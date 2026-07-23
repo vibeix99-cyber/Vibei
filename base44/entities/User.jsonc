@@ -1,0 +1,14 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "staff_role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "staff"
+      ],
+      "description": "Internal store role for team members"
+    }
+  }
+}

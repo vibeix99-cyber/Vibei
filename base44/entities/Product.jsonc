@@ -1,0 +1,81 @@
+{
+  "name": "Product",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "makers_story": {
+      "type": "string",
+      "description": "The artisan / maker's story"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Gourmet Food & Staple",
+        "Handloom & Handicrafts",
+        "Gifts",
+        "Cosmetics",
+        "Fashion",
+        "Books"
+      ]
+    },
+    "origin": {
+      "type": "string",
+      "description": "District or tribal origin, e.g. Mokokchung District"
+    },
+    "price": {
+      "type": "number",
+      "description": "Price in INR"
+    },
+    "sale_price": {
+      "type": "number"
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "variants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "in_stock": {
+      "type": "boolean",
+      "default": true
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "organic": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "name",
+    "category",
+    "price"
+  ]
+}
