@@ -153,6 +153,9 @@ kbd {
   font-style: normal;
   background: linear-gradient(180deg, #ffd75e, #ff8a3d);
   -webkit-background-clip: text; background-clip: text; color: transparent;
+  /* the parent's text-shadow would show straight through the clipped fill */
+  text-shadow: none;
+  filter: drop-shadow(0 4px 0 #08132b);
 }
 .tagline { color: var(--ink-dim); letter-spacing: .18em; font-size: 12px; margin-top: 10px; text-transform: uppercase; }
 

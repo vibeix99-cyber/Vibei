@@ -9,12 +9,25 @@ creature is drawn procedurally on a canvas.
 
 ## Play
 
-Open `index.html` in any modern browser — it runs straight off the filesystem.
+**Easiest:** download `poke-arena.html` on its own and double-click it. That build
+has the CSS and JS inlined, so it is the one file you need — nothing else to copy.
+
+**From a clone:** open `index.html`, which loads `css/` and `js/` next to it.
 
 ```
 xdg-open pokemon-pvp/index.html      # Linux
 open pokemon-pvp/index.html          # macOS
 start pokemon-pvp\index.html         # Windows
+```
+
+Note that `index.html` only works with its sibling `css/` and `js/` folders
+alongside it. Copy it somewhere on its own and you get an unstyled page with no
+game — use `poke-arena.html` for that.
+
+Regenerate the single-file build after editing any source file:
+
+```
+python3 pokemon-pvp/build-standalone.py
 ```
 
 ## How a match works
