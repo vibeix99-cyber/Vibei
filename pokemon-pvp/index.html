@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Poké Arena — PvP Battle Simulator</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ================================================================ TITLE -->
+  <section id="screen-title" class="screen is-active">
+    <div class="title-wrap">
+      <div class="logo">
+        <span class="logo-mark"></span>
+        <h1>POKÉ <em>ARENA</em></h1>
+        <p class="tagline">Local hot-seat PvP · Level 100 · Randomized teams</p>
+      </div>
+
+      <div class="panel options">
+        <div class="opt-row">
+          <span class="opt-label">Format</span>
+          <div class="seg" id="opt-format">
+            <button class="seg-btn" data-value="1">1 v 1</button>
+            <button class="seg-btn is-on" data-value="3">3 v 3</button>
+            <button class="seg-btn" data-value="6">6 v 6</button>
+          </div>
+        </div>
+        <div class="opt-row">
+          <span class="opt-label">Pass &amp; play</span>
+          <div class="seg" id="opt-hide">
+            <button class="seg-btn is-on" data-value="1">Hide picks</button>
+            <button class="seg-btn" data-value="0">Open screen</button>
+          </div>
+        </div>
+        <div class="opt-row">
+          <span class="opt-label">Text speed</span>
+          <div class="seg" id="opt-speed">
+            <button class="seg-btn" data-value="1.5">Slow</button>
+            <button class="seg-btn is-on" data-value="1">Normal</button>
+            <button class="seg-btn" data-value="0.55">Fast</button>
+          </div>
+        </div>
+      </div>
+
+      <button class="big-btn" id="btn-to-preview">DRAW TEAMS</button>
+
+      <div class="hint">
+        <b>Controls</b> — Mouse/touch, or keyboard:
+        <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd> pick · <kbd>←</kbd><kbd>→</kbd><kbd>↑</kbd><kbd>↓</kbd> move ·
+        <kbd>Enter</kbd> confirm · <kbd>Esc</kbd> back · <kbd>Space</kbd> skip text
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================== PREVIEW -->
+  <section id="screen-preview" class="screen">
+    <div class="preview-wrap">
+      <h2 class="screen-title">TEAM PREVIEW</h2>
+      <div class="preview-grid">
+        <div class="team-col team-p1">
+          <header><span class="ptag p1">PLAYER 1</span></header>
+          <div class="team-list" id="preview-p1"></div>
+        </div>
+        <div class="vs-badge">VS</div>
+        <div class="team-col team-p2">
+          <header><span class="ptag p2">PLAYER 2</span></header>
+          <div class="team-list" id="preview-p2"></div>
+        </div>
+      </div>
+      <div class="preview-actions">
+        <button class="btn ghost" id="btn-reroll">↻ Reroll teams</button>
+        <button class="big-btn" id="btn-start">START BATTLE</button>
+        <button class="btn ghost" id="btn-back-title">← Title</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================================== BATTLE -->
+  <section id="screen-battle" class="screen">
+    <div class="battle-wrap">
+
+      <div class="scoreboard">
+        <div class="score-side">
+          <span class="ptag p1">P1</span>
+          <div class="pips" id="pips-p1"></div>
+        </div>
+        <div class="turn-box"><span id="turn-counter">Turn 1</span></div>
+        <div class="score-side right">
+          <div class="pips" id="pips-p2"></div>
+          <span class="ptag p2">P2</span>
+        </div>
+      </div>
+
+      <div class="arena" id="arena">
+        <canvas id="stage" width="960" height="420"></canvas>
+
+        <div class="hud hud-foe" id="hud-p2">
+          <div class="hud-top-row">
+            <span class="hud-name"></span>
+            <span class="hud-lvl">Lv100</span>
+          </div>
+          <div class="hud-types"></div>
+          <div class="hpbar"><i></i></div>
+          <div class="hud-bottom-row">
+            <span class="hud-hp"></span>
+            <span class="hud-status"></span>
+          </div>
+          <div class="hud-boosts"></div>
+        </div>
+
+        <div class="hud hud-ally" id="hud-p1">
+          <div class="hud-top-row">
+            <span class="hud-name"></span>
+            <span class="hud-lvl">Lv100</span>
+          </div>
+          <div class="hud-types"></div>
+          <div class="hpbar"><i></i></div>
+          <div class="hud-bottom-row">
+            <span class="hud-hp"></span>
+            <span class="hud-status"></span>
+          </div>
+          <div class="hud-boosts"></div>
+        </div>
+      </div>
+
+      <div class="msgbar" id="msgbar"><span id="msg-text">Get ready!</span><span class="msg-caret">▾</span></div>
+
+      <div class="command" id="command">
+        <div class="cmd-header">
+          <span id="cmd-who" class="ptag p1">PLAYER 1</span>
+          <span id="cmd-hint">Choose an action</span>
+        </div>
+        <div class="cmd-body" id="cmd-body"></div>
+      </div>
+
+      <details class="logbox">
+        <summary>Battle log</summary>
+        <div id="log"></div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ================================================================= PASS -->
+  <section id="screen-pass" class="screen">
+    <div class="pass-wrap">
+      <div class="pass-eye">🙈</div>
+      <h2 id="pass-title">PASS THE KEYBOARD</h2>
+      <p id="pass-sub">Player 2, it's your call.</p>
+      <button class="big-btn" id="btn-pass-ready">I'M READY</button>
+      <p class="pass-note">Press <kbd>Enter</kbd> when the other player isn't looking.</p>
+    </div>
+  </section>
+
+  <!-- =============================================================== RESULT -->
+  <section id="screen-result" class="screen">
+    <div class="result-wrap">
+      <div class="confetti" id="confetti"></div>
+      <h2 id="result-title">PLAYER 1 WINS</h2>
+      <p id="result-sub"></p>
+      <div class="result-teams" id="result-teams"></div>
+      <div class="result-actions">
+        <button class="big-btn" id="btn-rematch">REMATCH (same teams)</button>
+        <button class="btn ghost" id="btn-new-teams">New random teams</button>
+        <button class="btn ghost" id="btn-result-title">← Title</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/sprites.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
