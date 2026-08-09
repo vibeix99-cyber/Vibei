@@ -265,13 +265,13 @@ a{ color:var(--brass); }
 
 <script>
 const DATA = {
-  wave: "Wave 1 · halted by spend limit",
+  wave: "Wave 2 · relaunched",
   updated: "9 Aug 2026",
-  percent: 46,
-  note: "Twelve builders landed substantial work before the account limit cut them off mid-task.",
+  percent: 52,
+  note: "Spend limit raised. Four agents on the two dead pieces, the wiring pass and the handoff queue.", ,
   stats: [
     { n: "20",   l: "pieces" },
-    { n: "0/20", l: "critics run" },
+    { n: "4", l: "agents live" },
     { n: "32",   l: "fighters" },
     { n: "264",  l: "moves" },
     { n: "71",   l: "abilities" },
@@ -279,7 +279,7 @@ const DATA = {
   ],
   // [piece, status, rounds, oursScore, theirsScore, gap]
   pieces: [
-    ["Battle engine & rules",      "review", 1, 0, 0, "Taunt, Encore, Disable and pivot moves ship as data but the engine never reads them"],
+    ["Battle engine & rules",      "active", 2, 0, 0, "Taunt, Encore, Disable and pivot moves ship as data but the engine never reads them"],
     ["Type chart & balance",       "review", 1, 0, 0, "Rebalanced from measurement; per-fighter spread is 36-70% and could be tighter"],
     ["Status, weather & field",    "review", 1, 0, 0, "Weather still changes a HUD chip and nothing in the 3D scene"],
     ["Move design",                "review", 1, 0, 0, "264 moves against a stated power budget; unjudged"],
@@ -287,18 +287,18 @@ const DATA = {
     ["Abilities",                  "review", 1, 0, 0, "71 abilities; the behavioural test suite was never finished"],
     ["Items & bag",                "review", 1, 0, 0, "Held-item tradeoffs landed; bag economy untested"],
     ["Opponent AI",                "review", 1, 0, 0, "Tier ladder was monotonic on last measure except pirate over rookie"],
-    ["Arena & lighting",           "sent",   1, 0, 0, "Data for six distinct arenas landed; the stage that renders it never did"],
+    ["Arena & lighting",           "active", 2, 0, 0, "Data for six distinct arenas landed; the stage that renders it never did"],
     ["Character models",           "review", 1, 0, 0, "Articulated rigs with outlines; a null-scale crash stopped every spawn until fixed"],
-    ["Move VFX",                   "sent",   1, 0, 0, "Builder died before writing the file — still five generic shapes"],
-    ["Camera direction",           "review", 1, 0, 0, "Impact framing still tight; giants still break the frame"],
+    ["Move VFX",                   "active", 2, 0, 0, "Builder died before writing the file — still five generic shapes"],
+    ["Camera direction",           "active", 2, 0, 0, "Impact framing still tight; giants still break the frame"],
     ["Battle HUD & menus",         "review", 1, 0, 0, "Rebuilt and much stronger; never checked at phone sizes"],
     ["Audio",                      "review", 1, 0, 0, "Richer SFX registry; cries still share templates across 32 fighters"],
     ["Game feel & pacing",         "review", 1, 0, 0, "Concurrent beats landed; the measured turn-length pass never ran"],
-    ["Team builder & dex",         "review", 1, 0, 0, "Dex is excellent and now routed; team builder is still the placeholder grid"],
-    ["Modes & progression",        "sent",   1, 0, 0, "Save, runs, opponents and reports all written but not routed to a screen"],
-    ["PvP: hot-seat & link",       "review", 1, 0, 0, "Hot-seat works; serverless link battle is written but has no screen"],
-    ["Onboarding & accessibility", "sent",   1, 0, 0, "Help overlay routed; no tutorial battle"],
-    ["Save & persistence",         "sent",   1, 0, 0, "src/meta/save.js exists; nothing calls it yet"]
+    ["Team builder & dex",         "active", 2, 0, 0, "Dex is excellent and now routed; team builder is still the placeholder grid"],
+    ["Modes & progression",        "active", 2, 0, 0, "Save, runs, opponents and reports all written but not routed to a screen"],
+    ["PvP: hot-seat & link",       "active", 2, 0, 0, "Hot-seat works; serverless link battle is written but has no screen"],
+    ["Onboarding & accessibility", "active", 2, 0, 0, "Help overlay routed; no tutorial battle"],
+    ["Save & persistence",         "active", 2, 0, 0, "src/meta/save.js exists; nothing calls it yet"]
   ],
   log: [
     ["W0", "Repo scaffolded. <b>Three.js vendored locally</b> — no CDN, no build step, opens from a file server."],
@@ -314,7 +314,9 @@ const DATA = {
     ["W1", "The screens agent had built a full <b>Fighter Dex</b> — searchable, 3D preview, complete weakness chart — and died before registering it. Now routed."],
     ["W1", "Roster taken to <b>32 fighters</b>, then measured over 1400 headless battles rather than eyeballed."],
     ["W1", "That measurement found the default move set was picking the last four moves learned, so Jinbe went to battle with four status moves and no attack."],
-    ["W1", "It also found the foundation <b>type chart was broken</b>: HAKI had eight super-effective matchups against one weakness. Rebalanced; win-rate spread went 31-73% to 36-70%."]
+    ["W1", "It also found the foundation <b>type chart was broken</b>: HAKI had eight super-effective matchups against one weakness. Rebalanced; win-rate spread went 31-73% to 36-70%."],
+    ["W2", "<b>Spend limit raised; relaunched.</b> Four agents: the arena renderer, move VFX, the wiring pass, and the queued cross-file requests."],
+    ["W2", "The handoff queue is the interesting one — Taunt, Encore, Disable and pivot moves all ship as data the engine never reads, so they are currently a lie to the player."]
   ]
 };
 
