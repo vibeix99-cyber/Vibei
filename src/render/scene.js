@@ -1896,13 +1896,22 @@ export class Stage {
     this.stats.tris = info.triangles;
   }
 
-  tickStats(dt) {
-    this.stats.acc += dt;
+  /**
+   * Frame rate must be measured against the wall clock, not the game clock.
+   * The loop clamps dt to 0.05s so a slow frame cannot teleport the
+   * simulation; feeding that clamped value back in here reported 20fps on a
+   * machine actually running 7, which is exactly the number you must not get
+   * wrong when deciding whether the scene is too heavy.
+   */
+  tickStats() {
+    const now = performance.now();
+    if (this._fpsT === undefined) { this._fpsT = now; this.stats.frames = 0; return; }
     this.stats.frames++;
-    if (this.stats.acc >= 0.5) {
-      this.stats.fps = Math.round(this.stats.frames / this.stats.acc);
+    const elapsed = (now - this._fpsT) / 1000;
+    if (elapsed >= 0.5) {
+      this.stats.fps = Math.round(this.stats.frames / elapsed);
       this.stats.frames = 0;
-      this.stats.acc = 0;
+      this._fpsT = now;
     }
   }
 }

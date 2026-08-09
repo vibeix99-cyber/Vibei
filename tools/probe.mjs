@@ -18,6 +18,12 @@ const args = Object.fromEntries(
 );
 
 const PORT = Number(args.port || 8123);
+// Headless is software-rendered, where cost is per-pixel rather than per-triangle.
+// A smaller viewport at low quality is the difference between a 90-second probe
+// and an eight-minute one; pass --quality high --vw 1440 --vh 900 to judge looks.
+const QUALITY = args.quality || 'low';
+const VW = Number(args.vw || 1100);
+const VH = Number(args.vh || 700);
 const OUT = args.out || 'tests/shots';
 const TURNS = Number(args.turns || 10);
 const BASE = `http://127.0.0.1:${PORT}`;
@@ -41,7 +47,7 @@ async function main() {
     executablePath: process.env.PW_CHROMIUM || undefined,
     args: ['--use-gl=swiftshader', '--enable-unsafe-swiftshader', '--disable-dev-shm-usage', '--no-sandbox']
   });
-  const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
+  const page = await browser.newPage({ viewport: { width: VW, height: VH }, deviceScaleFactor: 1 });
 
   page.on('console', (m) => { if (m.type() === 'error') errors.push(`console: ${m.text()}`); });
   page.on('pageerror', (e) => errors.push(`pageerror: ${e.message}`));
@@ -52,7 +58,7 @@ async function main() {
   };
 
   console.log('▶ loading', BASE);
-  await page.goto(BASE, { waitUntil: 'networkidle' });
+  await page.goto(`${BASE}/?quality=${QUALITY}`, { waitUntil: 'networkidle' });
   await page.waitForFunction(() => window.__ARENA?.version, null, { timeout: 20000 });
   await page.evaluate(() => window.__ARENA.ready);
   await page.evaluate(() => window.__ARENA.audio.setMuted(true));
@@ -123,7 +129,7 @@ async function main() {
   for (let t = 0; t < TURNS; t++) {
     const done = await page.evaluate(async () => {
       const A = window.__ARENA;
-      const deadline = Date.now() + 45000;
+      const deadline = Date.now() + 120000;
       while (Date.now() < deadline) {
         if (A.router.currentId !== 'battle') return 'ended';
         const w = A.battle.waitingFor();
@@ -154,7 +160,7 @@ async function main() {
   await shot('05-battle-late');
 
   const perf = await page.evaluate(() => ({ fps: window.__ARENA.perf.fps, calls: window.__ARENA.perf.drawCalls, tris: window.__ARENA.perf.tris }));
-  console.log(`  perf: ${perf.fps} fps · ${perf.calls} draw calls · ${perf.tris} tris`);
+  console.log(`  perf: ${perf.fps} fps · ${perf.calls} draw calls · ${perf.tris} tris  (quality=${QUALITY}, ${VW}x${VH}, software renderer)`);
 
   await page.evaluate(() => window.__ARENA.router.go('title'));
   await sleep(400);
