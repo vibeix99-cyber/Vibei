@@ -21,30 +21,35 @@ export const TYPE_ICON = {
 };
 
 // chart[attacker][defender]. Missing entry = 1.
-// Design intent (keep when rebalancing):
-//   HAKI is the "true damage" answer to intangibles (SPIRIT/SHADOW/VOID) and is the only
-//   thing that reliably hurts LOGIA-flavoured elemental types. It is resisted by physical
-//   discipline (FIST/SLASH) so it is not universally best.
-//   SEA is the great neutraliser — it beats elementals but folds to STORM and TOXIN.
+//
+// Design intent — keep these when rebalancing, and keep the numbers honest:
+// no type should clear more than four matchups super-effectively, and none
+// should carry more than five weaknesses.
+//   HAKI answers what you cannot normally hit (SPIRIT / SHADOW / VOID / LIGHT)
+//   and nothing else. Physical discipline — FIST, SLASH, MECHA — shrugs it off,
+//   and a MIND that reads you goes straight through it.
+//   MECHA and HAKI are the two defensive pillars; both pay for it offensively.
+//   BEAST hits hard and dies fast. SEA is the neutraliser: broad, rarely decisive.
+//   VOID and SPIRIT are the rock-paper-scissors core the endgame turns on.
 const T = (o) => o;
 export const CHART = {
-  SLASH:  T({ SLASH: 0.5, MECHA: 0.5, EARTH: 0.5, FLAME: 0.5, SEA: 0.5, WIND: 2, BEAST: 2, TOXIN: 2, SPIRIT: 0.5, VOID: 0.5, HAKI: 0.5, FROST: 2 }),
+  SLASH:  T({ SLASH: 0.5, MECHA: 0.5, EARTH: 0.5, HAKI: 0.5, WIND: 2, BEAST: 2, TOXIN: 2, FROST: 2 }),
   FIST:   T({ MECHA: 2, EARTH: 2, FROST: 2, HAKI: 0.5, WIND: 0.5, SPIRIT: 0, MIND: 0.5, SHADOW: 0.5, BEAST: 2, SLASH: 2 }),
-  HAKI:   T({ SPIRIT: 2, SHADOW: 2, VOID: 2, FLAME: 2, SEA: 2, LIGHT: 2, FIST: 0.5, SLASH: 0.5, HAKI: 2, MECHA: 0.5, MIND: 2 }),
+  HAKI:   T({ SPIRIT: 2, SHADOW: 2, VOID: 2, LIGHT: 2, FIST: 0.5, SLASH: 0.5, MECHA: 0.5 }),
   FLAME:  T({ FROST: 2, BEAST: 2, MECHA: 2, TOXIN: 2, SEA: 0.5, EARTH: 0.5, FLAME: 0.5, STORM: 0.5, WIND: 2 }),
   FROST:  T({ WIND: 2, EARTH: 2, BEAST: 2, SEA: 2, FLAME: 0.5, FROST: 0.5, MECHA: 0.5, HAKI: 0.5 }),
   SEA:    T({ FLAME: 2, EARTH: 2, MECHA: 2, SEA: 0.5, WIND: 0.5, SPIRIT: 0.5, STORM: 0.5, TOXIN: 0.5, FROST: 0.5 }),
-  STORM:  T({ SEA: 2, WIND: 2, MECHA: 0.5, EARTH: 0, STORM: 0.5, SLASH: 2, LIGHT: 0.5, TOXIN: 2 }),
+  STORM:  T({ SEA: 2, WIND: 2, MECHA: 0.5, EARTH: 0, STORM: 0.5, SLASH: 2, LIGHT: 0.5 }),
   EARTH:  T({ FLAME: 2, MECHA: 2, TOXIN: 2, STORM: 2, WIND: 0, BEAST: 0.5, SEA: 0.5, FROST: 0.5 }),
   WIND:   T({ FIST: 2, BEAST: 2, TOXIN: 2, SOUND: 2, MECHA: 0.5, STORM: 0.5, EARTH: 0.5, FROST: 0.5 }),
-  SHADOW: T({ MIND: 2, SPIRIT: 2, LIGHT: 0.5, HAKI: 0.5, SHADOW: 0.5, BEAST: 2, VOID: 0.5 }),
-  LIGHT:  T({ SHADOW: 2, VOID: 2, TOXIN: 2, SPIRIT: 2, MECHA: 0.5, LIGHT: 0.5, EARTH: 0.5, HAKI: 0.5 }),
+  SHADOW: T({ MIND: 2, SPIRIT: 2, LIGHT: 0.5, HAKI: 0.5, SHADOW: 0.5, VOID: 0.5 }),
+  LIGHT:  T({ SHADOW: 2, VOID: 2, SPIRIT: 2, LIGHT: 0.5, EARTH: 0.5, HAKI: 0.5 }),
   BEAST:  T({ MIND: 2, TOXIN: 0.5, MECHA: 0.5, SLASH: 0.5, SPIRIT: 0.5, EARTH: 2, SOUND: 2, HAKI: 0.5 }),
   MECHA:  T({ FROST: 2, WIND: 2, SOUND: 2, FLAME: 0.5, SEA: 0.5, STORM: 0.5, EARTH: 0.5, MECHA: 0.5, SPIRIT: 0.5 }),
-  MIND:   T({ FIST: 2, TOXIN: 2, HAKI: 0.5, VOID: 0, MIND: 0.5, SHADOW: 0.5, MECHA: 0.5, SPIRIT: 2 }),
+  MIND:   T({ FIST: 2, HAKI: 2, VOID: 0, MIND: 0.5, SHADOW: 0.5, SPIRIT: 2 }),
   TOXIN:  T({ BEAST: 2, SEA: 2, SPIRIT: 0.5, MECHA: 0, EARTH: 0.5, TOXIN: 0.5, MIND: 0.5, LIGHT: 2 }),
-  SOUND:  T({ MIND: 2, SPIRIT: 2, BEAST: 2, MECHA: 0.5, EARTH: 0.5, SOUND: 0.5, VOID: 0, HAKI: 0.5 }),
-  SPIRIT: T({ SHADOW: 2, MIND: 2, VOID: 2, HAKI: 0.5, SPIRIT: 0.5, MECHA: 0.5, BEAST: 0.5 }),
+  SOUND:  T({ MIND: 2, SPIRIT: 2, MECHA: 0.5, EARTH: 0.5, SOUND: 0.5, VOID: 0 }),
+  SPIRIT: T({ SHADOW: 2, MIND: 2, VOID: 2, SPIRIT: 0.5, BEAST: 0.5 }),
   VOID:   T({ SPIRIT: 2, LIGHT: 2, MIND: 2, VOID: 2, HAKI: 0.5, SLASH: 0.5, SOUND: 0.5 })
 };
 
