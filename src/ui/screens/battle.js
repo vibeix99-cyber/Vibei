@@ -235,7 +235,13 @@ export class BattleScreen {
     this.promptNext();
   }
 
-  /** Fade the board out before handing over to the results screen. */
+  /**
+   * Fade the board out before handing over to the results screen.
+   *
+   * The `battleEnd` beat already holds for ~0.95 s and lands on the victory
+   * shot, so this only has to cover the fade starting — anything longer is the
+   * single longest stretch of dead air in the game.
+   */
   toResults() {
     const b = this.battle;
     const fade = document.createElement('div');
@@ -251,7 +257,7 @@ export class BattleScreen {
         fade.classList.remove('on');
         setTimeout(() => fade.remove(), 700);
       });
-    }, 900);
+    }, 250);
   }
 
   promptNext() {
@@ -318,10 +324,13 @@ export class BattleScreen {
     };
   }
 
+  // The prompt is raised the moment the last line of the turn has *started* to
+  // be read, so clearing first would cut the tail off "It's super effective!".
+  // `say()` queues behind whatever is still on screen, which is what we want.
+
   ask(side) {
     this.waitingChoice = side;
     const mon = this.battle.sides[side].party[this.battle.sides[side].activeIndex];
-    this.app.textbox.clear();
     this.app.textbox.say(`What will ${mon.nickname} do?`, { hold: 0 });
     this.menu.showRoot(this.ctxFor(side));
     this.turnPill?.classList.remove('thinking');
@@ -330,7 +339,6 @@ export class BattleScreen {
   askSwitch(side) {
     this.waitingChoice = side;
     this.forcedSwitch = true;
-    this.app.textbox.clear();
     this.app.textbox.say('Choose your next fighter.', { hold: 0 });
     this.menu.showParty(this.ctxFor(side), true);
   }

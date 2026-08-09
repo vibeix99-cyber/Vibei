@@ -178,3 +178,67 @@ darker `void` variant would separate them) and `sand` (used for every EARTH move
 including the 130 BP ones — an `impact_earth` with more low end would help the heavy
 tier land). Purely cosmetic; no move needs changing either way.
 **Status:** open
+
+---
+
+### Screens & modes → announcements
+
+Everything in `src/meta/**` and `src/net/link.js` is now routed. New screen ids
+(all registered in `main.js`): `mode`, `teambuilder` (real, in its own file),
+`tournament`, `gauntlet`, `daily`, `link`, `linkbattle`, `tutorial`.
+
+- `src/ui/screens/simple.js` no longer exports `TeamBuilderScreen` or a
+  placeholder `DexScreen`. It exports `VersusScreen`, `SingleScreen`,
+  `OptionsScreen` only. The real builder is `src/ui/screens/teambuilder.js`.
+- New file `src/meta/flow.js`: `finishBattle(battle, params)` folds a finished
+  battle into report + progression + run state, `rematchParams(params, battle)`
+  rebuilds a matchup with the same two crews, `nextStep(out)` names the one
+  button the results screen should shout about.
+- **Battle params gained a `meta` field**, and it is the only way a screen says
+  why a fight is happening: `meta: { kind: 'quick'|'ai'|'hotseat'|'tournament'
+  |'gauntlet'|'daily'|'tutorial'|'link'|'dex', opId?, cupId?, dailyKey?, stage?,
+  aiLevel? }`. `battle.js` already forwards its whole params object to the
+  results screen as `replayFrom`, so nothing had to change there.
+- `main.js`'s router now stashes the outgoing screen's `battle` on
+  `app.lastBattle` before unmounting, so the results screen can read the real
+  finished battle. Nothing else should write that field.
+- `window.__ARENA` gained `meta` (save, progression, runs, opponents, analysis,
+  report, flow, teamcode, link), `battle.last()`, `debug.fixture(name)`,
+  `debug.fixtures()`, `debug.saveHealth()`, `debug.saveJson()`. Everything that
+  was there before is unchanged. `__ARENA.battle.screen()` now also resolves on
+  the `linkbattle` and `tutorial` screens, which are `BattleScreen` subclasses.
+- Settings now live in the save file (`meta/save.js`, `SAVE_VERSION = 2`), not
+  in the separate `gla.settings` key. `app.settings` is still the same object
+  shape and `app.saveSettings()` still exists, so `battle.js`'s speed control
+  keeps working. `app.reloadSettings()` is new (after a save import/reset).
+
+### Screens & modes → Battle screen (`src/ui/screens/battle.js`)
+**Need:** a first-class hook for an external choice source.
+**Why:** the link battle and the tutorial both need to reuse the real battle
+screen while changing *where a choice comes from*. Today they do it by
+subclassing `BattleScreen` and overriding `promptNext()` / `onPlayerChoice()` /
+`submit()`, which means a rename in those three methods silently breaks netplay.
+**Proposed API:** accept `params.controller` with
+`{ mySide, request(side), submit(choice), onTurn(cb) }`; when present,
+`promptNext()` asks only `mySide`, `onPlayerChoice` forwards to
+`controller.submit`, and the screen renders events from `controller.onTurn`
+instead of calling `submitChoices` itself. Two extra call sites, and
+`src/ui/screens/link.js` drops its whole override block.
+**Status:** open
+
+### Screens & modes → Battle screen (`src/ui/screens/battle.js`)
+**Need (small):** pass the finished `battle` object to the results screen, e.g.
+`this.app.router.go('results', { …, battle: this.battle })`.
+**Why:** the results screen needs the real battle to build its report. It works
+today because `main.js`'s router stashes `app.lastBattle`, but an explicit
+parameter is one less piece of spooky action.
+**Status:** open
+
+### Screens & modes → Progression (`src/meta/progression.js`)
+**Note, not a blocker:** `UNLOCKS` only ever unlocks four of the 23 held items,
+and `STARTING.items` is one. Gating the team builder's item picker on
+`unlockedHeldItems()` would make 18 items permanently invisible, so the builder
+shows all held items and marks the un-earned ones instead. If that is not the
+intent, add unlock rules for the rest (or a `heldItemsForBuilder()`) and the
+builder will follow it.
+**Status:** open

@@ -105,6 +105,9 @@ const _box = new THREE.Box3(), _tbox = new THREE.Box3(), _m4 = new THREE.Matrix4
 
 const pose = (pos, look, fov) => ({ pos, look, fov });
 
+/** Shortest camera move allowed while reduced motion is on. Never a cut. */
+const REDUCED_BLEND = 1.1;
+
 /* ------------------------------------------------------------------ */
 
 export class CameraDirector {
@@ -142,6 +145,15 @@ export class CameraDirector {
     this._kick = null;
     this.attn = { p: new THREE.Vector3(), w: 0, k: 0 };
     this.noiseT = Math.random() * 300;
+
+    /**
+     * Reduced motion. A hard switch, not a scale factor — the same contract
+     * `Feel.reduced` uses. While it is on the director never cuts, never
+     * punches the lens, and never leaves the two calm framings; see `_request`.
+     * Kept in sync from `ctx.reduced` on every event and from the bound view's
+     * `feel` every frame, so it is right before the first event arrives.
+     */
+    this.reduced = false;
 
     this.pending = null;
     this._turn = { first: null, prevFirst: null, movers: 0 };
@@ -679,6 +691,18 @@ export class CameraDirector {
    * shot is still young and the new beat is no more important than it.
    */
   _request(shot, o = {}) {
+    if (this.reduced) {
+      // Reduced motion: the shot change *is* the jarring part, so there is no
+      // point softening the ones we keep. Everything collapses onto the two
+      // calm framings, and every move between them is a long glide, never a cut.
+      shot = shot.id === 'establish' ? this._establish(0) : this._neutral();
+      o = { ...o, dur: Math.max(o.dur ?? 0.5, REDUCED_BLEND), ease: E.glide, mode: 'arc' };
+      // Already there: keep re-framing rather than restarting the blend.
+      if (this.shot && this.shot.id === shot.id) { this.shot = shot; return false; }
+      // Toggled on mid-battle from a shot reduced motion would never pick:
+      // shot discipline must not be allowed to keep us there.
+      if (this.shot && this.shot.id !== 'neutral' && this.shot.id !== 'establish') o.force = true;
+    }
     const cur = this.shot;
     if (cur && !o.force) {
       const minHold = Math.max(this._minShot, Math.min(cur.minHold, 1.4) / clamp(this.speed, 1, 3));
@@ -719,7 +743,7 @@ export class CameraDirector {
   /** Bias the current shot toward a point without cutting. */
   nudge(point, strength = 1) {
     this.attn.p.copy(point);
-    this.attn.k = clamp(strength, 0, 1);
+    this.attn.k = clamp(strength, 0, 1) * (this.reduced ? 0.4 : 1);
     this.attn.w = Math.max(this.attn.w, 0.001);
   }
 
@@ -768,14 +792,23 @@ export class CameraDirector {
 
   shotFor(base, side) { return base + (side === 0 ? 'A' : 'B'); }
 
-  /** Push the camera in briefly, e.g. on a critical hit. */
+  /**
+   * Push the camera in briefly, e.g. on a critical hit. `amount` is the whole
+   * size of the push — the impact tiers pass 0.20 / 0.30 / 0.40 and a lethal
+   * blow 0.50, and they must read as four different hits, so `update()`
+   * multiplies the decay curve by it rather than by a constant.
+   */
   punch(amount = 0.35, seconds = 0.18) {
+    if (this.reduced) return;
     this.dolly = amount; this._dollyAmp = amount;
     this._dollyT = seconds; this._dollyMax = seconds;
   }
 
   /** Widen (or tighten) the lens hard and let it fall back. Stands in for blur. */
-  fovKick(amp = 8, seconds = 0.26) { this._kick = { t: 0, dur: seconds, amp }; }
+  fovKick(amp = 8, seconds = 0.26) {
+    if (this.reduced) return;
+    this._kick = { t: 0, dur: seconds, amp };
+  }
 
   /**
    * Freeze deliberate camera movement while the screen is shaking, so the two
@@ -794,10 +827,11 @@ export class CameraDirector {
   /**
    * Called by BattleView for every battle event, before the event's own beat.
    * @param {object} ev   the BattleEvent
-   * @param {object} ctx  { big, crit, lethal, speed }
+   * @param {object} ctx  { big, crit, lethal, speed, reduced }
    */
   onEvent(ev, ctx = {}) {
     if (!ev) return;
+    if (ctx.reduced !== undefined) this.reduced = !!ctx.reduced;
     this.speed = clamp(ctx.speed || 1, 0.25, 8);
     this._idle = 0;
     this._commanded = false;
@@ -1015,6 +1049,7 @@ export class CameraDirector {
 
     // Drift into the command framing while the battle waits for a choice.
     const v = this._bind();
+    if (v?.feel) this.reduced = !!v.feel.reduced;   // live, not only on the next event
     const waiting = v ? (!v.beat && v.queue.length === 0) : false;
     if (waiting && !this._opening) {
       this._idle += dt;
@@ -1071,7 +1106,9 @@ export class CameraDirector {
     const p = _b.copy(this.cur.pos).addScaledVector(_a, this.dolly * Math.min(3.2, dist * 0.22));
 
     // ---- handheld: scales with battle intensity, silent while shaking ----
-    if (this.shakeHold <= 0) {
+    // Reduced motion turns it off outright: a camera that never stops moving is
+    // exactly what the setting exists to remove.
+    if (this.shakeHold <= 0 && !this.reduced) {
       this.noiseT += dt * (0.55 + this.intensity * 1.5);
       const amp = dist * (0.0016 + this.intensity * 0.0050);
       _q0.set(-_a.z, 0, _a.x).normalize();
@@ -1103,6 +1140,7 @@ export class CameraDirector {
     const cp = this.cam.position;
     const out = {
       seq: this.seq, shot: this.shot?.id || null, age: +this.shotAge.toFixed(2), fov: +fov.toFixed(1),
+      reduced: this.reduced, dolly: +this.dolly.toFixed(3),
       camY: +cp.y.toFixed(2), side: +sideOfAxis(cp).toFixed(2),
       intensity: +this.intensity.toFixed(2), shakeHold: +this.shakeHold.toFixed(2),
       heights: [+this.act[0].h.toFixed(2), +this.act[1].h.toFixed(2)],

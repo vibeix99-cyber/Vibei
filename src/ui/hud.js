@@ -352,13 +352,17 @@ export class NamePlate {
     });
   }
 
-  update(dt) { this.render(this.hpSpring.update(dt)); }
+  update(dt) { this.render(this.hpSpring.update(dt), dt); }
 
-  render(v) {
+  /** @param {number=} dt game seconds; 0 during hitstop, so the bar freezes too. */
+  render(v, dt) {
     const frac = v ?? this.hpSpring.value;
     const f = Math.max(0, Math.min(1, frac));
     this.$fill.style.transform = `scaleX(${f})`;
-    this.ghost += (f - this.ghost) * 0.035;
+    // The trailing red "ghost" chases the fill on the game clock. Advancing it
+    // per-frame instead would keep it draining through the frozen frame — and
+    // would run at a different speed on a 144 Hz screen.
+    if (dt > 0) this.ghost += (f - this.ghost) * (1 - Math.exp(-dt * 2.1));
     if (this.ghost < f) this.ghost = f;
     this.$ghost.style.transform = `scaleX(${Math.max(f, this.ghost)})`;
 
@@ -405,8 +409,27 @@ export class FieldBanner {
   }
 }
 
-/** Floating damage/heal number anchored to a screen point. */
-export function floatNumber(parent, x, y, text, kind = '') {
+/**
+ * The game clock the HUD animates on. `Feel` owns hitstop and slow-mo, and the
+ * whole point of a frozen frame is that *nothing* moves during it — a damage
+ * number still flying is the one element that gives the freeze away. Looked up
+ * lazily so the HUD keeps working headless and in the model sheets.
+ */
+function gameFeel() {
+  try {
+    const a = globalThis.__ARENA;
+    return a?.stage?.feel || a?.app?.stage?.feel || null;
+  } catch { return null; }
+}
+
+/**
+ * Floating damage/heal number anchored to a screen point.
+ *
+ * Advances on the game clock, not on wall time: frozen during hitstop, slowed
+ * by slow-mo, so it stays welded to the hit that produced it.
+ * @param {{feel?:object, dur?:number}} [opts] `feel` overrides the clock lookup.
+ */
+export function floatNumber(parent, x, y, text, kind = '', opts = {}) {
   injectHudCss();
   const el = document.createElement('div');
   el.className = `dmgnum ${kind}`;
@@ -415,14 +438,28 @@ export function floatNumber(parent, x, y, text, kind = '') {
   el.style.top = `${y}px`;
   parent.appendChild(el);
   const dx = (Math.random() - 0.5) * 40;
-  const start = performance.now();
-  const dur = kind === 'crit' ? 1100 : 900;
-  function step(now) {
-    const p = Math.min(1, (now - start) / dur);
+  const dur = opts.dur ?? (kind === 'crit' ? 1100 : 900);
+  let elapsed = 0;
+  let last = -1;
+  const draw = (p) => {
     const rise = -70 * (1 - Math.pow(1 - p, 3));
     const scale = p < 0.16 ? 0.5 + (p / 0.16) * 0.75 : 1.25 - (p - 0.16) * 0.28;
     el.style.transform = `translate(${dx * p}px, ${rise}px) scale(${scale})`;
     el.style.opacity = p < 0.7 ? 1 : 1 - (p - 0.7) / 0.3;
+  };
+  draw(0);
+  function step(now) {
+    if (last < 0) last = now;
+    let ms = Math.min(64, now - last);          // a dropped frame must not teleport it
+    last = now;
+    const feel = opts.feel || gameFeel();
+    if (feel) {
+      if (feel.hitstopMs > 0) ms = 0;           // the frozen frame is genuinely frozen
+      else if (feel.timeScale > 0) ms *= feel.timeScale;
+    }
+    elapsed += ms;
+    const p = Math.min(1, elapsed / dur);
+    draw(p);
     if (p < 1) requestAnimationFrame(step); else el.remove();
   }
   requestAnimationFrame(step);

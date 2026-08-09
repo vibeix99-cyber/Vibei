@@ -223,7 +223,14 @@ export function dealDirect(state, mon, amount, source = 'effect', meta = {}) {
   mon.damageTakenThisTurn += dealt;
   mon.timesHit++;
   mon.hitThisTurn = true;
-  if (mon.hp <= 0) { mon.hp = 0; mon.faintCause = source; }
+  // Stamp the order in which fighters hit 0 so `runFaints` can announce them in
+  // the order they actually fell (a defender before the recoil that killed its
+  // attacker), rather than in side order.
+  if (mon.hp <= 0) {
+    mon.hp = 0;
+    mon.faintCause = source;
+    mon.faintOrder = (state.faintSeq = (state.faintSeq || 0) + 1);
+  }
   emit(state, {
     t: 'damage', side: mon.side, uid: mon.uid, amount: dealt,
     hpAfter: mon.hp, maxHp: mon.maxHp, source,
@@ -408,10 +415,15 @@ function checkFaint(state, mon) {
   return true;
 }
 
-/** Faint anything sitting at 0 HP, actives first. */
+/** Faint anything sitting at 0 HP, in the order it got there. */
 function runFaints(state) {
-  for (const i of [0, 1]) checkFaint(state, active(state, i));
-  for (const s of state.sides) for (const p of s.party) checkFaint(state, p);
+  const down = [];
+  for (const s of state.sides) {
+    for (const p of s.party) if (!p.fainted && p.hp <= 0) down.push(p);
+  }
+  if (!down.length) return;
+  down.sort((a, b) => (a.faintOrder ?? 0) - (b.faintOrder ?? 0) || (a.side - b.side));
+  for (const p of down) checkFaint(state, p);
 }
 
 /* ------------------------------------------------------------------ */
@@ -803,6 +815,27 @@ function hitSubstitute(state, target, dmg) {
 
 function protectSuccessOdds(streak) { return 100 / Math.pow(3, Math.max(0, streak)); }
 
+/**
+ * Pivot: the user strikes and leaves. Parks a `switch` request for its own side
+ * so `runQueue` pauses the turn and the caller can pick a replacement; the rest
+ * of the queue resumes afterwards (see `resolveReplacements`, reason 'pivot').
+ *
+ * Driven either by `flags: ['pivot']` on a damaging move, or by
+ * `{ kind:'custom', value:'pivot' }` on any move.
+ * @returns {boolean} true if the switch request was actually raised.
+ */
+function tryPivot(state, user, moveId) {
+  if (!user || user.fainted || state.ended) return false;
+  if (state.request[user.side] === 'switch') return false;      // already leaving
+  if (!legalSwitches(state, user.side).length) return false;    // trapped, or nobody left
+  emit(state, { t: 'pivot', side: user.side, uid: user.uid, moveId: moveId ?? user.lastMoveId ?? null });
+  msg(state, `${label(user)} breaks off!`);
+  state.request[user.side] = 'switch';
+  state.request[1 - user.side] = null;
+  state.pendingSwitch[user.side] = true;
+  return true;
+}
+
 export function executeMove(state, side, moveId, choice = {}, opts = {}) {
   const user = active(state, side);
   if (!user || user.fainted) return;
@@ -1011,15 +1044,7 @@ export function executeMove(state, side, moveId, choice = {}, opts = {}) {
   runFaints(state);
 
   // --- pivot: strike and leave -----------------------------------------
-  if (move.flags?.includes('pivot') && !user.fainted && !state.ended && landed > 0) {
-    const outs = legalSwitches(state, user.side);
-    if (outs.length) {
-      msg(state, `${label(user)} breaks off!`);
-      state.request[user.side] = 'switch';
-      state.request[1 - user.side] = null;
-      state.pendingSwitch[user.side] = true;
-    }
-  }
+  if (move.flags?.includes('pivot') && landed > 0) tryPivot(state, user, moveId);
 }
 
 function isProtectMove(move) {
@@ -1045,6 +1070,14 @@ function accuracyOpts(state, user, move) {
 /* move effects                                                        */
 /* ------------------------------------------------------------------ */
 
+/**
+ * Effect kinds that act on the field or on a *side*, not on a combatant.
+ * They resolve even if the fighter that would have been the "target" is down —
+ * a hazard-removal attack that silently fails because it landed a KO is a rules
+ * surprise, not a rule.
+ */
+const FIELD_EFFECTS = new Set(['weather', 'terrain', 'hazard', 'screen', 'clearHazards', 'trickRoom']);
+
 /** @returns {{did:boolean, spoke:boolean}} did = state changed, spoke = a line was printed. */
 function applyEffects(state, move, user, target, damageDealt, isStatusMove, ctx = {}) {
   if (!move.effects) return { did: false, spoke: false };
@@ -1058,12 +1091,15 @@ function applyEffects(state, move, user, target, damageDealt, isStatusMove, ctx 
 
     const toSelf = e.target === 'self' || e.target === 'allySide';
     const tgt = toSelf ? user : target;
-    if (!tgt) continue;
-    if (tgt.fainted && !toSelf) continue;
-    if (user.fainted && toSelf && e.kind !== 'hazard' && e.kind !== 'screen') continue;
-    // A substitute swallows anything aimed through it.
-    if (!toSelf && tgt.volatiles.substitute && !bypassesSub(move) &&
-        ['status', 'boost', 'volatile', 'cure'].includes(e.kind)) continue;
+    const fieldWide = FIELD_EFFECTS.has(e.kind);
+    if (!fieldWide) {
+      if (!tgt) continue;
+      if (tgt.fainted && !toSelf) continue;
+      if (user.fainted && toSelf) continue;
+      // A substitute swallows anything aimed through it.
+      if (!toSelf && tgt.volatiles.substitute && !bypassesSub(move) &&
+          ['status', 'boost', 'volatile', 'cure'].includes(e.kind)) continue;
+    }
 
     const mark = state.events.length;
     switch (e.kind) {
@@ -1289,15 +1325,7 @@ const CUSTOM = {
     emit(state, { t: 'hazard', side: s.index, id: 'all', layers: 0, phase: 'clear' });
     msg(state, 'The hazards were blown away!'); return true;
   },
-  pivot: ({ state, user }) => {
-    const outs = legalSwitches(state, user.side);
-    if (!outs.length || user.fainted) return false;
-    msg(state, `${label(user)} breaks off!`);
-    state.request[user.side] = 'switch';
-    state.request[1 - user.side] = null;
-    state.pendingSwitch[user.side] = true;
-    return true;
-  }
+  pivot: ({ state, user, move }) => tryPivot(state, user, move?.id)
 };
 
 function runCustom(state, id, ctx) {

@@ -14,10 +14,10 @@
 import {
   createBattle, submitChoices, legalMoves, legalSwitches, moveLegality,
   effectiveSpeed, executeMove, addVolatile, applyStatus, setWeather, setTerrain,
-  publicView, active, MAX_TURNS
+  dealDirect, healMon, publicView, active, MAX_TURNS
 } from '../src/core/engine.js';
 import { chooseAction, AI_LEVELS } from '../src/core/ai.js';
-import { computeDamage, damageRange, pokeRound, isGrounded } from '../src/core/damage.js';
+import { computeDamage, damageRange, pokeRound, isGrounded, critCheck } from '../src/core/damage.js';
 import { allFighters, makeDefaultMember, getFighter } from '../src/data/fighters.js';
 import { MOVES, MOVE_BY_ID, getMove } from '../src/data/moves.js';
 import { ARENAS } from '../src/data/arenas.js';
@@ -38,6 +38,9 @@ const has = (k) => argv.includes(`--${k}`);
 const QUICK = has('quick');
 const ONLY = arg('only', null);
 const FUZZ_N = Number(arg('fuzz', QUICK ? 500 : 20000));
+/** Shard offset: `--from 2500 --fuzz 2500` runs battles 2500…4999 only, so a big
+ *  fuzz run can be split across cores without any two shards repeating a seed. */
+const FUZZ_FROM = Number(arg('from', 0));
 const DET_N = Number(arg('det', QUICK ? 50 : 1000));
 
 let pass = 0, fail = 0;
@@ -159,6 +162,28 @@ function turn(b, c0, c1) { return submitChoices(b, [c0 ?? null, c1 ?? null]); }
 function texts(evs) { return evs.filter((e) => e.t === 'message').map((e) => e.text); }
 function saidIn(evs, needle) { return texts(evs).some((t) => t.includes(needle)); }
 function kinds(evs, k) { return evs.filter((e) => e.t === k); }
+
+/**
+ * Force `side` to move first for the rest of the battle. Scripted cases that
+ * care about turn order must not silently change meaning when the roster is
+ * rebalanced, so order is pinned here rather than inferred from base stats.
+ */
+function outspeed(b, side) {
+  for (const p of b.sides[side].party) p.stats.spe = 400;
+  for (const p of b.sides[1 - side].party) p.stats.spe = 10;
+  return b;
+}
+
+/**
+ * Set a fighter's HP *through the engine* so the event stream stays a complete
+ * account of the battle. Assigning `mon.hp` directly desyncs the stream from
+ * the state and makes `validate()` (rightly) complain.
+ */
+function setHp(b, mon, hp) {
+  if (hp < mon.hp) dealDirect(b, mon, mon.hp - hp, 'effect');
+  else if (hp > mon.hp) healMon(b, mon, hp - mon.hp, 'effect');
+  return mon;
+}
 
 /* ------------------------------------------------------------------ */
 /* invariant checker — used by both fuzz and the unit cases            */
@@ -470,7 +495,8 @@ function unitTests() {
   {
     // a fighter knocked out earlier in the turn never gets to act
     const b = battle(member('jinbe', ['t_nuke']), member('nami', ['t_weak']));
-    b.sides[1].party[0].hp = 1;
+    outspeed(b, 0);
+    setHp(b, active(b, 1), 1);
     const evs = turn(b, mv('t_nuke'), mv('t_weak'));
     const p1moves = evs.filter((e) => e.t === 'moveUsed' && e.side === 1);
     eq('a KO’d fighter does not act', p1moves.length, 0);
@@ -479,8 +505,10 @@ function unitTests() {
   {
     // the attacker's move still resolves fully even though the recoil kills it
     const b = battle([member('jinbe', ['t_recoilnuke']), member('luffy', ['t_weak'])],
-                     [member('nami', ['t_weak']), member('sanji', ['t_weak'])]);
-    b.sides[0].party[0].hp = 40;
+                     [member('zoro', ['t_weak']), member('sanji', ['t_weak'])]);
+    outspeed(b, 0);
+    setHp(b, active(b, 0), 40);
+    setHp(b, active(b, 1), 60);      // the nuke must actually be lethal, so the recoil is too
     const evs = turn(b, mv('t_recoilnuke'), mv('t_weak'));
     const faints = kinds(evs, 'faint').map((e) => e.side);
     ok('defender is KO’d before the attacker’s recoil kills it', faints[0] === 1 && faints[1] === 0, JSON.stringify(faints));
@@ -507,25 +535,58 @@ function unitTests() {
     ok('side 0 must send out a replacement', b.request[0] === 'switch' || b.sides[0].activeIndex === 1, JSON.stringify(b.request));
   }
   {
-    const b = battle(member('mihawk', ['t_pivot']), [member('jinbe', ['t_weak']), member('luffy', ['t_weak'])]);
+    const b = battle([member('mihawk', ['t_pivot']), member('luffy', ['t_weak'])],
+                     member('jinbe', ['t_weak']));
+    outspeed(b, 0);
     const evs = turn(b, mv('t_pivot'), mv('t_weak'));
     ok('pivot pauses the turn for a replacement', b.request[0] === 'switch', JSON.stringify(b.request));
     ok('the pivot move already dealt its damage', kinds(evs, 'damage').length > 0);
+    const pv = kinds(evs, 'pivot')[0];
+    ok('a pivot event tells the UI to prompt',
+      !!pv && pv.side === 0 && pv.uid === 'p0-0' && pv.moveId === 't_pivot', JSON.stringify(pv));
+    ok('the pivot event lands after the damage it follows',
+      evs.indexOf(pv) > evs.findIndex((e) => e.t === 'damage'));
+    ok('the foe is not asked for anything while the pivot resolves', b.request[1] === null, JSON.stringify(b.request));
+    ok('the foe has not moved yet', !evs.some((e) => e.t === 'moveUsed' && e.side === 1));
     const before = b.turn;
-    turn(b, sw(0), null);
+    const evs2 = turn(b, sw(1), null);
     eq('the turn resumes rather than restarting', b.turn, before);
+    eq('the replacement is on the field', b.sides[0].activeIndex, 1);
+    ok('the rest of the turn runs against the replacement',
+      evs2.some((e) => e.t === 'moveUsed' && e.side === 1), texts(evs2).join(' | '));
     ok('both sides can act again', b.request[0] === 'move' && b.request[1] === 'move', JSON.stringify(b.request));
   }
   {
     const b = battle(member('mihawk', ['t_pivot']), member('jinbe', ['t_weak']));
-    turn(b, mv('t_pivot'), mv('t_weak'));
+    const evs = turn(b, mv('t_pivot'), mv('t_weak'));
     ok('a pivot with nobody to switch to just keeps going', b.request[0] === 'move' && !b.ended, JSON.stringify(b.request));
+    ok('and emits no pivot event', kinds(evs, 'pivot').length === 0);
+  }
+  {
+    // a pivot that never lands must not offer the free switch
+    const b = battle([member('mihawk', ['t_pivot']), member('luffy', ['t_weak'])],
+                     member('jinbe', ['t_weak']));
+    outspeed(b, 0);
+    addVolatile(b, active(b, 1), 'protect', 1);
+    const evs = turn(b, mv('t_pivot'), mv('t_weak'));
+    ok('a blocked pivot does not switch the user out',
+      b.request[0] !== 'switch' && kinds(evs, 'pivot').length === 0, JSON.stringify(b.request));
+  }
+  {
+    const b = battle([member('mihawk', ['t_pivot']), member('luffy', ['t_weak'])],
+                     member('jinbe', ['t_weak']));
+    outspeed(b, 0);
+    addVolatile(b, active(b, 0), 'rooted', 0);                // trapped by its own roots
+    const evs = turn(b, mv('t_pivot'), mv('t_weak'));
+    ok('a trapped pivot user cannot leave',
+      b.request[0] !== 'switch' && kinds(evs, 'pivot').length === 0, JSON.stringify(b.request));
   }
 
   /* ---------------- volatiles ---------------- */
   section('volatiles');
   {
     const b = battle(member('jinbe', ['t_sub', 't_weak']), member('nami', ['t_burn', 't_drop', 't_weak', 't_sound']));
+    outspeed(b, 0);
     const start = active(b, 0).hp;
     turn(b, mv('t_sub'), mv('t_burn'));
     eq('substitute costs a quarter of max HP', active(b, 0).hp, start - Math.floor(active(b, 0).maxHp / 4));
@@ -563,29 +624,70 @@ function unitTests() {
     ok('leech seed cannot take root in a TOXIN type', !active(b, 1).volatiles.leechseed && saidIn(evs, "doesn't affect"));
   }
   {
-    const b = battle(member('jinbe', ['t_taunt', 't_weak']), member('nami', ['t_buff', 't_weak']));
-    turn(b, mv('t_taunt'), mv('t_weak'));
+    // TAUNT — the answer to stall
+    const b = battle(member('jinbe', ['t_taunt', 't_weak']), member('kaido', ['t_buff', 't_weak']));
+    outspeed(b, 0);
+    const evs = turn(b, mv('t_taunt'), mv('t_buff'));
     ok('taunt lands', !!active(b, 1).volatiles.taunt);
+    ok('a status move already picked this turn is refused out loud',
+      evs.some((e) => e.t === 'cannotMove' && e.reason === 'taunt' && e.side === 1), texts(evs).join(' | '));
+    ok('and the refusal is spoken', saidIn(evs, 'after the taunt'), texts(evs).join(' | '));
+    const slot = active(b, 1).moves[0];
+    eq('a refused move costs no PP', slot.pp, slot.maxPp);
     ok('a taunted fighter cannot pick a status move', !legalMoves(b, 1).includes('t_buff'), JSON.stringify(legalMoves(b, 1)));
-    const evs = turn(b, mv('t_weak'), mv('t_buff'));
-    ok('a taunted status move is refused out loud', saidIn(evs, 'after the taunt'), texts(evs).join(' | '));
-    for (let i = 0; i < 3; i++) turn(b, mv('t_weak'), mv('t_weak'));
-    ok('taunt wears off', !active(b, 1).volatiles.taunt);
-  }
-  {
-    const b = battle(member('jinbe', ['t_encore', 't_weak']), member('nami', ['t_buff', 't_weak']));
-    turn(b, mv('t_weak'), mv('t_buff'));
-    turn(b, mv('t_encore'), mv('t_weak'));
-    ok('encore latches on', active(b, 1).volatiles.encore?.data.moveId === 't_buff');
+    ok('but its attacks are untouched', legalMoves(b, 1).includes('t_weak'));
     turn(b, mv('t_weak'), mv('t_weak'));
-    eq('encore forces the repeat', active(b, 1).lastMoveId, 't_buff');
+    turn(b, mv('t_weak'), mv('t_weak'));
+    ok('taunt wears off after three turns', !active(b, 1).volatiles.taunt);
+    ok('and says so', b.log.some((t) => t.includes('shook off the taunt')), b.log.slice(-4).join(' | '));
+    ok('the status move comes back', legalMoves(b, 1).includes('t_buff'), JSON.stringify(legalMoves(b, 1)));
   }
   {
-    const b = battle(member('jinbe', ['t_disable', 't_weak']), member('nami', ['t_buff', 't_weak']));
-    turn(b, mv('t_weak'), mv('t_buff'));
-    turn(b, mv('t_disable'), mv('t_weak'));
-    ok('disable names the last move', active(b, 1).volatiles.disable?.data.moveId === 't_buff');
-    ok('the disabled move is off the menu', !legalMoves(b, 1).includes('t_buff'));
+    // a fighter with nothing but status moves is reduced to Struggle
+    const b = battle(member('jinbe', ['t_taunt', 't_weak']), member('nami', ['t_buff']));
+    outspeed(b, 0);
+    turn(b, mv('t_taunt'), mv('t_buff'));
+    eq('a taunted stall fighter has only Struggle left', JSON.stringify(legalMoves(b, 1)), JSON.stringify(['struggle']));
+    const evs = turn(b, mv('t_weak'), mv('t_buff'));
+    ok('and it really does Struggle', evs.some((e) => e.t === 'moveUsed' && e.side === 1 && e.moveId === 'struggle'),
+      texts(evs).join(' | '));
+  }
+  {
+    // ENCORE — the answer to setup
+    const b = battle(member('jinbe', ['t_encore', 't_weak']), member('kaido', ['t_buff', 't_weak']));
+    outspeed(b, 0);
+    const first = turn(b, mv('t_encore'), mv('t_buff'));
+    ok('encore fails with no last move to repeat', !active(b, 1).volatiles.encore && saidIn(first, 'But it failed!'),
+      texts(first).join(' | '));
+    turn(b, mv('t_encore'), mv('t_weak'));
+    eq('encore latches on to the last move', active(b, 1).volatiles.encore?.data.moveId, 't_buff');
+    eq('encore narrows the legal set to exactly that move',
+      JSON.stringify(legalMoves(b, 1)), JSON.stringify(['t_buff']));
+    const evs = turn(b, mv('t_weak'), mv('t_weak'));       // side 1 asks for something else
+    ok('encore overrides the choice', evs.some((e) => e.t === 'moveUsed' && e.side === 1 && e.moveId === 't_buff'),
+      texts(evs).join(' | '));
+    eq('and the state agrees', active(b, 1).lastMoveId, 't_buff');
+    turn(b, mv('t_weak'), mv('t_weak'));
+    turn(b, mv('t_weak'), mv('t_weak'));
+    ok('encore expires', !active(b, 1).volatiles.encore);
+    ok('and the fighter is free again', legalMoves(b, 1).includes('t_weak'), JSON.stringify(legalMoves(b, 1)));
+  }
+  {
+    // DISABLE — the answer to a single button
+    const b = battle(member('jinbe', ['t_disable', 't_weak']), member('kaido', ['t_buff', 't_weak']));
+    outspeed(b, 0);
+    const first = turn(b, mv('t_disable'), mv('t_buff'));
+    ok('disable fails with no last move to seal', !active(b, 1).volatiles.disable, JSON.stringify(active(b, 1).volatiles));
+    const evs = turn(b, mv('t_disable'), mv('t_weak'));
+    eq('disable names the last move', active(b, 1).volatiles.disable?.data.moveId, 't_buff');
+    ok('and says which move it sealed', saidIn(evs, 'was sealed off'), texts(evs).join(' | '));
+    ok('the disabled move is off the menu', !legalMoves(b, 1).includes('t_buff'), JSON.stringify(legalMoves(b, 1)));
+    ok('everything else still works', legalMoves(b, 1).includes('t_weak'));
+    ok('picking it anyway is refused, not silently swapped',
+      !moveLegality(b, active(b, 1), 't_buff').ok && moveLegality(b, active(b, 1), 't_buff').reason === 'disable');
+    for (let i = 0; i < 4; i++) if (!b.ended) turn(b, mv('t_weak'), mv('t_weak'));
+    ok('disable wears off after four turns', !active(b, 1).volatiles.disable);
+    ok('and the move returns', legalMoves(b, 1).includes('t_buff'), JSON.stringify(legalMoves(b, 1)));
   }
   {
     const b = battle(member('jinbe', ['t_torment', 't_weak']), member('nami', ['t_weak', 't_buff']));
@@ -613,10 +715,10 @@ function unitTests() {
   {
     // …but not residual damage.
     const b = battle([member('jinbe', ['t_dbond']), member('luffy', ['t_weak'])],
-                     [member('mihawk', ['t_weak']), member('zoro', ['t_weak'])]);
+                     [member('mihawk', ['t_buff']), member('zoro', ['t_weak'])]);
     const me = b.sides[0].party[0];
-    me.hp = 1; me.status = 'psn';
-    const evs = turn(b, mv('t_dbond'), mv('t_weak'));
+    setHp(b, me, 1); me.status = 'psn';
+    const evs = turn(b, mv('t_dbond'), mv('t_buff'));
     const faints = kinds(evs, 'faint').map((e) => e.side);
     ok('destiny bond ignores poison', faints.length === 1 && faints[0] === 0, JSON.stringify(faints));
     ok('the foe is untouched', !b.sides[1].party[0].fainted);
@@ -627,6 +729,8 @@ function unitTests() {
     ok('perish song catches both fighters', !!active(b, 0).volatiles.perish && !!active(b, 1).volatiles.perish);
     ok('the count is announced', b.log.some((t) => t.includes('perish count fell to 3')), b.log.slice(-4).join(' | '));
     turn(b, mv('t_weak'), mv('t_weak'));
+    turn(b, mv('t_weak'), mv('t_weak'));
+    ok('the count is still running after two more turns', !b.ended, `turn ${b.turn}`);
     turn(b, mv('t_weak'), mv('t_weak'));
     ok('perish song collects', b.ended, `turn ${b.turn} ended=${b.ended}`);
     eq('a perish-song wipe is a draw', b.winner, 'draw');
@@ -666,7 +770,6 @@ function unitTests() {
     ok('focus energy is tracked', !!active(b, 0).volatiles.focusenergy);
     let crits = 0;
     const rng = new RNG(3);
-    const { critCheck } = await import('../src/core/damage.js');
     for (let i = 0; i < 4000; i++) if (critCheck(rng, getMove('t_weak'), active(b, 0))) crits++;
     ok('focus energy lifts the crit rate to ~1/2', crits > 1700 && crits < 2300, `${crits}/4000`);
   }
@@ -711,7 +814,7 @@ function unitTests() {
   /* ---------------- field state ---------------- */
   section('field state');
   {
-    const b = battle(member('nami', ['t_sand', 't_weak']), member('luffy', ['t_weak']));
+    const b = battle(member('nami', ['t_sand', 't_weak']), member('zoro', ['t_weak']));
     turn(b, mv('t_sand'), mv('t_weak'));
     eq('sandstorm is up', b.field.weather.id, 'sandstorm');
     ok('sandstorm chips both fighters', b.events.filter((e) => e.t === 'damage' && e.source === 'weather').length === 2);
@@ -753,14 +856,14 @@ function unitTests() {
   }
   {
     const b = battle(member('nami', ['t_shards', 't_weak']),
-                     [member('luffy', ['t_weak']), member('kaido', ['t_weak'])]);
+                     [member('zoro', ['t_weak']), member('chopper', ['t_weak'])]);
     turn(b, mv('t_shards'), mv('t_weak'));
     const evs = turn(b, mv('t_weak'), sw(1));
     const hz = evs.find((e) => e.t === 'damage' && e.source === 'hazard');
-    const kai = b.sides[1].party[1];
-    const wantFrac = (1 / 8) * 2;   // FROST is super effective on BEAST
-    ok('ice shards scale with type effectiveness', hz && hz.amount === Math.floor(kai.maxHp * wantFrac),
-      `${hz?.amount} vs ${Math.floor(kai.maxHp * wantFrac)}`);
+    const inc = b.sides[1].party[1];
+    const wantFrac = (1 / 8) * 2;   // FROST is super effective on BEAST/MIND
+    ok('ice shards scale with type effectiveness', hz && hz.amount === Math.floor(inc.maxHp * wantFrac),
+      `${hz?.amount} vs ${Math.floor(inc.maxHp * wantFrac)}`);
   }
   {
     const b = battle(member('nami', ['t_barbs', 't_weak']),
@@ -785,6 +888,33 @@ function unitTests() {
     turn(b, mv('t_weak'), sw(1));
     turn(b, mv('t_weak'), mv('t_magnetrise'));
     ok('barbs stay put for a grounded fighter', b.sides[1].hazards.barbs === 1);
+  }
+  {
+    // Side- and field-wide effects are not the target's business: a hazard
+    // sweeper that happens to land the KO must still sweep.
+    const b = battle([member('nami', ['t_shards', 't_weak']), member('law', ['t_weak'])],
+                     [member('usopp', ['scrap_sweep', 't_weak']), member('franky', ['t_weak'])]);
+    turn(b, mv('t_shards'), mv('t_weak'));
+    eq('the sweeper’s own side is hazarded', b.sides[1].hazards.shards, 1);
+    setHp(b, active(b, 0), 1);
+    const evs = turn(b, mv('t_weak'), mv('scrap_sweep'));
+    ok('the sweep landed the KO', kinds(evs, 'faint').some((e) => e.side === 0), texts(evs).join(' | '));
+    eq('and the hazards still went', b.sides[1].hazards.shards, undefined);
+    ok('the clear is on the event stream',
+      evs.some((e) => e.t === 'hazard' && e.phase === 'clear' && e.side === 1), JSON.stringify(kinds(evs, 'hazard')));
+  }
+  {
+    // …and the same for weather set by a killing blow
+    const b = battle([member('nami', ['t_weak']), member('law', ['t_weak'])],
+                     member('crocodile', ['sand_tomb_test', 't_weak']));
+    MOVE_BY_ID.sand_tomb_test = { ...DEFAULTS, id: 'sand_tomb_test', name: 'Sand Burial', type: 'EARTH',
+      category: 'physical', power: 90, accuracy: null, effects: [{ kind: 'weather', value: 'sandstorm' }] };
+    MOVES.push(MOVE_BY_ID.sand_tomb_test);
+    b.sides[1].party[0].moves[0] = { id: 'sand_tomb_test', pp: 20, maxPp: 20, disabled: false };
+    setHp(b, active(b, 0), 1);
+    const evs = turn(b, mv('t_weak'), mv('sand_tomb_test'));
+    ok('the blow was lethal', kinds(evs, 'faint').some((e) => e.side === 0));
+    eq('the weather still came up', b.field.weather.id, 'sandstorm');
   }
   {
     const b = battle(member('jinbe', ['t_reflect', 't_weak']), member('mihawk', ['t_nuke']));
@@ -850,10 +980,10 @@ function unitTests() {
   section('endgame & edge cases');
   {
     // both actives fall to the same residual tick, and both are the last fighter
-    const b = battle(member('luffy', ['t_weak']), member('zoro', ['t_weak']));
-    b.sides[0].party[0].hp = 1; b.sides[0].party[0].status = 'psn';
-    b.sides[1].party[0].hp = 1; b.sides[1].party[0].status = 'psn';
-    turn(b, mv('t_weak'), mv('t_weak'));
+    const b = battle(member('luffy', ['t_buff']), member('zoro', ['t_buff']));
+    setHp(b, active(b, 0), 1); active(b, 0).status = 'psn';
+    setHp(b, active(b, 1), 1); active(b, 1).status = 'psn';
+    turn(b, mv('t_buff'), mv('t_buff'));
     ok('simultaneous residual KOs end the battle', b.ended);
     eq('and it is a draw', b.winner, 'draw');
     eq('with the right reason', b.endReason, 'knockout');
@@ -862,17 +992,19 @@ function unitTests() {
   }
   {
     // the last fighter dies to poison
-    const b = battle(member('luffy', ['t_weak']), member('zoro', ['t_weak']));
-    b.sides[1].party[0].hp = 1; b.sides[1].party[0].status = 'psn';
-    turn(b, mv('t_weak'), mv('t_weak'));
+    const b = battle(member('luffy', ['t_buff']), member('zoro', ['t_buff']));
+    setHp(b, active(b, 1), 1); active(b, 1).status = 'psn';
+    turn(b, mv('t_buff'), mv('t_buff'));
     ok('a residual KO ends the battle', b.ended);
     eq('the survivor wins', b.winner, 0);
     ok('clean event stream', validate(b).length === 0, validate(b).join('; '));
   }
   {
     // recoil kills the attacker after the defender is already down — both were the last
-    const b = battle(member('jinbe', ['t_recoilnuke']), member('nami', ['t_weak']));
-    b.sides[0].party[0].hp = 30;
+    const b = battle(member('jinbe', ['t_recoilnuke']), member('zoro', ['t_weak']));
+    outspeed(b, 0);
+    setHp(b, active(b, 0), 30);
+    setHp(b, active(b, 1), 60);
     turn(b, mv('t_recoilnuke'), mv('t_weak'));
     ok('both fall', b.sides[0].party[0].fainted && b.sides[1].party[0].fainted);
     eq('mutual destruction is a draw', b.winner, 'draw');
@@ -881,7 +1013,7 @@ function unitTests() {
   {
     // forced switch with nobody left
     const b = battle(member('luffy', ['t_weak']), member('zoro', ['t_nuke']));
-    b.sides[0].party[0].hp = 1;
+    setHp(b, active(b, 0), 1);
     turn(b, mv('t_weak'), mv('t_nuke'));
     ok('no replacement is requested when there is nobody left', b.request[0] === null && b.request[1] === null, JSON.stringify(b.request));
     ok('the battle is over', b.ended && b.winner === 1);
@@ -1017,13 +1149,13 @@ function randomTeam(rng, size, extended) {
 }
 
 function fuzz(n) {
-  section(`fuzz — ${n} AI-vs-AI battles`);
+  section(`fuzz — ${n} AI-vs-AI battles${FUZZ_FROM ? ` (from #${FUZZ_FROM})` : ''}`);
   const t0 = Date.now();
   const problems = new Map();
   let overruns = 0, drawn = 0, turns = 0, timeouts = 0, extendedRuns = 0;
   const winners = { 0: 0, 1: 0, draw: 0 };
 
-  for (let i = 0; i < n; i++) {
+  for (let i = FUZZ_FROM; i < FUZZ_FROM + n; i++) {
     const seed = (i * 2654435761 + 12345) >>> 0;
     const rng = new RNG(seed);
     const extended = i % 2 === 1;

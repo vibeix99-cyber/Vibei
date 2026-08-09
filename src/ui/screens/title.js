@@ -5,7 +5,7 @@
 import { audio } from '../../audio/audio.js';
 import * as Save from '../../meta/save.js';
 import { rankFor, activeTeam, unlockedArenas, isUnlocked } from '../../meta/progression.js';
-import { loadRun, roundName, getCup, gauntletLive } from '../../meta/runs.js';
+import { loadRun, roundName, getCup, gauntletLive, dateKey, dailyChallenge } from '../../meta/runs.js';
 import { allFighters } from '../../data/fighters.js';
 import { injectScreenCss, StageCast, orbitCamera, el, esc, toast, portrait } from './common.js';
 import { openHelp } from './help.js';
@@ -142,6 +142,18 @@ export class TitleScreen {
     if (gnt && gnt.status === 'active') {
       item('💀', 'Continue — Gauntlet', `Stage ${gnt.stage + 1} · ${gauntletLive(gnt).length} still standing`,
         () => this.app.router.go('gauntlet'), 'run');
+    }
+
+    // Today's challenge, only while it is still unplayed — a menu entry that
+    // disappears once it is done is worth more than one that never changes.
+    const today = dateKey();
+    if (!save.daily?.[today]) {
+      let sub = 'The same fight for everyone, everywhere. Resets at midnight.';
+      try {
+        const ch = dailyChallenge(today);
+        sub = `${ch.twist.name} — ${ch.twist.desc}`;
+      } catch { /* keep the generic line */ }
+      item('📅', 'Daily Challenge', sub, () => this.app.router.go('daily'));
     }
 
     item('🛠', 'Team Builder', save.teams.length

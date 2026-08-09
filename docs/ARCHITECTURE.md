@@ -94,7 +94,13 @@ SHADOW LIGHT BEAST MECHA MIND TOXIN SOUND SPIRIT VOID
   critStage: 0,                    // added to crit stage
   contact: true,
   flags: ['punch','sound','slice','bite','protect','reflectable','bypassSub',
-          'charge','recharge','snatch','pulse','bullet','wind','dance'],
+          'charge','recharge','snatch','pulse','bullet','wind','dance',
+          'pivot','pursuit','crush'],
+  // Honoured by engine.js: protect, bypassSub, sound (also bypasses a sub),
+  // charge, recharge, pivot (strike then switch out — emits `pivot`),
+  // pursuit (intercepts a switch at double power). `crush` doubles damage
+  // against a `minimized` target (damage.js); punch/slice/sound also feed
+  // ability hooks. The rest are markers with no behaviour attached yet.
   hits: [2,5] | null,              // multi-hit range
   drain: 0.5 | 0,                  // fraction of damage healed
   recoil: 0.33 | 0,                // fraction of damage taken
@@ -212,32 +218,52 @@ never repurpose an existing one.**
 
 | `t`              | payload                                                        |
 |------------------|----------------------------------------------------------------|
-| `battleStart`    | `{sides:[{name},{name}], arena}`                                 |
+| `battleStart`    | `{sides:[{name,tag,size},…], arena}`                             |
 | `turnStart`      | `{turn}`                                                         |
-| `switchIn`       | `{side, uid, speciesId, nickname, hp, maxHp, level, status}`     |
-| `switchOut`      | `{side, uid}`                                                    |
-| `moveUsed`       | `{side, uid, moveId, targetSide, targetUid}`                     |
+| `turnEnd`        | `{turn}` — after residuals, before replacements are asked for    |
+| `switchIn`       | `{side, uid, speciesId, nickname, hp, maxHp, level, status, types}` |
+| `switchOut`      | `{side, uid, reason:'choice'|'pivot'}`                           |
+| `moveUsed`       | `{side, uid, moveId, targetSide, targetUid, moveName, moveType, category, fx, pursuit}` |
 | `prepare`        | `{side, uid, moveId, text}`  (two-turn charge)                   |
-| `miss`           | `{side, uid, targetUid, reason:'accuracy'|'protect'|'immune'}`   |
+| `miss`           | `{side, uid, targetUid, reason:'accuracy'|'protect'|'immune'|'substitute'|'terrain'}` |
 | `damage`         | `{side, uid, amount, hpAfter, maxHp, eff, crit, hits, source}`   |
 | `heal`           | `{side, uid, amount, hpAfter, maxHp, source}`                    |
-| `boost`          | `{side, uid, stat, delta, stage, failed}`                        |
+| `boost`          | `{side, uid, stat, delta, stage, failed, source?}` — `stat:'all'` for a swap/clear |
 | `statusApply`    | `{side, uid, status}`                                            |
 | `statusCure`     | `{side, uid, status}`                                            |
-| `volatileStart`  | `{side, uid, id}`                                                |
+| `volatileStart`  | `{side, uid, id, turns}`                                         |
 | `volatileEnd`    | `{side, uid, id}`                                                |
-| `weather`        | `{id, phase:'start'|'upkeep'|'end'}`                             |
-| `terrain`        | `{id, phase}`                                                    |
-| `hazard`         | `{side, id, layers}`                                             |
-| `screen`         | `{side, id, turns, phase}`                                       |
+| `substitute`     | `{side, uid, phase:'start'|'hit'|'break', hp, maxHp, damage?}`   |
+| `perish`         | `{side, uid, count}` — the count *after* this turn's tick        |
+| `weather`        | `{id, phase:'start'|'upkeep'|'end', turns?}`                     |
+| `terrain`        | `{id, phase:'start'|'upkeep'|'end', turns?}`                     |
+| `trickRoom`      | `{turns}` — 0 means it just ended                                |
+| `hazard`         | `{side, id, layers, phase:'set'|'trigger'|'clear'}` (`id:'all'` on a full clear) |
+| `screen`         | `{side, id, turns, phase:'start'|'end'}`                         |
 | `ability`        | `{side, uid, abilityId}`                                         |
 | `itemUse`        | `{side, uid, itemId, consumed}`                                  |
+| `pivot`          | `{side, uid, moveId}` — see below                                |
 | `faint`          | `{side, uid}`                                                    |
-| `cannotMove`     | `{side, uid, reason:'par'|'slp'|'frz'|'flinch'|'confusion'|…}`   |
+| `cannotMove`     | `{side, uid, reason, moveId?}`                                   |
 | `message`        | `{text, style?:'plain'|'crit'|'super'|'weak'}`                   |
-| `battleEnd`      | `{winner:0|1|'draw'}`                                            |
+| `battleEnd`      | `{winner:0|1|'draw', reason:'knockout'|'timeout'|'forfeit'}`     |
 
 `eff` (effectiveness) ∈ `{0, 0.25, 0.5, 1, 2, 4}`.
+
+`cannotMove.reason` ∈ `'par' | 'slp' | 'frz' | 'flinch' | 'confusion' | 'recharge' |
+'taunt' | 'disable' | 'disabled' | 'encore' | 'torment' | 'imprison' | 'pp' | 'unknown'`.
+The volatile reasons are the ones that fire when a move was legal at choice time and
+became illegal mid-turn; no PP is spent in that case.
+
+**`pivot`** — emitted after a `pivot`-flagged move has fully resolved (damage, drain,
+recoil, secondary effects) when the user is still standing and has somewhere to go.
+The engine has already set `request[side] = 'switch'` and paused the turn; the rest of
+the action queue resumes once the replacement is submitted, and the replacement's
+`switchOut`/`switchIn` carry `reason: 'pivot'`. A blocked, missed or immune pivot, a
+trapped user, and a user with an empty bench all emit nothing and do not pause.
+
+Faints are emitted in the order fighters actually reached 0 HP — a defender is
+announced before the recoil that kills its attacker, not in side order.
 
 ---
 
