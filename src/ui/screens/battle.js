@@ -1,7 +1,12 @@
 // The battle screen: owns the battle loop, wires choices into the engine and
 // events into the BattleView.
+//
+// Screen furniture lives in the top-right corner cluster (turn + speed) so it
+// can never collide with the foe plate (top-left) or the bottom dock. The
+// hot-seat hand-off raises a full curtain: plates, text box and field chips all
+// live in other DOM subtrees, so `body[data-handoff]` hides them from theme.css.
 
-import { createBattle, submitChoices, publicView, legalSwitches } from '../../core/engine.js';
+import { createBattle, submitChoices, publicView } from '../../core/engine.js';
 import { chooseAction } from '../../core/ai.js';
 import { CommandMenu } from '../menus.js';
 import { audio } from '../../audio/audio.js';
@@ -11,27 +16,79 @@ import { ARENAS } from '../../data/arenas.js';
 import { RNG, seedFromString, randomSeedString } from '../../core/rng.js';
 
 const CSS = `
-.bhud-top{ position:absolute; left:50%; transform:translateX(-50%); top:auto; }
-.turnpill{
-  position:absolute; left:50%; transform:translateX(-50%); top:9vh;
-  padding:5px 16px; border-radius:99px; background:rgba(11,13,20,.82); border:2px solid #000;
-  font-weight:900; font-size:13px; letter-spacing:.18em; color:#f2c94c; text-transform:uppercase;
-  box-shadow:0 4px 14px rgba(0,0,0,.5);
+/* ---- top-right corner cluster: turn counter + speed ---- */
+.battlebar{
+  position:absolute; right:var(--edge); top:var(--edge-t); z-index:var(--z-plate);
+  display:flex; align-items:flex-start; justify-content:flex-end; gap:6px; flex-wrap:wrap;
+  max-width:calc(100% - var(--plate-w) - 2 * var(--edge) - 10px);
 }
+.turnpill{
+  display:flex; align-items:center; gap:7px;
+  padding:0 12px; height:32px; border-radius:99px;
+  background:rgba(11,13,20,.86); border:2px solid var(--edge-ink);
+  font-weight:900; font-size:12px; letter-spacing:.16em; color:var(--gold); text-transform:uppercase;
+  box-shadow:0 4px 14px rgba(0,0,0,.5); white-space:nowrap;
+}
+.turnpill .n{ font-family:var(--font-display); font-size:15px; letter-spacing:.02em; color:#fff; }
+.turnpill .dot{ width:7px; height:7px; border-radius:50%; background:var(--ok); box-shadow:0 0 6px var(--ok); }
+.turnpill.thinking .dot{ background:var(--warn); box-shadow:0 0 6px var(--warn); animation:lowHpBlink .7s infinite; }
+
 .speedbtn{
-  position:absolute; right:2.4vw; top:2.2vh; display:flex; gap:6px;
+  display:flex; align-items:stretch; gap:0; border-radius:10px; overflow:hidden;
+  border:2px solid var(--edge-ink); box-shadow:0 3px 0 var(--edge-ink);
+  background:rgba(11,13,20,.86); min-height:32px;
+}
+.speedbtn .lbl{
+  display:flex; align-items:center; padding:0 8px; font-size:9px; font-weight:900;
+  letter-spacing:.14em; color:#7b839c;
 }
 .speedbtn button{
-  padding:6px 12px; border-radius:9px; border:2px solid #000; background:#1b2033; color:#fff;
-  font-weight:800; font-size:13px; cursor:pointer; box-shadow:0 3px 0 #000;
+  min-width:38px; padding:0 9px; border:0; border-left:2px solid rgba(0,0,0,.6);
+  background:transparent; color:#c8cee0; font-family:var(--font-ui);
+  font-weight:900; font-size:13px; cursor:pointer;
 }
+.speedbtn button:hover{ background:rgba(255,255,255,.09); }
 .speedbtn button.on{ background:var(--gold); color:#16192a; }
-.handoff{
-  position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
-  gap:18px; background:rgba(4,6,12,.94); z-index:20; animation:fadeIn .2s both;
+.speedbtn button:focus-visible{ outline:2px solid var(--focus); outline-offset:-2px; }
+/* touch: the whole control gets a 44px band without making the bar huge */
+@media (pointer:coarse){ .speedbtn, .turnpill{ min-height:var(--tap); } .speedbtn button{ min-width:46px; } }
+/* narrow: the cluster wraps under itself rather than pushing off-screen */
+@media (max-width:560px){
+  .speedbtn .lbl{ display:none; }
+  .speedbtn button{ min-width:34px; padding:0 6px; }
+  .turnpill{ padding:0 10px; font-size:11px; letter-spacing:.1em; }
 }
-.handoff .who{ font-family:var(--font-display); font-size:clamp(26px,5vw,54px); color:#f2c94c; text-shadow:0 4px 0 #000; }
-.handoff .sub{ color:#c8cee0; font-size:16px; }
+
+/* ---- hot-seat hand-off curtain ---- */
+.handoff{
+  position:absolute; inset:0; z-index:var(--z-curtain);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
+  background:
+    radial-gradient(120% 90% at 50% 40%, #131a2e 0%, #070a12 62%, #04060c 100%);
+  animation:fadeIn .18s both; text-align:center; padding:var(--edge);
+}
+.handoff::before{
+  content:''; position:absolute; inset:0; opacity:.14; pointer-events:none;
+  background:repeating-linear-gradient(45deg,#f2c94c 0 2px,transparent 2px 22px);
+}
+.handoff .eye{ font-size:clamp(30px,7vw,54px); filter:grayscale(.2); }
+.handoff .who{
+  font-family:var(--font-display); font-size:clamp(22px,5.5vw,50px); color:var(--gold);
+  text-shadow:0 4px 0 #000; letter-spacing:.02em; line-height:1.05;
+}
+.handoff .sub{ color:#c8cee0; font-size:clamp(12px,1.6vw,16px); max-width:34ch; line-height:1.35; }
+.handoff .warn{
+  font-size:11px; font-weight:900; letter-spacing:.14em; color:#ff9c9c; text-transform:uppercase;
+}
+.handoff .btn{ min-width:min(280px,70vw); font-size:clamp(15px,2vw,20px); }
+@media (max-height:520px){ .handoff{ gap:8px; } .handoff .eye{ font-size:26px; } }
+
+/* ---- fade into the results screen ---- */
+.battle-fade{
+  position:fixed; inset:0; z-index:60; background:#04060c; opacity:0; pointer-events:none;
+  transition:opacity .55s ease;
+}
+.battle-fade.on{ opacity:1; }
 `;
 
 function randomTeam(rng, size = 3) {
@@ -56,6 +113,8 @@ export class BattleScreen {
     this.root = root;
     this.params = params;
     root.innerHTML = '';
+    document.body.dataset.cmd = 'none';
+    delete document.body.dataset.handoff;
 
     const seedStr = params.seed || randomSeedString();
     const seed = typeof seedStr === 'number' ? seedStr : seedFromString(String(seedStr));
@@ -89,26 +148,39 @@ export class BattleScreen {
     this.menu = new CommandMenu(root);
     this.menu.onChoice = (c) => this.onPlayerChoice(c);
 
+    /* ---- corner cluster ---- */
+    const bar = document.createElement('div');
+    bar.className = 'battlebar';
+
     this.turnPill = document.createElement('div');
     this.turnPill.className = 'turnpill';
-    this.turnPill.textContent = 'Turn 1';
-    root.appendChild(this.turnPill);
+    this.turnPill.innerHTML = `<span class="dot"></span>Turn <span class="n">1</span>`;
+    this.$turnN = this.turnPill.querySelector('.n');
+    bar.appendChild(this.turnPill);
 
     const sp = document.createElement('div');
     sp.className = 'speedbtn';
+    sp.setAttribute('role', 'group');
+    sp.setAttribute('aria-label', 'Battle speed');
+    sp.innerHTML = `<span class="lbl">SPD</span>`;
     [['1×', 1], ['2×', 2], ['4×', 4]].forEach(([lbl, v]) => {
       const b = document.createElement('button');
+      b.type = 'button';
       b.textContent = lbl;
+      b.title = `Battle speed ${lbl}`;
       b.className = (this.view.speed === v ? 'on' : '');
       b.onclick = () => {
         this.view.speed = v; this.app.settings.battleSpeed = v; this.app.saveSettings();
-        [...sp.children].forEach((c) => c.classList.remove('on')); b.classList.add('on');
+        [...sp.querySelectorAll('button')].forEach((c) => c.classList.remove('on'));
+        b.classList.add('on');
         this.app.textbox.cps = 110 * v;
         audio.sfx('ui_select');
       };
       sp.appendChild(b);
     });
-    root.appendChild(sp);
+    bar.appendChild(sp);
+    root.appendChild(bar);
+    this.bar = bar;
 
     this.app.textbox.show();
     this.app.textbox.cps = 110 * this.view.speed;
@@ -116,6 +188,17 @@ export class BattleScreen {
     this.pendingP0 = null;
     this.pendingP1 = null;
     this.handoffEl = null;
+    this.deviceHolder = 0;         // hot-seat: who is currently looking at the screen
+    this._ending = false;
+
+    // Escape/Backspace must reach the menu before main.js turns it into "quit",
+    // so this listener runs in the capture phase and stops what it consumes.
+    this._keyCapture = (e) => {
+      if (e.key !== 'Escape' && e.key !== 'Backspace') return;
+      if (this.handoffEl) { e.preventDefault(); e.stopImmediatePropagation(); return; }
+      if (this.menu?.back()) { e.preventDefault(); e.stopImmediatePropagation(); }
+    };
+    addEventListener('keydown', this._keyCapture, true);
 
     this.view.onIdle = () => this.onIdle();
     audio.startMusic('battle');
@@ -123,7 +206,11 @@ export class BattleScreen {
   }
 
   unmount() {
+    removeEventListener('keydown', this._keyCapture, true);
     this.menu?.clear();
+    this.handoffEl = null;
+    delete document.body.dataset.handoff;
+    document.body.dataset.cmd = 'none';
     this.root.innerHTML = '';
     this.app.textbox.clear();
     this.app.textbox.hide();
@@ -138,71 +225,113 @@ export class BattleScreen {
     if (b.ended) {
       if (!this._ending) {
         this._ending = true;
-        setTimeout(() => this.app.router.go('results', {
-          winner: b.winner, sides: b.sides.map((s) => s.name),
-          log: b.log, turns: b.turn, seed: b.seed, replayFrom: this.params
-        }), 1200);
+        this.menu?.clear();
+        this.toResults();
       }
       return;
     }
-    this.turnPill.textContent = `Turn ${b.turn + (b.request[0] === 'switch' || b.request[1] === 'switch' ? 0 : 1)}`;
+    const shown = b.turn + (b.request[0] === 'switch' || b.request[1] === 'switch' ? 0 : 1);
+    if (this.$turnN) this.$turnN.textContent = String(Math.max(1, shown));
     this.promptNext();
+  }
+
+  /** Fade the board out before handing over to the results screen. */
+  toResults() {
+    const b = this.battle;
+    const fade = document.createElement('div');
+    fade.className = 'battle-fade';
+    document.body.appendChild(fade);
+    requestAnimationFrame(() => fade.classList.add('on'));
+    setTimeout(() => {
+      this.app.router.go('results', {
+        winner: b.winner, sides: b.sides.map((s) => s.name),
+        log: b.log, turns: b.turn, seed: b.seed, replayFrom: this.params
+      });
+      requestAnimationFrame(() => {
+        fade.classList.remove('on');
+        setTimeout(() => fade.remove(), 700);
+      });
+    }, 900);
   }
 
   promptNext() {
     const b = this.battle;
     // forced switch takes priority
-    if (b.request[0] === 'switch') { this.askSwitch(0); return; }
+    if (b.request[0] === 'switch') { this.handTo(0, () => this.askSwitch(0)); return; }
     if (b.request[1] === 'switch') {
       const c = this.mode === 'ai' ? chooseAction(b, 1, this.aiLevel) : null;
       if (c) { this.submit([null, c]); return; }
-      this.askSwitch(1); return;
+      this.handTo(1, () => this.askSwitch(1)); return;
     }
-    if (this.pendingP0 === null) { this.ask(0); return; }
+    if (this.pendingP0 === null) { this.handTo(0, () => this.ask(0)); return; }
     if (this.pendingP1 === null) {
       if (this.mode === 'ai') { this.pendingP1 = chooseAction(b, 1, this.aiLevel); this.flush(); }
-      else this.handoffThen(() => this.ask(1));
+      else this.handTo(1, () => this.ask(1));
       return;
     }
     this.flush();
   }
 
-  handoffThen(fn) {
+  /** Hot-seat: raise the curtain if the device needs to change hands. */
+  handTo(side, fn) {
+    if (this.mode !== 'hotseat' || this.deviceHolder === side) { this.deviceHolder = side; fn(); return; }
+    this.handoffThen(side, () => { this.deviceHolder = side; fn(); });
+  }
+
+  handoffThen(side, fn) {
     if (this.handoffEl) return;
+    this.menu?.clear();
+    this.app.textbox.clear();
+    document.body.dataset.handoff = '1';
     const el = document.createElement('div');
     el.className = 'handoff';
-    el.innerHTML = `<div class="who">${this.battle.sides[1].name}</div>
-      <div class="sub">Pass the device. Tap when you're ready.</div>
-      <button class="btn primary">I'm ready</button>`;
-    el.querySelector('button').onclick = () => {
-      audio.sfx('ui_select'); el.remove(); this.handoffEl = null; fn();
+    const name = this.battle.sides[side].name;
+    el.innerHTML = `
+      <div class="eye">🙈</div>
+      <div class="warn">Screen hidden</div>
+      <div class="who">${name}'s turn</div>
+      <div class="sub">Pass the device to <b>${name}</b>. Everything on the board — plates, party and the last player's pick — is covered until they're ready.</div>
+      <button class="btn primary" type="button">${name} is ready</button>`;
+    const btn = el.querySelector('button');
+    btn.onclick = () => {
+      audio.sfx('ui_select');
+      el.remove();
+      this.handoffEl = null;
+      delete document.body.dataset.handoff;
+      fn();
     };
     this.root.appendChild(el);
     this.handoffEl = el;
+    setTimeout(() => { try { btn.focus({ preventScroll: true }); } catch { /* noop */ } }, 30);
   }
 
   ctxFor(side) {
     const s = this.battle.sides[side];
+    const other = this.battle.sides[1 - side];
     return {
       active: s.party[s.activeIndex],
-      foe: this.battle.sides[1 - side].party[this.battle.sides[1 - side].activeIndex],
+      foe: other.party[other.activeIndex],
       party: s.party, activeIndex: s.activeIndex, items: s.items,
+      // the move cards forecast damage with the real formula
+      field: this.battle.field, sideState: s, foeSideState: other,
       noRun: false, side
     };
   }
 
   ask(side) {
     this.waitingChoice = side;
+    const mon = this.battle.sides[side].party[this.battle.sides[side].activeIndex];
     this.app.textbox.clear();
-    this.app.textbox.say(`What will ${this.battle.sides[side].party[this.battle.sides[side].activeIndex].nickname} do?`, { hold: 0 });
+    this.app.textbox.say(`What will ${mon.nickname} do?`, { hold: 0 });
     this.menu.showRoot(this.ctxFor(side));
+    this.turnPill?.classList.remove('thinking');
   }
 
   askSwitch(side) {
     this.waitingChoice = side;
     this.forcedSwitch = true;
     this.app.textbox.clear();
-    this.app.textbox.say(`Choose your next fighter.`, { hold: 0 });
+    this.app.textbox.say('Choose your next fighter.', { hold: 0 });
     this.menu.showParty(this.ctxFor(side), true);
   }
 
@@ -210,6 +339,7 @@ export class BattleScreen {
     const side = this.waitingChoice;
     if (side === null || side === undefined) return;
     this.menu.clear();
+    this.turnPill?.classList.add('thinking');
     if (this.forcedSwitch) {
       this.forcedSwitch = false;
       const other = this.battle.request[1 - side] === 'switch'
@@ -218,6 +348,7 @@ export class BattleScreen {
       const arr = [null, null];
       arr[side] = choice;
       if (other) arr[1 - side] = other;
+      this.waitingChoice = null;
       this.submit(arr);
       return;
     }
@@ -246,7 +377,13 @@ export class BattleScreen {
   update() {}
 
   key(e) {
-    if (this.app.textbox.busy && (e.key === 'Enter' || e.key === ' ')) {
+    if (this.handoffEl) {
+      if (e.key === 'Enter' || e.key === ' ') { this.handoffEl.querySelector('button')?.click(); return true; }
+      return true;                                  // swallow everything behind the curtain
+    }
+    // Let the reader skip ahead, but only when the box is genuinely waiting on
+    // them — otherwise Enter belongs to the menu.
+    if (!this.menu?.items?.length && this.app.textbox.busy && (e.key === 'Enter' || e.key === ' ')) {
       if (this.app.textbox.advance()) return true;
     }
     return this.menu.key(e);

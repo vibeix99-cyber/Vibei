@@ -81,39 +81,61 @@ async function catchBeat(page, kinds, ms = 30000) {
 
 async function layoutAudit(page, vp, label) {
   const r = await page.evaluate(() => {
-    const out = { overflow: [], small: [], clipped: [] };
+    const out = { overflow: [], small: [], clipped: [], overlaps: [] };
     const W = window.innerWidth, H = window.innerHeight;
     const doc = document.documentElement;
     if (doc.scrollWidth > W + 1) out.overflow.push(`document scrollWidth ${doc.scrollWidth} > ${W}`);
-    const sel = '.cmdbtn, .movecard, .partyrow, .bagrow, .backbtn, .speedbtn button, .btn, .mvdetail-close';
-    for (const el of document.querySelectorAll(sel)) {
+    if (doc.scrollHeight > H + 1) out.overflow.push(`document scrollHeight ${doc.scrollHeight} > ${H}`);
+
+    const visible = (el) => {
+      const cs = getComputedStyle(el);
+      if (cs.visibility === 'hidden' || cs.display === 'none' || Number(cs.opacity) < 0.05) return false;
+      let p = el;
+      while (p && p !== document.body) {
+        const s = getComputedStyle(p);
+        if (s.visibility === 'hidden' || s.display === 'none' || Number(s.opacity) < 0.05) return false;
+        p = p.parentElement;
+      }
       const b = el.getBoundingClientRect();
-      if (b.width === 0 && b.height === 0) continue;
-      if (b.height < 44 - 0.5) out.small.push(`${el.className.split(' ')[0]}:${Math.round(b.height)}px "${(el.textContent || '').trim().slice(0, 18)}"`);
+      return b.width > 0 && b.height > 0;
+    };
+    const name = (el) => el.className.toString().split(' ').slice(0, 2).join('.');
+
+    const TAP = '.cmdbtn, .movecard:not(.empty), .listrow, .backbtn, .speedbtn button, .handoff .btn';
+    for (const el of document.querySelectorAll(TAP)) {
+      if (!visible(el)) continue;
+      const b = el.getBoundingClientRect();
+      if (b.height < 43.5) out.small.push(`${name(el)}:${Math.round(b.height)}px "${(el.textContent || '').trim().slice(0, 16)}"`);
       if (b.right > W + 1 || b.left < -1 || b.bottom > H + 1 || b.top < -1) {
-        out.overflow.push(`${el.className.split(' ')[0]} @${Math.round(b.left)},${Math.round(b.top)} ${Math.round(b.width)}x${Math.round(b.height)} vs ${W}x${H}`);
+        out.overflow.push(`${name(el)} @${Math.round(b.left)},${Math.round(b.top)} ${Math.round(b.width)}x${Math.round(b.height)} vs ${W}x${H}`);
       }
     }
-    for (const el of document.querySelectorAll('.textbox, .nameplate, .listpanel, .mvdetail')) {
+    for (const el of document.querySelectorAll('.textbox, .nameplate, .listpanel, .mvinfo, .mvsheet, .movegrid, .cmdroot, .battlebar, .fieldbanner')) {
+      if (!visible(el)) continue;
       const b = el.getBoundingClientRect();
-      if (b.width === 0) continue;
-      if (el.scrollHeight > el.clientHeight + 2) out.clipped.push(`${el.className.split(' ')[0]} content ${el.scrollHeight} > box ${el.clientHeight}`);
+      if (!el.classList.contains('listpanel') && el.scrollHeight > el.clientHeight + 2) {
+        out.clipped.push(`${name(el)} content ${el.scrollHeight} > box ${el.clientHeight}`);
+      }
       if (b.right > W + 1 || b.bottom > H + 1 || b.left < -1 || b.top < -1) {
-        out.overflow.push(`${el.className.split(' ')[0]} @${Math.round(b.left)},${Math.round(b.top)} ${Math.round(b.width)}x${Math.round(b.height)} vs ${W}x${H}`);
+        out.overflow.push(`${name(el)} @${Math.round(b.left)},${Math.round(b.top)} ${Math.round(b.width)}x${Math.round(b.height)} vs ${W}x${H}`);
       }
     }
-    // overlap: textbox vs menus vs plates
-    const box = (s) => { const e = document.querySelector(s); if (!e) return null; const b = e.getBoundingClientRect(); return b.width ? b : null; };
-    const pairs = [['.textbox', '.cmdroot'], ['.textbox', '.movegrid'], ['.textbox', '.nameplate.p0'], ['.nameplate.p0', '.cmdroot'], ['.nameplate.p1', '.speedbtn'], ['.turnpill', '.nameplate.p1']];
-    const overlaps = [];
-    for (const [a, b2] of pairs) {
-      const A2 = box(a), B2 = box(b2);
-      if (!A2 || !B2) continue;
-      const ox = Math.min(A2.right, B2.right) - Math.max(A2.left, B2.left);
-      const oy = Math.min(A2.bottom, B2.bottom) - Math.max(A2.top, B2.top);
-      if (ox > 2 && oy > 2) overlaps.push(`${a} ∩ ${b2} = ${Math.round(ox)}x${Math.round(oy)}`);
+    // no two pieces of chrome may share pixels
+    const boxes = [];
+    for (const s of ['.textbox', '.cmdroot', '.movegrid', '.mvinfo', '.nameplate.p0', '.nameplate.p1', '.battlebar', '.fieldbanner', '.listpanel']) {
+      const e = document.querySelector(s);
+      if (e && visible(e)) boxes.push([s, e.getBoundingClientRect()]);
     }
-    out.overlaps = overlaps;
+    const MODAL = new Set(['.listpanel']);
+    for (let i = 0; i < boxes.length; i++) {
+      for (let j = i + 1; j < boxes.length; j++) {
+        const [na, A2] = boxes[i], [nb, B2] = boxes[j];
+        if (MODAL.has(na) || MODAL.has(nb)) continue;   // modal panels are allowed to cover the board
+        const ox = Math.min(A2.right, B2.right) - Math.max(A2.left, B2.left);
+        const oy = Math.min(A2.bottom, B2.bottom) - Math.max(A2.top, B2.top);
+        if (ox > 2 && oy > 2) out.overlaps.push(`${na} ∩ ${nb} = ${Math.round(ox)}x${Math.round(oy)}`);
+      }
+    }
     return out;
   });
   const bad = [];
@@ -141,45 +163,67 @@ async function run(browser, vp) {
   await sleep(500);
   await shot('01-root');
 
-  // FIGHT → move grid
+  // keyboard: arrow-key focus must wrap and be visible
+  await page.keyboard.press('ArrowRight');
+  await page.keyboard.press('ArrowDown');
+  const kb = await page.evaluate(() => {
+    const m = window.__ARENA.app.router.current.menu;
+    const sel = document.querySelector('.cmdbtn.sel');
+    return { sel: m.sel, ring: !!document.querySelector('.cmdbtn.ring-sel'), label: sel?.textContent?.trim() };
+  });
+  if (kb.sel !== 3 || !kb.ring) problems.push(`[${vp.name}] keyboard grid nav wrong: ${JSON.stringify(kb)}`);
+  await shot('01b-keyboard', false);
+  await page.keyboard.press('ArrowUp'); await page.keyboard.press('ArrowLeft');
+
+  // FIGHT → move grid (real click on the real button)
   await page.click('.cmdbtn.fight');
   await sleep(350);
   await shot('02-moves');
 
-  // move detail affordance (hover on desktop, long-press on touch)
-  const cards = await page.$$('.movecard');
+  // move detail affordance (hover dwell on desktop, long-press on touch)
+  const cards = await page.$$('.movecard:not(.empty)');
   if (cards.length) {
     if (vp.w < 900) {
       const b = await cards[0].boundingBox();
-      await page.touchscreen.tap(b.x + b.width / 2, b.y + b.height / 2).catch(() => {});
-      await page.evaluate(() => document.querySelector('.movecard')?.dispatchEvent(new Event('longpress')));
-      await page.hover('.movecard').catch(() => {});
+      await page.touchscreen.tap(b.x + 4, b.y + 4).catch(() => {});
+      // real long-press: press, wait past the 420ms threshold, release
+      await page.mouse.move(b.x + b.width / 2, b.y + b.height / 2);
+      await cards[0].dispatchEvent('pointerdown', { pointerType: 'touch', isPrimary: true, bubbles: true });
+      await sleep(700);
     } else {
       await cards[0].hover();
+      await sleep(700);
     }
-    await sleep(700);
+    const open = await page.$('.mvsheet');
+    if (!open) problems.push(`[${vp.name}] move detail sheet never opened`);
     await shot('03-move-detail');
+    await cards[0].dispatchEvent('pointerup', { pointerType: 'touch', bubbles: true }).catch(() => {});
     await page.keyboard.press('Escape').catch(() => {});
-    await sleep(200);
+    await page.mouse.move(2, 2);
+    await sleep(250);
   }
 
-  // back → party
-  await page.evaluate(() => window.__ARENA.app.router.current.menu.showRoot(window.__ARENA.app.router.current.ctxFor(0)));
-  await sleep(200);
+  // Escape must go back to the root menu, not quit the battle
+  await page.keyboard.press('Escape');
+  await sleep(300);
+  const stillBattle = await page.evaluate(() => window.__ARENA.router.currentId);
+  if (stillBattle !== 'battle') problems.push(`[${vp.name}] Escape from move grid left the battle (→ ${stillBattle})`);
+
+  // → party
   await page.click('.cmdbtn.party');
   await sleep(350);
   await shot('04-party');
+  await page.keyboard.press('Escape');
+  await sleep(250);
 
-  // back → bag
-  await page.evaluate(() => window.__ARENA.app.router.current.menu.showRoot(window.__ARENA.app.router.current.ctxFor(0)));
-  await sleep(200);
+  // → bag
   await page.click('.cmdbtn.bag');
   await sleep(350);
   await shot('05-bag');
+  await page.keyboard.press('Escape');
+  await sleep(250);
 
-  // back to root, then play — catch a damage frame
-  await page.evaluate(() => window.__ARENA.app.router.current.menu.showRoot(window.__ARENA.app.router.current.ctxFor(0)));
-  await sleep(150);
+  // play — catch a damage frame
   await page.evaluate(() => {
     const A = window.__ARENA;
     const sc = A.battle.screen();

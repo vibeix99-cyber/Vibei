@@ -67,6 +67,23 @@ export function baseStatTotal(base) {
   return STAT_KEYS.reduce((a, k) => a + base[k], 0);
 }
 
+/** Clamp a boost stage into the legal -6..+6 window. */
+export function clampStage(n) { return Math.max(-6, Math.min(6, n)); }
+
+/**
+ * Speed used for turn order. Kept here so the engine and the AI can never
+ * disagree about who is faster.
+ *   opts.tailwind  – the fighter's side has Tailwind up
+ *   opts.itemHalve – held item halves Speed
+ */
+export function speedStat(mon, opts = {}) {
+  let spe = Math.floor(mon.stats.spe * boostMul(mon.boosts.spe || 0));
+  if (opts.itemHalve) spe = Math.floor(spe * 0.5);
+  if (mon.status === 'par' && !opts.ignoreParalysis) spe = Math.floor(spe * 0.5);
+  if (opts.tailwind) spe = Math.floor(spe * 2);
+  return Math.max(1, spe);
+}
+
 export const BOOST_TEXT = {
   1: 'rose!', 2: 'rose sharply!', 3: 'rose drastically!',
   '-1': 'fell!', '-2': 'harshly fell!', '-3': 'severely fell!'
@@ -75,4 +92,9 @@ export const BOOST_TEXT = {
 export function boostText(stat, delta) {
   const key = Math.max(-3, Math.min(3, delta));
   return `${STAT_NAME[stat]} ${BOOST_TEXT[String(key)] || 'changed.'}`;
+}
+
+/** "…won't go higher!" / "…won't go lower!" */
+export function boostCapText(stat, delta) {
+  return `${STAT_NAME[stat]} won't go ${delta > 0 ? 'higher' : 'lower'}!`;
 }

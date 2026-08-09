@@ -50,3 +50,131 @@ the module is written and standalone but nothing routes to it yet.
 - `ReplayRecorder(battle, meta)` / `loadReplay(code)` / `replayBattle(r)` — `GLA-REPLAY:`
   codes. A replay is just seed + teams + choices, so it stays short enough to paste.
 **Status:** open
+
+---
+
+### Game feel & pacing → announcements
+
+`src/render/feel.js` gained a few exports. Nothing existing changed shape.
+
+- `Ease` picked up `inOutCubic`, `inQuart`, `inQuint`, `outSextic`, `outSine`, `inSine`,
+  `pulse` (0→1→0), `recoil` (snap out, crawl back), `windup` (back, hold, explode),
+  `agony` (fast then very slow — the KO HP bar). Every previously existing easing is
+  unchanged.
+- `clamp01(t)`, `HIT_TIERS`, `tierFor(sev)` are new named exports.
+- `Feel.addShake(amp, opts)` now also accepts an object:
+  `{ dur, freq, dir:[x,y], kick }`. Passing a bare number still means the old `decay`
+  argument and is converted to a duration, so old call sites behave the same.
+- `Feel.screenFlash(color, alpha, ms)` — third argument is the whole life of the flash.
+- New: `Feel.impact(sev, {crit, eff, lethal, color, dir, speed})` fires a whole tuned
+  impact (freeze + shake + flash + zoom + slow-mo) and returns the tier it chose,
+  including `kb`, `drain` and `drainEase` so the caller can time knockback and HP drain
+  to the same profile. `Feel.planImpact(...)` returns the same numbers without firing.
+- New: `Feel.freezeFrames(n)`, `Feel.reset()`, `Spring.tune(k, d)`.
+- `Feel.reduced` is now a hard switch, not a scale factor: shake, flash, chroma,
+  slow-mo and hitstop are all **off**, and `shakeOffset()` returns zeroes.
+
+`BattleView` now runs **concurrent beats**. `view.beat` is gone; `view.beats` is an array.
+Each beat has `{ev, dur, t, fn, onEnd, ch, blocking}`. `view.busy` is unchanged.
+
+### Game feel → Camera
+**Need:** `CameraDirector.punch(amount, seconds)` should honour `amount`.
+**Why:** `update()` hardcodes `this.dolly = (this._dollyT / this._dollyMax) * 0.35`, so
+every punch is the same size. Impact tiers 2/3/4 pass 0.20/0.30/0.40 and all read identically.
+**Proposed API:** store `this._dollyAmount = amount` in `punch()` and multiply by it in `update()`.
+**Status:** open
+
+### Game feel → Camera
+**Need:** honour `ctx.reduced` in `onEvent`.
+**Why:** reduced motion has to mean *no* jarring motion, and camera cuts are the biggest
+remaining source of it. `BattleView` now passes `reduced: <bool>` in the ctx object
+alongside `big`/`crit`/`lethal`/`speed`.
+**Proposed API:** when `ctx.reduced`, stay on `standard`/`wide`, skip `punch()`, and
+lengthen blend times (or skip the shot change entirely).
+**Status:** open
+
+### Game feel → HUD
+**Need:** `floatNumber` should advance on the game clock, not `performance.now()`.
+**Why:** hitstop freezes the world by returning `dt = 0`, but the damage number keeps
+flying during the freeze, which is the one element that breaks the frozen frame.
+**Proposed API:** either accept an optional `dt` pump, or multiply progress by
+`window.__ARENA?.app?.stage?.feel?.hitstopMs > 0 ? 0 : 1`. Same applies to any CSS
+`transition`/`animation` used for impact feedback.
+**Status:** open
+
+### Game feel → Battle screen
+**Need:** cut the `setTimeout(..., 1200)` before `router.go('results', ...)` to ~250 ms.
+**Why:** the `battleEnd` beat already holds for 0.95 s and ends on the victory shot; the
+extra 1.2 s is the single longest stretch of dead air left in the game.
+**Status:** open
+
+### Game feel → Battle screen
+**Need:** in `ask()` / `askSwitch()`, don't `textbox.clear()` before the prompt.
+**Why:** the prompt is now raised the moment the last line of the turn has been read,
+so `clear()` can cut the tail of "It's super effective!". `say()` alone queues correctly.
+**Status:** open
+
+### Game feel → Scene
+**Need:** consume `feel.zoomPunch` (and optionally `feel.chroma`).
+**Why:** both are computed every frame and nothing reads them, so the impact zoom
+currently only exists via the camera director's fixed-size dolly.
+**Proposed API:** in `Stage.render`, nudge `camera.fov` by `-feel.zoomPunch * 40` before
+rendering (restore after), guarded by `feel.reduced`.
+**Status:** open
+
+---
+
+### Move design → Engine (`src/core/engine.js`)
+**Need:** three volatiles that already exist in `status.js` are never read by the engine —
+`taunt`, `encore`, `disable`. Moves for all three now ship in `src/data/moves.js`
+(`jeer`, `encore_command`, `shadow_stitch`); they apply the volatile and emit
+`volatileStart` correctly, but have no mechanical effect until the engine acts on them.
+**Why:** Taunt / Encore / Disable are the three levers that stop a metagame collapsing into
+"set up, then click the strongest button". Without them, stall and setup have no answer.
+**Proposed API** — all three fit inside the existing `canMove()` / `executeMove()` flow:
+- `taunt` (3 turns): in `executeMove`, if `user.volatiles.taunt` and
+  `move.category === 'status'`, emit `cannotMove {reason:'taunt'}` and return without
+  spending PP. Also filter these out of `legalMoves()` so the AI never picks one.
+- `encore` (3 turns): store the locked move at apply time
+  (`mon.volatiles.encore.data = { moveId: mon.lastMoveId }`); fail the move if
+  `lastMoveId` is null. In `runAction`, if `user.volatiles.encore.data.moveId` is set and
+  still has PP, substitute it for the chosen move id. Filter `legalMoves()` down to it too.
+- `disable` (4 turns): store `data = { moveId: mon.lastMoveId }` and set
+  `slot.disabled = true` on that move slot; clear it in `removeVolatile`. `legalMoves()`
+  already respects `slot.disabled`, so that is the whole change.
+**Status:** open
+
+### Move design → Engine (`src/core/engine.js`)
+**Need:** a pivot flag — a damaging move that switches the user out after it lands.
+**Why:** pivoting (U-turn / Volt Switch / Flip Turn) is the single biggest source of
+positional play in this genre. Momentum is currently one-directional: whoever switches
+eats a free hit, so switching is nearly always wrong. No pivot moves are shipped in
+`moves.js` because there is no way to express one; the type slots are held open for them.
+**Proposed API:** after damage and effects resolve in `executeMove`, if
+`move.flags.includes('pivot')` and the user is alive and has a legal switch, set
+`state.request[side] = 'switch'` and emit a `pivot` event
+(`{ t:'pivot', side, uid, moveId }`) so the UI can prompt. Data side is then just
+`flags: ['pivot']` on ~4 moves (one physical, one special, plus SEA/WIND flavour).
+**Status:** open
+
+### Move design → Engine (`src/core/engine.js`)
+**Need:** `applyEffects` skips *every* effect when the target faints, including ones
+that do not touch the target. Concretely `{ kind:'clearHazards' }` on `scrap_sweep`
+(a Rapid-Spin analogue) is dropped if the move KOs.
+**Why:** a hazard-removal attack that silently fails on a KO is a rules surprise, and
+hazard removal is one of only two ways off the board right now.
+**Proposed API:** in `applyEffects`, treat `clearHazards`, `trickRoom`, `weather`,
+`terrain` and `hazard` as side/field effects and run them regardless of
+`tgt.fainted` — i.e. move the `if (tgt.fainted …) continue;` guard so it only guards
+effects whose `target` is a combatant.
+**Status:** open
+
+### Move design → Audio (`src/audio/audio.js`)
+**Note (not a blocker):** every `fx.sfx` in `src/data/moves.js` uses a key that already
+exists in the `sfx()` switch — verified by `tools/movebudget.mjs`, which fails the build
+on an unknown key. Two families are carrying more weight than they were designed for and
+would benefit from variants if you have room: `warp` (now used by MIND *and* VOID — a
+darker `void` variant would separate them) and `sand` (used for every EARTH move,
+including the 130 BP ones — an `impact_earth` with more low end would help the heavy
+tier land). Purely cosmetic; no move needs changing either way.
+**Status:** open

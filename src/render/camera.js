@@ -1,135 +1,1138 @@
-// Cinematic camera director. Shots are named; the battle view requests a shot
-// and the director interpolates. Owned by the camera agent.
+// Cinematic camera director.
+//
+// The battle view hands every BattleEvent to `onEvent`; ALL shot selection
+// happens here. Four ideas hold the whole thing together:
+//
+//   1. Shots are *functions of time*, not fixed poses. A shot re-frames itself
+//      every frame from the live actors, so a 7 m Kaido and a 1.7 m Nami get
+//      genuinely different framings out of the same shot name.
+//   2. Framing is solved, not authored. `_fitDist` picks a distance from the
+//      lens and the content; `_aimAt` then rotates the camera so a chosen
+//      anchor — almost always a head — lands on an exact screen coordinate,
+//      and `_composeY` nudges that until nothing important is behind the HUD
+//      or cropped off the top.
+//   3. Every camera position lives on one side of the fighter-to-fighter axis
+//      (the 180° line), so side 0 is always screen-left and side 1 screen-right.
+//   4. A cut costs something. Small beats get a moving hold; hard cuts are
+//      saved for the moments that deserve them.
+//
+// Owned by the camera agent.
 
 import * as THREE from 'three';
 import { Ease } from './feel.js';
+import { getMove } from '../data/moves.js';
+import { getFighter } from '../data/fighters.js';
 
 const V = (x, y, z) => new THREE.Vector3(x, y, z);
+const DEG = Math.PI / 180;
+const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
+const lerp = (a, b, t) => a + (b - a) * t;
 
 /** Anchor positions on the stage. side 0 = near/left, side 1 = far/right. */
 export const SLOT_POS = [V(-4.6, 0, 1.2), V(4.6, 0, -1.2)];
 
+/* ------------------------------------------------------------------ */
+/* stage frame                                                         */
+/* ------------------------------------------------------------------ */
+// U runs along the fighter axis (side 0 → side 1). N is the perpendicular on
+// the *audience side* of that axis. Every shot is built in this frame, so the
+// 180° line is respected by construction instead of by checking numbers later.
+
+const MID = new THREE.Vector3().addVectors(SLOT_POS[0], SLOT_POS[1]).multiplyScalar(0.5);
+const AXIS = new THREE.Vector3().subVectors(SLOT_POS[1], SLOT_POS[0]);
+const SEP = AXIS.length();
+const U = AXIS.clone().normalize();
+const N = new THREE.Vector3(-U.z, 0, U.x);
+
+/** Signed distance from the 180° line. Positive = audience side. */
+export function sideOfAxis(p) { return (p.x - MID.x) * N.x + (p.z - MID.z) * N.z; }
+
+/* Screen-space safe area (viewport fractions). The HUD sits outside it:
+   p0 plate 0.03–0.27 x / 0.60–0.76 y, p1 plate 0.73–0.97 x / 0.03–0.18 y,
+   text box below 0.86 y, turn pill 0.09–0.12 y at centre. Heads go inside. */
+export const SAFE = { x0: 0.10, x1: 0.90, y0: 0.19, y1: 0.56 };
+
+/* Legacy static table. Kept so anything that imported SHOTS keeps working; the
+   director no longer uses it, and the mirrored shots have been moved back
+   across the axis so even the fallbacks keep screen sides consistent. */
 export const SHOTS = {
-  // Wide establishing shot — the default battle framing.
-  wide:     { pos: V(0, 5.0, 12.4), look: V(0, 1.9, 0), fov: 40 },
-  // Slightly closer, angled: reads both fighters but with depth.
-  standard: { pos: V(-1.2, 4.3, 10.4), look: V(0.2, 1.8, 0), fov: 42 },
-  // Over the player's shoulder when choosing.
-  command:  { pos: V(-5.6, 3.4, 7.4), look: V(1.8, 1.7, -0.6), fov: 46 },
-  // Attacker close-up before a big move.
-  heroA:    { pos: V(-6.6, 2.6, 4.6), look: V(-4.4, 1.7, 1.0), fov: 34 },
-  heroB:    { pos: V(6.6, 2.6, -4.6), look: V(4.4, 1.7, -1.0), fov: 34 },
-  // Impact framing on the defender.
-  impactA:  { pos: V(-2.0, 2.4, 6.2), look: V(-4.4, 1.6, 1.0), fov: 38 },
-  impactB:  { pos: V(2.0, 2.4, -6.2), look: V(4.4, 1.6, -1.0), fov: 38 },
-  // Low dramatic angle for finishers.
-  lowA:     { pos: V(-3.2, 0.8, 5.0), look: V(-4.4, 2.2, 0.8), fov: 30 },
-  lowB:     { pos: V(3.2, 0.8, -5.0), look: V(4.4, 2.2, -0.8), fov: 30 },
-  // Faint / KO.
-  koA:      { pos: V(-6.2, 1.4, 4.0), look: V(-4.6, 0.7, 1.0), fov: 36 },
-  koB:      { pos: V(6.2, 1.4, -4.0), look: V(4.6, 0.7, -1.0), fov: 36 },
-  // Switch-in entrance.
-  entryA:   { pos: V(-7.4, 2.2, 6.0), look: V(-4.6, 1.6, 1.0), fov: 40 },
-  entryB:   { pos: V(7.4, 2.2, -6.0), look: V(4.6, 1.6, -1.0), fov: 40 },
-  // Victory.
-  victory:  { pos: V(-3.0, 2.4, 6.4), look: V(-4.4, 1.8, 0.8), fov: 36 }
+  wide:     { pos: V(0, 5.6, 13.6),   look: V(0, 2.1, 0),      fov: 34 },
+  standard: { pos: V(-1.4, 4.4, 11.2), look: V(0.1, 1.9, 0),   fov: 40 },
+  command:  { pos: V(-6.3, 3.0, 4.4), look: V(2.4, 1.8, -0.6), fov: 30 },
+  heroA:    { pos: V(-1.9, 2.5, 5.2), look: V(-4.4, 1.7, 1.1), fov: 34 },
+  heroB:    { pos: V(1.9, 2.5, 3.0),  look: V(4.4, 1.7, -1.1), fov: 34 },
+  impactA:  { pos: V(5.6, 2.6, 2.0),  look: V(-4.4, 1.6, 1.1), fov: 26 },
+  impactB:  { pos: V(-5.6, 2.6, 4.4), look: V(4.4, 1.6, -1.1), fov: 26 },
+  lowA:     { pos: V(4.9, 1.0, 2.4),  look: V(-4.4, 2.0, 1.1), fov: 26 },
+  lowB:     { pos: V(-4.9, 1.0, 4.8), look: V(4.4, 2.0, -1.1), fov: 26 },
+  koA:      { pos: V(-6.4, 1.5, 3.0), look: V(-4.6, 0.6, 1.1), fov: 36 },
+  koB:      { pos: V(6.4, 1.5, 0.6),  look: V(4.6, 0.6, -1.1), fov: 36 },
+  entryA:   { pos: V(-1.2, 2.2, 6.4), look: V(-4.6, 1.6, 1.1), fov: 38 },
+  entryB:   { pos: V(3.0, 2.2, 4.0),  look: V(4.6, 1.6, -1.1), fov: 38 },
+  victory:  { pos: V(-1.9, 2.3, 5.4), look: V(-4.4, 1.8, 1.0), fov: 30 }
 };
+
+/* ------------------------------------------------------------------ */
+/* easing + noise                                                      */
+/* ------------------------------------------------------------------ */
+
+const E = {
+  ...Ease,
+  /** hard arrival — the impact snap. */
+  snap: (t) => 1 - Math.pow(1 - t, 6),
+  /** weight on both ends — pushes, establishing moves, the slow drift home. */
+  glide: (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2),
+  /** overshoot a hair, then sit down. After a KO. */
+  settle: (t) => (t >= 1 ? 1 : (1 - Math.pow(1 - t, 4)) + Math.sin(t * Math.PI) * Math.pow(1 - t, 2) * 0.15),
+  /** thrown, then caught — the whip pan. */
+  whip: (t) => 1 - Math.pow(1 - t, 3.2)
+};
+
+// Value noise, so handheld reads as a hand rather than as a sine wave.
+function hash1(i) { const s = Math.sin(i * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); }
+function vnoise(x) {
+  const i = Math.floor(x), f = x - i, u = f * f * (3 - 2 * f);
+  return (hash1(i) * (1 - u) + hash1(i + 1) * u) * 2 - 1;
+}
+function fbm(x) { return vnoise(x) * 0.62 + vnoise(x * 2.17 + 19.3) * 0.26 + vnoise(x * 4.41 + 71.9) * 0.12; }
+
+/* scratch — kept in disjoint pools so nested helpers cannot clobber each other */
+const _a = new THREE.Vector3(), _b = new THREE.Vector3();
+const _q0 = new THREE.Vector3(), _q1 = new THREE.Vector3(), _q2 = new THREE.Vector3(), _q3 = new THREE.Vector3();
+const _r0 = new THREE.Vector3(), _r1 = new THREE.Vector3(), _r2 = new THREE.Vector3(), _r3 = new THREE.Vector3();
+const _pv = new THREE.Vector3();
+const _box = new THREE.Box3(), _tbox = new THREE.Box3(), _m4 = new THREE.Matrix4();
+
+const pose = (pos, look, fov) => ({ pos, look, fov });
+
+/* ------------------------------------------------------------------ */
 
 export class CameraDirector {
   constructor(camera) {
     this.cam = camera;
-    this.cur = { pos: SHOTS.standard.pos.clone(), look: SHOTS.standard.look.clone(), fov: SHOTS.standard.fov };
-    this.target = { pos: SHOTS.standard.pos.clone(), look: SHOTS.standard.look.clone(), fov: SHOTS.standard.fov };
-    this.blend = 1;
-    this.blendTime = 1;
-    this.from = { pos: this.cur.pos.clone(), look: this.cur.look.clone(), fov: this.cur.fov };
-    this.ease = Ease.inOutQuad;
-    this.orbit = { amp: 0.12, speed: 0.11, t: Math.random() * 10 };
-    this.dolly = 0;
-    this.cam.userData.basePos = this.cam.position.clone();
+
+    /** Live description of each fighter, refreshed from the scene every frame. */
+    this.act = [0, 1].map((i) => ({
+      ref: null, sid: null, h: 1.8, scale: 1, measuredAt: -1,
+      home: SLOT_POS[i].clone(),
+      aim: SLOT_POS[i].clone(),
+      head: SLOT_POS[i].clone().setY(1.78),
+      headH: 1.78, topH: 1.95, halfW: 0.45, top: 1.95, down: false
+    }));
+    this.gScale = 1;
+
+    this.time = 0;
+    this.seq = 0;
+    this.marks = [];                 // shot-change log; read by tools/camerasheet.mjs
+    this.shot = null;
+    this.shotStart = 0;
+    this.shotAge = 0;
+    this.speed = 1;
+
+    this.cur = pose(new THREE.Vector3(), new THREE.Vector3(), 40);
+    this.from = pose(new THREE.Vector3(), new THREE.Vector3(), 40);
+    this.blend = 1; this.blendTime = 1; this.ease = E.glide; this.blendMode = 'arc';
+
+    this.dolly = 0; this._dollyT = 0; this._dollyMax = 1; this._dollyAmp = 0.35;
+    /** While >0 the director holds still so screen shake reads cleanly. */
     this.shakeHold = 0;
+    this._holdAt = null;
+    this.intensity = 0.12;
+    this.hpFrac = [1, 1];
+    this._kick = null;
+    this.attn = { p: new THREE.Vector3(), w: 0, k: 0 };
+    this.noiseT = Math.random() * 300;
+
+    this.pending = null;
+    this._turn = { first: null, prevFirst: null, movers: 0 };
+    this._lastDamage = null;
+    this._opening = false;
+    this._idle = 0;
+    this._commanded = false;
+    this._bindTries = 0;
+    this.view = null;
+
+    this._base = new THREE.Vector3();
+    this.cam.userData.basePos = this._base;
+
+    this._sample(0.016);
+    this._request(this._neutral(), { dur: 0, force: true });
+    this.update(0.0001);
   }
 
-  /** @param {string|object} shot  name in SHOTS, or {pos,look,fov} */
-  cut(shot) { this.go(shot, 0); }
+  /* ---------------------------------------------------------------- */
+  /* actor sampling — framing reads the scene, never a hard-coded 1.8 m */
+  /* ---------------------------------------------------------------- */
 
-  go(shot, seconds = 0.55, ease = Ease.inOutQuad) {
-    const s = typeof shot === 'string' ? SHOTS[shot] : shot;
-    if (!s) return;
-    this.from = { pos: this.cur.pos.clone(), look: this.cur.look.clone(), fov: this.cur.fov };
-    this.target = { pos: s.pos.clone(), look: s.look.clone(), fov: s.fov ?? 42 };
-    this.blend = seconds <= 0 ? 1 : 0;
-    this.blendTime = Math.max(0.0001, seconds);
-    this.ease = ease;
-    if (seconds <= 0) {
-      this.cur.pos.copy(this.target.pos); this.cur.look.copy(this.target.look); this.cur.fov = this.target.fov;
+  _bind() {
+    if (this.view) return this.view;
+    if (this._bindTries > 900) return null;
+    this._bindTries++;
+    try {
+      const v = globalThis.__ARENA?.app?.view;
+      if (v && v.dir === this) this.view = v;
+    } catch { /* not in a page, or not wired yet */ }
+    return this.view;
+  }
+
+  /** Measure the rig in authored space so a mid-spawn scale tween can't lie. */
+  _measure(s, a) {
+    s.h = a.rig?.heightM || getFighter(s.sid)?.model?.height || 1.8;
+    s.scale = a.rig?.scale || s.h / 1.8;
+    s.measuredAt = this.time;
+    let ok = false;
+    try {
+      a.root.updateWorldMatrix(true, true);
+      _m4.copy(a.root.matrixWorld).invert();
+      _box.makeEmpty();
+      a.root.traverse((o) => {
+        if (!o.isMesh || !o.geometry) return;
+        if (o === a.rig?.aura || o === a.rig?.blob) return;   // the aura balloons the box
+        if (!o.geometry.boundingBox) o.geometry.computeBoundingBox();
+        _tbox.copy(o.geometry.boundingBox).applyMatrix4(o.matrixWorld).applyMatrix4(_m4);
+        _box.union(_tbox);
+      });
+      ok = !_box.isEmpty() && isFinite(_box.max.y);
+    } catch { ok = false; }
+
+    if (!ok) { s.topH = s.h * 1.08; s.halfW = 0.45 * s.scale; return; }
+    const propTop = _box.max.y * s.scale;
+    const headTop = 2.02 * s.scale;
+    // Frame the head with real headroom and let a raised weapon crop, the way
+    // an operator would: only a third of the prop's reach is honoured.
+    s.topH = clamp(headTop + 0.34 * Math.max(0, propTop - headTop), s.h * 0.95, s.h * 1.5);
+    s.halfW = clamp(Math.max(_box.max.x - _box.min.x, _box.max.z - _box.min.z) * 0.5 * s.scale * 0.85,
+      0.35 * s.scale, 1.1 * s.h);
+  }
+
+  _sample(dt) {
+    const view = this._bind();
+    const k = 1 - Math.exp(-dt * 14);
+    for (let i = 0; i < 2; i++) {
+      const s = this.act[i];
+      const a = view?.actors?.[i] || null;
+      if (a && a.rig && a.root) {
+        if (s.ref !== a) { s.ref = a; s.sid = a.def?.id || s.sid; this._measure(s, a); }
+        else if (this.time - s.measuredAt > 1.0 && a.state === 'ready') this._measure(s, a);
+
+        // Track the fighter, but on a leash: knockback should tilt the frame,
+        // not drag the camera 6 m across the arena during a switch-in.
+        _a.copy(a.root.position).sub(s.home);
+        const L = _a.length();
+        if (L > 1.4) _a.multiplyScalar(1.4 / L);
+        s.aim.copy(s.home).addScaledVector(_a, 0.5);
+
+        let hh = s.h * 0.988;
+        if (a.rig.head) { a.rig.head.getWorldPosition(_b); hh = _b.y - a.root.position.y; }
+        s.headH += (clamp(hh, 0.18 * s.h, 1.4 * s.h) - s.headH) * k;
+        s.down = a.state === 'faint';
+      } else {
+        s.ref = null;
+        s.aim.copy(s.home);
+        s.headH += (s.h * 0.988 - s.headH) * k;
+        s.down = false;
+      }
+      s.head.copy(s.aim).setY(s.aim.y + s.headH);
+      s.top = Math.max(s.head.y + 0.16 * s.h, s.aim.y + s.topH);
     }
+    this.gScale = Math.max(this.act[0].scale, this.act[1].scale);
   }
 
-  /** Side-aware shot: 'hero' + side 0 => heroA */
-  shotFor(base, side) {
-    const key = base + (side === 0 ? 'A' : 'B');
-    return SHOTS[key] ? key : base;
+  /** Take heights off the event stream so framing is right on frame one. */
+  _noteSpecies(side, speciesId) {
+    const def = getFighter(speciesId);
+    if (!def) return;
+    const s = this.act[side];
+    s.sid = speciesId;
+    s.h = def.model?.height || 1.8;
+    s.scale = s.h / 1.8;
+    s.headH = s.h * 0.988;
+    s.topH = s.h * 1.12;
+    s.halfW = 0.45 * s.scale;
+    s.top = s.topH;
+    s.ref = null;
+    this.gScale = Math.max(this.act[0].scale, this.act[1].scale);
   }
 
-  /** Push the camera in briefly, e.g. on a critical hit. */
-  punch(amount = 0.35, seconds = 0.18) {
-    this.dolly = amount;
-    this._dollyT = seconds;
-    this._dollyMax = seconds;
+  /** 0 for a human-sized fight, 1 for a Kaido. Drives tilt and camera height. */
+  _giantK(tall) { return clamp((tall - 2.4) / 5.6, 0, 1); }
+
+  /* ---------------------------------------------------------------- */
+  /* framing maths                                                     */
+  /* ---------------------------------------------------------------- */
+
+  get aspect() { const a = this.cam.aspect; return (isFinite(a) && a > 0.2) ? a : 16 / 10; }
+
+  /** Distance at which a frame `frameH` tall and `frameW` wide fits in `fov`. */
+  _fitDist(frameH, frameW, fov) {
+    const tv = Math.tan(fov * DEG * 0.5);
+    const th = tv * this.aspect;
+    return Math.max(frameH / (2 * tv), frameW / (2 * th));
   }
 
   /**
-   * Called by BattleView for every battle event, before the event's own beat runs.
-   * ALL shot selection lives here — BattleView must not choose shots itself.
+   * A look-at point that puts `anchor` at screen fraction (sx, sy).
+   * This is the whole "never lose the player" mechanism: heads get *placed*,
+   * not hoped for. Solved by fixed-point iteration; converges in 2–3 steps.
+   */
+  _aimAt(pos, anchor, sx, sy, fov, out) {
+    const tv = Math.tan(fov * DEG * 0.5);
+    const th = tv * this.aspect;
+    const xt = (sx - 0.5) * 2 * th;
+    const yt = (0.5 - sy) * 2 * tv;
+    _q0.copy(anchor).sub(pos);
+    const dist = _q0.length() || 1;
+    _q0.multiplyScalar(1 / dist);
+    const M = Math.sqrt(1 + xt * xt + yt * yt);
+    _q1.copy(_q0);
+    for (let i = 0; i < 4; i++) {
+      _q2.set(-_q1.z, 0, _q1.x);
+      if (_q2.lengthSq() < 1e-8) _q2.set(1, 0, 0);
+      _q2.normalize();                        // camera right
+      _q3.crossVectors(_q2, _q1).normalize(); // camera up
+      _q1.copy(_q0).multiplyScalar(M).addScaledVector(_q2, -xt).addScaledVector(_q3, -yt).normalize();
+    }
+    return (out || new THREE.Vector3()).copy(pos).addScaledVector(_q1, dist);
+  }
+
+  /** Screen fraction (x, y) and forward depth (z) of a world point. */
+  _project(p, cp, look, fov, out) {
+    _r0.copy(look).sub(cp).normalize();
+    _r1.set(-_r0.z, 0, _r0.x); if (_r1.lengthSq() < 1e-8) _r1.set(1, 0, 0); _r1.normalize();
+    _r2.crossVectors(_r1, _r0).normalize();
+    _r3.copy(p).sub(cp);
+    const fwd = _r3.dot(_r0);
+    const tv = Math.tan(fov * DEG * 0.5), th = tv * this.aspect;
+    if (fwd <= 0.02) { out.set(_r3.dot(_r1) > 0 ? 9 : -9, 0.5, -1); return out; }
+    out.set(0.5 + (_r3.dot(_r1) / fwd) / (2 * th),
+      0.5 - (_r3.dot(_r2) / fwd) / (2 * tv), fwd);
+    return out;
+  }
+
+  /**
+   * Aim at `anchor`, then slide the tilt until every constraint is satisfied:
+   * `{v, min, max}` = this world point's screen y must stay in that band.
+   * Cheap, and it is what keeps a Kaido's head on screen while a Nami's head
+   * stays out of the bottom-left name plate in the same frame.
+   */
+  _composeY(p, anchor, sx, sy, fov, cons, out) {
+    let look = this._aimAt(p, anchor, sx, sy, fov, out);
+    for (let i = 0; i < 3; i++) {
+      let up = 0, down = 0;
+      for (const c of cons) {
+        this._project(c.v, p, look, fov, _pv);
+        if (_pv.z <= 0) continue;
+        if (c.min != null && _pv.y < c.min) up = Math.max(up, c.min - _pv.y);
+        if (c.max != null && _pv.y > c.max) down = Math.min(down, c.max - _pv.y);
+      }
+      const dy = up + down;
+      if (Math.abs(dy) < 0.004) break;
+      sy = clamp(sy + dy, 0.10, 0.56);
+      look = this._aimAt(p, anchor, sx, sy, fov, look);
+    }
+    return look;
+  }
+
+  /**
+   * Keep the camera out of trouble: above the deck, outside the fighters,
+   * inside the arena disc and — the one that matters — on the audience side
+   * of the 180° line.
+   */
+  _safe(p, minSide = 1.1) {
+    const f = sideOfAxis(p);
+    if (f < minSide) p.addScaledVector(N, minSide - f);
+
+    const floor = 0.60 + 0.12 * (this.gScale - 1);
+    if (p.y < floor) p.y = floor;
+
+    for (let i = 0; i < 2; i++) {
+      const s = this.act[i];
+      if (p.y > s.top * 0.95) continue;              // clearing them overhead is fine
+      const dx = p.x - s.aim.x, dz = p.z - s.aim.z;
+      const d = Math.hypot(dx, dz);
+      const r = s.halfW + 0.5 + 0.12 * s.scale;
+      if (d < r) {
+        if (d < 1e-4) p.x += r;
+        else { p.x += (dx / d) * (r - d); p.z += (dz / d) * (r - d); }
+      }
+    }
+
+    const rad = Math.hypot(p.x, p.z);
+    if (rad > 23) { p.x *= 23 / rad; p.z *= 23 / rad; }
+    const f2 = sideOfAxis(p);
+    if (f2 < minSide) p.addScaledVector(N, minSide - f2);
+    return p;
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* framing primitives                                                */
+  /* ---------------------------------------------------------------- */
+
+  /**
+   * Two-shot. `fillV` is the slice of frame height the *taller* fighter may
+   * occupy; `fillH` the slice of frame width the pair spans. Both heads are
+   * then composed into the safe band.
+   */
+  _twoShot(o) {
+    const a = this.act[0], b = this.act[1];
+    const tall = Math.max(a.top, b.top);
+    const wide = SEP + a.halfW + b.halfW;
+    const fov = o.fov;
+    const dist = this._fitDist(tall / o.fillV, wide / o.fillH, fov);
+    const gk = this._giantK(tall);
+
+    // Giants get a lower camera and a flatter tilt — look up at them, not down.
+    const elev = o.elev * (1 - 0.55 * gk) + (o.elev * 0.06);
+    const yaw = o.yaw || 0;
+    const pivotY = Math.min(tall * (o.pivot ?? 0.46), 1.05 + 0.26 * tall);
+
+    const p = new THREE.Vector3().copy(MID).setY(pivotY)
+      .addScaledVector(N, Math.cos(yaw) * Math.cos(elev) * dist)
+      .addScaledVector(U, Math.sin(yaw) * Math.cos(elev) * dist);
+    p.y += Math.sin(elev) * dist;
+    this._safe(p, o.minSide ?? 1.6);
+
+    const lead = a.top >= b.top ? a : b;
+    const anchor = _a.copy(a.head).add(b.head).multiplyScalar(0.5)
+      .setY((a.head.y + b.head.y) * 0.5);
+    const cons = [
+      { v: _b.copy(lead.aim).setY(lead.top), min: 0.045 },   // never crop the tallest head
+      { v: a.head, max: 0.555 }, { v: b.head, max: 0.555 }   // never hide a head behind a plate
+    ];
+    const look = this._composeY(p, anchor, o.sx ?? 0.5, o.sy ?? 0.36, fov, cons);
+    return pose(p, look, fov);
+  }
+
+  /**
+   * Over-the-shoulder / impact framing. `near` is the foreground fighter,
+   * the other is the subject. The lateral offset is *solved* so the near
+   * shoulder lands at `nearX` and the far head at `farX`, which is also what
+   * guarantees screen-left / screen-right stay correct at any body size.
+   */
+  _overShoulder(o) {
+    const near = this.act[o.near], far = this.act[1 - o.near];
+    _a.copy(far.aim).sub(near.aim); _a.y = 0;
+    const sep = Math.max(1.5, _a.length());
+    _a.multiplyScalar(1 / sep);                          // near → far, horizontal
+
+    const back = o.back * (0.55 + 0.45 * near.scale) + 0.35;
+    const dist = sep + back;
+    // Frame only as much of a giant as a hero shot needs: head and chest.
+    const shown = Math.min(far.top, 2.3 + 0.34 * far.top);
+    let fov = 2 * Math.atan((shown / o.fill) / (2 * dist)) / DEG;
+    fov = clamp(fov, o.fovMin ?? 20, o.fovMax ?? 52);
+
+    const tv = Math.tan(fov * DEG * 0.5), th = tv * this.aspect;
+    const wantDiff = (o.farX - o.nearX) * 2 * th;        // tan-space separation
+    const sign = o.near === 0 ? 1 : -1;
+    const lat = clamp(sign * wantDiff * back * dist / sep, 0.42, 8);
+
+    const p = new THREE.Vector3().copy(near.aim)
+      .addScaledVector(_a, -back)
+      .addScaledVector(N, lat);
+    // Eye line rides the near fighter's head, but a giant's eye line is not a
+    // camera height: cap it so we still look slightly up at the far fighter.
+    p.y = near.aim.y + Math.min(near.headH * (o.height ?? 0.95), 1.5 + 0.30 * near.headH) + (o.rise ?? 0);
+    this._safe(p, o.minSide ?? 0.5);
+
+    const cons = [
+      { v: _b.copy(far.aim).setY(far.top), min: 0.04 },
+      { v: far.head, min: SAFE.y0, max: 0.52 }
+    ];
+    const look = this._composeY(p, far.head, o.farX, o.sy ?? 0.37, fov, cons);
+    return pose(p, look, fov);
+  }
+
+  /**
+   * Single-fighter shot from the audience side. `yaw` swings toward the
+   * fighter's own facing so we get a three-quarter *front* while the 180°
+   * line — and therefore which way they face on screen — stays intact.
+   */
+  _single(o) {
+    const s = this.act[o.side];
+    const fov = o.fov;
+    const shown = Math.min(s.top, 2.3 + 0.34 * s.top);
+    const dist = this._fitDist(shown / o.fill, (s.halfW * 2 + 0.7) / (o.fillH ?? 0.45), fov);
+    const gk = this._giantK(s.top);
+    const yaw = (o.yaw ?? 0.55) * (o.side === 0 ? 1 : -1);
+    const elev = o.elev * (1 - 0.5 * gk);
+    const camY = Math.min(s.head.y * (o.pivot ?? 0.62), 1.35 + 0.30 * s.head.y);
+
+    const p = new THREE.Vector3().copy(s.aim).setY(camY)
+      .addScaledVector(N, Math.cos(yaw) * Math.cos(elev) * dist)
+      .addScaledVector(U, Math.sin(yaw) * Math.cos(elev) * dist);
+    p.y += Math.sin(elev) * dist;
+    this._safe(p, o.minSide ?? 1.2);
+
+    const sx = o.sx ?? (o.side === 0 ? 0.40 : 0.60);
+    const cons = [
+      { v: _b.copy(s.aim).setY(s.top), min: 0.04 },
+      { v: s.head, min: SAFE.y0, max: 0.52 }
+    ];
+    const look = this._composeY(p, s.head, sx, o.sy ?? 0.36, fov, cons);
+    return pose(p, look, fov);
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* the shot library                                                  */
+  /* ---------------------------------------------------------------- */
+
+  /** Establishing: long lens, whole arena, both fighters small in the world. */
+  _establish(push = 0) {
+    return {
+      id: 'establish', imp: 2, minHold: 1.0, subject: null,
+      live: (t) => this._twoShot({
+        fov: 33, fillV: 0.56, fillH: 0.54 + Math.min(t, 2.5) * 0.035 + push * 0.06,
+        elev: 0.30, yaw: -0.11, pivot: 0.46, sy: 0.34
+      })
+    };
+  }
+
+  /** The default two-shot: reads the board, still has depth. */
+  _neutral() {
+    return {
+      id: 'neutral', imp: 1, minHold: 0.8, subject: null,
+      live: () => this._twoShot({ fov: 40, fillV: 0.62, fillH: 0.74, elev: 0.215, yaw: -0.07, pivot: 0.46 })
+    };
+  }
+
+  /** Over the commanding player's shoulder while they pick. Long lens. */
+  _command(side = 0) {
+    return {
+      id: 'command', imp: 1, minHold: 1.2, subject: 1 - side,
+      live: (t) => this._overShoulder({
+        near: side, back: 1.5 + Math.min(t, 2.4) * 0.045,
+        fill: 0.40, fovMin: 22, fovMax: 40,
+        nearX: side === 0 ? 0.12 : 0.88, farX: side === 0 ? 0.62 : 0.38,
+        height: 1.0, rise: 0.28 * this.act[side].scale, sy: 0.38, minSide: 0.5
+      })
+    };
+  }
+
+  /** Attacker hero shot — three-quarter front, slow push through the beat. */
+  _hero(side, big) {
+    return {
+      id: big ? 'heroBig' : 'hero', imp: big ? 2 : 1, minHold: big ? 0.7 : 0.5, subject: side,
+      live: (t) => this._single({
+        side,
+        fov: big ? 30 : 36,
+        fill: (big ? 0.60 : 0.50) + Math.min(t, 0.9) * (big ? 0.09 : 0.05),   // the push
+        fillH: 0.32,
+        yaw: 0.62, elev: big ? 0.11 : 0.17,
+        sx: side === 0 ? 0.38 : 0.62,
+        sy: big ? 0.39 : 0.36,
+        pivot: big ? 0.72 : 0.64
+      })
+    };
+  }
+
+  /** Follows the attack across the stage, arriving as it lands. */
+  _track(side, dur) {
+    const from = side, to = 1 - side;
+    return {
+      id: 'track', imp: 2, minHold: 0.45, subject: null,
+      live: (t) => {
+        const e = E.inOutQuad(clamp(t / Math.max(0.18, dur), 0, 1));
+        const a = this.act[from], b = this.act[to];
+        const tall = Math.max(a.top, b.top);
+        const fov = 44;
+        const dist = this._fitDist(tall / 0.50, (SEP * 0.66 + a.halfW + b.halfW) / 0.82, fov);
+        const gk = this._giantK(tall);
+        const s0 = (a.aim.x - MID.x) * U.x + (a.aim.z - MID.z) * U.z;
+        const s1 = (b.aim.x - MID.x) * U.x + (b.aim.z - MID.z) * U.z;
+        const elev = (0.20 - e * 0.05) * (1 - 0.5 * gk);
+        const p = new THREE.Vector3().copy(MID)
+          .addScaledVector(U, lerp(s0, s1, e) * 0.5)
+          .setY(Math.min(tall * 0.45, 1.0 + 0.24 * tall))
+          .addScaledVector(N, Math.cos(elev) * dist);
+        p.y += Math.sin(elev) * dist;
+        this._safe(p, 1.6);
+        const anchor = _a.copy(a.head).lerp(b.head, e);
+        const sx = lerp(from === 0 ? 0.34 : 0.66, to === 0 ? 0.32 : 0.68, e);
+        const cons = [
+          { v: _b.copy(b.aim).setY(b.top), min: 0.04 },
+          { v: b.head, max: 0.54 }
+        ];
+        return pose(p, this._composeY(p, anchor, sx, 0.36, fov, cons), fov);
+      }
+    };
+  }
+
+  /** Impact: defender favoured, attacker held in the foreground, both legible. */
+  _impact(defSide, power) {
+    const atk = 1 - defSide;
+    return {
+      id: 'impact', imp: 2, minHold: 0.5, subject: defSide,
+      live: (t) => this._overShoulder({
+        near: atk, back: 1.35,
+        fill: clamp(0.42 + power * 0.10, 0.38, 0.58),
+        fovMin: 21, fovMax: 44,
+        nearX: atk === 0 ? 0.11 : 0.89,
+        farX: atk === 0 ? 0.62 : 0.38,
+        height: 0.98, rise: 0.12 - Math.min(t, 0.4) * 0.16,
+        sy: 0.37, minSide: 0.5
+      })
+    };
+  }
+
+  /** Low finisher: camera near the deck, long lens, the winner looms. */
+  _finisher(defSide) {
+    const atk = 1 - defSide;
+    return {
+      id: 'finisher', imp: 3, minHold: 1.25, subject: defSide,
+      live: (t) => this._overShoulder({
+        near: atk, back: 1.85,
+        fill: 0.50, fovMin: 20, fovMax: 38,
+        nearX: atk === 0 ? 0.10 : 0.90,
+        farX: atk === 0 ? 0.60 : 0.40,
+        height: 0.18, rise: 0.30 + Math.min(t, 1.4) * 0.10,
+        sy: 0.42, minSide: 0.5
+      })
+    };
+  }
+
+  /** KO: settle on the fallen fighter with the winner standing behind them. */
+  _ko(side) {
+    return {
+      id: 'ko', imp: 3, minHold: 0.9, subject: side,
+      live: (t) => {
+        const s = this.act[side], w = this.act[1 - side];
+        const fov = 36;
+        const dist = this._fitDist(Math.max(1.5, s.top) / 0.46, (s.halfW * 2 + 2.4) / 0.60, fov)
+          * (1 + Math.min(t, 1.6) * 0.05);                   // gentle drift out
+        // Sit behind the fallen fighter so the winner stays in the background.
+        const yaw = (side === 0 ? -1 : 1) * 0.42;
+        const elev = 0.23;
+        const p = new THREE.Vector3().copy(s.aim).setY(Math.min(Math.max(0.8, s.head.y * 0.7), 3.2))
+          .addScaledVector(N, Math.cos(yaw) * Math.cos(elev) * dist)
+          .addScaledVector(U, Math.sin(yaw) * Math.cos(elev) * dist);
+        p.y += Math.sin(elev) * dist;
+        this._safe(p, 1.2);
+        const anchor = _a.copy(s.aim).setY(Math.max(s.head.y, 0.5 * s.scale));
+        const cons = [{ v: _b.copy(w.aim).setY(w.head.y), min: 0.055, max: 0.54 }];
+        const sx = side === 0 ? 0.30 : 0.70;
+        return pose(p, this._composeY(p, anchor, sx, 0.46, fov, cons), fov);
+      }
+    };
+  }
+
+  /** Entrance: the fighter lands into a low three-quarter. */
+  _entrance(side) {
+    return {
+      id: 'entrance', imp: 2, minHold: 0.65, subject: side,
+      live: (t) => this._single({
+        side, fov: 38,
+        fill: 0.48 - Math.min(t, 0.8) * 0.04,
+        fillH: 0.36,
+        yaw: 0.50, elev: 0.09 + Math.min(t, 0.8) * 0.05,
+        sx: side === 0 ? 0.40 : 0.60, sy: 0.37, pivot: 0.68
+      })
+    };
+  }
+
+  /** Slow orbit for a two-turn charge — the one shot that keeps moving. */
+  _charge(side) {
+    return {
+      id: 'charge', imp: 2, minHold: 1.4, subject: side,
+      live: (t) => {
+        const s = this.act[side];
+        const fov = 34;
+        const shown = Math.min(s.top, 2.3 + 0.34 * s.top);
+        const dist = this._fitDist(shown / 0.56, (s.halfW * 2 + 1.0) / 0.38, fov);
+        const dirSign = side === 0 ? 1 : -1;
+        const gk = this._giantK(s.top);
+        const yaw = clamp((0.30 + t * 0.055) * dirSign + Math.sin(t * 0.5) * 0.10 * dirSign, -1.05, 1.05);
+        const elev = (0.16 + Math.sin(t * 0.42) * 0.025) * (1 - 0.5 * gk);
+        const p = new THREE.Vector3().copy(s.aim).setY(Math.min(s.head.y * 0.62, 1.35 + 0.30 * s.head.y))
+          .addScaledVector(N, Math.cos(yaw) * Math.cos(elev) * dist)
+          .addScaledVector(U, Math.sin(yaw) * Math.cos(elev) * dist);
+        p.y += Math.sin(elev) * dist;
+        this._safe(p, 1.2);
+        const cons = [{ v: _b.copy(s.aim).setY(s.top), min: 0.04 }, { v: s.head, max: 0.52 }];
+        return pose(p, this._composeY(p, s.head, side === 0 ? 0.40 : 0.60, 0.35, fov, cons), fov);
+      }
+    };
+  }
+
+  /** Victory: winner centred, slow push in. */
+  _victory(side) {
+    return {
+      id: 'victory', imp: 3, minHold: 2.0, subject: side,
+      live: (t) => this._single({
+        side, fov: 30,
+        fill: 0.48 + Math.min(t, 2.6) * 0.03,
+        fillH: 0.32,
+        yaw: 0.48, elev: 0.13,
+        sx: side === 0 ? 0.44 : 0.56, sy: 0.36, pivot: 0.68
+      })
+    };
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* shot discipline                                                   */
+  /* ---------------------------------------------------------------- */
+
+  get _minShot() { return 0.62 / clamp(this.speed, 1, 3); }
+
+  /**
+   * Ask for a shot. Denied — in favour of a moving hold — while the current
+   * shot is still young and the new beat is no more important than it.
+   */
+  _request(shot, o = {}) {
+    const cur = this.shot;
+    if (cur && !o.force) {
+      const minHold = Math.max(this._minShot, Math.min(cur.minHold, 1.4) / clamp(this.speed, 1, 3));
+      if (this.shotAge < minHold && shot.imp <= cur.imp) return false;
+      if (shot.id === cur.id && shot.imp < 3 && this.shotAge < 3.0) {
+        this.shot = shot;   // same shot: let it keep re-framing rather than restart
+        return false;
+      }
+    }
+
+    this.from.pos.copy(this.cur.pos);
+    this.from.look.copy(this.cur.look);
+    this.from.fov = this.cur.fov;
+
+    let dur = o.dur ?? 0.5;
+    if (dur > 0) dur = Math.max(0.11, dur / clamp(this.speed, 1, 2.5));
+    // A blend too short to read as a move but too long to read as a cut is the
+    // worst of both. Snap it to a real cut.
+    if (dur > 0 && dur < 0.10) dur = 0;
+
+    this.shot = shot;
+    this.shotStart = this.time;
+    this.shotAge = 0;
+    this.blend = dur <= 0 ? 1 : 0;
+    this.blendTime = Math.max(1e-4, dur);
+    this.ease = o.ease || E.glide;
+    this.blendMode = o.mode || 'arc';
+    this.seq++;
+    this.marks.push({ seq: this.seq, id: shot.id, t: +this.time.toFixed(3), cut: dur <= 0, imp: shot.imp });
+    if (this.marks.length > 500) this.marks.shift();
+    if (dur <= 0) {
+      const np = shot.live(0);
+      this.cur.pos.copy(np.pos); this.cur.look.copy(np.look); this.cur.fov = np.fov;
+    }
+    return true;
+  }
+
+  /** Bias the current shot toward a point without cutting. */
+  nudge(point, strength = 1) {
+    this.attn.p.copy(point);
+    this.attn.k = clamp(strength, 0, 1);
+    this.attn.w = Math.max(this.attn.w, 0.001);
+  }
+
+  /** Schedule a follow-up shot `delay` seconds from now. */
+  _later(delay, shot, o) { this.pending = { at: this.time + delay, shot, o }; }
+
+  /* ---------------------------------------------------------------- */
+  /* public knobs                                                      */
+  /* ---------------------------------------------------------------- */
+
+  cut(shot) { this.go(shot, 0); }
+
+  /** Legacy entry point: a name in SHOTS, a builder id, or a {pos,look,fov}. */
+  go(shot, seconds = 0.55, ease = E.glide) {
+    let s = null;
+    if (typeof shot === 'string') {
+      const side = /B$/.test(shot) ? 1 : 0;
+      const base = shot.replace(/[AB]$/, '');
+      const map = {
+        wide: () => this._establish(), establish: () => this._establish(),
+        standard: () => this._neutral(), neutral: () => this._neutral(),
+        command: () => this._command(0),
+        hero: () => this._hero(side, false),
+        low: () => this._finisher(1 - side),
+        impact: () => this._impact(side, 0.5),
+        finisher: () => this._finisher(side),
+        ko: () => this._ko(side),
+        entry: () => this._entrance(side), entrance: () => this._entrance(side),
+        charge: () => this._charge(side),
+        track: () => this._track(side, 0.5),
+        victory: () => this._victory(side)
+      };
+      if (map[base]) s = map[base]();
+      else if (SHOTS[shot]) {
+        const st = SHOTS[shot];
+        s = { id: shot, imp: 2, minHold: 0.6, subject: null,
+          live: () => pose(st.pos.clone(), st.look.clone(), st.fov ?? 42) };
+      }
+    } else if (shot && shot.pos) {
+      s = { id: shot.id || 'custom', imp: shot.imp ?? 2, minHold: 0.6, subject: null,
+        live: () => pose(shot.pos.clone(), shot.look.clone(), shot.fov ?? 42) };
+    }
+    if (!s) return false;
+    return this._request(s, { dur: seconds, ease, force: true });
+  }
+
+  shotFor(base, side) { return base + (side === 0 ? 'A' : 'B'); }
+
+  /** Push the camera in briefly, e.g. on a critical hit. */
+  punch(amount = 0.35, seconds = 0.18) {
+    this.dolly = amount; this._dollyAmp = amount;
+    this._dollyT = seconds; this._dollyMax = seconds;
+  }
+
+  /** Widen (or tighten) the lens hard and let it fall back. Stands in for blur. */
+  fovKick(amp = 8, seconds = 0.26) { this._kick = { t: 0, dur: seconds, amp }; }
+
+  /**
+   * Freeze deliberate camera movement while the screen is shaking, so the two
+   * do not fight each other. The only motion during a hold is the one move the
+   * director already committed to, and even that crawls.
+   */
+  holdShake(seconds = 0.26, delay = 0) {
+    if (delay > 0) this._holdAt = { at: this.time + delay, s: seconds };
+    else this.shakeHold = Math.max(this.shakeHold, seconds);
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* the event stream                                                  */
+  /* ---------------------------------------------------------------- */
+
+  /**
+   * Called by BattleView for every battle event, before the event's own beat.
    * @param {object} ev   the BattleEvent
-   * @param {object} ctx  { big:boolean, crit:boolean, lethal:boolean, speed:number }
+   * @param {object} ctx  { big, crit, lethal, speed }
    */
   onEvent(ev, ctx = {}) {
+    if (!ev) return;
+    this.speed = clamp(ctx.speed || 1, 0.25, 8);
+    this._idle = 0;
+    this._commanded = false;
     const side = ev.side ?? 0;
+
     switch (ev.t) {
-      case 'turnStart': this.go('standard', 0.5); break;
-      case 'switchIn':  this.go(this.shotFor('entry', side), 0.28, Ease.outQuart); break;
-      case 'moveUsed':  this.go(this.shotFor(ctx.big ? 'low' : 'hero', side), ctx.big ? 0.32 : 0.24, Ease.outQuart); break;
-      case 'damage':
-        this.go(this.shotFor('impact', side), 0.16, Ease.outQuint);
-        if (ctx.crit) this.punch(0.5, 0.22);
+      case 'battleStart': {
+        this._opening = true;
+        this.intensity = 0.14;
+        this.hpFrac = [1, 1];
+        this._turn = { first: null, prevFirst: null, movers: 0 };
+        this._lastDamage = null;
+        this.pending = null;
+        this.attn.w = 0; this.attn.k = 0;
+        this._request(this._establish(0), { dur: 0, force: true });
         break;
-      case 'faint':     this.go(this.shotFor('ko', side), 0.3, Ease.outQuart); break;
-      case 'battleEnd': this.go('victory', 0.9, Ease.inOutQuad); break;
+      }
+
+      case 'switchIn': {
+        this._noteSpecies(side, ev.speciesId);
+        if (ev.maxHp) this.hpFrac[side] = ev.hp / ev.maxHp;
+        // The opening sends both leads out back to back; two entrance cuts in
+        // 200 ms is a strobe, so the opening stays on one slowly opening wide.
+        if (this._opening) { this._request(this._establish(1), { dur: 1.2, ease: E.glide, force: true }); break; }
+        this._request(this._entrance(side), { dur: 0, ease: E.snap });
+        break;
+      }
+
+      case 'switchOut':
+        this._request(this._neutral(), { dur: 0.55, ease: E.glide });
+        break;
+
+      case 'turnStart': {
+        this._opening = false;
+        this._turn.prevFirst = this._turn.first;
+        this._turn.first = null;
+        this._turn.movers = 0;
+        // No cut here. The command framing we are already sitting in is the
+        // right place to open a turn from; only a stale shot needs rescuing.
+        if (this.shot && (this.shot.id === 'ko' || this.shot.id === 'finisher' || this.shot.id === 'victory')) {
+          this._request(this._neutral(), { dur: 0.85, ease: E.glide, force: true });
+        }
+        break;
+      }
+
+      case 'moveUsed': {
+        const mv = getMove(ev.moveId);
+        const big = !!ctx.big;
+        const prio = mv?.priority || 0;
+        const first = this._turn.movers === 0;
+        this._turn.movers++;
+        if (first) this._turn.first = side;
+
+        // Priority reversal: someone cut in ahead of the expected order.
+        const reversed = first && this._turn.prevFirst !== null && this._turn.prevFirst !== side;
+        if (first && prio > 0 && (reversed || prio >= 4)) {
+          this.fovKick(11, 0.32);
+          this._request(this._hero(side, true), { dur: 0.24, ease: E.whip, mode: 'arc', force: true });
+          this.intensity = Math.min(1, this.intensity + 0.25);
+          break;
+        }
+
+        if (mv?.category === 'status') {
+          // Nothing is going to land. Lean toward the user, do not cut.
+          this.nudge(this.act[side].head, 0.8);
+          this._request(this._neutral(), { dur: 0.7, ease: E.glide });
+          break;
+        }
+
+        const shape = (ev.fx || mv?.fx || {}).shape;
+        const ranged = shape === 'beam' || shape === 'arc' || shape === 'burst';
+        if (ranged) this._request(this._track(side, big ? 0.60 : 0.42), { dur: big ? 0.34 : 0.26, ease: E.glide });
+        else if (big) this._request(this._hero(side, true), { dur: 0.42, ease: E.glide });
+        else this._request(this._hero(side, false), { dur: 0.30, ease: E.outQuart });
+        break;
+      }
+
+      case 'prepare':
+        this._request(this._charge(side), { dur: 0.9, ease: E.glide });
+        break;
+
+      case 'damage': {
+        const maxHp = Math.max(1, ev.maxHp || 1);
+        const frac = (ev.amount || 0) / maxHp;
+        this.hpFrac[side] = (ev.hpAfter || 0) / maxHp;
+        const power = clamp(frac * 2.4 + (ev.crit ? 0.35 : 0) + (ev.eff > 1 ? 0.25 : 0), 0, 1);
+        this.intensity = clamp(Math.max(this.intensity, 0.25 + power * 0.7), 0, 1);
+        this._lastDamage = { side, eff: ev.eff ?? 1, crit: !!ev.crit, lethal: ev.hpAfter === 0, power };
+
+        if (ev.hpAfter === 0) {
+          // The blow that ends it gets the low angle, and gets to keep it.
+          this._request(this._finisher(side), { dur: 0.16, ease: E.snap, mode: 'linear', force: true });
+          this.punch(0.5, 0.30);
+          this.holdShake(0.42, 0.16);
+        } else {
+          const dur = power > 0.5 ? 0 : 0.14;
+          this._request(this._impact(side, power), { dur, ease: E.snap, mode: 'linear' });
+          if (ev.crit) { this.punch(0.55, 0.24); this.fovKick(-4, 0.22); }
+          else if (power > 0.35) this.punch(0.3, 0.2);
+          this.holdShake(0.16 + power * 0.24, dur);
+        }
+        break;
+      }
+
+      case 'heal': case 'itemUse': case 'ability': case 'statusApply':
+      case 'statusCure': case 'volatileStart': case 'boost': {
+        if (ev.failed) break;
+        // Small beats never earn a cut. Lean the frame toward whoever it is.
+        this.nudge(this.act[side].head, 0.9);
+        const stale = !this.shot || this.shot.id === 'ko' || this.shot.id === 'finisher' || this.shot.id === 'charge';
+        if (stale) this._request(this._neutral(), { dur: 0.7, ease: E.glide });
+        break;
+      }
+
+      case 'cannotMove':
+        this.nudge(this.act[side].head, 1);
+        this._request(this._hero(side, false), { dur: 0.45, ease: E.glide });
+        break;
+
+      case 'miss':
+        // `ev.side` is the attacker here; the dodge belongs to the other one.
+        this.nudge(this.act[1 - side].head, 1);
+        this._request(this._neutral(), { dur: 0.36, ease: E.outQuart });
+        break;
+
+      case 'weather': case 'terrain':
+        if (ev.phase === 'start') this._request(this._establish(0), { dur: 0.9, ease: E.glide });
+        break;
+
+      case 'faint': {
+        const d = this._lastDamage;
+        const superKo = d && d.side === side && (d.eff > 1 || d.crit);
+        const last = this._lastFighterDown();
+
+        if (superKo) {
+          // Hold the low angle. A super-effective KO is the shot of the match.
+          this._request(this._finisher(side), { dur: 0.18, ease: E.snap, force: true });
+          this.holdShake(0.5);
+          if (last) this._later(1.15, this._establish(0), { dur: 1.3, ease: E.glide, force: true });
+          else this._later(1.05, this._ko(side), { dur: 0.7, ease: E.settle, force: true });
+        } else if (last) {
+          // Board state matters more than the body: pull back and show it.
+          this._request(this._ko(side), { dur: 0.24, ease: E.snap, force: true });
+          this._later(0.7, this._establish(0), { dur: 1.25, ease: E.glide, force: true });
+        } else {
+          this._request(this._ko(side), { dur: 0.30, ease: E.settle, force: true });
+        }
+        this.intensity = clamp(this.intensity + 0.3, 0, 1);
+        break;
+      }
+
+      case 'battleEnd': {
+        const w = ev.winner === 'draw' ? 0 : ev.winner;
+        this.pending = null;
+        this._request(this._establish(0), { dur: 0.6, ease: E.glide, force: true });
+        this._later(0.9, this._victory(w), { dur: 1.5, ease: E.glide, force: true });
+        this.intensity = 0.2;
+        break;
+      }
+
       default: break;
     }
   }
 
+  /** Is a battleEnd queued behind this faint? (needs the view binding) */
+  _lastFighterDown() {
+    const q = this._bind()?.queue;
+    if (!q || !q.length) return false;
+    for (let i = 0; i < Math.min(q.length, 16); i++) if (q[i].t === 'battleEnd') return true;
+    return false;
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* per-frame                                                         */
+  /* ---------------------------------------------------------------- */
+
+  _lerpPose(from, to, e, mode, out) {
+    if (mode === 'linear') {
+      out.pos.lerpVectors(from.pos, to.pos, e);
+    } else {
+      // Blend *around* the stage instead of straight through it: a dolly that
+      // cuts across the arena centre reads as a mistake.
+      const a0 = Math.atan2(from.pos.z - MID.z, from.pos.x - MID.x);
+      const a1 = Math.atan2(to.pos.z - MID.z, to.pos.x - MID.x);
+      let da = a1 - a0;
+      while (da > Math.PI) da -= Math.PI * 2;
+      while (da < -Math.PI) da += Math.PI * 2;
+      const r0 = Math.hypot(from.pos.x - MID.x, from.pos.z - MID.z);
+      const r1 = Math.hypot(to.pos.x - MID.x, to.pos.z - MID.z);
+      const ang = a0 + da * e, r = lerp(r0, r1, e);
+      out.pos.set(MID.x + Math.cos(ang) * r, lerp(from.pos.y, to.pos.y, e), MID.z + Math.sin(ang) * r);
+    }
+    out.look.lerpVectors(from.look, to.look, e);
+    out.fov = lerp(from.fov, to.fov, e);
+    return out;
+  }
+
   update(dt) {
+    if (!isFinite(dt) || dt < 0) dt = 0;
+    dt = Math.min(dt, 0.1);
+    this.time += dt;
+    this.shotAge += dt;
+    this._sample(Math.max(dt, 1e-4));
+
+    if (this._holdAt && this.time >= this._holdAt.at) {
+      this.shakeHold = Math.max(this.shakeHold, this._holdAt.s);
+      this._holdAt = null;
+    }
+    if (this.shakeHold > 0) this.shakeHold = Math.max(0, this.shakeHold - dt);
+
+    if (this.pending && this.time >= this.pending.at) {
+      const p = this.pending; this.pending = null;
+      this._request(p.shot, p.o);
+    }
+
+    // Drift into the command framing while the battle waits for a choice.
+    const v = this._bind();
+    const waiting = v ? (!v.beat && v.queue.length === 0) : false;
+    if (waiting && !this._opening) {
+      this._idle += dt;
+      if (this._idle > 0.40 && !this._commanded) {
+        this._commanded = true;
+        let cs = 0;
+        try { const w = globalThis.__ARENA?.battle?.waitingFor?.(); if (w === 0 || w === 1) cs = w; } catch { /* ignore */ }
+        this._request(this._command(cs), { dur: 1.15, ease: E.glide });
+      }
+    } else if (!waiting) { this._idle = 0; this._commanded = false; }
+
+    // Intensity relaxes toward a floor set by how close the battle is.
+    const floor = 0.10 + (1 - Math.min(this.hpFrac[0], this.hpFrac[1])) * 0.28;
+    this.intensity += (floor - this.intensity) * (1 - Math.exp(-dt * 0.9));
+    this.intensity = clamp(this.intensity, 0, 1);
+
+    // ---- evaluate the live shot, then blend toward it ----
+    const tgt = this.shot ? this.shot.live(this.shotAge) : this.cur;
     if (this.blend < 1) {
-      this.blend = Math.min(1, this.blend + dt / this.blendTime);
-      const e = this.ease(this.blend);
-      this.cur.pos.lerpVectors(this.from.pos, this.target.pos, e);
-      this.cur.look.lerpVectors(this.from.look, this.target.look, e);
-      this.cur.fov = this.from.fov + (this.target.fov - this.from.fov) * e;
+      const rate = this.shakeHold > 0 ? 0.2 : 1;   // shake owns the frame
+      this.blend = Math.min(1, this.blend + (dt * rate) / this.blendTime);
+      this._lerpPose(this.from, tgt, this.ease(this.blend), this.blendMode, this.cur);
+    } else if (tgt !== this.cur) {
+      this.cur.pos.copy(tgt.pos); this.cur.look.copy(tgt.look); this.cur.fov = tgt.fov;
+    }
+
+    // ---- moving hold: bias the look toward whatever just happened ----
+    if (this.attn.w > 0) {
+      this.attn.w = Math.min(1, this.attn.w + dt * 3.4);
+      this.cur.look.lerp(this.attn.p, 0.22 * this.attn.w * this.attn.k);
+      this.attn.k = Math.max(0, this.attn.k - dt * 0.85);
+      if (this.attn.k <= 0) this.attn.w = 0;
     }
 
     if (this._dollyT > 0) {
       this._dollyT = Math.max(0, this._dollyT - dt);
-      this.dolly = (this._dollyT / this._dollyMax) * 0.35;
+      const p = this._dollyT / this._dollyMax;
+      this.dolly = this._dollyAmp * p * p;
     } else this.dolly = 0;
 
-    // Gentle life so static frames never feel like a screenshot.
-    this.orbit.t += dt * this.orbit.speed;
-    const ox = Math.sin(this.orbit.t) * this.orbit.amp;
-    const oy = Math.cos(this.orbit.t * 0.73) * this.orbit.amp * 0.4;
+    let fov = this.cur.fov;
+    if (this._kick) {
+      this._kick.t += dt;
+      const p = this._kick.t / this._kick.dur;
+      if (p >= 1) this._kick = null;
+      else fov += this._kick.amp * Math.sin(p * Math.PI) * (1 - p * 0.35);
+    }
+    fov = clamp(fov, 12, 70);
 
-    const dir = this.cur.look.clone().sub(this.cur.pos).normalize();
-    const pos = this.cur.pos.clone().addScaledVector(dir, this.dolly * 2.2);
-    pos.x += ox; pos.y += oy;
+    // ---- assemble ----
+    _a.copy(this.cur.look).sub(this.cur.pos);
+    const dist = Math.max(0.4, _a.length());
+    _a.multiplyScalar(1 / dist);
+    const p = _b.copy(this.cur.pos).addScaledVector(_a, this.dolly * Math.min(3.2, dist * 0.22));
 
-    this.cam.userData.basePos = pos;
-    this.cam.position.copy(pos);
+    // ---- handheld: scales with battle intensity, silent while shaking ----
+    if (this.shakeHold <= 0) {
+      this.noiseT += dt * (0.55 + this.intensity * 1.5);
+      const amp = dist * (0.0016 + this.intensity * 0.0050);
+      _q0.set(-_a.z, 0, _a.x).normalize();
+      _q1.crossVectors(_q0, _a).normalize();
+      p.addScaledVector(_q0, fbm(this.noiseT) * amp * 1.15);
+      p.addScaledVector(_q1, fbm(this.noiseT + 41.3) * amp);
+      p.addScaledVector(_a, fbm(this.noiseT + 88.1) * amp * 0.5);
+    }
+
+    this._safe(p, 0.42);
+
+    this._base.copy(p);
+    this.cam.userData.basePos = this._base;
+    this.cam.position.copy(p);
     this.cam.lookAt(this.cur.look);
-    if (Math.abs(this.cam.fov - this.cur.fov) > 0.01) {
-      this.cam.fov = this.cur.fov;
+    if (Math.abs(this.cam.fov - fov) > 0.005) {
+      this.cam.fov = fov;
       this.cam.updateProjectionMatrix();
     }
+    this._fovOut = fov;
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* diagnostics — used by tools/camerasheet.mjs                       */
+  /* ---------------------------------------------------------------- */
+
+  diag() {
+    const fov = this._fovOut ?? this.cam.fov;
+    const cp = this.cam.position;
+    const out = {
+      seq: this.seq, shot: this.shot?.id || null, age: +this.shotAge.toFixed(2), fov: +fov.toFixed(1),
+      camY: +cp.y.toFixed(2), side: +sideOfAxis(cp).toFixed(2),
+      intensity: +this.intensity.toFixed(2), shakeHold: +this.shakeHold.toFixed(2),
+      heights: [+this.act[0].h.toFixed(2), +this.act[1].h.toFixed(2)],
+      heads: [], tops: [], feet: [], problems: []
+    };
+    const t = new THREE.Vector3();
+    for (let i = 0; i < 2; i++) {
+      const s = this.act[i];
+      const h = this._project(s.head, cp, this.cur.look, fov, new THREE.Vector3());
+      const tp = this._project(t.copy(s.aim).setY(s.top), cp, this.cur.look, fov, new THREE.Vector3());
+      const ft = this._project(t.copy(s.aim).setY(0.02), cp, this.cur.look, fov, new THREE.Vector3());
+      out.heads.push({ x: +h.x.toFixed(3), y: +h.y.toFixed(3), z: +h.z.toFixed(2) });
+      out.tops.push(+tp.y.toFixed(3));
+      out.feet.push(+ft.y.toFixed(3));
+    }
+    if (out.side < 0.3) out.problems.push(`camera crossed the 180 line (${out.side})`);
+    if (out.camY < 0.45) out.problems.push(`camera below deck (${out.camY})`);
+
+    const subj = this.shot?.subject;
+    const check = subj == null ? [0, 1] : [subj];
+    for (const i of check) {
+      const h = out.heads[i];
+      if (h.z <= 0) { out.problems.push(`head ${i} behind camera`); continue; }
+      if (h.x < SAFE.x0 || h.x > SAFE.x1) out.problems.push(`head ${i} x=${h.x}`);
+      if (h.y < SAFE.y0 - 0.04 || h.y > SAFE.y1) out.problems.push(`head ${i} y=${h.y}`);
+      if (out.tops[i] < 0.0) out.problems.push(`fighter ${i} cropped at top (${out.tops[i]})`);
+    }
+    if (out.heads[0].z > 0 && out.heads[1].z > 0 && out.heads[0].x > out.heads[1].x - 0.02) {
+      out.problems.push('screen sides swapped');
+    }
+    return out;
   }
 }

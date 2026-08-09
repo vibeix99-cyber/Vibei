@@ -111,7 +111,17 @@ async function main() {
   for (const id of list) {
     await mkdir(`${OUT}/${id}`, { recursive: true });
     console.log(`\n▶ ${id}`);
-    await page.evaluate((a) => window.__ARENA.battle.start({ arena: a, mode: 'ai', teamSize: 3, seed: 'SHEET-7' }), id);
+    // Fixed cast so the sheet measures the arena, not the roster roll.
+    // Luffy (warm mid-tone) vs Zoro (near-black kit) — the hard case for rim separation.
+    await page.evaluate((a) => {
+      const A = window.__ARENA;
+      const team = (ids) => ids.map((i) => A.sim.makeDefaultMember(i, 50));
+      A.battle.start({
+        arena: a, mode: 'ai', teamSize: 3, seed: 'SHEET-7',
+        p0Team: team(['luffy', 'nami', 'ace']),
+        p1Team: team(['zoro', 'robin', 'jinbe'])
+      });
+    }, id);
     await settle(page);
     if (!args['keep-ui']) await page.evaluate(() => { document.getElementById('ui').style.visibility = 'hidden'; });
 

@@ -1,11 +1,17 @@
 // Construction, cloning and serialization of battle state.
+//
+// Nothing in here may depend on wall-clock time, Math.random or the DOM. UIDs
+// are derived from the fighter's position so that the same seed produces a
+// byte-identical event stream no matter how many battles the process has run.
 
 import { RNG } from './rng.js';
 import { computeStats, defaultIVs, defaultEVs } from './stats.js';
 import { getFighter } from '../data/fighters.js';
 import { getMove } from '../data/moves.js';
 
-let UID = 0;
+export function emptyBoosts() {
+  return { atk: 0, def: 0, spa: 0, spd: 0, spe: 0, acc: 0, eva: 0 };
+}
 
 export function makeCombatant(member, side, slot) {
   const def = getFighter(member.speciesId);
@@ -15,12 +21,16 @@ export function makeCombatant(member, side, slot) {
   const evs = { ...defaultEVs(), ...(member.evs || {}) };
   const nature = member.nature || 'hardy';
   const stats = computeStats(def.base, level, ivs, evs, nature);
-  const moves = (member.moves || []).slice(0, 4).map((id) => {
+  const seen = new Set();
+  const moves = (member.moves || []).filter((id) => {
+    if (!id || seen.has(id)) return false;
+    seen.add(id); return true;
+  }).slice(0, 4).map((id) => {
     const m = getMove(id);
     return { id, pp: m ? m.pp : 5, maxPp: m ? m.pp : 5, disabled: false };
   });
   return {
-    uid: `p${side}-${slot}-${++UID}`,
+    uid: `p${side}-${slot}`,
     side, slot,
     speciesId: def.id,
     nickname: member.nickname || def.name,
@@ -36,13 +46,15 @@ export function makeCombatant(member, side, slot) {
     baseAbility: member.ability || def.abilities[0],
     item: member.item || null, itemUsed: false,
     status: null, statusTurns: 0, toxicCounter: 0,
-    boosts: { atk: 0, def: 0, spa: 0, spd: 0, spe: 0, acc: 0, eva: 0 },
+    boosts: emptyBoosts(),
     volatiles: {},
-    fainted: false,
+    fainted: false, faintCause: null,
     lastMoveId: null, lastMoveFailed: false,
     movedThisTurn: false, turnsActive: 0, timesHit: 0,
-    damageTakenThisTurn: 0, protectStreak: 0,
-    critStageBonus: 0
+    damageTakenThisTurn: 0, hitThisTurn: false,
+    protectStreak: 0, endureStreak: 0,
+    critStageBonus: 0,
+    switchedInOnTurn: 0
   };
 }
 
@@ -81,8 +93,11 @@ export function createBattleState(opts) {
     format: { level: 50, teamSize: 6, bring: 6, ...(opts.format || {}) },
     request: { 0: null, 1: null },
     pendingSwitch: { 0: false, 1: false },
+    // Set while a turn is paused waiting on a pivot-move replacement.
+    resume: null,
     winner: null,
     ended: false,
+    endReason: null,
     events: [],
     turnEvents: [],
     log: []
@@ -103,6 +118,7 @@ export function publicView(state) {
     turn: state.turn,
     winner: state.winner,
     ended: state.ended,
+    endReason: state.endReason,
     request: state.request,
     field: state.field,
     arena: state.arena,
@@ -113,7 +129,9 @@ export function publicView(state) {
       party: s.party.map((p) => ({
         uid: p.uid, speciesId: p.speciesId, nickname: p.nickname, name: p.name,
         level: p.level, types: p.types, hp: p.hp, maxHp: p.maxHp,
-        status: p.status, boosts: p.boosts, volatiles: Object.keys(p.volatiles),
+        status: p.status, boosts: p.boosts,
+        volatiles: Object.keys(p.volatiles),
+        volatileState: Object.entries(p.volatiles).map(([id, v]) => ({ id, turns: v.turns })),
         fainted: p.fainted, ability: p.ability, item: p.item,
         moves: p.moves.map((m) => ({ ...m })), stats: p.stats
       }))
