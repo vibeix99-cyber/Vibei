@@ -265,41 +265,40 @@ a{ color:var(--brass); }
 
 <script>
 const DATA = {
-  wave: "Wave 0 · Foundation",
-  updated: "—",
-  percent: 6,
-  note: "Spine built, running and probe-clean. Fanning out to the piece agents.",
+  wave: "Wave 1 · Twelve agents building",
+  updated: "in flight",
+  percent: 22,
+  note: "Every piece has a dedicated builder in the running build right now.",
   stats: [
-    { n: "20",  l: "pieces" },
-    { n: "0/20",l: "critics passed" },
-    { n: "12",  l: "fighters" },
-    { n: "43",  l: "moves" },
-    { n: "18",  l: "types" },
-    { n: "6",   l: "arenas" }
+    { n: "20",   l: "pieces" },
+    { n: "12",   l: "agents live" },
+    { n: "0/20", l: "critics passed" },
+    { n: "12→44",l: "fighters" },
+    { n: "43→170",l: "moves" },
+    { n: "18",   l: "types" }
   ],
   // [piece, status, rounds, oursScore 0-10, theirsScore 0-10, gap]
-  // status: pass | active | review | sent | queued
   pieces: [
-    ["Battle engine & rules",      "active", 0, 0, 0, ""],
-    ["Type chart & balance",       "queued", 0, 0, 0, ""],
-    ["Status, weather & field",    "queued", 0, 0, 0, ""],
-    ["Move design",                "queued", 0, 0, 0, ""],
-    ["Roster & characters",        "queued", 0, 0, 0, ""],
-    ["Abilities",                  "queued", 0, 0, 0, ""],
-    ["Items & bag",                "queued", 0, 0, 0, ""],
-    ["Opponent AI",                "queued", 0, 0, 0, ""],
-    ["Arena & lighting",           "queued", 0, 0, 0, ""],
-    ["Character models",           "queued", 0, 0, 0, ""],
-    ["Move VFX",                   "queued", 0, 0, 0, ""],
-    ["Camera direction",           "queued", 0, 0, 0, ""],
-    ["Battle HUD & menus",         "queued", 0, 0, 0, ""],
-    ["Audio",                      "queued", 0, 0, 0, ""],
-    ["Game feel & pacing",         "queued", 0, 0, 0, ""],
-    ["Team builder & dex",         "queued", 0, 0, 0, ""],
-    ["Modes & progression",        "queued", 0, 0, 0, ""],
-    ["PvP: hot-seat & link",       "queued", 0, 0, 0, ""],
-    ["Onboarding & accessibility", "queued", 0, 0, 0, ""],
-    ["Save & persistence",         "queued", 0, 0, 0, ""]
+    ["Battle engine & rules",      "active", 0, 0, 0, "Volatiles declared but not all wired; endgame edge cases untested"],
+    ["Type chart & balance",       "queued", 0, 0, 0, "Waiting on the final move and roster set"],
+    ["Status, weather & field",    "active", 0, 0, 0, "Weather changes a HUD chip and nothing else"],
+    ["Move design",                "active", 0, 0, 0, "43 moves, no coverage across all 18 types"],
+    ["Roster & characters",        "active", 0, 0, 0, "12 fighters, no awakenings, no signature depth"],
+    ["Abilities",                  "active", 0, 0, 0, "Several descriptions promise behaviour with no implementation"],
+    ["Items & bag",                "active", 0, 0, 0, "11 items, all flat stat boosts, no tradeoffs"],
+    ["Opponent AI",                "active", 0, 0, 0, "One-ply heuristic; the five tiers are the same brain with noise"],
+    ["Arena & lighting",           "active", 0, 0, 0, "Six arenas are the same disc in different colours"],
+    ["Character models",           "active", 0, 0, 0, "Fighters read as capsules; no outlines, flat cel shading"],
+    ["Move VFX",                   "active", 0, 0, 0, "Five generic shapes — every slash looks identical"],
+    ["Camera direction",           "active", 0, 0, 0, "Impact shots too tight; giants break every framing"],
+    ["Battle HUD & menus",         "active", 0, 0, 0, "Plate collides with the text box; no move detail view"],
+    ["Audio",                      "active", 0, 0, 0, "One-oscillator SFX; 44 fighters share four cry templates"],
+    ["Game feel & pacing",         "active", 0, 0, 0, "Beats are strictly serial, so turns waste time"],
+    ["Team builder & dex",         "active", 0, 0, 0, "Placeholder sheets — no move, EV, nature or item choice"],
+    ["Modes & progression",        "active", 0, 0, 0, "No tournament, no unlocks, no reason to play twice"],
+    ["PvP: hot-seat & link",       "queued", 0, 0, 0, "Hot-seat works; no way to battle a friend remotely"],
+    ["Onboarding & accessibility", "active", 0, 0, 0, "No tutorial; reduced-motion path untested"],
+    ["Save & persistence",         "active", 0, 0, 0, "Settings only; nothing else survives a reload"]
   ],
   log: [
     ["W0", "Repo scaffolded. <b>Three.js vendored locally</b> — no CDN, no build step, opens from a file server."],
@@ -310,7 +309,10 @@ const DATA = {
     ["W0", "<b>Probe harness live</b> — critics drive the real build headlessly through <code>window.__ARENA</code>."],
     ["W0", "Fixed: fractional particle counts were poisoning geometry buffers with NaN."],
     ["W0", "Fixed: turns took ~20s. Text now runs <b>alongside</b> the animation instead of owning the clock."],
-    ["W0", "Fixed: battles could deadlock once both sides ran out of PP. Added Struggle."]
+    ["W0", "Fixed: battles could deadlock once both sides ran out of PP. Added Struggle."],
+    ["W0", "Camera framing moved behind <code>onEvent</code> and signature moves split into their own file, so camera, pacing, roster and move work can run at once."],
+    ["W1", "<b>Twelve builders launched.</b> Each owns a disjoint set of files and must verify against the running build, not its own diff."],
+    ["W1", "Critic protocol written: judge blind from screenshots and measurements, name one gap, send the builder back."]
   ]
 };
 
