@@ -483,6 +483,9 @@ function patternMat(key, colors, snippet, extra = {}) {
   return m;
 }
 
+// NOTE: `p` here is `vLP.xz` — a vec2. World Z is therefore `p.y`, not `p.z`.
+// Writing `p.z` compiles nowhere and silently drops the whole arena floor to a
+// flat untextured plane, which is how three of six arenas shipped broken.
 const GROUND_PATTERN = {
   // raked sand, scuffed to hell in the middle, with a painted duel ring
   colosseum: `
@@ -511,8 +514,8 @@ const GROUND_PATTERN = {
   ship: `
     vec2 p = vLP.xz;
     float r = length(p);
-    float plank = smoothstep(0.42, 0.48, abs(fract(p.z * 0.85) - 0.5));
-    float grain = 0.85 + 0.3 * n2(vec2(p.x * 2.2, p.z * 22.0));
+    float plank = smoothstep(0.42, 0.48, abs(fract(p.y * 0.85) - 0.5));
+    float grain = 0.85 + 0.3 * n2(vec2(p.x * 2.2, p.y * 22.0));
     vec3 wood = mix(uC1, uC2, plank * 0.8) * grain;
     vec3 grass = mix(uC3, uC3 * 0.72, smoothstep(0.35, 0.8, fbm(p * 1.5)));
     float lawn = 1.0 - smoothstep(6.7, 7.1, r);
@@ -522,7 +525,7 @@ const GROUND_PATTERN = {
   // kawara tiles: overlapping half-round rows
   rooftop: `
     vec2 p = vLP.xz;
-    float row = fract(p.z * 1.05);
+    float row = fract(p.y * 1.05);
     float rid = fract(p.x * 1.6);
     float bump = sin(rid * 3.14159);
     vec3 c = mix(uC2, uC1, 0.35 + bump * 0.62);
@@ -544,7 +547,7 @@ const GROUND_PATTERN = {
     vec2 p = vLP.xz;
     float plank = smoothstep(0.40, 0.47, abs(fract(p.x * 0.62) - 0.5));
     float board = n2(vec2(floor(p.x * 0.62), 0.5));
-    float grain = 0.86 + 0.28 * n2(vec2(p.x * 20.0, p.z * 1.6));
+    float grain = 0.86 + 0.28 * n2(vec2(p.x * 20.0, p.y * 1.6));
     vec3 c = mix(uC1 * (0.88 + board * 0.24), uC2, plank * 0.85) * grain;
     c = mix(c, uC3, smoothstep(0.14, 0.03, abs(length(p) - 8.45)) * 0.42);
     diffuseColor.rgb *= c;`
