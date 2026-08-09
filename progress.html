@@ -1,179 +1,350 @@
 <title>Grand Line Arena — Build Progress</title>
 <style>
-  :root{
-    --bg:#f7f5ee; --card:#fffdf7; --line:#d9d2bd; --ink:#191c26; --dim:#6a6f80;
-    --gold:#b8892b; --gold-b:#f2c94c; --sea:#2a7fd4; --good:#2b8a4a; --warn:#c07a1a; --bad:#c03a3a;
-    --shadow:0 2px 0 rgba(0,0,0,.08), 0 10px 28px rgba(0,0,0,.07);
+/* ─────────────────────────────────────────────────────────────
+   Palette: a dim arena scoreboard. Navy-biased ink (nautical,
+   not neutral grey), brass as the single accent, and a semantic
+   set kept deliberately separate from it so status never reads
+   as decoration.
+   ───────────────────────────────────────────────────────────── */
+:root{
+  --ground:      #eef1f6;
+  --surface:     #ffffff;
+  --surface-2:   #f6f8fb;
+  --line:        #d3dae6;
+  --line-soft:   #e4e9f1;
+  --ink:         #131b2b;
+  --ink-2:       #46536b;
+  --ink-3:       #7d889d;
+
+  --brass:       #a8721a;   /* accent — rails, wave marker, progress */
+  --brass-soft:  #f0e2c6;
+
+  --pass:        #1d7a4c;
+  --active:      #1f6fb8;
+  --review:      #9a6612;
+  --sent:        #b23a30;
+  --queued:      #7d889d;
+
+  --ours:        #a8721a;
+  --theirs:      #46536b;
+
+  --shadow: 0 1px 2px rgba(19,27,43,.06), 0 8px 24px rgba(19,27,43,.06);
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, "Cascadia Mono", Menlo, Consolas, monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:    #090e18;
+    --surface:   #111a2a;
+    --surface-2: #16202f;
+    --line:      #253247;
+    --line-soft: #1b2537;
+    --ink:       #eaeff8;
+    --ink-2:     #a3b0c6;
+    --ink-3:     #6d7b93;
+
+    --brass:      #e2a63f;
+    --brass-soft: #3a2e17;
+
+    --pass:      #52c489;
+    --active:    #56a6ee;
+    --review:    #e2a63f;
+    --sent:      #ef6f63;
+    --queued:    #6d7b93;
+
+    --ours:      #e2a63f;
+    --theirs:    #8ea0bd;
+
+    --shadow: 0 1px 0 rgba(0,0,0,.5), 0 14px 38px rgba(0,0,0,.45);
   }
-  :root:not([data-theme="light"]) { }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --bg:#0c0e15; --card:#151925; --line:#2a3145; --ink:#eef1f8; --dim:#98a0b6;
-      --gold:#f2c94c; --gold-b:#f2c94c; --sea:#5aa8ff; --good:#4ad07a; --warn:#f2c94c; --bad:#ff7a7a;
-      --shadow:0 2px 0 rgba(0,0,0,.4), 0 12px 34px rgba(0,0,0,.5);
-    }
-  }
-  :root[data-theme="dark"]{
-    --bg:#0c0e15; --card:#151925; --line:#2a3145; --ink:#eef1f8; --dim:#98a0b6;
-    --gold:#f2c94c; --gold-b:#f2c94c; --sea:#5aa8ff; --good:#4ad07a; --warn:#f2c94c; --bad:#ff7a7a;
-    --shadow:0 2px 0 rgba(0,0,0,.4), 0 12px 34px rgba(0,0,0,.5);
-  }
+}
+:root[data-theme="dark"]{
+  --ground:    #090e18;
+  --surface:   #111a2a;
+  --surface-2: #16202f;
+  --line:      #253247;
+  --line-soft: #1b2537;
+  --ink:       #eaeff8;
+  --ink-2:     #a3b0c6;
+  --ink-3:     #6d7b93;
 
-  *{box-sizing:border-box}
-  body{
-    margin:0; background:var(--bg); color:var(--ink);
-    font:16px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-    padding:36px 20px 80px;
-  }
-  .wrap{max-width:1080px;margin:0 auto}
-  header{margin-bottom:28px}
-  .kicker{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:800}
-  h1{font-size:clamp(28px,5vw,46px);line-height:1.05;margin:.18em 0 .12em;letter-spacing:-.02em}
-  .sub{color:var(--dim);max-width:70ch}
-  .stamp{margin-top:12px;font-size:13px;color:var(--dim)}
-  .stamp b{color:var(--ink)}
+  --brass:      #e2a63f;
+  --brass-soft: #3a2e17;
 
-  .bar{height:12px;border-radius:99px;background:var(--line);overflow:hidden;margin:18px 0 6px;position:relative}
-  .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--sea),var(--gold-b));border-radius:99px}
-  .barlab{display:flex;justify-content:space-between;font-size:13px;color:var(--dim)}
+  --pass:      #52c489;
+  --active:    #56a6ee;
+  --review:    #e2a63f;
+  --sent:      #ef6f63;
+  --queued:    #6d7b93;
 
-  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:26px 0}
-  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
-  .stat .n{font-size:26px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-  .stat .l{font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;margin-top:2px}
+  --ours:      #e2a63f;
+  --theirs:    #8ea0bd;
 
-  h2{font-size:20px;margin:34px 0 4px;letter-spacing:-.01em}
-  h2 + p{margin-top:0;color:var(--dim);font-size:14px}
+  --shadow: 0 1px 0 rgba(0,0,0,.5), 0 14px 38px rgba(0,0,0,.45);
+}
 
-  table{width:100%;border-collapse:collapse;margin-top:14px;font-size:14px}
-  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--card);box-shadow:var(--shadow)}
-  th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
-  th{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:800;white-space:nowrap}
-  tr:last-child td{border-bottom:none}
-  td.piece{font-weight:700;white-space:nowrap}
-  td.note{color:var(--dim)}
+*{ box-sizing:border-box; }
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:15px;
+  line-height:1.6;
+  padding:clamp(28px,5vw,56px) clamp(16px,4vw,40px) 96px;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{ max-width:1080px; margin:0 auto; display:flex; flex-direction:column; gap:40px; }
 
-  .pill{display:inline-block;padding:2px 9px;border-radius:99px;font-size:11px;font-weight:800;
-        letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;border:1px solid transparent}
-  .p-done{background:color-mix(in srgb,var(--good) 16%,transparent);color:var(--good);border-color:color-mix(in srgb,var(--good) 35%,transparent)}
-  .p-build{background:color-mix(in srgb,var(--sea) 16%,transparent);color:var(--sea);border-color:color-mix(in srgb,var(--sea) 35%,transparent)}
-  .p-crit{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn);border-color:color-mix(in srgb,var(--warn) 38%,transparent)}
-  .p-todo{background:color-mix(in srgb,var(--dim) 14%,transparent);color:var(--dim);border-color:color-mix(in srgb,var(--dim) 30%,transparent)}
-  .p-fail{background:color-mix(in srgb,var(--bad) 15%,transparent);color:var(--bad);border-color:color-mix(in srgb,var(--bad) 35%,transparent)}
+/* ── masthead ─────────────────────────────────────────────── */
+.head{ display:flex; flex-direction:column; gap:14px; }
+.eyebrow{
+  font-family:var(--mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--brass); font-weight:600;
+  display:flex; align-items:center; gap:10px;
+}
+.eyebrow::after{ content:""; flex:1; height:1px; background:var(--line); }
+h1{
+  margin:0; font-size:clamp(30px,5.4vw,52px); font-weight:800; letter-spacing:-.035em;
+  line-height:1.02; text-wrap:balance;
+}
+.lede{ margin:0; color:var(--ink-2); max-width:66ch; }
 
-  .score{font-variant-numeric:tabular-nums;font-weight:800}
-  .verdict{font-size:13px}
-  .verdict.win{color:var(--good)} .verdict.lose{color:var(--bad)} .verdict.tie{color:var(--dim)}
+.railwrap{ display:flex; flex-direction:column; gap:8px; margin-top:6px; }
+.rail{
+  height:10px; border-radius:2px; background:var(--line-soft);
+  border:1px solid var(--line); overflow:hidden; position:relative;
+}
+.rail i{
+  display:block; height:100%;
+  background:repeating-linear-gradient(115deg, var(--brass) 0 9px, color-mix(in srgb, var(--brass) 72%, transparent) 9px 18px);
+  transition:width .6s cubic-bezier(.16,1,.3,1);
+}
+.railmeta{
+  display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+  font-family:var(--mono); font-size:12px; color:var(--ink-3);
+}
+.railmeta b{ color:var(--ink); font-weight:600; }
 
-  .log{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 0;box-shadow:var(--shadow);margin-top:14px}
-  .log div{padding:9px 16px;border-bottom:1px solid var(--line);font-size:14px}
-  .log div:last-child{border-bottom:none}
-  .log .t{color:var(--dim);font-variant-numeric:tabular-nums;margin-right:10px;font-size:12px}
+/* ── stat strip ───────────────────────────────────────────── */
+.stats{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(122px,1fr));
+  border:1px solid var(--line); border-radius:4px; background:var(--surface);
+  box-shadow:var(--shadow); overflow:hidden;
+}
+.stat{ padding:14px 16px; border-right:1px solid var(--line-soft); }
+.stat:last-child{ border-right:none; }
+.stat .n{
+  font-family:var(--mono); font-size:25px; font-weight:600; letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums; line-height:1.1;
+}
+.stat .l{
+  font-size:10.5px; letter-spacing:.15em; text-transform:uppercase;
+  color:var(--ink-3); margin-top:3px; font-weight:600;
+}
 
-  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--dim);font-size:13px}
-  code{background:color-mix(in srgb,var(--dim) 14%,transparent);padding:1px 6px;border-radius:5px;font-size:.9em}
+/* ── sections ─────────────────────────────────────────────── */
+section{ display:flex; flex-direction:column; gap:4px; }
+h2{
+  margin:0; font-size:13px; font-weight:700; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--ink);
+  display:flex; align-items:center; gap:12px;
+}
+h2::after{ content:""; flex:1; height:1px; background:var(--line); }
+.note{ margin:0 0 8px; color:var(--ink-3); font-size:13.5px; }
+
+/* ── the bout record ──────────────────────────────────────── */
+.scroll{
+  overflow-x:auto; border:1px solid var(--line); border-radius:4px;
+  background:var(--surface); box-shadow:var(--shadow);
+}
+table{ width:100%; border-collapse:collapse; }
+th{
+  font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; font-weight:700;
+  color:var(--ink-3); text-align:left; padding:11px 14px; white-space:nowrap;
+  border-bottom:1px solid var(--line); background:var(--surface-2);
+}
+td{ padding:12px 14px; border-bottom:1px solid var(--line-soft); vertical-align:top; }
+tr:last-child td{ border-bottom:none; }
+th.num, td.num{ text-align:right; }
+
+/* status is carried by a left stripe as well as the word, so the
+   table reads at a glance without parsing every label */
+td.piece{
+  font-weight:650; white-space:nowrap; position:relative; padding-left:22px;
+}
+td.piece::before{
+  content:""; position:absolute; left:0; top:0; bottom:0; width:4px;
+  background:var(--stripe,var(--queued));
+}
+.st{ font-size:11px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; white-space:nowrap; color:var(--stripe,var(--queued)); }
+.rounds{ font-family:var(--mono); font-variant-numeric:tabular-nums; color:var(--ink-2); }
+
+/* verdict: a two-sided bar, so who is ahead is a shape not a sentence */
+.verdict{ min-width:180px; }
+.vbar{ display:flex; height:7px; border-radius:2px; overflow:hidden; background:var(--line-soft); margin-bottom:5px; }
+.vbar span{ display:block; height:100%; }
+.vbar .a{ background:var(--ours); }
+.vbar .b{ background:var(--theirs); opacity:.5; }
+.vlab{ font-family:var(--mono); font-size:11.5px; color:var(--ink-3); letter-spacing:.02em; }
+.vlab b{ font-weight:600; }
+.vlab.ours b{ color:var(--ours); }
+.vlab.theirs b{ color:var(--sent); }
+.gap{ color:var(--ink-2); font-size:13.5px; max-width:40ch; }
+.gap.none{ color:var(--ink-3); }
+
+/* ── ledger ───────────────────────────────────────────────── */
+.log{
+  border:1px solid var(--line); border-radius:4px; background:var(--surface);
+  box-shadow:var(--shadow); overflow:hidden;
+}
+.log div{
+  display:flex; gap:16px; padding:10px 16px; border-bottom:1px solid var(--line-soft);
+  font-size:14px; align-items:baseline;
+}
+.log div:last-child{ border-bottom:none; }
+.log .w{
+  font-family:var(--mono); font-size:11px; color:var(--brass); font-weight:600;
+  letter-spacing:.08em; flex:0 0 46px; text-transform:uppercase;
+}
+.log .m{ color:var(--ink-2); }
+.log .m b{ color:var(--ink); font-weight:600; }
+
+footer{
+  border-top:1px solid var(--line); padding-top:18px; color:var(--ink-3); font-size:13px;
+  display:flex; flex-direction:column; gap:6px;
+}
+code{
+  font-family:var(--mono); font-size:.88em; background:var(--surface-2);
+  border:1px solid var(--line-soft); border-radius:3px; padding:1px 5px; color:var(--ink-2);
+}
+a{ color:var(--brass); }
+@media (prefers-reduced-motion: reduce){ *{ transition:none !important; animation:none !important; } }
 </style>
 
 <div class="wrap">
-<header>
-  <div class="kicker">Live build progress</div>
-  <h1>Grand Line Arena</h1>
-  <div class="sub">A tactical turn-based PvP fighter battler in the Pokémon lineage, built in Three.js.
-  Each piece is built by a dedicated agent, then judged blind against the real Pokémon games by a fresh critic
-  that drives the actual running build — never the builder's summary.</div>
-  <div class="stamp">Wave <b id="wave">0 — Foundation</b> · updated <b id="ts">—</b></div>
 
-  <div class="bar"><i id="pbar" style="width:6%"></i></div>
-  <div class="barlab"><span id="pnote">Spine built and running. Fanning out.</span><span id="ppct">6%</span></div>
-</header>
+  <header class="head">
+    <div class="eyebrow" id="eyebrow">Wave 0 · Foundation</div>
+    <h1>Grand Line Arena</h1>
+    <p class="lede">A tactical turn-based PvP fighter battler in the Pokémon lineage, built in Three.js.
+      Every piece below is built by its own agent, then judged by a fresh critic that drives the actual
+      running build — never the builder's write-up — and compares it blind against the real Pokémon games.
+      A piece that loses gets sent back with its single biggest gap named.</p>
+    <div class="railwrap">
+      <div class="rail"><i id="rail" style="width:6%"></i></div>
+      <div class="railmeta"><span id="railnote">—</span><span><b id="railpct">6%</b> complete · updated <b id="ts">—</b></span></div>
+    </div>
+  </header>
 
-<div class="stats" id="stats"></div>
+  <div class="stats" id="stats"></div>
 
-<h2>The pieces</h2>
-<p>Each is built, then hammered by an independent critic until it wins the blind comparison.</p>
-<div class="scroll">
-<table>
-  <thead><tr><th>Piece</th><th>Status</th><th>Rounds</th><th>Blind verdict vs Pokémon</th><th>Biggest remaining gap</th></tr></thead>
-  <tbody id="pieces"></tbody>
-</table>
-</div>
+  <section>
+    <h2>Bout record</h2>
+    <p class="note">Rounds are build-and-critique cycles. A piece passes only when the critic picks it over Pokémon blind.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr>
+          <th>Piece</th><th>Status</th><th class="num">Rounds</th><th>Blind verdict</th><th>Biggest gap remaining</th>
+        </tr></thead>
+        <tbody id="pieces"></tbody>
+      </table>
+    </div>
+  </section>
 
-<h2>Build log</h2>
-<div class="log" id="log"></div>
+  <section>
+    <h2>Ledger</h2>
+    <div class="log" id="log"></div>
+  </section>
 
-<footer>
-  Run it locally with <code>npm run serve</code> and open <code>localhost:8080</code>.
-  Probe the running build with <code>npm run probe</code>.
-  <br>A non-commercial fan tribute; all characters belong to their respective creators.
-</footer>
+  <footer>
+    <div>Run it: <code>npm run serve</code> → <code>localhost:8080</code>. Probe the running build: <code>npm run probe</code>.</div>
+    <div>A non-commercial fan tribute. All characters belong to their respective creators; every model and effect in the build is generated procedurally from code.</div>
+  </footer>
 </div>
 
 <script>
 const DATA = {
-  wave: "0 — Foundation",
+  wave: "Wave 0 · Foundation",
   updated: "—",
   percent: 6,
-  note: "Spine built and running. Fanning out.",
+  note: "Spine built, running and probe-clean. Fanning out to the piece agents.",
   stats: [
-    { n: "20", l: "pieces" },
-    { n: "0", l: "critics passed" },
-    { n: "12", l: "fighters" },
-    { n: "43", l: "moves" },
-    { n: "18", l: "types" },
-    { n: "6", l: "arenas" }
+    { n: "20",  l: "pieces" },
+    { n: "0/20",l: "critics passed" },
+    { n: "12",  l: "fighters" },
+    { n: "43",  l: "moves" },
+    { n: "18",  l: "types" },
+    { n: "6",   l: "arenas" }
   ],
+  // [piece, status, rounds, oursScore 0-10, theirsScore 0-10, gap]
+  // status: pass | active | review | sent | queued
   pieces: [
-    ["Battle engine & rules",      "build", 0, "", "—"],
-    ["Type chart & balance",       "todo",  0, "", "—"],
-    ["Status, weather & field",    "todo",  0, "", "—"],
-    ["Move design (160+)",         "todo",  0, "", "—"],
-    ["Roster & characters",        "todo",  0, "", "—"],
-    ["Abilities",                  "todo",  0, "", "—"],
-    ["Items & bag",                "todo",  0, "", "—"],
-    ["Opponent AI",                "todo",  0, "", "—"],
-    ["Arena & lighting",           "todo",  0, "", "—"],
-    ["Character models",           "todo",  0, "", "—"],
-    ["Move VFX",                   "todo",  0, "", "—"],
-    ["Camera direction",           "todo",  0, "", "—"],
-    ["Battle HUD & menus",         "todo",  0, "", "—"],
-    ["Audio",                      "todo",  0, "", "—"],
-    ["Game feel & pacing",         "todo",  0, "", "—"],
-    ["Team builder & dex",         "todo",  0, "", "—"],
-    ["Modes & progression",        "todo",  0, "", "—"],
-    ["PvP: hot-seat & link",       "todo",  0, "", "—"],
-    ["Onboarding & accessibility", "todo",  0, "", "—"],
-    ["Save & persistence",         "todo",  0, "", "—"]
+    ["Battle engine & rules",      "active", 0, 0, 0, ""],
+    ["Type chart & balance",       "queued", 0, 0, 0, ""],
+    ["Status, weather & field",    "queued", 0, 0, 0, ""],
+    ["Move design",                "queued", 0, 0, 0, ""],
+    ["Roster & characters",        "queued", 0, 0, 0, ""],
+    ["Abilities",                  "queued", 0, 0, 0, ""],
+    ["Items & bag",                "queued", 0, 0, 0, ""],
+    ["Opponent AI",                "queued", 0, 0, 0, ""],
+    ["Arena & lighting",           "queued", 0, 0, 0, ""],
+    ["Character models",           "queued", 0, 0, 0, ""],
+    ["Move VFX",                   "queued", 0, 0, 0, ""],
+    ["Camera direction",           "queued", 0, 0, 0, ""],
+    ["Battle HUD & menus",         "queued", 0, 0, 0, ""],
+    ["Audio",                      "queued", 0, 0, 0, ""],
+    ["Game feel & pacing",         "queued", 0, 0, 0, ""],
+    ["Team builder & dex",         "queued", 0, 0, 0, ""],
+    ["Modes & progression",        "queued", 0, 0, 0, ""],
+    ["PvP: hot-seat & link",       "queued", 0, 0, 0, ""],
+    ["Onboarding & accessibility", "queued", 0, 0, 0, ""],
+    ["Save & persistence",         "queued", 0, 0, 0, ""]
   ],
   log: [
-    ["00:00", "Repo scaffolded. Three.js vendored locally, no CDN, no build step."],
-    ["00:00", "Architecture + contracts written so 20 agents can work in parallel without collisions."],
-    ["00:00", "Pure deterministic sim: seeded RNG, event-stream output, replay- and netplay-ready."],
-    ["00:00", "Playwright probe harness live — critics drive the real build headlessly via window.__ARENA."],
-    ["00:00", "First playable: 3v3 battle, 3D arena, procedural fighters, VFX, adaptive audio."],
-    ["00:00", "Fixed: fractional particle counts poisoning geometry buffers with NaN."],
-    ["00:00", "Fixed: turns took ~20s. Text now runs alongside animation instead of owning the clock."],
-    ["00:00", "Fixed: battles could deadlock when both sides ran out of PP. Added Struggle."]
+    ["W0", "Repo scaffolded. <b>Three.js vendored locally</b> — no CDN, no build step, opens from a file server."],
+    ["W0", "Contracts pinned in <b>docs/ARCHITECTURE.md</b> so twenty agents can work in parallel without colliding."],
+    ["W0", "Simulation is <b>pure and deterministic</b>: seeded RNG, no DOM, no wall clock. Replays and netplay come free."],
+    ["W0", "Sim talks to presentation through an <b>event stream</b>, so the renderer animates events instead of reading state."],
+    ["W0", "First playable: 3v3 battle, 3D arena, procedural fighters, VFX, adaptive score."],
+    ["W0", "<b>Probe harness live</b> — critics drive the real build headlessly through <code>window.__ARENA</code>."],
+    ["W0", "Fixed: fractional particle counts were poisoning geometry buffers with NaN."],
+    ["W0", "Fixed: turns took ~20s. Text now runs <b>alongside</b> the animation instead of owning the clock."],
+    ["W0", "Fixed: battles could deadlock once both sides ran out of PP. Added Struggle."]
   ]
 };
 
-const PILL = { done:["p-done","Passed"], build:["p-build","Building"], crit:["p-crit","In review"], todo:["p-todo","Queued"], fail:["p-fail","Sent back"] };
+const LABEL = { pass:"Passed", active:"Building", review:"In review", sent:"Sent back", queued:"Queued" };
+const COLOR = { pass:"var(--pass)", active:"var(--active)", review:"var(--review)", sent:"var(--sent)", queued:"var(--queued)" };
 
-document.getElementById('wave').textContent = DATA.wave;
+document.getElementById('eyebrow').textContent = DATA.wave;
 document.getElementById('ts').textContent = DATA.updated;
-document.getElementById('pbar').style.width = DATA.percent + '%';
-document.getElementById('ppct').textContent = DATA.percent + '%';
-document.getElementById('pnote').textContent = DATA.note;
+document.getElementById('rail').style.width = DATA.percent + '%';
+document.getElementById('railpct').textContent = DATA.percent + '%';
+document.getElementById('railnote').textContent = DATA.note;
 
 document.getElementById('stats').innerHTML = DATA.stats
   .map(s => `<div class="stat"><div class="n">${s.n}</div><div class="l">${s.l}</div></div>`).join('');
 
-document.getElementById('pieces').innerHTML = DATA.pieces.map(([name, st, rounds, verdict, gap]) => {
-  const [cls, lab] = PILL[st] || PILL.todo;
-  const vcls = /ours/i.test(verdict) ? 'win' : /pok/i.test(verdict) ? 'lose' : 'tie';
-  return `<tr><td class="piece">${name}</td><td><span class="pill ${cls}">${lab}</span></td>
-    <td class="score">${rounds || '—'}</td><td class="verdict ${vcls}">${verdict || '—'}</td><td class="note">${gap}</td></tr>`;
+document.getElementById('pieces').innerHTML = DATA.pieces.map(([name, st, rounds, ours, theirs, gap]) => {
+  const col = COLOR[st] || COLOR.queued;
+  let verdict = '<span class="vlab">not yet judged</span>';
+  if (ours || theirs) {
+    const total = Math.max(1, ours + theirs);
+    const win = ours > theirs, tie = ours === theirs;
+    verdict =
+      `<div class="vbar"><span class="a" style="width:${ours / total * 100}%"></span><span class="b" style="width:${theirs / total * 100}%"></span></div>` +
+      `<div class="vlab ${win ? 'ours' : tie ? '' : 'theirs'}"><b>${win ? 'OURS' : tie ? 'TIED' : 'POKÉMON'}</b> ${ours}–${theirs}</div>`;
+  }
+  return `<tr>
+    <td class="piece" style="--stripe:${col}">${name}</td>
+    <td><span class="st" style="--stripe:${col}">${LABEL[st] || 'Queued'}</span></td>
+    <td class="num rounds">${rounds || '·'}</td>
+    <td class="verdict">${verdict}</td>
+    <td class="gap ${gap ? '' : 'none'}">${gap || '·'}</td>
+  </tr>`;
 }).join('');
 
 document.getElementById('log').innerHTML = DATA.log.slice().reverse()
-  .map(([t, m]) => `<div><span class="t">${t}</span>${m}</div>`).join('');
+  .map(([w, m]) => `<div><span class="w">${w}</span><span class="m">${m}</span></div>`).join('');
 </script>

@@ -183,6 +183,14 @@ def({ id: 'struggle', name: 'Struggle', type: '???', category: 'physical', power
 
 /* ------------------------------------------------------------------ */
 
+import { SIGNATURE_MOVES } from './signatureMoves.js';
+
+const DEFAULTS = {
+  power: 0, accuracy: 100, priority: 0, target: 'foe', critStage: 0,
+  contact: false, flags: [], hits: null, drain: 0, recoil: 0, effects: null, pp: 10
+};
+for (const sig of SIGNATURE_MOVES) M.push({ ...DEFAULTS, ...sig });
+
 export const MOVES = M;
 export const MOVE_BY_ID = Object.fromEntries(M.map((m) => [m.id, m]));
 export function getMove(id) { return MOVE_BY_ID[id]; }

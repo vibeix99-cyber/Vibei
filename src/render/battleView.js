@@ -90,12 +90,23 @@ export class BattleView {
     const B = this.beat;
     const set = (d) => { B.dur = d / this.speed; };
 
+    // All camera framing is the director's call — see render/camera.js onEvent.
+    {
+      const mv = ev.moveId ? getMove(ev.moveId) : null;
+      const fx = ev.fx || mv?.fx || null;
+      this.dir.onEvent(ev, {
+        big: !!mv && ((mv.power || 0) >= 100 || (fx?.scale || 1) >= 1.6),
+        crit: !!ev.crit,
+        lethal: ev.t === 'damage' && ev.hpAfter === 0,
+        speed: this.speed
+      });
+    }
+
     switch (ev.t) {
       case 'battleStart': set(0.1); break;
 
       case 'turnStart': {
         set(0.08);
-        this.dir.go('standard', 0.5);
         break;
       }
 
@@ -106,7 +117,6 @@ export class BattleView {
         f.root.scale.setScalar(f.rig.scale * 0.6);
         const def = getFighter(ev.speciesId);
         audio.cry(def?.cry);
-        this.dir.go(this.dir.shotFor('entry', ev.side), 0.28, Ease.outQuart);
         set(0.62);
         B.fn = (p) => {
           const e = Ease.outBack(Math.min(1, p * 1.15));
@@ -150,7 +160,6 @@ export class BattleView {
         const atk = this.actors[ev.side];
         const fx = ev.fx || mv?.fx || {};
         const big = (mv?.power || 0) >= 100 || (fx.scale || 1) >= 1.6;
-        this.dir.go(this.dir.shotFor(big ? 'low' : 'hero', ev.side), big ? 0.32 : 0.24, Ease.outQuart);
         set(big ? 0.62 : 0.42);
         if (atk) {
           atk.state = 'charge';
@@ -195,11 +204,10 @@ export class BattleView {
         this.feel.hitstop((ev.crit ? 150 : 90) * Math.min(1.6, power));
         this.feel.addShake(0.13 * power);
         this.feel.punchZoom(0.05 * power);
-        if (ev.crit) { this.feel.screenFlash('#ffe36b', 0.45); audio.sfx('crit'); this.dir.punch(0.5, 0.22); }
+        if (ev.crit) { this.feel.screenFlash('#ffe36b', 0.45); audio.sfx('crit'); }
         else if (ev.eff > 1) { this.feel.screenFlash('#ffffff', 0.22); audio.sfx('super'); }
         else if (ev.eff < 1 && ev.eff > 0) audio.sfx('weak');
 
-        this.dir.go(this.dir.shotFor('impact', ev.side), 0.16, Ease.outQuint);
 
         // knockback
         if (tgt) {
@@ -290,7 +298,6 @@ export class BattleView {
       case 'faint': {
         const f = this.actors[ev.side];
         audio.sfx('faint');
-        this.dir.go(this.dir.shotFor('ko', ev.side), 0.3, Ease.outQuart);
         this.feel.slowmo(0.25, 700);
         this.vfx.faint(this.chestOf(ev.side), '#ffffff');
         this.plates[ev.side].hide();
@@ -353,7 +360,6 @@ export class BattleView {
       case 'battleEnd': {
         audio.stopMusic();
         audio.sfx(ev.winner === 0 ? 'victory' : 'defeat');
-        this.dir.go('victory', 0.9, Ease.inOutQuad);
         const w = this.actors[ev.winner === 'draw' ? 0 : ev.winner];
         if (w) w.state = 'ready';
         set(1.4);

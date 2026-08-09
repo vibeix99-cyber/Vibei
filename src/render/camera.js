@@ -79,6 +79,28 @@ export class CameraDirector {
     this._dollyMax = seconds;
   }
 
+  /**
+   * Called by BattleView for every battle event, before the event's own beat runs.
+   * ALL shot selection lives here — BattleView must not choose shots itself.
+   * @param {object} ev   the BattleEvent
+   * @param {object} ctx  { big:boolean, crit:boolean, lethal:boolean, speed:number }
+   */
+  onEvent(ev, ctx = {}) {
+    const side = ev.side ?? 0;
+    switch (ev.t) {
+      case 'turnStart': this.go('standard', 0.5); break;
+      case 'switchIn':  this.go(this.shotFor('entry', side), 0.28, Ease.outQuart); break;
+      case 'moveUsed':  this.go(this.shotFor(ctx.big ? 'low' : 'hero', side), ctx.big ? 0.32 : 0.24, Ease.outQuart); break;
+      case 'damage':
+        this.go(this.shotFor('impact', side), 0.16, Ease.outQuint);
+        if (ctx.crit) this.punch(0.5, 0.22);
+        break;
+      case 'faint':     this.go(this.shotFor('ko', side), 0.3, Ease.outQuart); break;
+      case 'battleEnd': this.go('victory', 0.9, Ease.inOutQuad); break;
+      default: break;
+    }
+  }
+
   update(dt) {
     if (this.blend < 1) {
       this.blend = Math.min(1, this.blend + dt / this.blendTime);
