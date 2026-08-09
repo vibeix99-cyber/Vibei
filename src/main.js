@@ -9,7 +9,9 @@ import { audio } from './audio/audio.js';
 import { TitleScreen } from './ui/screens/title.js';
 import { BattleScreen } from './ui/screens/battle.js';
 import { ResultsScreen } from './ui/screens/results.js';
-import { VersusScreen, SingleScreen, DexScreen, TeamBuilderScreen, OptionsScreen } from './ui/screens/simple.js';
+import { VersusScreen, SingleScreen, TeamBuilderScreen, OptionsScreen } from './ui/screens/simple.js';
+import { DexScreen } from './ui/screens/dex.js';
+import { openHelp, closeHelp, isHelpOpen } from './ui/screens/help.js';
 
 import * as engine from './core/engine.js';
 import { MOVES } from './data/moves.js';
@@ -89,6 +91,9 @@ class App {
     this.router.register('teambuilder', TeamBuilderScreen);
     this.router.register('options', OptionsScreen);
 
+    this.openHelp = (tab) => openHelp(this, tab);
+    this.closeHelp = closeHelp;
+
     addEventListener('keydown', (e) => this.onKey(e));
     addEventListener('pointerdown', () => audio.resume(), { once: true });
     addEventListener('keydown', () => audio.resume(), { once: true });
@@ -116,7 +121,14 @@ class App {
       this.saveSettings();
       return;
     }
-    if (e.key === 'Escape' && this.router.currentId !== 'title') { this.router.go('title'); return; }
+    if (e.key === '?' || (e.key === 'h' && !e.metaKey && !e.ctrlKey)) {
+      isHelpOpen() ? closeHelp() : openHelp(this);
+      return;
+    }
+    if (e.key === 'Escape') {
+      if (isHelpOpen()) { closeHelp(); return; }
+      if (this.router.currentId !== 'title') { this.router.go('title'); return; }
+    }
     if (this.router.current?.key?.(e)) e.preventDefault();
   }
 
