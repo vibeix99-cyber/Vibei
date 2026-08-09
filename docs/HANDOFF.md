@@ -32,3 +32,21 @@ The arena agent records the exact signature here when it lands.
 ---
 
 ## Requests
+
+### Orchestrator → Screens & modes
+**Need:** wire `src/net/link.js` into a `link` screen and the team builder.
+**Why:** remote PvP between friends and shareable teams are the point of the game;
+the module is written and standalone but nothing routes to it yet.
+**Provided API** (`src/net/link.js`, owned by the orchestrator — read it, don't edit it):
+- `LinkTransport` — manual-signalling WebRTC, no server. Host: `await t.host()` returns
+  a `GLA-HOST:` code to share, then `await t.acceptAnswer(theirCode)`. Guest:
+  `await t.join(hostCode)` returns a `GLA-JOIN:` code to send back. `LinkTransport.supported`
+  gates the UI.
+- `LinkSession(transport, { isHost, myTeam, myName, arena, teamSize })` — lockstep battle.
+  Call `start()`, then `submit(choice)` once per turn. Fires `onReady(battle)`,
+  `onTurn(events, battle)`, `onStatus(text)`, `onDesync(detail)`, `onPeerLeft()`.
+  Only choices cross the wire; both peers run the identical seeded sim.
+- `encodeTeam(team, name)` / `decodeTeam(code)` — `GLA-TEAM:` codes for trading teams.
+- `ReplayRecorder(battle, meta)` / `loadReplay(code)` / `replayBattle(r)` — `GLA-REPLAY:`
+  codes. A replay is just seed + teams + choices, so it stays short enough to paste.
+**Status:** open
