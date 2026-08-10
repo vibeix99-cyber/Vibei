@@ -276,3 +276,70 @@ solved from constraints, and "stand somewhere else" is not one of the levers
 left. If they are real, the fix is on the arena side (raise the rigging above
 head height, or mark decorative geometry so it does not read as an occluder).
 **Status:** open
+
+---
+
+### Content → AI (`src/core/ai.js`)
+**Need:** the AI assigns exactly zero value to `pivot` and `pursuit`.
+
+`src/data/moves.js` now carries twelve pivot moves and five pursuit moves, and
+20 of the 32 default level-50 sets contain one. `scoreMoves` scores a damaging
+move purely on `est.expected` plus riders read out of `move.effects`; a pivot
+carries no effects, so a 70 BP pivot is scored as a 70 BP move and loses to the
+120 BP move sitting next to it. Measured over 300 AI-vs-AI games (`ace` tier),
+default sets:
+
+```
+  move           offered   used    pick rate
+  shade_slip         158     35       22.2%     ← coverage, gets used
+  flash_relay        346     72       20.8%
+  gale_exit          300     58       19.3%
+  mind_relay         786    107       13.6%
+  hit_and_fade       515     32        6.2%
+  cut_and_run        389      2        0.5%     ← dominated by a same-type
+  volt_relay         230      2        0.9%       nuke in the same set
+  scrap_launch       129      1        0.8%
+```
+
+A pivot only fires when it happens to be the best raw damage for the matchup.
+Voluntary switches plus pivots currently land at 1.18 per game, 13.4% of turns
+(the baseline was 0.48 and 3.6%). The remaining gap to a genuine switching meta
+is one term in `scoreMoves`: something like
+
+```js
+if (mv.flags?.includes('pivot') && myBodies > 0) score += 18 + 10 * hazardBurden(state, 1 - side);
+```
+
+plus a `pursuit` term that reads how likely the foe is to leave. `utilityValue`
+also has no case for `custom: 'pivot'` — it falls through to `default: v += 6`,
+which is why `parting_note` (a Parting Shot) is valued only for its stat drop.
+**Status:** open
+
+### Content → tools (`tools/movebudget.mjs`)
+**Need:** two stale allow-lists, both now producing false reports.
+
+- `CUSTOM` does not list `pivot`, so `parting_note` is reported as
+  `unknown custom handler pivot`. The engine has had `CUSTOM.pivot` since the
+  pivot work (`engine.js`, the `CUSTOM` table) and `docs/ARCHITECTURE.md` §2.2
+  documents `{ kind:'custom', value:'pivot' }` as a supported form.
+- `INERT_VOLATILES` still lists `torment`, `perish`, `imprison`, `minimized`
+  and `rooted` as "declared in status.js but the engine does not act on it
+  yet". The engine acts on all five (`engine.js`: `moveLegality` for torment
+  and imprison, the perish tick in the residual pass, `damage.js` for
+  `minimized`, the `rooted` heal and `TRAPPING_VOLATILES`). Eleven moves now
+  apply them, so the audit emits eleven warnings that are no longer true.
+
+**Status:** open
+
+### Content → Engine (`src/core/engine.js`)
+**Observation, not a request:** `tests/critic/mechanics.mjs` fails its new
+IMPRISON primitive, and the failure is a contract wrinkle rather than a broken
+mechanic. Imprison works — with `mirror_seal` up, a foe told to use a sealed
+move visibly uses a different one — but the rejection happens when the choice
+is validated, so the move is silently swapped and the documented
+`cannotMove` reason `'imprison'` (ARCHITECTURE §4) never reaches the event
+stream. Torment does emit it, because torment can only become true mid-turn.
+Either the choice validator should let a sealed move through to `executeMove`
+so the player is told why, or §4 should say that `'imprison'` only fires when
+the seal lands after choices were locked.
+**Status:** open
