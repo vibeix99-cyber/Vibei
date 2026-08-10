@@ -1369,10 +1369,17 @@ export class CameraDirector {
     const busy = v ? ((v.queue?.length || 0) > 0 || (v.gate || 0) > 0
       || (v.beats ? v.beats.some((b) => b.blocking) : false)) : true;
     const waiting = !!v && !busy;
+    let asked = null;
+    if (waiting) {
+      try { const w = globalThis.__ARENA?.battle?.waitingFor?.(); if (w === 0 || w === 1) asked = w; } catch { /* ignore */ }
+      // The opening sweep owns the frame right up until the game asks for
+      // something — and then it does not, because turn 0 is a decision like
+      // any other and gets the same frame to make it from.
+      if (asked !== null) this._opening = false;
+    }
     if (waiting && !this._opening) {
       this._idle += dt;
-      let cs = 0;
-      try { const w = globalThis.__ARENA?.battle?.waitingFor?.(); if (w === 0 || w === 1) cs = w; } catch { /* ignore */ }
+      const cs = asked ?? 0;
       if (this.shot?.id === 'rest') {
         this.shot = this._rest(cs);       // already home: keep re-framing, never restart
         this._commanded = true;
