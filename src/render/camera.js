@@ -446,14 +446,17 @@ export class CameraDirector {
     // Pass 2: frame share. Measured, not estimated: how much of the frame an
     // actor takes is decided by its bounding box, and Big Mom's box is wider
     // than she is tall, so a height-only estimate under-reads her by a third.
-    // Projected size goes as 1/depth, so the distance the box *should* be at
-    // is the distance it is at times how far over budget it is — two or three
-    // corrections and it sits on the limit.
-    for (let pass = 0; pass < 3 && moved < 200; pass++) {
+    //
+    // Projected size goes as 1/depth, and depth is not radial distance for an
+    // actor off to one side — a full correction therefore overshoots, and the
+    // camera can only ever be pushed further out, so an overshoot is permanent
+    // and comes straight off the other fighter. Take 72% of the correction and
+    // converge on the limit from below instead of past it.
+    for (let pass = 0; pass < 4 && moved < 200; pass++) {
       const t = this._backOff(p, at, (s) => {
         const span = this._projSpan(s, p, at, fov);
         if (span <= maxFill) return 0;
-        return _c1.distanceTo(p) * Math.min(span / maxFill, 4);
+        return _c1.distanceTo(p) * (1 + 0.72 * Math.min(span / maxFill - 1, 3));
       });
       moved += t;
       if (t < 0.02) break;
