@@ -80,6 +80,12 @@ const MEASURE = () => {
   const THREE = A.debug.THREE;
   const cam = A.stage.camera;
   const W = innerWidth, H = innerHeight;
+  const worldBox = (obj) => {
+    if (!obj) return null;
+    const b = new THREE.Box3().setFromObject(obj);
+    if (b.isEmpty()) return null;
+    return [+(b.max.y - b.min.y).toFixed(2), +(b.max.x - b.min.x).toFixed(2), +(b.max.z - b.min.z).toFixed(2)];
+  };
   const project = (obj) => {
     if (!obj) return null;
     const box = new THREE.Box3().setFromObject(obj);
@@ -116,9 +122,33 @@ const MEASURE = () => {
   const st = A.battle.state();
   const who = (i) => { const sd = st?.sides?.[i]; const p = sd?.party?.[sd.activeIndex]; return p ? p.speciesId : null; };
   const tb = document.querySelector('.textbox .txt');
+  // Is arena geometry standing between the camera and the fighter?
+  const blocked = (side) => {
+    const root = view.actors[side]?.root;
+    if (!root) return null;
+    const box = new THREE.Box3().setFromObject(root);
+    if (box.isEmpty()) return null;
+    const c = box.getCenter(new THREE.Vector3());
+    c.y = box.min.y + (box.max.y - box.min.y) * 0.7;
+    const dir = c.clone().sub(cam.position);
+    const dist = dir.length();
+    const rc = new THREE.Raycaster(cam.position, dir.normalize(), 0.05, dist - 0.02);
+    rc.camera = cam;
+    const hits = rc.intersectObjects(A.stage.scene.children, true)
+      .filter((h) => h.object.visible && h.object.material && h.object.material.opacity !== 0
+        && !(h.object.material.transparent && h.object.material.opacity < 0.35));
+    for (const h of hits) {
+      let o = h.object, mine = false;
+      while (o) { if (o === root) { mine = true; break; } o = o.parent; }
+      if (!mine) return h.object.name || h.object.type;
+    }
+    return null;
+  };
   return {
     p0: project(view.actors[0]?.root), p1: project(view.actors[1]?.root),
     d0: near(0), d1: near(1),
+    blk0: blocked(0), blk1: blocked(1),
+    box0: worldBox(view.actors[0]?.root), box1: worldBox(view.actors[1]?.root),
     sp0: who(0), sp1: who(1),
     cam: [+cam.position.x.toFixed(2), +cam.position.y.toFixed(2), +cam.position.z.toFixed(2)],
     fov: +cam.fov.toFixed(1),
@@ -141,9 +171,13 @@ async function sample(page, name, tag) {
   if ((m.p1?.hPct || 0) < 10) bad.push(`P1 tiny ${m.p1?.hPct}%`);
   if ((m.p0?.onScreen ?? 1) < 0.55) bad.push(`P0 half out (${m.p0?.onScreen})`);
   if ((m.p1?.onScreen ?? 1) < 0.55) bad.push(`P1 half out (${m.p1?.onScreen})`);
+  if (m.blk0) bad.push(`P0 occluded by ${m.blk0}`);
+  if (m.blk1) bad.push(`P1 occluded by ${m.blk1}`);
   rows.push({ name, tag, bad, ...m });
   const f = (p) => p ? `${String(p.wPct).padStart(5)}x${String(p.hPct).padStart(5)}%${p.inView ? '' : ' OFF'}` : '  --- ';
-  console.log(`  ${name.padEnd(26)} ${String(m.diag?.shot).padEnd(9)} ${m.sp0}:${f(m.p0)} d=${m.d0}  ${m.sp1}:${f(m.p1)} d=${m.d1}  fov=${m.fov}` + (bad.length ? `   <<< ${bad.join(', ')}` : ''));
+  console.log(`  ${name.padEnd(26)} ${String(m.diag?.shot).padEnd(9)} ${m.sp0}:${f(m.p0)} d=${m.d0}  ${m.sp1}:${f(m.p1)} d=${m.d1}  fov=${m.fov}`
+    + ` box=${JSON.stringify(m.box0)}/${JSON.stringify(m.box1)} full=${JSON.stringify(m.diag?.fulls)}`
+    + (bad.length ? `   <<< ${bad.join(', ')}` : ''));
   return m;
 }
 
@@ -185,21 +219,23 @@ async function playerAct(page, kind) {
 /* ------------------------------------------------------------------ */
 
 const PAIRS = [
-  ['colosseum', ['luffy', 'nami', 'zoro'], ['ace', 'usopp', 'law']],          // the critic's own
-  ['marineford', ['luffy', 'nami', 'zoro'], ['ace', 'usopp', 'law']],
   ['marineford', ['chopper', 'nami'], ['bigmom', 'usopp']],                   // 0.9 vs 8.8
   ['onigashima', ['levi', 'nami'], ['kaido', 'usopp']],                       // 1.6 vs 7.1
   ['skypiea', ['kaido', 'nami'], ['levi', 'usopp']],                          // giant is the PLAYER
   ['baratie', ['bigmom', 'nami'], ['katakuri', 'usopp']],                     // two giants
-  ['sunny_deck', ['chopper', 'nami'], ['killua', 'usopp']]                    // two small fighters
+  ['sunny_deck', ['chopper', 'nami'], ['killua', 'usopp']],                   // two small fighters
+  ['colosseum', ['luffy', 'nami', 'zoro'], ['ace', 'usopp', 'law']],          // the critic's own
+  ['marineford', ['luffy', 'nami', 'zoro'], ['ace', 'usopp', 'law']]
 ];
+
+const TURNS = Number(args.turns || 3);
 
 async function scenRest(page) {
   for (const [arena, p0, p1] of PAIRS) {
     const tagBase = `${p0[0]}-vs-${p1[0]}-${arena}`;
     console.log(`\n▶ ${tagBase}`);
     await startBattle(page, { seed: 'CAM-REST-' + tagBase, arena, p0, p1 });
-    for (let t = 0; t < 4; t++) {
+    for (let t = 0; t < TURNS; t++) {
       await waitIdle(page);
       await waitGame(page, 1.6);
       await sample(page, `rest-${tagBase}-t${t}`, `command prompt, turn ${t}`);

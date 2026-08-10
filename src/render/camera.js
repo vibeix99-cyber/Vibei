@@ -115,6 +115,16 @@ const pose = (pos, look, fov) => ({ pos, look, fov });
 /** Shortest camera move allowed while reduced motion is on. Never a cut. */
 const REDUCED_BLEND = 1.1;
 
+/**
+ * How far out the camera may actually stand. `_safe` pulls anything past the
+ * arena disc back in, which used to happen *after* the framing was solved —
+ * so a two-shot that asked for 29 m to fit an 8.8 m Big Mom silently got 23,
+ * and she came out a third bigger than the frame budget said. Shots solve
+ * against this number instead, and open the lens when the pair will not fit
+ * from inside the arena.
+ */
+const REACH = 21.5;
+
 /* ------------------------------------------------------------------ */
 
 export class CameraDirector {
@@ -127,7 +137,8 @@ export class CameraDirector {
       home: SLOT_POS[i].clone(),
       aim: SLOT_POS[i].clone(),
       head: SLOT_POS[i].clone().setY(1.78),
-      headH: 1.78, topH: 1.95, halfW: 0.45, top: 1.95, down: false
+      headH: 1.78, topH: 1.95, fullH: 2.16, halfW: 0.45,
+      top: 1.95, full: 2.16, down: false
     }));
     this.gScale = 1;
 
@@ -214,12 +225,16 @@ export class CameraDirector {
       ok = !_box.isEmpty() && isFinite(_box.max.y);
     } catch { ok = false; }
 
-    if (!ok) { s.topH = s.h * 1.08; s.halfW = 0.45 * s.scale; return; }
+    if (!ok) { s.topH = s.h * 1.08; s.fullH = s.h * 1.25; s.halfW = 0.45 * s.scale; return; }
     const propTop = _box.max.y * s.scale;
     const headTop = 2.02 * s.scale;
     // Frame the head with real headroom and let a raised weapon crop, the way
     // an operator would: only a third of the prop's reach is honoured.
     s.topH = clamp(headTop + 0.34 * Math.max(0, propTop - headTop), s.h * 0.95, s.h * 1.5);
+    // …but *size* limits have to answer for everything the model actually
+    // draws. Kaido's horns put a metre and a half above his head, and a limit
+    // measured to the head is a limit the frame quietly breaks.
+    s.fullH = clamp(propTop, s.topH, s.h * 2.4);
     s.halfW = clamp(Math.max(_box.max.x - _box.min.x, _box.max.z - _box.min.z) * 0.5 * s.scale * 0.85,
       0.35 * s.scale, 1.1 * s.h);
   }
@@ -253,6 +268,8 @@ export class CameraDirector {
       }
       s.head.copy(s.aim).setY(s.aim.y + s.headH);
       s.top = Math.max(s.head.y + 0.16 * s.h, s.aim.y + s.topH);
+      // Height budgets are measured against this, framing against `top`.
+      s.full = Math.max(s.top, s.aim.y + s.fullH) + 0.22 * s.halfW;
     }
     this.gScale = Math.max(this.act[0].scale, this.act[1].scale);
   }
@@ -267,8 +284,10 @@ export class CameraDirector {
     s.scale = s.h / 1.8;
     s.headH = s.h * 0.988;
     s.topH = s.h * 1.12;
+    s.fullH = s.h * 1.28;
     s.halfW = 0.45 * s.scale;
     s.top = s.topH;
+    s.full = s.fullH;
     s.ref = null;
     this.gScale = Math.max(this.act[0].scale, this.act[1].scale);
   }
@@ -413,10 +432,10 @@ export class CameraDirector {
       // Nearest point of the actor's standing volume: a vertical segment from
       // the deck to the top of the head. Height matters — clearing a fighter
       // overhead is legitimate, being level with their chest at 40 cm is not.
-      const hi = s.aim.y + Math.max(0.35, s.top);
+      const hi = s.aim.y + Math.max(0.35, s.full);
       _c1.set(s.aim.x, clamp(p.y, s.aim.y + 0.05, hi), s.aim.z);
       const body = s.halfW + 0.5 + 0.2 * s.scale;
-      const frame = maxFill > 0 ? Math.max(0.35, s.top) / (2 * maxFill * tv) : 0;
+      const frame = maxFill > 0 ? Math.max(0.35, s.full) / (2 * maxFill * tv) : 0;
       const need = Math.max(body, frame);
       _c2.copy(p).sub(_c1);
       const q2 = _c2.lengthSq();
@@ -458,14 +477,14 @@ export class CameraDirector {
    */
   _twoShot(o) {
     const a = this.act[0], b = this.act[1];
-    const tall = Math.max(a.top, b.top);
+    const tall = Math.max(a.full, b.full);
     const wide = SEP + a.halfW + b.halfW;
     const gk = this._giantK(tall);
-    const bigIs1 = b.top > a.top;
+    const bigIs1 = b.full > a.full;
     const big = bigIs1 ? b : a, small = bigIs1 ? a : b;
     const sgn = bigIs1 ? -1 : 1;              // axial direction toward the smaller fighter
-    const fillV = o.fillV, fillH = o.fillH, minFill = o.minFill ?? 0;
-    const yaw = o.yaw || 0;
+    const fillH = o.fillH, minFill = o.minFill ?? 0;
+    let fillV = o.fillV;
 
     // Giants get a lower camera and a flatter tilt — look up at them, not down.
     const elev = o.elev * (1 - 0.55 * gk) + (o.elev * 0.06);
@@ -473,83 +492,107 @@ export class CameraDirector {
     const ce = Math.cos(elev);
 
     /** Stand-off from MID for the centred two-shot at a given lens. */
-    const symStand = (f) => ce * this._fitDist(tall / fillV, wide / fillH, f);
+    const symStand = (f) => Math.min(REACH, ce * this._fitDist(tall / fillV, wide / fillH, f));
     /**
      * Camera foot on the "big fighter exactly `fillV` tall" circle, `n` out
      * from the fighter axis. Axial offset is measured toward the smaller
-     * fighter; `fill` is that fighter's share of frame height from there.
+     * fighter; `fill` is that fighter's share of frame height from there and
+     * `spanX` the slice of frame *width* the pair covers — coming closer buys
+     * the small fighter height at the price of width, and off the end of that
+     * trade both fighters simply leave the frame sideways.
+     *
+     * Both are monotone in `n` (dS² = dT² + SEP² − 2·dT·SEP·cosθ shrinks as
+     * the camera swings in), which is what makes the bisections below legal.
      */
     const foot = (f, n) => {
-      const tv = Math.tan(f * DEG * 0.5);
-      const dT = big.top / (2 * tv * fillV);
+      const tv = Math.tan(f * DEG * 0.5), th = tv * this.aspect;
+      const dT = big.full / (2 * tv * fillV);
       const cu = Math.max(0, Math.sqrt(Math.max(0, dT * dT - n * n)) - SEP * 0.5);
       const dS = Math.max(0.5, Math.hypot(SEP * 0.5 - cu, n));
-      return { cu, dS, fill: small.top / (2 * tv * dS) };
+      const half = Math.abs(Math.atan2(SEP * 0.5 + small.halfW - cu, n)
+        - Math.atan2(-(SEP * 0.5 + big.halfW) - cu, n)) * 0.5;
+      return {
+        cu, dS,
+        fill: small.full / (2 * tv * dS),
+        spanX: Math.tan(Math.min(half, 1.45)) / th
+      };
     };
 
+    // The lens. It only ever opens, and only for a reason: first so the pair
+    // fits at all from inside the arena, then — if the smaller fighter is
+    // still a smudge — as far as `fovMax` to buy back the perspective that
+    // makes them readable. `foot(f, nMin).fill` rises with f, because a wider
+    // lens lets the camera stand closer to everything and the near fighter
+    // gains far more from that than the far one loses.
     let fov = o.fov;
-    let hor = symStand(fov);
-    let cn = Math.cos(yaw) * hor, cu = Math.sin(yaw) * hor, deep = 0;
-
-    // Is the smaller fighter still legible from the centred shot?
-    const tv0 = Math.tan(fov * DEG * 0.5);
-    const dSym = Math.max(0.5, Math.hypot(SEP * 0.5 - sgn * cu, cn));
-    if (minFill > 0 && small.top / (2 * tv0 * dSym) < minFill) {
-      // Closest the camera may ever come: outside the near fighter's body, off
-      // the 180° line, and further out again when the pair is enormous.
-      const nMin = Math.max(o.minSide ?? 1.6, small.halfW + 1.15 + 0.85 * small.scale) * (0.92 + 0.7 * gk);
-
-      // 1. the lens. `foot(f, nMin).fill` rises with f — a wider lens lets the
-      //    camera stand closer to everything, and the near fighter gains far
-      //    more from that than the far one loses. Take the narrowest that works.
-      const f1 = Math.max(fov, o.fovMax ?? fov);
-      if (f1 > fov && foot(fov, nMin).fill < minFill) {
-        if (foot(f1, nMin).fill < minFill) fov = f1;      // even wide open it cannot; take it all
-        else {
-          let lo = fov, hi = f1;
-          for (let i = 0; i < 16; i++) {
-            const mid = (lo + hi) * 0.5;
-            if (foot(mid, nMin).fill >= minFill) hi = mid; else lo = mid;
-          }
-          fov = hi;
-        }
-        hor = symStand(fov);
+    const fovMax = Math.max(fov, o.fovMax ?? fov);
+    const reachFov = 2 * Math.atan(Math.max(tall / (2 * fillV * REACH),
+      wide / (2 * fillH * REACH * this.aspect))) / DEG;
+    fov = clamp(Math.max(fov, reachFov), fov, fovMax);
+    // Closest the camera may ever come: outside the near fighter's body, off
+    // the 180° line, and further out again when the pair is enormous.
+    const nMin = Math.max(o.minSide ?? 1.6, small.halfW + 1.15 + 0.85 * small.scale) * (0.92 + 0.7 * gk);
+    if (minFill > 0 && fovMax > fov && foot(fov, nMin).fill < minFill
+        && foot(fovMax, nMin).fill >= minFill) {
+      let lo = fov, hi = fovMax;
+      for (let i = 0; i < 16; i++) {
+        const mid = (lo + hi) * 0.5;
+        if (foot(mid, nMin).fill >= minFill) hi = mid; else lo = mid;
       }
-
-      // 2. the stand-off. `fill` falls off with n, so the largest n that still
-      //    reaches `minFill` is the shallowest camera that does the job.
-      const nMax = Math.max(nMin, Math.cos(yaw) * hor);
-      let n = nMin;
-      if (foot(fov, nMax).fill >= minFill) n = nMax;
-      else {
-        let lo = nMin, hi = nMax;
-        for (let i = 0; i < 16; i++) {
-          const mid = (lo + hi) * 0.5;
-          if (foot(fov, mid).fill >= minFill) lo = mid; else hi = mid;
-        }
-        n = lo;
-      }
-      const f = foot(fov, n);
-      deep = nMax > nMin + 1e-3 ? clamp((nMax - n) / (nMax - nMin), 0, 1) : 0;
-      cn = lerp(Math.cos(yaw) * hor, n, deep);
-      cu = lerp(Math.sin(yaw) * hor, sgn * f.cu, deep);
+      fov = hi;
+    } else if (minFill > 0 && foot(fovMax, nMin).fill < minFill) {
+      fov = fovMax;                                  // even wide open; take it all
     }
+    const hor = symStand(fov);
+
+    // The stand-off. Everything from here rides the circle "the bigger fighter
+    // is exactly `fillV` tall", so closing in can never break the ceiling.
+    // `fill` falls off with n and `spanX` rises, so the pair of bisections
+    // brackets the shallowest camera that reads — and when the two disagree,
+    // width wins: a fighter half out of frame is worse than a small one.
+    const nMax = Math.max(nMin, hor);
+    let nFill = nMax, nSpan = nMin;
+    if (minFill > 0 && foot(fov, nMax).fill < minFill) {
+      let lo = nMin, hi = nMax;
+      for (let i = 0; i < 16; i++) {
+        const mid = (lo + hi) * 0.5;
+        if (foot(fov, mid).fill >= minFill) lo = mid; else hi = mid;
+      }
+      nFill = lo;
+    }
+    if (foot(fov, nMin).spanX > fillH) {
+      let lo = nMin, hi = nMax;
+      for (let i = 0; i < 16; i++) {
+        const mid = (lo + hi) * 0.5;
+        if (foot(fov, mid).spanX > fillH) lo = mid; else hi = mid;
+      }
+      nSpan = hi;
+    }
+    const n = clamp(Math.max(nFill, nSpan), nMin, nMax);
+    const deep = nMax > nMin + 1e-3 ? clamp((nMax - n) / (nMax - nMin), 0, 1) : 0;
+    // The three-quarter angle is a centred-shot luxury; a deep frame has spent
+    // its lateral budget already, so the yaw fades out as the camera swings in.
+    const yaw = (o.yaw || 0) * (1 - deep);
+    const cy = Math.cos(yaw), sy2 = Math.sin(yaw);
+    const fu = sgn * foot(fov, n).cu;
+    const cn = n * cy - fu * sy2, cuw = fu * cy + n * sy2;
 
     // Height: the elevated centred look when we are centred, dropping toward
     // the smaller fighter's own eye line as the shot goes deep — from down
     // there the giant reads as a giant instead of as a wall.
     const symY = pivotY + Math.sin(elev) * (hor / Math.max(0.2, ce));
-    const deepY = clamp(small.head.y * 0.9 + 0.06 * big.top, 0.8, 3.2);
+    const deepY = clamp(small.head.y * 0.9 + 0.06 * big.full, 0.8, 3.2);
     const p = new THREE.Vector3().copy(MID).setY(lerp(symY, deepY, deep))
-      .addScaledVector(N, cn).addScaledVector(U, cu);
+      .addScaledVector(N, cn).addScaledVector(U, cuw);
     this._safe(p, o.minSide ?? 1.6);
 
-    const lead = a.top >= b.top ? a : b;
+    const lead = a.full >= b.full ? a : b;
     const anchor = _a.copy(a.head).add(b.head).multiplyScalar(0.5)
       .setY((a.head.y + b.head.y) * 0.5);
-    // Nothing may sit closer than `fillV` allows, whatever the solve above did
-    // and whatever the actors do afterwards.
-    this._clearActors(p, anchor, fov, fillV * 1.08);
+    // And the ceiling is enforced, not merely aimed at: whatever the solve
+    // above did, whatever the actors do next, and whatever `_safe` had to move
+    // to keep the camera in the arena, nobody ends up taller than `fillV`.
+    this._clearActors(p, anchor, fov, fillV);
     this._safe(p, o.minSide ?? 1.6);
 
     const cons = [
@@ -1343,6 +1386,9 @@ export class CameraDirector {
       camY: +cp.y.toFixed(2), side: +sideOfAxis(cp).toFixed(2),
       intensity: +this.intensity.toFixed(2), shakeHold: +this.shakeHold.toFixed(2),
       heights: [+this.act[0].h.toFixed(2), +this.act[1].h.toFixed(2)],
+      tops2: [+this.act[0].top.toFixed(2), +this.act[1].top.toFixed(2)],
+      fulls: [+this.act[0].full.toFixed(2), +this.act[1].full.toFixed(2)],
+      halfW: [+this.act[0].halfW.toFixed(2), +this.act[1].halfW.toFixed(2)],
       heads: [], tops: [], feet: [], problems: []
     };
     const t = new THREE.Vector3();
