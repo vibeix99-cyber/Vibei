@@ -137,7 +137,7 @@ export class CameraDirector {
       home: SLOT_POS[i].clone(),
       aim: SLOT_POS[i].clone(),
       head: SLOT_POS[i].clone().setY(1.78),
-      headH: 1.78, topH: 1.95, fullH: 2.16, halfW: 0.45,
+      headH: 1.78, topH: 1.95, fullH: 2.16, halfW: 0.45, rad: 0.55,
       top: 1.95, full: 2.16, down: false
     }));
     this.gScale = 1;
@@ -225,7 +225,7 @@ export class CameraDirector {
       ok = !_box.isEmpty() && isFinite(_box.max.y);
     } catch { ok = false; }
 
-    if (!ok) { s.topH = s.h * 1.08; s.fullH = s.h * 1.25; s.halfW = 0.45 * s.scale; return; }
+    if (!ok) { s.topH = s.h * 1.08; s.fullH = s.h * 1.25; s.halfW = 0.45 * s.scale; s.rad = 0.55 * s.scale; return; }
     const propTop = _box.max.y * s.scale;
     const headTop = 2.02 * s.scale;
     // Frame the head with real headroom and let a raised weapon crop, the way
@@ -235,8 +235,12 @@ export class CameraDirector {
     // draws. Kaido's horns put a metre and a half above his head, and a limit
     // measured to the head is a limit the frame quietly breaks.
     s.fullH = clamp(propTop, s.topH, s.h * 2.4);
-    s.halfW = clamp(Math.max(_box.max.x - _box.min.x, _box.max.z - _box.min.z) * 0.5 * s.scale * 0.85,
-      0.35 * s.scale, 1.1 * s.h);
+    const halfXZ = Math.max(_box.max.x - _box.min.x, _box.max.z - _box.min.z) * 0.5 * s.scale;
+    // `halfW` is for keeping out of the way; `rad` is the honest half-extent
+    // the size budget is measured with. Big Mom is 7.4 m tall and 10 m wide,
+    // and it is the width that decides how much frame she projects into.
+    s.rad = clamp(halfXZ, 0.3 * s.scale, 2.2 * s.h);
+    s.halfW = clamp(halfXZ * 0.85, 0.35 * s.scale, 1.1 * s.h);
   }
 
   _sample(dt) {
@@ -268,8 +272,13 @@ export class CameraDirector {
       }
       s.head.copy(s.aim).setY(s.aim.y + s.headH);
       s.top = Math.max(s.head.y + 0.16 * s.h, s.aim.y + s.topH);
-      // Height budgets are measured against this, framing against `top`.
-      s.full = Math.max(s.top, s.aim.y + s.fullH) + 0.22 * s.halfW;
+      // Framing aims at `top`; size budgets are spent against `full`, which is
+      // the *projected* extent of the bounding box, not its height. A box half
+      // as wide as it is tall adds a quarter of its width to what it covers,
+      // because the near-bottom and far-top corners are at different depths —
+      // measured across the roster, `+ rad/2` predicts the real projection to
+      // within a couple of percent, from Chopper to Kaido.
+      s.full = Math.max(s.top, s.aim.y + s.fullH) + 0.5 * s.rad;
     }
     this.gScale = Math.max(this.act[0].scale, this.act[1].scale);
   }
@@ -286,6 +295,7 @@ export class CameraDirector {
     s.topH = s.h * 1.12;
     s.fullH = s.h * 1.28;
     s.halfW = 0.45 * s.scale;
+    s.rad = 0.55 * s.scale;
     s.top = s.topH;
     s.full = s.fullH;
     s.ref = null;
@@ -421,22 +431,47 @@ export class CameraDirector {
    * @param {number} maxFill       largest slice of frame height any actor may own
    */
   _clearActors(p, at, fov, maxFill = 1) {
-    const tv = Math.tan(clamp(fov, 8, 90) * DEG * 0.5);
+    // Pass 1: bodies. Analytic and absolute — the camera is never inside one.
+    let moved = this._backOff(p, at, (s) => s.halfW + 0.5 + 0.2 * s.scale);
+    if (maxFill <= 0) return p;
+    // Pass 2: frame share. Measured, not estimated: how much of the frame an
+    // actor takes is decided by its bounding box, and Big Mom's box is wider
+    // than she is tall, so a height-only estimate under-reads her by a third.
+    // Projected size goes as 1/depth, so the distance the box *should* be at
+    // is the distance it is at times how far over budget it is — two or three
+    // corrections and it sits on the limit.
+    for (let pass = 0; pass < 3 && moved < 200; pass++) {
+      const t = this._backOff(p, at, (s) => {
+        const span = this._projSpan(s, p, at, fov);
+        if (span <= maxFill) return 0;
+        return _c1.distanceTo(p) * Math.min(span / maxFill, 4);
+      });
+      moved += t;
+      if (t < 0.02) break;
+    }
+    return p;
+  }
+
+  /**
+   * Move `p` back along the view axis until it is at least `needOf(actor)`
+   * from every actor. `_c1` is left holding the last actor's reference point,
+   * which `_clearActors` reads back for the distance it just measured.
+   */
+  _backOff(p, at, needOf) {
     _c0.copy(at).sub(p);
     const L = _c0.length();
-    if (!(L > 1e-4)) return p;
+    if (!(L > 1e-4)) return 0;
     _c0.multiplyScalar(1 / L);                         // unit view direction
     let push = 0;
     for (let i = 0; i < 2; i++) {
       const s = this.act[i];
-      // Nearest point of the actor's standing volume: a vertical segment from
-      // the deck to the top of the head. Height matters — clearing a fighter
-      // overhead is legitimate, being level with their chest at 40 cm is not.
+      // Reference point on the actor's standing volume, at the camera's own
+      // height where possible: clearing a fighter overhead is legitimate,
+      // being level with their chest at 40 cm is not.
       const hi = s.aim.y + Math.max(0.35, s.full);
       _c1.set(s.aim.x, clamp(p.y, s.aim.y + 0.05, hi), s.aim.z);
-      const body = s.halfW + 0.5 + 0.2 * s.scale;
-      const frame = maxFill > 0 ? Math.max(0.35, s.full) / (2 * maxFill * tv) : 0;
-      const need = Math.max(body, frame);
+      const need = needOf(s);
+      if (!(need > 0)) continue;
       _c2.copy(p).sub(_c1);
       const q2 = _c2.lengthSq();
       if (q2 >= need * need) continue;
@@ -446,8 +481,27 @@ export class CameraDirector {
       const t = b + Math.sqrt(Math.max(0, b * b - q2 + need * need));
       if (t > push) push = t;
     }
-    if (push > 1e-4) p.addScaledVector(_c0, -Math.min(push, 60));
-    return p;
+    if (push > 1e-4) { push = Math.min(push, 60); p.addScaledVector(_c0, -push); return push; }
+    return 0;
+  }
+
+  /**
+   * The fraction of frame height an actor's bounding box actually projects
+   * into, from this pose — the same number the critic's harness measures, so
+   * the budget and the verdict are computed the same way.
+   */
+  _projSpan(s, p, at, fov) {
+    const r = Math.max(0.2, s.rad);
+    const y1 = s.aim.y + Math.max(0.3, s.fullH);
+    let lo = 1e9, hi = -1e9;
+    for (let i = 0; i < 8; i++) {
+      _k[3].set(s.aim.x + (i & 1 ? r : -r), (i & 2) ? y1 : s.aim.y, s.aim.z + (i & 4 ? r : -r));
+      this._project(_k[3], p, at, fov, _k[4]);
+      if (_k[4].z <= 0.05) return 9;                   // straddling the lens: as bad as it gets
+      if (_k[4].y < lo) lo = _k[4].y;
+      if (_k[4].y > hi) hi = _k[4].y;
+    }
+    return hi - lo;
   }
 
   /* ---------------------------------------------------------------- */
@@ -691,7 +745,7 @@ export class CameraDirector {
     return {
       id: 'establish', imp: 2, minHold: 1.0, subject: null,
       live: (t) => this._twoShot({
-        fov: 33, fovMax: 52, fillV: 0.56, minFill: 0.085,
+        fov: 33, fovMax: 56, fillV: 0.55, minFill: 0.10,
         fillH: 0.54 + Math.min(t, 2.5) * 0.035 + push * 0.06,
         elev: 0.30, yaw: -0.11, pivot: 0.46, sy: 0.34
       })
@@ -703,7 +757,7 @@ export class CameraDirector {
     return {
       id: 'neutral', imp: 1, minHold: 0.8, subject: null,
       live: () => this._twoShot({
-        fov: 40, fovMax: 60, fillV: 0.58, minFill: 0.14, fillH: 0.74,
+        fov: 40, fovMax: 62, fillV: 0.56, minFill: 0.13, fillH: 0.74,
         elev: 0.215, yaw: -0.07, pivot: 0.46
       })
     };
@@ -730,7 +784,7 @@ export class CameraDirector {
       id: 'rest', imp: 1, minHold: 1.1, subject: null,
       live: (t) => this._twoShot({
         fov: 38, fovMax: 62,
-        fillV: 0.55, minFill: 0.16,
+        fillV: 0.55, minFill: 0.15,
         fillH: 0.735 - Math.min(t, 2.2) * 0.010,      // a very slow settle in
         elev: 0.205, yaw: s === 0 ? -0.10 : 0.10, pivot: 0.46,
         sx: s === 0 ? 0.485 : 0.515, sy: 0.35, minSide: 1.8
