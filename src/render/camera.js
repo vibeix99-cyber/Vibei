@@ -972,7 +972,7 @@ export class CameraDirector {
     return {
       id: 'impact', imp: 2, minHold: 0.5, subject: defSide,
       live: (t) => this._overShoulder({
-        near: atk, back: 1.35, nearCap: 0.92,
+        near: atk, back: 1.35, nearCap: 0.84,
         fill: clamp(0.42 + power * 0.10, 0.38, 0.58),
         fovMin: 21, fovMax: 44,
         nearX: atk === 0 ? 0.11 : 0.89,
@@ -989,7 +989,7 @@ export class CameraDirector {
     return {
       id: 'finisher', imp: 3, minHold: 1.25, subject: defSide,
       live: (t) => this._overShoulder({
-        near: atk, back: 1.85, nearCap: 1.02,
+        near: atk, back: 1.85, nearCap: 0.95,
         fill: 0.50, fovMin: 20, fovMax: 38,
         nearX: atk === 0 ? 0.10 : 0.90,
         farX: atk === 0 ? 0.60 : 0.40,
@@ -1553,9 +1553,11 @@ export class CameraDirector {
     this._safe(p, 0.42);
     // Last line of defence, after blends, punches, kicks and handheld have all
     // had their say: whatever the shots asked for, the rendered camera is never
-    // inside a fighter. A blend between two legal poses can still pass through
-    // one, and that is exactly the frame a screenshot lands on.
-    this._clearActors(p, this.cur.look, fov, 1.3);
+    // inside a fighter and nobody ever renders taller than the frame. A blend
+    // between two legal poses can pass through an actor, and a crit punch adds
+    // a metre of dolly on top of an over-the-shoulder that was already tight —
+    // and those are exactly the frames a screenshot lands on.
+    this._clearActors(p, this.cur.look, fov, 1.05);
     this._safe(p, 0.42);
 
     this._base.copy(p);
