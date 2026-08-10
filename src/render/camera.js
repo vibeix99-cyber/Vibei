@@ -930,7 +930,11 @@ export class CameraDirector {
       side: s,
       id: 'rest', imp: 1, minHold: 1.1, subject: null,
       live: (t) => this._twoShot({
-        fov: 38, fovMax: 64,
+        // The lens is allowed to open a long way, because for a 10:1 pairing it
+        // is the *only* lever that helps both fighters at once: widening lets
+        // the camera stand closer to the small one without the big one growing.
+        // Retreating instead would meet the ceiling and starve the small one.
+        fov: 38, fovMax: 70,
         // 0.55 rather than 0.48: now that the ceiling is measured and enforced
         // exactly, every point of headroom given away here comes straight off
         // the smaller fighter, who has far less to spare.
