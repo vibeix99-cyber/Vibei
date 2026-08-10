@@ -373,8 +373,8 @@ def({ id: 'sables', name: 'Sables', type: 'EARTH', category: 'special', power: 8
 def({ id: 'grand_quake', name: 'Grand Quake', type: 'EARTH', category: 'physical', power: 95, accuracy: 100, pp: 10, flags: ['protect'],
   desc: 'Shakes the whole arena. WIND types float clear.', flavor: 'One stamp. The floor stops being a floor for a moment.',
   fx: { key: 'quake', color: '#a8804a', shape: 'burst', scale: 1.8, hitstop: 150, shake: 1.5, sfx: 'quake' } });
-def({ id: 'continental_press', name: 'Continental Press', type: 'EARTH', category: 'physical', power: 130, accuracy: 85, pp: 5, contact: true, flags: ['protect'],
-  desc: 'Colossal, and hard to place.', flavor: 'Geology, brought forward on the schedule.',
+def({ id: 'continental_press', name: 'Continental Press', type: 'EARTH', category: 'physical', power: 130, accuracy: 85, pp: 5, contact: true, flags: ['crush', 'protect'],
+  desc: 'Colossal, hard to place, and doubled on a small target.', flavor: 'Geology, brought forward on the schedule.',
   fx: { key: 'plate_slam', color: '#8f6a3d', shape: 'burst', scale: 2.2, hitstop: 220, shake: 1.8, sfx: 'quake' } });
 def({ id: 'strata_spear', name: 'Strata Spear', type: 'EARTH', category: 'special', power: 130, accuracy: 95, pp: 5, flags: ['charge', 'protect'],
   chargeText: 'The ground begins to split and stack…',
@@ -796,6 +796,172 @@ def({ id: 'nullify', name: 'Nullify', type: 'VOID', category: 'status', power: 0
   effects: [{ kind: 'custom', value: 'clearboosts' }],
   desc: 'Removes all of the target\'s stat changes.', flavor: 'Everything you built in the last four turns, unbuilt.',
   fx: { key: 'nullify', color: '#3a2f5b', shape: 'aura', scale: 1.4, sfx: 'warp' } });
+
+/* ================================================================== */
+/* THE TACTICAL LAYER                                                  */
+/*                                                                     */
+/* Everything below exists because the engine already implements it    */
+/* and nothing in the library reached for it. See docs/ARCHITECTURE.md */
+/* §2.2 for the flag contract and §4 for the events each one emits.    */
+/*                                                                     */
+/*   pivot     strike, then leave — the move that makes a bench matter */
+/*   pursuit   punishes the answer to a pivot, at double power         */
+/*   crush     doubles against a `minimized` target                    */
+/*   bypassSub goes through a decoy                                    */
+/*   perish / torment / imprison / rooted / minimized — volatiles the  */
+/*             engine ticks every turn that nothing ever applied       */
+/*                                                                     */
+/* Budget note: a pivot is priced as a plain 70 BP / 20 PP attack. The */
+/* EPS formula does not score the free switch, and it should not — the */
+/* switch costs the user its position on the field, which is a real    */
+/* price the formula has no column for.                                */
+/* ================================================================== */
+
+/* ---- pivot: twelve ways to hit something and not be there ---------- */
+
+def({ id: 'cut_and_run', name: 'Cut and Run', type: 'SLASH', category: 'physical', power: 70, accuracy: 100, pp: 20, contact: true, flags: ['slice', 'protect', 'pivot'],
+  desc: 'The user switches out after it lands.', flavor: 'The cut is the goodbye. He is over the rail before the blood.',
+  fx: { key: 'spin_slash', color: '#c9d4e0', shape: 'arc', scale: 1.1, hitstop: 80, shake: 0.5, sfx: 'slash_light' } });
+def({ id: 'hit_and_fade', name: 'Hit and Fade', type: 'FIST', category: 'physical', power: 70, accuracy: 100, pp: 20, contact: true, flags: ['punch', 'protect', 'pivot'],
+  desc: 'The user switches out after it lands.', flavor: 'One in the ribs on the way past. He never stopped walking.',
+  fx: { key: 'piston_punch', color: '#e8743b', shape: 'melee', scale: 1.05, hitstop: 85, shake: 0.5, sfx: 'hit_fist' } });
+def({ id: 'undertow', name: 'Undertow', type: 'SEA', category: 'special', power: 70, accuracy: 100, pp: 20, flags: ['protect', 'pivot'],
+  desc: 'The user switches out after it lands.', flavor: 'The water takes him back out with it, which was the plan.',
+  fx: { key: 'water_spiral', color: '#2a7fd4', shape: 'burst', scale: 1.2, hitstop: 85, shake: 0.5, sfx: 'wave' } });
+def({ id: 'volt_relay', name: 'Volt Relay', type: 'STORM', category: 'special', power: 70, accuracy: 100, pp: 20, flags: ['protect', 'pivot'],
+  desc: 'The user switches out after it lands.', flavor: 'He rides his own bolt back down the line to the bench.',
+  fx: { key: 'volt_rush', color: '#f5c542', shape: 'beam', scale: 1.15, hitstop: 80, shake: 0.5, sfx: 'zap' } });
+def({ id: 'gale_exit', name: 'Gale Exit', type: 'WIND', category: 'physical', power: 70, accuracy: 100, pp: 20, contact: true, flags: ['wind', 'protect', 'pivot'],
+  desc: 'The user switches out after it lands.', flavor: 'A boot to the chest, and the wind that took it away.',
+  fx: { key: 'wind_dash', color: '#a7e8c0', shape: 'melee', scale: 1.1, hitstop: 80, shake: 0.5, sfx: 'gale' } });
+def({ id: 'ember_break', name: 'Ember Break', type: 'FLAME', category: 'special', power: 70, accuracy: 100, pp: 20, flags: ['protect', 'pivot'],
+  desc: 'The user switches out after it lands.', flavor: 'He leaves as smoke, which is both a tactic and a habit.',
+  fx: { key: 'flame_charge', color: '#ff5a36', shape: 'burst', scale: 1.15, hitstop: 85, shake: 0.5, sfx: 'fire_small' } });
+def({ id: 'shade_slip', name: 'Shade Slip', type: 'SHADOW', category: 'physical', power: 70, accuracy: 100, pp: 20, contact: true, flags: ['protect', 'pivot'],
+  desc: 'The user switches out after it lands.', flavor: 'Into one shadow, out of a different one, some distance away.',
+  fx: { key: 'shade_claw', color: '#5a3d7a', shape: 'melee', scale: 1.1, hitstop: 85, shake: 0.5, sfx: 'hit_shadow' } });
+def({ id: 'scrap_launch', name: 'Scrap Launch', type: 'MECHA', category: 'special', power: 70, accuracy: 100, pp: 20, flags: ['bullet', 'protect', 'pivot'],
+  desc: 'The user switches out after it lands.', flavor: 'Fires the whole forearm, then walks off to fetch a spare.',
+  fx: { key: 'rivet', color: '#9aa7b5', shape: 'beam', scale: 1.15, hitstop: 85, shake: 0.5, sfx: 'cannon' } });
+def({ id: 'mind_relay', name: 'Mind Relay', type: 'MIND', category: 'special', power: 70, accuracy: 100, pp: 20, flags: ['protect', 'pivot'],
+  desc: 'The user switches out after it lands.', flavor: 'It puts the thought in, and the thinker somewhere else.',
+  fx: { key: 'psi_spike', color: '#e05c9e', shape: 'burst', scale: 1.15, hitstop: 85, shake: 0.5, sfx: 'psychic' } });
+def({ id: 'flash_relay', name: 'Flash Relay', type: 'LIGHT', category: 'special', power: 70, accuracy: 100, pp: 20, flags: ['protect', 'pivot'],
+  desc: 'The user switches out after it lands.', flavor: 'The light gets there. He is already back where he started.',
+  fx: { key: 'flash_dash', color: '#ffe9a3', shape: 'beam', scale: 1.15, hitstop: 80, shake: 0.5, sfx: 'light' } });
+def({ id: 'soul_relay', name: 'Soul Relay', type: 'SPIRIT', category: 'special', power: 70, accuracy: 100, pp: 20, flags: ['protect', 'pivot'],
+  desc: 'The user switches out after it lands.', flavor: 'He hands the fight over the way you hand over a coat.',
+  fx: { key: 'soul_drain', color: '#6fe3d0', shape: 'beam', scale: 1.15, hitstop: 85, shake: 0.5, sfx: 'soul' } });
+// The `pivot` flag only fires off landed damage, so the switch here rides the
+// engine's `custom: 'pivot'` handler; the flag is kept so the card reads true.
+def({ id: 'parting_note', name: 'Parting Note', type: 'SOUND', category: 'status', power: 0, accuracy: 100, pp: 10, target: 'foe', flags: ['sound', 'protect', 'reflectable', 'pivot'],
+  effects: [{ kind: 'boost', stats: { atk: -1, spa: -1 }, target: 'foe' }, { kind: 'custom', value: 'pivot' }],
+  desc: 'Lowers Attack and Sp. Atk, then the user switches out.', flavor: 'One flat chord, held slightly too long, and the door.',
+  fx: { key: 'sound_wave', color: '#c084fc', shape: 'burst', scale: 1.3, hitstop: 60, shake: 0.4, sfx: 'sonic' } });
+
+/* ---- pursuit: the tax on running away ------------------------------ */
+
+def({ id: 'run_down', name: 'Run Down', type: 'SHADOW', category: 'physical', power: 45, accuracy: 100, pp: 20, contact: true, flags: ['pursuit', 'protect'],
+  desc: 'Double power on a target that is switching out.', flavor: 'The shadow does not need to be faster. It needs to be attached.',
+  fx: { key: 'shade_grab', color: '#5a3d7a', shape: 'melee', scale: 1, hitstop: 70, shake: 0.4, sfx: 'hit_shadow' } });
+def({ id: 'hunters_mark', name: "Hunter's Mark", type: 'BEAST', category: 'physical', power: 45, accuracy: 100, pp: 20, contact: true, flags: ['bite', 'pursuit', 'protect'],
+  desc: 'Double power on a target that is switching out.', flavor: 'Backs are what it was built for. Faces are a compromise.',
+  fx: { key: 'drain_bite', color: '#8a6b3d', shape: 'melee', scale: 1, hitstop: 70, shake: 0.4, sfx: 'hit_beast' } });
+def({ id: 'tracking_round', name: 'Tracking Round', type: 'MECHA', category: 'special', power: 45, accuracy: 100, pp: 20, flags: ['bullet', 'pursuit', 'protect'],
+  desc: 'Double power on a target that is switching out.', flavor: 'Fired at where you are going, not at where you are.',
+  fx: { key: 'sniper_shot', color: '#9aa7b5', shape: 'beam', scale: 1, hitstop: 70, shake: 0.4, sfx: 'gunshot' } });
+def({ id: 'chasing_edge', name: 'Chasing Edge', type: 'SLASH', category: 'physical', power: 45, accuracy: 100, pp: 20, contact: true, flags: ['slice', 'pursuit', 'protect'],
+  desc: 'Double power on a target that is switching out.', flavor: 'A step is a long time to a man with a drawn sword.',
+  fx: { key: 'draw_blade', color: '#c9d4e0', shape: 'arc', scale: 1, hitstop: 70, shake: 0.4, sfx: 'slash_light' } });
+def({ id: 'pinning_will', name: 'Pinning Will', type: 'HAKI', category: 'physical', power: 45, accuracy: 100, pp: 20, contact: true, flags: ['pursuit', 'protect'],
+  desc: 'Double power on a target that is switching out.', flavor: 'He simply decides you are still standing there.',
+  fx: { key: 'haki_strike', color: '#2b2d42', shape: 'melee', scale: 1, hitstop: 70, shake: 0.4, sfx: 'hit_haki' } });
+
+/* ---- crush, and the small targets it answers ----------------------- */
+
+def({ id: 'heel_drop', name: 'Heel Drop', type: 'FIST', category: 'physical', power: 80, accuracy: 100, pp: 15, contact: true, flags: ['crush', 'protect'],
+  desc: 'Double damage on a target that made itself small.', flavor: 'Straight down, with the whole body behind the ankle.',
+  fx: { key: 'heel_drop', color: '#e8743b', shape: 'melee', scale: 1.3, hitstop: 110, shake: 0.8, sfx: 'impact_med' } });
+def({ id: 'pile_driver', name: 'Pile Driver', type: 'MECHA', category: 'physical', power: 85, accuracy: 95, pp: 15, contact: true, flags: ['crush', 'protect'],
+  desc: 'Double damage on a target that made itself small.', flavor: 'Hydraulics, a countdown, and no reverse gear on the ram.',
+  fx: { key: 'plate_slam', color: '#9aa7b5', shape: 'melee', scale: 1.35, hitstop: 125, shake: 0.9, sfx: 'impact_heavy' } });
+def({ id: 'full_weight', name: 'Full Weight', type: 'BEAST', category: 'physical', power: 80, accuracy: 100, pp: 15, contact: true, flags: ['crush', 'protect'],
+  desc: 'Double damage on a target that made itself small.', flavor: 'No technique in it at all. There is a great deal of animal.',
+  fx: { key: 'big_slam', color: '#8a6b3d', shape: 'melee', scale: 1.4, hitstop: 120, shake: 0.9, sfx: 'impact_heavy' } });
+def({ id: 'vanishing_act', name: 'Vanishing Act', type: 'SHADOW', category: 'status', power: 0, accuracy: null, pp: 15, target: 'self', flags: ['snatch'],
+  effects: [{ kind: 'boost', stats: { eva: 2 }, target: 'self' }, { kind: 'volatile', value: 'minimized', target: 'self' }],
+  desc: 'Sharply raises evasion. Crushing blows then hit double.', flavor: 'He folds himself down to the size of a rumour.',
+  fx: { key: 'blink', color: '#5a3d7a', shape: 'aura', scale: 0.8, sfx: 'shadow' } });
+def({ id: 'small_target', name: 'Small Target', type: 'MIND', category: 'status', power: 0, accuracy: null, pp: 15, target: 'self', flags: ['snatch'],
+  effects: [{ kind: 'boost', stats: { eva: 1, spe: 1 }, target: 'self' }, { kind: 'volatile', value: 'minimized', target: 'self' }],
+  desc: 'Raises evasion and Speed. Crushing blows then hit double.', flavor: 'Reads the swing, and is briefly not worth swinging at.',
+  fx: { key: 'buff_mind', color: '#e05c9e', shape: 'aura', scale: 0.85, sfx: 'buff' } });
+
+/* ---- bypassSub: hitting the person, not the decoy ------------------ */
+
+def({ id: 'haki_pierce', name: 'Haki Pierce', type: 'HAKI', category: 'physical', power: 75, accuracy: 100, pp: 15, contact: true, flags: ['bypassSub', 'protect'],
+  desc: 'Reaches the target through anything standing in for it.', flavor: 'Will, sharpened to a point, aimed at the real one.',
+  fx: { key: 'haki_flash', color: '#2b2d42', shape: 'melee', scale: 1.2, hitstop: 100, shake: 0.6, sfx: 'haki' } });
+def({ id: 'phase_lance', name: 'Phase Lance', type: 'VOID', category: 'special', power: 75, accuracy: 100, pp: 15, flags: ['bypassSub', 'protect'],
+  desc: 'Reaches the target through anything standing in for it.', flavor: 'It is not going around the obstacle. It is not going near it.',
+  fx: { key: 'void_bolt', color: '#3a2f5b', shape: 'beam', scale: 1.2, hitstop: 100, shake: 0.6, sfx: 'voidfx' } });
+def({ id: 'soul_reach', name: 'Soul Reach', type: 'SPIRIT', category: 'special', power: 70, accuracy: 100, pp: 20, flags: ['bypassSub', 'protect'],
+  desc: 'Reaches the target through anything standing in for it.', flavor: 'A hand closes on something that was never in the room.',
+  fx: { key: 'soul_link', color: '#6fe3d0', shape: 'beam', scale: 1.15, hitstop: 95, shake: 0.55, sfx: 'spirit' } });
+
+/* ---- the volatiles nobody was applying ----------------------------- */
+
+def({ id: 'dirge', name: 'Dirge', type: 'SOUND', category: 'status', power: 0, accuracy: 100, pp: 5, target: 'foe', flags: ['sound', 'protect'],
+  effects: [{ kind: 'volatile', value: 'perish', turns: 4 }],
+  desc: 'Everyone who hears it faints in three turns.', flavor: 'He has been saving it. Nobody in earshot gets a vote.',
+  fx: { key: 'requiem', color: '#c084fc', shape: 'aura', scale: 1.8, sfx: 'soul' } });
+def({ id: 'bitter_refrain', name: 'Bitter Refrain', type: 'SOUND', category: 'status', power: 0, accuracy: 100, pp: 15, target: 'foe', flags: ['sound', 'protect', 'reflectable'],
+  effects: [{ kind: 'volatile', value: 'torment' }],
+  desc: 'The target cannot use the same move twice running.', flavor: 'The same eight bars, until repeating yourself is unbearable.',
+  fx: { key: 'echo', color: '#c084fc', shape: 'burst', scale: 1.3, sfx: 'screech' } });
+def({ id: 'second_guess', name: 'Second Guess', type: 'MIND', category: 'status', power: 0, accuracy: 100, pp: 15, target: 'foe', flags: ['protect', 'reflectable'],
+  effects: [{ kind: 'volatile', value: 'torment' }],
+  desc: 'The target cannot use the same move twice running.', flavor: 'It worked last turn. That is now the reason not to.',
+  fx: { key: 'psi_break', color: '#e05c9e', shape: 'aura', scale: 1.2, sfx: 'psychic' } });
+def({ id: 'mirror_seal', name: 'Mirror Seal', type: 'MIND', category: 'status', power: 0, accuracy: null, pp: 10, target: 'self',
+  effects: [{ kind: 'volatile', value: 'imprison', target: 'self' }],
+  desc: 'Seals every move the user itself knows.', flavor: 'She names them out loud. After that nobody may use them.',
+  fx: { key: 'room_swap', color: '#e05c9e', shape: 'aura', scale: 1.5, sfx: 'psychic' } });
+def({ id: 'deep_root', name: 'Deep Root', type: 'EARTH', category: 'status', power: 0, accuracy: null, pp: 15, target: 'self',
+  effects: [{ kind: 'volatile', value: 'rooted', target: 'self' }],
+  desc: 'Restores HP each turn, but the user cannot flee.', flavor: 'He puts a foot through the flagstones and stops arguing.',
+  fx: { key: 'stone_spike', color: '#b98b5a', shape: 'aura', scale: 1.3, sfx: 'quake' } });
+def({ id: 'anchor_stance', name: 'Anchor Stance', type: 'SEA', category: 'status', power: 0, accuracy: null, pp: 15, target: 'self',
+  effects: [{ kind: 'volatile', value: 'rooted', target: 'self' }],
+  desc: 'Restores HP each turn, but the user cannot flee.', flavor: 'Both heels in the deck. The sea can come to him.',
+  fx: { key: 'water_wall', color: '#2a7fd4', shape: 'aura', scale: 1.3, sfx: 'wave' } });
+
+/* ---- hazards worth stacking ---------------------------------------- */
+
+def({ id: 'shrapnel_burst', name: 'Shrapnel Burst', type: 'MECHA', category: 'special', power: 60, accuracy: 100, pp: 15, flags: ['bullet', 'protect'],
+  effects: [{ kind: 'hazard', value: 'caltrops', target: 'foeSide' }],
+  desc: 'Hits, and scatters caltrops behind the target.', flavor: 'Most of the charge goes past. That part is deliberate.',
+  fx: { key: 'hazard', color: '#9aa7b5', shape: 'burst', scale: 1.3, hitstop: 75, shake: 0.5, sfx: 'scatter' } });
+def({ id: 'barb_spray', name: 'Barb Spray', type: 'TOXIN', category: 'special', power: 60, accuracy: 100, pp: 15, flags: ['protect'],
+  effects: [{ kind: 'hazard', value: 'barbs', target: 'foeSide' }],
+  desc: 'Hits, and lays toxic barbs behind the target.', flavor: 'Half of it lands. The other half waits for the next one.',
+  fx: { key: 'hazard_toxin', color: '#8bc34a', shape: 'burst', scale: 1.3, hitstop: 75, shake: 0.5, sfx: 'sludge' } });
+def({ id: 'shatter_volley', name: 'Shatter Volley', type: 'FROST', category: 'special', power: 60, accuracy: 100, pp: 15, flags: ['protect'],
+  effects: [{ kind: 'hazard', value: 'shards', target: 'foeSide' }],
+  desc: 'Hits, and hangs jagged ice over the target\'s side.', flavor: 'What misses does not melt. It waits at head height.',
+  fx: { key: 'hazard_ice', color: '#7fd8ff', shape: 'burst', scale: 1.3, hitstop: 75, shake: 0.5, sfx: 'ice_shatter' } });
+def({ id: 'slick_tide', name: 'Slick Tide', type: 'SEA', category: 'special', power: 60, accuracy: 100, pp: 15, flags: ['protect'],
+  effects: [{ kind: 'hazard', value: 'oilslick', target: 'foeSide' }],
+  desc: 'Hits, and spreads an oil slick behind the target.', flavor: 'Bilge water, and everything the bilge had been keeping.',
+  fx: { key: 'hazard_oil', color: '#2a7fd4', shape: 'burst', scale: 1.3, hitstop: 75, shake: 0.5, sfx: 'water_hit' } });
+def({ id: 'blade_scatter', name: 'Blade Scatter', type: 'SLASH', category: 'status', power: 0, accuracy: null, pp: 20, target: 'foeSide',
+  effects: [{ kind: 'hazard', value: 'caltrops', target: 'foeSide' }],
+  desc: 'Scatters caltrops. Stacks up to three layers.', flavor: 'Every broken blade he has ever owned, thrown point-first.',
+  fx: { key: 'hazard', color: '#c9d4e0', shape: 'burst', scale: 1.4, sfx: 'scatter' } });
+def({ id: 'bone_shards', name: 'Bone Shards', type: 'SPIRIT', category: 'status', power: 0, accuracy: null, pp: 20, target: 'foeSide',
+  effects: [{ kind: 'hazard', value: 'shards', target: 'foeSide' }],
+  desc: 'Hangs cutting shards over the foe\'s side of the field.', flavor: 'He can spare them. He is, after all, mostly spare.',
+  fx: { key: 'hazard_ice', color: '#6fe3d0', shape: 'burst', scale: 1.4, sfx: 'ice_shatter' } });
 
 /* ================================================================== */
 /* last resort                                                         */

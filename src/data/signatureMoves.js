@@ -446,9 +446,9 @@ export const SIGNATURE_MOVES = [
     fx: { key: 'crystal_fist', color: '#8a4a3a', shape: 'melee', scale: 1.8, hitstop: 180, shake: 1.3, sfx: 'impact_heavy' } },
 
   { id: 'crushing_stomp', name: 'Crushing Stomp', type: 'EARTH', category: 'physical',
-    power: 100, accuracy: 95, pp: 10, contact: true, flags: ['protect'],
+    power: 100, accuracy: 95, pp: 10, contact: true, flags: ['crush', 'protect'],
     effects: [{ kind: 'volatile', value: 'flinch', chance: 20, target: 'foe' }],
-    desc: 'Fifteen metres of downward opinion. 20% flinch.',
+    desc: 'Doubled on a small target. 20% flinch.',
     flavor: 'The street was there a second ago.',
     fx: { key: 'stomp', color: '#7a5a3a', shape: 'burst', scale: 2.0, hitstop: 200, shake: 1.6, sfx: 'impact_world' } },
 
@@ -595,8 +595,8 @@ export const SIGNATURE_MOVES = [
   /* ================= YU YU HAKUSHO ================= */
 
   { id: 'spirit_gun', name: 'Spirit Gun', type: 'SPIRIT', category: 'special',
-    power: 110, accuracy: 100, pp: 5, flags: ['bullet'],
-    desc: 'One finger, one shot, and it does not care what you are hiding behind.',
+    power: 110, accuracy: 100, pp: 5, flags: ['bullet', 'bypassSub'],
+    desc: 'One shot. It ignores whatever you put in front of you.',
     flavor: 'He points. That is the whole windup.',
     fx: { key: 'finger_shot', color: '#4ad0ff', shape: 'beam', scale: 1.9, hitstop: 180, shake: 1.3, sfx: 'light' } },
 
