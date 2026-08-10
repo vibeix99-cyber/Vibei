@@ -754,11 +754,22 @@ export function heldItemOf(mon) {
 
 /**
  * Hook names the ENGINE dispatches to items itself. `runAbility` must not also
- * fire the item for these or every effect would apply twice. Seeded with the two
- * the engine calls today, and grown automatically if the engine agent adds more.
+ * fire the item for these or every effect would apply twice.
+ *
+ * This list is FROZEN and must be edited by hand to match engine.js's actual
+ * `runItemHook(...)` call sites. It used to grow itself at runtime, which made
+ * the simulation depend on what the process had already done: the engine calls
+ * `runItemHook('onStatusImmune')`, so the first status attempt in a process
+ * silently added that name and changed every later battle. The same seed and
+ * the same choices then produced two different event streams — "Foe Nami
+ * shrugs it off!" in a cold process, "Foe Nami's Sea-Stone Band shields it!"
+ * afterwards. That breaks replays, netplay and AI search, which are the whole
+ * reason src/core is pure. Keep it static; `assertEngineHooks` below is the
+ * guard that stops it drifting out of sync.
  */
-const ENGINE_ITEM_HOOKS = new Set(['modifyDamage', 'onResidual']);
-export function itemHookIsEngineDriven(name) { return ENGINE_ITEM_HOOKS.has(name); }
+const ENGINE_ITEM_HOOKS = Object.freeze(['onStatusImmune', 'modifyDamage', 'onResidual']);
+export function itemHookIsEngineDriven(name) { return ENGINE_ITEM_HOOKS.includes(name); }
+export function engineItemHooks() { return ENGINE_ITEM_HOOKS.slice(); }
 
 export function dispatchItemHook(hookName, ctx) {
   const item = heldItemOf(ctx.mon);
@@ -768,9 +779,13 @@ export function dispatchItemHook(hookName, ctx) {
   return r === undefined ? ctx.value : r;
 }
 
-/** Engine entry point for held-item hooks. */
+/**
+ * Engine entry point for held-item hooks. Deliberately stateless: if you add a
+ * `runItemHook` call in engine.js for a hook not in ENGINE_ITEM_HOOKS, add the
+ * name to that list too, or the item will fire twice (once here, once through
+ * runAbility). `tools/hookaudit.mjs` checks the two agree.
+ */
 export function runItemHook(hookName, ctx) {
-  ENGINE_ITEM_HOOKS.add(hookName);
   return dispatchItemHook(hookName, ctx);
 }
 

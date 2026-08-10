@@ -1505,7 +1505,12 @@ function endBattle(state, winner, reason) {
   state.request = { 0: null, 1: null };
   state.resume = null;
   if (winner === 'draw') msg(state, 'Both crews are down — the battle is a draw!');
-  else msg(state, `${state.sides[winner].name} wins!`);
+  else {
+    // "You wins!" — side 0 is named "You" in single-player, so the victory line
+    // has to agree with its own subject.
+    const n = state.sides[winner].name;
+    msg(state, n === 'You' ? 'You win!' : `${n} wins!`);
+  }
   emit(state, { t: 'battleEnd', winner, reason });
 }
 

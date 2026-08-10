@@ -1,1049 +1,764 @@
 {
   "label": "before",
-  "seed": "PACE-7",
-  "reduced": false,
+  "seed": "CRITIC-TIME",
+  "turns": 6,
   "speeds": {
-    "1": {
-      "turns": [
+    "0.5x-passive": {
+      "speed": 0.5,
+      "mode": "passive",
+      "how": "api",
+      "fps": 3,
+      "turn": {
+        "n": 5,
+        "min": 1.15,
+        "med": 5.35,
+        "mean": 4.91,
+        "max": 7.65
+      },
+      "line": {
+        "n": 32,
+        "min": 0.5,
+        "med": 0.95,
+        "mean": 0.95,
+        "max": 2.25
+      },
+      "msgs": [
         {
-          "turn": 1,
-          "forced": false,
-          "timedOut": false,
-          "wall": 20.227100000000092,
-          "frames": 71,
-          "game": 3.54999999999999,
-          "deadFrames": 11,
-          "deadTime": 0.5499999999999999,
-          "byType": {
-            "turnStart": 0.1,
-            "moveUsed": 1.1,
-            "message": 0.2,
-            "boost": 0.9,
-            "damage": 0.7
-          },
-          "gateType": {
-            "_gated": 0.45,
-            "_idle": 0.1,
-            "turnStart": 0.1,
-            "moveUsed": 1.1,
-            "message": 0.2,
-            "boost": 0.9,
-            "damage": 0.7
-          },
-          "events": 10,
-          "hist": {
-            "turnStart": 1,
-            "moveUsed": 2,
-            "message": 4,
-            "boost": 2,
-            "damage": 1
-          },
-          "attacks": 2,
-          "biggestHitPct": 0.535483870967742,
-          "fps": 20
+          "text": "What will Usopp do?",
+          "shown": 2.25
         },
         {
-          "turn": 2,
-          "forced": false,
-          "timedOut": false,
-          "wall": 38.4805,
-          "frames": 133,
-          "game": 6.65000000000004,
-          "deadFrames": 21,
-          "deadTime": 1.0500000000000007,
-          "byType": {
-            "switchIn": 0.65,
-            "turnStart": 0.1,
-            "moveUsed": 1.1,
-            "message": 0.3,
-            "boost": 0.9,
-            "damage": 0.7,
-            "faint": 1.35
-          },
-          "gateType": {
-            "switchIn": 0.65,
-            "_gated": 0.65,
-            "_idle": 0.9,
-            "turnStart": 0.1,
-            "moveUsed": 1.1,
-            "message": 0.3,
-            "boost": 0.9,
-            "damage": 0.7,
-            "faint": 1.35
-          },
-          "events": 14,
-          "hist": {
-            "turnStart": 1,
-            "moveUsed": 2,
-            "message": 6,
-            "boost": 2,
-            "damage": 1,
-            "faint": 1,
-            "switchIn": 1
-          },
-          "attacks": 2,
-          "biggestHitPct": 0.4645161290322581,
-          "fps": 20
+          "text": "Usopp used Mud Shot!",
+          "shown": 0.85
         },
         {
-          "turn": 3,
-          "forced": false,
-          "timedOut": false,
-          "wall": 20.17039999999991,
-          "frames": 85,
-          "game": 4.25000000000006,
-          "deadFrames": 0,
-          "deadTime": 0,
-          "byType": {
-            "turnStart": 0.1,
-            "moveUsed": 1.1,
-            "message": 0.2,
-            "damage": 1.4,
-            "statusApply": 0.45
-          },
-          "gateType": {
-            "_gated": 0.45,
-            "_idle": 0.55,
-            "turnStart": 0.1,
-            "moveUsed": 1.1,
-            "message": 0.2,
-            "damage": 1.4,
-            "statusApply": 0.45
-          },
-          "events": 10,
-          "hist": {
-            "turnStart": 1,
-            "moveUsed": 2,
-            "message": 4,
-            "damage": 2,
-            "statusApply": 1
-          },
-          "attacks": 2,
-          "biggestHitPct": 0.509090909090909,
-          "fps": 20
+          "text": "It's super effective!",
+          "shown": 0.8
         },
         {
-          "turn": 4,
-          "forced": false,
-          "timedOut": false,
-          "wall": 18.207100000000093,
-          "frames": 72,
-          "game": 3.600000000000051,
-          "deadFrames": 6,
-          "deadTime": 0.30000000000000027,
-          "byType": {
-            "turnStart": 0.1,
-            "moveUsed": 0.65,
-            "message": 0.1,
-            "damage": 0.7,
-            "faint": 1.35
-          },
-          "gateType": {
-            "_gated": 0.25,
-            "_idle": 0.45,
-            "turnStart": 0.1,
-            "moveUsed": 0.65,
-            "message": 0.1,
-            "damage": 0.7,
-            "faint": 1.35
-          },
-          "events": 6,
-          "hist": {
-            "turnStart": 1,
-            "moveUsed": 1,
-            "message": 2,
-            "damage": 1,
-            "faint": 1
-          },
-          "attacks": 1,
-          "biggestHitPct": 0.4909090909090909,
-          "fps": 20
+          "text": "Foe Ace's Speed fell!",
+          "shown": 0.65
         },
         {
-          "turn": 5,
-          "forced": true,
-          "timedOut": false,
-          "wall": 0.0002999999998137355,
-          "frames": 0,
-          "game": 0,
-          "deadFrames": 0,
-          "deadTime": 0,
-          "byType": {},
-          "gateType": {},
-          "events": 2,
-          "hist": {
-            "switchIn": 1,
-            "message": 1
-          },
-          "attacks": 0,
-          "biggestHitPct": 0,
-          "fps": 20
+          "text": "Foe Ace used Fire Fist!",
+          "shown": 0.95
         },
         {
-          "turn": 6,
-          "forced": false,
-          "timedOut": false,
-          "wall": 26.225100000000094,
-          "frames": 90,
-          "game": 4.500000000000064,
-          "deadFrames": 8,
-          "deadTime": 0.3999999999999988,
-          "byType": {
-            "switchIn": 0.65,
-            "turnStart": 0.1,
-            "moveUsed": 0.65,
-            "message": 0.2,
-            "damage": 0.7,
-            "faint": 1.35
-          },
-          "gateType": {
-            "switchIn": 0.65,
-            "_gated": 0.4,
-            "_idle": 0.45,
-            "turnStart": 0.1,
-            "moveUsed": 0.65,
-            "message": 0.2,
-            "damage": 0.7,
-            "faint": 1.35
-          },
-          "events": 7,
-          "hist": {
-            "turnStart": 1,
-            "moveUsed": 1,
-            "message": 3,
-            "damage": 1,
-            "faint": 1
-          },
-          "attacks": 1,
-          "biggestHitPct": 1,
-          "fps": 20
+          "text": "It's devastatingly effective!",
+          "shown": 1.1
         },
         {
-          "turn": 7,
-          "forced": true,
-          "timedOut": false,
-          "wall": 0.0002000000001862645,
-          "frames": 0,
-          "game": 0,
-          "deadFrames": 0,
-          "deadTime": 0,
-          "byType": {},
-          "gateType": {},
-          "events": 2,
-          "hist": {
-            "switchIn": 1,
-            "message": 1
-          },
-          "attacks": 0,
-          "biggestHitPct": 0,
-          "fps": 20
+          "text": "Usopp fainted!",
+          "shown": 1
         },
         {
-          "turn": 8,
-          "forced": false,
-          "timedOut": false,
-          "wall": 21.863,
-          "frames": 137,
-          "game": 6.832699999999349,
-          "deadFrames": 28,
-          "deadTime": 1.399999999999995,
-          "byType": {
-            "switchIn": 0.65,
-            "turnStart": 0.1,
-            "moveUsed": 0.634,
-            "message": 0.3,
-            "damage": 0.699,
-            "faint": 1.35,
-            "statusApply": 0.45,
-            "battleEnd": 1.4
-          },
-          "gateType": {
-            "switchIn": 0.65,
-            "_gated": 0.75,
-            "_idle": 0.5,
-            "turnStart": 0.1,
-            "moveUsed": 0.634,
-            "message": 0.3,
-            "damage": 0.699,
-            "faint": 1.35,
-            "statusApply": 0.45,
-            "battleEnd": 1.4
-          },
-          "events": 11,
-          "hist": {
-            "turnStart": 1,
-            "moveUsed": 1,
-            "message": 5,
-            "damage": 1,
-            "statusApply": 1,
-            "faint": 1,
-            "battleEnd": 1
-          },
-          "attacks": 1,
-          "biggestHitPct": 1,
-          "fps": 20
+          "text": "Choose your next fighter.",
+          "shown": 1.25
+        },
+        {
+          "text": "Go! Saitama!",
+          "shown": 0.65
+        },
+        {
+          "text": "What will Saitama do?",
+          "shown": 0.5
+        },
+        {
+          "text": "Saitama used Grand Quake!",
+          "shown": 1.05
+        },
+        {
+          "text": "It's super effective!",
+          "shown": 0.95
+        },
+        {
+          "text": "Foe Ace fainted!",
+          "shown": 1
+        },
+        {
+          "text": "Rival sent out Brook!",
+          "shown": 1.6
+        },
+        {
+          "text": "What will Saitama do?",
+          "shown": 0.75
+        },
+        {
+          "text": "Foe Brook used Battle Hymn!",
+          "shown": 0.65
+        },
+        {
+          "text": "Foe Brook's Attack rose!",
+          "shown": 0.55
+        },
+        {
+          "text": "Foe Brook's Sp. Atk rose!",
+          "shown": 0.5
+        },
+        {
+          "text": "Saitama used Open Stance!",
+          "shown": 0.5
+        },
+        {
+          "text": "Saitama's Attack rose sharply!",
+          "shown": 0.55
+        },
+        {
+          "text": "Saitama's Defense fell!",
+          "shown": 0.85
+        },
+        {
+          "text": "What will Saitama do?",
+          "shown": 0.5
+        },
+        {
+          "text": "Foe Brook used Soul Solid!",
+          "shown": 1.1
+        },
+        {
+          "text": "A critical hit!",
+          "shown": 1
+        },
+        {
+          "text": "Saitama used Grand Quake!",
+          "shown": 1.15
+        },
+        {
+          "text": "Foe Brook fainted!",
+          "shown": 2.15
+        },
+        {
+          "text": "Rival sent out Nami!",
+          "shown": 1.55
+        },
+        {
+          "text": "What will Saitama do?",
+          "shown": 0.7
+        },
+        {
+          "text": "Saitama used Grand Quake!",
+          "shown": 1.05
+        },
+        {
+          "text": "It's super effective!",
+          "shown": 0.95
+        },
+        {
+          "text": "Foe Nami fainted!",
+          "shown": 0.75
+        },
+        {
+          "text": "You wins!",
+          "shown": 0.6
         }
-      ],
-      "summary": {
-        "turns": 8,
-        "gameAll": {
-          "n": 8,
-          "mean": 3.673,
-          "med": 4.25,
-          "p90": 6.833,
-          "max": 6.833
-        },
-        "gameTwoAttack": {
-          "n": 3,
-          "mean": 4.817,
-          "med": 4.25,
-          "p90": 6.65,
-          "max": 6.65
-        },
-        "wallAll": {
-          "n": 8,
-          "mean": 18.147,
-          "med": 20.227,
-          "p90": 38.48,
-          "max": 38.48
-        },
-        "fps": {
-          "n": 8,
-          "mean": 20,
-          "med": 20,
-          "p90": 20,
-          "max": 20
-        },
-        "deadTime": {
-          "n": 8,
-          "mean": 0.462,
-          "med": 0.4,
-          "p90": 1.4,
-          "max": 1.4
-        },
-        "deadPct": 12.6,
-        "deadFrames": 74,
-        "frames": 588,
-        "byType": {
-          "faint": 5.4,
-          "moveUsed": 5.234,
-          "damage": 4.899,
-          "switchIn": 1.95,
-          "boost": 1.8,
-          "battleEnd": 1.4,
-          "message": 1.3,
-          "statusApply": 0.9,
-          "turnStart": 0.6
-        },
-        "gateType": {
-          "faint": 5.4,
-          "moveUsed": 5.234,
-          "damage": 4.899,
-          "_gated": 2.95,
-          "_idle": 2.95,
-          "switchIn": 1.95,
-          "boost": 1.8,
-          "battleEnd": 1.4,
-          "message": 1.3,
-          "statusApply": 0.9,
-          "turnStart": 0.6
-        }
-      }
+      ]
     },
-    "2": {
-      "turns": [
+    "1x-passive": {
+      "speed": 1,
+      "mode": "passive",
+      "how": "api",
+      "fps": 4,
+      "turn": {
+        "n": 5,
+        "min": 0.7,
+        "med": 2.85,
+        "mean": 2.69,
+        "max": 4
+      },
+      "line": {
+        "n": 32,
+        "min": 0.3,
+        "med": 0.45,
+        "mean": 0.6,
+        "max": 3.9
+      },
+      "msgs": [
         {
-          "turn": 1,
-          "forced": false,
-          "timedOut": false,
-          "wall": 11.567900000000373,
-          "frames": 44,
-          "game": 2.1986999999996044,
-          "deadFrames": 6,
-          "deadTime": 0.29999999999999893,
-          "byType": {
-            "turnStart": 0.05,
-            "moveUsed": 0.599,
-            "message": 0.2,
-            "boost": 0.4,
-            "damage": 0.4
-          },
-          "gateType": {
-            "_gated": 0.45,
-            "_idle": 0.1,
-            "turnStart": 0.05,
-            "moveUsed": 0.599,
-            "message": 0.2,
-            "boost": 0.4,
-            "damage": 0.4
-          },
-          "events": 10,
-          "hist": {
-            "turnStart": 1,
-            "moveUsed": 2,
-            "message": 4,
-            "boost": 2,
-            "damage": 1
-          },
-          "attacks": 2,
-          "biggestHitPct": 0.535483870967742,
-          "fps": 20
+          "text": "What will Usopp do?",
+          "shown": 3.9
         },
         {
-          "turn": 2,
-          "forced": false,
-          "timedOut": false,
-          "wall": 37.998600000000096,
-          "frames": 87,
-          "game": 4.349999999999753,
-          "deadFrames": 0,
-          "deadTime": 0,
-          "byType": {
-            "switchIn": 0.35,
-            "turnStart": 0.05,
-            "moveUsed": 0.6,
-            "message": 0.3,
-            "boost": 0.4,
-            "damage": 0.4,
-            "faint": 0.85
-          },
-          "gateType": {
-            "switchIn": 0.35,
-            "_gated": 0.65,
-            "_idle": 0.75,
-            "turnStart": 0.05,
-            "moveUsed": 0.6,
-            "message": 0.3,
-            "boost": 0.4,
-            "damage": 0.4,
-            "faint": 0.85
-          },
-          "events": 14,
-          "hist": {
-            "turnStart": 1,
-            "moveUsed": 2,
-            "message": 6,
-            "boost": 2,
-            "damage": 1,
-            "faint": 1,
-            "switchIn": 1
-          },
-          "attacks": 2,
-          "biggestHitPct": 0.4645161290322581,
-          "fps": 20
+          "text": "Usopp used Mud Shot!",
+          "shown": 0.5
         },
         {
-          "turn": 3,
-          "forced": false,
-          "timedOut": false,
-          "wall": 10.856399999999907,
-          "frames": 56,
-          "game": 2.799999999999841,
-          "deadFrames": 0,
-          "deadTime": 0,
-          "byType": {
-            "turnStart": 0.05,
-            "moveUsed": 0.6,
-            "message": 0.2,
-            "damage": 0.8,
-            "statusApply": 0.25
-          },
-          "gateType": {
-            "_gated": 0.45,
-            "_idle": 0.45,
-            "turnStart": 0.05,
-            "moveUsed": 0.6,
-            "message": 0.2,
-            "damage": 0.8,
-            "statusApply": 0.25
-          },
-          "events": 10,
-          "hist": {
-            "turnStart": 1,
-            "moveUsed": 2,
-            "message": 4,
-            "damage": 2,
-            "statusApply": 1
-          },
-          "attacks": 2,
-          "biggestHitPct": 0.509090909090909,
-          "fps": 20
+          "text": "It's super effective!",
+          "shown": 0.4
         },
         {
-          "turn": 4,
-          "forced": false,
-          "timedOut": false,
-          "wall": 7.977399999999907,
-          "frames": 48,
-          "game": 2.3998000000001483,
-          "deadFrames": 0,
-          "deadTime": 0,
-          "byType": {
-            "turnStart": 0.05,
-            "moveUsed": 0.35,
-            "message": 0.1,
-            "damage": 0.4,
-            "faint": 0.85
-          },
-          "gateType": {
-            "_gated": 0.25,
-            "_idle": 0.4,
-            "turnStart": 0.05,
-            "moveUsed": 0.35,
-            "message": 0.1,
-            "damage": 0.4,
-            "faint": 0.85
-          },
-          "events": 6,
-          "hist": {
-            "turnStart": 1,
-            "moveUsed": 1,
-            "message": 2,
-            "damage": 1,
-            "faint": 1
-          },
-          "attacks": 1,
-          "biggestHitPct": 0.4909090909090909,
-          "fps": 20
+          "text": "Foe Ace's Speed fell!",
+          "shown": 0.35
         },
         {
-          "turn": 5,
-          "forced": true,
-          "timedOut": false,
-          "wall": 0.0002000000001862645,
-          "frames": 0,
-          "game": 0,
-          "deadFrames": 0,
-          "deadTime": 0,
-          "byType": {},
-          "gateType": {},
-          "events": 2,
-          "hist": {
-            "switchIn": 1,
-            "message": 1
-          },
-          "attacks": 0,
-          "biggestHitPct": 0,
-          "fps": 20
+          "text": "Foe Ace used Fire Fist!",
+          "shown": 0.55
         },
         {
-          "turn": 6,
-          "forced": false,
-          "timedOut": false,
-          "wall": 10.285599999999627,
-          "frames": 60,
-          "game": 2.9754999999998404,
-          "deadFrames": 0,
-          "deadTime": 0,
-          "byType": {
-            "switchIn": 0.35,
-            "turnStart": 0.05,
-            "moveUsed": 0.325,
-            "message": 0.2,
-            "damage": 0.4,
-            "faint": 0.85
-          },
-          "gateType": {
-            "switchIn": 0.35,
-            "_gated": 0.4,
-            "_idle": 0.4,
-            "turnStart": 0.05,
-            "moveUsed": 0.325,
-            "message": 0.2,
-            "damage": 0.4,
-            "faint": 0.85
-          },
-          "events": 7,
-          "hist": {
-            "turnStart": 1,
-            "moveUsed": 1,
-            "message": 3,
-            "damage": 1,
-            "faint": 1
-          },
-          "attacks": 1,
-          "biggestHitPct": 1,
-          "fps": 20
+          "text": "It's devastatingly effective!",
+          "shown": 0.65
         },
         {
-          "turn": 7,
-          "forced": true,
-          "timedOut": false,
-          "wall": 0.00030000000027939676,
-          "frames": 0,
-          "game": 0,
-          "deadFrames": 0,
-          "deadTime": 0,
-          "byType": {},
-          "gateType": {},
-          "events": 2,
-          "hist": {
-            "switchIn": 1,
-            "message": 1
-          },
-          "attacks": 0,
-          "biggestHitPct": 0,
-          "fps": 20
+          "text": "Usopp fainted!",
+          "shown": 0.35
         },
         {
-          "turn": 8,
-          "forced": false,
-          "timedOut": false,
-          "wall": 14.895299999999814,
-          "frames": 92,
-          "game": 4.578100000000305,
-          "deadFrames": 8,
-          "deadTime": 0.3999999999999986,
-          "byType": {
-            "switchIn": 0.35,
-            "turnStart": 0.05,
-            "moveUsed": 0.338,
-            "message": 0.298,
-            "damage": 0.445,
-            "faint": 0.85,
-            "statusApply": 0.25,
-            "battleEnd": 0.7
-          },
-          "gateType": {
-            "switchIn": 0.35,
-            "_gated": 0.697,
-            "_idle": 0.6,
-            "turnStart": 0.05,
-            "moveUsed": 0.338,
-            "message": 0.298,
-            "damage": 0.445,
-            "faint": 0.85,
-            "statusApply": 0.25,
-            "battleEnd": 0.7
-          },
-          "events": 11,
-          "hist": {
-            "turnStart": 1,
-            "moveUsed": 1,
-            "message": 5,
-            "damage": 1,
-            "statusApply": 1,
-            "faint": 1,
-            "battleEnd": 1
-          },
-          "attacks": 1,
-          "biggestHitPct": 1,
-          "fps": 20
+          "text": "Choose your next fighter.",
+          "shown": 0.6
+        },
+        {
+          "text": "Go! Saitama!",
+          "shown": 0.35
+        },
+        {
+          "text": "What will Saitama do?",
+          "shown": 0.4
+        },
+        {
+          "text": "Saitama used Grand Quake!",
+          "shown": 0.55
+        },
+        {
+          "text": "It's super effective!",
+          "shown": 0.5
+        },
+        {
+          "text": "Foe Ace fainted!",
+          "shown": 0.45
+        },
+        {
+          "text": "Rival sent out Brook!",
+          "shown": 0.75
+        },
+        {
+          "text": "What will Saitama do?",
+          "shown": 0.55
+        },
+        {
+          "text": "Foe Brook used Battle Hymn!",
+          "shown": 0.4
+        },
+        {
+          "text": "Foe Brook's Attack rose!",
+          "shown": 0.35
+        },
+        {
+          "text": "Foe Brook's Sp. Atk rose!",
+          "shown": 0.35
+        },
+        {
+          "text": "Saitama used Open Stance!",
+          "shown": 0.3
+        },
+        {
+          "text": "Saitama's Attack rose sharply!",
+          "shown": 0.35
+        },
+        {
+          "text": "Saitama's Defense fell!",
+          "shown": 0.45
+        },
+        {
+          "text": "What will Saitama do?",
+          "shown": 0.4
+        },
+        {
+          "text": "Foe Brook used Soul Solid!",
+          "shown": 0.6
+        },
+        {
+          "text": "A critical hit!",
+          "shown": 0.45
+        },
+        {
+          "text": "Saitama used Grand Quake!",
+          "shown": 0.55
+        },
+        {
+          "text": "Foe Brook fainted!",
+          "shown": 1.1
+        },
+        {
+          "text": "Rival sent out Nami!",
+          "shown": 0.8
+        },
+        {
+          "text": "What will Saitama do?",
+          "shown": 0.55
+        },
+        {
+          "text": "Saitama used Grand Quake!",
+          "shown": 0.55
+        },
+        {
+          "text": "It's super effective!",
+          "shown": 0.45
+        },
+        {
+          "text": "Foe Nami fainted!",
+          "shown": 0.4
+        },
+        {
+          "text": "You wins!",
+          "shown": 0.3
         }
-      ],
-      "summary": {
-        "turns": 8,
-        "gameAll": {
-          "n": 8,
-          "mean": 2.413,
-          "med": 2.8,
-          "p90": 4.578,
-          "max": 4.578
-        },
-        "gameTwoAttack": {
-          "n": 3,
-          "mean": 3.116,
-          "med": 2.8,
-          "p90": 4.35,
-          "max": 4.35
-        },
-        "wallAll": {
-          "n": 8,
-          "mean": 11.698,
-          "med": 10.856,
-          "p90": 37.999,
-          "max": 37.999
-        },
-        "fps": {
-          "n": 8,
-          "mean": 20,
-          "med": 20,
-          "p90": 20,
-          "max": 20
-        },
-        "deadTime": {
-          "n": 8,
-          "mean": 0.087,
-          "med": 0,
-          "p90": 0.4,
-          "max": 0.4
-        },
-        "deadPct": 3.6,
-        "deadFrames": 14,
-        "frames": 387,
-        "byType": {
-          "faint": 3.4,
-          "damage": 2.845,
-          "moveUsed": 2.812,
-          "message": 1.298,
-          "switchIn": 1.05,
-          "boost": 0.8,
-          "battleEnd": 0.7,
-          "statusApply": 0.5,
-          "turnStart": 0.3
-        },
-        "gateType": {
-          "faint": 3.4,
-          "_gated": 2.897,
-          "damage": 2.845,
-          "moveUsed": 2.812,
-          "_idle": 2.7,
-          "message": 1.298,
-          "switchIn": 1.05,
-          "boost": 0.8,
-          "battleEnd": 0.7,
-          "statusApply": 0.5,
-          "turnStart": 0.3
-        }
-      }
+      ]
     },
-    "4": {
-      "turns": [
+    "2x-passive": {
+      "speed": 2,
+      "mode": "passive",
+      "how": "api",
+      "fps": 4,
+      "turn": {
+        "n": 5,
+        "min": 0.5,
+        "med": 1.8,
+        "mean": 1.57,
+        "max": 2.1
+      },
+      "line": {
+        "n": 32,
+        "min": 0.15,
+        "med": 0.3,
+        "mean": 0.36,
+        "max": 2.1
+      },
+      "msgs": [
         {
-          "turn": 1,
-          "forced": false,
-          "timedOut": false,
-          "wall": 5.142,
-          "frames": 34,
-          "game": 1.6892999999997187,
-          "deadFrames": 0,
-          "deadTime": 0,
-          "byType": {
-            "turnStart": 0.05,
-            "moveUsed": 0.339,
-            "message": 0.2,
-            "boost": 0.2,
-            "damage": 0.3
-          },
-          "gateType": {
-            "_gated": 0.45,
-            "_idle": 0.15,
-            "turnStart": 0.05,
-            "moveUsed": 0.339,
-            "message": 0.2,
-            "boost": 0.2,
-            "damage": 0.3
-          },
-          "events": 10,
-          "hist": {
-            "turnStart": 1,
-            "moveUsed": 2,
-            "message": 4,
-            "boost": 2,
-            "damage": 1
-          },
-          "attacks": 2,
-          "biggestHitPct": 0.535483870967742,
-          "fps": 21
+          "text": "What will Usopp do?",
+          "shown": 2.1
         },
         {
-          "turn": 2,
-          "forced": false,
-          "timedOut": false,
-          "wall": 12.215699999999721,
-          "frames": 66,
-          "game": 3.2859999999998166,
-          "deadFrames": 0,
-          "deadTime": 0,
-          "byType": {
-            "switchIn": 0.2,
-            "turnStart": 0.05,
-            "moveUsed": 0.336,
-            "message": 0.3,
-            "boost": 0.2,
-            "damage": 0.3,
-            "faint": 0.6
-          },
-          "gateType": {
-            "switchIn": 0.2,
-            "_gated": 0.65,
-            "_idle": 0.65,
-            "turnStart": 0.05,
-            "moveUsed": 0.336,
-            "message": 0.3,
-            "boost": 0.2,
-            "damage": 0.3,
-            "faint": 0.6
-          },
-          "events": 14,
-          "hist": {
-            "turnStart": 1,
-            "moveUsed": 2,
-            "message": 6,
-            "boost": 2,
-            "damage": 1,
-            "faint": 1,
-            "switchIn": 1
-          },
-          "attacks": 2,
-          "biggestHitPct": 0.4645161290322581,
-          "fps": 20
+          "text": "Usopp used Mud Shot!",
+          "shown": 0.35
         },
         {
-          "turn": 3,
-          "forced": false,
-          "timedOut": false,
-          "wall": 6.133600000000093,
-          "frames": 44,
-          "game": 2.1995999999999682,
-          "deadFrames": 0,
-          "deadTime": 0,
-          "byType": {
-            "turnStart": 0.05,
-            "moveUsed": 0.35,
-            "message": 0.2,
-            "damage": 0.6,
-            "statusApply": 0.15
-          },
-          "gateType": {
-            "_gated": 0.45,
-            "_idle": 0.4,
-            "turnStart": 0.05,
-            "moveUsed": 0.35,
-            "message": 0.2,
-            "damage": 0.6,
-            "statusApply": 0.15
-          },
-          "events": 10,
-          "hist": {
-            "turnStart": 1,
-            "moveUsed": 2,
-            "message": 4,
-            "damage": 2,
-            "statusApply": 1
-          },
-          "attacks": 2,
-          "biggestHitPct": 0.509090909090909,
-          "fps": 20
+          "text": "It's super effective!",
+          "shown": 0.3
         },
         {
-          "turn": 4,
-          "forced": false,
-          "timedOut": false,
-          "wall": 6.459600000000093,
-          "frames": 37,
-          "game": 1.8437999999997174,
-          "deadFrames": 0,
-          "deadTime": 0,
-          "byType": {
-            "turnStart": 0.05,
-            "moveUsed": 0.2,
-            "message": 0.1,
-            "damage": 0.298,
-            "faint": 0.6
-          },
-          "gateType": {
-            "_gated": 0.246,
-            "_idle": 0.35,
-            "turnStart": 0.05,
-            "moveUsed": 0.2,
-            "message": 0.1,
-            "damage": 0.298,
-            "faint": 0.6
-          },
-          "events": 6,
-          "hist": {
-            "turnStart": 1,
-            "moveUsed": 1,
-            "message": 2,
-            "damage": 1,
-            "faint": 1
-          },
-          "attacks": 1,
-          "biggestHitPct": 0.4909090909090909,
-          "fps": 20
+          "text": "Foe Ace's Speed fell!",
+          "shown": 0.3
         },
         {
-          "turn": 5,
-          "forced": true,
-          "timedOut": false,
-          "wall": 0.00019999999972060322,
-          "frames": 0,
-          "game": 0,
-          "deadFrames": 0,
-          "deadTime": 0,
-          "byType": {},
-          "gateType": {},
-          "events": 2,
-          "hist": {
-            "switchIn": 1,
-            "message": 1
-          },
-          "attacks": 0,
-          "biggestHitPct": 0,
-          "fps": 20
+          "text": "Foe Ace used Fire Fist!",
+          "shown": 0.4
         },
         {
-          "turn": 6,
-          "forced": false,
-          "timedOut": false,
-          "wall": 11.1465,
-          "frames": 46,
-          "game": 2.2999999999998693,
-          "deadFrames": 0,
-          "deadTime": 0,
-          "byType": {
-            "switchIn": 0.2,
-            "turnStart": 0.05,
-            "moveUsed": 0.2,
-            "message": 0.2,
-            "damage": 0.3,
-            "faint": 0.6
-          },
-          "gateType": {
-            "switchIn": 0.2,
-            "_gated": 0.4,
-            "_idle": 0.35,
-            "turnStart": 0.05,
-            "moveUsed": 0.2,
-            "message": 0.2,
-            "damage": 0.3,
-            "faint": 0.6
-          },
-          "events": 7,
-          "hist": {
-            "turnStart": 1,
-            "moveUsed": 1,
-            "message": 3,
-            "damage": 1,
-            "faint": 1
-          },
-          "attacks": 1,
-          "biggestHitPct": 1,
-          "fps": 20
+          "text": "It's devastatingly effective!",
+          "shown": 0.3
         },
         {
-          "turn": 7,
-          "forced": true,
-          "timedOut": false,
-          "wall": 0.00030000000027939676,
-          "frames": 0,
-          "game": 0,
-          "deadFrames": 0,
-          "deadTime": 0,
-          "byType": {},
-          "gateType": {},
-          "events": 2,
-          "hist": {
-            "switchIn": 1,
-            "message": 1
-          },
-          "attacks": 0,
-          "biggestHitPct": 0,
-          "fps": 20
+          "text": "Usopp fainted!",
+          "shown": 0.2
         },
         {
-          "turn": 8,
-          "forced": false,
-          "timedOut": false,
-          "wall": 12.42419999999972,
-          "frames": 66,
-          "game": 3.2967000000000084,
-          "deadFrames": 0,
-          "deadTime": 0,
-          "byType": {
-            "switchIn": 0.2,
-            "turnStart": 0.05,
-            "moveUsed": 0.197,
-            "message": 0.3,
-            "damage": 0.3,
-            "faint": 0.6,
-            "statusApply": 0.15,
-            "battleEnd": 0.35
-          },
-          "gateType": {
-            "switchIn": 0.2,
-            "_gated": 0.65,
-            "_idle": 0.5,
-            "turnStart": 0.05,
-            "moveUsed": 0.197,
-            "message": 0.3,
-            "damage": 0.3,
-            "faint": 0.6,
-            "statusApply": 0.15,
-            "battleEnd": 0.35
-          },
-          "events": 11,
-          "hist": {
-            "turnStart": 1,
-            "moveUsed": 1,
-            "message": 5,
-            "damage": 1,
-            "statusApply": 1,
-            "faint": 1,
-            "battleEnd": 1
-          },
-          "attacks": 1,
-          "biggestHitPct": 1,
-          "fps": 20
+          "text": "Choose your next fighter.",
+          "shown": 0.35
+        },
+        {
+          "text": "Go! Saitama!",
+          "shown": 0.2
+        },
+        {
+          "text": "What will Saitama do?",
+          "shown": 0.3
+        },
+        {
+          "text": "Saitama used Grand Quake!",
+          "shown": 0.35
+        },
+        {
+          "text": "It's super effective!",
+          "shown": 0.35
+        },
+        {
+          "text": "Foe Ace fainted!",
+          "shown": 0.2
+        },
+        {
+          "text": "Rival sent out Brook!",
+          "shown": 0.25
+        },
+        {
+          "text": "What will Saitama do?",
+          "shown": 0.35
+        },
+        {
+          "text": "Foe Brook used Battle Hymn!",
+          "shown": 0.3
+        },
+        {
+          "text": "Foe Brook's Attack rose!",
+          "shown": 0.25
+        },
+        {
+          "text": "Foe Brook's Sp. Atk rose!",
+          "shown": 0.25
+        },
+        {
+          "text": "Saitama used Open Stance!",
+          "shown": 0.25
+        },
+        {
+          "text": "Saitama's Attack rose sharply!",
+          "shown": 0.3
+        },
+        {
+          "text": "Saitama's Defense fell!",
+          "shown": 0.25
+        },
+        {
+          "text": "What will Saitama do?",
+          "shown": 0.3
+        },
+        {
+          "text": "Foe Brook used Soul Solid!",
+          "shown": 0.4
+        },
+        {
+          "text": "A critical hit!",
+          "shown": 0.3
+        },
+        {
+          "text": "Saitama used Grand Quake!",
+          "shown": 0.3
+        },
+        {
+          "text": "Foe Brook fainted!",
+          "shown": 0.35
+        },
+        {
+          "text": "Rival sent out Nami!",
+          "shown": 0.4
+        },
+        {
+          "text": "What will Saitama do?",
+          "shown": 0.35
+        },
+        {
+          "text": "Saitama used Grand Quake!",
+          "shown": 0.35
+        },
+        {
+          "text": "It's super effective!",
+          "shown": 0.35
+        },
+        {
+          "text": "Foe Nami fainted!",
+          "shown": 0.25
+        },
+        {
+          "text": "You wins!",
+          "shown": 0.15
         }
-      ],
-      "summary": {
-        "turns": 8,
-        "gameAll": {
-          "n": 8,
-          "mean": 1.827,
-          "med": 2.2,
-          "p90": 3.297,
-          "max": 3.297
+      ]
+    },
+    "4x-passive": {
+      "speed": 4,
+      "mode": "passive",
+      "how": "api",
+      "fps": 4,
+      "turn": {
+        "n": 5,
+        "min": 0.35,
+        "med": 1.35,
+        "mean": 1.19,
+        "max": 1.6
+      },
+      "line": {
+        "n": 32,
+        "min": 0.1,
+        "med": 0.25,
+        "mean": 0.26,
+        "max": 1.15
+      },
+      "msgs": [
+        {
+          "text": "What will Usopp do?",
+          "shown": 1.15
         },
-        "gameTwoAttack": {
-          "n": 3,
-          "mean": 2.392,
-          "med": 2.2,
-          "p90": 3.286,
-          "max": 3.286
+        {
+          "text": "Usopp used Mud Shot!",
+          "shown": 0.25
         },
-        "wallAll": {
-          "n": 8,
-          "mean": 6.69,
-          "med": 6.46,
-          "p90": 12.424,
-          "max": 12.424
+        {
+          "text": "It's super effective!",
+          "shown": 0.3
         },
-        "fps": {
-          "n": 8,
-          "mean": 20.125,
-          "med": 20,
-          "p90": 21,
-          "max": 21
+        {
+          "text": "Foe Ace's Speed fell!",
+          "shown": 0.25
         },
-        "deadTime": {
-          "n": 8,
-          "mean": 0,
-          "med": 0,
-          "p90": 0,
-          "max": 0
+        {
+          "text": "Foe Ace used Fire Fist!",
+          "shown": 0.3
         },
-        "deadPct": 0,
-        "deadFrames": 0,
-        "frames": 293,
-        "byType": {
-          "faint": 2.4,
-          "damage": 2.098,
-          "moveUsed": 1.622,
-          "message": 1.3,
-          "switchIn": 0.6,
-          "boost": 0.4,
-          "battleEnd": 0.35,
-          "turnStart": 0.3,
-          "statusApply": 0.3
+        {
+          "text": "It's devastatingly effective!",
+          "shown": 0.25
         },
-        "gateType": {
-          "_gated": 2.846,
-          "_idle": 2.4,
-          "faint": 2.4,
-          "damage": 2.098,
-          "moveUsed": 1.622,
-          "message": 1.3,
-          "switchIn": 0.6,
-          "boost": 0.4,
-          "battleEnd": 0.35,
-          "turnStart": 0.3,
-          "statusApply": 0.3
+        {
+          "text": "Usopp fainted!",
+          "shown": 0.1
+        },
+        {
+          "text": "Choose your next fighter.",
+          "shown": 0.3
+        },
+        {
+          "text": "Go! Saitama!",
+          "shown": 0.1
+        },
+        {
+          "text": "What will Saitama do?",
+          "shown": 0.3
+        },
+        {
+          "text": "Saitama used Grand Quake!",
+          "shown": 0.3
+        },
+        {
+          "text": "It's super effective!",
+          "shown": 0.25
+        },
+        {
+          "text": "Foe Ace fainted!",
+          "shown": 0.1
+        },
+        {
+          "text": "Rival sent out Brook!",
+          "shown": 0.15
+        },
+        {
+          "text": "What will Saitama do?",
+          "shown": 0.3
+        },
+        {
+          "text": "Foe Brook used Battle Hymn!",
+          "shown": 0.25
+        },
+        {
+          "text": "Foe Brook's Attack rose!",
+          "shown": 0.25
+        },
+        {
+          "text": "Foe Brook's Sp. Atk rose!",
+          "shown": 0.25
+        },
+        {
+          "text": "Saitama used Open Stance!",
+          "shown": 0.25
+        },
+        {
+          "text": "Saitama's Attack rose sharply!",
+          "shown": 0.25
+        },
+        {
+          "text": "Saitama's Defense fell!",
+          "shown": 0.15
+        },
+        {
+          "text": "What will Saitama do?",
+          "shown": 0.3
+        },
+        {
+          "text": "Foe Brook used Soul Solid!",
+          "shown": 0.3
+        },
+        {
+          "text": "A critical hit!",
+          "shown": 0.3
+        },
+        {
+          "text": "Saitama used Grand Quake!",
+          "shown": 0.25
+        },
+        {
+          "text": "Foe Brook fainted!",
+          "shown": 0.1
+        },
+        {
+          "text": "Rival sent out Nami!",
+          "shown": 0.15
+        },
+        {
+          "text": "What will Saitama do?",
+          "shown": 0.35
+        },
+        {
+          "text": "Saitama used Grand Quake!",
+          "shown": 0.3
+        },
+        {
+          "text": "It's super effective!",
+          "shown": 0.25
+        },
+        {
+          "text": "Foe Nami fainted!",
+          "shown": 0.25
+        },
+        {
+          "text": "You wins!",
+          "shown": 0.1
         }
-      }
+      ]
+    },
+    "1x-mash": {
+      "speed": 1,
+      "mode": "mash",
+      "how": "api",
+      "fps": 4,
+      "turn": {
+        "n": 5,
+        "min": 0.6,
+        "med": 2.85,
+        "mean": 2.51,
+        "max": 4.05
+      },
+      "line": {
+        "n": 32,
+        "min": 0.1,
+        "med": 0.4,
+        "mean": 0.48,
+        "max": 1.3
+      },
+      "msgs": [
+        {
+          "text": "What will Usopp do?",
+          "shown": 1.3
+        },
+        {
+          "text": "Usopp used Mud Shot!",
+          "shown": 0.2
+        },
+        {
+          "text": "It's super effective!",
+          "shown": 0.45
+        },
+        {
+          "text": "Foe Ace's Speed fell!",
+          "shown": 0.55
+        },
+        {
+          "text": "Foe Ace used Fire Fist!",
+          "shown": 0.3
+        },
+        {
+          "text": "It's devastatingly effective!",
+          "shown": 0.4
+        },
+        {
+          "text": "Usopp fainted!",
+          "shown": 0.65
+        },
+        {
+          "text": "Choose your next fighter.",
+          "shown": 0.95
+        },
+        {
+          "text": "Go! Saitama!",
+          "shown": 0.2
+        },
+        {
+          "text": "What will Saitama do?",
+          "shown": 0.4
+        },
+        {
+          "text": "Saitama used Grand Quake!",
+          "shown": 0.2
+        },
+        {
+          "text": "It's super effective!",
+          "shown": 0.4
+        },
+        {
+          "text": "Foe Ace fainted!",
+          "shown": 0.7
+        },
+        {
+          "text": "Rival sent out Brook!",
+          "shown": 0.95
+        },
+        {
+          "text": "What will Saitama do?",
+          "shown": 0.6
+        },
+        {
+          "text": "Foe Brook used Battle Hymn!",
+          "shown": 0.15
+        },
+        {
+          "text": "Foe Brook's Attack rose!",
+          "shown": 0.3
+        },
+        {
+          "text": "Foe Brook's Sp. Atk rose!",
+          "shown": 0.25
+        },
+        {
+          "text": "Saitama used Open Stance!",
+          "shown": 0.3
+        },
+        {
+          "text": "Saitama's Attack rose sharply!",
+          "shown": 0.3
+        },
+        {
+          "text": "Saitama's Defense fell!",
+          "shown": 0.2
+        },
+        {
+          "text": "What will Saitama do?",
+          "shown": 0.2
+        },
+        {
+          "text": "Foe Brook used Soul Solid!",
+          "shown": 0.25
+        },
+        {
+          "text": "A critical hit!",
+          "shown": 0.45
+        },
+        {
+          "text": "Saitama used Grand Quake!",
+          "shown": 0.75
+        },
+        {
+          "text": "Foe Brook fainted!",
+          "shown": 1.2
+        },
+        {
+          "text": "Rival sent out Nami!",
+          "shown": 0.9
+        },
+        {
+          "text": "What will Saitama do?",
+          "shown": 0.55
+        },
+        {
+          "text": "Saitama used Grand Quake!",
+          "shown": 0.1
+        },
+        {
+          "text": "It's super effective!",
+          "shown": 0.45
+        },
+        {
+          "text": "Foe Nami fainted!",
+          "shown": 0.75
+        },
+        {
+          "text": "You wins!",
+          "shown": 0.15
+        }
+      ]
     }
+  },
+  "prompt": {
+    "text": "What will Usopp do?",
+    "cmd": "root",
+    "opacity": "1",
+    "waiting": 0
   },
   "errors": []
 }
