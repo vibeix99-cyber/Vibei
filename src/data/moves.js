@@ -220,6 +220,12 @@ def({ id: 'flame_commandment', name: 'Flame Commandment', type: 'FLAME', categor
   effects: [{ kind: 'weather', value: 'sun' }],
   desc: 'Sets Blazing Sun for 5 turns.', flavor: 'The sky agrees with you now.',
   fx: { key: 'weather_sun', color: '#ffb03a', shape: 'aura', sfx: 'weather' } });
+// The library had a status move for every major condition except a burn — the
+// one thing that answers a physical attacker — so chip never had an on-ramp.
+def({ id: 'ashen_brand', name: 'Ashen Brand', type: 'FLAME', category: 'status', power: 0, accuracy: 85, pp: 15, target: 'foe', flags: ['protect', 'reflectable'],
+  effects: [{ kind: 'status', value: 'brn', target: 'foe' }],
+  desc: 'Burns the target.', flavor: 'A blue light that settles on the shoulder and stays there.',
+  fx: { key: 'flame_whip', color: '#ff8a4a', shape: 'aura', scale: 1.2, sfx: 'fire_small' } });
 def({ id: 'ember_field', name: 'Ember Field', type: 'FLAME', category: 'status', power: 0, accuracy: null, pp: 10, target: 'field',
   effects: [{ kind: 'terrain', value: 'ember' }],
   desc: 'Ember Field for 5 turns. Boosts FLAME moves.', flavor: 'The floor keeps a memory of the last fight fought on it.',

@@ -34,13 +34,13 @@ def({
   base: { hp: 90, atk: 135, def: 95, spa: 50, spd: 85, spe: 95 },
   abilities: ['three_blades', 'unbreakable'],
   learnset: [
-    { lv: 1, move: 'one_sword_slash' }, { lv: 1, move: 'quick_strike' }, { lv: 4, move: 'draw_cut' },
-    { lv: 7, move: 'sever_tendon' }, { lv: 10, move: 'flying_slash' }, { lv: 12, move: 'blade_scatter' },
-    { lv: 14, move: 'chasing_edge' }, { lv: 17, move: 'whetstone_rite' }, { lv: 19, move: 'armament' },
-    { lv: 21, move: 'grit' }, { lv: 24, move: 'thousand_cuts' }, { lv: 27, move: 'blade_dance' },
-    { lv: 30, move: 'three_sword_style' }, { lv: 33, move: 'imbued_strike' }, { lv: 35, move: 'pinning_will' },
-    { lv: 38, move: 'conquerors_haki' }, { lv: 41, move: 'haki_pierce' }, { lv: 44, move: 'enma_draw' },
-    { lv: 46, move: 'steel_garden' }, { lv: 49, move: 'asura_bakkei' }
+    { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'one_sword_slash' }, { lv: 4, move: 'draw_cut' },
+    { lv: 7, move: 'sever_tendon' }, { lv: 10, move: 'flying_slash' }, { lv: 14, move: 'chasing_edge' },
+    { lv: 17, move: 'whetstone_rite' }, { lv: 19, move: 'armament' }, { lv: 21, move: 'grit' },
+    { lv: 24, move: 'thousand_cuts' }, { lv: 27, move: 'blade_dance' }, { lv: 30, move: 'three_sword_style' },
+    { lv: 33, move: 'imbued_strike' }, { lv: 35, move: 'pinning_will' }, { lv: 38, move: 'conquerors_haki' },
+    { lv: 41, move: 'haki_pierce' }, { lv: 44, move: 'enma_draw' }, { lv: 46, move: 'steel_garden' },
+    { lv: 49, move: 'asura_bakkei' }
   ],
   signature: 'three_sword_style',
   model: { build: 'bulk', height: 1.81, palette: { skin: '#e8b98a', hair: '#5aa84f', primary: '#1b1b22', secondary: '#2a7f4f', accent: '#c8a24b' }, silhouette: ['haramaki', 'three_swords', 'eye_scar', 'bandana'], aura: '#3ad07a' },
@@ -54,13 +54,13 @@ def({
   base: { hp: 85, atk: 115, def: 75, spa: 85, spd: 80, spe: 120 },
   abilities: ['blue_flame', 'chivalry'],
   learnset: [
-    { lv: 1, move: 'searing_kick' }, { lv: 1, move: 'quick_strike' }, { lv: 4, move: 'feather_step' },
+    { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'searing_kick' }, { lv: 4, move: 'feather_step' },
     { lv: 7, move: 'sky_walk' }, { lv: 10, move: 'flame_lash' }, { lv: 13, move: 'slicing_gale' },
     { lv: 16, move: 'tempest_kick' }, { lv: 19, move: 'hit_and_fade' }, { lv: 22, move: 'armament' },
-    { lv: 25, move: 'diable_jambe' }, { lv: 28, move: 'heel_drop' }, { lv: 31, move: 'ember_field' },
-    { lv: 34, move: 'concasse' }, { lv: 37, move: 'fire_fist' }, { lv: 40, move: 'blaze_rush' },
-    { lv: 43, move: 'ember_break' }, { lv: 45, move: 'open_stance' }, { lv: 47, move: 'ifrit_jambe' },
-    { lv: 49, move: 'flare_nova' }, { lv: 50, move: 'phoenix_dive' }
+    { lv: 25, move: 'diable_jambe' }, { lv: 26, move: 'ashen_brand' }, { lv: 28, move: 'heel_drop' },
+    { lv: 31, move: 'ember_field' }, { lv: 34, move: 'concasse' }, { lv: 37, move: 'fire_fist' },
+    { lv: 40, move: 'blaze_rush' }, { lv: 43, move: 'ember_break' }, { lv: 45, move: 'open_stance' },
+    { lv: 47, move: 'ifrit_jambe' }, { lv: 49, move: 'flare_nova' }, { lv: 50, move: 'phoenix_dive' }
   ],
   signature: 'diable_jambe',
   model: { build: 'lean', height: 1.80, palette: { skin: '#f2caa0', hair: '#e8c352', primary: '#1a1a1a', secondary: '#2b2b38', accent: '#f2f2f2' }, silhouette: ['suit', 'curl_brow', 'cigarette'], aura: '#3a6cff' },
@@ -77,11 +77,11 @@ def({
     { lv: 1, move: 'spark_jab' }, { lv: 1, move: 'sonic_wail' }, { lv: 4, move: 'arc_bolt' },
     { lv: 6, move: 'frost_step' }, { lv: 7, move: 'mind_haze' }, { lv: 10, move: 'chain_lightning' },
     { lv: 13, move: 'tidal_call' }, { lv: 16, move: 'numbing_mist' }, { lv: 19, move: 'mind_spike' },
-    { lv: 20, move: 'shatter_volley' }, { lv: 22, move: 'static_snare' }, { lv: 24, move: 'toxic_brand' },
-    { lv: 25, move: 'thunder_lance_tempo' }, { lv: 28, move: 'volt_relay' }, { lv: 31, move: 'thunderbolt_tempo' },
-    { lv: 34, move: 'light_wall' }, { lv: 37, move: 'sea_fog' }, { lv: 40, move: 'frost_veil' },
-    { lv: 42, move: 'ice_age' }, { lv: 43, move: 'voltage_surge' }, { lv: 45, move: 'mirror_room' },
-    { lv: 47, move: 'heavens_judgement' }, { lv: 50, move: 'el_thor' }
+    { lv: 20, move: 'shatter_volley' }, { lv: 22, move: 'static_snare' }, { lv: 25, move: 'thunder_lance_tempo' },
+    { lv: 28, move: 'volt_relay' }, { lv: 31, move: 'thunderbolt_tempo' }, { lv: 34, move: 'light_wall' },
+    { lv: 37, move: 'sea_fog' }, { lv: 40, move: 'frost_veil' }, { lv: 42, move: 'ice_age' },
+    { lv: 43, move: 'voltage_surge' }, { lv: 45, move: 'mirror_room' }, { lv: 47, move: 'heavens_judgement' },
+    { lv: 50, move: 'el_thor' }
   ],
   signature: 'thunderbolt_tempo',
   model: { build: 'lithe', height: 1.70, palette: { skin: '#f5cfa8', hair: '#f0913a', primary: '#f0913a', secondary: '#2e8fd0', accent: '#ffffff' }, silhouette: ['climatact', 'ponytail', 'shoulder_tattoo'], aura: '#f5c542' },
@@ -115,13 +115,13 @@ def({
   base: { hp: 90, atk: 100, def: 75, spa: 130, spd: 80, spe: 100 },
   abilities: ['logia_flame', 'sunburst'],
   learnset: [
-    { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'flame_lash' }, { lv: 4, move: 'searing_kick' },
+    { lv: 1, move: 'flame_lash' }, { lv: 1, move: 'quick_strike' }, { lv: 4, move: 'searing_kick' },
     { lv: 6, move: 'grit' }, { lv: 9, move: 'flame_commandment' }, { lv: 12, move: 'fire_fist' },
     { lv: 15, move: 'ember_break' }, { lv: 18, move: 'ember_field' }, { lv: 20, move: 'last_will' },
-    { lv: 22, move: 'armament' }, { lv: 25, move: 'blaze_rush' }, { lv: 28, move: 'imbued_strike' },
-    { lv: 30, move: 'will_of_iron' }, { lv: 33, move: 'sovereign_flash' }, { lv: 36, move: 'red_hawk' },
-    { lv: 39, move: 'conquerors_haki' }, { lv: 42, move: 'flare_nova' }, { lv: 45, move: 'haki_pierce' },
-    { lv: 47, move: 'phoenix_dive' }, { lv: 50, move: 'entei' }
+    { lv: 22, move: 'armament' }, { lv: 25, move: 'blaze_rush' }, { lv: 26, move: 'ashen_brand' },
+    { lv: 28, move: 'imbued_strike' }, { lv: 30, move: 'will_of_iron' }, { lv: 33, move: 'sovereign_flash' },
+    { lv: 36, move: 'red_hawk' }, { lv: 39, move: 'conquerors_haki' }, { lv: 42, move: 'flare_nova' },
+    { lv: 45, move: 'haki_pierce' }, { lv: 47, move: 'phoenix_dive' }, { lv: 50, move: 'entei' }
   ],
   signature: 'fire_fist',
   model: { build: 'athletic', height: 1.85, palette: { skin: '#e8ba8c', hair: '#1a1a1a', primary: '#ff5a1c', secondary: '#f2a03a', accent: '#ffdca8' }, silhouette: ['open_shirtless', 'cowboy_hat', 'back_tattoo'], aura: '#ff6a1c' },
@@ -158,10 +158,10 @@ def({
     { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'aqua_step' }, { lv: 4, move: 'shark_bite' },
     { lv: 7, move: 'siphon_wave' }, { lv: 10, move: 'tidal_call' }, { lv: 13, move: 'fishman_karate' },
     { lv: 16, move: 'iron_body' }, { lv: 19, move: 'anchor_stance' }, { lv: 20, move: 'slick_tide' },
-    { lv: 22, move: 'armament' }, { lv: 24, move: 'toxic_brand' }, { lv: 25, move: 'sea_veil' },
-    { lv: 28, move: 'abyss_pressure' }, { lv: 31, move: 'imbued_strike' }, { lv: 34, move: 'bubble_ward' },
-    { lv: 37, move: 'iron_wall' }, { lv: 40, move: 'shima_yurashi' }, { lv: 43, move: 'grand_quake' },
-    { lv: 45, move: 'tenfold_tsunami' }, { lv: 47, move: 'haki_pierce' }, { lv: 49, move: 'karakusagawara_seiken' }
+    { lv: 22, move: 'armament' }, { lv: 25, move: 'sea_veil' }, { lv: 28, move: 'abyss_pressure' },
+    { lv: 31, move: 'imbued_strike' }, { lv: 34, move: 'bubble_ward' }, { lv: 37, move: 'iron_wall' },
+    { lv: 40, move: 'shima_yurashi' }, { lv: 43, move: 'grand_quake' }, { lv: 45, move: 'tenfold_tsunami' },
+    { lv: 47, move: 'haki_pierce' }, { lv: 49, move: 'karakusagawara_seiken' }
   ],
   signature: 'fishman_karate',
   model: { build: 'giant', height: 3.01, palette: { skin: '#4a9fd4', hair: '#1a1a22', primary: '#2a5f8f', secondary: '#f2e2c8', accent: '#f0913a' }, silhouette: ['kimono', 'tusks', 'topknot'], aura: '#2a7fd4' },
@@ -177,11 +177,11 @@ def({
   learnset: [
     { lv: 1, move: 'one_sword_slash' }, { lv: 1, move: 'draw_cut' }, { lv: 4, move: 'flying_slash' },
     { lv: 7, move: 'sever_tendon' }, { lv: 10, move: 'chasing_edge' }, { lv: 13, move: 'whetstone_rite' },
-    { lv: 16, move: 'blade_scatter' }, { lv: 19, move: 'armament' }, { lv: 21, move: 'pinning_will' },
-    { lv: 22, move: 'unsheathe' }, { lv: 24, move: 'toxic_brand' }, { lv: 25, move: 'void_lance' },
-    { lv: 27, move: 'void_step' }, { lv: 30, move: 'phase_lance' }, { lv: 33, move: 'moonlit_reap' },
-    { lv: 36, move: 'steel_garden' }, { lv: 39, move: 'executioners_line' }, { lv: 42, move: 'entropy_pulse' },
-    { lv: 45, move: 'black_blade' }, { lv: 48, move: 'world_slash' }, { lv: 50, move: 'finality' }
+    { lv: 19, move: 'armament' }, { lv: 21, move: 'pinning_will' }, { lv: 22, move: 'unsheathe' },
+    { lv: 25, move: 'void_lance' }, { lv: 27, move: 'void_step' }, { lv: 30, move: 'phase_lance' },
+    { lv: 33, move: 'moonlit_reap' }, { lv: 36, move: 'steel_garden' }, { lv: 39, move: 'executioners_line' },
+    { lv: 42, move: 'entropy_pulse' }, { lv: 45, move: 'black_blade' }, { lv: 48, move: 'world_slash' },
+    { lv: 50, move: 'finality' }
   ],
   signature: 'black_blade',
   model: { build: 'lean', height: 1.98, palette: { skin: '#e0b48c', hair: '#1a1a1a', primary: '#1a1a22', secondary: '#5b2a2a', accent: '#c8a24b' }, silhouette: ['long_coat', 'wide_hat', 'greatsword', 'cross_pendant'], aura: '#1a1a22' },
@@ -195,13 +195,14 @@ def({
   base: { hp: 95, atk: 105, def: 90, spa: 110, spd: 85, spe: 85 },
   abilities: ['sand_body', 'desiccate'],
   learnset: [
-    { lv: 1, move: 'sand_lance' }, { lv: 1, move: 'mud_shot' }, { lv: 4, move: 'boulder_toss' },
+    { lv: 1, move: 'mud_shot' }, { lv: 1, move: 'sand_lance' }, { lv: 4, move: 'boulder_toss' },
     { lv: 7, move: 'desert_rise' }, { lv: 10, move: 'toxic_brand' }, { lv: 12, move: 'deep_root' },
     { lv: 14, move: 'barb_spray' }, { lv: 17, move: 'oil_slick_toss' }, { lv: 20, move: 'venom_road' },
     { lv: 23, move: 'sables' }, { lv: 25, move: 'venom_drain' }, { lv: 26, move: 'armament' },
-    { lv: 29, move: 'leech_thorns' }, { lv: 32, move: 'corrosive_wave' }, { lv: 35, move: 'stone_skin' },
-    { lv: 38, move: 'plague_cloud' }, { lv: 41, move: 'ground_death' }, { lv: 44, move: 'caltrop_scatter' },
-    { lv: 46, move: 'continental_press' }, { lv: 48, move: 'venom_crash' }, { lv: 50, move: 'grand_quake' }
+    { lv: 27, move: 'ashen_brand' }, { lv: 29, move: 'leech_thorns' }, { lv: 32, move: 'corrosive_wave' },
+    { lv: 35, move: 'stone_skin' }, { lv: 38, move: 'plague_cloud' }, { lv: 41, move: 'ground_death' },
+    { lv: 44, move: 'caltrop_scatter' }, { lv: 46, move: 'continental_press' }, { lv: 48, move: 'venom_crash' },
+    { lv: 50, move: 'grand_quake' }
   ],
   signature: 'sables',
   model: { build: 'bulk', height: 2.53, palette: { skin: '#d4a878', hair: '#1a1a1a', primary: '#3a2a2a', secondary: '#8a5a3a', accent: '#c8b088' }, silhouette: ['long_coat', 'hook_hand', 'cigar', 'face_scar'], aura: '#c8a165' },
@@ -215,13 +216,13 @@ def({
   base: { hp: 110, atk: 130, def: 100, spa: 95, spd: 100, spe: 90 },
   abilities: ['future_sight', 'mochi_body'],
   learnset: [
-    { lv: 1, move: 'pressure_point' }, { lv: 1, move: 'quick_strike' }, { lv: 4, move: 'clutch' },
+    { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'pressure_point' }, { lv: 4, move: 'clutch' },
     { lv: 6, move: 'will_of_iron' }, { lv: 7, move: 'mind_spike' }, { lv: 10, move: 'shambles' },
     { lv: 13, move: 'imbued_strike' }, { lv: 16, move: 'armament' }, { lv: 19, move: 'small_target' },
-    { lv: 22, move: 'mind_haze' }, { lv: 24, move: 'toxic_brand' }, { lv: 25, move: 'heel_drop' },
-    { lv: 28, move: 'pinning_will' }, { lv: 31, move: 'zangiri_mochi' }, { lv: 34, move: 'mind_relay' },
-    { lv: 37, move: 'conquerors_haki' }, { lv: 40, move: 'haki_pierce' }, { lv: 43, move: 'mind_break' },
-    { lv: 45, move: 'black_gauntlet' }, { lv: 47, move: 'sovereign_flash' }, { lv: 50, move: 'divine_departure' }
+    { lv: 22, move: 'mind_haze' }, { lv: 25, move: 'heel_drop' }, { lv: 28, move: 'pinning_will' },
+    { lv: 31, move: 'zangiri_mochi' }, { lv: 34, move: 'mind_relay' }, { lv: 37, move: 'conquerors_haki' },
+    { lv: 40, move: 'haki_pierce' }, { lv: 43, move: 'mind_break' }, { lv: 45, move: 'black_gauntlet' },
+    { lv: 47, move: 'sovereign_flash' }, { lv: 50, move: 'divine_departure' }
   ],
   signature: 'divine_departure',
   model: { build: 'giant', height: 5.09, palette: { skin: '#e8c4a0', hair: '#8a2a3a', primary: '#5a1a2a', secondary: '#2a2a33', accent: '#f0d8c0' }, silhouette: ['scarf', 'tall_coat', 'trident'], aura: '#c04a6a' },
@@ -237,8 +238,8 @@ def({
   learnset: [
     { lv: 1, move: 'imbued_strike' }, { lv: 1, move: 'savage_bite' }, { lv: 4, move: 'iron_body' },
     { lv: 6, move: 'grit' }, { lv: 9, move: 'pack_hunt' }, { lv: 12, move: 'territorial_growl' },
-    { lv: 15, move: 'wild_pulse' }, { lv: 18, move: 'armament' }, { lv: 20, move: 'toxic_brand' },
-    { lv: 21, move: 'hunters_mark' }, { lv: 24, move: 'full_weight' }, { lv: 27, move: 'crushing_stomp' },
+    { lv: 15, move: 'wild_pulse' }, { lv: 18, move: 'armament' }, { lv: 21, move: 'hunters_mark' },
+    { lv: 24, move: 'full_weight' }, { lv: 26, move: 'ashen_brand' }, { lv: 27, move: 'crushing_stomp' },
     { lv: 30, move: 'conquerors_haki' }, { lv: 33, move: 'beast_kings_roar' }, { lv: 36, move: 'will_of_iron' },
     { lv: 39, move: 'bolo_breath' }, { lv: 42, move: 'black_gauntlet' }, { lv: 45, move: 'raimei_hakke' },
     { lv: 47, move: 'rampage' }, { lv: 49, move: 'divine_departure' }, { lv: 50, move: 'haki_pierce' }
@@ -370,10 +371,11 @@ def({
     { lv: 1, move: 'radiant_palm' }, { lv: 1, move: 'photon_dart' }, { lv: 4, move: 'blinding_flash' },
     { lv: 7, move: 'mind_haze' }, { lv: 10, move: 'flash_relay' }, { lv: 13, move: 'mind_spike' },
     { lv: 16, move: 'light_wall' }, { lv: 19, move: 'tempest_kick' }, { lv: 22, move: 'small_target' },
-    { lv: 24, move: 'nightmare_grip' }, { lv: 25, move: 'yasakani' }, { lv: 28, move: 'heavens_ray' },
-    { lv: 31, move: 'second_guess' }, { lv: 34, move: 'aurora_veil' }, { lv: 37, move: 'pressure_point' },
-    { lv: 40, move: 'daybreak' }, { lv: 42, move: 'sleep_mist' }, { lv: 43, move: 'mind_break' },
-    { lv: 45, move: 'sunburst_lance' }, { lv: 47, move: 'mind_relay' }, { lv: 50, move: 'entropy_pulse' }
+    { lv: 24, move: 'nightmare_grip' }, { lv: 25, move: 'yasakani' }, { lv: 26, move: 'ashen_brand' },
+    { lv: 28, move: 'heavens_ray' }, { lv: 31, move: 'second_guess' }, { lv: 34, move: 'aurora_veil' },
+    { lv: 37, move: 'pressure_point' }, { lv: 40, move: 'daybreak' }, { lv: 42, move: 'sleep_mist' },
+    { lv: 43, move: 'mind_break' }, { lv: 45, move: 'sunburst_lance' }, { lv: 47, move: 'mind_relay' },
+    { lv: 50, move: 'entropy_pulse' }
   ],
   signature: 'heavens_ray',
   model: { build: 'lithe', height: 1.91, palette: { skin: '#f2d0b0', hair: '#1c1c28', primary: '#e04a7a', secondary: '#f2e2e8', accent: '#f2c94c' }, silhouette: ['cape', 'crossed_arms', 'cross_pendant'], aura: '#ff9ec4' },
@@ -427,10 +429,10 @@ def({
   base: { hp: 145, atk: 135, def: 130, spa: 115, spd: 105, spe: 60 },
   abilities: ['stamina_wall', 'conquerors_will'],
   learnset: [
-    { lv: 1, move: 'savage_bite' }, { lv: 1, move: 'soul_leech' }, { lv: 4, move: 'wandering_palm' },
+    { lv: 1, move: 'soul_leech' }, { lv: 1, move: 'savage_bite' }, { lv: 4, move: 'wandering_palm' },
     { lv: 7, move: 'iron_body' }, { lv: 10, move: 'soul_reach' }, { lv: 13, move: 'territorial_growl' },
     { lv: 16, move: 'pack_hunt' }, { lv: 19, move: 'sleep_mist' }, { lv: 22, move: 'armament' },
-    { lv: 24, move: 'toxic_brand' }, { lv: 25, move: 'conquerors_haki' }, { lv: 28, move: 'full_weight' },
+    { lv: 25, move: 'conquerors_haki' }, { lv: 26, move: 'ashen_brand' }, { lv: 28, move: 'full_weight' },
     { lv: 31, move: 'bone_shards' }, { lv: 34, move: 'abyssal_maw' }, { lv: 37, move: 'spirit_bolt' },
     { lv: 40, move: 'bolo_breath' }, { lv: 43, move: 'ward_of_departed' }, { lv: 45, move: 'rampage' },
     { lv: 47, move: 'dirge' }, { lv: 49, move: 'final_requiem' }, { lv: 50, move: 'soul_offering' }
@@ -570,11 +572,11 @@ def({
   learnset: [
     { lv: 1, move: 'feather_step' }, { lv: 1, move: 'quick_strike' }, { lv: 4, move: 'draw_cut' },
     { lv: 6, move: 'updraft' }, { lv: 7, move: 'sever_tendon' }, { lv: 10, move: 'blade_spiral' },
-    { lv: 13, move: 'tempest_kick' }, { lv: 16, move: 'chasing_edge' }, { lv: 19, move: 'gale_exit' },
-    { lv: 22, move: 'vertical_dive' }, { lv: 25, move: 'thousand_cuts' }, { lv: 28, move: 'odm_burst' },
-    { lv: 31, move: 'cut_and_run' }, { lv: 34, move: 'slicing_gale' }, { lv: 37, move: 'thunder_spear' },
-    { lv: 40, move: 'whetstone_rite' }, { lv: 43, move: 'sky_walk' }, { lv: 45, move: 'heavens_gust' },
-    { lv: 47, move: 'blade_dance' }, { lv: 50, move: 'oblivion_rend' }
+    { lv: 12, move: 'blade_scatter' }, { lv: 13, move: 'tempest_kick' }, { lv: 16, move: 'chasing_edge' },
+    { lv: 19, move: 'gale_exit' }, { lv: 22, move: 'vertical_dive' }, { lv: 25, move: 'thousand_cuts' },
+    { lv: 28, move: 'odm_burst' }, { lv: 31, move: 'cut_and_run' }, { lv: 34, move: 'slicing_gale' },
+    { lv: 37, move: 'thunder_spear' }, { lv: 40, move: 'whetstone_rite' }, { lv: 43, move: 'sky_walk' },
+    { lv: 45, move: 'heavens_gust' }, { lv: 47, move: 'blade_dance' }, { lv: 50, move: 'oblivion_rend' }
   ],
   signature: 'thousand_cuts',
   model: { build: 'lean', height: 1.60, palette: { skin: '#e8c8a8', hair: '#1c1c22', primary: '#3a3a48', secondary: '#5a4a3a', accent: '#c8c8d0' }, silhouette: ['cape', 'three_swords', 'gauntlets'], aura: '#a8b8c8' },
@@ -628,13 +630,13 @@ def({
   base: { hp: 95, atk: 120, def: 115, spa: 100, spd: 90, spe: 85 },
   abilities: ['iron_hide', 'technician'],
   learnset: [
-    { lv: 1, move: 'boulder_toss' }, { lv: 1, move: 'shockwave_palm' }, { lv: 4, move: 'mud_shot' },
+    { lv: 1, move: 'shockwave_palm' }, { lv: 1, move: 'boulder_toss' }, { lv: 4, move: 'mud_shot' },
     { lv: 6, move: 'scrap_sweep' }, { lv: 9, move: 'stone_skin' }, { lv: 12, move: 'gear_strike' },
     { lv: 15, move: 'automail_hook' }, { lv: 18, move: 'iron_body' }, { lv: 21, move: 'deep_root' },
     { lv: 23, move: 'toxic_brand' }, { lv: 24, move: 'sand_lance' }, { lv: 27, move: 'alchemic_spear' },
     { lv: 30, move: 'iron_wall' }, { lv: 33, move: 'strata_spear' }, { lv: 36, move: 'pile_driver' },
     { lv: 39, move: 'steel_meteor' }, { lv: 42, move: 'grand_quake' }, { lv: 44, move: 'caltrop_scatter' },
-    { lv: 46, move: 'shrapnel_burst' }, { lv: 48, move: 'continental_press' }, { lv: 50, move: 'jajanken_rock' }
+    { lv: 46, move: 'shrapnel_burst' }, { lv: 48, move: 'continental_press' }, { lv: 50, move: 'sables' }
   ],
   signature: 'strata_spear',
   model: { build: 'lean', height: 1.65, palette: { skin: '#f0cba0', hair: '#e8c04a', primary: '#c02a2a', secondary: '#1c1c28', accent: '#c8ccd8' }, silhouette: ['cape', 'gauntlets', 'tattoo_hands'], aura: '#8fd8ff' },
@@ -652,10 +654,10 @@ def({
     { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'gum_gum_pistol' }, { lv: 4, move: 'hit_and_fade' },
     { lv: 6, move: 'grit' }, { lv: 8, move: 'imbued_strike' }, { lv: 12, move: 'heel_drop' },
     { lv: 16, move: 'armament' }, { lv: 20, move: 'open_stance' }, { lv: 24, move: 'seismic_throw' },
-    { lv: 28, move: 'conquerors_haki' }, { lv: 32, move: 'kong_gun' }, { lv: 36, move: 'meteor_knuckle' },
-    { lv: 38, move: 'plus_ultra' }, { lv: 40, move: 'black_gauntlet' }, { lv: 42, move: 'red_hawk' },
-    { lv: 44, move: 'haki_pierce' }, { lv: 46, move: 'liberation_bell' }, { lv: 48, move: 'drums_of_liberation' },
-    { lv: 49, move: 'divine_departure' }, { lv: 50, move: 'bajrang_gun' }
+    { lv: 26, move: 'ashen_brand' }, { lv: 28, move: 'conquerors_haki' }, { lv: 32, move: 'kong_gun' },
+    { lv: 36, move: 'meteor_knuckle' }, { lv: 38, move: 'plus_ultra' }, { lv: 40, move: 'black_gauntlet' },
+    { lv: 42, move: 'red_hawk' }, { lv: 44, move: 'haki_pierce' }, { lv: 46, move: 'liberation_bell' },
+    { lv: 48, move: 'drums_of_liberation' }, { lv: 49, move: 'divine_departure' }, { lv: 50, move: 'bajrang_gun' }
   ],
   signature: 'divine_departure',
   model: { build: 'bulk', height: 2.20, palette: { skin: '#e8807a', hair: '#161616', primary: '#c02a24', secondary: '#2e6fd0', accent: '#f2d24b' }, silhouette: ['scar_chest', 'open_vest', 'sandals', 'gauntlets'], aura: '#ff3b2f' },
@@ -742,9 +744,9 @@ function utilityScore(f, m) {
   for (const e of m.effects || []) {
     switch (e.kind) {
       case 'status':                                     // the slow win is a win
-        v += ({ tox: 47, slp: 50, par: 46, frz: 44, brn: 42, psn: 34 }[e.value] ?? 40) * acc;
+        v += ({ tox: 50, slp: 50, par: 46, frz: 44, brn: 46, psn: 34 }[e.value] ?? 40) * acc;
         break;
-      case 'hazard': v += 46; break;
+      case 'hazard': v += 44; break;
       case 'screen': v += 24; break;
       case 'heal': v += 28; break;
       case 'cure': v += 8; break;
@@ -761,7 +763,7 @@ function utilityScore(f, m) {
         if (own) {
           const key = f.base.atk >= f.base.spa ? 'atk' : 'spa';
           if ((e.stats[key] || 0) > 0 || (e.stats.spe || 0) > 0) b *= 1.25;
-          else if ((e.stats.atk || 0) > 0 || (e.stats.spa || 0) > 0) b *= 0.7;
+          else b *= 0.7;                              // the wrong stat, or only bulk
         }
         v += b;
         break;
@@ -817,7 +819,7 @@ export function defaultMoves(id, level = 50) {
     (e.kind === 'volatile' && e.value === 'leechseed'));
   const isPivot = (m) => !!m.flags?.includes('pivot');
   let utilSlots = 0;
-  if (util.length && util[0].s >= 20) utilSlots = 1;
+  if (util.length && util[0].s >= 24) utilSlots = 1;
   if (utilSlots === 1 && atk.length >= 3) {
     const bleeders = util.filter((u) => bleeds(u) && u.s >= 42);
     // …and only when the third attack it would displace was never the point.
