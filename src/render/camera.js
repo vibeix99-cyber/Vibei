@@ -47,10 +47,15 @@ const N = new THREE.Vector3(-U.z, 0, U.x);
 /** Signed distance from the 180° line. Positive = audience side. */
 export function sideOfAxis(p) { return (p.x - MID.x) * N.x + (p.z - MID.z) * N.z; }
 
-/* Screen-space safe area (viewport fractions). The HUD sits outside it:
-   p0 plate 0.03–0.27 x / 0.60–0.76 y, p1 plate 0.73–0.97 x / 0.03–0.18 y,
-   text box below 0.86 y, turn pill 0.09–0.12 y at centre. Heads go inside. */
-export const SAFE = { x0: 0.10, x1: 0.90, y0: 0.19, y1: 0.56 };
+/* Screen-space safe area (viewport fractions), read off the live HUD rather
+   than guessed: the foe plate is top-LEFT (0.02–0.26 x / 0.02–0.14 y), the
+   player plate bottom-RIGHT (0.74–0.98 x / 0.70–0.82 y), the turn and speed
+   pills top-RIGHT above 0.06 y, and the dock owns everything below 0.82 y.
+   The old comment had the two plates mirrored, so every framing constraint
+   built on it was defending the wrong corners — heads were being pushed up
+   out of space that was free, and feet were being left in the text box.
+   `dock` is the floor for feet: below it a fighter's legs are behind the box. */
+export const SAFE = { x0: 0.08, x1: 0.92, y0: 0.15, y1: 0.64, dock: 0.79 };
 
 /* Legacy static table. Kept so anything that imported SHOTS keeps working; the
    director no longer uses it, and the mirrored shots have been moved back
@@ -100,6 +105,8 @@ function fbm(x) { return vnoise(x) * 0.62 + vnoise(x * 2.17 + 19.3) * 0.26 + vno
 const _a = new THREE.Vector3(), _b = new THREE.Vector3();
 const _q0 = new THREE.Vector3(), _q1 = new THREE.Vector3(), _q2 = new THREE.Vector3(), _q3 = new THREE.Vector3();
 const _r0 = new THREE.Vector3(), _r1 = new THREE.Vector3(), _r2 = new THREE.Vector3(), _r3 = new THREE.Vector3();
+const _c0 = new THREE.Vector3(), _c1 = new THREE.Vector3(), _c2 = new THREE.Vector3();
+const _k = [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()];
 const _pv = new THREE.Vector3();
 const _box = new THREE.Box3(), _tbox = new THREE.Box3(), _m4 = new THREE.Matrix4();
 
@@ -339,7 +346,7 @@ export class CameraDirector {
       }
       const dy = up + down;
       if (Math.abs(dy) < 0.004) break;
-      sy = clamp(sy + dy, 0.10, 0.56);
+      sy = clamp(sy + dy, 0.08, SAFE.y1);
       look = this._aimAt(p, anchor, sx, sy, fov, look);
     }
     return look;
@@ -376,40 +383,180 @@ export class CameraDirector {
     return p;
   }
 
+  /**
+   * The invariant. A camera is never allowed to end up inside an actor, or so
+   * close to one that the actor swallows the frame — which is the same failure
+   * seen from two sides, and it was the single worst thing about this camera.
+   *
+   * Both limits are *solved*, never tuned:
+   *   • the body limit is the actor's own bounding radius plus a hand's width,
+   *   • the frame limit is the distance at which this lens renders the actor
+   *     `maxFill` of the frame high — `top / (2·maxFill·tan(fov/2))`.
+   * The larger of the two wins, and the camera is pushed straight back along
+   * its own view axis until it is satisfied, which preserves the framing it was
+   * handed (same look direction, same subject placement, just more air).
+   *
+   * @param {THREE.Vector3} p      camera position, moved in place
+   * @param {THREE.Vector3} at     what the shot is looking at — the push is along -view
+   * @param {number} fov           the lens this pose will be rendered with
+   * @param {number} maxFill       largest slice of frame height any actor may own
+   */
+  _clearActors(p, at, fov, maxFill = 1) {
+    const tv = Math.tan(clamp(fov, 8, 90) * DEG * 0.5);
+    _c0.copy(at).sub(p);
+    const L = _c0.length();
+    if (!(L > 1e-4)) return p;
+    _c0.multiplyScalar(1 / L);                         // unit view direction
+    let push = 0;
+    for (let i = 0; i < 2; i++) {
+      const s = this.act[i];
+      // Nearest point of the actor's standing volume: a vertical segment from
+      // the deck to the top of the head. Height matters — clearing a fighter
+      // overhead is legitimate, being level with their chest at 40 cm is not.
+      const hi = s.aim.y + Math.max(0.35, s.top);
+      _c1.set(s.aim.x, clamp(p.y, s.aim.y + 0.05, hi), s.aim.z);
+      const body = s.halfW + 0.5 + 0.2 * s.scale;
+      const frame = maxFill > 0 ? Math.max(0.35, s.top) / (2 * maxFill * tv) : 0;
+      const need = Math.max(body, frame);
+      _c2.copy(p).sub(_c1);
+      const q2 = _c2.lengthSq();
+      if (q2 >= need * need) continue;
+      // Solve |(p - t·view) - c| = need for the smallest t ≥ 0. The camera is
+      // inside the sphere, so the discriminant is always positive.
+      const b = _c2.dot(_c0);
+      const t = b + Math.sqrt(Math.max(0, b * b - q2 + need * need));
+      if (t > push) push = t;
+    }
+    if (push > 1e-4) p.addScaledVector(_c0, -Math.min(push, 60));
+    return p;
+  }
+
   /* ---------------------------------------------------------------- */
   /* framing primitives                                                */
   /* ---------------------------------------------------------------- */
 
   /**
-   * Two-shot. `fillV` is the slice of frame height the *taller* fighter may
-   * occupy; `fillH` the slice of frame width the pair spans. Both heads are
-   * then composed into the safe band.
+   * The two-shot, solved for the pair that is actually on the stage.
+   *
+   * `fillV` is the slice of frame height the *taller* fighter may occupy and
+   * `fillH` the slice of width the pair spans — those two alone give the
+   * classic centred two-shot, and for two roughly human fighters that is the
+   * whole story and this returns exactly what it always did.
+   *
+   * It falls apart at the extremes. Fit a 8.8 m Big Mom into 55% of frame
+   * height from the middle of the stage and a 0.9 m Chopper lands at 6%: an
+   * unidentifiable smudge. One focal length at one distance cannot serve a
+   * 10:1 size ratio — but *perspective* can. So when the smaller fighter drops
+   * below `minFill` the camera slides around behind them and the lens opens
+   * up, until the near fighter is readable and the far one still fits.
+   *
+   * The slide runs along the circle "exactly `fillV` tall around the bigger
+   * fighter", so the height ceiling the critic measured cannot be broken by
+   * getting closer — it is a constraint of the path, not a check afterwards.
+   * Two bisections pick the least-deep point and the narrowest lens that do
+   * the job, so a pair that barely needs help barely moves.
    */
   _twoShot(o) {
     const a = this.act[0], b = this.act[1];
     const tall = Math.max(a.top, b.top);
     const wide = SEP + a.halfW + b.halfW;
-    const fov = o.fov;
-    const dist = this._fitDist(tall / o.fillV, wide / o.fillH, fov);
     const gk = this._giantK(tall);
+    const bigIs1 = b.top > a.top;
+    const big = bigIs1 ? b : a, small = bigIs1 ? a : b;
+    const sgn = bigIs1 ? -1 : 1;              // axial direction toward the smaller fighter
+    const fillV = o.fillV, fillH = o.fillH, minFill = o.minFill ?? 0;
+    const yaw = o.yaw || 0;
 
     // Giants get a lower camera and a flatter tilt — look up at them, not down.
     const elev = o.elev * (1 - 0.55 * gk) + (o.elev * 0.06);
-    const yaw = o.yaw || 0;
     const pivotY = Math.min(tall * (o.pivot ?? 0.46), 1.05 + 0.26 * tall);
+    const ce = Math.cos(elev);
 
-    const p = new THREE.Vector3().copy(MID).setY(pivotY)
-      .addScaledVector(N, Math.cos(yaw) * Math.cos(elev) * dist)
-      .addScaledVector(U, Math.sin(yaw) * Math.cos(elev) * dist);
-    p.y += Math.sin(elev) * dist;
+    /** Stand-off from MID for the centred two-shot at a given lens. */
+    const symStand = (f) => ce * this._fitDist(tall / fillV, wide / fillH, f);
+    /**
+     * Camera foot on the "big fighter exactly `fillV` tall" circle, `n` out
+     * from the fighter axis. Axial offset is measured toward the smaller
+     * fighter; `fill` is that fighter's share of frame height from there.
+     */
+    const foot = (f, n) => {
+      const tv = Math.tan(f * DEG * 0.5);
+      const dT = big.top / (2 * tv * fillV);
+      const cu = Math.max(0, Math.sqrt(Math.max(0, dT * dT - n * n)) - SEP * 0.5);
+      const dS = Math.max(0.5, Math.hypot(SEP * 0.5 - cu, n));
+      return { cu, dS, fill: small.top / (2 * tv * dS) };
+    };
+
+    let fov = o.fov;
+    let hor = symStand(fov);
+    let cn = Math.cos(yaw) * hor, cu = Math.sin(yaw) * hor, deep = 0;
+
+    // Is the smaller fighter still legible from the centred shot?
+    const tv0 = Math.tan(fov * DEG * 0.5);
+    const dSym = Math.max(0.5, Math.hypot(SEP * 0.5 - sgn * cu, cn));
+    if (minFill > 0 && small.top / (2 * tv0 * dSym) < minFill) {
+      // Closest the camera may ever come: outside the near fighter's body, off
+      // the 180° line, and further out again when the pair is enormous.
+      const nMin = Math.max(o.minSide ?? 1.6, small.halfW + 1.15 + 0.85 * small.scale) * (0.92 + 0.7 * gk);
+
+      // 1. the lens. `foot(f, nMin).fill` rises with f — a wider lens lets the
+      //    camera stand closer to everything, and the near fighter gains far
+      //    more from that than the far one loses. Take the narrowest that works.
+      const f1 = Math.max(fov, o.fovMax ?? fov);
+      if (f1 > fov && foot(fov, nMin).fill < minFill) {
+        if (foot(f1, nMin).fill < minFill) fov = f1;      // even wide open it cannot; take it all
+        else {
+          let lo = fov, hi = f1;
+          for (let i = 0; i < 16; i++) {
+            const mid = (lo + hi) * 0.5;
+            if (foot(mid, nMin).fill >= minFill) hi = mid; else lo = mid;
+          }
+          fov = hi;
+        }
+        hor = symStand(fov);
+      }
+
+      // 2. the stand-off. `fill` falls off with n, so the largest n that still
+      //    reaches `minFill` is the shallowest camera that does the job.
+      const nMax = Math.max(nMin, Math.cos(yaw) * hor);
+      let n = nMin;
+      if (foot(fov, nMax).fill >= minFill) n = nMax;
+      else {
+        let lo = nMin, hi = nMax;
+        for (let i = 0; i < 16; i++) {
+          const mid = (lo + hi) * 0.5;
+          if (foot(fov, mid).fill >= minFill) lo = mid; else hi = mid;
+        }
+        n = lo;
+      }
+      const f = foot(fov, n);
+      deep = nMax > nMin + 1e-3 ? clamp((nMax - n) / (nMax - nMin), 0, 1) : 0;
+      cn = lerp(Math.cos(yaw) * hor, n, deep);
+      cu = lerp(Math.sin(yaw) * hor, sgn * f.cu, deep);
+    }
+
+    // Height: the elevated centred look when we are centred, dropping toward
+    // the smaller fighter's own eye line as the shot goes deep — from down
+    // there the giant reads as a giant instead of as a wall.
+    const symY = pivotY + Math.sin(elev) * (hor / Math.max(0.2, ce));
+    const deepY = clamp(small.head.y * 0.9 + 0.06 * big.top, 0.8, 3.2);
+    const p = new THREE.Vector3().copy(MID).setY(lerp(symY, deepY, deep))
+      .addScaledVector(N, cn).addScaledVector(U, cu);
     this._safe(p, o.minSide ?? 1.6);
 
     const lead = a.top >= b.top ? a : b;
     const anchor = _a.copy(a.head).add(b.head).multiplyScalar(0.5)
       .setY((a.head.y + b.head.y) * 0.5);
+    // Nothing may sit closer than `fillV` allows, whatever the solve above did
+    // and whatever the actors do afterwards.
+    this._clearActors(p, anchor, fov, fillV * 1.08);
+    this._safe(p, o.minSide ?? 1.6);
+
     const cons = [
-      { v: _b.copy(lead.aim).setY(lead.top), min: 0.045 },   // never crop the tallest head
-      { v: a.head, max: 0.555 }, { v: b.head, max: 0.555 }   // never hide a head behind a plate
+      { v: _k[0].copy(lead.aim).setY(lead.top), min: 0.05 },     // never crop the tallest head
+      { v: a.head, max: SAFE.y1 }, { v: b.head, max: SAFE.y1 },  // no head behind the player's plate
+      { v: _k[1].copy(a.aim).setY(a.aim.y + 0.02), max: SAFE.dock },  // and no feet in the text box
+      { v: _k[2].copy(b.aim).setY(b.aim.y + 0.02), max: SAFE.dock }
     ];
     const look = this._composeY(p, anchor, o.sx ?? 0.5, o.sy ?? 0.36, fov, cons);
     return pose(p, look, fov);
@@ -446,10 +593,15 @@ export class CameraDirector {
     // camera height: cap it so we still look slightly up at the far fighter.
     p.y = near.aim.y + Math.min(near.headH * (o.height ?? 0.95), 1.5 + 0.30 * near.headH) + (o.rise ?? 0);
     this._safe(p, o.minSide ?? 0.5);
+    // A shoulder in the foreground is the point of the shot; a shoulder that
+    // *is* the shot is the bug. `nearCap` is how much frame the near fighter
+    // may own, and the camera backs off along its own axis until it holds.
+    this._clearActors(p, far.head, fov, o.nearCap ?? 0.95);
+    this._safe(p, o.minSide ?? 0.5);
 
     const cons = [
-      { v: _b.copy(far.aim).setY(far.top), min: 0.04 },
-      { v: far.head, min: SAFE.y0, max: 0.52 }
+      { v: _k[0].copy(far.aim).setY(far.top), min: 0.04 },
+      { v: far.head, min: SAFE.y0 - 0.05, max: 0.56 }
     ];
     const look = this._composeY(p, far.head, o.farX, o.sy ?? 0.37, fov, cons);
     return pose(p, look, fov);
@@ -475,11 +627,13 @@ export class CameraDirector {
       .addScaledVector(U, Math.sin(yaw) * Math.cos(elev) * dist);
     p.y += Math.sin(elev) * dist;
     this._safe(p, o.minSide ?? 1.2);
+    this._clearActors(p, s.head, fov, o.nearCap ?? 1.0);
+    this._safe(p, o.minSide ?? 1.2);
 
     const sx = o.sx ?? (o.side === 0 ? 0.40 : 0.60);
     const cons = [
-      { v: _b.copy(s.aim).setY(s.top), min: 0.04 },
-      { v: s.head, min: SAFE.y0, max: 0.52 }
+      { v: _k[0].copy(s.aim).setY(s.top), min: 0.04 },
+      { v: s.head, min: SAFE.y0 - 0.05, max: 0.56 }
     ];
     const look = this._composeY(p, s.head, sx, o.sy ?? 0.36, fov, cons);
     return pose(p, look, fov);
@@ -494,7 +648,8 @@ export class CameraDirector {
     return {
       id: 'establish', imp: 2, minHold: 1.0, subject: null,
       live: (t) => this._twoShot({
-        fov: 33, fillV: 0.56, fillH: 0.54 + Math.min(t, 2.5) * 0.035 + push * 0.06,
+        fov: 33, fovMax: 52, fillV: 0.56, minFill: 0.085,
+        fillH: 0.54 + Math.min(t, 2.5) * 0.035 + push * 0.06,
         elev: 0.30, yaw: -0.11, pivot: 0.46, sy: 0.34
       })
     };
@@ -504,19 +659,38 @@ export class CameraDirector {
   _neutral() {
     return {
       id: 'neutral', imp: 1, minHold: 0.8, subject: null,
-      live: () => this._twoShot({ fov: 40, fillV: 0.62, fillH: 0.74, elev: 0.215, yaw: -0.07, pivot: 0.46 })
+      live: () => this._twoShot({
+        fov: 40, fovMax: 60, fillV: 0.58, minFill: 0.14, fillH: 0.74,
+        elev: 0.215, yaw: -0.07, pivot: 0.46
+      })
     };
   }
 
-  /** Over the commanding player's shoulder while they pick. Long lens. */
-  _command(side = 0) {
+  /**
+   * The resting shot — the frame the player actually spends the battle looking
+   * at, and the one the director must be able to get back to from anywhere.
+   *
+   * It is a two-shot, deliberately: at a prompt you are reading the board, not
+   * admiring a shoulder. This used to be an over-the-shoulder that sat ~30 cm
+   * behind the player's own fighter, so every decision in the game was taken
+   * blind. The only thing left of the commanding side is a few degrees of yaw
+   * toward them and a hair more of their half of the stage — enough to feel
+   * whose turn it is, nowhere near enough to lose the fight.
+   *
+   * It also barely moves: a very slow settle in over two seconds and nothing
+   * else, because this is the frame a player stares at for ten seconds at a
+   * time and drift reads as a fault.
+   */
+  _rest(side = 0) {
+    const s = side === 1 ? 1 : 0;
     return {
-      id: 'command', imp: 1, minHold: 1.2, subject: 1 - side,
-      live: (t) => this._overShoulder({
-        near: side, back: 1.5 + Math.min(t, 2.4) * 0.045,
-        fill: 0.40, fovMin: 22, fovMax: 40,
-        nearX: side === 0 ? 0.12 : 0.88, farX: side === 0 ? 0.62 : 0.38,
-        height: 1.0, rise: 0.28 * this.act[side].scale, sy: 0.38, minSide: 0.5
+      id: 'rest', imp: 1, minHold: 1.1, subject: null,
+      live: (t) => this._twoShot({
+        fov: 38, fovMax: 62,
+        fillV: 0.55, minFill: 0.16,
+        fillH: 0.735 - Math.min(t, 2.2) * 0.010,      // a very slow settle in
+        elev: 0.205, yaw: s === 0 ? -0.10 : 0.10, pivot: 0.46,
+        sx: s === 0 ? 0.485 : 0.515, sy: 0.35, minSide: 1.8
       })
     };
   }
@@ -560,10 +734,12 @@ export class CameraDirector {
         p.y += Math.sin(elev) * dist;
         this._safe(p, 1.6);
         const anchor = _a.copy(a.head).lerp(b.head, e);
+        this._clearActors(p, anchor, fov, 0.85);
+        this._safe(p, 1.6);
         const sx = lerp(from === 0 ? 0.34 : 0.66, to === 0 ? 0.32 : 0.68, e);
         const cons = [
-          { v: _b.copy(b.aim).setY(b.top), min: 0.04 },
-          { v: b.head, max: 0.54 }
+          { v: _k[0].copy(b.aim).setY(b.top), min: 0.04 },
+          { v: b.head, max: 0.56 }
         ];
         return pose(p, this._composeY(p, anchor, sx, 0.36, fov, cons), fov);
       }
@@ -576,7 +752,7 @@ export class CameraDirector {
     return {
       id: 'impact', imp: 2, minHold: 0.5, subject: defSide,
       live: (t) => this._overShoulder({
-        near: atk, back: 1.35,
+        near: atk, back: 1.35, nearCap: 0.92,
         fill: clamp(0.42 + power * 0.10, 0.38, 0.58),
         fovMin: 21, fovMax: 44,
         nearX: atk === 0 ? 0.11 : 0.89,
@@ -593,7 +769,7 @@ export class CameraDirector {
     return {
       id: 'finisher', imp: 3, minHold: 1.25, subject: defSide,
       live: (t) => this._overShoulder({
-        near: atk, back: 1.85,
+        near: atk, back: 1.85, nearCap: 1.02,
         fill: 0.50, fovMin: 20, fovMax: 38,
         nearX: atk === 0 ? 0.10 : 0.90,
         farX: atk === 0 ? 0.60 : 0.40,
@@ -621,7 +797,9 @@ export class CameraDirector {
         p.y += Math.sin(elev) * dist;
         this._safe(p, 1.2);
         const anchor = _a.copy(s.aim).setY(Math.max(s.head.y, 0.5 * s.scale));
-        const cons = [{ v: _b.copy(w.aim).setY(w.head.y), min: 0.055, max: 0.54 }];
+        this._clearActors(p, anchor, fov, 0.9);
+        this._safe(p, 1.2);
+        const cons = [{ v: _k[0].copy(w.aim).setY(w.head.y), min: 0.055, max: 0.56 }];
         const sx = side === 0 ? 0.30 : 0.70;
         return pose(p, this._composeY(p, anchor, sx, 0.46, fov, cons), fov);
       }
@@ -660,7 +838,9 @@ export class CameraDirector {
           .addScaledVector(U, Math.sin(yaw) * Math.cos(elev) * dist);
         p.y += Math.sin(elev) * dist;
         this._safe(p, 1.2);
-        const cons = [{ v: _b.copy(s.aim).setY(s.top), min: 0.04 }, { v: s.head, max: 0.52 }];
+        this._clearActors(p, s.head, fov, 0.95);
+        this._safe(p, 1.2);
+        const cons = [{ v: _k[0].copy(s.aim).setY(s.top), min: 0.04 }, { v: s.head, max: 0.56 }];
         return pose(p, this._composeY(p, s.head, side === 0 ? 0.40 : 0.60, 0.35, fov, cons), fov);
       }
     };
@@ -695,13 +875,13 @@ export class CameraDirector {
       // Reduced motion: the shot change *is* the jarring part, so there is no
       // point softening the ones we keep. Everything collapses onto the two
       // calm framings, and every move between them is a long glide, never a cut.
-      shot = shot.id === 'establish' ? this._establish(0) : this._neutral();
+      shot = shot.id === 'establish' ? this._establish(0) : this._rest(0);
       o = { ...o, dur: Math.max(o.dur ?? 0.5, REDUCED_BLEND), ease: E.glide, mode: 'arc' };
       // Already there: keep re-framing rather than restarting the blend.
       if (this.shot && this.shot.id === shot.id) { this.shot = shot; return false; }
       // Toggled on mid-battle from a shot reduced motion would never pick:
       // shot discipline must not be allowed to keep us there.
-      if (this.shot && this.shot.id !== 'neutral' && this.shot.id !== 'establish') o.force = true;
+      if (this.shot && this.shot.id !== 'rest' && this.shot.id !== 'establish') o.force = true;
     }
     const cur = this.shot;
     if (cur && !o.force) {
@@ -765,7 +945,7 @@ export class CameraDirector {
       const map = {
         wide: () => this._establish(), establish: () => this._establish(),
         standard: () => this._neutral(), neutral: () => this._neutral(),
-        command: () => this._command(0),
+        command: () => this._rest(0), rest: () => this._rest(0),
         hero: () => this._hero(side, false),
         low: () => this._finisher(1 - side),
         impact: () => this._impact(side, 0.5),
@@ -1047,17 +1227,30 @@ export class CameraDirector {
       this._request(p.shot, p.o);
     }
 
-    // Drift into the command framing while the battle waits for a choice.
+    // ---- come home ----
+    // Whenever the battle stops moving, the camera returns to the resting
+    // two-shot. `v.beat` never existed — BattleView keeps `beats`, plural — so
+    // this test used to read "the event queue is empty", which is also true in
+    // the middle of a switch-in or an attack animation. That is how the
+    // director came to abandon a fighter mid-arrival and sit on empty floor.
     const v = this._bind();
     if (v?.feel) this.reduced = !!v.feel.reduced;   // live, not only on the next event
-    const waiting = v ? (!v.beat && v.queue.length === 0) : false;
+    const busy = v ? ((v.queue?.length || 0) > 0 || (v.gate || 0) > 0
+      || (v.beats ? v.beats.some((b) => b.blocking) : false)) : true;
+    const waiting = !!v && !busy;
     if (waiting && !this._opening) {
       this._idle += dt;
-      if (this._idle > 0.40 && !this._commanded) {
+      let cs = 0;
+      try { const w = globalThis.__ARENA?.battle?.waitingFor?.(); if (w === 0 || w === 1) cs = w; } catch { /* ignore */ }
+      if (this.shot?.id === 'rest') {
+        this.shot = this._rest(cs);       // already home: keep re-framing, never restart
         this._commanded = true;
-        let cs = 0;
-        try { const w = globalThis.__ARENA?.battle?.waitingFor?.(); if (w === 0 || w === 1) cs = w; } catch { /* ignore */ }
-        this._request(this._command(cs), { dur: 1.15, ease: E.glide });
+      } else if (this._idle > 0.35 && !this._commanded) {
+        // Ask politely first. After a beat, insist: the frame the player makes
+        // every decision from is not something shot discipline gets to veto.
+        const insist = this._idle > 0.95;
+        this._request(this._rest(cs), { dur: insist ? 0.8 : 1.05, ease: E.glide, force: insist });
+        if (insist) this._commanded = true;
       }
     } else if (!waiting) { this._idle = 0; this._commanded = false; }
 
@@ -1118,6 +1311,12 @@ export class CameraDirector {
       p.addScaledVector(_a, fbm(this.noiseT + 88.1) * amp * 0.5);
     }
 
+    this._safe(p, 0.42);
+    // Last line of defence, after blends, punches, kicks and handheld have all
+    // had their say: whatever the shots asked for, the rendered camera is never
+    // inside a fighter. A blend between two legal poses can still pass through
+    // one, and that is exactly the frame a screenshot lands on.
+    this._clearActors(p, this.cur.look, fov, 1.3);
     this._safe(p, 0.42);
 
     this._base.copy(p);
