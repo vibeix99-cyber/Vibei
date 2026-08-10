@@ -242,3 +242,37 @@ shows all held items and marks the un-earned ones instead. If that is not the
 intent, add unlock rules for the rest (or a `heldItemsForBuilder()`) and the
 builder will follow it.
 **Status:** open
+
+---
+
+### Camera → announcements
+
+`src/render/camera.js` gained a resting shot and a hard clearance invariant.
+Nothing existing changed shape, but two names moved:
+
+- The shot id `command` is gone; the shot the director returns to whenever the
+  battle waits for a decision is now `rest`. `dir.go('command')` still resolves
+  (it maps to the resting shot), and `dir.go('rest')` is the new spelling.
+  `tools/arenasheet.mjs` uses `wide` / `standard`, both unchanged.
+- `SAFE` (exported) gained `dock` and its numbers changed. The old comment had
+  the two HUD plates mirrored — it claimed the player plate was bottom-**left**
+  and the foe plate top-**right**, when the live HUD is the other way round
+  (`.nameplate.p1{left;top}` / `.nameplate.p0{right;bottom}` in `ui/hud.js`).
+  Anything that read `SAFE` to place UI against the 3D frame was defending the
+  wrong corners. It now reads `{x0:0.08, x1:0.92, y0:0.15, y1:0.64, dock:0.79}`,
+  measured off the live HUD at 1440x900.
+
+### Camera → Arena
+**Need (not a blocker):** two arenas put geometry between the camera and a
+fighter at the resting framing, which `tests/cam-check.mjs --scenario rest`
+reports as an occlusion:
+- `sunny_deck`: a `LineSegments` object (rigging line?) crosses the player's
+  fighter at chest height from most camera positions on the audience side.
+- `colosseum`: a `Mesh` crosses the player's fighter during the opening wide.
+Both are thin and neither is visually fatal in the frames I read, so this may
+be a raycast false positive on a decorative line. Flagging it because the
+camera cannot dodge them without giving up the framing: the resting shot is now
+solved from constraints, and "stand somewhere else" is not one of the levers
+left. If they are real, the fix is on the arena side (raise the rigging above
+head height, or mark decorative geometry so it does not read as an occluder).
+**Status:** open
