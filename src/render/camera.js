@@ -108,7 +108,7 @@ const _r0 = new THREE.Vector3(), _r1 = new THREE.Vector3(), _r2 = new THREE.Vect
 const _c0 = new THREE.Vector3(), _c1 = new THREE.Vector3(), _c2 = new THREE.Vector3();
 const _k = [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()];
 const _pv = new THREE.Vector3();
-const _box = new THREE.Box3(), _tbox = new THREE.Box3(), _m4 = new THREE.Matrix4();
+const _box = new THREE.Box3(), _dbox = new THREE.Box3(), _tbox = new THREE.Box3(), _m4 = new THREE.Matrix4();
 
 const pose = (pos, look, fov) => ({ pos, look, fov });
 
@@ -215,14 +215,21 @@ export class CameraDirector {
       a.root.updateWorldMatrix(true, true);
       _m4.copy(a.root.matrixWorld).invert();
       _box.makeEmpty();
+      _dbox.makeEmpty();
       a.root.traverse((o) => {
         if (!o.isMesh || !o.geometry) return;
-        if (o === a.rig?.aura || o === a.rig?.blob) return;   // the aura balloons the box
+        // The aura is a transient glow twice the fighter's size — it must not
+        // decide anything. The contact shadow is a permanent, visible disc and
+        // it is what actually sets how wide the silhouette reads, so it counts
+        // toward the size budget while staying out of the head framing.
+        if (o === a.rig?.aura) return;
         if (!o.geometry.boundingBox) o.geometry.computeBoundingBox();
         _tbox.copy(o.geometry.boundingBox).applyMatrix4(o.matrixWorld).applyMatrix4(_m4);
+        _dbox.union(_tbox);
+        if (o === a.rig?.blob) return;
         _box.union(_tbox);
       });
-      ok = !_box.isEmpty() && isFinite(_box.max.y);
+      ok = !_box.isEmpty() && isFinite(_box.max.y) && !_dbox.isEmpty() && isFinite(_dbox.max.y);
     } catch { ok = false; }
 
     if (!ok) { s.topH = s.h * 1.08; s.fullH = s.h * 1.25; s.halfW = 0.45 * s.scale; s.rad = 0.55 * s.scale; return; }
@@ -234,13 +241,14 @@ export class CameraDirector {
     // …but *size* limits have to answer for everything the model actually
     // draws. Kaido's horns put a metre and a half above his head, and a limit
     // measured to the head is a limit the frame quietly breaks.
-    s.fullH = clamp(propTop, s.topH, s.h * 2.4);
-    const halfXZ = Math.max(_box.max.x - _box.min.x, _box.max.z - _box.min.z) * 0.5 * s.scale;
+    s.fullH = clamp(_dbox.max.y * s.scale, s.topH, s.h * 2.4);
+    const halfXZ = Math.max(_dbox.max.x - _dbox.min.x, _dbox.max.z - _dbox.min.z) * 0.5 * s.scale;
     // `halfW` is for keeping out of the way; `rad` is the honest half-extent
     // the size budget is measured with. Big Mom is 7.4 m tall and 10 m wide,
     // and it is the width that decides how much frame she projects into.
     s.rad = clamp(halfXZ, 0.3 * s.scale, 2.2 * s.h);
-    s.halfW = clamp(halfXZ * 0.85, 0.35 * s.scale, 1.1 * s.h);
+    s.halfW = clamp(Math.max(_box.max.x - _box.min.x, _box.max.z - _box.min.z) * 0.5 * s.scale * 0.85,
+      0.35 * s.scale, 1.1 * s.h);
   }
 
   _sample(dt) {
@@ -501,7 +509,9 @@ export class CameraDirector {
       if (_k[4].y < lo) lo = _k[4].y;
       if (_k[4].y > hi) hi = _k[4].y;
     }
-    return hi - lo;
+    // A hair conservative: this is measured against the shot's aim point, and
+    // the tilt `_composeY` adds afterwards moves the corners by a little.
+    return (hi - lo) * 1.04;
   }
 
   /* ---------------------------------------------------------------- */
@@ -807,7 +817,10 @@ export class CameraDirector {
       id: 'rest', imp: 1, minHold: 1.1, subject: null,
       live: (t) => this._twoShot({
         fov: 38, fovMax: 64,
-        fillV: 0.55, minFill: 0.15,
+        // 0.57 rather than 0.50: now that the ceiling is measured and enforced
+        // exactly, every point of headroom given away here comes straight off
+        // the smaller fighter, who has far less to spare.
+        fillV: 0.57, minFill: 0.15,
         fillH: 0.735 - Math.min(t, 2.2) * 0.010,      // a very slow settle in
         elev: 0.205, yaw: s === 0 ? -0.10 : 0.10, pivot: 0.46,
         // Heads a little below the upper third: the pair sits in the middle of
