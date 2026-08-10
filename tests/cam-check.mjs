@@ -312,7 +312,23 @@ async function scenOpening(page) {
   }
 }
 
-const SCENARIOS = { rest: scenRest, arenas: scenArenaRest, sweep: scenSweep, switch: scenSwitch, opening: scenOpening };
+/**
+ * Screenshots of the resting frame for every pairing, without paying for a
+ * whole turn of animation per sample. `scenRest` proves the director gets
+ * here by itself; this one just shows what "here" looks like.
+ */
+async function scenGallery(page) {
+  for (const [arena, p0, p1] of PAIRS) {
+    const tag = `${p0[0]}-vs-${p1[0]}-${arena}`;
+    await startBattle(page, { seed: 'CAM-GAL-' + tag, arena, p0, p1 });
+    await waitGame(page, 1.0);
+    await page.evaluate(() => window.__ARENA.app.dir.go('rest', 0));
+    await waitGame(page, 1.4);
+    await sample(page, `gal-${tag}`, `forced resting frame, ${tag}`);
+  }
+}
+
+const SCENARIOS = { rest: scenRest, arenas: scenArenaRest, sweep: scenSweep, switch: scenSwitch, opening: scenOpening, gallery: scenGallery };
 
 async function main() {
   await mkdir(OUT, { recursive: true });

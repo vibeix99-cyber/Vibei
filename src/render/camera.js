@@ -572,77 +572,93 @@ export class CameraDirector {
       };
     };
 
-    // The lens. It only ever opens, and only for a reason: first so the pair
-    // fits at all from inside the arena, then — if the smaller fighter is
-    // still a smudge — as far as `fovMax` to buy back the perspective that
-    // makes them readable. `foot(f, nMin).fill` rises with f, because a wider
-    // lens lets the camera stand closer to everything and the near fighter
-    // gains far more from that than the far one loses.
+    // Closest the camera may ever come: outside the near fighter's body, off
+    // the 180° line, and further out again when the pair is enormous.
+    const nMin = Math.max(o.minSide ?? 1.6, small.halfW + 1.15 + 0.85 * small.scale) * (0.92 + 0.7 * gk);
+
+    /** The camera position this lens implies. */
+    const solve = (f, out) => {
+      const hor = symStand(f);
+      // The stand-off rides the circle "the bigger fighter is exactly `fillV`
+      // tall", so closing in can never break the ceiling. `fill` falls off
+      // with n and `spanX` rises, so the pair of bisections brackets the
+      // shallowest camera that reads — and when the two disagree, width wins:
+      // a fighter half out of frame is worse than a small one.
+      const nMax = Math.max(nMin, hor);
+      let nFill = nMax, nSpan = nMin;
+      if (minFill > 0 && foot(f, nMax).fill < minFill) {
+        let lo = nMin, hi = nMax;
+        for (let i = 0; i < 14; i++) {
+          const mid = (lo + hi) * 0.5;
+          if (foot(f, mid).fill >= minFill) lo = mid; else hi = mid;
+        }
+        nFill = lo;
+      }
+      if (foot(f, nMin).spanX > fillH) {
+        let lo = nMin, hi = nMax;
+        for (let i = 0; i < 14; i++) {
+          const mid = (lo + hi) * 0.5;
+          if (foot(f, mid).spanX > fillH) lo = mid; else hi = mid;
+        }
+        nSpan = hi;
+      }
+      const n = clamp(Math.max(nFill, nSpan), nMin, nMax);
+      const deep = nMax > nMin + 1e-3 ? clamp((nMax - n) / (nMax - nMin), 0, 1) : 0;
+      // The three-quarter angle is a centred-shot luxury; a deep frame has
+      // spent its lateral budget already, so the yaw fades as we swing in.
+      const yaw = (o.yaw || 0) * (1 - deep);
+      const cyw = Math.cos(yaw), syw = Math.sin(yaw);
+      const fu = sgn * foot(f, n).cu;
+      // Height: the elevated centred look when we are centred, dropping toward
+      // the smaller fighter's own eye line as the shot goes deep — from down
+      // there the giant reads as a giant instead of as a wall.
+      const symY = pivotY + Math.sin(elev) * (hor / Math.max(0.2, ce));
+      const deepY = clamp(small.head.y * 0.9 + 0.06 * big.full, 0.8, 3.2);
+      out.copy(MID).setY(lerp(symY, deepY, deep))
+        .addScaledVector(N, n * cyw - fu * syw)
+        .addScaledVector(U, fu * cyw + n * syw);
+      return this._safe(out, o.minSide ?? 1.6);
+    };
+
+    // The lens only ever opens, and only for a reason: first so the pair fits
+    // at all from inside the arena, then — if the smaller fighter is still a
+    // smudge — as far as `fovMax` to buy back the perspective that makes them
+    // readable. `foot(f, nMin).fill` rises with f, because a wider lens lets
+    // the camera stand closer to everything and the near fighter gains far
+    // more from that than the far one loses.
     let fov = o.fov;
     const fovMax = Math.max(fov, o.fovMax ?? fov);
     const reachFov = 2 * Math.atan(Math.max(tall / (2 * fillV * REACH),
       wide / (2 * fillH * REACH * this.aspect))) / DEG;
     fov = clamp(Math.max(fov, reachFov), fov, fovMax);
-    // Closest the camera may ever come: outside the near fighter's body, off
-    // the 180° line, and further out again when the pair is enormous.
-    const nMin = Math.max(o.minSide ?? 1.6, small.halfW + 1.15 + 0.85 * small.scale) * (0.92 + 0.7 * gk);
-    if (minFill > 0 && fovMax > fov && foot(fov, nMin).fill < minFill
-        && foot(fovMax, nMin).fill >= minFill) {
-      let lo = fov, hi = fovMax;
-      for (let i = 0; i < 16; i++) {
-        const mid = (lo + hi) * 0.5;
-        if (foot(mid, nMin).fill >= minFill) hi = mid; else lo = mid;
+    if (minFill > 0 && fovMax > fov && foot(fov, nMin).fill < minFill) {
+      if (foot(fovMax, nMin).fill < minFill) fov = fovMax;   // even wide open; take it all
+      else {
+        let lo = fov, hi = fovMax;
+        for (let i = 0; i < 14; i++) {
+          const mid = (lo + hi) * 0.5;
+          if (foot(mid, nMin).fill >= minFill) hi = mid; else lo = mid;
+        }
+        fov = hi;
       }
-      fov = hi;
-    } else if (minFill > 0 && foot(fovMax, nMin).fill < minFill) {
-      fov = fovMax;                                  // even wide open; take it all
     }
-    const hor = symStand(fov);
-
-    // The stand-off. Everything from here rides the circle "the bigger fighter
-    // is exactly `fillV` tall", so closing in can never break the ceiling.
-    // `fill` falls off with n and `spanX` rises, so the pair of bisections
-    // brackets the shallowest camera that reads — and when the two disagree,
-    // width wins: a fighter half out of frame is worse than a small one.
-    const nMax = Math.max(nMin, hor);
-    let nFill = nMax, nSpan = nMin;
-    if (minFill > 0 && foot(fov, nMax).fill < minFill) {
-      let lo = nMin, hi = nMax;
-      for (let i = 0; i < 16; i++) {
-        const mid = (lo + hi) * 0.5;
-        if (foot(fov, mid).fill >= minFill) lo = mid; else hi = mid;
-      }
-      nFill = lo;
-    }
-    if (foot(fov, nMin).spanX > fillH) {
-      let lo = nMin, hi = nMax;
-      for (let i = 0; i < 16; i++) {
-        const mid = (lo + hi) * 0.5;
-        if (foot(fov, mid).spanX > fillH) lo = mid; else hi = mid;
-      }
-      nSpan = hi;
-    }
-    const n = clamp(Math.max(nFill, nSpan), nMin, nMax);
-    const deep = nMax > nMin + 1e-3 ? clamp((nMax - n) / (nMax - nMin), 0, 1) : 0;
-    // The three-quarter angle is a centred-shot luxury; a deep frame has spent
-    // its lateral budget already, so the yaw fades out as the camera swings in.
-    const yaw = (o.yaw || 0) * (1 - deep);
-    const cy = Math.cos(yaw), sy2 = Math.sin(yaw);
-    const fu = sgn * foot(fov, n).cu;
-    const cn = n * cy - fu * sy2, cuw = fu * cy + n * sy2;
-
-    // Height: the elevated centred look when we are centred, dropping toward
-    // the smaller fighter's own eye line as the shot goes deep — from down
-    // there the giant reads as a giant instead of as a wall.
-    const symY = pivotY + Math.sin(elev) * (hor / Math.max(0.2, ce));
-    const deepY = clamp(small.head.y * 0.9 + 0.06 * big.full, 0.8, 3.2);
-    const p = new THREE.Vector3().copy(MID).setY(lerp(symY, deepY, deep))
-      .addScaledVector(N, cn).addScaledVector(U, cuw);
-    this._safe(p, o.minSide ?? 1.6);
 
     const lead = a.full >= b.full ? a : b;
     const anchor = _a.copy(a.head).add(b.head).multiplyScalar(0.5)
       .setY((a.head.y + b.head.y) * 0.5);
+    const p = solve(fov, new THREE.Vector3());
+
+    // Now check the answer against reality rather than against the estimate.
+    // `full` predicts the projected box well but not perfectly, and in a tight
+    // arena the camera can already be pressed against the disc with nowhere
+    // left to retreat — in which case the room has to be bought with the lens.
+    for (let pass = 0; pass < 2; pass++) {
+      const span = Math.max(this._projSpan(a, p, anchor, fov), this._projSpan(b, p, anchor, fov));
+      if (span <= fillV * 1.02 || fov >= fovMax - 0.05) break;
+      fov = Math.min(fovMax, 2 * Math.atan(Math.tan(fov * DEG * 0.5) * (span / fillV)) / DEG);
+      solve(fov, p);
+    }
+
     // And the ceiling is enforced, not merely aimed at: whatever the solve
     // above did, whatever the actors do next, and whatever `_safe` had to move
     // to keep the camera in the arena, nobody ends up taller than `fillV`.
@@ -780,7 +796,11 @@ export class CameraDirector {
    */
   _rest(side = 0) {
     const s = side === 1 ? 1 : 0;
-    return {
+    // Cached: while the battle waits, this is rebuilt every frame to keep it
+    // re-framing, and there is no reason to allocate a closure each time.
+    if (this._restShot && this._restShot.side === s) return this._restShot;
+    this._restShot = {
+      side: s,
       id: 'rest', imp: 1, minHold: 1.1, subject: null,
       live: (t) => this._twoShot({
         fov: 38, fovMax: 62,
@@ -790,6 +810,7 @@ export class CameraDirector {
         sx: s === 0 ? 0.485 : 0.515, sy: 0.35, minSide: 1.8
       })
     };
+    return this._restShot;
   }
 
   /** Attacker hero shot — three-quarter front, slow push through the beat. */
@@ -903,16 +924,24 @@ export class CameraDirector {
     };
   }
 
-  /** Entrance: the fighter lands into a low three-quarter. */
+  /**
+   * Entrance: the fighter lands into a low three-quarter.
+   *
+   * A switch-in throws the model in from ~7 m outside its own slot, so the
+   * shot is composed around the *lane*, not the landing spot: the fighter is
+   * placed off-centre toward the middle of the stage, leaving the outside of
+   * the frame for them to fly through, and the frame closes in as they land
+   * rather than opening out after they have already arrived.
+   */
   _entrance(side) {
     return {
-      id: 'entrance', imp: 2, minHold: 0.65, subject: side,
+      id: 'entrance', imp: 2, minHold: 0.7, subject: side,
       live: (t) => this._single({
-        side, fov: 38,
-        fill: 0.48 - Math.min(t, 0.8) * 0.04,
-        fillH: 0.36,
+        side, fov: 40,
+        fill: 0.38 + Math.min(t, 0.9) * 0.09,
+        fillH: 0.30,
         yaw: 0.50, elev: 0.09 + Math.min(t, 0.8) * 0.05,
-        sx: side === 0 ? 0.40 : 0.60, sy: 0.37, pivot: 0.68
+        sx: side === 0 ? 0.60 : 0.40, sy: 0.37, pivot: 0.68
       })
     };
   }
