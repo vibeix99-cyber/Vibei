@@ -525,6 +525,7 @@ export class CameraDirector {
       if (!(d > 0.2)) continue;
       _ray.set(from, _c2.multiplyScalar(1 / d));
       _ray.near = 0.05; _ray.far = d - 0.25;
+      _ray.camera = this.cam;                 // three needs this to raycast sprites
       let hits;
       try { hits = _ray.intersectObjects(scene.children, true); } catch { return 0; }
       for (const h of hits) {
