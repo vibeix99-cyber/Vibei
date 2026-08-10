@@ -431,3 +431,66 @@ costs never comes back, and the AI correctly refuses to spend it.
 at least one wall on the roster, so it can gate the work.
 
 **Status:** open
+
+#### The depth critic reached the same place independently — and named it better
+
+Wave-4 verdict, blind against Black 2 / White 2: **ours 5/10, BW2 9/10**. Its
+harness is `tests/critic/depth2.mjs`. It did not read any of the above, and its
+gap is the same gap, but it located the cause one level lower than I did and its
+instrument is better than mine. Take its framing over mine where they differ.
+
+It ran an **ablation with a control arm** — handicap Ace, play it against full
+Ace, 800 mirror-matched games a row:
+
+```
+  no switching        49.0%     the tool is worth   1.0pp   (inside noise)
+  no status moves     47.8%                         2.2pp
+  no bag items        46.9%                         3.1pp
+  click biggest only  39.9%                        10.1pp
+```
+
+Banning switching outright from the third-tier AI costs it nothing measurable.
+Which attack you click is worth ten times everything positional combined. And
+the swing test, with an identical-choice control that correctly flips 0.0%:
+forcing a status move on turn 2 or 3 flips the winner 14.4% of the time — *less
+often than forcing the worst available attack* (19.5%).
+
+Where it goes past my entry: I said the roster has no walls in its **base
+stats**. That is true but it is not the binding constraint, because a wall
+without recovery is only a slow attacker. The binding constraint is the
+**defensive move economy**:
+
+```
+  default sets carrying a recovery move or a screen     0 of 32
+  fighters that can even LEARN a 50% heal               3 of 32   (chopper, hancock, enel)
+  fighters that can learn a screen                      4 of 32
+  fighters that can learn Protect (`brace`)             4 of 32
+  Substitute / Rest / Trick Room in the library         none of 302
+```
+
+In Pokémon every species learns Protect and roughly a third learn reliable
+recovery. Consequences it measured in 200 default games / 1788 turns: 38.7% of
+KOs land on the *first* damaging hit, a fighter that appears lives 2.26 turns,
+only 4.01 of the 6 brought ever take the field, and screens fire 0.0 times per
+100 turns, terrain 0.0, Trick Room 0.0, Substitute 0.0, weather 0.3.
+
+So the fix has two halves and the second one is the one to do first:
+
+1. **Defensive move economy.** Put reliable recovery on the fighters whose
+   character supports it and give most of the roster Protect; add Substitute and
+   Rest to the library; get screens onto real learnsets. This is what lets a
+   turn spent on position pay back.
+2. **Then** the base-stat spread and EVs from my entry above, so there is
+   something whose job is to use them.
+
+Two of its findings are separate from the pace problem and belong to whoever
+owns reachability: only **82 of 302 moves, 9 of 71 abilities and 8 of 51 items**
+ever fire in a default battle, and screens/terrain/weather are fully implemented
+in the engine yet never dealt to a player.
+
+It also praised the move cards specifically — power, accuracy, PP, the ×2 chip
+and a numeric predicted-damage range, which mainline Pokémon does not show —
+but turned that into the sharpest line in the report: three cards carry a damage
+bar and the fourth reads only "STATUS" over empty space, so *the UI prices
+exactly the axis that matters and leaves the other one blank*. The presentation
+is telling the truth about the game.
