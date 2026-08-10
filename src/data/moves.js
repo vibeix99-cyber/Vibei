@@ -733,7 +733,10 @@ def({ id: 'soul_solid', name: 'Soul Solid', type: 'SPIRIT', category: 'special',
   effects: [{ kind: 'boost', stats: { spd: -1 }, chance: 30, target: 'foe' }],
   desc: 'A chilling note that cuts the soul. May lower Sp. Def.', flavor: 'Yohohoho.',
   fx: { key: 'soul_slash', color: '#6fe3d0', shape: 'arc', hitstop: 100, shake: 0.6, sfx: 'soul' } });
-def({ id: 'spirit_gun', name: 'Spirit Gun', type: 'SPIRIT', category: 'special', power: 110, accuracy: 90, pp: 10, flags: ['bullet', 'protect'],
+// NOTE: this used to be called `spirit_gun`, which collided with Yusuke's
+// signature of the same id in signatureMoves.js — 264 entries, 263 ids. The
+// generic version keeps its numbers under a name nobody else has claimed.
+def({ id: 'spirit_bolt', name: 'Spirit Bolt', type: 'SPIRIT', category: 'special', power: 110, accuracy: 90, pp: 10, flags: ['bullet', 'protect'],
   desc: 'Powerful, and slightly unreliable.', flavor: 'One finger, pointed. The rest is willpower and regret.',
   fx: { key: 'spirit_shot', color: '#7fe0ff', shape: 'beam', scale: 1.9, hitstop: 175, shake: 1.3, sfx: 'spirit' } });
 def({ id: 'soul_offering', name: 'Soul Offering', type: 'SPIRIT', category: 'special', power: 140, accuracy: 90, pp: 5, recoil: 0.5, flags: ['protect'],
