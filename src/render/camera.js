@@ -665,11 +665,14 @@ export class CameraDirector {
     this._clearActors(p, anchor, fov, fillV);
     this._safe(p, o.minSide ?? 1.6);
 
+    // Side 0 is always screen-left and side 1 screen-right, so the two feet
+    // limits are different: below side 0 there is nothing but the text box,
+    // while side 1 stands over the player's own name plate.
     const cons = [
       { v: _k[0].copy(lead.aim).setY(lead.top), min: 0.05 },     // never crop the tallest head
-      { v: a.head, max: SAFE.y1 }, { v: b.head, max: SAFE.y1 },  // no head behind the player's plate
-      { v: _k[1].copy(a.aim).setY(a.aim.y + 0.02), max: SAFE.dock },  // and no feet in the text box
-      { v: _k[2].copy(b.aim).setY(b.aim.y + 0.02), max: SAFE.dock }
+      { v: a.head, max: SAFE.y1 }, { v: b.head, max: SAFE.y1 },  // no head behind a plate
+      { v: _k[1].copy(a.aim).setY(a.aim.y + 0.02), max: SAFE.dock },
+      { v: _k[2].copy(b.aim).setY(b.aim.y + 0.02), max: 0.685 }
     ];
     const look = this._composeY(p, anchor, o.sx ?? 0.5, o.sy ?? 0.36, fov, cons);
     return pose(p, look, fov);
@@ -803,11 +806,13 @@ export class CameraDirector {
       side: s,
       id: 'rest', imp: 1, minHold: 1.1, subject: null,
       live: (t) => this._twoShot({
-        fov: 38, fovMax: 62,
+        fov: 38, fovMax: 64,
         fillV: 0.55, minFill: 0.15,
         fillH: 0.735 - Math.min(t, 2.2) * 0.010,      // a very slow settle in
         elev: 0.205, yaw: s === 0 ? -0.10 : 0.10, pivot: 0.46,
-        sx: s === 0 ? 0.485 : 0.515, sy: 0.35, minSide: 1.8
+        // Heads a little below the upper third: the pair sits in the middle of
+        // the glass instead of floating over a screenful of empty deck.
+        sx: s === 0 ? 0.485 : 0.515, sy: 0.41, minSide: 1.8
       })
     };
     return this._restShot;
