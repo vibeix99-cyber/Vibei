@@ -930,11 +930,11 @@ export class CameraDirector {
       side: s,
       id: 'rest', imp: 1, minHold: 1.1, subject: null,
       live: (t) => this._twoShot({
-        // The lens is allowed to open a long way, because for a 10:1 pairing it
-        // is the *only* lever that helps both fighters at once: widening lets
-        // the camera stand closer to the small one without the big one growing.
-        // Retreating instead would meet the ceiling and starve the small one.
-        fov: 38, fovMax: 70,
+        // 64 is measured, not chosen: past it the lens stops paying. Widening
+        // shrinks the distance the size ceiling demands, but it also flattens
+        // the angle the camera comes in at, and past ~64° the second effect
+        // wins — Chopper measures *smaller* at 70° than at 64°.
+        fov: 38, fovMax: 64,
         // 0.55 rather than 0.48: now that the ceiling is measured and enforced
         // exactly, every point of headroom given away here comes straight off
         // the smaller fighter, who has far less to spare.
