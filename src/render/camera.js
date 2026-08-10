@@ -113,6 +113,14 @@ const _box = new THREE.Box3(), _dbox = new THREE.Box3(), _tbox = new THREE.Box3(
 
 const pose = (pos, look, fov) => ({ pos, look, fov });
 
+/**
+ * Yaw offsets the resting shot may try, in order of preference, when arena
+ * geometry is standing in front of a fighter. Smallest first: the framing we
+ * solved for is the one we want, and moving off it is a concession.
+ */
+const LOS_TRY = [0, 0.30, -0.30, 0.58, -0.58, 0.88, -0.88];
+const _ray = new THREE.Raycaster();
+
 /** Shortest camera move allowed while reduced motion is on. Never a cut. */
 const REDUCED_BLEND = 1.1;
 
@@ -173,6 +181,9 @@ export class CameraDirector {
      * `feel` every frame, so it is right before the first event arrives.
      */
     this.reduced = false;
+
+    /** Line-of-sight search for the resting shot: target, eased value, clock. */
+    this._losYaw = 0; this._losEase = 0; this._losAt = -99;
 
     this.pending = null;
     this._turn = { first: null, prevFirst: null, movers: 0 };
@@ -498,6 +509,72 @@ export class CameraDirector {
   }
 
   /**
+   * Is anything in the arena standing between `from` and a fighter's chest?
+   * Returns how many of the two are hidden. Thin, see-through decoration does
+   * not count; a Skypiea pillar does.
+   */
+  _blockedCount(from, scene) {
+    let n = 0;
+    for (let i = 0; i < 2; i++) {
+      const s = this.act[i];
+      const root = s.ref?.root;
+      if (!root) continue;
+      _c1.copy(s.aim).setY(s.aim.y + Math.max(0.4, s.top) * 0.62);
+      _c2.copy(_c1).sub(from);
+      const d = _c2.length();
+      if (!(d > 0.2)) continue;
+      _ray.set(from, _c2.multiplyScalar(1 / d));
+      _ray.near = 0.05; _ray.far = d - 0.25;
+      let hits;
+      try { hits = _ray.intersectObjects(scene.children, true); } catch { return 0; }
+      for (const h of hits) {
+        const m = h.object.material;
+        if (!h.object.visible || !m || m.opacity === 0) continue;
+        if (m.transparent && m.opacity < 0.4) continue;
+        let o = h.object, mine = false;
+        while (o) { if (o === root) { mine = true; break; } o = o.parent; }
+        if (mine) continue;
+        n++;
+        break;
+      }
+    }
+    return n;
+  }
+
+  /**
+   * Arena geometry does not care about our framing. Skypiea puts a stone
+   * pillar a stride from a fighter slot, and from the natural resting angle it
+   * hides that fighter outright — a frame that satisfies every size rule and
+   * still shows the player nothing. So the resting shot may swing along its
+   * own stand-off arc until both fighters are genuinely visible; the framing
+   * is solved the same way from wherever it lands, and the offset it picks is
+   * eased in rather than cut to, so the search is never something you see.
+   *
+   * Sampled a few times a second, never while blending, and biased hard toward
+   * staying put: a camera that hunts is worse than one behind a pillar.
+   */
+  _seekView() {
+    const scene = this._bind()?.scene;
+    if (!scene || this.reduced) return;
+    if (this.time - this._losAt < 0.7) return;
+    this._losAt = this.time;
+    const cur = this.cur.pos;
+    const r = Math.hypot(cur.x - MID.x, cur.z - MID.z);
+    if (!(r > 1.5)) return;
+    const a0 = Math.atan2(cur.z - MID.z, cur.x - MID.x);
+    let bestD = this._losYaw, bestN = 99;
+    for (const d of LOS_TRY) {
+      const ang = a0 + (d - this._losYaw);
+      _c0.set(MID.x + Math.cos(ang) * r, cur.y, MID.z + Math.sin(ang) * r);
+      if (sideOfAxis(_c0) < 1.0) continue;      // never cross the 180 line to see better
+      const n = this._blockedCount(_c0, scene);
+      if (n < bestN) { bestN = n; bestD = d; }
+      if (n === 0) break;                       // first clear angle wins; 0 is tried first
+    }
+    this._losYaw = bestN >= 99 ? 0 : bestD;
+  }
+
+  /**
    * The fraction of frame height an actor's bounding box actually projects
    * into, from this pose — the same number the critic's harness measures, so
    * the budget and the verdict are computed the same way.
@@ -618,7 +695,9 @@ export class CameraDirector {
       const deep = nMax > nMin + 1e-3 ? clamp((nMax - n) / (nMax - nMin), 0, 1) : 0;
       // The three-quarter angle is a centred-shot luxury; a deep frame has
       // spent its lateral budget already, so the yaw fades as we swing in.
-      const yaw = (o.yaw || 0) * (1 - deep);
+      // `swing` is not a luxury — it is the offset that gets a pillar out from
+      // in front of a fighter — so it survives the fade.
+      const yaw = (o.yaw || 0) * (1 - deep) + (o.swing || 0);
       const cyw = Math.cos(yaw), syw = Math.sin(yaw);
       const fu = sgn * foot(f, n).cu;
       // Height: the elevated centred look when we are centred, dropping toward
@@ -827,7 +906,7 @@ export class CameraDirector {
         // the smaller fighter, who has far less to spare.
         fillV: 0.57, minFill: 0.15,
         fillH: 0.735 - Math.min(t, 2.2) * 0.010,      // a very slow settle in
-        elev: 0.205, yaw: s === 0 ? -0.10 : 0.10, pivot: 0.46,
+        elev: 0.205, yaw: s === 0 ? -0.10 : 0.10, swing: this._losEase, pivot: 0.46,
         // Heads a little below the upper third: the pair sits in the middle of
         // the glass instead of floating over a screenful of empty deck.
         sx: s === 0 ? 0.485 : 0.515, sy: 0.41, minSide: 1.8
@@ -1401,6 +1480,7 @@ export class CameraDirector {
       if (this.shot?.id === 'rest') {
         this.shot = this._rest(cs);       // already home: keep re-framing, never restart
         this._commanded = true;
+        if (this.blend >= 1) this._seekView();
       } else if (this._idle > 0.35 && !this._commanded) {
         // Ask politely first. After a beat, insist: the frame the player makes
         // every decision from is not something shot discipline gets to veto.
@@ -1408,7 +1488,10 @@ export class CameraDirector {
         this._request(this._rest(cs), { dur: insist ? 0.8 : 1.05, ease: E.glide, force: insist });
         if (insist) this._commanded = true;
       }
-    } else if (!waiting) { this._idle = 0; this._commanded = false; }
+    } else if (!waiting) { this._idle = 0; this._commanded = false; this._losYaw = 0; }
+    // The swing is always eased, never cut — including back to zero when the
+    // action starts and the resting shot hands the frame over.
+    this._losEase += (this._losYaw - this._losEase) * (1 - Math.exp(-dt * 2.4));
 
     // Intensity relaxes toward a floor set by how close the battle is.
     const floor = 0.10 + (1 - Math.min(this.hpFrac[0], this.hpFrac[1])) * 0.28;
