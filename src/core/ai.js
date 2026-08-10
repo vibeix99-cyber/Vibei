@@ -120,6 +120,18 @@ export const AI_PERSONALITIES = {
 
 const WIN = 1e6;
 const NEUTRAL_ACC = 0.85;       // assumed accuracy of an unknown foe move
+// How much of the switch a pivot buys actually shows up in the move's score.
+// A pivot is not a free switch — it commits before seeing the foe's turn — so
+// it is worth less than the same switch chosen on its own terms. Calibrated
+// against the switch rate and the AI ladder, not guessed: see tools/pivotcheck.mjs.
+const PIVOT_W = 0.55;
+// How much of `switchCost` a *switch* actually pays. The free hit on the way in
+// is most of what leaving costs, and it is priced separately; the attack we gave
+// up is priced by the move scores the switch competes against. The flat tax is
+// the residual on top of those two, not a third copy of them — at full weight
+// every tier below warlord switched on well under 2% of its turns. The bag keeps
+// the full rate: an item turn buys no position at all.
+const SWITCH_TEMPO = 0.55;
 
 /* ------------------------------------------------------------------ */
 /* RNG surrogates — the battle RNG is never touched                    */
@@ -651,6 +663,15 @@ function utilityValue(c, move) {
       case 'trickRoom':
         v += c.faster ? -26 : 26;
         break;
+      case 'custom': {
+        if (e.value !== 'pivot') { v += 6; break; }
+        // Parting Note and friends: the debuff is scored above, this is the
+        // free switch it leaves behind. Divided back out of `W.utility` so a
+        // personality's taste for status moves does not price the switch.
+        const gain = c.cfg?.switchIQ > 0 ? pivotGain(c, c.cfg) : null;
+        v += gain === null ? -14 : (gain * PIVOT_W * c.cfg.switchIQ) / Math.max(0.35, W.utility);
+        break;
+      }
       default:
         v += 6;
         break;
@@ -739,6 +760,28 @@ function scoreMoves(c) {
       if (mv.drain) score += (est.avg * mv.drain / me.maxHp) * 100 * 0.55;
       if (mv.flags?.includes('recharge')) score -= est.ko > 0.85 ? 6 : 26;
       if (mv.flags?.includes('charge')) score -= 34;
+      // A pivot is worth its damage *plus* the body it brings in behind it.
+      // Only pay for the switch on the rolls that actually land it.
+      if (isPivotMove(mv) && cfg.switchIQ > 0) {
+        const gain = pivotGain(c, cfg);
+        if (gain !== null) {
+          const lands = est.acc * (est.immune ? 0 : 1);
+          score += gain * lands * PIVOT_W * cfg.switchIQ;
+          // Striking something that is about to die and leaving is not a pivot,
+          // it is a wasted kill: stay in and take the free turn instead.
+          if (est.ko > 0.8 && gain < 24) score -= 20;
+        }
+      }
+      // Pursuit collects double on the way out. Price the bet, not the bluff.
+      if (mv.flags?.includes('pursuit') && !est.immune) {
+        const flee = foeFleeChance(c);
+        if (flee > 0) {
+          const koOut = koProb(est.min * 2, est.max * 2, foe.hp) * est.acc;
+          const extra = (est.expected / Math.max(1, foe.maxHp)) * 100
+            + (koOut - est.ko) * (1 - cfg.koBlind) * W.ko;
+          score += flee * extra * (0.35 + 0.65 * cfg.switchIQ);
+        }
+      }
       // Secondary effects riding on a damaging move are a bonus, not the point.
       if (mv.effects?.length && cfg.statusIQ > 0.3) score += utilityValue(c, mv) * 0.22;
       // Overkill is waste when something bulkier is behind it.
@@ -754,9 +797,18 @@ function scoreMoves(c) {
 /**
  * Value of bringing party member `idx` in *right now*: hazards on entry, the
  * free turn the foe gets, the risk of losing the body, then the matchup.
+ *
+ * Everything about the matchup is scored *relative to the body already out*.
+ * That is the whole point: you switch because staying in is worse, not because
+ * the bench is good in the abstract. Scored absolutely, a switch could only
+ * ever be a cost — the turn you give up is real and the position you gain is
+ * measured against nothing — and the AI stood there and died on 98% of turns.
+ *
+ * `freeEntry` is for the body a pivot move sends in behind a slower turn: the
+ * foe has already swung, so there is no free hit to eat on the way in.
  */
-function switchValue(c, idx, cfg, deep = false) {
-  const { state, side, foe, W } = c;
+function switchValue(c, idx, cfg, deep = false, freeEntry = false) {
+  const { state, side, me, foe, W } = c;
   const s = state.sides[side];
   const inc = s.party[idx];
   if (!inc || inc.fainted) return -Infinity;
@@ -765,11 +817,11 @@ function switchValue(c, idx, cfg, deep = false) {
   const hpAfterHazard = inc.hp - toll.damage;
   if (hpAfterHazard <= 0) return -Infinity;       // walking straight into a hazard KO
 
-  // The foe gets a free hit on the way in.
+  // The foe gets a free hit on the way in — unless it has already moved.
   const foeInto = bestThreat(state, 1 - side, foe, { ...inc, hp: hpAfterHazard }, c.foeMoves);
-  const freeHit = foeInto.expected;
+  const freeHit = freeEntry ? 0 : foeInto.expected;
   const hpAfter = Math.max(0, hpAfterHazard - freeHit);
-  const diesOnEntry = foeInto.max >= hpAfterHazard ? foeInto.ko : 0;
+  const diesOnEntry = !freeEntry && foeInto.max >= hpAfterHazard ? foeInto.ko : 0;
 
   // Post-entry matchup: how does this body actually fare?
   const ghost = { ...inc, hp: Math.max(1, hpAfter), boosts: { atk: 0, def: 0, spa: 0, spd: 0, spe: 0, acc: 0, eva: 0 }, volatiles: {} };
@@ -778,25 +830,41 @@ function switchValue(c, idx, cfg, deep = false) {
   const theirTurns = turnsToKO(Math.max(1, hpAfter), foeInto.expected);
   const incFaster = actsFirst(state, ghost, foe, back.move?.move, foeInto.move?.move);
 
+  // ...and how is the body already out there doing? This is the baseline every
+  // matchup term below is measured against.
+  const alive = me && !me.fainted;
+  const curMine = alive ? turnsToKO(foe.hp, c.myThreat.expected) : 99;
+  const curTheirs = alive ? turnsToKO(me.hp, c.foeThreat.expected) : 1;
+  const curDuel = clamp(curTheirs - curMine, -4, 4);
+  const curTie = curMine === curTheirs ? (c.faster ? 10 : -10) : 0;
+
   let v = 0;
-  v += clamp(theirTurns - myTurns, -4, 4) * 13;
-  if (myTurns === theirTurns) v += incFaster ? 10 : -10;
+  // The duel we would be in, minus the duel we are in.
+  v += (clamp(theirTurns - myTurns, -4, 4) - curDuel) * 13;
+  v += (myTurns === theirTurns ? (incFaster ? 10 : -10) : 0) - curTie;
   v -= (toll.damage / inc.maxHp) * 100 * 1.15;
   if (toll.status) v -= 18;
   if (toll.speDrop) v -= 8;
   v -= (Math.min(freeHit, hpAfterHazard) / inc.maxHp) * 100 * 0.85;
   v -= diesOnEntry * 95 * W.risk;
-  v -= W.switchCost;
-  v += (inc.hp / inc.maxHp) * 16;
+  v -= W.switchCost * SWITCH_TEMPO;
+  // Trading a healthy body for a hurt one is a cost, not a benefit.
+  v += ((inc.hp / inc.maxHp) - (alive ? me.hp / me.maxHp : 0)) * 16;
   if (inc.status) v -= (STATUS_PENALTY[inc.status] || 12) * 0.5;
+  if (alive && me.status) v += (STATUS_PENALTY[me.status] || 12) * 0.35;   // leaving it behind
 
-  // Resist check: does it actually wall the foe's best?
+  // Resist check: does it wall the foe's best move *better than what is out now*?
   if (foeInto.move) {
-    const e = typeEff(foeInto.move.move.type, inc.types);
-    if (e <= 0.25) v += 26; else if (e <= 0.5) v += 15; else if (e >= 4) v -= 34; else if (e >= 2) v -= 16;
+    const grade = (types) => {
+      const e = typeEff(foeInto.move.move.type, types);
+      return e <= 0.25 ? 26 : e <= 0.5 ? 15 : e >= 4 ? -34 : e >= 2 ? -16 : 0;
+    };
+    v += grade(inc.types) - (alive ? grade(me.types) : 0);
   }
-  // Offensive check: does it threaten back?
-  if (back.move && back.move.eff >= 2) v += 14;
+  // Offensive check: does it threaten back where the current body does not?
+  const incSE = back.move && back.move.eff >= 2;
+  const meSE = alive && c.myThreat.move && c.myThreat.move.eff >= 2;
+  if (incSE !== !!meSE) v += incSE ? 14 : -14;
 
   // Warlord+: do not burn the only body that answers a foe we haven't seen yet.
   // O(party²) in threat estimates, so it only runs at the root, never in the tree.
@@ -825,6 +893,63 @@ function reservedCheckPenalty(c, idx) {
     if (mineHere > bestOther + 8) penalty += 16;   // idx is the unique answer to `threat`
   }
   return penalty;
+}
+
+/* ------------------------------------------------------------------ */
+/* pivot / pursuit — the switching metagame                            */
+/* ------------------------------------------------------------------ */
+
+/**
+ * What the switch half of a pivot move is worth, on the same scale as a move
+ * score. A pivot is an attack that *also* buys the best body on the bench:
+ *
+ *   * the attack pays for the turn, so the tempo cost is refunded;
+ *   * when we move second the foe has already swung, so the body walking in
+ *     does not eat a free hit — that is most of why pivots are good.
+ *
+ * Returns `null` when there is nowhere to go (the engine's `tryPivot` no-ops),
+ * and may be negative: a pivot into a dead bench is a real liability, because
+ * the switch is not optional once the hit lands.
+ */
+function pivotGain(c, cfg) {
+  if (c._pivotGain !== undefined) return c._pivotGain;
+  const free = !c.faster;
+  let best = -Infinity;
+  for (const i of legalSwitches(c.state, c.side)) {
+    const v = switchValue(c, i, cfg, false, free);
+    if (v > best) best = v;
+  }
+  c._pivotGain = best === -Infinity ? null : best + c.W.switchCost * SWITCH_TEMPO;
+  return c._pivotGain;
+}
+
+/** Does `move` hand the user a free switch when it resolves? */
+function isPivotMove(move) {
+  if (!move) return false;
+  if (move.category !== 'status' && move.flags?.includes('pivot')) return true;
+  return !!move.effects?.some((e) => e.kind === 'custom' && e.value === 'pivot');
+}
+
+/**
+ * Rough odds the foe leaves the field this turn — what a pursuit move is
+ * betting on. Cheap on purpose: it reads the duel we have already estimated
+ * rather than running the foe's own switch search.
+ */
+function foeFleeChance(c) {
+  const { state, side, me, foe } = c;
+  if (!legalSwitches(state, 1 - side).length) return 0;      // nowhere to run
+
+  let p = 0.10;
+  const myTurns = turnsToKO(foe.hp, c.myThreat.expected);
+  const theirTurns = turnsToKO(me.hp, c.foeThreat.expected);
+  if (myTurns + 1 <= theirTurns) p += 0.20;                  // losing the duel outright
+  if (myTurns <= 1) p += 0.22;                               // dead where it stands
+  if (foe.hp / foe.maxHp < 0.35) p += 0.10;
+  if (foe.status === 'tox' || foe.status === 'brn') p += 0.07;
+  if ((foe.boosts.atk | 0) >= 2 || (foe.boosts.spa | 0) >= 2) p -= 0.22;  // it is winning
+  // Hazards on their side are exactly the tax that keeps a body in.
+  p -= Math.min(0.20, hazardBurden(state, 1 - side) / 90);
+  return clamp(p, 0, 0.72);
 }
 
 /* ------------------------------------------------------------------ */
@@ -938,7 +1063,9 @@ function strategicPass(c, options, cfg) {
         if (o.est && o.est.ko > 0.6) o.score += 30;
         else if (mv.category === 'status'
           && mv.effects?.some((e) => e.kind === 'status' || (e.kind === 'boost' && e.target === 'foe'))) o.score += 18;
-        else if (mv.category !== 'status' && (o.est?.expected || 0) < foe.hp * 0.3) o.score -= 22;
+        // Chipping a snowballing foe is a wasted turn — unless the chip also
+        // brings in the body that answers it.
+        else if (mv.category !== 'status' && (o.est?.expected || 0) < foe.hp * 0.3) o.score -= isPivotMove(mv) ? 4 : 22;
       }
       // Hazards are only worth a turn while there are bodies left to walk into them.
       if (mv.effects?.some((e) => e.kind === 'hazard')) {
@@ -967,7 +1094,9 @@ function allOptions(c, cfg, rng) {
       const v = switchValue(c, i, cfg, true);
       if (v === -Infinity) continue;
       // Switching competes against the best thing staying in can do.
-      options.push({ kind: 'switch', toSlot: i, score: v * cfg.switchIQ + (1 - cfg.switchIQ) * -40 });
+      // A lower switchIQ reads the position less clearly and hesitates; it does
+      // not become physically unable to leave.
+      options.push({ kind: 'switch', toSlot: i, score: v * cfg.switchIQ - (1 - cfg.switchIQ) * 22 });
     }
   }
   for (const it of bagOptions(c, cfg)) options.push(it);
@@ -1004,7 +1133,7 @@ function chooseForcedSwitch(state, side, cfg, rng) {
   let best = opts[0], bestScore = -Infinity;
   for (const i of opts) {
     // A forced switch pays no tempo cost — the turn is already gone.
-    let v = switchValue(c, i, cfg, !!rng) + cfg.W.switchCost;
+    let v = switchValue(c, i, cfg, !!rng) + cfg.W.switchCost * SWITCH_TEMPO;
     if (cfg.switchIQ < 0.5) {
       // Low tiers just send out whatever is healthiest and next in line.
       const p = state.sides[side].party[i];

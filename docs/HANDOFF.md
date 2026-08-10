@@ -313,7 +313,22 @@ if (mv.flags?.includes('pivot') && myBodies > 0) score += 18 + 10 * hazardBurden
 plus a `pursuit` term that reads how likely the foe is to leave. `utilityValue`
 also has no case for `custom: 'pivot'` — it falls through to `default: v += 6`,
 which is why `parting_note` (a Parting Shot) is valued only for its stat drop.
-**Status:** open
+
+**Status:** DONE. `scoreMoves` now prices a pivot as *damage plus the body it
+brings in* (`pivotGain`, gated on `cfg.switchIQ`), pursuit as *the double-power
+roll times the odds the foe actually leaves* (`foeFleeChance`), and
+`utilityValue` has a `custom: 'pivot'` case. `switchValue` also grew a
+`freeEntry` mode, because a pivot fired on a slower turn brings its replacement
+in after the foe has already swung — that free entry is most of why pivots are
+good.
+
+Measured with the new `tools/pivotcheck.mjs` (which counts offered-vs-taken over
+real self-play, so a move nobody carries cannot look under-picked): the numbers
+in the table above did not reproduce on the shipping build. Pooled pivot pick
+rate is 20.6%, `cut_and_run` 11.7% — not 0.5%. Voluntary switching moved
+warlord 11.1% → 12.3% of turns and ace 1.1% → 2.1%, which is honest but small.
+
+The reason it is small is not the AI. See the next entry.
 
 ### Content → tools (`tools/movebudget.mjs`)
 **Need:** two stale allow-lists, both now producing false reports.
@@ -342,4 +357,77 @@ stream. Torment does emit it, because torment can only become true mid-turn.
 Either the choice validator should let a sealed move through to `executeMove`
 so the player is told why, or §4 should say that `'imprison'` only fires when
 the seal lands after choices were locked.
+**Status:** open
+
+### AI → Roster (`src/data/fighters.js`) — the biggest gap to Pokémon
+
+**Need:** somebody on this roster has to be able to take a hit.
+
+I went into `src/core/ai.js` to make the AI switch more and came out convinced
+the AI is right not to. Switching, status, hazards, screens, items and PP are
+all investments that pay back over turns. Nothing here lives long enough for any
+of them to pay back, so "click the biggest number" is not the AI being lazy —
+it is the correct play, and every tactical system we have built is decorative
+underneath it.
+
+Reproduce with `node tools/pace.mjs --evs`. On the shipping roster:
+
+```
+  best move vs a random target   p25 45%   median 66%   p75 99%   p90 149%
+  hits to KO at the median       1.51                    (Pokémon: 2–3)
+  matchups that one-shot         24.5%                   (Pokémon: <10%)
+  matchups that two-shot         70.1%
+  warlord self-play              2.9 turns per KO, 11.5 turns for a 3v3
+  turns spent not attacking      8.5% switching  13.6% status  8.9% items
+```
+
+The damage formula is not the problem — `damage.js` is a faithful port and I
+re-derived it by hand against the source ordering. The problem is upstream, in
+the base stats:
+
+```
+  bulk / offense   (hp+def+spd) / (atk+spa+spe)
+    ours     0.63 … 1.31        a 2.1x spread     0 fighters above 1.40
+    Pokémon  0.31 … 1.90        a 6.1x spread     Blissey 1.90, Toxapex 1.86,
+                                                  Skarmory 1.55, Ferrothorn 1.42
+  glass cannons (<= 0.85)   18 of 32
+  base speed >= 100         21 of 32   (median 105; Pokémon OU median ~85)
+```
+
+The two bulkiest fighters we have, Kaido (1.15) and Big Mom (1.23), also carry
+145 and 135 base attack — they are bulky *attackers*, not walls. Chopper at 1.31
+is the most defensive thing on the roster and would be a mid-tier attacker in
+OU. There is no Blissey, no Toxapex, no Skarmory: nothing whose job is to come
+in, eat a hit and still be there. With nothing to switch *to*, the turn a switch
+costs never comes back, and the AI correctly refuses to spend it.
+
+**What I checked and ruled out**, so nobody repeats it:
+
+* *EV spreads.* The engine already honours `member.evs`; `makeDefaultMember`
+  just never sets it. I tried a role-based 252/252/4 spread and it made things
+  **worse** — 1.51 → 1.34 hits to a KO — because the rule classifies 21 of 32
+  fighters as sweepers, which is simply what their base stats are. You cannot
+  invest your way to a wall out of a stat line with no bulk in it.
+* *Move power.* Default-set BP medians 95 (p90 140). High, but re-deriving the
+  formula with our own median stats gives ~48% for a neutral STAB hit, which is
+  in line with the source material. Power is a contributing factor, not the
+  cause.
+* *The type chart.* The best move is super-effective in 40% of matchups. Worth a
+  look, but halving it would not move 1.51 hits into the 2–3 band on its own.
+
+**Suggested shape of the fix** (roster's call, not mine):
+
+1. Give six to eight fighters genuinely defensive base spreads — bulk/offense
+   1.4 to 1.8, base speed 50–70, one reliable recovery move, and offense low
+   enough that they win by attrition rather than by hitting back. Jinbe,
+   Chopper, Franky, Bartholomew Kuma and Magellan are the obvious candidates by
+   character.
+2. Pull base speed down across the roster: a median of 105 means speed ties and
+   turn order barely vary, and priority moves have nothing to leapfrog.
+3. Then set real EV spreads per archetype, which will work once there are
+   archetypes to spread for.
+
+`tools/pace.mjs` exits non-zero until the median sits in the 2.0–3.0 band with
+at least one wall on the roster, so it can gate the work.
+
 **Status:** open
