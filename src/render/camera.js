@@ -859,7 +859,11 @@ export class CameraDirector {
       .addScaledVector(U, Math.sin(yaw) * Math.cos(elev) * dist);
     p.y += Math.sin(elev) * dist;
     this._safe(p, o.minSide ?? 1.2);
-    this._clearActors(p, head, fov, o.nearCap ?? 1.0);
+    // Clearance is measured against the slot, not against the tracked head:
+    // the size budget projects a box that sits at `aim`, and aiming the test
+    // four metres off it reads the box as huge and shoves the camera into the
+    // next arena.
+    this._clearActors(p, s.head, fov, o.nearCap ?? 1.0);
     this._safe(p, o.minSide ?? 1.2);
 
     const sx = o.sx ?? (o.side === 0 ? 0.40 : 0.60);
