@@ -77,11 +77,11 @@ def({
     { lv: 1, move: 'spark_jab' }, { lv: 1, move: 'sonic_wail' }, { lv: 4, move: 'arc_bolt' },
     { lv: 6, move: 'frost_step' }, { lv: 7, move: 'mind_haze' }, { lv: 10, move: 'chain_lightning' },
     { lv: 13, move: 'tidal_call' }, { lv: 16, move: 'numbing_mist' }, { lv: 19, move: 'mind_spike' },
-    { lv: 20, move: 'shatter_volley' }, { lv: 22, move: 'static_snare' }, { lv: 25, move: 'thunder_lance_tempo' },
-    { lv: 28, move: 'volt_relay' }, { lv: 31, move: 'thunderbolt_tempo' }, { lv: 34, move: 'light_wall' },
-    { lv: 37, move: 'sea_fog' }, { lv: 40, move: 'frost_veil' }, { lv: 42, move: 'ice_age' },
-    { lv: 43, move: 'voltage_surge' }, { lv: 45, move: 'mirror_room' }, { lv: 47, move: 'heavens_judgement' },
-    { lv: 50, move: 'el_thor' }
+    { lv: 20, move: 'shatter_volley' }, { lv: 22, move: 'static_snare' }, { lv: 24, move: 'toxic_brand' },
+    { lv: 25, move: 'thunder_lance_tempo' }, { lv: 28, move: 'volt_relay' }, { lv: 31, move: 'thunderbolt_tempo' },
+    { lv: 34, move: 'light_wall' }, { lv: 37, move: 'sea_fog' }, { lv: 40, move: 'frost_veil' },
+    { lv: 42, move: 'ice_age' }, { lv: 43, move: 'voltage_surge' }, { lv: 45, move: 'mirror_room' },
+    { lv: 47, move: 'heavens_judgement' }, { lv: 50, move: 'el_thor' }
   ],
   signature: 'thunderbolt_tempo',
   model: { build: 'lithe', height: 1.70, palette: { skin: '#f5cfa8', hair: '#f0913a', primary: '#f0913a', secondary: '#2e8fd0', accent: '#ffffff' }, silhouette: ['climatact', 'ponytail', 'shoulder_tattoo'], aura: '#f5c542' },
@@ -97,11 +97,11 @@ def({
   learnset: [
     { lv: 1, move: 'pressure_point' }, { lv: 1, move: 'clutch' }, { lv: 4, move: 'mind_spike' },
     { lv: 6, move: 'small_target' }, { lv: 9, move: 'shadow_clutch' }, { lv: 12, move: 'mind_haze' },
-    { lv: 15, move: 'second_guess' }, { lv: 18, move: 'mind_relay' }, { lv: 21, move: 'shadow_steal' },
-    { lv: 24, move: 'nightfall_bolt' }, { lv: 27, move: 'iron_wall' }, { lv: 30, move: 'mirror_seal' },
-    { lv: 33, move: 'umbral_claw' }, { lv: 36, move: 'vanishing_act' }, { lv: 39, move: 'encore_command' },
-    { lv: 42, move: 'mil_fleur_gigantesco' }, { lv: 44, move: 'abyssal_maw' }, { lv: 46, move: 'mind_break' },
-    { lv: 48, move: 'shared_agony' }, { lv: 50, move: 'oblivion_rend' }
+    { lv: 15, move: 'second_guess' }, { lv: 18, move: 'mind_relay' }, { lv: 20, move: 'toxic_brand' },
+    { lv: 21, move: 'shadow_steal' }, { lv: 24, move: 'nightfall_bolt' }, { lv: 27, move: 'iron_wall' },
+    { lv: 30, move: 'mirror_seal' }, { lv: 33, move: 'umbral_claw' }, { lv: 36, move: 'vanishing_act' },
+    { lv: 39, move: 'encore_command' }, { lv: 42, move: 'mil_fleur_gigantesco' }, { lv: 44, move: 'abyssal_maw' },
+    { lv: 46, move: 'mind_break' }, { lv: 48, move: 'shared_agony' }, { lv: 50, move: 'oblivion_rend' }
   ],
   signature: 'clutch',
   model: { build: 'lithe', height: 1.88, palette: { skin: '#e5b98f', hair: '#1c1c22', primary: '#5b2a86', secondary: '#2a2a33', accent: '#c8a2d8' }, silhouette: ['long_coat', 'crossed_arms'], aura: '#a24fd0' },
@@ -158,10 +158,10 @@ def({
     { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'aqua_step' }, { lv: 4, move: 'shark_bite' },
     { lv: 7, move: 'siphon_wave' }, { lv: 10, move: 'tidal_call' }, { lv: 13, move: 'fishman_karate' },
     { lv: 16, move: 'iron_body' }, { lv: 19, move: 'anchor_stance' }, { lv: 20, move: 'slick_tide' },
-    { lv: 22, move: 'armament' }, { lv: 25, move: 'sea_veil' }, { lv: 28, move: 'abyss_pressure' },
-    { lv: 31, move: 'imbued_strike' }, { lv: 34, move: 'bubble_ward' }, { lv: 37, move: 'iron_wall' },
-    { lv: 40, move: 'shima_yurashi' }, { lv: 43, move: 'grand_quake' }, { lv: 45, move: 'tenfold_tsunami' },
-    { lv: 47, move: 'haki_pierce' }, { lv: 49, move: 'karakusagawara_seiken' }
+    { lv: 22, move: 'armament' }, { lv: 24, move: 'toxic_brand' }, { lv: 25, move: 'sea_veil' },
+    { lv: 28, move: 'abyss_pressure' }, { lv: 31, move: 'imbued_strike' }, { lv: 34, move: 'bubble_ward' },
+    { lv: 37, move: 'iron_wall' }, { lv: 40, move: 'shima_yurashi' }, { lv: 43, move: 'grand_quake' },
+    { lv: 45, move: 'tenfold_tsunami' }, { lv: 47, move: 'haki_pierce' }, { lv: 49, move: 'karakusagawara_seiken' }
   ],
   signature: 'fishman_karate',
   model: { build: 'giant', height: 3.01, palette: { skin: '#4a9fd4', hair: '#1a1a22', primary: '#2a5f8f', secondary: '#f2e2c8', accent: '#f0913a' }, silhouette: ['kimono', 'tusks', 'topknot'], aura: '#2a7fd4' },
@@ -175,13 +175,13 @@ def({
   base: { hp: 90, atk: 145, def: 90, spa: 90, spd: 95, spe: 100 },
   abilities: ['perfect_edge', 'unbreakable'],
   learnset: [
-    { lv: 1, move: 'draw_cut' }, { lv: 1, move: 'one_sword_slash' }, { lv: 4, move: 'flying_slash' },
+    { lv: 1, move: 'one_sword_slash' }, { lv: 1, move: 'draw_cut' }, { lv: 4, move: 'flying_slash' },
     { lv: 7, move: 'sever_tendon' }, { lv: 10, move: 'chasing_edge' }, { lv: 13, move: 'whetstone_rite' },
     { lv: 16, move: 'blade_scatter' }, { lv: 19, move: 'armament' }, { lv: 21, move: 'pinning_will' },
-    { lv: 22, move: 'unsheathe' }, { lv: 25, move: 'void_lance' }, { lv: 27, move: 'void_step' },
-    { lv: 30, move: 'phase_lance' }, { lv: 33, move: 'moonlit_reap' }, { lv: 36, move: 'steel_garden' },
-    { lv: 39, move: 'executioners_line' }, { lv: 42, move: 'entropy_pulse' }, { lv: 45, move: 'black_blade' },
-    { lv: 48, move: 'world_slash' }, { lv: 50, move: 'finality' }
+    { lv: 22, move: 'unsheathe' }, { lv: 24, move: 'toxic_brand' }, { lv: 25, move: 'void_lance' },
+    { lv: 27, move: 'void_step' }, { lv: 30, move: 'phase_lance' }, { lv: 33, move: 'moonlit_reap' },
+    { lv: 36, move: 'steel_garden' }, { lv: 39, move: 'executioners_line' }, { lv: 42, move: 'entropy_pulse' },
+    { lv: 45, move: 'black_blade' }, { lv: 48, move: 'world_slash' }, { lv: 50, move: 'finality' }
   ],
   signature: 'black_blade',
   model: { build: 'lean', height: 1.98, palette: { skin: '#e0b48c', hair: '#1a1a1a', primary: '#1a1a22', secondary: '#5b2a2a', accent: '#c8a24b' }, silhouette: ['long_coat', 'wide_hat', 'greatsword', 'cross_pendant'], aura: '#1a1a22' },
@@ -218,10 +218,10 @@ def({
     { lv: 1, move: 'pressure_point' }, { lv: 1, move: 'quick_strike' }, { lv: 4, move: 'clutch' },
     { lv: 6, move: 'will_of_iron' }, { lv: 7, move: 'mind_spike' }, { lv: 10, move: 'shambles' },
     { lv: 13, move: 'imbued_strike' }, { lv: 16, move: 'armament' }, { lv: 19, move: 'small_target' },
-    { lv: 22, move: 'mind_haze' }, { lv: 25, move: 'heel_drop' }, { lv: 28, move: 'pinning_will' },
-    { lv: 31, move: 'zangiri_mochi' }, { lv: 34, move: 'mind_relay' }, { lv: 37, move: 'conquerors_haki' },
-    { lv: 40, move: 'haki_pierce' }, { lv: 43, move: 'mind_break' }, { lv: 45, move: 'black_gauntlet' },
-    { lv: 47, move: 'sovereign_flash' }, { lv: 50, move: 'divine_departure' }
+    { lv: 22, move: 'mind_haze' }, { lv: 24, move: 'toxic_brand' }, { lv: 25, move: 'heel_drop' },
+    { lv: 28, move: 'pinning_will' }, { lv: 31, move: 'zangiri_mochi' }, { lv: 34, move: 'mind_relay' },
+    { lv: 37, move: 'conquerors_haki' }, { lv: 40, move: 'haki_pierce' }, { lv: 43, move: 'mind_break' },
+    { lv: 45, move: 'black_gauntlet' }, { lv: 47, move: 'sovereign_flash' }, { lv: 50, move: 'divine_departure' }
   ],
   signature: 'divine_departure',
   model: { build: 'giant', height: 5.09, palette: { skin: '#e8c4a0', hair: '#8a2a3a', primary: '#5a1a2a', secondary: '#2a2a33', accent: '#f0d8c0' }, silhouette: ['scarf', 'tall_coat', 'trident'], aura: '#c04a6a' },
@@ -235,13 +235,13 @@ def({
   base: { hp: 140, atk: 145, def: 125, spa: 110, spd: 110, spe: 70 },
   abilities: ['undying', 'conquerors_will'],
   learnset: [
-    { lv: 1, move: 'savage_bite' }, { lv: 1, move: 'imbued_strike' }, { lv: 4, move: 'iron_body' },
+    { lv: 1, move: 'imbued_strike' }, { lv: 1, move: 'savage_bite' }, { lv: 4, move: 'iron_body' },
     { lv: 6, move: 'grit' }, { lv: 9, move: 'pack_hunt' }, { lv: 12, move: 'territorial_growl' },
-    { lv: 15, move: 'wild_pulse' }, { lv: 18, move: 'armament' }, { lv: 21, move: 'hunters_mark' },
-    { lv: 24, move: 'full_weight' }, { lv: 27, move: 'crushing_stomp' }, { lv: 30, move: 'conquerors_haki' },
-    { lv: 33, move: 'beast_kings_roar' }, { lv: 36, move: 'will_of_iron' }, { lv: 39, move: 'bolo_breath' },
-    { lv: 42, move: 'black_gauntlet' }, { lv: 45, move: 'raimei_hakke' }, { lv: 47, move: 'rampage' },
-    { lv: 49, move: 'divine_departure' }, { lv: 50, move: 'haki_pierce' }
+    { lv: 15, move: 'wild_pulse' }, { lv: 18, move: 'armament' }, { lv: 20, move: 'toxic_brand' },
+    { lv: 21, move: 'hunters_mark' }, { lv: 24, move: 'full_weight' }, { lv: 27, move: 'crushing_stomp' },
+    { lv: 30, move: 'conquerors_haki' }, { lv: 33, move: 'beast_kings_roar' }, { lv: 36, move: 'will_of_iron' },
+    { lv: 39, move: 'bolo_breath' }, { lv: 42, move: 'black_gauntlet' }, { lv: 45, move: 'raimei_hakke' },
+    { lv: 47, move: 'rampage' }, { lv: 49, move: 'divine_departure' }, { lv: 50, move: 'haki_pierce' }
   ],
   signature: 'bolo_breath',
   model: { build: 'giant', height: 7.10, palette: { skin: '#d8a878', hair: '#3a5a8a', primary: '#8a2a2a', secondary: '#2a3a5a', accent: '#c8a24b' }, silhouette: ['horns', 'dragon_mane', 'kanabo', 'shirtless'], aura: '#5a7fd0' },
@@ -265,10 +265,11 @@ def({
     { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'hair_trigger' }, { lv: 4, move: 'sogeking_shot' },
     { lv: 7, move: 'oil_slick_toss' }, { lv: 10, move: 'caltrop_scatter' }, { lv: 13, move: 'toxic_barbs' },
     { lv: 16, move: 'mud_shot' }, { lv: 19, move: 'rivet_cannon' }, { lv: 22, move: 'shrapnel_burst' },
-    { lv: 25, move: 'barb_spray' }, { lv: 28, move: 'tracking_round' }, { lv: 31, move: 'scrap_launch' },
-    { lv: 34, move: 'venom_road' }, { lv: 37, move: 'pop_green_barbs' }, { lv: 40, move: 'leech_thorns' },
-    { lv: 43, move: 'screech_bomb' }, { lv: 45, move: 'overdrive_cannon' }, { lv: 46, move: 'brace' },
-    { lv: 48, move: 'plague_cloud' }, { lv: 49, move: 'venom_crash' }, { lv: 50, move: 'toxic_barbs' }
+    { lv: 24, move: 'toxic_brand' }, { lv: 25, move: 'barb_spray' }, { lv: 28, move: 'tracking_round' },
+    { lv: 31, move: 'scrap_launch' }, { lv: 34, move: 'venom_road' }, { lv: 37, move: 'pop_green_barbs' },
+    { lv: 40, move: 'leech_thorns' }, { lv: 43, move: 'screech_bomb' }, { lv: 45, move: 'overdrive_cannon' },
+    { lv: 46, move: 'brace' }, { lv: 48, move: 'plague_cloud' }, { lv: 49, move: 'venom_crash' },
+    { lv: 50, move: 'toxic_barbs' }
   ],
   signature: 'rivet_cannon',
   model: { build: 'lean', height: 1.76, palette: { skin: '#b57a4a', hair: '#1c1c22', primary: '#d8b84a', secondary: '#4a7f3a', accent: '#f2f2e8' }, silhouette: ['goggles', 'scarf', 'gauntlets'], aura: '#d8b84a' },
@@ -285,10 +286,11 @@ def({
     { lv: 1, move: 'shockwave_palm' }, { lv: 1, move: 'gear_strike' }, { lv: 4, move: 'hair_trigger' },
     { lv: 6, move: 'seismic_throw' }, { lv: 7, move: 'iron_body' }, { lv: 10, move: 'rivet_cannon' },
     { lv: 13, move: 'scrap_sweep' }, { lv: 16, move: 'caltrop_scatter' }, { lv: 19, move: 'iron_wall' },
-    { lv: 20, move: 'oil_slick_toss' }, { lv: 22, move: 'pile_driver' }, { lv: 25, move: 'steel_meteor' },
-    { lv: 28, move: 'shrapnel_burst' }, { lv: 31, move: 'strong_hammer' }, { lv: 34, move: 'tracking_round' },
-    { lv: 37, move: 'brace' }, { lv: 40, move: 'radical_beam' }, { lv: 43, move: 'general_franky_shield' },
-    { lv: 46, move: 'coup_de_vent' }, { lv: 47, move: 'heel_drop' }, { lv: 49, move: 'overdrive_cannon' }
+    { lv: 20, move: 'oil_slick_toss' }, { lv: 22, move: 'pile_driver' }, { lv: 24, move: 'toxic_brand' },
+    { lv: 25, move: 'steel_meteor' }, { lv: 28, move: 'shrapnel_burst' }, { lv: 31, move: 'strong_hammer' },
+    { lv: 34, move: 'tracking_round' }, { lv: 37, move: 'brace' }, { lv: 40, move: 'radical_beam' },
+    { lv: 43, move: 'general_franky_shield' }, { lv: 46, move: 'coup_de_vent' }, { lv: 47, move: 'heel_drop' },
+    { lv: 49, move: 'overdrive_cannon' }
   ],
   signature: 'coup_de_vent',
   model: { build: 'bulk', height: 2.40, palette: { skin: '#e3b98c', hair: '#5fc8e8', primary: '#3a86c8', secondary: '#2a2a33', accent: '#f2f2f2' }, silhouette: ['open_vest', 'gauntlets', 'shoulder_tattoo'], aura: '#5fc8e8' },
@@ -302,14 +304,14 @@ def({
   base: { hp: 75, atk: 95, def: 60, spa: 120, spd: 90, spe: 125 },
   abilities: ['revenant', 'amplifier'],
   learnset: [
-    { lv: 1, move: 'draw_cut' }, { lv: 1, move: 'resonance_lance' }, { lv: 4, move: 'echo_volley' },
+    { lv: 1, move: 'resonance_lance' }, { lv: 1, move: 'draw_cut' }, { lv: 4, move: 'echo_volley' },
     { lv: 6, move: 'jeer' }, { lv: 7, move: 'lullaby' }, { lv: 10, move: 'soul_leech' },
     { lv: 13, move: 'sonic_wail' }, { lv: 16, move: 'battle_hymn' }, { lv: 19, move: 'soul_relay' },
-    { lv: 22, move: 'flying_slash' }, { lv: 25, move: 'bone_shards' }, { lv: 28, move: 'taiko_strike' },
-    { lv: 31, move: 'nemuriuta_flanc' }, { lv: 34, move: 'soul_solid' }, { lv: 37, move: 'parting_note' },
-    { lv: 40, move: 'bitter_refrain' }, { lv: 42, move: 'spirit_double' }, { lv: 43, move: 'soul_parade' },
-    { lv: 45, move: 'screech_bomb' }, { lv: 47, move: 'dirge' }, { lv: 49, move: 'final_requiem' },
-    { lv: 50, move: 'soul_offering' }
+    { lv: 22, move: 'flying_slash' }, { lv: 24, move: 'toxic_brand' }, { lv: 25, move: 'bone_shards' },
+    { lv: 28, move: 'taiko_strike' }, { lv: 31, move: 'nemuriuta_flanc' }, { lv: 34, move: 'soul_solid' },
+    { lv: 37, move: 'parting_note' }, { lv: 40, move: 'bitter_refrain' }, { lv: 42, move: 'spirit_double' },
+    { lv: 43, move: 'soul_parade' }, { lv: 45, move: 'screech_bomb' }, { lv: 47, move: 'dirge' },
+    { lv: 49, move: 'final_requiem' }, { lv: 50, move: 'soul_offering' }
   ],
   signature: 'soul_solid',
   model: { build: 'lithe', height: 2.66, palette: { skin: '#f0ece0', hair: '#1c1c22', primary: '#2a2a44', secondary: '#5b2a86', accent: '#f2c94c' }, silhouette: ['suit', 'cape', 'three_swords'], aura: '#6fe3d0' },
@@ -323,15 +325,15 @@ def({
   base: { hp: 100, atk: 85, def: 105, spa: 90, spd: 110, spe: 65 },
   abilities: ['regenerator', 'pure_heart'],
   learnset: [
-    { lv: 1, move: 'pack_hunt' }, { lv: 1, move: 'savage_bite' }, { lv: 4, move: 'second_wind' },
+    { lv: 1, move: 'savage_bite' }, { lv: 1, move: 'pack_hunt' }, { lv: 4, move: 'second_wind' },
     { lv: 6, move: 'small_target' }, { lv: 7, move: 'frost_step' }, { lv: 9, move: 'numbing_mist' },
     { lv: 12, move: 'frostbite' }, { lv: 15, move: 'stone_skin' }, { lv: 18, move: 'rime_fist' },
-    { lv: 21, move: 'wild_pulse' }, { lv: 24, move: 'hardening_strike' }, { lv: 26, move: 'glacier_beam' },
-    { lv: 27, move: 'shatter_volley' }, { lv: 30, move: 'venom_fang' }, { lv: 31, move: 'shard_field' },
-    { lv: 33, move: 'frost_veil' }, { lv: 36, move: 'rumble_ball' }, { lv: 38, move: 'ice_age' },
-    { lv: 39, move: 'kokutei_cross' }, { lv: 42, move: 'avalanche_drop' }, { lv: 44, move: 'absolute_zero' },
-    { lv: 45, move: 'monster_slam' }, { lv: 47, move: 'full_weight' }, { lv: 49, move: 'rampage' },
-    { lv: 50, move: 'monster_point' }
+    { lv: 21, move: 'wild_pulse' }, { lv: 23, move: 'toxic_brand' }, { lv: 24, move: 'hardening_strike' },
+    { lv: 26, move: 'glacier_beam' }, { lv: 27, move: 'shatter_volley' }, { lv: 30, move: 'venom_fang' },
+    { lv: 31, move: 'shard_field' }, { lv: 33, move: 'frost_veil' }, { lv: 36, move: 'rumble_ball' },
+    { lv: 38, move: 'ice_age' }, { lv: 39, move: 'kokutei_cross' }, { lv: 41, move: 'leech_thorns' },
+    { lv: 42, move: 'avalanche_drop' }, { lv: 44, move: 'absolute_zero' }, { lv: 45, move: 'monster_slam' },
+    { lv: 47, move: 'full_weight' }, { lv: 49, move: 'rampage' }, { lv: 50, move: 'monster_point' }
   ],
   signature: 'rampage',
   model: { build: 'lithe', height: 0.90, palette: { skin: '#c8875a', hair: '#8a4a2a', primary: '#d8456a', secondary: '#f2e2c8', accent: '#f2c94c' }, silhouette: ['horns', 'cape'], aura: '#f2a0b8' },
@@ -345,13 +347,13 @@ def({
   base: { hp: 95, atk: 105, def: 90, spa: 130, spd: 95, spe: 110 },
   abilities: ['cursed_grip', 'pressure_haki'],
   learnset: [
-    { lv: 1, move: 'mind_spike' }, { lv: 1, move: 'shadow_clutch' }, { lv: 4, move: 'void_lance' },
+    { lv: 1, move: 'shadow_clutch' }, { lv: 1, move: 'mind_spike' }, { lv: 4, move: 'void_lance' },
     { lv: 7, move: 'mind_haze' }, { lv: 10, move: 'nightmare_grip' }, { lv: 13, move: 'shadow_stitch' },
     { lv: 16, move: 'pressure_point' }, { lv: 19, move: 'second_guess' }, { lv: 22, move: 'mind_relay' },
-    { lv: 25, move: 'encore_command' }, { lv: 28, move: 'small_target' }, { lv: 31, move: 'entropy_pulse' },
-    { lv: 34, move: 'umbral_claw' }, { lv: 37, move: 'phase_lance' }, { lv: 40, move: 'nullify' },
-    { lv: 43, move: 'mind_break' }, { lv: 45, move: 'oblivion_rend' }, { lv: 47, move: 'event_horizon' },
-    { lv: 49, move: 'finality' }, { lv: 50, move: 'mirror_seal' }
+    { lv: 24, move: 'toxic_brand' }, { lv: 25, move: 'encore_command' }, { lv: 28, move: 'small_target' },
+    { lv: 31, move: 'entropy_pulse' }, { lv: 34, move: 'umbral_claw' }, { lv: 37, move: 'phase_lance' },
+    { lv: 40, move: 'nullify' }, { lv: 43, move: 'mind_break' }, { lv: 45, move: 'oblivion_rend' },
+    { lv: 47, move: 'event_horizon' }, { lv: 49, move: 'finality' }, { lv: 50, move: 'mirror_seal' }
   ],
   signature: 'shadow_stitch',
   model: { build: 'lean', height: 3.05, palette: { skin: '#e8c49a', hair: '#f2e2a8', primary: '#e8567a', secondary: '#2a2a33', accent: '#f2c94c' }, silhouette: ['cape', 'goggles', 'open_vest' ], aura: '#e8567a' },
@@ -388,10 +390,10 @@ def({
     { lv: 1, move: 'feather_step' }, { lv: 1, move: 'quick_strike' }, { lv: 4, move: 'clearing_gust' },
     { lv: 7, move: 'tempest_kick' }, { lv: 10, move: 'slicing_gale' }, { lv: 13, move: 'gear_strike' },
     { lv: 16, move: 'iron_body' }, { lv: 19, move: 'gale_exit' }, { lv: 22, move: 'tracking_round' },
-    { lv: 25, move: 'armament' }, { lv: 28, move: 'updraft' }, { lv: 31, move: 'sea_fog' },
-    { lv: 34, move: 'cyclone_press' }, { lv: 37, move: 'tailwind_call' }, { lv: 40, move: 'steel_meteor' },
-    { lv: 43, move: 'heavens_gust' }, { lv: 45, move: 'pile_driver' }, { lv: 47, move: 'haki_pierce' },
-    { lv: 49, move: 'coup_de_vent' }, { lv: 50, move: 'brace' }
+    { lv: 24, move: 'toxic_brand' }, { lv: 25, move: 'armament' }, { lv: 28, move: 'updraft' },
+    { lv: 31, move: 'sea_fog' }, { lv: 34, move: 'cyclone_press' }, { lv: 37, move: 'tailwind_call' },
+    { lv: 40, move: 'steel_meteor' }, { lv: 43, move: 'heavens_gust' }, { lv: 45, move: 'pile_driver' },
+    { lv: 47, move: 'haki_pierce' }, { lv: 49, move: 'coup_de_vent' }, { lv: 50, move: 'brace' }
   ],
   signature: 'cyclone_press',
   model: { build: 'bulk', height: 2.09, palette: { skin: '#d8a878', hair: '#e8e8f0', primary: '#3a4a5a', secondary: '#2a2a33', accent: '#c8c8d0' }, silhouette: ['open_vest', 'cigar', 'gauntlets'], aura: '#c8ccd8' },
@@ -409,7 +411,7 @@ def({
     { lv: 6, move: 'second_wind' }, { lv: 7, move: 'static_snare' }, { lv: 10, move: 'thunder_kick' },
     { lv: 13, move: 'voltage_surge' }, { lv: 16, move: 'volt_relay' }, { lv: 19, move: 'soul_leech' },
     { lv: 22, move: 'resonance_lance' }, { lv: 25, move: 'thunderbolt_tempo' }, { lv: 28, move: 'spirit_bolt' },
-    { lv: 31, move: 'lightning_palm' }, { lv: 34, move: 'overcharge' }, { lv: 37, move: 'soul_reach' },
+    { lv: 31, move: 'chidori' }, { lv: 34, move: 'overcharge' }, { lv: 37, move: 'soul_reach' },
     { lv: 40, move: 'deep_focus' }, { lv: 43, move: 'heavens_judgement' }, { lv: 45, move: 'ward_of_departed' },
     { lv: 47, move: 'soul_offering' }, { lv: 50, move: 'el_thor' }
   ],
@@ -425,13 +427,13 @@ def({
   base: { hp: 145, atk: 135, def: 130, spa: 115, spd: 105, spe: 60 },
   abilities: ['stamina_wall', 'conquerors_will'],
   learnset: [
-    { lv: 1, move: 'soul_leech' }, { lv: 1, move: 'savage_bite' }, { lv: 4, move: 'wandering_palm' },
+    { lv: 1, move: 'savage_bite' }, { lv: 1, move: 'soul_leech' }, { lv: 4, move: 'wandering_palm' },
     { lv: 7, move: 'iron_body' }, { lv: 10, move: 'soul_reach' }, { lv: 13, move: 'territorial_growl' },
     { lv: 16, move: 'pack_hunt' }, { lv: 19, move: 'sleep_mist' }, { lv: 22, move: 'armament' },
-    { lv: 25, move: 'conquerors_haki' }, { lv: 28, move: 'full_weight' }, { lv: 31, move: 'bone_shards' },
-    { lv: 34, move: 'abyssal_maw' }, { lv: 37, move: 'spirit_bolt' }, { lv: 40, move: 'bolo_breath' },
-    { lv: 43, move: 'ward_of_departed' }, { lv: 45, move: 'rampage' }, { lv: 47, move: 'dirge' },
-    { lv: 49, move: 'final_requiem' }, { lv: 50, move: 'soul_offering' }
+    { lv: 24, move: 'toxic_brand' }, { lv: 25, move: 'conquerors_haki' }, { lv: 28, move: 'full_weight' },
+    { lv: 31, move: 'bone_shards' }, { lv: 34, move: 'abyssal_maw' }, { lv: 37, move: 'spirit_bolt' },
+    { lv: 40, move: 'bolo_breath' }, { lv: 43, move: 'ward_of_departed' }, { lv: 45, move: 'rampage' },
+    { lv: 47, move: 'dirge' }, { lv: 49, move: 'final_requiem' }, { lv: 50, move: 'soul_offering' }
   ],
   signature: 'final_requiem',
   model: { build: 'giant', height: 8.80, palette: { skin: '#f0c0a0', hair: '#e8508a', primary: '#e0407a', secondary: '#f2d24b', accent: '#ffffff' }, silhouette: ['cape', 'crossed_arms', 'cross_pendant'], aura: '#ff5fa0' },
@@ -572,7 +574,7 @@ def({
     { lv: 22, move: 'vertical_dive' }, { lv: 25, move: 'thousand_cuts' }, { lv: 28, move: 'odm_burst' },
     { lv: 31, move: 'cut_and_run' }, { lv: 34, move: 'slicing_gale' }, { lv: 37, move: 'thunder_spear' },
     { lv: 40, move: 'whetstone_rite' }, { lv: 43, move: 'sky_walk' }, { lv: 45, move: 'heavens_gust' },
-    { lv: 47, move: 'blade_dance' }, { lv: 50, move: 'world_slash' }
+    { lv: 47, move: 'blade_dance' }, { lv: 50, move: 'oblivion_rend' }
   ],
   signature: 'thousand_cuts',
   model: { build: 'lean', height: 1.60, palette: { skin: '#e8c8a8', hair: '#1c1c22', primary: '#3a3a48', secondary: '#5a4a3a', accent: '#c8c8d0' }, silhouette: ['cape', 'three_swords', 'gauntlets'], aura: '#a8b8c8' },
@@ -629,10 +631,10 @@ def({
     { lv: 1, move: 'boulder_toss' }, { lv: 1, move: 'shockwave_palm' }, { lv: 4, move: 'mud_shot' },
     { lv: 6, move: 'scrap_sweep' }, { lv: 9, move: 'stone_skin' }, { lv: 12, move: 'gear_strike' },
     { lv: 15, move: 'automail_hook' }, { lv: 18, move: 'iron_body' }, { lv: 21, move: 'deep_root' },
-    { lv: 24, move: 'sand_lance' }, { lv: 27, move: 'alchemic_spear' }, { lv: 30, move: 'iron_wall' },
-    { lv: 33, move: 'strata_spear' }, { lv: 36, move: 'pile_driver' }, { lv: 39, move: 'steel_meteor' },
-    { lv: 42, move: 'grand_quake' }, { lv: 44, move: 'caltrop_scatter' }, { lv: 46, move: 'shrapnel_burst' },
-    { lv: 48, move: 'continental_press' }, { lv: 50, move: 'ground_death' }
+    { lv: 23, move: 'toxic_brand' }, { lv: 24, move: 'sand_lance' }, { lv: 27, move: 'alchemic_spear' },
+    { lv: 30, move: 'iron_wall' }, { lv: 33, move: 'strata_spear' }, { lv: 36, move: 'pile_driver' },
+    { lv: 39, move: 'steel_meteor' }, { lv: 42, move: 'grand_quake' }, { lv: 44, move: 'caltrop_scatter' },
+    { lv: 46, move: 'shrapnel_burst' }, { lv: 48, move: 'continental_press' }, { lv: 50, move: 'jajanken_rock' }
   ],
   signature: 'strata_spear',
   model: { build: 'lean', height: 1.65, palette: { skin: '#f0cba0', hair: '#e8c04a', primary: '#c02a2a', secondary: '#1c1c28', accent: '#c8ccd8' }, silhouette: ['cape', 'gauntlets', 'tattoo_hands'], aura: '#8fd8ff' },
@@ -668,47 +670,256 @@ export const FIGHTER_BY_ID = Object.fromEntries(F.map((f) => [f.id, f]));
 export function getFighter(id) { return FIGHTER_BY_ID[id]; }
 export function allFighters() { return F; }
 
+/* ------------------------------------------------------------------ */
+/* the default set                                                     */
+/* ------------------------------------------------------------------ */
+//
+// With 20–25 moves in a pool, "the last four it learned" stopped being a
+// defensible answer, and "the four with the biggest BP number" was never one:
+// it cannot see accuracy, multi-hit, STAB, whether the fighter has the attack
+// stat to swing the move, or that a 70 BP pivot buys a free switch. So the
+// picker scores moves the way a player would and then builds a set out of the
+// scores. It stays pure and deterministic — same fighter, same level, same
+// four ids, forever.
+
+/** Engine's real average hit count for a `hits` range (see engine.js). */
+function avgHits(h) {
+  if (!h) return 1;
+  const [lo, hi] = h;
+  if (lo === hi) return lo;
+  if (lo === 3 && hi === 5) return 3.45;
+  if (lo === 2 && hi === 5) return 3.10;
+  return 2.65;
+}
+
+/** How much of this fighter's offence actually gets behind the move. */
+function statFit(f, m) {
+  const mine = m.category === 'physical' ? f.base.atk : f.base.spa;
+  const mid = (f.base.atk + f.base.spa) / 2;
+  return Math.max(0.5, Math.min(1.5, mine / Math.max(1, mid)));
+}
+
+/** Expected value of an attacking move for this fighter, in BP-ish units. */
+function attackScore(f, m) {
+  const acc = m.accuracy == null ? 1 : m.accuracy / 100;
+  let v = (m.power || 0) * avgHits(m.hits) * acc;
+  if (v === 0) v = 55;                                   // fixed damage / OHKO
+  if (f.types.includes(m.type)) v *= 1.3;                // STAB
+  v *= statFit(f, m);
+
+  for (const e of m.effects || []) {
+    const c = (e.chance ?? 100) / 100;
+    if (e.kind === 'status') v += 26 * c;
+    else if (e.kind === 'volatile' && (e.value === 'flinch' || e.value === 'confusion')) v += 15 * c;
+    else if (e.kind === 'boost') {
+      const sum = Object.values(e.stats).reduce((a, b) => a + b, 0);
+      const own = e.target === 'self';
+      // A one-shot finisher that wrecks the user is still a finisher: cap what
+      // the drawback can subtract, or nothing with self-drops is ever chosen.
+      v += Math.max(-40, (own ? 11 : 9) * (own ? sum : -sum) * c);
+    } else if (['hazard', 'screen', 'weather', 'terrain'].includes(e.kind)) v += 16;
+  }
+  v += 34 * (m.drain || 0);
+  v += 7 * (m.critStage || 0);
+  if ((m.priority || 0) > 0) v += 9 * m.priority;
+  if ((m.priority || 0) < 0) v += 12 * m.priority;       // moving last is a real cost
+  v -= 35 * (m.recoil || 0);
+  if (m.flags?.includes('charge')) v -= 20;
+  if (m.flags?.includes('recharge')) v -= 20;
+  // Five PP is three swings in a long game; the library's biggest numbers all
+  // sit there, and taking them every time is how a battler ends in nine turns.
+  if (m.pp <= 5) v -= 26; else if (m.pp <= 10) v -= 7;
+  if (m.flags?.includes('pursuit')) v += 10;
+  if (m.flags?.includes('bypassSub')) v += 6;
+  return v;
+}
+
+/** Value of a status move to *this* fighter, on the same rough scale/2. */
+function utilityScore(f, m) {
+  const acc = m.accuracy == null ? 1 : m.accuracy / 100;
+  const fast = f.base.spe >= 95;
+  let v = 0;
+  for (const e of m.effects || []) {
+    switch (e.kind) {
+      case 'status':                                     // the slow win is a win
+        v += ({ tox: 47, slp: 50, par: 46, frz: 44, brn: 42, psn: 34 }[e.value] ?? 40) * acc;
+        break;
+      case 'hazard': v += 46; break;
+      case 'screen': v += 24; break;
+      case 'heal': v += 28; break;
+      case 'cure': v += 8; break;
+      case 'clearHazards': v += 10; break;
+      case 'weather': case 'terrain': v += 12; break;
+      case 'trickRoom': v += f.base.spe <= 70 ? 18 : -25; break;
+      case 'boost': {
+        const own = e.target === 'self';
+        // Evasion and accuracy stages are worth about half an offensive stage.
+        const sum = Object.entries(e.stats)
+          .reduce((a, [k, n]) => a + n * (k === 'eva' || k === 'acc' ? 0.5 : 1), 0);
+        let b = (own ? 15 : 13) * (own ? sum : -sum) * acc;
+        // A boost is only worth it on the stat this fighter actually swings.
+        if (own) {
+          const key = f.base.atk >= f.base.spa ? 'atk' : 'spa';
+          if ((e.stats[key] || 0) > 0 || (e.stats.spe || 0) > 0) b *= 1.25;
+          else if ((e.stats.atk || 0) > 0 || (e.stats.spa || 0) > 0) b *= 0.7;
+        }
+        v += b;
+        break;
+      }
+      case 'volatile':
+        if (e.value === 'protect' || e.value === 'endure') v += 22;
+        else if (e.value === 'substitute') v += 20;
+        else if (e.value === 'perish') v += 24;
+        else if (e.value === 'focusenergy') v += 16;
+        else if (e.value === 'leechseed') v += 40 * acc;
+        else if (e.value === 'rooted') v -= 40;         // never a default: it traps you
+        else if (e.value === 'minimized') v -= 8;        // it doubles every crushing move
+        else if (e.value === 'aqua_ring' || e.value === 'magnetrise') v += 12;
+        else if (e.value === 'destinybond') v += 10;
+        else v += 18 * acc;                              // taunt / disable / encore / torment / yawn
+        break;
+      case 'custom': v += 14; break;
+      default: break;
+    }
+  }
+  if (m.flags?.includes('pivot')) v += 34;
+  if (fast && (m.priority || 0) > 0) v += 4;
+  return v;
+}
+
 /**
  * The level-appropriate default set — what most players will actually battle
- * with, so it has to be the fighter's honest best expression rather than
- * simply the last four things it learned. Newest first, but guaranteed at
- * least two ways to deal damage and never more than two status moves, and
- * biased toward covering different types.
+ * with, so it has to be the fighter's honest best expression rather than the
+ * last four things it learned. Guaranteed at least two ways to deal damage,
+ * never more than two status moves, and biased toward covering different types.
  */
 export function defaultMoves(id, level = 50) {
   const f = getFighter(id);
   if (!f) return [];
-  const learned = [...new Set(f.learnset.filter((l) => l.lv <= level).map((l) => l.move))].reverse();
-  if (learned.length <= 4) return learned.slice().reverse();
+  const learned = [...new Set(f.learnset.filter((l) => l.lv <= level).map((l) => l.move))];
+  if (learned.length <= 4) return learned;
 
-  const dmg = [], status = [];
+  const atk = [], util = [];
   for (const mid of learned) {
     const m = getMove(mid);
-    if (m && m.category !== 'status' && m.power > 0) dmg.push(m); else status.push(mid);
+    if (!m) continue;
+    if (m.category === 'status') util.push({ id: mid, m, s: utilityScore(f, m) });
+    else atk.push({ id: mid, m, s: attackScore(f, m) });
   }
+  atk.sort((a, b) => b.s - a.s || (a.id < b.id ? -1 : 1));
+  util.sort((a, b) => b.s - a.s || (a.id < b.id ? -1 : 1));
+
+  // How many of the four slots are not attacks? One if the fighter owns
+  // anything worth a turn; two only for a fighter with a real attrition plan —
+  // two ways to bleed you (a status condition, a hazard, a seed) is an
+  // archetype, whereas two setup moves is a fighter with no gameplan.
+  const bleeds = (o) => (o.m.effects || []).some((e) => e.kind === 'status' || e.kind === 'hazard' ||
+    (e.kind === 'volatile' && e.value === 'leechseed'));
+  const isPivot = (m) => !!m.flags?.includes('pivot');
+  let utilSlots = 0;
+  if (util.length && util[0].s >= 20) utilSlots = 1;
+  if (utilSlots === 1 && atk.length >= 3) {
+    const bleeders = util.filter((u) => bleeds(u) && u.s >= 42);
+    // …and only when the third attack it would displace was never the point.
+    if (bleeders.length >= 2 && util[1] && util[1].s >= 42 && atk[2].s < 120) utilSlots = 2;
+  }
+  const wantAtk = Math.min(4 - utilSlots, atk.length);
+  utilSlots = Math.min(utilSlots, 4 - Math.max(2, Math.min(2, atk.length)));
+  utilSlots = Math.max(0, Math.min(2, 4 - wantAtk));
 
   const picked = [];
   const seenType = new Set();
-  // Strongest first, but take a new type over a marginally stronger repeat.
-  for (const m of dmg.slice().sort((a, b) => (b.power || 0) - (a.power || 0))) {
-    if (picked.length >= 3) break;
-    if (seenType.has(m.type) && picked.length >= 2) continue;
-    seenType.add(m.type);
-    picked.push(m.id);
+  let pivots = 0;                                        // one is momentum, two is indecision
+  // First the best thing it has; after that a new attacking type is worth
+  // roughly 30 BP of raw power, which is what coverage is actually worth.
+  while (picked.length < wantAtk) {
+    let best = null, bestV = -Infinity;
+    for (const o of atk) {
+      if (picked.includes(o.id)) continue;
+      if (pivots && isPivot(o.m)) continue;
+      // Momentum is worth more than the BP column can express — but the first
+      // slot belongs to the fighter's best move, not to its escape hatch.
+      const momentum = picked.length && isPivot(o.m) ? 45 : 0;
+      const v = o.s + momentum + (picked.length && !seenType.has(o.m.type) ? 30 : 0);
+      if (v > bestV) { bestV = v; best = o; }
+    }
+    if (!best) break;
+    seenType.add(best.m.type);
+    if (isPivot(best.m)) pivots++;
+    picked.push(best.id);
   }
-  for (const sid of status) { if (picked.length >= 4) break; picked.push(sid); }
-  for (const m of dmg) { if (picked.length >= 4) break; if (!picked.includes(m.id)) picked.push(m.id); }
+
+  let statusTaken = 0;
+  for (const u of util) {
+    if (picked.length >= 4 || statusTaken >= utilSlots) break;
+    if (pivots && isPivot(u.m)) continue;
+    if (statusTaken === 1 && !bleeds(u)) continue;
+    if (isPivot(u.m)) pivots++;
+    picked.push(u.id); statusTaken++;
+  }
+  while (picked.length < 4) {
+    const next = atk.find((o) => !picked.includes(o.id)) || util.find((o) => !picked.includes(o.id));
+    if (!next) break;
+    picked.push(next.id);
+  }
 
   // Restore learn order so the set reads like a progression.
-  const order = learned.slice().reverse();
+  const order = learned;
   return picked.sort((a, b) => order.indexOf(a) - order.indexOf(b));
+}
+
+/**
+ * Held items a fighter would actually pick up. Quick battles used to hand out
+ * `item: null` and `abilities[0]`, which hid 38 held items and every rare
+ * ability behind the team builder. This picks deterministically from the
+ * fighter's own id so the same fighter always shows up the same way.
+ */
+// Roughly a third of the roster carries a locking item, which is about where
+// competitive Pokémon sits — and a locked fighter that meets the wrong wall is
+// the single most common honest reason to switch. The rest split between
+// staying power and damage.
+const ITEM_BY_ROLE = {
+  physical: ['choice_edge', 'power_band', 'expert_belt', 'leftovers', 'choice_edge', 'war_drum', 'straw_charm', 'log_pose_scarf'],
+  special: ['choice_lens', 'focus_lens', 'expert_belt', 'leftovers', 'choice_lens', 'war_drum', 'sitrus_fruit', 'log_pose_scarf'],
+  wall: ['leftovers', 'iron_gi', 'sitrus_fruit', 'spiked_guard', 'leftovers', 'straw_charm', 'shell_bell', 'cursed_cutlass'],
+  fast: ['log_pose_scarf', 'expert_belt', 'quick_charm', 'choice_edge', 'log_pose_scarf', 'leftovers', 'choice_lens', 'focus_lens']
+};
+
+/** Small stable hash so the choice is a property of the fighter, not of a seed. */
+function idHash(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  return h;
+}
+
+export function defaultItem(id) {
+  const f = getFighter(id);
+  if (!f) return null;
+  const b = f.base;
+  const bulk = b.hp + b.def + b.spd;
+  const role = bulk >= 320 && b.spe < 90 ? 'wall'
+    : b.spe >= 115 ? 'fast'
+      : b.atk >= b.spa ? 'physical' : 'special';
+  // A Log Pose Scarf on the fastest fighter in the game buys nothing and costs
+  // it the lock, so it only goes to something a speed tier short of the top.
+  const pool = ITEM_BY_ROLE[role].map((it) =>
+    (it === 'log_pose_scarf' && (b.spe > 130 || b.spe < 90)) ? 'expert_belt' : it);
+  return pool[idHash(id) % pool.length];
+}
+
+/** Every fifth fighter, by a stable hash, shows off its rare ability. */
+export function defaultAbility(id) {
+  const f = getFighter(id);
+  if (!f) return null;
+  if (f.abilities.length < 2) return f.abilities[0];
+  return (idHash(id + '#ability') % 5 === 0) ? f.abilities[1] : f.abilities[0];
 }
 
 export function makeDefaultMember(id, level = 50) {
   const f = getFighter(id);
   return {
     speciesId: id, nickname: f.name, level,
-    nature: 'hardy', ability: f.abilities[0], item: null,
+    nature: 'hardy', ability: defaultAbility(id), item: defaultItem(id),
     moves: defaultMoves(id, level)
   };
 }

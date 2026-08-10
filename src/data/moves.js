@@ -819,37 +819,37 @@ def({ id: 'nullify', name: 'Nullify', type: 'VOID', category: 'status', power: 0
 
 /* ---- pivot: twelve ways to hit something and not be there ---------- */
 
-def({ id: 'cut_and_run', name: 'Cut and Run', type: 'SLASH', category: 'physical', power: 70, accuracy: 100, pp: 20, contact: true, flags: ['slice', 'protect', 'pivot'],
+def({ id: 'cut_and_run', name: 'Cut and Run', type: 'SLASH', category: 'physical', power: 85, accuracy: 100, pp: 20, contact: true, flags: ['slice', 'protect', 'pivot'],
   desc: 'The user switches out after it lands.', flavor: 'The cut is the goodbye. He is over the rail before the blood.',
   fx: { key: 'spin_slash', color: '#c9d4e0', shape: 'arc', scale: 1.1, hitstop: 80, shake: 0.5, sfx: 'slash_light' } });
-def({ id: 'hit_and_fade', name: 'Hit and Fade', type: 'FIST', category: 'physical', power: 70, accuracy: 100, pp: 20, contact: true, flags: ['punch', 'protect', 'pivot'],
+def({ id: 'hit_and_fade', name: 'Hit and Fade', type: 'FIST', category: 'physical', power: 85, accuracy: 100, pp: 20, contact: true, flags: ['punch', 'protect', 'pivot'],
   desc: 'The user switches out after it lands.', flavor: 'One in the ribs on the way past. He never stopped walking.',
   fx: { key: 'piston_punch', color: '#e8743b', shape: 'melee', scale: 1.05, hitstop: 85, shake: 0.5, sfx: 'hit_fist' } });
-def({ id: 'undertow', name: 'Undertow', type: 'SEA', category: 'special', power: 70, accuracy: 100, pp: 20, flags: ['protect', 'pivot'],
+def({ id: 'undertow', name: 'Undertow', type: 'SEA', category: 'special', power: 85, accuracy: 100, pp: 20, flags: ['protect', 'pivot'],
   desc: 'The user switches out after it lands.', flavor: 'The water takes him back out with it, which was the plan.',
   fx: { key: 'water_spiral', color: '#2a7fd4', shape: 'burst', scale: 1.2, hitstop: 85, shake: 0.5, sfx: 'wave' } });
-def({ id: 'volt_relay', name: 'Volt Relay', type: 'STORM', category: 'special', power: 70, accuracy: 100, pp: 20, flags: ['protect', 'pivot'],
+def({ id: 'volt_relay', name: 'Volt Relay', type: 'STORM', category: 'special', power: 85, accuracy: 100, pp: 20, flags: ['protect', 'pivot'],
   desc: 'The user switches out after it lands.', flavor: 'He rides his own bolt back down the line to the bench.',
   fx: { key: 'volt_rush', color: '#f5c542', shape: 'beam', scale: 1.15, hitstop: 80, shake: 0.5, sfx: 'zap' } });
-def({ id: 'gale_exit', name: 'Gale Exit', type: 'WIND', category: 'physical', power: 70, accuracy: 100, pp: 20, contact: true, flags: ['wind', 'protect', 'pivot'],
+def({ id: 'gale_exit', name: 'Gale Exit', type: 'WIND', category: 'physical', power: 85, accuracy: 100, pp: 20, contact: true, flags: ['wind', 'protect', 'pivot'],
   desc: 'The user switches out after it lands.', flavor: 'A boot to the chest, and the wind that took it away.',
   fx: { key: 'wind_dash', color: '#a7e8c0', shape: 'melee', scale: 1.1, hitstop: 80, shake: 0.5, sfx: 'gale' } });
-def({ id: 'ember_break', name: 'Ember Break', type: 'FLAME', category: 'special', power: 70, accuracy: 100, pp: 20, flags: ['protect', 'pivot'],
+def({ id: 'ember_break', name: 'Ember Break', type: 'FLAME', category: 'special', power: 85, accuracy: 100, pp: 20, flags: ['protect', 'pivot'],
   desc: 'The user switches out after it lands.', flavor: 'He leaves as smoke, which is both a tactic and a habit.',
   fx: { key: 'flame_charge', color: '#ff5a36', shape: 'burst', scale: 1.15, hitstop: 85, shake: 0.5, sfx: 'fire_small' } });
-def({ id: 'shade_slip', name: 'Shade Slip', type: 'SHADOW', category: 'physical', power: 70, accuracy: 100, pp: 20, contact: true, flags: ['protect', 'pivot'],
+def({ id: 'shade_slip', name: 'Shade Slip', type: 'SHADOW', category: 'physical', power: 85, accuracy: 100, pp: 20, contact: true, flags: ['protect', 'pivot'],
   desc: 'The user switches out after it lands.', flavor: 'Into one shadow, out of a different one, some distance away.',
   fx: { key: 'shade_claw', color: '#5a3d7a', shape: 'melee', scale: 1.1, hitstop: 85, shake: 0.5, sfx: 'hit_shadow' } });
-def({ id: 'scrap_launch', name: 'Scrap Launch', type: 'MECHA', category: 'special', power: 70, accuracy: 100, pp: 20, flags: ['bullet', 'protect', 'pivot'],
+def({ id: 'scrap_launch', name: 'Scrap Launch', type: 'MECHA', category: 'special', power: 85, accuracy: 100, pp: 20, flags: ['bullet', 'protect', 'pivot'],
   desc: 'The user switches out after it lands.', flavor: 'Fires the whole forearm, then walks off to fetch a spare.',
   fx: { key: 'rivet', color: '#9aa7b5', shape: 'beam', scale: 1.15, hitstop: 85, shake: 0.5, sfx: 'cannon' } });
-def({ id: 'mind_relay', name: 'Mind Relay', type: 'MIND', category: 'special', power: 70, accuracy: 100, pp: 20, flags: ['protect', 'pivot'],
+def({ id: 'mind_relay', name: 'Mind Relay', type: 'MIND', category: 'special', power: 85, accuracy: 100, pp: 20, flags: ['protect', 'pivot'],
   desc: 'The user switches out after it lands.', flavor: 'It puts the thought in, and the thinker somewhere else.',
   fx: { key: 'psi_spike', color: '#e05c9e', shape: 'burst', scale: 1.15, hitstop: 85, shake: 0.5, sfx: 'psychic' } });
-def({ id: 'flash_relay', name: 'Flash Relay', type: 'LIGHT', category: 'special', power: 70, accuracy: 100, pp: 20, flags: ['protect', 'pivot'],
+def({ id: 'flash_relay', name: 'Flash Relay', type: 'LIGHT', category: 'special', power: 85, accuracy: 100, pp: 20, flags: ['protect', 'pivot'],
   desc: 'The user switches out after it lands.', flavor: 'The light gets there. He is already back where he started.',
   fx: { key: 'flash_dash', color: '#ffe9a3', shape: 'beam', scale: 1.15, hitstop: 80, shake: 0.5, sfx: 'light' } });
-def({ id: 'soul_relay', name: 'Soul Relay', type: 'SPIRIT', category: 'special', power: 70, accuracy: 100, pp: 20, flags: ['protect', 'pivot'],
+def({ id: 'soul_relay', name: 'Soul Relay', type: 'SPIRIT', category: 'special', power: 85, accuracy: 100, pp: 20, flags: ['protect', 'pivot'],
   desc: 'The user switches out after it lands.', flavor: 'He hands the fight over the way you hand over a coat.',
   fx: { key: 'soul_drain', color: '#6fe3d0', shape: 'beam', scale: 1.15, hitstop: 85, shake: 0.5, sfx: 'soul' } });
 // The `pivot` flag only fires off landed damage, so the switch here rides the
@@ -938,19 +938,19 @@ def({ id: 'anchor_stance', name: 'Anchor Stance', type: 'SEA', category: 'status
 
 /* ---- hazards worth stacking ---------------------------------------- */
 
-def({ id: 'shrapnel_burst', name: 'Shrapnel Burst', type: 'MECHA', category: 'special', power: 60, accuracy: 100, pp: 15, flags: ['bullet', 'protect'],
+def({ id: 'shrapnel_burst', name: 'Shrapnel Burst', type: 'MECHA', category: 'special', power: 75, accuracy: 100, pp: 15, flags: ['bullet', 'protect'],
   effects: [{ kind: 'hazard', value: 'caltrops', target: 'foeSide' }],
   desc: 'Hits, and scatters caltrops behind the target.', flavor: 'Most of the charge goes past. That part is deliberate.',
   fx: { key: 'hazard', color: '#9aa7b5', shape: 'burst', scale: 1.3, hitstop: 75, shake: 0.5, sfx: 'scatter' } });
-def({ id: 'barb_spray', name: 'Barb Spray', type: 'TOXIN', category: 'special', power: 60, accuracy: 100, pp: 15, flags: ['protect'],
+def({ id: 'barb_spray', name: 'Barb Spray', type: 'TOXIN', category: 'special', power: 75, accuracy: 100, pp: 15, flags: ['protect'],
   effects: [{ kind: 'hazard', value: 'barbs', target: 'foeSide' }],
   desc: 'Hits, and lays toxic barbs behind the target.', flavor: 'Half of it lands. The other half waits for the next one.',
   fx: { key: 'hazard_toxin', color: '#8bc34a', shape: 'burst', scale: 1.3, hitstop: 75, shake: 0.5, sfx: 'sludge' } });
-def({ id: 'shatter_volley', name: 'Shatter Volley', type: 'FROST', category: 'special', power: 60, accuracy: 100, pp: 15, flags: ['protect'],
+def({ id: 'shatter_volley', name: 'Shatter Volley', type: 'FROST', category: 'special', power: 75, accuracy: 100, pp: 15, flags: ['protect'],
   effects: [{ kind: 'hazard', value: 'shards', target: 'foeSide' }],
   desc: 'Hits, and hangs jagged ice over the target\'s side.', flavor: 'What misses does not melt. It waits at head height.',
   fx: { key: 'hazard_ice', color: '#7fd8ff', shape: 'burst', scale: 1.3, hitstop: 75, shake: 0.5, sfx: 'ice_shatter' } });
-def({ id: 'slick_tide', name: 'Slick Tide', type: 'SEA', category: 'special', power: 60, accuracy: 100, pp: 15, flags: ['protect'],
+def({ id: 'slick_tide', name: 'Slick Tide', type: 'SEA', category: 'special', power: 75, accuracy: 100, pp: 15, flags: ['protect'],
   effects: [{ kind: 'hazard', value: 'oilslick', target: 'foeSide' }],
   desc: 'Hits, and spreads an oil slick behind the target.', flavor: 'Bilge water, and everything the bilge had been keeping.',
   fx: { key: 'hazard_oil', color: '#2a7fd4', shape: 'burst', scale: 1.3, hitstop: 75, shake: 0.5, sfx: 'water_hit' } });
