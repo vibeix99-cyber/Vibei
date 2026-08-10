@@ -600,7 +600,11 @@ export class CameraDirector {
       if (_k[4].y < lo) lo = _k[4].y;
       if (_k[4].y > hi) hi = _k[4].y;
     }
-    return hi - lo;
+    // Six percent conservative. The box is sampled from a resting pose while
+    // the fighter is breathing, shifting weight and swinging a club, so the
+    // live silhouette runs a little larger than the one measured — and the
+    // budget is a ceiling, which means erring outward is the cheap direction.
+    return (hi - lo) * 1.06;
   }
 
   /* ---------------------------------------------------------------- */
@@ -927,10 +931,10 @@ export class CameraDirector {
       id: 'rest', imp: 1, minHold: 1.1, subject: null,
       live: (t) => this._twoShot({
         fov: 38, fovMax: 64,
-        // 0.57 rather than 0.50: now that the ceiling is measured and enforced
+        // 0.55 rather than 0.48: now that the ceiling is measured and enforced
         // exactly, every point of headroom given away here comes straight off
         // the smaller fighter, who has far less to spare.
-        fillV: 0.57, minFill: 0.15,
+        fillV: 0.55, minFill: 0.15,
         fillH: 0.735 - Math.min(t, 2.2) * 0.010,      // a very slow settle in
         elev: 0.205, yaw: s === 0 ? -0.10 : 0.10, swing: this._losEase, pivot: 0.46,
         // Heads a little below the upper third: the pair sits in the middle of

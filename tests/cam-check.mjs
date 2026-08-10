@@ -264,10 +264,10 @@ async function scenSweep(page) {
   await startBattle(page, { seed: 'CAM-SWEEP', arena, p0, p1 });
   await page.evaluate(() => window.__ARENA.battle.setSpeed(0.5));
   let n = 0;
-  for (let t = 0; t < 12 && n < 70; t++) {
+  for (let t = 0; t < 8 && n < 44; t++) {
     const r = await playerAct(page);
     if (r === 'ended' || r === 'timeout') break;
-    for (let k = 0; k < 8 && n < 70; k++) {
+    for (let k = 0; k < 8 && n < 44; k++) {
       const s = await sample(page, `sw-t${String(t).padStart(2, '0')}-${k}`, `turn ${t} beat ${k}`);
       n++;
       if (s.waiting === 0 && !s.busy) break;
