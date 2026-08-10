@@ -107,7 +107,7 @@ const _q0 = new THREE.Vector3(), _q1 = new THREE.Vector3(), _q2 = new THREE.Vect
 const _r0 = new THREE.Vector3(), _r1 = new THREE.Vector3(), _r2 = new THREE.Vector3(), _r3 = new THREE.Vector3();
 const _c0 = new THREE.Vector3(), _c1 = new THREE.Vector3(), _c2 = new THREE.Vector3();
 const _k = [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()];
-const _lk = new THREE.Vector3();
+const _lk = new THREE.Vector3(), _e0 = new THREE.Vector3(), _e1 = new THREE.Vector3();
 const _pv = new THREE.Vector3();
 const _box = new THREE.Box3(), _dbox = new THREE.Box3(), _tbox = new THREE.Box3(), _m4 = new THREE.Matrix4();
 
@@ -825,6 +825,18 @@ export class CameraDirector {
   _single(o) {
     const s = this.act[o.side];
     const fov = o.fov;
+    // `reach` lengthens the tracking leash for this shot only. A switch-in is
+    // thrown in from seven metres outside its own slot, and a camera pinned to
+    // the slot watches an empty patch of deck until the last third of the
+    // beat. Following most of the way out — but not all of it, or the pan
+    // becomes a whip — means the fighter is in frame for the whole arrival.
+    let head = s.head;
+    if (o.reach && s.ref?.root) {
+      _e0.copy(s.ref.root.position).sub(s.home);
+      const L = _e0.length();
+      if (L > o.reach) _e0.multiplyScalar(o.reach / L);
+      head = _e1.copy(s.home).add(_e0).setY(s.home.y + _e0.y * 0.5 + s.headH);
+    }
     const shown = Math.min(s.top, 2.3 + 0.34 * s.top);
     const dist = this._fitDist(shown / o.fill, (s.halfW * 2 + 0.7) / (o.fillH ?? 0.45), fov);
     const gk = this._giantK(s.top);
@@ -837,15 +849,15 @@ export class CameraDirector {
       .addScaledVector(U, Math.sin(yaw) * Math.cos(elev) * dist);
     p.y += Math.sin(elev) * dist;
     this._safe(p, o.minSide ?? 1.2);
-    this._clearActors(p, s.head, fov, o.nearCap ?? 1.0);
+    this._clearActors(p, head, fov, o.nearCap ?? 1.0);
     this._safe(p, o.minSide ?? 1.2);
 
     const sx = o.sx ?? (o.side === 0 ? 0.40 : 0.60);
     const cons = [
       { v: _k[0].copy(s.aim).setY(s.top), min: 0.04 },
-      { v: s.head, min: SAFE.y0 - 0.05, max: 0.56 }
+      { v: head, min: SAFE.y0 - 0.05, max: 0.56 }
     ];
-    const look = this._composeY(p, s.head, sx, o.sy ?? 0.36, fov, cons);
+    const look = this._composeY(p, head, sx, o.sy ?? 0.36, fov, cons);
     return pose(p, look, fov);
   }
 
@@ -1039,7 +1051,7 @@ export class CameraDirector {
     return {
       id: 'entrance', imp: 2, minHold: 0.7, subject: side,
       live: (t) => this._single({
-        side, fov: 40,
+        side, fov: 40, reach: 4.2,
         fill: 0.38 + Math.min(t, 0.9) * 0.09,
         fillH: 0.30,
         yaw: 0.50, elev: 0.09 + Math.min(t, 0.8) * 0.05,
