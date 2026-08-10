@@ -107,6 +107,7 @@ const _q0 = new THREE.Vector3(), _q1 = new THREE.Vector3(), _q2 = new THREE.Vect
 const _r0 = new THREE.Vector3(), _r1 = new THREE.Vector3(), _r2 = new THREE.Vector3(), _r3 = new THREE.Vector3();
 const _c0 = new THREE.Vector3(), _c1 = new THREE.Vector3(), _c2 = new THREE.Vector3();
 const _k = [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()];
+const _lk = new THREE.Vector3();
 const _pv = new THREE.Vector3();
 const _box = new THREE.Box3(), _dbox = new THREE.Box3(), _tbox = new THREE.Box3(), _m4 = new THREE.Matrix4();
 
@@ -509,9 +510,7 @@ export class CameraDirector {
       if (_k[4].y < lo) lo = _k[4].y;
       if (_k[4].y > hi) hi = _k[4].y;
     }
-    // A hair conservative: this is measured against the shot's aim point, and
-    // the tilt `_composeY` adds afterwards moves the corners by a little.
-    return (hi - lo) * 1.04;
+    return hi - lo;
   }
 
   /* ---------------------------------------------------------------- */
@@ -656,25 +655,6 @@ export class CameraDirector {
     const lead = a.full >= b.full ? a : b;
     const anchor = _a.copy(a.head).add(b.head).multiplyScalar(0.5)
       .setY((a.head.y + b.head.y) * 0.5);
-    const p = solve(fov, new THREE.Vector3());
-
-    // Now check the answer against reality rather than against the estimate.
-    // `full` predicts the projected box well but not perfectly, and in a tight
-    // arena the camera can already be pressed against the disc with nowhere
-    // left to retreat — in which case the room has to be bought with the lens.
-    for (let pass = 0; pass < 2; pass++) {
-      const span = Math.max(this._projSpan(a, p, anchor, fov), this._projSpan(b, p, anchor, fov));
-      if (span <= fillV * 1.02 || fov >= fovMax - 0.05) break;
-      fov = Math.min(fovMax, 2 * Math.atan(Math.tan(fov * DEG * 0.5) * (span / fillV)) / DEG);
-      solve(fov, p);
-    }
-
-    // And the ceiling is enforced, not merely aimed at: whatever the solve
-    // above did, whatever the actors do next, and whatever `_safe` had to move
-    // to keep the camera in the arena, nobody ends up taller than `fillV`.
-    this._clearActors(p, anchor, fov, fillV);
-    this._safe(p, o.minSide ?? 1.6);
-
     // Side 0 is always screen-left and side 1 screen-right, so the two feet
     // limits are different: below side 0 there is nothing but the text box,
     // while side 1 stands over the player's own name plate.
@@ -684,8 +664,30 @@ export class CameraDirector {
       { v: _k[1].copy(a.aim).setY(a.aim.y + 0.02), max: SAFE.dock },
       { v: _k[2].copy(b.aim).setY(b.aim.y + 0.02), max: 0.685 }
     ];
-    const look = this._composeY(p, anchor, o.sx ?? 0.5, o.sy ?? 0.36, fov, cons);
-    return pose(p, look, fov);
+    const sx = o.sx ?? 0.5, sy = o.sy ?? 0.36;
+    const p = solve(fov, new THREE.Vector3());
+    let look = this._composeY(p, anchor, sx, sy, fov, cons, _lk);
+
+    // Now check the answer against reality rather than against the estimate,
+    // and against the *composed* frame rather than the raw aim — the tilt is
+    // worth several percent of anyone's height. `full` predicts the projected
+    // box well but not perfectly, and in a tight arena the camera can already
+    // be pressed against the disc with nowhere left to retreat, in which case
+    // the room has to be bought with the lens instead of with distance.
+    for (let pass = 0; pass < 3; pass++) {
+      const span = Math.max(this._projSpan(a, p, look, fov), this._projSpan(b, p, look, fov));
+      if (span <= fillV * 1.03 || fov >= fovMax - 0.05) break;
+      fov = Math.min(fovMax, 2 * Math.atan(Math.tan(fov * DEG * 0.5) * (span / fillV)) / DEG);
+      solve(fov, p);
+      look = this._composeY(p, anchor, sx, sy, fov, cons, _lk);
+    }
+
+    // And the ceiling is enforced, not merely aimed at: whatever the solve
+    // above did, whatever the actors do next, and whatever `_safe` had to move
+    // to keep the camera in the arena, nobody ends up taller than `fillV`.
+    this._clearActors(p, look, fov, fillV);
+    this._safe(p, o.minSide ?? 1.6);
+    return pose(p, this._composeY(p, anchor, sx, sy, fov, cons), fov);
   }
 
   /**
