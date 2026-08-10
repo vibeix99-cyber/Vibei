@@ -159,9 +159,18 @@ export class TextBox {
     this.cps = 110;             // characters per second (base; scaled by battle speed)
     this.instant = false;
     this.waitingForInput = false;
-    // Lines clear themselves. Reading speed, not button-mashing, sets the floor.
-    this.autoAdvanceMs = 260;
-    this.minHoldMs = 180;
+    /**
+     * Lines clear themselves, but reading speed sets the floor and the floor
+     * wins. An earlier version held a line for a flat 260ms, which measured out
+     * at a median of 0.40s on screen — "A critical hit!" was gone in 0.20s, and
+     * three sentences could pass inside one second. A line now gets time
+     * proportional to its length on top of a base, so a long line is never
+     * rushed and a short one is still never a flash.
+     */
+    this.autoAdvanceMs = 380;   // base hold, before the per-character allowance
+    this.readMsPerChar = 26;    // ~38 chars/sec, comfortably under skim speed
+    this.minHoldMs = 520;       // absolute floor at 1x, before speed scaling
+    this.speed = 1;             // battle speed multiplier, set by the view
     this._waitT = 0;
     this._hold = 0;
     this._segs = [];
@@ -195,6 +204,27 @@ export class TextBox {
 
   /** How many lines are waiting behind the one being typed. */
   get backlog() { return this.queue.length + (this.current ? 1 : 0); }
+
+  /**
+   * How long a line must stay on screen once it has finished typing.
+   * `hold: 0` means a standing prompt that never expires on its own.
+   * A backlog compresses the hold, but never below the floor — the pressure
+   * valve is allowed to hurry the reader, not to overrule them.
+   */
+  holdFor(line, queued = this.queue.length) {
+    if (!line) return 0;
+    if (line.hold === 0) return 0;
+    const base = line.hold ?? this.autoAdvanceMs;
+    const want = Math.max(base, base * 0.5 + line.text.length * this.readMsPerChar);
+    const sp = Math.max(0.25, this.speed || 1);
+    // Speed divides the hold — that is what the setting is for — but the floor
+    // only eases with its square root, so 4x reads as terse rather than
+    // subliminal and 1/2x genuinely lingers.
+    const scaled = want / sp;
+    const compressed = queued ? scaled / (1 + queued * 0.35) : scaled;
+    const floor = this.minHoldMs / Math.sqrt(sp);
+    return Math.max(floor, compressed);
+  }
 
   _next() {
     this.current = this.queue.shift() || null;
@@ -283,8 +313,7 @@ export class TextBox {
       this.$ring.style.setProperty('--p', 0);
     } else {
       this._waitT += dt * 1000;
-      let hold = this.current.hold ?? this.autoAdvanceMs;
-      if (this.queue.length) hold = Math.max(this.minHoldMs, hold / (1 + this.queue.length * 0.6));
+      const hold = this.holdFor(this.current);
       this._hold = hold;
       // hold === 0 means "sit here until something else happens" (the prompt line)
       this.$ring.style.setProperty('--p', hold > 0 ? Math.min(1, this._waitT / hold) : 0);

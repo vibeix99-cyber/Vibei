@@ -99,7 +99,11 @@ const PACE = {
 /** How far behind the action the text box is allowed to fall, in seconds. */
 const TEXT_SLACK = 0.9;
 /** Message holds, ms at 1×. A crit line earns more time on screen than a chip. */
-const HOLD = { plain: 185, crit: 330, super: 300, weak: 210 };
+// Base hold per line style, in ms at 1x. The textbox adds a per-character
+// reading allowance on top, so these are floors for *importance*, not length:
+// a critical hit is the loudest thing that happens in a turn and should sit
+// there long enough to register.
+const HOLD = { plain: 420, crit: 950, super: 760, weak: 520, faint: 900, status: 700 };
 
 export class BattleView {
   constructor(stage, uiRoot, plates, textbox, fieldBanner) {
@@ -218,9 +222,10 @@ export class BattleView {
     if (!tb.current) return true;
     if (tb.queue.length) return false;
     if (tb.charIdx < tb.current.text.length) return false;
-    const hold = tb.current.hold ?? tb.autoAdvanceMs;
-    if (hold <= 0) return true;                       // standing prompt: never blocks
-    return (tb._waitT || 0) >= Math.min(hold, this.ms(260));
+    if (tb.current.hold === 0) return true;           // standing prompt: never blocks
+    // Honour the whole hold. This used to cap at 260ms/speed, which is how
+    // lines ended up averaging 0.4s on screen no matter what HOLD said.
+    return (tb._waitT || 0) >= tb.holdFor(tb.current);
   }
 
   /* ---------------- beats ---------------- */
@@ -302,7 +307,10 @@ export class BattleView {
 
   _say(ev) {
     const style = ev.style || 'plain';
-    this.textbox.say(ev.text, { style: ev.style, hold: this.ms(HOLD[style] ?? HOLD.plain) });
+    // The textbox owns the reading floor, so pass the *unscaled* base and let
+    // it scale — otherwise 4x speed divides the floor away entirely.
+    this.textbox.speed = this.speed * this.pace;
+    this.textbox.say(ev.text, { style: ev.style, hold: HOLD[style] ?? HOLD.plain });
   }
 
   /**

@@ -163,7 +163,9 @@ export class BattleScreen {
     sp.setAttribute('role', 'group');
     sp.setAttribute('aria-label', 'Battle speed');
     sp.innerHTML = `<span class="lbl">SPD</span>`;
-    [['1×', 1], ['2×', 2], ['4×', 4]].forEach(([lbl, v]) => {
+    // 0.5x exists because 1x is now the readable default, not the fast one —
+    // there was previously nothing slower than "as fast as it goes".
+    [['½×', 0.5], ['1×', 1], ['2×', 2], ['4×', 4]].forEach(([lbl, v]) => {
       const b = document.createElement('button');
       b.type = 'button';
       b.textContent = lbl;
@@ -173,7 +175,8 @@ export class BattleScreen {
         this.view.speed = v; this.app.settings.battleSpeed = v; this.app.saveSettings();
         [...sp.querySelectorAll('button')].forEach((c) => c.classList.remove('on'));
         b.classList.add('on');
-        this.app.textbox.cps = 110 * v;
+        this.app.textbox.cps = 110 * Math.max(0.75, v);
+        this.app.textbox.speed = v;
         audio.sfx('ui_select');
       };
       sp.appendChild(b);
@@ -183,7 +186,8 @@ export class BattleScreen {
     this.bar = bar;
 
     this.app.textbox.show();
-    this.app.textbox.cps = 110 * this.view.speed;
+    this.app.textbox.cps = 110 * Math.max(0.75, this.view.speed);
+    this.app.textbox.speed = this.view.speed;
     this.waitingChoice = null;
     this.pendingP0 = null;
     this.pendingP1 = null;
