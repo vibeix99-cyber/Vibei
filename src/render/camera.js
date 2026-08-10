@@ -146,7 +146,7 @@ export class CameraDirector {
       home: SLOT_POS[i].clone(),
       aim: SLOT_POS[i].clone(),
       head: SLOT_POS[i].clone().setY(1.78),
-      headH: 1.78, topH: 1.95, fullH: 2.16, halfW: 0.45, rad: 0.55,
+      headH: 1.78, topH: 1.95, fullH: 2.16, loH: -0.09, halfW: 0.45, rad: 0.55,
       top: 1.95, full: 2.16, down: false
     }));
     this.gScale = 1;
@@ -244,7 +244,10 @@ export class CameraDirector {
       ok = !_box.isEmpty() && isFinite(_box.max.y) && !_dbox.isEmpty() && isFinite(_dbox.max.y);
     } catch { ok = false; }
 
-    if (!ok) { s.topH = s.h * 1.08; s.fullH = s.h * 1.25; s.halfW = 0.45 * s.scale; s.rad = 0.55 * s.scale; return; }
+    if (!ok) {
+      s.topH = s.h * 1.08; s.fullH = s.h * 1.25; s.loH = -0.05 * s.h;
+      s.halfW = 0.45 * s.scale; s.rad = 0.55 * s.scale; return;
+    }
     const propTop = _box.max.y * s.scale;
     const headTop = 2.02 * s.scale;
     // Frame the head with real headroom and let a raised weapon crop, the way
@@ -254,6 +257,10 @@ export class CameraDirector {
     // draws. Kaido's horns put a metre and a half above his head, and a limit
     // measured to the head is a limit the frame quietly breaks.
     s.fullH = clamp(_dbox.max.y * s.scale, s.topH, s.h * 2.4);
+    // Models are not neatly rooted at the deck: outlines and contact geometry
+    // hang below y=0, and a box measured from the deck up loses that metre —
+    // which is exactly the metre that makes a giant overflow the frame.
+    s.loH = clamp(_dbox.min.y * s.scale, -0.5 * s.h, 0);
     const halfXZ = Math.max(_dbox.max.x - _dbox.min.x, _dbox.max.z - _dbox.min.z) * 0.5 * s.scale;
     // `halfW` is for keeping out of the way; `rad` is the honest half-extent
     // the size budget is measured with. Big Mom is 7.4 m tall and 10 m wide,
@@ -298,7 +305,7 @@ export class CameraDirector {
       // because the near-bottom and far-top corners are at different depths —
       // measured across the roster, `+ rad/2` predicts the real projection to
       // within a couple of percent, from Chopper to Kaido.
-      s.full = Math.max(s.top, s.aim.y + s.fullH) + 0.5 * s.rad;
+      s.full = Math.max(s.top, s.aim.y + s.fullH) - s.loH + 0.5 * s.rad;
     }
     this.gScale = Math.max(this.act[0].scale, this.act[1].scale);
   }
@@ -314,6 +321,7 @@ export class CameraDirector {
     s.headH = s.h * 0.988;
     s.topH = s.h * 1.12;
     s.fullH = s.h * 1.28;
+    s.loH = -0.05 * s.h;
     s.halfW = 0.45 * s.scale;
     s.rad = 0.55 * s.scale;
     s.top = s.topH;
@@ -583,9 +591,10 @@ export class CameraDirector {
   _projSpan(s, p, at, fov) {
     const r = Math.max(0.2, s.rad);
     const y1 = s.aim.y + Math.max(0.3, s.fullH);
+    const y0 = s.aim.y + Math.min(0, s.loH);
     let lo = 1e9, hi = -1e9;
     for (let i = 0; i < 8; i++) {
-      _k[3].set(s.aim.x + (i & 1 ? r : -r), (i & 2) ? y1 : s.aim.y, s.aim.z + (i & 4 ? r : -r));
+      _k[3].set(s.aim.x + (i & 1 ? r : -r), (i & 2) ? y1 : y0, s.aim.z + (i & 4 ? r : -r));
       this._project(_k[3], p, at, fov, _k[4]);
       if (_k[4].z <= 0.05) return 9;                   // straddling the lens: as bad as it gets
       if (_k[4].y < lo) lo = _k[4].y;
