@@ -46,7 +46,15 @@ export const CHART = {
   LIGHT:  T({ SHADOW: 2, VOID: 2, SPIRIT: 2, LIGHT: 0.5, EARTH: 0.5, HAKI: 0.5 }),
   BEAST:  T({ MIND: 2, TOXIN: 0.5, MECHA: 0.5, SLASH: 0.5, SPIRIT: 0.5, EARTH: 2, SOUND: 2, HAKI: 0.5 }),
   MECHA:  T({ FROST: 2, WIND: 2, SOUND: 2, FLAME: 0.5, SEA: 0.5, STORM: 0.5, EARTH: 0.5, MECHA: 0.5, SPIRIT: 0.5 }),
-  MIND:   T({ FIST: 2, HAKI: 2, VOID: 0, MIND: 0.5, SHADOW: 0.5, SPIRIT: 2 }),
+  // MECHA added: MIND was resisted by only 3 of 18 types and is one of the two
+  // attacking types that reliably breaks a wall open — Gojo and Law hit Jinbe,
+  // Franky and Kaido for 41-51% through it. A machine has no mind to read, so
+  // this is the one resistance the flavour argues for on its own, and it bounds
+  // the worst case for both MECHA walls. NOT a general chart loosening: the
+  // chart measures 22.5% resisted / 19.1% super, which is Pokemon's own density,
+  // and the "bench takes 44.6% vs the active's 28.1%" finding turned out to be a
+  // selection artefact rather than a resistance shortage. See docs/HANDOFF.md.
+  MIND:   T({ FIST: 2, HAKI: 2, VOID: 0, MIND: 0.5, SHADOW: 0.5, SPIRIT: 2, MECHA: 0.5 }),
   TOXIN:  T({ BEAST: 2, SEA: 2, SPIRIT: 0.5, MECHA: 0, EARTH: 0.5, TOXIN: 0.5, MIND: 0.5, LIGHT: 2 }),
   SOUND:  T({ MIND: 2, SPIRIT: 2, MECHA: 0.5, EARTH: 0.5, SOUND: 0.5, VOID: 0 }),
   SPIRIT: T({ SHADOW: 2, MIND: 2, VOID: 2, SPIRIT: 0.5, BEAST: 0.5 }),

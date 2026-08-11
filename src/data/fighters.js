@@ -898,6 +898,14 @@ export function defaultMoves(id, level = 50) {
   const priorityPick = wantsPriority
     ? atk.filter((o) => (o.m.priority || 0) > 0).sort((a, b) => b.s - a.s)[0]
     : null;
+
+  // Screens: seven moves in the library, nine fighters able to learn one, and
+  // zero default sets carrying one across three separate critic runs, because a
+  // screen competes with toxic and recovery on exactly the fighters that own it
+  // and loses to both. A screen is not a stall tool, it is a *support* tool —
+  // it belongs to the fighter that can afford a turn to halve everything for
+  // five, which is the sturdy end of the roster whether or not it also heals.
+  const screens = (o) => (o.m.effects || []).some((e) => e.kind === 'screen');
   const wantAtk = Math.min(4 - utilSlots, atk.length);
   utilSlots = Math.min(utilSlots, 4 - Math.max(2, Math.min(2, atk.length)));
   utilSlots = Math.max(0, Math.min(2, 4 - wantAtk));
@@ -938,7 +946,13 @@ export function defaultMoves(id, level = 50) {
   for (const u of util) {
     if (picked.length >= 4 || statusTaken >= utilSlots) break;
     if (pivots && isPivot(u.m)) continue;
-    if (statusTaken === 1 && !bleeds(u)) continue;
+    // The second utility slot used to accept only a bleeder — a status, a hazard
+    // or a seed. That is why seven screen moves and ten fighters able to learn
+    // one produced zero screens on default sets across three critic runs: a
+    // screen is not a bleeder, so it was structurally ineligible for the only
+    // slot it could have taken. A sturdy fighter that owns one may spend that
+    // slot on halving everything for five turns instead.
+    if (statusTaken === 1 && !bleeds(u) && !(screens(u) && bulkRatio(f) >= 1.05)) continue;
     if (isPivot(u.m)) pivots++;
     picked.push(u.id); statusTaken++;
   }
