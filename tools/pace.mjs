@@ -204,8 +204,69 @@ if (has('evs')) {
 }
 const sh = shape();
 
+// Spread, not level. The depth critic's round-4 correction, and it is the whole
+// point: a roster where everything dies in 2-3 hits has hit this tool's old
+// median target and still has no wall and no glass cannon. Pokémon's depth lives
+// in the distance between a Blissey that eats ten neutral hits and a Deoxys-A
+// that dies to one, so that distance is what has to be measured.
+const spread = (() => {
+  const rows = F.map((f) => ({ id: f.id, r: (f.base.hp + f.base.def + f.base.spd) / (f.base.atk + f.base.spa + f.base.spe) }))
+    .sort((a, b) => b.r - a.r);
+  const bulkiest = rows.slice(0, 4).map((x) => x.id);
+  const frailest = rows.slice(-4).map((x) => x.id);
+  return { bulkiest, frailest };
+})();
+
+function hitsFor(ids, evs) {
+  const team = () => F.map((f) => member(f.id, evs));
+  const b = createBattle({
+    seed: 7, arena: 'colosseum', format: { level: LEVEL, teamSize: F.length, bring: F.length },
+    sides: [{ name: 'A', team: team() }, { name: 'B', team: team() }]
+  });
+  const [A, B] = [b.sides[0].party, b.sides[1].party];
+  // Per defender: how many hits it survives from an *average* attacker playing
+  // its own best move. Averaging over attackers, not taking the hardest hitter
+  // in the game — that would say every fighter dies in under one hit, which is
+  // true and useless.
+  const out = [];
+  for (const d of B) {
+    if (!ids.includes(d.speciesId)) continue;
+    const perAttacker = [];
+    for (const a of A) {
+      if (a.speciesId === d.speciesId) continue;
+      let top = 0;
+      for (const slot of a.moves) {
+        const mv = getMove(slot.id);
+        if (!mv || mv.category === 'status') continue;
+        const r = damageRange({ move: mv, user: a, target: d, field: b.field, side: b.sides[0], foeSide: b.sides[1], crit: false, rng: null });
+        if (r.immune) continue;
+        top = Math.max(top, ((r.min + r.max) / 2) / d.maxHp * 100);
+      }
+      if (top > 0) perAttacker.push(top);
+    }
+    if (perAttacker.length) {
+      const mean = perAttacker.reduce((x, y) => x + y, 0) / perAttacker.length;
+      out.push(100 / mean);
+    }
+  }
+  return out.reduce((a, x) => a + x, 0) / Math.max(1, out.length);
+}
+
+const wallHits = hitsFor(spread.bulkiest, false);
+const frailHits = hitsFor(spread.frailest, false);
+console.log(`\n──── THE SPREAD ────`);
+console.log(`  the four bulkiest survive   ${wallHits.toFixed(2)} hits from an average attacker's best  (Pokémon walls: 6+)`);
+console.log(`  the four frailest survive   ${frailHits.toFixed(2)} hits                                  (Pokémon sweepers: 1–2)`);
+console.log(`  ratio between the ends      ${(wallHits / Math.max(0.01, frailHits)).toFixed(2)}×                                 (Pokémon: 4×+)`);
+
 const hits = 100 / now.m.med;
 let bad = 0;
+if (wallHits / Math.max(0.01, frailHits) < 2.2) {
+  console.log(`\n✗ The ends are ${(wallHits / Math.max(0.01, frailHits)).toFixed(2)}× apart. Everything dies at about the same rate, so there is`);
+  console.log(`  nothing to switch *to* — a bench answer only exists when some body takes`);
+  console.log(`  meaningfully less than the one already out.`);
+  bad++;
+}
 if (hits < 2.0) {
   console.log(`\n✗ ${hits.toFixed(2)} hits to a KO. Everything that costs a turn — switching, status,`);
   console.log(`  hazards, screens, items, PP — is priced out. The AI is not being greedy;`);
@@ -218,5 +279,5 @@ if (sh.walls === 0) {
   console.log(`  absorb a hit, every tactical system downstream is decorative.`);
   bad++;
 }
-if (!bad) console.log(`\n✅ ${hits.toFixed(2)} hits to a KO, ${sh.walls} walls on the roster — inside the band`);
+if (!bad) console.log(`\n✅ ${hits.toFixed(2)} hits median, ends ${(wallHits / Math.max(0.01, frailHits)).toFixed(2)}× apart, ${sh.walls} walls — inside the band`);
 process.exit(bad ? 1 : 0);

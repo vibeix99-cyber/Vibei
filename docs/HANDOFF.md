@@ -740,3 +740,54 @@ switch from a panel that tells them nothing about whether switching is good.
 4. Screens and substitute onto the sets of fighters that want them.
 
 **Status:** open
+
+### EVs are not the lever for the bulk spread — roster-wide offense is
+
+Acting on the depth critic's correction that Pokémon's depth is in the *spread*
+of bulk rather than its level, I tried redistributing the default EVs by
+archetype. It does not work, measured three ways, and this is here so nobody
+tries it a third time (I have now tried it twice).
+
+```
+  EV default                    median hits   one-shot   walls   frail   ends apart
+  flat defensive (shipping)         2.25        10.7%     2.61    1.59      1.64x
+  wall / bulky-attacker / cannon    1.58        25.2%     2.20    1.02      2.15x
+  wall / everyone-else              1.76        19.4%     2.20    1.23      1.79x
+```
+
+Splitting the roster widens the ends a little and *doubles* the share of
+matchups that one-shot. The reason is the same one that sank the first attempt:
+base offense on this roster is high enough that any offensive investment just
+accelerates the race, and the walls gain nothing because under the flat spread
+they are already fully invested defensively. You cannot buy a spread with points
+that are already spent.
+
+The ends are 1.64x apart against Pokémon's 4x+, and the four bulkiest survive
+2.61 hits against a Pokémon wall's six to ten. That gap is real and still open.
+The lever that would move it is **roster-wide offense** — base offensive stats
+and move power — not EVs and not, on the evidence, base defensive stats either:
+Chopper already sits at 2.00 bulk/offense and still dies in under three hits,
+because everything hits so hard in absolute terms.
+
+`tools/pace.mjs` now measures and gates on the spread, not just the median, so
+whoever takes this on can tell whether they are moving the right number. It
+currently fails that gate on purpose.
+
+**Status:** open
+
+### Priority moves now reach the roster
+
+Thirteen priority attacks in the library, twenty-eight fighters able to learn
+one, and exactly one default set carrying one. Priority is priced as damage, so
+a 40 BP first-strike could never out-score a 120 BP nuke and never won a slot —
+but it does not earn its place by damage, it earns it by role, the same way
+recovery does. A fast, frail attacker (bulk/offense <= 0.95, base speed >= 90)
+now reserves a slot for one, traded against its weakest attack and never against
+its first. 1 of 32 default sets, now 21.
+
+Side effect worth knowing: this *improved* pace on its own, because the moves
+are 40-70 BP and dilute the average attack. Median hits to a KO 2.13 -> 2.25,
+matchups that one-shot 12.3% -> 10.7%, turns per KO 5.01 -> 5.64, and the roster
+win-rate spread narrowed from 29.6-67.2% to 34.8-66.4%.
+
+**Status:** done

@@ -887,6 +887,17 @@ export function defaultMoves(id, level = 50) {
       && (e.target === 'self' || !e.target) && (e.frac ?? 0) >= 0.4);
     if (bulkRatio(f) >= 1.10 && util.some(heals)) utilSlots = 2;
   }
+
+  // Priority is insurance, and it is priced as damage, so it never wins a slot:
+  // thirteen priority attacks in the library, twenty-eight fighters able to
+  // learn one, and exactly one default set carrying one. A 40 BP first-strike
+  // cannot out-score a 120 BP nuke and should not try — it earns its place by
+  // role, the way recovery does. A fast, frail attacker is the fighter that
+  // wants to finish something faster than it before it moves, so it gets one.
+  const wantsPriority = bulkRatio(f) <= 0.95 && f.base.spe >= 90;
+  const priorityPick = wantsPriority
+    ? atk.filter((o) => (o.m.priority || 0) > 0).sort((a, b) => b.s - a.s)[0]
+    : null;
   const wantAtk = Math.min(4 - utilSlots, atk.length);
   utilSlots = Math.min(utilSlots, 4 - Math.max(2, Math.min(2, atk.length)));
   utilSlots = Math.max(0, Math.min(2, 4 - wantAtk));
@@ -911,6 +922,16 @@ export function defaultMoves(id, level = 50) {
     seenType.add(best.m.type);
     if (isPivot(best.m)) pivots++;
     picked.push(best.id);
+  }
+  // ...and if the insurance did not make it on merit, trade the weakest attack
+  // for it. Never the first slot: that is the fighter's actual gameplan.
+  if (priorityPick && picked.length >= 3 && !picked.includes(priorityPick.id)) {
+    let worst = -1, worstS = Infinity;
+    for (let i = 1; i < picked.length; i++) {
+      const o = atk.find((a) => a.id === picked[i]);
+      if (o && o.s < worstS && !isPivot(o.m)) { worstS = o.s; worst = i; }
+    }
+    if (worst > 0) picked[worst] = priorityPick.id;
   }
 
   let statusTaken = 0;
@@ -1045,6 +1066,26 @@ export function defaultEVSpread(id) {
   const f = getFighter(id);
   if (!f) return {};
   const defKey = f.base.def >= f.base.spd ? 'def' : 'spd';
+  // Spread, not level. Handing every fighter the same defensive spread raised
+  // the floor and squashed the range: the roster came out at a mean 1.97 hits
+  // to a KO with the bulkiest fighter in the game at 3.06, so there was no wall
+  // and no glass cannon, only thirty-two fighters who all died at about the same
+  // rate. A bench answer existed on 15.4% of turns and switching stayed inert.
+  //
+  // Pokémon's depth is in the distance between the ends: a frail sweeper dies to
+  // one resisted hit and a defensive Pokémon survives six to ten neutral ones.
+  // These three spreads are the roster's own base stats taken at their word.
+  //
+  // Measured three ways and the flat defensive spread won on every number that
+  // matters, so it stays. Splitting the roster into wall / bulky-attacker /
+  // glass-cannon spreads widened the ends from 1.99x to 2.15x apart and
+  // *doubled* the share of matchups that one-shot, 12.3% to 25.2%; a two-bucket
+  // version landed in between and was worse than both on the ends. The reason
+  // is the same one that sank the first EV experiment: base offense on this
+  // roster is high enough that any offensive investment simply accelerates the
+  // race, and the walls do not get bulkier because they were already fully
+  // invested. The ends are not far enough apart, and EVs are not the lever that
+  // moves them — roster-wide offense is. See docs/HANDOFF.md.
   return { hp: 252, [defKey]: 252, spe: 4 };
 }
 
