@@ -324,6 +324,10 @@ export class BattleScreen {
       party: s.party, activeIndex: s.activeIndex, items: s.items,
       // the move cards forecast damage with the real formula
       field: this.battle.field, sideState: s, foeSideState: other,
+      // What we have actually watched the foe do. The switch panel prices its
+      // incoming hit off this rather than off the foe's real moveset, so the
+      // panel never tells the player something they could not have known.
+      foeSeen: this.seenMovesOf(other.party[other.activeIndex]),
       noRun: false, side
     };
   }
@@ -331,6 +335,16 @@ export class BattleScreen {
   // The prompt is raised the moment the last line of the turn has *started* to
   // be read, so clearing first would cut the tail off "It's super effective!".
   // `say()` queues behind whatever is still on screen, which is what we want.
+
+  /** Move ids we have seen this fighter use, from the event stream. */
+  seenMovesOf(mon) {
+    if (!mon) return [];
+    const out = new Set();
+    for (const e of this.battle.events) {
+      if (e.t === 'moveUsed' && e.uid === mon.uid) out.add(e.moveId);
+    }
+    return [...out];
+  }
 
   ask(side) {
     this.waitingChoice = side;

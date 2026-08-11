@@ -156,6 +156,16 @@ const CSS = `
 .backbtn:active{ transform:translateY(2px); box-shadow:none; }
 
 /* ---------------- full move detail sheet (hover dwell / long press) ---------------- */
+/* popIn ends on "transform: none" and runs with "both", so its final frame
+   permanently overwrites whatever centring translate an element needs. Both
+   panels below are centred with a translate, so both lost it the moment the
+   animation finished and slid right by half their own width — which is why the
+   switch panel ran off the right edge of the screen and why the move sheet was
+   clipped there too. Two separate defects, one cause. Same motion, own
+   keyframes, translate preserved. */
+@keyframes popInCentred{ from{ transform:translate(-50%,-50%) scale(.86); opacity:0 } to{ transform:translate(-50%,-50%); opacity:1 } }
+@keyframes popInCentredX{ from{ transform:translateX(-50%) scale(.9); opacity:0 } to{ transform:translateX(-50%); opacity:1 } }
+
 .mvsheet{
   position:absolute; z-index:var(--z-sheet);
   left:50%; transform:translateX(-50%);
@@ -165,7 +175,7 @@ const CSS = `
   padding:10px 14px 12px; border-radius:14px; border:var(--bd) solid var(--edge-ink);
   background:linear-gradient(180deg,#20263c 0%,#0d1120 100%); color:var(--text-inv);
   box-shadow:var(--lip), var(--shadow-3), inset 0 0 0 1px rgba(255,255,255,.08);
-  animation:popIn .16s var(--ease-back) both; overflow:hidden;
+  animation:popInCentredX .16s var(--ease-back) both; overflow:hidden;
   display:flex; flex-direction:column; gap:5px;
 }
 .mvsheet h4{ margin:0; font-size:16px; font-weight:800; display:flex; align-items:center; gap:7px; flex-wrap:wrap; }
@@ -193,7 +203,7 @@ const CSS = `
   overflow:auto; padding:12px 14px 14px;
   background:linear-gradient(180deg,var(--panel-dark),#0f1322);
   border:var(--bd) solid var(--edge-ink); border-radius:16px;
-  box-shadow:0 20px 60px rgba(0,0,0,.7); animation:popIn .18s var(--ease-back) both;
+  box-shadow:0 20px 60px rgba(0,0,0,.7); animation:popInCentred .18s var(--ease-back) both;
   display:flex; flex-direction:column; gap:6px;
 }
 .listpanel h3{
@@ -218,6 +228,22 @@ const CSS = `
 .listrow .phpbar i{ position:absolute; inset:0 auto 0 0; }
 .listrow .phptxt{ font-variant-numeric:tabular-nums; font-weight:800; font-size:11.5px; min-width:62px; text-align:right; flex:0 0 auto; }
 .listrow .pflag{ font-size:9px; font-weight:900; padding:1px 5px; border-radius:4px; color:#0b0d14; flex:0 0 auto; }
+/* The tactical read: what this fighter would take on the way in, and whether it
+   outruns what it is walking into. Sits next to the HP bar because the two are
+   the same question — how long does this body last if I send it. */
+.listrow .ptac{ display:flex; align-items:center; gap:4px; flex:0 0 auto; }
+.listrow .ptac-in{
+  font-variant-numeric:tabular-nums; font-size:10.5px; font-weight:900; letter-spacing:.02em;
+  padding:1px 6px; border-radius:4px; min-width:44px; text-align:center;
+  background:#2a3048; color:#cdd6f0; border:1px solid rgba(255,255,255,.10);
+}
+.listrow .ptac-in.good{ background:#1e4030; color:#8ef0b6; border-color:#2f6a4c; }
+.listrow .ptac-in.warn{ background:#4a3a1c; color:#ffd98a; border-color:#7a5f28; }
+.listrow .ptac-in.bad{ background:#4d1f24; color:#ff9aa4; border-color:#7e343c; }
+.listrow .ptac-spd{ font-size:11px; font-weight:900; width:12px; text-align:center; color:#8b93ad; }
+.listrow .ptac-spd.good{ color:#8ef0b6; }
+.listrow .ptac-spd.warn{ color:#ffb0b8; }
+@media (max-width:560px){ .listrow .ptac-in{ min-width:38px; font-size:9.5px; } }
 .listrow .bnm{ font-weight:800; font-size:14px; }
 .listrow .bdesc{ font-size:11px; color:var(--text-dim-inv); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .listrow .bqty{ margin-left:auto; font-weight:900; font-size:14px; flex:0 0 auto; }
@@ -639,6 +665,53 @@ export class CommandMenu {
 
   /* ---------------- party ---------------- */
 
+  /**
+   * What switching to `p` actually costs, priced the same way the move cards
+   * price an attack.
+   *
+   * The depth critic put it plainly: the move card carries power, accuracy,
+   * live effectiveness and a numeric damage range, and the switch panel carried
+   * a name, two type chips and an HP bar. So the game handed the player a
+   * damage calculator for the option worth about 1.7pp a turn and left blank
+   * the one that is the correct answer on a third of the turns that matter.
+   * Nobody can learn to switch from that.
+   *
+   * Priced off the moves we have *watched the foe use*, never its real set —
+   * the panel must not tell the player anything they could not have known. With
+   * nothing seen yet it falls back to the foe's own types at a nominal 80 BP,
+   * which is a guess the player could equally have made, and says so.
+   */
+  _switchRead(ctx, p) {
+    const foe = ctx.foe;
+    if (!foe || !ctx.field || p.fainted) return null;
+    const seen = (ctx.foeSeen || []).map((id) => getMove(id)).filter((m) => m && m.category !== 'status');
+    const probes = seen.length
+      ? seen
+      : (foe.types || []).map((t) => ({
+        type: t, category: (foe.stats?.atk ?? 0) >= (foe.stats?.spa ?? 0) ? 'physical' : 'special',
+        power: 80, accuracy: 100, flags: [], effects: null, hits: null, drain: 0, recoil: 0, critStage: 0
+      }));
+    let worst = 0;
+    for (const mv of probes) {
+      try {
+        const r = damageRange({
+          move: mv, user: foe, target: p, field: ctx.field,
+          side: ctx.foeSideState, foeSide: ctx.sideState, crit: false, rng: null
+        });
+        if (r.immune) continue;
+        worst = Math.max(worst, ((r.min + r.max) / 2) / Math.max(1, p.maxHp) * 100);
+      } catch { /* a probe that will not price is not worth a broken panel */ }
+    }
+    const mySpe = p.stats?.spe ?? 0;
+    const foeSpe = foe.stats?.spe ?? 0;
+    return {
+      pct: Math.round(worst),
+      estimated: !seen.length,
+      lethal: worst >= 100,
+      faster: mySpe > foeSpe, tied: mySpe === foeSpe
+    };
+  }
+
   showParty(ctx, forced = false) {
     this.clear();
     this.ctx = ctx;
@@ -663,10 +736,23 @@ export class CommandMenu {
         ? `<span class="pflag" style="background:#6b6f85;color:#fff">FAINTED</span>`
         : isActive ? `<span class="pflag" style="background:var(--gold)">OUT</span>` : '';
       const st = p.status ? `<span class="pflag" style="background:${statusColorOf(p.status)}">${p.status.toUpperCase()}</span>` : '';
+      const read = dis ? null : this._switchRead(ctx, p);
+      let tac = '';
+      if (read) {
+        const band = read.lethal ? 'bad' : read.pct >= 50 ? 'warn' : read.pct <= 25 ? 'good' : '';
+        const spd = read.tied ? '=' : read.faster ? '▲' : '▼';
+        tac = `<span class="ptac">`
+          + `<span class="ptac-in ${band}" title="${read.estimated
+            ? 'Estimated: you have not seen this fighter attack yet, so this assumes a standard hit of its own type.'
+            : 'Worst hit you have actually seen this fighter use, against this bench fighter.'}">`
+          + `${read.lethal ? 'KO' : `−${read.pct}%`}${read.estimated ? '?' : ''}</span>`
+          + `<span class="ptac-spd ${read.faster ? 'good' : read.tied ? '' : 'warn'}" title="Speed against the fighter you are facing.">${spd}</span>`
+          + `</span>`;
+      }
       row.innerHTML = `
         <span class="pnm">${esc(p.nickname)}<br><span class="plv">Lv${p.level}</span></span>
         <span class="ptypes">${(p.types || []).map((t) => badgeHtml(t)).join('')}</span>
-        ${st}${flag}
+        ${st}${flag}${tac}
         <span class="phpbar"><i style="width:${frac * 100}%;background:${col}"></i></span>
         <span class="phptxt">${Math.max(0, p.hp)}/${p.maxHp}</span>`;
       d.appendChild(row);
