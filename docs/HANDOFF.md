@@ -1012,3 +1012,73 @@ Only 20 of 103 SFX keys fire in a default battle, which is worth a look after
 the mix is fixed — there is no point making unreachable sounds audible.
 
 **Status:** open
+
+### Depth round 5 — 6/10 against Black 2 (up from 5/10 twice)
+
+Harness `tests/critic/depth5.mjs` (`wall switchpay archteam panel`) plus re-runs
+of depth2/3/4. The rebalance is confirmed to have worked on everything except
+the one thing it was aimed at.
+
+**Confirmed working:**
+
+* **There is now a wall, arithmetically.** Seven fighters carry 50% recovery and
+  take 24–30% per best-move hit. Jinbe takes less than its own recovery from all
+  31 other fighters (24.7%/hit, 4.06 hits to KO). Roster mean incoming 48.4%.
+* **Archetypes play differently.** 240 games a cell: 3-wall teams average 60.2%
+  over 38.6-turn games, 3-fast teams 31.6% over 10.3 turns. A 28-turn spread in
+  length between compositions is real texture — though it is a ladder, not a
+  cycle, with no rock-paper-scissors anywhere.
+* **The extra turns carry information**, which is the obvious way this could
+  have failed. Halfway leader wins 68.2% with the full kit against 78.0% greedy;
+  26.4% of games are comebacks; stall-turn share flat at 43.0% vs 43.9%. The
+  length is not padding.
+* **The switch panel was singled out as better than the real games** — "Jinbe
+  −12%? ▲ 247/247" gives a predicted entry cost and matchup arrow Pokémon never
+  shows at choice time.
+
+**The gap, priced directly for the first time.** `depth5 switchpay` harvested
+6,765 real move-turns with a legal switch, filtered to where switching is most
+obviously indicated (foe's best takes ≥50% of the active, a bench fighter takes
+under 75% of that), and rolled both arms under common random numbers:
+
+```
+  stay in and click the biggest move   53.5% win
+  switch to the best bench answer      51.7% win     -1.8pp
+  entry cost: 27.4% of the incoming fighter's bar (median 26.1%, p90 53.1%)
+```
+
+The switch arm is given an **oracle** — it always picks the objectively
+lowest-threat bench member — and still loses. And the diagnosis underneath it is
+the number to fix:
+
+```
+  mean incoming on the ACTIVE            28.1%
+  mean incoming on the BEST BENCH ANSWER 44.6%
+```
+
+**On a random turn the bench is a worse matchup than what is already out**, and
+you pay a quarter of a bar to discover it. Everything else follows: a switch is
+the best action on 9.2% of turns while being ~30% of the candidate set; ace
+switches on 2.0% of turns, warlord 8.0%, against 25–35% in real play; and
+`firststep` at 1200 games a cell (±2.8pp) says "+switch out of a bad matchup" is
+−1.3pp against the mid AI and +1.5pp against the strong one — nothing — while
+"+one status" is +2.8pp and "+potion when low" is +3.7pp.
+
+**Two more open items:**
+
+* **49.2% of turns are free** — every legal action within 5pp of the best.
+  Greedy is within 5pp on 75.0% of turns and gives up only 6.6pp against 9.8pp
+  for choosing at random, so the entire value of thinking is 3.2pp. The ace AI
+  posts 7.4pp, still worse than greedy.
+* **Screens remain decorative.** Seven moves, nine fighters can learn one, and
+  still 0 of 32 default sets carry one, so in any battle a player actually
+  starts they do not exist.
+
+**Where I would go next.** The lever is not the entry cost — 27.4% is roughly
+Pokémon's own hazard-free switch cost. It is that a bench fighter is not a
+*better* matchup than the active. That is a type-chart and roster-coverage
+problem: defensive typings need to actually resist things, and a 3-fighter
+random team needs a reasonable chance of containing an answer. Measuring the
+type chart's defensive spread is the first thing to do, not more stat tuning.
+
+**Status:** open
