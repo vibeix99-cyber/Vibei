@@ -65,8 +65,15 @@
 >    Gigantesco, Consecutive Normal Punches, Serious Punch) and should stay: they
 >    are the characters' actual technique names and the fidelity is worth more
 >    than the card width.
-> 3. **Judge an unjudged piece.** Audio is the strongest candidate — a stale
->    audit was hiding five silent moves and nobody has ever looked at that piece.
+> 3. **Judge an unjudged piece.** Audio went out for its first blind judgement at
+>    the end of the last session; if no `### Audio — first verdict` section exists
+>    below, that run did not land and should be relaunched. Its brief is worth
+>    reusing: a headless browser makes no sound, so the critic must measure the
+>    signal (render through `OfflineAudioContext`, compare envelopes and spectra,
+>    log which sounds actually fire in a real battle) rather than read
+>    `src/audio/audio.js`, which is 1800 lines that will read impressively
+>    whatever it sounds like. Seven pieces remain unjudged after it: character
+>    models, arena, team builder, modes, link battle, onboarding, save.
 > 4. **Re-judge feel and depth** once (1) lands. Both current scores predate it.
 >
 > ### Traps — measured, and all of them cost me an afternoon
