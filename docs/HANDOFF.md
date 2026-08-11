@@ -642,3 +642,101 @@ Message pacing measured at ~110 c/s typing with 0.55–0.80 s holds per line, wh
 is the reading floor working as intended. Leave it alone.
 
 **Status:** informational
+
+### Depth round 4 — still 5/10, and now we know exactly why
+
+Re-judged blind against Black 2: **ours 5/10, BW2 9/10.** Harness at
+`tests/critic/depth4.mjs` (modes `regret firststep arc ui`). Read this entry
+before doing any more roster work; it corrects the target I was aiming at.
+
+What the roster pass moved, and what it did not:
+
+```
+                                        old        now
+  ace-vs-ace game length              9.1       13.4 turns
+  hits survived before fainting       2.26       2.76
+  KOs on the first damaging hit      38.7%      29.3%
+  ban all status moves               -2.2pp     -5.7pp
+  pure greedy vs full ace           -10.1pp    -19.7pp
+  ban switching                      -1.0pp     -1.0pp    <- unmoved
+```
+
+(My own earlier reading of the status ablation was −9.4pp against this critic's
+−5.7pp. Different sample and harness settings; take the critic's number, it ran
+the larger batch and I am not a neutral party.)
+
+**The measurement nobody had made.** `depth4 regret` takes 120 real mid-game
+positions, enumerates every legal action, and plays each out 40 times against an
+ace opponent under common random numbers — so changing your action no longer
+changes the dice, which is the confound `swing2` had to apologise for. Noise
+floor established by running the *same* action six times: p90 20.0pp.
+
+* 51.7% of turns contain a decision that beats the noise floor. There **is** a
+  game underneath.
+* On those turns the best action is a switch 32.3% of the time.
+* And: pick at random → 17.2pp mean regret. Click the biggest number → 14.5pp.
+  The game's own ace AI → 12.8pp, finding the best action **less often than
+  greedy does** (57.0% vs 58.3%).
+
+So 12.8pp of per-turn value is sitting there untouched, invisible to every
+heuristic in this codebase. Only a rollout engine can see it.
+
+**Why the first step toward playing well does not pay.** `depth4 firststep`,
+1000 games a cell, ±3.1pp, each row is pure greedy plus exactly one new habit:
+
+```
+  + potion when low                +1.9pp
+  + switch out of a bad matchup    +0.7pp     inside the error bar
+  + one status on a safe turn      +0.8pp     inside the error bar
+  all three                        +2.6pp
+```
+
+Meanwhile warlord beats ace 70.4% and ace beats greedy 66.3%. The depth is real
+and it is entirely reserved for someone already expert.
+
+**The correction to my roster work.** I calibrated `tools/pace.mjs` to a
+roster-wide median of 2–3 hits to a KO and hit it. That target was wrong.
+Pokémon's depth is not in the *level* of bulk, it is in the *spread*: a frail
+sweeper dies to one resisted hit and a defensive Pokémon survives six to ten
+neutral ones and heals half a bar every other turn. Our roster mean is 1.97 hits
+and the bulkiest fighter in the game, Franky, is 3.06. I gave everything a
+defensive EV spread and raised the floor uniformly, which compressed the range
+instead of widening it. There is no wall; there is a slightly-slower-to-die
+fighter.
+
+That compression is what keeps switching inert: **a bench fighter that would
+take less than 60% of what the active is taking exists on only 15.4% of
+move-turns.** With no answer to switch to, the strongest AI switches on 7.3% of
+turns (ace 1.4%, pirate 0.2%) against competitive singles' 25–35%, and every
+slower tool inherits it — toxic, hazards and setup all expire before they pay.
+
+**Dead content it found** (`depth2 reach`, 4011 turns): screens 0.0 per 100
+turns, substitute 0.0, trick room has an event kind in the contract and zero
+moves, and **19 priority moves in the library with 1 on any default set**. Four
+of the six levers a competitive player uses to make position matter are
+unreachable. One move, `toxic_brand`, is used 632 times — nearly double the next.
+
+**The cheapest high-value fix it found, and it is a UI one.** `tests/shots/depth4/02-fight.png`
+versus `03-party.png`: the move card carries name, PP, type, category, power,
+accuracy, live effectiveness against the fighter actually opposite, a damage-roll
+bar with a numeric range and rider text — better than any Pokémon game. The
+switch panel carries a name, two type chips and an HP bar. We hand the player a
+damage calculator for the option worth 1.7pp and an HP bar for the option that is
+the correct answer on a third of the turns that matter. A player cannot learn to
+switch from a panel that tells them nothing about whether switching is good.
+
+**Suggested order** (mine, not the critic's — it gives one gap by protocol):
+
+1. Switch panel information: incoming damage estimate, what the bench fighter
+   resists, speed comparison. Cheap, and it is the only one of these that helps
+   a beginner directly.
+2. Widen the bulk spread rather than raising it. Walls want 6+ hits to KO and
+   should keep their recovery; sweepers should go back to dying in 1–2. Undo the
+   uniform defensive EV default in favour of per-archetype spreads — offensive
+   for sweepers, defensive for walls. `pace.mjs` needs its gate changed from a
+   median to a spread before it can measure this honestly.
+3. Priority onto default sets — 19 moves, 1 reachable, and priority is how a
+   sweep gets stopped.
+4. Screens and substitute onto the sets of fighters that want them.
+
+**Status:** open
