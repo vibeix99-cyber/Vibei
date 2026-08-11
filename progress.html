@@ -265,10 +265,10 @@ a{ color:var(--brass); }
 
 <script>
 const DATA = {
-  wave: "Wave 4 · re-judging",
+  wave: "Wave 5 · the spread, not the level",
   updated: "10 Aug 2026",
   percent: 74,
-  note: "Feel critic scored 5/10 vs Sword/Shield. Both of its findings are fixed and re-measured.",
+  note: "Depth re-judged: still 5/10. Half of all turns hold a real decision \u2014 and no heuristic in the codebase can see it.",
   stats: [
     { n: "2/20", l: "critics run" },
     { n: "5/10", l: "battle feel" },
@@ -279,7 +279,7 @@ const DATA = {
   ],
   pieces: [
     ["The battle, as experienced", "review", 3, 5, 8, "Both critic findings fixed: the turn starts on commit, the camera is home when you choose"],
-    ["The game underneath",        "active", 3, 5, 9, "Tactics worth only 4pp between two human strategies; verdict still pending"],
+    ["The game underneath",        "sent",   4, 5, 9, "Bulk was raised uniformly instead of spread: no wall, so a bench answer exists on 15.4% of turns"],
     ["Battle engine & rules",      "review", 2, 0, 0, "Critic: 666/666 advertised move properties fire; formula faithful; determinism hole closed"],
     ["Type chart & balance",       "review", 2, 0, 0, "Critic: healthy \u2014 offence +1 to \u22123, defence +6 to \u22124, no dominant typing"],
     ["Status, weather & field",    "review", 2, 0, 0, "Chip damage is decorative: 95.4% of 12,999 KOs were direct, hazards caused 2"],
@@ -337,7 +337,15 @@ const DATA = {
     ["W4", "Fixed. A question stops being a question once answered; the turn now starts <b>0.05s</b> after you commit. The link screen had the same bug by another route."],
     ["W4", "Its second finding: at the command prompt the camera sat in the previous action\u2019s framing. Reproduced: only <b>1 of 8 prompts</b> was on the resting shot."],
     ["W4", "Instrumenting changed the diagnosis \u2014 the camera was not stuck, it was <b>1.4s late</b>, and the menu was up for all of it. Now <b>8 of 8</b>, no fighter offscreen."],
-    ["W4", "It rated our impact feel and tempo <i>above</i> Sword/Shield: hitstop, chroma split, 0.45\u00d7 slow-mo, damage numbers, and ~5s per turn against ~20s."]
+    ["W4", "It rated our impact feel and tempo <i>above</i> Sword/Shield: hitstop, chroma split, 0.45\u00d7 slow-mo, damage numbers, and ~5s per turn against ~20s."],
+    ["W5", "<b>Depth re-judged: still 5/10 against Black 2.</b> Status went from worth 2.2pp to 5.7pp and the skill ceiling nearly doubled \u2014 but switching did not move one point."],
+    ["W5", "It built the measurement nobody had: 120 real positions, every legal action rolled out 40 times under common random numbers. <b>51.7% of turns hold a decision that beats the dice.</b>"],
+    ["W5", "A switch is the best action on <b>32.3%</b> of those turns. Yet our ace AI carries 12.8pp of regret per turn and finds the best action <i>less often than clicking the biggest number does</i>."],
+    ["W5", "And the first step toward playing well pays nothing: learning to switch is worth <b>+0.7pp</b>, learning to status <b>+0.8pp</b>, both inside a \u00b13.1pp error bar."],
+    ["W5", "<b>It corrected my own fix.</b> I raised bulk to a roster median of 2\u20133 hits and hit the target. The target was wrong \u2014 Pok\u00e9mon\u2019s depth is in the <i>spread</i>, not the level."],
+    ["W5", "Sweepers should die in one hit and walls survive ten. Ours all sit at two to three, so a bench answer exists on only <b>15.4%</b> of turns and switching stays inert."],
+    ["W5", "Cheapest fix it found is a UI one: the move card is better than any Pok\u00e9mon game, the switch panel is a name and an HP bar. We instrument the option worth 1.7pp and leave the one that matters blank."],
+    ["W5", "Move audit was crying wolf: 121 problems, 80 of them a stale regex in the tool. Now 41 real ones \u2014 including <b>five moves that play no sound at all</b>."]
   ]
 };
 
