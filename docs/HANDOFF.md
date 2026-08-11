@@ -588,7 +588,39 @@ The pillar case is a separate, harder bug from the framing case: `camera.js`
 raycasts for occluders in its resting shot, so either the raycast is not running
 on this path or the pillar is not in the occluder set.
 
-**Status:** open
+**Status:** FIXED. The diagnosis in the paragraph above is wrong and the pillar
+was a symptom, not a bug of its own — worth reading before trusting any of it.
+
+The camera was never stuck on the wrong shot. It came home every time, about
+1.4s late: `update()` waited 0.35s of idle before asking, then glided for 1.05s,
+and the menu is up for all of it. Every "wrong framing" reading — the overlaps,
+the two offscreen fighters, the pillar — was the same thing seen at different
+points of that window, on `entrance` and `impact` shots that had simply not been
+left yet.
+
+It now departs immediately once `waitingFor()` names a side, over 0.55s.
+`_commanded` also stopped being a latch; it was only cleared when the battle went
+un-idle, so anything that knocked the frame off the resting shot mid-wait was
+never recovered.
+
+Measured after, three seeds: 8 of 8 prompts on the resting shot (was 1 of 8), no
+fighter offscreen, both framed at 14-23% of width around x=14 and x=80.
+
+Two notes for whoever measures this next:
+
+* **`tests/critic-promptshots.mjs` over-reports occlusion.** Its raycast counts
+  `Points` and `LineSegments` as blockers, which means blizzard snow and rain
+  streaks read as a hidden fighter. `withHiddenFighter` will not go to zero on a
+  weather arena however good the framing is. Look at the pixels —
+  `tests/shots/prompts/p05.png` and `p06.png` are clean two-shots that the
+  counter calls occluded.
+* **Do not gate the departure on the outgoing shot's `minHold`.** I tried it,
+  because letting a KO finish its beat sounds obviously right. It is not: the
+  beat has already played by the time this code runs, since `waiting` requires
+  the queue drained and every blocking beat finished, so the hold only delays
+  the exit. It made the camera settle fully on the action shot and *then* start
+  moving — 4 of 7 prompts mid-blend with the gate against 6 of 8 arrived without
+  it. The comment in `camera.js` says so at the call site.
 
 ### Feel critic → what it praised, so nobody "fixes" it
 

@@ -268,7 +268,7 @@ const DATA = {
   wave: "Wave 4 · re-judging",
   updated: "10 Aug 2026",
   percent: 74,
-  note: "Pace fixed and verified deeper, not just longer. The skill gradient for a new player is the next gap.",
+  note: "Feel critic scored 5/10 vs Sword/Shield. Both of its findings are fixed and re-measured.",
   stats: [
     { n: "2/20", l: "critics run" },
     { n: "5/10", l: "battle feel" },
@@ -278,7 +278,7 @@ const DATA = {
     { n: "2.1",  l: "hits to a KO" }
   ],
   pieces: [
-    ["The battle, as experienced", "active", 2, 5, 8, "Re-run cut short twice; harness now committed and ready"],
+    ["The battle, as experienced", "review", 3, 5, 8, "Both critic findings fixed: the turn starts on commit, the camera is home when you choose"],
     ["The game underneath",        "active", 3, 5, 9, "Tactics worth only 4pp between two human strategies; verdict still pending"],
     ["Battle engine & rules",      "review", 2, 0, 0, "Critic: 666/666 advertised move properties fire; formula faithful; determinism hole closed"],
     ["Type chart & balance",       "review", 2, 0, 0, "Critic: healthy \u2014 offence +1 to \u22123, defence +6 to \u22124, no dominant typing"],
@@ -291,7 +291,7 @@ const DATA = {
     ["Arena & lighting",           "review", 2, 0, 0, "Three of six floors were failing to compile \u2014 fixed"],
     ["Character models",           "review", 1, 0, 0, "Praised: outlined low-poly fighters read well at a neutral two-shot"],
     ["Move VFX",                   "review", 2, 0, 0, "Critic dismissed 'oversized' \u2014 it was the camera, not the effects"],
-    ["Camera direction",           "review", 3, 0, 0, "Rebuilt against the critic's bbox measurements; resting two-shot verified frame by frame"],
+    ["Camera direction",           "review", 4, 0, 0, "Prompts on the resting shot: 1 of 8 \u2192 8 of 8, no fighter offscreen"],
     ["Battle HUD & menus",         "review", 2, 0, 0, "Move cards called better than any Pok\u00e9mon game \u2014 power, accuracy, PP, \u00d72, damage forecast"],
     ["Audio",                      "review", 1, 0, 0, "Per-beat SFX, per-fighter cries, intensity ramps \u2014 all synthesised"],
     ["Game feel & pacing",         "review", 3, 0, 0, "Reading floor added; \u00bd\u00d7 speed added; being re-judged now"],
@@ -331,7 +331,13 @@ const DATA = {
     ["W4", "Checked the obvious way the roster pass could have failed: lead changes hands <b>1.75 times a game against 1.13</b> without recovery. Deeper, not just longer."],
     ["W4", "<b>And the next gap, found by measuring instead of assuming.</b> Between two human-plausible strategies the whole tactical layer is worth about <b>4 points</b>."],
     ["W4", "A novice who only clicks potions edges out a club player who switches and statuses. The gradient is steep at the top and flat where a beginner stands."],
-    ["W4", "Both critic re-runs were cut short before a verdict. Their harnesses are committed so the next attempt starts from them."]
+    ["W4", "Both critic re-runs were cut short before a verdict. Their harnesses are committed so the next attempt starts from them."],
+    ["W4", "<b>Feel critic: 5/10 against Sword/Shield.</b> Its gap was a real bug \u2014 choosing a move did not start the turn."],
+    ["W4", "The answered \"What will X do?\" line held the whole action queue behind it: <b>28.15 game-seconds</b> with 11 events backed up, and clicking the arena did not release it."],
+    ["W4", "Fixed. A question stops being a question once answered; the turn now starts <b>0.05s</b> after you commit. The link screen had the same bug by another route."],
+    ["W4", "Its second finding: at the command prompt the camera sat in the previous action\u2019s framing. Reproduced: only <b>1 of 8 prompts</b> was on the resting shot."],
+    ["W4", "Instrumenting changed the diagnosis \u2014 the camera was not stuck, it was <b>1.4s late</b>, and the menu was up for all of it. Now <b>8 of 8</b>, no fighter offscreen."],
+    ["W4", "It rated our impact feel and tempo <i>above</i> Sword/Shield: hitstop, chroma split, 0.45\u00d7 slow-mo, damage numbers, and ~5s per turn against ~20s."]
   ]
 };
 
