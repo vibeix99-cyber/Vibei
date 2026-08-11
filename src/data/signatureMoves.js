@@ -44,20 +44,20 @@ export const SIGNATURE_MOVES = [
   { id: 'enma_draw', name: 'Enma Draw', type: 'SLASH', category: 'physical',
     power: 115, accuracy: 100, pp: 5, contact: true, critStage: 1, flags: ['slice', 'protect'],
     effects: [{ kind: 'boost', stats: { atk: 1, def: -1 }, target: 'self' }],
-    desc: 'Enma pulls more haki than intended. Raises Attack, lowers Defense.',
+    desc: 'Enma takes more haki than intended. Raises Atk, lowers Def.',
     flavor: 'The blade decides how much of you it wants. You find out afterwards.',
     fx: { key: 'enma_cut', color: '#1b1b22', shape: 'arc', scale: 1.6, hitstop: 170, shake: 1.2, sfx: 'slash_heavy' } },
 
   { id: 'asura_bakkei', name: 'Asura: Bakkei', type: 'SLASH', category: 'physical',
     power: 45, accuracy: 100, pp: 5, contact: true, critStage: 1, hits: [3, 3], flags: ['slice', 'protect'],
-    desc: 'Nine blades in three passes. Always hits three times. High crit ratio.',
+    desc: 'Nine blades in three passes. Hits 3 times. High crit ratio.',
     flavor: 'Something with too many arms borrowed his body for four seconds.',
     fx: { key: 'asura_slash', color: '#8a5ad0', shape: 'arc', scale: 1.8, hitstop: 90, shake: 1.0, sfx: 'slash_heavy' } },
 
   { id: 'ifrit_jambe', name: 'Ifrit Jambe', type: 'FLAME', category: 'physical',
     power: 120, accuracy: 95, pp: 5, contact: true, recoil: 0.25, flags: ['protect'],
     effects: [{ kind: 'status', value: 'brn', chance: 30, target: 'foe' }],
-    desc: 'A blue-white kick that cooks the user too. 25% recoil, 30% burn.',
+    desc: 'A blue-white kick that cooks the user. 25% recoil, 30% burn.',
     flavor: 'The leg is past red now. He is not going to talk about it.',
     fx: { key: 'blue_kick', color: '#3a6cff', shape: 'melee', scale: 1.8, hitstop: 190, shake: 1.3, sfx: 'impact_fire' } },
 
@@ -77,7 +77,7 @@ export const SIGNATURE_MOVES = [
 
   { id: 'zangetsu_arc', name: 'Zangetsu Arc', type: 'SLASH', category: 'physical',
     power: 95, accuracy: 100, pp: 15, contact: true, critStage: 1, flags: ['slice', 'protect'],
-    desc: 'A door-sized cleaver swung by someone with no formal training. High crit ratio.',
+    desc: 'A door-sized cleaver, swung with no training. High crit ratio.',
     flavor: 'It has no guard, no edge on one side and no business working.',
     fx: { key: 'cleaver', color: '#3a3a5a', shape: 'arc', scale: 1.7, hitstop: 150, shake: 1.1, sfx: 'slash_heavy' } },
 
@@ -89,14 +89,14 @@ export const SIGNATURE_MOVES = [
 
   { id: 'constant_flux', name: 'Constant Flux', type: 'SEA', category: 'physical',
     power: 100, accuracy: 100, pp: 10, contact: true, critStage: 1, flags: ['slice', 'protect'],
-    desc: 'Tenth Form. The longer the turn continues the harder it cuts. High crit ratio.',
+    desc: 'Tenth Form. The longer it runs, the harder it cuts. High crit.',
     flavor: 'Water does not stop to argue about which shape it should be.',
     fx: { key: 'water_spiral', color: '#2a7fd4', shape: 'arc', scale: 1.7, hitstop: 150, shake: 1.0, sfx: 'water_hit' } },
 
   { id: 'thunder_lance_tempo', name: 'Thunder Lance Tempo', type: 'STORM', category: 'special',
     power: 75, accuracy: 100, pp: 10,
     effects: [{ kind: 'boost', stats: { spa: 1 }, chance: 70, target: 'self' }],
-    desc: 'A drawn spear of charge. 70% chance to raise the user\'s Sp. Atk.',
+    desc: 'A drawn spear of charge. 70% to raise the user\'s Sp. Atk.',
     flavor: 'Each one teaches her where the next one should go.',
     fx: { key: 'lightning_lance', color: '#f5c542', shape: 'beam', scale: 1.2, hitstop: 100, shake: 0.7, sfx: 'thunder' } },
 
@@ -116,14 +116,14 @@ export const SIGNATURE_MOVES = [
   { id: 'rumble_ball', name: 'Rumble Ball', type: 'BEAST', category: 'status',
     power: 0, accuracy: null, pp: 5, target: 'self',
     effects: [{ kind: 'boost', stats: { atk: 1, spa: 1, spe: 2, def: -1, spd: -1 }, target: 'self' }],
-    desc: 'Raises Attack, Sp. Atk and Speed sharply; lowers both defenses.',
+    desc: 'Sharply raises Atk, Sp. Atk and Speed; lowers both defenses.',
     flavor: 'Three minutes of being seven animals. Dosage is a strong word for it.',
     fx: { key: 'transform_pulse', color: '#e08aa0', shape: 'aura', scale: 1.4, sfx: 'buff' } },
 
   { id: 'monster_point', name: 'Monster Point', type: 'BEAST', category: 'status',
     power: 0, accuracy: null, pp: 5, target: 'self',
     effects: [{ kind: 'boost', stats: { atk: 2, def: 1, spe: -1 }, target: 'self' }],
-    desc: 'Sharply raises Attack and raises Defense, at the cost of Speed.',
+    desc: 'Sharply raises Attack, raises Defense, at the cost of Speed.',
     flavor: 'The doctor leaves the building. Something much larger signs for the delivery.',
     fx: { key: 'monster_grow', color: '#6b4a2f', shape: 'aura', scale: 2.2, sfx: 'roar' } },
 
@@ -137,7 +137,7 @@ export const SIGNATURE_MOVES = [
   { id: 'mil_fleur_gigantesco', name: 'Mil Fleur: Gigantesco Mano', type: 'MIND', category: 'physical',
     power: 110, accuracy: 90, pp: 5, contact: true, flags: ['protect'],
     effects: [{ kind: 'boost', stats: { def: -1, spd: -1 }, chance: 100, target: 'foe' }],
-    desc: 'A giant clasped fist. Always lowers the target\'s Defense and Sp. Def.',
+    desc: 'A giant clasped fist. Always lowers Defense and Sp. Def.',
     flavor: 'A thousand hands agree on one shape and use it once.',
     fx: { key: 'giant_hands', color: '#a24fd0', shape: 'melee', scale: 2.2, hitstop: 200, shake: 1.5, sfx: 'impact_world' } },
 
@@ -158,14 +158,14 @@ export const SIGNATURE_MOVES = [
   { id: 'general_franky_shield', name: 'General Shield', type: 'MECHA', category: 'status',
     power: 0, accuracy: null, pp: 5, target: 'allySide',
     effects: [{ kind: 'screen', value: 'veil', target: 'allySide' }],
-    desc: 'Raises an Aurora Veil: halves physical and special damage for 5 turns.',
+    desc: 'An Aurora Veil: halves physical and special damage, 5 turns.',
     flavor: 'Two hundred tonnes of hand-built nonsense, standing between you and it.',
     fx: { key: 'mecha_screen', color: '#7fd8ff', shape: 'aura', scale: 1.8, sfx: 'shield' } },
 
   { id: 'nemuriuta_flanc', name: 'Nemuriuta: Flanc', type: 'SOUND', category: 'status',
     power: 0, accuracy: 90, pp: 10, target: 'foe', flags: ['sound', 'protect'],
     effects: [{ kind: 'status', value: 'slp', target: 'foe' }],
-    desc: 'A lullaby with unusually good accuracy. Puts the target to sleep.',
+    desc: 'A lullaby with unusual accuracy. Puts the target to sleep.',
     flavor: 'He has no lungs, which turns out not to matter.',
     fx: { key: 'lullaby', color: '#8fa3c9', shape: 'aura', scale: 1.5, sfx: 'sleep' } },
 
@@ -185,7 +185,7 @@ export const SIGNATURE_MOVES = [
   { id: 'entei', name: 'Entei', type: 'FLAME', category: 'special',
     power: 130, accuracy: 90, pp: 5,
     effects: [{ kind: 'status', value: 'brn', chance: 30, target: 'foe' }, { kind: 'clearHazards' }],
-    desc: 'A rolling wall of flame. 30% burn, and it burns away hazards on the user\'s side.',
+    desc: 'A rolling wall of flame. 30% burn; clears your hazards.',
     flavor: 'Everything between here and there stops being a problem, including the floor.',
     fx: { key: 'flame_wall', color: '#ff5a1c', shape: 'burst', scale: 2.2, hitstop: 190, shake: 1.5, sfx: 'fire_big' } },
 
@@ -218,7 +218,7 @@ export const SIGNATURE_MOVES = [
 
   { id: 'ground_death', name: 'Ground Death', type: 'EARTH', category: 'special',
     power: 100, accuracy: 90, pp: 10, drain: 0.5,
-    desc: 'Pulls the water out of the target. Heals the user for half the damage dealt.',
+    desc: 'Pulls the water out of the target. Heals half the damage.',
     flavor: 'A handshake, and then a very dry afternoon.',
     fx: { key: 'desiccate', color: '#c8a165', shape: 'beam', scale: 1.5, hitstop: 150, shake: 0.9, sfx: 'sand' } },
 
@@ -231,7 +231,7 @@ export const SIGNATURE_MOVES = [
   { id: 'raimei_hakke', name: 'Raimei Hakke', type: 'BEAST', category: 'physical',
     power: 120, accuracy: 100, pp: 5, contact: true, flags: ['protect'],
     effects: [{ kind: 'custom', value: 'clearboosts' }],
-    desc: 'A thunder-clad club blow that knocks every stat change off the target.',
+    desc: 'A thunder-clad blow that clears the target\'s stat changes.',
     flavor: 'Eight trigrams, one kanabo, and no interest in whatever you had set up.',
     fx: { key: 'club_thunder', color: '#5a7fd0', shape: 'melee', scale: 2.3, hitstop: 230, shake: 1.8, sfx: 'impact_world' } },
 
@@ -258,7 +258,7 @@ export const SIGNATURE_MOVES = [
   { id: 'ice_time', name: 'Ice Time', type: 'FROST', category: 'special',
     power: 95, accuracy: 90, pp: 10,
     effects: [{ kind: 'status', value: 'frz', chance: 25, target: 'foe' }, { kind: 'weather', value: 'hail' }],
-    desc: 'Freezes on contact and drops the temperature of the whole arena. 25% freeze.',
+    desc: 'Freezes on contact and chills the whole arena. 25% freeze.',
     flavor: 'He is not in a hurry. The weather is doing most of it.',
     fx: { key: 'ice_pillar', color: '#8fd8f0', shape: 'burst', scale: 1.9, hitstop: 160, shake: 1.1, sfx: 'ice' } },
 
@@ -273,7 +273,7 @@ export const SIGNATURE_MOVES = [
   { id: 'rasengan', name: 'Rasengan', type: 'SPIRIT', category: 'physical',
     power: 95, accuracy: 100, pp: 10, contact: true, flags: ['protect'],
     effects: [{ kind: 'boost', stats: { def: -1 }, chance: 30, target: 'foe' }],
-    desc: 'A grinding sphere held in one palm. 30% chance to lower Defense.',
+    desc: 'A grinding sphere held in one palm. 30% to lower Defense.',
     flavor: 'Shape, rotation, power. He got the third one first and worked backwards.',
     fx: { key: 'spiral_sphere', color: '#6fb8ff', shape: 'melee', scale: 1.5, hitstop: 160, shake: 1.1, sfx: 'impact_heavy' } },
 
@@ -322,7 +322,7 @@ export const SIGNATURE_MOVES = [
   { id: 'final_getsuga', name: 'Final Getsuga Tenshō', type: 'SLASH', category: 'physical',
     power: 150, accuracy: 100, pp: 5, contact: true, flags: ['slice', 'protect'],
     effects: [{ kind: 'boost', stats: { atk: -2, spa: -2, spe: -2 }, target: 'self' }],
-    desc: 'Becomes the attack itself. Harshly lowers the user\'s Attack, Sp. Atk and Speed.',
+    desc: 'Becomes the attack itself. Harshly lowers Atk, Sp. Atk, Speed.',
     flavor: 'He trades everything he has for one swing, and the swing is worth it exactly once.',
     fx: { key: 'final_cut', color: '#0e0e14', shape: 'arc', scale: 2.8, hitstop: 280, shake: 2.0, sfx: 'slash_world' } },
 
@@ -336,21 +336,21 @@ export const SIGNATURE_MOVES = [
 
   { id: 'kamehameha', name: 'Kamehameha', type: 'SPIRIT', category: 'special',
     power: 110, accuracy: 100, pp: 10, flags: ['pulse'],
-    desc: 'The turtle-school beam. Reliable, enormous, always the same six syllables.',
+    desc: 'The turtle-school beam. Reliable, enormous, six syllables.',
     flavor: 'Fifty years of other people copying it and it still lands.',
     fx: { key: 'blue_beam', color: '#6fd8ff', shape: 'beam', scale: 2.2, hitstop: 180, shake: 1.4, sfx: 'light' } },
 
   { id: 'kaioken', name: 'Kaiō-ken', type: 'FIST', category: 'status',
     power: 0, accuracy: null, pp: 10, target: 'self',
     effects: [{ kind: 'boost', stats: { atk: 1, spe: 1, def: -1, spd: -1 }, target: 'self' }],
-    desc: 'Multiplies output past the safe limit. Raises Attack and Speed, lowers both defenses.',
+    desc: 'Past the safe limit. Raises Atk and Speed, lowers defenses.',
     flavor: 'A technique whose main instruction is "do not".',
     fx: { key: 'red_aura', color: '#ff3b2f', shape: 'aura', scale: 1.8, sfx: 'buff' } },
 
   { id: 'dragon_fist', name: 'Dragon Fist', type: 'FIST', category: 'physical',
     power: 140, accuracy: 90, pp: 5, contact: true, flags: ['punch', 'protect'],
     effects: [{ kind: 'volatile', value: 'flinch', chance: 20, target: 'foe' }],
-    desc: 'Goes in as a fist and comes out the other side as a dragon. 20% flinch.',
+    desc: 'In as a fist, out the other side as a dragon. 20% flinch.',
     flavor: 'Nobody has ever asked him where the dragon comes from.',
     fx: { key: 'gold_dragon', color: '#ffd84a', shape: 'beam', scale: 2.5, hitstop: 240, shake: 1.8, sfx: 'dragon' } },
 
@@ -378,7 +378,7 @@ export const SIGNATURE_MOVES = [
   { id: 'hinokami_kagura', name: 'Hinokami Kagura', type: 'FLAME', category: 'physical',
     power: 110, accuracy: 100, pp: 5, contact: true, flags: ['slice', 'protect', 'dance'],
     effects: [{ kind: 'weather', value: 'sun' }],
-    desc: 'A dance older than the technique it replaced. Brings out Blazing Sun.',
+    desc: 'A dance older than what it replaced. Brings Blazing Sun.',
     flavor: 'His father did this all night in the snow and called it keeping warm.',
     fx: { key: 'sun_dance', color: '#ff7a2a', shape: 'arc', scale: 2.0, hitstop: 180, shake: 1.3, sfx: 'impact_fire' } },
 
@@ -412,7 +412,7 @@ export const SIGNATURE_MOVES = [
 
   { id: 'dismantle', name: 'Dismantle', type: 'SHADOW', category: 'physical',
     power: 90, accuracy: 100, pp: 10, contact: true, critStage: 2, flags: ['slice', 'protect'],
-    desc: 'A lattice of cuts at whatever depth he chose. Very high crit ratio.',
+    desc: 'A lattice of cuts at a chosen depth. Very high crit ratio.',
     flavor: 'He adjusts the spacing for the material. You are a material.',
     fx: { key: 'cross_cut', color: '#8a2a3a', shape: 'arc', scale: 1.6, hitstop: 150, shake: 1.0, sfx: 'slash_heavy' } },
 
@@ -428,7 +428,7 @@ export const SIGNATURE_MOVES = [
   { id: 'thunder_spear', name: 'Thunder Spear', type: 'MECHA', category: 'physical',
     power: 100, accuracy: 90, pp: 10, flags: ['bullet', 'protect'],
     effects: [{ kind: 'boost', stats: { def: -1 }, chance: 50, target: 'foe' }],
-    desc: 'A lance that detonates once it is inside. 50% chance to lower Defense.',
+    desc: 'A lance that detonates once inside. 50% to lower Defense.',
     flavor: 'Fired from a wire, at speed, by someone who cannot afford a second one.',
     fx: { key: 'spear_blast', color: '#b8b0a0', shape: 'beam', scale: 1.6, hitstop: 170, shake: 1.3, sfx: 'cannon' } },
 
@@ -441,7 +441,7 @@ export const SIGNATURE_MOVES = [
   { id: 'hardening_strike', name: 'Hardening Strike', type: 'BEAST', category: 'physical',
     power: 105, accuracy: 100, pp: 10, contact: true, flags: ['punch', 'protect'],
     effects: [{ kind: 'boost', stats: { def: 1 }, chance: 100, target: 'self' }],
-    desc: 'Crystallises the fist mid-swing. Always raises the user\'s Defense.',
+    desc: 'Crystallises the fist mid-swing. Always raises Defense.',
     flavor: 'The same reflex that makes the arm a weapon makes it a wall.',
     fx: { key: 'crystal_fist', color: '#8a4a3a', shape: 'melee', scale: 1.8, hitstop: 180, shake: 1.3, sfx: 'impact_heavy' } },
 
@@ -461,7 +461,7 @@ export const SIGNATURE_MOVES = [
   { id: 'odm_burst', name: 'ODM Burst', type: 'WIND', category: 'physical',
     power: 85, accuracy: 100, pp: 15, contact: true, flags: ['wind', 'protect'],
     effects: [{ kind: 'boost', stats: { spe: 1 }, chance: 30, target: 'self' }],
-    desc: 'A full gas burn into the pass. 30% chance to raise the user\'s Speed.',
+    desc: 'A full gas burn into the pass. 30% to raise the user\'s Speed.',
     flavor: 'He budgets the tank to the litre and spends it all anyway.',
     fx: { key: 'gas_burst', color: '#cfd6e8', shape: 'melee', scale: 1.3, hitstop: 100, shake: 0.7, sfx: 'slash_air' } },
 
@@ -470,7 +470,7 @@ export const SIGNATURE_MOVES = [
   { id: 'detroit_smash', name: 'Detroit Smash', type: 'FIST', category: 'physical',
     power: 110, accuracy: 100, pp: 10, contact: true, recoil: 0.33, flags: ['punch', 'protect'],
     effects: [{ kind: 'boost', stats: { spe: 1 }, chance: 100, target: 'self' }],
-    desc: 'Costs him an arm and buys him a gear. 33% recoil, always raises Speed.',
+    desc: 'Costs an arm, buys a gear. 33% recoil, always raises Speed.',
     flavor: 'He has not yet found the percentage that does not break something.',
     fx: { key: 'green_smash', color: '#3aa06a', shape: 'melee', scale: 1.9, hitstop: 190, shake: 1.4, sfx: 'impact_heavy' } },
 
@@ -510,7 +510,7 @@ export const SIGNATURE_MOVES = [
   { id: 'serious_punch', name: 'Serious Series: Serious Punch', type: 'FIST', category: 'physical',
     power: 150, accuracy: 100, pp: 5, contact: true, flags: ['punch'],
     effects: [{ kind: 'custom', value: 'clearboosts' }],
-    desc: 'Cannot be blocked, and removes every stat change on the target.',
+    desc: 'Cannot be blocked. Removes every stat change on the target.',
     flavor: 'Whatever you spent three turns building, he was not told about it.',
     fx: { key: 'serious', color: '#ffffff', shape: 'melee', scale: 3.0, hitstop: 320, shake: 2.0, sfx: 'impact_world' } },
 
@@ -559,7 +559,7 @@ export const SIGNATURE_MOVES = [
   { id: 'alchemic_spear', name: 'Alchemic Spear', type: 'EARTH', category: 'physical',
     power: 95, accuracy: 100, pp: 10, contact: true, flags: ['protect'],
     effects: [{ kind: 'hazard', value: 'caltrops', target: 'foeSide' }],
-    desc: 'Rips a spike out of the ground — and leaves the broken ground behind as hazards.',
+    desc: 'Rips a spike from the ground, leaving the rubble as hazards.',
     flavor: 'A clap, a hand on the floor, and the floor takes it personally.',
     fx: { key: 'stone_spike', color: '#b02a2a', shape: 'melee', scale: 1.6, hitstop: 160, shake: 1.2, sfx: 'sand' } },
 
@@ -574,7 +574,7 @@ export const SIGNATURE_MOVES = [
   { id: 'moon_tiara_action', name: 'Moon Tiara Action', type: 'LIGHT', category: 'special',
     power: 90, accuracy: 100, pp: 10, critStage: 1, flags: ['bullet'],
     effects: [{ kind: 'boost', stats: { spd: -1 }, chance: 30, target: 'foe' }],
-    desc: 'A thrown disc of moonlight that comes back on its own. High crit ratio.',
+    desc: 'A thrown disc of moonlight that returns. High crit ratio.',
     flavor: 'She has never once had to go and fetch it.',
     fx: { key: 'tiara_disc', color: '#ffe9a3', shape: 'arc', scale: 1.4, hitstop: 120, shake: 0.7, sfx: 'chime' } },
 
@@ -609,7 +609,7 @@ export const SIGNATURE_MOVES = [
   { id: 'demon_surge', name: 'Demon Surge', type: 'SHADOW', category: 'status',
     power: 0, accuracy: null, pp: 5, target: 'self',
     effects: [{ kind: 'boost', stats: { spa: 2, spd: -1 }, target: 'self' }],
-    desc: 'Lets the ancestor answer. Sharply raises Sp. Atk, lowers Sp. Def.',
+    desc: 'The ancestor answers. Raises Sp. Atk sharply, cuts Sp. Def.',
     flavor: 'The markings arrive first and the manners leave immediately after.',
     fx: { key: 'demon_mark', color: '#1f7a4a', shape: 'aura', scale: 1.7, sfx: 'roar' } }
 

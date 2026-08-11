@@ -377,6 +377,14 @@ const SFX_ALIAS = {
   poison_hit: 'sludge', bug: 'scatter', sonic_boom: 'sonic',
   void: 'voidfx', abyss: 'voidfx', nothing: 'voidfx',
   guard: 'shield', protect: 'shield', barrier: 'shield', screen: 'shield',
+  // Five moves shipped pointing at sounds that did not exist and played in
+  // silence: moon_tiara_action and moon_princess_halation asked for `chime`,
+  // and monster_point, kurama_cloak and demon_surge asked for `roar`. Nothing
+  // surfaced it because the move audit's key list had rotted — a silent move
+  // does not announce itself. Aliased here rather than rewritten in the move
+  // data: these are the names a move author reaches for, and the next one to
+  // reach for them should get a sound too.
+  chime: 'light', bell: 'light', roar: 'beast_roar', growl: 'beast_roar',
   potion: 'heal', recover: 'heal', ko: 'faint', down: 'faint',
   win: 'victory', lose: 'defeat', fanfare: 'victory'
 };

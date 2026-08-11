@@ -57,12 +57,14 @@
 >    base lines. Re-measure with `pace.mjs`, then `tools/rosterbalance.mjs`
 >    (keep the win-rate spread near 34.8–66.4%) and `tests/critic/depth3.mjs firststep`
 >    — the target is "learning to switch" clearing its ±3.1pp error bar.
-> 2. **Move budget, 41 real problems.** `node tools/movebudget.mjs`. Five moves
->    play no sound at all (`chime`: moon_tiara_action, moon_princess_halation;
->    `roar`: monster_point, kurama_cloak, demon_surge) — quickest win in the
->    file. Then 39 over-budget moves, mostly signatures past their PP-band cap,
->    and 33 descriptions over the 62-char card width. Doing (1) first is wise:
+> 2. **Move budget: 39 over-budget moves, and only those.** `node tools/movebudget.mjs`.
+>    The five silent moves and all 30 over-long descriptions are fixed; what is
+>    left is 39 moves past their PP-band cap, mostly signatures. Do (1) first —
 >    both touch move power and you do not want to tune the same numbers twice.
+>    The audit's three remaining warnings are long move *names* (Mil Fleur
+>    Gigantesco, Consecutive Normal Punches, Serious Punch) and should stay: they
+>    are the characters' actual technique names and the fidelity is worth more
+>    than the card width.
 > 3. **Judge an unjudged piece.** Audio is the strongest candidate — a stale
 >    audit was hiding five silent moves and nobody has ever looked at that piece.
 > 4. **Re-judge feel and depth** once (1) lands. Both current scores predate it.
@@ -92,7 +94,7 @@
 > node tools/probe.mjs           clean boot -> battle -> title
 > node tools/pace.mjs            FAILS on purpose: ends 1.64x apart, needs 2.2x+
 > node tools/rosterbalance.mjs   win-rate spread 34.8-66.4% across 32 fighters
-> node tools/movebudget.mjs      41 real problems (was 121; 80 were tool rot)
+> node tools/movebudget.mjs      39 over-budget moves + 3 long-name notes
 > node tools/pivotcheck.mjs      pivot and pursuit pick rates
 > node tools/aiarena.mjs         five AI tiers, monotonic ladder
 > ```
