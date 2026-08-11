@@ -1,5 +1,103 @@
 # Handoff requests
 
+> ## START HERE — state of play, and what to do next
+>
+> This file is 800 lines of accumulated request history. You do not need to read
+> it top to bottom. This section is the whole picture; everything below is the
+> evidence behind it, searchable by heading when you need a specific number.
+>
+> ### Where the game stands
+>
+> Twenty pieces, each built and then judged blind against Pokémon by a critic
+> with fresh context that boots the real build and never reads a builder's
+> summary (`docs/CRITIC.md`). Two pieces have been judged more than once:
+>
+> | piece | ours | Pokémon | verdict |
+> |---|---|---|---|
+> | The battle, as experienced | **6/10** | 8/10 (Sword/Shield) | Pokémon — both named gaps since fixed |
+> | The game underneath | **5/10** | 9/10 (Black 2) | Pokémon — gap still open |
+>
+> Feel moved 5 → 6 after the blocking-prompt and camera fixes. Depth has not
+> moved, and the reason is one thing, stated in the next section.
+>
+> **Eight pieces have never been judged at all**: audio, character models, arena,
+> team builder, modes, link battle, onboarding, save. Any of them could be a 4.
+>
+> ### The one thing standing between depth 5/10 and a real tactical game
+>
+> Nothing on the roster can take a hit and stay in, so switching never pays, so
+> every slower tool (toxic, hazards, setup, screens) expires before it does.
+> Measured: the four bulkiest fighters survive **2.61 hits** from an average
+> attacker's best move where a Pokémon wall survives six to ten, and the frail
+> end survives 1.59 — the ends are **1.64× apart against Pokémon's 4×+**. A bench
+> fighter that would take meaningfully less than the active exists on only 15.4%
+> of turns, and a player who learns to switch gains **+0.7pp ±3.1**, which is
+> nothing.
+>
+> **The lever is roster-wide offense — base offensive stats and move power.** It
+> is not EVs and not base defense. Both have been tried:
+>
+> * EV redistribution, twice. Splitting the default spread by archetype widens
+>   the ends slightly and *doubles* the share of matchups that one-shot
+>   (12.3% → 25.2%). Base offense is high enough that any offensive investment
+>   just accelerates the race, and walls gain nothing because the flat defensive
+>   default already invests them fully. Numbers in "EVs are not the lever".
+> * Base defense. Chopper already sits at 2.00 bulk/offense — Blissey territory —
+>   and still dies in under three hits, because everything hits so hard in
+>   absolute terms.
+>
+> `node tools/pace.mjs` measures and gates on the distance between the ends. It
+> fails on purpose today. Getting it to pass is the highest-value work left.
+>
+> ### Roadmap, in the order I would do it
+>
+> 1. **Roster-wide offense.** Bring base offensive stats and/or move power down
+>    until `tools/pace.mjs` passes its spread gate. Expect to touch
+>    `src/data/moves.js` power values and the offensive halves of `src/data/fighters.js`
+>    base lines. Re-measure with `pace.mjs`, then `tools/rosterbalance.mjs`
+>    (keep the win-rate spread near 34.8–66.4%) and `tests/critic/depth3.mjs firststep`
+>    — the target is "learning to switch" clearing its ±3.1pp error bar.
+> 2. **Move budget, 41 real problems.** `node tools/movebudget.mjs`. Five moves
+>    play no sound at all (`chime`: moon_tiara_action, moon_princess_halation;
+>    `roar`: monster_point, kurama_cloak, demon_surge) — quickest win in the
+>    file. Then 39 over-budget moves, mostly signatures past their PP-band cap,
+>    and 33 descriptions over the 62-char card width. Doing (1) first is wise:
+>    both touch move power and you do not want to tune the same numbers twice.
+> 3. **Judge an unjudged piece.** Audio is the strongest candidate — a stale
+>    audit was hiding five silent moves and nobody has ever looked at that piece.
+> 4. **Re-judge feel and depth** once (1) lands. Both current scores predate it.
+>
+> ### Traps — measured, and all of them cost me an afternoon
+>
+> * `tools/pace.mjs` used to gate on the *median* hits to a KO. A roster where
+>   everything dies at the same rate passes that and still has no wall. Gate on
+>   the spread.
+> * `tests/critic-promptshots.mjs` counts `Points` and `LineSegments` as
+>   occluders, so blizzard snow and rain read as a hidden fighter. Its
+>   `withHiddenFighter` count will never reach zero on a weather arena. Look at
+>   the screenshots.
+> * Do not gate the camera's departure on the outgoing shot's `minHold`; do not
+>   try to measure a safe camera radius per arena with a single-height raycast.
+>   Both look right and both are wrong — reasons at the call sites in
+>   `src/render/camera.js`.
+> * My own numbers are not neutral. Where a critic's measurement and mine
+>   disagree, take the critic's: it ran the larger batch and it did not build the
+>   thing.
+>
+> ### The gates, and what passing looks like
+>
+> ```
+> node tools/determinism.mjs     identical across process state
+> node tools/hookaudit.mjs       engine and item hook lists agree
+> node tools/probe.mjs           clean boot -> battle -> title
+> node tools/pace.mjs            FAILS on purpose: ends 1.64x apart, needs 2.2x+
+> node tools/rosterbalance.mjs   win-rate spread 34.8-66.4% across 32 fighters
+> node tools/movebudget.mjs      41 real problems (was 121; 80 were tool rot)
+> node tools/pivotcheck.mjs      pivot and pursuit pick rates
+> node tools/aiarena.mjs         five AI tiers, monotonic ladder
+> ```
+
+
 Agents own disjoint sets of files (see `docs/ARCHITECTURE.md` §1). When you need a change
 in a file you don't own, **append a request here instead of editing it**. Keep each request
 short and precise: what you need, why, and the exact API you'd like.
@@ -774,6 +872,48 @@ whoever takes this on can tell whether they are moving the right number. It
 currently fails that gate on purpose.
 
 **Status:** open
+
+### Switch panel now prices the option — done
+
+The depth critic's sharpest observation was about the UI rather than the maths:
+the move card carries name, PP, type, category, power, accuracy, live
+effectiveness against the fighter actually opposite, a damage-roll bar with a
+numeric range and rider text — better than any Pokémon game — and the switch
+panel carried a name, two type chips and an HP bar. The game instrumented the
+option worth about 1.7pp a turn and left blank the one that is the correct
+answer on **32.3% of the turns that matter**. That is the likeliest reason
+"learning to switch" measured at +0.7pp ±3.1: a player cannot learn to switch
+from a panel that tells them nothing about whether switching is good.
+
+Each bench row now carries the incoming hit as a percentage of that fighter's
+own bar, colour-banded (green ≤25%, amber ≥50%, red for a KO), and an arrow for
+whether it outruns what it is walking into.
+
+**Priced off what the player has actually seen.** `battle.js` derives the foe's
+revealed moves from the event stream — the same source `ai.js` uses for its
+`revealed` knowledge tier — and passes them as `ctx.foeSeen`. The panel never
+reads the foe's real moveset. With nothing seen yet it falls back to the foe's
+own types at a nominal 80 BP, suffixes the figure with `?` and says so in the
+tooltip; that is a guess the player could equally have made.
+
+Verified in the running build: bench reads −35%▲ and −30%▲ against a foe whose
+move had been seen, active fighter correctly shows no read
+(`tests/shots/party/panel.png`).
+
+**And it uncovered a layout bug that had been shipping the whole time.**
+`@keyframes popIn` ends on `transform: none` and runs with `both`, so its final
+frame permanently overwrote the centring `translate(-50%,-50%)` on any element
+that used it. The switch panel slid right by half its own width the instant the
+animation finished — measured at `left: 500` in a 1000px viewport, so the HP
+bars and HP numbers were off-screen. `.mvsheet` has the same construction, which
+is exactly why the feel critic reported the move sheet as "clipped off the right
+edge". **Two separate critic findings, one cause.** Both now use keyframes that
+preserve their translate; the panel measures 170–830 in a 1000px screen.
+
+If you add anything else to a list row, check the width: the row is now
+name + types + flags + read + HP bar + HP text inside a 660px panel.
+
+**Status:** done
 
 ### Priority moves now reach the roster
 
