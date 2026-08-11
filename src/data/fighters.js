@@ -10,7 +10,7 @@ const def = (o) => { F.push({ tier: 'B', awaken: null, ...o }); };
 def({
   id: 'luffy', name: 'Luffy', epithet: 'Straw Hat', origin: 'One Piece',
   types: ['FIST', 'BEAST'],
-  base: { hp: 95, atk: 125, def: 80, spa: 60, spd: 80, spe: 110 },
+  base: { hp: 95, atk: 110, def: 80, spa: 55, spd: 80, spe: 110 },
   abilities: ['gum_body', 'conquerors_will', 'iron_fist'],
   learnset: [
     { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'gum_gum_pistol' }, { lv: 4, move: 'pack_hunt' },
@@ -31,7 +31,7 @@ def({
 def({
   id: 'zoro', name: 'Zoro', epithet: 'Pirate Hunter', origin: 'One Piece',
   types: ['SLASH', 'HAKI'],
-  base: { hp: 90, atk: 135, def: 95, spa: 50, spd: 85, spe: 95 },
+  base: { hp: 90, atk: 120, def: 95, spa: 45, spd: 85, spe: 95 },
   abilities: ['three_blades', 'unbreakable', 'adaptability'],
   learnset: [
     { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'one_sword_slash' }, { lv: 4, move: 'draw_cut' },
@@ -51,7 +51,7 @@ def({
 def({
   id: 'sanji', name: 'Sanji', epithet: 'Black Leg', origin: 'One Piece',
   types: ['FLAME', 'FIST'],
-  base: { hp: 85, atk: 115, def: 75, spa: 85, spd: 80, spe: 120 },
+  base: { hp: 85, atk: 100, def: 75, spa: 75, spd: 80, spe: 120 },
   abilities: ['blue_flame', 'chivalry', 'flame_drinker'],
   learnset: [
     { lv: 10, move: 'set_the_feet' },
@@ -72,7 +72,7 @@ def({
 def({
   id: 'nami', name: 'Nami', epithet: 'Cat Burglar', origin: 'One Piece',
   types: ['STORM', 'MIND'],
-  base: { hp: 75, atk: 55, def: 65, spa: 120, spd: 85, spe: 105 },
+  base: { hp: 75, atk: 50, def: 65, spa: 105, spd: 85, spe: 105 },
   abilities: ['weather_read', 'opportunist', 'squall_caller'],
   learnset: [
     { lv: 10, move: 'read_the_hit' },
@@ -94,7 +94,7 @@ def({
 def({
   id: 'robin', name: 'Robin', epithet: 'Devil Child', origin: 'One Piece',
   types: ['MIND', 'SHADOW'],
-  base: { hp: 85, atk: 95, def: 80, spa: 100, spd: 95, spe: 85 },
+  base: { hp: 85, atk: 85, def: 80, spa: 90, spd: 95, spe: 85 },
   abilities: ['thousand_arms', 'cold_read', 'download_read'],
   learnset: [
     { lv: 14, move: 'clear_the_head' }, { lv: 10, move: 'read_the_hit' },
@@ -115,7 +115,7 @@ def({
 def({
   id: 'ace', name: 'Ace', epithet: 'Fire Fist', origin: 'One Piece',
   types: ['FLAME', 'HAKI'],
-  base: { hp: 90, atk: 100, def: 75, spa: 130, spd: 80, spe: 100 },
+  base: { hp: 90, atk: 90, def: 75, spa: 115, spd: 80, spe: 100 },
   abilities: ['logia_flame', 'sunburst', 'solar_skin'],
   learnset: [
     { lv: 1, move: 'flame_lash' }, { lv: 1, move: 'quick_strike' }, { lv: 4, move: 'searing_kick' },
@@ -135,7 +135,7 @@ def({
 def({
   id: 'law', name: 'Law', epithet: 'Surgeon of Death', origin: 'One Piece',
   types: ['MIND', 'SLASH'],
-  base: { hp: 80, atk: 90, def: 75, spa: 125, spd: 85, spe: 105 },
+  base: { hp: 80, atk: 80, def: 75, spa: 110, spd: 85, spe: 105 },
   abilities: ['operating_room', 'cold_read', 'trade_places'],
   learnset: [
     { lv: 10, move: 'read_the_hit' },
@@ -156,7 +156,7 @@ def({
 def({
   id: 'jinbe', name: 'Jinbe', epithet: 'Knight of the Sea', origin: 'One Piece',
   types: ['SEA', 'FIST'],
-  base: { hp: 135, atk: 105, def: 130, spa: 60, spd: 115, spe: 45 },
+  base: { hp: 140, atk: 84, def: 134, spa: 52, spd: 119, spe: 42 },
   abilities: ['ocean_heart', 'unbreakable', 'sea_legs'],
   learnset: [
     { lv: 14, move: 'tidal_mend' }, { lv: 10, move: 'set_the_feet' },
@@ -177,7 +177,7 @@ def({
 def({
   id: 'mihawk', name: 'Mihawk', epithet: "World's Strongest Swordsman", origin: 'One Piece',
   types: ['SLASH', 'VOID'],
-  base: { hp: 90, atk: 145, def: 90, spa: 90, spd: 95, spe: 100 },
+  base: { hp: 90, atk: 130, def: 90, spa: 80, spd: 95, spe: 100 },
   abilities: ['perfect_edge', 'unbreakable', 'prankster_wit'],
   learnset: [
     { lv: 1, move: 'one_sword_slash' }, { lv: 1, move: 'draw_cut' }, { lv: 4, move: 'flying_slash' },
@@ -197,7 +197,7 @@ def({
 def({
   id: 'crocodile', name: 'Crocodile', epithet: 'Desert King', origin: 'One Piece',
   types: ['EARTH', 'TOXIN'],
-  base: { hp: 110, atk: 80, def: 110, spa: 100, spd: 105, spe: 65 },
+  base: { hp: 110, atk: 70, def: 110, spa: 90, spd: 105, spe: 65 },
   abilities: ['sand_body', 'desiccate', 'dust_devil'],
   learnset: [
     { lv: 14, move: 'strata_rest' }, { lv: 10, move: 'set_the_feet' },
@@ -219,7 +219,7 @@ def({
 def({
   id: 'katakuri', name: 'Katakuri', epithet: 'Sweet Commander', origin: 'One Piece',
   types: ['MIND', 'HAKI'],
-  base: { hp: 110, atk: 130, def: 100, spa: 95, spd: 100, spe: 90 },
+  base: { hp: 110, atk: 115, def: 100, spa: 85, spd: 100, spe: 90 },
   abilities: ['future_sight', 'mochi_body', 'insomnia_watch'],
   learnset: [
     { lv: 14, move: 'clear_the_head' }, { lv: 10, move: 'read_the_hit' },
@@ -240,7 +240,7 @@ def({
 def({
   id: 'kaido', name: 'Kaido', epithet: 'Strongest Creature', origin: 'One Piece',
   types: ['BEAST', 'HAKI'],
-  base: { hp: 140, atk: 145, def: 125, spa: 110, spd: 110, spe: 70 },
+  base: { hp: 140, atk: 130, def: 125, spa: 95, spd: 110, spe: 70 },
   abilities: ['undying', 'conquerors_will', 'rage_scale'],
   learnset: [
     { lv: 14, move: 'beast_regrowth' },
@@ -268,7 +268,7 @@ def({
 def({
   id: 'usopp', name: 'Usopp', epithet: 'God of the Sniper Island', origin: 'One Piece',
   types: ['MECHA', 'TOXIN'],
-  base: { hp: 70, atk: 60, def: 65, spa: 115, spd: 70, spe: 100 },
+  base: { hp: 70, atk: 55, def: 65, spa: 100, spd: 70, spe: 100 },
   abilities: ['technician', 'quick_draw', 'harvest_luck'],
   learnset: [
     { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'hair_trigger' }, { lv: 4, move: 'sogeking_shot' },
@@ -289,7 +289,7 @@ def({
 def({
   id: 'franky', name: 'Franky', epithet: 'Cyborg', origin: 'One Piece',
   types: ['MECHA', 'FIST'],
-  base: { hp: 120, atk: 100, def: 145, spa: 75, spd: 100, spe: 40 },
+  base: { hp: 126, atk: 85, def: 148, spa: 60, spd: 104, spe: 38 },
   abilities: ['iron_hide', 'thick_hide', 'venom_spines'],
   learnset: [
     { lv: 14, move: 'field_repair' },
@@ -311,7 +311,7 @@ def({
 def({
   id: 'brook', name: 'Brook', epithet: 'Soul King', origin: 'One Piece',
   types: ['SPIRIT', 'SLASH'],
-  base: { hp: 75, atk: 95, def: 60, spa: 120, spd: 90, spe: 125 },
+  base: { hp: 70, atk: 88, def: 54, spa: 112, spd: 82, spe: 134 },
   abilities: ['revenant', 'amplifier', 'bad_dreams'],
   learnset: [
     { lv: 10, move: 'read_the_hit' },
@@ -333,7 +333,7 @@ def({
 def({
   id: 'chopper', name: 'Chopper', epithet: 'Cotton Candy Lover', origin: 'One Piece',
   types: ['BEAST', 'MIND'],
-  base: { hp: 125, atk: 60, def: 125, spa: 70, spd: 120, spe: 55 },
+  base: { hp: 133, atk: 50, def: 129, spa: 54, spd: 124, spe: 51 },
   abilities: ['regenerator', 'pure_heart', 'immunity_gut'],
   learnset: [
     { lv: 16, move: 'aurora_veil' },
@@ -357,7 +357,7 @@ def({
 def({
   id: 'doflamingo', name: 'Doflamingo', epithet: 'Heavenly Demon', origin: 'One Piece',
   types: ['MIND', 'VOID'],
-  base: { hp: 95, atk: 105, def: 90, spa: 130, spd: 95, spe: 110 },
+  base: { hp: 95, atk: 90, def: 90, spa: 115, spd: 95, spe: 110 },
   abilities: ['cursed_grip', 'pressure_haki', 'mimicry'],
   learnset: [
     { lv: 10, move: 'read_the_hit' },
@@ -378,7 +378,7 @@ def({
 def({
   id: 'hancock', name: 'Hancock', epithet: 'Pirate Empress', origin: 'One Piece',
   types: ['LIGHT', 'MIND'],
-  base: { hp: 85, atk: 100, def: 80, spa: 125, spd: 100, spe: 115 },
+  base: { hp: 85, atk: 90, def: 80, spa: 110, spd: 100, spe: 115 },
   abilities: ['mirage_step', 'opportunist', 'heat_haze'],
   learnset: [
     { lv: 10, move: 'read_the_hit' },
@@ -400,7 +400,7 @@ def({
 def({
   id: 'smoker', name: 'Smoker', epithet: 'White Hunter', origin: 'One Piece',
   types: ['WIND', 'MECHA'],
-  base: { hp: 115, atk: 95, def: 115, spa: 70, spd: 110, spe: 65 },
+  base: { hp: 121, atk: 80, def: 119, spa: 56, spd: 114, spe: 61 },
   abilities: ['windborne', 'justified', 'blizzard_veil'],
   learnset: [
     { lv: 16, move: 'light_wall' },
@@ -422,7 +422,7 @@ def({
 def({
   id: 'enel', name: 'Enel', epithet: 'God of Skypiea', origin: 'One Piece',
   types: ['STORM', 'SPIRIT'],
-  base: { hp: 80, atk: 85, def: 65, spa: 145, spd: 85, spe: 120 },
+  base: { hp: 74, atk: 70, def: 58, spa: 140, spd: 78, spe: 135 },
   abilities: ['static_field', 'amplifier', 'flash_absorb'],
   learnset: [
     { lv: 10, move: 'read_the_hit' },
@@ -443,7 +443,7 @@ def({
 def({
   id: 'bigmom', name: 'Big Mom', epithet: 'Emperor of the Sea', origin: 'One Piece',
   types: ['SPIRIT', 'BEAST'],
-  base: { hp: 145, atk: 135, def: 130, spa: 115, spd: 105, spe: 60 },
+  base: { hp: 145, atk: 120, def: 130, spa: 100, spd: 105, spe: 60 },
   abilities: ['stamina_wall', 'conquerors_will', 'slow_haki'],
   learnset: [
     { lv: 14, move: 'beast_regrowth' }, { lv: 10, move: 'read_the_hit' },
@@ -464,7 +464,7 @@ def({
 def({
   id: 'shanks', name: 'Shanks', epithet: 'Red-Haired', origin: 'One Piece',
   types: ['HAKI', 'SLASH'],
-  base: { hp: 100, atk: 130, def: 100, spa: 100, spd: 110, spe: 115 },
+  base: { hp: 100, atk: 115, def: 100, spa: 90, spd: 110, spe: 115 },
   abilities: ['conquerors_will', 'perfect_edge', 'blade_ground'],
   learnset: [
     { lv: 1, move: 'draw_cut' }, { lv: 1, move: 'imbued_strike' }, { lv: 4, move: 'one_sword_slash' },
@@ -484,7 +484,7 @@ def({
 def({
   id: 'goku', name: 'Goku', epithet: 'Son of Saiyans', origin: 'Dragon Ball',
   types: ['FIST', 'LIGHT'],
-  base: { hp: 105, atk: 130, def: 95, spa: 125, spd: 95, spe: 115 },
+  base: { hp: 105, atk: 115, def: 95, spa: 110, spd: 95, spe: 115 },
   abilities: ['late_bloomer', 'guts_haki', 'swift_swim'],
   learnset: [
     { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'photon_dart' }, { lv: 4, move: 'radiant_palm' },
@@ -504,7 +504,7 @@ def({
 def({
   id: 'ichigo', name: 'Ichigo', epithet: 'Substitute Reaper', origin: 'Bleach',
   types: ['SLASH', 'SPIRIT'],
-  base: { hp: 95, atk: 130, def: 85, spa: 105, spd: 80, spe: 105 },
+  base: { hp: 95, atk: 115, def: 85, spa: 90, spd: 80, spe: 105 },
   abilities: ['berserker', 'last_stand', 'frozen_wake'],
   learnset: [
     { lv: 1, move: 'draw_cut' }, { lv: 1, move: 'one_sword_slash' }, { lv: 4, move: 'soul_leech' },
@@ -525,7 +525,7 @@ def({
 def({
   id: 'ichigo_bankai', name: 'Ichigo', epithet: 'Bankai', origin: 'Bleach',
   types: ['SLASH', 'VOID'],
-  base: { hp: 95, atk: 140, def: 90, spa: 110, spd: 85, spe: 140 },
+  base: { hp: 88, atk: 132, def: 80, spa: 100, spd: 78, spe: 152 },
   abilities: ['berserker', 'unburden_ki', 'caltrop_trail'],
   learnset: [
     { lv: 10, move: 'read_the_hit' },
@@ -546,7 +546,7 @@ def({
 def({
   id: 'gojo', name: 'Gojo', epithet: 'The Honoured One', origin: 'Jujutsu Kaisen',
   types: ['VOID', 'MIND'],
-  base: { hp: 90, atk: 90, def: 95, spa: 150, spd: 110, spe: 125 },
+  base: { hp: 90, atk: 80, def: 95, spa: 130, spd: 110, spe: 125 },
   abilities: ['mirror_scale', 'pressure_haki'],
   learnset: [
     { lv: 10, move: 'read_the_hit' },
@@ -567,7 +567,7 @@ def({
 def({
   id: 'tanjiro', name: 'Tanjiro', epithet: 'Water Breathing', origin: 'Demon Slayer',
   types: ['SEA', 'SLASH'],
-  base: { hp: 90, atk: 115, def: 85, spa: 95, spd: 90, spe: 105 },
+  base: { hp: 90, atk: 100, def: 85, spa: 85, spd: 90, spe: 105 },
   abilities: ['technician', 'pure_heart'],
   learnset: [
     { lv: 10, move: 'set_the_feet' },
@@ -588,7 +588,7 @@ def({
 def({
   id: 'levi', name: 'Levi', epithet: 'Humanity\'s Strongest', origin: 'Attack on Titan',
   types: ['SLASH', 'WIND'],
-  base: { hp: 80, atk: 135, def: 80, spa: 60, spd: 95, spe: 145 },
+  base: { hp: 80, atk: 120, def: 80, spa: 55, spd: 95, spe: 145 },
   abilities: ['quick_draw', 'clean_sweep'],
   learnset: [
     { lv: 10, move: 'set_the_feet' },
@@ -609,7 +609,7 @@ def({
 def({
   id: 'saitama', name: 'Saitama', epithet: 'Caped Baldy', origin: 'One Punch Man',
   types: ['FIST'],
-  base: { hp: 100, atk: 165, def: 100, spa: 40, spd: 90, spe: 105 },
+  base: { hp: 100, atk: 145, def: 100, spa: 35, spd: 90, spe: 105 },
   abilities: ['overwhelm', 'finisher', 'iron_fist'],
   learnset: [
     { lv: 1, move: 'normal_punch' }, { lv: 1, move: 'quick_strike' }, { lv: 4, move: 'consecutive_normal_punches' },
@@ -629,7 +629,7 @@ def({
 def({
   id: 'killua', name: 'Killua', epithet: 'Lightning Palm', origin: 'Hunter x Hunter',
   types: ['STORM', 'SHADOW'],
-  base: { hp: 80, atk: 120, def: 75, spa: 105, spd: 80, spe: 150 },
+  base: { hp: 74, atk: 112, def: 66, spa: 96, spd: 72, spe: 160 },
   abilities: ['unburden_ki', 'momentum', 'heat_haze'],
   learnset: [
     { lv: 10, move: 'read_the_hit' },
@@ -650,7 +650,7 @@ def({
 def({
   id: 'edward', name: 'Edward', epithet: 'Fullmetal Alchemist', origin: 'Fullmetal Alchemist',
   types: ['EARTH', 'MECHA'],
-  base: { hp: 95, atk: 120, def: 115, spa: 100, spd: 90, spe: 85 },
+  base: { hp: 95, atk: 105, def: 115, spa: 90, spd: 90, spe: 85 },
   abilities: ['iron_hide', 'technician'],
   learnset: [
     { lv: 14, move: 'strata_rest' }, { lv: 10, move: 'set_the_feet' },
@@ -672,7 +672,7 @@ def({
 def({
   id: 'luffy_g4', name: 'Luffy', epithet: 'Fourth Gear', origin: 'One Piece',
   types: ['FIST', 'HAKI'],
-  base: { hp: 95, atk: 138, def: 92, spa: 60, spd: 85, spe: 122 },
+  base: { hp: 95, atk: 120, def: 92, spa: 55, spd: 85, spe: 122 },
   abilities: ['gum_body', 'momentum', 'bloodlust'],
   learnset: [
     { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'gum_gum_pistol' }, { lv: 4, move: 'hit_and_fade' },
@@ -1065,6 +1065,8 @@ export function defaultAbility(id) {
 export function defaultEVSpread(id) {
   const f = getFighter(id);
   if (!f) return {};
+  const r = bulkRatio(f);
+  const offKey = f.base.atk >= f.base.spa ? 'atk' : 'spa';
   const defKey = f.base.def >= f.base.spd ? 'def' : 'spd';
   // Spread, not level. Handing every fighter the same defensive spread raised
   // the floor and squashed the range: the roster came out at a mean 1.97 hits
@@ -1076,17 +1078,16 @@ export function defaultEVSpread(id) {
   // one resisted hit and a defensive Pokémon survives six to ten neutral ones.
   // These three spreads are the roster's own base stats taken at their word.
   //
-  // Measured three ways and the flat defensive spread won on every number that
-  // matters, so it stays. Splitting the roster into wall / bulky-attacker /
-  // glass-cannon spreads widened the ends from 1.99x to 2.15x apart and
-  // *doubled* the share of matchups that one-shot, 12.3% to 25.2%; a two-bucket
-  // version landed in between and was worse than both on the ends. The reason
-  // is the same one that sank the first EV experiment: base offense on this
-  // roster is high enough that any offensive investment simply accelerates the
-  // race, and the walls do not get bulkier because they were already fully
-  // invested. The ends are not far enough apart, and EVs are not the lever that
-  // moves them — roster-wide offense is. See docs/HANDOFF.md.
-  return { hp: 252, [defKey]: 252, spe: 4 };
+  // Split by archetype, which only became affordable once roster-wide offense
+  // came down. On its own this spread widens the ends from 1.99x to 2.15x apart
+  // and *doubles* the share of matchups that one-shot, 12.3% to 25.2% — which is
+  // why it was reverted twice before. The two changes are a pair: the split is
+  // what widens the ratio (a uniform offense cut cannot, since hits-to-KO is
+  // HP x def / attack and the attacker term cancels out of the ratio), and the
+  // offense cut is what keeps the frail end from evaporating.
+  if (r >= 1.30) return { hp: 252, [defKey]: 252, [offKey]: 4 };   // wall: lean all the way in
+  if (r <= 0.85) return { [offKey]: 252, spe: 252, hp: 4 };        // glass cannon: stay glass
+  return { hp: 252, [offKey]: 252, [defKey]: 4 };                  // bulky attacker
 }
 
 export function makeDefaultMember(id, level = 50) {
