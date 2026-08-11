@@ -195,7 +195,20 @@ if (STAGE === 'all' || STAGE === 'hud') {
   // responsive: extreme aspect ratios must not push the HUD off screen
   for (const vp of [{ width: 1920, height: 420 }, { width: 480, height: 900 }, { width: 3440, height: 1440 }]) {
     const { page: p2 } = await fresh(vp);
-    await settle(p2, 'SCENE-R');
+    // Lightweight settle. The full one waits out the intro and a whole turn to
+    // reach a command prompt, which is minutes per viewport under software
+    // rendering and timed the stage out at 25 minutes. The layout question only
+    // needs the dock rendered and its entry animation finished.
+    await p2.evaluate(() => window.__ARENA.battle.quick('SCENE-R'));
+    await p2.waitForSelector('.cmdroot, .txtbox', { timeout: 60000 }).catch(() => {});
+    await sleep(1200);
+    await p2.evaluate(() => Promise.race([
+      Promise.all(document.getAnimations()
+        .filter((a) => (a.effect?.getComputedTiming?.().iterations ?? 1) !== Infinity)
+        .map((a) => a.finished.catch(() => {}))),
+      new Promise((r) => setTimeout(r, 1200))
+    ]));
+    await sleep(150);
     const fit = await p2.evaluate(() => {
       const W = innerWidth, H = innerHeight;
       const els = [...document.querySelectorAll('.plate, .cmdroot, .cmdbtn, .movegrid, .txtbox, .turnpill')];

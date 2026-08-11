@@ -1428,6 +1428,17 @@ itself. The harness now waits for finite animations to land (bounded at 1200ms,
 because some loop forever and awaiting them all hangs the run) and tests alpha
 numerically.
 
-**Status:** done — scene, models, onboarding and `npm run check` verified;
-HUD re-run with the corrected harness was still in flight at commit time and the
-two original findings are disproven by hand above.
+**The HUD stage is too slow to be a gate, and that is a finding.** It boots four
+browsers and each needs a battle driven to a command prompt to inspect move
+cards; under software rendering that is 25+ minutes and it times out. I cut the
+responsive checks down to "render the dock, wait for its animation to land", but
+the legibility pass still needs a real prompt. Either give `__ARENA` a way to
+force the move menu open without playing a turn, or fold legibility into
+`probe.mjs`, which already reaches a prompt once. Until then run it as
+`--stage lights|camera|models|onboarding`, each of which finishes in under a
+minute.
+
+**Status:** done for scene, models, onboarding and `npm run check`. The two HUD
+findings are disproven by direct measurement (documented above) but the
+automated confirmation has not completed — treat HUD legibility and ultrawide
+fit as **hand-verified, not gated**.
