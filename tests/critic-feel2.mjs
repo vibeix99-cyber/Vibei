@@ -285,6 +285,88 @@ async function clearStalePrompt() {
   return false;
 }
 
+if (MODE === 'stale') {
+  await page.evaluate(() => window.__ARENA.battle.quick('FEEL-9'));
+  for (let i = 0; i < 300; i++) { if ((await page.evaluate(() => window.__ARENA.battle.waitingFor())) === 0) break; await sleep(250); }
+  await sleep(1500);
+  const snap = async (l) => {
+    const s = await page.evaluate(() => ({
+      gt: +window.__ARENA.stage.time.toFixed(2), txt: window.__ARENA.app.textbox.$txt.textContent,
+      cls: window.__ARENA.app.textbox.el.className, wfi: window.__ARENA.app.textbox.waitingForInput,
+      beats: window.__ARENA.app.view.queue.length, queuedMsgs: window.__ARENA.app.textbox.queue.length,
+      hp0: window.__ARENA.app.plates[0].hp, menu: !!document.querySelector('.cmdbtn.fight')
+    }));
+    console.log(l.padEnd(34), JSON.stringify(s));
+  };
+  await snap('at prompt');
+  await page.click('.cmdbtn.fight'); await sleep(500);
+  const cards = await page.$$('.movegrid .movecard');
+  await cards[2].click();
+  await sleep(1200); await snap('1.2s wall after committing');
+  await sleep(6000); await snap('7s wall after committing');
+  await page.screenshot({ path: `${OUT}/s-stale-after-commit.png` });
+  await sleep(15000); await snap('22s wall after committing');
+  await page.screenshot({ path: `${OUT}/s-stale-22s.png` });
+  await page.click('.textbox'); await sleep(1500); await snap('after clicking the textbox');
+  await page.keyboard.press('Enter'); await sleep(1500); await snap('after pressing Enter');
+  await page.keyboard.press('Space'); await sleep(1500); await snap('after pressing Space');
+  await sleep(4000); await snap('4s later');
+}
+
+if (MODE === 'zoom') {
+  await page.evaluate(() => window.__ARENA.battle.quick('FEEL-9'));
+  for (let i = 0; i < 300; i++) { if ((await page.evaluate(() => window.__ARENA.battle.waitingFor())) === 0) break; await sleep(250); }
+  for (let i = 0; i < 300; i++) { if (await page.evaluate(() => (window.__ARENA.app.dir.blend ?? 1) >= 1)) break; await sleep(250); }
+  await sleep(2000);
+  const boxes = await page.evaluate(() => {
+    const A = window.__ARENA, THREE = A.debug.THREE, cam = A.stage.camera;
+    return A.app.view.actors.map((a) => {
+      const box = new THREE.Box3().setFromObject(a.root);
+      let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+      for (let i = 0; i < 8; i++) {
+        const v = new THREE.Vector3(i & 1 ? box.max.x : box.min.x, i & 2 ? box.max.y : box.min.y, i & 4 ? box.max.z : box.min.z).project(cam);
+        x0 = Math.min(x0, v.x); x1 = Math.max(x1, v.x); y0 = Math.min(y0, v.y); y1 = Math.max(y1, v.y);
+      }
+      const W = innerWidth, H = innerHeight;
+      const px = (x) => (x + 1) / 2 * W, py = (y) => (1 - y) / 2 * H;
+      return { x: Math.max(0, px(x0) - 40), y: Math.max(0, py(y1) - 40), width: Math.min(W, px(x1) - px(x0) + 80), height: Math.min(H, py(y0) - py(y1) + 90) };
+    });
+  });
+  for (let i = 0; i < boxes.length; i++) {
+    await page.screenshot({ path: `${OUT}/z-p${i}.png`, clip: boxes[i] });
+    console.log(`z-p${i}`, JSON.stringify(boxes[i]));
+  }
+}
+
+if (MODE === 'audio') {
+  const shape = await page.evaluate(() => {
+    const a = window.__ARENA.app.audio;
+    const keys = [];
+    let o = a;
+    while (o && o !== Object.prototype) { keys.push(...Object.getOwnPropertyNames(o)); o = Object.getPrototypeOf(o); }
+    return { keys: [...new Set(keys)], ctxState: a.ctx?.state ?? null, muted: a.muted ?? null };
+  });
+  console.log('audio surface:', JSON.stringify(shape));
+  await page.evaluate(() => {
+    const a = window.__ARENA.app.audio;
+    window.__SND = [];
+    for (const k of ['sfx', 'play', 'cue', 'note', 'hit', 'music', 'playMusic', 'stopMusic', 'beep', 'blip', 'tone', 'ping']) {
+      if (typeof a[k] === 'function') {
+        const orig = a[k].bind(a);
+        a[k] = (...args) => { window.__SND.push({ fn: k, args: args.map((x) => (typeof x === 'object' ? '{obj}' : x)), gt: +window.__ARENA.stage.time.toFixed(2) }); return orig(...args); };
+      }
+    }
+  });
+  await page.evaluate(() => window.__ARENA.battle.quick('FEEL-9'));
+  for (let i = 0; i < 300; i++) { if ((await page.evaluate(() => window.__ARENA.battle.waitingFor())) === 0) break; await sleep(250); }
+  await sleep(1000);
+  await playTurn(2); await clearStalePrompt();
+  for (let i = 0; i < 300; i++) { if ((await page.evaluate(() => window.__ARENA.battle.waitingFor())) === 0) break; await sleep(250); }
+  const snd = await page.evaluate(() => window.__SND);
+  console.log(`sound calls during battle-start + one turn: ${snd.length}`);
+  snd.slice(0, 40).forEach((s) => console.log(`   gt=${s.gt} ${s.fn}(${s.args.join(',')})`));
+}
+
 if (MODE === 'rest3') {
   const measure = () => page.evaluate(() => {
     const A = window.__ARENA, THREE = A.debug.THREE, cam = A.stage.camera;
