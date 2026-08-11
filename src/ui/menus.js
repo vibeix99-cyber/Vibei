@@ -300,6 +300,7 @@ export class CommandMenu {
     this.root = root;
     this.el = null;
     this.extras = [];
+    this._dwells = new Set();     // armed hover-dwell timers, see _wireDetail
     this.onChoice = null;
     this.mode = null;
     this.sel = 0;
@@ -318,6 +319,7 @@ export class CommandMenu {
 
   clear() {
     this._closeSheet();
+    this._cancelDwells();
     clearTimeout(this._pressTimer);
     if (this.el) { this.el.remove(); this.el = null; }
     for (const e of this.extras) e.remove();
@@ -545,12 +547,23 @@ export class CommandMenu {
   _wireDetail(card, mv, slot, lbl, fc) {
     let dwell = null;
     const open = () => this._openSheet(mv, slot, lbl, fc);
-    card.addEventListener('pointerenter', (e) => {
-      if (e.pointerType === 'touch') return;
+    // The dwell timer used to live only in this closure, cleared on
+    // `pointerleave`. Click a card inside the 420ms and the menu is torn down
+    // with the timer still armed: it fired about 0.4s into the action and threw
+    // the full detail sheet over the arena — clipped off the right edge, on top
+    // of the player's own HP plate — where it sat until the next prompt, over
+    // the knockout and all. Reproduced in 3 of 3 mouse runs. The card is gone
+    // by then, so nothing it owns can cancel it; the menu has to.
+    const arm = () => {
       clearTimeout(dwell);
       dwell = setTimeout(open, 420);
-    });
-    card.addEventListener('pointerleave', () => { clearTimeout(dwell); this._closeSheet(); });
+      this._dwells.add(dwell);
+    };
+    const disarm = () => { clearTimeout(dwell); this._dwells.delete(dwell); dwell = null; };
+    card.addEventListener('pointerenter', (e) => { if (e.pointerType !== 'touch') arm(); });
+    card.addEventListener('pointerleave', () => { disarm(); this._closeSheet(); });
+    // Committing this card is also a reason to forget it.
+    card.addEventListener('pointerdown', disarm);
     card.addEventListener('pointerdown', (e) => {
       if (e.pointerType !== 'touch') return;
       clearTimeout(this._pressTimer);
@@ -608,6 +621,12 @@ export class CommandMenu {
   _closeSheet() {
     if (this.sheet) { this.sheet.remove(); this.sheet = null; }
     delete document.body.dataset.sheet;
+  }
+
+  /** Forget every armed hover-dwell timer. See the note in `_wireDetail`. */
+  _cancelDwells() {
+    for (const t of this._dwells) clearTimeout(t);
+    this._dwells.clear();
   }
 
   /** Toggle the detail sheet for the focused card (keyboard route). */

@@ -132,7 +132,29 @@ const REDUCED_BLEND = 1.1;
  * against this number instead, and open the lens when the pair will not fit
  * from inside the arena.
  */
-const REACH = 21.5;
+const REACH = 14.5;
+// 14.5, not the 21.5 this used to be, and the difference is the whole bug the
+// feel critic found. The old number was chosen so a two-shot could always back
+// up far enough to fit an 8.8m fighter, and it could — by standing *inside the
+// stands*. On the default seed a 5.1m fighter drove the stand-off to radius 20
+// and from there zero of nine rays reached either fighter, for five consecutive
+// command prompts and most of the action between them.
+//
+// The arena floor is about 13 across; every shot that was working already sat
+// at 12.7. Past ~14.5 there is nothing to stand on. Fitting a giant is what
+// `fovMax` is for — the lens opens to 64 in the resting shot — and a giant that
+// slightly overflows a readable frame beats a giant framed perfectly from
+// behind a wall.
+//
+// This is a flat bound rather than a per-arena measurement on purpose. I tried
+// measuring a safe radius per stage by casting rays out from the centre and it
+// does not work: what blocks the shot here is tier geometry at radius ~14 that
+// a ray at eye height passes straight over and a camera at 5.2m looks down
+// through, so any single-height probe gives false confidence. I also tried
+// having `_seekView` search inward as well as around; it engages, but with the
+// bound correct it never had anything left to rescue, so it was removed rather
+// than shipped unproven. If a future arena puts structure inside 14.5, that
+// search is the right thing to bring back — see docs/HANDOFF.md.
 
 /* ------------------------------------------------------------------ */
 
