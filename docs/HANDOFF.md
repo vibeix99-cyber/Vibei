@@ -1380,3 +1380,54 @@ Down to four, none of them systems: character models, arena/lighting, onboarding
 (title + tutorial flow as a first-time experience), and battle HUD legibility.
 All four are *presentation* judgements that need a blind critic looking at
 pixels, not a harness — `tools/metacheck.mjs` covers the mechanical half.
+
+### Presentation swept — scene, models, HUD, first boot
+
+New gate: `node tools/scenecheck.mjs [--stage all|lights|camera|models|hud|onboarding]`.
+A harness cannot judge whether something *looks* good, but it can catch the
+failures that are arithmetic. Nothing needed fixing in the scene, and the two
+things that looked broken were both the harness.
+
+**Lighting** — hemisphere key at 0.72, five directionals (max 2.50, nothing
+blown past 5.0), one casting shadows at 2048², renderer shadows enabled.
+
+**Camera** — FOV 38°, near 0.2 / far 900 (4500:1, no depth-precision risk), both
+fighters 11.6m and 13.4m clear of the near plane and fully inside the frustum at
+the resting shot.
+
+**Models** — 2 actors, 4 meshes each, 8580 and 9476 tris, no NaN bounding
+spheres, heights 2.78m and 2.24m.
+
+**First boot with empty localStorage** — lands on `title`, not in a battle; the
+landing text offers a way in; the tutorial screen exists with 566 chars and two
+buttons; zero page errors.
+
+**`npm run check` was broken and now is not.** `package.json` has pointed it at
+`tools/check.mjs` since the project started and that file never existed, so the
+first command a newcomer would run failed with MODULE_NOT_FOUND. Written: it
+parses every JS file (110), resolves every DOM-free import (24 modules), and
+runs determinism and the hook audit — all node-only, under a minute — then
+prints the browser gates rather than running them.
+
+**Both HUD "findings" were mine, and they matter more than the passes.**
+
+* *"`.txt` and `.turnpill` have no contrast protection."* The turn pill's
+  background is `rgba(11,13,20,0.86)` — a solid panel. My transparency test was
+  `/rgba\(.*,\s*0(\.\d+)?\)$/`, which matches `0.86)` as though it were zero.
+  **Test the alpha channel, not the string.**
+* *"The HUD hangs 8px off the bottom at 3440×1440."* The dock's computed
+  `bottom` is 20px and every container is exactly 1440 tall. It carried
+  `transform: matrix(1,0,0,1,0,28)` with `animationName: slideUp` — I measured
+  during its 0.2s entry animation. **This is the same mistake the camera harness
+  made with mid-blend frames**, one layer up: sampling a transient as if it were
+  the rest state.
+
+That is six false positives across two sweeps, all one species — asserting
+against a label, a field name, or a moment I assumed rather than the thing
+itself. The harness now waits for finite animations to land (bounded at 1200ms,
+because some loop forever and awaiting them all hangs the run) and tests alpha
+numerically.
+
+**Status:** done — scene, models, onboarding and `npm run check` verified;
+HUD re-run with the corrected harness was still in flight at commit time and the
+two original findings are disproven by hand above.
