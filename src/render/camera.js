@@ -1515,12 +1515,35 @@ export class CameraDirector {
         this.shot = this._rest(cs);       // already home: keep re-framing, never restart
         this._commanded = true;
         if (this.blend >= 1) this._seekView();
-      } else if (this._idle > 0.35 && !this._commanded) {
-        // Ask politely first. After a beat, insist: the frame the player makes
-        // every decision from is not something shot discipline gets to veto.
-        const insist = this._idle > 0.95;
-        this._request(this._rest(cs), { dur: insist ? 0.8 : 1.05, ease: E.glide, force: insist });
-        if (insist) this._commanded = true;
+      } else if (asked !== null || this._idle > 0.35) {
+        // The politeness delay is for a lull *inside* a turn, where pulling the
+        // camera home would cut the action short. Once the game has actually
+        // asked the player to choose there is nothing left to be polite to —
+        // every beat has finished, the queue is empty, and the only thing still
+        // on screen is the aftermath pose of the last hit. Waiting another
+        // 0.35s plus a one-second glide meant the menu came up while the camera
+        // was still buried in the previous action: measured 7 of 8 command
+        // prompts with a fighter hidden, offscreen, or behind its opponent's
+        // shoulder, which is the one frame the player actually has to plan from.
+        //
+        // The shot's own minimum hold is deliberately NOT respected here, which
+        // was worth measuring rather than assuming. Waiting it out looks correct
+        // — a KO has earned its beat — but the beat already happened: `waiting`
+        // requires the queue drained and every blocking beat finished, so the
+        // hold only delays the departure. Gating on it made the camera settle
+        // fully on the action shot and *then* start moving, which is the exact
+        // pattern the critic caught. Measured: 4 of 7 prompts mid-blend with the
+        // gate, against 6 of 8 already arrived without it.
+        //
+        // `_commanded` is deliberately not a latch. If anything knocks the frame
+        // off the resting shot while the game is still waiting, this comes back
+        // for it rather than leaving the player looking at scenery.
+        const insist = asked !== null || this._idle > 0.95 || this._commanded;
+        // One forced request lands us on `rest`; from the next frame the branch
+        // above takes over and keeps re-framing, so this never restarts a blend
+        // it already started.
+        this._request(this._rest(cs), { dur: insist ? 0.55 : 1.05, ease: E.glide, force: insist });
+        this._commanded = true;
       }
     } else if (!waiting) { this._idle = 0; this._commanded = false; this._losYaw = 0; }
     // The swing is always eased, never cut — including back to zero when the
