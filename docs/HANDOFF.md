@@ -940,3 +940,75 @@ matchups that one-shot 12.3% -> 10.7%, turns per KO 5.01 -> 5.64, and the roster
 win-rate spread narrowed from 29.6-67.2% to 34.8-66.4%.
 
 **Status:** done
+
+### Audio — first verdict: 4/10 against Black 2 (the lowest score in the project)
+
+Harnesses at `tests/critic/audiolab.js`, `audio.mjs`, `audio-live.mjs`,
+`audio-pix.mjs`; data and spectrogram sheets in `tests/shots/audio/`. The critic
+could not listen — nothing headless can — so every number below is measured
+signal: the game's own synthesis rendered through `OfflineAudioContext` and
+analysed for peak, RMS, envelope and FFT fingerprint, plus a call log from a
+real battle driven to its results screen.
+
+**The gap: the sound is beautiful and reports nothing.** Summed against the
+battle bed (RMS −28.1 dBFS), the measured lift each cue produces in the mix:
+
+```
+  text_blip  0.00 dB      crit    0.11 dB      item     0.05 dB
+  ui_move    0.01         super   0.07         shield   0.09
+  miss       0.01         weak    0.02         immune   0.12
+  lowhp      0.13         heal    0.97         faint    4.81
+```
+
+Every cue that tells the player *what just happened* sits 15–27 dB under the
+music and moves the mix by around a tenth of a decibel. `text_blip` is 84% of
+every audio call in a battle (961 of 1144) and is 47 dB down — it is not there.
+Only `faint`, `thunder` and `hit_flame` clear 2 dB.
+
+**This is not a clipping or harshness problem — the opposite.** Zero clipped
+samples in every render, including eight heavy attacks fired at once (peak
+0.514, −5.8 dBFS). The SFX bus is running roughly 20 dB too quiet against its
+own music bus. Note the shipped defaults are already `sfxVol 0.8` against
+`musicVol 0.35` (`src/meta/save.js`), so the imbalance is inside the synthesis
+gains, not the sliders — do not try to fix this by moving a slider default.
+
+**Two more, both measured:**
+
+* A critical hit is the ordinary hit plus 0.45 dB RMS and one thin 1568 Hz
+  streak (fingerprint distance 0.0269). Super-effective is 0.07 dB of lift.
+  With your eyes shut you cannot tell what landed.
+* **27 of 32 fighter cries have another fighter's cry closer to them than a
+  critical is to a normal hit.** All 32 render, but there are four `shape`
+  values, centroids are confined to 366–1132 Hz, and every one is the same
+  two-part broadband grunt varying in length and darkness. No chirp, no
+  glissando, no pure tone, no stutter.
+
+**What it praised, so nobody flattens it:** the five music tracks are real and
+genuinely distinct — title 92bpm, battle 152, laststand 170, victory 138, defeat
+68, sectioned arrangements with chord changes and lead lines, track-to-track
+distance 0.21–0.52. It called this the strongest part of the work.
+
+**The adaptive layer is nearly inert, and there is a specific bug in it.** Across
+a whole battle the intensity trace was 0.5 → 0.4 → 0.5 → 0.6 → 0.7, peaking at
+**0.70**. Over that range the music moves 1.9 dB RMS / 0.032 cosine. All the
+large arrangement change lives *below* I = 0.25, which play never visits. And the
+one real escalation that was built — the crossfade to `laststand`, worth +2.4 dB
+and 0.43 cosine — requires I ≥ 0.78, which needs both sides down to exactly one
+fighter. It never fired. `startMusic` was called twice in the whole battle.
+
+**Suggested order** (mine; the critic gives one gap by protocol):
+
+1. Re-gain the SFX bus against the music bus so the informational cues clear the
+   bed. This is the whole verdict and it is a handful of constants.
+2. Make a critical, a super-effective and a resist *different sounds* rather
+   than layers on the same one — the critic's B description is explicit that
+   this is what Pokémon does and why it works.
+3. Re-map the intensity curve onto the range play actually occupies (0.4–0.7),
+   and lower the `laststand` threshold from 0.78 so the endgame track can fire.
+4. Widen the cry synthesis: more shapes, wider centroid range, some articulation
+   that is not a grunt.
+
+Only 20 of 103 SFX keys fire in a default battle, which is worth a look after
+the mix is fixed — there is no point making unreachable sounds audible.
+
+**Status:** open
