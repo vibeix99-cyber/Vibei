@@ -49,14 +49,38 @@
 > `node tools/pace.mjs` measures and gates on the distance between the ends. It
 > fails on purpose today. Getting it to pass is the highest-value work left.
 >
+> ### Settled since the last roadmap edit
+>
+> * **The type chart is not the depth blocker, and the bench-gap number that
+>   suggested it was is a selection artefact.** At turn 1 the bench is a *better*
+>   matchup than the lead (33.7% incoming vs 44.3%); it only inverts mid-battle
+>   (47.5 vs 27.4) because the active is whatever already fit, and reading the
+>   bench at full HP changes nothing. Chart density is 22.5% resisted / 19.1%
+>   super, which is Pokémon's own. Do not loosen it. One change made: **MECHA
+>   resists MIND**, because MIND was resisted by 3 of 18 types and was what Gojo
+>   and Law used to open the walls for 41–51%.
+> * **Screens reach 5 of 32 default sets** (Jinbe, Franky, Chopper, Smoker, Big
+>   Mom), up from 0 across three critic runs. The cause was structural: the
+>   second utility slot accepted only a "bleeder" — status, hazard or seed — so a
+>   screen was ineligible for the one slot it could ever have taken.
+> * **Switching moved but is not fixed.** On `depth4 regret`, the best action is
+>   a switch on 43.4% of the turns that matter, up from 9.2%, and the ace AI now
+>   beats greedy (10.7pp regret vs 11.2) where it used to lose to it. On
+>   `firststep`, "+switch out of a bad matchup" is +2.7pp against the ace AI, up
+>   from +1.9 — but −1.1pp against the pirate AI, and ±2.8pp is the error bar.
+>   Real movement, still on the edge.
+>
 > ### Roadmap, in the order I would do it
 >
-> 1. **Roster-wide offense.** Bring base offensive stats and/or move power down
->    until `tools/pace.mjs` passes its spread gate. Expect to touch
->    `src/data/moves.js` power values and the offensive halves of `src/data/fighters.js`
->    base lines. Re-measure with `pace.mjs`, then `tools/rosterbalance.mjs`
->    (keep the win-rate spread near 34.8–66.4%) and `tests/critic/depth3.mjs firststep`
->    — the target is "learning to switch" clearing its ±3.1pp error bar.
+> 1. **Make switching pay against a weak opponent, not just a strong one.** This
+>    is the last standing piece of the depth gap. `pace.mjs` passes (2.64 hits
+>    median, ends 2.63× apart, 5 walls), so stat work is done — do not reach for
+>    it again. What is left is that a switch costs 27% of the incoming fighter's
+>    bar and the matchup it buys is worth less than that against an opponent who
+>    is not punishing you correctly. Candidates nobody has tested: hazards
+>    (currently the only thing that makes *the opponent's* switching expensive),
+>    and whether entry damage should scale with how bad the outgoing matchup was.
+>    Gate on `depth4 firststep` row C clearing ±2.8pp against **both** AI tiers.
 > 2. **Move budget: 39 over-budget moves, and only those.** `node tools/movebudget.mjs`.
 >    The five silent moves and all 30 over-long descriptions are fixed; what is
 >    left is 39 moves past their PP-band cap, mostly signatures. Do (1) first —
