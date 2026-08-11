@@ -1082,3 +1082,76 @@ random team needs a reasonable chance of containing an answer. Measuring the
 type chart's defensive spread is the first thing to do, not more stat tuning.
 
 **Status:** open
+
+### Audio round 2 — 5/10 (up from 4/10), and the level fix hit the wrong layer
+
+Harness re-run from scratch plus five new scripts (`audio-turn.mjs`,
+`audio-verify.mjs`, `audio-duck.mjs`, `audio-duck2.mjs`, `audio-pix2.mjs`).
+
+**What the fix did land:**
+
+```
+  cue SNR vs the battle bed        was        now
+  crit                          -15.87     +1.80 dB
+  heal                           -5.91     +2.88
+  lowhp                         -15.27     -1.08
+  buff / debuff           -10.01/-9.62   +0.49/+1.22
+  text_blip                     -47.44    -12.82
+```
+
+The critical hit is genuinely fixed: `impact_med` vs `impact_med + crit` is now
+**+11.9 dB peak / +10.5 dB RMS** against the old 0.45 dB, and on `slash_heavy`,
+which is what the live game actually fires, **+16.8 dB**. Headroom is clean —
+the busiest 3 s of a real battle, 111 cues over the bed, peaks at −7.1 dBFS with
+zero clipped samples, and 32 simultaneous `impact_world` only reach −1.67.
+
+**The gap: I lifted the stinger layer and left the layer that carries every
+ordinary hit exactly where it was.** Peak against the bed's median 250 ms window
+peak (−14.64 dBFS at ship volumes):
+
+```
+  crit  +7.19   faint +5.87   heal/buff +5.2   lowhp +5.42     <- stingers
+  impact_med -5.45   psychic -7.02   clang -7.92
+  slash_heavy -8.54  impact_light -9.32  scatter -15.58        <- the hit
+```
+
+The 18 quietest of the 103 registry keys are all move/impact sounds; the 8
+loudest are all stingers. **A stat buff is now the loudest thing in the battle
+and a punch is the quietest.** And across two live battles, hit-layer sounds
+outnumbered effectiveness stingers 43-to-6 and 44-to-20, so **55–86% of all hits
+play only the buried impact layer** — you cannot hear that you landed a blow.
+
+**Why I got it wrong, which matters more than the miss.** `SFX_ROLE` says
+"everything else already cleared the bed on measurement". That was true of the
+sample I measured and false of the game: **stage 1 of the harness tests 41 of the
+103 keys**, and the ones a live battle actually fires — `clang`, `slash_heavy`,
+`water_hit`, `psychic`, `gale`, `impact_heavy`, `slash_world` — are not among
+them. I calibrated against an unrepresentative subset and generalised from it.
+Fix the harness's key list at the same time as the mix.
+
+**Two live bugs it found on the way:**
+
+* **`sfx(key, {delay})` is not honoured.** `{delay:1.0}`, `{at:1.0}` and
+  `{when:...}` all start the cue at 0.0120 s. Stage 5's `burst8` and any timing
+  test built on it are firing everything at t=0. Its own first pass reported
+  clipping because of this and it caught and retracted the number itself.
+* **The ducking never engages.** Measured by lowpassing the mix at 200 Hz and
+  firing cues with no bass content: mix-vs-bed delta 0.00 dB for `text_blip`,
+  +0.01 for `ui_move`, −0.04 for `ui_select`. The `musicDuck` node exists and
+  `_duck()` is called; nothing happens. Half of what I shipped is inert.
+* `tests/critic/audio-pix.mjs` is broken as committed (`window.__draw is not a
+  function`); use `audio-pix2.mjs`.
+
+**Still open from round 1:** cries barely moved — mean pairwise distance 0.1291
+→ 0.1422, near-twins 27 → 18 at the 0.03 threshold but **30 of 32** at 0.05, and
+the shape distribution is untouched at four templates for 32 fighters. Widening
+the knobs was not enough; they need genuinely different articulations. And the
+continuous intensity system is inaudible over the range play visits (fingerprint
+distance 0.075 across I=0.4→0.9, 0.0013 from 0.8→0.9) — what actually reads is
+the discrete `laststand` swap, which now fires and which it called unmistakable.
+
+**Suggested order:** extend `SFX_ROLE` to the impact keys and re-measure against
+the *live-fired* key list, not stage 1's; then find why `_duck` is inert; then
+the cries.
+
+**Status:** open
