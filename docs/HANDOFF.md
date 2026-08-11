@@ -494,3 +494,59 @@ but turned that into the sharpest line in the report: three cards carry a damage
 bar and the fourth reads only "STATUS" over empty space, so *the UI prices
 exactly the axis that matters and leaves the other one blank*. The presentation
 is telling the truth about the game.
+
+### Wave 4, second half — what the re-run harnesses measured
+
+Neither wave-4 critic reached a verdict; both runs were cut short. Both left
+working instruments, committed at `tests/critic/depth3.mjs` and
+`tests/critic-feel3.mjs`, and I ran two of the depth modes myself. Numbers, not
+verdicts — the blind comparison still needs a fresh critic.
+
+**`depth3.mjs tempo` — are the longer games deeper, or just longer?** This is
+the obvious way the roster pass could have failed, so it is the first thing to
+check. 150 ace-vs-ace games a row:
+
+```
+  variant                        turns   stall%   KOturn%   lead flips   heal:dmg
+  full game                       14.5    41.5%     21.5%       1.75       0.26
+  no bag items                    13.8    45.4%     22.6%       1.83       0.18
+  no bag, no recovery              9.7    43.8%     29.3%       1.13       0.02
+  no bag, no status at all         9.2    42.5%     30.3%       1.31       0.02
+  pure greedy, no bag              8.4    41.7%     32.8%       1.50       0.03
+```
+
+Deeper, not merely longer. The HP lead changes hands **1.75 times a game with
+recovery against 1.13 without** — the extra turns carry information. And the
+failure mode everyone expects from adding recovery did not happen: stall turns
+are **41.5% of the full game against 41.7% of a pure greedy one**, statistically
+the same, so the added length is not dead air. That said, four turns in ten
+moving less than 6% of a team's HP is high in absolute terms whichever variant
+you run, and it is worth someone asking why.
+
+**`depth3.mjs human` — and here is the one that is not good enough.** The
+harness pits *human-plausible* policies against each other rather than the AI
+against a crippled copy of itself, which is the question that actually matters.
+100 mirrored pairs a cell:
+
+```
+  greedy (biggest number)   vs  club player (+switch, +status)     46.0%
+  greedy                    vs  novice (greedy + potions)          47.0%
+  novice                    vs  club player                        51.5%
+  greedy                    vs  AI ace                             33.0%
+  club player               vs  AI ace                             41.5%
+```
+
+Against the AI the tools are plainly load-bearing — Ace beats greedy 66–33 using
+exactly them. But **between two human-plausible strategies the entire tactical
+layer is worth about four percentage points**, and a novice who only learned to
+click potions edges out a club player who learned to switch and status (51.5%).
+
+The honest reading: the skill gradient is steep at the top and nearly flat at the
+bottom. Switching and status pay *when used correctly* and not at all when used
+approximately, so a beginner taking their first step toward playing properly
+feels no reward for it. That is the next real gap, it is a different gap from
+the one the roster pass closed, and it is not a roster problem — it is a
+question about whether the tools are legible and forgiving enough that
+approximate use of them beats ignoring them.
+
+**Status:** open
