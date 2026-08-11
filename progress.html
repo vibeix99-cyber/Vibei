@@ -268,23 +268,23 @@ const DATA = {
   wave: "Wave 4 · re-judging",
   updated: "10 Aug 2026",
   percent: 74,
-  note: "Both critics are running again on the rebuilt camera, the reading floor and the new switching AI.",
+  note: "Depth critic: 5/10 vs Black 2. It found the game was a nine-turn race. Fixed and re-measured.",
   stats: [
     { n: "2/20", l: "critics run" },
     { n: "5/10", l: "battle feel" },
-    { n: "6/10", l: "tactical depth" },
+    { n: "5/10", l: "tactical depth" },
     { n: "32",   l: "fighters" },
-    { n: "302",  l: "moves" },
-    { n: "1.5",  l: "hits to a KO" }
+    { n: "309",  l: "moves" },
+    { n: "2.1",  l: "hits to a KO" }
   ],
   pieces: [
     ["The battle, as experienced", "active", 2, 5, 8, "Being re-judged: camera rebuilt, reading floor added"],
-    ["The game underneath",        "active", 2, 6, 9, "Being re-judged: full movepools, pivots priced, switching scored against staying in"],
+    ["The game underneath",        "review", 3, 5, 9, "Status moves went from worth 2.2pp to 9.4pp; switching still only 2.4pp"],
     ["Battle engine & rules",      "review", 2, 0, 0, "Critic: 666/666 advertised move properties fire; formula faithful; determinism hole closed"],
     ["Type chart & balance",       "review", 2, 0, 0, "Critic: healthy \u2014 offence +1 to \u22123, defence +6 to \u22124, no dominant typing"],
     ["Status, weather & field",    "review", 2, 0, 0, "Chip damage is decorative: 95.4% of 12,999 KOs were direct, hazards caused 2"],
     ["Move design",                "review", 2, 0, 0, "302 moves, full pivot / pursuit / perish families; 23 signatures still unreachable"],
-    ["Roster & characters",        "sent",   2, 0, 0, "No walls. Bulk/offense spans 0.63\u20131.31; Pok\u00e9mon OU spans 0.31\u20131.90"],
+    ["Roster & characters",        "review", 3, 0, 0, "Four real walls now; bulk/offense spread 2.1\u00d7 \u2192 3.2\u00d7, against Pok\u00e9mon's 6.1\u00d7"],
     ["Abilities",                  "review", 2, 0, 0, "Critic: 71/71 demonstrably change the battle"],
     ["Items & bag",                "review", 2, 0, 0, "51/51 work, but default battles hand out none of the 38 held items"],
     ["Opponent AI",                "review", 3, 0, 0, "Ladder monotonic; pivots and pursuit now priced; switching scored against staying in"],
@@ -319,7 +319,13 @@ const DATA = {
     ["W4", "The median best move takes <b>66% of its target's health</b> \u2014 1.5 hits to a KO, where Pok\u00e9mon runs 2\u20133. A quarter of all matchups are one-shots."],
     ["W4", "Cause is the roster, not the formula: bulk/offense spans <b>0.63\u20131.31</b> against Pok\u00e9mon OU's 0.31\u20131.90. <b>Nothing here is a wall.</b>"],
     ["W4", "So switching, status, hazards, screens, items and PP are all investments with no time to pay back. Sent to the roster with numbers."],
-    ["W4", "Both critics relaunched on the rebuilt build."]
+    ["W4", "<b>Depth critic: 5/10 against Black 2.</b> Its instrument beat mine \u2014 handicap the AI, play it against itself: banning switching cost <b>1.0pp</b>, banning every status move <b>2.2pp</b>, clicking the biggest number <b>10.1pp</b>."],
+    ["W4", "It corrected me too. I blamed base stats; the binding cause was the defensive move economy \u2014 <b>0 of 32 sets carried a heal or a screen</b>."],
+    ["W4", "Recovery for the fighters whose bulk can cash it, Protect for all 32, and five fighters given real wall stat lines at unchanged BST."],
+    ["W4", "Then the thing never done at all: every set shipped with <b>zero EVs</b> while offensive base stats were tuned like invested ones. Pok\u00e9mon spends 508."],
+    ["W4", "Result: <b>1.51 \u2192 2.13 hits to a KO</b>, one-shots 24.5% \u2192 12.3%, games 9.1 \u2192 14.9 turns, first-hit KOs 38.7% \u2192 26.1%."],
+    ["W4", "On the critic's own ablation: status moves went from <b>2.2pp to 9.4pp</b> \u2014 noise to the second-biggest lever in the game. Switching is still weak at 2.4pp."],
+    ["W4", "Both critics and a builder were killed by the spend limit mid-run; the roster work above I did by hand."]
   ]
 };
 
