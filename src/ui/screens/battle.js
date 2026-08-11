@@ -335,7 +335,7 @@ export class BattleScreen {
   ask(side) {
     this.waitingChoice = side;
     const mon = this.battle.sides[side].party[this.battle.sides[side].activeIndex];
-    this.app.textbox.say(`What will ${mon.nickname} do?`, { hold: 0 });
+    this.app.textbox.say(`What will ${mon.nickname} do?`, { hold: 0, prompt: true });
     this.menu.showRoot(this.ctxFor(side));
     this.turnPill?.classList.remove('thinking');
   }
@@ -343,7 +343,7 @@ export class BattleScreen {
   askSwitch(side) {
     this.waitingChoice = side;
     this.forcedSwitch = true;
-    this.app.textbox.say('Choose your next fighter.', { hold: 0 });
+    this.app.textbox.say('Choose your next fighter.', { hold: 0, prompt: true });
     this.menu.showParty(this.ctxFor(side), true);
   }
 
@@ -377,6 +377,10 @@ export class BattleScreen {
 
   submit(choices) {
     const b = this.battle;
+    // The question has been answered, so it stops being a question. Otherwise it
+    // holds the whole turn behind it and the player has to tap past their own
+    // decision before anything moves.
+    this.app.textbox.dismissPrompt();
     const events = submitChoices(b, choices);
     this.view.setState(publicView(b));
     this.view.push(events);

@@ -186,9 +186,35 @@ export class TextBox {
   /** @param {string} text @param {{style?:string, hold?:number}} opts */
   say(text, opts = {}) {
     if (!text) return;
-    this.queue.push({ text, style: opts.style || '', hold: opts.hold ?? null });
+    this.queue.push({
+      text, style: opts.style || '', hold: opts.hold ?? null,
+      prompt: !!opts.prompt
+    });
     if (!this.current) this._next();
     this.show();
+  }
+
+  /**
+   * Retire a standing prompt because it has just been answered.
+   *
+   * A `hold: 0` line waits forever by design — that is what makes it a prompt.
+   * But the question stops being a question the instant the player commits, and
+   * the whole turn's animation queue is stacked up behind it. Leaving it there
+   * meant every single turn opened with a dead stop and an extra tap on a
+   * question the player had already answered: measured sitting for 28.15
+   * game-seconds with eleven animation events and two messages backed up.
+   *
+   * Only ever drops lines flagged `prompt` — a narration line that happens to
+   * carry `hold: 0` is somebody's deliberate pause and is left alone.
+   */
+  dismissPrompt() {
+    let dropped = false;
+    for (let i = this.queue.length - 1; i >= 0; i--) {
+      if (this.queue[i].prompt) { this.queue.splice(i, 1); dropped = true; }
+    }
+    if (this.current?.prompt) { this._next(); dropped = true; }
+    this._syncMore();
+    return dropped;
   }
 
   clear() {

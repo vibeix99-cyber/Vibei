@@ -469,6 +469,10 @@ export class LinkBattleScreen extends BattleScreen {
 
     session.onTurn = (events) => {
       this.awaitingPeer = false;
+      // The wait is over, so the standing "waiting" line stops being true. It is
+      // a `hold: 0` prompt, so nothing else retires it, and the peer's whole
+      // turn would queue up behind it.
+      this.app.textbox?.dismissPrompt?.();
       this.setLink('Linked', '');
       this.view.setState(publicView(this.battle));
       this.view.push(events);
@@ -501,7 +505,7 @@ export class LinkBattleScreen extends BattleScreen {
     if (this.awaitingPeer || this.battle.ended) return;
     this.awaitingPeer = true;
     this.setLink('Waiting for them', 'wait');
-    this.app.textbox?.say?.('Waiting for your opponent…', { hold: 0 });
+    this.app.textbox?.say?.('Waiting for your opponent…', { hold: 0, prompt: true });
     this.session.submit({ kind: 'pass' });
   }
 
@@ -514,6 +518,7 @@ export class LinkBattleScreen extends BattleScreen {
     this.forcedSwitch = false;
     this.awaitingPeer = true;
     this.setLink('Waiting for them', 'wait');
+    this.app.textbox?.dismissPrompt?.();      // the question has been answered
     if (!this.session.submit(choice)) {
       // Already submitted this turn — put the menu back rather than hanging.
       this.awaitingPeer = false;
