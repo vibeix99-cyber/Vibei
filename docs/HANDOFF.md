@@ -550,3 +550,63 @@ question about whether the tools are legible and forgiving enough that
 approximate use of them beats ignoring them.
 
 **Status:** open
+
+### Feel critic → Camera (`src/render/camera.js`) — the resting shot at a prompt
+
+**Verdict:** the battle-as-experienced piece scored **5/10 against Sword/Shield**
+(picked as the bar because it is the strongest mainline reference for 3D camera
+direction and impact staging). Its named gap was the blocking command prompt,
+which is fixed. This is its second finding, and it is the leading candidate for
+the next round.
+
+At the moment the player is asked to choose, with the camera **fully settled**
+(`blend = 1`, animation queue empty, plus 900 ms), the framing is frequently left
+over from the previous action:
+
+* 6 of 11 sampled prompts put the player's own fighter at 50–100% of frame
+  height with the opponent hidden behind its shoulder. Worst measured: player
+  73.5% × 100.8% of frame at x=47, foe 20.9% at x=61 (`tests/shots/prompts/p05.png`,
+  `p08.png`).
+* One settled prompt has the camera **inside a scenery pillar** with neither
+  fighter visible (`tests/shots/exp/f-21.png`).
+
+This matters more than a framing nit because it is exactly the moment the player
+needs the information: you cannot plan against an opponent you cannot see.
+Sword/Shield never does this — every camera position keeps both combatants
+visible and separated, and it always returns to the same readable resting angle
+before asking.
+
+**Note for whoever picks this up:** I previously looked at this with
+`tools/restframe.mjs`, concluded the decision frames were fine, and was wrong.
+That tool samples the *first* frame at which the prompt is raised; the critic
+sampled after the camera had fully settled and swept every prompt in a battle
+rather than the first three. Its method is better. Do not treat my earlier
+"decision frames are fine" as evidence — reproduce with
+`tests/critic-promptshots.mjs`.
+
+The pillar case is a separate, harder bug from the framing case: `camera.js`
+raycasts for occluders in its resting shot, so either the raycast is not running
+on this path or the pillar is not in the occluder set.
+
+**Status:** open
+
+### Feel critic → what it praised, so nobody "fixes" it
+
+Worth recording because two builders have now been tempted to soften these.
+
+The critic rated our impact feedback **above Sword/Shield's**: a normal hit is
+50 ms hitstop, 0.10 flash, 0.115 shake and a 0.032 zoom punch over 0.30 s; a KO
+is 125 ms hitstop, 0.45 flash, 0.70 chroma split and 0.45× slow-motion over
+0.59 s; damage floats up as a number and the HP bar springs down in 0.55–0.86 s
+with a ghost bar chasing it for another 1.3–2.4 s. Sword/Shield has no hitstop,
+no slow-motion and no damage numbers.
+
+It also rated our **tempo** above Sword/Shield's once unblocked — a seven-line
+turn narrates in about 5 s against roughly 20 s — and called the shot vocabulary
+(`establish / rest / neutral / hero / heroBig / track / impact / finisher / ko /
+entrance`, with real blends) richer.
+
+Message pacing measured at ~110 c/s typing with 0.55–0.80 s holds per line, which
+is the reading floor working as intended. Leave it alone.
+
+**Status:** informational
