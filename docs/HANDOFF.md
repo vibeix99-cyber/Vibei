@@ -1179,3 +1179,36 @@ the *live-fired* key list, not stage 1's; then find why `_duck` is inert; then
 the cries.
 
 **Status:** open
+
+### Save / progression / team codes — health check, all green
+
+Driven through the running build. Nothing needed fixing; recorded so the next
+person does not re-derive it.
+
+* **Save.** v2, migration chain complete (a path exists from every earlier
+  version), export/import round-trips, and a deliberately corrupted file
+  recovers rather than throwing — `load()` returns a valid save and the corrupt
+  copy is preserved under `gla.save.corrupt`.
+* **Progression.** 13 unlocks, all well-formed. They gate on a `test` predicate,
+  not an `xp` threshold — worth knowing before writing an audit against them.
+  Every item unlock names a real item, every arena unlock a real arena. A blank
+  save starts with 2 arenas and 1 held item.
+* **Team codes round-trip cleanly in both formats**, 12 of 12 across the roster
+  with ability, item and all four moves preserved. Junk input is rejected with a
+  human-readable reason and never throws: empty, prefix-only, non-base64, wrong
+  version and a foreign `GLA1:` shape all decline politely.
+
+**Two traps I fell into writing the check**, both worth knowing:
+
+* `encodeTeam` takes a team **object** `{ name, members }`, not a bare array of
+  members. Passing an array encodes an empty team and produces a 5-byte code
+  that decodes to "none of its fighters exist in this build" — which looks
+  exactly like a catastrophic data bug and is not one.
+* **There are two distinct code formats and they are not interchangeable.**
+  `src/net/link.js` emits `GLA-TEAM:` + base64 JSON; `src/meta/teamcode.js`
+  emits the compact `GLA1.` bitpacked form. The team builder accepts both by
+  sniffing the prefix. Wrapping a `GLA1.` code in a `GLA-TEAM:` prefix produces
+  something the game never emits, and the resulting regex truncation looks like
+  a parser bug. It is not.
+
+**Status:** done
