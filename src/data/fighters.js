@@ -54,6 +54,7 @@ def({
   base: { hp: 85, atk: 115, def: 75, spa: 85, spd: 80, spe: 120 },
   abilities: ['blue_flame', 'chivalry'],
   learnset: [
+    { lv: 10, move: 'set_the_feet' },
     { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'searing_kick' }, { lv: 4, move: 'feather_step' },
     { lv: 7, move: 'sky_walk' }, { lv: 10, move: 'flame_lash' }, { lv: 13, move: 'slicing_gale' },
     { lv: 16, move: 'tempest_kick' }, { lv: 19, move: 'hit_and_fade' }, { lv: 22, move: 'armament' },
@@ -74,6 +75,7 @@ def({
   base: { hp: 75, atk: 55, def: 65, spa: 120, spd: 85, spe: 105 },
   abilities: ['weather_read', 'opportunist'],
   learnset: [
+    { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'spark_jab' }, { lv: 1, move: 'sonic_wail' }, { lv: 4, move: 'arc_bolt' },
     { lv: 6, move: 'frost_step' }, { lv: 7, move: 'mind_haze' }, { lv: 10, move: 'chain_lightning' },
     { lv: 13, move: 'tidal_call' }, { lv: 16, move: 'numbing_mist' }, { lv: 19, move: 'mind_spike' },
@@ -95,6 +97,7 @@ def({
   base: { hp: 85, atk: 95, def: 80, spa: 100, spd: 95, spe: 85 },
   abilities: ['thousand_arms', 'cold_read'],
   learnset: [
+    { lv: 14, move: 'clear_the_head' }, { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'pressure_point' }, { lv: 1, move: 'clutch' }, { lv: 4, move: 'mind_spike' },
     { lv: 6, move: 'small_target' }, { lv: 9, move: 'shadow_clutch' }, { lv: 12, move: 'mind_haze' },
     { lv: 15, move: 'second_guess' }, { lv: 18, move: 'mind_relay' }, { lv: 20, move: 'toxic_brand' },
@@ -135,6 +138,7 @@ def({
   base: { hp: 80, atk: 90, def: 75, spa: 125, spd: 85, spe: 105 },
   abilities: ['operating_room', 'cold_read'],
   learnset: [
+    { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'one_sword_slash' }, { lv: 1, move: 'mind_spike' }, { lv: 4, move: 'draw_cut' },
     { lv: 7, move: 'sever_tendon' }, { lv: 10, move: 'shambles' }, { lv: 13, move: 'mind_haze' },
     { lv: 16, move: 'pressure_point' }, { lv: 19, move: 'mind_relay' }, { lv: 20, move: 'nullify' },
@@ -152,9 +156,10 @@ def({
 def({
   id: 'jinbe', name: 'Jinbe', epithet: 'Knight of the Sea', origin: 'One Piece',
   types: ['SEA', 'FIST'],
-  base: { hp: 120, atk: 120, def: 110, spa: 80, spd: 100, spe: 60 },
+  base: { hp: 135, atk: 105, def: 130, spa: 60, spd: 115, spe: 45 },
   abilities: ['ocean_heart', 'unbreakable'],
   learnset: [
+    { lv: 14, move: 'tidal_mend' }, { lv: 10, move: 'set_the_feet' },
     { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'aqua_step' }, { lv: 4, move: 'shark_bite' },
     { lv: 7, move: 'siphon_wave' }, { lv: 10, move: 'tidal_call' }, { lv: 13, move: 'fishman_karate' },
     { lv: 16, move: 'iron_body' }, { lv: 19, move: 'anchor_stance' }, { lv: 20, move: 'slick_tide' },
@@ -192,9 +197,10 @@ def({
 def({
   id: 'crocodile', name: 'Crocodile', epithet: 'Desert King', origin: 'One Piece',
   types: ['EARTH', 'TOXIN'],
-  base: { hp: 95, atk: 105, def: 90, spa: 110, spd: 85, spe: 85 },
+  base: { hp: 110, atk: 80, def: 110, spa: 100, spd: 105, spe: 65 },
   abilities: ['sand_body', 'desiccate'],
   learnset: [
+    { lv: 14, move: 'strata_rest' }, { lv: 10, move: 'set_the_feet' },
     { lv: 1, move: 'mud_shot' }, { lv: 1, move: 'sand_lance' }, { lv: 4, move: 'boulder_toss' },
     { lv: 7, move: 'desert_rise' }, { lv: 10, move: 'toxic_brand' }, { lv: 12, move: 'deep_root' },
     { lv: 14, move: 'barb_spray' }, { lv: 17, move: 'oil_slick_toss' }, { lv: 20, move: 'venom_road' },
@@ -216,6 +222,7 @@ def({
   base: { hp: 110, atk: 130, def: 100, spa: 95, spd: 100, spe: 90 },
   abilities: ['future_sight', 'mochi_body'],
   learnset: [
+    { lv: 14, move: 'clear_the_head' }, { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'pressure_point' }, { lv: 4, move: 'clutch' },
     { lv: 6, move: 'will_of_iron' }, { lv: 7, move: 'mind_spike' }, { lv: 10, move: 'shambles' },
     { lv: 13, move: 'imbued_strike' }, { lv: 16, move: 'armament' }, { lv: 19, move: 'small_target' },
@@ -236,6 +243,7 @@ def({
   base: { hp: 140, atk: 145, def: 125, spa: 110, spd: 110, spe: 70 },
   abilities: ['undying', 'conquerors_will'],
   learnset: [
+    { lv: 14, move: 'beast_regrowth' },
     { lv: 1, move: 'imbued_strike' }, { lv: 1, move: 'savage_bite' }, { lv: 4, move: 'iron_body' },
     { lv: 6, move: 'grit' }, { lv: 9, move: 'pack_hunt' }, { lv: 12, move: 'territorial_growl' },
     { lv: 15, move: 'wild_pulse' }, { lv: 18, move: 'armament' }, { lv: 21, move: 'hunters_mark' },
@@ -281,9 +289,10 @@ def({
 def({
   id: 'franky', name: 'Franky', epithet: 'Cyborg', origin: 'One Piece',
   types: ['MECHA', 'FIST'],
-  base: { hp: 110, atk: 115, def: 125, spa: 95, spd: 80, spe: 55 },
+  base: { hp: 120, atk: 100, def: 145, spa: 75, spd: 100, spe: 40 },
   abilities: ['iron_hide', 'thick_hide'],
   learnset: [
+    { lv: 14, move: 'field_repair' },
     { lv: 1, move: 'shockwave_palm' }, { lv: 1, move: 'gear_strike' }, { lv: 4, move: 'hair_trigger' },
     { lv: 6, move: 'seismic_throw' }, { lv: 7, move: 'iron_body' }, { lv: 10, move: 'rivet_cannon' },
     { lv: 13, move: 'scrap_sweep' }, { lv: 16, move: 'caltrop_scatter' }, { lv: 19, move: 'iron_wall' },
@@ -305,6 +314,7 @@ def({
   base: { hp: 75, atk: 95, def: 60, spa: 120, spd: 90, spe: 125 },
   abilities: ['revenant', 'amplifier'],
   learnset: [
+    { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'resonance_lance' }, { lv: 1, move: 'draw_cut' }, { lv: 4, move: 'echo_volley' },
     { lv: 6, move: 'jeer' }, { lv: 7, move: 'lullaby' }, { lv: 10, move: 'soul_leech' },
     { lv: 13, move: 'sonic_wail' }, { lv: 16, move: 'battle_hymn' }, { lv: 19, move: 'soul_relay' },
@@ -323,9 +333,10 @@ def({
 def({
   id: 'chopper', name: 'Chopper', epithet: 'Cotton Candy Lover', origin: 'One Piece',
   types: ['BEAST', 'MIND'],
-  base: { hp: 100, atk: 85, def: 105, spa: 90, spd: 110, spe: 65 },
+  base: { hp: 125, atk: 60, def: 125, spa: 70, spd: 120, spe: 55 },
   abilities: ['regenerator', 'pure_heart'],
   learnset: [
+    { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'savage_bite' }, { lv: 1, move: 'pack_hunt' }, { lv: 4, move: 'second_wind' },
     { lv: 6, move: 'small_target' }, { lv: 7, move: 'frost_step' }, { lv: 9, move: 'numbing_mist' },
     { lv: 12, move: 'frostbite' }, { lv: 15, move: 'stone_skin' }, { lv: 18, move: 'rime_fist' },
@@ -348,6 +359,7 @@ def({
   base: { hp: 95, atk: 105, def: 90, spa: 130, spd: 95, spe: 110 },
   abilities: ['cursed_grip', 'pressure_haki'],
   learnset: [
+    { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'shadow_clutch' }, { lv: 1, move: 'mind_spike' }, { lv: 4, move: 'void_lance' },
     { lv: 7, move: 'mind_haze' }, { lv: 10, move: 'nightmare_grip' }, { lv: 13, move: 'shadow_stitch' },
     { lv: 16, move: 'pressure_point' }, { lv: 19, move: 'second_guess' }, { lv: 22, move: 'mind_relay' },
@@ -368,6 +380,7 @@ def({
   base: { hp: 85, atk: 100, def: 80, spa: 125, spd: 100, spe: 115 },
   abilities: ['mirage_step', 'opportunist'],
   learnset: [
+    { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'radiant_palm' }, { lv: 1, move: 'photon_dart' }, { lv: 4, move: 'blinding_flash' },
     { lv: 7, move: 'mind_haze' }, { lv: 10, move: 'flash_relay' }, { lv: 13, move: 'mind_spike' },
     { lv: 16, move: 'light_wall' }, { lv: 19, move: 'tempest_kick' }, { lv: 22, move: 'small_target' },
@@ -386,9 +399,10 @@ def({
 def({
   id: 'smoker', name: 'Smoker', epithet: 'White Hunter', origin: 'One Piece',
   types: ['WIND', 'MECHA'],
-  base: { hp: 100, atk: 110, def: 100, spa: 80, spd: 95, spe: 85 },
+  base: { hp: 115, atk: 95, def: 115, spa: 70, spd: 110, spe: 65 },
   abilities: ['windborne', 'justified'],
   learnset: [
+    { lv: 14, move: 'field_repair' },
     { lv: 1, move: 'feather_step' }, { lv: 1, move: 'quick_strike' }, { lv: 4, move: 'clearing_gust' },
     { lv: 7, move: 'tempest_kick' }, { lv: 10, move: 'slicing_gale' }, { lv: 13, move: 'gear_strike' },
     { lv: 16, move: 'iron_body' }, { lv: 19, move: 'gale_exit' }, { lv: 22, move: 'tracking_round' },
@@ -409,6 +423,7 @@ def({
   base: { hp: 80, atk: 85, def: 65, spa: 145, spd: 85, spe: 120 },
   abilities: ['static_field', 'amplifier'],
   learnset: [
+    { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'arc_bolt' }, { lv: 1, move: 'spark_jab' }, { lv: 4, move: 'chain_lightning' },
     { lv: 6, move: 'second_wind' }, { lv: 7, move: 'static_snare' }, { lv: 10, move: 'thunder_kick' },
     { lv: 13, move: 'voltage_surge' }, { lv: 16, move: 'volt_relay' }, { lv: 19, move: 'soul_leech' },
@@ -429,6 +444,7 @@ def({
   base: { hp: 145, atk: 135, def: 130, spa: 115, spd: 105, spe: 60 },
   abilities: ['stamina_wall', 'conquerors_will'],
   learnset: [
+    { lv: 14, move: 'beast_regrowth' }, { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'soul_leech' }, { lv: 1, move: 'savage_bite' }, { lv: 4, move: 'wandering_palm' },
     { lv: 7, move: 'iron_body' }, { lv: 10, move: 'soul_reach' }, { lv: 13, move: 'territorial_growl' },
     { lv: 16, move: 'pack_hunt' }, { lv: 19, move: 'sleep_mist' }, { lv: 22, move: 'armament' },
@@ -510,6 +526,7 @@ def({
   base: { hp: 95, atk: 140, def: 90, spa: 110, spd: 85, spe: 140 },
   abilities: ['berserker', 'unburden_ki'],
   learnset: [
+    { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'draw_cut' }, { lv: 1, move: 'flash_step' }, { lv: 4, move: 'cut_and_run' },
     { lv: 6, move: 'flying_slash' }, { lv: 7, move: 'chasing_edge' }, { lv: 10, move: 'sever_tendon' },
     { lv: 13, move: 'zangetsu_arc' }, { lv: 16, move: 'void_lance' }, { lv: 19, move: 'getsuga_tensho' },
@@ -530,6 +547,7 @@ def({
   base: { hp: 90, atk: 90, def: 95, spa: 150, spd: 110, spe: 125 },
   abilities: ['mirror_scale', 'pressure_haki'],
   learnset: [
+    { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'void_lance' }, { lv: 1, move: 'flash_step' }, { lv: 4, move: 'mind_spike' },
     { lv: 6, move: 'deep_focus' }, { lv: 7, move: 'photon_dart' }, { lv: 10, move: 'nullify' },
     { lv: 13, move: 'mind_relay' }, { lv: 16, move: 'phase_lance' }, { lv: 19, move: 'limitless_blue' },
@@ -550,6 +568,7 @@ def({
   base: { hp: 90, atk: 115, def: 85, spa: 95, spd: 90, spe: 105 },
   abilities: ['technician', 'pure_heart'],
   learnset: [
+    { lv: 10, move: 'set_the_feet' },
     { lv: 1, move: 'draw_cut' }, { lv: 1, move: 'aqua_step' }, { lv: 4, move: 'one_sword_slash' },
     { lv: 6, move: 'slicing_gale' }, { lv: 7, move: 'siphon_wave' }, { lv: 10, move: 'water_wheel' },
     { lv: 13, move: 'cut_and_run' }, { lv: 16, move: 'whetstone_rite' }, { lv: 19, move: 'shark_bite' },
@@ -570,6 +589,7 @@ def({
   base: { hp: 80, atk: 135, def: 80, spa: 60, spd: 95, spe: 145 },
   abilities: ['quick_draw', 'clean_sweep'],
   learnset: [
+    { lv: 10, move: 'set_the_feet' },
     { lv: 1, move: 'feather_step' }, { lv: 1, move: 'quick_strike' }, { lv: 4, move: 'draw_cut' },
     { lv: 6, move: 'updraft' }, { lv: 7, move: 'sever_tendon' }, { lv: 10, move: 'blade_spiral' },
     { lv: 12, move: 'blade_scatter' }, { lv: 13, move: 'tempest_kick' }, { lv: 16, move: 'chasing_edge' },
@@ -610,6 +630,7 @@ def({
   base: { hp: 80, atk: 120, def: 75, spa: 105, spd: 80, spe: 150 },
   abilities: ['unburden_ki', 'momentum'],
   learnset: [
+    { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'spark_jab' }, { lv: 1, move: 'quick_strike' }, { lv: 4, move: 'shadow_clutch' },
     { lv: 6, move: 'nightfall_bolt' }, { lv: 7, move: 'thunder_kick' }, { lv: 10, move: 'flash_step' },
     { lv: 13, move: 'chain_lightning' }, { lv: 16, move: 'umbral_claw' }, { lv: 19, move: 'volt_relay' },
@@ -630,6 +651,7 @@ def({
   base: { hp: 95, atk: 120, def: 115, spa: 100, spd: 90, spe: 85 },
   abilities: ['iron_hide', 'technician'],
   learnset: [
+    { lv: 14, move: 'strata_rest' }, { lv: 10, move: 'set_the_feet' },
     { lv: 1, move: 'shockwave_palm' }, { lv: 1, move: 'boulder_toss' }, { lv: 4, move: 'mud_shot' },
     { lv: 6, move: 'scrap_sweep' }, { lv: 9, move: 'stone_skin' }, { lv: 12, move: 'gear_strike' },
     { lv: 15, move: 'automail_hook' }, { lv: 18, move: 'iron_body' }, { lv: 21, move: 'deep_root' },
@@ -737,6 +759,12 @@ function attackScore(f, m) {
 }
 
 /** Value of a status move to *this* fighter, on the same rough scale/2. */
+/** Bulk against offense — the axis a fighter's role actually sits on. */
+function bulkRatio(f) {
+  return (f.base.hp + f.base.def + f.base.spd) / (f.base.atk + f.base.spa + f.base.spe);
+}
+const clamp01 = (x) => (x < 0 ? 0 : x > 1 ? 1 : x);
+
 function utilityScore(f, m) {
   const acc = m.accuracy == null ? 1 : m.accuracy / 100;
   const fast = f.base.spe >= 95;
@@ -748,7 +776,16 @@ function utilityScore(f, m) {
         break;
       case 'hazard': v += 44; break;
       case 'screen': v += 24; break;
-      case 'heal': v += 28; break;
+      case 'heal': {
+        // Reliable recovery is only a plan for something that survives the turn
+        // it spends. On a wall it *is* the win condition — the fight becomes
+        // "can you out-damage the heal", which is the question the whole
+        // defensive half of the game asks. On a sweeper it is a slot that
+        // fighter cannot afford, and handing it out flat is how you get a
+        // roster where every set heals and no fight ever ends.
+        v += 14 + 46 * clamp01((bulkRatio(f) - 0.80) / 0.45);
+        break;
+      }
       case 'cure': v += 8; break;
       case 'clearHazards': v += 10; break;
       case 'weather': case 'terrain': v += 12; break;
@@ -769,7 +806,7 @@ function utilityScore(f, m) {
         break;
       }
       case 'volatile':
-        if (e.value === 'protect' || e.value === 'endure') v += 22;
+        if (e.value === 'protect' || e.value === 'endure') v += 12 + 24 * clamp01((bulkRatio(f) - 0.80) / 0.45);
         else if (e.value === 'substitute') v += 20;
         else if (e.value === 'perish') v += 24;
         else if (e.value === 'focusenergy') v += 16;
@@ -824,6 +861,13 @@ export function defaultMoves(id, level = 50) {
     const bleeders = util.filter((u) => bleeds(u) && u.s >= 42);
     // …and only when the third attack it would displace was never the point.
     if (bleeders.length >= 2 && util[1] && util[1].s >= 42 && atk[2].s < 120) utilSlots = 2;
+    // The other two-slot archetype, and the one this roster was missing
+    // entirely: a genuinely bulky fighter that can heal wants the heal *and*
+    // the thing it is stalling you out with. Two attacks is enough for a body
+    // whose plan is to still be standing.
+    const heals = (o) => (o.m.effects || []).some((e) => e.kind === 'heal'
+      && (e.target === 'self' || !e.target) && (e.frac ?? 0) >= 0.4);
+    if (bulkRatio(f) >= 1.10 && util.some(heals)) utilSlots = 2;
   }
   const wantAtk = Math.min(4 - utilSlots, atk.length);
   utilSlots = Math.min(utilSlots, 4 - Math.max(2, Math.min(2, atk.length)));
@@ -917,11 +961,37 @@ export function defaultAbility(id) {
   return (idHash(id + '#ability') % 5 === 0) ? f.abilities[1] : f.abilities[0];
 }
 
+/**
+ * The default EV spread, and it is deliberately a defensive one.
+ *
+ * Every fighter shipped with zero EVs, while their offensive base stats were
+ * tuned like a competitive Pokémon's *invested* ones. That is the arithmetic
+ * behind a nine-turn game: the median best move took 66% of its target's health,
+ * so a 50% recovery move was a losing trade, a switch cost you half a body, and
+ * every positional system in the game was priced out. Competitive Pokémon spends
+ * 508 EVs and most of them go into bulk; ours spent none.
+ *
+ * Quick Battle does not ask a player to build a spread, so the default has to
+ * pick one, and the right default is the one that makes the fight last long
+ * enough to have decisions in it. Offensive identity still comes from base
+ * stats — a Killua at 0.63 bulk/offense is still a glass cannon next to a
+ * Chopper at 2.00. The team builder can still spend these points on offense,
+ * which turns "I want to hit harder" into an actual choice with an actual cost
+ * instead of the only setting available.
+ */
+export function defaultEVSpread(id) {
+  const f = getFighter(id);
+  if (!f) return {};
+  const defKey = f.base.def >= f.base.spd ? 'def' : 'spd';
+  return { hp: 252, [defKey]: 252, spe: 4 };
+}
+
 export function makeDefaultMember(id, level = 50) {
   const f = getFighter(id);
   return {
     speciesId: id, nickname: f.name, level,
     nature: 'hardy', ability: defaultAbility(id), item: defaultItem(id),
+    evs: defaultEVSpread(id),
     moves: defaultMoves(id, level)
   };
 }

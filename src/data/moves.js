@@ -970,6 +970,54 @@ def({ id: 'bone_shards', name: 'Bone Shards', type: 'SPIRIT', category: 'status'
   fx: { key: 'hazard_ice', color: '#6fe3d0', shape: 'burst', scale: 1.4, sfx: 'ice_shatter' } });
 
 /* ================================================================== */
+/* staying alive                                                       */
+/* ================================================================== */
+// A critic put the tactical layer at 5/10 against Black 2 and named one cause:
+// nothing here survives long enough for position to matter. A fighter lived 2.26
+// turns and 38.7% of KOs landed on the first damaging hit, so switching, hazards,
+// poison clocks and PP were all investments with no time to pay back — banning
+// switching outright from a strong AI cost it 1.0 percentage point.
+//
+// The library had three reliable heals for thirty-two fighters, and the bulky
+// half of the roster could not learn any of them. These are the missing half of
+// the game. They are deliberately typed for the bulky fighters and nobody else:
+// in the source material reliable recovery is a privilege of bulk, and handing
+// it to a sweeper does not lengthen a fight, it just makes the race unloseable
+// for whoever was winning it.
+
+def({ id: 'tidal_mend', name: 'Tidal Mend', type: 'SEA', category: 'status', power: 0, accuracy: null, pp: 10, target: 'self', flags: ['snatch'],
+  effects: [{ kind: 'heal', frac: 0.5, target: 'self' }],
+  desc: 'Restores half of max HP.', flavor: 'The sea closes over the wound and hands him back whole.',
+  fx: { key: 'heal', color: '#4fc3f7', shape: 'aura', sfx: 'heal' } });
+def({ id: 'beast_regrowth', name: 'Beast Regrowth', type: 'BEAST', category: 'status', power: 0, accuracy: null, pp: 10, target: 'self', flags: ['snatch'],
+  effects: [{ kind: 'heal', frac: 0.5, target: 'self' }],
+  desc: 'Restores half of max HP.', flavor: 'Something under the hide decides the damage was optional.',
+  fx: { key: 'heal', color: '#9ede6a', shape: 'aura', sfx: 'heal' } });
+def({ id: 'field_repair', name: 'Field Repair', type: 'MECHA', category: 'status', power: 0, accuracy: null, pp: 10, target: 'self', flags: ['snatch'],
+  effects: [{ kind: 'heal', frac: 0.5, target: 'self' }],
+  desc: 'Restores half of max HP.', flavor: 'Cola, solder, and a confidence the schematics do not support.',
+  fx: { key: 'heal', color: '#8fd0ff', shape: 'aura', sfx: 'heal' } });
+def({ id: 'strata_rest', name: 'Strata Rest', type: 'EARTH', category: 'status', power: 0, accuracy: null, pp: 10, target: 'self', flags: ['snatch'],
+  effects: [{ kind: 'heal', frac: 0.5, target: 'self' }],
+  desc: 'Restores half of max HP.', flavor: 'He sinks to the knee and the ground gives some of it back.',
+  fx: { key: 'heal', color: '#d2b48c', shape: 'aura', sfx: 'heal' } });
+def({ id: 'clear_the_head', name: 'Clear the Head', type: 'MIND', category: 'status', power: 0, accuracy: null, pp: 10, target: 'self', flags: ['snatch'],
+  effects: [{ kind: 'heal', frac: 0.5, target: 'self' }],
+  desc: 'Restores half of max HP.', flavor: 'Two seconds of nothing at all, which is the hardest thing he does.',
+  fx: { key: 'heal', color: '#c9a7ff', shape: 'aura', sfx: 'heal' } });
+
+// Protect existed on exactly one default set. In the source material every
+// fighter can decline a turn; Haki is literally seeing the hit before it lands.
+def({ id: 'read_the_hit', name: 'Read the Hit', type: 'HAKI', category: 'status', power: 0, accuracy: null, pp: 10, target: 'self', priority: 4,
+  effects: [{ kind: 'volatile', value: 'protect', target: 'self' }],
+  desc: 'Protects the user this turn.', flavor: 'He watched it arrive a half-second ago and stepped out of it then.',
+  fx: { key: 'protect', color: '#b9a2ff', shape: 'aura', sfx: 'shield' } });
+def({ id: 'set_the_feet', name: 'Set the Feet', type: 'FIST', category: 'status', power: 0, accuracy: null, pp: 10, target: 'self', priority: 4,
+  effects: [{ kind: 'volatile', value: 'protect', target: 'self' }],
+  desc: 'Protects the user this turn.', flavor: 'Weight back, guard up, and an invitation to try it anyway.',
+  fx: { key: 'protect', color: '#ffcf7a', shape: 'aura', sfx: 'shield' } });
+
+/* ================================================================== */
 /* last resort                                                         */
 /* ================================================================== */
 
