@@ -40,28 +40,79 @@ async function fresh(viewport = { width: 1280, height: 800 }, clearStorage = fal
   return { page, errs };
 }
 
-const settle = async (page, seed = 'SCENE-1') => {
+/** Let every *finite* CSS animation land. Some loop forever; awaiting those hangs. */
+const animationsDone = async (page, cap = 1500) => {
+  // The command dock enters with a 0.2s `slideUp`, so a rect sampled while it
+  // is running sits up to 28px below its resting position and reads as the HUD
+  // hanging off the bottom of an ultrawide viewport. Measuring a transient as
+  // if it were the rest state is the same mistake the camera harness made with
+  // mid-blend frames.
+  await page.evaluate((ms) => Promise.race([
+    Promise.all(document.getAnimations()
+      .filter((a) => (a.effect?.getComputedTiming?.().iterations ?? 1) !== Infinity)
+      .map((a) => a.finished.catch(() => {}))),
+    new Promise((r) => setTimeout(r, ms))
+  ]), cap);
+  await sleep(120);
+};
+
+/**
+ * Start a battle and wait until the HUD is actually on screen.
+ *
+ * Both nameplates start with `.hidden` — `opacity:0` and parked off to the
+ * side by `translateX(var(--plate-shift)) scale(.96)` — and `NamePlate.show()`
+ * only drops it when the fighter's switch-in is animated. Measuring before
+ * that reads the parked transform: at 480x900 the player's plate looked 18px
+ * past the right edge when its resting position is 11px *inside* it. No
+ * animation is running at that moment, so waiting for animations cannot catch
+ * it; the class is simply still applied. Reveal lands at ~7s, against ~40-100s
+ * for a real command prompt.
+ */
+const openBattle = async (page, seed = 'SCENE-1') => {
   await page.evaluate((s) => window.__ARENA.battle.quick(s), seed);
-  for (let i = 0; i < 300; i++) {
-    if (await page.evaluate(() => window.__ARENA.battle.waitingFor() === 0)) break;
-    await sleep(200);
+  let live = false;
+  for (let i = 0; i < 200 && !live; i++) {
+    live = await page.evaluate(() => !!window.__ARENA.battle.screen());
+    if (!live) await sleep(100);
+  }
+  if (!live) return false;
+  for (let i = 0; i < 120; i++) {
+    const shown = await page.evaluate(() => {
+      const p = [...document.querySelectorAll('.nameplate')];
+      return p.length === 2 && p.every((e) => !e.classList.contains('hidden'));
+    });
+    if (shown) { await animationsDone(page); return true; }
+    await sleep(500);
+  }
+  return false;
+};
+
+/**
+ * Drive all the way to a real command prompt. Measured at ~101s after the
+ * battle starts under software rendering, because the whole intro plays first
+ * — so the cap has to be generous, and whether it was actually reached is
+ * returned rather than assumed. The old version capped at 300 polls and fell
+ * through silently when it lost the race, which left the camera reading a
+ * mid-intro shot and the legibility pass finding no move cards at all.
+ */
+const settle = async (page, seed = 'SCENE-1') => {
+  await openBattle(page, seed);
+  let asked = false;
+  for (let i = 0; i < 200; i++) {
+    if (await page.evaluate(() => window.__ARENA.battle.waitingFor() === 0)) { asked = true; break; }
+    await sleep(1000);
   }
   await sleep(2500);        // let the camera reach its resting shot
-  // ...and let every CSS animation land. The command dock enters with a 0.2s
-  // `slideUp`, so a rect sampled while it is running sits up to 28px below its
-  // resting position and reads as the HUD hanging off the bottom of an
-  // ultrawide viewport. Measuring a transient as if it were the rest state is
-  // the same mistake the camera harness made with mid-blend frames.
-  await page.evaluate(() => Promise.all(
-    document.getAnimations().map((a) => a.finished.catch(() => {}))
-  ));
-  await sleep(120);
+  await animationsDone(page);
+  return asked;
 };
 
 /* ------------------------------------------------- lights + camera + models */
 if (['all', 'lights', 'camera', 'models'].includes(STAGE)) {
   const { page } = await fresh();
-  await settle(page);
+  const asked = await settle(page);
+  note(asked, 'the battle reached a real command prompt before the scene was sampled',
+    asked ? '' : 'timed out mid-intro — every reading below is of a transient, not the resting shot');
 
   const scene = await page.evaluate(() => {
     const A = window.__ARENA, THREE = A.debug?.THREE || A.stage.THREE;
@@ -155,76 +206,131 @@ if (['all', 'lights', 'camera', 'models'].includes(STAGE)) {
 }
 
 /* ------------------------------------------------------------------ HUD */
+// Every reading here needs the command dock on screen, and waiting for the game
+// to raise a real prompt costs ~101s per browser under software rendering — the
+// intro plays in full first. `__ARENA.battle.showMenu()` renders the same panel
+// from the same context object without a turn being played, which is ~15s, and
+// is the difference between this stage being a gate and being a thing you run
+// overnight. The panels are inert: `onPlayerChoice` ignores input while
+// `waitingChoice` is null.
 if (STAGE === 'all' || STAGE === 'hud') {
-  // legibility at the default size
-  const { page } = await fresh();
-  await settle(page);
-  const legibility = await page.evaluate(() => {
-    const sel = ['.plate .nm', '.plate .hp', '.hpnum', '.movecard .mv-name', '.pflag', '.txt', '.turnpill'];
-    const out = [];
-    for (const s of sel) {
-      for (const el of [...document.querySelectorAll(s)].slice(0, 2)) {
-        const cs = getComputedStyle(el);
-        const bg = cs.backgroundColor;
-        // Alpha test, not a string test. The first version matched "0.86)" with
-        // /0(\.\d+)?\)$/ and declared an 86%-opaque panel transparent, which
-        // reported the turn pill and the textbox as unprotected text.
-        const alphaOf = (c) => { const m = /rgba?\(([^)]+)\)/.exec(c || ''); if (!m) return 0; const p = m[1].split(','); return p.length > 3 ? parseFloat(p[3]) : 1; };
-        const opaque = alphaOf(bg) >= 0.35;
-        // walk up for a backing panel
-        let backed = opaque, n = el.parentElement, hops = 0;
-        while (!backed && n && hops++ < 3) {
-          if (alphaOf(getComputedStyle(n).backgroundColor) >= 0.35) backed = true;
-          n = n.parentElement;
-        }
-        out.push({
-          sel: s, shadow: cs.textShadow !== 'none' ? cs.textShadow.slice(0, 40) : null,
-          stroke: cs.webkitTextStrokeWidth && cs.webkitTextStrokeWidth !== '0px' ? cs.webkitTextStrokeWidth : null,
-          backed, size: cs.fontSize
-        });
+  /** Text-contrast reading for one selector: shadow, stroke, or a panel behind it. */
+  const readContrast = (page, sel) => page.evaluate((s) => {
+    const alphaOf = (c) => {
+      // Alpha test, not a string test. The first version matched "0.86)" with
+      // /0(\.\d+)?\)$/ and declared an 86%-opaque panel transparent, which
+      // reported the turn pill and the textbox as unprotected text.
+      const m = /rgba?\(([^)]+)\)/.exec(c || '');
+      if (!m) return 0;
+      const p = m[1].split(',');
+      return p.length > 3 ? parseFloat(p[3]) : 1;
+    };
+    // A panel painted with a gradient has `backgroundColor: rgba(0,0,0,0)` and
+    // is completely opaque all the same — `.movecard` is a cream gradient and
+    // `.textbox` a dark blue one. Reading only backgroundColor called both of
+    // them bare text floating on the 3D. Take the gradient's own stops.
+    const isPanel = (cs) => {
+      if (alphaOf(cs.backgroundColor) >= 0.35) return true;
+      const img = cs.backgroundImage;
+      if (!img || img === 'none') return false;
+      const stops = img.match(/rgba?\([^)]+\)/g) || [];
+      return stops.some((c) => alphaOf(c) >= 0.35);
+    };
+    return [...document.querySelectorAll(s)].slice(0, 2).map((el) => {
+      const cs = getComputedStyle(el);
+      let backed = isPanel(cs), n = el.parentElement, hops = 0;
+      while (!backed && n && hops++ < 3) {
+        if (isPanel(getComputedStyle(n))) backed = true;
+        n = n.parentElement;
+      }
+      // Judging text the player cannot see in this state is worthless. The
+      // textbox is explicitly `opacity:0` under `body[data-cmd="moves"]`, so
+      // each selector is read in the panel where it is actually on screen.
+      let vis = el.offsetParent !== null, m = el;
+      for (let i = 0; vis && m && i < 6; i++, m = m.parentElement) {
+        if (parseFloat(getComputedStyle(m).opacity) < 0.05) vis = false;
+      }
+      return {
+        sel: s, visible: vis,
+        shadow: cs.textShadow !== 'none' ? cs.textShadow.slice(0, 40) : null,
+        stroke: cs.webkitTextStrokeWidth && cs.webkitTextStrokeWidth !== '0px' ? cs.webkitTextStrokeWidth : null,
+        backed, size: parseFloat(cs.fontSize)
+      };
+    });
+  }, sel);
+
+  /** Anything with a box that pokes outside the viewport. */
+  const readFit = (page) => page.evaluate(() => {
+    const W = innerWidth, H = innerHeight, off = [];
+    const els = [...document.querySelectorAll('.nameplate, .cmdroot, .cmdbtn, .movegrid, .movecard, .mvinfo, .textbox, .turnpill')];
+    for (const el of els) {
+      const r = el.getBoundingClientRect();
+      if (r.width === 0 && r.height === 0) continue;
+      if (r.right > W + 2 || r.left < -2 || r.bottom > H + 2 || r.top < -2) {
+        off.push(`${el.className.split(' ')[0]} [${Math.round(r.left)},${Math.round(r.top)} ${Math.round(r.width)}x${Math.round(r.height)}]`);
       }
     }
-    return out;
+    return { off, checked: els.length };
   });
-  const unprotected = legibility.filter((l) => !l.shadow && !l.stroke && !l.backed);
-  note(unprotected.length === 0, 'every HUD text layer has contrast protection',
-    unprotected.length ? unprotected.map((l) => l.sel).join(', ') + ' sit on the 3D with no shadow, stroke or panel'
-      : `${legibility.length} elements checked, all shadowed / stroked / on a panel`);
-  await page.close();
 
-  // responsive: extreme aspect ratios must not push the HUD off screen
-  for (const vp of [{ width: 1920, height: 420 }, { width: 480, height: 900 }, { width: 3440, height: 1440 }]) {
-    const { page: p2 } = await fresh(vp);
-    // Lightweight settle. The full one waits out the intro and a whole turn to
-    // reach a command prompt, which is minutes per viewport under software
-    // rendering and timed the stage out at 25 minutes. The layout question only
-    // needs the dock rendered and its entry animation finished.
-    await p2.evaluate(() => window.__ARENA.battle.quick('SCENE-R'));
-    await p2.waitForSelector('.cmdroot, .txtbox', { timeout: 60000 }).catch(() => {});
-    await sleep(1200);
-    await p2.evaluate(() => Promise.race([
-      Promise.all(document.getAnimations()
-        .filter((a) => (a.effect?.getComputedTiming?.().iterations ?? 1) !== Infinity)
-        .map((a) => a.finished.catch(() => {}))),
-      new Promise((r) => setTimeout(r, 1200))
-    ]));
-    await sleep(150);
-    const fit = await p2.evaluate(() => {
-      const W = innerWidth, H = innerHeight;
-      const els = [...document.querySelectorAll('.plate, .cmdroot, .cmdbtn, .movegrid, .txtbox, .turnpill')];
-      const off = [];
-      for (const el of els) {
-        const r = el.getBoundingClientRect();
-        if (r.width === 0 && r.height === 0) continue;
-        if (r.right > W + 2 || r.left < -2 || r.bottom > H + 2 || r.top < -2) {
-          off.push(`${el.className.split(' ')[0]} [${Math.round(r.left)},${Math.round(r.top)} ${Math.round(r.width)}x${Math.round(r.height)}]`);
+  // Real class names, taken from src/ui/hud.js. The first version asked for
+  // `.plate .nm`, `.plate .hp`, `.hpnum` and `.pflag`, none of which the HUD
+  // has ever emitted — the nameplate is `.nameplate` and its parts are `.np-*`.
+  // Four selectors matching nothing, counted as four passes.
+  const MOVE_SEL = ['.nameplate', '.np-name', '.np-num', '.np-lv', '.np-hplabel', '.movecard .mv-name', '.mv-pp', '.turnpill'];
+  const ROOT_SEL = ['.cmdbtn', '.txt'];
+  const VIEWPORTS = [
+    { width: 1280, height: 800 },     // the default, and the one legibility is read at
+    { width: 1920, height: 420 },     // letterbox
+    { width: 480, height: 900 },      // phone
+    { width: 3440, height: 1440 }     // ultrawide
+  ];
+
+  for (const [i, vp] of VIEWPORTS.entries()) {
+    const { page } = await fresh(vp);
+    const live = await openBattle(page, 'SCENE-R');
+    note(live, `HUD is revealed at ${vp.width}x${vp.height}`, live ? '' : 'no battle screen, or the nameplates never left their parked state');
+    if (!live) { await page.close(); continue; }
+
+    for (const panel of ['moves', 'root']) {
+      const mode = await page.evaluate((p) => window.__ARENA.battle.showMenu(p, 0), panel);
+      note(mode === panel, `the ${panel} panel opens at ${vp.width}x${vp.height}`, mode ? `dock mode "${mode}"` : 'showMenu returned null');
+      await animationsDone(page);
+
+      // Legibility is a property of the CSS, not of the viewport, so read it
+      // once — but read it with the panel actually on screen.
+      if (i === 0) {
+        for (const sel of panel === 'moves' ? MOVE_SEL : ROOT_SEL) {
+          const found = await readContrast(page, sel);
+          // A selector that matches nothing is not a pass. The previous version
+          // asked for `.movecard .mv-name` on a page where the dock had never
+          // opened, found zero elements, and counted that as clean.
+          if (!found.length) { note(false, `contrast: ${sel}`, 'selector matched no elements — nothing was checked'); continue; }
+          // Judge only what is on screen. The foe's `.np-num` is `display:none`
+          // by design — you do not get to see the opponent's exact HP, same as
+          // Pokémon — and scoring an invisible element's contrast is noise.
+          const shown = found.filter((l) => l.visible);
+          if (!shown.length) { note(false, `contrast: ${sel}`, `hidden while the ${panel} panel is open — read it in the other state`); continue; }
+          const bare = shown.filter((l) => !l.shadow && !l.stroke && !l.backed);
+          note(bare.length === 0, `contrast: ${sel}`,
+            bare.length ? `${bare.length}/${shown.length} sit on the 3D with no shadow, stroke or panel`
+              : `${shown.length} visible checked at ${shown[0].size}px, all shadowed / stroked / on a panel`);
+          // A floor, not an opinion. 10px is the smallest thing the HUD ships
+          // today — `.np-hplabel`, the two-glyph "HP" mark at weight 900 with
+          // .16em tracking, which is how Pokémon sets the same label. Every
+          // layer carrying variable information the player has to read (names,
+          // HP numbers, move names, PP) measures 11px or more. The gate exists
+          // to catch a later shrink, not to enforce a taste.
+          const floor = shown.every((l) => l.size >= 10);
+          note(floor, `size: ${sel}`, shown.map((l) => `${l.size}px`).join(', ') + (floor ? '' : ' — below the 10px floor'));
         }
       }
-      return { off, checked: els.length };
-    });
-    note(fit.off.length === 0, `HUD fits ${vp.width}x${vp.height}`,
-      fit.off.length ? fit.off.slice(0, 3).join('; ') : `${fit.checked} elements on screen`);
-    await p2.close();
+
+      const fit = await readFit(page);
+      note(fit.off.length === 0, `HUD fits ${vp.width}x${vp.height} with the ${panel} panel open`,
+        fit.off.length ? fit.off.slice(0, 3).join('; ') : `${fit.checked} elements on screen`);
+    }
+    await page.close();
   }
 }
 

@@ -313,6 +313,9 @@ window.__ARENA = {
     state(),                      // deep-cloned public battle state
     choose(sideIndex, choice),    // submit a choice programmatically
     events(),                     // events produced so far
+    waitingFor(),                 // 0 | 1 | null — which side is being asked
+    showMenu(panel, side),        // 'moves'|'root'|'party'|'bag'; returns the
+                                  // dock mode, or null if there is no battle
     skipAnimations(bool),
     isAnimating(),
     log()                         // array of message strings, in order
@@ -323,6 +326,17 @@ window.__ARENA = {
 ```
 
 Critics will use `page.evaluate(() => window.__ARENA...)`. Keep it stable.
+
+`showMenu()` exists because the command dock normally appears only when the game
+raises a real prompt, and under software rendering the intro has to play out
+first — 40 to 100 seconds per browser. It renders the same panel from the same
+`ctxFor(side)` context object, so a harness inspecting the DOM sees exactly what
+a player would. Nothing is armed: `onPlayerChoice` ignores input while
+`waitingChoice` is null. It does **not** substitute for a real prompt when what
+you are judging is timing or camera framing — for those, poll `waitingFor()`.
+Note that the nameplates are revealed by the switch-in animation (~7s) and sit
+parked off-screen under `.hidden` before that, so wait for
+`.nameplate:not(.hidden)` before measuring any layout.
 
 ---
 

@@ -334,6 +334,24 @@ window.__ARENA = {
       return true;
     },
     waitingFor() { const s = this.screen(); return s ? s.waitingChoice : null; },
+    /**
+     * Render a command panel without waiting for a real prompt. Test-only.
+     * The dock normally appears when `ask()` raises one, which costs an intro
+     * plus a whole turn of animation — minutes per browser under software
+     * rendering — and a harness inspecting the DOM does not need any of it.
+     * Nothing is armed: `onPlayerChoice` ignores input while `waitingChoice`
+     * is null, so a click here goes nowhere.
+     */
+    showMenu(which = 'moves', side = 0) {
+      const s = this.screen();
+      if (!s?.battle || !s.menu) return null;
+      const ctx = s.ctxFor(side);
+      if (which === 'root') s.menu.showRoot(ctx);
+      else if (which === 'party') s.menu.showParty(ctx);
+      else if (which === 'bag') s.menu.showBag(ctx);
+      else s.menu.showMoves(ctx);
+      return s.menu.mode;
+    },
     events() { const s = this.screen(); return s ? s.battle.events : []; },
     log() { const s = this.screen(); return s ? s.battle.log : []; },
     isAnimating() { return app.view.busy; },
