@@ -11,7 +11,7 @@ def({
   id: 'luffy', name: 'Luffy', epithet: 'Straw Hat', origin: 'One Piece',
   types: ['FIST', 'BEAST'],
   base: { hp: 95, atk: 125, def: 80, spa: 60, spd: 80, spe: 110 },
-  abilities: ['gum_body', 'conquerors_will'],
+  abilities: ['gum_body', 'conquerors_will', 'iron_fist'],
   learnset: [
     { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'gum_gum_pistol' }, { lv: 4, move: 'pack_hunt' },
     { lv: 7, move: 'grit' }, { lv: 10, move: 'gum_gum_gatling' }, { lv: 13, move: 'savage_bite' },
@@ -32,7 +32,7 @@ def({
   id: 'zoro', name: 'Zoro', epithet: 'Pirate Hunter', origin: 'One Piece',
   types: ['SLASH', 'HAKI'],
   base: { hp: 90, atk: 135, def: 95, spa: 50, spd: 85, spe: 95 },
-  abilities: ['three_blades', 'unbreakable'],
+  abilities: ['three_blades', 'unbreakable', 'adaptability'],
   learnset: [
     { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'one_sword_slash' }, { lv: 4, move: 'draw_cut' },
     { lv: 7, move: 'sever_tendon' }, { lv: 10, move: 'flying_slash' }, { lv: 14, move: 'chasing_edge' },
@@ -52,7 +52,7 @@ def({
   id: 'sanji', name: 'Sanji', epithet: 'Black Leg', origin: 'One Piece',
   types: ['FLAME', 'FIST'],
   base: { hp: 85, atk: 115, def: 75, spa: 85, spd: 80, spe: 120 },
-  abilities: ['blue_flame', 'chivalry'],
+  abilities: ['blue_flame', 'chivalry', 'flame_drinker'],
   learnset: [
     { lv: 10, move: 'set_the_feet' },
     { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'searing_kick' }, { lv: 4, move: 'feather_step' },
@@ -73,7 +73,7 @@ def({
   id: 'nami', name: 'Nami', epithet: 'Cat Burglar', origin: 'One Piece',
   types: ['STORM', 'MIND'],
   base: { hp: 75, atk: 55, def: 65, spa: 120, spd: 85, spe: 105 },
-  abilities: ['weather_read', 'opportunist'],
+  abilities: ['weather_read', 'opportunist', 'squall_caller'],
   learnset: [
     { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'spark_jab' }, { lv: 1, move: 'sonic_wail' }, { lv: 4, move: 'arc_bolt' },
@@ -95,7 +95,7 @@ def({
   id: 'robin', name: 'Robin', epithet: 'Devil Child', origin: 'One Piece',
   types: ['MIND', 'SHADOW'],
   base: { hp: 85, atk: 95, def: 80, spa: 100, spd: 95, spe: 85 },
-  abilities: ['thousand_arms', 'cold_read'],
+  abilities: ['thousand_arms', 'cold_read', 'download_read'],
   learnset: [
     { lv: 14, move: 'clear_the_head' }, { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'pressure_point' }, { lv: 1, move: 'clutch' }, { lv: 4, move: 'mind_spike' },
@@ -116,7 +116,7 @@ def({
   id: 'ace', name: 'Ace', epithet: 'Fire Fist', origin: 'One Piece',
   types: ['FLAME', 'HAKI'],
   base: { hp: 90, atk: 100, def: 75, spa: 130, spd: 80, spe: 100 },
-  abilities: ['logia_flame', 'sunburst'],
+  abilities: ['logia_flame', 'sunburst', 'solar_skin'],
   learnset: [
     { lv: 1, move: 'flame_lash' }, { lv: 1, move: 'quick_strike' }, { lv: 4, move: 'searing_kick' },
     { lv: 6, move: 'grit' }, { lv: 9, move: 'flame_commandment' }, { lv: 12, move: 'fire_fist' },
@@ -136,7 +136,7 @@ def({
   id: 'law', name: 'Law', epithet: 'Surgeon of Death', origin: 'One Piece',
   types: ['MIND', 'SLASH'],
   base: { hp: 80, atk: 90, def: 75, spa: 125, spd: 85, spe: 105 },
-  abilities: ['operating_room', 'cold_read'],
+  abilities: ['operating_room', 'cold_read', 'trade_places'],
   learnset: [
     { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'one_sword_slash' }, { lv: 1, move: 'mind_spike' }, { lv: 4, move: 'draw_cut' },
@@ -157,7 +157,7 @@ def({
   id: 'jinbe', name: 'Jinbe', epithet: 'Knight of the Sea', origin: 'One Piece',
   types: ['SEA', 'FIST'],
   base: { hp: 135, atk: 105, def: 130, spa: 60, spd: 115, spe: 45 },
-  abilities: ['ocean_heart', 'unbreakable'],
+  abilities: ['ocean_heart', 'unbreakable', 'sea_legs'],
   learnset: [
     { lv: 14, move: 'tidal_mend' }, { lv: 10, move: 'set_the_feet' },
     { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'aqua_step' }, { lv: 4, move: 'shark_bite' },
@@ -178,7 +178,7 @@ def({
   id: 'mihawk', name: 'Mihawk', epithet: "World's Strongest Swordsman", origin: 'One Piece',
   types: ['SLASH', 'VOID'],
   base: { hp: 90, atk: 145, def: 90, spa: 90, spd: 95, spe: 100 },
-  abilities: ['perfect_edge', 'unbreakable'],
+  abilities: ['perfect_edge', 'unbreakable', 'prankster_wit'],
   learnset: [
     { lv: 1, move: 'one_sword_slash' }, { lv: 1, move: 'draw_cut' }, { lv: 4, move: 'flying_slash' },
     { lv: 7, move: 'sever_tendon' }, { lv: 10, move: 'chasing_edge' }, { lv: 13, move: 'whetstone_rite' },
@@ -198,7 +198,7 @@ def({
   id: 'crocodile', name: 'Crocodile', epithet: 'Desert King', origin: 'One Piece',
   types: ['EARTH', 'TOXIN'],
   base: { hp: 110, atk: 80, def: 110, spa: 100, spd: 105, spe: 65 },
-  abilities: ['sand_body', 'desiccate'],
+  abilities: ['sand_body', 'desiccate', 'dust_devil'],
   learnset: [
     { lv: 14, move: 'strata_rest' }, { lv: 10, move: 'set_the_feet' },
     { lv: 1, move: 'mud_shot' }, { lv: 1, move: 'sand_lance' }, { lv: 4, move: 'boulder_toss' },
@@ -220,7 +220,7 @@ def({
   id: 'katakuri', name: 'Katakuri', epithet: 'Sweet Commander', origin: 'One Piece',
   types: ['MIND', 'HAKI'],
   base: { hp: 110, atk: 130, def: 100, spa: 95, spd: 100, spe: 90 },
-  abilities: ['future_sight', 'mochi_body'],
+  abilities: ['future_sight', 'mochi_body', 'insomnia_watch'],
   learnset: [
     { lv: 14, move: 'clear_the_head' }, { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'pressure_point' }, { lv: 4, move: 'clutch' },
@@ -241,7 +241,7 @@ def({
   id: 'kaido', name: 'Kaido', epithet: 'Strongest Creature', origin: 'One Piece',
   types: ['BEAST', 'HAKI'],
   base: { hp: 140, atk: 145, def: 125, spa: 110, spd: 110, spe: 70 },
-  abilities: ['undying', 'conquerors_will'],
+  abilities: ['undying', 'conquerors_will', 'rage_scale'],
   learnset: [
     { lv: 14, move: 'beast_regrowth' },
     { lv: 1, move: 'imbued_strike' }, { lv: 1, move: 'savage_bite' }, { lv: 4, move: 'iron_body' },
@@ -269,7 +269,7 @@ def({
   id: 'usopp', name: 'Usopp', epithet: 'God of the Sniper Island', origin: 'One Piece',
   types: ['MECHA', 'TOXIN'],
   base: { hp: 70, atk: 60, def: 65, spa: 115, spd: 70, spe: 100 },
-  abilities: ['technician', 'quick_draw'],
+  abilities: ['technician', 'quick_draw', 'harvest_luck'],
   learnset: [
     { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'hair_trigger' }, { lv: 4, move: 'sogeking_shot' },
     { lv: 7, move: 'oil_slick_toss' }, { lv: 10, move: 'caltrop_scatter' }, { lv: 13, move: 'toxic_barbs' },
@@ -290,7 +290,7 @@ def({
   id: 'franky', name: 'Franky', epithet: 'Cyborg', origin: 'One Piece',
   types: ['MECHA', 'FIST'],
   base: { hp: 120, atk: 100, def: 145, spa: 75, spd: 100, spe: 40 },
-  abilities: ['iron_hide', 'thick_hide'],
+  abilities: ['iron_hide', 'thick_hide', 'venom_spines'],
   learnset: [
     { lv: 14, move: 'field_repair' },
     { lv: 1, move: 'shockwave_palm' }, { lv: 1, move: 'gear_strike' }, { lv: 4, move: 'hair_trigger' },
@@ -312,7 +312,7 @@ def({
   id: 'brook', name: 'Brook', epithet: 'Soul King', origin: 'One Piece',
   types: ['SPIRIT', 'SLASH'],
   base: { hp: 75, atk: 95, def: 60, spa: 120, spd: 90, spe: 125 },
-  abilities: ['revenant', 'amplifier'],
+  abilities: ['revenant', 'amplifier', 'bad_dreams'],
   learnset: [
     { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'resonance_lance' }, { lv: 1, move: 'draw_cut' }, { lv: 4, move: 'echo_volley' },
@@ -334,8 +334,9 @@ def({
   id: 'chopper', name: 'Chopper', epithet: 'Cotton Candy Lover', origin: 'One Piece',
   types: ['BEAST', 'MIND'],
   base: { hp: 125, atk: 60, def: 125, spa: 70, spd: 120, spe: 55 },
-  abilities: ['regenerator', 'pure_heart'],
+  abilities: ['regenerator', 'pure_heart', 'immunity_gut'],
   learnset: [
+    { lv: 16, move: 'aurora_veil' },
     { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'savage_bite' }, { lv: 1, move: 'pack_hunt' }, { lv: 4, move: 'second_wind' },
     { lv: 6, move: 'small_target' }, { lv: 7, move: 'frost_step' }, { lv: 9, move: 'numbing_mist' },
@@ -357,7 +358,7 @@ def({
   id: 'doflamingo', name: 'Doflamingo', epithet: 'Heavenly Demon', origin: 'One Piece',
   types: ['MIND', 'VOID'],
   base: { hp: 95, atk: 105, def: 90, spa: 130, spd: 95, spe: 110 },
-  abilities: ['cursed_grip', 'pressure_haki'],
+  abilities: ['cursed_grip', 'pressure_haki', 'mimicry'],
   learnset: [
     { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'shadow_clutch' }, { lv: 1, move: 'mind_spike' }, { lv: 4, move: 'void_lance' },
@@ -378,7 +379,7 @@ def({
   id: 'hancock', name: 'Hancock', epithet: 'Pirate Empress', origin: 'One Piece',
   types: ['LIGHT', 'MIND'],
   base: { hp: 85, atk: 100, def: 80, spa: 125, spd: 100, spe: 115 },
-  abilities: ['mirage_step', 'opportunist'],
+  abilities: ['mirage_step', 'opportunist', 'heat_haze'],
   learnset: [
     { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'radiant_palm' }, { lv: 1, move: 'photon_dart' }, { lv: 4, move: 'blinding_flash' },
@@ -400,8 +401,9 @@ def({
   id: 'smoker', name: 'Smoker', epithet: 'White Hunter', origin: 'One Piece',
   types: ['WIND', 'MECHA'],
   base: { hp: 115, atk: 95, def: 115, spa: 70, spd: 110, spe: 65 },
-  abilities: ['windborne', 'justified'],
+  abilities: ['windborne', 'justified', 'blizzard_veil'],
   learnset: [
+    { lv: 16, move: 'light_wall' },
     { lv: 14, move: 'field_repair' },
     { lv: 1, move: 'feather_step' }, { lv: 1, move: 'quick_strike' }, { lv: 4, move: 'clearing_gust' },
     { lv: 7, move: 'tempest_kick' }, { lv: 10, move: 'slicing_gale' }, { lv: 13, move: 'gear_strike' },
@@ -421,7 +423,7 @@ def({
   id: 'enel', name: 'Enel', epithet: 'God of Skypiea', origin: 'One Piece',
   types: ['STORM', 'SPIRIT'],
   base: { hp: 80, atk: 85, def: 65, spa: 145, spd: 85, spe: 120 },
-  abilities: ['static_field', 'amplifier'],
+  abilities: ['static_field', 'amplifier', 'flash_absorb'],
   learnset: [
     { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'arc_bolt' }, { lv: 1, move: 'spark_jab' }, { lv: 4, move: 'chain_lightning' },
@@ -442,7 +444,7 @@ def({
   id: 'bigmom', name: 'Big Mom', epithet: 'Emperor of the Sea', origin: 'One Piece',
   types: ['SPIRIT', 'BEAST'],
   base: { hp: 145, atk: 135, def: 130, spa: 115, spd: 105, spe: 60 },
-  abilities: ['stamina_wall', 'conquerors_will'],
+  abilities: ['stamina_wall', 'conquerors_will', 'slow_haki'],
   learnset: [
     { lv: 14, move: 'beast_regrowth' }, { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'soul_leech' }, { lv: 1, move: 'savage_bite' }, { lv: 4, move: 'wandering_palm' },
@@ -463,7 +465,7 @@ def({
   id: 'shanks', name: 'Shanks', epithet: 'Red-Haired', origin: 'One Piece',
   types: ['HAKI', 'SLASH'],
   base: { hp: 100, atk: 130, def: 100, spa: 100, spd: 110, spe: 115 },
-  abilities: ['conquerors_will', 'perfect_edge'],
+  abilities: ['conquerors_will', 'perfect_edge', 'blade_ground'],
   learnset: [
     { lv: 1, move: 'draw_cut' }, { lv: 1, move: 'imbued_strike' }, { lv: 4, move: 'one_sword_slash' },
     { lv: 6, move: 'grit' }, { lv: 9, move: 'sever_tendon' }, { lv: 12, move: 'armament' },
@@ -483,7 +485,7 @@ def({
   id: 'goku', name: 'Goku', epithet: 'Son of Saiyans', origin: 'Dragon Ball',
   types: ['FIST', 'LIGHT'],
   base: { hp: 105, atk: 130, def: 95, spa: 125, spd: 95, spe: 115 },
-  abilities: ['late_bloomer', 'guts_haki'],
+  abilities: ['late_bloomer', 'guts_haki', 'swift_swim'],
   learnset: [
     { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'photon_dart' }, { lv: 4, move: 'radiant_palm' },
     { lv: 6, move: 'seismic_throw' }, { lv: 7, move: 'open_stance' }, { lv: 10, move: 'flash_step' },
@@ -503,7 +505,7 @@ def({
   id: 'ichigo', name: 'Ichigo', epithet: 'Substitute Reaper', origin: 'Bleach',
   types: ['SLASH', 'SPIRIT'],
   base: { hp: 95, atk: 130, def: 85, spa: 105, spd: 80, spe: 105 },
-  abilities: ['berserker', 'last_stand'],
+  abilities: ['berserker', 'last_stand', 'frozen_wake'],
   learnset: [
     { lv: 1, move: 'draw_cut' }, { lv: 1, move: 'one_sword_slash' }, { lv: 4, move: 'soul_leech' },
     { lv: 6, move: 'chasing_edge' }, { lv: 7, move: 'flying_slash' }, { lv: 10, move: 'grit' },
@@ -524,7 +526,7 @@ def({
   id: 'ichigo_bankai', name: 'Ichigo', epithet: 'Bankai', origin: 'Bleach',
   types: ['SLASH', 'VOID'],
   base: { hp: 95, atk: 140, def: 90, spa: 110, spd: 85, spe: 140 },
-  abilities: ['berserker', 'unburden_ki'],
+  abilities: ['berserker', 'unburden_ki', 'caltrop_trail'],
   learnset: [
     { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'draw_cut' }, { lv: 1, move: 'flash_step' }, { lv: 4, move: 'cut_and_run' },
@@ -608,7 +610,7 @@ def({
   id: 'saitama', name: 'Saitama', epithet: 'Caped Baldy', origin: 'One Punch Man',
   types: ['FIST'],
   base: { hp: 100, atk: 165, def: 100, spa: 40, spd: 90, spe: 105 },
-  abilities: ['overwhelm', 'finisher'],
+  abilities: ['overwhelm', 'finisher', 'iron_fist'],
   learnset: [
     { lv: 1, move: 'normal_punch' }, { lv: 1, move: 'quick_strike' }, { lv: 4, move: 'consecutive_normal_punches' },
     { lv: 7, move: 'shockwave_palm' }, { lv: 8, move: 'iron_body' }, { lv: 10, move: 'seismic_throw' },
@@ -628,7 +630,7 @@ def({
   id: 'killua', name: 'Killua', epithet: 'Lightning Palm', origin: 'Hunter x Hunter',
   types: ['STORM', 'SHADOW'],
   base: { hp: 80, atk: 120, def: 75, spa: 105, spd: 80, spe: 150 },
-  abilities: ['unburden_ki', 'momentum'],
+  abilities: ['unburden_ki', 'momentum', 'heat_haze'],
   learnset: [
     { lv: 10, move: 'read_the_hit' },
     { lv: 1, move: 'spark_jab' }, { lv: 1, move: 'quick_strike' }, { lv: 4, move: 'shadow_clutch' },
@@ -671,7 +673,7 @@ def({
   id: 'luffy_g4', name: 'Luffy', epithet: 'Fourth Gear', origin: 'One Piece',
   types: ['FIST', 'HAKI'],
   base: { hp: 95, atk: 138, def: 92, spa: 60, spd: 85, spe: 122 },
-  abilities: ['gum_body', 'momentum'],
+  abilities: ['gum_body', 'momentum', 'bloodlust'],
   learnset: [
     { lv: 1, move: 'quick_strike' }, { lv: 1, move: 'gum_gum_pistol' }, { lv: 4, move: 'hit_and_fade' },
     { lv: 6, move: 'grit' }, { lv: 8, move: 'imbued_strike' }, { lv: 12, move: 'heel_drop' },
@@ -759,6 +761,9 @@ function attackScore(f, m) {
 }
 
 /** Value of a status move to *this* fighter, on the same rough scale/2. */
+/** Which attacking type each terrain pays off for. Mirrors the engine's table. */
+const TERRAIN_TYPE = { blade: 'SLASH', ember: 'FLAME', psychic: 'MIND', haki: 'HAKI' };
+
 /** Bulk against offense — the axis a fighter's role actually sits on. */
 function bulkRatio(f) {
   return (f.base.hp + f.base.def + f.base.spd) / (f.base.atk + f.base.spa + f.base.spe);
@@ -775,7 +780,12 @@ function utilityScore(f, m) {
         v += ({ tox: 50, slp: 50, par: 46, frz: 44, brn: 46, psn: 34 }[e.value] ?? 40) * acc;
         break;
       case 'hazard': v += 44; break;
-      case 'screen': v += 24; break;
+      case 'screen': {
+        // A screen buys turns, and turns are only worth buying for something
+        // that can spend them. Same argument as recovery below.
+        v += 16 + 34 * clamp01((bulkRatio(f) - 0.85) / 0.45);
+        break;
+      }
       case 'heal': {
         // Reliable recovery is only a plan for something that survives the turn
         // it spends. On a wall it *is* the win condition — the fight becomes
@@ -788,7 +798,15 @@ function utilityScore(f, m) {
       }
       case 'cure': v += 8; break;
       case 'clearHazards': v += 10; break;
-      case 'weather': case 'terrain': v += 12; break;
+      case 'weather': case 'terrain': {
+        // Worth a turn only to a fighter whose own kit cashes it in.
+        const payoff = (getFighter(f.id)?.learnset || []).filter((l) => {
+          const mv = getMove(l.move);
+          return mv && mv.category !== 'status' && TERRAIN_TYPE[e.value] === mv.type;
+        }).length;
+        v += 10 + Math.min(26, payoff * 5);
+        break;
+      }
       case 'trickRoom': v += f.base.spe <= 70 ? 18 : -25; break;
       case 'boost': {
         const own = e.target === 'self';
@@ -924,11 +942,48 @@ export function defaultMoves(id, level = 50) {
 // competitive Pokémon sits — and a locked fighter that meets the wrong wall is
 // the single most common honest reason to switch. The rest split between
 // staying power and damage.
+// Thirty-eight held items existed and twelve of them ever reached a fighter,
+// because these four pools were short and repeated their favourites. Widened to
+// the whole holdable library, still sorted by the role that wants each one — a
+// Choice Lens on a physical attacker is not variety, it is a mistake.
+// Thirty-eight held items existed and twelve of them ever reached a fighter,
+// because these four pools were short and repeated their favourites.
+//
+// The type charms and the weather stones are not role choices at all — a Flame
+// Charm belongs to the man who is on fire, and a Frost Stone belongs to the one
+// whose ability wants a blizzard. Those are named here; everything else falls
+// through to a role pool widened to the rest of the holdable library.
+const ITEM_BY_FIGHTER = {
+  // type charms — the item is the character
+  ace: 'flame_charm', jinbe: 'tide_charm', enel: 'storm_coil', mihawk: 'blade_oil',
+  shanks: 'haki_stone', luffy: 'knuckle_wrap', chopper: 'frost_prism', gojo: 'void_shard',
+  // weather stones — paired with the ability or the arc that wants that sky
+  sanji: 'sun_stone', nami: 'squall_stone', edward: 'sand_stone', smoker: 'frost_stone',
+  // signatures
+  bigmom: 'weighted_bands',       // she has never needed to be fast
+  kaido: 'cursed_cutlass',        // the drink, and what it costs him
+  killua: 'prism_boots',          // he does not touch the ground long enough
+  katakuri: 'grave_plum'          // he has already seen the one that would land
+};
+// Sea Stone Band is deliberately *not* handed to anyone by default. Blanket
+// status immunity was worth little when status moves were worth 2.2pp; now that
+// they are the second-biggest lever in the game it took Katakuri from the middle
+// of the roster to a 71.4% win rate on its own. It stays in the wall pool, where
+// the hash may or may not find it, and in the builder, where it is a choice.
+
+// Everything else falls through to a role pool, widened to the rest of the
+// holdable library. The competitive staples stay here rather than in the table
+// above, because a Choice Edge should be the common case and a Frost Prism the
+// exception — not the other way round.
 const ITEM_BY_ROLE = {
-  physical: ['choice_edge', 'power_band', 'expert_belt', 'leftovers', 'choice_edge', 'war_drum', 'straw_charm', 'log_pose_scarf'],
-  special: ['choice_lens', 'focus_lens', 'expert_belt', 'leftovers', 'choice_lens', 'war_drum', 'sitrus_fruit', 'log_pose_scarf'],
-  wall: ['leftovers', 'iron_gi', 'sitrus_fruit', 'spiked_guard', 'leftovers', 'straw_charm', 'shell_bell', 'cursed_cutlass'],
-  fast: ['log_pose_scarf', 'expert_belt', 'quick_charm', 'choice_edge', 'log_pose_scarf', 'leftovers', 'choice_lens', 'focus_lens']
+  physical: ['choice_edge', 'power_band', 'expert_belt', 'leftovers', 'war_drum',
+    'straw_charm', 'log_pose_scarf', 'shell_bell', 'grave_plum', 'quick_charm'],
+  special: ['choice_lens', 'focus_lens', 'expert_belt', 'leftovers', 'war_drum',
+    'sitrus_fruit', 'log_pose_scarf', 'ward_plum', 'char_plum', 'cure_plum'],
+  wall: ['leftovers', 'iron_gi', 'sitrus_fruit', 'spiked_guard', 'straw_charm',
+    'shell_bell', 'marine_vest', 'pinch_pepper', 'brine_plum', 'mint_leaf'],
+  fast: ['log_pose_scarf', 'expert_belt', 'quick_charm', 'choice_edge', 'leftovers',
+    'choice_lens', 'focus_lens', 'prism_boots', 'straw_charm', 'ward_plum']
 };
 
 /** Small stable hash so the choice is a property of the fighter, not of a seed. */
@@ -948,6 +1003,7 @@ export function defaultItem(id) {
       : b.atk >= b.spa ? 'physical' : 'special';
   // A Log Pose Scarf on the fastest fighter in the game buys nothing and costs
   // it the lock, so it only goes to something a speed tier short of the top.
+  if (ITEM_BY_FIGHTER[id]) return ITEM_BY_FIGHTER[id];
   const pool = ITEM_BY_ROLE[role].map((it) =>
     (it === 'log_pose_scarf' && (b.spe > 130 || b.spe < 90)) ? 'expert_belt' : it);
   return pool[idHash(id) % pool.length];
@@ -958,7 +1014,13 @@ export function defaultAbility(id) {
   const f = getFighter(id);
   if (!f) return null;
   if (f.abilities.length < 2) return f.abilities[0];
-  return (idHash(id + '#ability') % 5 === 0) ? f.abilities[1] : f.abilities[0];
+  // Slot 0 is the fighter's signature and stays the common case; the later
+  // slots are the hidden abilities and show up the way hidden abilities should.
+  // This used to stop at slot 1, which quietly made every third ability on the
+  // roster unreachable in a default battle.
+  const r = idHash(id + '#ability') % 8;
+  const slot = r < 5 ? 0 : r < 7 ? 1 : 2;
+  return f.abilities[Math.min(slot, f.abilities.length - 1)];
 }
 
 /**
