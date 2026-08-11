@@ -424,6 +424,46 @@ const SFX_ROLE = {
   // bed on measurement and is left exactly as it was.
 };
 
+/**
+ * The combat layer, and the correction to the block above.
+ *
+ * "Everything else already cleared the bed on measurement" was true of what I
+ * measured and false of the game. Stage 1 of the audio harness tests 41 of these
+ * 103 keys and none of the ones a live battle actually fires — `clang`,
+ * `slash_heavy`, `psychic`, `impact_light`, `water_hit`, `gale`. So the lift
+ * above went entirely onto the stinger layer and the sound of a blow landing was
+ * left where it was: a critic measured a stat buff as the loudest thing in the
+ * battle and a punch as the quietest, with the 18 faintest keys in the registry
+ * all being move sounds and 55-86% of hits carrying no stinger at all.
+ *
+ * These lifts are not chosen. Every key in the registry was rendered against the
+ * battle bed's median 250 ms window peak (-14.9 dBFS at ship volumes) and the
+ * lift closes **65% of its deficit** against +1 dB over that bed — deficits ran
+ * from -0.1 to -34.4 dB. Deliberately not 100%: closing the whole gap put every
+ * one of the 24 quietest keys within 0.7 dB of the others and flattened the
+ * registry's own tap-to-world impact ladder, so a glancing blow and a
+ * world-ender landed at the same loudness. 65% fixes the absolute level and
+ * keeps a third of the original spread. Keys already over the bar are absent
+ * rather than cut, so nothing that works today is disturbed. Regenerate the same
+ * way after any change to the synthesis; do not hand-tune a number here.
+ */
+const SFX_COMBAT_LIFT = {
+  beast_roar: 1.6, bubble: 2.2, burn: 4.6, cannon: 1.2, clang: 2.0, cursor: 1.6, fire_big: 1.1,
+  fire_small: 3.6, flame_burst: 1.3, gale: 2.0, gunshot: 3.2, haki: 1.1, hit_beast: 1.2,
+  hit_fist: 1.6, hit_flame: 1.1, hit_frost: 1.6, hit_light: 1.3, hit_mecha: 1.2, hit_mind: 1.5,
+  hit_sea: 1.4, hit_slash: 3.0, hit_sound: 1.4, hit_spirit: 1.5, hit_storm: 1.2,
+  hit_toxin: 1.5, hit_wind: 2.4, ice: 1.4, ice_shatter: 1.2, impact_fire: 1.1,
+  impact_heavy: 1.3, impact_light: 2.1, impact_med: 1.7, impact_tap: 2.8, levelup: 1.6,
+  light: 1.4, light_beam: 1.9, mecha_whirr: 1.1, page: 6.7, psychic: 2.0, recharge: 2.8,
+  scatter: 2.9, screech: 2.3, slash_air: 2.6, slash_heavy: 2.2, slash_light: 5.0,
+  slash_multi: 1.2, slash_soft: 7.3, sludge: 2.2, sonic: 4.0, soul: 1.4, spirit: 1.4,
+  tornado: 1.4, transform: 1.8, warp: 4.7, water_hit: 1.5, weather: 1.2, whirlpool: 2.0,
+  whoosh: 2.8, zap: 4.7
+};
+for (const [k, lift] of Object.entries(SFX_COMBAT_LIFT)) {
+  if (!SFX_ROLE[k]) SFX_ROLE[k] = { lift, duck: 0 };
+}
+
 // The lift is applied to the registry entry itself rather than inside `sfx()`,
 // so it is a property of the sound and not of one code path. Anything that
 // reaches for SFX[key] directly — the critic's offline harness does exactly
@@ -685,7 +725,12 @@ export class Audio {
     this.sfxComp.threshold.value = -17; this.sfxComp.knee.value = 8;
     this.sfxComp.ratio.value = 3.2; this.sfxComp.attack.value = 0.004; this.sfxComp.release.value = 0.16;
     this.sfxBus = ctx.createGain(); this.sfxBus.gain.value = this.sfxVol;
-    this.sfxSum = ctx.createGain(); this.sfxSum.gain.value = 0.9;
+    // 0.8, not 0.9. Lifting the combat layer put enough into the bus that a busy
+    // turn was riding the master limiter constantly; a dB back here costs
+    // nothing audible and means the limiter is catching peaks rather than
+    // holding the whole passage down. (The peak level itself barely moves —
+    // that is set by the limiter's -1.6 dB threshold, not by this gain.)
+    this.sfxSum = ctx.createGain(); this.sfxSum.gain.value = 0.8;
     this.sfxSum.connect(this.sfxComp).connect(this.sfxBus).connect(this.master);
 
     // Music bus with a duck stage that big impacts pull down.
@@ -755,7 +800,13 @@ export class Audio {
     param.cancelScheduledValues(t);
     param.setTargetAtTime(v, t, 0.012);
   }
-  _now() { return this.ctx.currentTime + (this._offline ? 0 : 0.006); }
+  // `_delayOff` is added here rather than threaded through every call because
+  // registry entries write their own `_v({...})` argument lists and mostly do not
+  // forward `o.delay` — measured: `sfx(k, {delay:1.0})`, `{at:1.0}` and
+  // `{when:...}` all started the cue at 0.0120s. Both callers of `_now()` are
+  // voice starts, and `_impact`/`_slash`/`_grains` all funnel through them, so
+  // one offset here reaches everything.
+  _now() { return this.ctx.currentTime + (this._offline ? 0 : 0.006) + (this._delayOff || 0); }
   _rand() { return this._rng(); }
   _rr(a, b) { return a + (b - a) * this._rng(); }
 
@@ -1157,7 +1208,12 @@ export class Audio {
   _duck(amount = 0.25, len = 0.4) {
     if (!this.ctx || !this.musicDuck || !this._tracks.length) return;
     const g = this.musicDuck.gain;
-    const t = this.ctx.currentTime;
+    // `_now()`, not `ctx.currentTime`. Offline, currentTime stays at 0 for the
+    // whole scheduling pass, so every duck was being written at t=0 and had
+    // recovered long before the cue it was supposed to be ducking for actually
+    // played — which is why it measured as no ducking at all. Live it was merely
+    // early by the cue's own delay; offline it was inert.
+    const t = this._now();
     const target = clamp(1 - amount, 0.15, 1);
     if (g.cancelAndHoldAtTime) g.cancelAndHoldAtTime(t); else g.cancelScheduledValues(t);
     g.setValueAtTime(Math.min(g.value, 1), t);
@@ -1242,11 +1298,21 @@ export class Audio {
     // registry entry's weight would flatten the whole impact ladder.
     if (opts.w != null) o.w = opts.w;
     if (rep) o.delay += this._rand() * 0.012;
-    try { fn(this, o); } catch (e) { if (this._realtime) console.warn('[audio] sfx', name, e); }
-    // A reporting cue pushes the bed down for a moment so it is heard as
-    // information rather than as texture. Never for `text_blip`: it fires ~960
-    // times a battle and would pump the music continuously.
-    if (role && role.duck) this._duck(role.duck, role.duckLen ?? 0.26);
+    const prevOff = this._delayOff;
+    this._delayOff = (prevOff || 0) + (o.delay || 0);
+    try {
+      fn(this, o);
+      // A reporting cue pushes the bed down for a moment so it is heard as
+      // information rather than as texture. Never for `text_blip`: it fires
+      // ~960 times a battle and would pump the music continuously.
+      //
+      // This has to happen *inside* the delay window. It used to sit after the
+      // restore below, so the duck was written at the current time while the
+      // cue it was ducking for played up to a second later — measured at 0.13 dB
+      // of ducking, which is none.
+      if (role && role.duck) this._duck(role.duck, role.duckLen ?? 0.26);
+    } catch (e) { if (this._realtime) console.warn('[audio] sfx', name, e); }
+    finally { this._delayOff = prevOff; }
   }
 
   /* ---------------- cries ---------------- */
