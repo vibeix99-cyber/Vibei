@@ -1212,3 +1212,57 @@ person does not re-derive it.
   a parser bug. It is not.
 
 **Status:** done
+
+### Hazard removal distribution — shipped, and the gate it was aimed at FAILED
+
+**What changed.** Removal now reaches 3 of 32 default sets (Ace, Franky, Edward),
+up from 1. No learnsets touched and no hazard formula touched: Franky and Edward
+already owned `scrap_sweep` and simply never picked it. Two reasons, both fixed:
+
+* Neither scorer credited `clearHazards` at all — `attackScore` gave `+16` for
+  *setting* a hazard and nothing for clearing one. Now +20 there, +32 in
+  `utilityScore`, both kept under the status (50) and hazard-set (44) tiers.
+* Scoring alone can never be enough: `scrap_sweep` is 40 BP against movepools
+  whose top attacks are 65-100, so it loses on merit and always will. Removal
+  now gets a **role slot**, the same treatment recovery, priority and screens
+  each needed. Guarded at `picked.length >= 2` rather than the `>= 3` the other
+  slots use — a wall only ever picks two attacks, which is the exact trap the
+  screen slot fell into. Safe here only because the removal move is itself an
+  attack, so the trade leaves two attacking moves rather than one.
+
+**The primary gate failed and the lever is not sufficient.** `depth4 firststep`,
+400 games a cell, ±2.4pp:
+
+```
+  "+ switch out of a bad matchup"        vs pirate      vs ace
+  before this change                       -1.1pp       +2.7pp
+  after                                    -0.4pp       +2.1pp
+```
+
+Against the weak AI it moved 0.7pp in the right direction and is still negative.
+Against the strong AI it is unchanged within noise. **Distribution is not the
+answer to the pirate-tier deficit**, and per the standing guidance that opens
+the door to the hazard formulas — but do not walk through it without reading the
+next paragraph first.
+
+**A question about the gate itself, which I could not resolve and which should
+be settled before more work goes into it.** The pirate AI does not punish a bad
+matchup — that is what makes it the weak tier. Switching out of a matchup your
+opponent is not exploiting costs a turn and buys nothing, so "switching pays
+against a weak opponent" may be asking for something that is not true in Pokémon
+either: there, too, tactical play converts against strong opposition and is
+close to free-to-ignore against a beginner. If that is right, row C against
+pirate is the wrong gate, and the honest target is row **E** — the composite
+club player — which is **+7.7pp vs pirate and +8.9pp vs ace**, comfortably clear
+of noise on both tiers and up from +6.8/+8.1 before.
+
+Worth an explicit decision next session: either accept row E as the gate and
+call the depth blocker closed, or keep row C and accept that it requires making
+the pirate AI punish matchups better — which is an `ai.js` change, not a content
+one, and would mean the weak tier is no longer weak in the way it is now.
+
+**Regression gates all green:** pace 2.66 hits median / 2.63x ends / 5 walls,
+determinism identical across process state, audiocheck balanced with ducking
+intact, probe clean.
+
+**Status:** open — lever spent, gate unresolved

@@ -744,6 +744,12 @@ function attackScore(f, m) {
       // the drawback can subtract, or nothing with self-drops is ever chosen.
       v += Math.max(-40, (own ? 11 : 9) * (own ? sum : -sum) * c);
     } else if (['hazard', 'screen', 'weather', 'terrain'].includes(e.kind)) v += 16;
+    // Hazard removal was worth nothing here, which is why `scrap_sweep` — a
+    // 40 BP attack that also sweeps your own side clean — lost every slot it
+    // competed for and only Ace carried removal on a default set, via a 100 BP
+    // move picked purely on damage. Clearing is worth about a hazard set: both
+    // buy or deny the same entry tax.
+    else if (e.kind === 'clearHazards') v += 20;
   }
   v += 34 * (m.drain || 0);
   v += 7 * (m.critStage || 0);
@@ -797,7 +803,10 @@ function utilityScore(f, m) {
         break;
       }
       case 'cure': v += 8; break;
-      case 'clearHazards': v += 10; break;
+      // Same argument on the status side, for `clearing_gust`. Kept under the
+      // status (50) and hazard-setting (44) tiers: removal should win a slot
+      // when the alternatives are thin, not displace a win condition.
+      case 'clearHazards': v += 32; break;
       case 'weather': case 'terrain': {
         // Worth a turn only to a fighter whose own kit cashes it in.
         const payoff = (getFighter(f.id)?.learnset || []).filter((l) => {
@@ -906,6 +915,16 @@ export function defaultMoves(id, level = 50) {
   // it belongs to the fighter that can afford a turn to halve everything for
   // five, which is the sturdy end of the roster whether or not it also heals.
   const screens = (o) => (o.m.effects || []).some((e) => e.kind === 'screen');
+
+  // Hazard removal, distributed the way every other role tool here is. Scoring
+  // it as damage can never work: `scrap_sweep` is 40 BP against movepools whose
+  // top attacks are 65-100, so it loses every slot on merit and always will.
+  // Only Ace carried removal on a default set, and only because `entei` is a
+  // 100 BP move that happens to clear. With hazards on 6 of 32 sets and removal
+  // on 1, entry damage is a coin flip on team draw rather than something a
+  // player can answer.
+  const clears = (o) => (o.m.effects || []).some((e) => e.kind === 'clearHazards');
+  const clearAtk = atk.filter(clears).sort((a, b) => b.s - a.s)[0] || null;
   const wantAtk = Math.min(4 - utilSlots, atk.length);
   utilSlots = Math.min(utilSlots, 4 - Math.max(2, Math.min(2, atk.length)));
   utilSlots = Math.max(0, Math.min(2, 4 - wantAtk));
@@ -933,6 +952,18 @@ export function defaultMoves(id, level = 50) {
   }
   // ...and if the insurance did not make it on merit, trade the weakest attack
   // for it. Never the first slot: that is the fighter's actual gameplan.
+  // >= 2, not >= 3. A wall picks only two attacks, so the >= 3 guard the other
+  // role slots use would block every fighter that owns removal — the same trap
+  // the screen slot fell into. Safe here precisely because the removal move is
+  // itself an attack: trading slot 1 for it leaves two attacking moves, not one.
+  if (clearAtk && picked.length >= 2 && !picked.includes(clearAtk.id)) {
+    let worst = -1, worstS = Infinity;
+    for (let i = 1; i < picked.length; i++) {
+      const o = atk.find((a) => a.id === picked[i]);
+      if (o && o.s < worstS && !isPivot(o.m) && !clears(o)) { worstS = o.s; worst = i; }
+    }
+    if (worst > 0) picked[worst] = clearAtk.id;
+  }
   if (priorityPick && picked.length >= 3 && !picked.includes(priorityPick.id)) {
     let worst = -1, worstS = Infinity;
     for (let i = 1; i < picked.length; i++) {
@@ -952,7 +983,7 @@ export function defaultMoves(id, level = 50) {
     // screen is not a bleeder, so it was structurally ineligible for the only
     // slot it could have taken. A sturdy fighter that owns one may spend that
     // slot on halving everything for five turns instead.
-    if (statusTaken === 1 && !bleeds(u) && !(screens(u) && bulkRatio(f) >= 1.05)) continue;
+    if (statusTaken === 1 && !bleeds(u) && !(screens(u) && bulkRatio(f) >= 1.05) && !clears(u)) continue;
     if (isPivot(u.m)) pivots++;
     picked.push(u.id); statusTaken++;
   }
