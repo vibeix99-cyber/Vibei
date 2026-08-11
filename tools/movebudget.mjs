@@ -51,12 +51,17 @@ function audit() {
   const SHAPES = ['arc', 'beam', 'burst', 'melee', 'aura'];
   const EFFECT_KINDS = ['status', 'cure', 'boost', 'volatile', 'heal', 'weather', 'terrain',
     'hazard', 'screen', 'clearHazards', 'trickRoom', 'custom'];
-  const CUSTOM = ['seismic', 'halfhp', 'ohko', 'painsplit', 'swapboosts', 'clearboosts'];
+  const CUSTOM = ['seismic', 'halfhp', 'ohko', 'painsplit', 'swapboosts', 'clearboosts', 'pivot'];
   const VOLATILES = ['confusion', 'flinch', 'protect', 'substitute', 'leechseed', 'taunt', 'encore',
     'charging', 'recharge', 'focusenergy', 'endure', 'destinybond', 'rooted', 'torment', 'disable',
-    'perish', 'imprison', 'minimized', 'aqua_ring', 'magnetrise', 'yawn'];
+    'perish', 'imprison', 'minimized', 'aqua_ring', 'magnetrise', 'yawn', 'locked_on'];
   // Volatiles declared in status.js that the engine does not yet act on.
-  const INERT_VOLATILES = ['taunt', 'encore', 'disable', 'torment', 'perish', 'imprison', 'minimized', 'rooted'];
+  // Empty, and it should stay that way unless something is genuinely stubbed:
+  // this list previously named all eight of taunt, encore, disable, torment,
+  // perish, imprison, minimized and rooted long after the engine had grown to
+  // handle every one of them, so the audit spent eleven warnings a run telling
+  // the reader something that was not true.
+  const INERT_VOLATILES = [];
   const STATUSES = ['brn', 'psn', 'tox', 'par', 'slp', 'frz'];
   const WEATHERS = ['rain', 'sun', 'sandstorm', 'hail', 'fog', 'none'];
   const TERRAINS = ['blade', 'ember', 'psychic', 'haki', 'none'];
@@ -298,11 +303,14 @@ async function main() {
 
   const r = await page.evaluate(audit);
 
-  // sfx keys actually implemented, read straight out of the audio module source
+  // sfx keys actually implemented. This used to scrape the audio module's source
+  // text between `sfx(name` and `cry(cry)` for `case` labels; audio.js has since
+  // moved to an exported SFX table, so the scrape matched nothing and the audit
+  // reported all 80 keys in use as unknown — every one of them real. Read the
+  // exports instead, which cannot silently stop matching.
   const sfxKeys = await page.evaluate(async () => {
-    const src = await (await fetch('/src/audio/audio.js')).text();
-    const body = src.slice(src.indexOf('sfx(name'), src.indexOf('cry(cry)'));
-    return [...body.matchAll(/case\s+'([a-z0-9_]+)'/g)].map((m) => m[1]);
+    const mod = await import('/src/audio/audio.js');
+    return [...Object.keys(mod.SFX || {}), ...Object.keys(mod.SFX_ALIAS || {})];
   });
   const known = new Set(sfxKeys);
   const badSfx = r.sfxUsed.filter((k) => !known.has(k));
