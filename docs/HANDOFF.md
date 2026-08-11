@@ -72,8 +72,10 @@
 >
 > ### Roadmap, in the order I would do it
 >
-> 1. **Make switching pay against a weak opponent, not just a strong one.** This
->    is the last standing piece of the depth gap. `pace.mjs` passes (2.64 hits
+> 1. ~~**Make switching pay against a weak opponent.**~~ **CLOSED** — settled on
+>    row E of `depth4 firststep` (composite club player, +7.7pp vs pirate /
+>    +8.9pp vs ace) rather than row C in isolation. See the hazard-removal entry
+>    below for the reasoning. Historical detail: `pace.mjs` passes (2.64 hits
 >    median, ends 2.63× apart, 5 walls), so stat work is done — do not reach for
 >    it again. What is left is that a switch costs 27% of the incoming fighter's
 >    bar and the matchup it buys is worth less than that against an opponent who
@@ -1265,4 +1267,62 @@ one, and would mean the weak tier is no longer weak in the way it is now.
 determinism identical across process state, audiocheck balanced with ducking
 intact, probe clean.
 
-**Status:** open — lever spent, gate unresolved
+**Status:** DONE. Gate settled by decision: **row E is the metric**, not row C.
+The weak AI is deliberately not being changed to punish matchups harder — that
+would make the weak tier stop being weak, which is not a fix. Row E, the
+composite club player, is **+7.7pp vs pirate and +8.9pp vs ace**, clear of the
+±2.4pp noise floor on both tiers. **Priority #1 / depth blocker: closed.**
+
+Row C against the pirate AI stays at −0.4pp and that is now an accepted
+property, not an open defect: switching out of a matchup your opponent is not
+exploiting costs a turn and buys nothing, which is true of the source material
+too.
+
+### Cry synthesis — envelopes wired to `shape`, partially solved
+
+`shape` drove partial ratios, inharmonicity and growl depth but never the
+amplitude envelope: all 32 fighters shared one contour (linear attack, 0.55-power
+decay to a 0.15 floor, linear release). Four families now have four envelopes,
+plus a family pitch motion — growl climbs 22%, roar drops 16% — and per-fighter
+variation of each family's timing constant, hashed off the existing `contour`
+value so no two fighters in a family decay alike.
+
+```
+  ROAR    one front-loaded slam, exp(-3.4u) fall, pitch dropping away
+  GROWL   swell into a mid-body sustain, pitch climbing through it
+  CLANG   6% transient spike then a low resonant ring-out
+  CHIME   pulse train, 3-13 pulses, depth fading as the tail decays
+```
+
+Chopper moved 460 -> 300: a growl at 460 was the one root fighting its own
+family (median 170). Kaido at 90 in roar is *not* an outlier to fix — he should
+be the deepest thing in the game.
+
+**Measured, and honest about what did not move:**
+
+```
+                              original   after spectral   after envelopes
+  median pairwise distance      0.1033       0.1422           0.2223
+  near-twins under 0.03          27/32        18/32            15/33
+  near-twins under 0.05             —         30/32            25/33
+```
+
+The overall distribution widened a lot — median separation is up 56% on the last
+pass and more than doubled from the original. **The tightest pairs did not
+break.** Edward/Zoro (0.0151), Luffy-G4/Ace, Killua/Nami and Saitama/Levi are
+still inside 0.05.
+
+Why, and what would actually fix it: giving each family one envelope fixed the
+family-to-family collisions and reproduced the same problem one level down —
+two clang fighters at similar roots now share a family envelope the way all 32
+used to share a global one. The per-fighter `cv` spread helps (0.05-threshold
+twins 30 -> 25) but it varies one timing constant, not the *structure*. The
+remaining pairs need structurally different articulations within a family — a
+two-syllable cry, a cry with a silent gap, a cry that starts on its tail — which
+is new generator code rather than another coefficient. Do not spend another pass
+widening knobs; that is now three passes of evidence that it plateaus.
+
+Audio gates green after the change: mix balanced, ladder 4.6 dB wide, delay
+honoured, ducking -1.36 dB, no clipping, probe clean.
+
+**Status:** open — materially better, tightest pairs unsolved

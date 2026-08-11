@@ -351,7 +351,7 @@ def({
   signature: 'rampage',
   model: { build: 'lithe', height: 0.90, palette: { skin: '#c8875a', hair: '#8a4a2a', primary: '#d8456a', secondary: '#f2e2c8', accent: '#f2c94c' }, silhouette: ['horns', 'cape'], aura: '#f2a0b8' },
   dex: 'A doctor first and a monster second, and only ever in that order. Being called cute makes him furious and visibly delighted.',
-  tier: 'B', cry: { root: 460, shape: 'growl', len: 0.4 }
+  tier: 'B', cry: { root: 300, shape: 'growl', len: 0.4 }
 });
 
 def({

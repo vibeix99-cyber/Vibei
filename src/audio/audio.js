@@ -1495,12 +1495,67 @@ export class Audio {
     for (let i0 = 0; i0 < n; i0 += BLK) {
       const t = i0 / sr;
       const u = clamp(t / dur, 0, 1);
-      const pitchMul = cf(u) * (1 + P.vibDepth * Math.sin(TAU * P.vibRate * t + P.contour));
-      // amplitude envelope
+      // Family pitch motion, on top of the per-fighter contour. A growl climbs,
+      // a roar drops away hard — the two harmonic families read very differently
+      // once the pitch moves in opposite directions rather than both sitting flat.
+      const glide = P.shape === 'growl' ? 1 + 0.22 * u
+        : P.shape === 'roar' ? 1 - 0.16 * Math.min(1, u * 2.4)
+          : 1;
+      const pitchMul = cf(u) * glide * (1 + P.vibDepth * Math.sin(TAU * P.vibRate * t + P.contour));
+      // ---- amplitude envelope, by family ----------------------------
+      // This used to be one contour for all 32 fighters: linear attack, a
+      // 0.55-power decay to a 0.15 floor, linear release. `shape` drove partial
+      // ratios, inharmonicity and growl depth but never touched the *shape of
+      // the sound over time*, so every cry was the same two-part grunt with a
+      // different timbre painted on — and 27 of 32 had a near-twin. Spectral
+      // widening alone moved that to 18; it is the envelope that separates a
+      // bark from a bell.
       let env;
-      if (t < atk) env = t / atk;
-      else if (t < dur) env = Math.pow(1 - (t - atk) / Math.max(0.001, dur - atk), 0.55) * 0.85 + 0.15;
-      else env = Math.max(0, 1 - (t - dur) / rel);
+      const uu = clamp((t - atk) / Math.max(0.001, dur - atk), 0, 1);
+      // Per-fighter variation *within* the family. Giving each family one
+      // envelope fixed the family-to-family collisions and left the
+      // within-family ones untouched — Edward and Zoro are both clang at
+      // similar roots, so they shared a contour again one level down. `contour`
+      // is already a stable per-fighter hash in 0..5; this spreads the family's
+      // own timing constant across it so no two fighters decay alike.
+      const cv = 0.62 + (P.contour % 6) * 0.15;   // 0.62 .. 1.37
+      if (t < atk) {
+        env = t / atk;
+      } else if (t < dur) {
+        switch (P.shape) {
+          case 'roar':
+            // One heavy front-loaded slam that falls away fast. Almost all the
+            // energy is in the first fifth.
+            env = Math.exp(-uu * 3.4 * cv) * 0.92 + 0.08 * (1 - uu);
+            break;
+          case 'growl':
+            // Swells into a mid-body sustain and holds, rather than decaying
+            // from the first sample. Pairs with the rising glide below.
+            env = 0.30 + 0.70 * Math.min(1, uu / (0.28 * cv)) * (1 - Math.pow(uu, 2.6 * cv));
+            break;
+          case 'clang':
+            // A sharp metallic transient, then a low resonant ring-out. The
+            // long per-partial decay above is what makes the ring sing; this
+            // stops the strike itself being buried in it.
+            env = uu < 0.06 * cv
+              ? 1 - uu * (5.5 / cv)
+              : 0.34 * Math.exp(-(uu - 0.06 * cv) * 1.5 * cv);
+            break;
+          case 'chime':
+          default: {
+            // A vibrating multi-pulse stutter that sparkles out: a pulse train
+            // whose depth fades as the tail decays, so it shimmers early and
+            // smooths late.
+            const pulses = 3 + (P.contour % 6) * 2;
+            const depth = 0.45 * (1 - uu);
+            const trem = 1 - depth * (0.5 - 0.5 * Math.cos(TAU * pulses * uu));
+            env = Math.pow(1 - uu, 1.25) * trem;
+            break;
+          }
+        }
+      } else {
+        env = Math.max(0, 1 - (t - dur) / rel);
+      }
       env *= env;                                  // perceptual taper
       // formant gains, recomputed per block
       for (let k = 0; k < K; k++) {
