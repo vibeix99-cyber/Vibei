@@ -1326,3 +1326,57 @@ Audio gates green after the change: mix balanced, ladder 4.6 dB wide, delay
 honoured, ducking -1.36 dB, no clipping, probe clean.
 
 **Status:** open — materially better, tightest pairs unsolved
+
+### Meta systems swept — team builder, modes, save, netplay: all clean
+
+New gate: `node tools/metacheck.mjs [--stage all|screens|builder|runs|save|link]`.
+It drives the real UI through `window.__ARENA` and asserts on the live DOM.
+**31 checks, zero findings.** No source changed — this pass found nothing to fix,
+which is itself the result.
+
+* **All 15 screens mount** with content and no console errors. `linkbattle` is
+  the one that does not become current, and correctly so: deep-linked without a
+  live session it renders "that link battle is no longer running" and bounces to
+  the lobby.
+* **Team builder exposes everything the engine grew.** 32 roster rows, 6 crew
+  slots, 6 EV sliders against a spent/left budget, natures, abilities, and the
+  full 38-item held library. Hazard removal is learnable there on all four
+  owners (ace, franky, smoker, edward) and screens on all ten.
+* **Both code formats round-trip a fully customised member** — custom EV spread,
+  non-default IVs, nature, held item, third ability slot, hand-picked moves —
+  with no loss, in `GLA1.` and `GLA-TEAM:` alike.
+* **Tournament runs Quarter-final → Semi-final → Final to `status: 'won'`**, a
+  different opponent each round. **Gauntlet walks all 11 ladder steps** with 11
+  distinct opponents and the AI tier escalating rookie → pirate → ace → warlord
+  → yonko. Daily mounts and offers its challenge.
+* **Save writes through to localStorage and survives a page reload.**
+* Combat regressions after the pass: probe clean, determinism identical across
+  process state.
+
+**Read this before trusting a future finding from this harness.** Four of my
+first five "problems" were the harness, not the game, and all four were the same
+mistake — asserting against a *label or a field name I assumed* rather than the
+thing itself:
+
+* Grepped the builder's screen text for "EV". The EV editor renders a budget and
+  six sliders and never prints the word. **Assert on controls, not captions.**
+* Read the builder on mount, before selecting a fighter. The nature/item/ability
+  editor does not exist in the DOM until something is selected.
+* Compared a 3-key EV spread against the decoder's normalised 6-key output and
+  called a lossless round-trip "LOSSY".
+* Looped a tournament on `run.done`. The terminal flag is `run.status` — 'won'
+  or 'lost' — so it advanced a finished bracket forever and looked like a mode
+  that never ends.
+
+The pattern is worth more than the individual fixes: every one produced a
+confident, plausible, entirely false bug report. When this harness flags
+something, reproduce it by hand before acting.
+
+**Status:** done — meta systems judged and clean
+
+### Unjudged pieces remaining
+
+Down to four, none of them systems: character models, arena/lighting, onboarding
+(title + tutorial flow as a first-time experience), and battle HUD legibility.
+All four are *presentation* judgements that need a blind critic looking at
+pixels, not a harness — `tools/metacheck.mjs` covers the mechanical half.
