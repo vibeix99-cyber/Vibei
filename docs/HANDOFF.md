@@ -1576,3 +1576,62 @@ PP — measures 11px or more.
 **Status:** done. `node tools/scenecheck.mjs` is clean across all five stages,
 39 checks. HUD legibility and ultrawide fit are **gated**, no longer
 hand-verified.
+
+### Camera occlusion — gated, and the reported bug did not reproduce
+
+A player reported arena geometry physically blocking the view of the fighters,
+and noted `scenecheck` had missed it. **`scenecheck` missed it because it was
+never looking.** The camera stage tested *frustum containment* — are the
+fighters inside the view volume — which says nothing about whether a pillar
+stands between the lens and them. A fighter can be perfectly framed and
+completely invisible. There is now an occlusion check at the resting shot and a
+per-arena stage covering all six, which is where it matters: the arenas differ
+precisely in what they put near the fighters.
+
+**Nothing in the camera was moved, because the measurements do not support it.**
+
+* **The resting shot is clear.** 0% of either fighter occluded in all six
+  arenas, agreed by the game's own `_blockedCount` and by an independent ray
+  grid, and confirmed against screenshots. Raising it, pulling it forward or
+  changing the FOV would have fixed nothing and put the framing work at risk.
+* **Through whole battles, 5 of 381 sampled frames exceed 35% occlusion**, and
+  3 of those are mid-blend during the deliberate `establish` sweep. The single
+  held-shot case is an over-the-shoulder impact shot in Marineford where the
+  foreground fighter is *the point of the shot*.
+* **The Onigashima opening genuinely looks bad and measures fine.** A black
+  post sits in the middle of the establishing shot. A per-frame trace of the
+  whole 2.9s sweep reads **0% occluded on every frame** — the post is between
+  the fighters, not over them. Worth saying plainly: it reads as an obstruction
+  to the eye and is not one. If this is the reported bug it is a *composition*
+  complaint, not an occlusion one, and the fix would be to move the arena prop
+  or the sweep's arc, not the resting camera.
+
+**An avoidance pass for action shots was written, measured, and thrown away.**
+It extended the existing yaw search to held action shots. Result: 6 bad samples
+of 371 against a baseline of 5 of 381 — no improvement, inside noise. Third
+time this has happened with this camera (see the `minHold` gate and the radius
+search); the rule holds. **An unproven camera behaviour change is worse than
+none.**
+
+`_blockedCount` was kept and sharpened, because it was demonstrably weak:
+
+* **It cast one ray up the fighter's centre line.** A *vertical* pillar occludes
+  a *horizontal* slice, so every sample missed it — measured at 50% of a
+  silhouette gone with the function reporting nothing wrong. My first fix
+  sampled three *heights*, which is the wrong axis and changed nothing. It now
+  casts a cross.
+* **It counted the other fighter as an occluder**, which would drive the search
+  away from correct over-the-shoulder framing.
+* **It counted non-mesh geometry.** Rain is `LineSegments`, and three raycasts
+  lines against a **one-world-unit default threshold**, so any ray passing
+  within a metre of a raindrop registers a hit. A probe using the defaults
+  reported every fighter **100% occluded in all six arenas** in frames whose
+  pixels show them completely clear. That number was the first thing this
+  investigation produced and it was entirely artefact.
+
+No regression: 5 of 366 bad samples after the change against 5 of 381 before.
+
+**Still open:** the report has not been reproduced. If it is not the Onigashima
+composition, the missing information is the arena, the fighters and the moment
+— worth asking rather than guessing, since six arenas at the resting shot and
+381 sampled action frames did not show it.
