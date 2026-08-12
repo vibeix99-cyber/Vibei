@@ -514,6 +514,46 @@ export class CameraDirector {
   }
 
   /**
+   * Back the camera off until both fighters sit inside the horizontal safe band.
+   *
+   * `_clearActors` measures frame *height* and body distance and nothing else,
+   * so a fighter could project at 126% of screen width and satisfy every check
+   * the director had. Measured in Corrida Colosseum: **53 of 53 held `track`
+   * frames** with a fighter at least 20% outside the viewport, worst case fully
+   * outside it, while the left 60% of frame held empty floor.
+   *
+   * The vertical half of this has always been here — `_track` constrains the
+   * other fighter's head and feet through `_composeY`. Only the horizontal half
+   * was missing, which is why it read as an oversight rather than a choice.
+   *
+   * Same convergence discipline as the frame-share pass: the camera can only be
+   * pushed outward, so an overshoot is permanent and comes straight off the
+   * other fighter. Take 72% of the correction and approach the limit from below.
+   */
+  _frameBoth(p, at, fov, lo = 0.06, hi = 0.94) {
+    for (let pass = 0; pass < 4; pass++) {
+      const t = this._backOff(p, at, (s) => {
+        const r = Math.max(0.2, s.rad);
+        const y = s.aim.y + Math.max(0.3, s.top) * 0.55;
+        let worst = 0;
+        for (const w of [-1, 0, 1]) {
+          _k[2].set(s.aim.x + U.x * r * w, y, s.aim.z + U.z * r * w);
+          this._project(_k[2], p, at, fov, _k[4]);
+          // Behind the lens reads as x = +/-9; treat it as maximally outside
+          // rather than letting a huge number swamp the correction.
+          const x = clamp(_k[4].x, -1, 2);
+          const over = x < lo ? lo - x : (x > hi ? x - hi : 0);
+          if (over > worst) worst = over;
+        }
+        if (worst <= 0.001) return 0;
+        return _c1.distanceTo(p) * (1 + 0.72 * Math.min(worst / ((hi - lo) * 0.5), 3));
+      });
+      if (t < 0.02) break;
+    }
+    return p;
+  }
+
+  /**
    * Move `p` back along the view axis until it is at least `needOf(actor)`
    * from every actor. `_c1` is left holding the last actor's reference point,
    * which `_clearActors` reads back for the distance it just measured.
@@ -1053,6 +1093,8 @@ export class CameraDirector {
         this._safe(p, 1.6);
         const anchor = _a.copy(a.head).lerp(b.head, e);
         this._clearActors(p, anchor, fov, 0.85);
+        this._safe(p, 1.6);
+        this._frameBoth(p, anchor, fov);
         this._safe(p, 1.6);
         const sx = lerp(from === 0 ? 0.34 : 0.66, to === 0 ? 0.32 : 0.68, e);
         const cons = [
