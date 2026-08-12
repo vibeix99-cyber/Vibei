@@ -25,7 +25,7 @@ def({
   awaken: { into: 'luffy_g4', at: 38 },
   model: { build: 'athletic', height: 1.74, palette: { skin: '#f0c092', hair: '#161616', primary: '#d63b2f', secondary: '#2e6fd0', accent: '#f2d24b' }, silhouette: ['strawhat', 'scar_chest', 'open_vest', 'sandals'], aura: '#ff3b2f' },
   dex: 'Rubber from heel to hairline; punches arrive from impossible distances. Loses to nothing except a locked pantry.',
-  tier: 'S', cry: { root: 240, shape: 'roar', len: 0.5 }
+  tier: 'S', cry: { root: 240, shape: 'roar', len: 0.5, artic: 'late-gap' }
 });
 
 def({
@@ -45,7 +45,7 @@ def({
   signature: 'three_sword_style',
   model: { build: 'bulk', height: 1.81, palette: { skin: '#e8b98a', hair: '#5aa84f', primary: '#1b1b22', secondary: '#2a7f4f', accent: '#c8a24b' }, silhouette: ['haramaki', 'three_swords', 'eye_scar', 'bandana'], aura: '#3ad07a' },
   dex: 'Carries three swords and one impossible promise. Directions are the only opponent he has never beaten.',
-  tier: 'S', cry: { root: 180, shape: 'clang', len: 0.45 }
+  tier: 'S', cry: { root: 180, shape: 'clang', len: 0.45, artic: 'triplet' }
 });
 
 def({
@@ -66,7 +66,7 @@ def({
   signature: 'diable_jambe',
   model: { build: 'lean', height: 1.80, palette: { skin: '#f2caa0', hair: '#e8c352', primary: '#1a1a1a', secondary: '#2b2b38', accent: '#f2f2f2' }, silhouette: ['suit', 'curl_brow', 'cigarette'], aura: '#3a6cff' },
   dex: 'Never uses his hands in a fight — they belong to the kitchen. The legs are a separate, less reasonable animal.',
-  tier: 'A', cry: { root: 300, shape: 'chime', len: 0.4 }
+  tier: 'A', cry: { root: 300, shape: 'chime', len: 0.4, artic: 'triplet' }
 });
 
 def({
@@ -88,7 +88,7 @@ def({
   signature: 'thunderbolt_tempo',
   model: { build: 'lithe', height: 1.70, palette: { skin: '#f5cfa8', hair: '#f0913a', primary: '#f0913a', secondary: '#2e8fd0', accent: '#ffffff' }, silhouette: ['climatact', 'ponytail', 'shoulder_tattoo'], aura: '#f5c542' },
   dex: 'Reads a sky like a ledger and charges interest either way. The staff is only the delivery mechanism.',
-  tier: 'A', cry: { root: 420, shape: 'chime', len: 0.35 }
+  tier: 'A', cry: { root: 420, shape: 'chime', len: 0.35, artic: 'swell' }
 });
 
 def({
@@ -109,7 +109,7 @@ def({
   signature: 'clutch',
   model: { build: 'lithe', height: 1.88, palette: { skin: '#e5b98f', hair: '#1c1c22', primary: '#5b2a86', secondary: '#2a2a33', accent: '#c8a2d8' }, silhouette: ['long_coat', 'crossed_arms'], aura: '#a24fd0' },
   dex: 'Grows limbs wherever she pleases. The spine she reaches for is rarely the one you were guarding.',
-  tier: 'A', cry: { root: 260, shape: 'chime', len: 0.45 }
+  tier: 'A', cry: { root: 260, shape: 'chime', len: 0.45, artic: 'swell' }
 });
 
 def({
@@ -129,7 +129,7 @@ def({
   signature: 'fire_fist',
   model: { build: 'athletic', height: 1.85, palette: { skin: '#e8ba8c', hair: '#1a1a1a', primary: '#ff5a1c', secondary: '#f2a03a', accent: '#ffdca8' }, silhouette: ['open_shirtless', 'cowboy_hat', 'back_tattoo'], aura: '#ff6a1c' },
   dex: 'Elemental to the bone — fists pass through him and come out warm. Falls asleep mid-sentence, mid-meal, mid-fight.',
-  tier: 'S', cry: { root: 200, shape: 'roar', len: 0.5 }
+  tier: 'S', cry: { root: 200, shape: 'roar', len: 0.5, artic: 'swell' }
 });
 
 def({
@@ -150,7 +150,7 @@ def({
   signature: 'gamma_knife',
   model: { build: 'lean', height: 1.91, palette: { skin: '#dfb489', hair: '#1a1a22', primary: '#f5d547', secondary: '#2a2a38', accent: '#e0e0e8' }, silhouette: ['long_coat', 'spotted_hat', 'nodachi', 'tattoo_hands'], aura: '#7fd8ff' },
   dex: 'Inside the Room the rules are his. Rearranges organs the way other people rearrange furniture.',
-  tier: 'S', cry: { root: 170, shape: 'chime', len: 0.5 }
+  tier: 'S', cry: { root: 170, shape: 'chime', len: 0.5, artic: 'stutter' }
 });
 
 def({
@@ -171,7 +171,7 @@ def({
   signature: 'fishman_karate',
   model: { build: 'giant', height: 3.01, palette: { skin: '#4a9fd4', hair: '#1a1a22', primary: '#2a5f8f', secondary: '#f2e2c8', accent: '#f0913a' }, silhouette: ['kimono', 'tusks', 'topknot'], aura: '#2a7fd4' },
   dex: 'Strikes the water inside you and lets physics finish the sentence. Will not move when he has decided not to.',
-  tier: 'A', cry: { root: 120, shape: 'growl', len: 0.6 }
+  tier: 'A', cry: { root: 120, shape: 'growl', len: 0.6, artic: 'triplet' }
 });
 
 def({
@@ -191,7 +191,7 @@ def({
   signature: 'black_blade',
   model: { build: 'lean', height: 1.98, palette: { skin: '#e0b48c', hair: '#1a1a1a', primary: '#1a1a22', secondary: '#5b2a2a', accent: '#c8a24b' }, silhouette: ['long_coat', 'wide_hat', 'greatsword', 'cross_pendant'], aura: '#1a1a22' },
   dex: 'Cuts what he decides to cut, at whatever distance he decides. Sits very still until the moment that ends.',
-  tier: 'S', cry: { root: 140, shape: 'clang', len: 0.55 }
+  tier: 'S', cry: { root: 140, shape: 'clang', len: 0.55, artic: 'stutter' }
 });
 
 def({
@@ -213,7 +213,7 @@ def({
   signature: 'sables',
   model: { build: 'bulk', height: 2.53, palette: { skin: '#d4a878', hair: '#1a1a1a', primary: '#3a2a2a', secondary: '#8a5a3a', accent: '#c8b088' }, silhouette: ['long_coat', 'hook_hand', 'cigar', 'face_scar'], aura: '#c8a165' },
   dex: 'Turns to sand when struck and to a desert when annoyed. Drinks the water out of everything he touches.',
-  tier: 'A', cry: { root: 150, shape: 'growl', len: 0.5 }
+  tier: 'A', cry: { root: 150, shape: 'growl', len: 0.5, artic: 'stutter' }
 });
 
 def({
@@ -234,7 +234,7 @@ def({
   signature: 'divine_departure',
   model: { build: 'giant', height: 5.09, palette: { skin: '#e8c4a0', hair: '#8a2a3a', primary: '#5a1a2a', secondary: '#2a2a33', accent: '#f0d8c0' }, silhouette: ['scarf', 'tall_coat', 'trident'], aura: '#c04a6a' },
   dex: 'Sees a few seconds ahead and steps out of the way before you have thought of the punch. Has never been knocked down.',
-  tier: 'S', cry: { root: 130, shape: 'growl', len: 0.55 }
+  tier: 'S', cry: { root: 130, shape: 'growl', len: 0.55, artic: 'stutter' }
 });
 
 def({
@@ -255,7 +255,7 @@ def({
   signature: 'bolo_breath',
   model: { build: 'giant', height: 7.10, palette: { skin: '#d8a878', hair: '#3a5a8a', primary: '#8a2a2a', secondary: '#2a3a5a', accent: '#c8a24b' }, silhouette: ['horns', 'dragon_mane', 'kanabo', 'shirtless'], aura: '#5a7fd0' },
   dex: 'Has tried to die a great many times and been refused every time. Fights hungover, which is his handicap system.',
-  tier: 'S', cry: { root: 90, shape: 'roar', len: 0.75 }
+  tier: 'S', cry: { root: 90, shape: 'roar', len: 0.75, artic: 'late-gap' }
 });
 
 
@@ -283,7 +283,7 @@ def({
   signature: 'rivet_cannon',
   model: { build: 'lean', height: 1.76, palette: { skin: '#b57a4a', hair: '#1c1c22', primary: '#d8b84a', secondary: '#4a7f3a', accent: '#f2f2e8' }, silhouette: ['goggles', 'scarf', 'gauntlets'], aura: '#d8b84a' },
   dex: 'Wins fights from four hundred metres away and then invents a better version of what happened. The lies are load-bearing.',
-  tier: 'B', cry: { root: 380, shape: 'chime', len: 0.4 }
+  tier: 'B', cry: { root: 380, shape: 'chime', len: 0.4, artic: 'double' }
 });
 
 def({
@@ -305,7 +305,7 @@ def({
   signature: 'coup_de_vent',
   model: { build: 'bulk', height: 2.40, palette: { skin: '#e3b98c', hair: '#5fc8e8', primary: '#3a86c8', secondary: '#2a2a33', accent: '#f2f2f2' }, silhouette: ['open_vest', 'gauntlets', 'shoulder_tattoo'], aura: '#5fc8e8' },
   dex: 'Rebuilt himself out of the wreck that nearly killed him, and improved the specification while he was in there. Runs on cola.',
-  tier: 'A', cry: { root: 130, shape: 'clang', len: 0.55 }
+  tier: 'A', cry: { root: 130, shape: 'clang', len: 0.55, artic: 'stutter' }
 });
 
 def({
@@ -327,7 +327,7 @@ def({
   signature: 'soul_solid',
   model: { build: 'lithe', height: 2.66, palette: { skin: '#f0ece0', hair: '#1c1c22', primary: '#2a2a44', secondary: '#5b2a86', accent: '#f2c94c' }, silhouette: ['suit', 'cape', 'three_swords'], aura: '#6fe3d0' },
   dex: 'Came back from the dead with his sense of humour intact and very little else. The blade is cold before it reaches you.',
-  tier: 'A', cry: { root: 520, shape: 'chime', len: 0.55 }
+  tier: 'A', cry: { root: 520, shape: 'chime', len: 0.55, artic: 'three-syllable' }
 });
 
 def({
@@ -351,7 +351,7 @@ def({
   signature: 'rampage',
   model: { build: 'lithe', height: 0.90, palette: { skin: '#c8875a', hair: '#8a4a2a', primary: '#d8456a', secondary: '#f2e2c8', accent: '#f2c94c' }, silhouette: ['horns', 'cape'], aura: '#f2a0b8' },
   dex: 'A doctor first and a monster second, and only ever in that order. Being called cute makes him furious and visibly delighted.',
-  tier: 'B', cry: { root: 300, shape: 'growl', len: 0.4 }
+  tier: 'B', cry: { root: 300, shape: 'growl', len: 0.4, artic: 'two-syllable' }
 });
 
 def({
@@ -372,7 +372,7 @@ def({
   signature: 'shadow_stitch',
   model: { build: 'lean', height: 3.05, palette: { skin: '#e8c49a', hair: '#f2e2a8', primary: '#e8567a', secondary: '#2a2a33', accent: '#f2c94c' }, silhouette: ['cape', 'goggles', 'open_vest' ], aura: '#e8567a' },
   dex: 'Everyone in the room is already holding a string and has not noticed. He finds the moment they notice extremely funny.',
-  tier: 'S', cry: { root: 210, shape: 'growl', len: 0.6 }
+  tier: 'S', cry: { root: 210, shape: 'growl', len: 0.6, artic: 'two-syllable' }
 });
 
 def({
@@ -394,7 +394,7 @@ def({
   signature: 'heavens_ray',
   model: { build: 'lithe', height: 1.91, palette: { skin: '#f2d0b0', hair: '#1c1c28', primary: '#e04a7a', secondary: '#f2e2e8', accent: '#f2c94c' }, silhouette: ['cape', 'crossed_arms', 'cross_pendant'], aura: '#ff9ec4' },
   dex: 'Beauty as a weapon, deployed with total sincerity and no mercy whatsoever. Turning to stone is the polite outcome.',
-  tier: 'A', cry: { root: 440, shape: 'chime', len: 0.5 }
+  tier: 'A', cry: { root: 440, shape: 'chime', len: 0.5, artic: 'double' }
 });
 
 def({
@@ -416,7 +416,7 @@ def({
   signature: 'cyclone_press',
   model: { build: 'bulk', height: 2.09, palette: { skin: '#d8a878', hair: '#e8e8f0', primary: '#3a4a5a', secondary: '#2a2a33', accent: '#c8c8d0' }, silhouette: ['open_vest', 'cigar', 'gauntlets'], aura: '#c8ccd8' },
   dex: 'Smoke does not stop for a fist and does not stop for an order either. Two cigars, permanently, because one is not enough.',
-  tier: 'B', cry: { root: 170, shape: 'growl', len: 0.5 }
+  tier: 'B', cry: { root: 170, shape: 'growl', len: 0.5, artic: 'three-syllable' }
 });
 
 def({
@@ -437,7 +437,7 @@ def({
   signature: 'el_thor',
   model: { build: 'lean', height: 2.66, palette: { skin: '#e0b878', hair: '#f2e8d0', primary: '#f2c94c', secondary: '#2a2a33', accent: '#ffffff' }, silhouette: ['halo', 'cape', 'topknot'], aura: '#fff3a0' },
   dex: 'Hears every heartbeat on the island and mistakes that for omniscience. Two hundred million volts of very sincere theology.',
-  tier: 'A', cry: { root: 300, shape: 'clang', len: 0.5 }
+  tier: 'A', cry: { root: 300, shape: 'clang', len: 0.5, artic: 'gap' }
 });
 
 def({
@@ -458,7 +458,7 @@ def({
   signature: 'final_requiem',
   model: { build: 'giant', height: 8.80, palette: { skin: '#f0c0a0', hair: '#e8508a', primary: '#e0407a', secondary: '#f2d24b', accent: '#ffffff' }, silhouette: ['cape', 'crossed_arms', 'cross_pendant'], aura: '#ff5fa0' },
   dex: 'Takes years off your life as a snack and asks for seconds. The homies sing while she does it.',
-  tier: 'S', cry: { root: 95, shape: 'roar', len: 0.8 }
+  tier: 'S', cry: { root: 95, shape: 'roar', len: 0.8, artic: 'two-syllable' }
 });
 
 def({
@@ -478,7 +478,7 @@ def({
   signature: 'sovereign_flash',
   model: { build: 'athletic', height: 1.99, palette: { skin: '#e8bc90', hair: '#c8402a', primary: '#1c1c28', secondary: '#3a3a48', accent: '#f2e2c8' }, silhouette: ['cape', 'face_scar', 'three_swords'], aura: '#e8503a' },
   dex: 'Arrived, and the war stopped. Gave away an arm for a child and has never once mentioned it since.',
-  tier: 'S', cry: { root: 165, shape: 'clang', len: 0.6 }
+  tier: 'S', cry: { root: 165, shape: 'clang', len: 0.6, artic: 'triplet' }
 });
 
 def({
@@ -498,7 +498,7 @@ def({
   signature: 'annihilation_ray',
   model: { build: 'athletic', height: 1.75, palette: { skin: '#f0c090', hair: '#1c1c22', primary: '#e87a2a', secondary: '#2a5fb0', accent: '#f2e2c8' }, silhouette: ['open_vest', 'gauntlets', 'scar_chest'], aura: '#ffe36b' },
   dex: 'Gets stronger every time something nearly kills him, which he treats as a training plan. Would rather you fought him at your best.',
-  tier: 'S', cry: { root: 250, shape: 'roar', len: 0.65 }
+  tier: 'S', cry: { root: 250, shape: 'roar', len: 0.65, artic: 'two-syllable' }
 });
 
 def({
@@ -519,7 +519,7 @@ def({
   awaken: { into: 'ichigo_bankai', at: 40 },
   model: { build: 'lean', height: 1.81, palette: { skin: '#eec49a', hair: '#e8873a', primary: '#1c1c28', secondary: '#2a2a38', accent: '#e8e8f0' }, silhouette: ['kimono', 'greatsword', 'scarf'], aura: '#3a6cff' },
   dex: 'Borrowed a job that was never his and refused to give it back. Swings a sword the size of a door as if it weighed nothing.',
-  tier: 'A', cry: { root: 200, shape: 'clang', len: 0.55 }
+  tier: 'A', cry: { root: 200, shape: 'clang', len: 0.55, artic: 'three-syllable' }
 });
 
 def({
@@ -540,7 +540,7 @@ def({
   signature: 'event_horizon',
   model: { build: 'lean', height: 1.81, palette: { skin: '#eec49a', hair: '#e8873a', primary: '#0f0f16', secondary: '#1c1c28', accent: '#e04a4a' }, silhouette: ['kimono', 'greatsword', 'scarf', 'eye_scar'], aura: '#1a1a2a' },
   dex: 'Traded every ounce of bulk for speed and did not think about it for long. The compressed form is the point.',
-  tier: 'S', cry: { root: 150, shape: 'clang', len: 0.6 }
+  tier: 'S', cry: { root: 150, shape: 'clang', len: 0.6, artic: 'swell' }
 });
 
 def({
@@ -561,7 +561,7 @@ def({
   signature: 'singularity',
   model: { build: 'lean', height: 1.90, palette: { skin: '#f2dcc8', hair: '#f2f2f8', primary: '#12121a', secondary: '#2a2a38', accent: '#7fd8ff' }, silhouette: ['goggles', 'cape', 'suit'], aura: '#7fd8ff' },
   dex: 'Nothing reaches him and he knows it, which is most of the problem. Blindfolded because seeing everything is exhausting.',
-  tier: 'S', cry: { root: 330, shape: 'chime', len: 0.55 }
+  tier: 'S', cry: { root: 330, shape: 'chime', len: 0.55, artic: 'stutter' }
 });
 
 def({
@@ -582,7 +582,7 @@ def({
   signature: 'tenfold_tsunami',
   model: { build: 'lean', height: 1.65, palette: { skin: '#e8b890', hair: '#7a2a1a', primary: '#1c3a28', secondary: '#2a2a33', accent: '#3a8ad0' }, silhouette: ['kimono', 'three_swords', 'face_scar'], aura: '#3a9fd8' },
   dex: 'Fights like water finding a crack, which is patient and completely relentless. Apologises to almost everyone he defeats.',
-  tier: 'A', cry: { root: 280, shape: 'chime', len: 0.45 }
+  tier: 'A', cry: { root: 280, shape: 'chime', len: 0.45, artic: 'stutter' }
 });
 
 def({
@@ -603,7 +603,7 @@ def({
   signature: 'thousand_cuts',
   model: { build: 'lean', height: 1.60, palette: { skin: '#e8c8a8', hair: '#1c1c22', primary: '#3a3a48', secondary: '#5a4a3a', accent: '#c8c8d0' }, silhouette: ['cape', 'three_swords', 'gauntlets'], aura: '#a8b8c8' },
   dex: 'Spins through the air on steel cable and lands without a hair out of place. Would like everyone to clean up after themselves.',
-  tier: 'A', cry: { root: 220, shape: 'clang', len: 0.4 }
+  tier: 'A', cry: { root: 220, shape: 'clang', len: 0.4, artic: 'stutter' }
 });
 
 def({
@@ -623,7 +623,7 @@ def({
   signature: 'falling_star_fist',
   model: { build: 'athletic', height: 1.75, palette: { skin: '#f2d0a8', hair: '#f2d0a8', primary: '#e8c93a', secondary: '#e04a4a', accent: '#f2f2f2' }, silhouette: ['cape', 'gauntlets'], aura: '#f2f2f2' },
   dex: 'Three years of push-ups and no air conditioning, and now nothing is a fight. Would genuinely like to lose one.',
-  tier: 'S', cry: { root: 190, shape: 'roar', len: 0.35 }
+  tier: 'S', cry: { root: 190, shape: 'roar', len: 0.35, artic: 'gap' }
 });
 
 def({
@@ -644,7 +644,7 @@ def({
   signature: 'overcharge',
   model: { build: 'lithe', height: 1.58, palette: { skin: '#f2dcc0', hair: '#e8e8f0', primary: '#3a4a6a', secondary: '#2a2a38', accent: '#7fd8ff' }, silhouette: ['gauntlets', 'scarf'], aura: '#8fe8ff' },
   dex: 'Raised as a weapon and spending every day since deciding not to be one. Moves faster than the decision to move.',
-  tier: 'A', cry: { root: 400, shape: 'clang', len: 0.35 }
+  tier: 'A', cry: { root: 400, shape: 'clang', len: 0.35, artic: 'three-syllable' }
 });
 
 def({
@@ -665,7 +665,7 @@ def({
   signature: 'strata_spear',
   model: { build: 'lean', height: 1.65, palette: { skin: '#f0cba0', hair: '#e8c04a', primary: '#c02a2a', secondary: '#1c1c28', accent: '#c8ccd8' }, silhouette: ['cape', 'gauntlets', 'tattoo_hands'], aura: '#8fd8ff' },
   dex: 'Claps once and the ground becomes a weapon. Do not comment on the height; the automail arm is not the sensitive subject.',
-  tier: 'A', cry: { root: 260, shape: 'clang', len: 0.45 }
+  tier: 'A', cry: { root: 260, shape: 'clang', len: 0.45, artic: 'swell' }
 });
 
 
@@ -686,7 +686,7 @@ def({
   signature: 'divine_departure',
   model: { build: 'bulk', height: 2.20, palette: { skin: '#e8807a', hair: '#161616', primary: '#c02a24', secondary: '#2e6fd0', accent: '#f2d24b' }, silhouette: ['scar_chest', 'open_vest', 'sandals', 'gauntlets'], aura: '#ff3b2f' },
   dex: 'Bounces off the air itself, then off you, and the recoil is the attack. Runs out in ten minutes and cannot move for the next ten.',
-  tier: 'S', cry: { root: 210, shape: 'roar', len: 0.6 }
+  tier: 'S', cry: { root: 210, shape: 'roar', len: 0.6, artic: 'double' }
 });
 
 /* ------------------------------------------------------------------ */

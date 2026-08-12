@@ -46,6 +46,123 @@ function mulberry32(a) {
   };
 }
 
+/**
+ * Structural articulations — the *rhythm* of a cry, independent of its timbre.
+ *
+ * Giving each of the four `shape` families its own amplitude envelope fixed the
+ * family-to-family collisions and reproduced the same problem one level down:
+ * two clang fighters at similar roots came to share a family envelope the way
+ * all 32 fighters once shared a global one. Spreading a timing constant across
+ * the family was tried for three passes and plateaus every time, for a reason
+ * that is structural rather than numerical — **no coefficient turns one
+ * utterance into two.** A cry that speaks twice, or stops dead in the middle,
+ * or starts on its own tail, is a different sound at the level the ear
+ * segments on, and no amount of widening a decay constant reaches it.
+ *
+ * Each entry maps normalised body time to `[gain, pitchMul]` and *multiplies*
+ * whatever the family envelope is already doing rather than replacing it, so a
+ * clang/two-syllable is still struck metal — struck twice. Gain never exceeds
+ * 1: these carve time out of a cry, they do not add level to it.
+ */
+const ARTICULATIONS = {
+  plain: () => [1, 1, 0, 1],
+
+  /** Two utterances with real silence between them; the second lower, darker. */
+  'two-syllable': (u, cv) => {
+    const cut = 0.34 * cv, gap = cut + 0.10;
+    if (u < cut) return [Math.min(1, (cut - u) * 14 + 0.35), 1.055, -0.34, 1.26];
+    if (u < gap) return [Math.max(0, 1 - (u - cut) / 0.045) * 0.2, 1, 0.2, 1];
+    return [Math.min(1, ((u - gap) / Math.max(0.05, 1 - gap)) * 9), 0.84, 0.46, 0.76];
+  },
+
+  /**
+   * Three hard re-attacks up front, each bright at its edge, settling into a
+   * dark held tone. The settled part matters as much as the strikes: an
+   * articulation that only decorates its first third leaves the rest of the cry
+   * bare family envelope, which is what put Smoker inside 0.04 of three
+   * different fighters.
+   */
+  stutter: (u, cv) => {
+    const win = 0.34 * cv;
+    if (u >= win) return [1, 0.97, 0.5, 0.78];
+    const k = (u / win) * 3, frac = k - Math.floor(k);
+    return [0.12 + 0.88 * Math.pow(1 - frac, 1.7), 1 + 0.03 * Math.floor(k),
+      -0.55 + frac * 0.8, 1.3 - frac * 0.34];
+  },
+
+  /**
+   * Cuts clean out in the middle and comes back *higher and brighter* on a
+   * different vowel. Silence is the loudest thing you can put in the middle of
+   * a half-second sound. The direction matters: while this returned darker and
+   * lower it traced the same bright-then-dark arc as `two-syllable`, and Ichigo
+   * and Edward sat 0.0226 apart despite having different rhythms.
+   */
+  gap: (u, cv) => {
+    const a = 0.30 * cv, b = a + 0.17;
+    if (u < a) return [1, 0.98, 0.44, 0.8];
+    if (u < b) return [Math.max(0, 1 - Math.min((u - a) / 0.035, (b - u) / 0.035, 1)), 1, 0, 1];
+    return [1, 1.06, -0.5, 1.3];
+  },
+
+  /** Peaks late — starts on what would normally be its own tail and opens up. */
+  swell: (u) => [0.06 + 1.6 * Math.pow(u, 1.6) * (1 - 0.5 * u),
+    0.93 + 0.14 * u, 0.72 - u * 1.0, 0.74 + u * 0.52],
+
+  /** Three even calls, each darker and further back than the last. */
+  triplet: (u) => {
+    const k = Math.min(u, 0.999) * 3.2;
+    if (k >= 3) return [Math.max(0.05, 1 - (k - 3) * 3), 1, 0.5, 0.82];
+    const i = Math.floor(k), frac = k - i;
+    return [0.05 + 0.95 * (Math.min(1, frac * 12) * Math.min(1, (1 - frac) * 5)),
+      1 + 0.045 * (1 - i), -0.4 + i * 0.42, 1.18 - i * 0.18];
+  },
+
+  /** Two even calls, the second lower and markedly darker. */
+  double: (u) => {
+    const k = Math.min(u, 0.999) * 2.15;
+    if (k >= 2) return [Math.max(0.05, 1 - (k - 2) * 4), 0.97, 0.66, 0.7];
+    const i = Math.floor(k), frac = k - i;
+    return [0.05 + 0.95 * (Math.min(1, frac * 10) * Math.min(1, (1 - frac) * 4)),
+      1 - 0.05 * i, -0.45 + i * 1.05, 1.24 - i * 0.5];
+  },
+
+  /** Short, short, long — a name being shouted across a deck. */
+  'three-syllable': (u, cv) => {
+    const s = 0.17 * cv;
+    if (u < s) return [Math.min(1, (s - u) * 16 + 0.3), 1.07, -0.6, 1.34];
+    if (u < s * 1.35) return [0, 1, 0, 1];
+    if (u < s * 2.35) return [Math.min(1, (s * 2.35 - u) * 16 + 0.3), 1.03, -0.28, 1.14];
+    if (u < s * 2.7) return [0, 1, 0, 1];
+    return [Math.min(1, (u - s * 2.7) * 12), 0.86, 0.58, 0.68];
+  },
+
+  /** Runs full, cuts late, and leaves one short bright stub behind it. */
+  'late-gap': (u, cv) => {
+    const a = 0.58 * cv, b = a + 0.15;
+    if (u < a) return [1, 1, 0.24, 0.86];
+    if (u < b) return [0, 1, 0, 1];
+    return [Math.min(1, (u - b) * 14), 1.06, -0.66, 1.38];
+  },
+
+  /** Holds back on a faint dark hum, then arrives late, hard and bright. */
+  rev: (u, cv) => {
+    const on = 0.38 * cv;
+    return u < on ? [0.04, 0.9, 1.15, 0.6] : [Math.min(1, (u - on) * 22), 1.02, -0.42, 1.3];
+  },
+
+  /**
+   * A fast roll that thins out into one held tone — continuous where `stutter`
+   * is three discrete strikes.
+   */
+  roll: (u, cv) => {
+    const win = 0.55 * cv;
+    if (u >= win) return [1, 1, 0.3, 0.8];
+    const r = 1 - u / win;
+    return [0.3 + 0.7 * (0.5 - 0.5 * Math.cos(TAU * (7 + 11 * r) * u)),
+      1 + 0.02 * r, -0.3 + 0.55 * r, 1.1 - 0.24 * r];
+  }
+};
+
 const STEP = { c: 0, d: 2, e: 4, f: 5, g: 7, a: 9, b: 11 };
 /** 'a4' 'gs5' 'bb3' -> midi number. */
 function noteToMidi(tok) {
@@ -812,30 +929,42 @@ export class Audio {
 
   /* ---------------- buffers ---------------- */
 
+  // Seeded off what the buffer *is*, not off the RNG stream, so adding a sound
+  // later cannot shift the noise in every sound that already existed.
   _noise(seconds, kind) {
     const rate = this.ctx.sampleRate;
     const len = Math.floor(rate * seconds);
     const buf = this.ctx.createBuffer(1, len, rate);
     const d = buf.getChannelData(0);
+    const rnd = mulberry32(fnv1a(`noise:${kind}:${seconds}`));
     if (kind === 'brown') {
       let last = 0;
-      for (let i = 0; i < len; i++) { last = (last + 0.02 * (Math.random() * 2 - 1)) / 1.02; d[i] = last * 3.2; }
+      for (let i = 0; i < len; i++) { last = (last + 0.02 * (rnd() * 2 - 1)) / 1.02; d[i] = last * 3.2; }
     } else if (kind === 'pink') {
       let b0 = 0, b1 = 0, b2 = 0;
       for (let i = 0; i < len; i++) {
-        const w = Math.random() * 2 - 1;
+        const w = rnd() * 2 - 1;
         b0 = 0.99765 * b0 + w * 0.0990460;
         b1 = 0.96300 * b1 + w * 0.2965164;
         b2 = 0.57000 * b2 + w * 1.0526913;
         d[i] = (b0 + b1 + b2 + w * 0.1848) * 0.32;
       }
     } else {
-      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+      for (let i = 0; i < len; i++) d[i] = rnd() * 2 - 1;
     }
     return buf;
   }
 
-  /** Arena IR: a handful of early reflections plus a lowpassed exponential tail. */
+  /**
+   * Arena IR: a handful of early reflections plus a lowpassed exponential tail.
+   *
+   * Seeded. Every cry sends to this reverb, so while the tail was built from
+   * `Math.random()` no two renders of the same cry were the same sound —
+   * measured at 0.0127 of fingerprint distance between three identical renders,
+   * which is a noise floor of the same order as the 0.03 threshold the cries
+   * were being judged against. The closest pair on record, 0.0141, was inside
+   * the error bar of zero.
+   */
   _impulse(seconds, decay) {
     const rate = this.ctx.sampleRate;
     const len = Math.floor(rate * seconds);
@@ -843,11 +972,12 @@ export class Audio {
     const taps = [0.011, 0.019, 0.031, 0.047, 0.062, 0.083, 0.101];
     for (let ch = 0; ch < 2; ch++) {
       const d = buf.getChannelData(ch);
+      const rnd = mulberry32(fnv1a(`ir:${seconds}:${decay}:${ch}`));
       let lp = 0;
       for (let i = 0; i < len; i++) {
         const u = i / len;
         const env = Math.pow(1 - u, decay);
-        const w = (Math.random() * 2 - 1) * env;
+        const w = (rnd() * 2 - 1) * env;
         lp += (w - lp) * (0.55 - 0.4 * u);       // highs die first, as in a real hall
         d[i] = lp * 0.9;
       }
@@ -1401,6 +1531,9 @@ export class Audio {
 
     const P = {
       id, shape, f0, dur,
+      // Structural articulation — see ARTICULATIONS. Set per fighter in the
+      // cry block; absent means the family envelope speaks once, as before.
+      artic: ARTICULATIONS[block?.artic] ? block.artic : 'plain',
       tilt: lerp(2.70, 0.34, bright),                     // harmonic rolloff
       nPart: shape === 'chime' ? 9 : shape === 'clang' ? 8 : 14 + Math.round(r() * 6),
       grit: clamp(0.06 + phys * 0.34 + power * 0.12 + r() * 0.14, 0, 0.72),
@@ -1436,7 +1569,13 @@ export class Audio {
    */
   _cryBuffer(P) {
     const sr = this.ctx.sampleRate;
-    const ck = `${P.id}|${sr}`;
+    // Key on the articulation too. `id` seeds every per-fighter random draw, so
+    // it must not absorb the articulation, but two profiles that differ only by
+    // articulation render to different waveforms and cannot share a cache slot.
+    // Inert in the game, where a fighter's cry block is fixed — it matters to
+    // anything that renders the same fighter under several articulations, which
+    // is exactly what tools/cryassign.mjs does.
+    const ck = `${P.id}#${P.artic}|${sr}`;
     const hit = this._cryCache.get(ck);
     if (hit) return hit;
 
@@ -1491,6 +1630,15 @@ export class Audio {
     let np0 = 0, np1 = 0, brown = 0;              // noise filter state
     let lp = 0, hp = 0, hpPrev = 0;
     const atk = P.attack, rel = P.release, dur = P.dur;
+    // Per-fighter variation *within* the family: `contour` is already a stable
+    // per-fighter hash in 0..5, and this spreads the family's own timing
+    // constant across it so no two fighters in a family decay alike. It is also
+    // what shifts where an articulation lands.
+    const cv = 0.62 + (P.contour % 6) * 0.15;   // 0.62 .. 1.37
+    const artic = ARTICULATIONS[P.artic] || ARTICULATIONS.plain;
+    // Hold the articulation at its final body value through the release, so a
+    // triplet rings out from its third call instead of sprouting a fourth.
+    const [relGain, , relTilt, relVow] = artic(1, cv);
 
     for (let i0 = 0; i0 < n; i0 += BLK) {
       const t = i0 / sr;
@@ -1501,7 +1649,8 @@ export class Audio {
       const glide = P.shape === 'growl' ? 1 + 0.22 * u
         : P.shape === 'roar' ? 1 - 0.16 * Math.min(1, u * 2.4)
           : 1;
-      const pitchMul = cf(u) * glide * (1 + P.vibDepth * Math.sin(TAU * P.vibRate * t + P.contour));
+      const [aGain, aPitch, aTilt, aVow] = t < dur ? artic(u, cv) : [relGain, 1, relTilt, relVow];
+      const pitchMul = cf(u) * glide * aPitch * (1 + P.vibDepth * Math.sin(TAU * P.vibRate * t + P.contour));
       // ---- amplitude envelope, by family ----------------------------
       // This used to be one contour for all 32 fighters: linear attack, a
       // 0.55-power decay to a 0.15 floor, linear release. `shape` drove partial
@@ -1512,13 +1661,6 @@ export class Audio {
       // bark from a bell.
       let env;
       const uu = clamp((t - atk) / Math.max(0.001, dur - atk), 0, 1);
-      // Per-fighter variation *within* the family. Giving each family one
-      // envelope fixed the family-to-family collisions and left the
-      // within-family ones untouched — Edward and Zoro are both clang at
-      // similar roots, so they shared a contour again one level down. `contour`
-      // is already a stable per-fighter hash in 0..5; this spreads the family's
-      // own timing constant across it so no two fighters decay alike.
-      const cv = 0.62 + (P.contour % 6) * 0.15;   // 0.62 .. 1.37
       if (t < atk) {
         env = t / atk;
       } else if (t < dur) {
@@ -1556,22 +1698,39 @@ export class Audio {
       } else {
         env = Math.max(0, 1 - (t - dur) / rel);
       }
+      env *= aGain;                                // structural articulation
       env *= env;                                  // perceptual taper
       // formant gains, recomputed per block
+      //
+      // `aTilt` bends the harmonic rolloff as the articulation moves, and it is
+      // the half that makes an articulation audible *as a different sound*
+      // rather than the same sound interrupted. A gain gate alone multiplies
+      // the whole spectrum by a scalar, and log10(g*x) = log10(g) + log10(x) —
+      // so in the log-band fingerprint every band shifts by the same constant
+      // and the *shape*, which is what distance is measured on, does not move
+      // at all. Measured: ten distinct rhythms assigned across the roster left
+      // the closest pair at 0.0193, barely better than no articulation. It is
+      // also simply what happens acoustically. A second syllable is darker than
+      // the first, a re-attack is brighter at its edge, and a sound that swells
+      // opens up as it arrives.
       for (let k = 0; k < K; k++) {
         const f = P.f0 * ratio[k] * pitchMul;
         if (f > sr * 0.45 || f < 12) { gK[k] = 0; continue; }
         let fg = 0.22;
         for (let j = 0; j < 3; j++) {
-          const bw = P.formants[j] / P.fq[j];
-          const x = (f - P.formants[j]) / (bw * 0.5);
+          // `aVow` slides the resonances as the articulation moves: two
+          // syllables on the same vowel are one sound interrupted, two on
+          // different vowels are two sounds.
+          const fj = P.formants[j] * aVow;
+          const bw = fj / P.fq[j];
+          const x = (f - fj) / (bw * 0.5);
           fg += P.fa[j] / (1 + x * x);
         }
         if (shimmer && f > 3000) fg *= 1 + shimmer * 0.9;
         if (tintLp && f > tintLp) fg *= tintLp / f;
         if (tintHp && f < tintHp) fg *= f / tintHp;
         if (metal && k > 2) fg *= 1 + metal * 0.5;
-        gK[k] = base[k] * fg * Math.exp(-t * decay[k]);
+        gK[k] = base[k] * (aTilt ? Math.pow(ratio[k], -aTilt) : 1) * fg * Math.exp(-t * decay[k]);
       }
 
       const end = Math.min(n, i0 + BLK);
@@ -1972,7 +2131,16 @@ Audio.renderOffline = async function renderOffline(spec = {}) {
     case 'cry': {
       const f = FIGHTER_BY_ID[spec.fighterId];
       if (!f) throw new Error('unknown fighter ' + spec.fighterId);
-      a.cry(f.cry, spec.opts || {});
+      // `spec.artic` hears one fighter under an articulation that is not its
+      // own. The block has to be a copy, which defeats the identity lookup in
+      // `_fighterForCry`, so the fighter is handed over explicitly — otherwise
+      // the profile loses its stat shape and types and stops being that
+      // fighter's voice at all. Rendering through the real `cry()` path matters:
+      // it adds the highpass, the pan and the reverb send, and the reverb smears
+      // the tail enough that an optimiser scoring the bare buffer picks an
+      // assignment the gate then rejects.
+      a.cry(spec.artic ? { ...f.cry, artic: spec.artic } : f.cry,
+        spec.artic ? { ...(spec.opts || {}), fighter: f } : (spec.opts || {}));
       break;
     }
     case 'cryProfile': {                             // synthetic profile, for scale tests
@@ -1996,4 +2164,4 @@ Audio.SFX_NAMES = Object.keys(SFX);
 Audio.SFX_ALIASES = SFX_ALIAS;
 
 export const audio = new Audio();
-export { TRACKS, SFX, SFX_ALIAS };
+export { TRACKS, SFX, SFX_ALIAS, ARTICULATIONS };
