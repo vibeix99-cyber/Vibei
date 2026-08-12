@@ -1759,3 +1759,64 @@ Two things came out of it before it stopped, both worth keeping:
   depth    7/10    9/10    POKEMON   re-judged, up from 6
   feel     6/10    8/10    POKEMON   re-judged, unchanged at 6
 ```
+
+### Feel — words and picture on one clock, and two corrections to the brief
+
+**Two things the feel critic reported did not survive measurement, and I would
+rather record that than quietly build on them.**
+
+* **"18% of battle time is a frame in which nothing at all is moving" is not the
+  case. Frozen frames are 0.0%.** The fighters breathe and the camera drifts
+  continuously, all battle. That figure counted the *effects layer* — shake,
+  flash, VFX, HP, text — and could not see actor or camera motion. There was
+  nothing to unfreeze; the brief's third bullet was already satisfied. What is
+  true is that the effects layer is idle 24.5% of the time, which is a different
+  and much smaller claim.
+* **The 0.4-2.3s narration lag was partly a pairing artifact.** Two plausible
+  rules — "first line completing after the flash" and "nearest line either side"
+  — each answered a different question, confidently and wrongly. Pinning the
+  line that actually *explains* the impact gives **0.72s**, not 2.3s. Real, and
+  smaller than reported. Third rule was the right one; the first two are
+  documented in `tools/feelcheck.mjs` so nobody re-derives them.
+
+**The fix, on the surviving finding.** The box showed one line at a time, so
+each line had to be held long enough to read before the next could start, and
+that hold *is* the lag. It now keeps the previous line visible above the current
+one, dimmed and clamped to one row — which is what makes everything else safe. A
+queued hold no longer buys the reader their only look at a line, so it collapses;
+and an impact may pull the box level with the action without taking anything
+away, because a skipped line is promoted rather than lost.
+
+```
+                                             before   after
+  explaining line readable after impact       0.72s    0.37s
+  "Foe Goku took aim!" complete               4.90s    3.55s
+  control returned to the player              5.55s    4.20s
+  eight turns, total                          37.3s    30.6s
+  static effects layer                        24.5%    18.3%
+  frozen frames                                0.0%     0.0%
+```
+
+New gate: `node tools/feelcheck.mjs`.
+
+**Opponent framing: the obvious lever does not work, and it is worth knowing
+why.** Raising the far fighter's floor (`minFill`) from 0.15 to 0.26 moved the
+opponent's median on-screen height from **0.162 to 0.171** — nine thousandths —
+while roughly **doubling** resting-shot occlusion (either fighter behind geometry
+7% of frames, then 13%), because forcing the far fighter larger slides the camera
+around behind the near one and into the scenery. The median is set by the *shot
+vocabulary*, not by that constant: `heroBig` and `impact` are most of a turn and
+favour one fighter deliberately. **Reverted**, with the measurement kept in the
+comment. Fixing "the opponent is a speck" means changing which shots a turn is
+made of — a direction, not a number.
+
+**Scorecard: unchanged, because no critic has judged this.** Feel remains the
+recorded 6/10 until a fresh blind critic re-runs. The improvements above are
+measured against instrumented timelines, not against a verdict, and a builder
+measuring their own work is not a score.
+
+```
+  piece   ours   pokemon   winner    status
+  depth    7/10    9/10    POKEMON   re-judged
+  feel     6/10    8/10    POKEMON   last verdict; predates the text pipelining
+```
