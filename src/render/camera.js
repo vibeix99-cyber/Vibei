@@ -127,6 +127,8 @@ const LOS_TRY = [0, 0.30, -0.30, 0.58, -0.58, 0.88, -0.88];
  * occludes a *horizontal* slice and every centre-line ray missed it.
  */
 const LOS_PT = [[0.22, 0], [0.62, 0], [0.92, 0], [0.62, -0.9], [0.62, 0.9]];
+/** Yaw offsets a single-subject shot may swing through to see its subject. */
+const HERO_TRY = [0.34, -0.34, 0.68, -0.68, 1.02, -1.02];
 const _ray = new THREE.Raycaster();
 
 /** Shortest camera move allowed while reduced motion is on. Never a cut. */
@@ -605,14 +607,21 @@ export class CameraDirector {
    */
   _blockedCount(from, scene) {
     let n = 0;
-    _ray.camera = this.cam;                 // three needs this to raycast sprites
+    for (let i = 0; i < 2; i++) {
+      if (this._blockedOne(from, this.act[i], scene, this.act[1 - i])) n++;
+    }
+    return n;
+  }
+
+  /** Is this one fighter hidden from `from`? Two of three cross samples blocked. */
+  _blockedOne(from, s, scene, ignore = null) {
+    _ray.camera = this.cam;
     _ray.params.Line = { threshold: 0.001 };
     _ray.params.Points = { threshold: 0.001 };
-    for (let i = 0; i < 2; i++) {
-      const s = this.act[i];
-      const root = s.ref?.root;
-      if (!root) continue;
-      const other = this.act[1 - i]?.ref?.root || null;
+    {
+      const root = s?.ref?.root;
+      if (!root) return false;
+      const other = ignore?.ref?.root || null;
       const top = Math.max(0.4, s.top);
       // Sideways offset is taken perpendicular to the view ray, so the cross
       // spans the silhouette as the camera sees it rather than in world X.
@@ -649,9 +658,8 @@ export class CameraDirector {
           break;
         }
       }
-      if (blocked >= 2) n++;
+      return blocked >= 2;
     }
-    return n;
   }
 
   /**
@@ -962,17 +970,30 @@ export class CameraDirector {
     const elev = o.elev * (1 - 0.5 * gk);
     const camY = Math.min(s.head.y * (o.pivot ?? 0.62), 1.35 + 0.30 * s.head.y);
 
-    const p = new THREE.Vector3().copy(s.aim).setY(camY)
-      .addScaledVector(N, Math.cos(yaw) * Math.cos(elev) * dist)
-      .addScaledVector(U, Math.sin(yaw) * Math.cos(elev) * dist);
-    p.y += Math.sin(elev) * dist;
-    this._safe(p, o.minSide ?? 1.2);
-    // Clearance is measured against the slot, not against the tracked head:
-    // the size budget projects a box that sits at `aim`, and aiming the test
-    // four metres off it reads the box as huge and shoves the camera into the
-    // next arena.
-    this._clearActors(p, s.head, fov, o.nearCap ?? 1.0);
-    this._safe(p, o.minSide ?? 1.2);
+    const place = (off) => {
+      const y = yaw + off;
+      const q = new THREE.Vector3().copy(s.aim).setY(camY)
+        .addScaledVector(N, Math.cos(y) * Math.cos(elev) * dist)
+        .addScaledVector(U, Math.sin(y) * Math.cos(elev) * dist);
+      q.y += Math.sin(elev) * dist;
+      this._safe(q, o.minSide ?? 1.2);
+      // Clearance is measured against the slot, not against the tracked head:
+      // the size budget projects a box that sits at `aim`, and aiming the test
+      // four metres off it reads the box as huge and shoves the camera into the
+      // next arena.
+      this._clearActors(q, s.head, fov, o.nearCap ?? 1.0);
+      this._safe(q, o.minSide ?? 1.2);
+      return q;
+    };
+
+    // A shot of one fighter exists to show that fighter, and this one did not.
+    // Measured by a critic recording every game frame: the `heroBig` push-in
+    // put its own subject behind arena geometry in 72% of frames, with a
+    // screenshot of a beige pillar filling the frame and neither fighter
+    // visible. `_clearActors` cannot catch it — it measures how much of the
+    // frame the subject *would* fill and how far away its body is, never
+    // whether anything is in the way.
+    const p = this._seeSubject(`single:${o.side}:${o.fov}`, s, place);
 
     const sx = o.sx ?? (o.side === 0 ? 0.40 : 0.60);
     const cons = [
@@ -1051,6 +1072,32 @@ export class CameraDirector {
       })
     };
     return this._restShot;
+  }
+
+  /**
+   * Pick a yaw offset from which `s` is actually visible. `place(off)` builds
+   * the camera position for that offset; the chosen offset is cached and
+   * re-solved at most three times a second.
+   *
+   * The throttle has to live on the director, not on the shot's options object:
+   * builders like `_hero` construct a fresh options object inside `live()`, so
+   * a cache hung there is empty every frame and the search runs six raycast
+   * sets per frame forever.
+   */
+  _seeSubject(key, s, place) {
+    const p = place(0);
+    const scene = this._bind()?.scene;
+    if (!scene || this.reduced || !s?.ref?.root) return p;
+    const c = this._see || (this._see = {});
+    if (c.key !== key || this.time - (c.at ?? -99) >= 0.33) {
+      c.key = key; c.at = this.time; c.off = 0;
+      if (this._blockedOne(p, s, scene)) {
+        for (const d of HERO_TRY) {
+          if (!this._blockedOne(place(d), s, scene)) { c.off = d; break; }
+        }
+      }
+    }
+    return c.off ? place(c.off) : p;
   }
 
   /** Attacker hero shot — three-quarter front, slow push through the beat. */
@@ -1151,14 +1198,22 @@ export class CameraDirector {
         // Sit behind the fallen fighter so the winner stays in the background.
         const yaw = (side === 0 ? -1 : 1) * 0.42;
         const elev = 0.23;
-        const p = new THREE.Vector3().copy(s.aim).setY(Math.min(Math.max(0.8, s.head.y * 0.7), 3.2))
-          .addScaledVector(N, Math.cos(yaw) * Math.cos(elev) * dist)
-          .addScaledVector(U, Math.sin(yaw) * Math.cos(elev) * dist);
-        p.y += Math.sin(elev) * dist;
-        this._safe(p, 1.2);
         const anchor = _a.copy(s.aim).setY(Math.max(s.head.y, 0.5 * s.scale));
-        this._clearActors(p, anchor, fov, 0.9);
-        this._safe(p, 1.2);
+        // Same swing as the hero shots. The KO is the one beat in a battle
+        // nobody should have to guess at, and it was the worst offender
+        // measured — the fallen fighter behind arena geometry in 77% of frames.
+        const place = (off) => {
+          const y = yaw + off;
+          const q = new THREE.Vector3().copy(s.aim).setY(Math.min(Math.max(0.8, s.head.y * 0.7), 3.2))
+            .addScaledVector(N, Math.cos(y) * Math.cos(elev) * dist)
+            .addScaledVector(U, Math.sin(y) * Math.cos(elev) * dist);
+          q.y += Math.sin(elev) * dist;
+          this._safe(q, 1.2);
+          this._clearActors(q, anchor, fov, 0.9);
+          this._safe(q, 1.2);
+          return q;
+        };
+        const p = this._seeSubject(`ko:${side}`, s, place);
         const cons = [{ v: _k[0].copy(w.aim).setY(w.head.y), min: 0.055, max: 0.56 }];
         const sx = side === 0 ? 0.30 : 0.70;
         return pose(p, this._composeY(p, anchor, sx, 0.46, fov, cons), fov);
