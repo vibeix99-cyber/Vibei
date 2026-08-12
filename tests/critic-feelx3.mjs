@@ -59,10 +59,11 @@ const pickMove = () => page.evaluate(() => {
 await page.evaluate((s) => window.__ARENA.battle.quick(s), SEED);
 await waitPrompt();
 
-if (MODE === 'frame') {
+if (MODE === 'frame' || MODE === 'frame2') {
+  const INCLUDE_ACTORS = MODE === 'frame2';
   // Sample five points up each fighter every render frame: is it in frame, and
   // is the line from the camera blocked by arena geometry?
-  await page.evaluate(async () => {
+  await page.evaluate(async (INCLUDE_ACTORS) => {
     const A = window.__ARENA;
     const THREE = await import('three');
     window.__THREE = THREE;
@@ -74,20 +75,22 @@ if (MODE === 'frame') {
       try {
         const V = A.app.view, cam = A.stage.camera, sc = A.stage.scene, dir = A.app.dir;
         cam.updateMatrixWorld(true);
-        const row = { gt: +A.stage.time.toFixed(3), shot: dir.shot?.id ?? null, s: [] };
+        const row = { gt: +A.stage.time.toFixed(3), shot: dir.shot?.id ?? null, s: [],
+          shake: +A.stage.feel.shake.amp.toFixed(4), hp: A.app.plates.map((p) => p.hp) };
         for (let s = 0; s < 2; s++) {
           const act = V.actors[s];
           if (!act) { row.s.push(null); continue; }
           const a = dir.act[s];
           const h = a?.fullH || 1.9, hw = a?.halfW || 0.45;
           const base = new THREE.Vector3().setFromMatrixPosition(act.root.matrixWorld);
-          let inFrame = 0, clear = 0, n = 0; let minx = 9, maxx = -9, miny = 9, maxy = -9;
+          let inFrame = 0, clear = 0, n = 0, headOut = 0; let minx = 9, maxx = -9, miny = 9, maxy = -9;
           for (const [fy, fx] of [[0.15, 0], [0.55, 0], [0.92, 0], [0.55, -0.9], [0.55, 0.9]]) {
             n++;
             P.copy(base); P.y += h * fy; P.x += hw * fx;
             const ndc = P.clone().project(cam);
             const on = Math.abs(ndc.x) <= 1 && ndc.y >= -1 && ndc.y <= 1 && ndc.z < 1;
             if (on) inFrame++;
+            if (fy === 0.92 && ndc.y > 1 && ndc.z < 1) headOut = 1;
             minx = Math.min(minx, ndc.x); maxx = Math.max(maxx, ndc.x);
             miny = Math.min(miny, ndc.y); maxy = Math.max(maxy, ndc.y);
             C.copy(cam.position); D.copy(P).sub(C);
@@ -95,14 +98,19 @@ if (MODE === 'frame') {
             rc.set(C, D); rc.near = 0.05; rc.far = dist - 0.4;
             const hits = rc.intersectObject(sc, true).filter((hh) => {
               let o = hh.object;
-              while (o) { if (o === V.actors[0]?.root || o === V.actors[1]?.root || o === A.stage.fxGroup) return false; o = o.parent; }
+              while (o) {
+                if (o === A.stage.fxGroup) return false;
+                if (o === V.actors[s]?.root) return false;
+                if (!INCLUDE_ACTORS && (o === V.actors[0]?.root || o === V.actors[1]?.root)) return false;
+                o = o.parent;
+              }
               const m = hh.object.material;
               return hh.object.visible && m && !(m.transparent && (m.opacity ?? 1) < 0.55);
             });
             if (!hits.length) clear++;
           }
           // screen-space height as a fraction of viewport
-          row.s.push({ inFrame, clear, n,
+          row.s.push({ inFrame, clear, n, headOut,
             cx: +((minx + maxx) / 4 + 0.5).toFixed(3), cy: +(0.5 - (miny + maxy) / 4).toFixed(3),
             hFrac: +((maxy - miny) / 2).toFixed(3) });
         }
@@ -110,7 +118,7 @@ if (MODE === 'frame') {
       } catch (e) { F.push({ err: String(e.message) }); }
     };
     requestAnimationFrame(tick);
-  });
+  }, INCLUDE_ACTORS);
   let n = 0;
   for (; n < 16; n++) {
     await pickMove();
@@ -128,8 +136,10 @@ if (MODE === 'frame') {
     const blocked = a.filter((x) => x.clear === 0).length;
     const partBlocked = a.filter((x) => x.clear < x.n).length;
     const hs = a.map((x) => x.hFrac).sort((p, q) => p - q);
+    const headOut = a.filter((x) => x.headOut).length;
     return { fullyInFrame: (100 * fully / a.length).toFixed(0) + '%', offScreen: (100 * none / a.length).toFixed(0) + '%',
       fullyBlocked: (100 * blocked / a.length).toFixed(0) + '%', anyBlocked: (100 * partBlocked / a.length).toFixed(0) + '%',
+      headAboveFrame: (100 * headOut / a.length).toFixed(0) + '%',
       medHeightFracOfScreen: hs[Math.floor(hs.length / 2)] };
   };
   console.log('side0 (player):', JSON.stringify(stat(0)));
