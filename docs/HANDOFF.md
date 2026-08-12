@@ -1680,7 +1680,62 @@ carries much of Pokémon team-building barely exists. **This is the most
 actionable lever on depth: coverage per fighter attacks "there is never a good
 switch-in" directly, and unlike EV or base-stat work it does not touch pace.**
 
-**Feel: not re-judged.** The critic died mid-run when the account hit its
+**Feel: 6/10, Pokémon 8/10, winner POKEMON.** Re-judged on the second attempt;
+the first died on the account spend limit.
+
+**The camera reports were real and my first investigation was wrong.** I polled
+occlusion every 250ms and concluded "cannot reproduce". The critic recorded
+*every game frame* and found the shot I never sampled once. Sparse polling
+against a shot vocabulary whose median holds are 0.8-2.3s is an under-powered
+instrument, and I reported its silence as evidence of absence. It is not.
+
+```
+                                        critic    after
+  heroBig, subject behind geometry        72%       5%
+  ko,      subject behind geometry        77%      19%
+  player,  behind geometry overall         9%       5%
+  track,   fighter outside the frame     53/53 ->  0/38 held frames
+```
+
+`_hero` and `_ko` placed a camera and never asked whether anything was in the
+way; `_clearActors` cannot answer that, since it measures how much of the frame
+the subject *would* fill and how far its body is, never what is between. Both
+now swing through candidate yaws until the subject is visible. Separately
+`_clearActors` never checked horizontal position at all, so a fighter could
+project at 126% of screen width and satisfy every check — `_frameBoth` is the
+missing horizontal half of a constraint whose vertical half was always there.
+
+**Still open, and deliberately not touched:**
+
+* `impact` crops the attacker in 53% of frames — an over-the-shoulder foreground
+  body, which reads as intentional shot language.
+* `entrance` puts the arriving fighter off-screen in 16% of frames.
+* **The foe's median on-screen height is 0.162 of the viewport against the
+  player's 0.496.** The opponent is a speck for most of the battle, and a new
+  opponent arriving is one of the biggest beats in a Pokémon battle.
+* **The frustum check at rest is RED at 6.5% past the edge**, and it is
+  pre-existing — bisected to the camera before any of today's changes, which
+  clips identically. The old boolean was passing by luck: consecutive runs of
+  identical code give 11.34m and 10.75m of near-plane clearance and the resting
+  two-shot sits on the boundary. The critic independently sees the player partly
+  off-frame in 8% of resting frames. **Left failing rather than tuned to green.**
+
+**The feel gap is not the camera.** It is that the visual beat and the text beat
+run on separate clocks: flash, shake, particles and HP drain all finish inside
+0.5s, and the line explaining the hit lands 0.4-2.3s later onto a frozen frame.
+Four of seven hits are announced *after* they land; "A critical hit!" arrives
+1.30s late, "It's not very effective..." up to 2.30s late. **18% of battle time
+(5.25 of 28.68 game-seconds) is a frame with no shake, no flash, no VFX, no HP
+movement and no text movement.** The game ships a `+2` backlog badge, which is
+the system admitting it. That is the single highest-value thing left in feel.
+
+What beats Pokémon, per the critic: the effectiveness-scaled impact stack (a
+resisted hit gets 50ms of hitstop against 100ms, a fifth the flash, no chroma,
+no slow-mo), the FOV punch-in on move announcements, colour-coded log keywords,
+the forced-switch panel's per-candidate matchup deltas, and a 4.7s turn against
+Sword/Shield's 14.
+
+**Superseded note (kept deliberately):****Feel: not re-judged.** The critic died mid-run when the account hit its
 monthly spend limit, before any verdict. **The last feel score remains 6/10 and
 it predates the audio mix, the cry overhaul, the camera rebuild and the
 presentation sweep — it should not be quoted as current.** Its half-finished
@@ -1702,5 +1757,5 @@ Two things came out of it before it stopped, both worth keeping:
 ```
   piece   ours   pokemon   winner    status
   depth    7/10    9/10    POKEMON   re-judged, up from 6
-  feel      —       —         —      NOT re-judged (critic died on spend limit)
+  feel     6/10    8/10    POKEMON   re-judged, unchanged at 6
 ```
