@@ -1,6 +1,6 @@
 // The presentation half, audited as maths rather than taste.
 //
-//   node tools/scenecheck.mjs [--stage all|lights|camera|models|hud|onboarding]
+//   node tools/scenecheck.mjs [--stage all|lights|camera|models|hud|occlusion|onboarding]
 //
 // Four pieces had never been judged and all four are things you would normally
 // have to *look* at: character models, arena lighting, HUD legibility, and what
@@ -39,6 +39,68 @@ async function fresh(viewport = { width: 1280, height: 800 }, clearStorage = fal
   await page.evaluate(() => window.__ARENA.audio.setMuted(true));
   return { page, errs };
 }
+
+/**
+ * What fraction of each fighter is hidden behind arena geometry, right now?
+ *
+ * The camera stage tested frustum containment — "are the fighters inside the
+ * view volume" — which says nothing about whether a pillar stands between the
+ * lens and them. A fighter can be perfectly framed and completely invisible.
+ *
+ * Casts a grid over each silhouette. Meshes only: rain is `LineSegments`, and
+ * three raycasts lines against a one-world-unit default threshold, so a probe
+ * using the defaults reports every fighter 100% occluded in every arena in
+ * frames where the pixels show them entirely clear.
+ */
+const occlusion = (page) => page.evaluate(() => {
+  const A = window.__ARENA, THREE = A.debug.THREE;
+  const cam = A.stage.camera, scene = A.stage.scene;
+  cam.updateMatrixWorld();
+  const camPos = new THREE.Vector3().setFromMatrixPosition(cam.matrixWorld);
+  const ray = new THREE.Raycaster();
+  ray.camera = cam;
+  ray.params.Line = { threshold: 0.001 };
+  ray.params.Points = { threshold: 0.001 };
+  const out = [];
+  for (const act of A.app.view.actors) {
+    if (!act?.root) { out.push(null); continue; }
+    const box = new THREE.Box3().setFromObject(act.root);
+    if (!Number.isFinite(box.min.x)) { out.push(null); continue; }
+    const blockers = new Map();
+    let total = 0, hidden = 0;
+    for (let ix = 0; ix < 4; ix++) for (let iy = 0; iy < 6; iy++) {
+      const p = new THREE.Vector3(
+        box.min.x + (box.max.x - box.min.x) * ((ix + 0.5) / 4),
+        box.min.y + (box.max.y - box.min.y) * ((iy + 0.5) / 6),
+        (box.min.z + box.max.z) * 0.5);
+      const dir = p.clone().sub(camPos);
+      const dist = dir.length();
+      if (dist < 0.2) continue;
+      total++;
+      ray.set(camPos, dir.multiplyScalar(1 / dist));
+      ray.near = 0.05; ray.far = dist - 0.25;
+      let hits = [];
+      try { hits = ray.intersectObjects(scene.children, true); } catch { /* ignore */ }
+      for (const h of hits) {
+        if (!h.object.isMesh) continue;
+        const m = h.object.material;
+        if (!h.object.visible || !m || m.opacity === 0) continue;
+        if (m.transparent && m.opacity < 0.4) continue;
+        let o = h.object, mine = false;
+        while (o) { if (o === act.root) { mine = true; break; } o = o.parent; }
+        if (mine) continue;
+        hidden++;
+        let top = h.object, name = h.object.name || '';
+        while (top.parent && top.parent !== scene) { top = top.parent; if (top.name) name = top.name; }
+        blockers.set(name || h.object.type, (blockers.get(name || h.object.type) || 0) + 1);
+        break;
+      }
+    }
+    out.push({ pct: Math.round(hidden / Math.max(1, total) * 100),
+      blockers: [...blockers.entries()].sort((a, b) => b[1] - a[1]).slice(0, 2) });
+  }
+  return out;
+});
 
 /** Let every *finite* CSS animation land. Some loop forever; awaiting those hangs. */
 const animationsDone = async (page, cap = 1500) => {
@@ -193,6 +255,13 @@ if (['all', 'lights', 'camera', 'models'].includes(STAGE)) {
       live.map((a) => `${a.distToNearPlane}m clear`).join(', '));
     note(live.every((a) => a.allInFrustum), 'both fighters are fully inside the frustum at rest',
       live.map((a) => (a.allInFrustum ? 'in' : 'CLIPPED')).join(', '));
+    // In the frustum is not the same as visible. This is the check that was
+    // missing when a player reported arena geometry blocking the view.
+    const occ = (await occlusion(page)).filter(Boolean);
+    const worst = Math.max(0, ...occ.map((o) => o.pct));
+    note(worst < 25, 'nothing stands between the camera and either fighter at rest',
+      occ.map((o) => `${o.pct}%`).join(', ') + (worst >= 25
+        ? ' — blocked by ' + occ.flatMap((o) => o.blockers.map(([k]) => k)).join(', ') : ' hidden'));
   }
 
   if (STAGE === 'all' || STAGE === 'models') {
@@ -332,6 +401,53 @@ if (STAGE === 'all' || STAGE === 'hud') {
     }
     await page.close();
   }
+}
+
+/* ------------------------------------------------------------ occlusion */
+// Every arena, not just the default one. The arenas differ precisely in what
+// they put near the fighters — Skypiea has stone pillars, Onigashima a torii
+// post, Baratie a mast — so an occlusion check that only ever sees one of them
+// is checking the least interesting case.
+if (STAGE === 'all' || STAGE === 'occlusion') {
+  const { page } = await fresh();
+  const arenas = await page.evaluate(() => window.__ARENA.data.arenas.map((a) => a.id));
+  for (const arena of arenas) {
+    await page.evaluate((a) => window.__ARENA.battle.start({
+      mode: 'ai', aiLevel: 'ace', teamSize: 3, seed: 'OCC-1', arena: a, meta: { kind: 'quick' }
+    }), arena);
+    let live = false;
+    for (let i = 0; i < 200 && !live; i++) {
+      live = await page.evaluate(() => !!window.__ARENA.battle.screen());
+      if (!live) await sleep(100);
+    }
+    // Wait on the actors themselves, not on the nameplates. Restarting into a
+    // new arena leaves the previous battle's plates already revealed, so a
+    // nameplate test passes instantly and the measurement lands before the new
+    // fighters have any geometry — "only 1 actors on stage" in five of six
+    // arenas. Wait for the thing being measured.
+    for (let i = 0; i < 90; i++) {
+      const n = await page.evaluate(() => {
+        const A = window.__ARENA;
+        let k = 0;
+        for (const a of A.app.view.actors || []) {
+          if (!a?.root) continue;
+          const b = new A.debug.THREE.Box3().setFromObject(a.root);
+          if (Number.isFinite(b.min.x) && b.max.y - b.min.y > 0.2) k++;
+        }
+        return k;
+      });
+      if (n === 2) break;
+      await sleep(500);
+    }
+    await sleep(1500);
+    const occ = (await occlusion(page)).filter(Boolean);
+    const worst = Math.max(0, ...occ.map((o) => o.pct));
+    note(occ.length === 2 && worst < 35, `${arena}: fighters are not behind the scenery`,
+      occ.length !== 2 ? `only ${occ.length} actors on stage`
+        : occ.map((o) => `${o.pct}%`).join(', ') + ' hidden'
+          + (worst >= 35 ? ' — by ' + occ.flatMap((o) => o.blockers.map(([k, v]) => `${k}(${v})`)).join(', ') : ''));
+  }
+  await page.close();
 }
 
 /* ----------------------------------------------------------- onboarding */

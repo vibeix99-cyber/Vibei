@@ -119,6 +119,14 @@ const pose = (pos, look, fov) => ({ pos, look, fov });
  * solved for is the one we want, and moving off it is a concession.
  */
 const LOS_TRY = [0, 0.30, -0.30, 0.58, -0.58, 0.88, -0.88];
+/**
+ * Sample points for the line-of-sight test, as (height fraction, sideways
+ * fraction of half-width). A cross, not a line: the first attempt sampled three
+ * heights straight up the fighter's centre and still reported "clear" while an
+ * Onigashima pillar took 50% of the silhouette, because a *vertical* pillar
+ * occludes a *horizontal* slice and every centre-line ray missed it.
+ */
+const LOS_PT = [[0.22, 0], [0.62, 0], [0.92, 0], [0.62, -0.9], [0.62, 0.9]];
 const _ray = new THREE.Raycaster();
 
 /** Shortest camera move allowed while reduced motion is on. Never a cut. */
@@ -539,35 +547,69 @@ export class CameraDirector {
   }
 
   /**
-   * Is anything in the arena standing between `from` and a fighter's chest?
+   * Is anything in the arena standing between `from` and a fighter?
    * Returns how many of the two are hidden. Thin, see-through decoration does
    * not count; a Skypiea pillar does.
+   *
+   * Three heights, not one. A single chest ray scores a clean 0 while an
+   * Onigashima pillar cuts the fighter in half vertically — measured at 50% of
+   * the silhouette gone with this function reporting nothing wrong. A fighter
+   * counts as hidden when two of its three samples are blocked, so a railing
+   * across the shins is still allowed to be scenery.
+   *
+   * Meshes only. Rain is `LineSegments` and three raycasts lines against a
+   * one-world-unit default threshold, so a ray that passes within a metre of a
+   * raindrop registers a hit — a grid probe using the defaults reported all 32
+   * fighters 100% occluded in all six arenas, in frames where the pixels show
+   * them completely clear.
    */
   _blockedCount(from, scene) {
     let n = 0;
+    _ray.camera = this.cam;                 // three needs this to raycast sprites
+    _ray.params.Line = { threshold: 0.001 };
+    _ray.params.Points = { threshold: 0.001 };
     for (let i = 0; i < 2; i++) {
       const s = this.act[i];
       const root = s.ref?.root;
       if (!root) continue;
-      _c1.copy(s.aim).setY(s.aim.y + Math.max(0.4, s.top) * 0.62);
-      _c2.copy(_c1).sub(from);
-      const d = _c2.length();
-      if (!(d > 0.2)) continue;
-      _ray.set(from, _c2.multiplyScalar(1 / d));
-      _ray.near = 0.05; _ray.far = d - 0.25;
-      _ray.camera = this.cam;                 // three needs this to raycast sprites
-      let hits;
-      try { hits = _ray.intersectObjects(scene.children, true); } catch { return 0; }
-      for (const h of hits) {
-        const m = h.object.material;
-        if (!h.object.visible || !m || m.opacity === 0) continue;
-        if (m.transparent && m.opacity < 0.4) continue;
-        let o = h.object, mine = false;
-        while (o) { if (o === root) { mine = true; break; } o = o.parent; }
-        if (mine) continue;
-        n++;
-        break;
+      const other = this.act[1 - i]?.ref?.root || null;
+      const top = Math.max(0.4, s.top);
+      // Sideways offset is taken perpendicular to the view ray, so the cross
+      // spans the silhouette as the camera sees it rather than in world X.
+      _c0.set(s.aim.x - from.x, 0, s.aim.z - from.z).normalize();
+      const px = -_c0.z, pz = _c0.x, hw = Math.max(0.25, s.rad || 0.4);
+      let blocked = 0;
+      for (const [f, w] of LOS_PT) {
+        _c1.copy(s.aim).setY(s.aim.y + top * f);
+        if (w) { _c1.x += px * hw * w; _c1.z += pz * hw * w; }
+        _c2.copy(_c1).sub(from);
+        const d = _c2.length();
+        if (!(d > 0.2)) continue;
+        _ray.set(from, _c2.multiplyScalar(1 / d));
+        _ray.near = 0.05; _ray.far = d - 0.25;
+        let hits;
+        try { hits = _ray.intersectObjects(scene.children, true); } catch { return 0; }
+        for (const h of hits) {
+          if (!h.object.isMesh) continue;
+          const m = h.object.material;
+          if (!h.object.visible || !m || m.opacity === 0) continue;
+          if (m.transparent && m.opacity < 0.4) continue;
+          // Skip both fighters, not just this one. An over-the-shoulder impact
+          // shot puts the attacker in the foreground on purpose — measured at
+          // 88% of the defender hidden behind `fighter:ace`, which is the shot
+          // working, not failing. Counting it would make the search swing away
+          // from correct framing.
+          let o = h.object, mine = false;
+          while (o) {
+            if (o === root || o === other) { mine = true; break; }
+            o = o.parent;
+          }
+          if (mine) continue;
+          blocked++;
+          break;
+        }
       }
+      if (blocked >= 2) n++;
     }
     return n;
   }
