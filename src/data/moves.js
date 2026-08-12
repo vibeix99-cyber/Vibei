@@ -148,7 +148,7 @@ def({ id: 'grit', name: 'Grit', type: 'FIST', category: 'status', power: 0, accu
 def({ id: 'imbued_strike', name: 'Imbued Strike', type: 'HAKI', category: 'physical', power: 50, accuracy: 100, pp: 20, contact: true, flags: ['protect'],
   desc: 'A hardened blow that lands on anything.', flavor: 'Black to the wrist. Ghosts are just people who forgot to bleed.',
   fx: { key: 'haki_strike', color: '#2b2d42', shape: 'melee', scale: 1.1, hitstop: 95, shake: 0.6, sfx: 'hit_haki' } });
-def({ id: 'sovereign_flash', name: 'Sovereign Flash', type: 'HAKI', category: 'special', power: 70, accuracy: 95, pp: 10, flags: ['protect'],
+def({ id: 'sovereign_flash', name: 'Sovereign Flash', type: 'HAKI', category: 'special', power: 70, accuracy: 95, pp: 15, flags: ['protect'],
   effects: [{ kind: 'volatile', value: 'flinch', chance: 20, target: 'foe' }],
   desc: '20% chance to make the target flinch.', flavor: 'Eye contact, briefly, at range. Enough.',
   fx: { key: 'haki_flash', color: '#4a3fd0', shape: 'burst', scale: 1.5, hitstop: 140, shake: 1, sfx: 'conqueror' } });
@@ -246,7 +246,7 @@ def({ id: 'rime_fist', name: 'Rime Fist', type: 'FROST', category: 'physical', p
   effects: [{ kind: 'boost', stats: { spe: -1 }, chance: 20, target: 'foe' }],
   desc: '20% chance to lower the target\'s Speed.', flavor: 'The knuckles come away white and stay that way.',
   fx: { key: 'ice_punch', color: '#8fd8ff', shape: 'melee', scale: 1.1, hitstop: 100, shake: 0.6, sfx: 'hit_frost' } });
-def({ id: 'glacier_beam', name: 'Glacier Beam', type: 'FROST', category: 'special', power: 70, accuracy: 100, pp: 10, flags: ['protect'],
+def({ id: 'glacier_beam', name: 'Glacier Beam', type: 'FROST', category: 'special', power: 70, accuracy: 100, pp: 15, flags: ['protect'],
   effects: [{ kind: 'status', value: 'frz', chance: 10, target: 'foe' }],
   desc: '10% chance to freeze.', flavor: 'A straight line drawn in a temperature.',
   fx: { key: 'ice_beam', color: '#7fd8ff', shape: 'beam', scale: 1.5, hitstop: 125, shake: 0.9, sfx: 'ice' } });
@@ -376,7 +376,7 @@ def({ id: 'sables', name: 'Sables', type: 'EARTH', category: 'special', power: 6
   effects: [{ kind: 'weather', value: 'sandstorm', chance: 100 }],
   desc: 'A sand cyclone. Also whips up a sandstorm.', flavor: 'The desert arrives as a guest and stays as a tenant.',
   fx: { key: 'sand_cyclone', color: '#c8a165', shape: 'burst', scale: 1.6, hitstop: 100, shake: 0.9, sfx: 'sand' } });
-def({ id: 'grand_quake', name: 'Grand Quake', type: 'EARTH', category: 'physical', power: 70, accuracy: 100, pp: 10, flags: ['protect'],
+def({ id: 'grand_quake', name: 'Grand Quake', type: 'EARTH', category: 'physical', power: 70, accuracy: 100, pp: 15, flags: ['protect'],
   desc: 'Shakes the whole arena. WIND types float clear.', flavor: 'One stamp. The floor stops being a floor for a moment.',
   fx: { key: 'quake', color: '#a8804a', shape: 'burst', scale: 1.8, hitstop: 150, shake: 1.5, sfx: 'quake' } });
 def({ id: 'continental_press', name: 'Continental Press', type: 'EARTH', category: 'physical', power: 100, accuracy: 85, pp: 5, contact: true, flags: ['crush', 'protect'],
@@ -661,7 +661,7 @@ def({ id: 'corrosive_wave', name: 'Corrosive Wave', type: 'TOXIN', category: 'sp
 def({ id: 'venom_drain', name: 'Venom Drain', type: 'TOXIN', category: 'special', power: 55, accuracy: 100, pp: 10, drain: 0.5, flags: ['protect'],
   desc: 'Drains half the damage dealt.', flavor: 'What comes back is not clean, but it counts.',
   fx: { key: 'toxin_drain', color: '#7bb03a', shape: 'beam', scale: 1.2, hitstop: 100, shake: 0.6, sfx: 'drain' } });
-def({ id: 'venom_road', name: 'Venom Road', type: 'TOXIN', category: 'special', power: 60, accuracy: 100, pp: 10, flags: ['protect'],
+def({ id: 'venom_road', name: 'Venom Road', type: 'TOXIN', category: 'special', power: 60, accuracy: 100, pp: 15, flags: ['protect'],
   effects: [{ kind: 'status', value: 'psn', chance: 40, target: 'foe' }],
   desc: 'A flood of poison. 40% poison.', flavor: 'It takes the low ground, then all of it.',
   fx: { key: 'poison_flood', color: '#8bc34a', shape: 'burst', scale: 1.4, hitstop: 90, shake: 0.7, sfx: 'sludge' } });
@@ -669,7 +669,7 @@ def({ id: 'plague_cloud', name: 'Plague Cloud', type: 'TOXIN', category: 'specia
   effects: [{ kind: 'status', value: 'psn', chance: 30, target: 'foe' }],
   desc: 'Inaccurate. 30% chance to poison.', flavor: 'It drifts. Aiming is a courtesy it does not extend.',
   fx: { key: 'plague', color: '#7b9c3a', shape: 'burst', scale: 1.8, hitstop: 150, shake: 1.1, sfx: 'poison' } });
-def({ id: 'venom_crash', name: 'Venom Crash', type: 'TOXIN', category: 'physical', power: 80, accuracy: 95, pp: 5, contact: true, recoil: 0.25, flags: ['protect'],
+def({ id: 'venom_crash', name: 'Venom Crash', type: 'TOXIN', category: 'physical', power: 90, accuracy: 95, pp: 5, contact: true, recoil: 0.25, flags: ['protect'],
   effects: [{ kind: 'status', value: 'psn', chance: 20, target: 'foe' }],
   desc: 'User takes 25% recoil. 20% chance to poison.', flavor: 'He lands in his own puddle and does not seem to mind.',
   fx: { key: 'venom_slam', color: '#6fa02c', shape: 'melee', scale: 1.9, hitstop: 195, shake: 1.5, sfx: 'hit_toxin' } });
@@ -693,7 +693,7 @@ def({ id: 'leech_thorns', name: 'Leech Thorns', type: 'TOXIN', category: 'status
 def({ id: 'resonance_lance', name: 'Resonance Lance', type: 'SOUND', category: 'special', power: 45, accuracy: null, pp: 20, flags: ['sound', 'protect'],
   desc: 'Never misses.', flavor: 'It does not travel to you. It arrives at the same time as itself.',
   fx: { key: 'resonate', color: '#c084fc', shape: 'beam', scale: 1.05, hitstop: 80, shake: 0.45, sfx: 'sonic' } });
-def({ id: 'sonic_wail', name: 'Sonic Wail', type: 'SOUND', category: 'special', power: 50, accuracy: 100, pp: 15, flags: ['sound', 'protect'],
+def({ id: 'sonic_wail', name: 'Sonic Wail', type: 'SOUND', category: 'special', power: 60, accuracy: 100, pp: 15, flags: ['sound', 'protect'],
   effects: [{ kind: 'boost', stats: { spa: -1 }, chance: 30, target: 'foe' }],
   desc: '30% chance to lower the target\'s Sp. Atk.', flavor: 'A note nobody in the crowd will admit to hearing.',
   fx: { key: 'sound_wave', color: '#c084fc', shape: 'beam', hitstop: 80, shake: 0.5, sfx: 'sonic' } });
@@ -776,7 +776,7 @@ def({ id: 'erasure_fist', name: 'Erasure Fist', type: 'VOID', category: 'physica
   effects: [{ kind: 'volatile', value: 'flinch', chance: 20, target: 'foe' }],
   desc: '20% chance to make the target flinch.', flavor: 'The knuckle arrives. A small amount of the world does not.',
   fx: { key: 'void_punch', color: '#3a2f5b', shape: 'melee', scale: 1.15, hitstop: 105, shake: 0.65, sfx: 'hit_void' } });
-def({ id: 'entropy_pulse', name: 'Entropy Pulse', type: 'VOID', category: 'special', power: 70, accuracy: 95, pp: 10, flags: ['pulse', 'protect'],
+def({ id: 'entropy_pulse', name: 'Entropy Pulse', type: 'VOID', category: 'special', power: 70, accuracy: 95, pp: 15, flags: ['pulse', 'protect'],
   effects: [{ kind: 'boost', stats: { spd: -1 }, chance: 20, target: 'foe' }],
   desc: '20% chance to lower the target\'s Sp. Def.', flavor: 'Everything it touches ages by an unhelpful amount.',
   fx: { key: 'entropy', color: '#4a3f70', shape: 'burst', scale: 1.6, hitstop: 145, shake: 1.1, sfx: 'voidfx' } });

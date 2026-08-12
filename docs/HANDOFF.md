@@ -1325,7 +1325,90 @@ widening knobs; that is now three passes of evidence that it plateaus.
 Audio gates green after the change: mix balanced, ladder 4.6 dB wide, delay
 honoured, ducking -1.36 dB, no clipping, probe clean.
 
-**Status:** open — materially better, tightest pairs unsolved
+**Status:** CLOSED — see below. The remedy named here (structural articulations)
+was necessary but not sufficient, and the reason it looked like it had plateaued
+turned out to be a bug in the measurement.
+
+### Cries — closed. Two problems, and the smaller one was hiding the larger
+
+**The measurement was noisy, and nobody had checked.** `_impulse` built the
+arena reverb tail from `Math.random()`, and every cry sends to that reverb, so
+no two renders of the same cry were ever the same sound. Three identical renders
+of Ichigo measured **0.0127 and 0.0134 apart** — a noise floor of the same order
+as the 0.03 threshold the cries were being judged against. The worst pair on
+record, 0.0141, was inside the error bar of zero. `_noise` had it too. Both are
+now seeded off *what the buffer is* rather than off the RNG stream, so adding a
+sound later cannot shift the noise in every sound that already existed. Renders
+are bit-identical now.
+
+This also explains the three "plateaus". Each pass measured a real improvement
+plus 0.013 of noise and concluded the improvement was not real.
+
+**Amplitude articulation is nearly invisible — provably.** Eleven distinct
+rhythms assigned across the roster left the closest pair at 0.0193, barely
+better than none at all. A gain gate multiplies the whole spectrum by a scalar,
+and `log10(g*x) = log10(g) + log10(x)`, so in a log-band fingerprint every band
+shifts by the same constant and the *shape*, which is what distance is measured
+on, does not move. **If you carve a cry in time and change nothing about what it
+is made of, this metric cannot see it, and the ear barely can either.** Each
+articulation now also bends the harmonic tilt and slides the formants as it
+goes — which is just what happens acoustically: a second syllable is darker than
+the first, a re-attack is brighter at its edge, a swell opens up as it arrives.
+
+**Assignment is solved, not guessed.** Hand-picking by family got the worst pair
+from 0.0141 to 0.0173 and then went backwards — fixing Katakuri/Smoker pushed
+Ichigo/Edward closer, because every change moves one fighter against all 31
+others at once. `tools/cryassign.mjs` renders all 32x11 combinations through the
+real `cry()` path and hill-climbs the assignment. Nine articulations are **pinned
+for character** and excluded from the optimiser, because the free answer scored
+beautifully and had thrown away every joke in it — Zoro on `double` when he
+fights with three swords, Big Mom on `stutter` when the entire point of her is
+that she shouts MA-MA.
+
+Scoring the bare buffer is not close enough: an assignment measuring 0.0595 that
+way came back at 0.0346 through the real path, because the reverb send smears
+the tail. The optimiser and the gate now agree to four decimals.
+
+```
+                              before   after
+  worst nearest-neighbour     0.0141  0.0899
+  median pairwise distance    0.2223  0.3833
+  fighters inside 0.03         14/32    0/32
+  fighters inside 0.05         27/32    0/32
+```
+
+The eleven rhythms: `plain`, `two-syllable`, `three-syllable`, `stutter`, `gap`,
+`late-gap`, `swell`, `triplet`, `double`, `rev`, `roll`.
+
+New gate: `node tools/crycheck.mjs [--list]`. It had been ad-hoc for three
+passes and was gone when the fourth needed it, so it lives in the repo now.
+
+### Move budget — closed, and the queue entry was wrong about it
+
+The handoff said "39 -> 6 over-budget moves". **Nothing was over budget.** The
+six findings `tools/movebudget.mjs` reports are *role coverage* gaps: HAKI,
+FROST, EARTH, TOXIN, SOUND and VOID had no move meeting the "reliable" bar —
+non-status, 60-75 BP, >=95 accuracy, >=15 PP. A type without one has no
+dependable STAB, which is a real hole, but it is not a budget violation and no
+amount of nerfing would have fixed it.
+
+Five of the six already had a qualifying move sitting at exactly **10 PP**, so
+the fix is a PP bump and the power curve is untouched: `sovereign_flash` (HAKI),
+`glacier_beam` (FROST), `grand_quake` (EARTH), `venom_road` (TOXIN),
+`entropy_pulse` (VOID). SOUND's only 70 BP option is `liberation_bell`, a
+*signature* move exclusive to one fighter — which cannot be a type's dependable
+option — so `sonic_wail` went 50 -> 60 BP instead. TOXIN also lacked a "heavy
+90+ with a cost"; `venom_crash` was 80 BP at 5 PP, and 5 PP already counts as
+the cost, so it went to 90.
+
+**309 moves within budget, zero problems.** Pace unmoved: 2.65 hits median,
+2.63x spread, 5 walls. The three remaining warnings are move names too long for
+the card, which is cosmetic and pre-existing.
+
+**Status:** done. Both queue items closed; the build is ready for a fresh Feel
+and Depth re-judge, both of whose last scores (6/10 each) now predate the roster
+offense work, the audio mix, the hazard distribution, the cry overhaul and the
+presentation sweep.
 
 ### Meta systems swept — team builder, modes, save, netplay: all clean
 

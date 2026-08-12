@@ -60,5 +60,6 @@ console.log(`     node tools/pace.mjs         hits-to-KO band and the bulk sprea
 console.log(`     node tools/audiocheck.mjs   mix balance, ducking, no clipping`);
 console.log(`     node tools/metacheck.mjs    builder, modes, save, link lobby`);
 console.log(`     node tools/scenecheck.mjs   lights, camera, models, HUD, first boot`);
+console.log(`     node tools/crycheck.mjs     every fighter's cry is distinct from every other`);
 console.log(bad ? `\n❌ ${bad} failing\n` : `\n✅ all clear\n`);
 process.exit(bad ? 1 : 0);
