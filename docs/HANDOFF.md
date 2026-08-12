@@ -1635,3 +1635,72 @@ No regression: 5 of 366 bad samples after the change against 5 of 381 before.
 composition, the missing information is the arena, the fighters and the moment
 — worth asking rather than guessing, since six arenas at the resting shot and
 381 sampled action frames did not show it.
+
+### The re-judge — depth 7/10, feel NOT re-judged
+
+**Depth: ours 7/10, Pokémon 9/10, winner POKEMON.** Up from 6/10. Judged blind
+against Sword/Shield singles by a fresh-context critic that built its own
+instruments (`tests/critic/depth6*.mjs`) rather than trusting depth2-5.
+
+What it confirmed, by checking rather than reading:
+
+* The damage chain is faithful — hand-verified at 170-204, 306 on a crit, for
+  L50 / 100 power / 150 Atk / 100 Def / STAB / 2x. `pokeRound` half-down at the
+  right steps, type applied per defending type with truncation, crits ignoring
+  the defender's boosts.
+* Pursuit and mid-turn pivot are both correctly implemented, which it notes
+  most clones skip.
+* Type chart 19.1% super / 21.0% resisted / 1.9% immune, against Pokémon's own
+  15.7 / 18.8 / 2.5 counted from the same encoding. 18 speed tiers, 3.1x apart.
+* **The AI is better than Pokémon's, decisively** — yonko beats "click the
+  biggest number" 86.6% (103-16-1 over 120 games both seatings), warlord beats
+  ace 74.2%, and rookie correctly *loses* to greedy at 38.7%.
+
+**The gap is the positional layer, and the depth blocker is narrower than this
+file previously claimed.** Priority #1 was closed on row E showing +7.7pp /
++8.9pp. The critic's harder test — the full warlord against the identical brain
+that may never switch, 240 games with a fair fallback — lands at a compatible
+**13.6pp (63.6%, 152-87-1) at 3v3 and 15.4pp at 6v6**, and judges that small:
+in Pokémon singles a no-switch player is not competitive at all, and here one
+still wins 36.4%. The strongest brain switches on **7.5%** of turns against
+roughly a quarter in competitive singles. **Treat Priority #1 as narrowed, not
+closed.**
+
+The mechanical cause, measured over all 992 ordered pairs: the attacker's best
+move does a **median 36.8% of the target's HP**, only **10.8%** of pairs let a
+body in for <=15%, and the best switch-in across a 2-body bench still eats a
+median **27.2%**. There is usually no body that walls anything.
+
+Reinforcing it, and independently verified here rather than taken on trust: the
+median fighter's L50 learnset offers very few distinct attacking types — **mean
+3.53, range 2-6, with Crocodile, Franky and Shanks on 2**. (The critic reported
+a median of 3; recounting gives 4. Mean and named fighters agree exactly.) With
+dual STAB that is about one coverage slot, so the fourth-move decision that
+carries much of Pokémon team-building barely exists. **This is the most
+actionable lever on depth: coverage per fighter attacks "there is never a good
+switch-in" directly, and unlike EV or base-stat work it does not touch pace.**
+
+**Feel: not re-judged.** The critic died mid-run when the account hit its
+monthly spend limit, before any verdict. **The last feel score remains 6/10 and
+it predates the audio mix, the cry overhaul, the camera rebuild and the
+presentation sweep — it should not be quoted as current.** Its half-finished
+harnesses are committed at `tests/critic-feelx2.mjs` and `critic-feelx3.mjs`;
+`feelx2 occl` needs `ray.camera` set before it will run to completion.
+
+Two things came out of it before it stopped, both worth keeping:
+
+* **Independent corroboration on the camera.** Its own line-of-sight audit reads
+  `blocked: false` for both fighters at the resting shot — a second instrument,
+  written by someone else, agreeing the resting shot is clear.
+* **A new lead, one sample only:** at game-time 3.30 during a `charge` shot it
+  logged fighter s0 at x = **-4.3%**, off the left edge of the frame. That is a
+  framing escape, not occlusion, and it is unproven at n=1. Worth a look before
+  the next feel judgement.
+
+**Scorecard, honestly:**
+
+```
+  piece   ours   pokemon   winner    status
+  depth    7/10    9/10    POKEMON   re-judged, up from 6
+  feel      —       —         —      NOT re-judged (critic died on spend limit)
+```
