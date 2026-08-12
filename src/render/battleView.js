@@ -305,6 +305,22 @@ export class BattleView {
     }
   }
 
+  /**
+   * Pull the box level with the action: finish what is typing and step to the
+   * newest queued line, so an impact is never narrated by a stale one. Bounded,
+   * because a long backlog should still be read rather than flushed in a frame.
+   */
+  _catchUpText() {
+    const tb = this.textbox;
+    for (let i = 0; i < 3 && tb.queue.length; i++) {
+      if (tb.current && tb.charIdx < tb.current.text.length) {
+        tb.charIdx = tb.current.text.length;
+        tb._paint(tb.charIdx);
+      }
+      tb._next();
+    }
+  }
+
   _say(ev) {
     const style = ev.style || 'plain';
     // The textbox owns the reading floor, so pass the *unscaled* base and let
@@ -455,6 +471,18 @@ export class BattleView {
         const color = pf?.fx?.color || TYPE_COLOR[pf?.type] || '#ffffff';
 
         // ── the impact frame ──────────────────────────────────────────
+        // Bring the box up to date first. A critic photographed a -28 crit
+        // exploding on screen while the textbox still read "Tanjiro recovered
+        // health!" with two more lines stacked behind it: the words describing
+        // an earlier beat, on top of this one's picture. Measured at 3 of 9
+        // impacts with lines still queued.
+        //
+        // Safe only because the box keeps the previous line visible above the
+        // current one — snapping a line to complete and moving on no longer
+        // takes it away from the reader, it promotes it. Without that row this
+        // would be swapping one defect for a worse one.
+        this._catchUpText();
+
         // Sound, effect, number, bar, shake, flash and freeze all happen here,
         // on one frame. Everything after this is aftermath.
         const prof = this.feel.impact(sev, {

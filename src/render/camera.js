@@ -1063,6 +1063,20 @@ export class CameraDirector {
         // 0.55 rather than 0.48: now that the ceiling is measured and enforced
         // exactly, every point of headroom given away here comes straight off
         // the smaller fighter, who has far less to spare.
+        // The far fighter's floor.
+        //
+        // A critic measured the opponent's median on-screen height at 0.162 of
+        // the viewport against the player's 0.496 and called it a speck. Raising
+        // this floor is the obvious lever and it does not work: at 0.26 the
+        // foe's median moved to 0.171 — nine thousandths — while resting-shot
+        // occlusion roughly doubled (either fighter behind geometry in 7% of
+        // frames, then 13%), because forcing the far fighter larger slides the
+        // camera around behind the near one and into the scenery.
+        //
+        // The median is set by the shot vocabulary, not by this number: single
+        // subject shots (`heroBig`, `impact`) are most of a turn and favour one
+        // fighter deliberately. Fixing "the opponent is a speck" means changing
+        // which shots a turn is made of, which is a direction, not a constant.
         fillV: 0.55, minFill: 0.15,
         fillH: 0.735 - Math.min(t, 2.2) * 0.010,      // a very slow settle in
         elev: 0.205, yaw: s === 0 ? -0.10 : 0.10, swing: this._losEase, pivot: 0.46,

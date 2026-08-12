@@ -19,7 +19,8 @@ const CSS = `
   box-shadow:var(--lip), 0 14px 34px rgba(0,0,0,.55), inset 0 0 0 2px rgba(255,255,255,.07);
   color:var(--text-inv); font-family:var(--font-ui); font-size:var(--fs-xl);
   font-weight:600; line-height:1.24; letter-spacing:.005em;
-  display:flex; align-items:center; overflow:hidden; cursor:pointer;
+  display:flex; flex-direction:column; justify-content:center; align-items:stretch;
+  overflow:hidden; cursor:pointer;
   transition:opacity .18s var(--ease-out), transform .22s var(--ease-out);
 }
 .textbox.hidden{ opacity:0; transform:translateY(14px); pointer-events:none; }
@@ -31,6 +32,20 @@ body[data-cmd="moves"] .textbox{ opacity:0; pointer-events:none; }
   display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:3;
 }
 .textbox .txt.long{ font-size:.86em; -webkit-line-clamp:4; }
+
+/* The line before this one, kept on screen while the next one types.
+   A single box that shows one line at a time has to hold each line long enough
+   to be read before the next may start, and that hold is what put the words
+   behind the picture — an impact's flash was over 0.7s before the line
+   explaining it finished typing. With the previous line still legible above,
+   the hold between lines can collapse without the reader losing anything. */
+.textbox .txt-prev{
+  display:block; width:100%; white-space:pre-wrap; overflow:hidden;
+  display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:1;
+  font-size:.74em; font-weight:600; opacity:.46; margin-bottom:2px;
+  transition:opacity .16s var(--ease-out);
+}
+.textbox .txt-prev:empty{ display:none; }
 
 /* inline emphasis */
 .textbox .em-crit{ color:#ffe36b; font-weight:900; text-shadow:0 0 12px rgba(255,227,107,.55); }
@@ -143,10 +158,12 @@ export class TextBox {
     this.el.setAttribute('role', 'status');
     this.el.setAttribute('aria-live', 'polite');
     this.el.innerHTML =
+      `<span class="txt-prev"></span>` +
       `<span class="txt"></span>` +
       `<span class="tb-more">+<b class="n">0</b></span>` +
       `<span class="tb-adv"><span class="ring"></span><span class="chev"></span></span>`;
     this.$txt = this.el.querySelector('.txt');
+    this.$prev = this.el.querySelector('.txt-prev');
     this.$adv = this.el.querySelector('.tb-adv');
     this.$ring = this.el.querySelector('.ring');
     this.$more = this.el.querySelector('.tb-more');
@@ -217,10 +234,14 @@ export class TextBox {
     return dropped;
   }
 
+  /** The line above the current one. Empty string hides the row entirely. */
+  _setPrev(text) { if (this.$prev) this.$prev.textContent = text || ''; }
+
   clear() {
     this.queue.length = 0;
     this.current = null;
     this.$txt.textContent = '';
+    this._setPrev('');
     this._segs = []; this._nodes = [];
     this.waitingForInput = false;
     this.el.classList.remove('waiting', 'stacked');
@@ -247,23 +268,39 @@ export class TextBox {
     // only eases with its square root, so 4x reads as terse rather than
     // subliminal and 1/2x genuinely lingers.
     const scaled = want / sp;
-    const compressed = queued ? scaled / (1 + queued * 0.35) : scaled;
-    const floor = this.minHoldMs / Math.sqrt(sp);
+    // With a line already waiting, this hold is no longer the reader's only
+    // chance at the current line: `_next` carries it up into the row above,
+    // where it stays legible while the next one types. So a queued hold buys
+    // very little and costs a great deal — it is the single thing that put the
+    // words behind the picture, with an impact's flash finishing 0.72s (median)
+    // before the line explaining it did. Collapse it hard, and let the floor
+    // collapse with it, because the floor was the binding constraint: a 28
+    // character line wanted 728ms, compressed to 539ms, and then sat on a
+    // 520ms floor that the compression could never get under.
+    const compressed = queued ? scaled / (1 + queued * 1.9) : scaled;
+    const floor = (queued ? this.minHoldMs * 0.26 : this.minHoldMs) / Math.sqrt(sp);
     return Math.max(floor, compressed);
   }
 
   _next() {
+    // Carry the outgoing line up, so it stays readable while the next types.
+    // Only if it was actually finished — a line the player skipped past or that
+    // never completed has not been read and should not be presented as history.
+    const out = this.current;
+    if (out && !out.prompt && this.charIdx >= out.text.length) this._setPrev(out.text);
     this.current = this.queue.shift() || null;
     this.charIdx = 0; this.acc = 0; this._waitT = 0;
     this.waitingForInput = false;
     this.el.classList.remove('waiting');
     if (this.current) {
+      if (this.current.prompt) this._setPrev('');
       this.$txt.className = `txt ${this.current.style}`;
       if (this.current.text.length > 74) this.$txt.classList.add('long');
       this._build(this.current.text);
       this._paint(0);
     } else {
       this.$txt.textContent = '';
+      this._setPrev('');
       this._segs = []; this._nodes = [];
       this._syncMore();
       this.onEmpty?.();
