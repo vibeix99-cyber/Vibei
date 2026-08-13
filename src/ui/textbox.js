@@ -262,7 +262,13 @@ export class TextBox {
     if (!line) return 0;
     if (line.hold === 0) return 0;
     const base = line.hold ?? this.autoAdvanceMs;
-    const want = Math.max(base, base * 0.5 + line.text.length * this.readMsPerChar);
+    // Length earns reading time, but only up to a point tied to the line's own
+    // importance — otherwise a long trivial line outranks a short decisive one
+    // no matter what `hold` says. "Ichigo's Shell Bell chimes." is 28 characters
+    // of nothing and was drawing 938ms, the longest hold in the turn, purely on
+    // character count; "Foe Sanji fainted!" is 18 characters that end a fighter.
+    const want = Math.min(base * 1.9,
+      Math.max(base, base * 0.5 + line.text.length * this.readMsPerChar));
     const sp = Math.max(0.25, this.speed || 1);
     // Speed divides the hold — that is what the setting is for — but the floor
     // only eases with its square root, so 4x reads as terse rather than
@@ -278,7 +284,21 @@ export class TextBox {
     // character line wanted 728ms, compressed to 539ms, and then sat on a
     // 520ms floor that the compression could never get under.
     const compressed = queued ? scaled / (1 + queued * 1.9) : scaled;
-    const floor = (queued ? this.minHoldMs * 0.26 : this.minHoldMs) / Math.sqrt(sp);
+    // The floor has to know what the line is worth, or compression inverts
+    // importance. A critic measured "Foe Sanji fainted!" — the blow that decides
+    // the match — holding 0.34s while "Ichigo's Shell Bell chimes." held 1.15s,
+    // and that is arithmetic, not bad luck: the faint arrives in a burst so it
+    // is divided by 4.8, while the item ping arrives alone and is not divided at
+    // all. `hold` already encodes importance (faint 900, crit 950, plain 420);
+    // it just was not being consulted once a backlog existed.
+    //
+    // So a queued line may be hurried, but never below 62% of its own base.
+    // Faint holds 0.56s with two lines stacked behind it, where the flat floor
+    // gave it 0.19s; an ordinary queued line still collapses to 0.26s, which is
+    // where the pacing gain came from.
+    const base2 = line.hold ?? this.autoAdvanceMs;
+    const floor = Math.max(queued ? this.minHoldMs * 0.26 : this.minHoldMs,
+      queued ? base2 * 0.62 : 0) / Math.sqrt(sp);
     return Math.max(floor, compressed);
   }
 

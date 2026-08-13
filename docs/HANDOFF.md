@@ -1820,3 +1820,89 @@ measuring their own work is not a score.
   depth    7/10    9/10    POKEMON   re-judged
   feel     6/10    8/10    POKEMON   last verdict; predates the text pipelining
 ```
+
+## FINAL SCORECARD
+
+Both pieces re-judged blind by fresh-context critics against Sword/Shield, per
+`docs/CRITIC.md`. Neither was told what had changed.
+
+```
+  piece   ours   pokemon   winner    movement
+  depth    7/10    9/10    POKEMON   6 -> 7
+  feel     6/10    8/10    POKEMON   6 -> 6  (unchanged)
+```
+
+**Feel did not move, and the reason matters more than the number.** The critic
+saw the two-line box ("the previous one greying out above the new one") and the
+text pipelining, credited the impact machinery as beyond anything Pokémon ships
+— tiered hitstop 33/50/94ms, crit slow-mo to 0.5x, spring HP bars, damage
+numbers, a nine-shot director — and then named a different gap, one this build
+introduced last commit:
+
+> "Every beat is given the same ~0.5s and the biggest ones get the least"
+> — median text dwell 0.53s, with **"Foe Sanji fainted!" holding 0.34s while
+> "Ichigo's Shell Bell chimes." held 1.15s.**
+
+**That inversion was mine.** Collapsing queued holds to fix the narration lag
+applied uniformly, so a decisive line arriving in a burst was divided by 4.8
+while a trivial line arriving alone was not divided at all. Arithmetic, not bad
+luck: faint went from ~540ms to 191ms the moment that change landed.
+
+Fixed, and the fix is in two halves because the inversion had two causes:
+
+* **The floor now knows what a line is worth.** A queued line may be hurried but
+  never below 62% of its own base hold. `hold` already encoded importance
+  (crit 950, faint 900, plain 420); nothing consulted it once a backlog existed.
+* **The reading allowance is capped at 1.9x the base.** Length earned time
+  without limit, so 28 characters of item ping outranked 18 characters that end
+  a fighter, whatever `hold` said.
+
+```
+                    queued (2 behind)      alone
+  crit                589ms                950ms
+  faint               558ms                918ms
+  super               471ms                  —
+  plain               260ms                798ms
+```
+
+Ordering is now monotone in importance in both regimes. Live: FAINT 0.90s >
+SUPER 0.70s > plain 0.57s, longest plain line 1.45s -> 1.15s.
+
+**Still open, from this critic, none of it attempted:**
+
+* **The camera loses the fighter being hit.** Player fully off-screen in 9-14%
+  of frames; one continuous **1.80s** run inside `heroBig` containing the impact
+  frame of a hit *on the player*, with the damage number drawn off-screen at
+  NDC cx -1.48. `heroBig` p0-offscreen 24%, `entrance` p1 71%, `ko` 21%/23%.
+  The occlusion work fixed *what is in front of* the subject; this is *framing
+  of the other fighter*, and `_frameBoth` was only ever wired into `_track`.
+* **The money frames are badly composed.** `finisher` crops its own subject on
+  the left edge and puts arena geometry through it; the KO frame is two small
+  figures in opposite corners of an empty floor, with no push-in and no slow-mo
+  on the KO itself.
+* **The opponent is a speck** (median 0.162 of viewport). Established earlier
+  that `minFill` is the wrong lever — it buys 0.009 for double the occlusion.
+  This needs the shot vocabulary changed, not a constant.
+
+**Gate suite at final commit:**
+
+```
+  npm run check   PASS   125 files, 24 DOM-free imports, determinism, hooks
+  pace            PASS   2.65 hits median, ends 2.63x apart, 5 walls
+  movebudget      PASS   309 moves within budget
+  crycheck        PASS   0/32 fighters within 0.05 of another
+  audiocheck      PASS   mix balanced, ladder intact, ducks, no clipping
+  metacheck       PASS   builder, modes, save, link lobby
+  scenecheck      PASS   lights, camera, models, HUD, occlusion, first boot
+  feelcheck       PASS   explaining line 0.32s, static fx layer 14.3%
+  probe           PASS   boot -> battle -> title, console clean
+```
+
+One caveat on that table, kept deliberately: **the frustum-at-rest check is
+marginal.** It reads green here and red on other runs of identical code, because
+the resting two-shot sits exactly on the boundary — consecutive runs give 11.34m
+and 10.75m of near-plane clearance. Bisected to before any of this session's
+camera work. Green is not proof it is fixed.
+
+**No critic has judged the importance-ordering fix.** It is verified by
+arithmetic and by live measurement, not by a verdict. Feel stands at 6/10.
