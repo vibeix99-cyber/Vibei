@@ -1906,3 +1906,77 @@ camera work. Green is not proof it is fixed.
 
 **No critic has judged the importance-ordering fix.** It is verified by
 arithmetic and by live measurement, not by a verdict. Feel stands at 6/10.
+
+## RE-JUDGE ROUND 4 — FEEL 5/10. THE SCORE WENT DOWN.
+
+```
+  piece   ours   pokemon   winner    history
+  depth    7/10    9/10    POKEMON   6 -> 7
+  feel     5/10    7/10    POKEMON   6 -> 6 -> 5
+```
+
+**The camera framing work did not improve the verdict, and this critic explains
+why in one sentence I should not have needed telling:**
+
+> "A geometry-only framing audit would score these as fine; they are not."
+
+That is the method I built. `tools/scenecheck.mjs` and the frame recorders
+measure where a fighter *is* — inside the frustum, unoccluded by raycast. The
+wins are real on that metric and were measured honestly:
+
+```
+  heroBig, other fighter off-screen   64% -> 0%
+  ko, subject partly off-frame        50% -> 14%
+  foe fully in frame                  82% -> 96%
+  both visible and unblocked          59% -> 76%
+```
+
+**And they did not matter, because the defender is not hidden by geometry — it
+is hidden by its own hit effect.** At the five impacts of the critic's run the
+attacker held **0.67-0.85 of screen height** while the defender sat at
+**0.10-0.29**, off-centre, and in four of five cases *entirely inside an opaque
+white VFX sphere*. The pixel evidence is unambiguous: `gt5_05.jpg` and
+`gt10_47.jpg` show a fighter that has just taken 75 and 87 damage rendered as a
+solid white ball; `critic-feelw-c/key/gt4_12.jpg` is a 182-damage finisher — 100
+ms hitstop, chroma 0.7 — where both fighters measure 0.14 and 0.11 of screen
+height and the damage number is half-illegible on top of the flash.
+
+So the entire 33/50/75/100 ms hitstop ladder, the shake, the flash, the chroma —
+all of it verified working and correctly escalated — lands on something the
+player cannot see connect. **That is the gap, and no amount of the framing work
+in this session addresses it.**
+
+**What is needed next is an instrument, not a fix.** Every camera measurement in
+this repo answers "is the fighter in the frame and unoccluded by scenery". The
+question that decides this piece is "can you see the fighter the effect is
+happening to" — subject *prominence* against the attacker, and coverage by the
+game's own VFX. That is a pixel measurement (sample the defender's silhouette in
+the rendered frame and ask how much of it is the fighter versus the effect), and
+until it exists any change here is guesswork. Two sessions of camera work have
+now been validated against a metric that cannot see the actual defect.
+
+**Second finding, real and unfixed:** the second mover's announce line completes
+**0.30 s after its own blow has landed**, in 4 of 4 turns measured. Impact at
+gt 8.55, line complete at 8.85. The first mover is fine; the ordering breaks
+only for the second.
+
+**Third finding, real and FIXED this session:** the faint line was never styled.
+`msg(state, "... fainted!")` passed no style, so it fell through to the plain
+hold and the `faint: 900` entry in the HOLD table was unreachable by anything —
+"Jinbe fainted!" held 0.75s against 1.05s for a routine move announcement,
+because a plain hold is computed from character count and a KO is a short
+sentence. Last session's importance-aware floor had the arithmetic right and the
+input wrong. Faint dwell is now 1.11s, the longest-held line type in a battle,
+against a plain median of 0.57s.
+
+**Credited by this critic, unprompted:** input latency (choice to camera cut
+0.15s, to first character 0.20s) "better than Pokemon's by a wide margin"; the
+impact ladder "real and correctly escalated"; the HP bar with drain, ghost trail,
+colour states, stat pips and near-death red "better instrumented than SwSh's";
+the two-line box making a 0.5s line "effectively legible for two beats"; a full
+two-move turn in 2.20-2.60s against Sword/Shield's 10-14s.
+
+**Gate suite at this commit:** check, pace, movebudget, crycheck, audiocheck,
+metacheck, scenecheck, feelcheck, probe — all PASS. Which is exactly the problem
+worth stating plainly: **a green board and a falling score.** The gates measure
+what I taught them to measure.
