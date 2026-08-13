@@ -516,6 +516,47 @@ export class CameraDirector {
   }
 
   /**
+   * Widen the lens until one actor is at least *present* in the frame.
+   *
+   * `heroBig` exists to sell the attacker and should not be re-framed into a
+   * polite two-shot — but measured, it put the other fighter fully off-screen in
+   * 64% of its frames, and when that fighter is the one taking the hit the
+   * player learns they were hit from the HP number. A critic caught exactly
+   * that: a 1.80s run inside `heroBig` holding the impact frame of a hit on the
+   * player, damage number drawn off-screen at NDC -1.48.
+   *
+   * Widening rather than dollying back, which was the first attempt and cost
+   * more than it bought: pulling the camera out to catch the other fighter put
+   * arena geometry in front of the hero in 55% of frames, against 4% before.
+   * The lens costs nothing but the subject's size, and only when it is needed.
+   *
+   * Returns the fov to use — never narrower than the one asked for, never more
+   * than `maxAdd` degrees wider, so the hero cannot be shrunk arbitrarily to
+   * chase a fighter standing somewhere silly.
+   */
+  _fovToInclude(p, at, fov, s, maxAdd = 16, lo = 0.05, hi = 0.95) {
+    if (!s?.ref?.root) return fov;
+    let f = fov;
+    for (let pass = 0; pass < 6; pass++) {
+      _k[2].copy(s.aim).setY(s.aim.y + Math.max(0.3, s.top) * 0.55);
+      this._project(_k[2], p, at, f, _k[4]);
+      const x = _k[4].x;
+      if (_k[4].z <= 0.05) return fov;              // behind the lens: no fov saves it
+      const over = x < lo ? lo - x : (x > hi ? x - hi : 0);
+      if (over <= 0.002) break;
+      // x - 0.5 scales as 1/tan(fov/2); solve for the tangent that lands it on
+      // the band edge, then take most of the correction so it converges from
+      // below rather than oscillating.
+      const edge = x < lo ? lo : hi;
+      const want = Math.abs(x - 0.5) / Math.max(1e-3, Math.abs(edge - 0.5));
+      const th = Math.tan(f * DEG * 0.5);
+      f = Math.min(fov + maxAdd, 2 * Math.atan(th * (1 + 0.8 * (want - 1))) / DEG);
+      if (f >= fov + maxAdd - 1e-3) break;
+    }
+    return clamp(f, fov, fov + maxAdd);
+  }
+
+  /**
    * Back the camera off until both fighters sit inside the horizontal safe band.
    *
    * `_clearActors` measures frame *height* and body distance and nothing else,
@@ -995,13 +1036,19 @@ export class CameraDirector {
     // whether anything is in the way.
     const p = this._seeSubject(`single:${o.side}:${o.fov}`, s, place);
 
+    // Big hero shots may hold an impact, and an impact the player cannot see is
+    // not a shot, it is a missed event. Only the wide variants ask for it: a
+    // tight `hero` is allowed to be about one fighter.
+    const shotFov = o.keepOther
+      ? this._fovToInclude(p, s.head, fov, this.act[1 - o.side])
+      : fov;
     const sx = o.sx ?? (o.side === 0 ? 0.40 : 0.60);
     const cons = [
       { v: _k[0].copy(s.aim).setY(s.top), min: 0.04 },
       { v: head, min: SAFE.y0 - 0.05, max: 0.56 }
     ];
-    const look = this._composeY(p, head, sx, o.sy ?? 0.36, fov, cons);
-    return pose(p, look, fov);
+    const look = this._composeY(p, head, sx, o.sy ?? 0.36, shotFov, cons);
+    return pose(p, look, shotFov);
   }
 
   /* ---------------------------------------------------------------- */
@@ -1126,7 +1173,8 @@ export class CameraDirector {
         yaw: 0.62, elev: big ? 0.11 : 0.17,
         sx: side === 0 ? 0.38 : 0.62,
         sy: big ? 0.39 : 0.36,
-        pivot: big ? 0.72 : 0.64
+        pivot: big ? 0.72 : 0.64,
+        keepOther: !!big
       })
     };
   }
@@ -1206,9 +1254,21 @@ export class CameraDirector {
       id: 'ko', imp: 3, minHold: 0.9, subject: side,
       live: (t) => {
         const s = this.act[side], w = this.act[1 - side];
-        const fov = 36;
+        // Push IN, and open the lens as it goes.
+        //
+        // This drifted *out* by 5% over 1.6s, at a fixed 36 degrees, and a
+        // critic photographed the result: two small figures in opposite corners
+        // of an empty floor, two thirds of the frame bare, with nothing to say
+        // this was the moment a fighter died. A KO is the one beat in a battle
+        // that has earned a camera move.
+        //
+        // The lens widens 36 -> 30 while the distance closes 18%, which is a
+        // dolly-in rather than a zoom: the fallen fighter grows and the
+        // background compresses behind them instead of the whole frame scaling.
+        const k = E.outCubic(clamp(t / 1.15, 0, 1));
+        const fov = 36 - 6 * k;
         const dist = this._fitDist(Math.max(1.5, s.top) / 0.46, (s.halfW * 2 + 2.4) / 0.60, fov)
-          * (1 + Math.min(t, 1.6) * 0.05);                   // gentle drift out
+          * (1 - 0.18 * k);
         // Sit behind the fallen fighter so the winner stays in the background.
         const yaw = (side === 0 ? -1 : 1) * 0.42;
         const elev = 0.23;
@@ -1224,6 +1284,12 @@ export class CameraDirector {
           q.y += Math.sin(elev) * dist;
           this._safe(q, 1.2);
           this._clearActors(q, anchor, fov, 0.9);
+          this._safe(q, 1.2);
+          // Both fighters, properly. The winner standing over the body is the
+          // whole point of the shot and it was being cropped out: measured at
+          // 50% of `ko` frames with the fallen fighter partly outside the frame
+          // and 23% with something in front of them.
+          this._frameBoth(q, anchor, fov, 0.05, 0.95);
           this._safe(q, 1.2);
           return q;
         };
@@ -1252,7 +1318,12 @@ export class CameraDirector {
         fill: 0.38 + Math.min(t, 0.9) * 0.09,
         fillH: 0.30,
         yaw: 0.50, elev: 0.09 + Math.min(t, 0.8) * 0.05,
-        sx: side === 0 ? 0.60 : 0.40, sy: 0.37, pivot: 0.68
+        sx: side === 0 ? 0.60 : 0.40, sy: 0.37, pivot: 0.68,
+        // The arriving fighter is thrown in from ~7m outside its slot and is
+        // meant to fly through frame — that part is the shot. The fighter
+        // already standing there has no reason to be off screen while it
+        // happens, and was, in a quarter of these frames.
+        keepOther: true
       })
     };
   }
