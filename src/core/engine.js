@@ -400,7 +400,12 @@ function checkFaint(state, mon) {
   mon.fainted = true;
   state.sides[mon.side].faints++;
   emit(state, { t: 'faint', side: mon.side, uid: mon.uid });
-  msg(state, `${label(mon)} fainted!`);
+  // Styled, so the presentation layer can weight it. Without this the line falls
+  // through to the plain hold and the `faint: 900` entry in the HOLD table is
+  // unreachable — measured by a critic as "Jinbe fainted!" holding 0.75s against
+  // 1.05s for "Jinbe used Karakusagawara Seiken!", because a plain hold is
+  // computed from character count and a KO is a short sentence.
+  msg(state, `${label(mon)} fainted!`, 'faint');
 
   // Destiny Bond only answers a foe's attack — not poison, not a hazard.
   if (mon.volatiles.destinybond && mon.faintCause === 'move') {
