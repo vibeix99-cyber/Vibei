@@ -1980,3 +1980,66 @@ two-move turn in 2.20-2.60s against Sword/Shield's 10-14s.
 metacheck, scenecheck, feelcheck, probe — all PASS. Which is exactly the problem
 worth stating plainly: **a green board and a falling score.** The gates measure
 what I taught them to measure.
+
+## VFX MASKING — instrument built, defect relocated, not fixed
+
+**New gate: `node tools/vfxcheck.mjs`.** It answers the question every other
+camera measurement here is blind to: *can you see the fighter the effect is
+happening to?* Each impact frame is rendered twice — as the player sees it, and
+with every live VFX object hidden — and diffed inside the defender's own screen
+box. The changed pixels are the ones its effect painted over it. Read straight
+off the drawing buffer with `gl.readPixels`, so no image decoding is needed and
+it works while the loop is frozen by hitstop, which is the moment that matters.
+
+**Baseline, 14 impacts: median 3.1% of the defender masked, worst 65.1%.**
+
+So "the fighter that just took 87 damage is a solid white ball" is the **tail,
+not the typical frame**. The two worst are both `finisher`, at 44.5% and 65.1%,
+and both are frames where the defender is *also* small — masking and lack of
+prominence compound, and the critic photographed the compound case.
+
+**The prominence half was chased to a specific number and then relocated.**
+`impact` states a defender `fill` of 0.38-0.58 and delivers 0.246. Four attempts
+to move it, all measured, all reverted:
+
+* Re-solving the lens after the clearance pass — no change; `fov` is already
+  pinned at its `fovMin: 21` floor.
+* Letting the foreground shoulder crop (`nearCap` 0.84 -> 1.30, `back` 1.35 ->
+  1.15) — no change.
+* Excluding the foreground body from the frame-share pass, on the theory that
+  `_projSpan` returns its "straddling the lens" sentinel of 9 for a shoulder
+  that sits behind the lens by design and so retreats ~3x per pass — no change.
+* Chasing `_safe` — it only clamps radius to 23 and cannot push outward.
+
+**Where it actually lives.** Sampling the camera at the *flash rising edge*
+rather than across the shot: at 4 of 11 impacts `blend` is **0** — the shot has
+only just been requested, so the frame at the moment of contact still shows the
+shot before it. The 28m camera-to-defender median that started this hunt is a
+mid-blend artifact, not the shot's geometry: at the impact shot's own distance
+the defender fills ~0.40, which is what it asks for. **The shot is composed
+correctly and is not on screen yet when the hit lands.**
+
+Two things must be settled before anyone acts on that, and neither is settled:
+
+1. Headless renders at 1-4fps. A 0.26s blend spans one rendered frame here and
+   perhaps fifteen at 60fps, so "blend 0 at the flash" may be an artifact of
+   *when* the sampler catches the flash rather than something a player sees.
+2. Several frames report a `fov` inconsistent with their named shot (56 on a
+   shot capped at 44), which means the director's update and the sampler's rAF
+   callback are racing. Fix the sampler before trusting any of these numbers.
+
+**Second-mover sync: shipped, unverified.** `moveUsed` now pulls the box level
+before the announce line is said, mirroring the damage beat. The critic measured
+the second mover's announce completing 0.30s after its own blow in 4 of 4 turns;
+across every seed available here the second mover never chose a damaging move,
+so the case could not be constructed. What *is* measured: first-mover announces
+land at or before their impact (0 to -0.14s, 0/5 late), and the catch-up cannot
+increase lag — it flushes at most three lines, and a stepped-past line is
+promoted into the visible row rather than discarded.
+
+**Opponent prominence (0.162 of viewport): still the shot vocabulary.**
+Established two sessions ago that `minFill` buys 0.009 for double the occlusion.
+Nothing this session changes that conclusion.
+
+**No critic was run.** The dominant gap is not fixed, so a re-judge would spend
+a full critic run to re-report a known score. Feel stands at **5/10**.
