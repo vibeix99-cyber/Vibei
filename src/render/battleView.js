@@ -399,6 +399,15 @@ export class BattleView {
 
       /* ------------------------------------------------------------ */
       case 'moveUsed': {
+        // Pull the box level before the announce line is said. The first mover
+        // is fine — its line is spoken on the frame its move dispatches and is
+        // typed well before contact. The second mover's line queues behind the
+        // first mover's reaction lines ("It's super effective!", a stat drop, an
+        // item proc), so it starts late and finishes *after* its own blow:
+        // measured at 0.30s late in 4 of 4 turns. Catching up here costs the
+        // reader nothing, because a line stepped past is promoted into the row
+        // above rather than discarded.
+        this._catchUpText();
         const atk = this.actors[ev.side];
         const f = fx || {};
         const big = (mv?.power || 0) >= 100 || (f.scale || 1) >= 1.6 || (look?.sev ?? 0) >= 0.4;
