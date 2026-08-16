@@ -1,0 +1,29 @@
+{
+  "name": "grand-line-arena",
+  "version": "0.1.0",
+  "description": "Tactical turn-based PvP fighter battler in Three.js",
+  "main": "index.js",
+  "scripts": {
+    "serve": "node tools/serve.mjs 8080",
+    "probe": "node tools/probe.mjs",
+    "check": "node tools/check.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vibeix99-cyber/Vibei.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vibeix99-cyber/Vibei/issues"
+  },
+  "homepage": "https://github.com/vibeix99-cyber/Vibei#readme",
+  "dependencies": {
+    "three": "^0.185.1"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.1"
+  },
+  "type": "module"
+}
