@@ -523,7 +523,8 @@ test('two tabs: one timer, shared state, no double counting', async ({ page, con
   const b = await context.newPage();
   const bErrors: string[] = [];
   b.on('pageerror', (e) => bErrors.push(e.message));
-  await b.goto('/?debug#/', { waitUntil: 'networkidle' });
+  // Same seed as tab A: seeds pin the debug clock, and a tab on a different clock would see A's brew as long overdue.
+  await b.goto('/?debug&seed=newbie#/', { waitUntil: 'networkidle' });
   await waitKettle(b);
   const before = (await focusSessions(page)).length;
 
@@ -542,7 +543,7 @@ test('two tabs: one timer, shared state, no double counting', async ({ page, con
   await expect.poll(async () => (await timer(b)).status).toBe('running');
 
   // Both tabs share one real clock; finish via A and let both tick.
-  const endsIn = await K<number>(page, `__kettle.timer.getState().endsAt - Date.now()`);
+  const endsIn = await K<number>(page, `__kettle.timer.getState().endsAt - __kettle.clock.now()`);
   await page.evaluate(`__kettle.ff(${endsIn} + 50)`);
   await b.evaluate(`__kettle.ff(${endsIn} + 50)`);
   await page.evaluate('__kettle.timer.getState().tick()');
@@ -796,6 +797,8 @@ for (const [vpName, vp] of Object.entries(VIEWPORTS)) {
         await shot(page, `resp-${vpName}-${sc.name}`, true);
         const rep = await layoutAudit(page);
         writeFileSync(`${OUT}layout-${vpName}-${sc.name}.json`, JSON.stringify(rep, null, 2));
+        // isMobile widens the layout viewport to fit overflowing content (a zoom-out), so innerWidth alone hides overflow.
+        expect(rep.innerW, `layout viewport widened to ${rep.innerW}px by overflowing content (viewport ${vp.viewport.width}px)`).toBeLessThanOrEqual(vp.viewport.width);
         expect(rep.scrollW, `no horizontal page scroll (${rep.scrollW} > ${rep.innerW})`).toBeLessThanOrEqual(rep.innerW + 1);
         expect(rep.overflow, 'no element sticks out of the viewport horizontally').toEqual([]);
         expect(rep.overlaps, 'no overlapping interactive controls').toEqual([]);

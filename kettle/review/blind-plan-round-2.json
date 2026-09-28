@@ -1,0 +1,99 @@
+{
+ "_doc": "Round-2 blind plan (matched, settled states). Same step grammar as blind-plan.json. Refs are the status-bar/device-chrome-cropped copies made by review/out/round-2/crop.mjs (crop boxes in review/out/round-2/crops.json), addressed relative to review/refs/duolingo/. Dropped vs round 1 (no clean, settled ref with its primary action visible): focus in-session (timer-in-session crop hides CHECK), break running, nook (no comparable), stats streak calendar (streak-calendar-repaired is an infographic), and GIF mid-animation frames (lesson-end-walk, streak-extended, quests-chest-open). `state` is copied into the key per pair.",
+ "viewport": { "width": 390, "height": 844, "deviceScaleFactor": 2, "isMobile": true, "hasTouch": true },
+ "screens": [
+  {
+   "id": "onboarding-question",
+   "kind": "onboarding: one question per screen, an option chosen",
+   "state": "Kettle: daily-goal step, 'A cup' chosen, Continue enabled, entrance settled. Duo: course/goal pick with one option selected (where-to-start: none selected, CTA enabled).",
+   "capture": { "route": "/welcome", "params": { "seed": "fresh", "onboarded": "0" },
+     "steps": [ { "button": "^get started" }, { "wait": 900 }, { "fill": "input", "text": "Robin" }, { "button": "^continue\\b" }, { "wait": 1200 }, { "click": "text=A cup" }, { "wait": 1400 } ] },
+   "refs": [ "../../out/round-2/refs-cropped/onboarding__onboarding-course-pick.png", "../../out/round-2/refs-cropped/onboarding__onboarding-set-goal-2020.png", "../../out/round-2/refs-cropped/onboarding__onboarding-where-to-start.png" ]
+  },
+  {
+   "id": "onboarding-notify",
+   "kind": "onboarding: asking permission for reminders/notifications",
+   "state": "Kettle: notifications step (permission state 'default'), both actions visible. Duo: reminders priming screen with Continue.",
+   "capture": { "route": "/welcome", "params": { "seed": "fresh", "onboarded": "0" },
+     "steps": [ { "eval": "Object.defineProperty(Notification, 'permission', { get: () => 'default', configurable: true })" }, { "button": "^get started" }, { "wait": 900 }, { "fill": "input", "text": "Robin" }, { "button": "^continue\\b" }, { "wait": 1100 }, { "click": "text=A cup" }, { "wait": 300 }, { "button": "^continue\\b" }, { "wait": 1100 }, { "click": "text=Classic" }, { "wait": 300 }, { "button": "^continue\\b" }, { "wait": 1100 }, { "click": "text=Rain" }, { "wait": 300 }, { "button": "^continue\\b" }, { "wait": 1800 } ] },
+   "refs": [ "../../out/round-2/refs-cropped/onboarding__onboarding-reminders.png" ]
+  },
+  {
+   "id": "home",
+   "kind": "home / today screen of a daily-habit app (main call to action)",
+   "state": "Kettle: veteran profile mid-day, goal part-done, top of page, no toast. Duo: path home with START bubble, mid-unit progress.",
+   "capture": { "route": "/", "params": { "seed": "veteran" }, "steps": [ { "wait": 2500 } ] },
+   "refs": [ "../../out/round-2/refs-cropped/home__home-path-2026.png", "../../out/round-2/refs-cropped/home__home-path-start-bubble.png" ]
+  },
+  {
+   "id": "home-recipes",
+   "kind": "daily quests / daily challenges list with mixed progress",
+   "state": "Kettle: Today's recipes card scrolled to top, 1 done / 2 partial. Duo: daily + friends/monthly quests with partial progress.",
+   "capture": { "route": "/", "params": { "seed": "veteran" }, "steps": [ { "wait": 2000 }, { "eval": "(() => { const h = [...document.querySelectorAll('h2,h3')].find(e => /recipes/i.test(e.textContent)); const card = h && (h.closest('section,article,[class*=card]') || h); card && card.scrollIntoView({ block: 'start' }); })()" }, { "wait": 1200 } ] },
+   "refs": [ "../../out/round-2/refs-cropped/quests__quests-daily-cards.png", "../../out/round-2/refs-cropped/quests__quests-monthly-2026.png" ]
+  },
+  {
+   "id": "quit-sheet",
+   "kind": "confirmation sheet when leaving a session early",
+   "state": "Kettle: end-early sheet 6 min into a brew, sheet fully open. Duo: quit-lesson sheet, fully open.",
+   "capture": { "route": "/", "params": { "seed": "newbie" }, "steps": [ { "eval": "__kettle.timer.getState().startFocus({ intention: 'Inbox zero', tag: 'work' })" }, { "wait": 6000 }, { "eval": "__kettle.ff(6 * 60000)" }, { "wait": 800 }, { "button": "^end session$" }, { "wait": 1800 } ] },
+   "refs": [ "../../out/round-2/refs-cropped/dialogs__dialog-quit-confirm.png" ]
+  },
+  {
+   "id": "done-1",
+   "kind": "end-of-session results card",
+   "state": "Kettle: card 1 after tiles and receipt finished counting. Duo: lesson complete card (+XP, streak ring, week row).",
+   "capture": { "route": "/", "params": { "seed": "celebrate" }, "steps": [ { "eval": "__kettle.timer.getState().startFocus({ intention: 'Inbox zero', tag: 'work' })" }, { "wait": 1500 }, { "eval": "__kettle.finish()" }, { "wait": 8000 } ] },
+   "refs": [ "../../out/round-2/refs-cropped/lesson-complete__lesson-end-goal-achieved-2020.png" ]
+  },
+  {
+   "id": "done-streak",
+   "kind": "streak extended celebration",
+   "state": "Kettle: warm-streak card after number flip and week row filled. Duo: '3 day streak' ring + week row + CONTINUE (same ref as results; it is Duo's streak moment).",
+   "capture": { "route": "/", "params": { "seed": "celebrate" }, "steps": [ { "eval": "__kettle.timer.getState().startFocus({ intention: 'Inbox zero', tag: 'work' })" }, { "wait": 1500 }, { "eval": "__kettle.finish()" }, { "wait": 7000 }, { "button": "^continue\\b", "timeout": 9000 }, { "wait": 5000 } ] },
+   "refs": [ "../../out/round-2/refs-cropped/lesson-complete__lesson-end-goal-achieved-2020.png" ]
+  },
+  {
+   "id": "done-recipes",
+   "kind": "reward moment: daily quests / chest opened",
+   "state": "Kettle: recipes card after tin opened and bars filled. Duo: reward card after chest opened (+10 energy, Continue).",
+   "capture": { "route": "/", "params": { "seed": "celebrate" }, "steps": [ { "eval": "__kettle.timer.getState().startFocus({ intention: 'Inbox zero', tag: 'work' })" }, { "wait": 1500 }, { "eval": "__kettle.finish()" }, { "wait": 7000 }, { "button": "^continue\\b", "timeout": 9000 }, { "wait": 5000 }, { "button": "^continue\\b", "timeout": 9000 }, { "wait": 5000 } ] },
+   "refs": [ "../../out/round-2/refs-cropped/lesson-complete__lesson-end-reward-2025.png" ]
+  },
+  {
+   "id": "done-levelup",
+   "kind": "level-up / reward unlocked celebration",
+   "state": "Kettle: level-up card with nook preview rendered. Duo: reward card after chest opened.",
+   "capture": { "route": "/", "params": { "seed": "celebrate" }, "steps": [ { "eval": "__kettle.timer.getState().startFocus({ intention: 'Inbox zero', tag: 'work' })" }, { "wait": 1500 }, { "eval": "__kettle.finish()" }, { "wait": 7000 }, { "button": "^continue\\b", "timeout": 9000 }, { "wait": 5000 }, { "button": "^continue\\b", "timeout": 9000 }, { "wait": 5000 }, { "button": "^continue\\b", "timeout": 9000 }, { "wait": 6000 } ] },
+   "refs": [ "../../out/round-2/refs-cropped/lesson-complete__lesson-end-reward-2025.png" ]
+  },
+  {
+   "id": "break-over",
+   "kind": "interstitial between sessions: mascot + next step",
+   "state": "Kettle: 'Break's over' after a short tea break, 3D room rendered. Duo: practice-session intro (mascot + bubble + CONTINUE) and timed side-quest intro (PLAY).",
+   "capture": { "route": "/", "params": { "seed": "newbie" }, "steps": [ { "eval": "__kettle.timer.getState().startBreak('shortBreak')" }, { "wait": 3000 }, { "eval": "__kettle.finish()" }, { "wait": 8000 } ] },
+   "refs": [ "../../out/round-2/refs-cropped/timer-like__timer-session-intro.png", "../../out/round-2/refs-cropped/timer-like__timer-side-quest.png" ]
+  },
+  {
+   "id": "stats",
+   "kind": "profile / statistics screen",
+   "state": "Kettle: stats top of page, veteran, counters settled. Duo: profile with overview/statistics tiles.",
+   "capture": { "route": "/stats", "params": { "seed": "veteran" }, "steps": [ { "wait": 3000 } ] },
+   "refs": [ "../../out/round-2/refs-cropped/profile-stats__profile-2026.png", "../../out/round-2/refs-cropped/profile-stats__profile-statistics-2023.png" ]
+  },
+  {
+   "id": "stats-badges",
+   "kind": "achievements / badges collection",
+   "state": "Kettle: Badges section scrolled to top (6 tiered badges + personal bests below). Duo: achievements page (personal records + awards grid).",
+   "capture": { "route": "/stats", "params": { "seed": "veteran" }, "steps": [ { "wait": 2500 }, { "eval": "(() => { const h = [...document.querySelectorAll('h2,h3')].find(e => /^badges/i.test(e.textContent.trim())); const card = h && (h.closest('section,article,[class*=card]') || h); card && card.scrollIntoView({ block: 'start' }); })()" }, { "wait": 1200 } ] },
+   "refs": [ "../../out/round-2/refs-cropped/profile-stats__profile-achievements-2023.png" ]
+  },
+  {
+   "id": "settings",
+   "kind": "settings / preferences screen",
+   "state": "Kettle: settings top of page. Duo: settings menu, preferences toggles, reminders list.",
+   "capture": { "route": "/settings", "params": { "seed": "veteran" }, "steps": [ { "wait": 2000 } ] },
+   "refs": [ "../../out/round-2/refs-cropped/settings__settings-preferences.png", "../../out/round-2/refs-cropped/settings__settings-menu.png", "../../out/round-2/refs-cropped/settings__settings-reminders.png" ]
+  }
+ ]
+}
