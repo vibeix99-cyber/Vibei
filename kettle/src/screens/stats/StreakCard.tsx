@@ -175,7 +175,7 @@ export function StreakCard({ streak, byDay, today, weekStartsOn, firstDay }: Pro
         <p className={s.calSummary}>
           {warmCount === 0 && cozyCount === 0
             ? 'A fresh month to fill'
-            : `${plural(warmCount, 'warm day')} in ${monthOnly}${cozyCount ? ` · ${plural(cozyCount, 'Tea Cozy day')}` : ''}`}
+            : `${offset === 0 ? `${monthOnly} so far` : `In ${monthOnly}`}: ${plural(warmCount, 'warm day')}${cozyCount ? ` · ${plural(cozyCount, 'Tea Cozy day')}` : ''}`}
         </p>
       </div>
     </Card>

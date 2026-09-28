@@ -42,9 +42,10 @@ export function LeafConfetti({ burstKey, count = 26, reduced, spread = 1, delay 
     return Array.from({ length: reduced ? 6 : count }, (_, i) => {
       const angle = (-90 + (r() - 0.5) * 150) * (Math.PI / 180);
       const dist = (110 + r() * 170) * spread;
-      const dx = Math.cos(angle) * dist;
+      // Stay inside the hero: never drift across the headline or past the card edges.
+      const dx = Math.max(-150, Math.min(150, Math.cos(angle) * dist));
       const up = Math.sin(angle) * dist; // negative = up
-      const fall = 180 + r() * 220;
+      const fall = Math.min(60 + r() * 120, 85 - up);
       const colors = palette === 'gold' ? COLORS[3 + (i % 2)] : COLORS[Math.floor(r() * (r() < 0.8 ? 3 : 5))];
       return {
         dx,

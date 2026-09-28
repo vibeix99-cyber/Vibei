@@ -32,12 +32,13 @@ export function RecipesStep({ report: r, reduced, active, headingRef, headingId 
       : []),
   ]);
 
-  const title = r.allQuestsJustDone
-    ? 'All of today’s recipes, done'
-    : completed.length > 1
-      ? 'Recipes complete'
-      : completed.length === 1
-        ? 'Recipe complete'
+  // Honest headline: only say "all" when every recipe is finished.
+  const doneCount = quests.filter((q) => q.after >= q.target).length;
+  const title =
+    r.allQuestsJustDone || (quests.length > 0 && doneCount === quests.length)
+      ? 'All of today’s recipes, done'
+      : completed.length > 0
+        ? `${doneCount} of ${quests.length} recipes done`
         : 'Today’s recipes';
   const sub = completed.length
     ? `The tin’s open: +${reward} leaves${r.allQuestsJustDone ? ', plus a bonus for finishing all three' : ''}.`
