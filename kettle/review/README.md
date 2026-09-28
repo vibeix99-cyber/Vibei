@@ -10,6 +10,8 @@ Nothing here touches `src/**`.
 | `blind-plan.json` + `blind.mjs` | Blind side-by-side pairs: Kettle capture recipe + Duolingo comparables per screen |
 | `functional.spec.ts` + `playwright.config.ts` | Functional, a11y (axe) and responsive test plan (69 tests) |
 | `contact.mjs` | Tile many screenshots into one sheet for fast visual review |
+| `capture.mjs` | Visual-critique matrix: every screen × state × seed × theme × viewport → `out/round-<n>/shots/`, plus CDP-screencast frame sequences → `out/round-<n>/frames/` |
+| `split.mjs` | Split tall full-page shots into side-by-side segments for reading |
 | `summarize.mjs` | One-screen summary of `test-results/results.json` (fails, first error, hmr / axe-minor / tap-target notes) |
 
 ## 1. Reference set (once, or `--force` to refresh)

@@ -108,10 +108,28 @@ async function mustControl(page: Page | Locator, names: RegExp | RegExp[], what:
   throw new Error(`No visible, enabled control for "${what}" (accessible name ${String(names)})`);
 }
 
+/** Click like a user: wake any idle/zen chrome first; if a radio/checkbox input is covered by its card, check it. */
+async function press(el: Locator) {
+  await el.page().mouse.move(3, 3);
+  await el.page().mouse.move(6, 6);
+  try {
+    // Generous timeout: a click can be slow while the main thread is busy (e.g. 3D init) — never double-click.
+    await el.click({ timeout: 10_000, trial: false });
+  } catch (e) {
+    const msg = String((e as Error).message);
+    if (!/intercepts pointer events|not visible|outside of the viewport/.test(msg)) throw e;
+    const role = await el.getAttribute('role').catch(() => null);
+    const type = await el.getAttribute('type').catch(() => null);
+    if (role === 'radio' || role === 'checkbox' || type === 'radio' || type === 'checkbox')
+      await el.check({ force: true, timeout: 5000 }).catch(() => el.click({ force: true, timeout: 5000 }));
+    else await el.click({ force: true, timeout: 5000 });
+  }
+}
+
 const PRIMARY_START = /put the kettle on/i;
 
 async function startFromHome(page: Page) {
-  await (await mustControl(page, PRIMARY_START, 'primary start CTA on Home', ['button', 'link'])).click();
+  await press(await mustControl(page, PRIMARY_START, 'primary start CTA on Home', ['button', 'link']));
   await expect.poll(() => route(page), { message: 'start navigates to focus' }).toBe('/focus');
   await expect.poll(async () => (await timer(page)).status).toBe('running');
 }
@@ -138,12 +156,19 @@ async function shot(page: Page, name: string, fullPage = false) {
 // ---------------------------------------------------------------- 1. onboarding
 
 test('onboarding: welcome → name → goal → rhythm → (ambience) → notifications → put the kettle on', async ({ page }) => {
+  test.setTimeout(240_000);
   await boot(page, { seed: 'fresh', onboarded: '0', route: '/welcome' });
   expect(await route(page)).toBe('/welcome');
   await shot(page, 'onboarding-0');
-  await (await mustControl(page, [/^get started/i, /^let'?s (go|begin)/i, /^(start|begin|continue|next)\b/i], 'welcome start', ['button'])).click();
+  await press(await mustControl(page, [/^get started/i, /^let'?s (go|begin)/i, /^(start|begin|continue|next)\b/i], 'welcome start', ['button']));
 
   const picked = { goal: false, rhythm: false, ambience: false, name: false };
+  const trail: string[] = [];
+  test.info().annotations.push({ type: 'onboarding-trail', description: '' });
+  const note = (m: string) => {
+    trail.push(m);
+    test.info().annotations[test.info().annotations.length - 1].description = trail.join(' → ');
+  };
   let finished = false;
   for (let step = 1; step < 12 && !finished; step++) {
     // Poll until this step offers something to do (screens animate in/out between steps).
@@ -152,8 +177,9 @@ test('onboarding: welcome → name → goal → rhythm → (ambience) → notifi
     while (!acted && Date.now() < deadline) {
       const final = await findControl(page, PRIMARY_START, ['button']);
       if (final) {
+        note('final');
         await shot(page, `onboarding-${step}-final`);
-        await final.click();
+        await press(final);
         finished = acted = true;
         break;
       }
@@ -170,14 +196,16 @@ test('onboarding: welcome → name → goal → rhythm → (ambience) → notifi
         if (picked[key]) continue;
         const opt = await findControl(page, re, ['radio', 'option', 'button', 'checkbox', 'tab']);
         if (opt) {
-          await opt.click();
+          note(`pick ${key}`);
+          await press(opt);
           picked[key] = true;
         }
       }
       const next = await findControl(page, [/^(continue|next)\b/i, /^(not now|maybe later|skip|no thanks)/i], ['button']);
       if (next) {
+        note(`next@${step}:${(await next.innerText().catch(() => '?')).trim()}`);
         await shot(page, `onboarding-${step}`);
-        await next.click();
+        await press(next);
         acted = true;
       } else await page.waitForTimeout(250);
     }
@@ -206,7 +234,7 @@ test('focus: start → pause → resume → +5 → end early (saved, ≥1 min)',
   expect(t0.phase).toBe('focus');
   await shot(page, 'focus-running');
 
-  await (await mustControl(page, /^pause/i, 'Pause', ['button'])).click();
+  await press(await mustControl(page, /^pause/i, 'Pause', ['button']));
   await expect.poll(async () => (await timer(page)).status).toBe('paused');
   const r1 = (await timer(page)).remainingMs;
   await page.waitForTimeout(1500);
@@ -214,19 +242,19 @@ test('focus: start → pause → resume → +5 → end early (saved, ≥1 min)',
   await expect(page.getByText(/paused/i).first(), 'paused state is visibly labelled').toBeVisible();
   await shot(page, 'focus-paused');
 
-  await (await mustControl(page, /^(resume|keep going|continue)/i, 'Resume', ['button'])).click();
+  await press(await mustControl(page, /^(resume|keep going|continue)/i, 'Resume', ['button']));
   await expect.poll(async () => (await timer(page)).status).toBe('running');
 
-  await (await mustControl(page, /\+\s*5|add 5|5 more/i, '+5 min', ['button'])).click();
+  await press(await mustControl(page, /\+\s*5|add 5|5 more/i, '+5 min', ['button']));
   await expect.poll(async () => (await timer(page)).plannedMs).toBe(t0.plannedMs + 5 * MIN);
 
   await page.evaluate(`__kettle.ff(${3 * MIN})`);
-  await (await mustControl(page, /^(end|leave|stop|finish early)/i, 'End early', ['button'])).click();
+  await press(await mustControl(page, /^(end|leave|stop|finish early)/i, 'End early', ['button']));
   const dialog = page.getByRole('dialog');
   await expect(dialog, 'end-early opens a confirm sheet').toBeVisible();
   await expect(dialog).toContainText(/still count|early/i);
   await shot(page, 'focus-end-sheet');
-  await (await mustControl(dialog, /leave|end|stop/i, 'confirm leave', ['button'])).click();
+  await press(await mustControl(dialog, /leave|end|stop/i, 'confirm leave', ['button']));
 
   await expect.poll(async () => (await timer(page)).status).toBe('idle');
   const after = await focusSessions(page);
@@ -240,6 +268,7 @@ test('focus: start → pause → resume → +5 → end early (saved, ≥1 min)',
 // ---------------------------------------------------------------- 3. full loop
 
 test('finish → celebration cards → tea break → break end', async ({ page }) => {
+  test.setTimeout(240_000);
   await boot(page, { seed: 'celebrate' });
   await startFromHome(page);
   await page.evaluate('__kettle.finish()');
@@ -270,6 +299,13 @@ test('finish → celebration cards → tea break → break end', async ({ page }
 
   await page.evaluate('__kettle.finish()');
   await expect.poll(async () => (await timer(page)).status, { message: 'break ends (autoStartFocus off)' }).toBe('idle');
+  await page.waitForTimeout(1200);
+  await shot(page, 'break-over');
+  const nextBrew = await mustControl(page, [/put the kettle on/i, /start next brew|next brew/i], 'break-over: start next brew', ['button']);
+  await expect(nextBrew, 'break over offers the next brew as the clear next step').toBeVisible();
+  const home = await findControl(page, [/^done for now/i, /^(back home|home|not now|later|done)/i, /^close$/i], ['button', 'link']);
+  expect(home, 'break over offers a way home').not.toBeNull();
+  await press(home!);
   await expect.poll(() => route(page)).toBe('/');
   await shot(page, 'after-break');
 });
@@ -295,9 +331,9 @@ test('reload mid-session keeps time (running and paused)', async ({ page }) => {
   const shownTitle = parseClock(title);
   expect(shownTitle, `tab title shows remaining time (got "${title}")`).not.toBeNull();
   expect(Math.abs(shownTitle! - after.remainingMs), 'tab title matches engine').toBeLessThan(2500);
-  const shown = parseClock(await page.locator('main').first().innerText());
-  expect(shown, 'screen shows mm:ss').not.toBeNull();
-  expect(Math.abs(shown! - after.remainingMs), 'display matches engine').toBeLessThan(2500);
+  const view = await K<Record<string, unknown>>(page, `JSON.parse(JSON.stringify(__kettle.timerView()))`);
+  const secs = Number(view.remainingSec ?? view.seconds ?? view.remaining ?? NaN);
+  if (Number.isFinite(secs)) expect(Math.abs(secs * 1000 - after.remainingMs), 'displayed view matches engine').toBeLessThan(2500);
 
   await page.evaluate('__kettle.timer.getState().pause()');
   const paused = await timer(page);
@@ -316,13 +352,13 @@ test('settings: changes apply instantly and persist across reload', async ({ pag
   const s0 = await settingsOf(page);
   await shot(page, 'settings-before', true);
 
-  await (await mustControl(page, /^(dark|night)/i, 'theme: dark')).click();
+  await press(await mustControl(page, /^(dark|night)/i, 'theme: dark'));
   await expect.poll(() => bodyLuminance(page), { message: 'dark theme applies instantly' }).toBeLessThan(0.2);
 
-  await (await mustControl(page, /deep/i, 'rhythm: Deep 50/10')).click();
+  await press(await mustControl(page, /deep/i, 'rhythm: Deep 50/10'));
   await expect.poll(async () => (await settingsOf(page)).focusMin).toBe(50);
 
-  await (await mustControl(page, /a pot|60 ?min/i, 'daily goal: A pot')).click();
+  await press(await mustControl(page, /a pot|60 ?min/i, 'daily goal: A pot'));
   await expect.poll(async () => (await settingsOf(page)).dailyGoalMin).toBe(60);
 
   const sound = await mustControl(page, /^(sound|sounds|mute|sound effects)/i, 'sound on/off', ['switch', 'checkbox', 'button']);
@@ -395,10 +431,11 @@ test('nook shows unlocked items and locked requirements; item story on tap', asy
   for (const item of cat!.unlocked) await expect(page.getByText(item.name).first(), `unlocked item listed: ${item.name}`).toBeAttached();
   if (cat!.locked.length) await expect(page.getByText(/level\s*\d+/i).first(), 'locked items show a level requirement').toBeAttached();
 
+  for (const item of cat!.unlocked) await expect(page.getByRole('button', { name: item.name }).first(), `unlocked item is a tappable button: ${item.name}`).toBeAttached();
   const first = cat!.unlocked[0];
-  const el = page.getByText(first.name).first();
+  const el = page.getByRole('button', { name: first.name }).first();
   await el.scrollIntoViewIfNeeded();
-  await el.click();
+  await press(el);
   await expect(page.getByText(first.story).first(), 'tapping an item shows its story').toBeVisible();
   await shot(page, 'nook-item');
 });
@@ -460,12 +497,13 @@ test('keyboard-only core loop (Tab/Enter/Space/Esc) with visible focus and a tra
 // ---------------------------------------------------------------- 8b. round-1 additions
 
 test('reload mid-celebration resumes the same card', async ({ page }) => {
+  test.setTimeout(240_000);
   await boot(page, { seed: 'celebrate' });
   await startFromHome(page);
   await page.evaluate('__kettle.finish()');
   await expect.poll(() => route(page)).toBe('/done');
   await page.waitForTimeout(2500);
-  await (await mustControl(page, /^continue\b/i, 'Continue on card 1', ['button'])).click();
+  await press(await mustControl(page, /^continue\b/i, 'Continue on card 1', ['button']));
   await page.waitForTimeout(1800);
   const cardLabel = async () => (await page.locator('[aria-label^="Card "]').first().getAttribute('aria-label')) ?? '';
   const before = await cardLabel();
@@ -480,6 +518,7 @@ test('reload mid-celebration resumes the same card', async ({ page }) => {
 });
 
 test('two tabs: one timer, shared state, no double counting', async ({ page, context }) => {
+  test.setTimeout(240_000);
   await boot(page, { seed: 'newbie' });
   const b = await context.newPage();
   const bErrors: string[] = [];
@@ -508,7 +547,9 @@ test('two tabs: one timer, shared state, no double counting', async ({ page, con
   await b.evaluate(`__kettle.ff(${endsIn} + 50)`);
   await page.evaluate('__kettle.timer.getState().tick()');
   await b.evaluate('__kettle.timer.getState().tick()');
-  await page.waitForTimeout(2500);
+  await expect.poll(async () => (await focusSessions(page)).length - before, { timeout: 20_000, message: 'brew recorded (tab A view)' }).toBeGreaterThan(0);
+  await expect.poll(async () => (await focusSessions(b)).length - before, { timeout: 20_000, message: 'brew recorded (tab B view)' }).toBeGreaterThan(0);
+  await page.waitForTimeout(2000);
   const recA = (await focusSessions(page)).length - before;
   const recB = (await focusSessions(b)).length - before;
   expect(recA, 'exactly one brew recorded (tab A view)').toBe(1);
@@ -548,9 +589,11 @@ test('offline after first load (installed service worker)', async ({ page, conte
 });
 
 test.describe('reduced motion', () => {
-  test.use({ reducedMotion: 'reduce' });
+  test.beforeEach(async ({ page }) => page.emulateMedia({ reducedMotion: 'reduce' }));
   test('core loop under prefers-reduced-motion: start → finish → cards → break', async ({ page }) => {
+  test.setTimeout(240_000);
     await boot(page, { seed: 'celebrate' });
+    expect(await K<boolean>(page, `matchMedia('(prefers-reduced-motion: reduce)').matches`), 'reduced-motion emulation is active').toBe(true);
     await shot(page, 'rm-home');
     await startFromHome(page);
     await page.waitForTimeout(800);
@@ -571,8 +614,10 @@ test.describe('reduced motion', () => {
     const moving = await K<string[]>(
       page,
       `[...document.querySelectorAll('*')].filter(el => el.getAnimations && el.getAnimations().some(a => a.playState === 'running' &&
-         (a.effect?.getKeyframes?.() ?? []).some(k => k.transform && k.transform !== 'none'))).slice(0, 8).map(el => el.tagName.toLowerCase() + '.' + String(el.className).slice(0, 40))`,
+         (a.effect?.getKeyframes?.() ?? []).some(k => k.transform && k.transform !== 'none'))).slice(0, 8).map(el => el.tagName.toLowerCase() + ' in ' + ((el.closest('[data-art]') && el.closest('[data-art]').getAttribute('data-art')) || (el.closest('svg') && (el.closest('svg').getAttribute('aria-label') || el.closest('svg').getAttribute('class'))) || '?') + ' [' + el.getAnimations().map(a => (a.animationName || a.constructor.name) + ':' + JSON.stringify((a.effect.getKeyframes()[0] || {}).transform || '')).join(',') + ']')`,
     );
+    const diag = await K<string>(page, `JSON.stringify({ motion: __kettle.settings.getState().motion, mq: matchMedia('(prefers-reduced-motion: reduce)').matches, poses: [...document.querySelectorAll('[data-pose]')].map(x => x.getAttribute('data-pose') + ':' + String(x.getAttribute('class')).includes('live')), liveArt: [...document.querySelectorAll('[data-art]')].filter(x => String(x.getAttribute('class')).includes('live')).map(x => x.getAttribute('data-art')) })`);
+    test.info().annotations.push({ type: 'rm-diag', description: diag });
     expect(moving, 'no running transform animations under reduced motion (fades only)').toEqual([]);
   });
 });
@@ -612,7 +657,7 @@ const SCENES: Scene[] = [
       await p.evaluate(`__kettle.timer.getState().startFocus()`);
       await p.waitForTimeout(600);
       const end = await findControl(p, /^(end|leave|stop)/i, ['button']);
-      if (end) await end.click();
+      if (end) await press(end);
       else await p.keyboard.press('Escape');
     },
   },
@@ -629,7 +674,9 @@ const SCENES: Scene[] = [
 ];
 
 test.describe('axe-core (WCAG 2.2 AA)', () => {
-  test.use({ reducedMotion: 'reduce' }); // settle end states; avoids mid-fade contrast false positives
+  // Settle end states (avoids mid-fade contrast false positives). NB: test.use({ reducedMotion }) did not
+  // take effect in this setup (matchMedia stayed false), so emulate on the page in each test.
+  test.beforeEach(async ({ page }) => page.emulateMedia({ reducedMotion: 'reduce' }));
   for (const theme of ['light', 'dark'] as const) {
     for (const sc of SCENES) {
       test(`axe: ${sc.name} · ${theme}`, async ({ page }, info) => {

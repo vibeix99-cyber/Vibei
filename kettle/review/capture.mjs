@@ -28,6 +28,7 @@ mkdirSync(join(OUT, 'frames'), { recursive: true });
 
 const VP = {
   phone: { width: 390, height: 844, deviceScaleFactor: 2, isMobile: true, hasTouch: true },
+  phone1x: { width: 390, height: 844, deviceScaleFactor: 1, isMobile: true, hasTouch: true },
   small: { width: 320, height: 640, deviceScaleFactor: 2, isMobile: true, hasTouch: true },
   land: { width: 844, height: 390, deviceScaleFactor: 2, isMobile: true, hasTouch: true },
   tablet: { width: 820, height: 1180, deviceScaleFactor: 1, isMobile: true, hasTouch: true },
@@ -41,7 +42,7 @@ const W = (ms) => ({ wait: ms });
 const E = (js) => ({ eval: js });
 const START = (intent = 'Thesis chapter 3', tag = 'study') => [E(`__kettle.timer.getState().startFocus({ intention: '${intent}', tag: '${tag}' })`), W(900)];
 const FINISH = [E('__kettle.finish()')];
-const CONT = [B('^continue\\b'), W(3200)];
+const CONT = [B('^continue\\b', { timeout: 9000 }), W(3200)];
 const ONB = {
   hello: [],
   name: [B('^get started'), W(900)],
@@ -50,7 +51,7 @@ const ONB = {
 ONB.rhythm = [...ONB.goal, { choose: 'a cup' }, W(300), B('^continue\\b'), W(900)];
 ONB.ambience = [...ONB.rhythm, { choose: '^classic' }, W(300), B('^continue\\b'), W(900)];
 ONB.notify = [...ONB.ambience, { choose: '^rain' }, W(300), B('^continue\\b'), W(1100)];
-ONB.ready = [...ONB.notify, B('^(not now|maybe later|skip|no thanks|later)'), W(1300)];
+ONB.ready = [...ONB.notify, B('^(not now|maybe later|skip|no thanks|later|continue)'), W(1300)];
 const TOD = (h, m) => E(`(() => { const d = new Date(__kettle.clock.now()); d.setHours(${h}, ${m}, 0, 0); __kettle.ff(d.getTime() - __kettle.clock.now()); __kettle.navigate('/stats'); setTimeout(() => __kettle.navigate('/'), 150); })()`);
 
 // ------------------------------------------------------------------ the matrix
@@ -85,7 +86,7 @@ for (const vp of ['small', 'land', 'tablet', 'desk', 'wide']) add(`focus-running
 add('focus-running.desk.dark', { vp: 'desk', theme: 'dark', params: { seed: 'newbie' }, steps: FOCUS });
 add('focus-running.land.dark', { vp: 'land', theme: 'dark', params: { seed: 'newbie' }, steps: FOCUS });
 both('focus-paused', { params: { seed: 'newbie' }, steps: [...FOCUS, B('^pause$'), W(1200)] });
-add('focus-paused.desk', { vp: 'desk', params: { seed: 'newbie' }, steps: [...FOCUS, B('^pause$'), W(1200)] });
+add('focus-paused.desk', { vp: 'desk', params: { seed: 'newbie' }, steps: [...FOCUS, { press: ' ' }, W(1200)] });
 both('focus-zen', { params: { seed: 'newbie' }, steps: [...FOCUS, W(8500)] });
 both('focus-endsheet', { params: { seed: 'newbie' }, steps: [...FOCUS, B('^end session$'), W(1200)] });
 add('focus-endsheet.desk', { vp: 'desk', params: { seed: 'newbie' }, steps: [...FOCUS, B('^end session$'), W(1200)] });
@@ -129,7 +130,7 @@ add('stats-badge-tap', { route: '/stats', params: { seed: 'veteran' }, steps: [W
 both('nook-veteran', { route: '/nook', params: { seed: 'veteran' }, steps: [W(5000)], full: true });
 add('nook-blank', { route: '/nook', params: { seed: 'blank' }, steps: [W(5000)], full: true });
 for (const vp of ['desk', 'land', 'small']) add(`nook-veteran.${vp}`, { vp, route: '/nook', params: { seed: 'veteran' }, steps: [W(5000)] });
-add('nook-item-tap', { route: '/nook', params: { seed: 'veteran' }, steps: [W(4000), { click: 'text=Trailing pothos' }, W(1200)] });
+add('nook-item-tap', { route: '/nook', params: { seed: 'veteran' }, steps: [W(4000), B('^trailing pothos'), W(1200)] });
 both('settings', { route: '/settings', params: { seed: 'veteran' }, steps: [W(1500)], full: true });
 add('settings.desk', { vp: 'desk', route: '/settings', params: { seed: 'veteran' }, steps: [W(1500)], full: true });
 add('settings-reset-confirm', { route: '/settings', params: { seed: 'veteran' }, steps: [W(1200), B('^reset everything'), W(1000)] });
@@ -150,7 +151,7 @@ seq('card2-streak', { params: { seed: 'celebrate' }, pre: [...DONE], trigger: B(
 seq('card3-recipes', { params: { seed: 'celebrate' }, pre: [...DONE, ...CONT], trigger: B('^continue\\b'), n: 20, every: 180 });
 seq('card4-level', { params: { seed: 'celebrate' }, pre: [...DONE, ...CONT, ...CONT], trigger: B('^continue\\b'), n: 20, every: 180 });
 seq('card5-badges', { params: { seed: 'celebrate' }, pre: [...DONE, ...CONT, ...CONT, ...CONT], trigger: B('^continue\\b'), n: 18, every: 180 });
-seq('break-start', { params: { seed: 'celebrate' }, pre: [...DONE, ...CONT, ...CONT, ...CONT, ...CONT, W(500)], trigger: B('tea break|^start'), n: 12, every: 120 });
+seq('break-start', { params: { seed: 'celebrate' }, pre: [...DONE, ...CONT, ...CONT, ...CONT, ...CONT, W(500)], trigger: B('tea break|^start', { timeout: 9000 }), n: 12, every: 120 });
 seq('onb-next', { route: '/welcome', params: { seed: 'fresh', onboarded: '0' }, pre: [...ONB.goal, { choose: 'a cup' }], trigger: B('^continue\\b'), n: 10, every: 80 });
 
 // ------------------------------------------------------------------ runner
@@ -162,6 +163,9 @@ async function runStep(page, s) {
   if (s.fill) return page.locator(s.fill).first().fill(s.text, { timeout });
   if (s.click) return page.locator(s.click).first().click({ timeout });
   const scope = s.within ? page.locator(s.within).first() : page;
+  // Wake idle/zen chrome the way a real pointer would before interacting.
+  await page.mouse.move(4, 4);
+  await page.mouse.move(8, 8);
   const pick = async (roles, re) => {
     const deadline = Date.now() + timeout;
     while (Date.now() < deadline) {
@@ -170,7 +174,21 @@ async function runStep(page, s) {
         const n = await loc.count();
         for (let i = 0; i < n; i++) {
           const b = loc.nth(i);
-          if ((await b.isVisible()) && (await b.isEnabled())) return b.click({ timeout });
+          if (!(await b.isEnabled().catch(() => false))) continue;
+          if (await b.isVisible()) {
+            try {
+              return await b.click({ timeout: 1500 });
+            } catch {
+              /* covered (e.g. visually-hidden radio under its card) → fall through to force */
+            }
+          }
+          if (role === 'radio' || role === 'checkbox') {
+            try {
+              return await b.check({ force: true, timeout: 1500 });
+            } catch {
+              return b.click({ force: true, timeout: 1500 });
+            }
+          }
         }
       }
       await page.waitForTimeout(150);
@@ -234,21 +252,38 @@ async function doShot(browser, spec) {
 }
 
 async function doFrames(browser, spec) {
+  // CDP screencast: frames arrive as the compositor produces them (real motion cadence),
+  // unlike page.screenshot which costs ~1 s per shot with the 3D scene on SwiftShader.
   const dir = join(OUT, 'frames', spec.id);
   mkdirSync(dir, { recursive: true });
   let o;
   try {
-    o = await open(browser, spec);
+    o = await open(browser, { ...spec, vp: spec.vp === 'phone' ? 'phone1x' : spec.vp });
     await runSteps(o.page, spec.pre ?? [], o.log);
-    const t0 = Date.now();
-    const trig = runStep(o.page, spec.trigger).catch((e) => o.log.warnings.push(`trigger → ${String(e.message).split('\n')[0]}`));
+    const cdp = await o.page.context().newCDPSession(o.page);
+    const frames = [];
+    let t0 = 0;
+    cdp.on('Page.screencastFrame', async (f) => {
+      frames.push({ at: Date.now() - t0, data: f.data });
+      await cdp.send('Page.screencastFrameAck', { sessionId: f.sessionId }).catch(() => {});
+    });
+    await cdp.send('Page.startScreencast', { format: 'jpeg', quality: 80, maxWidth: 780, maxHeight: 1688, everyNthFrame: 1 });
+    await o.page.waitForTimeout(250);
+    t0 = Date.now();
+    frames.length = 0;
+    await runStep(o.page, spec.trigger).catch((e) => o.log.warnings.push(`trigger → ${String(e.message).split('\n')[0]}`));
+    await o.page.waitForTimeout(spec.n * spec.every);
+    await cdp.send('Page.stopScreencast').catch(() => {});
+    // Keep ~spec.n frames evenly spaced in time.
+    const keep = [];
     for (let k = 0; k < spec.n; k++) {
-      const at = Date.now() - t0;
-      await o.page.screenshot({ path: join(dir, `${String(k).padStart(2, '0')}-${String(at).padStart(5, '0')}ms.png`) });
-      const next = t0 + (k + 1) * spec.every;
-      if (next > Date.now()) await o.page.waitForTimeout(next - Date.now());
+      const target = k * spec.every;
+      let best = null;
+      for (const f of frames) if (!best || Math.abs(f.at - target) < Math.abs(best.at - target)) best = f;
+      if (best && !keep.includes(best)) keep.push(best);
     }
-    await trig;
+    keep.forEach((f, k) => writeFileSync(join(dir, `${String(k).padStart(2, '0')}-${String(Math.max(0, f.at)).padStart(5, '0')}ms.jpg`), Buffer.from(f.data, 'base64')));
+    o.log.frames = frames.length;
   } catch (e) {
     (o?.log ?? (o = { log: { id: spec.id, warnings: [], errors: [] } }).log).warnings.push(`FAILED: ${String(e.message).split('\n')[0]}`);
   }

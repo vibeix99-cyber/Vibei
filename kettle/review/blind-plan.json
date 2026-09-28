@@ -19,22 +19,20 @@
     },
     "steps": [
      {
-      "button": "^(get started|let'?s (go|begin)|start|begin|continue|next)\\b"
+      "button": "^get started"
      },
      {
-      "wait": 500
+      "wait": 700
      },
      {
-      "fill": "input[type=text], input:not([type])",
-      "text": "Robin",
-      "optional": true
+      "fill": "input",
+      "text": "Robin"
      },
      {
-      "button": "^continue|^next",
-      "optional": true
+      "button": "^continue\\b"
      },
      {
-      "wait": 1200
+      "wait": 1500
      }
     ]
    },
@@ -55,46 +53,56 @@
     },
     "steps": [
      {
-      "button": "^(get started|let'?s (go|begin)|start|begin|continue|next)\\b"
+      "button": "^get started"
      },
      {
-      "wait": 400
+      "wait": 700
      },
      {
-      "button": "^continue|^next|skip",
-      "optional": true
+      "fill": "input",
+      "text": "Robin"
      },
      {
-      "wait": 400
+      "button": "^continue\\b"
      },
      {
-      "button": "a cup|30",
-      "optional": true
+      "wait": 900
      },
      {
-      "button": "^continue|^next",
-      "optional": true
+      "choose": "a cup"
      },
      {
-      "wait": 400
+      "wait": 300
      },
      {
-      "button": "classic|25",
-      "optional": true
+      "button": "^continue\\b"
      },
      {
-      "button": "^continue|^next",
-      "optional": true
+      "wait": 900
      },
      {
-      "wait": 400
+      "choose": "^classic"
      },
      {
-      "button": "^skip|no sound|silence|none",
-      "optional": true
+      "wait": 300
      },
      {
-      "wait": 1200
+      "button": "^continue\\b"
+     },
+     {
+      "wait": 900
+     },
+     {
+      "choose": "^rain"
+     },
+     {
+      "wait": 300
+     },
+     {
+      "button": "^continue\\b"
+     },
+     {
+      "wait": 1500
      }
     ]
    },
@@ -134,13 +142,13 @@
       "eval": "__kettle.timer.getState().startFocus({ intention: 'Thesis chapter 3', tag: 'study' })"
      },
      {
-      "wait": 800
+      "wait": 4500
      },
      {
       "eval": "__kettle.ff(9 * 60000)"
      },
      {
-      "wait": 2500
+      "wait": 1600
      }
     ]
    },
@@ -162,7 +170,7 @@
       "eval": "__kettle.timer.getState().startFocus({ intention: 'Inbox zero', tag: 'work' })"
      },
      {
-      "wait": 800
+      "wait": 4500
      },
      {
       "eval": "__kettle.ff(6 * 60000)"
@@ -171,17 +179,17 @@
       "wait": 600
      },
      {
-      "button": "^end|leave|stop",
-      "optional": true
+      "button": "^end session$"
      },
      {
-      "wait": 1200
+      "wait": 1400
      }
     ]
    },
    "refs": [
     "dialogs/dialog-quit-confirm.png",
-    "dialogs/dialog-energy-sheet.png"
+    "dialogs/dialog-energy-sheet.png",
+    "dialogs/dialog-protect-streak.png"
    ]
   },
   {
@@ -197,13 +205,13 @@
       "eval": "__kettle.timer.getState().startFocus({ intention: 'Inbox zero', tag: 'work' })"
      },
      {
-      "wait": 600
+      "wait": 900
      },
      {
       "eval": "__kettle.finish()"
      },
      {
-      "wait": 3500
+      "wait": 6500
      }
     ]
    },
@@ -226,20 +234,20 @@
       "eval": "__kettle.timer.getState().startFocus({ intention: 'Inbox zero', tag: 'work' })"
      },
      {
-      "wait": 600
+      "wait": 900
      },
      {
       "eval": "__kettle.finish()"
      },
      {
-      "wait": 2500
+      "wait": 6500
      },
      {
-      "button": "^continue|^next|nice|yay",
-      "optional": true
+      "button": "^continue\\b",
+      "timeout": 9000
      },
      {
-      "wait": 3000
+      "wait": 4000
      }
     ]
    },
@@ -262,27 +270,27 @@
       "eval": "__kettle.timer.getState().startFocus({ intention: 'Inbox zero', tag: 'work' })"
      },
      {
-      "wait": 600
+      "wait": 900
      },
      {
       "eval": "__kettle.finish()"
      },
      {
-      "wait": 2500
+      "wait": 6500
      },
      {
-      "button": "^continue|^next|nice|yay",
-      "optional": true
+      "button": "^continue\\b",
+      "timeout": 9000
      },
      {
-      "wait": 2500
+      "wait": 4000
      },
      {
-      "button": "^continue|^next|nice|yay",
-      "optional": true
+      "button": "^continue\\b",
+      "timeout": 9000
      },
      {
-      "wait": 3000
+      "wait": 4000
      }
     ]
    },
@@ -304,39 +312,40 @@
       "eval": "__kettle.timer.getState().startFocus({ intention: 'Inbox zero', tag: 'work' })"
      },
      {
-      "wait": 600
+      "wait": 900
      },
      {
       "eval": "__kettle.finish()"
      },
      {
-      "wait": 2500
+      "wait": 6500
      },
      {
-      "button": "^continue|^next|nice|yay",
-      "optional": true
+      "button": "^continue\\b",
+      "timeout": 9000
      },
      {
-      "wait": 2500
+      "wait": 4000
      },
      {
-      "button": "^continue|^next|nice|yay|open",
-      "optional": true
+      "button": "^continue\\b",
+      "timeout": 9000
      },
      {
-      "wait": 2500
+      "wait": 4000
      },
      {
-      "button": "^continue|^next|nice|yay",
-      "optional": true
+      "button": "^continue\\b",
+      "timeout": 9000
      },
      {
-      "wait": 3000
+      "wait": 4000
      }
     ]
    },
    "refs": [
-    "lesson-complete/lesson-end-reward-2025.png"
+    "lesson-complete/lesson-end-reward-2025.png",
+    "quests/quests-chest-open.gif.400ms.png"
    ]
   },
   {
@@ -352,7 +361,7 @@
       "eval": "__kettle.timer.getState().startBreak('shortBreak')"
      },
      {
-      "wait": 800
+      "wait": 4500
      },
      {
       "eval": "__kettle.ff(60000)"
@@ -397,7 +406,7 @@
     },
     "steps": [
      {
-      "wait": 3500
+      "wait": 6000
      }
     ]
    },
@@ -423,6 +432,56 @@
     "settings/settings-preferences.png",
     "settings/settings-menu.jpg",
     "settings/settings-reminders.png"
+   ]
+  },
+  {
+   "id": "home-recipes",
+   "kind": "daily quests / daily challenges list",
+   "capture": {
+    "route": "/",
+    "params": {
+     "seed": "veteran"
+    },
+    "steps": [
+     {
+      "wait": 1500
+     },
+     {
+      "eval": "(() => { const h = [...document.querySelectorAll('h2,h3')].find(e => /recipes/i.test(e.textContent)); h && h.scrollIntoView({ block: 'start' }); window.scrollBy(0, -80); document.querySelectorAll('main, [class*=scroll]').forEach(el => {}); })()"
+     },
+     {
+      "wait": 800
+     }
+    ]
+   },
+   "refs": [
+    "quests/quests-daily-cards.png",
+    "quests/quests-monthly-2026.png"
+   ]
+  },
+  {
+   "id": "stats-streak",
+   "kind": "streak calendar / streak overview",
+   "capture": {
+    "route": "/stats",
+    "params": {
+     "seed": "veteran"
+    },
+    "steps": [
+     {
+      "wait": 1800
+     },
+     {
+      "eval": "(() => { const h = [...document.querySelectorAll('h2,h3')].find(e => /days warm/i.test(e.textContent)); h && h.scrollIntoView({ block: 'start' }); })()"
+     },
+     {
+      "wait": 800
+     }
+    ]
+   },
+   "refs": [
+    "streak/streak-calendar-repaired.png",
+    "streak/streak-3-day-screen.png"
    ]
   }
  ]

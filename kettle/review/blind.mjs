@@ -241,19 +241,33 @@ async function runStep(page, s) {
   if (s.press) return page.keyboard.press(s.press);
   if (s.fill) return page.locator(s.fill).first().fill(s.text, { timeout });
   if (s.click) return page.locator(s.click).first().click({ timeout });
-  if (s.button) {
-    const re = new RegExp(s.button, 'i');
-    const loc = page.getByRole('button', { name: re });
+  if (s.button || s.choose) {
+    // Wake idle/zen chrome like a real pointer, then click; covered radios (cards) get force-checked.
+    await page.mouse.move(4, 4);
+    await page.mouse.move(8, 8);
+    const re = new RegExp(s.button ?? s.choose, 'i');
+    const roles = s.button ? ['button', 'link'] : ['radio', 'option', 'button', 'checkbox', 'tab'];
     const deadline = Date.now() + timeout;
     while (Date.now() < deadline) {
-      const n = await loc.count();
-      for (let i = 0; i < n; i++) {
-        const b = loc.nth(i);
-        if ((await b.isVisible()) && (await b.isEnabled())) return b.click({ timeout });
+      for (const role of roles) {
+        const loc = page.getByRole(role, { name: re });
+        const n = await loc.count();
+        for (let i = 0; i < n; i++) {
+          const b = loc.nth(i);
+          if (!(await b.isEnabled().catch(() => false))) continue;
+          if (await b.isVisible()) {
+            try {
+              return await b.click({ timeout: 1500 });
+            } catch {
+              /* covered → force below for radios/checkboxes */
+            }
+          }
+          if (role === 'radio' || role === 'checkbox') return b.check({ force: true, timeout: 1500 }).catch(() => b.click({ force: true, timeout: 1500 }));
+        }
       }
       await page.waitForTimeout(150);
     }
-    throw new Error(`no visible enabled button matching ${re}`);
+    throw new Error(`no visible enabled control matching ${re}`);
   }
   throw new Error(`unknown step ${JSON.stringify(s)}`);
 }

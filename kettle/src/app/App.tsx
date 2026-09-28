@@ -1,13 +1,21 @@
 /**
  * Root component: theme, route switching, onboarding gate, area isolation.
- * Shared file — keep changes minimal and coordinated.
+ * Shared file (orchestrator) — keep changes minimal and coordinated.
+ *
+ * Route transitions never pass through an empty frame:
+ *  - screen chunks are warmed on idle and, once loaded, render synchronously
+ *    (no Suspense flash);
+ *  - two layers: the persistent tab shell vs. each full-screen route. Inside
+ *    the shell, tabs switch in place. Between layers the incoming layer fades
+ *    in ON TOP of the outgoing one, which stays opaque underneath until it is
+ *    removed — a dissolve, never a gap and never a double exposure.
  */
-import { lazy, Suspense, useEffect, useRef, type ReactNode } from 'react';
+import { lazy, Suspense, useEffect, type ComponentType, type ReactNode } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useSettings } from '@/state/settings';
 import { useTimer } from '@/timer';
 import { useReducedMotion } from '@/lib/useReducedMotion';
-import { pageTransition } from '@/lib/motion';
+import { ease } from '@/lib/motion';
 import { ErrorBoundary } from './ErrorBoundary';
 import { Shell } from './Shell';
 import { ShellOverlays } from './ShellOverlays';
@@ -15,45 +23,94 @@ import { Rail } from './Rail';
 import { navigate, useRoute, TAB_ROUTES, type Route } from './router';
 import { useApplyTheme } from './theme';
 
-const loaders = {
-  home: () => import('@/screens/home/HomeScreen'),
-  stats: () => import('@/screens/stats/StatsScreen'),
-  nook: () => import('@/screens/nook/NookScreen'),
-  settings: () => import('@/screens/settings/SettingsScreen'),
-  focus: () => import('@/screens/focus/FocusScreen'),
-  done: () => import('@/screens/done/DoneScreen'),
-  welcome: () => import('@/screens/welcome/WelcomeScreen'),
+type Loader = () => Promise<{ default: ComponentType }>;
+
+/** A lazy screen that renders synchronously once its chunk has been loaded (no Suspense flash). */
+function lazyScreen(load: Loader) {
+  let Loaded: ComponentType | null = null;
+  let pending: Promise<{ default: ComponentType }> | null = null;
+  const preload = () =>
+    (pending ??= load().then((m) => {
+      Loaded = m.default;
+      return m;
+    }));
+  const Lazy = lazy(preload);
+  function Screen() {
+    return Loaded ? <Loaded /> : <Lazy />;
+  }
+  Screen.preload = () => void preload().catch(() => (pending = null));
+  return Screen;
+}
+
+const Home = lazyScreen(() => import('@/screens/home/HomeScreen'));
+const Stats = lazyScreen(() => import('@/screens/stats/StatsScreen'));
+const NookScreen = lazyScreen(() => import('@/screens/nook/NookScreen'));
+const Settings = lazyScreen(() => import('@/screens/settings/SettingsScreen'));
+const Focus = lazyScreen(() => import('@/screens/focus/FocusScreen'));
+const Done = lazyScreen(() => import('@/screens/done/DoneScreen'));
+const Welcome = lazyScreen(() => import('@/screens/welcome/WelcomeScreen'));
+const Kit = lazyScreen(() => import('./KitRoute'));
+
+const SCREENS: Record<Route, { area: string; Screen: ReturnType<typeof lazyScreen> }> = {
+  '/': { area: 'home', Screen: Home },
+  '/stats': { area: 'stats', Screen: Stats },
+  '/nook': { area: 'nook', Screen: NookScreen },
+  '/settings': { area: 'settings', Screen: Settings },
+  '/focus': { area: 'focus', Screen: Focus },
+  '/done': { area: 'done', Screen: Done },
+  '/welcome': { area: 'welcome', Screen: Welcome },
+  '/kit': { area: 'kit', Screen: Kit },
 };
-const Home = lazy(loaders.home);
-const Stats = lazy(loaders.stats);
-const NookScreen = lazy(loaders.nook);
-const Settings = lazy(loaders.settings);
-const Focus = lazy(loaders.focus);
-const Done = lazy(loaders.done);
-const Welcome = lazy(loaders.welcome);
-const Kit = lazy(() => import('./KitRoute'));
 
 /** Warm every screen chunk once the app is idle, so route changes never flash blank. */
 function preloadScreens(): void {
-  const run = () => Object.values(loaders).forEach((load) => void load().catch(() => {}));
+  const run = () => Object.values(SCREENS).forEach(({ Screen }) => Screen.preload());
   const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number };
-  if (w.requestIdleCallback) w.requestIdleCallback(run, { timeout: 4000 });
-  else setTimeout(run, 1500);
+  if (w.requestIdleCallback) w.requestIdleCallback(run, { timeout: 3000 });
+  else setTimeout(run, 1200);
 }
 
-/** Full-screen routes crossfade into each other (e.g. the kettle whistle → celebration). */
-const IMMERSIVE: Route[] = ['/focus', '/done'];
+/** Incoming layer dissolves in above the outgoing one (which drops below and stays opaque). */
+function layerTransition(reduced: boolean) {
+  const inDur = reduced ? 0.14 : 0.24;
+  return {
+    initial: reduced ? { opacity: 0, zIndex: 1 } : { opacity: 0, y: 10, zIndex: 1 },
+    animate: { opacity: 1, y: 0, zIndex: 1, transition: { duration: inDur, ease: ease.out } },
+    // Stay fully visible underneath until the incoming layer has covered it, then vanish.
+    // (Must animate a real change — an exit to the current value would finish instantly.)
+    exit: {
+      opacity: 0,
+      zIndex: 0,
+      transition: { zIndex: { duration: 0 }, opacity: { delay: inDur, duration: 0.05 } },
+    },
+  };
+}
 
-const SCREENS: Record<Route, { area: string; el: () => ReactNode }> = {
-  '/': { area: 'home', el: () => <Home /> },
-  '/stats': { area: 'stats', el: () => <Stats /> },
-  '/nook': { area: 'nook', el: () => <NookScreen /> },
-  '/settings': { area: 'settings', el: () => <Settings /> },
-  '/focus': { area: 'focus', el: () => <Focus /> },
-  '/done': { area: 'done', el: () => <Done /> },
-  '/welcome': { area: 'welcome', el: () => <Welcome /> },
-  '/kit': { area: 'kit', el: () => <Kit /> },
-};
+const layerStyle = { position: 'relative', minHeight: '100%', background: 'var(--bg)' } as const;
+
+function RouteView({ route }: { route: Route }) {
+  const { area, Screen } = SCREENS[route];
+  return (
+    <ErrorBoundary area={area}>
+      <Suspense fallback={null}>
+        <Screen />
+      </Suspense>
+    </ErrorBoundary>
+  );
+}
+
+/** Tabs inside the persistent shell. `route` is a prop (not a hook) so an exiting layer keeps its own screen. */
+function TabSwitch({ route, reduced }: { route: Route; reduced: boolean }) {
+  return (
+    <div style={{ position: 'relative' }}>
+      <AnimatePresence mode="popLayout" initial={false}>
+        <motion.div key={route} {...layerTransition(reduced)} style={layerStyle}>
+          <RouteView route={route} />
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export function App() {
   useApplyTheme();
@@ -61,12 +118,6 @@ export function App() {
   const onboarded = useSettings((s) => s.onboarded);
   const timerStatus = useTimer((s) => s.status);
   const reduced = useReducedMotion();
-  const prevRoute = useRef(route);
-  const crossfade = IMMERSIVE.includes(prevRoute.current) && IMMERSIVE.includes(route);
-  useEffect(() => {
-    prevRoute.current = route;
-  }, [route]);
-  useEffect(preloadScreens, []);
 
   // Gates: onboarding first; an active session always owns the screen on load.
   useEffect(() => {
@@ -79,33 +130,31 @@ export function App() {
     // only on first mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  useEffect(preloadScreens, []);
 
-  const screen = SCREENS[route];
-  const content = (
-    <AnimatePresence mode={crossfade ? 'popLayout' : 'wait'} initial={false}>
-      <motion.div
-        key={route}
-        {...pageTransition(reduced)}
-        style={{ minHeight: '100%' }}
-      >
-        <ErrorBoundary area={screen.area}>
-          <Suspense fallback={null}>{screen.el()}</Suspense>
-        </ErrorBoundary>
-      </motion.div>
-    </AnimatePresence>
-  );
+  const inShell = TAB_ROUTES.includes(route);
+  const layerKey = inShell ? 'shell' : route;
 
-  if (TAB_ROUTES.includes(route)) {
-    return (
-      <>
-        <Shell rail={<Rail />}>{content}</Shell>
-        <ShellOverlays />
-      </>
+  let layer: ReactNode;
+  if (inShell) {
+    layer = (
+      <Shell rail={<Rail />}>
+        <TabSwitch route={route} reduced={reduced} />
+      </Shell>
     );
+  } else {
+    layer = <RouteView route={route} />;
   }
+
   return (
     <>
-      {content}
+      <div style={{ position: 'relative', minHeight: '100%' }}>
+        <AnimatePresence mode="popLayout" initial={false}>
+          <motion.div key={layerKey} {...layerTransition(reduced)} style={layerStyle}>
+            {layer}
+          </motion.div>
+        </AnimatePresence>
+      </div>
       <ShellOverlays />
     </>
   );
