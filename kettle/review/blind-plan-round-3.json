@@ -1,0 +1,209 @@
+{
+ "_doc": "Round-3 blind plan: only the screens changed since round 2 (celebration hero fill + 'Today 37/30' goal tile, stats badge counts + opaque sticky header, home 320/landscape fixes, landscape onboarding questions). Same matched-state, settled, chrome-cropped refs and step grammar as blind-plan-round-2.json. Kettle at 390x844@2x, light, no toasts.",
+ "viewport": {
+  "width": 390,
+  "height": 844,
+  "deviceScaleFactor": 2,
+  "isMobile": true,
+  "hasTouch": true
+ },
+ "screens": [
+  {
+   "id": "onboarding-question",
+   "kind": "onboarding: one question per screen, an option chosen",
+   "state": "Kettle: daily-goal step, 'A cup' chosen, Continue enabled, entrance settled. Duo: course/goal pick with one option selected (where-to-start: none selected, CTA enabled).",
+   "capture": {
+    "route": "/welcome",
+    "params": {
+     "seed": "fresh",
+     "onboarded": "0"
+    },
+    "steps": [
+     {
+      "button": "^get started"
+     },
+     {
+      "wait": 900
+     },
+     {
+      "fill": "input",
+      "text": "Robin"
+     },
+     {
+      "button": "^continue\\b"
+     },
+     {
+      "wait": 1200
+     },
+     {
+      "click": "text=A cup"
+     },
+     {
+      "wait": 1400
+     }
+    ]
+   },
+   "refs": [
+    "../../out/round-2/refs-cropped/onboarding__onboarding-course-pick.png",
+    "../../out/round-2/refs-cropped/onboarding__onboarding-set-goal-2020.png",
+    "../../out/round-2/refs-cropped/onboarding__onboarding-where-to-start.png"
+   ]
+  },
+  {
+   "id": "home",
+   "kind": "home / today screen of a daily-habit app (main call to action)",
+   "state": "Kettle: veteran profile mid-day, goal part-done, top of page, no toast. Duo: path home with START bubble, mid-unit progress.",
+   "capture": {
+    "route": "/",
+    "params": {
+     "seed": "veteran"
+    },
+    "steps": [
+     {
+      "wait": 3000
+     }
+    ]
+   },
+   "refs": [
+    "../../out/round-2/refs-cropped/home__home-path-2026.png",
+    "../../out/round-2/refs-cropped/home__home-path-start-bubble.png"
+   ]
+  },
+  {
+   "id": "done-1",
+   "kind": "end-of-session results card",
+   "state": "Kettle: card 1 (whistle) after tiles and receipt finished counting; goal tile reads 'Today 37/30'; hero art fills the top. Duo: lesson complete card (+XP, streak ring, week row).",
+   "capture": {
+    "route": "/",
+    "params": {
+     "seed": "celebrate"
+    },
+    "steps": [
+     {
+      "eval": "__kettle.timer.getState().startFocus({ intention: 'Inbox zero', tag: 'work' })"
+     },
+     {
+      "wait": 1500
+     },
+     {
+      "eval": "__kettle.finish()"
+     },
+     {
+      "wait": 8000
+     }
+    ]
+   },
+   "refs": [
+    "../../out/round-2/refs-cropped/lesson-complete__lesson-end-goal-achieved-2020.png"
+   ]
+  },
+  {
+   "id": "done-streak",
+   "kind": "streak extended celebration",
+   "state": "Kettle: warm-streak card after number flip and week row filled. Duo: '3 day streak' ring + week row + CONTINUE (same ref as results; it is Duo's streak moment).",
+   "capture": {
+    "route": "/",
+    "params": {
+     "seed": "celebrate"
+    },
+    "steps": [
+     {
+      "eval": "__kettle.timer.getState().startFocus({ intention: 'Inbox zero', tag: 'work' })"
+     },
+     {
+      "wait": 1500
+     },
+     {
+      "eval": "__kettle.finish()"
+     },
+     {
+      "wait": 7000
+     },
+     {
+      "button": "^continue\\b",
+      "timeout": 9000
+     },
+     {
+      "wait": 5000
+     }
+    ]
+   },
+   "refs": [
+    "../../out/round-2/refs-cropped/lesson-complete__lesson-end-goal-achieved-2020.png"
+   ]
+  },
+  {
+   "id": "done-recipes",
+   "kind": "reward moment: daily quests / chest opened",
+   "state": "Kettle: recipes card after tin opened and bars filled. Duo: reward card after chest opened (+10 energy, Continue).",
+   "capture": {
+    "route": "/",
+    "params": {
+     "seed": "celebrate"
+    },
+    "steps": [
+     {
+      "eval": "__kettle.timer.getState().startFocus({ intention: 'Inbox zero', tag: 'work' })"
+     },
+     {
+      "wait": 1500
+     },
+     {
+      "eval": "__kettle.finish()"
+     },
+     {
+      "wait": 7000
+     },
+     {
+      "button": "^continue\\b",
+      "timeout": 9000
+     },
+     {
+      "wait": 5000
+     },
+     {
+      "button": "^continue\\b",
+      "timeout": 9000
+     },
+     {
+      "wait": 5000
+     }
+    ]
+   },
+   "refs": [
+    "../../out/round-2/refs-cropped/lesson-complete__lesson-end-reward-2025.png"
+   ]
+  },
+  {
+   "id": "stats-badges",
+   "kind": "achievements / badges collection",
+   "state": "Kettle: Badges section at top of the viewport, just below the opaque compact sticky header (12 of 12 badges earned; tiered hexes). Duo: achievements page (personal records + awards grid).",
+   "capture": {
+    "route": "/stats",
+    "params": {
+     "seed": "veteran"
+    },
+    "steps": [
+     {
+      "wait": 2500
+     },
+     {
+      "eval": "(() => { document.documentElement.style.scrollBehavior = 'auto'; const h = [...document.querySelectorAll('h2,h3')].find(e => /^badges/i.test(e.textContent.trim())); const card = h && (h.closest('section,article,[class*=card]') || h); if (card) window.scrollTo(0, window.scrollY + card.getBoundingClientRect().top - 40); })()"
+     },
+     {
+      "wait": 600
+     },
+     {
+      "eval": "(() => { const h = [...document.querySelectorAll('h2,h3')].find(e => /^badges/i.test(e.textContent.trim())); const card = h && (h.closest('section,article,[class*=card]') || h); const bar = [...document.querySelectorAll('*')].filter(e => { const cs = getComputedStyle(e); const r = e.getBoundingClientRect(); return (cs.position === 'sticky' || cs.position === 'fixed') && r.top <= 1 && r.height > 20 && r.height < 160 && r.width > innerWidth * 0.8; }).map(e => e.getBoundingClientRect().bottom); const top = bar.length ? Math.max(...bar) : 0; if (card) window.scrollTo(0, window.scrollY + card.getBoundingClientRect().top - top - 12); })()"
+     },
+     {
+      "wait": 1500
+     }
+    ]
+   },
+   "refs": [
+    "../../out/round-2/refs-cropped/profile-stats__profile-achievements-2023.png"
+   ]
+  }
+ ]
+}
