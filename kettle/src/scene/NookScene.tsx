@@ -5,9 +5,12 @@
 import { useEffect, useRef, useState } from 'react';
 import type { NookSceneProps } from './types';
 import { nextTask, type EngineState, type NookEngine } from './engine/Engine';
-import { DARK_VEIL, backdropCss, debugOn, isMobileDevice, softwareGL, useDarkTheme, useDebugItems, useReducedMotion, useSceneTier, useSceneTime, useSceneWeather } from './resolve';
+import { DARK_DIM, backdropCss, debugOn, isMobileDevice, softwareGL, useDarkTheme, useDebugItems, useReducedMotion, useSceneTier, useSceneTime, useSceneWeather } from './resolve';
 import { SETTLE_MS, createEngine, settled, takeWarm, type EngineSpec } from './warm';
 import { NookStatic } from './Fallback';
+
+/** Canvas fade-in over the static nook. */
+const FADE_MS = 420;
 
 export default function NookScene(props: NookSceneProps) {
   const items = useDebugItems(props.items);
@@ -29,7 +32,8 @@ export default function NookScene(props: NookSceneProps) {
   const latest = useRef({ paused, reduced });
   latest.current = { paused, reduced };
   const latestState = useRef<Partial<EngineState>>({});
-  latestState.current = { mode, progress, whistling, weather, time, items, highlightItem, interactive, reducedMotion: reduced };
+  const dim = dark ? DARK_DIM : 1;
+  latestState.current = { mode, progress, whistling, weather, time, items, highlightItem, interactive, reducedMotion: reduced, dim };
 
   const applyRun = () => {
     const e = engineRef.current;
@@ -142,13 +146,32 @@ export default function NookScene(props: NookSceneProps) {
 
   // ---- props → engine
   useEffect(() => {
-    engineRef.current?.setState({ mode, progress, whistling, weather, time, items, highlightItem, interactive, reducedMotion: reduced });
-  }, [mode, progress, whistling, weather, time, items, highlightItem, interactive, reduced]);
+    engineRef.current?.setState({ mode, progress, whistling, weather, time, items, highlightItem, interactive, reducedMotion: reduced, dim });
+  }, [mode, progress, whistling, weather, time, items, highlightItem, interactive, reduced, dim]);
 
   useEffect(() => {
     applyRun();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paused, reduced, ready]);
+
+  // Cross-fade: the static nook stays mounted under the canvas until the canvas has
+  // fully faded in. Unmounting it the moment the first frame landed left only the
+  // bare backdrop showing while the canvas was still near opacity 0 — on a busy
+  // machine (the level-up card mounts mid-celebration) that read as a blank card.
+  const [covered, setCovered] = useState(false);
+  useEffect(() => {
+    if (!ready) {
+      setCovered(false);
+      return;
+    }
+    if (reduced) {
+      setCovered(true);
+      return;
+    }
+    // `transitionend` on the canvas host normally ends it; this is the backstop.
+    const id = window.setTimeout(() => setCovered(true), FADE_MS + 900);
+    return () => window.clearTimeout(id);
+  }, [ready, reduced]);
 
   const showStatic = tier === 'off' || failed;
   return (
@@ -162,10 +185,10 @@ export default function NookScene(props: NookSceneProps) {
         width: '100%',
         height: '100%',
         overflow: 'hidden',
-        background: backdrop ? backdropCss(time) : undefined,
+        background: backdrop ? backdropCss(time, dark) : undefined,
       }}
     >
-      {(!ready || showStatic) && (
+      {(!ready || !covered || showStatic) && (
         <div aria-hidden style={{ position: 'absolute', inset: 0 }}>
           <NookStatic weather={weather} mode={mode} progress={progress} items={items} paused={paused} />
         </div>
@@ -179,23 +202,14 @@ export default function NookScene(props: NookSceneProps) {
             inset: 0,
             visibility: failed ? 'hidden' : 'visible',
             opacity: ready ? 1 : 0,
-            transition: reduced ? 'none' : 'opacity 420ms ease',
+            transition: reduced ? 'none' : `opacity ${FADE_MS}ms ease`,
             pointerEvents: interactive ? 'auto' : 'none',
+          }}
+          onTransitionEnd={(e) => {
+            if (e.target === e.currentTarget && e.propertyName === 'opacity' && ready) setCovered(true);
           }}
         />
       )}
-      <div
-        aria-hidden
-        data-scene-veil
-        style={{
-          position: 'absolute',
-          inset: 0,
-          pointerEvents: 'none',
-          background: DARK_VEIL,
-          opacity: dark ? 1 : 0,
-          transition: reduced ? 'none' : 'opacity 420ms ease',
-        }}
-      />
     </div>
   );
 }

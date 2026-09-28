@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect } from 'react';
 import type { NookSceneProps } from './types';
 import { NookStatic } from './Fallback';
-import { DARK_VEIL, backdropCss, hasWebGL, isMobileDevice, softwareGL, useReducedMotion, useDarkTheme, useSceneTier, useSceneTime, useSceneWeather } from './resolve';
+import { backdropCss, hasWebGL, isMobileDevice, softwareGL, useReducedMotion, useDarkTheme, useSceneTier, useSceneTime, useSceneWeather } from './resolve';
 export type { NookSceneProps, SceneMode, SceneWeather, SceneTime } from './types';
 
 const LazyScene = lazy(() => import('./NookScene'));
@@ -21,10 +21,9 @@ export function Nook(props: NookSceneProps) {
       aria-hidden
       data-scene-mode={props.mode}
       data-scene-static="true"
-      style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden', background: props.backdrop === false ? undefined : backdropCss(time) }}
+      style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden', background: props.backdrop === false ? undefined : backdropCss(time, dark) }}
     >
       <NookStatic weather={weather} mode={props.mode} progress={props.progress} items={props.items} paused={props.paused} />
-      {dark && <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: DARK_VEIL }} />}
     </div>
   );
   if (tier === 'off' || !hasWebGL()) return staticNook;

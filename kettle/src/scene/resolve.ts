@@ -37,13 +37,6 @@ export function useDarkTheme(): boolean {
   return useSyncExternalStore(subscribeTheme, readDark, () => false);
 }
 
-/**
- * Soft dim + vignette laid over the nook in the dark theme so the lit room
- * sits in the plum UI instead of glaring out of it (CSS only: no GPU cost).
- */
-export const DARK_VEIL =
-  'radial-gradient(125% 105% at 50% 44%, rgba(24, 16, 36, 0) 52%, rgba(24, 16, 36, 0.42) 100%), linear-gradient(rgba(24, 16, 36, 0.1), rgba(24, 16, 36, 0.1))';
-
 /** `auto` follows the local clock in the light theme and is always an evening room in the dark one. */
 export function useSceneTime(pref: SceneTime = 'auto'): ResolvedTime {
   const dark = useDarkTheme();
@@ -144,7 +137,15 @@ export function softwareGL(): boolean {
   return hasWebGL() && softwareCache;
 }
 
-export function backdropCss(time: ResolvedTime): string {
+/** Exposure multiplier for the dark theme: the lit room sits a touch dimmer in the plum UI. */
+export const DARK_DIM = 0.86;
+
+/**
+ * Canvas backdrop. In the dark theme its edges sink further toward the UI's plum
+ * (a soft vignette around the room — CSS on the host, so no extra layer over the canvas).
+ */
+export function backdropCss(time: ResolvedTime, dark = false): string {
   const m = MOODS[time];
+  if (dark) return `radial-gradient(120% 95% at 50% 42%, ${m.bgInner} 0%, ${m.bgOuter} 72%, #171120 100%)`;
   return `radial-gradient(120% 95% at 50% 42%, ${m.bgInner} 0%, ${m.bgOuter} 100%)`;
 }

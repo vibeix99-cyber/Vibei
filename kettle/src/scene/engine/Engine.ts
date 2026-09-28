@@ -49,6 +49,8 @@ export interface EngineState {
   highlightItem: string | null;
   interactive: boolean;
   reducedMotion: boolean;
+  /** Exposure multiplier (dark app theme dims the room a little; 1 = as designed). */
+  dim: number;
 }
 
 export interface EngineOptions {
@@ -181,6 +183,7 @@ export class NookEngine {
     highlightItem: null,
     interactive: false,
     reducedMotion: false,
+    dim: 1,
   };
   private moods: Record<ResolvedTime, MoodN>;
   private moodFrom: MoodN;
@@ -341,6 +344,7 @@ export class NookEngine {
       if (patch.highlightItem) this.bounce.set(patch.highlightItem, 0);
     }
     if (patch.whistling && !prev.whistling) this.whistleAge = 0;
+    if (patch.dim !== undefined) this.renderer.toneMappingExposure = next.dim; // a uniform: no recompile
     if (patch.interactive !== undefined) this.opts.canvas.style.touchAction = next.interactive ? 'pan-y' : 'auto';
     this.invalidate();
   }
