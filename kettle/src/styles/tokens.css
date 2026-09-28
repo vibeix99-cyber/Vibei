@@ -1,0 +1,73 @@
+/* Design tokens — INITIAL. OWNER: design-system area. All colors via tokens. */
+:root {
+  --font-display: 'Fredoka Variable', 'Fredoka', ui-rounded, system-ui, sans-serif;
+  --font-body: 'Nunito Variable', 'Nunito', ui-rounded, system-ui, sans-serif;
+
+  --paper: #fff9f0;
+  --paper-2: #fdf1e1;
+  --oat: #f3e6d3;
+  --oat-edge: #e3d2b9;
+  --ink: #3b2a20;
+  --ink-2: #6f5a4b;
+  --ink-3: #9a8574;
+
+  --persimmon: #f2733a;
+  --persimmon-edge: #c9551f;
+  --persimmon-soft: #ffe3d2;
+  --matcha: #6fb25c;
+  --matcha-edge: #4e8c3d;
+  --matcha-soft: #e2f3d8;
+  --honey: #ffc23d;
+  --honey-edge: #d99a14;
+  --honey-soft: #fff0c7;
+  --sky: #5aaee0;
+  --sky-edge: #3b8bbd;
+  --sky-soft: #dcf0fb;
+  --berry: #ec6f86;
+  --berry-edge: #c54d65;
+  --berry-soft: #fde1e6;
+  --plum: #2a2340;
+
+  --surface: #ffffff;
+  --surface-edge: var(--oat-edge);
+  --focus-ring: #3b8bbd;
+
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 22px;
+  --r-xl: 28px;
+  --r-pill: 999px;
+
+  --edge: 4px;
+  --shadow-soft: 0 10px 30px rgba(59, 42, 32, 0.08);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --paper: #1f1a2e;
+  --paper-2: #262038;
+  --oat: #332b4a;
+  --oat-edge: #211b31;
+  --ink: #fbefe2;
+  --ink-2: #d2c2b4;
+  --ink-3: #a797a6;
+  --surface: #2b2440;
+  --surface-edge: #1a1528;
+  --persimmon-soft: #4a2e2e;
+  --matcha-soft: #26382a;
+  --honey-soft: #423a26;
+  --sky-soft: #22354a;
+  --berry-soft: #45283a;
+  --focus-ring: #8fd0ff;
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.35);
+  color-scheme: dark;
+}

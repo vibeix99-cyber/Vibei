@@ -1,0 +1,101 @@
+.btn {
+  --face: var(--persimmon);
+  --edge-c: var(--persimmon-edge);
+  --text: #fff;
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  border-radius: var(--r-lg);
+  display: inline-flex;
+  min-height: 48px;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+}
+.face {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 22px;
+  border-radius: inherit;
+  background: var(--face);
+  color: var(--text);
+  box-shadow: 0 var(--edge) 0 var(--edge-c);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  letter-spacing: 0.01em;
+  transform: translateY(0);
+  transition: transform 90ms ease, box-shadow 90ms ease, filter 150ms ease;
+  margin-bottom: var(--edge);
+}
+.btn:hover .face {
+  filter: brightness(1.04);
+}
+.btn:active .face {
+  transform: translateY(var(--edge));
+  box-shadow: 0 0 0 var(--edge-c);
+}
+.btn:disabled {
+  cursor: not-allowed;
+}
+.btn:disabled .face {
+  --face: var(--oat);
+  --edge-c: var(--oat-edge);
+  --text: var(--ink-3);
+}
+.block {
+  display: flex;
+  width: 100%;
+}
+.sm {
+  min-height: 36px;
+}
+.sm .face {
+  padding: 0 14px;
+  font-size: 0.9375rem;
+}
+.lg .face {
+  min-height: 56px;
+  font-size: 1.1875rem;
+}
+.primary {
+}
+.secondary {
+  --face: var(--surface);
+  --edge-c: var(--surface-edge);
+  --text: var(--ink);
+}
+.secondary .face {
+  border: 2px solid var(--surface-edge);
+}
+.ghost {
+  --face: transparent;
+  --edge-c: transparent;
+  --text: var(--ink-2);
+}
+.matcha {
+  --face: var(--matcha);
+  --edge-c: var(--matcha-edge);
+}
+.sky {
+  --face: var(--sky);
+  --edge-c: var(--sky-edge);
+}
+.honey {
+  --face: var(--honey);
+  --edge-c: var(--honey-edge);
+  --text: var(--ink);
+}
+.berry,
+.danger {
+  --face: var(--berry);
+  --edge-c: var(--berry-edge);
+}
+.icon {
+  display: inline-flex;
+}

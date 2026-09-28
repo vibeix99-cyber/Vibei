@@ -1,0 +1,116 @@
+.shell {
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+  grid-template-areas: 'main' 'nav';
+}
+.skip {
+  position: absolute;
+  left: -9999px;
+}
+.skip:focus {
+  left: 12px;
+  top: 12px;
+  z-index: 200;
+  background: var(--surface);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+.main {
+  grid-area: main;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--space-4);
+  outline: none;
+}
+.nav {
+  grid-area: nav;
+  position: sticky;
+  bottom: 0;
+  background: var(--surface);
+  border-top: 2px solid var(--surface-edge);
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 10;
+}
+.brand {
+  display: none;
+}
+.tabs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 0 6px;
+  color: var(--ink-3);
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 0.75rem;
+}
+.tab[aria-current='page'] {
+  color: var(--persimmon);
+}
+.rail {
+  display: none;
+}
+@media (min-width: 900px) {
+  .shell {
+    grid-template-columns: 240px 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: 'nav main';
+  }
+  .nav {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    border-top: 0;
+    border-right: 2px solid var(--surface-edge);
+    padding: var(--space-5) var(--space-3);
+  }
+  .brand {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: var(--persimmon);
+    padding: 0 var(--space-3) var(--space-5);
+  }
+  .tabs {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .tab {
+    flex-direction: row;
+    gap: 14px;
+    padding: 10px 14px;
+    border-radius: var(--r-md);
+    font-size: 0.9375rem;
+  }
+  .tab[aria-current='page'] {
+    background: var(--persimmon-soft);
+    box-shadow: inset 0 0 0 2px var(--persimmon);
+  }
+}
+@media (min-width: 1200px) {
+  .shell {
+    grid-template-columns: 240px 1fr 360px;
+    grid-template-areas: 'nav main rail';
+  }
+  .rail {
+    display: block;
+    grid-area: rail;
+    padding: var(--space-5);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: auto;
+  }
+}
