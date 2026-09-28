@@ -110,16 +110,19 @@ test.describe('timer reliability', () => {
 
   test('a phase that ended while the app was closed (3 h ago) completes once, at its real end, whileAway', async ({ page, kettlePage }) => {
     await open(page, kettlePage);
-    const endsAt = await page.evaluate(() => {
+    // "Closed for 3 h": the persisted state must be in place before the app boots. Writing it
+    // from the live page raced with the app persisting its own (idle) state before the reload.
+    const endsAt = Date.now() - 3 * 3600_000;
+    await page.addInitScript((e: number) => {
+      if (sessionStorage.getItem('away-seeded')) return;
+      sessionStorage.setItem('away-seeded', '1');
       const planned = 25 * 60_000;
-      const endsAt = Date.now() - 3 * 3600_000;
       const state = {
-        status: 'running', phase: 'focus', plannedMs: planned, startedAt: endsAt - planned, endsAt, remainingMs: planned,
+        status: 'running', phase: 'focus', plannedMs: planned, startedAt: e - planned, endsAt: e, remainingMs: planned,
         pausedAt: null, pausedTotalMs: 0, completedInCycle: 0, intention: 'While away', tag: null, sessionId: 's_away_e2e', lastEnded: null,
       };
       localStorage.setItem('kettle:timer', JSON.stringify({ state, version: 1 }));
-      return endsAt;
-    });
+    }, endsAt);
     await page.reload();
     await open(page, page.url());
     await waitIdle(page);
