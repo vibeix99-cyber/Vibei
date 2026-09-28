@@ -4,7 +4,7 @@
  */
 import { useSyncExternalStore } from 'react';
 
-export const ROUTES = ['/', '/stats', '/nook', '/settings', '/focus', '/done', '/welcome'] as const;
+export const ROUTES = ['/', '/stats', '/nook', '/settings', '/focus', '/done', '/welcome', '/kit'] as const;
 export type Route = (typeof ROUTES)[number];
 export const TAB_ROUTES: Route[] = ['/', '/stats', '/nook', '/settings'];
 

@@ -20,6 +20,7 @@ const Settings = lazy(() => import('@/screens/settings/SettingsScreen'));
 const Focus = lazy(() => import('@/screens/focus/FocusScreen'));
 const Done = lazy(() => import('@/screens/done/DoneScreen'));
 const Welcome = lazy(() => import('@/screens/welcome/WelcomeScreen'));
+const Kit = lazy(() => import('./KitRoute'));
 
 const SCREENS: Record<Route, { area: string; el: () => ReactNode }> = {
   '/': { area: 'home', el: () => <Home /> },
@@ -29,6 +30,7 @@ const SCREENS: Record<Route, { area: string; el: () => ReactNode }> = {
   '/focus': { area: 'focus', el: () => <Focus /> },
   '/done': { area: 'done', el: () => <Done /> },
   '/welcome': { area: 'welcome', el: () => <Welcome /> },
+  '/kit': { area: 'kit', el: () => <Kit /> },
 };
 
 export function App() {
@@ -40,6 +42,7 @@ export function App() {
 
   // Gates: onboarding first; an active session always owns the screen on load.
   useEffect(() => {
+    if (route === '/kit') return;
     if (!onboarded && route !== '/welcome') navigate('/welcome', { replace: true });
     else if (onboarded && route === '/welcome') navigate('/', { replace: true });
   }, [onboarded, route]);
