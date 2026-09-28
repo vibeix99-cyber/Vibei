@@ -225,6 +225,113 @@ test.describe('timer reliability', () => {
   });
 });
 
+test.describe('device integrations', () => {
+  test('wake lock: held while running and visible; released on pause, idle and setting off; re-acquired on return', async ({ page, kettlePage }) => {
+    // Headless Chromium always denies real wake locks, so stand in a faithful fake.
+    await page.addInitScript(() => {
+      const wl = { active: 0, requests: 0, last: null as null | { release: () => Promise<void> } };
+      (window as any).__wl = wl;
+      const api = {
+        request: async () => {
+          wl.requests++;
+          wl.active++;
+          const fns: (() => void)[] = [];
+          const s = {
+            released: false,
+            addEventListener: (_t: string, fn: () => void) => fns.push(fn),
+            release: async () => {
+              if (s.released) return;
+              s.released = true;
+              wl.active--;
+              fns.forEach((f) => f());
+            },
+          };
+          wl.last = s;
+          return s;
+        },
+      };
+      Object.defineProperty(navigator, 'wakeLock', { configurable: true, value: api });
+    });
+    await open(page, kettlePage);
+    const active = () => page.evaluate(() => (window as any).__wl.active);
+    const t = (fn: string) => page.evaluate((f) => (window as any).__kettle.timer.getState()[f](), fn);
+    await start(page, 1);
+    await expect.poll(active).toBe(1);
+    await t('pause');
+    await expect.poll(active).toBe(0);
+    await t('resume');
+    await expect.poll(active).toBe(1);
+    await page.evaluate(() => (window as any).__kettle.settings.getState().set({ keepAwake: false }));
+    await expect.poll(active).toBe(0);
+    await page.evaluate(() => (window as any).__kettle.settings.getState().set({ keepAwake: true }));
+    await expect.poll(active).toBe(1);
+    // The browser drops the lock when the tab is hidden; we take it back when it's visible again.
+    await setHidden(page, true);
+    await page.evaluate(() => (window as any).__wl.last.release());
+    await expect.poll(active).toBe(0);
+    await setHidden(page, false);
+    await expect.poll(active).toBe(1);
+    await t('end');
+    await expect.poll(active).toBe(0);
+  });
+
+  test('media session: metadata + play/pause handlers while a phase runs, cleared when idle', async ({ page, kettlePage }) => {
+    await open(page, kettlePage);
+    await start(page, 2, 'Essay');
+    const ms = () => page.evaluate(() => ({ title: navigator.mediaSession.metadata?.title ?? null, artist: navigator.mediaSession.metadata?.artist ?? null, state: navigator.mediaSession.playbackState }));
+    await expect.poll(ms).toMatchObject({ title: 'Focusing · 2 min left', artist: 'Kettle', state: 'playing' });
+    await page.evaluate(() => (window as any).__kettle.timer.getState().pause());
+    await expect.poll(ms).toMatchObject({ title: 'Paused · 2 min left', state: 'paused' });
+    await page.evaluate(() => (window as any).__kettle.timer.getState().end('user'));
+    await expect.poll(ms).toMatchObject({ title: null, state: 'none' });
+  });
+});
+
+test.describe('keyboard shortcuts infra', () => {
+  test('Space toggles — but never while typing, on a focused button, or on key repeat; ? toggles help, not over a dialog', async ({ page, kettlePage }) => {
+    test.skip(!kettlePage.includes('harness'), 'infra is exercised in the harness; screens bind their own keys');
+    await open(page, kettlePage);
+    await start(page, 2);
+    const status = async () => (await state(page)).status;
+    await page.locator('body').click({ position: { x: 5, y: 5 } });
+    await page.keyboard.press('Space');
+    await expect.poll(status).toBe('paused');
+    await page.keyboard.press('Space');
+    await expect.poll(status).toBe('running');
+
+    await page.getByTestId('input').focus();
+    await page.keyboard.type('tea time');
+    expect(await status()).toBe('running');
+    await expect(page.getByTestId('input')).toHaveValue('tea time');
+
+    await page.getByTestId('btn').focus();
+    await page.keyboard.press('Space');
+    expect(await status()).toBe('running');
+    expect(await page.evaluate(() => (window as any).__kettle.buttonClicks())).toBe(1);
+
+    await page.locator('body').click({ position: { x: 5, y: 5 } });
+    await page.keyboard.down('Space');
+    for (let i = 0; i < 5; i++) await page.dispatchEvent('body', 'keydown', { key: ' ', code: 'Space', repeat: true });
+    await page.keyboard.up('Space');
+    await expect.poll(status).toBe('paused'); // one toggle, not six
+
+    await page.keyboard.press('Shift+Slash');
+    await expect(page.getByTestId('help')).toHaveText('help-open');
+    await page.keyboard.press('Shift+Slash');
+    await expect(page.getByTestId('help')).toHaveText('help-closed');
+    await page.evaluate(() => {
+      const d = document.createElement('div');
+      d.setAttribute('role', 'dialog');
+      d.setAttribute('aria-modal', 'true');
+      document.body.appendChild(d);
+    });
+    await page.keyboard.press('Shift+Slash');
+    await expect(page.getByTestId('help')).toHaveText('help-closed');
+    await page.keyboard.press('Space');
+    expect(await status()).toBe('paused'); // page shortcuts are off while a dialog is open
+  });
+});
+
 test.describe('multiple tabs', () => {
   test('two tabs show the same session live and exactly one records it', async ({ context, kettlePage }) => {
     const a = await context.newPage();

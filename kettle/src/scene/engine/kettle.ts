@@ -140,7 +140,7 @@ export function buildKettle(kit: Kit): KettleParts {
   const spoutDir = dir.clone().applyQuaternion(kettle.quaternion).normalize();
 
   // ---------------- effects
-  const steam = makeSteam(kit.tex.puff(), 44, 17, { size: 0.5, rise: 1.9, life: 3.4, spread: 0.45, opacity: 0.62 });
+  const steam = makeSteam(kit.tex.puff(), 60, 17, { size: 0.5, rise: 1.9, life: 3.6, spread: 0.45, opacity: 0.62 });
   steam.u.uOrigin.value.copy(spoutTip);
   steam.u.uDir.value.copy(spoutDir);
   root.add(steam.mesh);
@@ -157,7 +157,7 @@ export function buildKettle(kit: Kit): KettleParts {
   root.add(fireDecal);
 
   const notes: Sprite[] = [];
-  const noteMat = new SpriteMaterial({ map: kit.tex.note(), color: new Color(C.cream), transparent: true, depthWrite: false, opacity: 0 });
+  const noteMat = new SpriteMaterial({ map: kit.tex.note(), color: new Color(C.honey), transparent: true, depthWrite: false, opacity: 0, toneMapped: false });
   for (let i = 0; i < 3; i++) {
     const s = new Sprite(i === 0 ? noteMat : noteMat.clone());
     s.scale.setScalar(0.22);

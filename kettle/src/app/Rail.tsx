@@ -3,22 +3,13 @@
  * Plus `SidebarStatus`, the compact version shown in the sidebar at 900–1199px.
  * OWNER: design-system area.
  */
-import { Icon, type IconName } from '@/art';
+import { Icon, LevelBadge, Leaf, QuestIcon, StreakMug, TeaCozy } from '@/art';
 import { addDays } from '@/lib/dates';
 import { useDayKey, useLevel, useQuests, useStreak, useToday, type Quest } from '@/progress';
 import { DAILY_GOALS, useSettings } from '@/state/settings';
 import { Card, Counter, Pill, ProgressBar, Ring, WeekStrip, cx } from '@/ui';
 import s from './Rail.module.css';
 
-const QUEST_ICON: Record<string, IconName> = {
-  clock: 'clock',
-  cup: 'cup',
-  sun: 'sun',
-  moon: 'moon',
-  leaf: 'leaf',
-  pencil: 'pencil',
-  break: 'break',
-};
 
 /** Just the word, singular or plural (the number is rendered separately). */
 const word = (n: number, one: string, many = `${one}s`) => (n === 1 ? one : many);
@@ -62,8 +53,8 @@ function StreakCard() {
   return (
     <Card className={s.card} as="section" aria-labelledby="rail-streak">
       <div className={s.streakHead}>
-        <span className={cx(s.bigIcon, n === 0 && s.cold)} aria-hidden="true">
-          <Icon name="mug" tone={n > 0 ? 'color' : 'mono'} size={40} />
+        <span className={s.bigIcon} aria-hidden="true">
+          <StreakMug state={n === 0 ? 'cold' : streak.todayDone ? 'warm' : 'atRisk'} size={56} />
         </span>
         <div className={s.streakText}>
           <h2 id="rail-streak" className={s.streakTitle}>
@@ -93,7 +84,7 @@ function StreakCard() {
         </span>
         <span className={s.sep} aria-hidden="true" />
         <span className={s.cozies}>
-          <Icon name="cozy" size={18} tone="color" />{' '}
+          <TeaCozy size={22} muted={streak.cozies === 0} animate={false} />{' '}
           {streak.cozies > 0
             ? `${streak.cozies} Tea ${word(streak.cozies, 'Cozy', 'Cozies')}`
             : streak.toNextCozy > 0
@@ -150,7 +141,7 @@ function LevelCard() {
     <Card className={s.card} as="section" aria-labelledby="rail-level">
       <div className={s.levelHead}>
         <span className={s.levelBadge} aria-hidden="true">
-          {level.level}
+          <LevelBadge level={level.level} size={48} />
         </span>
         <div className={s.levelText}>
           <h2 id="rail-level" className={s.levelTitle}>
@@ -160,7 +151,7 @@ function LevelCard() {
             {toNext.toLocaleString()} {word(toNext, 'leaf', 'leaves')} to level {level.level + 1}
           </p>
         </div>
-        <Pill tone="matcha" icon={<Icon name="leaf" size={16} />} title="Leaves">
+        <Pill tone="matcha" icon={<Leaf size={16} />} title="Leaves">
           <Counter value={level.leaves} font="body" />
         </Pill>
       </div>
@@ -206,14 +197,15 @@ function RecipesCard() {
 function RecipeRow({ q }: { q: Quest }) {
   return (
     <li className={cx(s.recipe, q.done && s.recipeDone)}>
-      <span className={s.recipeIcon} data-tone={q.done ? 'matcha' : 'honey'} aria-hidden="true">
-        <Icon name={q.done ? 'check' : (QUEST_ICON[q.icon] ?? 'tin')} tone={q.done ? 'mono' : 'color'} size={22} />
+      <span className={s.recipeIcon} aria-hidden="true">
+        <QuestIcon icon={q.icon} done={q.done} size={40} />
       </span>
       <div className={s.recipeBody}>
         <div className={s.recipeTop}>
           <span className={s.recipeTitle}>{q.title}</span>
           <span className={s.reward}>
-            <Icon name="leaf" size={14} />+{q.reward}
+            <Leaf size={14} />+{q.reward}
+            <span className="sr-only"> leaves</span>
           </span>
         </div>
         <ProgressBar
@@ -239,12 +231,12 @@ export function SidebarStatus() {
     <div className={s.mini}>
       <div className={s.miniRow}>
         <span className={s.miniStat} title="Warm streak">
-          <Icon name="mug" tone={streak.current > 0 ? 'color' : 'mono'} size={22} />
+          <StreakMug state={streak.current === 0 ? 'cold' : streak.todayDone ? 'warm' : 'atRisk'} size={26} animate={false} />
           <strong aria-hidden="true">{streak.current}</strong>
           <span className="sr-only">{streak.current} {word(streak.current, 'day')} warm streak</span>
         </span>
         <span className={s.miniStat} title="Leaves">
-          <Icon name="leaf" tone="color" size={22} />
+          <Leaf size={22} />
           <strong aria-hidden="true">{level.leaves.toLocaleString()}</strong>
           <span className="sr-only">{level.leaves.toLocaleString()} leaves</span>
         </span>

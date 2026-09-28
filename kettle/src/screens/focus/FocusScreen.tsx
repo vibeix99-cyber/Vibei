@@ -12,7 +12,7 @@
  * phone landscape + desktop (scene | panel). Zen: chrome fades after 7 s idle.
  * Keys: Space pause/resume · Esc end sheet · + add 5 min · M mute.
  */
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { TimerAnnouncer, elapsedActiveMs, useRemaining, useTimer } from '@/timer';
 import { useShortcut } from '@/lib/shortcuts';
@@ -83,6 +83,7 @@ export default function FocusScreen() {
   const [endOpen, setEndOpen] = useState(false);
   const [ambOpen, setAmbOpen] = useState(false);
   const [bumps, setBumps] = useState<number[]>([]);
+  const mainRef = useRef<HTMLButtonElement>(null);
 
   const view: View =
     t.status !== 'idle' ? (t.phase === 'focus' ? 'focus' : 'break') : whistle ? 'whistle' : breakOver ? 'over' : 'none';
@@ -135,6 +136,8 @@ export default function FocusScreen() {
     'Escape',
     () => {
       audio.play('whoosh');
+      // Give the sheet a real opener to hand focus back to (not <body>).
+      if (!document.activeElement || document.activeElement === document.body) mainRef.current?.focus({ preventScroll: true });
       setEndOpen(true);
     },
     { enabled: view === 'focus' },
@@ -380,6 +383,7 @@ export default function FocusScreen() {
                     className={s.chrome}
                   />
                   <RoundButton
+                    ref={mainRef}
                     size={88}
                     sfx={false}
                     variant={paused ? 'primary' : 'secondary'}

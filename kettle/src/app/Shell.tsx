@@ -7,7 +7,7 @@
  */
 import { useEffect, useRef, type ReactNode } from 'react';
 import { motion } from 'motion/react';
-import { Icon, type IconName } from '@/art';
+import { Icon, Logo, type IconName } from '@/art';
 import { audio } from '@/audio';
 import { haptic } from '@/lib/haptics';
 import { spring } from '@/lib/motion';
@@ -58,11 +58,8 @@ export function Shell({ children, rail }: { children: ReactNode; rail?: ReactNod
             navigate('/');
           }}
         >
-          <span className={s.brandMark} aria-hidden="true">
-            <Icon name="kettle" tone="color" size={34} />
-          </span>
-          <span className={s.wordmark} aria-hidden="true">
-            Kettle
+          <span className={s.logo} aria-hidden="true">
+            <Logo size={40} />
           </span>
         </a>
         <ul className={s.tabs}>

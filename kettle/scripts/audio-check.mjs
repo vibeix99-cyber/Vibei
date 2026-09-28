@@ -209,6 +209,8 @@ for (const it of result.items) {
   if (isSfx && m.endAbs > 1e-4) flags.push('END-STEP');
   if (isSfx && m.clickScore > 40) flags.push(`click ${m.clickScore.toFixed(0)}@${m.clickAt.toFixed(3)}s`);
   if (isAmb && m.clickScore > 400 && !['fire', 'rain', 'lofi'].includes(it.id)) flags.push(`click ${m.clickScore.toFixed(0)}@${m.clickAt.toFixed(2)}s`);
+  // Smooth beds (no impulsive grains) must stay smooth — through fades and re-plans too.
+  if ((['brown', 'forest', 'simmer'].includes(it.id) || it.id === 'rapidSwitch') && m.clickScore > 25) flags.push(`click ${m.clickScore.toFixed(0)}@${m.clickAt.toFixed(2)}s`);
   if (m.hf8k > 0.02) flags.push(`HF>8k ${(m.hf8k * 100).toFixed(1)}%`);
   if (delta != null && Math.abs(delta) > 1.0 && !it.id.includes('@')) flags.push(`LEVEL ${delta > 0 ? '+' : ''}${delta.toFixed(1)}dB`);
   if (isSfx && it.declaredEnd != null && it.dryEnd != null && it.dryEnd > it.declaredEnd + 0.05) flags.push(`dry tail ${it.dryEnd.toFixed(2)}s > declared ${it.declaredEnd.toFixed(2)}s`);

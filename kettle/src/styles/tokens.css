@@ -173,6 +173,7 @@
   /* Utility */
   --focus-ring: #2477b8;
   --scrim: rgba(43, 28, 20, 0.44);
+  --scrim-solid: color-mix(in srgb, var(--bg), rgb(43 28 20) 44%); /* scrim over bg, for the scrollbar gutter */
   --highlight: rgba(255, 255, 255, 0.38); /* inner sheen stripe on fills */
   --glow: rgba(255, 186, 110, 0); /* lamplight glow (dark only) */
 
@@ -264,6 +265,7 @@
 
   --focus-ring: #8fd0ff;
   --scrim: rgba(12, 7, 18, 0.62);
+  --scrim-solid: color-mix(in srgb, var(--bg), rgb(12 7 18) 62%);
   --highlight: rgba(255, 255, 255, 0.28);
   --glow: rgba(255, 176, 96, 0.09);
 

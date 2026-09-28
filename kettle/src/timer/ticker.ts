@@ -175,12 +175,37 @@ function startLeadership(): void {
   const locks = nav.locks && typeof nav.locks.request === 'function' ? nav.locks : null;
   leadership = electLeader({ name: LEADER_LOCK, locks, storage: locks ? null : storageOrNull() });
   leadership.onChange((isLeader) => {
+    leaderListeners.forEach((fn) => {
+      try {
+        fn(isLeader);
+      } catch (err) {
+        console.error('[timer] leader listener threw', err);
+      }
+    });
     if (isLeader) {
       // Pick up anything written while we were a follower, then re-check after settling.
       queueWake();
       setTimeout(queueWake, SETTLE_MS + 20);
     }
   });
+}
+
+const leaderListeners = new Set<(leader: boolean) => void>();
+
+/**
+ * Is this the tab that fires timer side effects (and that the user most recently
+ * looked at)? Audio can use it to play ambience in one tab only. Always true
+ * with a single tab or before `initTimer`.
+ */
+export function isLeaderTab(): boolean {
+  return !multiTab || !!leadership?.isLeader();
+}
+
+export function onLeaderTabChange(fn: (leader: boolean) => void): () => void {
+  leaderListeners.add(fn);
+  return () => {
+    leaderListeners.delete(fn);
+  };
 }
 
 function claimIfVisible(): void {

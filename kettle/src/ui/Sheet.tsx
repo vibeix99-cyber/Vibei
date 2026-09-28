@@ -158,7 +158,15 @@ function SheetPanel({
       // synchronous focus() here would be undone. Skip if we were re-registered (StrictMode).
       queueMicrotask(() => {
         if (stack.some((e) => e.id === id)) return;
-        if (back && document.contains(back) && !back.closest('[inert]')) back.focus({ preventScroll: true });
+        if (back && document.contains(back) && !back.closest('[inert]')) {
+          back.focus({ preventScroll: true });
+          if (document.activeElement === back) return;
+        }
+        // Opener gone (or it was a keyboard shortcut): land somewhere sensible, never <body>.
+        const top = stack[stack.length - 1]?.el;
+        const scope = top ?? document.getElementById('main') ?? document.getElementById('root');
+        const target = scope && (scope.matches('[tabindex]') ? scope : focusables(scope)[0]);
+        target?.focus({ preventScroll: true });
       });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

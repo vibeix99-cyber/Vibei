@@ -194,28 +194,18 @@
     align-items: center;
     gap: 10px;
     margin: 0 0 var(--space-4);
-    padding: 4px 10px;
+    padding: 4px 8px;
     border-radius: var(--r-md);
     text-decoration: none;
     width: fit-content;
   }
-  .brandMark {
-    display: grid;
-    place-items: center;
-    transform: rotate(-6deg);
+  .logo {
+    display: flex;
+    transform-origin: 20% 60%;
     transition: transform var(--dur-slow) var(--ease-bounce);
   }
-  .brand:hover .brandMark {
-    transform: rotate(4deg) translateY(-1px);
-  }
-  .wordmark {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.875rem;
-    line-height: 1;
-    letter-spacing: -0.015em;
-    color: var(--persimmon);
-    padding-bottom: 3px;
+  .brand:hover .logo {
+    transform: rotate(-3deg) scale(1.03);
   }
   .tabs {
     grid-template-columns: 1fr;

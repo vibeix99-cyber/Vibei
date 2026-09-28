@@ -115,14 +115,15 @@ export function makeSteam(map: Texture, count: number, seed: number, o: { size: 
         float r1 = h11(cyc * 7.13 + aSeed * 91.7);
         float r2 = h11(cyc * 3.71 + aSeed * 17.3);
         float act = smoothstep(aIdx - 0.12, aIdx + 0.02, uIntensity);
-        float ease = 1.0 - (1.0 - age) * (1.0 - age);
-        vec3 p = uOrigin + uDir * ease * (0.12 + 0.9 * uBurst);
-        p.y += age * uRise * (1.0 + 0.8 * uBurst);
+        float ease = 1.0 - pow(1.0 - age, 3.0);
+        // a jet out of the spout (strong when whistling), then a lazy rise
+        vec3 p = uOrigin + uDir * ease * (0.1 + 1.25 * uBurst);
+        p.y += pow(age, 1.25) * uRise * (1.0 + 0.45 * uBurst);
         float wob = age * uSpread;
         p.x += sin(age * 5.0 + r1 * 6.283 + uTime * 0.6) * wob * 0.6 + (r1 - 0.5) * wob;
         p.z += cos(age * 4.0 + r2 * 6.283 + uTime * 0.5) * wob * 0.6 + (r2 - 0.5) * wob;
-        float size = uSize * (0.28 + 1.2 * age) * (0.8 + 0.4 * r2) * (1.0 + uBurst * 0.6);
-        float fade = smoothstep(0.0, 0.12, age) * (1.0 - smoothstep(0.4, 1.0, age));
+        float size = uSize * (0.3 + 1.25 * age) * (0.8 + 0.4 * r2) * (1.0 + uBurst * 0.5);
+        float fade = smoothstep(0.0, 0.08, age) * (1.0 - smoothstep(0.5, 1.0, age));
         vAlpha = uOpacity * act * fade;
         vec4 mv = modelViewMatrix * vec4(p, 1.0);
         float a = r1 * 6.283 + age * (r2 - 0.5) * 2.0;

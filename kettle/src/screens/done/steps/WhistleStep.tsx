@@ -24,8 +24,10 @@ export function WhistleStep({ report: r, reduced, active, headingRef, headingId 
   const goalAfter = g.goalMin > 0 ? Math.min(1, g.afterMin / g.goalMin) : 1;
   const goalDone = g.afterMin >= g.goalMin;
 
-  // The whistle itself ('complete') already played when the brew ended (flow.ts).
+  // The whistle itself ('complete') played when the brew ended (flow.ts) — replay it only if
+  // that happened while you were away (hidden tab / closed app), so the moment still sounds right.
   useCues(active, [
+    [0, () => r.whileAway && audio.play('complete')],
     [520, () => audio.play('pop', { volume: 0.6, haptic: false })],
     [880, () => audio.play('pop', { volume: 0.6, step: 2, haptic: false })],
     [1500, () => g.justMet && audio.play('quest', { volume: 0.7 })],

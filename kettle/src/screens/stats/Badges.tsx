@@ -1,31 +1,16 @@
 /** Badges grid (tiers I–V) with a detail sheet per badge. */
-import { useId, useState } from 'react';
-import { Icon, type IconName } from '@/art';
+import { useId, useState, type CSSProperties } from 'react';
+import { Badge, Icon, TIER } from '@/art';
 import { dayKey, type DayKey } from '@/lib/dates';
 import { ROMAN, type BadgeProgress } from '@/progress';
 import { Button, Card, ProgressBar, Sheet, cx, type Tone } from '@/ui';
 import { monthDay } from './format';
 import s from './stats.module.css';
 
-export const BADGE_ICON: Record<string, IconName> = {
-  'first-brew': 'kettle',
-  'warm-streak': 'mug',
-  'leaf-collector': 'leaf',
-  'deep-steep': 'droplet',
-  'morning-dew': 'sun',
-  moonlit: 'moon',
-  marathon: 'lightning',
-  'tea-time': 'break',
-  'goal-getter': 'target',
-  intentional: 'pencil',
-  'weekend-warmth': 'heart',
-  'nook-builder': 'nook',
-};
-
-/** Tier colours climb persimmon → matcha → sky → plum → honey (gold). One-tier badges are gold. */
-export function tierTone(tier: number, maxTier: number): Tone {
-  if (maxTier === 1) return 'honey';
-  return (['persimmon', 'matcha', 'sky', 'plum', 'honey'] as Tone[])[Math.max(0, Math.min(4, tier - 1))];
+/** Progress-bar tone nearest to each art tier colour (I oat → II sky → III matcha → IV berry → V honey). */
+const TIER_TONE: Tone[] = ['honey', 'sky', 'matcha', 'berry', 'honey'];
+export function tierTone(tier: number): Tone {
+  return TIER_TONE[Math.max(0, Math.min(4, tier - 1))];
 }
 
 const UNIT: Record<string, [string, string]> = {
@@ -44,23 +29,15 @@ const UNIT: Record<string, [string, string]> = {
 };
 const unit = (id: string, n: number) => (UNIT[id] ? UNIT[id][n === 1 ? 0 : 1] : '');
 
-export function BadgeMedal({ badge, size = 76 }: { badge: BadgeProgress; size?: number }) {
-  const locked = badge.tier === 0;
-  const tone = locked ? undefined : tierTone(badge.tier, badge.maxTier);
-  return (
-    <span className={cx(s.medal, locked && s.medalLocked)} data-tone={tone} style={{ width: size, height: size }} aria-hidden="true">
-      <span className={s.medalFace}>
-        <Icon name={BADGE_ICON[badge.id] ?? 'star'} size={Math.round(size * 0.46)} />
-      </span>
-      {locked ? (
-        <span className={s.medalLock}>
-          <Icon name="lock" size={14} />
-        </span>
-      ) : (
-        badge.maxTier > 1 && <span className={s.medalTier}>{ROMAN[badge.tier]}</span>
-      )}
-    </span>
-  );
+/** The art area's hex medal for a badge at its current tier (locked when tier 0). Decorative. */
+export function BadgeMedal({ badge, size = 84 }: { badge: BadgeProgress; size?: number }) {
+  return <Badge id={badge.id} tier={Math.max(1, badge.tier)} locked={badge.tier === 0} size={size} title="" className={s.medalArt} />;
+}
+
+/** Inline style that paints a tier chip / row in the art palette's tier colours. */
+function tierStyle(tier: number): CSSProperties {
+  const t = TIER[Math.max(0, Math.min(4, tier - 1))];
+  return { ['--tier-base' as string]: t.base, ['--tier-ink' as string]: t.ink, ['--tier-shade' as string]: t.shade };
 }
 
 export function BadgesSection({ badges, today }: { badges: BadgeProgress[]; today: DayKey }) {
@@ -113,7 +90,7 @@ function BadgeSheet({ badge, today, onClose }: { badge: BadgeProgress | null; to
       onClose={onClose}
       title={b?.title ?? 'Badge'}
       align="center"
-      hero={b ? <BadgeMedal badge={b} size={112} /> : undefined}
+      hero={b ? <BadgeMedal badge={b} size={128} /> : undefined}
       description={
         b
           ? b.tier === 0
@@ -138,12 +115,13 @@ function BadgeSheet({ badge, today, onClose }: { badge: BadgeProgress | null; to
               <p className={s.badgeGoal}>{b.description}</p>
               <ProgressBar
                 value={b.toNext}
-                tone={tierTone(b.tier + 1, b.maxTier)}
+                tone={b.maxTier === 1 ? 'honey' : tierTone(b.tier + 1)}
                 label={`Progress toward ${b.maxTier > 1 ? `tier ${ROMAN[b.tier + 1]}` : b.title}`}
                 valueText={`${b.value} of ${b.next}`}
               />
               <p className={s.badgeCount}>
-                <strong>{b.value.toLocaleString()}</strong> / {b.next.toLocaleString()} {unit(b.id, b.next)}
+                <strong>{b.value.toLocaleString()}</strong> / {b.next.toLocaleString()} {unit(b.id, b.next)} ·{' '}
+                {(b.next - b.value).toLocaleString()} to go
               </p>
             </div>
           ) : (
@@ -155,7 +133,7 @@ function BadgeSheet({ badge, today, onClose }: { badge: BadgeProgress | null; to
                 const reached = i < b.tier;
                 const at = b.unlockedAt[i];
                 return (
-                  <li key={i} className={s.tierRow} data-reached={reached || undefined} data-tone={reached ? tierTone(i + 1, b.maxTier) : undefined}>
+                  <li key={i} className={s.tierRow} data-reached={reached || undefined} style={reached ? tierStyle(i + 1) : undefined}>
                     <span className={s.tierBadge}>{ROMAN[i + 1]}</span>
                     <span className={s.tierText}>
                       {threshold.toLocaleString()} {unit(b.id, threshold)}

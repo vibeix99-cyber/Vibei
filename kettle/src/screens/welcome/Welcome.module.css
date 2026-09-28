@@ -1,16 +1,9 @@
 /* Onboarding. Tokens only; AA-safe local inks for colored text. */
 .screen,
 .hello {
-  --brand-ink: #c9551f;
-  --warn-ink: #7d5200;
   min-height: 100vh;
   min-height: 100dvh;
   background: var(--paper);
-}
-:global(:root[data-theme='dark']) .screen,
-:global(:root[data-theme='dark']) .hello {
-  --brand-ink: #ff9a66;
-  --warn-ink: #ffcf66;
 }
 .screen {
   display: grid;

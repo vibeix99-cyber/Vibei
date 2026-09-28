@@ -33,6 +33,7 @@ export const SHORTCUTS: ShortcutInfo[] = [
   { id: 'toggle', keys: ['Space'], label: 'Pause or resume', where: 'During a brew' },
   { id: 'end', keys: ['Esc'], label: 'End the brew early', where: 'During a brew' },
   { id: 'addTime', keys: ['+'], label: 'Add 5 minutes', where: 'During a brew' },
+  { id: 'mute', keys: ['M'], label: 'Mute or unmute sounds', where: 'During a brew' },
   { id: 'start', keys: ['Enter'], label: 'Put the kettle on', where: 'Today' },
   { id: 'help', keys: ['?'], label: 'Show keyboard shortcuts', where: 'Anywhere' },
 ];

@@ -3,7 +3,7 @@
  * consecutive warm days join into one pill (cozy days bridge the pill).
  */
 import { useId, useMemo, useState } from 'react';
-import { Icon } from '@/art';
+import { Icon, StreakMug, TeaCozy } from '@/art';
 import { addDays, type DayKey } from '@/lib/dates';
 import type { DayTotal } from '@/progress/insights';
 import { monthGrid, monthOf } from '@/progress/insights';
@@ -52,9 +52,7 @@ export function StreakCard({ streak, byDay, today, weekStartsOn, firstDay }: Pro
   return (
     <Card as="section" className={cx(s.card, s.streakCard)} aria-labelledby={headingId}>
       <div className={s.streakTop}>
-        <div className={s.streakMug} data-alive={alive || undefined} aria-hidden="true">
-          <Icon name="mug" size={44} tone={alive ? 'color' : 'mono'} />
-        </div>
+        <StreakMug state={!alive ? 'cold' : streak.todayDone ? 'warm' : 'atRisk'} size={76} title="" className={s.streakMugArt} />
         <div className={s.streakText}>
           <h2 id={headingId} className={s.streakHeadline}>
             {headline}
@@ -69,7 +67,7 @@ export function StreakCard({ streak, byDay, today, weekStartsOn, firstDay }: Pro
         <div className={s.cozyIcons} aria-hidden="true">
           {Array.from({ length: streak.maxCozies }, (_, i) => (
             <span key={i} className={s.cozySlot} data-full={i < streak.cozies || undefined}>
-              <Icon name="cozy" size={22} />
+              <TeaCozy size={34} muted={i >= streak.cozies} animate={false} title="" />
             </span>
           ))}
         </div>

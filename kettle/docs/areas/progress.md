@@ -65,6 +65,15 @@ Owner: progress area (`src/progress/**`, `src/screens/stats/**`). Dev port 5186.
    again"), empty month says "A fresh month to fill". Full suite: tsc clean, 192 tests /
    17 files green, `vite build` ok (Stats chunk 13.5 kB gz), axe 0 violations.
 
+6. **Real art.** Swapped in the art area's pieces: hex `Badge` medals (tier palette oat →
+   sky → matcha → berry → honey; badge-sheet tier rows/chips now use the same `TIER`
+   colours), scalloped `LevelBadge`, `StreakMug` (warm / atRisk / cold) in the streak card
+   and the Day-streak tile, knitted `TeaCozy` slots (muted when empty), `Leaf` for leaf
+   counts, `EmptySpot` for empty rhythm/tag scopes; Chai `peek` stays on the empty hero.
+   Badge sheet shows "N to go" so a freshly reached tier's empty bar doesn't read as broken.
+   Cozy row stacks on 320px. tsc clean · 193 tests green · axe 0 on /stats (the open badge
+   sheet reports one *minor* `aria-allowed-role` on the kit's toast `<ol role="status">`).
+
 Screenshots (final): `.shots/progress/final/*` — `{fresh,blank,newbie,veteran}-stats-{mobile,desktop}-{light,dark}.png`,
 `vet-scroll-*.png` (390 light, full scroll), `broken-streakcard.png`; interactions in
 `.shots/progress/it3-i-{badge,edit,delete,deleted,kbd}.png`; tablet `it4s-vet-t-dark-*.png`.
@@ -96,5 +105,7 @@ Screenshots (final): `.shots/progress/final/*` — `{fresh,blank,newbie,veteran}
   triggers on desktop; the right rail fills the space well, so this is fine for now.
 - Tag metadata is duplicated (home `TAG_OPTIONS` icons, focus `TAGS` colors, stats
   `TAG_META`) → suggest a shared `src/state/tags.ts`.
-- Art: badge medallions are drawn in Stats from `Icon`s; if art ships per-badge artwork,
-  swap `BadgeMedal`'s face.
+- Art: the `Badge` tier chip renders "IV" in Fredoka where I and V touch and read as "N"
+  (visible at 84–128px) → suggest Nunito 900 or more letter-spacing for the numeral.
+- Design-system: Toast region `<ol role="status">` trips axe `aria-allowed-role` (minor) →
+  put `role="status"` on a wrapping div.

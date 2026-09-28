@@ -27,7 +27,7 @@ export interface Chai {
 
 // Loaf size (local units, before the root scale).
 const W = 0.8;
-const H = 0.72;
+const H = 0.8;
 const D = 0.74;
 const FZ = D / 2; // front face
 
@@ -46,27 +46,27 @@ export function buildChai(kit: Kit): Chai {
   // The loaf breathes (scale from the bottom); everything on it rides along.
   const loaf = group();
   loaf.userData.dyn = true;
-  const bodyGeo = kit.rbox(W, H, D, 0.3, 5);
+  const bodyGeo = kit.rbox(W, H, D, 0.25, 5);
   // Taper toward the top like the 2D loaf silhouette.
   const pos = bodyGeo.getAttribute('position');
   for (let i = 0; i < pos.count; i++) {
     const y = (pos.getY(i) + H / 2) / H; // 0..1
-    pos.setX(i, pos.getX(i) * (1 - 0.1 * y));
+    pos.setX(i, pos.getX(i) * (1 - 0.12 * y));
     pos.setZ(i, pos.getZ(i) * (1 - 0.05 * y));
   }
   bodyGeo.computeVertexNormals();
   const loafStatic = group();
   loafStatic.add(kit.mesh(bodyGeo, fur, { p: [0, H / 2, 0] }));
   // snout: a broad soft pillow on the lower front
-  loafStatic.add(kit.mesh(kit.sphere(0.5, 28, 18), cream, { p: [0, 0.3, FZ - 0.035], s: [0.5, 0.34, 0.2] }));
+  loafStatic.add(kit.mesh(kit.sphere(0.5, 28, 18), cream, { p: [0, 0.32, FZ - 0.035], s: [0.5, 0.36, 0.2] }));
   // nose: wide dark oval sitting on top of the snout
-  loafStatic.add(kit.mesh(kit.sphere(0.5, 24, 14), nose, { p: [0, 0.41, FZ + 0.045], s: [0.22, 0.09, 0.08], r: [-0.25, 0, 0] }));
-  loafStatic.add(kit.mesh(kit.sphere(0.02, 8, 6), white, { p: [-0.045, 0.432, FZ + 0.082], s: [1.5, 0.65, 0.5], cast: false }));
+  loafStatic.add(kit.mesh(kit.sphere(0.5, 24, 14), nose, { p: [0, 0.44, FZ + 0.045], s: [0.22, 0.09, 0.08], r: [-0.25, 0, 0] }));
+  loafStatic.add(kit.mesh(kit.sphere(0.02, 8, 6), white, { p: [-0.045, 0.462, FZ + 0.082], s: [1.5, 0.65, 0.5], cast: false }));
   for (const s of [-1, 1]) {
     // mouth: a tiny "w" under the nose
-    loafStatic.add(kit.mesh(kit.torus(0.026, 0.008, Math.PI, 4, 10), kit.mat(C.espresso, { rough: 0.9 }), { p: [s * 0.026, 0.3, FZ + 0.063], r: [0, 0, Math.PI], cast: false }));
+    loafStatic.add(kit.mesh(kit.torus(0.026, 0.008, Math.PI, 4, 10), kit.mat(C.espresso, { rough: 0.9 }), { p: [s * 0.026, 0.33, FZ + 0.063], r: [0, 0, Math.PI], cast: false }));
     // blush on the cheeks, just outside the snout
-    loafStatic.add(kit.mesh(kit.sphere(0.5, 14, 10), blush, { p: [s * 0.3, 0.33, FZ - 0.07], s: [0.1, 0.065, 0.05], r: [0, s * 0.55, 0], cast: false }));
+    loafStatic.add(kit.mesh(kit.sphere(0.5, 14, 10), blush, { p: [s * 0.3, 0.37, FZ - 0.07], s: [0.1, 0.065, 0.05], r: [0, s * 0.55, 0], cast: false }));
     // tiny ears on the top corners, tilted outward
     loafStatic.add(kit.mesh(kit.sphere(0.5, 14, 10), ear, { p: [s * 0.25, H - 0.045, -0.1], s: [0.085, 0.075, 0.06], r: [0, 0, -s * 0.5] }));
     // stubby front paws
@@ -76,7 +76,7 @@ export function buildChai(kit: Kit): Chai {
   loaf.add(loafStatic);
 
   // eyes: open dots / sleepy ∪ / happy ∩ (high on the face, wide apart)
-  const eyeY = 0.53;
+  const eyeY = 0.6;
   const eyeX = 0.19;
   const eyeZ = FZ - 0.005;
   const eyesOpen = group();
@@ -106,7 +106,7 @@ export function buildChai(kit: Kit): Chai {
 
   // paws + mug for tea time
   const pawsUp = group();
-  const mugMat = kit.mat(C.berry, { rough: 0.32 });
+  const mugMat = kit.mat(C.persimmon, { rough: 0.32 });
   pawsUp.add(kit.mesh(kit.smoothLathe([[0.001, 0], [0.085, 0], [0.095, 0.02], [0.1, 0.17], [0.09, 0.18], [0.085, 0.16], [0.001, 0.16]], 2, 20), mugMat, { p: [0, 0.1, FZ + 0.12] }));
   pawsUp.add(kit.mesh(kit.cyl(0.084, 0.084, 0.01, 16), kit.mat(C.tea, { rough: 0.32 }), { p: [0, 0.25, FZ + 0.12] }));
   pawsUp.add(kit.mesh(kit.torus(0.045, 0.016, Math.PI * 1.2, 6, 12), mugMat, { p: [0.1, 0.19, FZ + 0.12], r: [0, 0, -Math.PI * 0.6] }));
@@ -186,7 +186,7 @@ export function buildChai(kit: Kit): Chai {
   };
 
   root.userData.baseY = 0;
-  root.scale.setScalar(1.18);
+  root.scale.setScalar(1.12);
   return {
     root,
     setPose,

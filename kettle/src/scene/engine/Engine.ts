@@ -750,10 +750,11 @@ export class NookEngine {
     ks.uTime.value = t;
     ks.uIntensity.value = this.steamLevel;
     ks.uBurst.value = this.burst;
-    ks.uSize.value = 0.34 + 0.36 * this.steamLevel;
-    ks.uOpacity.value = 0.42 + 0.3 * this.steamLevel;
-    ks.uRise.value = 1.4 + 0.9 * this.steamLevel;
-    ks.uSpread.value = 0.3 + 0.35 * this.steamLevel;
+    const lv = this.steamLevel;
+    ks.uSize.value = 0.5 + 0.55 * lv;
+    ks.uOpacity.value = 0.62 + 0.28 * lv;
+    ks.uRise.value = 1.7 + 1.3 * lv;
+    ks.uSpread.value = 0.34 + 0.4 * lv;
 
     // whistle: lid rattles, kettle wiggles, notes float out
     const k = this.ket;
@@ -770,12 +771,12 @@ export class NookEngine {
       n.visible = on;
       if (!on) continue;
       const ph = (t * 0.55 + i / k.notes.length) % 1;
-      n.position.copy(k.spoutTip).addScaledVector(k.spoutDir, 0.15 + ph * 0.5);
-      n.position.y += ph * 0.9 + Math.sin(ph * 7 + i) * 0.05;
-      n.position.x += Math.sin(ph * 5 + i * 2) * 0.1;
-      n.material.opacity = Math.sin(Math.PI * ph) * this.burst;
+      n.position.copy(k.spoutTip).addScaledVector(k.spoutDir, 0.35 + ph * 0.9);
+      n.position.y += 0.15 + ph * 1.1 + Math.sin(ph * 7 + i) * 0.06;
+      n.position.z += Math.sin(ph * 5 + i * 2) * 0.12;
+      n.material.opacity = Math.min(1, Math.sin(Math.PI * ph) * 1.4) * this.burst;
       n.material.rotation = Math.sin(ph * 6 + i) * 0.35;
-      n.scale.setScalar(0.16 + 0.08 * Math.sin(Math.PI * ph));
+      n.scale.setScalar(0.24 + 0.1 * Math.sin(Math.PI * ph));
     }
 
     // stove fire

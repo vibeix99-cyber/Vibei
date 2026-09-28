@@ -13,28 +13,50 @@ export class Simmer extends BaseAmbient {
   private heat!: ConstantSourceNode;
   private bubbleClock!: EventClock;
   private lanes_: GainNode[] = [];
-  /** JS mirror of the heat automation for event density: linear h0@t0 → h1@t1. */
-  private h = { h0: 0, t0: 0, h1: 0, t1: 0 };
+  /** JS mirror of the heat automation (piecewise linear) for event density. */
+  private path: { t: number; v: number }[] = [{ t: 0, v: 0 }];
+
+  heatAt(t: number): number {
+    const p = this.path;
+    if (t <= p[0]!.t) return p[0]!.v;
+    for (let i = 1; i < p.length; i++) {
+      const a = p[i - 1]!, b = p[i]!;
+      if (t <= b.t) return a.v + ((b.v - a.v) * (t - a.t)) / Math.max(1e-6, b.t - a.t);
+    }
+    return p[p.length - 1]!.v;
+  }
+
+  /**
+   * Replace the heat plan from `at`: start from the current heat and ramp
+   * linearly through `points` (one automation plan, so no ramp gets cancelled
+   * half-way → no steps/clicks in the rumble).
+   */
+  setHeatPath(at: number, points: { t: number; v: number }[]): void {
+    const cur = this.heatAt(at);
+    const p = this.heat.offset;
+    // cancelScheduledValues drops an in-progress ramp entirely (its end event is
+    // in the future); ramping to the current value re-creates that segment exactly.
+    p.cancelScheduledValues(at);
+    p.linearRampToValueAtTime(cur, at);
+    let last = at;
+    const plan = [{ t: at, v: cur }];
+    for (const pt of points) {
+      const t = Math.max(last + 0.02, pt.t);
+      const v = Math.max(0, Math.min(1, pt.v));
+      p.linearRampToValueAtTime(v, t);
+      plan.push({ t, v });
+      last = t;
+    }
+    this.path = plan;
+  }
 
   constructor(d: AmbientDest) {
     super(d);
   }
 
-  heatAt(t: number): number {
-    const { h0, t0, h1, t1 } = this.h;
-    if (t <= t0) return h0;
-    if (t >= t1) return h1;
-    return h0 + ((h1 - h0) * (t - t0)) / (t1 - t0);
-  }
-
   /** Ramp heat linearly from its current value to `target`, arriving at `at + dur`. */
   setHeat(target: number, at: number, dur: number): void {
-    const cur = this.heatAt(at);
-    const p = this.heat.offset;
-    p.cancelScheduledValues(at);
-    p.setValueAtTime(cur, at);
-    p.linearRampToValueAtTime(target, at + Math.max(0.05, dur));
-    this.h = { h0: cur, t0: at, h1: target, t1: at + Math.max(0.05, dur) };
+    this.setHeatPath(at, [{ t: at + Math.max(0.05, dur), v: target }]);
   }
 
   start(at: number): void {

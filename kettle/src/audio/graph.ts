@@ -141,8 +141,11 @@ export class Fader {
     const segs = 24;
     const curve = fadeCurve(from, to, segs + 1, shape);
     for (const p of this.params) {
+      // cancelScheduledValues drops an in-progress ramp entirely (its end event is in
+      // the future); ramping to the current value re-creates that segment exactly, so
+      // an interrupted fade continues without a step.
       p.cancelScheduledValues(at);
-      p.setValueAtTime(from, at);
+      p.linearRampToValueAtTime(from, at);
       for (let i = 1; i <= segs; i++) p.linearRampToValueAtTime(curve[i]!, at + (dur * i) / segs);
     }
     this.points = { t0: at, dur, curve };

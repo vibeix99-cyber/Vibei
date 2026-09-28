@@ -17,7 +17,8 @@ import { useSettings } from '@/state/settings';
 import { useReducedMotion } from '@/lib/useReducedMotion';
 import { ease } from '@/lib/motion';
 import { audio } from '@/audio';
-import { navigate } from '@/app/router';
+import { getRoute, navigate } from '@/app/router';
+import type { CompletionReport } from '@/progress';
 import { beginBreak, setCelebrationStep, skipBreakFromDone, useFlow } from '@/app/flow';
 import { usePageVisible } from '../focus/parts/hooks';
 import { buildSteps, summarize, type StepKind, type StepProps } from './steps/types';
@@ -39,7 +40,11 @@ const STEP: Record<StepKind, (p: StepProps) => ReactNode> = {
 const AUTO_BREAK_S = 10;
 
 export default function DoneScreen() {
-  const report = useProgress((p) => p.lastReport);
+  const liveReport = useProgress((p) => p.lastReport);
+  // Keep showing the celebration while we leave (the flow clears the report as it hands off).
+  const kept = useRef<CompletionReport | null>(liveReport);
+  if (liveReport) kept.current = liveReport;
+  const report = liveReport ?? kept.current;
   const reduced = useReducedMotion();
   const visible = usePageVisible();
   const autoStart = useSettings((st) => st.autoStartBreaks);
@@ -60,12 +65,13 @@ export default function DoneScreen() {
   const kind = steps[step];
   const last = step === steps.length - 1;
 
+  // Arrived with nothing to celebrate → home. (Leaving via the CTAs navigates on its own.)
   useEffect(() => {
-    if (!report) navigate('/', { replace: true });
-  }, [report]);
+    if (!liveReport && !kept.current && getRoute() === '/done') navigate('/', { replace: true });
+  }, [liveReport]);
   useEffect(() => {
-    if (report) setCelebrationStep(report.id, step);
-  }, [report, step]);
+    if (liveReport) setCelebrationStep(liveReport.id, step);
+  }, [liveReport, step]);
 
   // Screen readers: land on each card's heading, then hear its summary.
   const headingRef = useCallback((el: HTMLHeadingElement | null) => {
@@ -81,14 +87,24 @@ export default function DoneScreen() {
   const breakKind = nextBreakKind(useTimer.getState().completedInCycle);
   const breakLabel = breakKind === 'longBreak' ? 'Start long tea break' : 'Start tea break';
 
+  // Once we hand off (break / home), ignore further presses while the route animates out.
+  const leaving = useRef(false);
+  const leave = useCallback((to: 'break' | 'home') => {
+    if (leaving.current) return;
+    leaving.current = true;
+    if (to === 'break') beginBreak();
+    else skipBreakFromDone();
+  }, []);
+
   const advance = useCallback(() => {
+    if (leaving.current) return;
     if (last) {
-      beginBreak();
+      leave('break');
       return;
     }
     audio.play('tap');
     setIdx(step + 1);
-  }, [last, step]);
+  }, [last, step, leave]);
 
   // Enter / Space continue from anywhere that isn't another control.
   const ctaRef = useRef<HTMLButtonElement>(null);
@@ -108,7 +124,7 @@ export default function DoneScreen() {
   // Optional auto-start of the break once the last card is up.
   const [autoLeft, setAutoLeft] = useState<number | null>(null);
   const [autoCancelled, setAutoCancelled] = useState(false);
-  const autoOn = !!report && last && autoStart && !autoCancelled && seen;
+  const autoOn = !!liveReport && last && autoStart && !autoCancelled && seen;
   useEffect(() => {
     if (!autoOn) {
       setAutoLeft(null);
@@ -120,8 +136,8 @@ export default function DoneScreen() {
     return () => clearInterval(id);
   }, [autoOn, visible]);
   useEffect(() => {
-    if (autoOn && autoLeft != null && autoLeft <= 0) beginBreak();
-  }, [autoOn, autoLeft]);
+    if (autoOn && autoLeft != null && autoLeft <= 0) leave('break');
+  }, [autoOn, autoLeft, leave]);
 
   if (!report || !kind) return <div className={s.done} />;
   const Step = STEP[kind];
@@ -162,7 +178,7 @@ export default function DoneScreen() {
         <div className={s.footInner} data-last={last || undefined}>
           {last ? (
             <>
-              <Button variant="ghost" sfx="cancel" onClick={skipBreakFromDone} className={s.skip}>
+              <Button variant="ghost" sfx="cancel" onClick={() => leave('home')} className={s.skip}>
                 Skip break
               </Button>
               <Button ref={ctaRef} data-done-cta="" size="lg" variant="sky" sfx="start" onClick={advance} className={s.cta}>

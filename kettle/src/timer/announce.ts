@@ -6,8 +6,10 @@
  * All wording lives in the pure functions below (unit tested).
  */
 import { on } from '@/lib/events';
+import { clock } from '@/lib/clock';
 import { spokenDuration, plural } from '@/lib/format';
-import { subscribeTimerView, getTimerView } from './view';
+import { remainingAt, useTimer } from './store';
+import { subscribeTimerView } from './view';
 import type { Phase, TimerView } from './types';
 
 const FIVE_MIN = 5 * 60_000;
@@ -145,15 +147,16 @@ export function initAnnouncer(): void {
   on('timer:start', ({ phase, durationMs }) => say({ type: 'start', phase, durationMs }));
   on('timer:pause', ({ phase, remainingMs }) => say({ type: 'pause', phase, remainingMs }));
   on('timer:resume', ({ phase, remainingMs }) => say({ type: 'resume', phase, remainingMs }));
-  on('timer:addTime', ({ phase, addedMs }) => say({ type: 'addTime', phase, addedMs, remainingMs: getTimerView().remainingMs + addedMs }));
+  // Read the store (already updated when the event fires), not the ≤1 s old view snapshot.
+  const remainingNow = () => remainingAt(useTimer.getState(), clock.now());
+  on('timer:addTime', ({ phase, addedMs }) => say({ type: 'addTime', phase, addedMs, remainingMs: remainingNow() }));
   on('timer:complete', ({ phase }) => say({ type: 'complete', phase }));
   on('timer:stop', ({ phase, record }) => say({ type: 'stop', phase, savedMs: record?.focusedMs ?? null }));
   // Mirrored changes from another tab (the user may be reading this one).
   on('timer:sync', ({ kind, phase, record }) => {
-    const v = getTimerView();
-    if (kind === 'start') say({ type: 'start', phase, durationMs: v.plannedMs });
-    else if (kind === 'pause') say({ type: 'pause', phase, remainingMs: v.remainingMs });
-    else if (kind === 'resume') say({ type: 'resume', phase, remainingMs: v.remainingMs });
+    if (kind === 'start') say({ type: 'start', phase, durationMs: useTimer.getState().plannedMs });
+    else if (kind === 'pause') say({ type: 'pause', phase, remainingMs: remainingNow() });
+    else if (kind === 'resume') say({ type: 'resume', phase, remainingMs: remainingNow() });
     else if (kind === 'complete') say({ type: 'complete', phase });
     else if (kind === 'stop') say({ type: 'stop', phase, savedMs: record?.focusedMs ?? null });
   });

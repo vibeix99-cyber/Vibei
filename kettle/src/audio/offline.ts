@@ -45,8 +45,12 @@ export async function renderAmbient(kind: Kind | 'simmer', seconds = 12, seed = 
     v.start(0);
     const f = new Fader(ctx, [v.output.gain, v.wetOutput.gain], 0);
     f.fade(dbToGain(SIMMER_LEVEL.level), 0.6, 'equalPower', 0);
-    v.setHeat(0, 0, 0.05);
-    v.setHeat(1, 0.05, seconds - 0.05);
+    v.setHeatPath(0, [{ t: seconds, v: 1 }]);
+    // Re-plan mid-way like the engine does after a clock jump / resume: must stay step-free.
+    v.setHeatPath(seconds / 2, [
+      { t: seconds / 2 + 0.3, v: (seconds / 2 + 0.3) / seconds },
+      { t: seconds, v: 1 },
+    ]);
     v.schedule(0, seconds);
   } else {
     const v = createAmbient(kind, { ctx, dry: graph.amb, wet: graph.ambWet, rng });
@@ -77,7 +81,7 @@ export async function chainGain(levelDb = -20): Promise<number> {
 }
 
 /** Worst-case stacks through the voice pool + limiter. */
-export async function renderScenario(name: 'tapStorm' | 'celebration' | 'countUp' | 'ambientPlusComplete'): Promise<Float32Array[]> {
+export async function renderScenario(name: 'tapStorm' | 'celebration' | 'countUp' | 'ambientPlusComplete' | 'rapidSwitch'): Promise<Float32Array[]> {
   const seconds = name === 'ambientPlusComplete' ? 8 : 5;
   const ctx = new OfflineAudioContext(2, SR * seconds, SR);
   const graph = buildGraph(ctx);
@@ -96,6 +100,29 @@ export async function renderScenario(name: 'tapStorm' | 'celebration' | 'countUp
     fire('quest', 1.1);
     fire('badge', 1.5);
     fire('levelUp', 1.9);
+  }
+  if (name === 'rapidSwitch') {
+    // Picker mashing: crossfades interrupted mid-way must stay click-free.
+    const mk = (k: Kind) => {
+      const v = createAmbient(k, { ctx, dry: graph.amb, wet: graph.ambWet, rng });
+      v.start(0);
+      v.schedule(0, seconds);
+      return { v, f: new Fader(ctx, [v.output.gain, v.wetOutput.gain], 0), k };
+    };
+    const a = mk('brown');
+    const b = mk('forest');
+    a.f.fade(ambientTrim('brown'), 0.8, 'equalPower', 0);
+    const plan: [number, typeof a, typeof a][] = [
+      [1.5, a, b],
+      [2.1, b, a],
+      [2.5, a, b],
+      [2.8, b, a],
+      [3.6, a, b],
+    ];
+    for (const [t, from, to] of plan) {
+      from.f.fade(0, 1.5, 'equalPower', t);
+      to.f.fade(ambientTrim(to.k), 1.5, 'equalPower', t);
+    }
   }
   if (name === 'ambientPlusComplete') {
     const v = createAmbient('rain', { ctx, dry: graph.amb, wet: graph.ambWet, rng });
@@ -257,7 +284,7 @@ export async function audit(opts: { sfx?: string[]; ambient?: string[]; scenario
       png: files ? spectrogramPng(data, `ambient: ${kind}`, sub(metrics)) : undefined,
     });
   }
-  for (const sc of (opts.scenarios ?? ['tapStorm', 'countUp', 'celebration', 'ambientPlusComplete']) as Parameters<typeof renderScenario>[0][]) {
+  for (const sc of (opts.scenarios ?? ['tapStorm', 'countUp', 'celebration', 'ambientPlusComplete', 'rapidSwitch']) as Parameters<typeof renderScenario>[0][]) {
     const data = await renderScenario(sc);
     const metrics = measure(data, SR, { edges: false });
     items.push({

@@ -1,17 +1,9 @@
 /* Home — "Today". Tokens only; accent *text* uses AA-safe local inks. */
 .screen {
-  --streak-ink: #b4481a;
-  --honey-ink: #7d5200;
-  --matcha-ink: #3d7330;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 20px;
   padding-bottom: 32px;
-}
-:global(:root[data-theme='dark']) .screen {
-  --streak-ink: #ff9a66;
-  --honey-ink: #ffcf66;
-  --matcha-ink: #9fd88c;
 }
 
 /* ---------- Status bar ---------- */
@@ -47,7 +39,7 @@
   transform: scale(0.96);
 }
 .stat[data-kind='streak'] .statNum {
-  color: var(--streak-ink);
+  color: var(--persimmon-ink);
 }
 .stat[data-kind='leaves'] .statNum {
   color: var(--matcha-ink);
@@ -274,15 +266,12 @@
   appearance: none;
   border: 0;
   background: none;
-  color: var(--sky-edge);
+  color: var(--sky-ink);
   font-weight: 800;
   font-size: 0.9375rem;
   cursor: pointer;
   min-height: 44px;
   padding: 0 4px;
-}
-:global(:root[data-theme='dark']) .linkBtn {
-  color: var(--sky);
 }
 .rhythmSeg > * {
   min-height: 56px;

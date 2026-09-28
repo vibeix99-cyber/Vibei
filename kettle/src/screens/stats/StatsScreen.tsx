@@ -6,7 +6,7 @@
  * badges → editable history. Two columns when the content area is wide.
  */
 import { useId, useMemo, useState } from 'react';
-import { Icon, Mascot, type MascotPose } from '@/art';
+import { Icon, Leaf, LevelBadge, Mascot, StreakMug, type MascotPose } from '@/art';
 import { addDays } from '@/lib/dates';
 import { ITEMS, localeWeekStart, useBadges, useDayKey, useHour, useLevel, useProgress, useStreak } from '@/progress';
 import { dayTotals, goalMetDays, totals } from '@/progress/insights';
@@ -68,7 +68,7 @@ export default function StatsScreen() {
       <section aria-label="Overview" className={s.area} data-area="overview">
         <div className={s.tiles}>
           <Stat
-            icon={<Icon name="mug" size={26} tone={streak.current > 0 ? 'color' : 'mono'} />}
+            icon={<StreakMug size={34} state={streak.current === 0 ? 'cold' : streak.todayDone ? 'warm' : 'atRisk'} animate={false} title="" />}
             tone="persimmon"
             value={streak.current.toLocaleString()}
             label="Day streak"
@@ -164,13 +164,11 @@ function LevelCard({ level, leaves, into, size }: { level: number; leaves: numbe
   return (
     <Card as="section" className={cx(s.card, s.levelCard)} aria-label={`Cozy level ${level}`}>
       <div className={s.levelTop}>
-        <div className={s.levelBadge} aria-hidden="true">
-          <span className={s.levelNum}>{level}</span>
-        </div>
+        <LevelBadge level={level} size={68} title="" className={s.levelArt} />
         <div className={s.levelText}>
           <h2 className={s.levelTitle}>Cozy level {level}</h2>
           <p className={s.levelLeaves}>
-            <Icon name="leaf" size={18} tone="color" />
+            <Leaf size={18} />
             {leaves.toLocaleString()} leaves earned
           </p>
         </div>

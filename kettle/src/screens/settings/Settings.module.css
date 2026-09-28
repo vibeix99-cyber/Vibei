@@ -1,13 +1,9 @@
 /* Settings. Tokens only; AA-safe local inks for colored text. */
 .screen {
-  --warn-ink: #7d5200;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 28px;
   padding-bottom: 40px;
-}
-:global(:root[data-theme='dark']) .screen {
-  --warn-ink: #ffcf66;
 }
 .title {
   font-size: clamp(1.75rem, 6vw, 2.125rem);
@@ -44,10 +40,7 @@
   flex-wrap: wrap;
   gap: 6px;
 }
-/* Workaround: kit input keeps its intrinsic width inside the flex box (requested fix). */
-.profileBody input {
-  min-width: 0;
-}
+
 
 /* Rows */
 .padRow {
@@ -199,7 +192,7 @@
   font-weight: 700;
 }
 .warnText {
-  color: var(--warn-ink);
+  color: var(--honey-ink);
 }
 .inlineLink {
   appearance: none;

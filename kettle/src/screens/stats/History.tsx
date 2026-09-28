@@ -1,6 +1,6 @@
 /** Session history grouped by day — tap a brew to rename, retag or delete it (with undo). */
 import { useId, useMemo, useState } from 'react';
-import { Icon, Mascot } from '@/art';
+import { Icon, Leaf, Mascot } from '@/art';
 import type { DayKey } from '@/lib/dates';
 import { historyByDay, leavesBySession } from '@/progress/insights';
 import { useProgress, type SessionRecord } from '@/progress';
@@ -101,7 +101,7 @@ function SessionRow({ session: x, leaves, onOpen }: { session: SessionRecord; le
         )}
         <span className={s.sessionLeaves}>
           +{leaves}
-          <Icon name="leaf" size={14} />
+          <Leaf size={14} />
         </span>
       </span>
     </button>

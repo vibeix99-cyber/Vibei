@@ -3,7 +3,7 @@ import { Icon, Mascot, QuestIcon, Leaf } from '@/art';
 import type { Quest, SessionRecord } from '@/progress';
 import { formatDuration } from '@/lib/format';
 import { Card, ProgressBar } from '@/ui';
-import { TAG_LABEL } from './content';
+import { TAG_BY_ID } from '@/state/tags';
 import s from './Home.module.css';
 
 export function RecipesCard({ quests }: { quests: Quest[] }) {
@@ -81,7 +81,7 @@ export function TodayBrews({ sessions }: { sessions: SessionRecord[] }) {
               <div className={s.tlBody}>
                 <p className={s.tlTitle}>{x.intention || 'A quiet brew'}</p>
                 <p className={s.tlMeta}>
-                  {x.tag ? `${TAG_LABEL[x.tag]} · ` : ''}
+                  {x.tag ? `${TAG_BY_ID[x.tag]?.label ?? x.tag} · ` : ''}
                   {formatDuration(x.focusedMs)}
                   {x.completed ? '' : ' · ended early'}
                 </p>

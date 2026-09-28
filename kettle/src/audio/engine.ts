@@ -354,14 +354,17 @@ export class Engine {
         voice.scheduledTo = now;
         const fader = new Fader(ctx, [voice.output.gain, voice.wetOutput.gain], 0);
         this.simmer = { voice, fader, stopAt: null };
-        voice.setHeat(heat, now, 0.05);
       }
       const s = this.simmer;
       s.stopAt = null;
       const trim = dbToGain(SIMMER_LEVEL.level);
       if (Math.abs(s.fader.target - trim) > 1e-3) s.fader.fade(trim, fadeInMs / 1000);
-      s.voice.setHeat(heat, now, 0.3);
-      s.voice.setHeat(1, now + 0.3, Math.max(0.1, secondsToBoil - 0.3));
+      // Settle to the right heat for the time left, then rise to a boil exactly at the end.
+      const settle = Math.min(0.3, Math.max(0.05, secondsToBoil / 2));
+      s.voice.setHeatPath(now, [
+        { t: now + settle, v: heat },
+        { t: now + Math.max(settle + 0.05, secondsToBoil), v: 1 },
+      ]);
       this.touch();
       this.pump();
       this.ensurePump();

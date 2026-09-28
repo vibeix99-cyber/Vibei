@@ -1,6 +1,6 @@
 /** "Your rhythm": when you brew (hour-of-day chart) and what you brew (tag breakdown). */
 import { useId, useMemo } from 'react';
-import { Icon } from '@/art';
+import { EmptySpot, Icon } from '@/art';
 import type { DayKey } from '@/lib/dates';
 import { hourHistogram, rhythmOf, tagBreakdown, type Chronotype, type TagSlice } from '@/progress/insights';
 import type { SessionRecord } from '@/progress';
@@ -25,10 +25,13 @@ export function RhythmCard({ sessions, fromDay, scopeLabel }: { sessions: Sessio
   if (!rhythm) {
     return (
       <Card as="section" className={s.card} aria-labelledby={headingId}>
-        <h2 id={headingId} className={s.cardTitle}>
+        <p className={s.overline} id={headingId}>
           When you brew
-        </h2>
-        <p className={s.muted}>No brews in {scopeLabel.toLowerCase()} yet.</p>
+        </p>
+        <div className={s.smallEmpty}>
+          <EmptySpot kind="stats" size={96} />
+          <p className={s.muted}>No brews in the {scopeLabel.toLowerCase()} yet. Chai will spot your rhythm as you brew.</p>
+        </div>
       </Card>
     );
   }
@@ -159,7 +162,10 @@ export function TagsCard({ sessions, fromDay, scopeLabel }: { sessions: SessionR
         What you brew
       </p>
       {slices.length === 0 ? (
-        <p className={s.muted}>No brews in {scopeLabel.toLowerCase()} yet.</p>
+        <div className={s.smallEmpty}>
+          <EmptySpot kind="history" size={96} />
+          <p className={s.muted}>No brews in the {scopeLabel.toLowerCase()} yet.</p>
+        </div>
       ) : (
         <>
           {top?.tag && (

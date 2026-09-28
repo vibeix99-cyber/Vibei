@@ -7,7 +7,8 @@ import { useTimer, useRemaining, nextBreakKind } from '@/timer';
 import { formatClock } from '@/lib/format';
 import { useShortcut } from '@/lib/shortcuts';
 import { Button, Card, Chip, ChipGroup, Ring, SegmentedControl, Sheet, NumberStepper, TextField } from '@/ui';
-import { RHYTHM_OPTIONS, TAG_OPTIONS, matchPreset } from './content';
+import { RHYTHM_OPTIONS, matchPreset } from './content';
+import { TAGS } from '@/state/tags';
 import s from './Home.module.css';
 
 export function Composer({ recent }: { recent: string[] }) {
@@ -104,7 +105,7 @@ export function Composer({ recent }: { recent: string[] }) {
           value={tag}
           onChange={setTag}
           className={s.tagGroup}
-          options={TAG_OPTIONS.map((o) => ({ value: o.id, label: o.label, icon: o.icon }))}
+          options={TAGS.map((o) => ({ value: o.id, label: o.label, icon: o.icon, tone: o.tone }))}
         />
         <RhythmPicker />
       </Card>

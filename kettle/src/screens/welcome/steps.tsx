@@ -111,6 +111,7 @@ export function GoalStep({ value, onChange, focusMin }: { value: number | null; 
 
 export function RhythmStep({ value, onChange }: { value: RhythmId | null; onChange: (v: RhythmId) => void }) {
   return (
+    <>
     <RadioCards
       label="Rhythm"
       name="rhythm"
@@ -130,19 +131,24 @@ export function RhythmStep({ value, onChange }: { value: RhythmId | null; onChan
               </span>
             </span>
             <RhythmArt focusMin={r.focusMin} breakMin={r.breakMin} scaleMin={60} className={s.rhythmBar} />
-            <span className={s.rhythmLegend} aria-hidden>
-              <span>
-                <i className={s.dotFocus} /> {r.focusMin} min brew
-              </span>
-              <span>
-                <i className={s.dotBreak} /> {r.breakMin} min tea break
-              </span>
-            </span>
             <span className={s.optSub}>{r.goodFor}</span>
+            <span className="sr-only">
+              {r.focusMin} minute brews, then {r.breakMin} minute tea breaks.
+            </span>
           </span>
         ),
       }))}
     />
+      <p className={s.rhythmLegend} aria-hidden>
+        <span>
+          <i className={s.dotFocus} /> Brew
+        </span>
+        <span>
+          <i className={s.dotBreak} /> Tea break
+        </span>
+        <span>Bars share one 60‑minute scale.</span>
+      </p>
+    </>
   );
 }
 

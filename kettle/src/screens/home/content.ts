@@ -4,7 +4,7 @@
  */
 import type { IconName } from '@/art';
 import { AMBIENTS } from '@/audio';
-import { DAILY_GOALS, RHYTHMS, type AmbientKind, type RhythmId, type TagId } from '@/state/settings';
+import { DAILY_GOALS, RHYTHMS, type AmbientKind, type RhythmId } from '@/state/settings';
 
 export type GoalArt = 'sip' | 'cup' | 'pot' | 'kettle';
 
@@ -75,22 +75,6 @@ export function matchPreset(v: { focusMin: number; shortBreakMin: number; longBr
   }
   return null;
 }
-
-export interface TagOption {
-  id: TagId;
-  label: string;
-  icon: IconName;
-}
-
-export const TAG_OPTIONS: TagOption[] = [
-  { id: 'work', label: 'Work', icon: 'target' },
-  { id: 'study', label: 'Study', icon: 'edit' },
-  { id: 'read', label: 'Read', icon: 'info' },
-  { id: 'create', label: 'Create', icon: 'sparkle' },
-  { id: 'life', label: 'Life', icon: 'home' },
-];
-
-export const TAG_LABEL: Record<TagId, string> = Object.fromEntries(TAG_OPTIONS.map((t) => [t.id, t.label])) as Record<TagId, string>;
 
 export interface AmbientOption {
   id: AmbientKind;

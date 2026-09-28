@@ -184,6 +184,10 @@
   display: flex;
   width: 100%;
 }
+.iconOnly {
+  min-width: var(--tap); /* the hit box is ≥ 44 × 44 even when the face is 40 */
+  justify-content: center;
+}
 .iconOnly .face {
   padding: 0;
   width: var(--h);

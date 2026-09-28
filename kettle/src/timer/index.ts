@@ -11,7 +11,8 @@
  * Notifications: notificationStatus, requestNotificationPermission,
  *                showTimerNotification, notificationsSupported
  * Accessibility: <TimerAnnouncer/> (polite live region), announce()
- * Multi-tab:     registerTabSync(store) to mirror another persisted store across tabs
+ * Multi-tab:     registerTabSync(store) to mirror another persisted store across tabs;
+ *                isLeaderTab / onLeaderTabChange (e.g. play ambience in one tab only)
  */
 export * from './types';
 export {
@@ -33,6 +34,8 @@ export {
   useProgressFrame,
   useSmoothProgress,
   timerDiagnostics,
+  isLeaderTab,
+  onLeaderTabChange,
   type RemainingView,
   type TimerDiagnostics,
 } from './ticker';

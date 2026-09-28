@@ -99,26 +99,8 @@
   align-items: center;
   gap: var(--space-3);
 }
-.levelBadge {
+.levelArt {
   flex: none;
-  width: 60px;
-  height: 60px;
-  border-radius: 20px;
-  display: grid;
-  place-items: center;
-  background: var(--honey);
-  box-shadow:
-    inset 0 -5px 0 var(--honey-edge),
-    inset 0 3px 0 var(--honey-hi);
-  transform: rotate(-4deg);
-}
-.levelNum {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.75rem;
-  color: var(--honey-on);
-  transform: rotate(4deg);
-  margin-top: -3px;
 }
 .levelText {
   display: grid;
@@ -449,19 +431,9 @@
   align-items: center;
   gap: var(--space-3);
 }
-.streakMug {
+.streakMugArt {
   flex: none;
-  width: 64px;
-  height: 64px;
-  border-radius: 22px;
-  display: grid;
-  place-items: center;
-  background: var(--surface-3);
-  color: var(--ink-3);
-}
-.streakMug[data-alive] {
-  background: var(--persimmon-soft);
-  color: var(--persimmon);
+  margin: -6px -4px -8px -6px;
 }
 .streakText {
   display: grid;
@@ -494,18 +466,16 @@
   flex: none;
 }
 .cozySlot {
-  width: 36px;
-  height: 36px;
-  border-radius: 12px;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
   display: grid;
   place-items: center;
-  color: var(--sky-ink);
   background: transparent;
-  border: 2px dashed var(--sky-soft-edge);
-  opacity: 0.75;
+  box-shadow: inset 0 0 0 2px var(--sky-soft-edge);
+  opacity: 0.8;
 }
 .cozySlot[data-full] {
-  border: 0;
   background: var(--surface);
   box-shadow: inset 0 -3px 0 var(--sky-soft-edge);
   opacity: 1;
@@ -672,6 +642,14 @@
 }
 .calKey[data-state='today'] {
   box-shadow: inset 0 0 0 2px var(--ink-2);
+}
+
+.smallEmpty {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  text-align: center;
+  padding: var(--space-2) 0;
 }
 
 /* ---------- Rhythm & tags ---------- */
@@ -885,8 +863,11 @@
 .badgeBtn:hover {
   background: var(--surface-2);
 }
-.badgeBtn:active .medal {
+.badgeBtn:active .medalArt {
   transform: translateY(2px) scale(0.98);
+}
+.medalArt {
+  transition: transform var(--dur-fast) var(--ease-out);
 }
 .badgeName {
   font-weight: 900;
@@ -899,68 +880,6 @@
   font-size: var(--text-caption);
   font-weight: 700;
   color: var(--ink-2);
-}
-.medal {
-  position: relative;
-  display: grid;
-  place-items: center;
-  flex: none;
-  border-radius: 50%;
-  background: var(--tone);
-  box-shadow:
-    inset 0 -5px 0 var(--tone-edge),
-    inset 0 4px 0 var(--tone-hi);
-  transition: transform var(--dur-fast) var(--ease-out);
-}
-.medalFace {
-  width: 74%;
-  height: 74%;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: var(--tone-soft);
-  color: var(--tone-ink);
-  box-shadow: inset 0 3px 0 var(--tone-soft-edge);
-}
-.medalTier {
-  position: absolute;
-  bottom: -6px;
-  left: 50%;
-  transform: translateX(-50%);
-  min-width: 30px;
-  padding: 1px 8px 2px;
-  border-radius: var(--r-pill);
-  background: var(--tone-strong);
-  color: var(--tone-on);
-  font-family: var(--font-body);
-  font-weight: 900;
-  font-size: 0.8125rem;
-  line-height: 1.3;
-  letter-spacing: 0.06em;
-  box-shadow: 0 0 0 3px var(--surface);
-  text-align: center;
-}
-.medalLocked {
-  background: var(--surface-3);
-  box-shadow: inset 0 -5px 0 var(--line-strong);
-}
-.medalLocked .medalFace {
-  background: var(--surface-2);
-  color: var(--ink-disabled);
-  box-shadow: none;
-}
-.medalLock {
-  position: absolute;
-  bottom: -4px;
-  right: 2px;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: var(--surface);
-  color: var(--ink-2);
-  box-shadow: inset 0 0 0 2px var(--line-strong);
 }
 .badgeDetail {
   display: grid;
@@ -1002,7 +921,7 @@
   color: var(--ink-2);
 }
 .tierRow[data-reached] {
-  background: var(--tone-soft);
+  background: color-mix(in srgb, var(--tier-base) 22%, var(--surface));
   color: var(--ink);
 }
 .tierBadge {
@@ -1018,8 +937,8 @@
   color: var(--ink-2);
 }
 .tierRow[data-reached] .tierBadge {
-  background: var(--tone-strong);
-  color: var(--tone-on);
+  background: var(--tier-ink);
+  color: #fff8ec;
 }
 .tierText {
   flex: 1;
@@ -1032,7 +951,7 @@
   font-weight: 800;
 }
 .tierRow[data-reached] .tierWhen {
-  color: var(--tone-ink);
+  color: var(--ink);
 }
 
 /* ---------- History ---------- */
@@ -1201,12 +1120,13 @@
     display: inline;
   }
   .cozyRow {
+    flex-direction: column;
     align-items: flex-start;
+    gap: var(--space-2);
   }
-  .streakMug {
-    width: 52px;
-    height: 52px;
-    border-radius: 18px;
+  .streakMugArt {
+    width: 60px;
+    height: 60px;
   }
   .partList {
     grid-template-columns: repeat(2, minmax(0, 1fr));

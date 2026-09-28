@@ -131,7 +131,7 @@ export default function NookScene(props: NookSceneProps) {
     >
       {(!ready || showStatic) && (
         <div aria-hidden style={{ position: 'absolute', inset: 0 }}>
-          <NookStatic time={time} weather={weather} mode={mode} progress={progress} items={items} />
+          <NookStatic weather={weather} mode={mode} progress={progress} items={items} />
         </div>
       )}
       {tier !== 'off' && (

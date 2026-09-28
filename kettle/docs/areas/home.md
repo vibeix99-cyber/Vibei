@@ -55,6 +55,15 @@ Dev port 5188. Screenshots in `.shots/home/`.
   - Reset: Chai concerned as the sheet hero, "It can't be undone", an "Export a backup first" link, and stacked "Keep my data" (primary) and "Reset everything" (danger) buttons.
 - Custom rhythm sheet on Home: kit steppers plus a sticky footer "Use 25/5 min" that snaps back to a preset if the numbers match one.
 
+## Iteration 4
+
+- Goal met: the ring keeps the minutes (in matcha) and gets a small check badge. The earlier full-ring bullseye was too heavy. Chai uses the proud pose with "You did it. Today's pot is brewed."
+- CTA caption: "Then a 5 min tea break." or "Then a long tea break, 15 min. You've earned it.", from `nextBreakKind(completedInCycle + 1)`.
+- Recent intentions (shown on focus) are kit `Chip size="sm"` with a refresh icon, and `mousedown` doesn't steal focus.
+- Rhythm step: `RhythmSpot` illustrations on each card, plus a single legend line under the options ("Brew · Tea break · Bars share one 60‑minute scale") instead of repeating it per card. There's a screen-reader sentence per option.
+- The status pills sit in the greeting row from 720 px (tablet and landscape), not 900 px.
+- Removed unused CSS. `vite build` passes and the whole-project `tsc` is clean.
+- Critic smoke note (quest reward contrast): the faded reward on completed recipes was the only failure (2.5:1). Fixed in iteration 2 with full-strength `--ink-2`. Re-verified with axe across seeds, themes and sizes (below).
+
 ## Requests for other areas
 
-- design-system: `TextField` input needs `min-width: 0` inside `.box` (it overflows narrow containers; worked around in Settings). Button primary white-on-persimmon text is 2.9:1 (below AA for 17px).

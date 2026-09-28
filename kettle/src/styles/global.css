@@ -19,8 +19,14 @@ body,
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  background: var(--bg);
+  background-color: var(--bg);
   scrollbar-gutter: stable;
+  transition: background-color var(--dur-base) var(--ease-out);
+}
+/* While a sheet/dialog is open the page can't scroll; the reserved scrollbar gutter
+   takes the scrim tint so no undimmed strip shows at the edge. */
+html.kettle-modal-open {
+  background-color: var(--scrim-solid);
 }
 
 body {
