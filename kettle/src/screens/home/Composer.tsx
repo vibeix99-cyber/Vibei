@@ -112,7 +112,7 @@ export function Composer({ recent }: { recent: string[] }) {
       </Card>
     </section>
     {/* Docked: on short or landscape screens it sticks above the tab bar so the main action is never below the fold. */}
-    <div className={s.ctaDock}>
+    <div className={s.ctaDock} data-toast-above="">
       <Button size="lg" block sfx="start" className={s.cta} onClick={start} icon={<Icon name="play" size={22} />}>
         Put the kettle on · {focusMin} min
       </Button>

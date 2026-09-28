@@ -86,3 +86,14 @@
     bottom: calc(20px + env(safe-area-inset-bottom));
   }
 }
+
+/* A screen with a docked primary action (e.g. Today's "Put the kettle on") marks it with
+   data-toast-above; toasts then float above it instead of covering it. */
+:global(body:has([data-toast-above])) .region {
+  bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 118px);
+}
+@media (min-width: 900px), (orientation: landscape) and (max-height: 520px) {
+  :global(body:has([data-toast-above])) .region {
+    bottom: calc(env(safe-area-inset-bottom) + 118px);
+  }
+}
