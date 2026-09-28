@@ -23,7 +23,7 @@ ask for it (or pass `className` for layout only).
 | `toast()` / `<Toaster/>` | `toast(msg, {tone, icon, duration, action, id})`, `toast.success`, `toast.warning`, `toast.dismiss`. `emit('ui:toast', …)` also works. Toaster is mounted in App |
 | `SpeechBubble` | `tail` left/top/bottom/right/none, `tailAt`, `tone`, `size`, `arrive`, `live` |
 | `Stat` | `icon`, `value` (node — use `<Counter/>`), `label`, `hint`, `tone`, `variant` tile/bare, `size` |
-| `ListGroup` / `ListRow` | Group: `title` (overline), `footer`. Row: `icon`, `iconTone`, `label`, `description`, `value`, `onClick` (→ button + chevron), `toggle={{checked,onChange}}`, `trailing`, `stacked`, `danger`, `disabled` |
+| `ListGroup` / `ListRow` | Group: `title` (overline), `headingLevel` 2/3, `footer`. Row: `icon`, `iconTone`, `label`, `description`, `value`, `onClick` (→ button + chevron), `toggle={{checked,onChange}}`, `trailing`, `stacked`, `danger`, `disabled` |
 | `TextField` | `label`, `hideLabel`, `value`, `onChange(string)`, `icon`, `clearable`, `showCount`+`maxLength`, `hint`, `error`, `size` |
 | `NumberStepper` | `value`, `onChange`, `min/max/step`, `label`, `unit`, `format`, `size` (spinbutton + hold-to-repeat) |
 | `Digits` | `value` string/number, `roll` false/'up'/'down', `label` (SR text), `font`. Fixed-width digit cells — use for every timer |
@@ -99,6 +99,10 @@ or settings) — use `:global(html[data-motion='reduce'])` in CSS modules.
 - Undimmed scrollbar-gutter strip under modals fixed (`--scrim-solid` on `<html>`).
 - Toaster: live region is a `div[role=status]` wrapping the list (axe aria-allowed-role).
 - Gallery uses shared `TAGS`. `data-layout="wide"` opt-in for Stats.
+- `ShellOverlays` (mounted once in App, every route): Toaster + keyboard-shortcuts sheet
+  (from `SHORTCUTS`, toggled by `?` via `useShortcutHelp`) + PWA update prompt (actionable
+  "Update" toast from `usePwaUpdate`, held back while a brew is running or paused; tapping it
+  away dismisses for the session). Toasts gained `onDismiss` (user/timeout only).
 - `Button variant="dangerSoft"` (quiet destructive) — gallery dialog uses primary "Keep my
   data" + dangerSoft "Reset everything".
 - TextField input is now compressible (it forced Settings' name card wider than the card).
@@ -106,6 +110,9 @@ or settings) — use `:global(html[data-motion='reduce'])` in CSS modules.
   compact density, then wraps to two rows (4+ options) only if still needed.
 
 ## Open issues / requests
+- Timer/PWA area: `registerPwa` also emits a plain "fresh brew … ready" `ui:toast`; the Toaster
+  skips it locally because `ShellOverlays` shows the actionable, session-aware prompt. Please
+  drop that emit so the workaround can go.
 - Home area: at 320px the status bar (streak · leaves · level+bar) is 20px wider than the
   column (`.statusBar`/`.stat` min-content), causing horizontal scroll. Let `.stat` shrink
   (`min-width: 0`) or drop the level bar below 360px.

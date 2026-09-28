@@ -44,7 +44,7 @@ function ShortcutHelpSheet() {
     >
       <div className={s.groups}>
         {groupShortcuts(SHORTCUTS).map(([where, items]) => (
-          <ListGroup key={where} title={where}>
+          <ListGroup key={where} title={where} headingLevel={3}>
             {items.map((sc) => (
               <ListRow
                 key={sc.id}

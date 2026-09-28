@@ -319,6 +319,19 @@ const fairyLights: Builder = (kit) => {
     21,
   );
   root.add(glows.mesh);
+  // warm wash on the walls under the swags
+  const washMat = kit.basic(C.honey, { map: kit.tex.soft(), additive: true, opacity: 0.3, unique: true, depthWrite: false });
+  const wash = (w: number, p: [number, number, number], ry: number) => {
+    const m = new Mesh(kit.unitPlane(), washMat);
+    m.position.set(...p);
+    m.rotation.y = ry;
+    m.scale.set(w, 1.3, 1);
+    m.renderOrder = 2;
+    m.userData.dyn = true;
+    root.add(m);
+  };
+  wash(xMax - xMin + 0.8, [(xMin + xMax) / 2, 3.55, zBack + 0.015], 0);
+  wash(zFront - zBack + 0.6, [xMin + 0.015, 3.55, (zBack + zFront) / 2], Math.PI / 2);
   const proxy = kit.proxy(xMax - xMin, 0.4, 0.3, { p: [(xMin + xMax) / 2, 3.72, zBack + 0.15] });
   const proxy2 = kit.proxy(0.3, 0.4, zFront - zBack, { p: [xMin + 0.15, 3.72, (zBack + zFront) / 2] });
   proxy2.userData.itemId = 'fairyLights';
@@ -330,6 +343,7 @@ const fairyLights: Builder = (kit) => {
       const on = 0.25 + 0.75 * lamp;
       glows.u.uTime.value = t;
       glows.u.uOn.value = on;
+      washMat.opacity = 0.32 * lamp * (0.94 + 0.06 * Math.sin(t * 0.9));
       for (let i = 0; i < mats.length; i++) mats[i].emissiveIntensity = on * (1.0 + 0.25 * Math.sin(t * 1.3 + i * 1.9));
     },
   });

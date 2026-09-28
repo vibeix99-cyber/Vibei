@@ -75,9 +75,6 @@ export function Toaster() {
   useEffect(
     () =>
       on('ui:toast', ({ message, tone }) => {
-        // The PWA "update ready" notice is owned by ShellOverlays' actionable prompt
-        // (it waits until no brew is running); skip the plain duplicate from the bus.
-        if (/fresh brew of Kettle is ready/i.test(message)) return;
         toast(message, { tone });
       }),
     [],

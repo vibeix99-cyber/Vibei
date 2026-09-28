@@ -3,7 +3,7 @@
  *
  *   registerPwa()     called from boot; no-op in dev and where SWs aren't available
  *   usePwaUpdate()    { needRefresh, offlineReady, update(), dismiss() } for an
- *                     "Update" button (settings/shell); a toast is emitted too
+ *                     "Update" button (ShellOverlays shows the actionable prompt)
  *
  * Updates never reload on their own: a running brew survives a reload anyway,
  * but ambience and animations would restart, so the user decides.
@@ -63,8 +63,8 @@ export function registerPwa(): void {
       updateSW = registerSW({
         immediate: true,
         onNeedRefresh() {
+          // The actionable update prompt lives in ShellOverlays (usePwaUpdate); no plain toast here.
           patch({ needRefresh: true });
-          emit('ui:toast', { message: 'A fresh brew of Kettle is ready. Reload to update.', tone: 'neutral' });
         },
         onOfflineReady() {
           patch({ offlineReady: true });

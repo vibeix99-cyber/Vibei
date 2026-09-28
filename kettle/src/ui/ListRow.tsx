@@ -131,20 +131,23 @@ export function ListRow({
 
 export interface ListGroupProps {
   title?: ReactNode;
+  /** Heading level of the title. Default 2 (use 3 inside a sheet/dialog). */
+  headingLevel?: 2 | 3;
   /** Small print under the group. */
   footer?: ReactNode;
   children: ReactNode;
   className?: string;
 }
 
-export function ListGroup({ title, footer, children, className }: ListGroupProps) {
+export function ListGroup({ title, headingLevel = 2, footer, children, className }: ListGroupProps) {
   const id = useId();
+  const H = headingLevel === 3 ? 'h3' : 'h2';
   return (
     <section className={cx(s.group, className)} aria-labelledby={title ? id : undefined}>
       {title && (
-        <h2 id={id} className={s.groupTitle}>
+        <H id={id} className={s.groupTitle}>
           {title}
-        </h2>
+        </H>
       )}
       <div className={s.card}>{children}</div>
       {footer && <p className={s.footer}>{footer}</p>}

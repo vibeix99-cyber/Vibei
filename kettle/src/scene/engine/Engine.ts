@@ -416,6 +416,8 @@ export class NookEngine {
     this.kit.dispose();
     this.renderer.renderLists.dispose();
     this.renderer.dispose();
+    // Free the GL context now rather than at GC (browsers cap live contexts).
+    this.renderer.forceContextLoss();
   }
 
   // ------------------------------------------------------------ input

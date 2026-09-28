@@ -5,6 +5,7 @@
 import { useMemo } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Icon, StreakMug, TeaCozy } from '@/art';
+import { WeekStrip } from '@/ui';
 import { audio } from '@/audio';
 import { spring } from '@/lib/motion';
 import { parseDayKey } from '@/lib/dates';
@@ -13,6 +14,9 @@ import { LeafConfetti } from '../LeafConfetti';
 import { useBeat, useCues } from '../choreo';
 import type { StepProps } from './types';
 import s from '../Done.module.css';
+
+/** Seconds after the strip arrives before today's dot lights. */
+const LIGHT_DELAY = 0.55;
 
 export function StreakStep({ report: r, reduced, active, headingRef, headingId }: StepProps) {
   const st = r.streak;
@@ -28,15 +32,14 @@ export function StreakStep({ report: r, reduced, active, headingRef, headingId }
     }
     return st.week ?? [];
   }, [sessions, r.record.day, st.week]);
-  const todayIdx = Math.max(0, week.findIndex((d) => d.isToday));
-  // beats: 1 mug · 2 number rolls · 3 week strip · 4 today warms
-  const dayGap = 70;
-  const todayAt = 1250 + todayIdx * dayGap + 250;
-  const beat = useBeat(active, [0, 650, 1150, todayAt]);
+  // beats: 1 mug · 2 number rolls · 3 week strip arrives · 4 today lights up (kit WeekStrip `celebrate`)
+  const stripAt = 1150;
+  const todayAt = stripAt + LIGHT_DELAY * 1000;
+  const beat = useBeat(active, [0, 650, stripAt, todayAt]);
 
   useCues(active, [
     [650, () => audio.play('streak')],
-    ...week.map((_, i): [number, () => void] => [1150 + i * dayGap, () => i !== todayIdx && audio.play('streakTick', { step: i, volume: 0.45, haptic: false })]),
+    [stripAt + 60, () => audio.play('streakTick', { step: 2, volume: 0.45, haptic: false })],
     [todayAt, () => audio.play('pop', { step: 8 })],
     ...(st.milestone ? ([[todayAt + 350, () => audio.play('levelUp', { volume: 0.6 })]] as [number, () => void][]) : []),
   ]);
@@ -88,37 +91,14 @@ export function StreakStep({ report: r, reduced, active, headingRef, headingId }
       </div>
 
       {week.length > 0 && (
-        <ol className={s.week} aria-label="The last seven days">
-          {week.map((d, i) => {
-            const isToday = i === todayIdx;
-            const state = isToday ? (beat >= 4 ? 'done' : 'today') : d.state;
-            return (
-              <motion.li
-                key={d.day}
-                className={s.weekDay}
-                initial={reduced ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.7 }}
-                animate={beat >= 3 ? { opacity: 1, y: 0, scale: 1 } : undefined}
-                transition={reduced ? { duration: 0.2 } : { ...spring.joyful, delay: (i * dayGap) / 1000 }}
-              >
-                <span className={s.weekLabel} data-today={isToday || undefined}>
-                  {d.label}
-                </span>
-                <motion.span
-                  className={s.weekDot}
-                  data-state={state}
-                  animate={isToday && beat >= 4 && !reduced ? { scale: [1, 1.28, 1] } : undefined}
-                  transition={{ duration: 0.5 }}
-                >
-                  {state === 'done' && <Icon name="check" size={16} />}
-                  {state === 'cozy' && <Icon name="cozy" size={16} />}
-                </motion.span>
-                <span className="sr-only">
-                  {d.state === 'done' || isToday ? 'warm' : d.state === 'cozy' ? 'kept warm by a Tea Cozy' : d.state === 'future' ? 'coming up' : 'missed'}
-                </span>
-              </motion.li>
-            );
-          })}
-        </ol>
+        <motion.div
+          className={s.weekWrap}
+          initial={reduced ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.96 }}
+          animate={beat >= 3 ? { opacity: 1, y: 0, scale: 1 } : undefined}
+          transition={reduced ? { duration: 0.2 } : spring.cozy}
+        >
+          {beat >= 3 && <WeekStrip days={week} celebrate delay={LIGHT_DELAY} size="lg" label="The last seven days" />}
+        </motion.div>
       )}
 
       {(st.cozyEarned || st.milestone) && (

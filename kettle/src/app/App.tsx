@@ -8,9 +8,9 @@ import { useSettings } from '@/state/settings';
 import { useTimer } from '@/timer';
 import { useReducedMotion } from '@/lib/useReducedMotion';
 import { pageTransition } from '@/lib/motion';
-import { Toaster } from '@/ui';
 import { ErrorBoundary } from './ErrorBoundary';
 import { Shell } from './Shell';
+import { ShellOverlays } from './ShellOverlays';
 import { Rail } from './Rail';
 import { navigate, useRoute, TAB_ROUTES, type Route } from './router';
 import { useApplyTheme } from './theme';
@@ -73,14 +73,14 @@ export function App() {
     return (
       <>
         <Shell rail={<Rail />}>{content}</Shell>
-        <Toaster />
+        <ShellOverlays />
       </>
     );
   }
   return (
     <>
       {content}
-      <Toaster />
+      <ShellOverlays />
     </>
   );
 }

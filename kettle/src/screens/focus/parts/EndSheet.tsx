@@ -32,7 +32,7 @@ export function EndSheet({ open, focusedMs, onKeep, onEnd }: EndSheetProps) {
           <Button ref={keepRef} block size="lg" onClick={onKeep}>
             Keep brewing
           </Button>
-          <Button block variant="ghost" sfx="cancel" onClick={onEnd}>
+          <Button block variant="dangerSoft" sfx="cancel" onClick={onEnd}>
             End session
           </Button>
         </div>

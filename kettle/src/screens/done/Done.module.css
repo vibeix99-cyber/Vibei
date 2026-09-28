@@ -343,60 +343,11 @@
   color: var(--persimmon-ink);
   display: block;
 }
-.week {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 4px;
+.weekWrap {
   width: 100%;
-  max-width: 420px;
-  list-style: none;
-  margin: 4px 0 0;
-  padding: 14px 10px;
-  border-radius: var(--r-lg);
-  background: var(--surface);
-  border: 2px solid var(--line);
-  box-shadow: 0 var(--edge) 0 var(--line-strong);
-}
-.weekDay {
-  display: grid;
-  justify-items: center;
-  gap: 6px;
-}
-.weekLabel {
-  font-weight: 800;
-  font-size: 0.8125rem;
-  color: var(--ink-3);
-}
-.weekLabel[data-today] {
-  color: var(--persimmon-ink);
-}
-.weekDot {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: var(--surface-3);
-  color: #fff;
-  transition:
-    background-color 300ms ease,
-    box-shadow 300ms ease;
-}
-.weekDot[data-state='done'] {
-  background: var(--persimmon);
-  box-shadow: inset 0 -3px 0 var(--persimmon-edge);
-}
-.weekDot[data-state='cozy'] {
-  background: var(--sky);
-  box-shadow: inset 0 -3px 0 var(--sky-edge);
-}
-.weekDot[data-state='today'] {
-  background: var(--surface);
-  box-shadow: inset 0 0 0 3px var(--persimmon);
-}
-.weekDot[data-state='future'] {
-  background: transparent;
-  box-shadow: inset 0 0 0 2px var(--line-strong);
+  max-width: 440px;
+  min-height: 88px;
+  margin-top: 4px;
 }
 .note {
   display: flex;
@@ -814,14 +765,10 @@
     font-size: 0.8125rem;
     padding: 2px 8px;
   }
-  .week,
+  .weekWrap,
   .quests,
   .itemCard {
     margin-top: 0;
-  }
-  .weekDot {
-    width: 30px;
-    height: 30px;
   }
   .quest {
     padding: 6px 0;
