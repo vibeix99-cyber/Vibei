@@ -329,7 +329,7 @@ export default function FocusScreen() {
                         </motion.span>
                       ) : (
                         <motion.span key="clock" className={s.clock} exit={{ opacity: 0, scale: 0.8 }}>
-                          <Digits value={clockText} roll={reduced ? false : 'down'} label={null} className={clockText.length > 5 ? s.digitsLong : s.digits} />
+                          <Digits value={clockText} roll={false} label={null} className={clockText.length > 5 ? s.digitsLong : s.digits} />
                         </motion.span>
                       )}
                     </AnimatePresence>

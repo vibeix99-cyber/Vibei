@@ -24,7 +24,7 @@
 .rolling {
   display: inline-grid;
   /* clip vertically to the cell (clip-path doesn't disturb baseline alignment like overflow would) */
-  clip-path: inset(-0.02em -0.3em);
+  clip-path: inset(0 -0.3em);
 }
 .glyph {
   grid-area: 1 / 1;
@@ -33,9 +33,13 @@
 }
 .in,
 .out {
-  animation-duration: 170ms;
+  animation-duration: 160ms;
   animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
   animation-fill-mode: forwards;
+}
+/* The old digit gets out of the way fast, so a still frame never shows two glyphs. */
+.out {
+  animation-duration: 80ms;
 }
 /* Base styles equal the END state: if an animation is pending (Chrome paints composited
    layers at their base style for a frame) or the page is stalled, the cell shows exactly one
@@ -55,21 +59,22 @@
 .rolling[data-dir='down'] .out {
   animation-name: out-down;
 }
+/* A short nudge + fade (not a full-height odometer slide): crisp in any still frame. */
 @keyframes in-up {
-  from { transform: translateY(100%); }
-  to { transform: none; }
+  from { transform: translateY(18%); opacity: 0; }
+  to { transform: none; opacity: 1; }
 }
 @keyframes out-up {
-  from { transform: none; visibility: visible; }
-  to { transform: translateY(-100%); visibility: hidden; }
+  from { transform: none; opacity: 1; visibility: visible; }
+  to { transform: translateY(-12%); opacity: 0; visibility: hidden; }
 }
 @keyframes in-down {
-  from { transform: translateY(-100%); }
-  to { transform: none; }
+  from { transform: translateY(-18%); opacity: 0; }
+  to { transform: none; opacity: 1; }
 }
 @keyframes out-down {
-  from { transform: none; visibility: visible; }
-  to { transform: translateY(100%); visibility: hidden; }
+  from { transform: none; opacity: 1; visibility: visible; }
+  to { transform: translateY(12%); opacity: 0; visibility: hidden; }
 }
 /* Reduced motion: a quick cross-fade instead of a roll. */
 @keyframes fade-in {

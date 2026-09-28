@@ -55,7 +55,7 @@ export function Digits({ value, roll = false, label, font = 'display', className
 }
 
 /**
- * One odometer cell. The roll is a 170ms CSS transform animation (compositor-driven, so a busy
+ * One odometer cell. The change is a 160ms nudge-and-fade CSS animation (compositor-driven, so a busy
  * main thread can't strand a glyph mid-translate; `fill-mode: both` guarantees the end state).
  * The cell clips its own glyphs, so any in-between frame reads as a crisp mechanical counter.
  */
