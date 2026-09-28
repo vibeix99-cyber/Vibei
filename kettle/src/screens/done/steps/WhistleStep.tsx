@@ -52,7 +52,8 @@ export function WhistleStep({ report: r, reduced, active, headingRef, headingId 
         {active && <LeafConfetti burstKey={r.id} reduced={reduced} delay={0.12} />}
         <motion.div
           className={s.heroArt}
-          initial={reduced ? { opacity: 0 } : { opacity: 0, y: 36, scale: 0.72 }}
+          // Chai carries over from the whistle ring: visible from the first frame, then springs up.
+          initial={reduced ? { opacity: 1 } : { opacity: 1, y: 28, scale: 0.8 }}
           animate={active ? { opacity: 1, y: 0, scale: 1 } : undefined}
           transition={reduced ? { duration: 0.2 } : spring.joyful}
         >
