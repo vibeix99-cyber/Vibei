@@ -209,10 +209,12 @@
   cursor: not-allowed;
 }
 .btn:disabled .face {
+  /* Clearly a button, just inert: visible outline (~3.5:1) and a readable label. */
   --face: var(--surface-3);
   --edge-c: var(--line-strong);
-  --ring: var(--line-strong);
-  --text: var(--ink-disabled);
+  --ring-w: 2px;
+  --ring: color-mix(in srgb, var(--ink-3) 70%, var(--surface-3));
+  --text: color-mix(in srgb, var(--ink-3) 85%, var(--surface-3));
   background-image: none;
   filter: none;
 }
