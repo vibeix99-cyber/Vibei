@@ -71,7 +71,8 @@ test('precaches the shell, fonts, 3D chunk and tick worker; boots and times a br
   await context.setOffline(true);
   await page.reload();
   await page.waitForFunction(() => !!(window as any).__kettle?.timerInfo, null, { timeout: 20_000 });
-  expect((await page.evaluate(() => document.body.innerText)).trim().length).toBeGreaterThan(0);
+  // The lazily-loaded screen renders from the cache too.
+  await expect.poll(async () => (await page.evaluate(() => document.body.innerText)).trim().length, { timeout: 15_000 }).toBeGreaterThan(0);
   expect(await page.evaluate(() => (window as any).__kettle.timerInfo().scheduler)).toBe('worker');
   await page.evaluate(() => (window as any).__kettle.settings.getState().set({ autoStartBreaks: false, scene: 'off' }));
   await page.evaluate(() => (window as any).__kettle.timer.getState().startFocus({ minutes: 3 / 60 }));

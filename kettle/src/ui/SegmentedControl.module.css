@@ -1,5 +1,7 @@
 .control {
+  --cols: 3;
   display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
   gap: 4px;
   padding: 4px;
   border-radius: var(--r-lg);
@@ -87,7 +89,6 @@
 }
 .label {
   overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
 }
 .lg .label {
@@ -101,6 +102,26 @@
   color: var(--ink-2);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+  overflow: hidden;
+}
+/* Self-fitting densities (set by the component when labels would overflow). */
+.control[data-fit='1'] .inner,
+.control[data-fit='2'] .inner {
+  padding: 6px 4px;
+  gap: 4px;
+}
+.control[data-fit='1'] .label {
+  font-size: 0.8125rem;
+}
+.control[data-fit='1'].lg .label {
+  font-size: 0.9375rem;
+}
+.control[data-fit='1'] .icon,
+.control[data-fit='2'] .icon {
+  display: none;
+}
+.control[data-fit='2'] .label {
+  text-overflow: ellipsis;
 }
 .option:active:not(:disabled) .inner {
   transform: translateY(1px);

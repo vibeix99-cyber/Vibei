@@ -15,6 +15,7 @@ import {
   Matrix4,
   Mesh,
   MeshBasicMaterial,
+  MeshLambertMaterial,
   MeshStandardMaterial,
   NormalBlending,
   AdditiveBlending,
@@ -308,7 +309,42 @@ export class Kit {
     });
   }
 
+  /**
+   * Low tier: swap shared PBR materials for Lambert (much cheaper per pixel).
+   * Animated (unique) materials stay as they are so their owners keep working.
+   */
+  liteify(root: Object3D): void {
+    const swap = (m: Material): Material => {
+      const std = m as MeshStandardMaterial;
+      if (!std.isMeshStandardMaterial || this.uniques.has(std)) return m;
+      let lite = this.lite.get(std);
+      if (!lite) {
+        lite = new MeshLambertMaterial({
+          color: std.color,
+          map: std.map,
+          vertexColors: std.vertexColors,
+          emissive: std.emissive,
+          emissiveIntensity: std.emissiveIntensity,
+          side: std.side,
+          transparent: std.transparent,
+          opacity: std.opacity,
+          depthWrite: std.depthWrite,
+        });
+        this.lite.set(std, lite);
+      }
+      return lite;
+    };
+    root.traverse((o) => {
+      const mesh = o as Mesh;
+      if (!mesh.isMesh) return;
+      mesh.material = Array.isArray(mesh.material) ? mesh.material.map(swap) : swap(mesh.material);
+    });
+  }
+  private lite = new Map<Material, MeshLambertMaterial>();
+
   dispose(): void {
+    this.lite.forEach((m) => m.dispose());
+    this.lite.clear();
     this.geos.forEach((g) => g.dispose());
     this.geos.clear();
     this.mats.forEach((m) => m.dispose());

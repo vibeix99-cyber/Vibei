@@ -99,8 +99,16 @@ or settings) — use `:global(html[data-motion='reduce'])` in CSS modules.
 - Undimmed scrollbar-gutter strip under modals fixed (`--scrim-solid` on `<html>`).
 - Toaster: live region is a `div[role=status]` wrapping the list (axe aria-allowed-role).
 - Gallery uses shared `TAGS`. `data-layout="wide"` opt-in for Stats.
+- `Button variant="dangerSoft"` (quiet destructive) — gallery dialog uses primary "Keep my
+  data" + dangerSoft "Reset everything".
+- TextField input is now compressible (it forced Settings' name card wider than the card).
+- SegmentedControl never truncates mid-word: it measures its labels and steps down to a
+  compact density, then wraps to two rows (4+ options) only if still needed.
 
 ## Open issues / requests
+- Home area: at 320px the status bar (streak · leaves · level+bar) is 20px wider than the
+  column (`.statusBar`/`.stat` min-content), causing horizontal scroll. Let `.stat` shrink
+  (`min-width: 0`) or drop the level bar below 360px.
 - Progress area: add `data-layout="wide"` on the Stats root if you want the wide column.
 - Core-loop: `WeekStrip celebrate` is ready for the streak-extended card; `Counter onTick`
   for count-up ticks; `Digits roll="down"` for the timer.

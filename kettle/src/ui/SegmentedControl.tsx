@@ -2,7 +2,7 @@
  * Segmented control with radiogroup semantics (arrow keys, roving tabindex).
  * A raised thumb glides between options on a sunken track. OWNER: design-system area.
  */
-import { useId, useRef, type KeyboardEvent, type ReactNode } from 'react';
+import { useId, useLayoutEffect, useRef, type KeyboardEvent, type ReactNode } from 'react';
 import { motion } from 'motion/react';
 import { audio } from '@/audio';
 import { haptic } from '@/lib/haptics';
@@ -44,7 +44,40 @@ export function SegmentedControl<T extends string>({
   const layoutId = useId();
   const reduced = useReducedMotion();
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
+  const rootRef = useRef<HTMLDivElement>(null);
   const selectedIndex = options.findIndex((o) => o.value === value);
+  const n = options.length;
+  const labelsKey = options.map((o) => (typeof o.label === 'string' ? o.label : o.value)).join('|');
+
+  // Never truncate a word: if labels overflow, step down to a compact density, then wrap
+  // into two rows. Measured on the DOM (no re-render loop), only when the width changes.
+  useLayoutEffect(() => {
+    const el = rootRef.current;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    let lastWidth = -1;
+    const overflow = () =>
+      Array.from(el.querySelectorAll<HTMLElement>('[data-seg-text]')).some((t) => t.scrollWidth > t.clientWidth + 1);
+    const fit = () => {
+      const w = el.clientWidth;
+      if (w === lastWidth) return;
+      lastWidth = w;
+      el.dataset.fit = '0';
+      el.style.setProperty('--cols', String(n));
+      if (!overflow()) return;
+      el.dataset.fit = '1';
+      if (!overflow() || n < 4) return;
+      el.dataset.fit = '2';
+      el.style.setProperty('--cols', String(Math.ceil(n / 2)));
+    };
+    fit();
+    const ro = new ResizeObserver(fit);
+    ro.observe(el);
+    void document.fonts?.ready.then(() => {
+      lastWidth = -1;
+      fit();
+    });
+    return () => ro.disconnect();
+  }, [n, labelsKey]);
 
   const choose = (v: T) => {
     if (v === value) return;
@@ -72,9 +105,10 @@ export function SegmentedControl<T extends string>({
     <div
       role="radiogroup"
       aria-label={label}
+      ref={rootRef}
       className={cx(s.control, s[size], className)}
       data-tone={tone}
-      style={{ gridTemplateColumns: `repeat(${options.length}, minmax(0, 1fr))` }}
+      style={{ ['--cols' as string]: n }}
       onKeyDown={onKeyDown}
     >
       {options.map((o, i) => {
@@ -104,8 +138,14 @@ export function SegmentedControl<T extends string>({
             <span className={s.inner}>
               {o.icon != null && <span className={s.icon}>{renderIcon(o.icon, 20)}</span>}
               <span className={s.text}>
-                <span className={s.label}>{o.label}</span>
-                {o.sublabel != null && <span className={s.sub}>{o.sublabel}</span>}
+                <span className={s.label} data-seg-text="">
+                  {o.label}
+                </span>
+                {o.sublabel != null && (
+                  <span className={s.sub} data-seg-text="">
+                    {o.sublabel}
+                  </span>
+                )}
               </span>
             </span>
           </button>

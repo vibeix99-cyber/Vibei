@@ -45,6 +45,7 @@
 .input {
   flex: 1 1 auto;
   min-width: 0;
+  width: 100%; /* percentage width = compressible: the input never forces its parent wider */
   height: 100%;
   min-height: inherit;
   border: 0;

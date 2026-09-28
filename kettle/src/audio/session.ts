@@ -11,7 +11,7 @@
 import { clock } from '@/lib/clock';
 import { on } from '@/lib/events';
 import { useSettings, type AmbientKind } from '@/state/settings';
-import { useTimer, remainingAt, timerDiagnostics } from '@/timer';
+import { useTimer, remainingAt, isTimerLeader } from '@/timer';
 import type { TimerState } from '@/timer';
 import { engine } from './engine';
 
@@ -51,7 +51,7 @@ export function heatFor(remainingMs: number): number {
  */
 function isAudioOwner(): boolean {
   try {
-    return timerDiagnostics().leader;
+    return isTimerLeader();
   } catch {
     return true;
   }

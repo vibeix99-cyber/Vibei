@@ -43,7 +43,8 @@ export function TimerRing({ value, thickness = 7, className, children }: TimerRi
       const a = v * 2 * Math.PI - Math.PI / 2;
       head.current.setAttribute('cx', String(50 + r * Math.cos(a)));
       head.current.setAttribute('cy', String(50 + r * Math.sin(a)));
-      head.current.style.opacity = visible ? '1' : '0';
+      // No bead on a full ring (the whistle): the circle simply closes.
+      head.current.style.opacity = visible && v < 0.999 ? '1' : '0';
     }
   };
 

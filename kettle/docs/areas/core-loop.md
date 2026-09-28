@@ -71,6 +71,15 @@ break-over + reload, next brew, skip, autoStartFocus, Space/+/Esc, focus return 
    focus returns to Pause after the Esc sheet; doubled haptics removed; steam puffs dropped from the
    celebration hero (read as smudges in dark mode); narrow-phone labels ("Next brew" < 360 px).
 
+5. **Small screens + polish** — 320 px: compact tiles (icon over value), cycle label + ambience label collapse
+   to icons, "Next brew" short label; short portrait breaks (< 700 px) hide the room so nothing overlaps;
+   landscape celebration becomes two columns (hero left) with a real sticky footer (`overflow-x: clip`);
+   streak number anchored to the mug; confetti passes *behind* text and cards; whistle steam (overlapped the
+   intention on desktop) replaced by a check ripple, no bead on the full ring; tin goes closed → opening → open;
+   tags from `@/state/tags`; ambience during a brew left to the audio session. Unit tests (12) for
+   `buildSteps`/`summarize`/`cycleInfo`/`focusStatus`/`suggestionsFor`; axe: 0 violations on focus, paused,
+   break and every celebration card in light + dark.
+
 ## Open issues / requests
 
 - **scene**: `mode="showcase"` + `highlightItem` renders the whole room small in the 180–230 px level-up card —

@@ -33,9 +33,11 @@ jump detection, leader/claim wiring, hooks, `initTimer`) · `scheduler.ts` + `ti
 - `notificationStatus()`, `requestNotificationPermission()` (a granted/denied result flips `settings.notifications`),
   `showTimerNotification(kind)` (for a "test" button), `notificationsSupported()`.
 - `<TimerAnnouncer/>` (polite live region), `announce(text)`, `lastAnnouncement()`.
-- `isLeaderTab()` / `onLeaderTabChange(fn)`: e.g. play ambience in one tab only.
+- `isTimerLeader()` / `onLeaderChange(fn)` (aliases `isLeaderTab` / `onLeaderTabChange`): only the leader tab
+  should play session ambience and completion sounds. Leadership follows the tab the user is looking at.
 - `registerTabSync(store)`: mirror another persisted zustand store across tabs.
-- `timerDiagnostics()` (also exposed as `__kettle.timerInfo()`), and `__kettle.timerView()`.
+- `timerDiagnostics()` (also exposed as `__kettle.timerInfo()`), `__kettle.timerView()`, and
+  `__kettle.pwa.{state,update}`. These are debug-only; use the stable APIs above in app code.
 - `@/lib/shortcuts`: `useShortcut(keys, handler, {enabled, allowInInputs, allowInDialogs, allowRepeat, preventDefault})`,
   `bindShortcut`, `SHORTCUTS` registry `{id, keys, label, where}`, `displayKey`, `useShortcutHelp()` /
   `openShortcutHelp()` (`?` toggles it; `initShortcuts()` runs at boot).
@@ -83,14 +85,21 @@ jump detection, leader/claim wiring, hooks, `initTimer`) · `scheduler.ts` + `ti
   simultaneous start, follower End at 0:00, stale-tab end, split-brain resolved by the claim,
   plus lock and lease election. `presentation.test.ts` covers title, favicon, media, announcer,
   notification rules, wake-lock rule, cross-tab diff, completion rule and shortcut parsing.
-- E2E (`npx playwright test --project=timer-harness --project=timer-app`): **17 tests per target**,
-  run against both the isolated harness (`/tests/harness/timer.html`) and the real app. They cover
+- E2E (`npx playwright test --project=timer-harness --project=timer-app`): **14 tests** on the isolated
+  harness (`/tests/harness/timer.html`) and **12** in the real app (two are harness-only), 26/26 green. They cover
   reload mid-session (running + paused), a phase that ended 3 h ago, reload at 0:00, completion
   driven by the worker with main-thread timers dead (on time within 400 ms on the harness), the
   hidden-page notification and title, a frozen tab across the end (CDP), two tabs live and one record,
   two tabs pressing start at once, closing the leader, a frozen leader, render budget, wake lock,
   media session and keyboard infra. The e2e server has HMR off (`tests/e2e.vite.config.ts`),
   because edits from other agents were reloading pages mid-test.
+- PWA e2e (`npx playwright test --project=pwa`, 3 tests): production build + `vite preview` on 5193.
+  Checks that the manifest is installable (its icons exist); that the precache includes the shell,
+  fonts, three chunk and tick worker; that an offline reload boots and times a brew with the worker;
+  and the update flow: the new SW waits, `needRefresh` fires, nothing reloads mid-brew, applying
+  reloads, and the same brew is still running.
+- Also verified by probes (not in CI): 4 tabs × 3 cycles of ~15 random cross-tab pause/resume/+time
+  actions gave exactly one completion per session, identical state in all tabs and always one leader.
 
 ## Iterations
 1. **Engine rebuild.** Built the worker scheduler, per-second view store and `useRemaining`,
@@ -112,6 +121,12 @@ jump detection, leader/claim wiring, hooks, `initTimer`) · `scheduler.ts` + `ti
    Added wake-lock (fake API: headless shell always denies), media-session and shortcut e2e tests,
    `isLeaderTab()` for audio, and `M` in the registry. Deduped the precache (includeAssets duplicated the glob).
 
+4. **PWA + integration pass.** Added a reproducible PWA project. Found that `updateSW(true)`
+   doesn't reload when the update arrives during the *first* (install) visit, because
+   workbox-window only reloads if the page was controlled at registration. `applyPwaUpdate()` now
+   also reloads on `controllerchange` (with a 4 s fallback). Verified on both first and return visits.
+   Added `isTimerLeader()` / `onLeaderChange()` for audio (it was reading the diagnostics API).
+
 ## Known gaps / notes
 - Headless can't show real OS throttling or real wake locks. They're simulated: dead main-thread
   timers, CDP freeze, fake `wakeLock`. A real-device pass on Android Chrome (SW notification path)
@@ -123,8 +138,8 @@ jump detection, leader/claim wiring, hooks, `initTimer`) · `scheduler.ts` + `ti
 ## Requests for other areas
 - **orchestrator:** add `workbox-precaching`, `workbox-routing`, `workbox-core` (7.x) to
   `devDependencies` (they're imported by `src/pwa/sw.ts`, currently hoisted from vite-plugin-pwa).
-- **audio:** gate ambience with `isLeaderTab()` / `onLeaderTabChange()` so two open tabs don't
-  play two rain loops (leadership follows the tab the user is looking at).
+- **audio:** switch `src/audio/session.ts` from `timerDiagnostics().leader` to `isTimerLeader()` /
+  `onLeaderChange()` (a stable API; the diagnostics shape may change).
 - **home/settings/shell:** render a shortcuts help sheet from `SHORTCUTS` bound to
   `useShortcutHelp()` (`?` already toggles it). Show an "Update" affordance from `usePwaUpdate()`
   (a toast is emitted already).

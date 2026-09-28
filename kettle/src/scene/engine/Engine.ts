@@ -307,6 +307,7 @@ export class NookEngine {
 
     this.applyLayout();
     this.applyWeather();
+    if (this.quality === 'low') kit.liteify(this.scene);
   }
 
   // ------------------------------------------------------------ public API
@@ -387,6 +388,7 @@ export class NookEngine {
     this.renderer.shadowMap.enabled = shadows;
     this.lampSpot.castShadow = shadows;
     this.kit.shadows = shadows;
+    if (q === 'low') this.kit.liteify(this.scene);
     this.scene.traverse((o) => {
       const m = (o as Mesh).material as { needsUpdate?: boolean } | undefined;
       if (m && 'needsUpdate' in m) m.needsUpdate = true;
@@ -563,6 +565,7 @@ export class NookEngine {
       let b = this.items.get(id);
       if (on && !b) {
         b = BUILDERS[id](this.kit, { tableTop: this.tableTop });
+        if (this.quality === 'low') this.kit.liteify(b.root);
         this.items.set(id, b);
         this.itemsRoot.add(b.root);
         // arrive with a little pop when unlocked while watching
