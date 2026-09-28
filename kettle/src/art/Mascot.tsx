@@ -545,10 +545,12 @@ function renderPose(pose: MascotPose, id: string, big: boolean): ReactNode {
       );
     case 'peek':
       return (
+        // Head close-up peeking over the bottom edge: yuzu + ears stay inside the
+        // box with margin (composes at 56–150px); chin tucked below the edge.
         <g className={s.peekBob}>
-          <Head id={id} y={66} eyes="open" mouth="none" blush={0.45} big={big} yuzuRot={-4} />
-          <Paw x={66} y={197} r={13} />
-          <Paw x={134} y={197} r={13} />
+          <Head id={id} y={44} k={1.15} eyes="open" mouth="w" blush={0.5} big={big} yuzuRot={-4} />
+          <Paw x={60} y={196} r={14} />
+          <Paw x={140} y={196} r={14} />
         </g>
       );
     case 'stretch':

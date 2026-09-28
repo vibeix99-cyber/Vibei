@@ -86,6 +86,19 @@ export default function ArtGallery() {
       )}
 
       {show('small') && (
+        <Section id="peek-cards" title="Peek in small cards" note="How screens use it: 56 · 72 · 96 · 120 px inside empty-state cards.">
+          <div style={{ ...grid, alignItems: 'stretch' }}>
+            {[56, 72, 96, 120].map((sz) => (
+              <div key={sz} style={{ display: 'flex', alignItems: 'flex-end', gap: 12, padding: '12px 16px 0', border: '2px dashed var(--surface-edge)', borderRadius: 22, color: 'var(--ink-2)', fontWeight: 700 }}>
+                <Mascot pose="peek" size={sz} animate={animate} />
+                <span style={{ paddingBottom: 12 }}>Nothing brewed yet.</span>
+              </div>
+            ))}
+          </div>
+        </Section>
+      )}
+
+      {show('small') && (
         <Section id="small" title="Chai at small sizes" note="24 · 32 · 48 · 64 px (bigger eyes/nose below 72px).">
           {[24, 32, 48, 64].map((sz) => (
             <div key={sz} style={{ ...grid, gap: 10 }}>

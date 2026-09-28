@@ -153,6 +153,8 @@ export class NookEngine {
   private lampSpot: SpotLight;
   private stoveLight: PointLight;
   private winLight: DirectionalLight;
+  /** Always present (intensity 0 when idle) so the light count never changes. */
+  private hiLight: PointLight;
 
   // highlight
   private halo: Sprite;
@@ -285,12 +287,16 @@ export class NookEngine {
     this.winLight.target.position.set(0.2, 0, 1);
     this.scene.add(this.winLight, this.winLight.target);
 
+    this.hiLight = new PointLight('#FFE0A0', 0, 2.6, 1.4);
+    this.scene.add(this.hiLight);
+
     // ---- highlight props
     const haloMat = new SpriteMaterial({ map: kit.tex.soft(), color: new Color(C.honeyHi), blending: AdditiveBlending, transparent: true, depthWrite: false, opacity: 0, toneMapped: false });
+    haloMat.depthTest = false;
     this.halo = new Sprite(haloMat);
     this.halo.renderOrder = 8;
     this.scene.add(this.halo);
-    const spMat = new SpriteMaterial({ map: kit.tex.sparkle(), color: new Color(C.honeyHi), transparent: true, depthWrite: false, opacity: 0, toneMapped: false });
+    const spMat = new SpriteMaterial({ map: kit.tex.sparkle(), color: new Color(C.honeyHi), transparent: true, depthWrite: false, depthTest: false, opacity: 0, toneMapped: false });
     for (let i = 0; i < 5; i++) {
       const s = new Sprite(i === 0 ? spMat : spMat.clone());
       s.renderOrder = 9;
@@ -846,12 +852,15 @@ export class NookEngine {
       this.hiRadius = b.radius;
     }
     const lv = this.hiLevel;
-    // halo sits just behind the item (away from the camera)
+    // a warm local light lifts the item; a soft glow washes over it
     _fwd.copy(this.camera.position).sub(this.hiFocus).normalize();
-    this.halo.position.copy(this.hiFocus).addScaledVector(_fwd, -this.hiRadius * 0.6);
     const pulse = still ? 1 : 0.85 + 0.15 * Math.sin(t * 2.4);
-    this.halo.scale.setScalar(this.hiRadius * 3.4 * pulse);
-    this.halo.material.opacity = 0.55 * lv;
+    this.hiLight.position.copy(this.hiFocus).addScaledVector(_fwd, this.hiRadius * 1.1).add(_v.set(0, this.hiRadius * 0.6, 0));
+    this.hiLight.distance = 1.6 + this.hiRadius * 2.2;
+    this.hiLight.intensity = 5.5 * lv * pulse;
+    this.halo.position.copy(this.hiFocus).addScaledVector(_fwd, this.hiRadius);
+    this.halo.scale.setScalar(this.hiRadius * 3.2 * pulse);
+    this.halo.material.opacity = 0.3 * lv;
     this.halo.visible = lv > 0.01;
     // sparkles orbit and twinkle
     _right.set(1, 0, 0).applyQuaternion(this.camera.quaternion);
@@ -864,8 +873,8 @@ export class NookEngine {
       const rr = this.hiRadius * (1.05 + 0.12 * Math.sin(t * 1.7 + i));
       sp.position.copy(this.hiFocus).addScaledVector(_right, Math.cos(a) * rr).addScaledVector(_up, Math.sin(a) * rr * 0.8 + 0.1);
       const tw = still ? 0.8 : Math.max(0, Math.sin(t * 3.1 + i * 1.7));
-      sp.material.opacity = lv * (0.35 + 0.65 * tw);
-      sp.scale.setScalar(0.1 + 0.1 * tw);
+      sp.material.opacity = lv * (0.45 + 0.55 * tw);
+      sp.scale.setScalar(0.13 + 0.12 * tw);
       sp.material.rotation = t * 0.8 + i;
     }
     // springy bounce on select

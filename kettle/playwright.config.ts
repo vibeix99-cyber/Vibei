@@ -4,6 +4,7 @@
  *   npx playwright test                          # everything
  *   npx playwright test --project=timer-harness  # timer engine only (isolated page)
  *   npx playwright test --project=timer-app      # timer inside the real app
+ *   npx playwright test --project=pwa            # build + preview: offline, manifest, update prompt
  *
  * Starts an HMR-free dev server (tests/e2e.vite.config.ts) on KETTLE_PORT
  * (default 5183, the timer area's port), or reuses one already running there.
@@ -46,8 +47,15 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'], launchOptions, kettlePage: '/?debug&onboarded=1#/' } as never,
     },
     {
+      // Production build + preview (its own server, see the spec). Slow: run on purpose.
+      name: 'pwa',
+      testMatch: /pwa\.spec\.ts/,
+      timeout: 120_000,
+      use: { ...devices['Desktop Chrome'], launchOptions },
+    },
+    {
       name: 'chromium',
-      testIgnore: /timer\.spec\.ts/,
+      testIgnore: /(timer|pwa)\.spec\.ts/,
       use: { ...devices['Desktop Chrome'], launchOptions },
     },
   ],

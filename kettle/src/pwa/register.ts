@@ -33,8 +33,21 @@ export function getPwaState(): PwaState {
 
 /** Reload into the new version (after the user said yes). */
 export async function applyPwaUpdate(): Promise<void> {
-  if (updateSW) await updateSW(true);
-  else location.reload();
+  if (!updateSW) {
+    location.reload();
+    return;
+  }
+  // workbox-window reloads on 'controlling' only when the page was controlled at
+  // registration; cover the first-visit case (and any missed event) ourselves.
+  let done = false;
+  const reload = () => {
+    if (done) return;
+    done = true;
+    location.reload();
+  };
+  navigator.serviceWorker?.addEventListener('controllerchange', reload, { once: true });
+  await updateSW(true);
+  setTimeout(reload, 4000);
 }
 
 export function dismissPwaUpdate(): void {

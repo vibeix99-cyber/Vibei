@@ -59,6 +59,7 @@ async function liveCheck(base) {
   const ctx = await browser.newContext();
   const errors = [];
   const results = [];
+  let reloaded = false;
   const expect = (label, cond, detail) => {
     results.push(`${cond ? 'ok  ' : 'FAIL'} ${label}${detail ? ` — ${detail}` : ''}`);
     return cond;
@@ -68,6 +69,7 @@ async function liveCheck(base) {
     page.on('console', (m) => m.type() === 'error' && errors.push(`[${name}] ${m.text()}`));
     page.on('pageerror', (e) => errors.push(`[${name}] ${e.message}`));
     await page.goto(`${base}/?debug&seed=veteran&onboarded=1#/`, { waitUntil: 'networkidle' });
+    page.on('load', () => (reloaded = true)); // HMR full reload (another area's edit) mid-run
     await page.waitForTimeout(600);
     await page.mouse.click(5, 5); // user gesture → unlock
     await page.waitForTimeout(200);
@@ -99,7 +101,18 @@ async function liveCheck(base) {
     }
     throw new Error('page kept reloading');
   };
-  const run = (page, fn) => page.evaluate(fn);
+  const run = async (page, fn) => {
+    try {
+      return await page.evaluate(fn);
+    } catch (e) {
+      if (/context was destroyed|navigation/i.test(String(e))) {
+        reloaded = true;
+        await page.waitForTimeout(1500);
+        return undefined;
+      }
+      throw e;
+    }
+  };
   const a = await open('A');
   await run(a, () => window.__kettle.settings.getState().set({ ambient: 'rain', muted: false }));
   await run(a, () => window.__kettle.timer.getState().startFocus());
@@ -161,6 +174,7 @@ async function liveCheck(base) {
   expect('no console errors', errors.length === 0, errors.slice(0, 3).join(' | '));
   await browser.close();
   console.log(results.join('\n'));
+  if (reloaded) console.log('\nNote: the dev server hot-reloaded the page mid-run (someone edited a file) — results may be unreliable; re-run.');
   const failed = results.filter((r) => r.startsWith('FAIL')).length;
   console.log(failed ? `\n${failed} live check(s) failed.` : '\nAll live checks passed.');
   return failed === 0;

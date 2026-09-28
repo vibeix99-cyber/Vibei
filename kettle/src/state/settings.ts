@@ -78,7 +78,7 @@ export const DEFAULT_SETTINGS: Settings = {
   muted: false,
   masterVolume: 0.8,
   sfxVolume: 0.7,
-  ambientVolume: 0.5,
+  ambientVolume: 0.6,
   ambient: 'rain',
   notifications: false,
   keepAwake: true,

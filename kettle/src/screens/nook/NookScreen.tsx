@@ -22,7 +22,7 @@ const TIME_ICON: Record<SceneTime, IconName> = { auto: 'clock', morning: 'sun', 
 type WeatherPref = SceneWeather | 'auto';
 const WEATHER_CYCLE: WeatherPref[] = ['auto', 'clear', 'rain', 'snow'];
 const WEATHER_LABEL: Record<WeatherPref, string> = { auto: 'Matches your sounds', clear: 'Clear sky', rain: 'Rain', snow: 'Snow' };
-const WEATHER_ICON: Record<WeatherPref, IconName> = { auto: 'sparkle', clear: 'star', rain: 'rain', snow: 'snow' };
+const WEATHER_ICON: Record<SceneWeather, IconName> = { clear: 'star', rain: 'rain', snow: 'snow' };
 
 const HINT_KEY = 'kettle:nook-hint-seen';
 
@@ -130,8 +130,8 @@ export default function NookScreen() {
             <IconButton
               size="sm"
               variant="secondary"
-              icon={<Icon name={WEATHER_ICON[weather]} size={20} />}
-              label={`Window: ${WEATHER_LABEL[weather]}. Change`}
+              icon={<Icon name={WEATHER_ICON[weather === 'auto' ? ambientWeather(ambient) : weather]} size={20} />}
+              label={`Window: ${weather === 'auto' ? `${WEATHER_LABEL[ambientWeather(ambient)]}, matching your sounds` : WEATHER_LABEL[weather]}. Change`}
               tooltip="bottom"
               onClick={cycleWeather}
             />

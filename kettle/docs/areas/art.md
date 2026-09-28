@@ -22,7 +22,7 @@ Mascot/ChaiArt · Icon (+`ICON_NAMES`, `tone`) · StreakMug · Leaf · TeaCozy �
 LevelBadge · Logo/KettleMark · QuestIcon · Badge (+`BADGE_ART_IDS`) · GoalVessel · RhythmSpot ·
 NotifySpot · BreakSpot · EmptySpot · NookFallback · PAL/TIER.
 
-## Iterations
+## Pass 1 iterations (Chai v1, since replaced)
 1. **Chai v1:** a round loaf with a round muzzle and round ears. It read as a **teddy bear**.
 2. Capybara pass: flat-topped blocky head, broad tall snout with the nose at its *top* and a
    long upper lip, smaller ears. The arms read as sticks, so they became stubby capsule arms with a sheen.
@@ -47,6 +47,25 @@ NotifySpot · BreakSpot · EmptySpot · NookFallback · PAL/TIER.
 - App icon: compared the kettle and Chai-face options. **Chai close-up** won (far more
   lovable/memorable). The favicon is also Chai's face (it reads at 16px on light and dark tabs); the
   kettle stays the logo mark.
+
+## Pass 2 — Chai redo (orchestrator send-back: "reads as bear/hamster")
+Before: `.shots/art/chai-v1/` · After: `.shots/art/chai-v2/` (`before-after-240-32.png`, `after-poses-240.png`,
+`after-small.png`, `after-poses-dark.png`, `after-welcome-mobile-*.png`).
+- **New construction:** a tall, flat-fronted barrel head (longer than wide) merging into a barrel body
+  with no neck. The **snout block** is the whole lower face in a darker, warmer brown: no cream patch, and its top
+  plane has a light edge. A **wide flat nose** sits on the snout's top edge with a split-lip ω under it; the mouth
+  stays closed except in cheer and stretch. **Small eyes set high and wide**, and idle uses calm soft-dome lids. **Tiny round
+  ears at the upper back corners**, coarse crown tufts, stubby darker legs.
+- Iterations:
+  1. The first build already read capybara, but its flat lids looked skeptical and the snout highlight made a stripe.
+  2. Dome-shaped lids (serene), a domed snout edge, the body tufts dropped (they read as scratches), and a brighter fur.
+  3. Sleep went from "bathtub" to a resting tilted head. Limbs got their own darker walnut, because paws vanished against the
+     head shade. Think became a paw on the cheek. Concerned has paws fidgeting under the chin. At small sizes the eyes are plain dots
+     (the lids read as heavy brows) and the nose is flatter (it looked like a gaping mouth).
+  4. Peek is recomposed as a head close-up with ears and yuzu kept inside the box (56–150px cards).
+- App icons, favicon, NookFallback and the stretch break spot all re-rendered from the new Chai.
+- Also: badge tier numerals now use Nunito 900 with letter-spacing (Fredoka's "IV" read as "N"). New icons `book`
+  and `briefcase`.
 
 ## How to regenerate icons
 `npx vite --port 5182` then `node scripts/render-icons.mjs --export --base http://127.0.0.1:5182`
