@@ -41,7 +41,7 @@ export const SPOTS = {
   books: { x: -1.55, z: -2.08 },
   shelf: { x: -1.45, y: 2.55 },
   crate: { x: 2.3, z: -2.02 },
-  monstera: { x: 2.72, z: -0.62 },
+  monstera: { x: 2.72, z: 0.45 },
   basket: { x: 2.05, z: 1.65 },
   catBed: { x: -2.5, z: 1.25 },
   painting: { z: 0.95, y: 2.5 },

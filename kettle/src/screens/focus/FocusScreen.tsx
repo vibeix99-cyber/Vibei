@@ -76,10 +76,11 @@ export default function FocusScreen() {
     if (view !== 'focus') setEndOpen(false);
   }, [view]);
 
-  // Ambience follows the session; the whistle gets the stage to itself.
+  // Ambience: during a brew the audio session owns it (fade in, pause dip, simmer, fade out) —
+  // this screen only asks for it on tea breaks and for quiet around the whistle / break-over card.
   useEffect(() => {
-    if (view === 'focus' || view === 'break') audio.setAmbient(ambient, { fadeMs: 1200 });
-    else audio.setAmbient('none', { fadeMs: view === 'whistle' ? 900 : 1500 });
+    if (view === 'break') audio.setAmbient(ambient, { fadeMs: 1500 });
+    else if (view !== 'focus') audio.setAmbient('none', { fadeMs: view === 'whistle' ? 900 : 1500 });
   }, [view, ambient]);
   useEffect(() => () => audio.setAmbient('none', { fadeMs: 1200 }), []);
 

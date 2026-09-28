@@ -12,7 +12,8 @@
  *                showTimerNotification, notificationsSupported
  * Accessibility: <TimerAnnouncer/> (polite live region), announce()
  * Multi-tab:     registerTabSync(store) to mirror another persisted store across tabs;
- *                isLeaderTab / onLeaderTabChange (e.g. play ambience in one tab only)
+ *                isTimerLeader / onLeaderChange (aliases isLeaderTab / onLeaderTabChange):
+ *                play session ambience & completion sounds in the leader tab only
  */
 export * from './types';
 export {
@@ -36,6 +37,8 @@ export {
   timerDiagnostics,
   isLeaderTab,
   onLeaderTabChange,
+  isTimerLeader,
+  onLeaderChange,
   type RemainingView,
   type TimerDiagnostics,
 } from './ticker';

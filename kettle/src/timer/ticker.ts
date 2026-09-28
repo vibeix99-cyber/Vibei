@@ -208,6 +208,10 @@ export function onLeaderTabChange(fn: (leader: boolean) => void): () => void {
   };
 }
 
+/** Stable names for other areas (audio): only the leader tab plays session ambience / completion sounds. */
+export const isTimerLeader = isLeaderTab;
+export const onLeaderChange = onLeaderTabChange;
+
 function claimIfVisible(): void {
   if (document.visibilityState === 'visible') leadership?.claim();
 }

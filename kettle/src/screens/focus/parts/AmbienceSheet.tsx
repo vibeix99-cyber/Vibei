@@ -3,6 +3,7 @@ import { Icon } from '@/art';
 import { Button, PressableCard, Sheet, Slider } from '@/ui';
 import { audio } from '@/audio';
 import { useSettings, type AmbientKind } from '@/state/settings';
+import { useTimer } from '@/timer';
 import { ambientOptions } from './ambience';
 import s from './sheets.module.css';
 
@@ -14,9 +15,10 @@ export function AmbienceSheet({ open, onClose }: { open: boolean; onClose: () =>
   const options = ambientOptions();
   const currentOption = options.find((o) => o.id === current) ?? options[0];
 
+  // The setting drives the session soundscape during a brew; on a tea break the screen plays it.
   const choose = (id: AmbientKind) => {
     set({ ambient: id });
-    audio.setAmbient(id, { fadeMs: 600 });
+    if (useTimer.getState().phase !== 'focus') audio.setAmbient(id, { fadeMs: 600 });
   };
 
   return (
@@ -83,10 +85,7 @@ export function AmbienceSheet({ open, onClose }: { open: boolean; onClose: () =>
         format={(v) => `${Math.round(v * 100)}%`}
         disabled={current === 'none'}
         start={<Icon name="sound" size={20} />}
-        onChange={(v) => {
-          set({ ambientVolume: v });
-          audio.sync();
-        }}
+        onChange={(v) => set({ ambientVolume: v })}
         className={s.volume}
       />
     </Sheet>
