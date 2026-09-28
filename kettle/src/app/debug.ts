@@ -2,7 +2,7 @@
  * Debug + screenshot API. Enabled in dev, or in any build with `?debug` in the URL.
  *
  * URL params (applied before first render):
- *   ?seed=fresh|newbie|veteran   load a demo profile (see progress/seed.ts)
+ *   ?seed=fresh|blank|newbie|veteran|celebrate|atRisk   load a demo profile (see progress/seed.ts)
  *   ?theme=light|dark            force theme
  *   ?motion=reduce|full          force motion preference
  *   ?onboarded=0|1               override onboarding flag
@@ -11,7 +11,7 @@
  * window.__kettle: { clock, timer, progress, settings, navigate, seed(name), ff(ms), finish() }
  */
 import { clock } from '@/lib/clock';
-import { useTimer } from '@/timer';
+import { useTimer, timerDiagnostics } from '@/timer';
 import { useProgress } from '@/progress';
 import { useSettings } from '@/state/settings';
 import { navigate, getRoute } from './router';
@@ -41,6 +41,8 @@ export function applyDebugParams(): void {
     navigate,
     getRoute,
     seed: seedProfile,
+    /** Timer internals: leader election, scheduler (worker/main), settling. */
+    timerInfo: timerDiagnostics,
     /** Fast-forward the clock by ms. */
     ff: (ms: number) => clock.advance(ms),
     /** Jump to 1s before the current phase ends. */

@@ -1,0 +1,22 @@
+.wrap {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+/* Kit Button, icon-only, made round at --size. */
+.wrap .round {
+  --h: var(--size);
+  border-radius: 50%;
+}
+.wrap .round > span {
+  border-radius: 50%;
+}
+.caption {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.1;
+  color: var(--ink-2);
+  white-space: nowrap;
+}

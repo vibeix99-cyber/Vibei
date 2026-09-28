@@ -8,7 +8,9 @@ export interface NookSceneProps {
   progress?: number;
   /** True for the moment the kettle whistles (burst of steam). */
   whistling?: boolean;
+  /** Defaults to the chosen ambience (rain/lo-fi → rain, fire → snow, else clear). */
   weather?: SceneWeather;
+  /** Defaults to 'auto' (local clock). */
   timeOfDay?: SceneTime;
   /** Unlocked item ids (see progress/items.ts). */
   items: string[];
@@ -19,4 +21,9 @@ export interface NookSceneProps {
   interactive?: boolean;
   paused?: boolean;
   className?: string;
+  /**
+   * Paint the soft time-of-day backdrop behind the diorama (default true).
+   * Pass false to float the room on your own background.
+   */
+  backdrop?: boolean;
 }

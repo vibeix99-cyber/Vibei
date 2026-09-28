@@ -1,0 +1,45 @@
+.digits {
+  --cell: 0.6em;
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums lining-nums;
+  line-height: 1;
+  white-space: nowrap;
+}
+.body {
+  --cell: 0.58em;
+  font-family: var(--font-body);
+  font-weight: inherit;
+}
+.row {
+  display: inline-flex;
+  align-items: baseline;
+}
+.cell {
+  display: inline-block;
+  width: var(--cell);
+  text-align: center;
+}
+.rolling {
+  display: inline-grid;
+  position: relative;
+  padding-block: 0.14em;
+  margin-block: -0.14em;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+}
+.glyph {
+  grid-area: 1 / 1;
+  display: block;
+  text-align: center;
+}
+.colon {
+  display: inline-block;
+  width: 0.3em;
+  text-align: center;
+  transform: translateY(-0.06em);
+}
+.sep {
+  display: inline-block;
+}

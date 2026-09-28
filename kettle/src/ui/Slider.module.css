@@ -1,0 +1,122 @@
+.slider {
+  --thumb: 30px;
+  --track-h: 12px;
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+}
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.headValueOnly {
+  justify-content: flex-end;
+}
+.label {
+  font-weight: 800;
+  color: var(--ink);
+}
+.value {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--tone-ink);
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.end {
+  display: inline-flex;
+  color: var(--ink-3);
+}
+.hit {
+  position: relative;
+  flex: 1;
+  height: var(--tap);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.track {
+  position: relative;
+  width: 100%;
+  height: var(--track-h);
+  border-radius: var(--r-pill);
+  background: var(--surface-3);
+  overflow: hidden;
+}
+.fill {
+  position: relative;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--tone);
+  transition: width var(--dur-fast) var(--ease-out);
+}
+.stripe {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 2px;
+  height: 3px;
+  border-radius: var(--r-pill);
+  background: var(--highlight);
+}
+.thumb {
+  position: absolute;
+  top: 50%;
+  width: var(--thumb);
+  height: var(--thumb);
+  margin-left: calc(var(--thumb) / -2);
+  margin-top: calc(var(--thumb) / -2 - 1px);
+  border-radius: 50%;
+  background: #fffdfa;
+  box-shadow:
+    inset 0 0 0 2px var(--tone),
+    0 3px 0 var(--tone-edge);
+  transition:
+    left var(--dur-fast) var(--ease-out),
+    transform var(--dur-base) var(--ease-spring);
+  cursor: grab;
+}
+.thumb::after {
+  content: '';
+  position: absolute;
+  inset: 9px;
+  border-radius: 50%;
+  background: var(--tone);
+  opacity: 0.9;
+}
+.thumb:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+@media (hover: hover) {
+  .hit:hover .thumb {
+    transform: scale(1.06);
+  }
+}
+.dragging .thumb {
+  cursor: grabbing;
+  transform: scale(1.12);
+}
+.dragging .fill,
+.dragging .thumb {
+  transition-property: transform;
+}
+.disabled {
+  opacity: 0.5;
+}
+.disabled .hit,
+.disabled .thumb {
+  cursor: not-allowed;
+}
+:global(html[data-motion='reduce']) .thumb,
+:global(html[data-motion='reduce']) .fill {
+  transition-duration: 1ms;
+}

@@ -7,6 +7,8 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useSettings } from '@/state/settings';
 import { useTimer } from '@/timer';
 import { useReducedMotion } from '@/lib/useReducedMotion';
+import { pageTransition } from '@/lib/motion';
+import { Toaster } from '@/ui';
 import { ErrorBoundary } from './ErrorBoundary';
 import { Shell } from './Shell';
 import { Rail } from './Rail';
@@ -57,10 +59,7 @@ export function App() {
     <AnimatePresence mode="wait" initial={false}>
       <motion.div
         key={route}
-        initial={reduced ? { opacity: 0 } : { opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={reduced ? { opacity: 0 } : { opacity: 0, y: -4 }}
-        transition={{ duration: reduced ? 0.12 : 0.22, ease: [0.22, 1, 0.36, 1] }}
+        {...pageTransition(reduced)}
         style={{ minHeight: '100%' }}
       >
         <ErrorBoundary area={screen.area}>
@@ -71,7 +70,17 @@ export function App() {
   );
 
   if (TAB_ROUTES.includes(route)) {
-    return <Shell rail={<Rail />}>{content}</Shell>;
+    return (
+      <>
+        <Shell rail={<Rail />}>{content}</Shell>
+        <Toaster />
+      </>
+    );
   }
-  return content;
+  return (
+    <>
+      {content}
+      <Toaster />
+    </>
+  );
 }

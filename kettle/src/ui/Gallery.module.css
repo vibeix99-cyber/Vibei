@@ -1,0 +1,185 @@
+.gallery {
+  display: grid;
+  gap: var(--space-6);
+  max-width: 1320px;
+  margin: 0 auto;
+}
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+.controls {
+  display: grid;
+  gap: var(--space-2);
+  width: min(100%, 360px);
+}
+.code {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 0.9em;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: var(--surface-3);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
+  gap: var(--space-5);
+  align-items: start;
+}
+.section,
+.sectionWide {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+  padding: var(--space-5);
+  border-radius: var(--r-xl);
+  background: var(--bg-sunken);
+}
+.sectionWide {
+  grid-column: 1 / -1;
+}
+@media (max-width: 600px) {
+  .section,
+  .sectionWide {
+    padding: var(--space-4);
+    margin-inline: calc(var(--space-2) * -1);
+  }
+}
+.sectionHead {
+  display: grid;
+  gap: 2px;
+}
+.rowWrap {
+  display: grid;
+  gap: var(--space-2);
+}
+.rowLabel {
+  color: var(--ink-3);
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+.stack {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+}
+.twoCol {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+.blockDemo {
+  display: grid;
+  gap: var(--space-2);
+  width: min(100%, 420px);
+}
+
+/* swatches */
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-3);
+}
+.toneCol {
+  display: grid;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: 0 4px 0 var(--tone-edge);
+  margin-bottom: 4px;
+}
+.toneFace {
+  display: flex;
+  align-items: flex-end;
+  height: 72px;
+  padding: 10px 12px;
+  background: var(--tone);
+  color: var(--tone-on);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1875rem;
+  text-transform: capitalize;
+}
+.toneSoft {
+  padding: 8px 12px 10px;
+  background: var(--tone-soft);
+  color: var(--tone-ink);
+  font-weight: 800;
+  font-size: var(--text-body-s);
+}
+.swatch {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+}
+.chipColor {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 48px;
+  border-radius: var(--r-md);
+  border: 2px solid var(--line);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+.swatchName {
+  font-size: var(--text-caption);
+  font-weight: 800;
+  color: var(--ink-2);
+}
+
+.typeStack {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.digitsDemo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-4);
+}
+.timer {
+  font-size: clamp(3.5rem, 12vw, 5rem);
+  color: var(--ink);
+}
+.timerSmall {
+  font-size: 2rem;
+  color: var(--ink-2);
+}
+.counterBig {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 2.5rem;
+  line-height: 1;
+}
+.ringDigits {
+  font-size: 1.625rem;
+}
+
+.optRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.optText {
+  display: grid;
+}
+
+.chaiRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.chaiCol {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-1);
+}

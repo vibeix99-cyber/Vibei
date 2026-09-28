@@ -1,0 +1,33 @@
+.ring {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.svg {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+.track {
+  stroke: var(--surface-3);
+}
+.glass .track {
+  stroke: rgba(255, 255, 255, 0.28);
+}
+.fill {
+  stroke: var(--tone);
+}
+.hl {
+  stroke: var(--highlight);
+  transform-origin: center;
+  transform-box: view-box;
+}
+.center {
+  position: relative;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  line-height: 1.1;
+}

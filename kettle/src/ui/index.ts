@@ -1,8 +1,55 @@
+/**
+ * Kettle UI kit — public surface. OWNER: design-system area.
+ * Screens must build from these (no ad-hoc control styling). Live gallery: `#/kit?part=ui`.
+ */
 export { Button } from './Button';
 export type { ButtonProps, ButtonVariant, ButtonSize } from './Button';
-export { Card } from './Card';
-export type { CardProps } from './Card';
+export { IconButton } from './IconButton';
+export type { IconButtonProps } from './IconButton';
+export { Card, PressableCard } from './Card';
+export type { CardProps, PressableCardProps, CardTone, CardPadding } from './Card';
 export { ProgressBar } from './ProgressBar';
 export type { ProgressBarProps } from './ProgressBar';
-export { Sheet } from './Sheet';
+export { Ring } from './Ring';
+export type { RingProps } from './Ring';
+export { Toggle } from './Toggle';
+export type { ToggleProps } from './Toggle';
+export { Slider } from './Slider';
+export type { SliderProps } from './Slider';
+export { Chip, ChipGroup } from './Chip';
+export type { ChipProps, ChipGroupProps, ChipOption } from './Chip';
+export { SegmentedControl } from './SegmentedControl';
+export type { SegmentedControlProps, SegmentOption } from './SegmentedControl';
+export { Sheet, Dialog } from './Sheet';
 export type { SheetProps } from './Sheet';
+export { toast, Toaster } from './Toast';
+export type { ToastOptions, ToastTone } from './Toast';
+export { SpeechBubble } from './SpeechBubble';
+export type { SpeechBubbleProps } from './SpeechBubble';
+export { Stat } from './Stat';
+export type { StatProps } from './Stat';
+export { ListRow, ListGroup } from './ListRow';
+export type { ListRowProps, ListGroupProps } from './ListRow';
+export { TextField } from './TextField';
+export type { TextFieldProps } from './TextField';
+export { NumberStepper } from './NumberStepper';
+export type { NumberStepperProps } from './NumberStepper';
+export { Digits } from './Digits';
+export type { DigitsProps } from './Digits';
+export { Counter } from './Counter';
+export type { CounterProps } from './Counter';
+export { Pill, Tag } from './Pill';
+export type { PillProps } from './Pill';
+export { Divider } from './Divider';
+export type { DividerProps } from './Divider';
+export { ScreenHeader, SectionHeader } from './ScreenHeader';
+export type { ScreenHeaderProps } from './ScreenHeader';
+export { WeekStrip } from './WeekStrip';
+export type { WeekStripProps, WeekStripDayLike, WeekDotState } from './WeekStrip';
+export { Tooltip } from './Tooltip';
+export type { TooltipProps } from './Tooltip';
+export { Spinner } from './Spinner';
+export type { SpinnerProps } from './Spinner';
+export { Kbd, Skeleton, EmptyState, VisuallyHidden } from './Misc';
+export { cx, useMediaQuery, TONES } from './util';
+export type { Tone, IconSlot } from './util';

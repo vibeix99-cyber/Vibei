@@ -1,0 +1,132 @@
+.card {
+  position: relative;
+  background: var(--surface);
+  border: 2px solid var(--break-edge, var(--surface-edge));
+  border-bottom-width: 4px;
+  border-radius: var(--r-lg);
+  padding: 14px 14px 8px;
+  display: grid;
+  gap: 4px;
+  overflow: hidden;
+}
+.row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  align-items: center;
+  gap: 14px;
+  min-height: 84px;
+}
+.art {
+  width: 80px;
+  height: 80px;
+  border-radius: 20px;
+  background: var(--sky-soft);
+  display: grid;
+  place-items: center;
+}
+.text {
+  display: grid;
+  gap: 2px;
+}
+.title {
+  font-size: 1.125rem;
+  line-height: 1.2;
+}
+.body {
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.dots {
+  display: inline-flex;
+  gap: 5px;
+  padding-left: 4px;
+}
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--oat-edge);
+  transition:
+    width 300ms ease,
+    background-color 300ms ease;
+}
+.dot[data-on='true'] {
+  width: 16px;
+  background: var(--sky);
+}
+.next {
+  appearance: none;
+  border: 0;
+  background: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-height: 44px;
+  padding: 0 6px 0 12px;
+  border-radius: var(--r-md);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--sky-edge);
+  cursor: pointer;
+}
+:global([data-theme='dark']) .next {
+  color: #8fd0ff;
+}
+.next:hover {
+  background: var(--sky-soft);
+}
+
+/* ---------- breathing guide ---------- */
+.breathe {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+}
+.halo,
+.core {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--sky);
+}
+.halo {
+  inset: 0;
+  opacity: 0.22;
+}
+.core {
+  inset: 14px;
+}
+.breathe .halo,
+.breathe .core {
+  transform: scale(0.62);
+  transition: transform 6s cubic-bezier(0.45, 0, 0.55, 1);
+}
+.breathe[data-phase='in'] .halo,
+.breathe[data-phase='in'] .core {
+  transform: scale(1);
+  transition-duration: 4s;
+}
+.breathe[data-reduced='true'] .halo,
+.breathe[data-reduced='true'] .core {
+  transform: none;
+  transition: opacity 600ms ease;
+}
+.breathe[data-reduced='true'][data-phase='out'] .core {
+  opacity: 0.7;
+}
+.breatheLabel {
+  position: relative;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: #fff;
+  text-shadow: 0 1px 0 var(--sky-edge);
+}

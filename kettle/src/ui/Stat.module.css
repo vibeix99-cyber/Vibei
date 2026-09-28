@@ -1,0 +1,60 @@
+.stat {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+.tile {
+  padding: 12px 14px;
+  background: var(--surface);
+  border: var(--border) solid var(--line);
+  border-bottom-width: var(--edge);
+  border-radius: var(--r-lg);
+}
+.icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  color: var(--ink-2);
+}
+.stat[data-tone] .icon {
+  background: var(--tone-soft);
+  color: var(--tone);
+}
+.lg .icon {
+  width: 52px;
+  height: 52px;
+}
+.text {
+  display: grid;
+  min-width: 0;
+}
+.value {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.375rem;
+  line-height: 1.15;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.lg .value {
+  font-size: 1.75rem;
+}
+.label {
+  font-size: var(--text-body-s);
+  font-weight: 700;
+  color: var(--ink-2);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hint {
+  font-size: var(--text-caption);
+  font-weight: 700;
+  color: var(--ink-3);
+}

@@ -1,0 +1,429 @@
+{
+ "_doc": "Blind-review plan: how to capture each Kettle screen and which Duolingo refs (paths under review/refs/duolingo/) it is compared with. `kind` is the neutral screen description shown to the judge. Steps: {eval: js-expression} | {button: 'regex'} (click first visible enabled button whose accessible name matches, case-insensitive) | {click: 'playwright selector'} | {press: 'Key'} | {fill: 'selector', text} | {wait: ms}. Add `optional: true` to tolerate a missing control. Captures run at 390x844 @2x, no full-page, so they match phone screenshots.",
+ "viewport": {
+  "width": 390,
+  "height": 844,
+  "deviceScaleFactor": 2,
+  "isMobile": true,
+  "hasTouch": true
+ },
+ "screens": [
+  {
+   "id": "onboarding-question",
+   "kind": "onboarding: one question per screen (choose a daily goal / what to learn)",
+   "capture": {
+    "route": "/welcome",
+    "params": {
+     "seed": "fresh",
+     "onboarded": "0"
+    },
+    "steps": [
+     {
+      "button": "^(get started|let'?s (go|begin)|start|begin|continue|next)\\b"
+     },
+     {
+      "wait": 500
+     },
+     {
+      "fill": "input[type=text], input:not([type])",
+      "text": "Robin",
+      "optional": true
+     },
+     {
+      "button": "^continue|^next",
+      "optional": true
+     },
+     {
+      "wait": 1200
+     }
+    ]
+   },
+   "refs": [
+    "onboarding/onboarding-course-pick.png",
+    "onboarding/onboarding-where-to-start.png",
+    "onboarding/onboarding-set-goal-2020.png"
+   ]
+  },
+  {
+   "id": "onboarding-notify",
+   "kind": "onboarding: asking permission for reminders/notifications",
+   "capture": {
+    "route": "/welcome",
+    "params": {
+     "seed": "fresh",
+     "onboarded": "0"
+    },
+    "steps": [
+     {
+      "button": "^(get started|let'?s (go|begin)|start|begin|continue|next)\\b"
+     },
+     {
+      "wait": 400
+     },
+     {
+      "button": "^continue|^next|skip",
+      "optional": true
+     },
+     {
+      "wait": 400
+     },
+     {
+      "button": "a cup|30",
+      "optional": true
+     },
+     {
+      "button": "^continue|^next",
+      "optional": true
+     },
+     {
+      "wait": 400
+     },
+     {
+      "button": "classic|25",
+      "optional": true
+     },
+     {
+      "button": "^continue|^next",
+      "optional": true
+     },
+     {
+      "wait": 400
+     },
+     {
+      "button": "^skip|no sound|silence|none",
+      "optional": true
+     },
+     {
+      "wait": 1200
+     }
+    ]
+   },
+   "refs": [
+    "onboarding/onboarding-reminders.png"
+   ]
+  },
+  {
+   "id": "home",
+   "kind": "home / today screen of a daily-habit app (main call to action)",
+   "capture": {
+    "route": "/",
+    "params": {
+     "seed": "veteran"
+    },
+    "steps": [
+     {
+      "wait": 1500
+     }
+    ]
+   },
+   "refs": [
+    "home/home-path-2026.png",
+    "home/home-path-start-bubble.png"
+   ]
+  },
+  {
+   "id": "focus",
+   "kind": "in-session screen of a timed activity",
+   "capture": {
+    "route": "/",
+    "params": {
+     "seed": "newbie"
+    },
+    "steps": [
+     {
+      "eval": "__kettle.timer.getState().startFocus({ intention: 'Thesis chapter 3', tag: 'study' })"
+     },
+     {
+      "wait": 800
+     },
+     {
+      "eval": "__kettle.ff(9 * 60000)"
+     },
+     {
+      "wait": 2500
+     }
+    ]
+   },
+   "refs": [
+    "timer-like/timer-in-session.png",
+    "timer-like/timer-match-madness.png"
+   ]
+  },
+  {
+   "id": "quit-sheet",
+   "kind": "confirmation sheet when leaving a session early",
+   "capture": {
+    "route": "/",
+    "params": {
+     "seed": "newbie"
+    },
+    "steps": [
+     {
+      "eval": "__kettle.timer.getState().startFocus({ intention: 'Inbox zero', tag: 'work' })"
+     },
+     {
+      "wait": 800
+     },
+     {
+      "eval": "__kettle.ff(6 * 60000)"
+     },
+     {
+      "wait": 600
+     },
+     {
+      "button": "^end|leave|stop",
+      "optional": true
+     },
+     {
+      "wait": 1200
+     }
+    ]
+   },
+   "refs": [
+    "dialogs/dialog-quit-confirm.png",
+    "dialogs/dialog-energy-sheet.png"
+   ]
+  },
+  {
+   "id": "done-1",
+   "kind": "end-of-session celebration (results)",
+   "capture": {
+    "route": "/",
+    "params": {
+     "seed": "celebrate"
+    },
+    "steps": [
+     {
+      "eval": "__kettle.timer.getState().startFocus({ intention: 'Inbox zero', tag: 'work' })"
+     },
+     {
+      "wait": 600
+     },
+     {
+      "eval": "__kettle.finish()"
+     },
+     {
+      "wait": 3500
+     }
+    ]
+   },
+   "refs": [
+    "lesson-complete/lesson-end-goal-achieved-2020.png",
+    "lesson-complete/lesson-end-reward-2025.png",
+    "lesson-complete/lesson-end-walk-anim.gif.1200ms.png"
+   ]
+  },
+  {
+   "id": "done-streak",
+   "kind": "streak extended celebration",
+   "capture": {
+    "route": "/",
+    "params": {
+     "seed": "celebrate"
+    },
+    "steps": [
+     {
+      "eval": "__kettle.timer.getState().startFocus({ intention: 'Inbox zero', tag: 'work' })"
+     },
+     {
+      "wait": 600
+     },
+     {
+      "eval": "__kettle.finish()"
+     },
+     {
+      "wait": 2500
+     },
+     {
+      "button": "^continue|^next|nice|yay",
+      "optional": true
+     },
+     {
+      "wait": 3000
+     }
+    ]
+   },
+   "refs": [
+    "streak/streak-3-day-screen.png",
+    "streak/streak-extended-anim.gif.2200ms.png",
+    "streak/streak-friends-extended.png"
+   ]
+  },
+  {
+   "id": "done-recipes",
+   "kind": "daily quests progress / reward chest opening",
+   "capture": {
+    "route": "/",
+    "params": {
+     "seed": "celebrate"
+    },
+    "steps": [
+     {
+      "eval": "__kettle.timer.getState().startFocus({ intention: 'Inbox zero', tag: 'work' })"
+     },
+     {
+      "wait": 600
+     },
+     {
+      "eval": "__kettle.finish()"
+     },
+     {
+      "wait": 2500
+     },
+     {
+      "button": "^continue|^next|nice|yay",
+      "optional": true
+     },
+     {
+      "wait": 2500
+     },
+     {
+      "button": "^continue|^next|nice|yay",
+      "optional": true
+     },
+     {
+      "wait": 3000
+     }
+    ]
+   },
+   "refs": [
+    "quests/quests-chest-open.gif.400ms.png",
+    "quests/quests-daily-cards.png"
+   ]
+  },
+  {
+   "id": "done-levelup",
+   "kind": "level-up / reward unlocked celebration",
+   "capture": {
+    "route": "/",
+    "params": {
+     "seed": "celebrate"
+    },
+    "steps": [
+     {
+      "eval": "__kettle.timer.getState().startFocus({ intention: 'Inbox zero', tag: 'work' })"
+     },
+     {
+      "wait": 600
+     },
+     {
+      "eval": "__kettle.finish()"
+     },
+     {
+      "wait": 2500
+     },
+     {
+      "button": "^continue|^next|nice|yay",
+      "optional": true
+     },
+     {
+      "wait": 2500
+     },
+     {
+      "button": "^continue|^next|nice|yay|open",
+      "optional": true
+     },
+     {
+      "wait": 2500
+     },
+     {
+      "button": "^continue|^next|nice|yay",
+      "optional": true
+     },
+     {
+      "wait": 3000
+     }
+    ]
+   },
+   "refs": [
+    "lesson-complete/lesson-end-reward-2025.png"
+   ]
+  },
+  {
+   "id": "break",
+   "kind": "rest / break screen between sessions",
+   "capture": {
+    "route": "/",
+    "params": {
+     "seed": "newbie"
+    },
+    "steps": [
+     {
+      "eval": "__kettle.timer.getState().startBreak('shortBreak')"
+     },
+     {
+      "wait": 800
+     },
+     {
+      "eval": "__kettle.ff(60000)"
+     },
+     {
+      "wait": 2500
+     }
+    ]
+   },
+   "refs": [
+    "timer-like/timer-session-intro.png",
+    "timer-like/timer-side-quest.jpg"
+   ]
+  },
+  {
+   "id": "stats",
+   "kind": "profile / statistics / achievements screen",
+   "capture": {
+    "route": "/stats",
+    "params": {
+     "seed": "veteran"
+    },
+    "steps": [
+     {
+      "wait": 2000
+     }
+    ]
+   },
+   "refs": [
+    "profile-stats/profile-2026.png",
+    "profile-stats/profile-statistics-2023.png",
+    "profile-stats/profile-achievements-2023.png"
+   ]
+  },
+  {
+   "id": "nook",
+   "kind": "collection / unlocked rewards screen",
+   "capture": {
+    "route": "/nook",
+    "params": {
+     "seed": "veteran"
+    },
+    "steps": [
+     {
+      "wait": 3500
+     }
+    ]
+   },
+   "refs": [
+    "profile-stats/profile-achievements-2023.png"
+   ]
+  },
+  {
+   "id": "settings",
+   "kind": "settings / preferences screen",
+   "capture": {
+    "route": "/settings",
+    "params": {
+     "seed": "veteran"
+    },
+    "steps": [
+     {
+      "wait": 1500
+     }
+    ]
+   },
+   "refs": [
+    "settings/settings-preferences.png",
+    "settings/settings-menu.jpg",
+    "settings/settings-reminders.png"
+   ]
+  }
+ ]
+}

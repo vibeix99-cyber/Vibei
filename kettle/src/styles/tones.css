@@ -1,0 +1,78 @@
+/*
+ * Tone mapping. OWNER: design-system area.
+ * `data-tone="<tone>"` on any element exposes that tone's recipe as generic
+ * variables (--tone, --tone-hi, --tone-edge, --tone-strong, --tone-soft,
+ * --tone-soft-edge, --tone-ink, --tone-on) to it and its descendants.
+ * Kit components set it for you; screens can use it too.
+ */
+[data-tone='persimmon'] {
+  --tone: var(--persimmon);
+  --tone-hi: var(--persimmon-hi);
+  --tone-edge: var(--persimmon-edge);
+  --tone-strong: var(--persimmon-strong);
+  --tone-soft: var(--persimmon-soft);
+  --tone-soft-edge: var(--persimmon-soft-edge);
+  --tone-ink: var(--persimmon-ink);
+  --tone-on: var(--persimmon-on);
+}
+[data-tone='matcha'] {
+  --tone: var(--matcha);
+  --tone-hi: var(--matcha-hi);
+  --tone-edge: var(--matcha-edge);
+  --tone-strong: var(--matcha-strong);
+  --tone-soft: var(--matcha-soft);
+  --tone-soft-edge: var(--matcha-soft-edge);
+  --tone-ink: var(--matcha-ink);
+  --tone-on: var(--matcha-on);
+}
+[data-tone='honey'] {
+  --tone: var(--honey);
+  --tone-hi: var(--honey-hi);
+  --tone-edge: var(--honey-edge);
+  --tone-strong: var(--honey-strong);
+  --tone-soft: var(--honey-soft);
+  --tone-soft-edge: var(--honey-soft-edge);
+  --tone-ink: var(--honey-ink);
+  --tone-on: var(--honey-on);
+}
+[data-tone='sky'] {
+  --tone: var(--sky);
+  --tone-hi: var(--sky-hi);
+  --tone-edge: var(--sky-edge);
+  --tone-strong: var(--sky-strong);
+  --tone-soft: var(--sky-soft);
+  --tone-soft-edge: var(--sky-soft-edge);
+  --tone-ink: var(--sky-ink);
+  --tone-on: var(--sky-on);
+}
+[data-tone='berry'] {
+  --tone: var(--berry);
+  --tone-hi: var(--berry-hi);
+  --tone-edge: var(--berry-edge);
+  --tone-strong: var(--berry-strong);
+  --tone-soft: var(--berry-soft);
+  --tone-soft-edge: var(--berry-soft-edge);
+  --tone-ink: var(--berry-ink);
+  --tone-on: var(--berry-on);
+}
+[data-tone='plum'] {
+  --tone: var(--plum);
+  --tone-hi: var(--plum-hi);
+  --tone-edge: var(--plum-edge);
+  --tone-strong: var(--plum-strong);
+  --tone-soft: var(--plum-soft);
+  --tone-soft-edge: var(--plum-soft-edge);
+  --tone-ink: var(--plum-ink);
+  --tone-on: var(--plum-on);
+}
+/* Neutral "tone" — espresso on oat. */
+[data-tone='neutral'] {
+  --tone: var(--ink-2);
+  --tone-hi: var(--surface-2);
+  --tone-edge: var(--ink);
+  --tone-strong: var(--ink-2);
+  --tone-soft: var(--surface-3);
+  --tone-soft-edge: var(--line-strong);
+  --tone-ink: var(--ink-2);
+  --tone-on: var(--ink-inverse);
+}

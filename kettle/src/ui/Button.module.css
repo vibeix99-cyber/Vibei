@@ -1,101 +1,237 @@
 .btn {
-  --face: var(--persimmon);
-  --edge-c: var(--persimmon-edge);
-  --text: #fff;
+  --h: 48px;
+  --pad-x: 24px;
+  --edge-size: var(--edge);
+  --reserve: var(--edge);
+  --face: var(--tone, var(--persimmon));
+  --edge-c: var(--tone-edge, var(--persimmon-edge));
+  --text: var(--tone-on, #fff);
+  --ring: transparent;
+  --ring-w: 0px;
   appearance: none;
   border: 0;
-  padding: 0;
+  margin: 0;
+  padding: 0 0 var(--reserve);
   background: none;
   cursor: pointer;
-  border-radius: var(--r-lg);
   display: inline-flex;
-  min-height: 48px;
+  vertical-align: middle;
+  position: relative;
+  min-width: 0;
+  max-width: 100%;
+  border-radius: var(--r-md);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1875rem; /* 19px — WCAG "large" when bold */
+  line-height: 1.1;
+  letter-spacing: 0.005em;
   -webkit-user-select: none;
   user-select: none;
   touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
+
 .face {
-  flex: 1;
+  position: relative;
+  flex: 1 1 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: var(--h);
+  padding: 6px var(--pad-x);
+  border-radius: inherit;
+  background: var(--face);
+  color: var(--text);
+  box-shadow:
+    inset 0 0 0 var(--ring-w) var(--ring),
+    0 var(--edge-size) 0 var(--edge-c);
+  transform: translateY(0);
+  transition:
+    transform var(--dur-instant) var(--ease-out),
+    box-shadow var(--dur-instant) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    filter var(--dur-fast) var(--ease-out);
+}
+
+.content {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 0 22px;
-  border-radius: inherit;
-  background: var(--face);
-  color: var(--text);
-  box-shadow: 0 var(--edge) 0 var(--edge-c);
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.0625rem;
-  letter-spacing: 0.01em;
-  transform: translateY(0);
-  transition: transform 90ms ease, box-shadow 90ms ease, filter 150ms ease;
-  margin-bottom: var(--edge);
+  min-width: 0;
 }
-.btn:hover .face {
-  filter: brightness(1.04);
+.label {
+  min-width: 0;
+  text-align: center;
+  text-wrap: balance;
 }
-.btn:active .face {
-  transform: translateY(var(--edge));
-  box-shadow: 0 0 0 var(--edge-c);
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline: -2px;
 }
-.btn:disabled {
-  cursor: not-allowed;
+
+/* ---- Press ---- */
+.btn:active:not(:disabled):not([data-loading]) .face {
+  transform: translateY(var(--edge-size));
+  box-shadow:
+    inset 0 0 0 var(--ring-w) var(--ring),
+    0 0 0 var(--edge-c);
 }
-.btn:disabled .face {
-  --face: var(--oat);
-  --edge-c: var(--oat-edge);
-  --text: var(--ink-3);
+@media (hover: hover) {
+  .btn:hover:not(:disabled):not([data-loading]) .face {
+    filter: brightness(1.06) saturate(1.04);
+  }
 }
-.block {
-  display: flex;
-  width: 100%;
+
+/* ---- Variants ---- */
+.solid {
+  /* colors come from data-tone */
 }
-.sm {
-  min-height: 36px;
+.solid .face {
+  /* a whisper of top light so faces don't read as flat stickers */
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0) 55%);
 }
-.sm .face {
-  padding: 0 14px;
-  font-size: 0.9375rem;
+.solid.sm {
+  --face: var(--tone-strong);
+  --edge-c: color-mix(in oklab, var(--tone-strong), #1a0d06 26%);
 }
-.lg .face {
-  min-height: 56px;
-  font-size: 1.1875rem;
-}
-.primary {
-}
+
 .secondary {
   --face: var(--surface);
-  --edge-c: var(--surface-edge);
+  --edge-c: var(--line-strong);
+  --ring: var(--line-strong);
+  --ring-w: 2px;
   --text: var(--ink);
+  --edge-size: 2px;
+  --reserve: 2px;
 }
 .secondary .face {
-  border: 2px solid var(--surface-edge);
+  min-height: calc(var(--h) + 2px);
 }
+.secondary[data-tone] {
+  --text: var(--tone-ink);
+}
+@media (hover: hover) {
+  .secondary:hover:not(:disabled):not([data-loading]) .face {
+    filter: none;
+    background-color: var(--surface-2);
+  }
+}
+
+.soft {
+  --face: var(--tone-soft);
+  --edge-c: var(--tone-soft-edge);
+  --ring: var(--tone-soft-edge);
+  --ring-w: 2px;
+  --text: var(--tone-ink);
+  --edge-size: 2px;
+  --reserve: 2px;
+}
+.soft .face {
+  min-height: calc(var(--h) + 2px);
+}
+
 .ghost {
   --face: transparent;
   --edge-c: transparent;
   --text: var(--ink-2);
+  --edge-size: 0px;
 }
-.matcha {
-  --face: var(--matcha);
-  --edge-c: var(--matcha-edge);
+.ghost[data-tone] {
+  --text: var(--tone-ink);
 }
-.sky {
-  --face: var(--sky);
-  --edge-c: var(--sky-edge);
+@media (hover: hover) {
+  .ghost:hover:not(:disabled) .face {
+    filter: none;
+    background-color: var(--surface-2);
+    color: var(--ink);
+  }
+  .ghost[data-tone]:hover:not(:disabled) .face {
+    background-color: var(--tone-soft);
+    color: var(--tone-ink);
+  }
 }
-.honey {
-  --face: var(--honey);
-  --edge-c: var(--honey-edge);
-  --text: var(--ink);
+.ghost:active:not(:disabled) .face {
+  background-color: var(--surface-3);
+  transform: translateY(1px);
 }
-.berry,
-.danger {
-  --face: var(--berry);
-  --edge-c: var(--berry-edge);
+
+/* ---- Sizes ---- */
+.sm {
+  --h: 40px;
+  --pad-x: 16px;
+  font-size: 1rem;
+  font-weight: 700;
 }
-.icon {
-  display: inline-flex;
+.sm .content {
+  gap: 6px;
+}
+.md {
+  --h: 48px;
+  --pad-x: 24px;
+}
+.lg {
+  --h: 56px;
+  --pad-x: 32px;
+  font-size: 1.3125rem;
+  border-radius: var(--r-lg);
+}
+
+.block {
+  display: flex;
+  width: 100%;
+}
+.iconOnly .face {
+  padding: 0;
+  width: var(--h);
+  flex: 0 0 auto;
+}
+.iconOnly.secondary .face,
+.iconOnly.soft .face {
+  width: calc(var(--h) + 2px);
+}
+.iconOnly.ghost {
+  border-radius: var(--r-pill);
+}
+.iconOnly .icon {
+  margin: 0;
+}
+
+/* ---- States ---- */
+.btn:disabled {
+  cursor: not-allowed;
+}
+.btn:disabled .face {
+  --face: var(--surface-3);
+  --edge-c: var(--line-strong);
+  --ring: var(--line-strong);
+  --text: var(--ink-disabled);
+  background-image: none;
+  filter: none;
+}
+.ghost:disabled .face {
+  --face: transparent;
+  --edge-c: transparent;
+}
+
+.btn[data-loading] {
+  cursor: progress;
+}
+.btn[data-loading] .content {
+  visibility: hidden;
+}
+.spinner {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--text);
+}
+
+/* Effective reduced motion (system or settings) is mirrored on <html data-motion> by theme.ts. */
+:global(html[data-motion='reduce']) .face {
+  transition-duration: 1ms;
 }

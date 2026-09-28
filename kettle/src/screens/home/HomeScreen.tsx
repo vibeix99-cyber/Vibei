@@ -1,31 +1,23 @@
-/** Home ("Today") — PLACEHOLDER. OWNER: home/onboarding/settings area. */
-import { Mascot } from '@/art';
-import { Button, Card, ProgressBar } from '@/ui';
-import { useStreak, useToday, useLevel } from '@/progress';
-import { useSettings } from '@/state/settings';
+/** Home — "Today". OWNER: home area. */
 import { useTimer } from '@/timer';
+import { StatusBar } from './StatusBar';
+import { Hero, GoalCard } from './Hero';
+import { Composer, ResumeBanner } from './Composer';
+import { RecipesCard, TodayBrews } from './Recipes';
+import { useHomeData } from './useHomeData';
+import s from './Home.module.css';
 
 export default function HomeScreen() {
-  const name = useSettings((s) => s.name);
-  const focusMin = useSettings((s) => s.focusMin);
-  const today = useToday();
-  const streak = useStreak();
-  const level = useLevel();
-  const startFocus = useTimer((s) => s.startFocus);
+  const data = useHomeData();
+  const active = useTimer((t) => t.status !== 'idle');
   return (
-    <div style={{ display: 'grid', gap: 16 }}>
-      <h1>Good day{name ? `, ${name}` : ''}</h1>
-      <Mascot pose="wave" size={140} />
-      <Card>
-        {streak.current} day streak · Level {level.level} · {level.leaves} leaves
-      </Card>
-      <Card>
-        <p>Today: {Math.round(today.focusMs / 60000)} / {today.goalMin} min</p>
-        <ProgressBar value={today.goalProgress} label="Daily goal" />
-      </Card>
-      <Button size="lg" block sfx="start" onClick={() => startFocus()}>
-        Put the kettle on · {focusMin} min
-      </Button>
+    <div className={s.screen}>
+      <Hero data={data} status={<StatusBar data={data} />} />
+      {active ? <ResumeBanner /> : null}
+      <GoalCard data={data} />
+      {!active && <Composer recent={data.recentIntentions} />}
+      <RecipesCard quests={data.quests} />
+      <TodayBrews sessions={data.todays} />
     </div>
   );
 }

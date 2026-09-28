@@ -1,32 +1,450 @@
-/** Focus + Break session screen — PLACEHOLDER. OWNER: core-loop area. */
-import { useTimer, useRemaining } from '@/timer';
-import { formatClock } from '@/lib/format';
-import { Button } from '@/ui';
+/**
+ * Focus + tea-break session screen (#/focus). OWNER: core-loop area.
+ *
+ * Views (derived, never stored):
+ *   focus    — timer running/paused in a brew
+ *   whistle  — the ~2 s beat right after a brew completes (kettle whistles) → /done
+ *   break    — tea break (short or long), sky-toned
+ *   over     — a break ended and the next brew wasn't auto-started
+ *   none     — nothing to show → home (or /done when a celebration is pending)
+ *
+ * Layouts: phone portrait (scene card → timer → thumb-reach controls),
+ * phone landscape + desktop (scene | panel). Zen: chrome fades after 7 s idle.
+ * Keys: Space pause/resume · Esc end sheet · + add 5 min · M mute.
+ */
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
+import { TimerAnnouncer, elapsedActiveMs, useRemaining, useTimer } from '@/timer';
+import { useShortcut } from '@/lib/shortcuts';
+import { clock } from '@/lib/clock';
+import { formatClock, spokenDuration } from '@/lib/format';
+import { useReducedMotion } from '@/lib/useReducedMotion';
+import { ease, spring } from '@/lib/motion';
+import { audio } from '@/audio';
+import { Icon, Mascot } from '@/art';
+import { Button, Digits, IconButton, Kbd } from '@/ui';
 import { Nook } from '@/scene';
-import { useUnlockedItems } from '@/progress';
+import { useProgress, useUnlockedItems } from '@/progress';
+import { useSettings } from '@/state/settings';
+import { navigate } from '@/app/router';
+import { endFocusEarly, leaveBreakOver, skipBreak, startNextBrew, useFlow } from '@/app/flow';
+import { TimerRing } from './parts/TimerRing';
+import { RoundButton } from './parts/RoundButton';
+import { EndSheet } from './parts/EndSheet';
+import { AmbienceSheet } from './parts/AmbienceSheet';
+import { CycleDots, TagChip } from './parts/bits';
+import { ambientOption, weatherFor } from './parts/ambience';
+import { useZen } from './parts/hooks';
+import { BreakIdeas } from './break/BreakIdeas';
+import s from './FocusScreen.module.css';
+
+type View = 'focus' | 'whistle' | 'break' | 'over' | 'none';
+const FIVE_MIN = 5 * 60_000;
+
+function focusStatus(progress: number, remainingMs: number): string {
+  if (remainingMs <= 60_000) return 'Almost whistling…';
+  if (progress < 0.34) return 'Kettle’s warming up…';
+  if (progress < 0.8) return 'Deep in it. Nice.';
+  return 'Nearly there…';
+}
+
+/** Cycle dots + label. A skipped long break stays owed, so `done` can exceed `every`. */
+function cycleInfo(view: View, done: number, every: number, isLong: boolean) {
+  const filled = Math.min(every, done);
+  switch (view) {
+    case 'focus':
+      return done < every
+        ? { filled, current: done + 1, label: `Brew ${done + 1} of ${every}` }
+        : { filled, current: 0, label: 'Long tea break next' };
+    case 'whistle':
+      return { filled, current: 0, label: done >= every ? 'Long tea break earned' : `Brew ${done} of ${every} done` };
+    case 'break':
+      return isLong ? { filled: every, current: 0, label: `${every} of ${every} brewed` } : { filled, current: 0, label: `${done} of ${every} brewed` };
+    default:
+      return done < every
+        ? { filled, current: done + 1, label: `Next: brew ${done + 1} of ${every}` }
+        : { filled, current: 0, label: 'Long tea break next' };
+  }
+}
 
 export default function FocusScreen() {
   const t = useTimer();
-  const { remainingMs, progress } = useRemaining();
+  const tv = useRemaining();
+  const whistle = useFlow((f) => f.whistle);
+  const breakOver = useFlow((f) => f.breakOver);
+  const hasReport = useProgress((p) => p.lastReport != null);
   const items = useUnlockedItems();
-  const isFocus = t.phase === 'focus';
+  const reduced = useReducedMotion();
+  const ambient = useSettings((st) => st.ambient);
+  const muted = useSettings((st) => st.muted);
+  const every = useSettings((st) => Math.max(1, st.longBreakEvery));
+  const setSettings = useSettings((st) => st.set);
+
+  const [endOpen, setEndOpen] = useState(false);
+  const [ambOpen, setAmbOpen] = useState(false);
+  const [bumps, setBumps] = useState<number[]>([]);
+
+  const view: View =
+    t.status !== 'idle' ? (t.phase === 'focus' ? 'focus' : 'break') : whistle ? 'whistle' : breakOver ? 'over' : 'none';
+  const paused = t.status === 'paused';
+  const isLong = (view === 'break' && t.phase === 'longBreak') || (view === 'over' && breakOver?.phase === 'longBreak');
+  const sheetOpen = endOpen || ambOpen;
+  const zen = useZen(view === 'focus' && !paused && !sheetOpen);
+
+  // Nothing to show here → celebration if one is pending, else home.
+  useEffect(() => {
+    if (view === 'none') navigate(hasReport ? '/done' : '/', { replace: true });
+  }, [view, hasReport]);
+
+  // Close the end sheet if the phase changes under it.
+  useEffect(() => {
+    if (view !== 'focus') setEndOpen(false);
+  }, [view]);
+
+  // Ambience follows the session; the whistle gets the stage to itself.
+  useEffect(() => {
+    if (view === 'focus' || view === 'break') audio.setAmbient(ambient, { fadeMs: 1200 });
+    else audio.setAmbient('none', { fadeMs: view === 'whistle' ? 900 : 1500 });
+  }, [view, ambient]);
+  useEffect(() => () => audio.setAmbient('none', { fadeMs: 1200 }), []);
+
+  const toggle = useCallback(() => {
+    const st = useTimer.getState();
+    if (st.status === 'idle') return;
+    audio.play(st.status === 'running' ? 'pause' : 'resume');
+    st.toggle();
+  }, []);
+
+  const addFive = useCallback(() => {
+    const st = useTimer.getState();
+    if (st.status === 'idle' || st.phase !== 'focus') return;
+    st.addTime(FIVE_MIN);
+    setBumps((b) => [...b.slice(-2), clock.now()]);
+  }, []);
+
+  const toggleMute = useCallback(() => {
+    const next = !useSettings.getState().muted;
+    setSettings({ muted: next });
+    audio.sync();
+    if (!next) audio.play('toggle');
+  }, [setSettings]);
+
+  const active = view === 'focus' || view === 'break';
+  useShortcut('Space', toggle, { enabled: active });
+  useShortcut(
+    'Escape',
+    () => {
+      audio.play('whoosh');
+      setEndOpen(true);
+    },
+    { enabled: view === 'focus' },
+  );
+  useShortcut(
+    ['+', '='],
+    () => {
+      audio.play('addTime');
+      addFive();
+    },
+    { enabled: view === 'focus' },
+  );
+  useShortcut('m', toggleMute, { enabled: view !== 'none' });
+
+  // Focused time so far (for the end sheet copy).
+  const focusedMs = useMemo(() => (endOpen ? elapsedActiveMs(useTimer.getState(), clock.now()) : 0), [endOpen]);
+
+  if (view === 'none') return <div className={s.screen} data-view="none" data-focus-view="none" />;
+
+  const amb = ambientOption(ambient);
+  const cycle = cycleInfo(view, t.completedInCycle, every, isLong);
+  const clockText = formatClock(tv.seconds * 1000);
+  const heading =
+    view === 'break' ? (isLong ? 'Long tea break' : 'Tea break') : view === 'over' ? 'Break’s over' : t.intention ? `Brewing: ${t.intention}` : 'Focus session';
+  const nookMode = view === 'break' ? 'break' : view === 'over' ? 'idle' : 'focus';
+  const status =
+    view === 'whistle' ? 'Whistling…' : paused ? 'Paused · the kettle will wait' : view === 'break' ? 'left to sip' : focusStatus(tv.progress, tv.remainingMs);
+
   return (
-    <div style={{ minHeight: '100vh', display: 'grid', gap: 16, padding: 16, alignContent: 'start' }}>
-      <div style={{ height: 280 }}>
-        <Nook mode={isFocus ? 'focus' : 'break'} progress={progress} items={items} />
-      </div>
-      <p>{isFocus ? 'Kettle’s warming up…' : 'Tea time'}</p>
-      <div role="timer" style={{ fontFamily: 'var(--font-display)', fontSize: 72, fontWeight: 600 }}>
-        {formatClock(remainingMs)}
-      </div>
-      <div style={{ display: 'flex', gap: 12 }}>
-        <Button variant="secondary" onClick={() => t.toggle()} sfx={t.status === 'running' ? 'pause' : 'resume'}>
-          {t.status === 'running' ? 'Pause' : 'Resume'}
-        </Button>
-        <Button variant="ghost" onClick={() => t.end('user')} sfx="cancel">
-          End
-        </Button>
-      </div>
+    <div
+      className={s.screen}
+      data-view={view}
+      data-focus-view={view}
+      data-paused={paused || undefined}
+      data-long={isLong || undefined}
+      data-zen={zen || undefined}
+      data-reduced={reduced || undefined}
+    >
+      <div className={s.wash} aria-hidden="true" />
+      <h1 className="sr-only">{heading}</h1>
+
+      {/* ---------- top bar ---------- */}
+      <header className={`${s.top} ${s.chrome}`}>
+        <div className={s.topLeft}>
+          {view === 'break' && <span className={s.phasePill}>{isLong ? 'Long tea break' : 'Tea break'}</span>}
+          <CycleDots total={every} filled={cycle.filled} current={cycle.current} label={cycle.label} />
+        </div>
+        <div className={s.topRight}>
+          {view !== 'over' && (
+            <Button
+              variant="secondary"
+              size="sm"
+              icon={<Icon name={amb.icon} size={20} />}
+              onClick={() => setAmbOpen(true)}
+              aria-label={`Ambience: ${amb.label}. Change`}
+              aria-haspopup="dialog"
+              sfx="whoosh"
+            >
+              {amb.label}
+            </Button>
+          )}
+          {view === 'over' ? (
+            <IconButton variant="secondary" size="sm" label="Close" icon={<Icon name="close" size={20} />} onClick={leaveBreakOver} />
+          ) : (
+            <IconButton
+              variant="secondary"
+              size="sm"
+              sfx={false}
+              label={muted ? 'Turn sound on' : 'Mute sounds'}
+              aria-pressed={muted}
+              icon={<Icon name={muted ? 'mute' : 'sound'} size={20} />}
+              onClick={toggleMute}
+            />
+          )}
+        </div>
+      </header>
+
+      {/* ---------- the nook ---------- */}
+      <motion.div
+        className={s.scene}
+        initial={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.97 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={reduced ? { duration: 0.2 } : spring.gentle}
+      >
+        <div className={s.nookBox}>
+          <Nook
+            mode={nookMode}
+            progress={view === 'whistle' ? 1 : tv.progress}
+            whistling={view === 'whistle'}
+            weather={weatherFor(ambient)}
+            timeOfDay="auto"
+            items={items}
+            className={s.nook}
+          />
+        </div>
+        <AnimatePresence>
+          {paused && (
+            <motion.div key="veil" className={s.veil} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.35 }}>
+              <span className={s.veilPill}>
+                <Icon name="pause" size={18} /> Paused
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+
+      {/* ---------- panel ---------- */}
+      <main className={s.panel}>
+        <AnimatePresence mode="wait" initial={false}>
+          {view === 'over' ? (
+            <motion.div
+              key="over"
+              className={s.over}
+              initial={reduced ? { opacity: 0 } : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={reduced ? { duration: 0.2 } : spring.cozy}
+            >
+              <div className={s.overChai}>
+                <Mascot pose="wave" size={132} animate={!reduced} />
+              </div>
+              <h2 className={s.overTitle}>Break’s over</h2>
+              <p className={s.overSub}>
+                {breakOver?.whileAway ? 'Your tea break ended while you were away. ' : ''}
+                {t.intention ? (
+                  <>
+                    Ready for another brew of <strong>{t.intention}</strong>?
+                  </>
+                ) : (
+                  'Ready for another brew?'
+                )}
+              </p>
+              <div className={s.overActions}>
+                <Button block size="lg" sfx="start" icon={<Icon name="play" size={24} />} onClick={startNextBrew}>
+                  Put the kettle on
+                </Button>
+                <Button block variant="ghost" onClick={leaveBreakOver}>
+                  Done for now
+                </Button>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key={view === 'break' ? 'break' : 'focus'}
+              className={s.panelInner}
+              initial={reduced ? { opacity: 0 } : { opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reduced ? { opacity: 0 } : { opacity: 0, y: -10 }}
+              transition={{ duration: reduced ? 0.2 : 0.35, ease: ease.out }}
+            >
+              {view === 'break' ? (
+                <div className={s.breakHead}>
+                  <div className={s.breakChai}>
+                    <Mascot pose="sip" size={84} animate={!reduced} />
+                  </div>
+                  <div className={s.breakText}>
+                    <h2 className={s.breakTitle}>{isLong ? 'Long tea break' : 'Tea time'}</h2>
+                    <p className={s.breakSub}>{isLong ? `${every} brews done. Put your feet up.` : 'Stretch, sip, look out the window.'}</p>
+                  </div>
+                  <IconButton
+                    variant={paused ? 'sky' : 'secondary'}
+                    size="sm"
+                    sfx={false}
+                    label={paused ? 'Resume break' : 'Pause break'}
+                    icon={<Icon name={paused ? 'play' : 'pause'} size={20} />}
+                    onClick={toggle}
+                  />
+                </div>
+              ) : (
+                <div className={`${s.intention} ${s.chrome}`}>
+                  <span className={s.intentionText}>{t.intention || 'Focus time'}</span>
+                  {t.tag && <TagChip tag={t.tag} />}
+                </div>
+              )}
+
+              {/* dial */}
+              <div className={s.dialWrap}>
+                <TimerRing value={view === 'whistle' ? 1 : undefined} thickness={view === 'break' ? 6 : 7} className={s.dial}>
+                  <div className={s.dialInner}>
+                    <AnimatePresence mode="popLayout" initial={false}>
+                      {view === 'whistle' ? (
+                        <motion.span
+                          key="done"
+                          className={s.check}
+                          initial={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.4 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={reduced ? { duration: 0.2 } : spring.joyful}
+                        >
+                          <CheckMark />
+                        </motion.span>
+                      ) : (
+                        <motion.span key="clock" className={s.clock} exit={{ opacity: 0, scale: 0.8 }}>
+                          <Digits value={clockText} roll={reduced ? false : 'down'} label={null} className={clockText.length > 5 ? s.digitsLong : s.digits} />
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
+                    <span className={s.status} role="timer" aria-label={view === 'whistle' ? 'Done' : `${spokenDuration(tv.remainingMs)} left`}>
+                      {status}
+                    </span>
+                  </div>
+                </TimerRing>
+                {view === 'whistle' && !reduced && <Steam />}
+                <AnimatePresence>
+                  {bumps.map((b) => (
+                    <motion.span
+                      key={b}
+                      className={s.bump}
+                      aria-hidden="true"
+                      initial={{ opacity: 0, y: 8, scale: 0.8 }}
+                      animate={{ opacity: [0, 1, 1, 0], y: reduced ? 0 : -36, scale: 1 }}
+                      transition={{ duration: 1.3, ease: ease.out }}
+                      onAnimationComplete={() => setBumps((x) => x.filter((v) => v !== b))}
+                    >
+                      +5 min
+                    </motion.span>
+                  ))}
+                </AnimatePresence>
+              </div>
+
+              {view === 'break' && <BreakIdeas long={isLong} reduced={reduced} seed={t.completedInCycle} />}
+
+              {/* controls */}
+              {view === 'break' ? (
+                <div className={s.breakActions}>
+                  <Button variant="secondary" sfx="cancel" onClick={skipBreak} className={s.skipBtn}>
+                    Skip break
+                  </Button>
+                  <Button sfx="start" onClick={startNextBrew} className={s.nextBtn}>
+                    <span className={s.labelLong}>Start next brew</span>
+                    <span className={s.labelShort}>Next brew</span>
+                  </Button>
+                </div>
+              ) : (
+                <div className={`${s.controls} ${view === 'whistle' ? s.controlsGone : ''}`}>
+                  <RoundButton
+                    size={60}
+                    sfx="addTime"
+                    label="Add 5 minutes"
+                    caption="Add time"
+                    icon={<span className={s.plusFive}>+5</span>}
+                    onClick={addFive}
+                    disabled={view !== 'focus'}
+                    className={s.chrome}
+                  />
+                  <RoundButton
+                    size={88}
+                    sfx={false}
+                    variant={paused ? 'primary' : 'secondary'}
+                    label={paused ? 'Resume' : 'Pause'}
+                    icon={<Icon name={paused ? 'play' : 'pause'} size={38} />}
+                    onClick={toggle}
+                    disabled={view !== 'focus'}
+                    className={s.main}
+                  />
+                  <RoundButton
+                    size={60}
+                    sfx="whoosh"
+                    label="End session"
+                    caption="End"
+                    icon={<Icon name="stop" size={24} />}
+                    onClick={() => setEndOpen(true)}
+                    disabled={view !== 'focus'}
+                    aria-haspopup="dialog"
+                    className={s.chrome}
+                  />
+                </div>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <p className={`${s.keys} ${s.chrome}`} aria-hidden="true">
+          {view === 'focus' && (
+            <>
+              <Kbd>Space</Kbd> pause <span className={s.sep}>·</span> <Kbd>+</Kbd> 5 min <span className={s.sep}>·</span> <Kbd>Esc</Kbd> end
+            </>
+          )}
+        </p>
+      </main>
+
+      {active && <TimerAnnouncer />}
+
+      <EndSheet
+        open={endOpen}
+        focusedMs={focusedMs}
+        onKeep={() => setEndOpen(false)}
+        onEnd={() => {
+          setEndOpen(false);
+          endFocusEarly();
+        }}
+      />
+      <AmbienceSheet open={ambOpen} onClose={() => setAmbOpen(false)} />
+    </div>
+  );
+}
+
+function CheckMark() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M5.5 12.5l4.2 4.2 8.8-9.4" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+/** Soft steam puffs rising from the dial while the kettle whistles. */
+function Steam() {
+  return (
+    <div className={s.steam} aria-hidden="true">
+      {[0, 1, 2, 3, 4].map((i) => (
+        <span key={i} className={s.puff} style={{ ['--i' as string]: i }} />
+      ))}
     </div>
   );
 }

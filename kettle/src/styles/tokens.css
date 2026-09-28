@@ -1,46 +1,45 @@
-/* Design tokens — INITIAL. OWNER: design-system area. All colors via tokens. */
+/*
+ * Kettle design tokens. OWNER: design-system area.
+ *
+ * Two themes: "paper" (light, default) and "plum lamplight" (dark).
+ * `data-theme` on <html> is set by src/app/theme.ts (and an inline boot script
+ * in index.html so the first paint is already right).
+ *
+ * Every text/background pairing is checked by `node scripts/contrast.mjs`
+ * (WCAG AA: 4.5:1 body text, 3:1 for >=18.66px bold / non-text UI).
+ *
+ * Tone recipe — each tone (persimmon, matcha, honey, sky, berry, plum) has:
+ *   --<tone>            face: button faces, fills, rings
+ *   --<tone>-hi         light highlight (sheens, inner stripes, illustration)
+ *   --<tone>-edge       the darker tactile bottom edge under a face
+ *   --<tone>-strong     deeper face for SMALL solid controls (white text >= 4.5:1)
+ *   --<tone>-soft       tinted background (selected chips, tinted cards)
+ *   --<tone>-soft-edge  border/edge for tinted surfaces
+ *   --<tone>-ink        tone-colored text on soft / surface / bg (>= 4.5:1)
+ *   --<tone>-on         text on the face (>= 3:1 large bold; buttons use 19px/700)
+ */
+
 :root {
-  --font-display: 'Fredoka Variable', 'Fredoka', ui-rounded, system-ui, sans-serif;
-  --font-body: 'Nunito Variable', 'Nunito', ui-rounded, system-ui, sans-serif;
+  /* ---------- Type ---------- */
+  --font-display: 'Fredoka Variable', 'Fredoka', ui-rounded, 'SF Pro Rounded', system-ui, sans-serif;
+  --font-body: 'Nunito Variable', 'Nunito', ui-rounded, 'SF Pro Rounded', system-ui, sans-serif;
 
-  --paper: #fff9f0;
-  --paper-2: #fdf1e1;
-  --oat: #f3e6d3;
-  --oat-edge: #e3d2b9;
-  --ink: #3b2a20;
-  --ink-2: #6f5a4b;
-  --ink-3: #9a8574;
+  --text-display-xl: clamp(2.5rem, 1.9rem + 2.6vw, 3.5rem); /* 40 → 56 */
+  --text-display-l: clamp(2rem, 1.65rem + 1.4vw, 2.5rem); /* 32 → 40 */
+  --text-display-m: clamp(1.625rem, 1.5rem + 0.5vw, 1.875rem); /* 26 → 30 */
+  --text-title: 1.3125rem; /* 21 */
+  --text-headline: 1.0625rem; /* 17 — Nunito 800 */
+  --text-body: 1rem; /* 16 */
+  --text-body-s: 0.875rem; /* 14 */
+  --text-caption: 0.8125rem; /* 13 */
+  --text-overline: 0.75rem; /* 12 */
 
-  --persimmon: #f2733a;
-  --persimmon-edge: #c9551f;
-  --persimmon-soft: #ffe3d2;
-  --matcha: #6fb25c;
-  --matcha-edge: #4e8c3d;
-  --matcha-soft: #e2f3d8;
-  --honey: #ffc23d;
-  --honey-edge: #d99a14;
-  --honey-soft: #fff0c7;
-  --sky: #5aaee0;
-  --sky-edge: #3b8bbd;
-  --sky-soft: #dcf0fb;
-  --berry: #ec6f86;
-  --berry-edge: #c54d65;
-  --berry-soft: #fde1e6;
-  --plum: #2a2340;
+  --weight-display: 600;
+  --weight-body: 500;
+  --weight-strong: 800;
 
-  --surface: #ffffff;
-  --surface-edge: var(--oat-edge);
-  --focus-ring: #3b8bbd;
-
-  --r-sm: 10px;
-  --r-md: 16px;
-  --r-lg: 22px;
-  --r-xl: 28px;
-  --r-pill: 999px;
-
-  --edge: 4px;
-  --shadow-soft: 0 10px 30px rgba(59, 42, 32, 0.08);
-
+  /* ---------- Space (4px grid) ---------- */
+  --space-0: 2px;
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -48,26 +47,249 @@
   --space-5: 24px;
   --space-6: 32px;
   --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --gutter: 16px; /* page side padding, grows with the viewport */
 
-  color-scheme: light;
+  /* ---------- Shape ---------- */
+  --r-xs: 6px;
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 22px;
+  --r-xl: 28px;
+  --r-pill: 999px;
+  --edge: 4px; /* tactile bottom edge */
+  --border: 2px;
+  --tap: 44px; /* minimum touch target */
+
+  /* ---------- Layers ---------- */
+  --z-raised: 1;
+  --z-sticky: 10;
+  --z-nav: 50;
+  --z-overlay: 100;
+  --z-modal: 110;
+  --z-toast: 200;
+  --z-tooltip: 300;
+  --z-skip: 1000;
+
+  /* ---------- Motion ---------- */
+  --dur-instant: 90ms;
+  --dur-fast: 150ms;
+  --dur-base: 240ms;
+  --dur-slow: 420ms;
+  --dur-slower: 700ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in: cubic-bezier(0.55, 0, 1, 0.45);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  /* "cozy bounce": damped spring, ~6% overshoot. Use with --dur-slow. */
+  --ease-spring: linear(0, 0.064, 0.211, 0.392, 0.571, 0.729, 0.855, 0.947, 1.008, 1.044, 1.06, 1.063, 1.057, 1.047, 1.035, 1.024, 1.015, 1.007, 1.002, 0.999, 0.997, 0.996, 0.996, 0.997, 1);
+  /* joyful bounce (celebrations), ~20% overshoot. Use with --dur-slower. */
+  --ease-bounce: linear(0, 0.093, 0.311, 0.573, 0.82, 1.014, 1.139, 1.197, 1.202, 1.17, 1.119, 1.065, 1.018, 0.984, 0.965, 0.958, 0.961, 0.969, 0.98, 0.991, 1, 1.005, 1.008, 1.009, 1.007, 1.005, 1.003, 1.001, 1);
+
+  /* ---------- Layout ---------- */
+  --sidebar-w: 248px;
+  --rail-w: 344px;
+  --content-max: 680px;
+  --tabbar-h: 68px;
 }
 
+/* ================= Light — "paper" ================= */
+:root,
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  /* Surfaces: page → cards → wells */
+  --bg: #fff9f0; /* paper */
+  --bg-sunken: #f9efe1;
+  --surface: #fffdfa; /* cards */
+  --surface-2: #fcf4e9; /* hover / secondary fill inside cards */
+  --surface-3: #f3e6d3; /* oat: tracks, wells, inputs */
+  --line: #eddfcb; /* 2px borders */
+  --line-strong: #e0cdb2; /* 4px tactile edges */
+
+  /* Text */
+  --ink: #3b2a20; /* espresso */
+  --ink-2: #6b5444;
+  --ink-3: #78624f;
+  --ink-disabled: #b3a08e;
+  --inverse: #3b2a20;
+  --ink-inverse: #fff9f0;
+
+  /* Tones */
+  --persimmon: #e8612b;
+  --persimmon-hi: #ff9d68;
+  --persimmon-edge: #b8481a;
+  --persimmon-strong: #c9501f;
+  --persimmon-soft: #ffe8d9;
+  --persimmon-soft-edge: #f7cbb0;
+  --persimmon-ink: #a9421a;
+  --persimmon-on: #ffffff;
+
+  --matcha: #4f9e3d;
+  --matcha-hi: #8fd17b;
+  --matcha-edge: #3a7a2c;
+  --matcha-strong: #3e8430;
+  --matcha-soft: #e4f3da;
+  --matcha-soft-edge: #c3e2ae;
+  --matcha-ink: #336d25;
+  --matcha-on: #ffffff;
+
+  --honey: #ffc23d;
+  --honey-hi: #ffe08f;
+  --honey-edge: #d6950f;
+  --honey-strong: #ffb81f;
+  --honey-soft: #fff1cc;
+  --honey-soft-edge: #f5da92;
+  --honey-ink: #7f5000;
+  --honey-on: #3b2a20;
+
+  --sky: #3494d1;
+  --sky-hi: #86c8f0;
+  --sky-edge: #23709f;
+  --sky-strong: #2479b0;
+  --sky-soft: #ddeffb;
+  --sky-soft-edge: #b3d8f1;
+  --sky-ink: #1c6497;
+  --sky-on: #ffffff;
+
+  --berry: #df4f6b;
+  --berry-hi: #ff98aa;
+  --berry-edge: #ad324d;
+  --berry-strong: #c23857;
+  --berry-soft: #fde3e8;
+  --berry-soft-edge: #f5bfca;
+  --berry-ink: #a93350;
+  --berry-on: #ffffff;
+
+  --plum: #7352b0;
+  --plum-hi: #b39af0;
+  --plum-edge: #533891;
+  --plum-strong: #6546a3;
+  --plum-soft: #eee7f9;
+  --plum-soft-edge: #d6c8f0;
+  --plum-ink: #5b3c97;
+  --plum-on: #ffffff;
+
+  /* Utility */
+  --focus-ring: #2477b8;
+  --scrim: rgba(43, 28, 20, 0.44);
+  --highlight: rgba(255, 255, 255, 0.38); /* inner sheen stripe on fills */
+  --glow: rgba(255, 186, 110, 0); /* lamplight glow (dark only) */
+
+  --shadow-1: 0 1px 2px rgba(59, 42, 32, 0.06), 0 3px 10px rgba(59, 42, 32, 0.06);
+  --shadow-2: 0 4px 12px rgba(59, 42, 32, 0.08), 0 14px 32px rgba(59, 42, 32, 0.1);
+  --shadow-3: 0 12px 32px rgba(59, 42, 32, 0.14), 0 32px 72px rgba(59, 42, 32, 0.16);
+
+  /* ---- Legacy aliases (screens written against the initial tokens) ---- */
+  --paper: var(--bg);
+  --paper-2: var(--bg-sunken);
+  --oat: var(--surface-3);
+  --oat-edge: var(--line-strong);
+  --surface-edge: var(--line);
+  --shadow-soft: var(--shadow-2);
+}
+
+/* ================= Dark — "plum lamplight" ================= */
 :root[data-theme='dark'] {
-  --paper: #1f1a2e;
-  --paper-2: #262038;
-  --oat: #332b4a;
-  --oat-edge: #211b31;
-  --ink: #fbefe2;
-  --ink-2: #d2c2b4;
-  --ink-3: #a797a6;
-  --surface: #2b2440;
-  --surface-edge: #1a1528;
-  --persimmon-soft: #4a2e2e;
-  --matcha-soft: #26382a;
-  --honey-soft: #423a26;
-  --sky-soft: #22354a;
-  --berry-soft: #45283a;
-  --focus-ring: #8fd0ff;
-  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.35);
   color-scheme: dark;
+
+  --bg: #241a2d;
+  --bg-sunken: #1d1525;
+  --surface: #2e2339;
+  --surface-2: #372a44;
+  --surface-3: #41334f;
+  --line: #41334f;
+  --line-strong: #4e3e5e;
+
+  --ink: #fcefe3; /* warm cream, never pure white */
+  --ink-2: #dac7bc;
+  --ink-3: #b8a4b1;
+  --ink-disabled: #7a6a84;
+  --inverse: #fcefe3;
+  --ink-inverse: #2b1f1a;
+
+  --persimmon: #e8612b;
+  --persimmon-hi: #ff9d68;
+  --persimmon-edge: #a53e15;
+  --persimmon-strong: #c9501f;
+  --persimmon-soft: #4a2c33;
+  --persimmon-soft-edge: #653a3d;
+  --persimmon-ink: #ffac85;
+  --persimmon-on: #ffffff;
+
+  --matcha: #4f9e3d;
+  --matcha-hi: #8fd17b;
+  --matcha-edge: #336b27;
+  --matcha-strong: #3e8430;
+  --matcha-soft: #28392f;
+  --matcha-soft-edge: #36513b;
+  --matcha-ink: #a0d98b;
+  --matcha-on: #ffffff;
+
+  --honey: #ffc23d;
+  --honey-hi: #ffe08f;
+  --honey-edge: #c0840a;
+  --honey-strong: #ffb81f;
+  --honey-soft: #433629;
+  --honey-soft-edge: #5c4a31;
+  --honey-ink: #ffd47a;
+  --honey-on: #3b2a20;
+
+  --sky: #3494d1;
+  --sky-hi: #86c8f0;
+  --sky-edge: #1f6290;
+  --sky-strong: #2479b0;
+  --sky-soft: #26334f;
+  --sky-soft-edge: #31466a;
+  --sky-ink: #99d0f5;
+  --sky-on: #ffffff;
+
+  --berry: #df4f6b;
+  --berry-hi: #ff98aa;
+  --berry-edge: #9c2d46;
+  --berry-strong: #c23857;
+  --berry-soft: #472640;
+  --berry-soft-edge: #603153;
+  --berry-ink: #ffa3b6;
+  --berry-on: #ffffff;
+
+  --plum: #8a6ad0;
+  --plum-hi: #c2adf7;
+  --plum-edge: #5d42a0;
+  --plum-strong: #6d4fb0;
+  --plum-soft: #3a2e58;
+  --plum-soft-edge: #4b3b72;
+  --plum-ink: #cdbcf8;
+  --plum-on: #ffffff;
+
+  --focus-ring: #8fd0ff;
+  --scrim: rgba(12, 7, 18, 0.62);
+  --highlight: rgba(255, 255, 255, 0.28);
+  --glow: rgba(255, 176, 96, 0.09);
+
+  --shadow-1: 0 1px 2px rgba(8, 4, 14, 0.3), 0 3px 10px rgba(8, 4, 14, 0.22);
+  --shadow-2: 0 4px 12px rgba(8, 4, 14, 0.32), 0 14px 32px rgba(8, 4, 14, 0.34);
+  --shadow-3: 0 12px 32px rgba(8, 4, 14, 0.42), 0 32px 72px rgba(8, 4, 14, 0.46);
+}
+
+@media (min-width: 400px) {
+  :root {
+    --gutter: 20px;
+  }
+}
+@media (min-width: 600px) {
+  :root {
+    --gutter: 24px;
+  }
+}
+@media (min-width: 900px) {
+  :root {
+    --gutter: 32px;
+  }
+}
+@media (min-width: 1600px) {
+  :root {
+    --content-max: 720px;
+    --rail-w: 368px;
+  }
 }

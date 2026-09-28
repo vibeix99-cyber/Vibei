@@ -1,24 +1,84 @@
 .card {
+  position: relative;
+  display: block;
+  min-width: 0;
   background: var(--surface);
-  border: 2px solid var(--surface-edge);
-  border-bottom-width: 4px;
+  color: var(--ink);
+  border: var(--border) solid var(--line);
   border-radius: var(--r-lg);
+}
+.raised {
+  border-bottom-width: var(--edge);
+}
+.flat {
+}
+.sunken {
+  background: var(--bg-sunken);
+  border-color: transparent;
+}
+
+.pad-none {
+  padding: 0;
+}
+.pad-sm {
+  padding: var(--space-3);
+}
+.pad-md {
   padding: var(--space-4);
 }
-.plain {
+.pad-lg {
+  padding: var(--space-5);
 }
-.persimmon {
-  background: var(--persimmon-soft);
+@media (min-width: 600px) {
+  .pad-md {
+    padding: 20px;
+  }
+  .pad-lg {
+    padding: var(--space-6);
+  }
 }
-.matcha {
-  background: var(--matcha-soft);
+
+/* Tinted cards */
+.card[data-tone]:not([data-card-tone='plain']) {
+  background: var(--tone-soft);
+  border-color: var(--tone-soft-edge);
 }
-.honey {
-  background: var(--honey-soft);
+
+/* ---- Pressable ---- */
+.pressable {
+  appearance: none;
+  width: 100%;
+  text-align: inherit;
+  font: inherit;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+  transition:
+    transform var(--dur-instant) var(--ease-out),
+    border-bottom-width var(--dur-instant) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
 }
-.sky {
-  background: var(--sky-soft);
+@media (hover: hover) {
+  .pressable:hover:not(:disabled) {
+    background-color: var(--surface-2);
+  }
+  .pressable[data-tone]:not([data-card-tone='plain']):hover:not(:disabled) {
+    background-color: color-mix(in oklab, var(--tone-soft), var(--tone-soft-edge) 30%);
+  }
 }
-.berry {
-  background: var(--berry-soft);
+.pressable:active:not(:disabled) {
+  transform: translateY(2px);
+  border-bottom-width: var(--border);
+  margin-bottom: 2px;
+}
+.pressable:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+.selected,
+.selected:hover {
+  background: var(--tone-soft) !important;
+  border-color: var(--tone) !important;
 }

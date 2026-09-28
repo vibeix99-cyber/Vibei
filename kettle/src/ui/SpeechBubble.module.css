@@ -1,0 +1,78 @@
+.bubble {
+  --bg: var(--surface);
+  --bd: var(--line);
+  --tail: 14px;
+  position: relative;
+  min-width: 0;
+  max-width: 100%;
+  padding: 12px 16px;
+  border-radius: var(--r-lg);
+  background: var(--bg);
+  border: var(--border) solid var(--bd);
+  border-bottom-width: var(--edge);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+.lg {
+  padding: 16px 20px;
+  font-size: 1.1875rem;
+  border-radius: var(--r-xl);
+}
+.bubble[data-tone] {
+  --bg: var(--tone-soft);
+  --bd: var(--tone-soft-edge);
+}
+/* Tail: a rotated square sharing the bubble's fill + border. */
+.bubble::before {
+  content: '';
+  position: absolute;
+  width: var(--tail);
+  height: var(--tail);
+  background: var(--bg);
+  border: var(--border) solid var(--bd);
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-radius: 0 0 0 4px;
+}
+.tail-none::before {
+  display: none;
+}
+.tail-left {
+  margin-left: calc(var(--tail) / 2);
+}
+.tail-left::before {
+  left: calc(var(--tail) / -2 - 1px);
+  top: var(--tail-at);
+  transform: translateY(-50%) rotate(45deg);
+}
+.tail-right {
+  margin-right: calc(var(--tail) / 2);
+}
+.tail-right::before {
+  right: calc(var(--tail) / -2 - 1px);
+  top: var(--tail-at);
+  transform: translateY(-50%) rotate(-135deg);
+}
+.tail-top {
+  margin-top: calc(var(--tail) / 2);
+}
+.tail-top::before {
+  top: calc(var(--tail) / -2 - 1px);
+  left: var(--tail-at);
+  transform: translateX(-50%) rotate(135deg);
+}
+.tail-bottom {
+  margin-bottom: calc(var(--tail) / 2);
+}
+.tail-bottom::before {
+  bottom: calc(var(--tail) / -2 - 3px);
+  left: var(--tail-at);
+  transform: translateX(-50%) rotate(-45deg);
+  border-width: var(--border) var(--border) var(--edge) var(--edge);
+  border-top-color: transparent;
+  border-right-color: transparent;
+}

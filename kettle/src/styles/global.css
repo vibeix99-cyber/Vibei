@@ -1,6 +1,8 @@
 @import '@fontsource-variable/fredoka/index.css';
 @import '@fontsource-variable/nunito/index.css';
 @import './tokens.css';
+@import './type.css';
+@import './tones.css';
 
 *,
 *::before,
@@ -11,23 +13,38 @@
 html,
 body,
 #root {
-  height: 100%;
+  min-height: 100%;
 }
 
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  background: var(--bg);
+  scrollbar-gutter: stable;
 }
 
 body {
   margin: 0;
-  background: var(--paper);
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--bg);
+  /* Plum lamplight: a warm glow from the top-left (transparent in the light theme). */
+  background-image: radial-gradient(120vmax 90vmax at 8% -18%, var(--glow), transparent 62%);
+  background-attachment: fixed;
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: 1rem;
+  font-size: var(--text-body);
+  font-weight: var(--weight-body);
   line-height: 1.5;
+  font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
+  text-rendering: optimizeLegibility;
+}
+
+#root {
+  isolation: isolate;
 }
 
 h1,
@@ -37,22 +54,45 @@ h4 {
   font-family: var(--font-display);
   line-height: 1.15;
   margin: 0;
-  font-weight: 600;
+  font-weight: var(--weight-display);
+  letter-spacing: -0.005em;
+  text-wrap: balance;
 }
 
 p {
   margin: 0;
+  text-wrap: pretty;
 }
 
-button {
+strong,
+b {
+  font-weight: var(--weight-strong);
+}
+
+button,
+input,
+select,
+textarea {
   font: inherit;
   color: inherit;
 }
 
+img,
+svg {
+  flex-shrink: 0;
+}
+
+::selection {
+  background: var(--honey-soft);
+  color: var(--ink);
+}
+
+:focus {
+  outline: none;
+}
 :focus-visible {
   outline: 3px solid var(--focus-ring);
   outline-offset: 3px;
-  border-radius: 6px;
 }
 
 .sr-only {
@@ -67,10 +107,28 @@ button {
   border: 0;
 }
 
+/* Smooth theme switch — added briefly by src/app/theme.ts when the theme changes. */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition:
+    background-color 360ms var(--ease-in-out),
+    border-color 360ms var(--ease-in-out),
+    color 360ms var(--ease-in-out),
+    fill 360ms var(--ease-in-out),
+    stroke 360ms var(--ease-in-out),
+    box-shadow 360ms var(--ease-in-out) !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  html {
     scroll-behavior: auto !important;
   }
+}
+/* User-forced reduced motion (settings) — set on <html> by theme.ts. */
+html[data-motion='reduce'] *,
+html[data-motion='reduce'] *::before,
+html[data-motion='reduce'] *::after {
+  scroll-behavior: auto !important;
 }

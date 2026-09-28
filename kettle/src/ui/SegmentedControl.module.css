@@ -1,0 +1,107 @@
+.control {
+  display: grid;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--r-lg);
+  background: var(--surface-3);
+  box-shadow: inset 0 2px 0 color-mix(in oklab, var(--line-strong), transparent 40%);
+  min-width: 0;
+}
+.option {
+  position: relative;
+  appearance: none;
+  border: 0;
+  margin: 0;
+  padding: 0 0 3px;
+  background: none;
+  cursor: pointer;
+  min-height: var(--tap);
+  border-radius: calc(var(--r-lg) - 4px);
+  color: var(--ink-2);
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.9375rem;
+  line-height: 1.15;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.md .option {
+  min-height: 44px;
+}
+.lg .option {
+  min-height: 64px;
+}
+@media (hover: hover) {
+  .option:hover:not(:disabled):not(.selected) {
+    color: var(--ink);
+  }
+  .option:hover:not(:disabled):not(.selected) .inner {
+    background: color-mix(in oklab, var(--surface-3), var(--surface) 45%);
+  }
+}
+.option:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.selected {
+  color: var(--ink);
+}
+.control[data-tone] .selected {
+  color: var(--tone-ink);
+}
+.thumb {
+  position: absolute;
+  inset: 0 0 3px;
+  border-radius: inherit;
+  background: var(--surface);
+  box-shadow:
+    inset 0 0 0 2px var(--line),
+    0 3px 0 var(--line-strong);
+}
+.control[data-tone] .thumb {
+  box-shadow:
+    inset 0 0 0 2px var(--tone),
+    0 3px 0 var(--tone);
+  background: var(--tone-soft);
+}
+.inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 100%;
+  padding: 6px 10px;
+  border-radius: inherit;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.icon {
+  display: inline-flex;
+}
+.text {
+  display: grid;
+  gap: 1px;
+  text-align: center;
+  min-width: 0;
+}
+.label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lg .label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.0625rem;
+}
+.sub {
+  font-size: var(--text-caption);
+  font-weight: 700;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.option:active:not(:disabled) .inner {
+  transform: translateY(1px);
+}

@@ -1,135 +1,221 @@
 /**
- * Progress store — MINIMAL PLACEHOLDER. OWNER: progress area.
- * Replace internals freely; keep the exported hook/selector names stable
- * (other areas depend on them) or update all call sites in the same change.
+ * Progress store. OWNER: progress area.
+ *
+ * Persisted (schema v2, versioned migrations) in localStorage under
+ * `kettle:progress`. All game logic lives in the pure `engine.ts`; this file
+ * adds persistence, cross-tab safety, events and the React selector hooks
+ * (stable public API — see index.ts).
+ *
+ * Multi-tab safety: every write bumps `rev`. Before recording, the store
+ * re-reads storage and adopts a newer revision written by another tab, then
+ * applies the record idempotently (same session id never counts twice). A
+ * `storage` listener keeps idle tabs in sync.
  */
+import { useEffect, useMemo } from 'react';
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { useMemo } from 'react';
-import { safeStorage, STORAGE_PREFIX } from '@/lib/storage';
-import { addDays, todayKey } from '@/lib/dates';
+import { clock } from '@/lib/clock';
+import { dayKey, type DayKey } from '@/lib/dates';
 import { emit, on } from '@/lib/events';
-import { getSettings, useSettings } from '@/state/settings';
+import { safeStorage, STORAGE_PREFIX } from '@/lib/storage';
+import { getSettings, useSettings, type TagId } from '@/state/settings';
+import { badgeMetrics, badgeProgress, ROMAN } from './badgeEngine';
+import { applyRecord, emptyData, refreshCaches, replay, SCHEMA_VERSION, type ApplyResult } from './engine';
 import { itemsUnlockedAt } from './items';
-import type { CompletionReport, LevelInfo, Quest, SessionRecord, StreakInfo, TodaySummary } from './types';
+import { levelFromLeaves } from './levels';
+import { newQuestDay, questsView } from './quests';
+import { daysToNextCozy, localeWeekStart, MAX_COZIES, streakTimeline, warmDays } from './streak';
+import { useDayKey, useHour } from './time';
+import { coerceData } from './validate';
+import type { BadgeProgress, CompletionReport, LevelInfo, ProgressData, Quest, SessionRecord, StreakInfo, TodaySummary } from './types';
 
-interface ProgressState {
-  sessions: SessionRecord[];
-  leaves: number;
-  cozies: number;
-  lastReport: CompletionReport | null;
-}
+export { leavesForLevel, levelFromLeaves } from './levels';
+
+export const PROGRESS_KEY = `${STORAGE_PREFIX}progress`;
 
 interface ProgressActions {
+  /** Record a finished phase. Idempotent by `record.id`. Returns the report for focus sessions. */
   recordSession: (record: SessionRecord, whileAway?: boolean) => CompletionReport | null;
+  /** Edit what a session was about. */
+  editSession: (id: string, patch: { intention?: string; tag?: TagId | null }) => void;
+  /** Remove a session from history (leaves earned are kept). */
+  deleteSession: (id: string) => void;
+  /** Undo a delete: put the session back exactly as it was. */
+  restoreSession: (record: SessionRecord) => void;
+  /** Snapshot today's recipes (called by useQuests). */
+  ensureToday: () => void;
   clearReport: () => void;
   resetAll: () => void;
+  /** Replace the whole document (import / seeds). */
+  load: (data: ProgressData) => void;
 }
 
-/** Leaves needed to reach `level` from level 1. Level 2 arrives after the first brew. */
-export function leavesForLevel(level: number): number {
-  if (level <= 1) return 0;
-  let total = 0;
-  for (let l = 2; l <= level; l++) total += 20 + (l - 2) * 15;
-  return total;
+export type ProgressStore = ProgressData & ProgressActions;
+
+const DATA_KEYS: (keyof ProgressData)[] = ['sessions', 'ledger', 'leaves', 'cozies', 'dayGoals', 'quests', 'badges', 'tombstones', 'lastReport', 'rev'];
+
+export function pickData(s: ProgressData): ProgressData {
+  const out = {} as Record<string, unknown>;
+  for (const k of DATA_KEYS) out[k] = s[k];
+  return out as unknown as ProgressData;
 }
 
-export function levelFromLeaves(leaves: number): LevelInfo {
-  let level = 1;
-  while (leaves >= leavesForLevel(level + 1)) level++;
-  const base = leavesForLevel(level);
-  return { level, leaves, into: leaves - base, size: leavesForLevel(level + 1) - base };
-}
-
-function focusDays(sessions: SessionRecord[]): Set<string> {
-  return new Set(sessions.filter((s) => s.phase === 'focus' && s.completed).map((s) => s.day));
-}
-
-export function computeStreak(sessions: SessionRecord[], today = todayKey()): { current: number; best: number } {
-  const days = focusDays(sessions);
-  let current = 0;
-  let cursor = days.has(today) ? today : addDays(today, -1);
-  while (days.has(cursor)) {
-    current++;
-    cursor = addDays(cursor, -1);
+/** v1 (placeholder) → v2: replay sessions through the engine; never lose leaves. */
+export function migrateV1(old: unknown): ProgressData {
+  const { data: coerced } = coerceData(old);
+  const goalMin = getSettings().dailyGoalMin;
+  let data = replay(coerced.sessions, { goalMin, weekStartsOn: localeWeekStart() });
+  const oldLeaves = typeof (old as { leaves?: unknown })?.leaves === 'number' ? Math.floor((old as { leaves: number }).leaves) : 0;
+  if (oldLeaves > data.leaves) {
+    const now = clock.now();
+    const extra = oldLeaves - data.leaves;
+    data = {
+      ...data,
+      ledger: [...data.ledger, { id: `carry:v1`, at: now, day: dayKey(now), kind: 'carryOver', amount: extra, note: 'Carried over' }],
+      leaves: oldLeaves,
+    };
   }
-  let best = 0;
-  const sorted = [...days].sort();
-  let run = 0;
-  let prev: string | null = null;
-  for (const d of sorted) {
-    run = prev && addDays(prev, 1) === d ? run + 1 : 1;
-    best = Math.max(best, run);
-    prev = d;
-  }
-  return { current, best: Math.max(best, current) };
+  return data;
 }
 
-export const useProgress = create<ProgressState & ProgressActions>()(
+function readStored(): ProgressData | null {
+  const raw = safeStorage.getItem(PROGRESS_KEY);
+  if (!raw) return null;
+  try {
+    const parsed = JSON.parse(raw) as { state?: unknown; version?: number };
+    if (parsed.version !== SCHEMA_VERSION) return null;
+    return coerceData(parsed.state, clock.now()).data;
+  } catch {
+    return null;
+  }
+}
+
+function ctxNow(whileAway = false) {
+  return { now: clock.now(), goalMin: getSettings().dailyGoalMin, weekStartsOn: localeWeekStart(), whileAway };
+}
+
+export const useProgress = create<ProgressStore>()(
   persist(
     (set, get) => ({
-      sessions: [],
-      leaves: 0,
-      cozies: 0,
-      lastReport: null,
+      ...emptyData(),
 
       recordSession: (record, whileAway = false) => {
+        syncFromStorage();
         const s = get();
-        if (s.sessions.some((x) => x.id === record.id)) return null; // idempotent
-        const sessions = [...s.sessions, record];
-        if (record.phase !== 'focus') {
-          set({ sessions });
+        let res: ApplyResult;
+        try {
+          res = applyRecord(pickData(s), record, ctxNow(whileAway));
+        } catch (err) {
+          console.error('[progress] could not record session', err);
           return null;
         }
-        const minutes = Math.floor(record.focusedMs / 60000);
-        const base = minutes;
-        const bonuses = record.completed ? [{ label: 'Full brew', amount: 5 }] : [];
-        const total = base + bonuses.reduce((a, b) => a + b.amount, 0);
-        const before = levelFromLeaves(s.leaves);
-        const after = levelFromLeaves(s.leaves + total);
-        const today = record.day;
-        const goalMin = getSettings().dailyGoalMin;
-        const beforeMin = s.sessions.filter((x) => x.phase === 'focus' && x.day === today).reduce((a, x) => a + x.focusedMs, 0) / 60000;
-        const afterMin = beforeMin + record.focusedMs / 60000;
-        const sb = computeStreak(s.sessions, today);
-        const sa = computeStreak(sessions, today);
-        const week = Array.from({ length: 7 }, (_, i) => {
-          const day = addDays(today, i - 6);
-          const done = focusDays(sessions).has(day);
-          const label = new Date(`${day}T12:00:00`).toLocaleDateString(undefined, { weekday: 'narrow' });
-          return { day, label, state: done ? ('done' as const) : day === today ? ('today' as const) : ('missed' as const) };
-        });
-        const unlocked = itemsUnlockedAt(after.level).filter((id) => !itemsUnlockedAt(before.level).includes(id));
-        const report: CompletionReport = {
-          record,
-          whileAway,
-          leaves: { base, bonuses, total },
-          goal: { beforeMin, afterMin, goalMin, justMet: beforeMin < goalMin && afterMin >= goalMin },
-          streak: { before: sb.current, after: sa.current, extended: record.completed && sa.current > sb.current, week },
-          level: { before: before.level, after: after.level, leavesBefore: s.leaves, leavesAfter: s.leaves + total, unlocked },
-          quests: [],
-          badges: [],
-        };
-        set({ sessions, leaves: s.leaves + total, lastReport: record.completed ? report : s.lastReport });
-        emit('progress:report', { report });
-        if (after.level > before.level) emit('progress:levelup', { from: before.level, to: after.level });
-        return report;
+        if (res.duplicate) return s.lastReport?.id === record.id ? s.lastReport : null;
+        const completedFocus = record.phase === 'focus' && record.completed;
+        set({ ...res.data, lastReport: completedFocus && res.report ? res.report : s.lastReport });
+        announce(res, completedFocus);
+        return res.report;
       },
 
-      clearReport: () => set({ lastReport: null }),
-      resetAll: () => set({ sessions: [], leaves: 0, cozies: 0, lastReport: null }),
+      editSession: (id, patch) => {
+        syncFromStorage();
+        const s = get();
+        const clean: Partial<SessionRecord> = {};
+        if (patch.intention !== undefined) clean.intention = patch.intention.trim().slice(0, 140);
+        if (patch.tag !== undefined) clean.tag = patch.tag;
+        const sessions = s.sessions.map((x) => (x.id === id ? { ...x, ...clean } : x));
+        const lastReport = s.lastReport && s.lastReport.id === id ? { ...s.lastReport, record: { ...s.lastReport.record, ...clean } } : s.lastReport;
+        set({ sessions, lastReport, rev: s.rev + 1 });
+      },
+
+      deleteSession: (id) => {
+        syncFromStorage();
+        const s = get();
+        if (!s.sessions.some((x) => x.id === id)) return;
+        const next = refreshCaches(
+          {
+            ...pickData(s),
+            sessions: s.sessions.filter((x) => x.id !== id),
+            tombstones: [...s.tombstones.filter((t) => t !== id), id].slice(-500),
+            lastReport: s.lastReport?.id === id ? null : s.lastReport,
+            rev: s.rev + 1,
+          },
+          dayKey(clock.now()),
+        );
+        set(next);
+      },
+
+      restoreSession: (record) => {
+        syncFromStorage();
+        const s = get();
+        if (s.sessions.some((x) => x.id === record.id)) return;
+        const sessions = [...s.sessions, record].sort((a, b) => a.endedAt - b.endedAt);
+        set(
+          refreshCaches(
+            { ...pickData(s), sessions, tombstones: s.tombstones.filter((t) => t !== record.id), rev: s.rev + 1 },
+            dayKey(clock.now()),
+          ),
+        );
+      },
+
+      ensureToday: () => {
+        const day = dayKey(clock.now());
+        const goal = getSettings().dailyGoalMin;
+        const needs = (st: ProgressData) => {
+          const existing = st.quests[day];
+          if (!existing) return true;
+          if (existing.goalMin === goal) return false;
+          // Goal changed before anything happened today → rescale today's recipes.
+          return Object.keys(existing.done).length === 0 && !st.sessions.some((x) => x.day === day);
+        };
+        if (!needs(get())) return;
+        syncFromStorage();
+        const fresh = get();
+        if (!needs(fresh)) return;
+        set({ quests: { ...fresh.quests, [day]: newQuestDay(day, goal, new Date(clock.now()).getHours()) }, rev: fresh.rev + 1 });
+      },
+
+      clearReport: () => {
+        if (get().lastReport) set({ lastReport: null, rev: get().rev + 1 });
+      },
+      resetAll: () => set({ ...emptyData(), rev: get().rev + 1 }),
+      load: (data) => set({ ...data, rev: Math.max(get().rev, data.rev) + 1 }),
     }),
     {
-      name: `${STORAGE_PREFIX}progress`,
-      version: 1,
+      name: PROGRESS_KEY,
+      version: SCHEMA_VERSION,
       storage: createJSONStorage(() => safeStorage),
-      partialize: (s) => ({ sessions: s.sessions, leaves: s.leaves, cozies: s.cozies, lastReport: s.lastReport }),
+      partialize: (s) => pickData(s),
+      migrate: (persisted, version) => {
+        if (version < 2) return migrateV1(persisted) as unknown as ProgressStore;
+        return coerceData(persisted, clock.now()).data as unknown as ProgressStore;
+      },
+      merge: (persisted, current) => ({ ...current, ...coerceData(persisted, clock.now()).data }),
     },
   ),
 );
 
+/** Adopt a newer revision written by another tab. */
+export function syncFromStorage(): void {
+  const stored = readStored();
+  if (stored && stored.rev > useProgress.getState().rev) useProgress.setState(stored);
+}
+
+function announce(res: ApplyResult, completedFocus: boolean): void {
+  if (res.report && completedFocus) emit('progress:report', { report: res.report });
+  if (res.streakUp) emit('progress:streak', res.streakUp);
+  if (res.levelUp) emit('progress:levelup', res.levelUp);
+  for (const q of res.quests) emit('progress:quest', { id: q.id });
+  for (const b of res.badges) emit('progress:badge', { id: b.id, tier: b.tier });
+  // No celebration sequence for breaks / brews ended early → a gentle toast instead.
+  if (!completedFocus) {
+    for (const q of res.quests) emit('ui:toast', { message: `Recipe done: ${q.title} · +${q.reward} leaves`, tone: 'success' });
+    for (const b of res.badges) emit('ui:toast', { message: `New badge: ${b.title}${b.tier > 1 ? ` ${ROMAN[b.tier]}` : ''}`, tone: 'success' });
+    if (res.levelUp) emit('ui:toast', { message: `Cozy level ${res.levelUp.to}!`, tone: 'success' });
+  }
+}
+
 let started = false;
-/** Subscribe to timer events. Must run before `initTimer()`. */
+/** Subscribe to timer events + other tabs. Must run before `initTimer()`. */
 export function initProgress(): void {
   if (started) return;
   started = true;
@@ -139,9 +225,30 @@ export function initProgress(): void {
   on('timer:stop', ({ record }) => {
     if (record) useProgress.getState().recordSession(record);
   });
+  if (typeof window !== 'undefined') {
+    window.addEventListener('storage', (e) => {
+      if (e.key === PROGRESS_KEY) syncFromStorage();
+    });
+  }
+  // Keep cached counters honest (e.g. cozies consumed overnight).
+  const s = useProgress.getState();
+  const fixed = refreshCaches(pickData(s), dayKey(clock.now()));
+  if (fixed.leaves !== s.leaves || fixed.cozies !== s.cozies) useProgress.setState({ leaves: fixed.leaves, cozies: fixed.cozies });
 }
 
-// ---------- selector hooks (stable API) ----------
+// ---------------------------------------------------------------------------
+// Pure helpers (stable API)
+// ---------------------------------------------------------------------------
+
+/** Current and best warm streak (Tea Cozies included). */
+export function computeStreak(sessions: SessionRecord[], today: DayKey = dayKey(clock.now())): { current: number; best: number } {
+  const t = streakTimeline(sessions, today);
+  return { current: t.current, best: t.best };
+}
+
+// ---------------------------------------------------------------------------
+// Selector hooks (stable API)
+// ---------------------------------------------------------------------------
 
 export function useLevel(): LevelInfo {
   const leaves = useProgress((s) => s.leaves);
@@ -150,30 +257,80 @@ export function useLevel(): LevelInfo {
 
 export function useStreak(): StreakInfo {
   const sessions = useProgress((s) => s.sessions);
-  const cozies = useProgress((s) => s.cozies);
+  const today = useDayKey();
+  const hour = useHour();
   return useMemo(() => {
-    const { current, best } = computeStreak(sessions);
-    const todayDone = focusDays(sessions).has(todayKey());
-    return { current, best, todayDone, cozies };
-  }, [sessions, cozies]);
+    const t = streakTimeline(warmDays(sessions), today);
+    const cozyDays = t.cozyDays;
+    return {
+      current: t.current,
+      best: t.best,
+      todayDone: t.todayDone,
+      cozies: t.cozies,
+      maxCozies: MAX_COZIES,
+      atRisk: t.current > 0 && !t.todayDone && hour >= 18,
+      toNextCozy: daysToNextCozy(t.current),
+      lastCozyDay: cozyDays.length ? cozyDays[cozyDays.length - 1] : null,
+      runs: t.runs,
+      days: t.days,
+    };
+  }, [sessions, today, hour]);
 }
 
 export function useToday(): TodaySummary {
   const sessions = useProgress((s) => s.sessions);
+  const ledger = useProgress((s) => s.ledger);
   const goalMin = useSettings((s) => s.dailyGoalMin);
+  const day = useDayKey();
   return useMemo(() => {
-    const day = todayKey();
-    const todays = sessions.filter((s) => s.phase === 'focus' && s.day === day);
-    const focusMs = todays.reduce((a, s) => a + s.focusedMs, 0);
-    return { day, focusMs, sessions: todays.filter((s) => s.completed).length, goalMin, goalProgress: focusMs / 60000 / goalMin };
-  }, [sessions, goalMin]);
+    let focusMs = 0;
+    let done = 0;
+    let breaks = 0;
+    for (const s of sessions) {
+      if (s.day !== day) continue;
+      if (s.phase === 'focus') {
+        focusMs += s.focusedMs;
+        if (s.completed) done++;
+      } else if (s.completed) breaks++;
+    }
+    const leaves = ledger.reduce((a, e) => (e.day === day ? a + e.amount : a), 0);
+    const goalProgress = goalMin > 0 ? focusMs / 60000 / goalMin : 0;
+    return { day, focusMs, sessions: done, goalMin, goalProgress, goalMet: goalProgress >= 1, leaves, breaks };
+  }, [sessions, ledger, goalMin, day]);
 }
 
+/** Today's three recipes with live progress. Snapshots them on first view. */
 export function useQuests(): Quest[] {
-  return [];
+  const day = useDayKey();
+  const stored = useProgress((s) => s.quests[day]);
+  const sessions = useProgress((s) => s.sessions);
+  const ledger = useProgress((s) => s.ledger);
+  const goalMin = useSettings((s) => s.dailyGoalMin);
+  useEffect(() => {
+    useProgress.getState().ensureToday();
+  }, [day, goalMin]);
+  return useMemo(() => {
+    const state = stored ?? newQuestDay(day, goalMin, new Date(clock.now()).getHours());
+    const records = sessions.filter((s) => s.day === day);
+    const dayLedger = ledger.filter((e) => e.day === day);
+    return questsView(state, { records, ledger: dayLedger });
+  }, [stored, sessions, ledger, day, goalMin]);
 }
 
 export function useUnlockedItems(): string[] {
   const { level } = useLevel();
   return useMemo(() => itemsUnlockedAt(level), [level]);
+}
+
+/** Every badge with tier, progress toward the next tier and unlock dates. */
+export function useBadges(): BadgeProgress[] {
+  const sessions = useProgress((s) => s.sessions);
+  const ledger = useProgress((s) => s.ledger);
+  const leaves = useProgress((s) => s.leaves);
+  const badges = useProgress((s) => s.badges);
+  const today = useDayKey();
+  return useMemo(() => {
+    const best = streakTimeline(warmDays(sessions), today).best;
+    return badgeProgress(badges, badgeMetrics({ sessions, ledger, leaves, bestStreak: best }));
+  }, [sessions, ledger, leaves, badges, today]);
 }

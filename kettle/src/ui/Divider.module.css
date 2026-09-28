@@ -1,0 +1,37 @@
+.rule {
+  border: 0;
+  height: 2px;
+  background: var(--line);
+  border-radius: 2px;
+  margin: 0;
+}
+.none {
+  margin-block: 0;
+}
+.sm {
+  margin-block: var(--space-2);
+}
+.md {
+  margin-block: var(--space-4);
+}
+.lg {
+  margin-block: var(--space-6);
+}
+.labelled {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--ink-2);
+  font-size: var(--text-overline);
+  font-weight: 900;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+.labelled::before,
+.labelled::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--line);
+}

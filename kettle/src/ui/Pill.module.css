@@ -1,0 +1,34 @@
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: var(--r-pill);
+  background: var(--tone-soft);
+  color: var(--tone-ink);
+  box-shadow: inset 0 0 0 2px var(--tone-soft-edge);
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  vertical-align: middle;
+}
+.sm {
+  min-height: 22px;
+  padding: 0 8px;
+  font-size: 0.75rem;
+  gap: 4px;
+}
+.solid {
+  background: var(--tone-strong);
+  color: var(--tone-on);
+  box-shadow: inset 0 -2px 0 var(--tone-edge);
+}
+.icon {
+  display: inline-flex;
+  margin-left: -2px;
+}

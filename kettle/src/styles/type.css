@@ -1,0 +1,99 @@
+/*
+ * Type scale — utility classes. OWNER: design-system area.
+ * Fredoka (display, 600) for headings & numbers; Nunito for UI/body.
+ *
+ *   .t-display-xl  hero moments ("The kettle's whistling!")     40→56 / 1.05
+ *   .t-display-l   screen heroes, big numbers                     32→40 / 1.1
+ *   .t-display-m   screen titles                                  26→30 / 1.15
+ *   .t-title       card / section titles                          21    / 1.25
+ *   .t-headline    strong UI labels (Nunito 800)                  17    / 1.35
+ *   .t-body        body copy (Nunito 500)                         16    / 1.5
+ *   .t-body-s      supporting copy                                14    / 1.45
+ *   .t-caption     metadata, hints (ink-2)                        13    / 1.35
+ *   .t-overline    tiny ALL-CAPS labels (the only caps allowed)   12    / 1.2
+ *   .t-num         fixed-width numerals for counters/stats
+ */
+.t-display-xl,
+.t-display-l,
+.t-display-m,
+.t-title {
+  font-family: var(--font-display);
+  font-weight: var(--weight-display);
+  text-wrap: balance;
+  margin: 0;
+}
+.t-display-xl {
+  font-size: var(--text-display-xl);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+}
+.t-display-l {
+  font-size: var(--text-display-l);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.t-display-m {
+  font-size: var(--text-display-m);
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+}
+.t-title {
+  font-size: var(--text-title);
+  line-height: 1.25;
+}
+.t-headline {
+  font-family: var(--font-body);
+  font-size: var(--text-headline);
+  font-weight: var(--weight-strong);
+  line-height: 1.35;
+  margin: 0;
+}
+.t-body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: var(--weight-body);
+  line-height: 1.5;
+  margin: 0;
+}
+.t-body-s {
+  font-family: var(--font-body);
+  font-size: var(--text-body-s);
+  font-weight: 600;
+  line-height: 1.45;
+  margin: 0;
+}
+.t-caption {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--ink-2);
+  margin: 0;
+}
+.t-overline {
+  font-family: var(--font-body);
+  font-size: var(--text-overline);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  margin: 0;
+}
+.t-num {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Text color helpers */
+.t-ink {
+  color: var(--ink);
+}
+.t-ink-2 {
+  color: var(--ink-2);
+}
+.t-ink-3 {
+  color: var(--ink-3);
+}
+.t-center {
+  text-align: center;
+}

@@ -1,0 +1,698 @@
+{
+ "_note": "Public Duolingo reference screenshots for the Kettle critic's blind review. URLs only — images are downloaded by review/fetch-refs.mjs into review/refs/ (gitignored; third-party images must never be committed). G: = https://storage.ghost.io/c/7a/33/7a33d0f4-927d-4fe8-a6bf-96131b5e76d4/content/images/ (blog.duolingo.com's image host). AS: = https://is1-ssl.mzstatic.com/image/thumb/ (Apple App Store CDN).",
+ "prefixes": {
+  "G:": "https://storage.ghost.io/c/7a/33/7a33d0f4-927d-4fe8-a6bf-96131b5e76d4/content/images/",
+  "AS:": "https://is1-ssl.mzstatic.com/image/thumb/",
+  "S3:": "https://s3.us-east-1.amazonaws.com/content.duolingo.com/"
+ },
+ "refs": [
+  {
+   "cat": "home",
+   "file": "home-tabs-refresh-2026.png",
+   "url": "G:2026/01/1.-Caption.-Refreshed-bottom-tabs.png",
+   "page": "https://blog.duolingo.com/core-tabs-redesign/",
+   "note": "Six current tab screens (path/home, quests, leagues, profile, feed) with the 2026 bottom tab bar. Best 'current app' overview.",
+   "blind": false,
+   "crops": [
+    {
+     "file": "home-path-2026.png",
+     "box": [
+      200,
+      200,
+      749,
+      1624
+     ],
+     "blind": true,
+     "note": "2026 path/home screen, cropped."
+    },
+    {
+     "file": "quests-monthly-2026.png",
+     "box": [
+      1016,
+      200,
+      746,
+      1624
+     ],
+     "cat": "quests",
+     "blind": true,
+     "note": "2026 monthly + friends quest screen, cropped."
+    },
+    {
+     "file": "profile-leagues-2026.png",
+     "box": [
+      1829,
+      200,
+      749,
+      1624
+     ],
+     "cat": "profile-stats",
+     "blind": false,
+     "note": "2026 league list, cropped."
+    },
+    {
+     "file": "profile-2026.png",
+     "box": [
+      1016,
+      1889,
+      746,
+      1624
+     ],
+     "cat": "profile-stats",
+     "blind": true,
+     "note": "2026 profile screen (overview stats, friend streaks), cropped."
+    }
+   ]
+  },
+  {
+   "cat": "home",
+   "file": "home-path-start-bubble.png",
+   "url": "G:2025/12/1-screenshot_complete-new-lesson.PNG",
+   "page": "https://blog.duolingo.com/ways-to-practice-in-duolingo/",
+   "note": "Learning path with a node tapped: 'Start +35 XP' popover. Primary-CTA-on-home comparable.",
+   "blind": true
+  },
+  {
+   "cat": "home",
+   "file": "home-path-legendary.png",
+   "url": "G:2025/12/3-screenshot_complete-legendary-lesson.PNG",
+   "page": "https://blog.duolingo.com/ways-to-practice-in-duolingo/",
+   "note": "Path with completed + gold (Legendary) nodes, top stat bar.",
+   "blind": true
+  },
+  {
+   "cat": "home",
+   "file": "home-path-unit.png",
+   "url": "S3:Duolingo+101%3A+How+to+learn+a+language+on+Duolingo/9-pathUnit.png",
+   "page": "https://blog.duolingo.com/duolingo-101-how-to-learn-a-language-on-duolingo/",
+   "note": "Unit header + path nodes (star, book, mic, barbell, video, chest).",
+   "blind": true
+  },
+  {
+   "cat": "home",
+   "file": "home-score-banner.png",
+   "url": "G:2025/12/EN-DuolingoProductYIR-Score.png",
+   "page": "https://blog.duolingo.com/product-highlights/",
+   "note": "2025: path unit banner with course score.",
+   "blind": false
+  },
+  {
+   "cat": "dialogs",
+   "file": "dialog-quit-confirm-copytest.png",
+   "url": "G:2022/01/localization-spanish-messaging.png",
+   "page": "https://blog.duolingo.com/copy-testing-experiments/",
+   "note": "Quit-lesson confirm sheet ('Do you want to end this session? You'll lose all your progress!' / Keep learning / End session), two copy variants. Direct comparable to Kettle's end-early sheet.",
+   "blind": false,
+   "crops": [
+    {
+     "file": "dialog-quit-confirm.png",
+     "box": [
+      158,
+      0,
+      338,
+      600
+     ],
+     "blind": true,
+     "note": "Single quit-confirm sheet (variant A)."
+    }
+   ]
+  },
+  {
+   "cat": "lesson-complete",
+   "file": "lesson-end-walk-anim.gif",
+   "url": "G:2022/02/04_A_Violet_01_FINAL.gif",
+   "page": "https://blog.duolingo.com/building-character/",
+   "note": "End-of-lesson character animation (Duo + Lily walk across).",
+   "blind": false,
+   "frames": [
+    400,
+    1200,
+    2200,
+    3500
+   ],
+   "blindFrames": [
+    1200
+   ]
+  },
+  {
+   "cat": "lesson-complete",
+   "file": "lesson-end-goal-achieved-2020.png",
+   "url": "G:2020/02/streaks_achievegoal.png",
+   "page": "https://blog.duolingo.com/how-streaks-keep-duolingo-learners-committed-to-their-language-goals/",
+   "note": "Older (2020) daily-goal-achieved end card.",
+   "blind": true
+  },
+  {
+   "cat": "lesson-complete",
+   "file": "lesson-correct-celebration.gif",
+   "url": "G:2022/02/junior_correct_vidmock2.gif",
+   "page": "https://blog.duolingo.com/building-character/",
+   "note": "Micro-celebration: character reacts to a correct answer.",
+   "blind": false,
+   "frames": [
+    400,
+    1200,
+    2200,
+    3500
+   ]
+  },
+  {
+   "cat": "streak",
+   "file": "streak-3-day-week.jpg",
+   "url": "AS:PurpleSource211/v4/37/b0/99/37b099cd-086d-b920-2ed3-0be6507353c4/V2_iOS6.5_06.jpg/600x1300bb.jpg",
+   "page": "https://apps.apple.com/us/app/duolingo-language-lessons/id570060128",
+   "note": "Current store shot: '3 day streak' with week row + Duo speech bubble.",
+   "blind": false,
+   "crops": [
+    {
+     "file": "streak-3-day-screen.png",
+     "box": [
+      0,
+      0,
+      600,
+      930
+     ],
+     "blind": true,
+     "note": "Store shot minus marketing caption."
+    }
+   ]
+  },
+  {
+   "cat": "streak",
+   "file": "streak-extended-anim.gif",
+   "url": "G:2022/01/streakanimation.gif",
+   "page": "https://blog.duolingo.com/how-duolingo-streak-builds-habit/",
+   "note": "Streak-extended sequence: number count, Duo spins and bursts into flame.",
+   "blind": false,
+   "frames": [
+    400,
+    1200,
+    2200,
+    3500
+   ],
+   "blindFrames": [
+    1200,
+    2200
+   ]
+  },
+  {
+   "cat": "streak",
+   "file": "streak-friend-drawer.png",
+   "url": "G:2024/07/friend-streak-screen-drawer.png",
+   "page": "https://blog.duolingo.com/friend-streak/",
+   "note": "Streak drawer (Personal/Friends tabs).",
+   "blind": false,
+   "crops": [
+    {
+     "file": "streak-friends-extended.png",
+     "box": [
+      1070,
+      66,
+      468,
+      1010
+     ],
+     "blind": true,
+     "note": "'Friend Streaks extended!' celebration screen."
+    },
+    {
+     "file": "streak-drawer.png",
+     "box": [
+      462,
+      66,
+      468,
+      1010
+     ],
+     "blind": false,
+     "note": "Streak drawer list."
+    }
+   ]
+  },
+  {
+   "cat": "streak",
+   "file": "streak-calendar-broken.png",
+   "url": "G:2021/10/Frame-1.png",
+   "page": "https://blog.duolingo.com/protecting-streaks-from-site-issues/",
+   "note": "Streak calendar with a broken day.",
+   "blind": false
+  },
+  {
+   "cat": "streak",
+   "file": "streak-calendar-repaired.png",
+   "url": "G:2021/10/Frame-2.png",
+   "page": "https://blog.duolingo.com/protecting-streaks-from-site-issues/",
+   "note": "Streak calendar repaired with a Streak Freeze (Tea Cozy comparable).",
+   "blind": false
+  },
+  {
+   "cat": "streak",
+   "file": "streak-milestone-phoenix.jpg",
+   "url": "G:2022/01/02_Phoenix_Duo_Designs.jpg",
+   "page": "https://blog.duolingo.com/streak-milestone-design-animation/",
+   "note": "Streak milestone illustration concepts.",
+   "blind": false
+  },
+  {
+   "cat": "streak",
+   "file": "streak-share-card.png",
+   "url": "G:2022/01/05_ShareCard.png",
+   "page": "https://blog.duolingo.com/streak-milestone-design-animation/",
+   "note": "Milestone share cards.",
+   "blind": false
+  },
+  {
+   "cat": "quests",
+   "file": "quests-solid-headers.png",
+   "url": "G:2026/01/4.-Caption.-Punchy_-solid--vibrant-colored-headers-1.png",
+   "page": "https://blog.duolingo.com/core-tabs-redesign/",
+   "note": "2026 exploration: quest / league / friends screens with solid headers.",
+   "blind": false
+  },
+  {
+   "cat": "quests",
+   "file": "quests-modular-cards.png",
+   "url": "G:2026/01/6.-Caption.-Modular_-card-based-flexible-layout-1.png",
+   "page": "https://blog.duolingo.com/core-tabs-redesign/",
+   "note": "2026 exploration: daily quests as modular cards.",
+   "blind": false,
+   "crops": [
+    {
+     "file": "quests-daily-cards.png",
+     "box": [
+      201,
+      201,
+      748,
+      1622
+     ],
+     "blind": true,
+     "note": "Daily + friends quest cards, cropped."
+    }
+   ]
+  },
+  {
+   "cat": "quests",
+   "file": "quests-flat-minimal.png",
+   "url": "G:2026/01/7.-Caption.-Flat_-minimal-layout-with-heavy-white-space-1.png",
+   "page": "https://blog.duolingo.com/core-tabs-redesign/",
+   "note": "2026 exploration: quest progress bars, minimal.",
+   "blind": false
+  },
+  {
+   "cat": "quests",
+   "file": "quests-friends-menu.png",
+   "url": "G:2022/09/image.png",
+   "page": "https://blog.duolingo.com/friends-quests/",
+   "note": "Quests menu + popup sheet.",
+   "blind": false
+  },
+  {
+   "cat": "quests",
+   "file": "quests-chest-open.gif",
+   "url": "G:2022/09/Friend_Quest_Chest_04.gif",
+   "page": "https://blog.duolingo.com/friends-quests/",
+   "note": "Chest opening reward animation (tin-opening comparable).",
+   "blind": false,
+   "frames": [
+    400,
+    1200,
+    2200,
+    3500
+   ],
+   "blindFrames": [
+    400
+   ]
+  },
+  {
+   "cat": "quests",
+   "file": "quests-share-card.png",
+   "url": "G:2022/09/SHARE-CARD--1-.png",
+   "page": "https://blog.duolingo.com/friends-quests/",
+   "note": "Quest completion share card.",
+   "blind": false
+  },
+  {
+   "cat": "profile-stats",
+   "file": "profile-badges-before-after.png",
+   "url": "G:2023/12/before-after.png",
+   "page": "https://blog.duolingo.com/achievement-badges/",
+   "note": "Profile achievements, old vs new badge grid.",
+   "blind": false,
+   "crops": [
+    {
+     "file": "profile-statistics-2023.png",
+     "box": [
+      888,
+      168,
+      478,
+      845
+     ],
+     "blind": true,
+     "note": "Profile: statistics tiles + achievements row."
+    },
+    {
+     "file": "profile-achievements-2023.png",
+     "box": [
+      1405,
+      168,
+      478,
+      845
+     ],
+     "blind": true,
+     "note": "Achievements: personal records + awards grid (Badges comparable)."
+    }
+   ]
+  },
+  {
+   "cat": "profile-stats",
+   "file": "profile-personal-bests.png",
+   "url": "G:2023/12/new-personal-best.png",
+   "page": "https://blog.duolingo.com/achievement-badges/",
+   "note": "Personal-record badges (tiered badge art comparable).",
+   "blind": false
+  },
+  {
+   "cat": "profile-stats",
+   "file": "profile-consistent-headers.png",
+   "url": "G:2026/01/10.-Caption.-Consistent-header-size-and-title-placement-1.png",
+   "page": "https://blog.duolingo.com/core-tabs-redesign/",
+   "note": "2026: quest / league / profile with consistent headers.",
+   "blind": false,
+   "crops": [
+    {
+     "file": "profile-header-2026.png",
+     "box": [
+      1829,
+      201,
+      748,
+      1622
+     ],
+     "blind": false,
+     "note": "Profile with solid header, cropped."
+    }
+   ]
+  },
+  {
+   "cat": "profile-stats",
+   "file": "profile-tabs-before.png",
+   "url": "G:2026/01/2.-Caption.-Inconsistent-headers--typography--and-spacing.png",
+   "page": "https://blog.duolingo.com/core-tabs-redesign/",
+   "note": "Pre-2026 monthly quest, profile, feed (what Duolingo itself called inconsistent).",
+   "blind": false
+  },
+  {
+   "cat": "profile-stats",
+   "file": "profile-leagues.png",
+   "url": "G:2023/04/diamond-tournie.png",
+   "page": "https://blog.duolingo.com/duolingo-leagues-leaderboards/",
+   "note": "Leaderboard list screens (ranked list styling).",
+   "blind": false
+  },
+  {
+   "cat": "settings",
+   "file": "settings-preferences.png",
+   "url": "S3:Duolingo+101%3A+How+to+learn+a+language+on+Duolingo/16-settings.PNG",
+   "page": "https://blog.duolingo.com/duolingo-101-how-to-learn-a-language-on-duolingo/",
+   "note": "Preferences: sound effects, haptics, motivational messages… toggles.",
+   "blind": true
+  },
+  {
+   "cat": "settings",
+   "file": "settings-reminders.png",
+   "url": "S3:Duolingo+101%3A+How+to+learn+a+language+on+Duolingo/17-settings.PNG",
+   "page": "https://blog.duolingo.com/duolingo-101-how-to-learn-a-language-on-duolingo/",
+   "note": "Reminders / notifications settings.",
+   "blind": true
+  },
+  {
+   "cat": "settings",
+   "file": "settings-menu.jpg",
+   "url": "G:2023/04/IMG_BBCFAD918DF1-1.jpeg",
+   "page": "https://blog.duolingo.com/how-to-keep-your-streak-on-vacation/",
+   "note": "Settings menu list.",
+   "blind": true
+  },
+  {
+   "cat": "settings",
+   "file": "settings-courses-list.jpg",
+   "url": "AS:PurpleSource211/v4/6e/ef/30/6eef3023-de04-3b29-21f8-a993245b9abd/iPhone6.5_-_Default_-_first_screen_adapt_Var_2_01.jpg/600x1300bb.jpg",
+   "page": "https://apps.apple.com/us/app/duolingo-language-lessons/id570060128",
+   "note": "Store shot: grouped list rows (list-row craft comparable).",
+   "blind": false
+  },
+  {
+   "cat": "onboarding",
+   "file": "onboarding-course-pick.png",
+   "url": "S3:Duolingo+101%3A+How+to+learn+a+language+on+Duolingo/1-onboarding.png",
+   "page": "https://blog.duolingo.com/duolingo-101-how-to-learn-a-language-on-duolingo/",
+   "note": "Duo asks 'What would you like to learn?' — one question per screen, speech bubble, options list.",
+   "blind": true
+  },
+  {
+   "cat": "onboarding",
+   "file": "onboarding-reminders.png",
+   "url": "S3:Duolingo+101%3A+How+to+learn+a+language+on+Duolingo/2-onboarding.png",
+   "page": "https://blog.duolingo.com/duolingo-101-how-to-learn-a-language-on-duolingo/",
+   "note": "Notification permission asked with context.",
+   "blind": true
+  },
+  {
+   "cat": "onboarding",
+   "file": "onboarding-where-to-start.png",
+   "url": "S3:Duolingo+101%3A+How+to+learn+a+language+on+Duolingo/3-onboarding.png",
+   "page": "https://blog.duolingo.com/duolingo-101-how-to-learn-a-language-on-duolingo/",
+   "note": "Two big option cards.",
+   "blind": true
+  },
+  {
+   "cat": "onboarding",
+   "file": "onboarding-set-goal-2020.png",
+   "url": "G:2020/02/streaks_setgoal.png",
+   "page": "https://blog.duolingo.com/how-streaks-keep-duolingo-learners-committed-to-their-language-goals/",
+   "note": "Daily goal selection (older UI) — direct comparable to Kettle's goal step.",
+   "blind": true
+  },
+  {
+   "cat": "onboarding",
+   "file": "onboarding-notif-optin-copy.png",
+   "url": "G:2022/01/localization-german-test.png",
+   "page": "https://blog.duolingo.com/copy-testing-experiments/",
+   "note": "Two push opt-in screens (copy test).",
+   "blind": false
+  },
+  {
+   "cat": "dialogs",
+   "file": "dialog-streak-freeze.png",
+   "url": "G:2022/01/Streak-Freeze--2-.png",
+   "page": "https://blog.duolingo.com/how-duolingo-streak-builds-habit/",
+   "note": "'Protect your streak' sheet — Tea Cozy comparable.",
+   "blind": false,
+   "crops": [
+    {
+     "file": "dialog-protect-streak.png",
+     "box": [
+      207,
+      5,
+      226,
+      393
+     ],
+     "blind": true,
+     "note": "'Protect your 3 day streak!' sheet (Tea Cozy comparable)."
+    }
+   ]
+  },
+  {
+   "cat": "dialogs",
+   "file": "dialog-energy-sheets.png",
+   "url": "https://lh7-rt.googleusercontent.com/docsz/AD_4nXd0YuztXwxsNGMDnDRxOJRxTJO1sTg--kJibnRfFKrsLaVB_UYlRAYwHiQ3KYf9ZU-AzF6Ucm7jLqYyFwdGVoEMw2QYuLG25oVZspvAsVMKLtZBTN9sbNHayGYwnikw0ocP-G6exQ?key=O8IRLK1i3bqyJNL6PN3pmQ",
+   "page": "https://blog.duolingo.com/duolingo-energy/",
+   "note": "2025 Energy screens incl. bottom sheet.",
+   "blind": false,
+   "crops": [
+    {
+     "file": "dialog-energy-sheet.png",
+     "box": [
+      629,
+      79,
+      345,
+      754
+     ],
+     "blind": true,
+     "note": "Bottom sheet over a lesson with mascot + single CTA."
+    },
+    {
+     "file": "lesson-end-reward-2025.png",
+     "box": [
+      1063,
+      79,
+      345,
+      754
+     ],
+     "cat": "lesson-complete",
+     "blind": true,
+     "note": "2025 reward card: '+10 energy', chest, 'Enjoy your reward!' + Continue (celebration-card comparable)."
+    }
+   ]
+  },
+  {
+   "cat": "dialogs",
+   "file": "dialog-friends-quest-popup.png",
+   "url": "G:2022/09/image.png",
+   "page": "https://blog.duolingo.com/friends-quests/",
+   "note": "Popup over the quests screen.",
+   "blind": false
+  },
+  {
+   "cat": "dialogs",
+   "file": "dialog-streak-wager-2020.png",
+   "url": "G:2020/02/streaks_wager1.png",
+   "page": "https://blog.duolingo.com/how-streaks-keep-duolingo-learners-committed-to-their-language-goals/",
+   "note": "Offer dialog (older UI).",
+   "blind": false
+  },
+  {
+   "cat": "dialogs",
+   "file": "dialog-shop.png",
+   "url": "G:2023/04/img1.PNG",
+   "page": "https://blog.duolingo.com/how-to-keep-your-streak-on-vacation/",
+   "note": "Shop: streak freezes + Timer Boost power-up.",
+   "blind": false
+  },
+  {
+   "cat": "timer-like",
+   "file": "timer-match-madness.png",
+   "url": "G:2025/12/6-screenshot_match-madness-lesson.PNG",
+   "page": "https://blog.duolingo.com/ways-to-practice-in-duolingo/",
+   "note": "Timed challenge intro: 'Match all the words before time runs out!'",
+   "blind": true
+  },
+  {
+   "cat": "timer-like",
+   "file": "timer-side-quest.jpg",
+   "url": "G:2025/12/5-screenshot_side-quest-lesson_preview.jpeg",
+   "page": "https://blog.duolingo.com/ways-to-practice-in-duolingo/",
+   "note": "Timed Side Quest preview: 'Get every exercise correct in time'.",
+   "blind": true
+  },
+  {
+   "cat": "timer-like",
+   "file": "timer-in-session-header.jpg",
+   "url": "AS:PurpleSource221/v4/cb/ee/31/cbee31c9-a814-b59b-db16-3136ce60d20d/V2_iOS6.5_02.jpg/600x1300bb.jpg",
+   "page": "https://apps.apple.com/us/app/duolingo-language-lessons/id570060128",
+   "note": "In-session chrome: close X, progress bar, energy — focus-screen chrome comparable.",
+   "blind": false,
+   "crops": [
+    {
+     "file": "timer-in-session.png",
+     "box": [
+      0,
+      0,
+      600,
+      930
+     ],
+     "blind": true,
+     "note": "In-session chrome minus marketing caption."
+    }
+   ]
+  },
+  {
+   "cat": "timer-like",
+   "file": "timer-in-session-combo.jpg",
+   "url": "AS:PurpleSource211/v4/c2/f5/5c/c2f55ce1-38da-64cc-a7ec-af549fd053e6/V2_iOS6.5_04.jpg/600x1300bb.jpg",
+   "page": "https://apps.apple.com/us/app/duolingo-language-lessons/id570060128",
+   "note": "In-session progress bar on a combo streak (sheen/glow).",
+   "blind": false
+  },
+  {
+   "cat": "timer-like",
+   "file": "timer-session-intro.png",
+   "url": "G:2026/02/mistakes2.png",
+   "page": "https://blog.duolingo.com/guide-to-duolingo-practice-hub/",
+   "note": "Session start: mascot + speech bubble framing the session.",
+   "blind": false
+  },
+  {
+   "cat": "brand",
+   "file": "brand-wordmark.jpg",
+   "url": "AS:Features123/v4/53/b4/04/53b40486-8c45-86cc-cf9a-8e8642b8dd92/pr_source.png/1600x900sr.jpg",
+   "page": "https://apps.apple.com/us/app/duolingo-language-lessons/id570060128",
+   "note": "Wordmark on Feather Green (type/colour reference — do NOT imitate).",
+   "blind": false
+  },
+  {
+   "cat": "brand",
+   "file": "brand-illustration-banner.jpg",
+   "url": "AS:Features221/v4/75/d4/f7/75d4f7e6-5481-be55-8718-eb19618e8471/df0637e9-b1b3-448f-9087-035894c6445c.png/1600x900sr.jpg",
+   "page": "https://apps.apple.com/us/app/duolingo-language-lessons/id570060128",
+   "note": "Characters + tonal line-art background.",
+   "blind": false
+  },
+  {
+   "cat": "brand",
+   "file": "brand-shape-language-cats.png",
+   "url": "G:2020/06/04-cat-shapes-1.png",
+   "page": "https://blog.duolingo.com/shape-language-duolingos-art-style/",
+   "note": "Shape language: simple geometric construction.",
+   "blind": false
+  },
+  {
+   "cat": "brand",
+   "file": "brand-shape-language-home.png",
+   "url": "G:2020/06/02-home-screen.png",
+   "page": "https://blog.duolingo.com/shape-language-duolingos-art-style/",
+   "note": "Shape language applied to UI.",
+   "blind": false
+  },
+  {
+   "cat": "brand",
+   "file": "brand-character-construction.gif",
+   "url": "G:2022/02/duo.gif",
+   "page": "https://blog.duolingo.com/building-character/",
+   "note": "Duo and Junior built from the same basic shapes.",
+   "blind": false,
+   "frames": [
+    400,
+    1200,
+    2200,
+    3500
+   ]
+  },
+  {
+   "cat": "brand",
+   "file": "brand-cast.png",
+   "url": "G:2022/02/13-copy-10-2.png",
+   "page": "https://blog.duolingo.com/building-character/",
+   "note": "Character cast line-up.",
+   "blind": false
+  },
+  {
+   "cat": "brand",
+   "file": "brand-mascot-moods.png",
+   "url": "G:2023/08/widgets--1-.png",
+   "page": "https://blog.duolingo.com/widget-feature/",
+   "note": "25 mascot moods/poses — bar for Chai's pose range.",
+   "blind": false
+  },
+  {
+   "cat": "brand",
+   "file": "brand-mascot-streak-states.png",
+   "url": "G:2023/08/widgets.png",
+   "page": "https://blog.duolingo.com/widget-feature/",
+   "note": "Mascot emotional states tied to streak state.",
+   "blind": false
+  },
+  {
+   "cat": "brand",
+   "file": "brand-shape-pill.png",
+   "url": "G:2024/04/shape-lang--6-.png",
+   "page": "https://blog.duolingo.com/vikram-redesign/",
+   "note": "Character shape-language refinement (circle → pill).",
+   "blind": false
+  },
+  {
+   "cat": "brand",
+   "file": "brand-reshaping-duo.png",
+   "url": "G:2020/07/reshaping-duo-2.png",
+   "page": "https://blog.duolingo.com/reshaping-duo/",
+   "note": "Mascot geometry rework.",
+   "blind": false
+  }
+ ]
+}

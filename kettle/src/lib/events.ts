@@ -14,6 +14,17 @@ export interface AppEvents {
   /** User ended a phase early (or skipped). `record` present for focus with ≥1 min. */
   'timer:stop': { phase: Phase; reason: 'user' | 'skip'; record: SessionRecord | null };
   'timer:addTime': { phase: Phase; addedMs: number };
+  /**
+   * Another tab changed the shared timer and this tab now mirrors it. UI only
+   * (navigate, re-render) — never record, play sounds or notify on this; the
+   * tab that made the change already did. `record` is set for complete/stop when known.
+   */
+  'timer:sync': {
+    kind: 'start' | 'pause' | 'resume' | 'addTime' | 'complete' | 'stop' | 'reset';
+    phase: Phase;
+    record: SessionRecord | null;
+    whileAway: boolean;
+  };
   /** Progress store finished processing a completed focus session. */
   'progress:report': { report: CompletionReport };
   'progress:levelup': { from: number; to: number };

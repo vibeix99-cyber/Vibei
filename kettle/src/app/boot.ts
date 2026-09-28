@@ -2,6 +2,8 @@
 import { initProgress } from '@/progress';
 import { initAudio } from '@/audio';
 import { initTimer } from '@/timer';
+import { initShortcuts } from '@/lib/shortcuts';
+import { registerPwa } from '@/pwa';
 import { initFlow } from './flow';
 import { applyDebugParams } from './debug';
 
@@ -11,4 +13,6 @@ export function boot(): void {
   initAudio();
   initFlow();
   initTimer();
+  initShortcuts();
+  registerPwa();
 }

@@ -1,0 +1,79 @@
+/* ---------- End early ---------- */
+.savedRow {
+  display: flex;
+  justify-content: center;
+  padding-bottom: var(--space-2);
+}
+.actions {
+  display: grid;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+/* ---------- Ambience ---------- */
+.mutedNote {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--r-md);
+  background: var(--honey-soft);
+  color: var(--ink);
+  margin-bottom: var(--space-3);
+  font-weight: 700;
+}
+.mutedNote span {
+  flex: 1;
+}
+.ambGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: var(--space-3);
+}
+.amb {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  min-height: 60px;
+}
+.ambNow {
+  min-height: 1.4em;
+  margin-bottom: var(--space-4);
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+  text-align: center;
+}
+.ambIcon {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--surface-3);
+  color: var(--ink-2);
+  transition:
+    background-color var(--dur-fast, 150ms) ease,
+    color var(--dur-fast, 150ms) ease;
+}
+.ambIcon[data-on] {
+  background: var(--sky);
+  color: var(--sky-on, #fff);
+}
+.ambLabel {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.2;
+  color: var(--ink);
+}
+.volume {
+  margin-bottom: var(--space-2);
+}
+@media (min-width: 720px) {
+  .ambGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

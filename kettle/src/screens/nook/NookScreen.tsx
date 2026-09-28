@@ -1,4 +1,4 @@
-/** Nook (3D room collection) — PLACEHOLDER. OWNER: scene area. */
+/** Nook (3D room collection) — WIP. OWNER: scene area. */
 import { Nook } from '@/scene';
 import { useUnlockedItems } from '@/progress';
 
@@ -7,7 +7,7 @@ export default function NookScreen() {
   return (
     <div style={{ display: 'grid', gap: 16 }}>
       <h1>Your nook</h1>
-      <div style={{ height: 360 }}>
+      <div style={{ height: 520, borderRadius: 24, overflow: 'hidden' }}>
         <Nook mode="showcase" items={items} interactive />
       </div>
     </div>

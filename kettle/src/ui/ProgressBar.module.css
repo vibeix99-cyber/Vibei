@@ -1,16 +1,77 @@
 .track {
+  --h: 16px;
+  position: relative;
   width: 100%;
-  background: var(--oat);
+  background: var(--surface-3);
   border-radius: var(--r-pill);
   overflow: hidden;
+  isolation: isolate;
+}
+.onTint {
+  background: color-mix(in oklab, var(--surface), var(--tone-soft-edge) 25%);
 }
 .fill {
+  position: relative;
   height: 100%;
+  min-width: var(--h);
+  max-width: 100%;
   border-radius: inherit;
-  background: var(--matcha);
-  transition: width 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  background: var(--tone);
+  overflow: hidden;
+  transition: width var(--dur-slower) var(--ease-spring);
 }
-.fill[data-tone='persimmon'] { background: var(--persimmon); }
-.fill[data-tone='honey'] { background: var(--honey); }
-.fill[data-tone='sky'] { background: var(--sky); }
-.fill[data-tone='berry'] { background: var(--berry); }
+.empty {
+  min-width: 0;
+  opacity: 0;
+}
+/* Inner highlight stripe: a soft rounded bar across the top third. */
+.stripe {
+  position: absolute;
+  left: calc(var(--h) * 0.45);
+  right: calc(var(--h) * 0.45);
+  top: calc(var(--h) * 0.2);
+  height: max(3px, calc(var(--h) * 0.24));
+  border-radius: var(--r-pill);
+  background: var(--highlight);
+}
+/* Sheen: a diagonal glint sweeping across the fill after it grows. */
+.sheen,
+.shimmer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  min-width: 120px;
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.75) 48%, rgba(255, 255, 255, 0.75) 52%, rgba(255, 255, 255, 0) 70%);
+  transform: translateX(-110%);
+  pointer-events: none;
+}
+.sheen {
+  opacity: 0.7;
+  animation: sweep 1s var(--ease-in-out) 0.3s 1 both;
+}
+.shimmer {
+  opacity: 0.4;
+  animation: shimmer 3.6s var(--ease-in-out) 1s infinite;
+}
+@keyframes shimmer {
+  0% {
+    transform: translateX(-110%);
+  }
+  40%,
+  100% {
+    transform: translateX(110%);
+  }
+}
+@keyframes sweep {
+  from {
+    transform: translateX(-110%);
+  }
+  to {
+    transform: translateX(110%);
+  }
+}
+.reduced .fill {
+  transition-duration: 1ms;
+}

@@ -1,0 +1,136 @@
+.chip {
+  --h: 40px;
+  appearance: none;
+  border: 0;
+  margin: 0;
+  padding: 0 0 3px;
+  background: none;
+  cursor: pointer;
+  display: inline-flex;
+  flex-shrink: 0;
+  border-radius: var(--r-md);
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.9375rem;
+  line-height: 1.1;
+  color: var(--ink-2);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.md {
+  min-height: calc(var(--h) + 4px); /* 44px touch target */
+}
+.sm {
+  --h: 34px;
+  font-size: 0.875rem;
+  min-height: 38px;
+  position: relative;
+}
+/* keep a 44px touch target around the compact chip */
+.sm::before {
+  content: '';
+  position: absolute;
+  inset: -3px -2px;
+}
+.face {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: var(--h);
+  padding: 0 14px;
+  border-radius: inherit;
+  background: var(--surface);
+  box-shadow:
+    inset 0 0 0 2px var(--line-strong),
+    0 3px 0 var(--line-strong);
+  transition:
+    transform var(--dur-instant) var(--ease-out),
+    box-shadow var(--dur-instant) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+.sm .face {
+  padding: 0 12px;
+}
+.icon {
+  display: inline-flex;
+  margin-left: -3px;
+}
+.tick {
+  width: 0;
+  height: 14px;
+  margin-left: -6px;
+  opacity: 0;
+  transform: scale(0.3);
+  transition:
+    width var(--dur-base) var(--ease-spring),
+    margin var(--dur-base) var(--ease-spring),
+    opacity var(--dur-fast) var(--ease-out),
+    transform var(--dur-base) var(--ease-bounce);
+}
+@media (hover: hover) {
+  .chip:hover:not(:disabled) .face {
+    background: var(--surface-2);
+    color: var(--ink);
+  }
+}
+.chip:active:not(:disabled) .face {
+  transform: translateY(3px);
+  box-shadow:
+    inset 0 0 0 2px var(--line-strong),
+    0 0 0 var(--line-strong);
+}
+.selected {
+  color: var(--tone-ink);
+}
+.selected .face,
+.selected:hover:not(:disabled) .face {
+  background: var(--tone-soft);
+  color: var(--tone-ink);
+  box-shadow:
+    inset 0 0 0 2px var(--tone),
+    0 3px 0 var(--tone);
+}
+.selected:active:not(:disabled) .face {
+  box-shadow:
+    inset 0 0 0 2px var(--tone),
+    0 0 0 var(--tone);
+}
+.selected .tick {
+  width: 14px;
+  margin-left: 0;
+  opacity: 1;
+  transform: none;
+}
+.chip:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  min-width: 0;
+}
+.scroll {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 4px var(--gutter) 6px;
+  margin: -4px calc(var(--gutter) * -1) -6px;
+  scroll-padding-inline: var(--gutter);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent);
+}
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+:global(html[data-motion='reduce']) .face,
+:global(html[data-motion='reduce']) .tick {
+  transition-duration: 1ms;
+}

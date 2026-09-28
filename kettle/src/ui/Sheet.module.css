@@ -1,29 +1,160 @@
-.backdrop {
+.layer {
   position: fixed;
   inset: 0;
-  background: rgba(31, 26, 46, 0.45);
+  z-index: var(--z-modal);
   display: flex;
-  align-items: flex-end;
   justify-content: center;
-  z-index: 100;
+  pointer-events: none;
 }
 .sheet {
-  width: min(560px, 100%);
+  align-items: flex-end;
+}
+.dialog {
+  align-items: center;
+  padding: max(var(--space-5), env(safe-area-inset-top)) var(--space-5) max(var(--space-5), env(safe-area-inset-bottom));
+}
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--scrim);
+  pointer-events: auto;
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+.panel {
+  position: relative;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   background: var(--surface);
-  border-radius: var(--r-xl) var(--r-xl) 0 0;
-  padding: var(--space-5);
-  padding-bottom: calc(var(--space-5) + env(safe-area-inset-bottom));
+  color: var(--ink);
   outline: none;
+  box-shadow: var(--shadow-3);
+  overflow: hidden;
+}
+.sheet .panel {
+  max-width: 560px;
+  max-height: calc(100dvh - max(24px, env(safe-area-inset-top)));
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+  border: var(--border) solid var(--line);
+  border-bottom: 0;
+  /* the panel keeps extending below the fold so the spring overshoot never shows a gap */
+  margin-bottom: -40px;
+  padding-bottom: 40px;
+}
+.dialog .panel {
+  max-height: min(760px, 100%);
+  border-radius: var(--r-xl);
+  border: var(--border) solid var(--line);
+  border-bottom-width: 6px;
+}
+.sm {
+  max-width: 420px !important;
+}
+.md {
+  max-width: 520px;
+}
+.lg {
+  max-width: 680px;
+}
+.sheet .md,
+.sheet .lg {
+  max-width: 600px;
+}
+
+.grab {
+  flex: none;
+  display: grid;
+  place-items: center;
+  height: 24px;
+  cursor: grab;
+  touch-action: none;
+}
+.grab:active {
+  cursor: grabbing;
+}
+.handle {
+  width: 44px;
+  height: 5px;
+  border-radius: var(--r-pill);
+  background: var(--line-strong);
+}
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+}
+.sheet .close {
+  top: 16px;
+}
+
+.header {
+  flex: none;
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-5) var(--space-4);
+  touch-action: pan-x;
+}
+.dialog .header {
+  padding-top: var(--space-5);
+}
+.hasClose {
+  padding-right: 64px;
+}
+.center {
+  text-align: center;
+  justify-items: center;
+  padding-left: 64px;
+}
+.headerHidden {
+  padding-bottom: 0;
+}
+.hero {
+  display: grid;
+  place-items: center;
+  margin-bottom: var(--space-1);
 }
 .title {
-  font-size: 1.375rem;
-  margin-bottom: var(--space-3);
+  font-size: var(--text-title);
+  line-height: 1.2;
+  font-weight: 600;
 }
 @media (min-width: 720px) {
-  .backdrop {
-    align-items: center;
+  .title {
+    font-size: 1.5rem;
   }
-  .sheet {
-    border-radius: var(--r-xl);
-  }
+}
+.description {
+  color: var(--ink-2);
+  font-weight: 600;
+  line-height: 1.5;
+}
+.body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 var(--space-5) var(--space-5);
+}
+.footer {
+  flex: none;
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  border-top: var(--border) solid var(--line);
+  background: var(--surface);
+}
+.body + .footer {
+  padding-top: var(--space-4);
+}
+.sheet .footer,
+.sheet .body:last-child {
+  padding-bottom: max(var(--space-5), env(safe-area-inset-bottom));
+}
+.header + .footer {
+  border-top: 0;
+  padding-top: var(--space-2);
 }

@@ -1,0 +1,280 @@
+/* Settings. Tokens only; AA-safe local inks for colored text. */
+.screen {
+  --warn-ink: #7d5200;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
+  padding-bottom: 40px;
+}
+:global(:root[data-theme='dark']) .screen {
+  --warn-ink: #ffcf66;
+}
+.title {
+  font-size: clamp(1.75rem, 6vw, 2.125rem);
+}
+
+/* Profile */
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+}
+.avatar {
+  flex: none;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--honey-soft);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.avatar svg {
+  margin-top: 10px;
+}
+.profileBody {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 8px;
+}
+.profileMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+/* Workaround: kit input keeps its intrinsic width inside the flex box (requested fix). */
+.profileBody input {
+  min-width: 0;
+}
+
+/* Rows */
+.padRow {
+  padding: 14px 16px;
+}
+.stackRow {
+  display: grid;
+  gap: 10px;
+  padding: 14px 16px;
+}
+.stackHead {
+  display: grid;
+  gap: 2px;
+}
+.stackTitle {
+  font-weight: 800;
+}
+.stackDesc {
+  font-size: 0.875rem;
+  color: var(--ink-2);
+}
+.sliderRow {
+  padding: 10px 16px 6px;
+}
+.helpRow {
+  margin: 0;
+  padding: 12px 16px;
+  background: var(--honey-soft);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+/* Goal chips (2×2) */
+.goalGrid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.goalGrid > button {
+  justify-content: flex-start;
+  min-height: 56px;
+  border-radius: var(--r-md);
+  padding: 0 12px;
+  white-space: normal;
+  text-align: left;
+}
+.goalChip {
+  display: grid;
+  line-height: 1.15;
+}
+.goalMin {
+  font-size: 0.8125rem;
+  color: var(--ink-2);
+  font-weight: 700;
+}
+
+/* Ambience */
+.ambDesc {
+  font-size: 0.875rem;
+  color: var(--ink-2);
+  font-weight: 600;
+}
+.eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  width: 18px;
+  height: 16px;
+}
+.eq i {
+  width: 4px;
+  border-radius: 2px;
+  background: var(--persimmon);
+  animation: eq 900ms ease-in-out infinite;
+}
+.eq i:nth-child(2) {
+  animation-delay: -300ms;
+}
+.eq i:nth-child(3) {
+  animation-delay: -600ms;
+}
+@keyframes eq {
+  0%,
+  100% {
+    height: 4px;
+  }
+  50% {
+    height: 16px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .eq i {
+    animation: none;
+    height: 10px;
+  }
+}
+:global([data-motion='reduce']) .eq i {
+  animation: none;
+  height: 10px;
+}
+
+/* Data */
+.msgSlot {
+  margin-top: -18px;
+}
+.msgSlot:empty {
+  display: none;
+}
+.msg {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: var(--r-md);
+  background: var(--matcha-soft);
+  font-weight: 700;
+  font-size: 0.9375rem;
+}
+.msg[data-tone='error'] {
+  background: var(--berry-soft);
+}
+.msg svg {
+  flex: none;
+}
+.sheetBody {
+  display: grid;
+  gap: 16px;
+}
+.sheetActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.stackActions {
+  display: grid;
+  gap: 10px;
+}
+.sheetNote {
+  font-size: 0.9375rem;
+  color: var(--ink-2);
+}
+.summary {
+  list-style: none;
+  margin: 0;
+  padding: 12px 16px;
+  display: grid;
+  gap: 6px;
+  border-radius: var(--r-md);
+  background: var(--paper-2);
+  font-weight: 700;
+}
+.warnText {
+  color: var(--warn-ink);
+}
+.inlineLink {
+  appearance: none;
+  margin: 0 auto;
+  border: 0;
+  background: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  justify-self: start;
+  min-height: 44px;
+  padding: 0 4px;
+  font-weight: 800;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* Shortcuts */
+.kbdGroup {
+  padding: 12px 16px;
+  display: grid;
+  gap: 8px;
+}
+.kbdWhere {
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.kbdList {
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+.kbdRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.kbdRow dt {
+  font-weight: 700;
+}
+.kbdRow dd {
+  margin: 0;
+  white-space: nowrap;
+}
+.kbdOr {
+  color: var(--ink-2);
+  font-size: 0.875rem;
+}
+
+/* About */
+.story {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  background: var(--honey-soft);
+}
+.storyHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.storyHead svg {
+  flex: none;
+  margin: -8px 0 -6px -4px;
+}
+.story p {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+.storyTitle {
+  font-size: 1.1875rem;
+}

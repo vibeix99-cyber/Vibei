@@ -1,0 +1,58 @@
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding-top: var(--space-2);
+  min-width: 0;
+}
+.back {
+  margin-left: -8px;
+  margin-top: 2px;
+}
+.titles {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+.overline {
+  font-size: var(--text-overline);
+  font-weight: 900;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.title {
+  font-size: var(--text-display-l);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.m .title {
+  font-size: var(--text-display-m);
+}
+.subtitle {
+  color: var(--ink-2);
+  font-weight: 600;
+  font-size: 1.0625rem;
+}
+.actions {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: 2px;
+}
+.section {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-width: 0;
+}
+.sectionTitle {
+  font-size: var(--text-title);
+  line-height: 1.25;
+}
+.sectionAction {
+  flex: none;
+}

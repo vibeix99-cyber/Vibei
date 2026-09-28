@@ -1,0 +1,114 @@
+.toggle {
+  --w: 56px;
+  --hgt: 34px;
+  --pad: 4px;
+  --off: 18px;
+  --on: 26px;
+  appearance: none;
+  border: 0;
+  margin: 0;
+  padding: 5px 0;
+  background: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  min-height: var(--tap);
+  border-radius: var(--r-pill);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.sm {
+  --w: 46px;
+  --hgt: 28px;
+  --off: 14px;
+  --on: 20px;
+}
+.toggle:focus-visible {
+  outline: none;
+}
+.toggle:focus-visible .track {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+.track {
+  position: relative;
+  display: block;
+  width: var(--w);
+  height: var(--hgt);
+  border-radius: var(--r-pill);
+  background: var(--surface-3);
+  box-shadow: inset 0 0 0 2px var(--line-strong);
+  transition:
+    background-color var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out);
+}
+.thumb {
+  --size: var(--off);
+  position: absolute;
+  top: 50%;
+  left: calc((var(--hgt) - var(--off)) / 2);
+  width: var(--size);
+  height: var(--size);
+  margin-top: calc(var(--size) / -2);
+  border-radius: 50%;
+  background: var(--ink-3);
+  color: var(--tone);
+  display: grid;
+  place-items: center;
+  transition:
+    left var(--dur-slow) var(--ease-spring),
+    width var(--dur-slow) var(--ease-spring),
+    height var(--dur-slow) var(--ease-spring),
+    margin var(--dur-slow) var(--ease-spring),
+    background-color var(--dur-base) var(--ease-out);
+}
+.check {
+  width: 60%;
+  height: 60%;
+  opacity: 0;
+  transform: scale(0.4) rotate(-20deg);
+  transition:
+    opacity var(--dur-fast) var(--ease-out),
+    transform var(--dur-slow) var(--ease-bounce);
+}
+@media (hover: hover) {
+  .toggle:hover:not(:disabled) .track {
+    box-shadow: inset 0 0 0 2px var(--ink-3);
+  }
+}
+.toggle:active:not(:disabled) .thumb {
+  --size: calc(var(--on) - 2px);
+  left: calc((var(--hgt) - var(--on)) / 2 + 1px);
+}
+/* ---- On ---- */
+.on .track {
+  background: var(--tone);
+  box-shadow: inset 0 -3px 0 var(--tone-edge);
+}
+.on .thumb,
+.on:active:not(:disabled) .thumb {
+  --size: var(--on);
+  left: calc(var(--w) - var(--on) - (var(--hgt) - var(--on)) / 2);
+  background: #fffdfa;
+  box-shadow: 0 2px 0 rgba(40, 20, 10, 0.18);
+}
+.on .check {
+  opacity: 1;
+  transform: none;
+}
+@media (hover: hover) {
+  .on:hover:not(:disabled) .track {
+    box-shadow: inset 0 -3px 0 var(--tone-edge);
+    filter: brightness(1.05);
+  }
+}
+.toggle:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+:global(html[data-motion='reduce']) .thumb,
+:global(html[data-motion='reduce']) .check,
+:global(html[data-motion='reduce']) .track {
+  transition-duration: 1ms;
+}
