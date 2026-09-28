@@ -697,6 +697,140 @@
   }
 }
 
+/* Landscape phones, question steps: Chai + the question on the left, the options on the right
+   (scrolling inside their column), a slim header and footer. The screen is exactly one viewport tall,
+   so the question, the options and Continue are all on screen together. */
+@media (orientation: landscape) and (max-height: 520px) {
+  .screen {
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    overflow: hidden;
+  }
+  .top {
+    position: static;
+    padding: calc(4px + env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 4px max(16px, env(safe-area-inset-left));
+  }
+  .topInner,
+  .footerInner {
+    max-width: 960px;
+  }
+  .main {
+    max-width: 960px;
+    min-height: 0;
+    padding: 0 max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    grid-template-rows: minmax(0, 1fr);
+    align-content: stretch;
+    gap: 0 24px;
+  }
+  .prompt,
+  .prompt[data-step='ready'] {
+    align-self: center;
+    gap: 12px;
+  }
+  .chai :global(svg) {
+    width: 96px;
+    height: 96px;
+  }
+  .prompt[data-step='ready'] .chai :global(svg) {
+    width: 116px;
+    height: 116px;
+  }
+  .question {
+    font-size: 1.25rem;
+  }
+  /* The options column scrolls on its own; auto margins centre short content without clipping tall content. */
+  .stage {
+    min-height: 0;
+    margin: 0 -10px;
+    padding: 10px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    display: flex;
+    flex-direction: column;
+  }
+  .body {
+    margin-block: auto;
+    gap: 10px;
+  }
+  .opt {
+    padding: 8px 14px;
+  }
+  .goalOpt {
+    gap: 12px;
+    min-height: 48px;
+  }
+  .goalOpt .optArt {
+    width: 44px;
+    height: 44px;
+  }
+  .optTitle {
+    font-size: 1.0625rem;
+  }
+  .optSub {
+    font-size: 0.875rem;
+  }
+  .rhythmOpt {
+    row-gap: 4px;
+  }
+  .rhythmSpot {
+    grid-row: span 3;
+    width: 48px;
+    height: 48px;
+  }
+  .rhythmOpt > .optSub {
+    grid-column: 2;
+  }
+  .rhythmBar {
+    height: 10px;
+  }
+  .ambOpt {
+    gap: 4px;
+    padding: 2px 0 0;
+  }
+  .ambIcon {
+    width: 44px;
+    height: 44px;
+  }
+  .reaction {
+    min-height: 0;
+  }
+  /* Chai is already on the left: the extra notification spot art would only push the copy down. */
+  .notifySpot {
+    display: none;
+  }
+  .notify {
+    gap: 12px;
+  }
+  .reasons {
+    gap: 8px;
+  }
+  .summary li {
+    padding: 8px 14px;
+  }
+  .nameWrap {
+    max-width: none;
+  }
+  .footer {
+    padding: 8px max(16px, env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  }
+  .footerInner,
+  .footerInner[data-two] {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    gap: 12px;
+  }
+  .footerPrimary,
+  .footerSecondary {
+    --h: 48px;
+    flex: 0 0 auto;
+    min-width: 180px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .eq i {
     animation: none;

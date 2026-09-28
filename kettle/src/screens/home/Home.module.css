@@ -746,6 +746,8 @@
   .colA,
   .colB {
     display: grid;
+    /* One shrinkable track: an auto track would grow to the status bar's min-content and spill into colB. */
+    grid-template-columns: minmax(0, 1fr);
     gap: 14px;
     min-width: 0;
   }
@@ -763,12 +765,19 @@
   }
   .statusBar {
     justify-content: flex-start;
-    gap: 6px;
-    margin: -4px 0 0;
+    flex-wrap: wrap; /* last resort on very narrow columns: wrap rather than spill into the composer */
+    gap: 4px;
+    margin: -4px 0 0 -8px;
+    min-width: 0;
   }
   .stat {
     min-height: 44px;
+    min-width: 0;
+    padding: 0 8px;
     font-size: 1.0625rem;
+  }
+  .statLevel {
+    width: 36px;
   }
   .greeting {
     font-size: 1.375rem;
@@ -792,5 +801,11 @@
   }
   .ctaDock {
     bottom: 10px;
+  }
+}
+/* Smaller landscape phones (e.g. 667×375): the left column is too narrow for the tiny level bar; the badge stays. */
+@media (max-width: 759px) and (orientation: landscape) and (max-height: 520px) {
+  .statLevel {
+    display: none;
   }
 }

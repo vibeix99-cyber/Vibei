@@ -77,3 +77,15 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+/* Landscape phones: the two choices side by side so both fit under the copy. */
+@media (orientation: landscape) and (max-height: 520px) {
+  .actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+  }
+  .savedRow {
+    justify-content: flex-start;
+    padding-bottom: 0;
+  }
+}

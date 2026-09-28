@@ -286,3 +286,62 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+/* Landscape phones: the whole room on the left, held in view (sticky) at the screen's height; a compact
+   header, the level card and the collection scroll on the right. The engine re-fits the camera to
+   whatever box it gets, so the room stays whole (it shrinks to make space when a story card opens). */
+@media (orientation: landscape) and (max-height: 520px) {
+  .root {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-areas: 'stage header' 'stage panel';
+    grid-template-rows: auto 1fr;
+    gap: var(--space-3) var(--space-4);
+    align-items: start;
+    /* Eat most of the shell's bottom padding (sized for a bottom tab bar) so the sticky room still has room
+       to stay whole at the end of the scroll. */
+    margin-bottom: calc(var(--space-3) - var(--space-7));
+  }
+  .header {
+    padding-top: 0;
+  }
+  .header h1 {
+    font-size: 1.5rem;
+  }
+  .header p {
+    font-size: 0.9375rem;
+  }
+  .stageCol {
+    position: sticky;
+    top: var(--space-3);
+    height: calc(100vh - 2 * var(--space-3));
+    height: calc(100dvh - 2 * var(--space-3));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .stage {
+    flex: 1 1 auto;
+    min-height: 0;
+    aspect-ratio: auto;
+    border-radius: var(--r-lg);
+  }
+  .storySlot {
+    flex: none;
+    max-height: 60%;
+    overflow-y: auto;
+  }
+  .story {
+    gap: var(--space-2);
+    padding: var(--space-3);
+  }
+  .panel {
+    gap: var(--space-4);
+  }
+  .levelTitle {
+    font-size: 1.1875rem;
+  }
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-2);
+  }
+}

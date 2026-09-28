@@ -161,3 +161,75 @@
 .dialog .footer {
   padding-bottom: var(--space-4);
 }
+
+/* ---------- Landscape phones (compact height) ----------
+ * The panel never grows past the screen: the header and body share the room and scroll,
+ * the footer (the actions) stays pinned and visible. Hero art sits beside the copy. */
+@media (orientation: landscape) and (max-height: 520px) {
+  .dialog {
+    padding: max(var(--space-3), env(safe-area-inset-top)) var(--space-5) max(var(--space-3), env(safe-area-inset-bottom));
+  }
+  .dialog .panel {
+    max-height: 100%;
+  }
+  /* Hero-beside-copy needs more width than the portrait-sized small dialog. */
+  .sm {
+    max-width: 560px !important;
+  }
+  .sheet .panel {
+    max-height: calc(100dvh - max(12px, env(safe-area-inset-top)));
+  }
+  .header {
+    flex: 0 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-bottom: var(--space-3);
+  }
+  .dialog .header {
+    padding-top: var(--space-4);
+  }
+  /* The body gives up its height (and scrolls) long before the header does. */
+  .body {
+    flex: 0 100 auto;
+    padding-bottom: var(--space-3);
+  }
+  .header:has(> .hero) {
+    grid-template-columns: auto minmax(0, 1fr);
+    /* Title + description stay together, centred against the art. */
+    grid-template-rows: 1fr auto auto 1fr;
+    gap: 0 var(--space-4);
+    align-items: center;
+    text-align: start;
+    justify-items: start;
+    padding-left: var(--space-5);
+  }
+  .header:has(> .hero) > .hero {
+    grid-row: 1 / -1;
+    margin: 0;
+    max-width: 104px;
+  }
+  .header:has(> .hero) > .hero > * {
+    max-width: 100%;
+    height: auto;
+  }
+  .header:has(> .hero) > :not(.hero) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .header:has(> .hero) > .description {
+    grid-row: 3;
+    margin-top: var(--space-2);
+  }
+  .footer {
+    padding-top: var(--space-3);
+    padding-bottom: var(--space-3);
+  }
+  .body + .footer {
+    padding-top: var(--space-3);
+  }
+  .sheet .footer,
+  .sheet .body:last-child {
+    padding-bottom: max(var(--space-3), env(safe-area-inset-bottom));
+  }
+}
