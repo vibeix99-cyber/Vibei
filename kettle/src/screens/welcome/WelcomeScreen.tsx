@@ -272,6 +272,7 @@ function Hello({ onStart }: { onStart: () => void }) {
   const reduced = useReducedMotion();
   const wideHello = useMediaQuery('(min-width: 720px)');
   const compactHello = useMediaQuery('(max-height: 680px)');
+  const landscapeHello = useMediaQuery('(orientation: landscape) and (max-height: 520px)');
   const fileRef = useRef<HTMLInputElement>(null);
   const [msg, setMsg] = useState<{ tone: 'error' | 'ok'; text: string } | null>(null);
   const set = useSettings((st) => st.set);
@@ -312,7 +313,7 @@ function Hello({ onStart }: { onStart: () => void }) {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={reduced ? { duration: 0.2 } : spring.joyful}
         >
-          <Mascot pose="wave" size={wideHello ? 248 : compactHello ? 160 : 200} animate />
+          <Mascot pose="wave" size={landscapeHello ? 150 : wideHello ? 248 : compactHello ? 160 : 200} animate />
         </motion.div>
         <div className={s.brand}>
           <div className={s.wordmark}>

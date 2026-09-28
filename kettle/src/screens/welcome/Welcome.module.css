@@ -653,7 +653,48 @@
 .helloMsg[data-tone='error'] {
   background: var(--berry-soft);
 }
-@media (min-width: 720px) {
+/* Landscape phones: Chai + bubble on the left, brand + actions on the right,
+   so "Get started" is visible without scrolling. */
+@media (orientation: landscape) and (max-height: 520px) {
+  .hello {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      'bubble brand'
+      'chai   footer';
+    align-content: center;
+    column-gap: 24px;
+    padding: calc(8px + env(safe-area-inset-top)) max(24px, env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom))
+      max(24px, env(safe-area-inset-left));
+  }
+  .helloMain {
+    display: contents;
+  }
+  .helloBubble {
+    grid-area: bubble;
+    align-self: end;
+    justify-self: center;
+    margin-bottom: 4px;
+  }
+  .helloChai {
+    grid-area: chai;
+    justify-self: center;
+    align-self: start;
+  }
+  .brand {
+    grid-area: brand;
+    align-self: end;
+    text-align: center;
+    margin: 0 0 12px;
+  }
+  .helloFooter {
+    grid-area: footer;
+    align-self: start;
+    padding: 0;
+  }
+  .helloTitle {
+    font-size: 1.5rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
