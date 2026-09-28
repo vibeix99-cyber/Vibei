@@ -1,7 +1,8 @@
 .region {
   position: fixed;
   z-index: var(--z-toast);
-  top: max(12px, env(safe-area-inset-top));
+  /* Bottom, above the tab bar: never over header chrome (streak, titles, progress). */
+  bottom: calc(var(--tabbar-h) + 14px + env(safe-area-inset-bottom));
   left: 0;
   right: 0;
   display: flex;
@@ -77,4 +78,11 @@
 }
 .action:hover {
   background: color-mix(in oklab, var(--ink-inverse), transparent 78%);
+}
+
+/* No bottom tab bar on desktop / landscape phones: sit near the bottom edge. */
+@media (min-width: 900px), (orientation: landscape) and (max-height: 520px) {
+  .region {
+    bottom: calc(20px + env(safe-area-inset-bottom));
+  }
 }

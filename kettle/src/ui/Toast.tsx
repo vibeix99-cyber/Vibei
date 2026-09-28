@@ -150,9 +150,9 @@ function ToastView({ item, reduced }: { item: ToastItem; reduced: boolean }) {
       id={`toast-${item.id}`}
       layout={!reduced}
       className={s.toast}
-      initial={reduced ? { opacity: 0 } : { opacity: 0, y: -18, scale: 0.94 }}
+      initial={reduced ? { opacity: 0 } : { opacity: 0, y: 18, scale: 0.94 }}
       animate={reduced ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1, transition: spring.cozy }}
-      exit={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.94, y: -8, transition: { duration: 0.16 } }}
+      exit={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.94, y: 8, transition: { duration: 0.16 } }}
       onClick={(e) => {
         if ((e.target as HTMLElement).closest('button')) return;
         toast.dismiss(item.id);

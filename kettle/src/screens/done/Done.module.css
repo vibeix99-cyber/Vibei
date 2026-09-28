@@ -692,19 +692,20 @@
     padding-bottom: 22px;
   }
   .footInner {
-    flex-direction: row;
-    justify-content: flex-end;
+    /* Centred under the celebration, like the content above it. */
+    flex-direction: row-reverse;
+    justify-content: center;
     width: min(960px, 100%);
   }
   .cta {
     width: auto;
-    min-width: 220px;
+    min-width: 280px;
   }
   .skip {
     width: auto;
   }
   .auto {
-    justify-content: flex-end;
+    justify-content: center;
     width: min(960px, 100%);
     margin: 6px auto 0;
   }
