@@ -24,6 +24,8 @@ export interface ToastOptions {
   action?: { label: string; onClick: () => void };
   /** Replace an existing toast with the same id instead of stacking. */
   id?: string;
+  /** Called when the user dismisses it or it times out (not on programmatic `toast.dismiss`). */
+  onDismiss?: () => void;
 }
 interface ToastItem extends ToastOptions {
   id: string;
@@ -70,7 +72,16 @@ const TONE_ICON: Record<ToastTone, { glyph: 'check' | 'info' | 'sparkle' | 'bell
 export function Toaster() {
   const list = useToasts();
   const reduced = useReducedMotion();
-  useEffect(() => on('ui:toast', ({ message, tone }) => toast(message, { tone })), []);
+  useEffect(
+    () =>
+      on('ui:toast', ({ message, tone }) => {
+        // The PWA "update ready" notice is owned by ShellOverlays' actionable prompt
+        // (it waits until no brew is running); skip the plain duplicate from the bus.
+        if (/fresh brew of Kettle is ready/i.test(message)) return;
+        toast(message, { tone });
+      }),
+    [],
+  );
   if (typeof document === 'undefined') return null;
   return createPortal(
     <div className={s.region}>
@@ -106,7 +117,10 @@ function ToastView({ item, reduced }: { item: ToastItem; reduced: boolean }) {
     if (!Number.isFinite(duration)) return;
     const start = () => {
       startedAt.current = performance.now();
-      timer.current = window.setTimeout(() => toast.dismiss(item.id), remaining.current);
+      timer.current = window.setTimeout(() => {
+        toast.dismiss(item.id);
+        item.onDismiss?.();
+      }, remaining.current);
     };
     start();
     const el = document.getElementById(`toast-${item.id}`);
@@ -145,6 +159,7 @@ function ToastView({ item, reduced }: { item: ToastItem; reduced: boolean }) {
       onClick={(e) => {
         if ((e.target as HTMLElement).closest('button')) return;
         toast.dismiss(item.id);
+        item.onDismiss?.();
       }}
     >
       <span className={cx(s.icon)} data-tone={meta.tone} aria-hidden="true">
