@@ -38,9 +38,8 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-3);
-  background: color-mix(in srgb, var(--bg) 92%, transparent);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  /* Opaque: a translucent bar let scrolled text ghost through behind the title. */
+  background: var(--bg);
   border-bottom: var(--border) solid var(--line);
   opacity: 0;
   transform: translateY(-6px);
@@ -1220,9 +1219,7 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-3);
-  background: color-mix(in srgb, var(--bg) 92%, transparent);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: var(--bg);
   border-bottom: var(--border) solid var(--line);
   opacity: 0;
   transform: translateY(-6px);

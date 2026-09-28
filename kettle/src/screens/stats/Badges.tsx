@@ -57,6 +57,7 @@ export function BadgesSection({ badges, today }: { badges: BadgeProgress[]; toda
   const gridId = useId();
   const earnedTiers = badges.reduce((a, b) => a + b.tier, 0);
   const totalTiers = badges.reduce((a, b) => a + b.maxTier, 0);
+  const earnedBadges = badges.filter((b) => b.tier > 0).length;
   const open = badges.find((b) => b.id === openId) ?? null;
   const ordered = useMemo(() => orderBadges(badges), [badges]);
   const shown = all ? ordered : ordered.slice(0, PREVIEW);
@@ -68,7 +69,7 @@ export function BadgesSection({ badges, today }: { badges: BadgeProgress[]; toda
             Badges
           </h2>
           <p className={s.cardSub}>
-            {earnedTiers} of {totalTiers} tiers earned
+            {earnedBadges} of {badges.length} badges earned · {earnedTiers} of {totalTiers} tiers
           </p>
         </div>
       </div>
