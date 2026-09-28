@@ -21,7 +21,9 @@ export type ButtonVariant =
   | 'honey'
   | 'berry'
   | 'plum'
-  | 'danger';
+  | 'danger'
+  /** Quiet destructive: berry ink on a berry tint. Pair with a primary "keep" action. */
+  | 'dangerSoft';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -77,12 +79,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
 ) {
   const iconOnly = children == null && icon != null && iconRight == null;
   const solidTone = VARIANT_TONE[variant];
-  const dataTone = solidTone ?? tone ?? (variant === 'soft' ? 'persimmon' : undefined);
+  const dataTone = variant === 'dangerSoft' ? 'berry' : (solidTone ?? tone ?? (variant === 'soft' ? 'persimmon' : undefined));
+  const variantClass = solidTone ? s.solid : variant === 'dangerSoft' ? s.soft : s[variant];
   return (
     <button
       ref={ref}
       type={type}
-      className={cx(s.btn, solidTone ? s.solid : s[variant], s[size], block && s.block, iconOnly && s.iconOnly, className)}
+      className={cx(s.btn, variantClass, s[size], block && s.block, iconOnly && s.iconOnly, className)}
       data-tone={dataTone}
       data-loading={loading || undefined}
       aria-busy={loading || undefined}

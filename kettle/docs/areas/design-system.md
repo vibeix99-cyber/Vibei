@@ -10,7 +10,7 @@ ask for it (or pass `className` for layout only).
 
 | Component | Key props |
 |---|---|
-| `Button` | `variant` primary · secondary · soft · ghost · matcha · sky · honey · berry · plum · danger; `size` sm/md/lg; `icon`/`iconRight` (IconName or node); `block`; `loading`; `tone` (for soft/ghost); `sfx` (SfxName or false); `haptics` |
+| `Button` | `variant` primary · secondary · soft · ghost · matcha · sky · honey · berry · plum · danger · dangerSoft (quiet destructive: berry ink on berry tint — use under a primary "keep" action instead of a second loud button); `size` sm/md/lg; `icon`/`iconRight` (IconName or node); `block`; `loading`; `tone` (for soft/ghost); `sfx` (SfxName or false); `haptics` |
 | `IconButton` | `icon`, `label` (required → aria-label + tooltip), `variant` (default ghost), `size`, `tooltip` |
 | `Card` / `PressableCard` | `tone` plain·persimmon·matcha·honey·sky·berry·plum; `padding` none/sm/md/lg; `variant` raised/flat/sunken; `as`. PressableCard: `selected`, button props (pair with `role="radio" aria-checked` in pickers) |
 | `ProgressBar` | `value` 0..1, `tone`, `height`, `label`, `valueText`, `animateIn`, `shimmer`, `track` |

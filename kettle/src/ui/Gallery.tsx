@@ -238,8 +238,11 @@ export default function UiGallery() {
             <Button variant="soft" tone="sky">
               Soft sky
             </Button>
-            <Button variant="ghost" tone="berry">
+            <Button variant="dangerSoft" icon="trash">
               Reset data
+            </Button>
+            <Button variant="ghost" tone="berry">
+              Leave early
             </Button>
           </Row>
           <Row label="Sizes">
@@ -689,11 +692,11 @@ export default function UiGallery() {
         size="sm"
         footer={
           <>
-            <Button block variant="secondary" onClick={() => setDialog(false)}>
+            <Button block onClick={() => setDialog(false)}>
               Keep my data
             </Button>
-            <Button block variant="ghost" tone="berry" onClick={() => setDialog(false)}>
-              Reset
+            <Button block variant="dangerSoft" sfx="cancel" onClick={() => setDialog(false)}>
+              Reset everything
             </Button>
           </>
         }
