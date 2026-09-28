@@ -98,8 +98,9 @@
   align-items: center;
   padding: 6px 12px;
   border-radius: var(--r-pill);
-  background: var(--sky);
-  color: #fff;
+  /* --sky-strong keeps white 14px text AA (≈4.8:1); plain --sky was 3.3:1. */
+  background: var(--sky-strong);
+  color: var(--sky-on);
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 0.875rem;
