@@ -10,7 +10,7 @@
  */
 import { test as base, expect, type Locator, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 const OUT = fileURLToPath(new URL('./test-results/functional/', import.meta.url));
@@ -291,8 +291,12 @@ test('reload mid-session keeps time (running and paused)', async ({ page }) => {
   expect(after.status).toBe('running');
   // Wall-clock anchored: remaining must drop by exactly the real time the reload took (±1.5 s).
   expect(Math.abs(before.remainingMs - elapsed - after.remainingMs), `drift across reload (reload took ${elapsed} ms)`).toBeLessThan(1500);
-  const shown = parseClock(await page.getByRole('timer').first().innerText());
-  expect(shown, 'timer (role=timer) shows mm:ss').not.toBeNull();
+  const title = await page.title();
+  const shownTitle = parseClock(title);
+  expect(shownTitle, `tab title shows remaining time (got "${title}")`).not.toBeNull();
+  expect(Math.abs(shownTitle! - after.remainingMs), 'tab title matches engine').toBeLessThan(2500);
+  const shown = parseClock(await page.locator('main').first().innerText());
+  expect(shown, 'screen shows mm:ss').not.toBeNull();
   expect(Math.abs(shown! - after.remainingMs), 'display matches engine').toBeLessThan(2500);
 
   await page.evaluate('__kettle.timer.getState().pause()');
@@ -367,16 +371,24 @@ test('stats reflect a newly finished brew', async ({ page }) => {
 test('nook shows unlocked items and locked requirements; item story on tap', async ({ page }) => {
   await boot(page, { seed: 'veteran', route: '/nook' });
   type Item = { id: string; name: string; story: string; unlockLevel: number };
-  // String form so the dynamic import reaches the browser untouched (dev server serves /src/*).
-  const cat = await K<{ level: number; unlocked: Item[]; locked: Item[] }>(
+  const src = readFileSync(fileURLToPath(new URL('../src/progress/items.ts', import.meta.url)), 'utf8');
+  const all: Item[] = [...src.matchAll(/\{\s*id:\s*'([^']+)',\s*name:\s*'([^']+)',\s*story:\s*'((?:[^'\\]|\\.)*)',\s*unlockLevel:\s*(\d+)\s*\}/g)].map((m) => ({
+    id: m[1],
+    name: m[2],
+    story: m[3].replace(/\\'/g, "'"),
+    unlockLevel: Number(m[4]),
+  }));
+  expect(all.length, 'parsed the ITEMS catalog').toBeGreaterThan(5);
+  const level = await K<number | null>(
     page,
-    `(async () => {
-      const m = await import('/src/progress/index.ts');
-      const level = m.levelFromLeaves(__kettle.progress.getState().leaves).level;
-      return { level, unlocked: m.ITEMS.filter(i => i.unlockLevel <= level), locked: m.ITEMS.filter(i => i.unlockLevel > level) };
-    })()`,
-  ).catch(() => null);
-  test.skip(!cat, 'catalog import needs the dev server (not snapshot mode)');
+    `(() => { const el = document.querySelector('[aria-label^="Cozy level"]');
+      const m = el && el.getAttribute('aria-label').match(/(\\d+)/); return m ? Number(m[1]) : null; })()`,
+  );
+  const lv =
+    level ??
+    (await K<number | null>(page, `import('/src/progress/index.ts').then(m => m.levelFromLeaves(__kettle.progress.getState().leaves).level).catch(() => null)`));
+  const cat = lv == null ? null : { level: lv, unlocked: all.filter((i) => i.unlockLevel <= lv), locked: all.filter((i) => i.unlockLevel > lv) };
+  expect(cat, 'nook (or shell) exposes the Cozy level (aria-label "Cozy level N")').not.toBeNull();
   expect(cat!.unlocked.length, 'veteran has unlocked items').toBeGreaterThan(0);
   await page.waitForTimeout(1500);
   await shot(page, 'nook', true);
@@ -443,6 +455,126 @@ test('keyboard-only core loop (Tab/Enter/Space/Esc) with visible focus and a tra
   expect(onLeave, 'confirm-leave button reachable by Tab').toBe(true);
   await page.keyboard.press('Enter');
   await expect.poll(async () => (await timer(page)).status).toBe('idle');
+});
+
+// ---------------------------------------------------------------- 8b. round-1 additions
+
+test('reload mid-celebration resumes the same card', async ({ page }) => {
+  await boot(page, { seed: 'celebrate' });
+  await startFromHome(page);
+  await page.evaluate('__kettle.finish()');
+  await expect.poll(() => route(page)).toBe('/done');
+  await page.waitForTimeout(2500);
+  await (await mustControl(page, /^continue\b/i, 'Continue on card 1', ['button'])).click();
+  await page.waitForTimeout(1800);
+  const cardLabel = async () => (await page.locator('[aria-label^="Card "]').first().getAttribute('aria-label')) ?? '';
+  const before = await cardLabel();
+  expect(before, 'card counter present').toMatch(/Card 2 of \d+/);
+  const sessionsBefore = (await focusSessions(page)).length;
+  await reopen(page, '/done');
+  await page.waitForTimeout(1500);
+  expect(await route(page), 'still celebrating after reload').toBe('/done');
+  expect(await cardLabel(), 'same card after reload').toBe(before);
+  expect((await focusSessions(page)).length, 'reload does not re-record the brew').toBe(sessionsBefore);
+  await shot(page, 'reload-mid-celebration');
+});
+
+test('two tabs: one timer, shared state, no double counting', async ({ page, context }) => {
+  await boot(page, { seed: 'newbie' });
+  const b = await context.newPage();
+  const bErrors: string[] = [];
+  b.on('pageerror', (e) => bErrors.push(e.message));
+  await b.goto('/?debug#/', { waitUntil: 'networkidle' });
+  await waitKettle(b);
+  const before = (await focusSessions(page)).length;
+
+  await startFromHome(page);
+  await expect.poll(async () => (await timer(b)).status, { message: 'tab B sees the brew started in tab A' }).toBe('running');
+  await expect.poll(() => route(b), { message: 'tab B follows to focus' }).toBe('/focus');
+  const ra = (await timer(page)).remainingMs;
+  const rb = (await timer(b)).remainingMs;
+  expect(Math.abs(ra - rb), 'both tabs show the same remaining time').toBeLessThan(1500);
+
+  await b.bringToFront();
+  await b.evaluate('__kettle.timer.getState().pause()');
+  await expect.poll(async () => (await timer(page)).status, { message: 'pause in B reflects in A' }).toBe('paused');
+  await page.bringToFront();
+  await page.evaluate('__kettle.timer.getState().resume()');
+  await expect.poll(async () => (await timer(b)).status).toBe('running');
+
+  // Both tabs share one real clock; finish via A and let both tick.
+  const endsIn = await K<number>(page, `__kettle.timer.getState().endsAt - Date.now()`);
+  await page.evaluate(`__kettle.ff(${endsIn} + 50)`);
+  await b.evaluate(`__kettle.ff(${endsIn} + 50)`);
+  await page.evaluate('__kettle.timer.getState().tick()');
+  await b.evaluate('__kettle.timer.getState().tick()');
+  await page.waitForTimeout(2500);
+  const recA = (await focusSessions(page)).length - before;
+  const recB = (await focusSessions(b)).length - before;
+  expect(recA, 'exactly one brew recorded (tab A view)').toBe(1);
+  expect(recB, 'exactly one brew recorded (tab B view)').toBe(1);
+  expect(bErrors, 'no page errors in tab B').toEqual([]);
+  await shot(page, 'two-tabs-a');
+  await b.screenshot({ path: `${OUT}two-tabs-b.png` });
+});
+
+test('offline after first load (installed service worker)', async ({ page, context }) => {
+  await boot(page, { seed: 'newbie' });
+  const hasSW = await K<boolean>(page, `'serviceWorker' in navigator && !!navigator.serviceWorker.controller || false`);
+  const ready = await K<boolean>(
+    page,
+    `(async () => { if (!('serviceWorker' in navigator)) return false;
+       const reg = await Promise.race([navigator.serviceWorker.ready, new Promise(r => setTimeout(() => r(null), 8000))]);
+       return !!reg; })()`,
+  );
+  test.skip(!ready, 'no service worker (dev server) — run with the built preview (KETTLE_SNAPSHOT=1)');
+  if (!hasSW) {
+    await page.reload({ waitUntil: 'networkidle' }); // first load installs; second is controlled
+    await waitKettle(page);
+  }
+  await context.setOffline(true);
+  await page.reload({ waitUntil: 'load' });
+  await waitKettle(page);
+  await expect(page.locator('main, [role="main"]').first(), 'app shell renders offline').toBeVisible();
+  for (const r of ['/stats', '/settings', '/nook']) {
+    await page.evaluate(`__kettle.navigate('${r}')`);
+    await page.waitForTimeout(1200);
+    await expect(page.locator('main, [role="main"]').first(), `${r} renders offline (lazy chunk precached)`).toBeVisible();
+  }
+  await page.evaluate(`__kettle.navigate('/')`);
+  await startFromHome(page);
+  await shot(page, 'offline-focus');
+  await context.setOffline(false);
+});
+
+test.describe('reduced motion', () => {
+  test.use({ reducedMotion: 'reduce' });
+  test('core loop under prefers-reduced-motion: start → finish → cards → break', async ({ page }) => {
+    await boot(page, { seed: 'celebrate' });
+    await shot(page, 'rm-home');
+    await startFromHome(page);
+    await page.waitForTimeout(800);
+    await shot(page, 'rm-focus');
+    await page.evaluate('__kettle.finish()');
+    await expect.poll(() => route(page)).toBe('/done');
+    for (let i = 0; i < 8; i++) {
+      await page.waitForTimeout(1200);
+      await shot(page, `rm-done-${i}`);
+      if ((await route(page)) !== '/done') break;
+      const next = await findControl(page, [/^(continue|next)\b/i, /^(start (my |a |the )?(tea )?break|tea time|take a break)/i], ['button']);
+      if (!next) break;
+      await next.click();
+    }
+    await expect.poll(async () => (await timer(page)).phase, { timeout: 15_000 }).toMatch(/Break$/);
+    await shot(page, 'rm-break');
+    // With reduced motion nothing should be mid-transform after settling.
+    const moving = await K<string[]>(
+      page,
+      `[...document.querySelectorAll('*')].filter(el => el.getAnimations && el.getAnimations().some(a => a.playState === 'running' &&
+         (a.effect?.getKeyframes?.() ?? []).some(k => k.transform && k.transform !== 'none'))).slice(0, 8).map(el => el.tagName.toLowerCase() + '.' + String(el.className).slice(0, 40))`,
+    );
+    expect(moving, 'no running transform animations under reduced motion (fades only)').toEqual([]);
+  });
 });
 
 // ---------------------------------------------------------------- 9. axe on every route, light + dark
@@ -541,7 +673,9 @@ const VIEWPORTS = {
   '320': { viewport: { width: 320, height: 640 }, isMobile: true, hasTouch: true, touch: true },
   '390': { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, touch: true },
   landscape: { viewport: { width: 844, height: 390 }, isMobile: true, hasTouch: true, touch: true },
+  tablet: { viewport: { width: 820, height: 1180 }, isMobile: true, hasTouch: true, touch: true },
   '1440': { viewport: { width: 1440, height: 900 }, isMobile: false, hasTouch: false, touch: false },
+  '1920': { viewport: { width: 1920, height: 1080 }, isMobile: false, hasTouch: false, touch: false },
 } as const;
 
 const LAYOUT_SCENES = SCENES.filter((s) => ['welcome', 'home', 'stats', 'nook', 'settings', 'focus', 'end-sheet', 'break', 'done'].includes(s.name));

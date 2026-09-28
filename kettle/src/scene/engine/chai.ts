@@ -34,9 +34,10 @@ const FZ = D / 2; // front face
 export function buildChai(kit: Kit): Chai {
   const root = new Group();
   root.name = 'chai';
-  const fur = kit.mat(C.fur, { rough: 0.9 });
+  // Fur + snout carry a little self-fill so Chai never goes muddy in night light.
+  const fur = kit.uniqueMat(C.fur, { rough: 0.9, emissive: C.fur, emissiveIntensity: 0.16 });
   const furShade = kit.mat(C.furShade, { rough: 0.9 });
-  const cream = kit.mat(C.muzzle, { rough: 0.9 });
+  const cream = kit.uniqueMat(C.muzzle, { rough: 0.9, emissive: C.muzzle, emissiveIntensity: 0.14 });
   const nose = kit.mat(C.nose, { rough: 0.32 });
   const eyeMat = kit.mat(C.eye, { rough: 0.32 });
   const white = kit.mat('#FFFFFF', { rough: 0.32 });

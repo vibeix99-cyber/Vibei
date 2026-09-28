@@ -34,7 +34,7 @@ export const WIN = {
 
 export const SPOTS = {
   lamp: { x: -2.62, z: -1.92 },
-  stove: { x: -2.6, z: -0.3 },
+  stove: { x: -2.6, z: 0.28 },
   table: { x: 0.45, z: 0.55 },
   rug: { x: 0.2, z: 0.55 },
   cushion: { x: -0.95, z: 1.15 },
@@ -43,8 +43,8 @@ export const SPOTS = {
   crate: { x: 2.3, z: -2.02 },
   monstera: { x: -0.78, z: -1.86 },
   basket: { x: 2.05, z: 1.65 },
-  catBed: { x: -2.5, z: 1.25 },
-  painting: { z: 0.95, y: 2.5 },
+  catBed: { x: -2.45, z: 1.72 },
+  painting: { z: 1.3, y: 2.55 },
   lantern: { x: -1.9, y: 3.2, z: 1.75 },
   telescope: { x: 1.75, z: -1.05 },
 };
