@@ -82,6 +82,18 @@
   }
 }
 @media (max-width: 359px) {
+  /* 320-wide phones: no side bleed, tighter pills, drop the tiny level bar (badge stays). */
+  .statusBar {
+    margin: -6px 0 -4px;
+    gap: 2px;
+  }
+  .stat {
+    min-width: 0;
+    padding: 0 6px;
+  }
+  .statLevel {
+    display: none;
+  }
   .chaiRow {
     gap: 10px;
   }
@@ -336,6 +348,13 @@
 }
 .cta {
   position: relative;
+}
+@media (max-width: 359px) {
+  /* Keep the main action on one line on 320-wide phones. */
+  .cta span {
+    font-size: 1.0625rem;
+    white-space: nowrap;
+  }
 }
 .ctaNote {
   margin-top: -2px;
