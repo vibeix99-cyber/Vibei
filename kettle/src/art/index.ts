@@ -10,5 +10,5 @@ export type { BadgeProps } from './Badge';
 export { GoalVessel, RhythmSpot, NotifySpot, BreakSpot, EmptySpot } from './Spots';
 export type { GoalVesselKind, RhythmSpotKind, BreakSpotKind, EmptySpotKind } from './Spots';
 export { NookFallback } from './NookFallback';
-export type { NookFallbackProps, NookWeather } from './NookFallback';
+export type { NookFallbackProps, NookWeather, NookTime } from './NookFallback';
 export { PAL, TIER } from './palette';
