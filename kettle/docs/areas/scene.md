@@ -28,5 +28,19 @@ Headless: run my own dev server with HMR off (other agents' edits reload pages m
    Steam at 50% was an invisible trickle → bigger puffs, jet along the spout on whistle, honey music notes. Rain read as dots → longer, slanted streaks. Curtains lightened. Weather wasn't applied on init (clear showed rain) → fixed.
 3. **Nook screen** — big interactive stage, time/weather preview toggles, hint pill, story card (Chai + speech bubble), level card with next surprise, collection grid with flat item glyphs (silhouettes when locked). Highlight was invisible for wall-side items (halo occluded) → warm local light + front glow + sparkles on top + camera nudge; small non-interactive cards (level-up) frame the item. Monstera moved beside the window (it hid the record player).
 
+4. **Phone-size focus critique** — 8% and 50% steam looked identical because the plume rose right in front of the glowing lamp shade (white on white). Moved the stove forward along the left wall so the plume rises against the plain corner wall; cat bed/painting shifted to suit. Chai got a gentle self-fill (fur + snout) so the face reads at night. Low tier now swaps shared PBR materials for Lambert. Fresh canvas per engine + `forceContextLoss()` on dispose (StrictMode-safe; 6 remounts → 1 canvas, no warnings). Fairy lights cast a warm wash on the walls.
+   Level-up card: with `highlightItem` set and `interactive` off, the camera frames the item (~50% of the card's short side), plus warm local light, glow, sparkles, bounce.
+
+## Perf (headless SwiftShader = CPU rasteriser, so absolute ms are pessimistic)
+| case | draw calls | triangles | JS/CPU per frame | software raster per frame |
+|---|---|---|---|---|
+| desktop Nook 676×555, all 14 items, high (shadows) | 209 | 153k | ~4 ms | ~890 ms |
+| same, low (Lambert, no shadows) | 137 | 89k | ~3 ms | ~170 ms |
+| phone Nook, level 12, high | 157 | 129k | ~2 ms | ~455 ms |
+| phone Nook, level 12, low | 109 | 77k | ~2 ms | ~92 ms |
+Loop caps at 30 fps (60 only while dragging / blending moods), pauses offscreen / hidden / `paused` / reduced motion (renders on demand). `auto` drops to low after sustained slow frames. Lazy chunk: NookScene 80 kB (27 kB gz) + three 584 kB (147 kB gz), loaded only when a 3D nook mounts.
+
 ## Open / requests
+- core-loop: the level-up card needs no new prop — `highlightItem` with `interactive` unset already frames the item. `backdrop={false}` floats the room on your own background.
 - Shell caps `main` at 680px, so the "scene + side panel" layout (container query ≥ 860px) never activates on desktop. Request (design-system): let `/nook` use a wider main (≈1040px) or hide the rail there.
+- Known gaps: base-room objects (kettle, window, lamp) aren't tappable for stories; locked items have no in-room "ghost" preview; no morning/day-specific window light shafts beyond the floor patch; the art `NookFallback` is night-only, so a daytime crossfade from fallback → 3D shifts mood briefly while three.js loads.

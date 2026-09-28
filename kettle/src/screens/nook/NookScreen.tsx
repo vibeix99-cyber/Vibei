@@ -102,7 +102,7 @@ export default function NookScreen() {
   const described = describeRoom(unlocked, weather === 'auto' ? ambientWeather(ambient) : weather);
 
   return (
-    <div className={s.root}>
+    <div className={s.root} data-layout="wide">
       <ScreenHeader className={s.header} title="Your nook" subtitle={subtitle} />
 
       <section className={s.stageCol} aria-label="The room">
