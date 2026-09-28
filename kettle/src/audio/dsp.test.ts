@@ -67,7 +67,7 @@ describe('gain', () => {
   });
 
   it('fade curves hit their endpoints and are monotonic', () => {
-    for (const shape of ['linear', 'equalPower'] as const) {
+    for (const shape of ['linear', 'equalPower', 'easeOut'] as const) {
       const up = fadeCurve(0, 1, 33, shape);
       const down = fadeCurve(0.8, 0.1, 33, shape);
       expect(up[0]).toBe(0);
@@ -84,6 +84,14 @@ describe('gain', () => {
     const b = fadeCurve(1, 0, 65, 'equalPower');
     for (let i = 0; i < 65; i++) expect(a[i]! ** 2 + b[i]! ** 2).toBeCloseTo(1, 5);
     expect(sampleCurve(a, 0.5)).toBeCloseTo(Math.SQRT1_2, 2);
+  });
+
+  it('ease-out fades land softly on silence', () => {
+    const c = fadeCurve(1, 0, 101, 'easeOut');
+    const cos = fadeCurve(1, 0, 101, 'equalPower');
+    // Last 10% of the fade: the ease-out is already quiet and barely moving.
+    expect(c[90]!).toBeLessThan(0.02);
+    expect(Math.abs(c[100]! - c[99]!)).toBeLessThan(Math.abs(cos[100]! - cos[99]!) / 10);
   });
 });
 

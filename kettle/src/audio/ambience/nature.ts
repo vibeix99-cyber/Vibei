@@ -196,7 +196,7 @@ export class Forest extends BaseAmbient {
     const { rng, ctx } = this;
     // One shared gust signal drives wind + leaves so they swell together.
     const gust = this.own(ctx.createConstantSource());
-    this.drifts.push(new Drift(gust.offset, rng, { min: 0.2, max: 1, minDur: 2.5, maxDur: 8, skew: 1.4 }, at, 0.45));
+    this.drifts.push(new Drift(gust.offset, rng, { min: 0.34, max: 1, minDur: 3, maxDur: 9, skew: 1.3 }, at, 0.5));
     const gustSq = ctx.createWaveShaper();
     const curve = new Float32Array(257);
     for (let i = 0; i < curve.length; i++) {

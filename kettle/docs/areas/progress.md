@@ -57,6 +57,39 @@ Owner: progress area (`src/progress/**`, `src/screens/stats/**`). Dev port 5186.
    the rhythm section. Tooltip compacted to one line. Roman numerals in Nunito (Fredoka's
    "IV" read as "N"). axe: 0 violations (veteran light/dark, blank, newbie desktop dark).
 
+5. **Tablet/320/delight.** 4-across tiles at 560–760px stack icon-over-value (labels were
+   wrapping); 320px: Personal bests become rows, history tag moves to its own meta line,
+   header Chai shrinks; date ranges compact ("Sep 22–28"). Bars and tag fills grow in with
+   the cozy spring (staggered), off under reduced motion (`html[data-motion]` + media query).
+   Broken-streak copy verified ("Start a new streak — one brew today warms the kettle
+   again"), empty month says "A fresh month to fill". Full suite: tsc clean, 192 tests /
+   17 files green, `vite build` ok (Stats chunk 13.5 kB gz), axe 0 violations.
+
+Screenshots (final): `.shots/progress/final/*` — `{fresh,blank,newbie,veteran}-stats-{mobile,desktop}-{light,dark}.png`,
+`vet-scroll-*.png` (390 light, full scroll), `broken-streakcard.png`; interactions in
+`.shots/progress/it3-i-{badge,edit,delete,deleted,kbd}.png`; tablet `it4s-vet-t-dark-*.png`.
+
+## Public API (for other areas)
+
+- Hooks: `useProgress`, `useLevel`, `useStreak` (current, best, todayDone, cozies, maxCozies,
+  atRisk, toNextCozy, lastCozyDay, runs, days), `useToday` (+goalMet, leaves, breaks),
+  `useQuests` (snapshots today's recipes), `useUnlockedItems`, `useBadges`, `useDayKey`, `useHour`.
+- Store actions: `recordSession`, `editSession`, `deleteSession`, `restoreSession`,
+  `ensureToday`, `clearReport`, `resetAll`, `load`.
+- `CompletionReport`: see `types.ts` — leaves {base, bonuses[{kind,label,amount}], total,
+  before, after}, goal {beforeMin, afterMin, goalMin, justMet, alreadyMet, metDays},
+  streak {before, after, extended, best, newBest, cozies, cozyEarned, milestone, week[]},
+  level {before, after, leavesBefore/After, intoBefore/sizeBefore, intoAfter/sizeAfter,
+  unlocked[]}, quests[{id,title,icon,before,after,target,justCompleted,done,reward}],
+  allQuestsJustDone, badges[{id,tier,title,description}], firstEver, whileAway.
+- Events: `progress:report` (completed brews only), `progress:streak`, `progress:levelup`,
+  `progress:quest`, `progress:badge`; `ui:toast` for recipes/badges/level-ups earned
+  outside the celebration (tea breaks, brews ended early).
+- Portability: `exportData()`, `previewImport(json)`, `importData(json, {mode, settings})`
+  → `{ok, summary}` | `{ok:false, error}` (friendly copy), `resetAllData({keepSettings})`,
+  `backupFileName()`.
+- Seeds: `fresh`, `blank`, `newbie`, `veteran`, `celebrate`, `atRisk` (`SEED_NAMES`).
+
 ## Open issues / requests
 
 - Shell caps `main` at ~680px, so the Stats two-column layout (container ≥ 880px) never

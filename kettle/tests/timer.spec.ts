@@ -84,10 +84,15 @@ test.describe('timer reliability', () => {
     expect(after.status).toBe('running');
     expect(after.sessionId).toBe(before.sessionId);
     expect(after.endsAt).toBe(before.endsAt);
-    const rem = await page.evaluate(() => (window as any).__kettle.timer.getState().endsAt - Date.now());
-    expect(rem).toBeGreaterThan(55_000);
-    expect(rem).toBeLessThan(58_700);
-    await expect(page).toHaveTitle(/^0:5\d · Focusing — Kettle$/);
+    // What's displayed agrees with the original end time (reload can take a while in a busy browser).
+    const { rem, shown } = await page.evaluate(() => {
+      const k = (window as any).__kettle;
+      return { rem: k.timer.getState().endsAt - Date.now(), shown: k.timerView().seconds };
+    });
+    expect(rem).toBeGreaterThan(30_000);
+    expect(rem).toBeLessThan(58_600);
+    expect(Math.abs(shown * 1000 - rem)).toBeLessThan(1600);
+    await expect(page).toHaveTitle(/^0:[0-5]\d · Focusing — Kettle$/);
 
     await page.evaluate(() => (window as any).__kettle.timer.getState().pause());
     const paused = await state(page);

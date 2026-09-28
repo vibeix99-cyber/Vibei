@@ -24,7 +24,10 @@ const C = {
   cookieEdge: '#C4874A',
 };
 
-export function BreakArt({ kind, size = 88 }: { kind: SuggestionArt; size?: number }) {
+type LocalArt = Exclude<SuggestionArt, 'stretch' | 'water' | 'eyes' | 'breathe'>;
+
+/** Spots the art area doesn't draw (window, walk, snack, shoulders). */
+export function BreakArt({ kind, size = 88 }: { kind: LocalArt; size?: number }) {
   return (
     <svg viewBox="0 0 96 96" width={size} height={size} aria-hidden="true" focusable="false">
       {ART[kind]}
@@ -32,53 +35,7 @@ export function BreakArt({ kind, size = 88 }: { kind: SuggestionArt; size?: numb
   );
 }
 
-const ART: Record<SuggestionArt, ReactNode> = {
-  water: (
-    <g>
-      <ellipse cx="48" cy="86" rx="22" ry="4" fill="#3B2A20" opacity="0.1" />
-      <path d="M26 18h44l-5.5 60a7 7 0 0 1-7 6.4H38.5a7 7 0 0 1-7-6.4z" fill={C.skySoft} />
-      <path d="M29.4 44h37.2l-3.1 34a7 7 0 0 1-7 6.4H39.5a7 7 0 0 1-7-6.4z" fill={C.sky} />
-      <path d="M58 44h8.6l-3.1 34a7 7 0 0 1-7 6.4h-3z" fill={C.skyEdge} opacity="0.55" />
-      <rect x="33" y="24" width="5" height="44" rx="2.5" fill="#fff" opacity="0.8" />
-      <path d="M76 20c0 0 6 7.2 6 11a6 6 0 0 1-12 0c0-3.8 6-11 6-11z" fill={C.sky} />
-      <circle cx="74" cy="31" r="1.8" fill="#fff" opacity="0.8" />
-    </g>
-  ),
-  stretch: (
-    <g>
-      <ellipse cx="48" cy="88" rx="20" ry="4" fill="#3B2A20" opacity="0.1" />
-      <rect x="24" y="12" width="10" height="34" rx="5" fill={C.chai} transform="rotate(-24 29 44)" />
-      <rect x="62" y="12" width="10" height="34" rx="5" fill={C.chai} transform="rotate(24 67 44)" />
-      <rect x="36" y="42" width="24" height="30" rx="12" fill={C.persimmon} />
-      <path d="M52 42h-4a12 12 0 0 1 12 12v6a12 12 0 0 1-8 11.3z" fill={C.persimmonEdge} opacity="0.5" />
-      <rect x="38" y="64" width="9" height="22" rx="4.5" fill={C.chaiEdge} />
-      <rect x="49" y="64" width="9" height="22" rx="4.5" fill={C.chaiEdge} />
-      <circle cx="48" cy="32" r="11" fill={C.chai} />
-      <circle cx="44" cy="28" r="3" fill="#fff" opacity="0.35" />
-      <path d="M14 16l4 4M82 16l-4 4M48 4v5" stroke={C.honey} strokeWidth="4" strokeLinecap="round" />
-    </g>
-  ),
-  eyes: (
-    <g>
-      <path d="M8 50Q48 14 88 50Q48 86 8 50z" fill="#fff" />
-      <path d="M8 50Q48 86 88 50Q48 74 8 50z" fill={C.skySoft} />
-      <circle cx="48" cy="50" r="17" fill={C.sky} />
-      <path d="M48 33a17 17 0 0 1 0 34a13 17 0 0 0 0-34z" fill={C.skyEdge} opacity="0.5" />
-      <circle cx="48" cy="50" r="7.5" fill={C.ink} />
-      <circle cx="42" cy="44" r="4" fill="#fff" />
-      <rect x="60" y="6" width="30" height="20" rx="10" fill={C.honey} />
-      <text x="75" y="21" textAnchor="middle" fontFamily="Fredoka Variable, Fredoka, sans-serif" fontWeight="700" fontSize="14" fill={C.ink}>
-        20
-      </text>
-    </g>
-  ),
-  breathe: (
-    <g>
-      <circle cx="48" cy="48" r="40" fill={C.sky} opacity="0.18" />
-      <circle cx="48" cy="48" r="28" fill={C.sky} opacity="0.35" />
-      <circle cx="48" cy="48" r="16" fill={C.sky} />
-    </g>
-  ),
+const ART: Record<LocalArt, ReactNode> = {
   window: (
     <g>
       <rect x="12" y="10" width="72" height="70" rx="12" fill={C.chai} />

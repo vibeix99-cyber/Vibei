@@ -36,7 +36,7 @@ export const AMBIENTS: readonly AmbientInfo[] = [
 export const AMBIENT_LEVELS: Record<Exclude<AmbientKind, 'none'>, { level: number; target: number }> = {
   rain: { level: 4.4, target: -16 },
   fire: { level: 11.2, target: -16 },
-  forest: { level: 10.8, target: -17 },
+  forest: { level: 9.7, target: -17 },
   brown: { level: -2.9, target: -17 },
   lofi: { level: 14.4, target: -16 },
 };

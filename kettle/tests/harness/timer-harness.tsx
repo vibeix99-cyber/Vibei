@@ -43,7 +43,7 @@ const api = {
   progress: useProgress,
   settings: useSettings,
   timerInfo: timerDiagnostics,
-  view: getTimerView,
+  timerView: getTimerView,
   events: log,
   renders: () => renders,
   lastAnnouncement,

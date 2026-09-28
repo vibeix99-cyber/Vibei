@@ -11,7 +11,7 @@
  * window.__kettle: { clock, timer, progress, settings, navigate, seed(name), ff(ms), finish() }
  */
 import { clock } from '@/lib/clock';
-import { useTimer, timerDiagnostics } from '@/timer';
+import { useTimer, timerDiagnostics, getTimerView } from '@/timer';
 import { useProgress } from '@/progress';
 import { useSettings } from '@/state/settings';
 import { navigate, getRoute } from './router';
@@ -43,6 +43,8 @@ export function applyDebugParams(): void {
     seed: seedProfile,
     /** Timer internals: leader election, scheduler (worker/main), settling. */
     timerInfo: timerDiagnostics,
+    /** What the timer displays right now (seconds, progress, status). */
+    timerView: getTimerView,
     /** Fast-forward the clock by ms. */
     ff: (ms: number) => clock.advance(ms),
     /** Jump to 1s before the current phase ends. */

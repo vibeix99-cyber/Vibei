@@ -215,7 +215,20 @@
 }
 .rhythmOpt {
   display: grid;
-  gap: 8px;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 14px;
+  row-gap: 8px;
+  align-items: center;
+}
+.rhythmSpot {
+  grid-row: span 2;
+  align-self: center;
+}
+.rhythmOpt > :not(.rhythmSpot) {
+  grid-column: 2;
+}
+.rhythmOpt > .optSub {
+  grid-column: 1 / -1;
 }
 .rhythmTop {
   display: flex;

@@ -28,6 +28,7 @@ ask for it (or pass `className` for layout only).
 | `NumberStepper` | `value`, `onChange`, `min/max/step`, `label`, `unit`, `format`, `size` (spinbutton + hold-to-repeat) |
 | `Digits` | `value` string/number, `roll` false/'up'/'down', `label` (SR text), `font`. Fixed-width digit cells — use for every timer |
 | `Counter` | `value`, `from`, `duration`, `delay`, `format`, `onTick` (hook `audio.play('streakTick')`), `onDone` |
+| `WeekStrip` | `days` (progress `WeekStripDay[]` as-is: `{day,label,state,isToday}`), `size` sm/md/lg, `celebrate` + `delay` (today's dot lights up with a pop + check draw — for the streak-extended card), `tray`, `label` |
 | `Pill` / `Tag` | `tone` (+neutral), `icon`, `solid`, `size` |
 | `Divider` | `label`, `spacing` |
 | `ScreenHeader` / `SectionHeader` | `title`, `subtitle`, `overline`, `onBack`, `actions`, `size` l/m. The title is the page `<h1>` |

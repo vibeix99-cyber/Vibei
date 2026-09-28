@@ -5,7 +5,7 @@
  */
 import { useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { Icon } from '@/art';
+import { BreakSpot, Icon } from '@/art';
 import { ease } from '@/lib/motion';
 import { usePageVisible } from '../parts/hooks';
 import { BreakArt } from './BreakArt';
@@ -45,7 +45,15 @@ export function BreakIdeas({ long, reduced, seed = 0 }: { long: boolean; reduced
           exit={reduced ? { opacity: 0 } : { opacity: 0, x: -16 }}
           transition={{ duration: 0.28, ease: ease.out }}
         >
-          <div className={s.art}>{current.id === 'breathe' ? <Breathe reduced={reduced} /> : <BreakArt kind={current.id} size={76} />}</div>
+          <div className={s.art}>
+            {current.id === 'breathe' ? (
+              <Breathe reduced={reduced} />
+            ) : current.id === 'stretch' || current.id === 'water' || current.id === 'eyes' ? (
+              <BreakSpot kind={current.id} size={80} backdrop={false} animate={!reduced} />
+            ) : (
+              <BreakArt kind={current.id} size={72} />
+            )}
+          </div>
           <div className={s.text}>
             <h3 className={s.title}>{current.title}</h3>
             <p className={s.body}>{current.body}</p>

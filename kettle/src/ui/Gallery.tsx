@@ -37,6 +37,7 @@ import {
   TextField,
   Toggle,
   Tooltip,
+  WeekStrip,
   toast,
   TONES,
   type Tone,
@@ -104,6 +105,7 @@ export default function UiGallery() {
   const [secs, setSecs] = useState(25 * 60);
   const [loading, setLoading] = useState(false);
   const [selectedCard, setSelectedCard] = useState('cup');
+  const [replay, setReplay] = useState(0);
   const sheetInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -505,6 +507,46 @@ export default function UiGallery() {
               <Stat variant="bare" icon="target" tone="berry" value="80%" label="Goal" />
             </div>
           </Card>
+        </Section>
+
+        <Section id="week" title="Warm week" note="Takes progress's WeekStripDay[] as-is. celebrate lights today up (tap Replay).">
+          <WeekStrip
+            days={[
+              { day: '2026-09-22', label: 'M', state: 'done' },
+              { day: '2026-09-23', label: 'T', state: 'done' },
+              { day: '2026-09-24', label: 'W', state: 'cozy' },
+              { day: '2026-09-25', label: 'T', state: 'done' },
+              { day: '2026-09-26', label: 'F', state: 'missed' },
+              { day: '2026-09-27', label: 'S', state: 'today', isToday: true },
+              { day: '2026-09-28', label: 'S', state: 'future' },
+            ]}
+          />
+          <WeekStrip
+            key={replay}
+            size="lg"
+            celebrate
+            delay={0.5}
+            label="Streak extended"
+            days={[
+              { day: '2026-09-22', label: 'M', state: 'done' },
+              { day: '2026-09-23', label: 'T', state: 'done' },
+              { day: '2026-09-24', label: 'W', state: 'done' },
+              { day: '2026-09-25', label: 'T', state: 'done' },
+              { day: '2026-09-26', label: 'F', state: 'done', isToday: true },
+              { day: '2026-09-27', label: 'S', state: 'future' },
+              { day: '2026-09-28', label: 'S', state: 'future' },
+            ]}
+          />
+          <Row>
+            <Button size="sm" variant="secondary" icon="refresh" onClick={() => setReplay((r) => r + 1)}>
+              Replay
+            </Button>
+            <WeekStrip
+              size="sm"
+              tray={false}
+              days={['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((l, i) => ({ day: `2026-09-${22 + i}`, label: l, state: i < 3 ? 'done' : i === 3 ? 'today' : 'future', isToday: i === 3 }))}
+            />
+          </Row>
         </Section>
 
         <Section id="list" title="List rows" note="Settings-style groups.">

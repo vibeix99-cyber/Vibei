@@ -1,6 +1,6 @@
 /** Onboarding step bodies (options only — Chai's question lives in WelcomeScreen). */
 import { useId, type ReactNode } from 'react';
-import { Icon, GoalVessel, Logo, NotifySpot } from '@/art';
+import { Icon, GoalVessel, Logo, NotifySpot, RhythmSpot } from '@/art';
 import type { AmbientKind, RhythmId } from '@/state/settings';
 import { TextField } from '@/ui';
 import { RhythmArt } from '@/screens/home/art';
@@ -120,6 +120,7 @@ export function RhythmStep({ value, onChange }: { value: RhythmId | null; onChan
         value: r.id,
         content: (
           <span className={s.rhythmOpt}>
+            <RhythmSpot rhythm={r.id} size={64} className={s.rhythmSpot} />
             <span className={s.rhythmTop}>
               <span className={s.optTitle}>{r.label}</span>
               <span className={s.optRight}>

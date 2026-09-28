@@ -135,8 +135,10 @@ export class Fader {
 
   fade(to: number, seconds: number, shape: FadeShape = 'equalPower', at = this.ctx.currentTime): void {
     const from = this.valueAt(at);
+    // Fading to silence: land softly (see fadeCurve).
+    if (to === 0 && shape === 'equalPower') shape = 'easeOut';
     const dur = Math.max(0.02, seconds);
-    const segs = 16;
+    const segs = 24;
     const curve = fadeCurve(from, to, segs + 1, shape);
     for (const p of this.params) {
       p.cancelScheduledValues(at);

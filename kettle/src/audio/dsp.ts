@@ -68,11 +68,13 @@ export function gainToDb(g: number): number {
   return g <= 0 ? -Infinity : 20 * Math.log10(g);
 }
 
-export type FadeShape = 'linear' | 'equalPower';
+export type FadeShape = 'linear' | 'equalPower' | 'easeOut';
 
 /**
- * Sampled fade curve from `from` to `to` (for `setValueCurveAtTime`).
- * `equalPower` uses a quarter-sine so uncorrelated crossfades keep constant power.
+ * Sampled fade curve from `from` to `to`.
+ * - `equalPower`: quarter-sine, so uncorrelated crossfades keep constant power.
+ * - `easeOut`: quadratic that lands on the target with zero slope — use when
+ *   fading to silence (a cosine tail drops ~20 dB in its last 10% and sounds abrupt).
  */
 export function fadeCurve(from: number, to: number, n = 64, shape: FadeShape = 'equalPower'): Float32Array {
   const out = new Float32Array(Math.max(2, n));
@@ -81,6 +83,7 @@ export function fadeCurve(from: number, to: number, n = 64, shape: FadeShape = '
     const x = i / last;
     let w: number;
     if (shape === 'linear') w = x;
+    else if (shape === 'easeOut') w = 1 - (1 - x) * (1 - x);
     else w = to > from ? Math.sin((x * Math.PI) / 2) : 1 - Math.cos((x * Math.PI) / 2);
     out[i] = from + (to - from) * w;
   }
