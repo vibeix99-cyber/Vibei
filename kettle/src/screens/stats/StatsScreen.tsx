@@ -1,28 +1,26 @@
 /**
  * Stats — your brewing story. OWNER: progress area.
  *
- * Overview tiles → cozy level → this week (bars vs goal) → warm streak
- * calendar (joined runs, Tea Cozy days) → rhythm (time of day, tags) →
- * badges → editable history. Two columns when the content area is wide.
+ * Left column: overview tiles → cozy level → last 7 days (bars vs goal) → warm
+ * streak calendar (joined runs, Tea Cozy days) → personal bests.
+ * Right column: badges (6 + view all) → your rhythm (collapsible) → history.
+ * Phones stack left then right; ≥ 760px content width shows both columns.
  */
-import { useId, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type RefObject } from 'react';
 import { Icon, Leaf, LevelBadge, Mascot, StreakMug, type MascotPose } from '@/art';
-import { addDays } from '@/lib/dates';
 import { ITEMS, localeWeekStart, useBadges, useDayKey, useHour, useLevel, useProgress, useStreak } from '@/progress';
 import { dayTotals, goalMetDays, totals } from '@/progress/insights';
 import { useSettings } from '@/state/settings';
 import { useTimer } from '@/timer';
-import { Button, Card, EmptyState, ProgressBar, ScreenHeader, SegmentedControl, Stat, cx } from '@/ui';
+import { Button, Card, EmptyState, ProgressBar, ScreenHeader, Stat, cx, useMediaQuery } from '@/ui';
 import { BadgesSection } from './Badges';
 import { hm, monthDay } from './format';
 import { HistorySection } from './History';
 import { PersonalBestsCard } from './PersonalBests';
-import { RhythmCard, TagsCard } from './PatternCards';
+import { RhythmSection } from './PatternCards';
 import { StreakCard } from './StreakCard';
 import { WeekCard } from './WeekCard';
 import s from './stats.module.css';
-
-type Scope = '30d' | 'all';
 
 export default function StatsScreen() {
   const sessions = useProgress((st) => st.sessions);
@@ -34,19 +32,12 @@ export default function StatsScreen() {
   const goalMin = useSettings((st) => st.dailyGoalMin);
   const name = useSettings((st) => st.name);
   const weekStartsOn = useMemo(() => localeWeekStart(), []);
+  const wide = useMediaQuery('(min-width: 900px)');
+  const headerRef = useRef<HTMLDivElement>(null);
 
   const t = useMemo(() => totals(sessions), [sessions]);
   const byDay = useMemo(() => dayTotals(sessions), [sessions]);
   const metDays = useMemo(() => goalMetDays(ledger), [ledger]);
-  const recent = useMemo(() => {
-    const from = addDays(today, -29);
-    return sessions.filter((x) => x.phase === 'focus' && x.day >= from).length;
-  }, [sessions, today]);
-  const [scopeChoice, setScope] = useState<Scope | null>(null);
-  const scope: Scope = scopeChoice ?? (recent >= 5 || t.sessions === recent ? '30d' : 'all');
-  const fromDay = scope === '30d' ? addDays(today, -29) : undefined;
-  const scopeLabel = scope === '30d' ? 'Last 30 days' : 'All time';
-  const rhythmId = useId();
 
   const empty = t.sessions === 0;
   const hour = useHour();
@@ -56,84 +47,82 @@ export default function StatsScreen() {
     : `${name ? `${name} · ` : ''}brewing since ${t.firstDay ? monthDay(t.firstDay, today) : 'today'}`;
 
   return (
-    <div className={s.screen}>
+    // data-layout="wide": the shell widens the column (and lets the rail yield) for this dashboard.
+    <div className={s.screen} data-layout="wide">
+      <CompactBar streak={streak.current} alive={streak.current > 0} todayDone={streak.todayDone} watch={headerRef} />
+      <div ref={headerRef} className={s.headerWrap}>
       <ScreenHeader
         title="Stats"
         subtitle={subtitle}
         actions={empty ? undefined : <Mascot pose={chaiPose} size={76} animate className={s.headerChai} />}
+        className={s.header}
       />
+      </div>
 
       {empty && <EmptyHero />}
 
-      <section aria-label="Overview" className={s.area} data-area="overview">
-        <div className={s.tiles}>
-          <Stat
-            icon={<StreakMug size={34} state={streak.current === 0 ? 'cold' : streak.todayDone ? 'warm' : 'atRisk'} animate={false} title="" />}
-            tone="persimmon"
-            value={streak.current.toLocaleString()}
-            label="Day streak"
-            hint={streak.atRisk ? <span className={s.riskHint}>Brew tonight</span> : undefined}
-          />
-          <Stat icon={<Icon name="trophy" size={26} tone="color" />} tone="honey" value={streak.best.toLocaleString()} label="Best streak" />
-          <Stat icon="clock" tone="sky" value={hm(t.focusMs)} label="Total focus" />
-          <Stat icon="cup" tone="matcha" value={t.brews.toLocaleString()} label="Full brews" />
-        </div>
-      </section>
-
-      <div className={s.area} data-area="level">
-        <LevelCard level={level.level} leaves={level.leaves} into={level.into} size={level.size} />
-      </div>
-
-      {!empty && (
-        <>
-          <div className={s.area} data-area="week">
-            <WeekCard byDay={byDay} metDays={metDays} today={today} goalMin={goalMin} firstDay={t.firstDay} />
-          </div>
-          <div className={s.area} data-area="streak">
-            <StreakCard streak={streak} byDay={byDay} today={today} weekStartsOn={weekStartsOn} firstDay={t.firstDay} />
-          </div>
-          <div className={s.area} data-area="bests">
-            <PersonalBestsCard sessions={sessions} today={today} weekStartsOn={weekStartsOn} />
-          </div>
-        </>
-      )}
-
-      <div className={s.area} data-area="badges">
-        <BadgesSection badges={badges} today={today} />
-      </div>
-
-      {!empty && (
-        <>
-          <section className={cx(s.area, s.patterns)} data-area="rhythm" aria-labelledby={rhythmId}>
-            <div className={s.sectionHead}>
-              <h2 id={rhythmId} className={s.sectionTitle}>
-                Your rhythm
-              </h2>
-              <SegmentedControl<Scope>
-                label="Time range"
-                value={scope}
-                onChange={setScope}
-                options={[
-                  { value: '30d', label: '30 days' },
-                  { value: 'all', label: 'All time' },
-                ]}
-                className={s.scope}
+      <div className={s.columns}>
+        {/* Left: how you're doing — overview, level, week, streak calendar, records. */}
+        <div className={s.col}>
+          <section aria-label="Overview" className={s.area}>
+            <div className={s.tiles}>
+              <Stat
+                icon={<StreakMug size={34} state={streak.current === 0 ? 'cold' : streak.todayDone ? 'warm' : 'atRisk'} animate={false} title="" />}
+                tone="persimmon"
+                value={streak.current.toLocaleString()}
+                label="Day streak"
+                hint={streak.atRisk ? <span className={s.riskHint}>Brew tonight</span> : undefined}
               />
-            </div>
-            <div className={s.patternGrid}>
-              <RhythmCard sessions={sessions} fromDay={fromDay} scopeLabel={scopeLabel} />
-              <TagsCard sessions={sessions} fromDay={fromDay} scopeLabel={scopeLabel} />
+              <Stat icon={<Icon name="trophy" size={26} tone="color" />} tone="honey" value={streak.best.toLocaleString()} label="Best streak" />
+              <Stat icon="clock" tone="sky" value={hm(t.focusMs)} label="Total focus" />
+              <Stat icon="cup" tone="matcha" value={t.brews.toLocaleString()} label="Full brews" />
             </div>
           </section>
-        </>
-      )}
-
-
-      {!empty && (
-        <div className={s.area} data-area="history">
-          <HistorySection sessions={sessions} metDays={metDays} today={today} />
+          <LevelCard level={level.level} leaves={level.leaves} into={level.into} size={level.size} />
+          {!empty && (
+            <>
+              <WeekCard byDay={byDay} metDays={metDays} today={today} goalMin={goalMin} firstDay={t.firstDay} />
+              <StreakCard streak={streak} byDay={byDay} today={today} weekStartsOn={weekStartsOn} firstDay={t.firstDay} />
+              <PersonalBestsCard sessions={sessions} today={today} weekStartsOn={weekStartsOn} />
+            </>
+          )}
         </div>
-      )}
+
+        {/* Right: what you've collected and how you brew — badges, rhythm, history. */}
+        <div className={s.col}>
+          <BadgesSection badges={badges} today={today} />
+          {!empty && (
+            <>
+              <RhythmSection sessions={sessions} today={today} defaultOpen={wide} />
+              <HistorySection sessions={sessions} metDays={metDays} today={today} />
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Compact title bar that fades in once the big header scrolls away, so the top of the
+ * page always reads cleanly (large-title collapse). Decorative for AT: the h1 stays put.
+ */
+function CompactBar({ streak, alive, todayDone, watch }: { streak: number; alive: boolean; todayDone: boolean; watch: RefObject<HTMLDivElement | null> }) {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const el = watch.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+    const io = new IntersectionObserver(([e]) => setShow(!e.isIntersecting && e.boundingClientRect.top < 0), { threshold: 0 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [watch]);
+  return (
+    <div className={s.compactBar} data-show={show || undefined} aria-hidden="true">
+      <span className={s.compactTitle}>Stats</span>
+      <span className={s.compactStreak}>
+        <StreakMug size={26} state={!alive ? 'cold' : todayDone ? 'warm' : 'atRisk'} animate={false} title="" />
+        {streak}
+      </span>
     </div>
   );
 }

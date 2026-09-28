@@ -1,1 +1,1 @@
-export { registerPwa, usePwaUpdate, applyPwaUpdate, dismissPwaUpdate, getPwaState } from './register';
+export { registerPwa, usePwaUpdate, useOfflineReady, applyPwaUpdate, dismissPwaUpdate, getPwaState } from './register';

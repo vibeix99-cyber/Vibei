@@ -36,14 +36,14 @@ export function BreakIdeas({ long, reduced, seed = 0 }: { long: boolean; reduced
       onFocus={() => setHold(true)}
       onBlur={() => setHold(false)}
     >
-      <AnimatePresence mode="wait" initial={false}>
+      {/* Old and new ideas overlap (slide past each other) — the card is never empty mid-change. */}
+      <AnimatePresence mode="popLayout" initial={false}>
         <motion.div
           key={current.id}
           className={s.row}
-          initial={reduced ? { opacity: 0 } : { opacity: 0, x: 16 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={reduced ? { opacity: 0 } : { opacity: 0, x: -16 }}
-          transition={{ duration: 0.28, ease: ease.out }}
+          initial={reduced ? { opacity: 0 } : { opacity: 0, x: 28 }}
+          animate={{ opacity: 1, x: 0, transition: { duration: reduced ? 0.2 : 0.32, ease: ease.out } }}
+          exit={reduced ? { opacity: 0, transition: { duration: 0.2 } } : { opacity: 0, x: -28, transition: { duration: 0.22, ease: ease.out } }}
         >
           <div className={s.art}>
             {current.id === 'breathe' ? (

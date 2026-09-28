@@ -10,7 +10,7 @@
  */
 import { useCallback, useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { Button } from '@/ui';
+import { Button, useMediaQuery } from '@/ui';
 import { useProgress } from '@/progress';
 import { nextBreakKind, useTimer } from '@/timer';
 import { useSettings } from '@/state/settings';
@@ -38,6 +38,16 @@ const STEP: Record<StepKind, (p: StepProps) => ReactNode> = {
 };
 
 const AUTO_BREAK_S = 10;
+/** How long the content takes to step aside before handing off to the break / home. */
+const LEAVE_MS = 200;
+
+/** Art scale for the hero: small on short phones, roomier on tall phones, ~1.45× on desktop. */
+function useHeroScale(): number {
+  const desk = useMediaQuery('(min-width: 1024px) and (min-height: 700px)');
+  const tall = useMediaQuery('(max-width: 1023px) and (min-height: 800px)');
+  const short = useMediaQuery('(max-height: 700px)');
+  return desk ? 1.45 : tall ? 1.15 : short ? 0.8 : 1;
+}
 
 export default function DoneScreen() {
   const liveReport = useProgress((p) => p.lastReport);
@@ -49,6 +59,7 @@ export default function DoneScreen() {
   const visible = usePageVisible();
   const autoStart = useSettings((st) => st.autoStartBreaks);
   const headingId = useId();
+  const hs = useHeroScale();
 
   // Latch: start the choreography the first time the page is actually visible.
   const [seen, setSeen] = useState(visible);
@@ -87,14 +98,19 @@ export default function DoneScreen() {
   const breakKind = nextBreakKind(useTimer.getState().completedInCycle);
   const breakLabel = breakKind === 'longBreak' ? 'Start long tea break' : 'Start tea break';
 
-  // Once we hand off (break / home), ignore further presses while the route animates out.
+  // Hand-off (break / home): the card and buttons step aside first while the background shifts toward
+  // the next screen's (sky for tea time), so the route dissolve never double-exposes two screens' text.
   const leaving = useRef(false);
-  const leave = useCallback((to: 'break' | 'home') => {
-    if (leaving.current) return;
-    leaving.current = true;
-    if (to === 'break') beginBreak();
-    else skipBreakFromDone();
-  }, []);
+  const [exit, setExit] = useState<'break' | 'home' | null>(null);
+  const leave = useCallback(
+    (to: 'break' | 'home') => {
+      if (leaving.current) return;
+      leaving.current = true;
+      setExit(to);
+      window.setTimeout(() => (to === 'break' ? beginBreak() : skipBreakFromDone()), reduced ? 90 : LEAVE_MS);
+    },
+    [reduced],
+  );
 
   const advance = useCallback(() => {
     if (leaving.current) return;
@@ -143,8 +159,15 @@ export default function DoneScreen() {
   const Step = STEP[kind];
 
   return (
-    <div className={s.done} data-step={kind} data-done-screen="">
+    <div
+      className={s.done}
+      data-step={kind}
+      data-done-screen=""
+      data-exit={exit ?? undefined}
+      style={{ ['--hs' as string]: hs }}
+    >
       <div className={s.bg} data-kind={kind} aria-hidden="true" />
+      <div className={s.bgSky} aria-hidden="true" />
       <header className={s.top}>
         {steps.length > 1 && (
           <ol className={s.progress} aria-label={`Card ${step + 1} of ${steps.length}`}>
@@ -156,17 +179,17 @@ export default function DoneScreen() {
       </header>
 
       <main className={s.stage}>
-        <AnimatePresence mode="wait" initial={false}>
+        {/* Cards slide past each other (overlapping) — the stage is never empty between cards. */}
+        <AnimatePresence mode="popLayout" initial={false}>
           <motion.section
             key={kind}
             className={s.card}
             aria-labelledby={headingId}
-            initial={reduced ? { opacity: 0 } : { opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={reduced ? { opacity: 0 } : { opacity: 0, x: -40 }}
-            transition={{ duration: reduced ? 0.15 : 0.28, ease: ease.out }}
+            initial={reduced ? { opacity: 0 } : { opacity: 0, x: 56 }}
+            animate={{ opacity: 1, x: 0, transition: { duration: reduced ? 0.15 : 0.32, ease: ease.out, delay: reduced ? 0 : 0.04 } }}
+            exit={reduced ? { opacity: 0, transition: { duration: 0.12 } } : { opacity: 0, x: -56, transition: { duration: 0.18, ease: ease.in } }}
           >
-            <Step report={report} reduced={reduced} active={seen} headingRef={headingRef} headingId={headingId} />
+            <Step report={report} reduced={reduced} active={seen} scale={hs} headingRef={headingRef} headingId={headingId} />
           </motion.section>
         </AnimatePresence>
         <p className="sr-only" role="status" aria-live="polite">

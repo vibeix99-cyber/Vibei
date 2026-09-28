@@ -36,6 +36,7 @@ export function StreakCard({ streak, byDay, today, weekStartsOn, firstDay }: Pro
   const canNext = offset < 0;
   const headingId = useId();
   const monthName = monthTitle(year, month0);
+  const monthOnly = new Date(year, month0, 1).toLocaleDateString(undefined, { month: 'long' });
 
   const inMonth = rows.flat().filter((d): d is DayKey => !!d);
   const warmCount = inMonth.filter((d) => streak.days[d] === 'done').length;
@@ -172,8 +173,9 @@ export function StreakCard({ streak, byDay, today, weekStartsOn, firstDay }: Pro
           </li>
         </ul>
         <p className={s.calSummary}>
-          {warmCount === 0 && cozyCount === 0 ? 'A fresh month to fill' : plural(warmCount, 'warm day')}
-          {cozyCount ? ` · ${plural(cozyCount, 'cozy day')}` : ''}
+          {warmCount === 0 && cozyCount === 0
+            ? 'A fresh month to fill'
+            : `${plural(warmCount, 'warm day')} in ${monthOnly}${cozyCount ? ` · ${plural(cozyCount, 'Tea Cozy day')}` : ''}`}
         </p>
       </div>
     </Card>

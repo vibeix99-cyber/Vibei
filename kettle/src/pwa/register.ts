@@ -4,12 +4,14 @@
  *   registerPwa()     called from boot; no-op in dev and where SWs aren't available
  *   usePwaUpdate()    { needRefresh, offlineReady, update(), dismiss() } for an
  *                     "Update" button (ShellOverlays shows the actionable prompt)
+ *   useOfflineReady() true once the app shell is cached (this visit or an earlier
+ *                     one) — for a quiet "Works offline ✓" line in Settings → About.
+ *                     Caching is plumbing, not news: it is never toasted.
  *
  * Updates never reload on their own: a running brew survives a reload anyway,
  * but ambience and animations would restart, so the user decides.
  */
 import { useSyncExternalStore } from 'react';
-import { emit } from '@/lib/events';
 
 interface PwaState {
   needRefresh: boolean;
@@ -50,8 +52,9 @@ export async function applyPwaUpdate(): Promise<void> {
   setTimeout(reload, 4000);
 }
 
+/** Hide the update prompt ("later"). Offline readiness is a fact, not a notice — it stays. */
 export function dismissPwaUpdate(): void {
-  patch({ needRefresh: false, offlineReady: false });
+  patch({ needRefresh: false });
 }
 
 export function registerPwa(): void {
@@ -67,12 +70,14 @@ export function registerPwa(): void {
           patch({ needRefresh: true });
         },
         onOfflineReady() {
+          // Deliberately silent (no toast): it lands during onboarding / first load.
           patch({ offlineReady: true });
-          emit('ui:toast', { message: 'Kettle works offline now.', tone: 'success' });
         },
         onRegisteredSW(_url, reg) {
           patch({ registered: true });
           if (!reg) return;
+          // Return visits: the shell was cached on an earlier visit (onOfflineReady won't fire again).
+          if (reg.active) patch({ offlineReady: true });
           // Look for updates hourly and whenever the app comes back to the foreground.
           const check = () => {
             if (navigator.onLine !== false) void reg.update().catch(() => {});
@@ -100,4 +105,16 @@ export function usePwaUpdate(): PwaState & { update: () => Promise<void>; dismis
     () => state,
   );
   return { ...s, update: applyPwaUpdate, dismiss: dismissPwaUpdate };
+}
+
+/** True once Kettle works offline (shell precached). Quiet status for Settings → About. */
+export function useOfflineReady(): boolean {
+  return useSyncExternalStore(
+    (cb) => {
+      listeners.add(cb);
+      return () => listeners.delete(cb);
+    },
+    () => state.offlineReady,
+    () => false,
+  );
 }

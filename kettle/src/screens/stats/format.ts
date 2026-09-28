@@ -1,8 +1,5 @@
 /** Formatting helpers for the Stats screen. */
 import { addDays, parseDayKey, type DayKey } from '@/lib/dates';
-import type { IconName } from '@/art';
-import type { Tone } from '@/ui';
-import type { TagId } from '@/state/settings';
 
 const MIN = 60_000;
 
@@ -106,22 +103,6 @@ export function weekdayNames(weekStartsOn: number): { short: string; long: strin
 }
 
 export const plural = (n: number, one: string, many = `${one}s`) => `${n.toLocaleString()} ${n === 1 ? one : many}`;
-
-export interface TagMeta {
-  label: string;
-  icon: IconName;
-  tone: Tone;
-}
-
-/** Same labels/icons as Home's tag chips, same colors as the Focus screen's tag dot. */
-export const TAG_META: Record<TagId, TagMeta> = {
-  work: { label: 'Work', icon: 'target', tone: 'persimmon' },
-  study: { label: 'Study', icon: 'edit', tone: 'sky' },
-  read: { label: 'Read', icon: 'info', tone: 'berry' },
-  create: { label: 'Create', icon: 'sparkle', tone: 'honey' },
-  life: { label: 'Life', icon: 'home', tone: 'matcha' },
-};
-export const TAG_IDS: TagId[] = ['work', 'study', 'read', 'create', 'life'];
 
 /** Nice round axis ceiling. */
 export function niceMax(v: number): { max: number; step: number } {

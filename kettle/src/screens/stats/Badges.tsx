@@ -1,5 +1,5 @@
 /** Badges grid (tiers I–V) with a detail sheet per badge. */
-import { useId, useState, type CSSProperties } from 'react';
+import { useId, useMemo, useState, type CSSProperties } from 'react';
 import { Badge, Icon, TIER } from '@/art';
 import { dayKey, type DayKey } from '@/lib/dates';
 import { ROMAN, type BadgeProgress } from '@/progress';
@@ -40,12 +40,26 @@ function tierStyle(tier: number): CSSProperties {
   return { ['--tier-base' as string]: t.base, ['--tier-ink' as string]: t.ink, ['--tier-shade' as string]: t.shade };
 }
 
+const PREVIEW = 6;
+const lastUnlock = (b: BadgeProgress) => b.unlockedAt[b.tier - 1] ?? 0;
+
+/** Most recently earned first, then the locked ones you're closest to. Stable within ties. */
+function orderBadges(badges: BadgeProgress[]): BadgeProgress[] {
+  const earned = badges.filter((b) => b.tier > 0).sort((a, b) => lastUnlock(b) - lastUnlock(a));
+  const locked = badges.filter((b) => b.tier === 0).sort((a, b) => b.toNext - a.toNext);
+  return [...earned, ...locked];
+}
+
 export function BadgesSection({ badges, today }: { badges: BadgeProgress[]; today: DayKey }) {
   const [openId, setOpenId] = useState<string | null>(null);
+  const [all, setAll] = useState(false);
   const headingId = useId();
+  const gridId = useId();
   const earnedTiers = badges.reduce((a, b) => a + b.tier, 0);
   const totalTiers = badges.reduce((a, b) => a + b.maxTier, 0);
   const open = badges.find((b) => b.id === openId) ?? null;
+  const ordered = useMemo(() => orderBadges(badges), [badges]);
+  const shown = all ? ordered : ordered.slice(0, PREVIEW);
   return (
     <Card as="section" className={cx(s.card, s.badgesCard)} aria-labelledby={headingId}>
       <div className={s.cardHead}>
@@ -58,8 +72,8 @@ export function BadgesSection({ badges, today }: { badges: BadgeProgress[]; toda
           </p>
         </div>
       </div>
-      <ul className={s.badgeGrid}>
-        {badges.map((b) => {
+      <ul className={s.badgeGrid} id={gridId}>
+        {shown.map((b) => {
           const next = b.next != null ? `${b.value.toLocaleString()} of ${b.next.toLocaleString()}` : 'All tiers earned';
           return (
             <li key={b.id}>
@@ -77,6 +91,11 @@ export function BadgesSection({ badges, today }: { badges: BadgeProgress[]; toda
           );
         })}
       </ul>
+      {ordered.length > PREVIEW && (
+        <Button variant="secondary" block aria-expanded={all} aria-controls={gridId} onClick={() => setAll((v) => !v)} iconRight={all ? 'chevronUp' : 'chevronDown'}>
+          {all ? 'Show fewer' : `View all ${ordered.length} badges`}
+        </Button>
+      )}
       <BadgeSheet badge={open} today={today} onClose={() => setOpenId(null)} />
     </Card>
   );

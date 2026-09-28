@@ -23,16 +23,70 @@
 }
 .rolling {
   display: inline-grid;
-  position: relative;
-  padding-block: 0.14em;
-  margin-block: -0.14em;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
-  mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+  /* clip vertically to the cell (clip-path doesn't disturb baseline alignment like overflow would) */
+  clip-path: inset(-0.02em -0.3em);
 }
 .glyph {
   grid-area: 1 / 1;
   display: block;
   text-align: center;
+}
+.in,
+.out {
+  animation-duration: 170ms;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation-fill-mode: forwards;
+}
+/* Base styles equal the END state: if an animation is pending (Chrome paints composited
+   layers at their base style for a frame) or the page is stalled, the cell shows exactly one
+   crisp digit — the new one — never two superimposed glyphs. */
+.out {
+  visibility: hidden;
+}
+.rolling[data-dir='up'] .in {
+  animation-name: in-up;
+}
+.rolling[data-dir='up'] .out {
+  animation-name: out-up;
+}
+.rolling[data-dir='down'] .in {
+  animation-name: in-down;
+}
+.rolling[data-dir='down'] .out {
+  animation-name: out-down;
+}
+@keyframes in-up {
+  from { transform: translateY(100%); }
+  to { transform: none; }
+}
+@keyframes out-up {
+  from { transform: none; visibility: visible; }
+  to { transform: translateY(-100%); visibility: hidden; }
+}
+@keyframes in-down {
+  from { transform: translateY(-100%); }
+  to { transform: none; }
+}
+@keyframes out-down {
+  from { transform: none; visibility: visible; }
+  to { transform: translateY(100%); visibility: hidden; }
+}
+/* Reduced motion: a quick cross-fade instead of a roll. */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fade-out {
+  from { opacity: 1; visibility: visible; }
+  to { opacity: 0; visibility: hidden; }
+}
+:global(html[data-motion='reduce']) .rolling .in {
+  animation-name: fade-in;
+  animation-duration: 120ms;
+}
+:global(html[data-motion='reduce']) .rolling .out {
+  animation-name: fade-out;
+  animation-duration: 120ms;
 }
 .colon {
   display: inline-block;

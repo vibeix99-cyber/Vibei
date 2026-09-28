@@ -80,6 +80,7 @@ export function chaiLine(c: ChaiContext): ChaiLine {
 
   if (met) {
     if (c.part === 'night') return { mood: 'met', pose: 'sleep', text: 'Goal met, and it’s late. I vote for a cozy bedtime.' };
+    if (c.part === 'evening') return { mood: 'met', pose: 'sip', text: 'Goal met. Lamps low, feet up. You earned a slow evening.' };
     return {
       mood: 'met',
       pose: 'proud',
@@ -89,9 +90,9 @@ export function chaiLine(c: ChaiContext): ChaiLine {
 
   if (c.part === 'night') {
     if (c.streak > 0 && !c.todayDone) {
-      return { mood: 'night', pose: 'sip', text: nb(`It’s late. One gentle 15-minute brew keeps your ${c.streak}-day streak warm.`), suggestGentle: true };
+      return { mood: 'night', pose: 'sleep', text: nb(`It’s late. One gentle 15-minute brew keeps your ${c.streak}-day streak warm.`), suggestGentle: true };
     }
-    return { mood: 'night', pose: 'sip', text: pick(c.seed, ['It’s getting late. A gentle one, then rest?', 'Late-night brew? Let’s keep it short and sweet.']), suggestGentle: true };
+    return { mood: 'night', pose: 'sleep', text: pick(c.seed, ['It’s getting late. A gentle one, then rest?', 'Late-night brew? Let’s keep it short and sweet.']), suggestGentle: true };
   }
 
   if (c.daysSinceLast != null && c.daysSinceLast >= 3 && c.sessionsToday === 0 && c.todayMin === 0) {
@@ -105,25 +106,27 @@ export function chaiLine(c: ChaiContext): ChaiLine {
 
   if (c.todayMin > 0) {
     const n = brewsToGo(left, c.focusMin);
+    const more = n === 1 ? 'one more brew' : `${n} more brews`;
+    if (c.part === 'morning') return { mood: 'progress', pose: 'stretch', text: `Early start, nice. ${left} min to go, about ${more}.` };
+    if (c.part === 'evening') return { mood: 'progress', pose: 'sip', text: `Lamps on, pot’s nearly full. ${left} min to go, about ${more}.` };
     return {
       mood: 'progress',
       pose: 'sip',
-      text: pick(c.seed, [
-        `Nice start. ${left} min to go, about ${n === 1 ? 'one more brew' : `${n} more brews`}.`,
-        `Lovely work so far. ${left} more minutes and today’s pot is full.`,
-      ]),
+      text: pick(c.seed, [`Nice going. ${left} min to go, about ${more}.`, `Lovely work so far. ${left} more minutes and today’s pot is full.`]),
     };
   }
 
   if (c.firstVisitToday) {
     const byPart: Record<Exclude<DayPart, 'night'>, ChaiLine> = {
-      morning: { mood: 'hello', pose: 'wave', text: pick(c.seed, ['Morning. The kettle’s filled and ready when you are.', 'Fresh day, fresh pot. What shall we brew first?']) },
+      morning: { mood: 'hello', pose: 'stretch', text: pick(c.seed, ['Morning. Big stretch, then a fresh pot?', 'Fresh day, fresh pot. What shall we brew first?']) },
       afternoon: { mood: 'hello', pose: 'wave', text: pick(c.seed, ['Afternoon slump? A warm cup of focus helps.', 'Hello. Perfect time for a cup, don’t you think?']) },
-      evening: { mood: 'hello', pose: 'wave', text: pick(c.seed, ['Evening brew? Let’s keep it cozy.', 'Lamps on, kettle on. Ready when you are.']) },
+      evening: { mood: 'hello', pose: 'sip', text: pick(c.seed, ['Evening brew? Let’s keep it cozy.', 'Lamps on, kettle on. Ready when you are.']) },
     };
     return byPart[c.part];
   }
 
+  if (c.part === 'morning') return { mood: 'idle', pose: 'stretch', text: 'Stretched and ready. What are we brewing this morning?' };
+  if (c.part === 'evening') return { mood: 'idle', pose: 'sip', text: 'Lamps on. I’ll sit right here while you focus.' };
   return { mood: 'idle', pose: 'idle', text: pick(c.seed, ['Ready when you are. What are we brewing?', 'I’ll sit right here while you focus.']) };
 }
 

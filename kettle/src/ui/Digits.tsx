@@ -6,9 +6,7 @@
  *
  *   <Digits value="25:00" roll="down" className="t-display-xl" />
  */
-import type { CSSProperties, HTMLAttributes } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
-import { useReducedMotion } from '@/lib/useReducedMotion';
+import { useState, type CSSProperties, type HTMLAttributes } from 'react';
 import { cx } from './util';
 import s from './Digits.module.css';
 
@@ -23,14 +21,12 @@ export interface DigitsProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'chil
 }
 
 const DIGIT = /[0-9]/;
-const rollSpring = { type: 'spring', stiffness: 520, damping: 38, mass: 0.8 } as const;
 
 export function Digits({ value, roll = false, label, font = 'display', className, style, ...rest }: DigitsProps) {
-  const reduced = useReducedMotion();
   const text = String(value);
   const chars = [...text];
-  const dir = roll === 'down' ? -1 : 1;
-  const animate = !!roll && !reduced;
+  const dir: 1 | -1 = roll === 'down' ? -1 : 1;
+  const animate = !!roll; // reduced motion: RollCell cross-fades (CSS)
   return (
     <span className={cx(s.digits, font === 'body' && s.body, className)} style={style as CSSProperties} {...rest}>
       {label !== null && <span className="sr-only">{label ?? text}</span>}
@@ -51,23 +47,30 @@ export function Digits({ value, roll = false, label, font = 'display', className
               </span>
             );
           }
-          return (
-            <span key={`d${pos}`} className={cx(s.cell, s.rolling)}>
-              <AnimatePresence initial={false}>
-                <motion.span
-                  key={ch}
-                  className={s.glyph}
-                  initial={{ y: `${55 * dir}%`, opacity: 0 }}
-                  animate={{ y: '0%', opacity: 1 }}
-                  exit={{ y: `${-55 * dir}%`, opacity: 0 }}
-                  transition={rollSpring}
-                >
-                  {ch}
-                </motion.span>
-              </AnimatePresence>
-            </span>
-          );
+          return <RollCell key={`d${pos}`} ch={ch} dir={dir} />;
         })}
+      </span>
+    </span>
+  );
+}
+
+/**
+ * One odometer cell. The roll is a 170ms CSS transform animation (compositor-driven, so a busy
+ * main thread can't strand a glyph mid-translate; `fill-mode: both` guarantees the end state).
+ * The cell clips its own glyphs, so any in-between frame reads as a crisp mechanical counter.
+ */
+function RollCell({ ch, dir }: { ch: string; dir: 1 | -1 }) {
+  const [st, setSt] = useState({ cur: ch, old: null as string | null, n: 0 });
+  if (st.cur !== ch) setSt({ cur: ch, old: st.cur, n: st.n + 1 }); // derived state, set during render
+  return (
+    <span className={cx(s.cell, s.rolling)} data-dir={dir > 0 ? 'up' : 'down'}>
+      {st.old !== null && (
+        <span key={`o${st.n}`} className={cx(s.glyph, s.out)}>
+          {st.old}
+        </span>
+      )}
+      <span key={`i${st.n}`} className={cx(s.glyph, st.n > 0 && s.in)}>
+        {st.cur}
       </span>
     </span>
   );

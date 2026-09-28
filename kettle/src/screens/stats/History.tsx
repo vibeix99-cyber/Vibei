@@ -6,7 +6,8 @@ import { historyByDay, leavesBySession } from '@/progress/insights';
 import { useProgress, type SessionRecord } from '@/progress';
 import type { TagId } from '@/state/settings';
 import { Button, Card, ChipGroup, Dialog, Pill, Sheet, TextField, cx, toast } from '@/ui';
-import { hm, hmLong, relDay, TAG_IDS, TAG_META, timeOf } from './format';
+import { TAG_BY_ID, TAGS } from '@/state/tags';
+import { hm, hmLong, relDay, timeOf } from './format';
 import s from './stats.module.css';
 
 const PAGE_DAYS = 7;
@@ -66,7 +67,7 @@ export function HistorySection({ sessions, metDays, today }: { sessions: Session
 }
 
 function SessionRow({ session: x, leaves, onOpen }: { session: SessionRecord; leaves: number; onOpen: () => void }) {
-  const meta = x.tag ? TAG_META[x.tag] : null;
+  const meta = x.tag ? TAG_BY_ID[x.tag] : null;
   const title = x.intention || (meta ? `${meta.label} brew` : 'Brew');
   const status = x.completed ? 'Full brew' : 'Ended early';
   return (
@@ -154,7 +155,7 @@ function EditForm({ session, onDone }: { session: SessionRecord; onDone: () => v
           allowEmpty
           value={tag}
           onChange={setTag}
-          options={TAG_IDS.map((id) => ({ value: id, label: TAG_META[id].label, icon: TAG_META[id].icon, tone: TAG_META[id].tone }))}
+          options={TAGS.map((t) => ({ value: t.id, label: t.label, icon: t.icon, tone: t.tone }))}
         />
       </div>
       <div className={s.editActions}>

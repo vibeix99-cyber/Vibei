@@ -10,7 +10,66 @@
 .area {
   min-width: 0;
 }
+.columns {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+/* Each column is its own size container, so tiles / badges / charts adapt to the column. */
+.col {
+  container-type: inline-size;
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+  min-width: 0;
+}
 
+.headerWrap {
+  min-width: 0;
+}
+.compactBar {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  height: 52px;
+  margin: 0 calc(-1 * var(--gutter)) calc(-52px - var(--space-4));
+  padding: env(safe-area-inset-top) var(--gutter) 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: var(--border) solid var(--line);
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition:
+    opacity var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+.compactBar[data-show] {
+  opacity: 1;
+  transform: none;
+}
+.compactTitle {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-title);
+}
+.compactStreak {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: var(--persimmon-ink);
+}
+:global(html[data-motion='reduce']) .compactBar {
+  transform: none;
+}
 .headerChai {
   margin: -10px -6px -14px 0;
 }
@@ -644,6 +703,17 @@
   box-shadow: inset 0 0 0 2px var(--ink-2);
 }
 
+.rhythmCard {
+  gap: var(--space-4);
+}
+.rhythmBody {
+  display: grid;
+  gap: var(--space-5);
+}
+.rhythmBlock {
+  display: grid;
+  gap: var(--space-3);
+}
 .smallEmpty {
   display: grid;
   justify-items: center;
@@ -1136,7 +1206,53 @@
     align-items: center;
     gap: 4px;
   }
-  .headerChai {
+  .headerWrap {
+  min-width: 0;
+}
+.compactBar {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  height: 52px;
+  margin: 0 calc(-1 * var(--gutter)) calc(-52px - var(--space-4));
+  padding: env(safe-area-inset-top) var(--gutter) 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: var(--border) solid var(--line);
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition:
+    opacity var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+.compactBar[data-show] {
+  opacity: 1;
+  transform: none;
+}
+.compactTitle {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-title);
+}
+.compactStreak {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: var(--persimmon-ink);
+}
+:global(html[data-motion='reduce']) .compactBar {
+  transform: none;
+}
+.headerChai {
     width: 60px;
     height: 60px;
   }
@@ -1167,8 +1283,10 @@
   .pbGrid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
+}
+@container (min-width: 680px) {
   .badgeGrid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 }
 @container (min-width: 760px) {
@@ -1178,25 +1296,11 @@
     gap: var(--space-3);
   }
 }
-@container (min-width: 880px) {
-  .screen {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+@container (min-width: 760px) {
+  .columns {
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
     column-gap: var(--space-5);
     align-items: start;
   }
-  .screen > header,
-  .area[data-area='overview'],
-  .area[data-area='rhythm'],
-  .area[data-area='badges'],
-  .area[data-area='history'],
-  .emptyCard {
-    grid-column: 1 / -1;
-  }
-  .patternGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: start;
-  }
-  .badgeGrid {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
 }
+

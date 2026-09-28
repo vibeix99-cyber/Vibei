@@ -26,9 +26,9 @@ import type { Phase } from '@/timer/types';
 import { useProgress } from '@/progress';
 import { getRoute, navigate } from './router';
 
-/** How long the kettle whistles on the focus screen before the celebration. */
-export const WHISTLE_MS = 1900;
-const WHISTLE_MS_REDUCED = 1100;
+/** How long the kettle whistles on the focus screen before the celebration (the last ~380 ms bloom into it). */
+export const WHISTLE_MS = 1250;
+export const WHISTLE_MS_REDUCED = 800;
 /** A break that ended longer ago than this (app closed) just lands on home. */
 const STALE_BREAK_MS = 30 * 60_000;
 
@@ -77,7 +77,7 @@ export const useFlow = create<FlowState>()(
   ),
 );
 
-function reducedMotionNow(): boolean {
+export function reducedMotionNow(): boolean {
   const pref = getSettings().motion;
   if (pref === 'reduce') return true;
   if (pref === 'full') return false;

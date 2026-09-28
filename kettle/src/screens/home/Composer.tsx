@@ -57,6 +57,7 @@ export function Composer({ recent }: { recent: string[] }) {
   };
 
   return (
+    <>
     <section className={s.composer} aria-labelledby="home-brew">
       <Card className={s.composerCard}>
         <h2 id="home-brew" className={s.cardTitle}>
@@ -109,11 +110,15 @@ export function Composer({ recent }: { recent: string[] }) {
         />
         <RhythmPicker />
       </Card>
+    </section>
+    {/* Docked: on short or landscape screens it sticks above the tab bar so the main action is never below the fold. */}
+    <div className={s.ctaDock}>
       <Button size="lg" block sfx="start" className={s.cta} onClick={start} icon={<Icon name="play" size={22} />}>
         Put the kettle on · {focusMin} min
       </Button>
       <p className={s.ctaNote}>{longNext ? `Then a long tea break, ${longBreakMin} min. You’ve earned it.` : `Then a ${shortBreakMin} min tea break.`}</p>
-    </section>
+    </div>
+    </>
   );
 }
 

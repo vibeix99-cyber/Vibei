@@ -98,6 +98,12 @@ function WeekChart({ bars, goalMin, title }: { bars: WeekBar[]; goalMin: number;
   for (let v = 0; v <= max; v += step) ticks.push(v);
   const goalY = y(goalMin);
   const best = bars.reduce((bi, b, i) => (b.minutes > bars[bi].minutes ? i : bi), 0);
+  // Value labels sit 8px above the bar; if that would put the goal line through the digits
+  // (a bar just under the goal), lift the label clear above the line instead.
+  const labelY = (top: number) => {
+    const y0 = top - 8; // baseline; glyphs span ≈ y0-11 … y0+2
+    return goalY > y0 - 14 && goalY < y0 + 6 ? goalY - 7 : y0;
+  };
 
   const describe = (b: WeekBar) => {
     const day = longDay(b.day);
@@ -148,7 +154,7 @@ function WeekChart({ bars, goalMin, title }: { bars: WeekBar[]; goalMin: number;
                     </g>
                   )}
                   {showValue && (
-                    <text x={cx} y={top - 8} textAnchor="middle" className={s.value}>
+                    <text x={cx} y={labelY(top)} textAnchor="middle" className={s.value}>
                       {b.minutes}
                     </text>
                   )}

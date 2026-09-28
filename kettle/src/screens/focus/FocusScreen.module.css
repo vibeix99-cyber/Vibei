@@ -234,43 +234,55 @@
   line-height: 1.2;
   text-wrap: balance;
 }
-.check {
-  position: relative;
+.whistleChai {
   display: grid;
   place-items: center;
-  width: 30cqw;
-  height: 30cqw;
-  border-radius: 50%;
-  background: var(--matcha);
-  color: #fff;
-  box-shadow: inset 0 -4px 0 var(--matcha-edge);
+  width: 62cqw;
+  height: 62cqw;
+  margin-top: -6cqw;
 }
-.check svg {
-  width: 60%;
-  height: 60%;
+.whistleChai svg {
+  width: 100%;
+  height: 100%;
 }
-/* one soft ripple as the check lands */
-.check::after {
+.statusDone {
+  font-size: max(1.125rem, 7cqw);
+  color: var(--matcha-ink);
+  max-width: none;
+}
+/* one soft ripple off the ring as the kettle whistles */
+.screen[data-view='whistle'] .dialWrap::after {
   content: '';
   position: absolute;
-  inset: -6%;
+  inset: 0;
   border-radius: 50%;
-  border: 3px solid var(--matcha);
+  border: 4px solid var(--matcha);
   opacity: 0;
-  animation: ripple 1s var(--ease-out, ease-out) 0.15s 2 both;
+  pointer-events: none;
+  animation: ripple 0.9s var(--ease-out, ease-out) 0.1s 1 both;
 }
 @keyframes ripple {
   0% {
-    transform: scale(0.9);
-    opacity: 0.8;
+    transform: scale(0.96);
+    opacity: 0.7;
   }
   100% {
-    transform: scale(1.7);
+    transform: scale(1.35);
     opacity: 0;
   }
 }
-.screen[data-reduced] .check::after {
+.screen[data-reduced][data-view='whistle'] .dialWrap::after {
   animation: none;
+}
+/* the ring's inside swells into the celebration (same background as the Done screen) */
+.bloom {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  background:
+    radial-gradient(90% 55% at 50% 12%, var(--honey-soft), transparent 70%),
+    var(--bg);
 }
 @keyframes breathe {
   0%,
@@ -335,6 +347,8 @@
 }
 
 /* ---------- zen: chrome fades after inactivity ---------- */
+/* Top bar, intention and hints disappear completely (a tap there only wakes).
+   The three round controls stay visible, dimmed, and fully tappable: the first tap wakes AND acts. */
 .chrome {
   transition: opacity 700ms ease;
 }
@@ -342,12 +356,21 @@
   opacity: 0;
   pointer-events: none;
 }
-.screen[data-zen] .main {
-  opacity: 0.35;
-  pointer-events: none;
+.controls > * {
+  transition: opacity 700ms ease;
 }
-.screen[data-zen] {
-  cursor: none;
+.screen[data-zen] .controls > * {
+  opacity: 0.4;
+}
+.screen[data-zen] .controls > *:hover,
+.screen[data-zen] .controls > *:focus-within {
+  opacity: 1;
+  transition-duration: 150ms;
+}
+@media (hover: hover) and (pointer: fine) {
+  .screen[data-zen] {
+    cursor: none;
+  }
 }
 
 /* ---------- break ---------- */
@@ -589,7 +612,7 @@
   .screen[data-paused] .clock {
     animation: none;
   }
-  .check::after {
+  .screen[data-view='whistle'] .dialWrap::after {
     animation: none;
   }
 }

@@ -12,7 +12,7 @@
  * phone landscape + desktop (scene | panel). Zen: chrome fades after 7 s idle.
  * Keys: Space pause/resume · Esc end sheet · + add 5 min · M mute.
  */
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { TimerAnnouncer, elapsedActiveMs, useRemaining, useTimer } from '@/timer';
 import { useShortcut } from '@/lib/shortcuts';
@@ -27,7 +27,7 @@ import { Nook } from '@/scene';
 import { useProgress, useUnlockedItems } from '@/progress';
 import { useSettings } from '@/state/settings';
 import { navigate } from '@/app/router';
-import { endFocusEarly, leaveBreakOver, skipBreak, startNextBrew, useFlow } from '@/app/flow';
+import { WHISTLE_MS, endFocusEarly, leaveBreakOver, skipBreak, startNextBrew, useFlow } from '@/app/flow';
 import { TimerRing } from './parts/TimerRing';
 import { RoundButton } from './parts/RoundButton';
 import { EndSheet } from './parts/EndSheet';
@@ -58,6 +58,9 @@ export default function FocusScreen() {
   const [ambOpen, setAmbOpen] = useState(false);
   const [bumps, setBumps] = useState<number[]>([]);
   const mainRef = useRef<HTMLButtonElement>(null);
+  const dialRef = useRef<HTMLDivElement>(null);
+  const frozen = useRef<ReactNode>(null);
+  const [bloom, setBloom] = useState<{ x: number; y: number; r: number; R: number } | null>(null);
 
   const view: View =
     t.status !== 'idle' ? (t.phase === 'focus' ? 'focus' : 'break') : whistle ? 'whistle' : breakOver ? 'over' : 'none';
@@ -70,6 +73,25 @@ export default function FocusScreen() {
   useEffect(() => {
     if (view === 'none') navigate(hasReport ? '/done' : '/', { replace: true });
   }, [view, hasReport]);
+
+  // Whistle → celebration: the ring's warm inside swells to fill the screen, in the celebration's own
+  // colors, so the route dissolve reveals content over a matching background (no blank / double frames).
+  useEffect(() => {
+    if (view !== 'whistle' || reduced) {
+      setBloom(null);
+      return;
+    }
+    const t = setTimeout(() => {
+      const el = dialRef.current;
+      if (!el) return;
+      const b = el.getBoundingClientRect();
+      const x = b.left + b.width / 2;
+      const y = b.top + b.height / 2;
+      const R = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y)) + 20;
+      setBloom({ x, y, r: b.width * 0.42, R });
+    }, WHISTLE_MS - 420);
+    return () => clearTimeout(t);
+  }, [view, reduced]);
 
   // Close the end sheet if the phase changes under it.
   useEffect(() => {
@@ -130,7 +152,9 @@ export default function FocusScreen() {
   // Focused time so far (for the end sheet copy).
   const focusedMs = useMemo(() => (endOpen ? elapsedActiveMs(useTimer.getState(), clock.now()) : 0), [endOpen]);
 
-  if (view === 'none') return <div className={s.screen} data-view="none" data-focus-view="none" />;
+  // While this screen is the *outgoing* layer of a route dissolve the session has already
+  // ended (view 'none'): keep showing the last frame instead of an empty page.
+  if (view === 'none') return frozen.current ?? <div className={s.screen} data-view="none" data-focus-view="none" />;
 
   const amb = ambientOption(ambient);
   const cycle = cycleInfo(view, t.completedInCycle, every, isLong);
@@ -139,9 +163,9 @@ export default function FocusScreen() {
     view === 'break' ? (isLong ? 'Long tea break' : 'Tea break') : view === 'over' ? 'Break’s over' : t.intention ? `Brewing: ${t.intention}` : 'Focus session';
   const nookMode = view === 'break' ? 'break' : view === 'over' ? 'idle' : 'focus';
   const status =
-    view === 'whistle' ? 'Whistling…' : paused ? 'Paused · the kettle will wait' : view === 'break' ? 'left to sip' : focusStatus(tv.progress, tv.remainingMs);
+    view === 'whistle' ? 'Tea’s ready' : paused ? 'Paused · the kettle will wait' : view === 'break' ? 'left to sip' : focusStatus(tv.progress, tv.remainingMs);
 
-  return (
+  const out = (
     <div
       className={s.screen}
       data-view={view}
@@ -289,19 +313,19 @@ export default function FocusScreen() {
               )}
 
               {/* dial */}
-              <div className={s.dialWrap}>
+              <div className={s.dialWrap} ref={dialRef}>
                 <TimerRing value={view === 'whistle' ? 1 : undefined} thickness={view === 'break' ? 6 : 7} className={s.dial}>
                   <div className={s.dialInner}>
                     <AnimatePresence mode="popLayout" initial={false}>
                       {view === 'whistle' ? (
                         <motion.span
                           key="done"
-                          className={s.check}
-                          initial={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.4 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={reduced ? { duration: 0.2 } : spring.joyful}
+                          className={s.whistleChai}
+                          initial={reduced ? { opacity: 0 } : { opacity: 0, y: '45%', scale: 0.55 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          transition={reduced ? { duration: 0.2 } : { ...spring.joyful, stiffness: 520 }}
                         >
-                          <CheckMark />
+                          <Mascot pose="cheer" size={200} animate={!reduced} />
                         </motion.span>
                       ) : (
                         <motion.span key="clock" className={s.clock} exit={{ opacity: 0, scale: 0.8 }}>
@@ -309,7 +333,11 @@ export default function FocusScreen() {
                         </motion.span>
                       )}
                     </AnimatePresence>
-                    <span className={s.status} role="timer" aria-label={view === 'whistle' ? 'Done' : `${spokenDuration(tv.remainingMs)} left`}>
+                    <span
+                      className={view === 'whistle' ? `${s.status} ${s.statusDone}` : s.status}
+                      role="timer"
+                      aria-label={view === 'whistle' ? 'Done' : `${spokenDuration(tv.remainingMs)} left`}
+                    >
                       {status}
                     </span>
                   </div>
@@ -354,7 +382,6 @@ export default function FocusScreen() {
                     icon={<span className={s.plusFive}>+5</span>}
                     onClick={addFive}
                     disabled={view !== 'focus'}
-                    className={s.chrome}
                   />
                   <RoundButton
                     ref={mainRef}
@@ -376,7 +403,6 @@ export default function FocusScreen() {
                     onClick={() => setEndOpen(true)}
                     disabled={view !== 'focus'}
                     aria-haspopup="dialog"
-                    className={s.chrome}
                   />
                 </div>
               )}
@@ -404,14 +430,18 @@ export default function FocusScreen() {
         }}
       />
       <AmbienceSheet open={ambOpen} onClose={() => setAmbOpen(false)} />
+      {bloom && (
+        <motion.div
+          className={s.bloom}
+          aria-hidden="true"
+          initial={{ clipPath: `circle(${bloom.r}px at ${bloom.x}px ${bloom.y}px)`, opacity: 0.6 }}
+          animate={{ clipPath: `circle(${bloom.R}px at ${bloom.x}px ${bloom.y}px)`, opacity: 1 }}
+          transition={{ duration: 0.4, ease: ease.inOut }}
+        />
+      )}
     </div>
   );
+  frozen.current = out;
+  return out;
 }
 
-function CheckMark() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M5.5 12.5l4.2 4.2 8.8-9.4" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}

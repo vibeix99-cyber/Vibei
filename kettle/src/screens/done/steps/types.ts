@@ -7,6 +7,8 @@ export interface StepProps {
   reduced: boolean;
   /** True once the step is on screen and the page is visible — start the choreography. */
   active: boolean;
+  /** Hero art scale (0.8 short phone … 1.45 desktop). */
+  scale: number;
   /** Callback ref for the step heading: focuses it on mount (screen readers land on it). */
   headingRef: (el: HTMLHeadingElement | null) => void;
   headingId: string;

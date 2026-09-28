@@ -1,12 +1,13 @@
 /** "Your rhythm": when you brew (hour-of-day chart) and what you brew (tag breakdown). */
-import { useId, useMemo } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { EmptySpot, Icon } from '@/art';
-import type { DayKey } from '@/lib/dates';
+import { addDays, type DayKey } from '@/lib/dates';
 import { hourHistogram, rhythmOf, tagBreakdown, type Chronotype, type TagSlice } from '@/progress/insights';
 import type { SessionRecord } from '@/progress';
-import { Card, cx } from '@/ui';
+import { TAG_BY_ID } from '@/state/tags';
+import { Button, Card, SegmentedControl, cx } from '@/ui';
 import { barPath, ChartTip, useMarks, useWidth } from './chart-kit';
-import { hm, hmLong, hourLabel, minLabel, TAG_META } from './format';
+import { hm, hmLong, hourLabel, minLabel } from './format';
 import s from './stats.module.css';
 
 const TYPE_COPY: Record<Chronotype, { title: string; icon: 'sun' | 'moon' | 'mug' }> = {
@@ -17,58 +18,116 @@ const TYPE_COPY: Record<Chronotype, { title: string; icon: 'sun' | 'moon' | 'mug
   night: { title: 'You’re a moonlit sipper', icon: 'moon' },
 };
 
-export function RhythmCard({ sessions, fromDay, scopeLabel }: { sessions: SessionRecord[]; fromDay?: DayKey; scopeLabel: string }) {
+type Scope = '30d' | 'all';
+
+/**
+ * "Your rhythm" — one card. Collapsed (phones): the headline insight + a "See your rhythm"
+ * button. Open (default on wide screens): time range, hour-of-day chart, part-of-day
+ * shares and the tag breakdown.
+ */
+export function RhythmSection({ sessions, today, defaultOpen }: { sessions: SessionRecord[]; today: DayKey; defaultOpen: boolean }) {
+  const [openChoice, setOpen] = useState<boolean | null>(null);
+  const open = openChoice ?? defaultOpen;
+  const recent = useMemo(() => {
+    const from = addDays(today, -29);
+    return sessions.filter((x) => x.phase === 'focus' && x.day >= from).length;
+  }, [sessions, today]);
+  const total = useMemo(() => sessions.filter((x) => x.phase === 'focus').length, [sessions]);
+  const [scopeChoice, setScope] = useState<Scope | null>(null);
+  const scope: Scope = scopeChoice ?? (recent >= 5 || total === recent ? '30d' : 'all');
+  const fromDay = scope === '30d' ? addDays(today, -29) : undefined;
+  const scopeLabel = scope === '30d' ? 'Last 30 days' : 'All time';
+
   const hist = useMemo(() => hourHistogram(sessions, fromDay), [sessions, fromDay]);
   const rhythm = useMemo(() => rhythmOf(hist), [hist]);
-  const count = useMemo(() => sessions.filter((x) => x.phase === 'focus' && (!fromDay || x.day >= fromDay)).length, [sessions, fromDay]);
+  const slices = useMemo(() => tagBreakdown(sessions, fromDay), [sessions, fromDay]);
+  const count = scope === '30d' ? recent : total;
   const headingId = useId();
-  if (!rhythm) {
-    return (
-      <Card as="section" className={s.card} aria-labelledby={headingId}>
-        <p className={s.overline} id={headingId}>
-          When you brew
-        </p>
+  const bodyId = useId();
+  const top = slices.find((x) => x.tag);
+
+  const copy = rhythm ? TYPE_COPY[rhythm.type] : null;
+  const window = rhythm ? `${hourLabel(rhythm.peakStart)}–${hourLabel((rhythm.peakStart + 2) % 24)}` : '';
+  const parts: [string, number][] = rhythm
+    ? [
+        ['Morning', rhythm.parts.morning],
+        ['Afternoon', rhythm.parts.afternoon],
+        ['Evening', rhythm.parts.evening],
+        ['Night', rhythm.parts.night],
+      ]
+    : [];
+
+  return (
+    <Card as="section" className={cx(s.card, s.rhythmCard)} aria-labelledby={headingId}>
+      <div className={s.cardHead}>
+        <div className={s.cardTitles}>
+          <h2 id={headingId} className={s.cardTitle}>
+            Your rhythm
+          </h2>
+          <p className={s.cardSub}>{scopeLabel}</p>
+        </div>
+        {open && (
+          <SegmentedControl<Scope>
+            label="Time range"
+            value={scope}
+            onChange={setScope}
+            size="md"
+            options={[
+              { value: '30d', label: '30 days' },
+              { value: 'all', label: 'All time' },
+            ]}
+            className={s.scope}
+          />
+        )}
+      </div>
+
+      {rhythm && copy ? (
+        <div className={s.insight}>
+          <span className={s.insightIcon} data-tone={copy.icon === 'moon' ? 'plum' : 'honey'} aria-hidden="true">
+            <Icon name={copy.icon} size={28} tone="color" />
+          </span>
+          <div>
+            <p className={s.insightTitle}>{copy.title}</p>
+            <p className={s.insightSub}>
+              Sweet spot {window}
+              {top?.tag ? ` · mostly ${TAG_BY_ID[top.tag].label.toLowerCase()} (${Math.round(top.share * 100)}%)` : ''}
+              {count < 8 ? ` · based on ${count} ${count === 1 ? 'brew' : 'brews'}` : ''}
+            </p>
+          </div>
+        </div>
+      ) : (
         <div className={s.smallEmpty}>
           <EmptySpot kind="stats" size={96} />
           <p className={s.muted}>No brews in the {scopeLabel.toLowerCase()} yet. Chai will spot your rhythm as you brew.</p>
         </div>
-      </Card>
-    );
-  }
-  const copy = TYPE_COPY[rhythm.type];
-  const window = `${hourLabel(rhythm.peakStart)}–${hourLabel((rhythm.peakStart + 2) % 24)}`;
-  const parts: [string, number][] = [
-    ['Morning', rhythm.parts.morning],
-    ['Afternoon', rhythm.parts.afternoon],
-    ['Evening', rhythm.parts.evening],
-    ['Night', rhythm.parts.night],
-  ];
-  return (
-    <Card as="section" className={s.card} aria-labelledby={headingId}>
-      <p className={s.overline} id={headingId}>
-        When you brew
-      </p>
-      <div className={s.insight}>
-        <span className={s.insightIcon} data-tone={copy.icon === 'moon' ? 'plum' : 'honey'} aria-hidden="true">
-          <Icon name={copy.icon} size={28} tone="color" />
-        </span>
-        <div>
-          <p className={s.insightTitle}>{copy.title}</p>
-          <p className={s.insightSub}>
-            Your sweet spot is {window}
-            {count < 8 ? ` · based on ${count} ${count === 1 ? 'brew' : 'brews'} so far` : '.'}
-          </p>
+      )}
+
+      {open && rhythm && (
+        <div id={bodyId} className={s.rhythmBody}>
+          <div className={s.rhythmBlock}>
+            <p className={s.overline}>When you brew</p>
+            <HourChart hist={hist} peakStart={rhythm.peakStart} scopeLabel={scopeLabel} />
+            <ul className={s.partList} aria-label="Share of focus by part of day">
+              {parts.map(([label, share]) => (
+                <li key={label}>
+                  <span className={s.partValue}>{Math.round(share * 100)}%</span>
+                  <span className={s.partLabel}>{label}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className={s.rhythmBlock}>
+            <p className={s.overline}>What you brew</p>
+            <TagList slices={slices} />
+          </div>
         </div>
-      </div>
-      <HourChart hist={hist} peakStart={rhythm.peakStart} scopeLabel={scopeLabel} />
-      <ul className={s.partList} aria-label="Share of focus by part of day">
-        {parts.map(([label, share]) => (
-          <li key={label}>
-            <span className={s.partValue}>{Math.round(share * 100)}%</span>
-            <span className={s.partLabel}>{label}</span>
-          </li>
-        ))}
-      </ul>
+      )}
+
+      {rhythm && (
+        <Button variant="secondary" block aria-expanded={open} aria-controls={bodyId} onClick={() => setOpen(!open)} iconRight={open ? 'chevronUp' : 'chevronDown'}>
+          {open ? 'Show less' : 'See your rhythm'}
+        </Button>
+      )}
     </Card>
   );
 }
@@ -151,41 +210,19 @@ function HourChart({ hist, peakStart, scopeLabel }: { hist: number[]; peakStart:
   );
 }
 
-export function TagsCard({ sessions, fromDay, scopeLabel }: { sessions: SessionRecord[]; fromDay?: DayKey; scopeLabel: string }) {
-  const slices = useMemo(() => tagBreakdown(sessions, fromDay), [sessions, fromDay]);
-  const headingId = useId();
+function TagList({ slices }: { slices: TagSlice[] }) {
   const max = Math.max(...slices.map((x) => x.focusMs), 1);
-  const top = slices.find((x) => x.tag);
   return (
-    <Card as="section" className={s.card} aria-labelledby={headingId}>
-      <p className={s.overline} id={headingId}>
-        What you brew
-      </p>
-      {slices.length === 0 ? (
-        <div className={s.smallEmpty}>
-          <EmptySpot kind="history" size={96} />
-          <p className={s.muted}>No brews in the {scopeLabel.toLowerCase()} yet.</p>
-        </div>
-      ) : (
-        <>
-          {top?.tag && (
-            <p className={s.insightTitle}>
-              Mostly {TAG_META[top.tag].label.toLowerCase()}, {Math.round(top.share * 100)}% of your focus
-            </p>
-          )}
-          <ul className={s.tagList}>
-            {slices.map((x) => (
-              <TagRow key={x.tag ?? 'none'} slice={x} max={max} />
-            ))}
-          </ul>
-        </>
-      )}
-    </Card>
+    <ul className={s.tagList}>
+      {slices.map((x) => (
+        <TagRow key={x.tag ?? 'none'} slice={x} max={max} />
+      ))}
+    </ul>
   );
 }
 
 function TagRow({ slice, max }: { slice: TagSlice; max: number }) {
-  const meta = slice.tag ? TAG_META[slice.tag] : null;
+  const meta = slice.tag ? TAG_BY_ID[slice.tag] : null;
   const pct = Math.round(slice.share * 100);
   return (
     <li className={s.tagRow} data-tone={meta?.tone} aria-label={`${meta?.label ?? 'No tag'}: ${hmLong(slice.focusMs)}, ${pct}% of focus, ${slice.sessions} sessions`}>

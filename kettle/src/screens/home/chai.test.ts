@@ -35,9 +35,10 @@ describe('chaiLine', () => {
     expect(chaiLine({ ...base, totalSessions: 0 }).mood).toBe('first');
   });
   it('celebrates a met goal over everything else', () => {
-    const l = chaiLine({ ...base, todayMin: 30, sessionsToday: 1, todayDone: true, part: 'evening', streak: 4 });
+    const l = chaiLine({ ...base, todayMin: 30, sessionsToday: 1, todayDone: true, part: 'afternoon', streak: 4 });
     expect(l.mood).toBe('met');
     expect(l.pose).toBe('proud');
+    expect(chaiLine({ ...base, todayMin: 30, part: 'evening', streak: 4 }).mood).toBe('met');
   });
   it('suggests a gentle brew late at night, mentioning a streak at risk', () => {
     const l = chaiLine({ ...base, part: 'night', streak: 5 });
@@ -71,6 +72,16 @@ describe('chaiLine', () => {
       for (let seed = 0; seed < 4; seed++)
         for (const todayMin of [0, 10, 40])
           expect((chaiLine({ ...base, part, seed, todayMin }).text.match(/!/g) ?? []).length).toBeLessThanOrEqual(1);
+  });
+});
+
+describe('time of day', () => {
+  it('gives mornings, evenings and nights their own Chai for the same progress', () => {
+    const at = (part: ChaiContext['part']) => chaiLine({ ...base, part, todayMin: 10, firstVisitToday: false });
+    expect(at('morning').pose).toBe('stretch');
+    expect(at('evening').text).toMatch(/Lamps/);
+    expect(at('night').pose).toBe('sleep');
+    expect(new Set(['morning', 'afternoon', 'evening'].map((p) => at(p as ChaiContext['part']).text)).size).toBe(3);
   });
 });
 

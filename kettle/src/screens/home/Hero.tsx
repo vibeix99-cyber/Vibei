@@ -15,6 +15,7 @@ export function Hero({ data, status }: { data: HomeData; status?: ReactNode }) {
   const reduced = useReducedMotion();
   const wide = useMediaQuery('(min-width: 900px)');
   const narrow = useMediaQuery('(max-width: 359px)');
+  const landscape = useMediaQuery('(max-width: 899px) and (orientation: landscape) and (max-height: 520px)');
   const rhythm = useSettings((st) => st.rhythm);
   const applyRhythm = useSettings((st) => st.applyRhythm);
   const { line } = data;
@@ -29,12 +30,13 @@ export function Hero({ data, status }: { data: HomeData; status?: ReactNode }) {
       <div className={s.chaiRow}>
         <motion.div
           className={s.chai}
+          data-part={data.part}
           key={line.pose}
           initial={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.85, y: 8 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={reduced ? { duration: 0.2 } : spring.cozy}
         >
-          <Mascot pose={line.pose} size={wide ? 152 : narrow ? 88 : 112} animate />
+          <Mascot pose={line.pose} size={landscape ? 76 : wide ? 152 : narrow ? 88 : 112} animate />
         </motion.div>
         <div className={s.bubbleWrap}>
           <SpeechBubble tail="left" key={line.text} live>
@@ -55,7 +57,7 @@ export function Hero({ data, status }: { data: HomeData; status?: ReactNode }) {
 
 export function GoalCard({ data }: { data: HomeData }) {
   const { goalMin, todayMin, goalMet, goalProgress } = data;
-  const narrow = useMediaQuery('(max-width: 359px)');
+  const narrow = useMediaQuery('(max-width: 359px), (max-width: 899px) and (orientation: landscape) and (max-height: 520px)');
   const left = Math.max(0, goalMin - todayMin);
   const rhythm = useSettings((st) => st.rhythm);
   const rhythmLabel = RHYTHM_OPTIONS.find((r) => r.id === rhythm)?.label ?? 'your';
