@@ -127,6 +127,8 @@ const STILL_T = 7.35;
 const BASE_AZ = 0.56;
 const BASE_EL = 0.4;
 const FOV = 30;
+/** Turn a little toward items that face along +x (left wall) when framing them. */
+const FRAME_AZ: Record<string, number> = { painting: 0.4, lantern: 0.2, catBed: 0.15, fairyLights: -0.1 };
 
 const _v = new Vector3();
 const _right = new Vector3();
@@ -674,17 +676,31 @@ export class NookEngine {
 
   private updateCamera(dt: number, snap: boolean) {
     const k = snap ? 1 : 1 - Math.exp(-dt * 7);
-    // highlight nudges the view toward the item on the Nook screen
-    // Nook screen: a gentle nudge. Small showcase cards (level-up): frame the item.
+    // Highlight: on the Nook screen (interactive) a gentle nudge toward the item;
+    // in small showcase cards (level-up) the camera frames the item itself so it
+    // fills about half of the card with a little room around it.
     const hiId = this.state.highlightItem;
-    const hi = hiId && this.items.get(hiId)?.root.visible ? this.items.get(hiId) : undefined;
+    const hiB = hiId ? this.items.get(hiId) : undefined;
+    const hi = hiB && hiB.root.visible ? hiB : undefined;
     const inter = this.state.interactive;
-    const zoomGoal = this.zoomT * (hi ? (inter ? 0.88 : 0.64) : 1);
-    this.azC += (this.azT - this.azC) * k;
+    let zoomGoal = this.zoomT;
+    let azGoal = this.azT;
+    _v.copy(this.fitTarget);
+    if (hi && inter) {
+      zoomGoal *= 0.88;
+      _v.lerp(hi.focus, 0.3);
+    } else if (hi) {
+      const aspect = this.width / this.height;
+      const tanV = Math.tan(MathUtils.degToRad(FOV / 2));
+      const tanMin = Math.min(tanV, tanV * aspect);
+      const itemDist = (hi.radius * 2.0) / tanMin;
+      zoomGoal = MathUtils.clamp(itemDist / this.fitDist, 0.22, 1);
+      azGoal += FRAME_AZ[hi.id] ?? 0;
+      _v.copy(hi.focus);
+    }
+    this.azC += (azGoal - this.azC) * k;
     this.elC += (this.elT + this.baseEl() - this.elC) * k;
     this.zoomC += (zoomGoal - this.zoomC) * k;
-    _v.copy(this.fitTarget);
-    if (hi) _v.lerp(hi.focus, inter ? 0.3 : 0.7);
     this.targetC.lerp(_v, k);
     if (snap) this.targetC.copy(_v);
     this.az = BASE_AZ + this.azC;

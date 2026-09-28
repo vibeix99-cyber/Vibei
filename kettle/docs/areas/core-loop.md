@@ -80,6 +80,9 @@ break-over + reload, next brew, skip, autoStartFocus, Space/+/Esc, focus return 
    `buildSteps`/`summarize`/`cycleInfo`/`focusStatus`/`suggestionsFor`; axe: 0 violations on focus, paused,
    break and every celebration card in light + dark.
 
+6. **Late kit/art pickups** — streak card uses the kit `WeekStrip` (`celebrate` lights today); end sheet's
+   "End session" is `dangerSoft` under the primary "Keep brewing". Final screenshots: `.shots/core-loop/final/`.
+
 ## Open issues / requests
 
 - **scene**: `mode="showcase"` + `highlightItem` renders the whole room small in the 180–230 px level-up card —

@@ -2,7 +2,7 @@
  * Root component: theme, route switching, onboarding gate, area isolation.
  * Shared file — keep changes minimal and coordinated.
  */
-import { lazy, Suspense, useEffect, type ReactNode } from 'react';
+import { lazy, Suspense, useEffect, useRef, type ReactNode } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useSettings } from '@/state/settings';
 import { useTimer } from '@/timer';
@@ -15,14 +15,34 @@ import { Rail } from './Rail';
 import { navigate, useRoute, TAB_ROUTES, type Route } from './router';
 import { useApplyTheme } from './theme';
 
-const Home = lazy(() => import('@/screens/home/HomeScreen'));
-const Stats = lazy(() => import('@/screens/stats/StatsScreen'));
-const NookScreen = lazy(() => import('@/screens/nook/NookScreen'));
-const Settings = lazy(() => import('@/screens/settings/SettingsScreen'));
-const Focus = lazy(() => import('@/screens/focus/FocusScreen'));
-const Done = lazy(() => import('@/screens/done/DoneScreen'));
-const Welcome = lazy(() => import('@/screens/welcome/WelcomeScreen'));
+const loaders = {
+  home: () => import('@/screens/home/HomeScreen'),
+  stats: () => import('@/screens/stats/StatsScreen'),
+  nook: () => import('@/screens/nook/NookScreen'),
+  settings: () => import('@/screens/settings/SettingsScreen'),
+  focus: () => import('@/screens/focus/FocusScreen'),
+  done: () => import('@/screens/done/DoneScreen'),
+  welcome: () => import('@/screens/welcome/WelcomeScreen'),
+};
+const Home = lazy(loaders.home);
+const Stats = lazy(loaders.stats);
+const NookScreen = lazy(loaders.nook);
+const Settings = lazy(loaders.settings);
+const Focus = lazy(loaders.focus);
+const Done = lazy(loaders.done);
+const Welcome = lazy(loaders.welcome);
 const Kit = lazy(() => import('./KitRoute'));
+
+/** Warm every screen chunk once the app is idle, so route changes never flash blank. */
+function preloadScreens(): void {
+  const run = () => Object.values(loaders).forEach((load) => void load().catch(() => {}));
+  const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number };
+  if (w.requestIdleCallback) w.requestIdleCallback(run, { timeout: 4000 });
+  else setTimeout(run, 1500);
+}
+
+/** Full-screen routes crossfade into each other (e.g. the kettle whistle → celebration). */
+const IMMERSIVE: Route[] = ['/focus', '/done'];
 
 const SCREENS: Record<Route, { area: string; el: () => ReactNode }> = {
   '/': { area: 'home', el: () => <Home /> },
@@ -41,6 +61,12 @@ export function App() {
   const onboarded = useSettings((s) => s.onboarded);
   const timerStatus = useTimer((s) => s.status);
   const reduced = useReducedMotion();
+  const prevRoute = useRef(route);
+  const crossfade = IMMERSIVE.includes(prevRoute.current) && IMMERSIVE.includes(route);
+  useEffect(() => {
+    prevRoute.current = route;
+  }, [route]);
+  useEffect(preloadScreens, []);
 
   // Gates: onboarding first; an active session always owns the screen on load.
   useEffect(() => {
@@ -56,7 +82,7 @@ export function App() {
 
   const screen = SCREENS[route];
   const content = (
-    <AnimatePresence mode="wait" initial={false}>
+    <AnimatePresence mode={crossfade ? 'popLayout' : 'wait'} initial={false}>
       <motion.div
         key={route}
         {...pageTransition(reduced)}

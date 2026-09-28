@@ -15,7 +15,7 @@ export default function NookScene(props: NookSceneProps) {
   const weather = useSceneWeather(props.weather);
   const reduced = useReducedMotion();
   const { tier, adaptive } = useSceneTier();
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasHostRef = useRef<HTMLDivElement>(null);
   const hostRef = useRef<HTMLDivElement>(null);
   const engineRef = useRef<NookEngine | null>(null);
   const selectRef = useRef(props.onItemSelect);
@@ -36,9 +36,14 @@ export default function NookScene(props: NookSceneProps) {
 
   // ---- create / destroy the engine
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const canvasHost = canvasHostRef.current;
     const host = hostRef.current;
-    if (!canvas || !host || tier === 'off') return;
+    if (!canvasHost || !host || tier === 'off') return;
+    // A fresh canvas per engine: the old one's context is force-freed on dispose.
+    const canvas = document.createElement('canvas');
+    canvas.setAttribute('aria-hidden', 'true');
+    canvas.style.cssText = 'display:block;width:100%;height:100%;outline:none';
+    canvasHost.appendChild(canvas);
     let engine: NookEngine;
     try {
       engine = new NookEngine({
@@ -54,6 +59,7 @@ export default function NookScene(props: NookSceneProps) {
         },
       });
     } catch {
+      canvas.remove();
       setFailed(true);
       return;
     }
@@ -95,6 +101,7 @@ export default function NookScene(props: NookSceneProps) {
       document.removeEventListener('visibilitychange', onVis);
       canvas.removeEventListener('webglcontextrestored', onRestore);
       engine.dispose();
+      canvas.remove();
       engineRef.current = null;
       setReady(false);
       const w = window as unknown as { __nook?: unknown };
@@ -135,21 +142,16 @@ export default function NookScene(props: NookSceneProps) {
         </div>
       )}
       {tier !== 'off' && (
-        <canvas
-          key={`${tier}-${generation}`}
-          ref={canvasRef}
+        <div
+          ref={canvasHostRef}
           aria-hidden
           style={{
-            visibility: failed ? 'hidden' : 'visible',
             position: 'absolute',
             inset: 0,
-            width: '100%',
-            height: '100%',
-            display: 'block',
+            visibility: failed ? 'hidden' : 'visible',
             opacity: ready ? 1 : 0,
             transition: reduced ? 'none' : 'opacity 420ms ease',
             pointerEvents: interactive ? 'auto' : 'none',
-            outline: 'none',
           }}
         />
       )}
