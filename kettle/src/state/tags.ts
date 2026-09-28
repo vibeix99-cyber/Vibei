@@ -15,9 +15,9 @@ export interface TagMeta {
 }
 
 export const TAGS: TagMeta[] = [
-  { id: 'work', label: 'Work', icon: 'target', tone: 'persimmon' },
+  { id: 'work', label: 'Work', icon: 'briefcase', tone: 'persimmon' },
   { id: 'study', label: 'Study', icon: 'pencil', tone: 'sky' },
-  { id: 'read', label: 'Read', icon: 'eye', tone: 'berry' },
+  { id: 'read', label: 'Read', icon: 'book', tone: 'berry' },
   { id: 'create', label: 'Create', icon: 'sparkle', tone: 'honey' },
   { id: 'life', label: 'Life', icon: 'heart', tone: 'matcha' },
 ];

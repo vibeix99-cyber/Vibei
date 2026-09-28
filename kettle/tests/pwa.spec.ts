@@ -66,7 +66,7 @@ test('precaches the shell, fonts, 3D chunk and tick worker; boots and times a br
   expect(cached.some((u) => u.endsWith('/index.html'))).toBe(true);
   expect(cached.some((u) => /\/assets\/three-.*\.js$/.test(u))).toBe(true);
   expect(cached.some((u) => /\/assets\/tick\.worker-.*\.js$/.test(u))).toBe(true);
-  expect(cached.filter((u) => u.endsWith('.woff2')).length).toBeGreaterThan(0);
+  expect(cached.filter((u) => u.endsWith('.woff2')).length, cached.join('\n')).toBeGreaterThan(0);
 
   await context.setOffline(true);
   await page.reload();
