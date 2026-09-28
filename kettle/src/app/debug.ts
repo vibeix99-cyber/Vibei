@@ -12,6 +12,7 @@
  */
 import { clock } from '@/lib/clock';
 import { useTimer, timerDiagnostics, getTimerView } from '@/timer';
+import { getPwaState, applyPwaUpdate } from '@/pwa';
 import { useProgress } from '@/progress';
 import { useSettings } from '@/state/settings';
 import { navigate, getRoute } from './router';
@@ -45,6 +46,8 @@ export function applyDebugParams(): void {
     timerInfo: timerDiagnostics,
     /** What the timer displays right now (seconds, progress, status). */
     timerView: getTimerView,
+    /** Service worker / update state (production builds). */
+    pwa: { state: getPwaState, update: applyPwaUpdate },
     /** Fast-forward the clock by ms. */
     ff: (ms: number) => clock.advance(ms),
     /** Jump to 1s before the current phase ends. */

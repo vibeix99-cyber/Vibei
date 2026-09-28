@@ -1,6 +1,6 @@
 /** Small presentational bits shared by the focus / break / done screens. */
-import type { IconName } from '@/art';
 import { Tag } from '@/ui';
+import { TAG_BY_ID } from '@/state/tags';
 import type { TagId } from '@/state/settings';
 import s from './bits.module.css';
 
@@ -15,25 +15,19 @@ export function CycleDots({ total, filled, current, label }: { total: number; fi
           return <span key={n} className={s.dot} data-state={state} />;
         })}
       </span>
-      <span className={s.cycleLabel}>{label}</span>
+      <span className={s.cycleLabel} data-cycle-label="">
+        {label}
+      </span>
     </span>
   );
 }
 
-/** Same labels + icons as the Today screen's tag chips. */
-const TAG_INFO: Record<TagId, { label: string; icon: IconName }> = {
-  work: { label: 'Work', icon: 'target' },
-  study: { label: 'Study', icon: 'edit' },
-  read: { label: 'Read', icon: 'info' },
-  create: { label: 'Create', icon: 'sparkle' },
-  life: { label: 'Life', icon: 'home' },
-};
-
+/** The intention's tag, same label / icon / tone as everywhere else (`@/state/tags`). */
 export function TagChip({ tag }: { tag: TagId }) {
-  const t = TAG_INFO[tag];
+  const t = TAG_BY_ID[tag];
   if (!t) return null;
   return (
-    <Tag size="sm" icon={t.icon}>
+    <Tag size="sm" icon={t.icon} tone={t.tone}>
       {t.label}
     </Tag>
   );

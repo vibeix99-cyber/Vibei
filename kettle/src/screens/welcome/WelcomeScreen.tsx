@@ -176,7 +176,7 @@ export default function WelcomeScreen() {
             <Mascot pose={q.pose} size={step === 'ready' ? (wide ? 200 : compact ? 120 : 168) : wide ? 148 : compact ? 84 : 108} animate />
           </motion.div>
           <div className={s.bubble}>
-            <SpeechBubble key={`bubble-${step}`} tail={step === 'ready' ? 'top' : 'left'} size="lg">
+            <SpeechBubble key={`bubble-${step}`} tail={step === 'ready' ? 'top' : 'left'} tailAt={step === 'ready' ? '50%' : undefined} size="lg">
               {q.lead && <p className={s.questionLead}>{q.lead}</p>}
               <h1 ref={headingRef} tabIndex={-1} className={s.question}>
                 {q.text}
@@ -301,7 +301,7 @@ function Hello({ onStart }: { onStart: () => void }) {
           transition={reduced ? { duration: 0.2 } : { ...spring.cozy, delay: 0.35 }}
           style={{ transformOrigin: 'bottom center' }}
         >
-          <SpeechBubble tail="bottom" size="lg" arrive={false}>
+          <SpeechBubble tail="bottom" tailAt="50%" size="lg" arrive={false}>
             <h1 className={s.helloTitle}>Hi, I’m Chai.</h1>
             <p className={s.helloLine}>I’ll keep you company while you focus.</p>
           </SpeechBubble>

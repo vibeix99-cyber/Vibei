@@ -51,8 +51,10 @@ const F = {
   snoutHi: '#C58C5E',
   ear: '#9A6440',
   earIn: '#6E4329',
-  leg: '#96603D',
-  legHi: '#B07A51',
+  leg: '#8A5536',
+  legHi: '#A7704A',
+  paw: '#8A5536',
+  pawHi: '#A7704A',
   nose: '#352219',
   eye: '#2A1B13',
   lid: '#7A4C30',
@@ -137,7 +139,9 @@ function star(cx: number, cy: number, r: number): string {
   return `M${cx} ${cy - r} Q${cx + k} ${cy - k} ${cx + r} ${cy} Q${cx + k} ${cy + k} ${cx} ${cy + r} Q${cx - k} ${cy + k} ${cx - r} ${cy} Q${cx - k} ${cy - k} ${cx} ${cy - r} Z`;
 }
 
-function Eye({ x, y, kind, big }: { x: number; y: number; kind: Eyes; big: boolean }) {
+function Eye({ x, y, kind: k0, big }: { x: number; y: number; kind: Eyes; big: boolean }) {
+  // Lids turn into heavy "brows" at small sizes: fall back to friendly dots there.
+  const kind: Eyes = big && k0 === 'calm' ? 'open' : k0;
   const r = big ? 7.2 : 5.4;
   const sw = big ? 4.4 : 3.3;
   switch (kind) {
@@ -316,7 +320,7 @@ function Head({ id, eyes, mouth, brows, blush = 0.5, big, x = 0, y = 0, rot = 0,
       <ellipse cx="135" cy="122" rx={big ? 9 : 7.5} ry={big ? 6 : 4.8} fill={F.blush} opacity={blush} />
       {/* wide, flat nose on the snout's top edge */}
       {big ? (
-        <path d="M76 97 C76 91 84 89.5 100 89.5 C116 89.5 124 91 124 97 C124 104 114 108 100 108 C86 108 76 104 76 97 Z" fill={F.nose} />
+        <path d="M78 96 C78 91 86 89.5 100 89.5 C114 89.5 122 91 122 96 C122 101.5 113 104.5 100 104.5 C87 104.5 78 101.5 78 96 Z" fill={F.nose} />
       ) : (
         <>
           <path d="M80 96.5 C80 91.5 86 90 100 90 C114 90 120 91.5 120 96.5 C120 102.5 111.5 105.5 100 105.5 C88.5 105.5 80 102.5 80 96.5 Z" fill={F.nose} />
@@ -341,17 +345,12 @@ function Head({ id, eyes, mouth, brows, blush = 0.5, big, x = 0, y = 0, rot = 0,
   );
 }
 
-/** Stubby arm = round-capped capsule with a soft sheen. */
-function Arm({ x1, y1, x2, y2, w = 17 }: { x1: number; y1: number; x2: number; y2: number; w?: number }) {
-  return <path d={`M${x1} ${y1} L${x2} ${y2}`} stroke={PAL.paw} strokeWidth={w} strokeLinecap="round" />;
-}
-
 /** Curved arm ending in a mitten paw (optionally showing its pad). */
 function BentArm({ d, end, w = 17, pad }: { d: string; end: [number, number]; w?: number; pad?: boolean }) {
   const r = w * 0.64;
   return (
     <g>
-      <path d={d} stroke={PAL.paw} strokeWidth={w} strokeLinecap="round" fill="none" />
+      <path d={d} stroke={F.paw} strokeWidth={w} strokeLinecap="round" fill="none" />
       <Paw x={end[0]} y={end[1]} r={r} />
       {pad && (
         <g fill="#D9A57A">
@@ -369,8 +368,8 @@ function BentArm({ d, end, w = 17, pad }: { d: string; end: [number, number]; w?
 function Paw({ x, y, r = 9 }: { x: number; y: number; r?: number }) {
   return (
     <g>
-      <circle cx={x} cy={y} r={r} fill={PAL.paw} />
-      <ellipse cx={x - r * 0.3} cy={y - r * 0.38} rx={r * 0.45} ry={r * 0.28} fill={PAL.pawHi} opacity="0.7" transform={`rotate(-25 ${x - r * 0.3} ${y - r * 0.38})`} />
+      <circle cx={x} cy={y} r={r} fill={F.paw} />
+      <ellipse cx={x - r * 0.3} cy={y - r * 0.38} rx={r * 0.45} ry={r * 0.28} fill={F.pawHi} opacity="0.7" transform={`rotate(-25 ${x - r * 0.3} ${y - r * 0.38})`} />
     </g>
   );
 }
@@ -521,8 +520,8 @@ function renderPose(pose: MascotPose, id: string, big: boolean): ReactNode {
               <Barrel d={SIT} id={id} />
               <Legs />
               <Head id={id} rot={4} eyes="worried" mouth="wavy" brows="worried" blush={0.45} big={big} yuzuRot={-8} />
-              <Paw x={91} y={172} />
-              <Paw x={109} y={172} />
+              <Paw x={90} y={161} />
+              <Paw x={110} y={161} />
             </g>
           </g>
         </>
@@ -535,8 +534,7 @@ function renderPose(pose: MascotPose, id: string, big: boolean): ReactNode {
             <Barrel d={SIT} id={id} />
             <Legs />
             <Head id={id} rot={-5} eyes="look" mouth="flat" brows="hmm" blush={0.4} big={big} yuzuRot={-10} />
-            <Arm x1={134} y1={182} x2={119} y2={167} w={17} />
-            <Paw x={116} y={164} r={10} />
+            <BentArm d="M150 174 Q157 152 145 136" end={[143, 133]} w={17} />
           </g>
           <g fill="var(--art-bubble)">
             <circle className={s.thinkDot} cx="160" cy="42" r="4.5" />

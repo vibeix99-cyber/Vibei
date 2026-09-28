@@ -65,5 +65,38 @@ Dev port 5188. Screenshots in `.shots/home/`.
 - Removed unused CSS. `vite build` passes and the whole-project `tsc` is clean.
 - Critic smoke note (quest reward contrast): the faded reward on completed recipes was the only failure (2.5:1). Fixed in iteration 2 with full-strength `--ink-2`. Re-verified with axe across seeds, themes and sizes (below).
 
+## Iteration 5
+
+- Relays applied:
+  - Tags now come from the shared `@/state/tags` (TAGS/TAG_BY_ID). Tag chips use each tag's tone, and the brews timeline shows tone-coloured kit `Pill`s.
+  - Data flows use the progress API directly (`exportData`, `backupFileName`, `previewImport`, `importData(json, {mode})`, `resetAllData`).
+  - `RhythmSpot` added to the rhythm cards.
+- Local AA inks replaced with the design system's `--*-ink` tokens. Removed the TextField workaround now that the kit ships `min-width: 0`.
+- Hello and ready bubble tails are centered on Chai (`tailAt="50%"`).
+- Re-verified:
+  - `tsc` clean; 11 unit tests pass.
+  - `vite build` passes.
+  - axe is clean on all onboarding steps, Home (5 seeds × light/dark × 390/1024/1440) and Settings.
+  - The keyboard-only onboarding walk completes and lands on `#/focus` with the timer running.
+
+## Final screenshots
+
+`.shots/home/final/`:
+- `welcome/*`: every step, mobile light and desktop dark.
+- `home/*`: veteran afternoon, at-risk evening, late night, blank morning, plus mobile light/dark, desktop light/dark, 320 px, streak sheet and resume banner.
+- `settings/*`: mobile scroll frames and desktop dark.
+
+Data-flow sheets are in `.shots/home/flows/`.
+
+## Known gaps
+
+- The daily goal can only be one of the four presets (no custom-minutes goal).
+- The onboarding step isn't persisted across a reload; choices are saved as you go, so a reload just restarts at hello with selections kept.
+- First-visit-today uses a `kettle:home:lastVisit` localStorage key. It isn't part of backups, by design.
+- Ambience previews call `audio.preview`; checked in code, not by ear.
+
 ## Requests for other areas
 
+- None blocking.
+- design-system (nice to have): a `ghost`/`subtle` danger Button variant, so destructive confirms can pair a solid safe action with a quieter destructive one. Reset currently stacks two solid buttons.
+- art (nice to have): a larger Chai "wave from bottom edge" peek for empty states at 72 px. The current peek crops well but the ears get clipped on the dashed empty card.

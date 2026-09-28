@@ -35,6 +35,10 @@ ask for it (or pass `className` for layout only).
 | `Tooltip`, `Spinner`, `Kbd`, `Skeleton`, `EmptyState`, `VisuallyHidden` | small bits |
 | helpers | `cx`, `useMediaQuery`, `TONES`, types `Tone`, `IconSlot` |
 
+Layout opt-in: a screen that needs room renders a root element with `data-layout="wide"`
+(column grows to 1000px; the right rail yields between 1200–1679px, returns ≥ 1680px with an
+880px column). Default column is 680px (720 ≥ 1600).
+
 Tokens: `src/styles/tokens.css`. Type utilities: `.t-display-xl/l/m`, `.t-title`,
 `.t-headline`, `.t-body`, `.t-body-s`, `.t-caption`, `.t-overline`, `.t-num`, `.t-ink-2/3`.
 `data-tone="<tone>"` on any element exposes `--tone`, `--tone-edge`, `--tone-soft`, `--tone-ink`,
@@ -75,12 +79,28 @@ or settings) — use `:global(html[data-motion='reduce'])` in CSS modules.
   toast text 15px, warmer dark surfaces, rail "today" marker, hollow missed days, friendlier
   Tea Cozy copy, removed a misplaced rail link.
 
+### 2 — interaction + a11y hardening
+- Scripted checks (scratch harness): sheet opens with focus on the first action, Tab trapped,
+  Esc closes, focus restored, `#root` inert + scroll lock released, backdrop closes, initial
+  focus prop, slider keys/drag, segmented arrows, chip toggles, switch, stepper, `ui:toast`
+  bus + auto-dismiss, theme cross-fade + `theme-color`, `data-motion` mirror — all pass.
+- Fixed: focus restore was undone by React's commit-time selection restore (now restored in a
+  microtask; StrictMode double-mount guarded; never falls to `<body>` — falls back to the
+  sheet underneath / `#main`). Progress sheen made visible (was too faint). Dev server moved
+  to no-HMR + private dep cache so other areas' edits don't reload test pages.
+- Checked 320 / 390 / 844×390 / 820 / 1024 / 1280 / 1440 / 2560: no horizontal overflow.
+
+### 3 — cohesion + polish
+- `WeekStrip` promoted into the kit (progress `WeekStripDay[]` as-is, `celebrate` lights
+  today up); Rail uses it. Rail now uses the art area's `StreakMug`, `LevelBadge`,
+  `QuestIcon`, `Leaf`, `TeaCozy`; sidebar uses `<Logo/>`.
+- ≥ 44px hit boxes everywhere (icon-only buttons min 44 wide, slider thumb is a 44px box with
+  a 30px face, compact chips and toast actions extend their hit area). Audited by script.
+- Undimmed scrollbar-gutter strip under modals fixed (`--scrim-solid` on `<html>`).
+- Toaster: live region is a `div[role=status]` wrapping the list (axe aria-allowed-role).
+- Gallery uses shared `TAGS`. `data-layout="wide"` opt-in for Stats.
+
 ## Open issues / requests
-- Home area: `src/screens/home/kit` stand-ins can now be swapped for `@/ui` (SpeechBubble,
-  Ring, Chip/ChipGroup, SegmentedControl, Toggle, Slider, NumberStepper, TextField,
-  IconButton, ListRow/ListGroup). API diffs: TextField `onChange(value)`; ListRow uses
-  `label`/`iconTone` (not `title`/`tone`); ChipRadioGroup → `ChipGroup`; IconButton `size`
-  is sm/md/lg.
-- Home area: done-recipe reward text (`.questReward` with reduced opacity) fails contrast
-  (2.5:1 light, 4.2:1 dark) — use `--ink-3` or `--matcha-ink` without opacity.
-- Art area: a `Logo` export would replace the sidebar's `Icon name="kettle"` + wordmark.
+- Progress area: add `data-layout="wide"` on the Stats root if you want the wide column.
+- Core-loop: `WeekStrip celebrate` is ready for the streak-extended card; `Counter onTick`
+  for count-up ticks; `Digits roll="down"` for the timer.

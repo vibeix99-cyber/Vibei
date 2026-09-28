@@ -22,7 +22,8 @@ export interface BadgeProps {
 }
 
 const ROMAN = ['I', 'II', 'III', 'IV', 'V'];
-const FONT = "var(--font-display, 'Fredoka Variable', 'Fredoka', ui-rounded, system-ui, sans-serif)";
+/** Nunito 900 (not Fredoka) so roman numerals stay unambiguous — Fredoka's "IV" reads as "N". */
+const NUMERAL_FONT = "var(--font-body, 'Nunito Variable', 'Nunito', ui-rounded, system-ui, sans-serif)";
 
 type Ink = { c: string; k: string; b: string };
 
@@ -231,8 +232,8 @@ export function Badge({ id, tier = 1, locked, size = 88, className, title, showT
       ) : (
         withTier && (
           <g transform="translate(50 86)">
-            <rect x={-(8 + ROMAN[t - 1].length * 3.6)} y="-8.5" width={16 + ROMAN[t - 1].length * 7.2} height="17" rx="8.5" fill={pal.ink} />
-            <text textAnchor="middle" dominantBaseline="central" y="0.6" fontFamily={FONT} fontWeight="700" fontSize="12" fill={cream} letterSpacing="0.5">
+            <rect x={-(8 + ROMAN[t - 1].length * 4)} y="-8.5" width={16 + ROMAN[t - 1].length * 8} height="17" rx="8.5" fill={pal.ink} />
+            <text textAnchor="middle" dominantBaseline="central" y="0.8" x="0.9" fontFamily={NUMERAL_FONT} fontWeight="900" fontSize="11.5" fill={cream} letterSpacing="1.8">
               {ROMAN[t - 1]}
             </text>
           </g>

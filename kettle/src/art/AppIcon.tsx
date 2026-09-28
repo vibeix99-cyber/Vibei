@@ -3,6 +3,7 @@
  * to public/favicon.svg + public/icons/*.svg and rasterized to PNG by
  * scripts/render-icons.mjs. OWNER: art area.
  */
+import type React from 'react';
 import { KettleMark } from './Objects';
 import { ChaiArt } from './Mascot';
 
@@ -11,11 +12,13 @@ export type AppIconVariant = 'any' | 'maskable' | 'kettle' | 'favicon' | 'favico
 const BG = '#FFF3E2';
 const SUN = '#FFE2B3';
 
+const VARS = { '--art-shadow': 'rgba(59, 42, 32, 0.13)' } as React.CSSProperties;
+
 export function AppIconArt({ variant = 'any', size = 512 }: { variant?: AppIconVariant; size?: number }) {
   const id = `ai${variant}`;
   if (variant === 'favicon') {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width={size} height={size} data-appicon={variant}>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width={size} height={size} data-appicon={variant} style={VARS}>
         <g transform="translate(32 34) scale(1.12) translate(-32 -34)">
           <KettleMark id={id} />
         </g>
@@ -24,14 +27,14 @@ export function AppIconArt({ variant = 'any', size = 512 }: { variant?: AppIconV
   }
   if (variant === 'faviconChai') {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="26 20 148 148" width={size} height={size} data-appicon={variant}>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="28 -4 144 144" width={size} height={size} data-appicon={variant} style={VARS}>
         <ChaiArt pose="idle" id={id} big />
       </svg>
     );
   }
   if (variant === 'kettle') {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width={size} height={size} data-appicon={variant}>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width={size} height={size} data-appicon={variant} style={VARS}>
         <rect width="512" height="512" fill={BG} />
         <circle cx="256" cy="262" r="186" fill={SUN} />
         <ellipse cx="256" cy="420" rx="150" ry="14" fill="#3B2A20" opacity="0.08" />
@@ -44,11 +47,11 @@ export function AppIconArt({ variant = 'any', size = 512 }: { variant?: AppIconV
   // any / maskable: Chai close-up (head + yuzu), body cropped by the bottom edge.
   // Maskable keeps everything important inside the 40%-radius safe circle.
   const m = variant === 'maskable';
-  const k = m ? 2.6 : 3;
+  const k = m ? 2.55 : 2.9;
   const tx = 256 - 100 * k;
-  const ty = m ? 30 : 72 - 27 * k;
+  const ty = m ? 44 : 40;
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width={size} height={size} data-appicon={variant}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width={size} height={size} data-appicon={variant} style={VARS}>
       <rect width="512" height="512" fill={BG} />
       <circle cx="256" cy="300" r={m ? 205 : 230} fill={SUN} />
       <g transform={`translate(${tx} ${ty}) scale(${k})`}>

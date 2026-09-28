@@ -165,7 +165,7 @@ export class Fire extends BaseAmbient {
     this.crackClock.run(from, to, (t) => this.crackle(t));
     const pops = popGrains(this.ctx);
     this.popClock.run(from, to, (t) => {
-      this.grain(pick(rng, pops), t, logRange(rng, 0.12, 0.26), pick(rng, this.lanes_), rrange(rng, 0.85, 1.15));
+      this.grain(pick(rng, pops), t, logRange(rng, 0.07, 0.16), pick(rng, this.lanes_), rrange(rng, 0.85, 1.15));
     });
     // Every now and then a log settles: a soft thunk and a flurry of sparks.
     this.logClock.run(from, to, (t) => {

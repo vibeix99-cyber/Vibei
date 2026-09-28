@@ -13,7 +13,8 @@
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
   background: var(--bg);
-  overflow-x: hidden;
+  /* clip (not hidden): keeps the page as the scroller so the footer can stay sticky */
+  overflow-x: clip;
 }
 .bg {
   position: fixed;
@@ -142,8 +143,13 @@
   top: 50%;
   width: 0;
   height: 0;
-  z-index: 2;
+  z-index: 0;
   pointer-events: none;
+}
+/* Leaves fly around the hero and pass *behind* the words and cards (reads as depth, never hides text). */
+.step > :not(.hero) {
+  position: relative;
+  z-index: 1;
 }
 .leaf {
   position: absolute;
@@ -310,11 +316,14 @@
 }
 
 /* ---------- streak ---------- */
+.mugWrap {
+  position: relative;
+}
 .streakNum {
   position: absolute;
   z-index: 2;
-  right: calc(50% - 128px);
-  bottom: 6px;
+  right: -30px;
+  bottom: 2px;
   min-width: 72px;
   height: 72px;
   padding: 0 14px;
@@ -669,6 +678,31 @@
 }
 
 /* ---------- sizes ---------- */
+@media (max-width: 379px) {
+  .tiles {
+    gap: 8px;
+  }
+  .tileHead {
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    padding: 4px 4px 3px;
+  }
+  .tileBody {
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 4px;
+  }
+  .tileValue {
+    font-size: 1.375rem;
+  }
+  .unit {
+    font-size: 0.8125rem;
+  }
+  .receiptItem {
+    font-size: 0.8125rem;
+    padding: 3px 8px;
+  }
+}
 @media (max-height: 740px) {
   .step {
     --hero-h: 160px;
@@ -725,24 +759,79 @@
   }
 }
 @media (orientation: landscape) and (max-height: 520px) {
+  .top {
+    padding-top: 8px;
+    min-height: 22px;
+  }
+  .stage {
+    padding-top: 4px;
+    padding-bottom: 8px;
+  }
+  .card {
+    width: min(760px, 100%);
+  }
   .step {
-    --hero-h: 110px;
-    --hero-mascot: 104px;
-    gap: 8px;
+    --hero-h: 100%;
+    --hero-mascot: 150px;
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    column-gap: 20px;
+    row-gap: 8px;
+    align-items: center;
+    align-content: center;
+  }
+  .step > * {
+    grid-column: 2;
+  }
+  .step > .hero {
+    grid-column: 1;
+    grid-row: 1 / span 6;
+    align-self: stretch;
+    min-height: 170px;
   }
   .hero :global(svg) {
-    max-height: 104px;
+    max-width: 160px;
+    max-height: 160px;
   }
   .title {
-    font-size: 1.5rem;
+    font-size: 1.625rem;
+  }
+  .sub {
+    font-size: 1rem;
   }
   .glow,
   .rays {
-    transform: scale(0.55);
-  }
-  .streakNum {
     transform: scale(0.7);
-    transform-origin: bottom left;
+  }
+  .tileBody {
+    min-height: 52px;
+    padding: 8px 6px;
+  }
+  .tileValue {
+    font-size: 1.375rem;
+  }
+  .receiptItem {
+    font-size: 0.8125rem;
+    padding: 2px 8px;
+  }
+  .week,
+  .quests,
+  .itemCard {
+    margin-top: 0;
+  }
+  .weekDot {
+    width: 30px;
+    height: 30px;
+  }
+  .quest {
+    padding: 6px 0;
+  }
+  .itemScene {
+    height: 110px;
+  }
+  .footer {
+    padding-top: 8px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
   }
 }
 @media (prefers-reduced-motion: reduce) {

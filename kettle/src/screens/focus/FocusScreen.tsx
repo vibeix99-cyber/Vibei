@@ -36,36 +36,10 @@ import { CycleDots, TagChip } from './parts/bits';
 import { ambientOption, weatherFor } from './parts/ambience';
 import { useZen } from './parts/hooks';
 import { BreakIdeas } from './break/BreakIdeas';
+import { cycleInfo, focusStatus, type View } from './cycle';
 import s from './FocusScreen.module.css';
 
-type View = 'focus' | 'whistle' | 'break' | 'over' | 'none';
 const FIVE_MIN = 5 * 60_000;
-
-function focusStatus(progress: number, remainingMs: number): string {
-  if (remainingMs <= 60_000) return 'Almost whistling…';
-  if (progress < 0.34) return 'Kettle’s warming up…';
-  if (progress < 0.8) return 'Deep in it. Nice.';
-  return 'Nearly there…';
-}
-
-/** Cycle dots + label. A skipped long break stays owed, so `done` can exceed `every`. */
-function cycleInfo(view: View, done: number, every: number, isLong: boolean) {
-  const filled = Math.min(every, done);
-  switch (view) {
-    case 'focus':
-      return done < every
-        ? { filled, current: done + 1, label: `Brew ${done + 1} of ${every}` }
-        : { filled, current: 0, label: 'Long tea break next' };
-    case 'whistle':
-      return { filled, current: 0, label: done >= every ? 'Long tea break earned' : `Brew ${done} of ${every} done` };
-    case 'break':
-      return isLong ? { filled: every, current: 0, label: `${every} of ${every} brewed` } : { filled, current: 0, label: `${done} of ${every} brewed` };
-    default:
-      return done < every
-        ? { filled, current: done + 1, label: `Next: brew ${done + 1} of ${every}` }
-        : { filled, current: 0, label: 'Long tea break next' };
-  }
-}
 
 export default function FocusScreen() {
   const t = useTimer();
@@ -196,7 +170,7 @@ export default function FocusScreen() {
               aria-haspopup="dialog"
               sfx="whoosh"
             >
-              {amb.label}
+              <span className={s.ambLabel}>{amb.label}</span>
             </Button>
           )}
           {view === 'over' ? (
@@ -339,7 +313,6 @@ export default function FocusScreen() {
                     </span>
                   </div>
                 </TimerRing>
-                {view === 'whistle' && !reduced && <Steam />}
                 <AnimatePresence>
                   {bumps.map((b) => (
                     <motion.span
@@ -439,16 +412,5 @@ function CheckMark() {
     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
       <path d="M5.5 12.5l4.2 4.2 8.8-9.4" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
-  );
-}
-
-/** Soft steam puffs rising from the dial while the kettle whistles. */
-function Steam() {
-  return (
-    <div className={s.steam} aria-hidden="true">
-      {[0, 1, 2, 3, 4].map((i) => (
-        <span key={i} className={s.puff} style={{ ['--i' as string]: i }} />
-      ))}
-    </div>
   );
 }

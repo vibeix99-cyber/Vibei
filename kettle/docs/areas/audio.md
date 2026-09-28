@@ -90,7 +90,7 @@ Timbre vocabulary:
 - **All stacks:** no clipping, and the limiter never engages hard
 
 Every SFX shows:
-- Click score ≤ 11. A hard cut scores > 100.
+- Click score ≤ 12; tap's 11 is its intended soft "tok" transient. A hard cut scores > 100.
 - Start and end samples at 0.
 - DC 0.
 - Less than 0.2% of energy above 8 kHz.
@@ -118,9 +118,14 @@ Every SFX shows:
    - Forest gust range narrowed from 7.0 to 4.2 LU.
    - Fades to silence now use a quadratic ease-out; the cosine tail sounded abrupt in the ambience-plus-complete render.
 5. **Multi-tab and coexistence.** Ambience is gated on the timer leader. The session ambience wins during focus. Live assertions were added (`--live`).
+6. **Click forensics.** The click score found two real bugs, now fixed:
+   - `cancelScheduledValues` drops an in-progress ramp *entirely*. An interrupted simmer re-plan held at 0 for 5 s and then stepped, and interrupted fades could zipper by one segment. Fix: after cancelling, re-anchor with `linearRampToValueAtTime(current, at)`, which recreates the segment exactly (`Fader`, `Simmer.setHeatPath`).
+   - A fresh `GainNode` defaults to gain 1. With a non-sample-aligned start (always the case live), one sample leaked at full gain before `setValueAtTime(0, t)` took effect. Fix: envelope gains start at intrinsic 0. Tap-storm click score went from 72 to 13.
+   - Added the `rapidSwitch` scenario (crossfades interrupted mid-way): click score 4.
+   - Fire pops softened by 3.5 dB.
 
 ## Verification
-- `node scripts/audio-check.mjs` renders every SFX, 12 s of each bed (`--seconds 60` for long runs), and 4 stress scenarios in a real browser via OfflineAudioContext. It writes WAVs, spectrogram PNGs (log-frequency, with 4k and 8k lines in red) and `report.json` to `.shots/audio/`. It exits 1 on clipping, a peak above −1 dBFS, DC, start or end steps, or clicks. `--env` prints RMS envelopes.
+- `node scripts/audio-check.mjs` renders every SFX, 12 s of each bed (`--seconds 60` for long runs), and 5 stress scenarios (tap storm, count-up, celebration stack, ambience plus complete, rapid ambience switching) in a real browser via OfflineAudioContext. It writes WAVs, spectrogram PNGs (log-frequency, with 4k and 8k lines in red) and `report.json` to `.shots/audio/`. It exits 1 on clipping, a peak above −1 dBFS, DC, start or end steps, clicks in any SFX (score > 40), or clicks in smooth beds or switching (score > 25). `--env` prints RMS envelopes. The simmer render deliberately re-plans heat mid-ramp to exercise the automation path.
 - `node scripts/audio-check.mjs --live` drives the real app. It asserts fade-in, the pause dip (about −8 dB), resume, crossfade, that navigation keeps the ambience, the simmer, mute and unmute, that only one of two tabs plays, fade-out at session end, preview, and no console errors. All 12 pass.
 - `npx vitest run src/audio`: 43 unit tests covering DSP helpers, loop seams, the voice pool, LUFS against the BS.1770 reference sine, click detection, harmony, the SFX catalogue, the session target and haptics.
 - Tools: ffmpeg, numpy and PIL are not available, so the spectrograms are computed and drawn in the browser (`offline.ts`).

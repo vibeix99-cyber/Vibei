@@ -510,8 +510,14 @@
   white-space: nowrap;
 }
 .tlMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin-top: 2px;
   color: var(--ink-2);
   font-size: 0.875rem;
+  font-weight: 600;
 }
 
 /* ---------- Sheets ---------- */

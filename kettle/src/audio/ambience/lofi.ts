@@ -164,6 +164,7 @@ export class Lofi extends BaseAmbient {
     const hg = ctx.createGain();
     hg.gain.value = 0.7;
     const g = ctx.createGain();
+    g.gain.value = 0;
     const peak = 0.028;
     g.gain.setValueAtTime(0, t);
     g.gain.linearRampToValueAtTime(peak, t + 0.02);

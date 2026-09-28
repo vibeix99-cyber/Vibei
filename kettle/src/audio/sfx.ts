@@ -104,6 +104,7 @@ function kettleWhistle(o: Out, t: number, dur: number, gain: number): number {
   const f1 = P(8); // …and rises to C6 as it comes to the boil (never shrill)
   const out = voiceOut(o, { gain, wet: 0.22 });
   const env = ctx.createGain();
+  env.gain.value = 0;
   env.gain.setValueAtTime(0, t);
   env.gain.linearRampToValueAtTime(0.18, t + 0.14);
   env.gain.linearRampToValueAtTime(1, t + 0.42);
@@ -130,6 +131,7 @@ function kettleWhistle(o: Out, t: number, dur: number, gain: number): number {
   const lfo = ctx.createOscillator();
   lfo.frequency.value = 5.2;
   const depth = ctx.createGain();
+  depth.gain.value = 0;
   depth.gain.setValueAtTime(0, t);
   depth.gain.linearRampToValueAtTime(16, t + 0.5); // cents
   lfo.connect(depth);

@@ -2,7 +2,7 @@
 import { Icon, Mascot, QuestIcon, Leaf } from '@/art';
 import type { Quest, SessionRecord } from '@/progress';
 import { formatDuration } from '@/lib/format';
-import { Card, ProgressBar } from '@/ui';
+import { Card, Pill, ProgressBar } from '@/ui';
 import { TAG_BY_ID } from '@/state/tags';
 import s from './Home.module.css';
 
@@ -81,9 +81,15 @@ export function TodayBrews({ sessions }: { sessions: SessionRecord[] }) {
               <div className={s.tlBody}>
                 <p className={s.tlTitle}>{x.intention || 'A quiet brew'}</p>
                 <p className={s.tlMeta}>
-                  {x.tag ? `${TAG_BY_ID[x.tag]?.label ?? x.tag} · ` : ''}
-                  {formatDuration(x.focusedMs)}
-                  {x.completed ? '' : ' · ended early'}
+                  {x.tag && TAG_BY_ID[x.tag] && (
+                    <Pill size="sm" tone={TAG_BY_ID[x.tag].tone} icon={TAG_BY_ID[x.tag].icon}>
+                      {TAG_BY_ID[x.tag].label}
+                    </Pill>
+                  )}
+                  <span>
+                    {formatDuration(x.focusedMs)}
+                    {x.completed ? '' : ' · ended early'}
+                  </span>
                 </p>
               </div>
             </li>

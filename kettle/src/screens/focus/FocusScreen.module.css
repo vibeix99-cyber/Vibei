@@ -14,7 +14,6 @@
   --ring-edge: var(--persimmon-edge);
   --ring-track: var(--oat);
   --ring-head: #fff;
-  --steam: #e6d6c2;
   --dial: min(72vw, 33dvh, 320px);
 
   position: relative;
@@ -32,7 +31,6 @@
   overflow-y: auto;
 }
 :global([data-theme='dark']) .screen {
-  --steam: rgba(255, 255, 255, 0.55);
   --ring-head: var(--paper);
 }
 
@@ -162,7 +160,6 @@
   grid-area: panel;
   display: grid;
   align-content: end;
-  min-height: 0;
 }
 .panelInner {
   display: flex;
@@ -238,6 +235,7 @@
   text-wrap: balance;
 }
 .check {
+  position: relative;
   display: grid;
   place-items: center;
   width: 30cqw;
@@ -250,6 +248,29 @@
 .check svg {
   width: 60%;
   height: 60%;
+}
+/* one soft ripple as the check lands */
+.check::after {
+  content: '';
+  position: absolute;
+  inset: -6%;
+  border-radius: 50%;
+  border: 3px solid var(--matcha);
+  opacity: 0;
+  animation: ripple 1s var(--ease-out, ease-out) 0.15s 2 both;
+}
+@keyframes ripple {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+.screen[data-reduced] .check::after {
+  animation: none;
 }
 @keyframes breathe {
   0%,
@@ -275,41 +296,6 @@
   font-size: 0.9375rem;
   box-shadow: 0 3px 0 var(--honey-edge);
   pointer-events: none;
-}
-
-/* steam while whistling */
-.steam {
-  position: absolute;
-  left: 50%;
-  bottom: 93%;
-  width: 34%;
-  height: 30%;
-  transform: translateX(-50%);
-  pointer-events: none;
-}
-.puff {
-  position: absolute;
-  bottom: 0;
-  left: calc(4% + var(--i) * 18%);
-  width: 24%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: var(--steam);
-  opacity: 0;
-  animation: puff 1.5s ease-out calc(var(--i) * 0.16s) infinite;
-}
-@keyframes puff {
-  0% {
-    transform: translateY(30%) scale(0.4);
-    opacity: 0;
-  }
-  25% {
-    opacity: 0.95;
-  }
-  100% {
-    transform: translateY(-190%) scale(1.35);
-    opacity: 0;
-  }
 }
 
 /* controls */
@@ -460,6 +446,32 @@
   margin-top: 10px;
 }
 
+/* ---------- short / narrow phones ---------- */
+@media (orientation: portrait) and (max-height: 700px) {
+  /* A tea break on a short screen: Chai + the sky wash carry the mood; the room steps aside. */
+  .screen[data-view='break'] {
+    grid-template-rows: auto 0 auto;
+    row-gap: 6px;
+  }
+  .screen[data-view='break'] .scene {
+    visibility: hidden;
+    border: 0;
+    box-shadow: none;
+  }
+  .screen[data-view='break'] .panel {
+    align-content: center;
+  }
+}
+@media (max-width: 359px) {
+  .top [data-cycle-label],
+  .ambLabel {
+    display: none;
+  }
+  .topLeft {
+    gap: 8px;
+  }
+}
+
 /* ---------- tablet portrait ---------- */
 @media (min-width: 640px) and (orientation: portrait) {
   .screen {
@@ -577,7 +589,7 @@
   .screen[data-paused] .clock {
     animation: none;
   }
-  .puff {
+  .check::after {
     animation: none;
   }
 }

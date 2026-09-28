@@ -65,7 +65,9 @@ export type IconName =
   | 'snow'
   | 'more'
   | 'bellOff'
-  | 'lightning';
+  | 'lightning'
+  | 'book'
+  | 'briefcase';
 
 export type IconTone = 'mono' | 'color';
 
@@ -124,6 +126,8 @@ const COLOR: Partial<Record<IconName, Omit<Paint, 'so'>>> = {
   heart: { p: PAL.berry, s: PAL.berryHi, a: PAL.berry, b: PAL.berry },
   droplet: { p: PAL.sky, s: PAL.skyHi, a: PAL.sky, b: PAL.sky },
   lightning: { p: PAL.honey, s: PAL.honeyHi, a: PAL.honey, b: PAL.honey },
+  book: { p: PAL.sky, s: '#F6E9D6', a: PAL.berry, b: PAL.skyShade },
+  briefcase: { p: '#8E5634', s: '#C98A59', a: PAL.honey, b: '#8E5634' },
 };
 
 const R = { strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, fill: 'none' };
@@ -446,6 +450,21 @@ const ICONS: Record<IconName, (c: Paint) => ReactNode> = {
       <circle cx="12" cy="12" r="2.3" />
       <circle cx="18.8" cy="12" r="2.3" />
     </g>
+  ),
+  book: (c) => (
+    <>
+      <path d="M7.2 16.2h12.6v4.1c0 .7-.5 1.2-1.2 1.2H7.2a2.65 2.65 0 0 1 0-5.3Z" fill={c.s} opacity={c.so} />
+      <path d="M7.2 2.6h11c.9 0 1.6.7 1.6 1.6v12H7.2a2.65 2.65 0 0 0-2.65 2.65V5.25A2.65 2.65 0 0 1 7.2 2.6Z" fill={c.p} />
+      <path d="M13.6 2.6v6.2l1.9-1.4 1.9 1.4V2.6Z" fill={c.a} />
+    </>
+  ),
+  briefcase: (c) => (
+    <>
+      <path d="M8.8 7.2V5.6c0-.9.7-1.6 1.6-1.6h3.2c.9 0 1.6.7 1.6 1.6v1.6" stroke={c.p} strokeWidth="2.4" {...R} />
+      <rect x="2.6" y="7" width="18.8" height="13.6" rx="3.2" fill={c.s} opacity={c.so} />
+      <path d="M2.6 11.4h18.8v1.4c0 .6-.5 1.1-1.1 1.1H3.7c-.6 0-1.1-.5-1.1-1.1Z" fill={c.p} />
+      <rect x="10" y="10.2" width="4" height="5.2" rx="1.3" fill={c.a} />
+    </>
   ),
   lightning: (c) => (
     <path d="M13.6 2.6 5.2 13.2h6l-1 8.2 8.6-10.8h-6.2Z" fill={c.p} stroke={c.p} strokeWidth="1.6" strokeLinejoin="round" />

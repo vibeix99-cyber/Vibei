@@ -73,14 +73,16 @@ export function Toaster() {
   useEffect(() => on('ui:toast', ({ message, tone }) => toast(message, { tone })), []);
   if (typeof document === 'undefined') return null;
   return createPortal(
-    <div className={s.region} role="region" aria-label="Notifications">
-      <ol className={s.list} role="status" aria-live="polite" aria-relevant="additions text">
-        <AnimatePresence initial={false}>
-          {list.map((t) => (
-            <ToastView key={t.id} item={t} reduced={reduced} />
-          ))}
-        </AnimatePresence>
-      </ol>
+    <div className={s.region}>
+      <div role="status" aria-live="polite" aria-relevant="additions text" aria-label="Notifications" className={s.live}>
+        <ol className={s.list}>
+          <AnimatePresence initial={false}>
+            {list.map((t) => (
+              <ToastView key={t.id} item={t} reduced={reduced} />
+            ))}
+          </AnimatePresence>
+        </ol>
+      </div>
     </div>,
     document.body,
   );

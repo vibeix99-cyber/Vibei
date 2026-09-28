@@ -106,6 +106,7 @@ export function startLoop(src: AudioBufferSourceNode, at: number, rng: Rng): voi
  * −60 dB at `t60` → linear to exact zero. Returns the end time.
  */
 export function percEnv(param: AudioParam, t: number, peak: number, attack: number, t60: number): number {
+  param.value = 0; // intrinsic 0: no full-gain sample before the first event
   const a = Math.max(0.001, attack);
   param.setValueAtTime(0, t);
   param.linearRampToValueAtTime(peak, t + a);
@@ -116,6 +117,7 @@ export function percEnv(param: AudioParam, t: number, peak: number, attack: numb
 
 /** Attack / hold / release envelope with linear segments. Returns end time. */
 export function arEnv(param: AudioParam, t: number, peak: number, attack: number, hold: number, release: number): number {
+  param.value = 0; // intrinsic 0: no full-gain sample before the first event
   param.setValueAtTime(0, t);
   param.linearRampToValueAtTime(peak, t + Math.max(0.001, attack));
   param.setValueAtTime(peak, t + attack + hold);
@@ -125,6 +127,7 @@ export function arEnv(param: AudioParam, t: number, peak: number, attack: number
 
 /** Swell envelope: smooth (quarter-sine-ish via exp ramps) attack then long release. */
 export function swellEnv(param: AudioParam, t: number, peak: number, attack: number, release: number): number {
+  param.value = 0; // intrinsic 0: no full-gain sample before the first event
   param.setValueAtTime(0, t);
   param.linearRampToValueAtTime(peak * 0.15, t + attack * 0.35);
   param.linearRampToValueAtTime(peak, t + attack);
@@ -379,6 +382,7 @@ export function breath(o: Out, t: number, b: BreathOpts): number {
 
 /** Attack → hold → exponential-ish release, all click-free. */
 export function arEnvSmooth(param: AudioParam, t: number, peak: number, attack: number, hold: number, release: number): number {
+  param.value = 0; // intrinsic 0: no full-gain sample before the first event
   param.setValueAtTime(0, t);
   param.linearRampToValueAtTime(peak * 0.2, t + attack * 0.4);
   param.linearRampToValueAtTime(peak, t + attack);
@@ -509,6 +513,7 @@ export function ePiano(o: Out, t: number, freq: number, opts: EpOpts): number {
   mod2.connect(idx2).connect(car2.frequency);
 
   const amp = ctx.createGain();
+  amp.gain.value = 0;
   const peak = opts.gain * (0.55 + vel * 0.45);
   // Exponential decay (−60 dB over t60) up to the note-off, then a short release.
   // Ramping to the value the decay would have at note-off keeps the same curve.

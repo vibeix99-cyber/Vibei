@@ -6,6 +6,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Icon, Mascot } from '@/art';
 import { useSettings, type ThemePref } from '@/state/settings';
+import { TAGS } from '@/state/tags';
 import {
   Button,
   Card,
@@ -397,19 +398,13 @@ export default function UiGallery() {
         </Section>
 
         <Section id="choice" title="Chips & segmented">
-          <Row label="Tag chips (single, can clear)">
+          <Row label="Tag chips (shared TAGS · single, can clear)">
             <ChipGroup
               label="Tag"
               allowEmpty
               value={tag}
               onChange={setTag}
-              options={[
-                { value: 'work', label: 'Work', icon: 'edit' },
-                { value: 'study', label: 'Study', icon: 'pencil' },
-                { value: 'read', label: 'Read', icon: 'star' },
-                { value: 'create', label: 'Create', icon: 'sparkle' },
-                { value: 'life', label: 'Life', icon: 'heart' },
-              ]}
+              options={TAGS.map((t) => ({ value: t.id, label: t.label, icon: t.icon, tone: t.tone }))}
             />
           </Row>
           <Row label="Multiple · sky">
@@ -681,11 +676,7 @@ export default function UiGallery() {
             allowEmpty
             value={tag}
             onChange={setTag}
-            options={[
-              { value: 'work', label: 'Work' },
-              { value: 'study', label: 'Study' },
-              { value: 'read', label: 'Read' },
-            ]}
+            options={TAGS.slice(0, 3).map((t) => ({ value: t.id, label: t.label, tone: t.tone }))}
           />
           <NumberStepper label="Minutes" value={mins} onChange={setMins} min={5} max={120} step={5} unit="min" />
         </div>

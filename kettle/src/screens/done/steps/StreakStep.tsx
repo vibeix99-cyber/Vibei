@@ -57,27 +57,27 @@ export function StreakStep({ report: r, reduced, active, headingRef, headingId }
         <div className={s.glow} data-tone="persimmon" aria-hidden="true" />
         {active && st.milestone != null && beat >= 4 && <LeafConfetti burstKey={`m${st.milestone}`} reduced={reduced} palette="gold" />}
         <motion.div
-          className={s.heroArt}
+          className={`${s.heroArt} ${s.mugWrap}`}
           initial={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.6, rotate: -8 }}
           animate={active ? { opacity: 1, scale: 1, rotate: 0 } : undefined}
           transition={reduced ? { duration: 0.2 } : spring.joyful}
         >
           <StreakMug size={168} state={beat >= 2 || reduced ? 'warm' : 'atRisk'} animate={!reduced} />
+          <div className={s.streakNum} aria-hidden="true">
+            <AnimatePresence initial={false} mode="popLayout">
+              <motion.span
+                key={n}
+                className={s.streakNumInner}
+                initial={reduced ? { opacity: 0 } : { y: '70%', opacity: 0, scale: 0.8 }}
+                animate={{ y: 0, opacity: 1, scale: 1 }}
+                exit={reduced ? { opacity: 0 } : { y: '-70%', opacity: 0 }}
+                transition={reduced ? { duration: 0.2 } : spring.joyful}
+              >
+                {n}
+              </motion.span>
+            </AnimatePresence>
+          </div>
         </motion.div>
-        <div className={s.streakNum} aria-hidden="true">
-          <AnimatePresence initial={false} mode="popLayout">
-            <motion.span
-              key={n}
-              className={s.streakNumInner}
-              initial={reduced ? { opacity: 0 } : { y: '70%', opacity: 0, scale: 0.8 }}
-              animate={{ y: 0, opacity: 1, scale: 1 }}
-              exit={reduced ? { opacity: 0 } : { y: '-70%', opacity: 0 }}
-              transition={reduced ? { duration: 0.2 } : spring.joyful}
-            >
-              {n}
-            </motion.span>
-          </AnimatePresence>
-        </div>
       </div>
 
       <div className={s.copy}>

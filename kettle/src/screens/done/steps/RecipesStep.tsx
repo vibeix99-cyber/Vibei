@@ -60,7 +60,11 @@ export function RecipesStep({ report: r, reduced, active, headingRef, headingId 
           }
           transition={reduced ? { duration: 0.2 } : beat >= 3 ? { duration: 0.5 } : spring.joyful}
         >
-          <TeaTin size={150} state={completed.length > 0 && beat >= 3 ? 'open' : 'closed'} animate={!reduced} />
+          <TeaTin
+            size={150}
+            state={completed.length === 0 || beat < 3 ? 'closed' : beat < 4 && !reduced ? 'opening' : 'open'}
+            animate={!reduced}
+          />
         </motion.div>
       </div>
 

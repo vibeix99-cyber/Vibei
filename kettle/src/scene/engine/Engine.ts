@@ -664,13 +664,16 @@ export class NookEngine {
   private updateCamera(dt: number, snap: boolean) {
     const k = snap ? 1 : 1 - Math.exp(-dt * 7);
     // highlight nudges the view toward the item on the Nook screen
-    const hi = this.state.interactive && this.state.highlightItem ? this.items.get(this.state.highlightItem) : undefined;
-    const zoomGoal = this.zoomT * (hi ? 0.9 : 1);
+    // Nook screen: a gentle nudge. Small showcase cards (level-up): frame the item.
+    const hiId = this.state.highlightItem;
+    const hi = hiId && this.items.get(hiId)?.root.visible ? this.items.get(hiId) : undefined;
+    const inter = this.state.interactive;
+    const zoomGoal = this.zoomT * (hi ? (inter ? 0.88 : 0.64) : 1);
     this.azC += (this.azT - this.azC) * k;
     this.elC += (this.elT + this.baseEl() - this.elC) * k;
     this.zoomC += (zoomGoal - this.zoomC) * k;
     _v.copy(this.fitTarget);
-    if (hi) _v.lerp(hi.focus, 0.28);
+    if (hi) _v.lerp(hi.focus, inter ? 0.3 : 0.7);
     this.targetC.lerp(_v, k);
     if (snap) this.targetC.copy(_v);
     this.az = BASE_AZ + this.azC;

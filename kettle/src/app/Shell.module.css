@@ -303,3 +303,22 @@
     --rail-w: 368px;
   }
 }
+
+/* ---------------- Opt-in wide column ----------------
+   A screen that needs room (e.g. Stats' two-column dashboard) renders a root element with
+   data-layout="wide": the column grows to 1000px and the right rail yields until 1680px. */
+@media (min-width: 900px) {
+  .main:has([data-layout='wide']) {
+    max-width: 1000px;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1679px) {
+  .stage:has([data-layout='wide']) .rail {
+    display: none;
+  }
+}
+@media (min-width: 1680px) {
+  .main:has([data-layout='wide']) {
+    max-width: 880px;
+  }
+}
