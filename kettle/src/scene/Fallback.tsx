@@ -11,14 +11,12 @@ interface Props {
   mode: SceneMode;
   progress?: number;
   items?: string[];
-  /** Hold the illustration still (timer paused). */
-  paused?: boolean;
 }
 
 const POSE: Record<SceneMode, MascotPose> = { focus: 'sleep', break: 'sip', idle: 'idle', showcase: 'idle' };
 
-export function NookStatic({ weather, mode, progress = 0, items = [], paused = false }: Props) {
+export function NookStatic({ weather, mode, progress = 0, items = [] }: Props) {
   const reduced = useReducedMotion();
   const steam = mode === 'focus' ? 0.15 + 0.85 * progress : mode === 'break' ? 0.4 : 0.3;
-  return <NookFallback items={items} steam={steam} weather={weather} chai={POSE[mode]} animate={!reduced && !paused} fit="slice" title="" />;
+  return <NookFallback items={items} steam={steam} weather={weather} chai={POSE[mode]} animate={!reduced} fit="slice" title="" />;
 }

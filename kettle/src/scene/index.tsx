@@ -23,7 +23,7 @@ export function Nook(props: NookSceneProps) {
       data-scene-static="true"
       style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden', background: props.backdrop === false ? undefined : backdropCss(time, dark) }}
     >
-      <NookStatic weather={weather} mode={props.mode} progress={props.progress} items={props.items} paused={props.paused} />
+      <NookStatic weather={weather} mode={props.mode} progress={props.progress} items={props.items} />
     </div>
   );
   if (tier === 'off' || !hasWebGL()) return staticNook;
