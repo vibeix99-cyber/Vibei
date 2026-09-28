@@ -229,6 +229,7 @@ export default function FocusScreen() {
             weather={weatherFor(ambient)}
             timeOfDay="auto"
             items={items}
+            paused={paused}
             className={s.nook}
           />
         </div>

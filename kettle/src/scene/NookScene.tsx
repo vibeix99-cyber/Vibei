@@ -5,7 +5,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { NookSceneProps } from './types';
 import { nextTask, type EngineState, type NookEngine } from './engine/Engine';
-import { backdropCss, debugOn, isMobileDevice, softwareGL, useDebugItems, useReducedMotion, useSceneTier, useSceneTime, useSceneWeather } from './resolve';
+import { DARK_VEIL, backdropCss, debugOn, isMobileDevice, softwareGL, useDarkTheme, useDebugItems, useReducedMotion, useSceneTier, useSceneTime, useSceneWeather } from './resolve';
 import { SETTLE_MS, createEngine, settled, takeWarm, type EngineSpec } from './warm';
 import { NookStatic } from './Fallback';
 
@@ -15,6 +15,7 @@ export default function NookScene(props: NookSceneProps) {
   const time = useSceneTime(props.timeOfDay);
   const weather = useSceneWeather(props.weather);
   const reduced = useReducedMotion();
+  const dark = useDarkTheme();
   const { tier, adaptive } = useSceneTier();
   const canvasHostRef = useRef<HTMLDivElement>(null);
   const hostRef = useRef<HTMLDivElement>(null);
@@ -166,7 +167,7 @@ export default function NookScene(props: NookSceneProps) {
     >
       {(!ready || showStatic) && (
         <div aria-hidden style={{ position: 'absolute', inset: 0 }}>
-          <NookStatic weather={weather} mode={mode} progress={progress} items={items} />
+          <NookStatic weather={weather} mode={mode} progress={progress} items={items} paused={paused} />
         </div>
       )}
       {tier !== 'off' && (
@@ -183,6 +184,18 @@ export default function NookScene(props: NookSceneProps) {
           }}
         />
       )}
+      <div
+        aria-hidden
+        data-scene-veil
+        style={{
+          position: 'absolute',
+          inset: 0,
+          pointerEvents: 'none',
+          background: DARK_VEIL,
+          opacity: dark ? 1 : 0,
+          transition: reduced ? 'none' : 'opacity 420ms ease',
+        }}
+      />
     </div>
   );
 }

@@ -191,6 +191,16 @@ export function timeFromClock(date: Date): ResolvedTime {
   return 'night';
 }
 
+/**
+ * `timeOfDay: 'auto'` under the dark app theme: the nook is always an evening
+ * room (lamplight, fairy lights, stars/moon) so it sits in the plum UI. Dusk
+ * stays dusk; every other hour reads as night.
+ */
+export function autoTime(clockTime: ResolvedTime, dark: boolean): ResolvedTime {
+  if (!dark) return clockTime;
+  return clockTime === 'dusk' ? 'dusk' : 'night';
+}
+
 /** Weather follows the chosen ambience when the consumer doesn't set it. */
 export function weatherFromAmbient(ambient: string): SceneWeather {
   if (ambient === 'rain' || ambient === 'lofi') return 'rain';

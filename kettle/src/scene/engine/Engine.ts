@@ -329,7 +329,9 @@ export class NookEngine {
     if (patch.time && patch.time !== prev.time) {
       this.moodFrom = cloneMood(this.mood);
       this.moodTo = this.moods[patch.time];
-      this.moodT = next.reducedMotion || !this.firstFrameDone ? 1 : 0;
+      // Blend only while the loop runs; a stopped (paused / hidden / reduced-motion) engine
+      // renders single frames with dt = 0, which would never advance the blend.
+      this.moodT = next.reducedMotion || !this.firstFrameDone || !this.running ? 1 : 0;
       if (this.moodT === 1) this.applyMoodNow();
     }
     if (patch.weather && patch.weather !== prev.weather) this.applyWeather();
@@ -452,6 +454,8 @@ export class NookEngine {
     } else {
       cancelAnimationFrame(this.raf);
       this.raf = 0;
+      // Hold a settled frame: finish any mood blend now (single frames don't advance it).
+      if (this.moodT < 1) this.applyMoodNow();
       this.invalidate();
     }
   }

@@ -2,11 +2,11 @@
  * Prop resolution shared by the 3D scene and the static fallback (kept free
  * of three.js so the main chunk stays lean).
  */
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import { clock } from '@/lib/clock';
 import { getSettings, useSettings, type ScenePref } from '@/state/settings';
 import { useReducedMotion } from '@/lib/useReducedMotion';
-import { MOODS, timeFromClock, weatherFromAmbient, type ResolvedTime } from './engine/palette';
+import { MOODS, autoTime, timeFromClock, weatherFromAmbient, type ResolvedTime } from './engine/palette';
 import type { SceneTime, SceneWeather } from './types';
 
 export function debugOn(): boolean {
@@ -22,7 +22,31 @@ function debugParam(name: string): string | null {
 const TIMES = ['morning', 'day', 'dusk', 'night'];
 const WEATHERS = ['rain', 'snow', 'clear'];
 
+// ---- app theme (`<html data-theme>`), observed so the nook follows live theme changes
+function readDark(): boolean {
+  return typeof document !== 'undefined' && document.documentElement.dataset.theme === 'dark';
+}
+function subscribeTheme(cb: () => void): () => void {
+  if (typeof MutationObserver === 'undefined' || typeof document === 'undefined') return () => {};
+  const mo = new MutationObserver(cb);
+  mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  return () => mo.disconnect();
+}
+/** True while the app is in its dark theme; re-renders when `data-theme` changes. */
+export function useDarkTheme(): boolean {
+  return useSyncExternalStore(subscribeTheme, readDark, () => false);
+}
+
+/**
+ * Soft dim + vignette laid over the nook in the dark theme so the lit room
+ * sits in the plum UI instead of glaring out of it (CSS only: no GPU cost).
+ */
+export const DARK_VEIL =
+  'radial-gradient(125% 105% at 50% 44%, rgba(24, 16, 36, 0) 52%, rgba(24, 16, 36, 0.42) 100%), linear-gradient(rgba(24, 16, 36, 0.1), rgba(24, 16, 36, 0.1))';
+
+/** `auto` follows the local clock in the light theme and is always an evening room in the dark one. */
 export function useSceneTime(pref: SceneTime = 'auto'): ResolvedTime {
+  const dark = useDarkTheme();
   const forced = debugParam('nooktime');
   const [auto, setAuto] = useState<ResolvedTime>(() => timeFromClock(new Date(clock.now())));
   useEffect(() => {
@@ -37,7 +61,7 @@ export function useSceneTime(pref: SceneTime = 'auto'): ResolvedTime {
     };
   }, [pref]);
   if (forced && TIMES.includes(forced)) return forced as ResolvedTime;
-  return pref === 'auto' ? auto : pref;
+  return pref === 'auto' ? autoTime(auto, dark) : pref;
 }
 
 export function useSceneWeather(prop?: SceneWeather): SceneWeather {
