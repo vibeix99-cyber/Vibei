@@ -16,7 +16,8 @@ export class TextureBank {
     const canvas = document.createElement('canvas');
     canvas.width = w;
     canvas.height = h;
-    const ctx = canvas.getContext('2d')!;
+    // CPU-backed: uploading a GPU canvas into WebGL means a GPU readback/sync per texture.
+    const ctx = canvas.getContext('2d', { willReadFrequently: true })!;
     draw(ctx, w, h);
     const tex = new CanvasTexture(canvas);
     if (color) tex.colorSpace = SRGBColorSpace;

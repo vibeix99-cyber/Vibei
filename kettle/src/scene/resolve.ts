@@ -4,7 +4,7 @@
  */
 import { useEffect, useState } from 'react';
 import { clock } from '@/lib/clock';
-import { useSettings } from '@/state/settings';
+import { getSettings, useSettings, type ScenePref } from '@/state/settings';
 import { useReducedMotion } from '@/lib/useReducedMotion';
 import { MOODS, timeFromClock, weatherFromAmbient, type ResolvedTime } from './engine/palette';
 import type { SceneTime, SceneWeather } from './types';
@@ -72,6 +72,11 @@ export function isMobileDevice(): boolean {
 /** settings.scene → tier. 'auto' picks by device and may adapt down at runtime. */
 export function useSceneTier(): { tier: SceneTier; adaptive: boolean } {
   const pref = useSettings((s) => s.scene);
+  return resolveTier(pref);
+}
+
+/** Non-hook form of `useSceneTier` (for pre-warming outside React). */
+export function resolveTier(pref: ScenePref = getSettings().scene): { tier: SceneTier; adaptive: boolean } {
   const forced = debugParam('nookq');
   if (forced === 'high' || forced === 'low' || forced === 'off') return { tier: forced, adaptive: false };
   if (pref === 'off') return { tier: 'off', adaptive: false };
@@ -79,21 +84,40 @@ export function useSceneTier(): { tier: SceneTier; adaptive: boolean } {
   const nav = typeof navigator !== 'undefined' ? (navigator as Navigator & { deviceMemory?: number }) : undefined;
   const weak = (nav?.hardwareConcurrency ?? 8) <= 4 || (nav?.deviceMemory ?? 8) <= 3;
   const saveData = (nav as Navigator & { connection?: { saveData?: boolean } } | undefined)?.connection?.saveData;
-  return { tier: weak && isMobileDevice() ? 'low' : saveData ? 'low' : 'high', adaptive: true };
+  // No GPU (SwiftShader / llvmpipe / "Software" rasterizers): every pixel is drawn by the CPU.
+  const low = softwareGL() || (weak && isMobileDevice()) || !!saveData;
+  return { tier: low ? 'low' : 'high', adaptive: true };
 }
 
 export { useReducedMotion };
 
 let webglCache: boolean | null = null;
+let softwareCache = false;
 export function hasWebGL(): boolean {
   if (webglCache !== null) return webglCache;
   try {
     const c = document.createElement('canvas');
-    webglCache = !!(c.getContext('webgl2') || c.getContext('webgl'));
+    const gl = (c.getContext('webgl2') || c.getContext('webgl')) as WebGLRenderingContext | null;
+    webglCache = !!gl;
+    if (gl) {
+      const info = gl.getExtension('WEBGL_debug_renderer_info');
+      const name = String(info ? gl.getParameter(info.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER));
+      softwareCache = /swiftshader|llvmpipe|softpipe|software/i.test(name);
+      // Free the probe context now (browsers cap live contexts; GC may be slow to).
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
+    }
   } catch {
     webglCache = false;
   }
   return webglCache;
+}
+
+/**
+ * True when WebGL runs on a CPU rasterizer (no GPU / blocklisted driver). These
+ * are real users: the scene starts on the low tier with a lower frame cap.
+ */
+export function softwareGL(): boolean {
+  return hasWebGL() && softwareCache;
 }
 
 export function backdropCss(time: ResolvedTime): string {

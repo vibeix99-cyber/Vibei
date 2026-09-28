@@ -11,7 +11,7 @@ import { haptic } from '@/lib/haptics';
 import { VoicePool, dbToGain, mulberry32, volumeToGain, type Rng } from './dsp';
 import { Fader, buildGraph, buildSfx, type Graph } from './graph';
 import { SFX, type PlayOptions, type SfxName } from './sfx';
-import { AMBIENT_LEVELS, SIMMER_LEVEL, Simmer, ambientTrim, createAmbient, type AmbientVoice } from './ambience';
+import { AMBIENT_LEVELS, SIMMER_LEVEL, Simmer, ambientTrim, createAmbient, prepareVoice, voiceReady, type AmbientVoice } from './ambience';
 
 type Kind = Exclude<AmbientKind, 'none'>;
 
@@ -52,6 +52,8 @@ export class Engine {
 
   // Simmer
   private simmer: { voice: Simmer; fader: Fader; stopAt: number | null } | null = null;
+  /** Bumped on every simmer request so a deferred start can tell it went stale. */
+  private simmerReq = 0;
 
   private pumpId: ReturnType<typeof setInterval> | null = null;
   private idleId: ReturnType<typeof setInterval> | null = null;
@@ -322,6 +324,11 @@ export class Engine {
   private startAmbient(kind: Kind, fadeMs: number): void {
     const ctx = this.ctx;
     if (!ctx || !this.level || this.requested !== kind || this.current?.kind === kind) return;
+    if (!voiceReady(ctx, kind)) {
+      // Generate the long noise beds in slices first (a few frames; the bed fades in anyway).
+      void prepareVoice(ctx, kind).then(() => this.startAmbient(kind, fadeMs));
+      return;
+    }
     const voice = createAmbient(kind, { ctx, dry: this.level.node, wet: this.level.wetNode, rng: this.rng });
     const now = ctx.currentTime + 0.01;
     voice.start(now);
@@ -339,12 +346,22 @@ export class Engine {
 
   /** Heat rises linearly to 1 over `secondsToBoil` (from wherever it is now). */
   simmerTo(heat: number, secondsToBoil: number, fadeInMs = 600): void {
+    const req = ++this.simmerReq;
     if (this.silent('sfx')) {
       this.simmerOff(300);
       return;
     }
     const ctx = this.ctx;
     if (!ctx || !this.graph || !this.unlocked) return;
+    if (!this.simmer && !voiceReady(ctx, 'simmer')) {
+      const asked = performance.now();
+      void prepareVoice(ctx, 'simmer').then(() => {
+        if (req !== this.simmerReq) return;
+        const late = (performance.now() - asked) / 1000;
+        this.simmerTo(heat, Math.max(0, secondsToBoil - late), fadeInMs);
+      });
+      return;
+    }
     this.whenRunning(() => {
       const graph = this.graph!;
       const now = ctx.currentTime + 0.01;
@@ -372,6 +389,7 @@ export class Engine {
   }
 
   simmerOff(fadeMs = 1200): void {
+    this.simmerReq++;
     const s = this.simmer;
     const ctx = this.ctx;
     if (!s || !ctx || s.stopAt != null) return;

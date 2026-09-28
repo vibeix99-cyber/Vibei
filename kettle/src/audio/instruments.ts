@@ -35,28 +35,99 @@ const MAX_PARTIAL_HZ = 9000;
 // Shared buffers (cached per context)
 // ---------------------------------------------------------------------------
 
-type BufferKind = 'white' | 'pink' | 'brown' | 'whiteShort';
+export type BufferKind = 'white' | 'pink' | 'brown' | 'whiteShort';
 const bufferCache = new WeakMap<BaseAudioContext, Map<string, AudioBuffer>>();
+const pendingNoise = new WeakMap<BaseAudioContext, Map<string, Promise<void>>>();
+
+/** One looping noise bed: which colour, how long, and its seed. */
+export interface NoiseSpec {
+  kind: BufferKind;
+  seconds: number;
+  seed: number;
+}
+
+function cacheFor(ctx: BaseAudioContext): Map<string, AudioBuffer> {
+  let m = bufferCache.get(ctx);
+  if (!m) bufferCache.set(ctx, (m = new Map()));
+  return m;
+}
+
+const noiseKey = (kind: BufferKind, seconds: number, seed: number) => `${kind}:${seconds}:${seed}`;
+
+function noiseLengths(sr: number, seconds: number) {
+  const fade = Math.floor(sr * 0.25);
+  return { fade, len: Math.floor(sr * seconds) + fade };
+}
+
+/** One channel of a noise bed (channels are decorrelated by seed). */
+function noiseChannel(kind: BufferKind, len: number, fade: number, seed: number, ch: number): Float32Array {
+  const rng = mulberry32(seed * 31 + ch * 977 + kind.length * 13);
+  const gen = kind === 'pink' ? pinkNoise : kind === 'brown' ? brownNoise : whiteNoise;
+  return makeLoopable(gen(len, rng), fade);
+}
 
 /** Long, seamlessly-looping stereo noise buffers (channels decorrelated). */
 export function noiseBuffer(ctx: BaseAudioContext, kind: BufferKind, seconds = 8.3, seed = 7): AudioBuffer {
-  let m = bufferCache.get(ctx);
-  if (!m) bufferCache.set(ctx, (m = new Map()));
-  const key = `${kind}:${seconds}:${seed}`;
+  const m = cacheFor(ctx);
+  const key = noiseKey(kind, seconds, seed);
   const hit = m.get(key);
   if (hit) return hit;
   const sr = ctx.sampleRate;
-  const fade = Math.floor(sr * 0.25);
-  const len = Math.floor(sr * seconds) + fade;
+  const { fade, len } = noiseLengths(sr, seconds);
   const buf = ctx.createBuffer(2, len - fade, sr);
-  for (let ch = 0; ch < 2; ch++) {
-    const rng = mulberry32(seed * 31 + ch * 977 + kind.length * 13);
-    const gen = kind === 'pink' ? pinkNoise : kind === 'brown' ? brownNoise : whiteNoise;
-    const raw = gen(len, rng);
-    buf.copyToChannel(makeLoopable(raw, fade) as Float32Array<ArrayBuffer>, ch);
-  }
+  for (let ch = 0; ch < 2; ch++) buf.copyToChannel(noiseChannel(kind, len, fade, seed, ch) as Float32Array<ArrayBuffer>, ch);
   m.set(key, buf);
   return buf;
+}
+
+/** True when every bed in `specs` is already cached for `ctx` (starting a voice won't block). */
+export function noiseReady(ctx: BaseAudioContext, specs: readonly NoiseSpec[]): boolean {
+  const m = bufferCache.get(ctx);
+  return specs.every((s) => !!m?.has(noiseKey(s.kind, s.seconds, s.seed)));
+}
+
+/** Give the main thread a turn (input, rendering) between chunks of work. */
+export function yieldToMain(): Promise<void> {
+  const sched = (globalThis as { scheduler?: { yield?: () => Promise<void> } }).scheduler;
+  if (typeof sched?.yield === 'function') return sched.yield();
+  return new Promise((r) => setTimeout(r, 0));
+}
+
+/**
+ * Generate noise beds ahead of use, one channel per task, so a new ambience
+ * never stalls the main thread (a 10 s stereo bed is ~1M samples). Produces
+ * exactly the buffers `noiseBuffer` would; afterwards those calls are cache hits.
+ */
+export function prepareNoise(ctx: BaseAudioContext, specs: readonly NoiseSpec[]): Promise<void> {
+  let pending = pendingNoise.get(ctx);
+  if (!pending) pendingNoise.set(ctx, (pending = new Map()));
+  const jobs: Promise<void>[] = [];
+  for (const { kind, seconds, seed } of specs) {
+    const key = noiseKey(kind, seconds, seed);
+    if (cacheFor(ctx).has(key)) continue;
+    let job = pending.get(key);
+    if (!job) {
+      const p = pending;
+      job = (async () => {
+        const sr = ctx.sampleRate;
+        const { fade, len } = noiseLengths(sr, seconds);
+        const chans: Float32Array[] = [];
+        for (let ch = 0; ch < 2; ch++) {
+          await yieldToMain();
+          chans.push(noiseChannel(kind, len, fade, seed, ch));
+        }
+        const m = cacheFor(ctx);
+        if (!m.has(key)) {
+          const buf = ctx.createBuffer(2, len - fade, sr);
+          chans.forEach((d, ch) => buf.copyToChannel(d as Float32Array<ArrayBuffer>, ch));
+          m.set(key, buf);
+        }
+      })().finally(() => p.delete(key));
+      pending.set(key, job);
+    }
+    jobs.push(job);
+  }
+  return Promise.all(jobs).then(() => undefined);
 }
 
 /** Cache arbitrary generated mono grains per context. */

@@ -68,7 +68,9 @@ export function drawFavicon(v: Pick<TimerView, 'status' | 'phase' | 'progress'>)
     const S = 64;
     canvas.width = S;
     canvas.height = S;
-    const ctx = canvas.getContext('2d');
+    // CPU-backed on purpose: reading a GPU canvas back (toDataURL) waits for the
+    // whole GPU queue — hundreds of ms right as a brew starts and the 3D room spins up.
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
     if (!ctx) return null;
     const paused = v.status === 'paused';
     const tone = paused

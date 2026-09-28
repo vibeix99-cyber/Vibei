@@ -4,6 +4,7 @@
 import type { AmbientKind } from '@/state/settings';
 import type { IconName } from '@/art';
 import { dbToGain } from '../dsp';
+import { noiseReady, prepareNoise, type NoiseSpec } from '../instruments';
 import type { AmbientDest, AmbientVoice } from './common';
 import { Brown, Fire, Forest, Rain } from './nature';
 import { Lofi } from './lofi';
@@ -61,4 +62,46 @@ export function createAmbient(kind: Exclude<AmbientKind, 'none'>, d: AmbientDest
 /** Linear trim for an ambience. */
 export function ambientTrim(kind: Exclude<AmbientKind, 'none'>): number {
   return dbToGain(AMBIENT_LEVELS[kind].level);
+}
+
+/**
+ * The long noise beds each voice loops (must mirror the `loopNoise` calls in
+ * its `start`; ambience.test.ts checks). They're generated ahead of time in
+ * small slices so starting an ambience never blocks the main thread; a bed
+ * missing here still works, it's just generated synchronously on start.
+ */
+const BEDS: Record<Exclude<AmbientKind, 'none'> | 'simmer', readonly NoiseSpec[]> = {
+  rain: [
+    { kind: 'pink', seconds: 9.7, seed: 21 },
+    { kind: 'white', seconds: 7.3, seed: 22 },
+    { kind: 'brown', seconds: 8.9, seed: 23 },
+  ],
+  fire: [
+    { kind: 'brown', seconds: 8.9, seed: 31 },
+    { kind: 'pink', seconds: 9.7, seed: 32 },
+  ],
+  forest: [
+    { kind: 'pink', seconds: 9.7, seed: 41 },
+    { kind: 'brown', seconds: 8.9, seed: 42 },
+    { kind: 'white', seconds: 7.3, seed: 43 },
+  ],
+  brown: [
+    { kind: 'brown', seconds: 11.3, seed: 51 },
+    { kind: 'brown', seconds: 8.9, seed: 52 },
+  ],
+  lofi: [{ kind: 'pink', seconds: 9.7, seed: 61 }],
+  simmer: [
+    { kind: 'brown', seconds: 8.9, seed: 71 },
+    { kind: 'pink', seconds: 9.7, seed: 72 },
+  ],
+};
+
+/** True when `kind` can start without generating anything on the main thread. */
+export function voiceReady(ctx: BaseAudioContext, kind: keyof typeof BEDS): boolean {
+  return noiseReady(ctx, BEDS[kind]);
+}
+
+/** Generate `kind`'s noise beds in small slices (idempotent, deduped). */
+export function prepareVoice(ctx: BaseAudioContext, kind: keyof typeof BEDS): Promise<void> {
+  return prepareNoise(ctx, BEDS[kind]);
 }

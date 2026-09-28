@@ -10,6 +10,7 @@ import {
   Group,
   HemisphereLight,
   MathUtils,
+  type Material,
   Mesh,
   MeshBasicMaterial,
   NeutralToneMapping,
@@ -56,6 +57,8 @@ export interface EngineOptions {
   /** 'auto' lets the engine drop to low if frames are slow. */
   adaptive: boolean;
   mobile: boolean;
+  /** CPU rasterizer (SwiftShader, llvmpipe…): lower frame cap. */
+  software?: boolean;
   onItemSelect?: (id: string | null) => void;
   onFirstFrame?: () => void;
   onContextLost?: () => void;
@@ -198,6 +201,10 @@ export class NookEngine {
   private contextLost = false;
   private frameTimes: number[] = [];
   private slowFrames = 0;
+  /** Frames since the loop (re)started; the first few are allowed to be slow. */
+  private loopFrames = 0;
+  /** Programs are being (re)compiled in slices: hold rendering (the last frame stays up). */
+  private compiling = 0;
 
   // camera
   private width = 1;
@@ -336,6 +343,90 @@ export class NookEngine {
     this.invalidate();
   }
 
+  get canvas(): HTMLCanvasElement {
+    return this.opts.canvas;
+  }
+
+  /** False once disposed or the GL context was lost. */
+  get usable(): boolean {
+    return !this.disposed && !this.contextLost;
+  }
+
+  /** Rebind callbacks (an engine pre-warmed off-screen gets adopted by a mounted host). */
+  setHandlers(h: Pick<EngineOptions, 'onItemSelect' | 'onFirstFrame' | 'onContextLost' | 'onQualityChange'>): void {
+    Object.assign(this.opts, h);
+  }
+
+  /**
+   * The canvas moved to a new host: treat the next frame as the first one
+   * (camera snaps, no mood blend / arrival pops, `onFirstFrame` fires).
+   */
+  rehost(): void {
+    this.firstFrameDone = false;
+    this.invalidate();
+  }
+
+  /**
+   * Compile and link every shader program the scene needs a few at a time
+   * (`pause` yields to the main thread in between), so neither the
+   * first frame nor a quality switch compiles dozens of programs in one
+   * blocking frame. Without KHR_parallel_shader_compile each link is waited
+   * for right away (a small stall per batch instead of one huge one).
+   * Resolves false if the engine went away meanwhile. Rendering is held from
+   * the call until it resolves; `prepare` runs one task in, before compiling.
+   */
+  async warm(pause: () => Promise<void>, prepare?: () => void): Promise<boolean> {
+    this.compiling++; // no frames until done (a frame would compile everything at once)
+    try {
+      if (prepare) {
+        // Extra scene building (e.g. items) in a task of its own.
+        await pause();
+        if (this.disposed || this.contextLost) return false;
+        prepare();
+      }
+      return await this.compileAll(pause);
+    } finally {
+      this.compiling--;
+      this.loopFrames = 0;
+      this.invalidate();
+    }
+  }
+
+  private async compileAll(pause: () => Promise<void>): Promise<boolean> {
+    const r = this.renderer;
+    const isDrawable = (o: Object3D) =>
+      !!((o as Mesh).isMesh || (o as Sprite).isSprite || (o as { isPoints?: boolean }).isPoints || (o as { isLine?: boolean }).isLine);
+    const objects: Object3D[] = [];
+    this.scene.traverse((o) => {
+      if (isDrawable(o) && (o as Mesh).material) objects.push(o);
+    });
+    const parallel = r.extensions.has('KHR_parallel_shader_compile');
+    const seen = new Set<Material>();
+    let slice = performance.now();
+    for (const o of objects) {
+      const own = (o as Mesh).material as Material | Material[];
+      if ((Array.isArray(own) ? own : [own]).every((m) => seen.has(m))) continue;
+      if (this.disposed || this.contextLost) return false;
+      // Compiles this object's subtree (already-built programs are cache hits).
+      const mats = r.compile(o, this.camera, this.scene) as Set<Material>;
+      for (const m of mats) {
+        if (seen.has(m)) continue;
+        seen.add(m);
+        const prog = (r.properties.get(m) as { currentProgram?: { isReady(): boolean; getUniforms(): unknown } }).currentProgram;
+        if (!prog) continue;
+        if (parallel) while (!prog.isReady()) await pause();
+        if (this.disposed || this.contextLost) return false;
+        prog.getUniforms(); // link check + uniform lookup now, not in the first frame
+      }
+      // Keep each task short: hand the thread back every ~12 ms.
+      if (performance.now() - slice > 12) {
+        await pause();
+        slice = performance.now();
+      }
+    }
+    return !this.disposed && !this.contextLost;
+  }
+
   setSize(w: number, h: number, dpr: number): void {
     this.width = Math.max(1, w);
     this.height = Math.max(1, h);
@@ -355,6 +446,8 @@ export class NookEngine {
     this.running = want;
     if (want) {
       this.lastFrame = performance.now();
+      this.loopFrames = 0;
+      this.slowFrames = 0;
       this.raf = requestAnimationFrame(this.loop);
     } else {
       cancelAnimationFrame(this.raf);
@@ -365,11 +458,11 @@ export class NookEngine {
 
   /** Render once soon (when the loop isn't running). */
   invalidate(): void {
-    if (this.running || this.disposed || this.contextLost) return;
+    if (this.running || this.disposed || this.contextLost || this.compiling > 0) return;
     if (!this.raf) {
       this.raf = requestAnimationFrame((now) => {
         this.raf = 0;
-        if (this.running) return;
+        if (this.running || this.compiling > 0) return;
         this.lastFrame = now;
         this.frame(0);
       });
@@ -397,6 +490,8 @@ export class NookEngine {
     });
     this.setSize(this.width, this.height, window.devicePixelRatio || 1);
     this.opts.onQualityChange?.(q);
+    // Every program changes: rebuild them a few per task while the last frame stays on screen.
+    void this.warm(nextTask);
   }
 
   dispose(): void {
@@ -733,17 +828,23 @@ export class NookEngine {
 
   private loop = (now: number) => {
     this.raf = requestAnimationFrame(this.loop);
+    if (this.compiling > 0) return;
     const interacting = now < this.interactingUntil || this.moodT < 1;
-    const minGap = interacting ? 0 : 1000 / 30 - 3;
+    // One frame per rAF at most, capped (lower on CPU rasterizers so input and the timer keep the thread).
+    const soft = !!this.opts.software;
+    const minGap = (interacting ? (soft ? 1000 / 30 : 0) : 1000 / (soft ? 20 : 30)) - 3;
     const gap = now - this.lastFrame;
     if (gap < minGap) return;
     this.lastFrame = now;
+    const t0 = performance.now();
     this.frame(Math.min(0.1, gap / 1000));
-    // adaptive quality: sustained slow frames on 'auto' → low tier
-    if (this.opts.adaptive && this.quality === 'high') {
-      if (gap > 55) this.slowFrames++;
-      else this.slowFrames = Math.max(0, this.slowFrames - 1);
-      if (this.slowFrames > 45) this.setQuality('low');
+    const work = performance.now() - t0;
+    // adaptive quality on 'auto': two slow frames in a row → low tier (the first frames after
+    // a (re)start are excused — they upload textures / build the shadow map).
+    if (this.opts.adaptive && this.quality === 'high' && ++this.loopFrames > 3) {
+      if (work > 40 || gap > 90) this.slowFrames++;
+      else this.slowFrames = 0;
+      if (this.slowFrames >= 2) this.setQuality('low');
     }
   };
 
@@ -928,6 +1029,13 @@ export class NookEngine {
 }
 
 // ------------------------------------------------------------ helpers
+
+/** Yield to the event loop (input, timers, painting) before continuing. */
+export function nextTask(): Promise<void> {
+  const sched = (globalThis as { scheduler?: { yield?: () => Promise<void> } }).scheduler;
+  if (typeof sched?.yield === 'function') return sched.yield();
+  return new Promise((r) => setTimeout(r, 0));
+}
 
 function sameList(a: string[], b: string[]) {
   if (a.length !== b.length) return false;

@@ -1,5 +1,7 @@
 /** Home — "Today". OWNER: home area. */
 import { useTimer } from '@/timer';
+import { useUnlockedItems } from '@/progress';
+import { usePrewarmNook } from '@/scene';
 import { StatusBar } from './StatusBar';
 import { Hero, GoalCard } from './Hero';
 import { Composer, ResumeBanner } from './Composer';
@@ -10,6 +12,8 @@ import s from './Home.module.css';
 export default function HomeScreen() {
   const data = useHomeData();
   const active = useTimer((t) => t.status !== 'idle');
+  // Build the 3D nook off-screen while Home idles, so "Put the kettle on" doesn't stall on it.
+  usePrewarmNook(useUnlockedItems());
   return (
     <div className={s.screen}>
       {/* Two columns on landscape phones (greeting + goal | composer + CTA); one flow elsewhere. */}
