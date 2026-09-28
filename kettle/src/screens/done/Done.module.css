@@ -83,6 +83,13 @@
   gap: 14px;
 }
 
+/* Tall phones: give the hero's space to the art (not empty glow) so content doesn't sink low. */
+@media (max-width: 719px) and (min-height: 760px) {
+  .hero {
+    zoom: 1.22;
+  }
+}
+
 /* hero */
 .hero {
   position: relative;

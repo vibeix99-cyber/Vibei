@@ -111,7 +111,7 @@ export function WhistleStep({ report: r, reduced, active, headingRef, headingId 
         </Tile>
         <Tile
           tone="matcha"
-          label={g.justMet ? 'Goal met' : 'Daily goal'}
+          label="Today"
           show={beat >= 4}
           reduced={reduced}
           sr={goalDone ? `Daily goal met: ${Math.round(g.afterMin)} of ${g.goalMin} minutes` : `Daily goal: ${Math.round(g.afterMin)} of ${g.goalMin} minutes`}
@@ -132,7 +132,8 @@ export function WhistleStep({ report: r, reduced, active, headingRef, headingId 
           </span>
           <span className={s.tileValue}>
             <Counter value={beat >= 4 ? Math.round(g.afterMin) : Math.round(g.beforeMin)} from={Math.round(g.beforeMin)} duration={1000} />
-            <span className={s.unit}>{goalDone ? 'min' : `/${g.goalMin}`}</span>
+            {/* Always a fraction of the daily goal, so it can't be misread as this session's time. */}
+            <span className={s.unit}>/{g.goalMin}</span>
           </span>
         </Tile>
       </div>
