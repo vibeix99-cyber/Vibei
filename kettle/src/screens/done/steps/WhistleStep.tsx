@@ -5,7 +5,9 @@
 import { useMemo, type ReactNode } from 'react';
 import { motion } from 'motion/react';
 import { Icon, Leaf, Mascot } from '@/art';
-import { Counter, Ring } from '@/ui';
+import { Chip, Counter, Ring } from '@/ui';
+import { useProgress, type SessionRecord } from '@/progress';
+import { setIntentionOutcome } from '@/app/intention';
 import { audio } from '@/audio';
 import { spring } from '@/lib/motion';
 import { TagChip } from '../../focus/parts/bits';
@@ -46,7 +48,7 @@ export function WhistleStep({ report: r, reduced, active, headingRef, headingId 
   const brewLeaves = receipt.reduce((a, b) => a + b.amount, 0);
 
   return (
-    <div className={s.step} data-step="whistle">
+    <div className={s.step} data-step="whistle" data-choice={r.record.intention ? '' : undefined}>
       <div className={s.hero}>
         <div className={s.glow} data-tone="honey" aria-hidden="true" />
         {active && <LeafConfetti burstKey={r.id} reduced={reduced} delay={0.12} />}
@@ -70,19 +72,17 @@ export function WhistleStep({ report: r, reduced, active, headingRef, headingId 
         <h1 id={headingId} ref={headingRef} tabIndex={-1} className={s.title}>
           {title}
         </h1>
-        {sub ? (
-          <p className={s.sub}>{sub}</p>
+        {sub && <p className={s.sub}>{sub}</p>}
+        {r.record.intention ? (
+          <>
+            <p className={s.sub}>
+              <span className={s.intent}>{r.record.intention}</span>
+              {r.record.tag && <TagChip tag={r.record.tag} />}
+            </p>
+            <IntentionChoice record={r.record} />
+          </>
         ) : (
-          <p className={s.sub}>
-            {r.record.intention ? (
-              <>
-                <span className={s.intent}>{r.record.intention}</span>
-                {r.record.tag && <TagChip tag={r.record.tag} />}
-              </>
-            ) : (
-              'Another cup, brewed.'
-            )}
-          </p>
+          !sub && <p className={s.sub}>Another cup, brewed.</p>
         )}
       </motion.div>
 
@@ -188,5 +188,21 @@ function Tile({
       </div>
       <span className="sr-only">{sr}</span>
     </motion.div>
+  );
+}
+
+/** Done or Carry forward: optional, changeable, stored on the record (reloads and other tabs agree). */
+function IntentionChoice({ record }: { record: SessionRecord }) {
+  const outcome = useProgress((st) => st.sessions.find((x) => x.id === record.id)?.outcome);
+  return (
+    <div className={s.intentChoice} role="group" aria-label={`${record.intention}: done, or carry it forward to your next brew?`}>
+      {/* The chip's own tick marks the choice, so the leading icon steps aside when selected. */}
+      <Chip tone="matcha" icon={outcome === 'done' ? undefined : 'check'} selected={outcome === 'done'} onClick={() => setIntentionOutcome(record, 'done')}>
+        Done
+      </Chip>
+      <Chip tone="honey" icon={outcome === 'carried' ? undefined : 'refresh'} selected={outcome === 'carried'} onClick={() => setIntentionOutcome(record, 'carried')}>
+        Carry forward
+      </Chip>
+    </div>
   );
 }

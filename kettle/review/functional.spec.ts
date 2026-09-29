@@ -571,6 +571,47 @@ test('leaving Focus mid-dissolve is not overridden by the outgoing screen', asyn
   expect(await route(page), 'stays where the user navigated').toBe('/stats');
 });
 
+test('intention: optional start, Done / Carry forward on the finish card, survives reload and tabs', async ({ page, context }) => {
+  test.setTimeout(180_000);
+  await boot(page, { seed: 'newbie' });
+  // No friction: an empty field starts straight away.
+  await page.getByRole('textbox', { name: /what are you brewing/i }).fill('');
+  await startFromHome(page);
+  expect((await timer(page)).status).toBe('running');
+  await page.evaluate(`__kettle.timer.getState().end('user')`);
+  await expect.poll(() => route(page)).toBe('/');
+
+  await page.getByRole('textbox', { name: /what are you brewing/i }).fill('Chapter 3 notes');
+  await startFromHome(page);
+  await page.evaluate('__kettle.finish()');
+  await expect.poll(() => route(page), { timeout: 15_000 }).toBe('/done');
+  const done = page.getByRole('button', { name: /^done$/i });
+  const carry = page.getByRole('button', { name: /^carry forward$/i });
+  await expect(done).toBeVisible({ timeout: 10_000 });
+  const outcome = () => K<string | null>(page, `(__kettle.progress.getState().sessions.filter(s => s.intention === 'Chapter 3 notes').at(-1) || {}).outcome ?? null`);
+  expect(await outcome(), 'nothing chosen yet').toBeNull();
+
+  await press(done);
+  await expect(done).toHaveAttribute('aria-pressed', 'true');
+  expect(await outcome()).toBe('done');
+  expect(await K<string>(page, '__kettle.timer.getState().intention'), 'Done clears the next brew').toBe('');
+
+  // Reload mid-celebration: the choice is still shown; a second tab agrees.
+  await reopen(page, '/done');
+  await expect(page.getByRole('button', { name: /^done$/i })).toHaveAttribute('aria-pressed', 'true', { timeout: 10_000 });
+  const b = await context.newPage();
+  await b.goto('/?debug#/stats', { waitUntil: 'networkidle' });
+  await waitKettle(b);
+  await expect(b.getByRole('button', { name: /Chapter 3 notes \(done\)/ }), 'history marks it done').toHaveCount(1);
+
+  await page.bringToFront();
+  await press(page.getByRole('button', { name: /^carry forward$/i }));
+  expect(await outcome()).toBe('carried');
+  expect(await K<string>(page, '__kettle.timer.getState().intention'), 'Carry forward keeps it for the next brew').toBe('Chapter 3 notes');
+  await expect(b.getByRole('button', { name: /Chapter 3 notes \(done\)/ }), 'tab B follows').toHaveCount(0, { timeout: 10_000 });
+  await b.close();
+});
+
 // ---------------------------------------------------------------- 8b. round-1 additions
 
 test('reload mid-celebration resumes the same card', async ({ page }) => {

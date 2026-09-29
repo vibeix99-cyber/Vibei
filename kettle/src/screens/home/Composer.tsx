@@ -6,7 +6,9 @@ import { useSettings, type TagId, type RhythmId } from '@/state/settings';
 import { useTimer, useRemaining, nextBreakKind } from '@/timer';
 import { formatClock } from '@/lib/format';
 import { useShortcut } from '@/lib/shortcuts';
-import { Button, Card, Chip, ChipGroup, Ring, SegmentedControl, Sheet, NumberStepper, TextField } from '@/ui';
+import { Button, Card, Chip, ChipGroup, Ring, SegmentedControl, Sheet, NumberStepper, TextField, toast } from '@/ui';
+import { useProgress } from '@/progress';
+import { carriedFrom, setIntentionOutcome } from '@/app/intention';
 import { RHYTHM_OPTIONS, matchPreset } from './content';
 import { TAGS } from '@/state/tags';
 import s from './Home.module.css';
@@ -25,6 +27,32 @@ export function Composer({ recent }: { recent: string[] }) {
   const longNext = nextBreakKind(completedInCycle + 1) === 'longBreak';
   const [text, setText] = useState(intention);
   const [tag, setTag] = useState<TagId | null>(timerTag ?? lastTag);
+  const [inputFocus, setInputFocus] = useState(false);
+  const typing = useRef(false);
+  typing.current = inputFocus;
+
+  // Follow changes made elsewhere (another tab, Done on the celebration) unless you're typing here.
+  useEffect(() => {
+    if (!typing.current) setText((cur) => (cur.trim() === intention.trim() ? cur : intention));
+  }, [intention]);
+
+  // Is the field holding the intention your last brew ended with? Then offer to cross it off.
+  const sessions = useProgress((st) => st.sessions);
+  const carried = carriedFrom(sessions, text);
+  const markDone = () => {
+    if (!carried) return;
+    setIntentionOutcome(carried, 'done');
+    setText('');
+    toast.success('Crossed off. Nice work.', {
+      action: {
+        label: 'Undo',
+        onClick: () => {
+          setIntentionOutcome(carried, 'carried');
+          setText(carried.intention);
+        },
+      },
+    });
+  };
 
   // Keep the timer's intention in sync (it's what Focus shows and records).
   useEffect(() => {
@@ -49,7 +77,6 @@ export function Composer({ recent }: { recent: string[] }) {
     }
   };
 
-  const [inputFocus, setInputFocus] = useState(false);
   const fieldRef = useRef<HTMLDivElement>(null);
   const showRecent = inputFocus && !text.trim() && recent.length > 0;
   const onFieldBlur = (e: FocusEvent<HTMLDivElement>) => {
@@ -60,12 +87,17 @@ export function Composer({ recent }: { recent: string[] }) {
     <>
     <section className={s.composer} aria-labelledby="home-brew">
       <Card className={s.composerCard}>
-        <h2 id="home-brew" className={s.cardTitle}>
-          What are you brewing?
-        </h2>
+        <div className={s.composerHead}>
+          <h2 id="home-brew" className={s.cardTitle}>
+            What are you brewing?
+          </h2>
+          <span className={s.optional} aria-hidden="true">
+            Optional
+          </span>
+        </div>
         <div ref={fieldRef} className={s.field} onFocus={() => setInputFocus(true)} onBlur={onFieldBlur}>
           <TextField
-            label="What are you brewing?"
+            label="What are you brewing? (optional)"
             hideLabel
             placeholder="e.g. Chapter 3 notes"
             value={text}
@@ -97,6 +129,15 @@ export function Composer({ recent }: { recent: string[] }) {
                 </Chip>
               ))}
             </div>
+          )}
+          {carried && !showRecent && (
+            <p className={s.carried}>
+              <Icon name="refresh" size={16} />
+              <span>Carried from your last brew</span>
+              <button type="button" className={s.linkBtn} onClick={markDone}>
+                Mark done
+              </button>
+            </p>
           )}
         </div>
         <ChipGroup<TagId>

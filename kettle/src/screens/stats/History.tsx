@@ -70,18 +70,26 @@ function SessionRow({ session: x, leaves, onOpen }: { session: SessionRecord; le
   const meta = x.tag ? TAG_BY_ID[x.tag] : null;
   const title = x.intention || (meta ? `${meta.label} brew` : 'Brew');
   const status = x.completed ? 'Full brew' : 'Ended early';
+  const done = !!x.intention && x.outcome === 'done';
   return (
     <button
       type="button"
       className={s.sessionRow}
       onClick={onOpen}
-      aria-label={`${title}, ${timeOf(x.startedAt)}, ${hmLong(x.focusedMs)}, ${status}${meta ? `, tagged ${meta.label}` : ''}, ${leaves} leaves. Edit`}
+      aria-label={`${title}${done ? ' (done)' : ''}, ${timeOf(x.startedAt)}, ${hmLong(x.focusedMs)}, ${status}${meta ? `, tagged ${meta.label}` : ''}, ${leaves} leaves. Edit`}
     >
       <span className={s.sessionIcon} data-tone={x.completed ? 'matcha' : undefined} data-partial={!x.completed || undefined} aria-hidden="true">
         <Icon name={x.completed ? 'cup' : 'clock'} size={22} />
       </span>
       <span className={s.sessionMain} aria-hidden="true">
-        <span className={cx(s.sessionTitle, !x.intention && s.sessionUntitled)}>{title}</span>
+        <span className={cx(s.sessionTitle, !x.intention && s.sessionUntitled)}>
+          {done && (
+            <span className={s.doneMark} title="Marked done">
+              <Icon name="check" size={14} />
+            </span>
+          )}
+          {title}
+        </span>
         <span className={s.sessionMeta}>
           {timeOf(x.startedAt)} · {hm(x.focusedMs)}
           {!x.completed && <> · ended early</>}

@@ -279,6 +279,30 @@
 .cardTitle {
   font-size: 1.25rem;
 }
+.composerHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.optional {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--ink-2);
+}
+.carried {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 6px;
+  margin: -6px 0 -10px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--ink-2);
+}
+.carried .linkBtn {
+  font-size: 0.875rem;
+}
 .field {
   display: grid;
   gap: 10px;

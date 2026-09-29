@@ -200,6 +200,13 @@
   font-weight: 700;
   color: var(--ink);
 }
+.intentChoice {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 2px;
+}
 .overline {
   font-family: var(--font-body);
   font-weight: 800;
@@ -669,6 +676,13 @@
   }
   .step :global(svg) {
     max-height: 100%;
+  }
+}
+/* Short portrait phones: the Done / Carry forward row takes the room from Chai, not from the receipt. */
+@media (max-height: 700px) and (orientation: portrait) {
+  .step[data-choice] {
+    --hero-h: 112px;
+    --hero-mascot: 106px;
   }
 }
 @media (min-width: 720px) {

@@ -1150,6 +1150,17 @@
 .sessionUntitled {
   color: var(--ink-2);
 }
+.doneMark {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+  vertical-align: -3px;
+  border-radius: 999px;
+  background: var(--matcha-soft);
+  color: var(--matcha-ink);
+}
 .sessionMeta {
   font-size: var(--text-caption);
   font-weight: 700;
