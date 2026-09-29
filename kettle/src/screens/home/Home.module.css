@@ -296,6 +296,12 @@
   font-weight: 700;
   color: var(--ink-2);
 }
+/* 320-wide phones: keep the question on one line (the field's name still says "optional"). */
+@media (max-width: 359px) {
+  .optional {
+    display: none;
+  }
+}
 .carried {
   display: flex;
   flex-wrap: wrap;
@@ -369,6 +375,12 @@
 }
 .colA,
 .colB {
+  display: contents;
+}
+.recipesLeft {
+  display: none;
+}
+.recipesRight {
   display: contents;
 }
 .ctaDock {
@@ -811,8 +823,23 @@
   }
   .statusBar {
     justify-content: space-between;
-    margin: -6px -8px -4px;
+    margin: 0 -8px;
     flex: auto;
+  }
+  .recipesLeft {
+    display: contents;
+  }
+  .recipesRight {
+    display: none;
+  }
+  /* The column is wide enough to show every tag: wrap them instead of a scroller that looks clipped. */
+  .composerCard .tagGroup {
+    flex-wrap: wrap;
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 }
 

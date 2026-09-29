@@ -29,10 +29,16 @@ export default function HomeScreen() {
         <Hero data={data} status={<StatusBar data={data} />} />
         {active ? <ResumeBanner /> : null}
         <GoalCard data={data} />
+        {/* Tablets balance the two columns with the recipes on the left; elsewhere they follow the composer. */}
+        <div className={s.recipesLeft}>
+          <RecipesCard quests={data.quests} />
+        </div>
       </div>
       <div className={s.colB}>
         {!active && <Composer recent={data.recentIntentions} />}
-        <RecipesCard quests={data.quests} />
+        <div className={s.recipesRight}>
+          <RecipesCard quests={data.quests} />
+        </div>
         <TodayBrews sessions={data.todays} />
       </div>
     </div>

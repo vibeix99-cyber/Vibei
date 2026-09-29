@@ -40,3 +40,20 @@ Phone-landscape Focus controls hide their labels; "Kettle's warming up…" wraps
 
 ## Questions skipped
 Questions skipped: the report has 6 priority issues, but the user had already set scope and priority for this round and asked not to be stopped for input.
+
+## Fair comparison of changed screens (before vs after)
+
+A fresh judge scored 8 before/after pairs using the project's blind harness (`review/blind.mjs`, randomised left/right, an answer key the judge never saw, criteria: clarity, charm, polish, ease, 1–10). **Not truly blind:** both sides are the same app, so new UI (the "Optional" marker, the Done / Carry forward chips) can give away the newer version. The judge reported recognising neither. This is not a Duolingo comparison; the full 21-screen comparison was not repeated.
+
+| Screen | Before | After | Result |
+|---|---|---|---|
+| Mid-transition frame, Today → Focus | 3.75 | 8.00 | after clearly |
+| Stats, tablet (dark) | 7.50 | 8.25 | after |
+| Stats, phone landscape | 6.75 | 7.50 | after |
+| Nook, phone landscape | 7.25 | 7.75 | after |
+| Today, 320 px | 7.25 | 7.25 | tie |
+| Finish card, phone | 7.50 | 7.50 | tie |
+| Settings, phone landscape (dark) | 7.25 | 6.75 | before: "title small for a page header" |
+| Today, tablet | 7.50 | 6.75 | before: "left column ends in a void; a tag chip clipped; stat pills against the top edge" |
+
+**Repairs after the comparison:** tablet Today moves the recipes into the left column (balanced columns, whole page on one screen), wraps the tags (all five visible) and gives the stat pills their margin back; short-landscape titles are 28 px (not 26). Not re-judged.
