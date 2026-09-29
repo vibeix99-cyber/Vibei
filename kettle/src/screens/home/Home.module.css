@@ -377,12 +377,7 @@
 .colB {
   display: contents;
 }
-.recipesLeft {
-  display: none;
-}
-.recipesRight {
-  display: contents;
-}
+
 .ctaDock {
   position: sticky;
   bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 10px);
@@ -797,7 +792,7 @@
 /* ---------- Tablets (720–899, portrait): greeting + goal | composer + CTA, recipes, today ---------- */
 @media (min-width: 720px) and (max-width: 899px) and (min-height: 521px) {
   .screen {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 20px 24px;
     align-items: start;
   }
@@ -823,14 +818,16 @@
   }
   .statusBar {
     justify-content: space-between;
+    flex-wrap: wrap; /* 744–800 px: the three pills may take two rows rather than run under the composer */
     margin: 0 -8px;
     flex: auto;
+    min-width: 0;
   }
-  .recipesLeft {
-    display: contents;
-  }
-  .recipesRight {
-    display: none;
+  .hero,
+  .heroTop,
+  .chaiRow,
+  .bubbleWrap {
+    min-width: 0;
   }
   /* The column is wide enough to show every tag: wrap them instead of a scroller that looks clipped. */
   .composerCard .tagGroup {
@@ -905,6 +902,18 @@
   }
   .ctaDock {
     bottom: 10px;
+  }
+}
+/* Short landscape phones: the greeting heads a narrow column, so it takes the next size down
+   (the other tabs' titles span the full width). */
+@media (orientation: landscape) and (max-height: 520px) {
+  .greeting {
+    font-size: var(--text-display-m);
+  }
+}
+@media (orientation: landscape) and (max-height: 520px) and (max-width: 759px) {
+  .optional {
+    display: none;
   }
 }
 /* Smaller landscape phones (e.g. 667×375): the left column is too narrow for the tiny level bar; the badge stays. */

@@ -2,6 +2,7 @@
 import { useRef } from 'react';
 import { useRoute } from '@/app/router';
 import { useTimer } from '@/timer';
+import { useMediaQuery } from '@/ui';
 import { useUnlockedItems } from '@/progress';
 import { usePrewarmNook } from '@/scene';
 import { StatusBar } from './StatusBar';
@@ -20,6 +21,7 @@ export default function HomeScreen() {
   const shown = useRef(live);
   if (route === '/') shown.current = live;
   const active = shown.current;
+  const tablet = useMediaQuery('(min-width: 720px) and (max-width: 899px) and (min-height: 521px)');
   // Build the 3D nook off-screen while Home idles, so "Put the kettle on" doesn't stall on it.
   usePrewarmNook(useUnlockedItems());
   return (
@@ -30,15 +32,11 @@ export default function HomeScreen() {
         {active ? <ResumeBanner /> : null}
         <GoalCard data={data} />
         {/* Tablets balance the two columns with the recipes on the left; elsewhere they follow the composer. */}
-        <div className={s.recipesLeft}>
-          <RecipesCard quests={data.quests} />
-        </div>
+        {tablet && <RecipesCard quests={data.quests} />}
       </div>
       <div className={s.colB}>
         {!active && <Composer recent={data.recentIntentions} />}
-        <div className={s.recipesRight}>
-          <RecipesCard quests={data.quests} />
-        </div>
+        {!tablet && <RecipesCard quests={data.quests} />}
         <TodayBrews sessions={data.todays} />
       </div>
     </div>

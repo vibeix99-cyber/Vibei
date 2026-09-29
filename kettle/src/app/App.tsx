@@ -79,7 +79,7 @@ function preloadScreens(): void {
  */
 function layerTransition(reduced: boolean, instant = false) {
   const inDur = reduced ? 0.14 : 0.24;
-  const cover = reduced ? 0.07 : 0.09;
+  const cover = reduced ? 0.06 : 0.08;
   return {
     layer: {
       initial: { zIndex: 1 },
@@ -94,7 +94,8 @@ function layerTransition(reduced: boolean, instant = false) {
     },
     content: {
       initial: instant ? { opacity: 1 } : reduced ? { opacity: 0 } : { opacity: 0, y: 10 },
-      animate: { opacity: 1, y: 0, transition: { duration: inDur, ease: ease.out } },
+      // Starts once the paper has mostly covered the old screen, so their text never reads at once.
+      animate: { opacity: 1, y: 0, transition: { duration: inDur, delay: instant ? 0 : cover * 0.6, ease: ease.out } },
     },
   };
 }

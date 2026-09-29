@@ -49,11 +49,9 @@ export default function FocusScreen() {
   const breakOver = useFlow((f) => f.breakOver);
   const hasReport = useProgress((p) => p.lastReport != null);
   const sessions = useProgress((p) => p.sessions);
-  // Items this brew just unlocked stay out of the room until the celebration's level-up card has
-  // revealed them (the report is cleared when the celebration ends).
+  // Items this brew just unlocked stay out of the room until the celebration's level-up card reveals them.
   const unlocked = useUnlockedItems();
   const unrevealed = useProgress((p) => p.lastReport?.level?.unlocked);
-  const items = useMemo(() => (unrevealed?.length ? unlocked.filter((id) => !unrevealed.includes(id)) : unlocked), [unlocked, unrevealed]);
   const reduced = useReducedMotion();
   const ambient = useSettings((st) => st.ambient);
   const muted = useSettings((st) => st.muted);
@@ -72,6 +70,12 @@ export default function FocusScreen() {
     t.status !== 'idle' ? (t.phase === 'focus' ? 'focus' : 'break') : whistle ? 'whistle' : breakOver ? 'over' : 'none';
   // Break's over: the words the next brew would reuse, if they're the last brew's (so they can be crossed off).
   const carriedRec = view === 'over' ? carriedFrom(sessions, t.intention) : null;
+  // Only during the whistle beat that leads into the celebration (leaving the celebration early mustn't
+  // keep the item out of the room for later brews).
+  const items = useMemo(
+    () => (view === 'whistle' && unrevealed?.length ? unlocked.filter((id) => !unrevealed.includes(id)) : unlocked),
+    [view, unlocked, unrevealed],
+  );
   const paused = t.status === 'paused';
   const isLong = (view === 'break' && t.phase === 'longBreak') || (view === 'over' && breakOver?.phase === 'longBreak');
   const sheetOpen = endOpen || ambOpen;

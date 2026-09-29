@@ -75,9 +75,12 @@
   font-size: 0.9375rem;
   line-height: 1.5;
 }
-/* Reading text stays at a comfortable measure in the wide desktop column. */
+/* Reading text stays at a comfortable measure in wide columns (the tinted row keeps its full width). */
 .story p {
   max-width: 68ch;
+}
+.helpRow {
+  padding-inline-end: max(16px, calc(100% - 68ch));
 }
 
 /* Goal chips (2×2) */
