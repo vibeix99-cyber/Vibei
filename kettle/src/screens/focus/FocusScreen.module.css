@@ -360,8 +360,19 @@
 .controls > * {
   transition: opacity 700ms ease;
 }
+/* Zen dims the round faces (kept AA for the "+5" label) and fades the captions out entirely,
+   so no dimmed text ever falls below contrast. Captions are aria-hidden; buttons keep their names. */
 .screen[data-zen] .controls > * {
-  opacity: 0.4;
+  opacity: 0.62;
+}
+.screen[data-zen] .controls [data-caption] {
+  opacity: 0;
+  transition: opacity 700ms ease;
+}
+.screen[data-zen] .controls > *:hover [data-caption],
+.screen[data-zen] .controls > *:focus-within [data-caption] {
+  opacity: 1;
+  transition-duration: 150ms;
 }
 .screen[data-zen] .controls > *:hover,
 .screen[data-zen] .controls > *:focus-within {
