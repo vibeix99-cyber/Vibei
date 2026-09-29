@@ -44,7 +44,7 @@ const test = base.extend<{ consoleErrors: string[] }>({
 
 // ---------------------------------------------------------------- helpers
 
-type Boot = { seed?: string; theme?: 'light' | 'dark'; onboarded?: '0' | '1'; motion?: 'reduce' | 'full'; route?: string };
+type Boot = { seed?: string; theme?: 'light' | 'dark'; onboarded?: '0' | '1'; motion?: 'reduce' | 'full'; nookq?: 'off' | 'low' | 'high'; route?: string };
 
 async function waitKettle(page: Page) {
   await page.waitForFunction(() => '__kettle' in window, null, { timeout: 15_000 });
@@ -53,7 +53,7 @@ async function waitKettle(page: Page) {
 
 async function boot(page: Page, o: Boot = {}) {
   const qs = ['debug'];
-  for (const k of ['seed', 'theme', 'onboarded', 'motion'] as const) if (o[k]) qs.push(`${k}=${o[k]}`);
+  for (const k of ['seed', 'theme', 'onboarded', 'motion', 'nookq'] as const) if (o[k]) qs.push(`${k}=${o[k]}`);
   await page.goto(`/?${qs.join('&')}#${o.route ?? '/'}`, { waitUntil: 'networkidle' });
   await waitKettle(page);
 }
@@ -494,6 +494,83 @@ test('keyboard-only core loop (Tab/Enter/Space/Esc) with visible focus and a tra
   await expect.poll(async () => (await timer(page)).status).toBe('idle');
 });
 
+test('Space still pauses after pointer use: End sheet closed by mouse, +5 clicked', async ({ page }) => {
+  await boot(page, { seed: 'newbie' });
+  await startFromHome(page);
+  await page.waitForTimeout(600);
+  const dialog = page.getByRole('dialog');
+  const end = page.getByRole('button', { name: 'End session' });
+
+  await press(end);
+  await expect(dialog, 'End opens the sheet').toBeVisible();
+  await press(dialog.getByRole('button', { name: /keep brewing/i }));
+  await expect(dialog).toBeHidden();
+  expect(await page.evaluate(() => (document.activeElement as HTMLElement | null)?.getAttribute('aria-label')), 'focus handed back to End').toBe('End session');
+  await page.keyboard.press('Space');
+  await expect.poll(async () => (await timer(page)).status, { message: 'Space pauses (does not re-open the sheet)' }).toBe('paused');
+  await expect(dialog, 'sheet stays closed').toBeHidden();
+  await page.keyboard.press('Space');
+  await expect.poll(async () => (await timer(page)).status).toBe('running');
+
+  const planned = (await timer(page)).plannedMs;
+  await press(page.getByRole('button', { name: 'Add 5 minutes' }));
+  await expect.poll(async () => (await timer(page)).plannedMs).toBe(planned + 5 * MIN);
+  await page.keyboard.press('Space');
+  await expect.poll(async () => (await timer(page)).status, { message: 'Space after clicking +5 pauses' }).toBe('paused');
+  expect((await timer(page)).plannedMs, 'Space did not add another 5 minutes').toBe(planned + 5 * MIN);
+  await page.keyboard.press('Space');
+  await expect.poll(async () => (await timer(page)).status).toBe('running');
+
+  // Closed with Esc instead: focus goes back to the button you clicked, and Space still pauses.
+  await press(end);
+  await expect(dialog).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(dialog).toBeHidden();
+  await page.keyboard.press('Space');
+  await expect.poll(async () => (await timer(page)).status, { message: 'click End → Esc → Space pauses' }).toBe('paused');
+  await expect(dialog).toBeHidden();
+  await page.keyboard.press('Space');
+  await expect.poll(async () => (await timer(page)).status).toBe('running');
+  const planned2 = (await timer(page)).plannedMs;
+  await press(page.getByRole('button', { name: 'Add 5 minutes' }));
+  await expect.poll(async () => (await timer(page)).plannedMs).toBe(planned2 + 5 * MIN);
+  await page.keyboard.press('Escape'); // the shortcut opens the End sheet
+  await expect(dialog).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(dialog).toBeHidden();
+  await page.keyboard.press('Space');
+  await expect.poll(async () => (await timer(page)).status, { message: 'click +5 → Esc → Esc → Space pauses' }).toBe('paused');
+  expect((await timer(page)).plannedMs, 'and does not add time').toBe(planned2 + 5 * MIN);
+  await page.keyboard.press('Space');
+  await expect.poll(async () => (await timer(page)).status).toBe('running');
+
+  // Keyboard users keep native buttons: Tab to End, Space opens the sheet — also after an Esc hand-back.
+  let onEnd = false;
+  for (let i = 0; i < 20 && !onEnd; i++) {
+    await page.keyboard.press('Tab');
+    onEnd = (await page.evaluate(() => (document.activeElement as HTMLElement | null)?.getAttribute('aria-label'))) === 'End session';
+  }
+  expect(onEnd, 'End reachable with Tab').toBe(true);
+  for (const round of [1, 2]) {
+    await page.keyboard.press('Space');
+    await expect(page.getByRole('dialog', { name: /leave the kettle early/i }), `Space on a keyboard-focused End opens the sheet (${round})`).toBeVisible();
+    expect((await timer(page)).status).toBe('running');
+    await page.keyboard.press('Escape');
+    await expect(dialog).toBeHidden();
+  }
+});
+
+test('leaving Focus mid-dissolve is not overridden by the outgoing screen', async ({ page }) => {
+  // The Focus screen redirects (to the celebration or Today) when it has nothing to show. While it is the
+  // outgoing layer of a route dissolve it must not: the user already chose where to go.
+  await boot(page, { seed: 'newbie' });
+  await startFromHome(page);
+  await page.waitForTimeout(800);
+  await page.evaluate(`(() => { __kettle.navigate('/stats'); __kettle.timer.getState().end('user'); })()`);
+  await page.waitForTimeout(2500);
+  expect(await route(page), 'stays where the user navigated').toBe('/stats');
+});
+
 // ---------------------------------------------------------------- 8b. round-1 additions
 
 test('reload mid-celebration resumes the same card', async ({ page }) => {
@@ -523,17 +600,26 @@ test('two tabs: one timer, shared state, no double counting', async ({ page, con
   const b = await context.newPage();
   const bErrors: string[] = [];
   b.on('pageerror', (e) => bErrors.push(e.message));
-  // Same seed as tab A: seeds pin the debug clock, and a tab on a different clock would see A's brew as long overdue.
-  await b.goto('/?debug&seed=newbie#/', { waitUntil: 'networkidle' });
+  // A real second tab reads the saved data; it must not re-seed (that wipes and rewrites A's data mid-test).
+  // Seeds pin tab A's debug clock, so align B's clock with A's: real tabs share one wall clock.
+  await b.goto('/?debug#/', { waitUntil: 'networkidle' });
   await waitKettle(b);
+  const offA = await K<number>(page, '__kettle.clock.offset');
+  await b.evaluate(`__kettle.ff(${offA} - __kettle.clock.offset)`);
   const before = (await focusSessions(page)).length;
 
   await startFromHome(page);
-  await expect.poll(async () => (await timer(b)).status, { message: 'tab B sees the brew started in tab A' }).toBe('running');
-  await expect.poll(() => route(b), { message: 'tab B follows to focus' }).toBe('/focus');
-  const ra = (await timer(page)).remainingMs;
-  const rb = (await timer(b)).remainingMs;
-  expect(Math.abs(ra - rb), 'both tabs show the same remaining time').toBeLessThan(1500);
+  // 20 s like the other cross-tab waits: under parallel software-GL load, tab B's main thread can be busy
+  // building its 3D scene for several seconds, so a single evaluate() may take 6 s to be serviced.
+  await expect.poll(async () => (await timer(b)).status, { timeout: 20_000, message: 'tab B sees the brew started in tab A' }).toBe('running');
+  await expect.poll(() => route(b), { timeout: 20_000, message: 'tab B follows to focus' }).toBe('/focus');
+  // Same end time + same clock = same remaining time. (Comparing two sequential remainingMs reads measured
+  // evaluate() latency instead: seconds apart when several software-rendered 3D scenes share the CPU.)
+  const endsAt = `[__kettle.timer.getState().endsAt, __kettle.clock.offset]`;
+  const [endsA, offsetA] = await K<[number, number]>(page, endsAt);
+  const [endsB, offsetB] = await K<[number, number]>(b, endsAt);
+  expect(endsB, 'both tabs count down to the same end time').toBe(endsA);
+  expect(offsetB, 'both tabs share one clock').toBe(offsetA);
 
   await b.bringToFront();
   await b.evaluate('__kettle.timer.getState().pause()');
@@ -553,8 +639,17 @@ test('two tabs: one timer, shared state, no double counting', async ({ page, con
   await page.waitForTimeout(2000);
   const recA = (await focusSessions(page)).length - before;
   const recB = (await focusSessions(b)).length - before;
+  if (recA !== 1 || recB !== 1) {
+    // Diagnostics: which records does each tab think are new?
+    const idsBefore = new Set((await focusSessions(page)).slice(0, before).map((r) => r.id));
+    const dump = async (p: Page) => (await focusSessions(p)).filter((r) => !idsBefore.has(r.id)).map((r) => `${r.id}:${r.completed ? 'done' : 'part'}`);
+    console.log('[two-tabs diag] A new:', await dump(page), ' B new:', await dump(b), ' before:', before,
+      ' A total:', (await focusSessions(page)).length, ' B total:', (await focusSessions(b)).length);
+  }
   expect(recA, 'exactly one brew recorded (tab A view)').toBe(1);
   expect(recB, 'exactly one brew recorded (tab B view)').toBe(1);
+  await expect.poll(() => route(page), { timeout: 10_000, message: 'tab A shows the celebration' }).toBe('/done');
+  await expect.poll(() => route(b), { timeout: 10_000, message: 'tab B (following) shows the celebration too' }).toBe('/done');
   expect(bErrors, 'no page errors in tab B').toEqual([]);
   await shot(page, 'two-tabs-a');
   await b.screenshot({ path: `${OUT}two-tabs-b.png` });
@@ -791,7 +886,9 @@ for (const [vpName, vp] of Object.entries(VIEWPORTS)) {
     test.use({ viewport: vp.viewport, isMobile: vp.isMobile, hasTouch: vp.hasTouch });
     for (const sc of LAYOUT_SCENES) {
       test(`layout: ${sc.name} @ ${vpName}`, async ({ page }, info) => {
-        await boot(page, { ...sc.boot, theme: 'light' });
+        // Static nook (same box as the 3D one): the audit skips <canvas> anyway, and with CPU-only WebGL a
+        // live 1920×1080 room renders at ~5 fps, which starved parallel runs (a 1.5 s wait once took 79 s).
+        await boot(page, { ...sc.boot, theme: 'light', nookq: 'off' });
         if (sc.setup) await sc.setup(page);
         await page.waitForTimeout(1500);
         await shot(page, `resp-${vpName}-${sc.name}`, true);

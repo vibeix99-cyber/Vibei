@@ -43,6 +43,8 @@ export function coerceSession(v: unknown, now = Date.now()): SessionRecord | nul
     intention: typeof v.intention === 'string' ? v.intention.slice(0, 140) : '',
     tag,
     day: isDayKey(v.day) ? v.day : dayKey(endedAt),
+    ...(v.outcome === 'done' || v.outcome === 'carried' ? { outcome: v.outcome } : {}),
+    ...(num(v.v) && v.v > 0 ? { v: v.v } : {}),
   };
 }
 
@@ -143,7 +145,16 @@ export function coerceData(v: unknown, now = Date.now()): { data: ProgressData; 
       if (bs) data.badges[k] = bs;
     }
   if (Array.isArray(v.tombstones)) data.tombstones = v.tombstones.filter((t): t is string => typeof t === 'string').slice(-500);
+  if (isObj(v.deletedAt)) {
+    const at: Record<string, number> = {};
+    for (const id of data.tombstones) {
+      const t = (v.deletedAt as Record<string, unknown>)[id];
+      if (num(t) && t > 0) at[id] = t;
+    }
+    if (Object.keys(at).length) data.deletedAt = at;
+  }
   if (num(v.rev)) data.rev = Math.max(0, Math.floor(v.rev));
+  if (typeof v.epoch === 'string' && v.epoch.length <= 64) data.epoch = v.epoch;
   // lastReport is transient UI state; keep it only if it looks like a report for a known session.
   if (isObj(v.lastReport) && isObj(v.lastReport.record) && data.sessions.some((s) => s.id === (v.lastReport as Obj).id)) {
     data.lastReport = v.lastReport as unknown as ProgressData['lastReport'];

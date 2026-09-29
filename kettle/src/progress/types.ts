@@ -17,7 +17,13 @@ export interface SessionRecord {
   tag: TagId | null;
   /** Local day the session ended on. */
   day: DayKey;
+  /** What happened to the intention afterwards: crossed off, or carried into the next brew. */
+  outcome?: IntentionOutcome;
+  /** When the record last changed after it was recorded (edit, outcome, undo of a delete). Cross-tab merges keep the latest. */
+  v?: number;
 }
+
+export type IntentionOutcome = 'done' | 'carried';
 
 // ---------------------------------------------------------------------------
 // Leaves ledger (auditable: every leaf ever earned has exactly one entry)
@@ -333,7 +339,14 @@ export interface ProgressData {
   badges: Record<string, BadgeState>;
   /** Ids of sessions the user deleted (so a stale tab can't re-add them). */
   tombstones: string[];
+  /** When each tombstoned id was deleted (tombstones from older versions have none and are final). */
+  deletedAt?: Record<string, number>;
   lastReport: CompletionReport | null;
   /** Monotonic revision, bumped on every write (cross-tab sync). */
   rev: number;
+  /**
+   * Data generation. A reset or a "replace" import starts a new one; tabs merge
+   * writes within a generation and let the newer generation win across them.
+   */
+  epoch?: string;
 }

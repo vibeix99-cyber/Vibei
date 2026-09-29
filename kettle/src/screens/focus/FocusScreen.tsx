@@ -15,7 +15,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { TimerAnnouncer, elapsedActiveMs, useRemaining, useTimer } from '@/timer';
-import { useShortcut } from '@/lib/shortcuts';
+import { useShortcut, useShortcutHelp } from '@/lib/shortcuts';
 import { clock } from '@/lib/clock';
 import { formatClock, spokenDuration } from '@/lib/format';
 import { useReducedMotion } from '@/lib/useReducedMotion';
@@ -26,7 +26,7 @@ import { Button, Digits, IconButton, Kbd } from '@/ui';
 import { Nook } from '@/scene';
 import { useProgress, useUnlockedItems } from '@/progress';
 import { useSettings } from '@/state/settings';
-import { navigate } from '@/app/router';
+import { getRoute, navigate } from '@/app/router';
 import { WHISTLE_MS, endFocusEarly, leaveBreakOver, skipBreak, startNextBrew, useFlow } from '@/app/flow';
 import { TimerRing } from './parts/TimerRing';
 import { RoundButton } from './parts/RoundButton';
@@ -67,11 +67,13 @@ export default function FocusScreen() {
   const paused = t.status === 'paused';
   const isLong = (view === 'break' && t.phase === 'longBreak') || (view === 'over' && breakOver?.phase === 'longBreak');
   const sheetOpen = endOpen || ambOpen;
+  const helpOpen = useShortcutHelp().open;
   const zen = useZen(view === 'focus' && !paused && !sheetOpen);
 
-  // Nothing to show here → celebration if one is pending, else home.
+  // Nothing to show here → celebration if one is pending, else home. Only while Focus is still the
+  // current route: as the outgoing layer of a dissolve, the user has already chosen where to go.
   useEffect(() => {
-    if (view === 'none') navigate(hasReport ? '/done' : '/', { replace: true });
+    if (view === 'none' && getRoute() === '/focus') navigate(hasReport ? '/done' : '/', { replace: true });
   }, [view, hasReport]);
 
   // Whistle → celebration: the ring's warm inside swells to fill the screen, in the celebration's own
@@ -93,9 +95,11 @@ export default function FocusScreen() {
     return () => clearTimeout(t);
   }, [view, reduced]);
 
-  // Close the end sheet if the phase changes under it.
+  // Close the end sheet if the phase changes under it, and the ambience sheet on any change
+  // (it would otherwise sit over the whistle and hold the room still through it).
   useEffect(() => {
     if (view !== 'focus') setEndOpen(false);
+    setAmbOpen(false);
   }, [view]);
 
   // Ambience: during a brew the audio session owns it (fade in, pause dip, simmer, fade out) —
@@ -229,7 +233,9 @@ export default function FocusScreen() {
             weather={weatherFor(ambient)}
             timeOfDay="auto"
             items={items}
-            paused={paused}
+            // Hold a still frame while paused or while a sheet covers the room: a live canvas under the
+            // sheet's blurred scrim re-blurs the whole viewport every frame (4 fps at 1920 on software GL).
+            paused={paused || sheetOpen || helpOpen}
             className={s.nook}
           />
         </div>

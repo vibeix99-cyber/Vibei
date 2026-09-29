@@ -242,7 +242,9 @@ function SheetPanel({
   const headerAlign = align ?? (hero ? 'center' : 'start');
 
   return (
-    <div ref={layerRef} className={cx(s.layer, s[mode])}>
+    // While animating out it is no longer a modal: not announced, not focusable, and it doesn't
+    // hold back app shortcuts (a slow exit used to let Space fall through to the opener).
+    <div ref={layerRef} className={cx(s.layer, s[mode])} inert={!isPresent || undefined}>
       <motion.div
         className={s.backdrop}
         aria-hidden="true"
@@ -255,7 +257,7 @@ function SheetPanel({
         ref={panelRef}
         className={cx(s.panel, s[size], className)}
         role="dialog"
-        aria-modal="true"
+        aria-modal={isPresent ? 'true' : undefined}
         aria-labelledby={titleId}
         aria-describedby={description ? descId : undefined}
         tabIndex={-1}

@@ -8,7 +8,7 @@ import { shouldNotify, notificationCopy } from './notify';
 import { wantsWakeLock } from './wakeLock';
 import { diffTimer } from './sync';
 import { completionAllowed, SETTLE_MS, FORCE_AFTER_MS } from './ticker';
-import { parseCombo, matchesCombo, isEditableTarget, isActivationTarget, displayKey } from '@/lib/shortcuts';
+import { parseCombo, matchesCombo, isEditableTarget, isActivationTarget, displayKey, createModality } from '@/lib/shortcuts';
 import type { TimerState, TimerView } from './types';
 
 const MIN = 60_000;
@@ -181,6 +181,33 @@ describe('shortcuts', () => {
     expect(isActivationTarget(el('a', { href: '#/' }))).toBe(true);
     expect(isActivationTarget(el('div', { role: 'switch' }))).toBe(true);
     expect(isActivationTarget(el('div'))).toBe(false);
+  });
+  it('tracks whether focus came from a pointer or the keyboard', () => {
+    const m = createModality();
+    const end = {} as EventTarget;
+    const sheetButton = {} as EventTarget;
+    // Clicked, or handed back by a sheet closed with the mouse: the shortcut wins.
+    m.pointerDown();
+    m.focusIn(end);
+    expect(m.pointerFocused(end)).toBe(true);
+    // Pressing Space doesn't change how the element got focus (Space pauses, then Space resumes).
+    m.keyDown(' ');
+    expect(m.pointerFocused(end)).toBe(true);
+    // Esc closes a sheet opened by that click and hands focus back: still pointer-reached.
+    m.focusIn(sheetButton);
+    m.keyDown('Escape');
+    m.focusIn(end);
+    expect(m.pointerFocused(end)).toBe(true);
+    // Reached with Tab: the native control keeps Space / Enter — also after an Esc hand-back later.
+    m.keyDown('Tab');
+    m.focusIn(sheetButton);
+    m.keyDown('Tab');
+    m.focusIn(end);
+    expect(m.pointerFocused(end)).toBe(false);
+    m.keyDown('Escape');
+    m.focusIn(end);
+    expect(m.pointerFocused(end)).toBe(false);
+    expect(m.pointerFocused(null)).toBe(false);
   });
   it('displays keys for help sheets', () => {
     expect(displayKey('Space', false)).toBe('Space');

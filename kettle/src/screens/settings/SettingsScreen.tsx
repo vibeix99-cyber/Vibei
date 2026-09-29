@@ -208,7 +208,7 @@ function DeviceGroup() {
       />
       {status === 'denied' && (
         <p className={s.helpRow}>
-          <strong>To turn nudges on:</strong> click the lock or tune icon next to the web address, open <em>Site settings</em>, set <em>Notifications</em> to <em>Allow</em>, then come back here.
+          <strong>To turn nudges on:</strong> {deniedHelp()}
         </p>
       )}
       {notifOn && (
@@ -338,5 +338,28 @@ function AboutGroup() {
       <ListRow icon="lock" iconTone="matcha" label="Privacy" description="No accounts, no tracking. Your data never leaves this device unless you export it." />
       <ListRow icon="heart" iconTone="berry" label="Credits" description="Type set in Fredoka and Nunito (SIL Open Font License). Every sound is synthesized live in your browser. The nook is built with three.js." />
     </ListGroup>
+  );
+}
+
+/** Where notification permission lives depends on how Kettle is open. */
+function deniedHelp() {
+  const installed = typeof matchMedia !== 'undefined' && (matchMedia('(display-mode: standalone)').matches || (navigator as Navigator & { standalone?: boolean }).standalone === true);
+  const touch = typeof matchMedia !== 'undefined' && matchMedia('(pointer: coarse)').matches;
+  if (installed)
+    return (
+      <>
+        open your phone’s <em>Settings</em>, find <em>Kettle</em> under <em>Notifications</em> (or <em>Apps</em>), allow notifications, then come back here.
+      </>
+    );
+  if (touch)
+    return (
+      <>
+        open your browser’s menu, find <em>Site settings</em> (or the page’s settings) for this site, set <em>Notifications</em> to <em>Allow</em>, then reload.
+      </>
+    );
+  return (
+    <>
+      click the lock or tune icon next to the web address, open <em>Site settings</em>, set <em>Notifications</em> to <em>Allow</em>, then come back here.
+    </>
   );
 }

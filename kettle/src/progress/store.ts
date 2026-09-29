@@ -27,7 +27,9 @@ import { newQuestDay, questsView } from './quests';
 import { daysToNextCozy, localeWeekStart, MAX_COZIES, streakTimeline, warmDays } from './streak';
 import { useDayKey, useHour } from './time';
 import { coerceData } from './validate';
-import type { BadgeProgress, CompletionReport, LevelInfo, ProgressData, Quest, SessionRecord, StreakInfo, TodaySummary } from './types';
+import { reconcile } from './merge';
+import { uid } from '@/lib/id';
+import type { BadgeProgress, CompletionReport, IntentionOutcome, LevelInfo, ProgressData, Quest, SessionRecord, StreakInfo, TodaySummary } from './types';
 
 export { leavesForLevel, levelFromLeaves } from './levels';
 
@@ -37,7 +39,8 @@ interface ProgressActions {
   /** Record a finished phase. Idempotent by `record.id`. Returns the report for focus sessions. */
   recordSession: (record: SessionRecord, whileAway?: boolean) => CompletionReport | null;
   /** Edit what a session was about. */
-  editSession: (id: string, patch: { intention?: string; tag?: TagId | null }) => void;
+  /** `outcome: null` clears it. Changing the intention text clears a stale outcome. */
+  editSession: (id: string, patch: { intention?: string; tag?: TagId | null; outcome?: IntentionOutcome | null }) => void;
   /** Remove a session from history (leaves earned are kept). */
   deleteSession: (id: string) => void;
   /** Undo a delete: put the session back exactly as it was. */
@@ -52,7 +55,10 @@ interface ProgressActions {
 
 export type ProgressStore = ProgressData & ProgressActions;
 
-const DATA_KEYS: (keyof ProgressData)[] = ['sessions', 'ledger', 'leaves', 'cozies', 'dayGoals', 'quests', 'badges', 'tombstones', 'lastReport', 'rev'];
+const DATA_KEYS: (keyof ProgressData)[] = ['sessions', 'ledger', 'leaves', 'cozies', 'dayGoals', 'quests', 'badges', 'tombstones', 'deletedAt', 'lastReport', 'rev', 'epoch'];
+
+/** The first version stamp after a record's current one. */
+const versionAfter = (r: SessionRecord | undefined) => (r ? (r.v ?? r.endedAt) + 1 : 0);
 
 export function pickData(s: ProgressData): ProgressData {
   const out = {} as Record<string, unknown>;
@@ -122,8 +128,16 @@ export const useProgress = create<ProgressStore>()(
         const clean: Partial<SessionRecord> = {};
         if (patch.intention !== undefined) clean.intention = patch.intention.trim().slice(0, 140);
         if (patch.tag !== undefined) clean.tag = patch.tag;
-        const sessions = s.sessions.map((x) => (x.id === id ? { ...x, ...clean } : x));
-        const lastReport = s.lastReport && s.lastReport.id === id ? { ...s.lastReport, record: { ...s.lastReport.record, ...clean } } : s.lastReport;
+        if (patch.outcome !== undefined) clean.outcome = patch.outcome ?? undefined;
+        const apply = (x: SessionRecord): SessionRecord => {
+          const next = { ...x, ...clean, v: Math.max(clock.now(), (x.v ?? x.endedAt) + 1) };
+          // An outcome belongs to the words it was given for; no words → nothing to mark.
+          if (!next.intention || (patch.intention !== undefined && patch.outcome === undefined && next.intention !== x.intention)) delete next.outcome;
+          if (!next.outcome) delete next.outcome;
+          return next;
+        };
+        const sessions = s.sessions.map((x) => (x.id === id ? apply(x) : x));
+        const lastReport = s.lastReport && s.lastReport.id === id ? { ...s.lastReport, record: apply(s.lastReport.record) } : s.lastReport;
         set({ sessions, lastReport, rev: s.rev + 1 });
       },
 
@@ -136,6 +150,7 @@ export const useProgress = create<ProgressStore>()(
             ...pickData(s),
             sessions: s.sessions.filter((x) => x.id !== id),
             tombstones: [...s.tombstones.filter((t) => t !== id), id].slice(-500),
+            deletedAt: { ...s.deletedAt, [id]: Math.max(clock.now(), versionAfter(s.sessions.find((x) => x.id === id))) },
             lastReport: s.lastReport?.id === id ? null : s.lastReport,
             rev: s.rev + 1,
           },
@@ -148,10 +163,14 @@ export const useProgress = create<ProgressStore>()(
         syncFromStorage();
         const s = get();
         if (s.sessions.some((x) => x.id === record.id)) return;
-        const sessions = [...s.sessions, record].sort((a, b) => a.endedAt - b.endedAt);
+        // Newer than the deletion, so the undo wins in every tab (see merge.ts).
+        const v = Math.max(clock.now(), (s.deletedAt?.[record.id] ?? 0) + 1, versionAfter(record));
+        const sessions = [...s.sessions, { ...record, v }].sort((a, b) => a.endedAt - b.endedAt);
+        const deletedAt = { ...s.deletedAt };
+        delete deletedAt[record.id];
         set(
           refreshCaches(
-            { ...pickData(s), sessions, tombstones: s.tombstones.filter((t) => t !== record.id), rev: s.rev + 1 },
+            { ...pickData(s), sessions, tombstones: s.tombstones.filter((t) => t !== record.id), deletedAt, rev: s.rev + 1 },
             dayKey(clock.now()),
           ),
         );
@@ -175,10 +194,13 @@ export const useProgress = create<ProgressStore>()(
       },
 
       clearReport: () => {
+        if (!get().lastReport) return;
+        syncFromStorage();
         if (get().lastReport) set({ lastReport: null, rev: get().rev + 1 });
       },
-      resetAll: () => set({ ...emptyData(), rev: get().rev + 1 }),
-      load: (data) => set({ ...data, rev: Math.max(get().rev, data.rev) + 1 }),
+      // Both start a new data generation, so other tabs adopt them instead of merging old data back in.
+      resetAll: () => set({ ...emptyData(), rev: get().rev + 1, epoch: uid('e_') }),
+      load: (data) => set({ ...data, rev: Math.max(get().rev, data.rev) + 1, epoch: uid('e_') }),
     }),
     {
       name: PROGRESS_KEY,
@@ -194,10 +216,14 @@ export const useProgress = create<ProgressStore>()(
   ),
 );
 
-/** Adopt a newer revision written by another tab. */
+/**
+ * Reconcile with what other tabs wrote: adopt a newer write that already holds
+ * everything we have, merge when both sides hold something the other lacks
+ * (same generation), and let a newer generation (reset / replace import) win.
+ */
 export function syncFromStorage(): void {
-  const stored = readStored();
-  if (stored && stored.rev > useProgress.getState().rev) useProgress.setState(stored);
+  const decision = reconcile(pickData(useProgress.getState()), readStored(), dayKey(clock.now()));
+  if (decision.kind !== 'keep') useProgress.setState(decision.data);
 }
 
 function announce(res: ApplyResult, completedFocus: boolean): void {

@@ -143,9 +143,49 @@ export function isActivationTarget(t: EventTarget | null): boolean {
   return !!role && INTERACTIVE_ROLES.has(role);
 }
 
+/**
+ * How the focused element got focus. A control the user reached with the keyboard owns Space / Enter
+ * (native activation). One that only holds focus because it was clicked, or because a sheet opened by
+ * pointer handed focus back to its opener, isn't what the user is aiming at: there the shortcut wins, so
+ * Space pauses instead of re-opening the End sheet or adding another 5 minutes. (`:focus-visible` can't
+ * tell: Chromium turns it on for the focused element before the keydown is dispatched.)
+ *
+ * Only focus-moving keys (Tab, arrows…) make a control keyboard-reached. When a script moves focus after
+ * any other key (Esc closing a sheet), the element keeps however the user last reached it.
+ */
+const NAV_KEYS = new Set(['Tab', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End', 'PageUp', 'PageDown', 'F6']);
+
+export function createModality() {
+  let pointer = false;
+  let navKey = false;
+  const byPointer = new WeakSet<object>();
+  return {
+    pointerDown() {
+      pointer = true;
+      navKey = false;
+    },
+    keyDown(key: string) {
+      pointer = false;
+      navKey = NAV_KEYS.has(key);
+    },
+    focusIn(target: EventTarget | null) {
+      if (!target) return;
+      if (pointer) byPointer.add(target);
+      else if (navKey) byPointer.delete(target);
+    },
+    /** True when the user last put focus on `target` with a pointer (directly, or handed back by script). */
+    pointerFocused(target: EventTarget | null) {
+      return !!target && byPointer.has(target);
+    },
+  };
+}
+
+const modality = createModality();
+
 function modalOpen(): Element | null {
   if (typeof document === 'undefined') return null;
-  return document.querySelector('[aria-modal="true"], dialog[open]');
+  for (const el of document.querySelectorAll('[aria-modal="true"], dialog[open]')) if (!el.closest('[inert]')) return el;
+  return null;
 }
 
 const ACTIVATION_KEYS = new Set([' ', 'enter', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright', 'home', 'end', 'pageup', 'pagedown']);
@@ -165,7 +205,7 @@ function onKeyDown(e: KeyboardEvent): void {
   if (e.defaultPrevented || e.isComposing || e.keyCode === 229) return;
   const target = e.target;
   const editable = isEditableTarget(target);
-  const activation = isActivationTarget(target);
+  const activation = isActivationTarget(target) && !modality.pointerFocused(target);
   const modal = modalOpen();
   for (let i = bindings.length - 1; i >= 0; i--) {
     const b = bindings[i];
@@ -196,6 +236,10 @@ export function bindShortcut(keys: string | string[], handler: ShortcutHandler, 
   if (!listening && typeof window !== 'undefined') {
     listening = true;
     window.addEventListener('keydown', onKeyDown);
+    // Capture phase: runs even when another handler (e.g. a dialog's focus trap) cancels the event.
+    window.addEventListener('keydown', (e) => modality.keyDown(e.key), { capture: true });
+    window.addEventListener('pointerdown', () => modality.pointerDown(), { capture: true, passive: true });
+    window.addEventListener('focusin', (e) => modality.focusIn(e.target), { capture: true });
   }
   return () => {
     const i = bindings.indexOf(b);

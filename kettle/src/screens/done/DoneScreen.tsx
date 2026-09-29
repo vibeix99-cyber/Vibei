@@ -11,7 +11,7 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Button, useMediaQuery } from '@/ui';
-import { useProgress } from '@/progress';
+import { syncFromStorage, useProgress } from '@/progress';
 import { nextBreakKind, useTimer } from '@/timer';
 import { useSettings } from '@/state/settings';
 import { useReducedMotion } from '@/lib/useReducedMotion';
@@ -77,8 +77,22 @@ export default function DoneScreen() {
   const last = step === steps.length - 1;
 
   // Arrived with nothing to celebrate → home. (Leaving via the CTAs navigates on its own.)
+  // When another tab finished the brew, its timer write reaches us a moment before its progress
+  // write: re-read storage, and if a celebration is expected give the report a moment to land.
   useEffect(() => {
-    if (!liveReport && !kept.current && getRoute() === '/done') navigate('/', { replace: true });
+    if (liveReport || kept.current || getRoute() !== '/done') return;
+    syncFromStorage();
+    if (useProgress.getState().lastReport) return;
+    const ended = useTimer.getState().lastEnded;
+    const unrecorded = !!ended && ended.phase === 'focus' && ended.reason === 'complete' && !useProgress.getState().sessions.some((x) => x.id === ended.sessionId);
+    const expecting = unrecorded || useFlow.getState().celebration != null;
+    const t = setTimeout(
+      () => {
+        if (!useProgress.getState().lastReport && getRoute() === '/done') navigate('/', { replace: true });
+      },
+      expecting ? 2000 : 0,
+    );
+    return () => clearTimeout(t);
   }, [liveReport]);
   useEffect(() => {
     if (liveReport) setCelebrationStep(liveReport.id, step);
