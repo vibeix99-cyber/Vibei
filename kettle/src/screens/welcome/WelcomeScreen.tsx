@@ -12,7 +12,8 @@ import { spring } from '@/lib/motion';
 import { audio } from '@/audio';
 import { useSettings, type AmbientKind, type RhythmId } from '@/state/settings';
 import { useTimer } from '@/timer';
-import { Button, IconButton, ProgressBar, SpeechBubble, useMediaQuery } from '@/ui';
+import { Button, IconButton, ProgressBar, SpeechBubble, toast, useMediaQuery } from '@/ui';
+import { plural } from '@/lib/format';
 import { notificationStatus, requestNotificationPermission, type NotificationStatus as NotifyStatus } from '@/timer/notify';
 import { importData, previewImport } from '@/progress';
 import { useAmbientPreview } from '@/screens/home/shims/useAmbientPreview';
@@ -281,19 +282,26 @@ function Hello({ onStart }: { onStart: () => void }) {
     const f = e.target.files?.[0];
     e.target.value = '';
     if (!f) return;
+    if (f.size > 20 * 1024 * 1024) {
+      setMsg({ tone: 'error', text: 'That file is too big to be a Kettle backup.' });
+      audio.play('error');
+      return;
+    }
     const text = await f.text();
-    // A fresh device: restore everything. If something is already here, add to it instead of replacing it.
+    // A fresh device: restore everything. If brews are already here, add to them and keep this device's
+    // settings — nothing here is replaced.
     const peek = previewImport(text, { mode: 'merge' });
     const hasProgress = peek.ok && (peek.summary.here.sessions > 0 || peek.summary.here.leaves > 0);
-    const res = importData(text, hasProgress ? { mode: 'merge', settings: true } : { mode: 'replace' });
+    const res = importData(text, hasProgress ? { mode: 'merge', settings: false } : { mode: 'replace' });
     if (!res.ok) {
       setMsg({ tone: 'error', text: res.error });
       audio.play('error');
       return;
     }
-    setMsg({ tone: 'ok', text: `Welcome back. ${res.summary.sessions} brews restored.` });
     audio.play('pop');
-    setTimeout(() => set({ onboarded: true }), 900);
+    // A toast survives the move to Today (onboarding finishes right away).
+    toast.success(hasProgress ? `Welcome back. Added ${plural(res.summary.added, 'brew')} from your backup.` : `Welcome back. ${plural(res.summary.sessions, 'brew')} restored.`);
+    set({ onboarded: true });
   };
 
   return (

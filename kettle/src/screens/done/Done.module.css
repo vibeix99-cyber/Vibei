@@ -199,6 +199,9 @@
 .intent {
   font-weight: 700;
   color: var(--ink);
+  /* An 80-character URL or long word wraps instead of widening the card. */
+  overflow-wrap: anywhere;
+  min-width: 0;
 }
 .intentChoice {
   display: flex;

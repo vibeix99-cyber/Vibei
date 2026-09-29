@@ -640,7 +640,7 @@ test('backup: export, re-import duplicates, cancel, add, undo, replace, undo, da
   doc.settings.name = 'Laptop';
   const other = JSON.stringify(doc);
   await pick('laptop.json', other);
-  await expect(sheet.getByRole('radio', { name: /add to what/i })).toBeChecked();
+  await expect(sheet.getByRole('radio', { name: /^add\b/i })).toBeChecked();
   await expect(sheet).toContainText(/adds 3 brews/i);
   await press(sheet.getByRole('button', { name: /^add$/i }));
   await expect.poll(focusCount).toBe(n0 + 3);
@@ -650,7 +650,7 @@ test('backup: export, re-import duplicates, cancel, add, undo, replace, undo, da
 
   // Replacing is a deliberate choice that says what will be lost, and can be undone.
   await pick('laptop.json', other);
-  await sheet.getByRole('radio', { name: /replace what/i }).click();
+  await sheet.getByRole('radio', { name: /^replace\b/i }).click();
   await expect(sheet).toContainText(new RegExp(`Your ${n0} brews and settings on this device will be swapped`));
   await press(sheet.getByRole('button', { name: /^replace$/i }));
   await expect.poll(focusCount).toBe(3);
@@ -686,6 +686,53 @@ test('two tabs: undo after deleting a brew sticks in both tabs', async ({ page, 
   await reopen(page, '/stats');
   expect(await count(page), 'and survives a reload').toBe(n);
   await b.close();
+});
+
+test('small screens: a long intention and the import sheet fit', async ({ page }) => {
+  test.setTimeout(180_000);
+  const url = 'https://docs.example.com/projects/kettle/chapter-three/literature-review-final-v2';
+  const fits = () => K<boolean>(page, `document.documentElement.scrollWidth <= innerWidth + 1`);
+  const inView = async (loc: Locator) => {
+    const b = await loc.boundingBox();
+    const w = page.viewportSize()!;
+    return !!b && b.x >= -1 && b.x + b.width <= w.width + 1 && b.y >= -1 && b.y + b.height <= w.height + 1;
+  };
+  await page.setViewportSize({ width: 390, height: 844 });
+  await boot(page, { seed: 'newbie', nookq: 'off' });
+  await page.getByRole('textbox', { name: /what are you brewing/i }).fill(url);
+  await startFromHome(page);
+  await page.waitForTimeout(800);
+  expect(await fits(), 'Focus: no horizontal overflow with an 80-char URL').toBe(true);
+  expect(await inView(page.getByRole('button', { name: 'End session' })), 'End stays on screen').toBe(true);
+  await page.evaluate('__kettle.finish()');
+  await expect.poll(() => route(page), { timeout: 15_000 }).toBe('/done');
+  await page.waitForTimeout(2500);
+  expect(await fits(), 'finish card: no horizontal overflow').toBe(true);
+  expect(await inView(page.getByRole('button', { name: /^carry forward$/i })), 'Carry forward on screen').toBe(true);
+
+  // Import sheet at 320: both choices readable; landscape: the consequence line is on screen.
+  await page.setViewportSize({ width: 320, height: 568 });
+  await reopen(page, '/');
+  await page.evaluate(`(() => { const t = __kettle.timer.getState(); if (t.status !== 'idle') t.end('skip'); __kettle.progress.getState().clearReport(); __kettle.navigate('/settings'); })()`);
+  await page.waitForTimeout(800);
+  const [dl] = await Promise.all([page.waitForEvent('download'), press(page.getByRole('button', { name: /export a backup/i }))]);
+  const other = JSON.parse(readFileSync((await dl.path())!, 'utf8'));
+  other.progress.sessions = other.progress.sessions.slice(0, 2).map((x: object, i: number) => ({ ...x, id: `far_${i}` }));
+  other.progress.ledger = [];
+  await page.locator('input[type=file]').setInputFiles({ name: 'other.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(other)) });
+  const sheet = page.getByRole('dialog');
+  await expect(sheet).toBeVisible();
+  for (const name of [/^add\b/i, /^replace\b/i]) {
+    const clipped = await sheet.getByRole('radio', { name }).evaluate((el) => [...el.querySelectorAll('*')].some((c) => c.scrollWidth > c.clientWidth + 1 && getComputedStyle(c).overflow !== 'visible'));
+    expect(clipped, `choice ${name} is not clipped at 320`).toBe(false);
+  }
+  await page.setViewportSize({ width: 844, height: 390 });
+  await page.waitForTimeout(400);
+  await sheet.getByRole('radio', { name: /^replace\b/i }).click();
+  const warning = sheet.getByText(/will be swapped for the backup/i);
+  await expect(warning).toBeVisible();
+  expect(await inView(warning), 'landscape: the loss warning is on screen without scrolling').toBe(true);
+  await press(sheet.getByRole('button', { name: /cancel/i }));
 });
 
 // ---------------------------------------------------------------- 8b. round-1 additions

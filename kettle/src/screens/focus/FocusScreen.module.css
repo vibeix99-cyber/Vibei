@@ -160,6 +160,8 @@
 .panel {
   grid-area: panel;
   display: grid;
+  /* One shrinkable column: an auto track would grow to the widest unbreakable line (a long intention). */
+  grid-template-columns: minmax(0, 1fr);
   align-content: end;
 }
 .panelInner {
@@ -178,6 +180,13 @@
   gap: 8px;
   max-width: 100%;
   min-height: 28px;
+  /* A scroll container's automatic minimum width is 0, so a long unbroken intention can't widen the
+     column (it ellipsizes instead) and the tag chip keeps its full size. */
+  min-width: 0;
+  overflow: hidden;
+}
+.intention > :not(.intentionText) {
+  flex: none;
 }
 .intentionText {
   font-family: var(--font-display);
@@ -465,11 +474,26 @@
 .overTitle {
   font-size: 1.875rem;
 }
+.overMark {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 10px;
+  border: 0;
+  background: none;
+  color: var(--matcha-ink);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
 .overSub {
   color: var(--ink-2);
   font-size: 1.0625rem;
   max-width: 34ch;
   text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 .overSub strong {
   color: var(--ink);

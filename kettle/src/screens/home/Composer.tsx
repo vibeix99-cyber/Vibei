@@ -7,7 +7,7 @@ import { useTimer, useRemaining, nextBreakKind } from '@/timer';
 import { formatClock } from '@/lib/format';
 import { useShortcut } from '@/lib/shortcuts';
 import { Button, Card, Chip, ChipGroup, Ring, SegmentedControl, Sheet, NumberStepper, TextField, toast } from '@/ui';
-import { useProgress } from '@/progress';
+import { useDayKey, useProgress } from '@/progress';
 import { carriedFrom, setIntentionOutcome } from '@/app/intention';
 import { RHYTHM_OPTIONS, matchPreset } from './content';
 import { TAGS } from '@/state/tags';
@@ -39,20 +39,35 @@ export function Composer({ recent }: { recent: string[] }) {
   // Is the field holding the intention your last brew ended with? Then offer to cross it off.
   const sessions = useProgress((st) => st.sessions);
   const carried = carriedFrom(sessions, text);
+  const inputRef = useRef<HTMLInputElement>(null);
   const markDone = () => {
     if (!carried) return;
     setIntentionOutcome(carried, 'done');
     setText('');
+    inputRef.current?.focus(); // the link unmounts; keep keyboard focus in the composer
     toast.success('Crossed off. Nice work.', {
       action: {
         label: 'Undo',
         onClick: () => {
           setIntentionOutcome(carried, 'carried');
           setText(carried.intention);
+          inputRef.current?.focus();
         },
       },
     });
   };
+
+  // Skipping is effortless across days too: yesterday's words only come back prefilled if you chose
+  // Carry forward (they're still one tap away under Recent).
+  const today = useDayKey();
+  useEffect(() => {
+    if (carried && carried.outcome !== 'carried' && carried.day !== today && useTimer.getState().status === 'idle') {
+      setText('');
+      setIntention('', tag);
+    }
+    // Only when Today opens (or the day turns), not while typing.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [today]);
 
   // Keep the timer's intention in sync (it's what Focus shows and records).
   useEffect(() => {
@@ -97,6 +112,7 @@ export function Composer({ recent }: { recent: string[] }) {
         </div>
         <div ref={fieldRef} className={s.field} onFocus={() => setInputFocus(true)} onBlur={onFieldBlur}>
           <TextField
+            ref={inputRef}
             label="What are you brewing? (optional)"
             hideLabel
             placeholder="e.g. Chapter 3 notes"
@@ -134,7 +150,7 @@ export function Composer({ recent }: { recent: string[] }) {
             <p className={s.carried}>
               <Icon name="refresh" size={16} />
               <span>Carried from your last brew</span>
-              <button type="button" className={s.linkBtn} onClick={markDone}>
+              <button type="button" className={s.linkBtn} onClick={markDone} aria-label={`Mark “${carried.intention}” done`}>
                 Mark done
               </button>
             </p>

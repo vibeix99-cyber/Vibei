@@ -5,8 +5,8 @@ import type { DayKey } from '@/lib/dates';
 import { historyByDay, leavesBySession } from '@/progress/insights';
 import { useProgress, type SessionRecord } from '@/progress';
 import type { TagId } from '@/state/settings';
-import { Button, Card, ChipGroup, Dialog, Pill, Sheet, TextField, cx, toast } from '@/ui';
-import { TAG_BY_ID, TAGS } from '@/state/tags';
+import { Button, Card, Chip, ChipGroup, Dialog, Pill, Sheet, TextField, cx, toast } from '@/ui';
+import { TAG_BY_ID, TAGS, brewTitle } from '@/state/tags';
 import { hm, hmLong, relDay, timeOf } from './format';
 import s from './stats.module.css';
 
@@ -68,7 +68,7 @@ export function HistorySection({ sessions, metDays, today }: { sessions: Session
 
 function SessionRow({ session: x, leaves, onOpen }: { session: SessionRecord; leaves: number; onOpen: () => void }) {
   const meta = x.tag ? TAG_BY_ID[x.tag] : null;
-  const title = x.intention || (meta ? `${meta.label} brew` : 'Brew');
+  const title = brewTitle(x);
   const status = x.completed ? 'Full brew' : 'Ended early';
   const done = !!x.intention && x.outcome === 'done';
   return (
@@ -82,15 +82,13 @@ function SessionRow({ session: x, leaves, onOpen }: { session: SessionRecord; le
         <Icon name={x.completed ? 'cup' : 'clock'} size={22} />
       </span>
       <span className={s.sessionMain} aria-hidden="true">
-        <span className={cx(s.sessionTitle, !x.intention && s.sessionUntitled)}>
+        <span className={cx(s.sessionTitle, !x.intention && s.sessionUntitled)}>{title}</span>
+        <span className={s.sessionMeta}>
           {done && (
-            <span className={s.doneMark} title="Marked done">
-              <Icon name="check" size={14} />
+            <span className={s.doneMark}>
+              <Icon name="check" size={14} /> Done ·{' '}
             </span>
           )}
-          {title}
-        </span>
-        <span className={s.sessionMeta}>
           {timeOf(x.startedAt)} · {hm(x.focusedMs)}
           {!x.completed && <> · ended early</>}
           {meta && (
@@ -129,9 +127,11 @@ function EditSheet({ session, onClose }: { session: SessionRecord | null; onClos
 function EditForm({ session, onDone }: { session: SessionRecord; onDone: () => void }) {
   const [intention, setIntention] = useState(session.intention);
   const [tag, setTag] = useState<TagId | null>(session.tag);
+  const [done, setDone] = useState(session.outcome === 'done');
   const [confirm, setConfirm] = useState(false);
   const save = () => {
-    useProgress.getState().editSession(session.id, { intention, tag });
+    const outcome = !intention.trim() ? null : done ? 'done' : session.outcome === 'done' ? null : undefined;
+    useProgress.getState().editSession(session.id, { intention, tag, ...(outcome !== undefined ? { outcome } : {}) });
     toast('Brew updated', { tone: 'success', icon: 'check' });
     onDone();
   };
@@ -153,7 +153,12 @@ function EditForm({ session, onDone }: { session: SessionRecord; onDone: () => v
         save();
       }}
     >
-      <TextField label="What were you brewing?" value={intention} onChange={setIntention} maxLength={60} showCount clearable icon="pencil" placeholder="e.g. Chapter 3 notes" />
+      <TextField label="What were you brewing?" value={intention} onChange={setIntention} maxLength={80} showCount clearable icon="pencil" placeholder="e.g. Chapter 3 notes" />
+      {intention.trim() && (
+        <Chip tone="matcha" icon={done ? undefined : 'check'} selected={done} onClick={() => setDone((d) => !d)} className={s.editDone}>
+          Done
+        </Chip>
+      )}
       <div className={s.editTags}>
         <p className={s.fieldLabel} id="edit-tag-label">
           Tag

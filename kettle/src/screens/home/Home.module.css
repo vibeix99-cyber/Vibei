@@ -142,9 +142,15 @@
   gap: 10px;
 }
 .greeting {
-  font-size: clamp(1.625rem, 6.4vw, 2.125rem);
+  /* A page title like the other tabs' (ScreenHeader), one step down on 320-wide phones. */
+  font-size: var(--text-display-l);
   font-weight: 600;
   letter-spacing: -0.005em;
+}
+@media (max-width: 359px) {
+  .greeting {
+    font-size: 1.625rem;
+  }
 }
 .chaiRow {
   display: flex;
@@ -776,6 +782,40 @@
   font-weight: 800;
 }
 
+/* ---------- Tablets (720–899, portrait): greeting + goal | composer + CTA, recipes, today ---------- */
+@media (min-width: 720px) and (max-width: 899px) and (min-height: 521px) {
+  .screen {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: 20px 24px;
+    align-items: start;
+  }
+  .colA,
+  .colB {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    min-width: 0;
+  }
+  .colA {
+    position: sticky;
+    top: 16px;
+  }
+  /* The column is phone-width again: stack the greeting over the stats, as on phones. */
+  .heroTop {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .heroTop .greeting {
+    order: 0;
+  }
+  .statusBar {
+    justify-content: space-between;
+    margin: -6px -8px -4px;
+    flex: auto;
+  }
+}
+
 /* ---------- Landscape phones: greeting + goal | composer + CTA ---------- */
 @media (max-width: 899px) and (orientation: landscape) and (max-height: 520px) {
   .screen {
@@ -818,9 +858,6 @@
   }
   .statLevel {
     width: 36px;
-  }
-  .greeting {
-    font-size: 1.375rem;
   }
   .bubbleText {
     font-size: 0.9375rem;

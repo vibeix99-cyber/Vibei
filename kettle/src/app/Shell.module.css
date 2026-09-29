@@ -304,6 +304,15 @@
   }
 }
 
+/* ---------------- Tablets (720–899 wide): screens that can use two columns get the width ----------------
+   Stats (data-layout="wide") and Today (data-tablet="wide") go two-column here instead of a stretched phone column. */
+@media (min-width: 720px) and (max-width: 899px) {
+  .main:has([data-layout='wide']),
+  .main:has([data-tablet='wide']) {
+    max-width: none;
+  }
+}
+
 /* ---------------- Opt-in wide column ----------------
    A screen that needs room (e.g. Stats' two-column dashboard) renders a root element with
    data-layout="wide": the column grows to 1000px and the right rail yields until 1680px. */

@@ -8,9 +8,10 @@
  *  - two layers: the persistent tab shell vs. each full-screen route. Inside
  *    the shell, tabs switch in place. Between layers the incoming layer fades
  *    in ON TOP of the outgoing one, which stays opaque underneath until it is
- *    removed — a dissolve, never a gap and never a double exposure.
+ *    removed. Its paper covers the old screen within ~90 ms and its content
+ *    rises over that: never a gap and never text over text.
  */
-import { lazy, Suspense, useEffect, useRef, type ComponentType, type ReactNode } from 'react';
+import { lazy, Suspense, useEffect, useRef, type ComponentType, type ReactNode, type Ref } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useSettings } from '@/state/settings';
 import { useTimer } from '@/timer';
@@ -70,23 +71,50 @@ function preloadScreens(): void {
   else setTimeout(run, 1200);
 }
 
-/** Incoming layer dissolves in above the outgoing one (which drops below and stays opaque). */
-function layerTransition(reduced: boolean) {
+/**
+ * Incoming layer dissolves in above the outgoing one (which drops below and stays opaque).
+ * The incoming layer's paper covers the old screen quickly (~90 ms) while its content rises in over
+ * the full duration, so the two screens' text never shows through each other, and there is still
+ * never an empty frame.
+ */
+function layerTransition(reduced: boolean, instant = false) {
   const inDur = reduced ? 0.14 : 0.24;
+  const cover = reduced ? 0.07 : 0.09;
   return {
-    initial: reduced ? { opacity: 0, zIndex: 1 } : { opacity: 0, y: 10, zIndex: 1 },
-    animate: { opacity: 1, y: 0, zIndex: 1, transition: { duration: inDur, ease: ease.out } },
-    // Stay fully visible underneath until the incoming layer has covered it, then vanish.
-    // (Must animate a real change — an exit to the current value would finish instantly.)
-    exit: {
-      opacity: 0,
-      zIndex: 0,
-      transition: { zIndex: { duration: 0 }, opacity: { delay: inDur, duration: 0.05 } },
+    layer: {
+      initial: { zIndex: 1 },
+      animate: { zIndex: 1 },
+      // Stay fully visible underneath until the incoming layer has covered it, then vanish.
+      // (Must animate a real change — an exit to the current value would finish instantly.)
+      exit: { opacity: 0, zIndex: 0, transition: { zIndex: { duration: 0 }, opacity: { delay: inDur, duration: 0.05 } } },
+    },
+    paper: {
+      initial: instant ? { opacity: 1 } : { opacity: 0 },
+      animate: { opacity: 1, transition: { duration: cover, ease: 'linear' as const } },
+    },
+    content: {
+      initial: instant ? { opacity: 1 } : reduced ? { opacity: 0 } : { opacity: 0, y: 10 },
+      animate: { opacity: 1, y: 0, transition: { duration: inDur, ease: ease.out } },
     },
   };
 }
 
-const layerStyle = { position: 'relative', minHeight: '100%', background: 'var(--bg)' } as const;
+const layerStyle = { position: 'relative', minHeight: '100%' } as const;
+const paperStyle = { position: 'absolute', inset: 0, background: 'var(--bg)', pointerEvents: 'none' } as const;
+const contentStyle = { position: 'relative', minHeight: '100%' } as const;
+
+/** One route layer: its paper and its content fade separately (see `layerTransition`). */
+function Dissolve({ t, children, ref }: { t: ReturnType<typeof layerTransition>; children: ReactNode; ref?: Ref<HTMLDivElement> }) {
+  // `ref` is forwarded so AnimatePresence's popLayout can measure and pop the exiting layer.
+  return (
+    <motion.div ref={ref} {...t.layer} style={layerStyle}>
+      <motion.div aria-hidden="true" {...t.paper} style={paperStyle} />
+      <motion.div {...t.content} style={contentStyle}>
+        {children}
+      </motion.div>
+    </motion.div>
+  );
+}
 
 function RouteView({ route }: { route: Route }) {
   const { area, Screen } = SCREENS[route];
@@ -104,9 +132,9 @@ function TabSwitch({ route, reduced }: { route: Route; reduced: boolean }) {
   return (
     <div style={{ position: 'relative' }}>
       <AnimatePresence mode="popLayout" initial={false}>
-        <motion.div key={route} {...layerTransition(reduced)} style={layerStyle}>
+        <Dissolve key={route} t={layerTransition(reduced)}>
           <RouteView route={route} />
-        </motion.div>
+        </Dissolve>
       </AnimatePresence>
     </div>
   );
@@ -141,8 +169,7 @@ export function App() {
   useEffect(() => {
     prevRoute.current = route;
   }, [route]);
-  const transition = layerTransition(reduced);
-  if (fromBloom) transition.initial = { opacity: 1, zIndex: 1 };
+  const transition = layerTransition(reduced, fromBloom);
 
   let layer: ReactNode;
   if (inShell) {
@@ -159,9 +186,9 @@ export function App() {
     <>
       <div style={{ position: 'relative', minHeight: '100%' }}>
         <AnimatePresence mode="popLayout" initial={false}>
-          <motion.div key={layerKey} {...transition} style={layerStyle}>
+          <Dissolve key={layerKey} t={transition}>
             {layer}
-          </motion.div>
+          </Dissolve>
         </AnimatePresence>
       </div>
       <ShellOverlays />

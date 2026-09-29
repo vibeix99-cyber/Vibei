@@ -135,7 +135,7 @@ describe('safe restore: compare, add, replace, undo', () => {
     const leaves = s.leaves;
 
     const again = previewImport(json, { mode: 'merge' });
-    expect(again.ok && again.summary).toMatchObject({ added: 0, duplicates: 2 });
+    expect(again.ok && again.summary).toMatchObject({ added: 0, updated: 0, duplicates: 2 });
     importData(json, { mode: 'merge' });
     expect(useProgress.getState().sessions.filter((x) => x.phase === 'focus')).toHaveLength(5);
     expect(useProgress.getState().leaves).toBe(leaves);
@@ -150,12 +150,53 @@ describe('safe restore: compare, add, replace, undo', () => {
     expect(useProgress.getState().sessions.map((x) => x.intention)).toContain('Thesis');
     expect(useSettings.getState()).toMatchObject({ name: 'Other', dailyGoalMin: 15 });
 
-    expect(undoLastImport()).toBe(true);
+    expect(undoLastImport()).toBe('undone');
     expect(useProgress.getState().sessions).toEqual(was.sessions);
     expect(useProgress.getState().ledger).toEqual(was.ledger);
     expect(useProgress.getState().leaves).toBe(was.leaves);
     expect(useSettings.getState()).toMatchObject({ name: 'Robin', dailyGoalMin: 60 });
-    expect(undoLastImport()).toBe(false);
+    expect(undoLastImport()).toBe('none');
+  });
+
+  it('adding takes newer edits from the backup and keeps brews deleted here deleted', () => {
+    recordSome();
+    const [a, b] = useProgress.getState().sessions.filter((x) => x.phase === 'focus');
+    const doc = JSON.parse(exportData());
+    // The other device edited brew a later; this device then deletes brew b.
+    doc.progress.sessions = doc.progress.sessions.map((x: { id: string; endedAt: number }) => (x.id === a.id ? { ...x, intention: 'Essay v2', outcome: 'done', v: x.endedAt + 60_000 } : x));
+    useProgress.getState().deleteSession(b.id);
+    const json = JSON.stringify(doc);
+    const res = previewImport(json, { mode: 'merge' });
+    expect(res.ok && res.summary).toMatchObject({ added: 0, updated: 1, deletedHere: 1 });
+    importData(json, { mode: 'merge' });
+    const s = useProgress.getState();
+    expect(s.sessions.find((x) => x.id === a.id)).toMatchObject({ intention: 'Essay v2', outcome: 'done' });
+    expect(s.sessions.some((x) => x.id === b.id), 'deleted here stays deleted').toBe(false);
+    expect(s.tombstones).toContain(b.id);
+    const again = previewImport(json, { mode: 'merge' });
+    expect(again.ok && again.summary).toMatchObject({ added: 0, updated: 0, deletedHere: 1 });
+  });
+
+  it('undo declines when brews or settings changed after the import', () => {
+    recordSome();
+    importData(otherDevice(), { mode: 'merge' });
+    useProgress.getState().recordSession(brew(TODAY, 13, 0, { intention: 'After the import' }));
+    expect(undoLastImport()).toBe('changed');
+    expect(useProgress.getState().sessions.some((x) => x.intention === 'After the import')).toBe(true);
+    importData(otherDevice(), { mode: 'replace' });
+    useSettings.getState().set({ name: 'Changed later' });
+    expect(undoLastImport()).toBe('changed');
+    expect(useSettings.getState().name).toBe('Changed later');
+  });
+
+  it('a damaged ledger is recounted, not reported as lost; files without a schema number still import', () => {
+    recordSome();
+    const doc = JSON.parse(exportData());
+    doc.progress.ledger = doc.progress.ledger.map((e: object) => ({ ...e, amount: -5 }));
+    const res = previewImport(JSON.stringify(doc), { mode: 'replace' });
+    expect(res.ok && res.summary).toMatchObject({ skipped: 0, ledgerRebuilt: true });
+    delete doc.schema;
+    expect(previewImport(JSON.stringify(doc)).ok).toBe(true);
   });
 
   it('a failed import changes nothing and leaves nothing to undo', () => {

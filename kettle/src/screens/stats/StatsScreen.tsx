@@ -180,7 +180,7 @@ function LevelCard({ level, leaves, into, size }: { level: number; leaves: numbe
         <span>
           {next ? (
             <>
-              Next for your nook: <strong>{next.name}</strong> at level {next.unlockLevel}
+              Next for your nook: <strong>a surprise</strong> at level {next.unlockLevel}
             </>
           ) : (
             <>Your nook is complete. Every item is yours.</>

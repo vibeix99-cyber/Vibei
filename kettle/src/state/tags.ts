@@ -23,3 +23,11 @@ export const TAGS: TagMeta[] = [
 ];
 
 export const TAG_BY_ID = Object.fromEntries(TAGS.map((t) => [t.id, t])) as Record<TagId, TagMeta>;
+
+/** What a brew is called wherever it's listed (Today, History…): its intention, else its tag, else a quiet brew. */
+export function brewTitle(s: { intention: string; tag: TagId | null }): string {
+  const words = s.intention.trim();
+  if (words) return words;
+  const meta = s.tag ? TAG_BY_ID[s.tag] : null;
+  return meta ? `${meta.label} brew` : 'A quiet brew';
+}

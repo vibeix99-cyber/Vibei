@@ -13,7 +13,7 @@ import { levelFromLeaves } from './levels';
 import { localeWeekStart } from './streak';
 import { pickData, syncFromStorage, useProgress } from './store';
 import { coerceData } from './validate';
-import type { ProgressData } from './types';
+import type { ProgressData, SessionRecord } from './types';
 
 /** Brews / leaves / level of one side of an import (this device now, or after the import). */
 export interface ProgressGlance {
@@ -31,8 +31,12 @@ export interface ImportSummary {
   after: ProgressGlance;
   /** Focus sessions in the backup that this device doesn't have yet. */
   added: number;
-  /** Focus sessions in the backup that are already here (skipped when adding). */
+  /** Focus sessions here that the backup has a newer edit of (adding takes the newer one). */
+  updated: number;
+  /** Focus sessions in the backup that are already here, unchanged (skipped when adding). */
   duplicates: number;
+  /** Focus sessions in the backup that were deleted on this device (adding keeps them deleted). */
+  deletedHere: number;
   /** Focus sessions in the backup (after validation). */
   sessions: number;
   breaks: number;
@@ -44,8 +48,10 @@ export interface ImportSummary {
   /** First and last day in the backup (null when empty). */
   from: string | null;
   to: string | null;
-  /** Records dropped because they were damaged. */
+  /** Brews dropped because they were damaged. */
   skipped: number;
+  /** The leaves ledger was missing or damaged and is recounted from the brews (nothing is lost). */
+  ledgerRebuilt: boolean;
   /** Settings were included and will be restored. */
   settings: boolean;
   exportedAt: string | null;
@@ -123,7 +129,8 @@ function parseBackup(json: string, opts: ImportOptions): { ok: true; parsed: Par
     return { ok: false, error: 'That file doesn’t look like a Kettle backup.' };
   }
   const doc = raw as { schema?: unknown; progress?: unknown; settings?: unknown; exportedAt?: unknown };
-  const schema = typeof doc.schema === 'number' ? doc.schema : 0;
+  // Very early exports had no schema number: anything with a progress object is read as schema 1.
+  const schema = typeof doc.schema === 'number' ? doc.schema : typeof doc.progress === 'object' && doc.progress !== null ? 1 : 0;
   if (schema > SCHEMA_VERSION) {
     return { ok: false, error: 'This backup is from a newer version of Kettle. Update the app, then try again.' };
   }
@@ -143,7 +150,8 @@ function parseBackup(json: string, opts: ImportOptions): { ok: true; parsed: Par
   // The backup on its own (what "replace" restores).
   let backup: ProgressData;
   const noLedger = incoming.ledger.length === 0 && incoming.sessions.length > 0;
-  if (!stats.hadLedger || (stats.ledgerIn > 0 && stats.ledgerKept === 0) || noLedger) {
+  const ledgerRebuilt = !stats.hadLedger || (stats.ledgerIn > 0 && stats.ledgerKept === 0) || noLedger;
+  if (ledgerRebuilt) {
     // Older/partial backup without a usable ledger: rebuild it from the sessions.
     backup = refreshCaches(replay(incoming.sessions, { goalMin, weekStartsOn: localeWeekStart(), dayGoals: incoming.dayGoals }), today);
     backup = { ...backup, badges: { ...backup.badges, ...incoming.badges } };
@@ -153,13 +161,32 @@ function parseBackup(json: string, opts: ImportOptions): { ok: true; parsed: Par
 
   syncFromStorage();
   const current = pickData(useProgress.getState());
-  const hereIds = new Set(current.sessions.map((s) => s.id));
   const backupFocus = backup.sessions.filter((s) => s.phase === 'focus');
-  const duplicates = backupFocus.filter((s) => hereIds.has(s.id)).length;
+
+  // Per brew, the latest event wins (same rule as cross-tab sync): a newer edit in the backup updates
+  // the brew here; a brew deleted here after the backup was made stays deleted.
+  const version = (s: SessionRecord) => s.v ?? s.endedAt;
+  const hereById = new Map(current.sessions.map((s) => [s.id, s]));
+  const deletedHere = new Map(current.tombstones.map((id) => [id, current.deletedAt?.[id] ?? Infinity]));
+  const merged = new Map(hereById);
+  const count = { added: 0, updated: 0, duplicates: 0, deletedHere: 0 };
+  for (const s of incoming.sessions) {
+    const focus = s.phase === 'focus';
+    const here = hereById.get(s.id);
+    if ((deletedHere.get(s.id) ?? -Infinity) >= version(s)) {
+      if (focus) count.deletedHere++;
+    } else if (!here) {
+      merged.set(s.id, s);
+      if (focus) count.added++;
+    } else if (version(s) > version(here)) {
+      merged.set(s.id, s);
+      if (focus) count.updated++;
+    } else if (focus) count.duplicates++;
+  }
 
   let data: ProgressData;
   if (mode === 'merge') {
-    const all = [...current.sessions, ...incoming.sessions.filter((s) => !hereIds.has(s.id))];
+    const all = [...merged.values()].sort((a, b) => a.endedAt - b.endedAt);
     const rebuilt = replay(all, { goalMin, weekStartsOn: localeWeekStart(), dayGoals: { ...incoming.dayGoals, ...current.dayGoals } });
     // Never lose leaves or badges either side already earned.
     const maxLeaves = Math.max(current.leaves, backup.leaves);
@@ -169,7 +196,8 @@ function parseBackup(json: string, opts: ImportOptions): { ok: true; parsed: Par
     const badges = { ...rebuilt.badges };
     for (const src of [backup.badges, current.badges])
       for (const [id, b] of Object.entries(src)) if (!badges[id] || badges[id].tier < b.tier) badges[id] = b;
-    data = refreshCaches({ ...rebuilt, badges, quests: { ...rebuilt.quests, ...current.quests } }, today);
+    // This device's deletions stay recorded, so the same backup added again can't bring them back.
+    data = refreshCaches({ ...rebuilt, badges, quests: { ...rebuilt.quests, ...current.quests }, tombstones: current.tombstones, deletedAt: current.deletedAt }, today);
   } else {
     data = backup;
   }
@@ -185,8 +213,7 @@ function parseBackup(json: string, opts: ImportOptions): { ok: true; parsed: Par
         mode,
         here: glance(current),
         after: glance(data),
-        added: backupFocus.length - duplicates,
-        duplicates,
+        ...count,
         sessions: backupFocus.length,
         breaks: backup.sessions.length - backupFocus.length,
         focusMs: backupFocus.reduce((a, s) => a + s.focusedMs, 0),
@@ -195,7 +222,8 @@ function parseBackup(json: string, opts: ImportOptions): { ok: true; parsed: Par
         days: days.length,
         from: days[0] ?? null,
         to: days[days.length - 1] ?? null,
-        skipped: stats.sessionsIn - stats.sessionsKept + (stats.ledgerIn - stats.ledgerKept),
+        skipped: stats.sessionsIn - stats.sessionsKept,
+        ledgerRebuilt: ledgerRebuilt && stats.sessionsKept > 0,
         settings: !!settings,
         exportedAt: typeof doc.exportedAt === 'string' ? doc.exportedAt : null,
       },
@@ -213,7 +241,11 @@ export function previewImport(json: string, opts: ImportOptions = {}): ImportRes
   return res.ok ? { ok: true, summary: res.parsed.summary } : res;
 }
 
-let undoSnapshot: { progress: ProgressData; settings: Partial<Settings> } | null = null;
+let undoSnapshot: { progress: ProgressData; settings: Partial<Settings>; after: ProgressData; afterSettings: string } | null = null;
+
+/** Brews, their versions and deletions: what a person would notice changing. */
+const brewsKey = (d: ProgressData) =>
+  JSON.stringify([d.epoch ?? '', d.sessions.map((s) => `${s.id}@${s.v ?? s.endedAt}`).sort(), [...d.tombstones].sort()]);
 
 /**
  * Restore a backup. Replaces progress (or merges with `mode: 'merge'`) and restores settings.
@@ -223,20 +255,26 @@ export function importData(json: string, opts: ImportOptions = {}): ImportResult
   const res = parseBackup(json, opts);
   if (!res.ok) return res;
   const { data, settings, summary } = res.parsed;
-  undoSnapshot = { progress: { ...pickData(useProgress.getState()), lastReport: null }, settings: exportableSettings() };
+  const before = { progress: { ...pickData(useProgress.getState()), lastReport: null }, settings: exportableSettings() };
   useProgress.getState().load(data);
   if (settings) useSettings.getState().set({ ...settings, onboarded: settings.onboarded ?? true });
+  undoSnapshot = { ...before, after: pickData(useProgress.getState()), afterSettings: JSON.stringify(exportableSettings()) };
   return { ok: true, summary };
 }
 
-/** Put back exactly what was here before the last import (this session). */
-export function undoLastImport(): boolean {
-  if (!undoSnapshot) return false;
-  const { progress, settings } = undoSnapshot;
+/**
+ * Put back exactly what was here before the last import (this session). Declines ('changed') if brews or
+ * settings changed since the import — here or in another tab — because restoring the old copy would erase them.
+ */
+export function undoLastImport(): 'undone' | 'changed' | 'none' {
+  if (!undoSnapshot) return 'none';
+  syncFromStorage();
+  const { progress, settings, after, afterSettings } = undoSnapshot;
   undoSnapshot = null;
+  if (brewsKey(pickData(useProgress.getState())) !== brewsKey(after) || JSON.stringify(exportableSettings()) !== afterSettings) return 'changed';
   useProgress.getState().load(progress);
   useSettings.getState().set(settings);
-  return true;
+  return 'undone';
 }
 
 export const canUndoImport = (): boolean => undoSnapshot !== null;

@@ -1,4 +1,6 @@
 /** Home — "Today". OWNER: home area. */
+import { useRef } from 'react';
+import { useRoute } from '@/app/router';
 import { useTimer } from '@/timer';
 import { useUnlockedItems } from '@/progress';
 import { usePrewarmNook } from '@/scene';
@@ -11,12 +13,18 @@ import s from './Home.module.css';
 
 export default function HomeScreen() {
   const data = useHomeData();
-  const active = useTimer((t) => t.status !== 'idle');
+  // While Today is the outgoing layer of "Put the kettle on", keep the frame you tapped from:
+  // don't swap the composer for the "kettle's on" banner mid-dissolve.
+  const route = useRoute();
+  const live = useTimer((t) => t.status !== 'idle');
+  const shown = useRef(live);
+  if (route === '/') shown.current = live;
+  const active = shown.current;
   // Build the 3D nook off-screen while Home idles, so "Put the kettle on" doesn't stall on it.
   usePrewarmNook(useUnlockedItems());
   return (
-    <div className={s.screen}>
-      {/* Two columns on landscape phones (greeting + goal | composer + CTA); one flow elsewhere. */}
+    <div className={s.screen} data-tablet="wide">
+      {/* Two columns on landscape phones and tablets (greeting + goal | composer + CTA); one flow elsewhere. */}
       <div className={s.colA}>
         <Hero data={data} status={<StatusBar data={data} />} />
         {active ? <ResumeBanner /> : null}

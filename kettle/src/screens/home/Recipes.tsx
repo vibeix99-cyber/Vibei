@@ -3,7 +3,7 @@ import { Icon, Mascot, QuestIcon, Leaf } from '@/art';
 import type { Quest, SessionRecord } from '@/progress';
 import { formatDuration } from '@/lib/format';
 import { Card, Pill, ProgressBar } from '@/ui';
-import { TAG_BY_ID } from '@/state/tags';
+import { TAG_BY_ID, brewTitle } from '@/state/tags';
 import s from './Home.module.css';
 
 export function RecipesCard({ quests }: { quests: Quest[] }) {
@@ -79,7 +79,7 @@ export function TodayBrews({ sessions }: { sessions: SessionRecord[] }) {
                 {x.completed && <Icon name="check" size={14} />}
               </span>
               <div className={s.tlBody}>
-                <p className={s.tlTitle}>{x.intention || 'A quiet brew'}</p>
+                <p className={s.tlTitle}>{brewTitle(x)}</p>
                 <p className={s.tlMeta}>
                   {x.tag && TAG_BY_ID[x.tag] && (
                     <Pill size="sm" tone={TAG_BY_ID[x.tag].tone} icon={TAG_BY_ID[x.tag].icon}>

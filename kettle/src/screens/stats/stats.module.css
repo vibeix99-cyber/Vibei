@@ -624,7 +624,8 @@
   font-variant-numeric: tabular-nums;
 }
 .calDay[data-state='done'] .calNum {
-  background: var(--persimmon);
+  /* strong, not base persimmon: 14px white numbers need 4.5:1 (base persimmon gives 3.4:1) */
+  background: var(--persimmon-strong);
   color: var(--persimmon-on);
   font-weight: 900;
   box-shadow: inset 0 -3px 0 var(--persimmon-edge);
@@ -1150,16 +1151,17 @@
 .sessionUntitled {
   color: var(--ink-2);
 }
+/* "✓ Done ·" leads the meta line of an intention marked done (text, not just a glyph). */
 .doneMark {
-  display: inline-grid;
-  place-items: center;
-  width: 18px;
-  height: 18px;
-  margin-right: 6px;
-  vertical-align: -3px;
-  border-radius: 999px;
-  background: var(--matcha-soft);
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
   color: var(--matcha-ink);
+  font-weight: 800;
+  white-space: pre;
+}
+.editDone {
+  justify-self: start;
 }
 .sessionMeta {
   font-size: var(--text-caption);
@@ -1330,7 +1332,7 @@
     gap: var(--space-3);
   }
 }
-@container (min-width: 760px) {
+@container (min-width: 680px) {
   .columns {
     grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
     column-gap: var(--space-5);

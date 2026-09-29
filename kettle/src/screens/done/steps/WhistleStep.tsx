@@ -196,11 +196,12 @@ function IntentionChoice({ record }: { record: SessionRecord }) {
   const outcome = useProgress((st) => st.sessions.find((x) => x.id === record.id)?.outcome);
   return (
     <div className={s.intentChoice} role="group" aria-label={`${record.intention}: done, or carry it forward to your next brew?`}>
-      {/* The chip's own tick marks the choice, so the leading icon steps aside when selected. */}
-      <Chip tone="matcha" icon={outcome === 'done' ? undefined : 'check'} selected={outcome === 'done'} onClick={() => setIntentionOutcome(record, 'done')}>
+      {/* The chip's own tick marks the choice, so the leading icon steps aside when selected.
+          Pressing the selected chip again takes the choice back. */}
+      <Chip tone="matcha" icon={outcome === 'done' ? undefined : 'check'} selected={outcome === 'done'} onClick={() => setIntentionOutcome(record, outcome === 'done' ? null : 'done')}>
         Done
       </Chip>
-      <Chip tone="honey" icon={outcome === 'carried' ? undefined : 'refresh'} selected={outcome === 'carried'} onClick={() => setIntentionOutcome(record, 'carried')}>
+      <Chip tone="honey" icon={outcome === 'carried' ? undefined : 'refresh'} selected={outcome === 'carried'} onClick={() => setIntentionOutcome(record, outcome === 'carried' ? null : 'carried')}>
         Carry forward
       </Chip>
     </div>

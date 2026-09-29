@@ -69,7 +69,7 @@ export function BadgesSection({ badges, today }: { badges: BadgeProgress[]; toda
             Badges
           </h2>
           <p className={s.cardSub}>
-            {earnedBadges} of {badges.length} badges earned · {earnedTiers} of {totalTiers} tiers
+            {earnedBadges === badges.length ? `Every badge started · ${earnedTiers} of ${totalTiers} tiers` : `${earnedBadges} of ${badges.length} badges earned · ${earnedTiers} of ${totalTiers} tiers`}
           </p>
         </div>
       </div>

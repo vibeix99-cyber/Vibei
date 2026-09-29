@@ -9,7 +9,8 @@
 import { useProgress, type IntentionOutcome, type SessionRecord } from '@/progress';
 import { useTimer } from '@/timer';
 
-export function setIntentionOutcome(record: Pick<SessionRecord, 'id' | 'intention' | 'tag'>, outcome: IntentionOutcome): void {
+/** `null` takes the choice back (the intention is kept for the next brew, as when nothing was chosen). */
+export function setIntentionOutcome(record: Pick<SessionRecord, 'id' | 'intention' | 'tag'>, outcome: IntentionOutcome | null): void {
   const words = record.intention.trim();
   if (!words) return;
   useProgress.getState().editSession(record.id, { outcome });
