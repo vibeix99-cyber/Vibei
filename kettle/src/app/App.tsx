@@ -10,7 +10,7 @@
  *    in ON TOP of the outgoing one, which stays opaque underneath until it is
  *    removed — a dissolve, never a gap and never a double exposure.
  */
-import { lazy, Suspense, useEffect, type ComponentType, type ReactNode } from 'react';
+import { lazy, Suspense, useEffect, useRef, type ComponentType, type ReactNode } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useSettings } from '@/state/settings';
 import { useTimer } from '@/timer';
@@ -134,6 +134,15 @@ export function App() {
 
   const inShell = TAB_ROUTES.includes(route);
   const layerKey = inShell ? 'shell' : route;
+  // The whistle "bloom" already paints the celebration's background, so focus → done
+  // must not fade in again from zero on top of it (that read as a blank cream beat).
+  const prevRoute = useRef(route);
+  const fromBloom = prevRoute.current === '/focus' && route === '/done';
+  useEffect(() => {
+    prevRoute.current = route;
+  }, [route]);
+  const transition = layerTransition(reduced);
+  if (fromBloom) transition.initial = { opacity: 1, zIndex: 1 };
 
   let layer: ReactNode;
   if (inShell) {
@@ -150,7 +159,7 @@ export function App() {
     <>
       <div style={{ position: 'relative', minHeight: '100%' }}>
         <AnimatePresence mode="popLayout" initial={false}>
-          <motion.div key={layerKey} {...layerTransition(reduced)} style={layerStyle}>
+          <motion.div key={layerKey} {...transition} style={layerStyle}>
             {layer}
           </motion.div>
         </AnimatePresence>

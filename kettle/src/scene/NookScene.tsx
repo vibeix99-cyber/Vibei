@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { NookSceneProps } from './types';
 import { nextTask, type EngineState, type NookEngine } from './engine/Engine';
 import { DARK_DIM, backdropCss, debugOn, isMobileDevice, softwareGL, useDarkTheme, useDebugItems, useReducedMotion, useSceneTier, useSceneTime, useSceneWeather } from './resolve';
-import { SETTLE_MS, createEngine, settled, takeWarm, type EngineSpec } from './warm';
+import { SETTLE_MS, createEngine, settled, stash, takeWarm, type EngineSpec } from './warm';
 import { NookStatic } from './Fallback';
 
 /** Canvas fade-in over the static nook. */
@@ -132,8 +132,10 @@ export default function NookScene(props: NookSceneProps) {
       undo.forEach((f) => f());
       const e = engine ?? warm?.engine;
       if (e) {
-        e.dispose();
         e.canvas.remove();
+        // Keep it warm for the next nook: a synchronous dispose stalled the whistle → celebration
+        // hand-off ~700 ms on slow GPUs (and idle-deferring it just moved the stall into the celebration).
+        if (!stash(e, spec)) e.dispose();
       }
       engineRef.current = null;
       setReady(false);

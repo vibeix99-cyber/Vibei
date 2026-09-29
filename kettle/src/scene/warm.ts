@@ -67,6 +67,20 @@ export function prewarm(spec: EngineSpec, state: Partial<EngineState>): void {
   slot = { engine, key, ready };
 }
 
+/**
+ * Park a still-usable engine from an unmounting nook for the next mount to adopt, instead of
+ * disposing it. Disposing (freeing the context and every program) blocked the main thread
+ * ~700 ms right at the whistle → celebration hand-off on slow GPUs. Returns false if the slot
+ * is taken or the engine can't be reused (the caller should then dispose it).
+ */
+export function stash(engine: NookEngine, spec: EngineSpec): boolean {
+  if (slot || !engine.usable) return false;
+  engine.setRunning(false);
+  engine.detachInput();
+  slot = { engine, key: keyOf(spec), ready: Promise.resolve(true) };
+  return true;
+}
+
 /** Hand over the warm engine if it matches `spec` (a mismatched one is discarded). */
 export function takeWarm(spec: EngineSpec): { engine: NookEngine; ready: Promise<boolean> } | null {
   const s = slot;
