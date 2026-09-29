@@ -923,7 +923,7 @@
   display: grid;
   justify-items: center;
   gap: 4px;
-  padding: var(--space-3) var(--space-1);
+  padding: var(--space-3) 0;
   border-radius: var(--r-lg);
   cursor: pointer;
   text-align: center;
@@ -946,9 +946,35 @@
   margin-top: 4px;
 }
 .badgeMeta {
-  font-size: var(--text-caption);
-  font-weight: 700;
+  font-size: var(--text-body-s);
+  font-weight: 800;
   color: var(--ink-2);
+}
+/* Progress toward the next tier, right under each badge (blind review: "no badge shows progress"). */
+.badgeProgress {
+  display: grid;
+  gap: 3px;
+  width: min(92px, 100%);
+  margin-top: 2px;
+}
+.badgeTrack {
+  display: block;
+  height: 6px;
+  border-radius: var(--r-pill);
+  background: var(--surface-3);
+  overflow: hidden;
+}
+.badgeFill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--honey);
+}
+.badgeCount {
+  font-size: var(--text-caption);
+  font-weight: 800;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
 }
 .badgeDetail {
   display: grid;

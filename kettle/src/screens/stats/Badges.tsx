@@ -84,9 +84,19 @@ export function BadgesSection({ badges, today }: { badges: BadgeProgress[]; toda
                 onClick={() => setOpenId(b.id)}
                 aria-label={`${b.title}, ${b.tier === 0 ? 'locked' : b.maxTier > 1 ? `tier ${b.tier} of ${b.maxTier}` : 'earned'}. ${b.next != null ? `${next} toward the next tier.` : ''}`}
               >
-                <BadgeMedal badge={b} />
+                <BadgeMedal badge={b} size={92} />
                 <span className={s.badgeName}>{b.title}</span>
-                <span className={s.badgeMeta}>{b.tier === 0 ? next : b.maxTier > 1 ? `Tier ${ROMAN[b.tier]}` : 'Earned'}</span>
+                <span className={s.badgeMeta}>{b.tier === 0 ? 'Locked' : b.maxTier > 1 ? `Tier ${ROMAN[b.tier]}` : 'Earned'}</span>
+                {b.next != null ? (
+                  <span className={s.badgeProgress} aria-hidden="true">
+                    <span className={s.badgeTrack}>
+                      <span className={s.badgeFill} style={{ width: `${Math.min(100, Math.round((b.value / b.next) * 100))}%` }} />
+                    </span>
+                    <span className={s.badgeCount}>{next}</span>
+                  </span>
+                ) : (
+                  b.maxTier > 1 && <span className={s.badgeCount}>All tiers ✓</span>
+                )}
               </button>
             </li>
           );
@@ -94,7 +104,7 @@ export function BadgesSection({ badges, today }: { badges: BadgeProgress[]; toda
       </ul>
       {ordered.length > PREVIEW && (
         <Button variant="secondary" block aria-expanded={all} aria-controls={gridId} onClick={() => setAll((v) => !v)} iconRight={all ? 'chevronUp' : 'chevronDown'}>
-          {all ? 'Show fewer' : `View all ${ordered.length} badges`}
+          {all ? 'Show fewer' : `Show ${ordered.length - PREVIEW} more badges`}
         </Button>
       )}
       <BadgeSheet badge={open} today={today} onClose={() => setOpenId(null)} />
