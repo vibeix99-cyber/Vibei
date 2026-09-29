@@ -15,7 +15,24 @@ import { pickData, syncFromStorage, useProgress } from './store';
 import { coerceData } from './validate';
 import type { ProgressData } from './types';
 
+/** Brews / leaves / level of one side of an import (this device now, or after the import). */
+export interface ProgressGlance {
+  sessions: number;
+  leaves: number;
+  level: number;
+}
+
 export interface ImportSummary {
+  /** How this preview would restore (see ImportOptions.mode). */
+  mode: 'replace' | 'merge';
+  /** What's on this device right now. */
+  here: ProgressGlance;
+  /** What this device would hold after restoring in `mode`. */
+  after: ProgressGlance;
+  /** Focus sessions in the backup that this device doesn't have yet. */
+  added: number;
+  /** Focus sessions in the backup that are already here (skipped when adding). */
+  duplicates: number;
   /** Focus sessions in the backup (after validation). */
   sessions: number;
   breaks: number;
@@ -39,7 +56,7 @@ export type ImportResult = { ok: true; summary: ImportSummary } | { ok: false; e
 export interface ImportOptions {
   /** 'replace' (default) swaps everything; 'merge' adds sessions not already here and rebuilds leaves. */
   mode?: 'replace' | 'merge';
-  /** Restore settings from the backup too (default true). */
+  /** Restore settings from the backup too. Default: yes when replacing, no when adding (your settings stay). */
   settings?: boolean;
 }
 
@@ -118,48 +135,63 @@ function parseBackup(json: string, opts: ImportOptions): { ok: true; parsed: Par
   if (stats.sessionsIn > 0 && stats.sessionsKept === 0) {
     return { ok: false, error: 'The sessions in this backup look damaged, so nothing was changed.' };
   }
-  const settings = opts.settings === false ? null : coerceSettings(doc.settings);
+  const mode = opts.mode ?? 'replace';
+  const settings = (opts.settings ?? mode === 'replace') ? coerceSettings(doc.settings) : null;
   const goalMin = settings?.dailyGoalMin ?? getSettings().dailyGoalMin;
   const today = dayKey(now);
 
+  // The backup on its own (what "replace" restores).
+  let backup: ProgressData;
+  const noLedger = incoming.ledger.length === 0 && incoming.sessions.length > 0;
+  if (!stats.hadLedger || (stats.ledgerIn > 0 && stats.ledgerKept === 0) || noLedger) {
+    // Older/partial backup without a usable ledger: rebuild it from the sessions.
+    backup = refreshCaches(replay(incoming.sessions, { goalMin, weekStartsOn: localeWeekStart(), dayGoals: incoming.dayGoals }), today);
+    backup = { ...backup, badges: { ...backup.badges, ...incoming.badges } };
+  } else {
+    backup = refreshCaches(incoming, today);
+  }
+
+  syncFromStorage();
+  const current = pickData(useProgress.getState());
+  const hereIds = new Set(current.sessions.map((s) => s.id));
+  const backupFocus = backup.sessions.filter((s) => s.phase === 'focus');
+  const duplicates = backupFocus.filter((s) => hereIds.has(s.id)).length;
+
   let data: ProgressData;
-  if ((opts.mode ?? 'replace') === 'merge') {
-    syncFromStorage();
-    const current = pickData(useProgress.getState());
-    const ids = new Set(current.sessions.map((s) => s.id));
-    const all = [...current.sessions, ...incoming.sessions.filter((s) => !ids.has(s.id))];
+  if (mode === 'merge') {
+    const all = [...current.sessions, ...incoming.sessions.filter((s) => !hereIds.has(s.id))];
     const rebuilt = replay(all, { goalMin, weekStartsOn: localeWeekStart(), dayGoals: { ...incoming.dayGoals, ...current.dayGoals } });
     // Never lose leaves or badges either side already earned.
-    const maxLeaves = Math.max(current.leaves, incoming.leaves);
+    const maxLeaves = Math.max(current.leaves, backup.leaves);
     if (maxLeaves > rebuilt.leaves) {
       rebuilt.ledger.push({ id: `carry:merge:${now}`, at: now, day: today, kind: 'carryOver', amount: maxLeaves - rebuilt.leaves, note: 'Carried over' });
     }
     const badges = { ...rebuilt.badges };
-    for (const src of [incoming.badges, current.badges])
+    for (const src of [backup.badges, current.badges])
       for (const [id, b] of Object.entries(src)) if (!badges[id] || badges[id].tier < b.tier) badges[id] = b;
     data = refreshCaches({ ...rebuilt, badges, quests: { ...rebuilt.quests, ...current.quests } }, today);
-  } else if (!stats.hadLedger || (stats.ledgerIn > 0 && stats.ledgerKept === 0)) {
-    // Older/partial backup without a usable ledger: rebuild it from the sessions.
-    data = refreshCaches(replay(incoming.sessions, { goalMin, weekStartsOn: localeWeekStart(), dayGoals: incoming.dayGoals }), today);
-    data = { ...data, badges: { ...data.badges, ...incoming.badges } };
   } else {
-    data = refreshCaches(incoming, today);
+    data = backup;
   }
   data = { ...data, lastReport: null };
 
-  const focus = data.sessions.filter((s) => s.phase === 'focus');
-  const days = [...new Set(focus.map((s) => s.day))].sort();
+  const days = [...new Set(backupFocus.map((s) => s.day))].sort();
   return {
     ok: true,
     parsed: {
       data,
       settings,
       summary: {
-        sessions: focus.length,
-        breaks: data.sessions.length - focus.length,
-        focusMs: focus.reduce((a, s) => a + s.focusedMs, 0),
-        leaves: data.leaves,
-        level: levelFromLeaves(data.leaves).level,
+        mode,
+        here: glance(current),
+        after: glance(data),
+        added: backupFocus.length - duplicates,
+        duplicates,
+        sessions: backupFocus.length,
+        breaks: backup.sessions.length - backupFocus.length,
+        focusMs: backupFocus.reduce((a, s) => a + s.focusedMs, 0),
+        leaves: backup.leaves,
+        level: levelFromLeaves(backup.leaves).level,
         days: days.length,
         from: days[0] ?? null,
         to: days[days.length - 1] ?? null,
@@ -171,24 +203,47 @@ function parseBackup(json: string, opts: ImportOptions): { ok: true; parsed: Par
   };
 }
 
+function glance(d: ProgressData): ProgressGlance {
+  return { sessions: d.sessions.filter((s) => s.phase === 'focus').length, leaves: d.leaves, level: levelFromLeaves(d.leaves).level };
+}
+
 /** Validate a backup and describe it, without changing anything (for a confirm dialog). */
 export function previewImport(json: string, opts: ImportOptions = {}): ImportResult {
   const res = parseBackup(json, opts);
   return res.ok ? { ok: true, summary: res.parsed.summary } : res;
 }
 
-/** Restore a backup. Replaces progress (or merges with `mode: 'merge'`) and restores settings. */
+let undoSnapshot: { progress: ProgressData; settings: Partial<Settings> } | null = null;
+
+/**
+ * Restore a backup. Replaces progress (or merges with `mode: 'merge'`) and restores settings.
+ * What was here before is kept (in memory) so the import can be undone.
+ */
 export function importData(json: string, opts: ImportOptions = {}): ImportResult {
   const res = parseBackup(json, opts);
   if (!res.ok) return res;
   const { data, settings, summary } = res.parsed;
+  undoSnapshot = { progress: { ...pickData(useProgress.getState()), lastReport: null }, settings: exportableSettings() };
   useProgress.getState().load(data);
   if (settings) useSettings.getState().set({ ...settings, onboarded: settings.onboarded ?? true });
   return { ok: true, summary };
 }
 
+/** Put back exactly what was here before the last import (this session). */
+export function undoLastImport(): boolean {
+  if (!undoSnapshot) return false;
+  const { progress, settings } = undoSnapshot;
+  undoSnapshot = null;
+  useProgress.getState().load(progress);
+  useSettings.getState().set(settings);
+  return true;
+}
+
+export const canUndoImport = (): boolean => undoSnapshot !== null;
+
 /** Start over: clears progress, stops any running timer and resets settings (→ onboarding). */
 export function resetAllData(opts: { keepSettings?: boolean } = {}): void {
+  undoSnapshot = null;
   // Lazy: keeps the timer out of progress's module graph (no import cycles).
   void import('@/timer')
     .then((m) => m.useTimer.getState().reset())

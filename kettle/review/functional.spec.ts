@@ -612,6 +612,82 @@ test('intention: optional start, Done / Carry forward on the finish card, surviv
   await b.close();
 });
 
+test('backup: export, re-import duplicates, cancel, add, undo, replace, undo, damaged file', async ({ page }) => {
+  test.setTimeout(180_000);
+  await boot(page, { seed: 'veteran', route: '/settings', nookq: 'off' });
+  const focusCount = () => K<number>(page, `__kettle.progress.getState().sessions.filter(s => s.phase === 'focus').length`);
+  const name = () => K<string>(page, '__kettle.settings.getState().name');
+  const n0 = await focusCount();
+  const [dl] = await Promise.all([page.waitForEvent('download'), press(page.getByRole('button', { name: /export a backup/i }))]);
+  expect(dl.suggestedFilename()).toMatch(/^kettle-backup-\d{4}-\d{2}-\d{2}\.json$/);
+  const json = readFileSync((await dl.path())!, 'utf8');
+  const pick = (file: string, text: string) => page.locator('input[type=file]').setInputFiles({ name: file, mimeType: 'application/json', buffer: Buffer.from(text) });
+  const sheet = page.getByRole('dialog');
+
+  // The same file again: everything is already here, nothing to add; Cancel changes nothing.
+  await pick('same.json', json);
+  await expect(sheet).toBeVisible();
+  await expect(sheet.getByRole('button', { name: /^add$/i }), 'nothing new to add').toBeDisabled();
+  await expect(sheet).toContainText(/already here/i);
+  await press(sheet.getByRole('button', { name: /cancel/i }));
+  await expect(sheet).toBeHidden();
+  expect(await focusCount()).toBe(n0);
+
+  // Another device's backup: adding is the default; settings stay; Undo puts it back.
+  const doc = JSON.parse(json);
+  doc.progress.sessions = doc.progress.sessions.filter((s: { phase: string }) => s.phase === 'focus').slice(0, 3).map((s: object, i: number) => ({ ...s, id: `laptop_${i}` }));
+  doc.progress.ledger = [];
+  doc.settings.name = 'Laptop';
+  const other = JSON.stringify(doc);
+  await pick('laptop.json', other);
+  await expect(sheet.getByRole('radio', { name: /add to what/i })).toBeChecked();
+  await expect(sheet).toContainText(/adds 3 brews/i);
+  await press(sheet.getByRole('button', { name: /^add$/i }));
+  await expect.poll(focusCount).toBe(n0 + 3);
+  expect(await name(), 'adding keeps your settings').not.toBe('Laptop');
+  await press(page.getByRole('button', { name: 'Undo' }));
+  await expect.poll(focusCount).toBe(n0);
+
+  // Replacing is a deliberate choice that says what will be lost, and can be undone.
+  await pick('laptop.json', other);
+  await sheet.getByRole('radio', { name: /replace what/i }).click();
+  await expect(sheet).toContainText(new RegExp(`Your ${n0} brews and settings on this device will be swapped`));
+  await press(sheet.getByRole('button', { name: /^replace$/i }));
+  await expect.poll(focusCount).toBe(3);
+  expect(await name()).toBe('Laptop');
+  await press(page.getByRole('button', { name: 'Undo' }));
+  await expect.poll(focusCount).toBe(n0);
+  expect(await name()).not.toBe('Laptop');
+
+  // A damaged file: a friendly error, nothing changes.
+  await pick('broken.json', json.slice(0, 400));
+  await expect(page.getByRole('alert')).toContainText(/couldn’t read that file/i);
+  await expect(sheet).toBeHidden();
+  expect(await focusCount()).toBe(n0);
+});
+
+test('two tabs: undo after deleting a brew sticks in both tabs', async ({ page, context }) => {
+  await boot(page, { seed: 'newbie', route: '/stats', nookq: 'off' });
+  const b = await context.newPage();
+  await b.goto('/?debug&nookq=off#/', { waitUntil: 'networkidle' });
+  await waitKettle(b);
+  const count = (p: Page) => K<number>(p, `__kettle.progress.getState().sessions.length`);
+  const n = await count(page);
+  const row = page.getByRole('button', { name: /\. Edit$/ }).first();
+  await row.scrollIntoViewIfNeeded();
+  await press(row);
+  await press(page.getByRole('button', { name: /delete this brew/i }));
+  await press(page.getByRole('dialog').getByRole('button', { name: /^delete$/i }));
+  await expect.poll(() => count(b), { message: 'tab B sees the delete' }).toBe(n - 1);
+  await press(page.getByRole('button', { name: 'Undo' }));
+  await page.waitForTimeout(1500);
+  expect(await count(page), 'undo sticks in tab A').toBe(n);
+  await expect.poll(() => count(b), { message: 'undo reaches tab B' }).toBe(n);
+  await reopen(page, '/stats');
+  expect(await count(page), 'and survives a reload').toBe(n);
+  await b.close();
+});
+
 // ---------------------------------------------------------------- 8b. round-1 additions
 
 test('reload mid-celebration resumes the same card', async ({ page }) => {

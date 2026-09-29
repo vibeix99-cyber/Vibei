@@ -14,7 +14,7 @@ import { useSettings, type AmbientKind, type RhythmId } from '@/state/settings';
 import { useTimer } from '@/timer';
 import { Button, IconButton, ProgressBar, SpeechBubble, useMediaQuery } from '@/ui';
 import { notificationStatus, requestNotificationPermission, type NotificationStatus as NotifyStatus } from '@/timer/notify';
-import { importData } from '@/progress';
+import { importData, previewImport } from '@/progress';
 import { useAmbientPreview } from '@/screens/home/shims/useAmbientPreview';
 import { AmbienceStep, GoalStep, NameStep, NotifyStep, ReadyStep, RhythmStep } from './steps';
 import s from './Welcome.module.css';
@@ -281,7 +281,11 @@ function Hello({ onStart }: { onStart: () => void }) {
     const f = e.target.files?.[0];
     e.target.value = '';
     if (!f) return;
-    const res = importData(await f.text());
+    const text = await f.text();
+    // A fresh device: restore everything. If something is already here, add to it instead of replacing it.
+    const peek = previewImport(text, { mode: 'merge' });
+    const hasProgress = peek.ok && (peek.summary.here.sessions > 0 || peek.summary.here.leaves > 0);
+    const res = importData(text, hasProgress ? { mode: 'merge', settings: true } : { mode: 'replace' });
     if (!res.ok) {
       setMsg({ tone: 'error', text: res.error });
       audio.play('error');

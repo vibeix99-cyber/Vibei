@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { addDays } from '@/lib/dates';
 import { useSettings } from '@/state/settings';
-import { exportData, importData, previewImport, resetAllData } from './portability';
+import { canUndoImport, exportData, importData, previewImport, resetAllData, undoLastImport } from './portability';
 import { migrateV1, useProgress } from './store';
 import { brew, setNow, teaBreak } from './testkit';
 
@@ -17,6 +17,7 @@ function recordSome() {
 
 beforeEach(() => {
   setNow(2026, 9, 28, 16, 0);
+  undoLastImport(); // drop any undo left by an earlier test
   useProgress.getState().resetAll();
   useSettings.getState().reset();
   useSettings.getState().set({ onboarded: true, name: 'Robin', dailyGoalMin: 60 });
@@ -93,6 +94,90 @@ describe('export / import', () => {
     expect(res.ok).toBe(true);
     expect(useProgress.getState().sessions).toHaveLength(4);
     expect(useProgress.getState().leaves).toBe(leaves);
+  });
+});
+
+describe('safe restore: compare, add, replace, undo', () => {
+  function otherDevice(): string {
+    // A backup made elsewhere: two brews this device has never seen, different settings.
+    const doc = JSON.parse(exportData());
+    doc.progress.sessions = [brew(addDays(TODAY, -3), 8, 0, { intention: 'Thesis' }), brew(addDays(TODAY, -2), 8, 0)];
+    doc.progress.ledger = [];
+    doc.settings = { ...doc.settings, name: 'Other', dailyGoalMin: 15 };
+    return JSON.stringify(doc);
+  }
+
+  it('the preview compares this device with the backup and changes nothing', () => {
+    recordSome();
+    const before = JSON.stringify(useProgress.getState().sessions);
+    const json = otherDevice();
+    const res = previewImport(json, { mode: 'merge' });
+    expect(res.ok).toBe(true);
+    if (!res.ok) return;
+    expect(res.summary).toMatchObject({ mode: 'merge', here: { sessions: 3 }, sessions: 2, added: 2, duplicates: 0, settings: false });
+    expect(res.summary.after.sessions).toBe(5);
+    expect(res.summary.leaves, 'an empty ledger is rebuilt from the brews').toBeGreaterThan(0);
+    const rep = previewImport(json, { mode: 'replace' });
+    expect(rep.ok && rep.summary).toMatchObject({ mode: 'replace', here: { sessions: 3 }, after: { sessions: 2 }, settings: true });
+    expect(JSON.stringify(useProgress.getState().sessions)).toBe(before);
+    expect(canUndoImport()).toBe(false);
+  });
+
+  it('adding keeps everything here and your settings; adding the same file again adds nothing', () => {
+    recordSome();
+    const json = otherDevice();
+    const res = importData(json, { mode: 'merge' });
+    expect(res.ok && res.summary.added).toBe(2);
+    const s = useProgress.getState();
+    expect(s.sessions.filter((x) => x.phase === 'focus')).toHaveLength(5);
+    expect(s.ledger.reduce((a, e) => a + e.amount, 0)).toBe(s.leaves);
+    expect(useSettings.getState()).toMatchObject({ name: 'Robin', dailyGoalMin: 60 });
+    const leaves = s.leaves;
+
+    const again = previewImport(json, { mode: 'merge' });
+    expect(again.ok && again.summary).toMatchObject({ added: 0, duplicates: 2 });
+    importData(json, { mode: 'merge' });
+    expect(useProgress.getState().sessions.filter((x) => x.phase === 'focus')).toHaveLength(5);
+    expect(useProgress.getState().leaves).toBe(leaves);
+  });
+
+  it('replacing swaps progress and settings, and undo puts back exactly what was here', () => {
+    recordSome();
+    useProgress.getState().editSession(useProgress.getState().sessions[0].id, { outcome: 'done' });
+    const was = { sessions: useProgress.getState().sessions, leaves: useProgress.getState().leaves, ledger: useProgress.getState().ledger };
+    const res = importData(otherDevice(), { mode: 'replace' });
+    expect(res.ok).toBe(true);
+    expect(useProgress.getState().sessions.map((x) => x.intention)).toContain('Thesis');
+    expect(useSettings.getState()).toMatchObject({ name: 'Other', dailyGoalMin: 15 });
+
+    expect(undoLastImport()).toBe(true);
+    expect(useProgress.getState().sessions).toEqual(was.sessions);
+    expect(useProgress.getState().ledger).toEqual(was.ledger);
+    expect(useProgress.getState().leaves).toBe(was.leaves);
+    expect(useSettings.getState()).toMatchObject({ name: 'Robin', dailyGoalMin: 60 });
+    expect(undoLastImport()).toBe(false);
+  });
+
+  it('a failed import changes nothing and leaves nothing to undo', () => {
+    recordSome();
+    const before = JSON.stringify(useProgress.getState().sessions);
+    const json = exportData();
+    for (const bad of [json.slice(0, json.length / 2), json.replace('"kettle"', '"other-app"'), '\u0000\u0001binary', JSON.stringify({ app: 'kettle', schema: 3, progress: {} })]) {
+      const r = importData(bad, { mode: 'replace' });
+      expect(r.ok).toBe(false);
+    }
+    expect(JSON.stringify(useProgress.getState().sessions)).toBe(before);
+    expect(canUndoImport()).toBe(false);
+  });
+
+  it('round-trips the intention outcome', () => {
+    recordSome();
+    const id = useProgress.getState().sessions.find((x) => x.intention === 'Essay')!.id;
+    useProgress.getState().editSession(id, { outcome: 'carried' });
+    const json = exportData();
+    resetAllData();
+    importData(json);
+    expect(useProgress.getState().sessions.find((x) => x.id === id)?.outcome).toBe('carried');
   });
 });
 

@@ -25,5 +25,5 @@ export { streakTimeline, weekStrip, localeWeekStart, COZY_EVERY, MAX_COZIES } fr
 export { generateQuests } from './quests';
 export { ROMAN, describeTier } from './badgeEngine';
 export { BONUS, leafLabel } from './engine';
-export { exportData, importData, previewImport, resetAllData, backupFileName } from './portability';
-export type { ImportResult, ImportSummary, ImportOptions } from './portability';
+export { exportData, importData, previewImport, resetAllData, backupFileName, undoLastImport, canUndoImport } from './portability';
+export type { ImportResult, ImportSummary, ImportOptions, ProgressGlance } from './portability';

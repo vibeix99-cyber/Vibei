@@ -4,7 +4,7 @@ import { Icon, Mascot } from '@/art';
 import { audio } from '@/audio';
 import { plural } from '@/lib/format';
 import { parseDayKey } from '@/lib/dates';
-import { importData, previewImport, resetAllData, type ImportSummary } from '@/progress';
+import { importData, previewImport, resetAllData, undoLastImport, type ImportSummary } from '@/progress';
 import { Button, ListGroup, ListRow, SegmentedControl, Sheet, toast } from '@/ui';
 import { downloadBackup } from '@/screens/home/shims/data';
 import s from './Settings.module.css';
@@ -17,8 +17,7 @@ const fmtDay = (d: string | null) => (d ? dateFmt.format(parseDayKey(d)) : '');
 export function DataSection() {
   const fileRef = useRef<HTMLInputElement>(null);
   const [msg, setMsg] = useState<Msg>(null);
-  const [pending, setPending] = useState<{ text: string; summary: ImportSummary } | null>(null);
-  const [mode, setMode] = useState<'replace' | 'merge'>('replace');
+  const [pending, setPending] = useState<{ text: string; summary: ImportSummary; hasProgress: boolean } | null>(null);
   const [resetOpen, setResetOpen] = useState(false);
 
   /** Successes are a toast; problems stay inline next to the control (and are announced). */
@@ -49,19 +48,30 @@ export function DataSection() {
       say({ tone: 'error', text: 'Couldn’t read that file.' });
       return;
     }
-    const res = previewImport(text);
-    if (!res.ok) {
+    // Something here already → add to it by default; replacing is a deliberate choice.
+    const first = previewImport(text, { mode: 'merge' });
+    if (!first.ok) {
       audio.play('error');
-      say({ tone: 'error', text: res.error });
+      say({ tone: 'error', text: first.error });
       return;
     }
+    const hasProgress = first.summary.here.sessions > 0 || first.summary.here.leaves > 0;
+    const res = hasProgress ? first : previewImport(text, { mode: 'replace' });
+    if (!res.ok) return;
     setMsg(null);
-    setMode('replace');
-    setPending({ text, summary: res.summary });
+    toast.dismiss(); // nothing may cover what the sheet says is about to happen
+    setPending({ text, summary: res.summary, hasProgress });
+  };
+
+  const chooseMode = (mode: 'replace' | 'merge') => {
+    if (!pending) return;
+    const res = previewImport(pending.text, { mode });
+    if (res.ok) setPending({ ...pending, summary: res.summary });
   };
 
   const confirmImport = () => {
     if (!pending) return;
+    const { mode } = pending.summary;
     const res = importData(pending.text, { mode });
     setPending(null);
     if (!res.ok) {
@@ -70,7 +80,16 @@ export function DataSection() {
       return;
     }
     audio.play('pop');
-    say({ tone: 'ok', text: `Backup restored: ${plural(res.summary.sessions, 'brew')}. Welcome back.` });
+    setMsg(null);
+    toast.success(mode === 'merge' ? `Added ${plural(res.summary.added, 'brew')} from your backup.` : `Backup restored: ${plural(res.summary.sessions, 'brew')}. Welcome back.`, {
+      duration: 10_000,
+      action: {
+        label: 'Undo',
+        onClick: () => {
+          if (undoLastImport()) toast('Import undone. Everything is as it was.', { tone: 'neutral' });
+        },
+      },
+    });
   };
 
   const sum = pending?.summary;
@@ -95,21 +114,27 @@ export function DataSection() {
       <Sheet
         open={!!pending}
         onClose={() => setPending(null)}
-        title="Restore this backup?"
+        title={!pending?.hasProgress ? 'Restore this backup?' : sum?.mode === 'replace' ? 'Replace with this backup?' : 'Add this backup?'}
         footer={
           <div className={s.sheetActions}>
             <Button variant="secondary" block onClick={() => setPending(null)}>
               Cancel
             </Button>
-            <Button variant="matcha" block onClick={confirmImport}>
-              Restore
-            </Button>
+            {sum?.mode === 'replace' && pending?.hasProgress ? (
+              <Button variant="danger" block onClick={confirmImport}>
+                Replace
+              </Button>
+            ) : (
+              <Button variant="matcha" block onClick={confirmImport} disabled={sum?.mode === 'merge' && sum.added === 0}>
+                {sum?.mode === 'merge' ? 'Add' : 'Restore'}
+              </Button>
+            )}
           </div>
         }
       >
-        {sum && (
+        {sum && pending && (
           <div className={s.sheetBody}>
-            <ul className={s.summary}>
+            <ul className={s.summary} aria-label="In this backup">
               <li>
                 <strong>{plural(sum.sessions, 'brew')}</strong> over {plural(sum.days, 'day')}
               </li>
@@ -123,16 +148,31 @@ export function DataSection() {
               )}
               {sum.skipped > 0 && <li className={s.warnText}>{plural(sum.skipped, 'damaged entry', 'damaged entries')} will be skipped.</li>}
             </ul>
-            <SegmentedControl
-              label="How to restore"
-              value={mode}
-              onChange={setMode}
-              options={[
-                { value: 'replace', label: 'Replace what’s here' },
-                { value: 'merge', label: 'Add to what’s here' },
-              ]}
-            />
-            <p className={s.sheetNote}>{mode === 'replace' ? 'Your current brews and settings on this device will be swapped for the backup.' : 'Brews from the backup are added; nothing here is removed.'}</p>
+            {pending.hasProgress && (
+              <>
+                <p className={s.sheetNote}>
+                  On this device now: <strong>{plural(sum.here.sessions, 'brew')}</strong>, cozy level {sum.here.level}.
+                </p>
+                <SegmentedControl
+                  label="How to restore"
+                  value={sum.mode}
+                  onChange={chooseMode}
+                  options={[
+                    { value: 'merge', label: 'Add to what’s here' },
+                    { value: 'replace', label: 'Replace what’s here' },
+                  ]}
+                />
+              </>
+            )}
+            <p className={s.sheetNote} data-tone={sum.mode === 'replace' && pending.hasProgress ? 'warn' : undefined} role="status">
+              {!pending.hasProgress
+                ? 'Restores your brews, leaves and settings from the backup.'
+                : sum.mode === 'replace'
+                  ? `Your ${plural(sum.here.sessions, 'brew')} and settings on this device will be swapped for the backup. You can undo right after.`
+                  : sum.added === 0
+                    ? 'Every brew in this backup is already here, so there’s nothing to add.'
+                    : `Adds ${plural(sum.added, 'brew')}${sum.duplicates ? ` (${sum.duplicates} already here are skipped)` : ''}. Nothing here is removed, and your settings stay as they are.`}
+            </p>
           </div>
         )}
       </Sheet>

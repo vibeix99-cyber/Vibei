@@ -181,6 +181,10 @@
   font-size: 0.9375rem;
   color: var(--ink-2);
 }
+.sheetNote[data-tone='warn'] {
+  color: var(--berry-ink, var(--ink));
+  font-weight: 700;
+}
 .summary {
   list-style: none;
   margin: 0;
