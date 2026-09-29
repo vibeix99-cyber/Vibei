@@ -47,8 +47,24 @@
 .statNum {
   font-variant-numeric: tabular-nums;
 }
-.statLevel {
+/* Every number is labelled (blind review: unlabeled counters read as noise). */
+.statText {
+  display: grid;
+  line-height: 1.05;
+  text-align: left;
+}
+.statLabel {
   display: block;
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  color: var(--ink-2);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+.statLevel {
+  display: grid;
+  gap: 3px;
   width: 56px;
 }
 .statLevelBar {
@@ -806,6 +822,13 @@
 /* Smaller landscape phones (e.g. 667×375): the left column is too narrow for the tiny level bar; the badge stays. */
 @media (max-width: 759px) and (orientation: landscape) and (max-height: 520px) {
   .statLevel {
+    display: none;
+  }
+}
+
+/* Landscape phones: labelled stats + level bar don't fit one row; the level badge alone shows the level. */
+@media (orientation: landscape) and (max-height: 520px) {
+  .stat[data-kind='level'] .statLevel {
     display: none;
   }
 }

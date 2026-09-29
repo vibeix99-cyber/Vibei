@@ -26,17 +26,24 @@ export function StatusBar({ data }: { data: HomeData }) {
       <nav className={s.statusBar} aria-label="Your progress">
         <button type="button" className={s.stat} data-kind="streak" onClick={() => setOpen('streak')}>
           <StreakMug size={34} state={mugState} animate={false} title="" />
-          <span className={s.statNum}>{n}</span>
-          <span className="sr-only">{n === 1 ? 'day' : 'days'} warm streak{mugState === 'atRisk' ? ', brew today to keep it' : ''}. Show details</span>
+          <span className={s.statText}>
+            <span className={s.statNum}>{n}</span>
+            <span className={s.statLabel}>{n === 1 ? 'day warm' : 'days warm'}</span>
+          </span>
+          <span className="sr-only">streak{mugState === 'atRisk' ? ', brew today to keep it' : ''}. Show details</span>
         </button>
         <button type="button" className={s.stat} data-kind="leaves" onClick={() => setOpen('leaves')}>
           <Leaf size={28} title="" />
-          <span className={s.statNum}>{fmt.format(level.leaves)}</span>
-          <span className="sr-only">leaves. Show details</span>
+          <span className={s.statText}>
+            <span className={s.statNum}>{fmt.format(level.leaves)}</span>
+            <span className={s.statLabel}>leaves</span>
+          </span>
+          <span className="sr-only">Show details</span>
         </button>
         <button type="button" className={s.stat} data-kind="level" onClick={() => setOpen('level')}>
           <LevelBadge level={level.level} size={36} title="" />
           <span className={s.statLevel} aria-hidden>
+            <span className={s.statLabel}>Level {level.level}</span>
             <ProgressBar value={level.size ? level.into / level.size : 0} tone="honey" height={8} className={s.statLevelBar} />
           </span>
           <span className="sr-only">
