@@ -80,7 +80,7 @@ Mark each item ✅ / ❌ / ➖ (couldn't test) and add a note.
 |---|---|---|---|
 | 6.1 | Open Kettle in two tabs, start a brew in one | The other tab follows and shows the celebration too. After the brew, both show exactly one new brew in Stats |  |
 | 6.1b | With both tabs open, delete a brew in Stats, then tap **Undo** | The brew comes back in both tabs and stays back after a reload |  |
-| 6.2 | Settings → **Export a backup**; open the file | A `.json` file downloads and opens as readable text |  |
+| 6.2 | Settings → **Export a backup**; open the file | On the preview, the claude.ai viewer first asks you to confirm the file (name and size); after you accept, a `.json` file saves and opens as readable text. Declining shows no message and saves nothing |  |
 | 6.3 | Settings → **Import a backup**, pick that same file | The sheet shows what's in the backup and what's on this device, says every brew is already here, and has nothing to add. Cancel changes nothing |  |
 | 6.4 | Import a backup from another device or browser | **Add to what's here** is preselected and says how many brews it adds. **Replace** says what would be lost. After either, **Undo** on the message puts everything back |  |
 

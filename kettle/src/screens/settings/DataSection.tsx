@@ -28,10 +28,10 @@ export function DataSection() {
     } else setMsg(m);
   };
 
-  const onExport = () => {
+  const onExport = async () => {
     try {
-      const name = downloadBackup();
-      say({ tone: 'ok', text: `Saved ${name}. Keep it somewhere safe.` });
+      const name = await downloadBackup();
+      if (name) say({ tone: 'ok', text: `Saved ${name}. Keep it somewhere safe.` });
     } catch {
       say({ tone: 'error', text: 'Couldn’t save the backup. Try again?' });
     }
@@ -201,7 +201,7 @@ export function DataSection() {
   );
 }
 
-function ResetSheet({ open, onClose, onExport }: { open: boolean; onClose: () => void; onExport: () => void }) {
+function ResetSheet({ open, onClose, onExport }: { open: boolean; onClose: () => void; onExport: () => void | Promise<void> }) {
   return (
     <Sheet
       open={open}
