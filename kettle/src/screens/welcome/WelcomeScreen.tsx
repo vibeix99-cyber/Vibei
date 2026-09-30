@@ -3,7 +3,7 @@
  * hello → name → goal → rhythm → ambience → notifications → ready.
  * OWNER: home/onboarding/settings area.
  */
-import { useCallback, useEffect, useRef, useState, type ChangeEvent } from 'react';
+import { useCallback, useEffect, useRef, useState, type ChangeEvent, type CSSProperties } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Logo, Mascot, type MascotPose } from '@/art';
 import { navigate } from '@/app/router';
@@ -274,6 +274,7 @@ function Hello({ onStart }: { onStart: () => void }) {
   const wideHello = useMediaQuery('(min-width: 720px)');
   const compactHello = useMediaQuery('(max-height: 680px)');
   const landscapeHello = useMediaQuery('(orientation: landscape) and (max-height: 520px)');
+  const chaiSize = landscapeHello ? 150 : wideHello ? 248 : compactHello ? 160 : 200;
   const fileRef = useRef<HTMLInputElement>(null);
   const [msg, setMsg] = useState<{ tone: 'error' | 'ok'; text: string } | null>(null);
   const set = useSettings((st) => st.set);
@@ -324,8 +325,11 @@ function Hello({ onStart }: { onStart: () => void }) {
           initial={reduced ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={reduced ? { duration: 0.2 } : spring.joyful}
+          style={{ '--chai': `${chaiSize}px` } as CSSProperties}
         >
-          <Mascot pose="wave" size={landscapeHello ? 150 : wideHello ? 248 : compactHello ? 160 : 200} animate />
+          {/* Chai's valley: decorative, drawn behind him (theme picks day or dusk in CSS). */}
+          <span className={s.helloScene} aria-hidden="true" />
+          <Mascot pose="wave" size={chaiSize} animate />
         </motion.div>
         <div className={s.brand}>
           <div className={s.wordmark}>

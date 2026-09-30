@@ -40,7 +40,7 @@ export default defineConfig({
       },
       injectManifest: {
         // App shell + self-hosted fonts + icons + the lazy three.js chunk → fully offline.
-        globPatterns: ['**/*.{js,css,html,svg,png,ico,woff2}'],
+        globPatterns: ['**/*.{js,css,html,svg,png,webp,ico,woff2}'],
         maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
       },
       devOptions: { enabled: false }, // never a service worker in dev

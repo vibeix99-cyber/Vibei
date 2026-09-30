@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+<defs>
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE6A8"/><stop offset=".55" stop-color="#FFF1D2"/><stop offset="1" stop-color="#FFF7E8"/></linearGradient>
+  <radialGradient id="glow"><stop offset="0" stop-color="#FFE8A6" stop-opacity=".95"/><stop offset=".5" stop-color="#FFE8A6" stop-opacity=".35"/><stop offset="1" stop-color="#FFE8A6" stop-opacity="0"/></radialGradient>
+  <linearGradient id="near" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9BD27F"/><stop offset="1" stop-color="#6FB25C"/></linearGradient>
+  <radialGradient id="winGlow"><stop offset="0" stop-color="#FFC23D" stop-opacity=".9"/><stop offset="1" stop-color="#FFC23D" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="400" height="400" fill="url(#sky)"/>
+<g opacity="0"><circle cx="60" cy="52" r="1.6" fill="#FFF3D1" opacity="0.9"/><circle cx="104" cy="30" r="1.2" fill="#FFF3D1" opacity="0.7"/><circle cx="150" cy="70" r="1.4" fill="#FFF3D1" opacity="0.8"/><circle cx="226" cy="40" r="1.1" fill="#FFF3D1" opacity="0.6"/><circle cx="262" cy="96" r="1.3" fill="#FFF3D1" opacity="0.7"/><circle cx="338" cy="58" r="1.2" fill="#FFF3D1" opacity="0.6"/><circle cx="40" cy="110" r="1" fill="#FFF3D1" opacity="0.5"/><circle cx="186" cy="22" r="1.3" fill="#FFF3D1" opacity="0.8"/><circle cx="318" cy="128" r="1" fill="#FFF3D1" opacity="0.5"/><circle cx="90" cy="88" r="1" fill="#FFF3D1" opacity="0.6"/></g>
+<g transform="translate(300 92)"><circle r="64" fill="url(#glow)"/><circle r="30" fill="#FFD36B"/><circle r="30" fill="#FFFFFF" opacity=".18" transform="translate(-6 -6) scale(.7)"/></g>
+<g fill="#FFFBF3" opacity=".9"><path d="M36 124c0-10 9-16 18-14 4-9 18-11 24-2 9-2 16 4 15 12z"/><path d="M226 60c0-8 7-13 14-11 4-7 15-8 19-1 7-1 13 3 12 10z" opacity=".8"/></g>
+<!-- far hills + far cottage -->
+<path d="M0 150 C40 128 80 126 120 138 C160 150 190 132 230 128 C280 122 330 140 400 132 L400 400 L0 400Z" fill="#CFE4B4"/>
+<path d="M230 128 C280 122 330 140 400 132 L400 170 C340 160 290 150 230 128Z" fill="#BBD89C" opacity=".6"/>
+<g transform="translate(118 122)">
+  <rect x="-9" y="-2" width="18" height="12" rx="2" fill="#FBEBD3"/>
+  <path d="M-12 -1 L0 -11 L12 -1Z" fill="#F2733A" stroke="#F2733A" stroke-width="2" stroke-linejoin="round"/>
+  <rect x="-3" y="2" width="5" height="5" rx="1" fill="#FFC23D"/>
+  <circle cx="-.5" cy="4.5" r="8" fill="url(#winGlow)" opacity="0"/>
+</g>
+<!-- mid hills -->
+<path d="M0 196 C50 168 110 170 160 186 C210 202 250 176 300 170 C340 166 370 176 400 180 L400 400 L0 400Z" fill="#A7D38C"/>
+<path d="M0 196 C50 168 110 170 160 186 L160 200 C110 186 60 184 0 208Z" fill="#8CC474" opacity=".5"/>
+<!-- right trees -->
+<g>
+  <ellipse cx="346" cy="262" rx="30" ry="6" fill="#3B2A20" opacity="0.10"/>
+  <rect x="342" y="222" width="8" height="40" rx="4" fill="#8A5A36"/>
+  <circle cx="346" cy="206" r="30" fill="#6FB25C"/>
+  <path d="M346 176 a30 30 0 0 1 30 30 a30 30 0 0 1 -12 24 a34 34 0 0 0 -18 -54Z" fill="#55953F" opacity=".55"/>
+  <circle cx="335" cy="195" r="11" fill="#9BD27F" opacity=".8"/>
+  <ellipse cx="378" cy="292" rx="20" ry="4" fill="#3B2A20" opacity="0.10"/>
+  <rect x="375" y="262" width="6" height="30" rx="3" fill="#8A5A36"/>
+  <circle cx="378" cy="252" r="20" fill="#6FB25C"/>
+  <circle cx="371" cy="245" r="7" fill="#9BD27F" opacity=".8"/>
+</g>
+<!-- near hill: calm, empty centre -->
+<path d="M0 262 C70 226 150 232 210 244 C280 258 340 238 400 250 L400 400 L0 400Z" fill="url(#near)"/>
+<path d="M30 256 C90 234 160 236 206 246" stroke="#B6E09C" stroke-width="6" stroke-linecap="round" fill="none" opacity=".55"/>
+<!-- path from the cottage door, curving out of frame on the left -->
+<path d="M70 262 C62 286 40 300 22 330 C14 344 6 356 0 366 L0 400 L26 400 C30 372 44 346 62 318 C74 300 84 282 82 262Z" fill="#F6E7CC"/>
+<path d="M82 262 C84 282 74 300 62 318 C44 346 30 372 26 400 L34 400 C40 372 54 348 70 322 C82 302 90 282 86 262Z" fill="#EBD3AE" opacity=".7"/>
+<!-- cottage (left edge) -->
+<g transform="translate(58 226)">
+  <ellipse cx="4" cy="38" rx="44" ry="7" fill="#3B2A20" opacity="0.10"/>
+  <rect x="22" y="-58" width="12" height="26" rx="3" fill="#B07A52"/>
+  <g fill="#FFFFFF" opacity="0.85"><circle cx="30" cy="-68" r="6"/><circle cx="36" cy="-80" r="7.5"/><circle cx="31" cy="-94" r="6"/></g>
+  <rect x="-34" y="-20" width="72" height="58" rx="8" fill="#FBEBD3"/>
+  <rect x="18" y="-20" width="20" height="58" rx="8" fill="#EAD0AC" opacity=".7"/>
+  <path d="M-44 -14 C-30 -46 -10 -58 4 -58 C18 -58 38 -46 50 -14 C52 -8 46 -4 40 -6 L-32 -6 C-40 -4 -46 -8 -44 -14Z" fill="#F2733A"/>
+  <path d="M4 -58 C18 -58 38 -46 50 -14 C52 -8 46 -4 40 -6 L24 -6 C30 -24 20 -48 4 -58Z" fill="#D4592A" opacity=".6"/>
+  <path d="M-28 -18 C-20 -36 -8 -46 2 -48" stroke="#FF9D6B" stroke-width="4" stroke-linecap="round" fill="none" opacity=".8"/>
+  <circle cx="-8" cy="12" r="30" fill="url(#winGlow)" opacity="0"/>
+  <path d="M-22 26 L-22 6 A14 14 0 0 1 6 6 L6 26Z" fill="#A8622E"/>
+  <path d="M-19 24 L-19 6 A11 11 0 0 1 3 6 L3 24Z" fill="#FFC23D"/>
+  <path d="M-19 24 L-19 6 A11 11 0 0 1 -8 -5 L-8 24Z" fill="#FFE08A" opacity=".7"/>
+  <rect x="-9" y="-5" width="2" height="29" fill="#A8622E"/><rect x="-19" y="12" width="22" height="2" fill="#A8622E"/>
+  <rect x="12" y="10" width="16" height="28" rx="7" fill="#A8622E"/>
+  <circle cx="24" cy="25" r="1.6" fill="#FFC23D"/>
+</g>
+<!-- little flowers at the edges -->
+<g><circle cx="118" cy="300" r="3" fill="#EC6F86"/><circle cx="126" cy="306" r="2.5" fill="#FFC23D"/><circle cx="300" cy="312" r="3" fill="#FFC23D"/><circle cx="312" cy="306" r="2.5" fill="#EC6F86"/><circle cx="360" cy="330" r="3" fill="#EC6F86"/><circle cx="40" cy="372" r="2.5" fill="#FFC23D"/></g>
+</svg>
