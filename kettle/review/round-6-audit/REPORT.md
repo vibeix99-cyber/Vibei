@@ -219,6 +219,19 @@ B remains a credible second step once A lands.
   - if you have one, a mid-range Android for 3D smoothness and warmth.
 - If you want GPT Image 2.5 or Nano Banana Pro concepts for Chai: run `chai-concept-prompt.md` with the files in `refs/` and send back the sheet. This is optional; R4 can proceed from the brief alone.
 
+## 8a. Decisions taken (30 Sep 2026)
+- **Direction A**, "the kettle is the timer".
+- **Gamification:** keep every system, but quieter. R1 merges them into one summary per brew; nothing is removed.
+- **Chai:** wait for your concept sheet. R4 moves out of round 1 and becomes round 1b, starting once you've picked from the sheet.
+
+**Adjusted round 1:**
+- **R1** One celebration.
+- **R2** The kettle is the timer and it whistles. Chai beside the kettle uses the existing, currently unused `focus` pose (eyes closed, holding a mug) until round 1b replaces it.
+- **R3** One tap to the first brew.
+- **R5** The fix bundle.
+
+**Still open:** the onboarding reorder (decision 4) is part of Direction A as proposed, so R3 assumes yes. Tell me if setup should stay before the first brew. Dark theme (decision 5) is untouched in round 1.
+
 ## 8. Decisions for you before implementation
 1. **Direction:** A (recommended), B, or C.
 2. **Gamification:** keep all systems but quieter (R1 only), or retire some (e.g. badge tiers → single badges; recipes optional; Tea Cozies kept).
