@@ -1,0 +1,11 @@
+/* Page-to-page: cross-document View Transitions where supported. The doorway arch morphs into the room's window. */
+@view-transition { navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.55s; animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1); }
+::view-transition-group(room-window) { animation-duration: 0.8s; animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1); }
+::view-transition-old(room-window), ::view-transition-new(room-window) { height: 100%; object-fit: cover; }
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+  .chai__big img { animation: none; }
+  .door__leaf { transition: none; }
+}

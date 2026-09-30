@@ -1,0 +1,23 @@
+{
+  "name": "valeoforth",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Valeoforth — a house of things I've built. Static site: an entrance and one room per project.",
+  "scripts": {
+    "images": "node tools/images.mjs",
+    "build": "node build.mjs",
+    "check": "node tools/check.mjs",
+    "preview": "node tools/serve.mjs dist 4173",
+    "dev": "node --watch-path=src --watch-path=build.mjs build.mjs && node tools/serve.mjs dist 4173",
+    "test": "npm run build && npm run check"
+  },
+  "dependencies": {
+    "@fontsource-variable/figtree": "^5.2.0",
+    "@fontsource-variable/fraunces": "^5.2.0"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.56.1",
+    "sharp": "^0.34.0"
+  }
+}

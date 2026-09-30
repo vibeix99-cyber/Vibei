@@ -1,0 +1,45 @@
+/* Site frame: header, rooms menu, footer, in-room rail. */
+.site-header { position: sticky; top: 0; z-index: 50; height: var(--header-h); display: flex; align-items: center;
+  background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  border-bottom: 1px solid var(--line); }
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--font-display); font-weight: 620; font-variation-settings: "SOFT" 100, "opsz" 48; font-size: 1.3125rem; letter-spacing: -0.01em; min-height: 44px; }
+.brand__mark { width: 22px; height: 28px; flex: none; }
+.crumb { display: none; color: var(--text-3); font-size: 0.9375rem; }
+.crumb b { color: var(--text); font-weight: 650; }
+@media (min-width: 720px) { .crumb { display: inline; } .crumb::before { content: "/"; margin-inline: 12px; color: var(--line); } }
+.head-tools { display: flex; align-items: center; gap: 8px; }
+
+/* Rooms menu — native <details>, works without JS */
+.menu { position: relative; }
+.menu > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 999px;
+  border: 1px solid var(--line); font-weight: 650; font-size: 0.9375rem; user-select: none; }
+.menu > summary::-webkit-details-marker { display: none; }
+.menu > summary:hover { border-color: var(--text-3); }
+.menu[open] > summary { background: var(--surface); }
+.menu__chev { width: 10px; height: 10px; transition: transform 0.25s var(--ease); }
+.menu[open] .menu__chev { transform: rotate(180deg); }
+.menu__panel { position: absolute; right: 0; top: calc(100% + 10px); width: min(340px, calc(100vw - 32px)); padding: 10px; border-radius: 18px;
+  background: var(--bg-2); color: var(--text); border: 1px solid var(--line); box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.6); }
+.menu__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.menu__item { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 14px; align-items: center; padding: 12px 14px; border-radius: 12px; text-decoration: none; min-height: 56px; }
+.menu__item:hover { background: var(--surface); }
+.menu__item[aria-current="page"] { background: color-mix(in srgb, var(--lamp) 14%, transparent); }
+.menu__num { font: 700 0.75rem/1 var(--font-ui); letter-spacing: 0.14em; color: var(--accent); }
+.menu__name { font-family: var(--font-display); font-weight: 600; font-variation-settings: "SOFT" 100, "opsz" 36; font-size: 1.1875rem; }
+.menu__desc { grid-column: 2 / 4; color: var(--text-3); font-size: 0.875rem; line-height: 1.35; }
+.menu__soon { margin: 6px 4px 2px; padding: 12px 14px 8px; border-top: 1px dashed var(--line); color: var(--text-3); font-size: 0.875rem; }
+
+/* footer */
+.site-footer { border-top: 1px solid var(--line); padding: 36px 0 48px; color: var(--text-3); font-size: 0.9375rem; }
+.site-footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; align-items: baseline; }
+.site-footer a { color: var(--text-2); }
+
+/* in-room rail */
+.rail { position: sticky; top: var(--header-h); z-index: 40; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.rail__list { list-style: none; margin: 0; padding: 8px var(--gutter); display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; }
+.rail__list::-webkit-scrollbar { display: none; }
+.rail__list a { display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 999px; white-space: nowrap; text-decoration: none; font-weight: 600; font-size: 0.9375rem; color: var(--text-2); scroll-snap-align: start; border: 1px solid transparent; }
+.rail__list a:hover { color: var(--text); border-color: var(--line); }
+.rail__list a[aria-current="true"] { background: var(--text); color: var(--bg); }
+@media (min-width: 900px) { .rail__list { justify-content: center; } }

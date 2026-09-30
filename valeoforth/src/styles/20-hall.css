@@ -1,0 +1,97 @@
+/* The hall (entrance). Dusk, one lit doorway, a floor the light spills onto. */
+.hall {
+  background:
+    radial-gradient(70% 55% at 68% 58%, rgba(255, 170, 80, 0.14), transparent 70%),
+    radial-gradient(120% 70% at 30% 0%, #2b2140 0%, transparent 62%),
+    linear-gradient(#15121e, #0e0b14);
+  background-attachment: fixed;
+}
+.hall::before { /* paper grain, tiled — cheap and static */
+  content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.09;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 .93  0 0 0 0 .82  0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.hall > main, .hall > footer { position: relative; z-index: 1; }
+
+.threshold { position: relative; min-height: calc(100svh - var(--header-h)); display: grid; align-items: center; padding-block: clamp(20px, 5vh, 56px) 0; overflow: clip; }
+.threshold__grid { display: grid; gap: 20px; align-items: end; grid-template-areas: "title" "door" "cta"; position: relative; z-index: 1; }
+.threshold__title { grid-area: title; display: grid; gap: 16px; align-content: center; }
+.threshold::after { content: ""; position: absolute; z-index: 0; left: 0; right: 0; bottom: 0; height: 120px; pointer-events: none;
+  background: linear-gradient(180deg, rgba(8, 6, 12, 0) 0%, #0b0810 70%), repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 2px, transparent 2px 120px); border-top: 1px solid rgba(255, 220, 170, 0.07); }
+.threshold h1 { font-size: clamp(3.4rem, 15vw, 9.25rem); line-height: 0.92; font-weight: 500; letter-spacing: -0.03em; margin-left: -0.04em; }
+.threshold h1 em { font-style: italic; font-weight: 400; color: var(--lamp-2); font-variation-settings: normal; }
+.threshold .lede { max-width: 30ch; font-size: clamp(1.1875rem, 2.2vw, 1.5rem); color: var(--text); }
+.threshold__cta { grid-area: cta; margin-top: 4px; padding-bottom: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; }
+.hint { color: var(--text-3); font-size: 0.9375rem; display: inline-flex; align-items: center; gap: 10px; }
+.hint::before { content: ""; width: 26px; height: 1px; background: var(--text-3); opacity: 0.7; }
+
+/* --- the doorway --- */
+.hallway { grid-area: door; --door-h: clamp(230px, 34svh, 460px); --door-w: calc(var(--door-h) * 0.68);
+  position: relative; display: grid; justify-items: center; align-items: end; padding-bottom: 0; isolation: isolate; }
+.door { position: relative; display: grid; z-index: 1; justify-items: center; text-decoration: none; color: inherit; margin-bottom: 30px; }
+.door__frame { display: block; position: relative; width: var(--door-w); height: var(--door-h); padding: 12px;
+  border-radius: calc(var(--door-w) / 2) calc(var(--door-w) / 2) 5px 5px;
+  background: linear-gradient(160deg, #6a4a33, #3a251a 55%, #2b1b13);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.5), inset 0 2px 0 rgba(255, 235, 200, 0.18), 0 40px 90px -30px rgba(255, 170, 80, 0.55), 0 0 120px -20px rgba(255, 170, 80, 0.25);
+  view-transition-name: none; }
+.door__view { display: block; position: relative; width: 100%; height: 100%; overflow: hidden; background: #1b1424;
+  border-radius: calc(var(--door-w) / 2 - 12px) calc(var(--door-w) / 2 - 12px) 2px 2px; view-transition-name: room-window; }
+.door__view img { width: 100%; height: 100%; object-fit: cover; object-position: 64% 62%; transform: scale(1.1) translate3d(var(--px, 0px), var(--py, 0px), 0); transition: transform 0.6s var(--ease); }
+.door__view::after { content: ""; position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 0 60px 6px rgba(20, 12, 8, 0.55);
+  background: radial-gradient(90% 70% at 50% 65%, rgba(255, 190, 110, 0.18), transparent 70%); transition: opacity 0.5s; }
+.door__leaf { display: block; position: absolute; inset: 12px; z-index: 2; pointer-events: none; transform-origin: 0 50%;
+  transform: perspective(1200px) rotateY(72deg); transition: transform 0.95s var(--ease);
+  border-radius: calc(var(--door-w) / 2 - 12px) calc(var(--door-w) / 2 - 12px) 2px 2px;
+  background: linear-gradient(90deg, #56392a, #2e1e15); box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.22), 0 0 30px rgba(0, 0, 0, 0.5); }
+.door__leaf::before { content: ""; position: absolute; inset: 14% 16% 10%; border: 2px solid rgba(255, 225, 180, 0.13); border-radius: 60px 60px 4px 4px; }
+.door__leaf::after { content: ""; position: absolute; right: 9%; top: 52%; width: 12px; height: 12px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ffe2a8, #b98a3e); box-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+.door__spill { display: block; position: absolute; z-index: -1; left: 50%; bottom: -16px; width: calc(var(--door-w) * 1.9); height: 150px; translate: -50% 0;
+  background: radial-gradient(60% 100% at 50% 0%, rgba(255, 178, 90, 0.5), rgba(255, 178, 90, 0.12) 55%, transparent 75%);
+  clip-path: polygon(24% 0, 76% 0, 100% 100%, 0 100%); filter: blur(6px); opacity: 0.75; transition: opacity 0.6s; }
+.door__plate { margin-top: 18px; display: grid; justify-items: center; gap: 2px; padding: 10px 22px 12px; border-radius: 10px; min-width: 190px;
+  background: linear-gradient(180deg, #e7be7c, #b98a45); color: #2a1a08; box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.5); text-align: center; }
+.door__plate small { font: 800 0.6875rem/1 var(--font-ui); letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.8; }
+.door__plate strong { font-family: var(--font-display); font-variation-settings: "SOFT" 100, "opsz" 48; font-weight: 650; font-size: 1.625rem; line-height: 1.1; }
+.door__plate span { font-size: 0.875rem; font-weight: 600; opacity: 0.85; }
+
+.door:hover .door__leaf, .door:focus-visible .door__leaf, .threshold:has(.btn:hover, .btn:focus-visible) .door__leaf { transform: perspective(1200px) rotateY(84deg); }
+.door:hover .door__spill, .threshold:has(.btn:hover, .btn:focus-visible) .door__spill { opacity: 1; }
+.door:hover .door__view img, .threshold:has(.btn:hover, .btn:focus-visible) .door__view img { transform: scale(1.16) translate3d(var(--px, 0px), var(--py, 0px), 0); }
+
+.ghost { display: none; position: absolute; bottom: 30px; width: calc(var(--door-w) * 0.62); height: calc(var(--door-h) * 0.82); z-index: -1; opacity: 0.55; pointer-events: none;
+  border-radius: 999px 999px 4px 4px; border: 1px solid rgba(246, 236, 220, 0.1); background: linear-gradient(#171220, #100c17); }
+.ghost::after { content: ""; position: absolute; inset: 14px; border-radius: inherit; border: 1px dashed rgba(246, 236, 220, 0.07); }
+
+@media (min-width: 900px) {
+  .threshold__grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); grid-template-areas: "title door" "cta door"; gap: 0 clamp(24px, 5vw, 80px); align-items: end; }
+  .threshold__title { align-self: end; padding-bottom: 8px; }
+  .threshold__cta { align-self: start; margin-top: 20px; }
+  .hallway { --door-h: clamp(380px, 64svh, 600px); grid-row: 1 / 3; }
+  .ghost { display: block; }
+  .ghost--r { right: -12%; }
+}
+@media (max-width: 899px) { .door { margin-bottom: 18px; } .door__plate { margin-top: 12px; padding: 7px 18px 9px; min-width: 0; } .door__plate strong { font-size: 1.375rem; } .threshold { padding-block-start: 8px; } .threshold__grid { gap: 14px; } .threshold__cta { padding-bottom: 22px; } .ghost--r { display: block; right: -22%; opacity: 0.35; } .threshold h1 { font-size: clamp(3.2rem, 17vw, 5rem); } .threshold .lede { font-size: 1.125rem; } .threshold__title .kicker { display: none; } }
+@media (max-height: 520px) and (orientation: landscape) {
+  .threshold { min-height: 0; padding-block: 20px 0; }
+  .threshold__grid { grid-template-columns: 1.1fr 0.9fr; grid-template-areas: "title door" "cta door"; }
+  .hallway { grid-row: 1 / 3; }
+  .threshold h1 { font-size: clamp(2.6rem, 9vw, 4.5rem); }
+  .hallway { --door-h: 300px; } .door { margin-bottom: 14px; } .door__plate { margin-top: 10px; padding: 6px 16px 8px; min-width: 0; }
+  .ghost { display: none; }
+}
+
+/* the house so far */
+.house { padding-block: clamp(56px, 10vw, 120px); border-top: 1px solid var(--line); background: linear-gradient(#0e0b14, var(--bg)); }
+.house__grid { display: grid; gap: 36px; }
+.house h2 { font-size: clamp(2rem, 4.5vw, 3.25rem); }
+.house p { color: var(--text-2); max-width: 52ch; }
+.house__list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.house__row { display: grid; grid-template-columns: auto 1fr auto; gap: 6px 22px; align-items: center; padding: 22px 4px; border-bottom: 1px solid var(--line); text-decoration: none; transition: background 0.25s, padding 0.3s var(--ease); }
+.house__row:hover { background: var(--surface); padding-inline: 16px; }
+.house__num { font: 700 0.8125rem/1 var(--font-ui); letter-spacing: 0.16em; color: var(--accent); }
+.house__name { font-family: var(--font-display); font-variation-settings: "SOFT" 100, "opsz" 72; font-weight: 600; font-size: clamp(1.6rem, 3.5vw, 2.25rem); line-height: 1.05; }
+.house__sum { grid-column: 2 / 3; color: var(--text-2); font-size: 1rem; }
+.house__status { grid-row: 1 / 3; grid-column: 3; justify-self: end; display: inline-flex; align-items: center; gap: 8px; font-size: 0.875rem; font-weight: 650; color: var(--text-2); }
+.house__status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--lamp); box-shadow: 0 0 12px var(--lamp); }
+.house__soon { padding: 22px 4px; color: var(--text-3); border-bottom: 1px dashed var(--line); font-size: 0.9375rem; }
+@media (min-width: 900px) { .house__grid { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 80px; align-items: start; } }
+@media (max-width: 520px) { .house__row { grid-template-columns: auto 1fr; } .house__status { grid-column: 2; grid-row: auto; justify-self: start; margin-top: 6px; } }

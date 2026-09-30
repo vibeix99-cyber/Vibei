@@ -24,8 +24,9 @@ const browser = await chromium.launch({
 });
 const M = { width: 390, height: 844 };
 const D = { width: 1280, height: 800 };
-const mk = (viewport, storageState, dpr = 2) =>
-  browser.newContext({ viewport, deviceScaleFactor: dpr, serviceWorkers: 'block', storageState, reducedMotion: 'no-preference' });
+const STEPS = new Set((process.env.STEPS ?? 'first,history,light,done,dark,desktop,chai').split(','));
+const mk = (viewport, storageState, dpr = 2, colorScheme = 'light') =>
+  browser.newContext({ viewport, deviceScaleFactor: dpr, serviceWorkers: 'block', storageState, reducedMotion: 'no-preference', colorScheme });
 const log = (...a) => console.log(...a);
 const shot = async (p, name, opts = {}) => {
   await p.waitForTimeout(opts.wait ?? 1200);
@@ -35,7 +36,7 @@ const shot = async (p, name, opts = {}) => {
 const at = (h) => `${URL0}${h}`;
 
 /* ---------- A. first-run flow (fresh storage) ---------- */
-{
+if (STEPS.has('first')) {
   const ctx = await mk(M); ctx.setDefaultTimeout(4000);
   const p = await ctx.newPage();
   await p.goto(at('#/welcome')); await shot(p, 'm-welcome', { wait: 1800 });
@@ -62,7 +63,7 @@ const plan = [
   ['2026-09-29','08:30','create','Sketch the logo'],['2026-09-29','09:10','create','Sketch the logo'],['2026-09-29','15:00','work','Inbox to zero'],
   ['2026-09-30','09:00','study','Chapter 3 notes'],['2026-09-30','09:40','study','Chapter 3 notes'],
 ];
-{
+if (STEPS.has('history')) {
   const ctx = await mk({ width: 390, height: 700 }, path.join(OUT, 'onboarded.json'), 1); ctx.setDefaultTimeout(3000);
   const p = await ctx.newPage(); let n = 0;
   for (const [d, t, tag, intent] of plan) {
@@ -82,10 +83,10 @@ const plan = [
 
 /* helpers for history-based shots */
 const withHistory = async (viewport, fn, { theme, dpr = 2, fixed = '2026-09-30T15:20:00' } = {}) => {
-  const ctx = await mk(viewport, path.join(OUT, 'history.json'), dpr); ctx.setDefaultTimeout(4000);
+  const ctx = await mk(viewport, path.join(OUT, 'history.json'), dpr, theme === 'dark' ? 'dark' : 'light'); ctx.setDefaultTimeout(4000);
   const p = await ctx.newPage();
   if (fixed) await p.clock.setFixedTime(new Date(fixed));
-  const base = theme ? `${URL0}?theme=${theme}` : URL0;
+  const base = URL0;
   await fn(p, (h) => `${base}${h}`);
   await ctx.close();
 };
@@ -97,7 +98,7 @@ const setTimer = (p, patch) => p.evaluate((patch) => {
 }, patch);
 
 /* ---------- C. light mobile ---------- */
-await withHistory(M, async (p, u) => {
+if (STEPS.has('light')) await withHistory(M, async (p, u) => {
   await p.goto(u('#/')); await shot(p, 'm-home', { wait: 2500 });
   await p.goto(u('#/')); await setTimer(p, { phase: 'focus', plannedMs: 1500000, elapsed: 11 * 60000 });
   await p.goto(u('#/focus')); await p.reload(); await shot(p, 'm-focus', { wait: 3500 });
@@ -108,10 +109,10 @@ await withHistory(M, async (p, u) => {
   await p.evaluate(() => { const s = JSON.parse(localStorage.getItem('kettle:timer')); s.state.status = 'idle'; s.state.phase = 'focus'; localStorage.setItem('kettle:timer', JSON.stringify(s)); });
   await p.goto(u('#/settings')); await shot(p, 'm-settings', { wait: 1500 });
 });
-await withHistory({ width: 390, height: 1750 }, async (p, u) => {
+if (STEPS.has('light')) await withHistory({ width: 390, height: 1750 }, async (p, u) => {
   await p.goto(u('#/stats')); await shot(p, 'm-stats-tall', { wait: 3000 });
 });
-await withHistory(M, async (p, u) => {
+if (STEPS.has('light')) await withHistory(M, async (p, u) => {
   await p.goto(u('#/nook')); await p.waitForTimeout(3500);
   await shot(p, 'm-nook', { wait: 500 });
   const tod = p.getByRole('button', { name: /Time of day/ });
@@ -121,7 +122,7 @@ await withHistory(M, async (p, u) => {
 });
 
 /* ---------- D. real completion at real time (done flow) ---------- */
-{
+if (STEPS.has('done')) {
   const ctx = await mk(M, path.join(OUT, 'history.json')); ctx.setDefaultTimeout(4000);
   const p = await ctx.newPage();
   await p.goto(at('#/')); await p.waitForTimeout(800);
@@ -135,7 +136,7 @@ await withHistory(M, async (p, u) => {
 }
 
 /* ---------- E. dark ("plum") mobile ---------- */
-await withHistory(M, async (p, u) => {
+if (STEPS.has('dark')) await withHistory(M, async (p, u) => {
   await p.goto(u('#/')); await shot(p, 'd-home', { wait: 2500 });
   await setTimer(p, { phase: 'focus', plannedMs: 1500000, elapsed: 11 * 60000 });
   await p.goto(u('#/focus')); await p.reload(); await shot(p, 'd-focus', { wait: 3500 });
@@ -145,7 +146,7 @@ await withHistory(M, async (p, u) => {
 }, { theme: 'dark' });
 
 /* ---------- F. desktop ---------- */
-await withHistory(D, async (p, u) => {
+if (STEPS.has('desktop')) await withHistory(D, async (p, u) => {
   await p.goto(u('#/')); await shot(p, 'x-home', { wait: 2500 });
   await p.goto(u('#/nook')); await shot(p, 'x-nook', { wait: 4000 });
   await p.goto(u('#/stats')); await shot(p, 'x-stats', { wait: 3000 });
@@ -154,7 +155,7 @@ await withHistory(D, async (p, u) => {
 });
 
 /* ---------- G. Chai poses + design-system kit ---------- */
-await withHistory({ width: 1280, height: 900 }, async (p, u) => {
+if (STEPS.has('chai')) await withHistory({ width: 1280, height: 900 }, async (p, u) => {
   await p.goto(u('#/kit?part=art&view=chai')); await p.waitForTimeout(2500);
   const svgs = await p.evaluate(() => [...document.querySelectorAll('[data-shot="chai"] svg[role="img"], [data-shot="chai"] svg')]
     .map((s) => ({ label: s.closest('div')?.parentElement?.innerText?.trim().split('\n').pop() ?? '', svg: s.outerHTML })));
