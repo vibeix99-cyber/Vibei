@@ -23,3 +23,12 @@ Running log so an interrupted session can resume. Newest at the bottom.
 - Real captures live in scratchpad `raw/` (not committed); processed WebP + Chai SVGs in `public/img`.
 - Gauntlet: screenshots via `node tools/shots.mjs <dir>`; critic round 1 launched (read-only agent). Findings → fix → re-shoot → round 2 (max 3 rounds).
 - Known nits to consider: Kettle hero on phones shows the arch below the fold; landscape hall CTA sits at the fold edge.
+
+## Checkpoint 3 — gauntlet complete (3 critic rounds), final
+- Round 1 (independent read-only critic on rendered pages): BLOCKER scroll-on-load (scrollIntoView on init), MAJOR wordmark/copy overlap at 900–1100 px, MAJOR accidental-looking screenshot crops, plus minors. All fixed.
+- Round 2: MAJOR scrollspy wrong (IntersectionObserver ratio) → rewritten; MAJOR Kettle hero two-column breakpoint (900 px) with fluid h1; minors (header opacity, landscape rail, ghost-door plaque). All fixed.
+- Round 3: "blocking and major issues resolved". One minor (Room 02 plaque clipped at 1280 px) fixed by raising its breakpoint to 1360 px.
+- Regressions from the rounds are now encoded in `tools/e2e.mjs` (no scroll on load; no headline/door overlap at 320–1440; CTA in first screen; scrollspy accuracy).
+- Remaining minor/nit (not fixed): tour tab pill text clips at the strip edge on 390 px (it scrolls); "Night" chip wraps alone on 390 px; Chai pose picker wraps 5+5+1 on phones; desktop masonry columns end unevenly; the Sounds tile has ~60 px of empty cream under its caption.
+- Not verified by the critic: the cross-document View Transition animation itself (only the end state). It is feature-detected and disabled under reduced motion; the single-file preview uses the same-document API.
+- Private preview: single-file build (`npm run preview:single`) published as a private Claude artifact. Kettle's own private artifact link appears nowhere in the site.
