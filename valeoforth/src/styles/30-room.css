@@ -45,17 +45,19 @@
 .tour__tab i { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--bg-3); font-style: normal; font-weight: 800; font-size: 0.875rem; color: var(--text); }
 .tour__tab[aria-selected="true"] i { background: var(--accent-strong); color: var(--on-accent); }
 @media (min-width: 900px) {
-  .tour[data-ready] { grid-template-columns: minmax(240px, 0.8fr) minmax(0, 1.6fr); gap: 56px; align-items: start; }
+  .tour[data-ready] { grid-template-columns: 300px minmax(0, 1fr); gap: 64px; align-items: start; }
+  .tour[data-ready] .step { grid-template-columns: minmax(0, 1fr) 320px; gap: 64px; align-items: center; }
+  .tour[data-ready] .step:nth-child(even) .step__copy { order: 0; }
   .tour[data-ready] .tour__tabs { flex-direction: column; overflow: visible; padding: 0; position: sticky; top: calc(var(--header-h) + 90px); }
   .tour__tab { border-radius: 20px; padding: 10px 18px 10px 10px; }
 }
 
 /* tiles */
-.tiles { display: grid; gap: clamp(14px, 2vw, 24px); grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
-.tile { display: grid; grid-template-rows: auto 1fr; border-radius: 24px; overflow: hidden; background: var(--bg-2); border: 1px solid var(--line); }
-.tile__pic { aspect-ratio: 4 / 3; overflow: hidden; background: var(--bg-3); position: relative; }
-.tile__pic img { width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, 50% 0%); transform: scale(var(--zoom, 1)); transform-origin: var(--pos, 50% 0%); transition: transform 0.8s var(--ease); }
-.tile:hover .tile__pic img { transform: scale(calc(var(--zoom, 1) * 1.04)); }
+.tiles { columns: 300px 3; column-gap: clamp(14px, 2vw, 24px); }
+.tile { display: block; break-inside: avoid; margin: 0 0 clamp(14px, 2vw, 24px); border-radius: 24px; overflow: hidden; background: var(--bg); border: 1px solid var(--line); }
+.tile__pic { background: var(--bg-3); overflow: hidden; }
+.tile__pic img { width: 100%; height: auto; transition: transform 0.8s var(--ease); }
+.tile:hover .tile__pic img { transform: scale(1.03); }
 .tile__body { padding: 20px 22px 24px; display: grid; gap: 6px; align-content: start; }
 .tile h3 { font-size: 1.4rem; line-height: 1.15; }
 .tile p { color: var(--text-2); font-size: 1rem; }

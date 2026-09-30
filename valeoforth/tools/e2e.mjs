@@ -6,6 +6,19 @@ const b = await chromium.launch({ executablePath: CHROME }); let fail = 0;
 const t = async (name, fn) => { try { await fn(); console.log('✓', name); } catch (e) { fail++; console.error('✗', name, '-', e.message.split('\n')[0]); } };
 const eq = (a, b2, m) => { if (a !== b2) throw new Error(`${m}: expected ${b2}, got ${a}`); };
 const errs = [];
+{ // regressions from review round 1
+  for (const [w, h] of [[320, 640], [390, 844], [900, 700], [1024, 768], [1100, 800], [1440, 900], [844, 390]]) {
+    const ctx = await b.newContext({ viewport: { width: w, height: h } }); const p = await ctx.newPage();
+    await t(`kettle does not scroll itself on load (${w}x${h})`, async () => { await p.goto(base + 'kettle/'); await p.waitForTimeout(1200); eq(await p.evaluate(() => Math.round(scrollY)), 0, 'scrollY'); });
+    await t(`hall headline never overlaps the door (${w}x${h})`, async () => {
+      await p.goto(base); await p.waitForTimeout(300);
+      const r = await p.evaluate(() => { const a = document.querySelector('.threshold h1'), b2 = document.querySelector('.door__frame'), ra = document.createRange(); ra.selectNodeContents(a); const A = ra.getBoundingClientRect(), B = b2.getBoundingClientRect(); return { overlap: A.right > B.left && A.left < B.right && A.bottom > B.top && A.top < B.bottom }; });
+      eq(r.overlap, false, 'overlap');
+    });
+    await t(`Come in button is in the first screen (${w}x${h})`, async () => { await p.goto(base); const bx = await p.getByRole('link', { name: /Come in/ }).boundingBox(); eq(bx.y + bx.height <= h + 2, true, 'button bottom ' + Math.round(bx.y + bx.height)); });
+    await ctx.close();
+  }
+}
 
 for (const mode of [{ n: 'default', o: {} }, { n: 'reduced-motion', o: { reducedMotion: 'reduce' } }, { n: 'no-JS', o: { javaScriptEnabled: false } }]) {
   const ctx = await b.newContext({ viewport: { width: 1280, height: 800 }, ...mode.o }); const p = await ctx.newPage();

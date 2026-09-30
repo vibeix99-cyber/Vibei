@@ -33,7 +33,7 @@
 /* footer */
 .site-footer { border-top: 1px solid var(--line); padding: 36px 0 48px; color: var(--text-3); font-size: 0.9375rem; }
 .site-footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; align-items: baseline; }
-.site-footer a { color: var(--text-2); }
+.site-footer a { color: var(--text-2); display: inline-flex; align-items: center; min-height: 44px; }
 
 /* in-room rail */
 .rail { position: sticky; top: var(--header-h); z-index: 40; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }

@@ -19,7 +19,7 @@ export function renderHome({ rooms }) {
         <span class="hint">More rooms are being built.</span>
       </p>
       <div class="hallway" data-hallway>
-        <span class="ghost ghost--r" aria-hidden="true"></span>
+        <span class="ghost ghost--r" aria-hidden="true"><span class="ghost__plate">Room 02 · being built</span></span>
         <a class="door" href="${root}${first.slug}/" tabindex="-1" aria-hidden="true" data-door>
           <span class="door__spill"></span>
           <span class="door__frame">

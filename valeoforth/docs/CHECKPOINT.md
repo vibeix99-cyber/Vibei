@@ -16,3 +16,10 @@ Running log so an interrupted session can resume. Newest at the bottom.
 - Kettle names: mascot **Chai** (capybara wearing a yuzu), "leaves" currency, "Nook" = the 3D cozy room, "brews" = focus
   sessions, "tea breaks". Tagline: "Put the kettle on. Get cozy. Get it done."
 - No public Kettle URL. **No live-demo link** is published (artifact is private).
+
+## Checkpoint 2 — build complete, gauntlet round 1 started
+- Direction B chosen (see DESIGN-BRIEF.md). Static Node generator (`build.mjs`), sharp image pipeline, no runtime deps.
+- Pushed commit "static site with hall + Kettle room…". `npm run build && npm run check && node tools/e2e.mjs` all green.
+- Real captures live in scratchpad `raw/` (not committed); processed WebP + Chai SVGs in `public/img`.
+- Gauntlet: screenshots via `node tools/shots.mjs <dir>`; critic round 1 launched (read-only agent). Findings → fix → re-shoot → round 2 (max 3 rounds).
+- Known nits to consider: Kettle hero on phones shows the arch below the fold; landscape hall CTA sits at the fold edge.

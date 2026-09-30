@@ -18,6 +18,13 @@ const phone = (name, src = name, crop) => jobs.push({ name, src, widths: [390, 7
   'm-welcome', 'm-ob-name', 'm-ob-goal', 'm-ob-rhythm', 'm-ob-sound', 'm-ob-nudge', 'm-ob-ready', 'm-home', 'm-focus', 'm-focus-late',
   'm-done-1', 'm-done-2', 'm-done-3', 'm-done-4', 'm-tea-break', 'm-settings', 'd-home', 'd-focus', 'd-nook', 'd-stats', 'd-tea-break',
 ].forEach((n) => phone(n));
+// tile crops (source is 780x1688): each cut sits on a clean edge of the UI
+phone('tile-sounds', 'm-ob-sound', { left: 0, top: 440, width: 780, height: 975 });
+phone('tile-rhythm', 'm-ob-rhythm', { left: 0, top: 456, width: 780, height: 930 });
+phone('tile-recipes', 'm-done-2', { left: 0, top: 844, width: 780, height: 650 });
+phone('tile-badge', 'm-done-3', { left: 0, top: 557, width: 780, height: 726 });
+phone('tile-plum', 'd-home', { left: 0, top: 0, width: 780, height: 850 });
+phone('tile-nudge', 'm-ob-nudge', { left: 0, top: 726, width: 780, height: 590 });
 phone('m-stats-a', 'm-stats-tall', { left: 0, top: 0, width: 780, height: 1688 });
 phone('m-stats-b', 'm-stats-tall', { left: 0, top: 1660, width: 780, height: 1688 });
 // nook scene matrix: t0 auto, t1 morning, t2 daytime, t3 dusk, t4 night; w0 auto(rain), w1 clear, w2 rain, w3 snow

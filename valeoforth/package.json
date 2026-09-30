@@ -3,14 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Valeoforth — a house of things I've built. Static site: an entrance and one room per project.",
+  "description": "Valeoforth \u2014 a house of things I've built. Static site: an entrance and one room per project.",
   "scripts": {
     "images": "node tools/images.mjs",
     "build": "node build.mjs",
     "check": "node tools/check.mjs",
     "preview": "node tools/serve.mjs dist 4173",
     "dev": "node --watch-path=src --watch-path=build.mjs build.mjs && node tools/serve.mjs dist 4173",
-    "test": "npm run build && npm run check"
+    "test": "npm run build && npm run check",
+    "preview:single": "node build.mjs && node tools/build-preview.mjs preview/index.html"
   },
   "dependencies": {
     "@fontsource-variable/figtree": "^5.2.0",

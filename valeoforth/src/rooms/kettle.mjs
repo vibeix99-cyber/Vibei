@@ -41,26 +41,28 @@ export default {
     S.push({ id: 'welcome', label: 'Welcome', html: html`
 <section class="rhero" id="welcome" aria-labelledby="k-title">
   <div class="wrap rhero__grid">
-    <div class="rhero__copy">
+    <div class="rhero__head">
       <p class="kicker" data-reveal>Room ${self.number}</p>
       <h1 id="k-title" class="display" data-reveal style="--d:60ms">Kettle</h1>
       <p class="rhero__tag" data-reveal style="--d:120ms">${self.tagline}</p>
-      <p class="lede" data-reveal style="--d:180ms">A focus timer that turns every work session into a small ritual: a kettle warming on a stove, a capybara keeping you company, and a room that gets cozier the more you show up.</p>
-      <ul class="facts" role="list" data-reveal style="--d:240ms">
-        <li>Installable web app</li><li>Light &amp; dark themes</li><li>Everything stays on your device</li>
-      </ul>
-      <p class="rhero__cta" data-reveal style="--d:300ms">
-        <a class="btn" href="#brew">Take the tour <span class="arrow" aria-hidden="true" style="transform:rotate(90deg)">→</span></a>
-        <a class="btn btn--ghost" href="#chai">Meet Chai</a>
-      </p>
-      <p class="status"><span class="dot" aria-hidden="true"></span>Private preview — not public yet</p>
     </div>
     <div class="rhero__art">
       <div class="arch" data-window>
-        <div class="arch__view">${img(root, 'nook-t3-w2', { alt: 'Kettle’s 3D nook at dusk: a small room with a stove and kettle, a floor lamp, a low table on a round rug, fairy lights, and Chai the capybara sitting on a cushion, rain on the window.', sizes: '(min-width: 900px) 52vw, 92vw', eager: true })}</div>
+        <div class="arch__view">${img(root, 'nook-t3-w2', { alt: 'Kettle’s 3D nook at dusk: a small room with a stove and kettle, a floor lamp, a low table on a round rug, fairy lights, and Chai the capybara on a cushion, rain on the window.', sizes: '(min-width: 1040px) 40vw, 80vw', eager: true })}</div>
       </div>
       <div class="rhero__phone phone" aria-hidden="true">${img(root, 'm-focus', { alt: '', sizes: '200px' })}</div>
       <img class="rhero__chai" src="${root}img/chai/peek.svg" alt="" width="150" height="150">
+    </div>
+    <div class="rhero__body">
+      <p class="lede" data-reveal>A focus timer that turns every work session into a small ritual: a kettle warming on a stove, a capybara keeping you company, and a room that gets cozier the more you show up.</p>
+      <p class="rhero__cta" data-reveal>
+        <a class="btn" href="#brew">Take the tour <span class="arrow" aria-hidden="true" style="transform:rotate(90deg)">→</span></a>
+        <a class="btn btn--ghost" href="#chai">Meet Chai</a>
+      </p>
+      <ul class="facts" role="list" data-reveal>
+        <li>Installable web app</li><li>Light &amp; dark themes</li><li>Everything stays on your device</li>
+      </ul>
+      <p class="status"><span class="dot" aria-hidden="true"></span>Private preview — not public yet</p>
     </div>
   </div>
 </section>` });
@@ -93,12 +95,12 @@ export default {
   <div class="wrap">
     ${sectionHead({ kicker: 'Key interactions', title: 'Little things, done warmly.', lede: 'The details that make it feel lived-in rather than clinical.' })}
     ${tiles({ root, items: [
-      { title: 'Sounds you can try first', image: 'm-ob-sound', pos: '50% 38%', alt: 'A list of background sounds: Rain, Fireside, Forest, Brown noise, Lo-fi keys and Quiet.', body: 'Rain, Fireside, Forest, Brown noise, Lo-fi keys — or Quiet. Tap one to hear a preview before you commit.' },
-      { title: 'Rhythms, or your own', image: 'm-ob-rhythm', pos: '50% 38%', alt: 'Rhythm choices: Classic 25/5, Deep 50/10, Gentle.', body: 'Classic, Deep and Gentle presets, plus a custom length for the days that don’t fit any of them.' },
-      { title: 'Daily recipes', image: 'm-done-2', pos: '50% 80%', alt: 'Three daily recipes with progress bars: brew 15 minutes, use two tags, finish three full brews.', body: 'Three small daily quests — brew for 15 minutes, use two different tags, finish three full brews — pay out leaves from the tea tin.' },
-      { title: 'Badges with a sense of humour', image: 'm-done-3', pos: '50% 67%', alt: 'A “Moonlit Sipper I” badge: finish a brew started after 10 pm.', body: 'Twelve badges with five tiers each — like Moonlit Sipper, for brews started after 10 pm.' },
-      { title: 'Plum, for late nights', image: 'd-home', dark: true, pos: '50% 10%', alt: 'Kettle’s Today screen in the dark Plum theme.', body: 'Paper and Plum themes, following your system by default — and a reduce-motion setting that quiets the animation.' },
-      { title: 'Nudges only if you want them', image: 'm-ob-nudge', pos: '50% 46%', alt: 'A preview of the optional notification: “The kettle’s whistling! Time for tea.”', body: 'Notifications are opt-in, and the app shows you exactly what one will say before asking.' },
+      { title: 'Sounds you can try first', image: 'tile-sounds',  alt: 'A list of background sounds: Rain, Fireside, Forest, Brown noise, Lo-fi keys and Quiet.', body: 'Rain, Fireside, Forest, Brown noise, Lo-fi keys — or Quiet. Tap one to hear a preview before you commit.' },
+      { title: 'Rhythms, or your own', image: 'tile-rhythm',  alt: 'Rhythm choices: Classic 25/5, Deep 50/10, Gentle.', body: 'Classic, Deep and Gentle presets, plus a custom length for the days that don’t fit any of them.' },
+      { title: 'Daily recipes', image: 'tile-recipes',  alt: 'Three daily recipes with progress bars: brew 15 minutes, use two tags, finish three full brews.', body: 'Three small daily quests — brew for 15 minutes, use two different tags, finish three full brews — pay out leaves from the tea tin.' },
+      { title: 'Badges with a sense of humour', image: 'tile-badge',  alt: 'A “Moonlit Sipper I” badge: finish a brew started after 10 pm.', body: 'Twelve badges, most with five tiers — like Moonlit Sipper, for brews started after 10 pm.' },
+      { title: 'Plum, for late nights', image: 'tile-plum',  alt: 'Kettle’s Today screen in the dark Plum theme.', body: 'Paper and Plum themes, following your system by default — and a reduce-motion setting that quiets the animation.' },
+      { title: 'Nudges only if you want them', image: 'tile-nudge',  alt: 'A preview of the optional notification: “The kettle’s whistling! Time for tea.”', body: 'Notifications are opt-in, and the app shows you exactly what one will say before asking.' },
     ] })}
   </div>
 </section>` });

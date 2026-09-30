@@ -5,10 +5,10 @@
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* Rooms menu: Esc + outside click close it (it is a native <details>, so it works without this) */
-  const menu = $('[data-menu]');
-  if (menu) {
-    addEventListener('keydown', (e) => { if (e.key === 'Escape' && menu.open) { menu.open = false; $('summary', menu).focus(); } });
-    addEventListener('click', (e) => { if (menu.open && !menu.contains(e.target)) menu.open = false; });
+  const menus = $$('[data-menu]');
+  if (menus.length) {
+    addEventListener('keydown', (e) => { if (e.key === 'Escape') menus.forEach((m) => { if (m.open) { m.open = false; $('summary', m).focus(); } }); });
+    addEventListener('click', (e) => menus.forEach((m) => { if (m.open && !m.contains(e.target)) m.open = false; }));
   }
 
   /* Reveal on scroll */
@@ -50,10 +50,12 @@
       steps.forEach((s, j) => s.classList.toggle('is-active', i === j));
       btns.forEach((b, j) => { b.setAttribute('aria-selected', String(i === j)); b.tabIndex = i === j ? 0 : -1; });
       if (focus) btns[i].focus();
-      if (btns[i].scrollIntoView && tabs.scrollWidth > tabs.clientWidth) btns[i].scrollIntoView({ inline: 'center', block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
+      if (focus !== undefined && tabs.scrollWidth > tabs.clientWidth) { // only after a user action; scroll the strip itself, never the page
+        const b = btns[i]; tabs.scrollTo({ left: b.offsetLeft - (tabs.clientWidth - b.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' });
+      }
     };
     btns.forEach((b, i) => {
-      b.addEventListener('click', () => show(i));
+      b.addEventListener('click', () => show(i, false));
       b.addEventListener('keydown', (e) => {
         const v = tabs.scrollWidth <= tabs.clientWidth || getComputedStyle(tabs).flexDirection === 'column';
         const next = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
@@ -96,7 +98,11 @@
   if (links.length && 'IntersectionObserver' in window) {
     const map = new Map(links.map((a) => [a.getAttribute('href').slice(1), a]));
     const secs = [...map.keys()].map((id) => document.getElementById(id)).filter(Boolean);
-    const set = (id) => links.forEach((a) => { const on = a === map.get(id); on ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current'); if (on && a.scrollIntoView && !reduce) a.scrollIntoView({ inline: 'nearest', block: 'nearest' }); });
+    const rail = $('.rail__list');
+    const set = (id) => links.forEach((a) => {
+      const on = a === map.get(id); on ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current');
+      if (on && rail.scrollWidth > rail.clientWidth && scrollY > 200) rail.scrollTo({ left: a.offsetLeft - (rail.clientWidth - a.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' }); // move the rail only, never the page
+    });
     const io = new IntersectionObserver((es) => { const v = es.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]; if (v) set(v.target.id); }, { rootMargin: '-25% 0px -60% 0px', threshold: [0, 0.1, 0.5, 1] });
     secs.forEach((s) => io.observe(s));
   }

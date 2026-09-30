@@ -29,7 +29,7 @@ export function tour({ root, id, label, steps }) {
 /** Grid of cropped screenshot tiles. */
 export function tiles({ root, items }) {
   return html`<div class="tiles">${items.map((t, i) => html`<article class="tile" data-reveal style="--d:${(i % 3) * 70}ms">
-    <div class="tile__pic" style="--pos:${t.pos ?? '50% 0%'};--zoom:${t.zoom ?? 1}">${img(root, t.image, { alt: t.alt, sizes: '(min-width: 960px) 360px, (min-width: 620px) 45vw, 92vw' })}</div>
+    <div class="tile__pic">${img(root, t.image, { alt: t.alt, sizes: '(min-width: 960px) 360px, (min-width: 620px) 45vw, 92vw' })}</div>
     <div class="tile__body"><h3 class="display">${t.title}</h3><p>${t.body}</p></div>
   </article>`)}</div>`;
 }
