@@ -65,3 +65,13 @@ Its four last defects are fixed:
 - `before-after-phone.png`, `before-after-desktop.png`, `after-other-sizes.png`
 - `candidates-raw.png`: raw outputs.
 - `candidates-in-app-light.png`, `candidates-in-app-dark.png`: the blind sheets. P = Qwen, Q = SVG, R = Marketing Studio, S = Grok.
+
+## Follow-up: GPT Image 2.5 (made by the owner on the Higgsfield website)
+Nano Banana Pro added a watermark on the owner's plan, so the owner used GPT Image 2.5 on the website instead. The inputs were the refined kit: the style board, the refined SVG as the layout guide, and the critique-based brief. The pair was placed in the same slot, and the same critic compared it under shuffled letters (X = GPT Image 2.5, Y = SVG). The critic had seen the SVG before, so this was not fully blind.
+
+| | Style | Composition | Legibility | Charm (light / dark) |
+|---|---|---|---|---|
+| X: GPT Image 2.5 | 8 | 8 | 8 | 8 / 9 |
+| Y: SVG | 8 | 8 | 8 | 8 / 9 |
+
+Effectively tied on screen: X's extra bushes, flowers and tufts fall behind Chai or outside the circle. The critic chose Y because its day and dusk pictures show the same valley, while X's dusk dropped the bushes and flowers its day version has. Y also keeps a slightly cleaner sky behind the yuzu, is vector (sharp on any screen) and is 3.8 KB inlined, against roughly 32 KB of raster. The SVG stays. No API credits were spent on this comparison. Sheets are in `gpt-image-2-5/`.
