@@ -1,6 +1,8 @@
-# Round 6 mockups v2: the refined round-1 look (Direction A, "the kettle is the timer")
+# Round 6 mockups v3: the refined round-1 look with the approved Chai
 
-**These are mockups, not the app.** No production file was changed and no paid generation was used. v1 of these mockups is in `frames-v1/` and `boards-v1/`, and in commit 3a161cf.
+**These are mockups, not the app.** No production file was changed and no paid generation was used. Production changes are pending your review.
+
+Earlier versions are in git history: v1 in commit 3a161cf, and v2 (the SVG Chai) in commit 6a6c856.
 
 The agreed direction is unchanged:
 - the kettle leads Focus;
@@ -9,19 +11,30 @@ The agreed direction is unchanged:
 - every reward system stays;
 - one summary follows each brew.
 
-## What to look at
-| File | Shows |
-|---|---|
-| `boards/1-focus-phone-current-vs-refined.png` | Focus on a phone: **today's app → v1 → v2**, midpoint (light) and whistle (dark). Phone frames are placed at 390 px, a phone's real width. |
-| `boards/2-focus-states-phone.png` | Start, midpoint, paused, +5 added, whistle; light and dark |
-| `boards/3-focus-desktop-current-vs-refined.png` | Desktop Focus, today → v1 → v2, each at 1440 × 900 (real size) |
-| `boards/4-focus-desktop-states.png` | The five desktop states, light and dark, at half size (full frames are in `frames/`) |
-| `boards/5-kettle-art.png` | The kettle: the v1 strip vs the v2 states, at Focus size and large |
-| `boards/6-summary-phone.png`, `7-summary-desktop.png` | The summary: today's five cards → v1 → v2 routine / details / major unlock / first brew |
-| `boards/8-home-phone.png`, `9-home-desktop.png` | Home: today → v1 → v2 |
-| `boards/10-first-run.png` | Brew first, set up later |
-| `motion/whistle-to-summary-{dark,light}.mp4` | **The motion prototype** (8.6 s, with the app's own whistle sound): normal and reduced motion side by side |
-| `chai-ab-brief.md` + `frames/chai-baseline-{light,dark}.png` | **The Chai A/B concept brief**, with today's Chai as the baseline at 160 / 72 / 56 / 24 px |
+**New in v3:** Chai is the approved art direction (`assets/chai/`). The poses are used as painted artwork, not redrawn:
+- **reading** during Focus (running and paused);
+- **sipping** on the tea break (a new Focus state);
+- **cheering** at the whistle and completion;
+- **concerned** only for gentle support;
+- **happy** for the Home greeting (my choice; say if you prefer another pose).
+
+## The seven deliverables (`exports/`)
+Every image tags each frame **CURRENT APP** (captured today from the unchanged app build, in `current-app/`) or **PROPOSED MOCKUP**.
+
+| # | File | Shows |
+|---|---|---|
+| 1 | `exports/1-focus-phone-current-vs-proposed.png` | Focus on a phone, light and dark: current vs proposed (midpoint and whistle), plus the proposed start, paused, +5 added and tea break. At 390 px, a phone's real width. |
+| 2 | `exports/2-focus-desktop-current-vs-proposed.png` | Desktop Focus at 1440 × 900 (real size): current vs proposed, light and dark, plus the proposed whistle and tea break |
+| 3 | `exports/3-kettle-state-sheet.png` | The kettle's states, light and dark: start, early, midpoint, late, paused, +5 added, whistle, tea break (resting) |
+| 4a | `exports/4a-completion-phone-current-vs-proposed.png` | Completion on a phone: a routine brew and the major room unlock (level 8, record player), current vs proposed, light and dark |
+| 4b | `exports/4b-completion-desktop-current-vs-proposed.png` | The same on desktop (routine light, unlock dark) |
+| 5a | `exports/5a-home-phone-current-vs-proposed.png` | Home on a phone, light and dark |
+| 5b | `exports/5b-home-desktop-current-vs-proposed.png` | Home on desktop, light and dark |
+| 6 | `exports/6-chai-size-checks.png` | Chai at actual display sizes, light and dark: in the Focus scene (phone and desktop), Home, gentle support, and 72 → 24 px (full pose vs face avatar) |
+| 7a | `exports/7a-motion-whistle-to-summary-light.mp4` | Motion prototype, light: normal and reduced motion side by side, with the app's own whistle sound |
+| 7b | `exports/7b-motion-whistle-to-summary-dark.mp4` | Motion prototype, dark |
+
+Single frames are in `frames/`. The Chai assets and their notes are in `assets/chai/`; see its `README.md` for extraction, format, resolution and the regeneration prompt.
 
 ## 1. The kettle (`build/Kettle2.tsx`)
 **Silhouette and details:**
@@ -90,12 +103,16 @@ Progress is always **elapsed ÷ planned length**, so it stays honest. Example: a
 
 **Rejected alternative:** freezing the kettle ("it can't cool down") would make the gauge disagree with the digits.
 
-## 3. Chai: A/B concept brief
-See `chai-ab-brief.md`.
-- **A:** today's Chai with better posture and expression.
-- **B:** a clearer capybara muzzle and more expressive body language.
-
-Both keep the yuzu, the palette and the gentle personality. Both use **the same seven poses in the same order**, plus a cell beside the v2 kettle, with the same model, settings and references. The baseline board shows the problem both must solve: at 56 px and below, today's greeting, focus and concerned poses share one silhouette. **The mascot is not replaced until you choose.**
+## 3. Chai: the approved art in the mockups
+- **One Chai on screen, always:**
+  - on Focus, Chai sits on the counter beside the kettle, at the same scale and with the same contact shadow;
+  - on the phone summary, the scene's cheering Chai stays visible above the sheet;
+  - when the sheet covers the scene (the unlock and details variants), cheering Chai sits on the sheet's top edge instead;
+  - on the desktop summary, cheering Chai joins the card's headline, because the card covers the scene.
+- **Scale in the Focus scene:** 178 CSS px on a phone and 322 on desktop (the reading pose's height). Every pose uses one scale factor, so cheering is shorter because the pose itself sits lower.
+- **Light:** the scene's shared light layer (window light by day, the warm stove pool at night) falls on Chai as it does on the kettle. The art itself is unchanged.
+- **Small sizes:** the full pose reads down to 40 px; below that, a round face avatar (happy head and yuzu) stays readable at 24 px.
+- **Not updated:** the first-run hello screen, and other screens outside this request, still use the old SVG Chai.
 
 ## 4. The summary: one per brew, a clear hierarchy
 1. **The message:** "25 minutes brewed", with "Tea's ready. Take five…". **Tea time · 5 min** is the primary button, in a footer that never scrolls away. Skip break is next to it.
@@ -149,20 +166,31 @@ The sound plays in both, subject to the app's sound setting.
 ## Honest limits
 - **Data is static and typed by hand** (a veteran with 690 leaves at level 7).
 - **The first brew** is shown with a 25-minute Focus frame; in production it would read 15:00.
-- **Chai uses today's poses** until you choose A or B. The paused state uses the existing `idle` pose (looking up at you). Chai's warm near-side light at night comes from the shared light layer, not from redrawn art.
+- **Chai's resolution:** the approved sheet gives about 490 px per pose. That is sharp everywhere except the desktop Focus Chai on a 2× (Retina) monitor, where it is upscaled about 1.3×. `assets/chai/README.md` has a precise prompt for transparent 2048 px poses for production.
+- **Paused Focus** keeps reading Chai; the "Paused" pill, dimmed digits and the unlit stove carry the state.
 - **The whistle jet** reads well at Focus size. At 520 px its core still looks like a smooth cone; a final art pass could break its edge into small billows.
 - **The Nook screen** was not in scope and is unchanged from v1.
 - **Performance figures** come from a CPU-only container, not a phone.
 
 ## Rebuild
 From `kettle/`, with `npx vite --port 5191` running (the review folder is not watched, so restart after edits):
+0. Chai assets (only when the sheet changes):
+   ```
+   python3 review/round-6-mockups/build/extract-chai.py
+   ```
+   Needs numpy, scipy and Pillow.
 1. `node review/round-6-mockups/build/shoot.mjs` renders all frames to `frames/`.
-2. Kettle and Chai sheets:
-   - `mock.html?screen=kettle&theme=…` at 1400 px, @2;
-   - `mock.html?screen=chai&theme=…` at 1180 px, @2.
-3. `node review/round-6-mockups/build/board.mjs review/round-6-mockups/build/boards.json` builds the boards.
-4. `node review/round-6-mockups/build/record-motion.mjs dark` records the motion prototype.
-5. Room stills:
+2. Sheets:
+   - `mock.html?screen=kettle&theme=…` at 1400 px, @2 → `frames/kettle-sheet-*.png`;
+   - `mock.html?screen=chaisize&theme=…` at 1300 px, @2 → `frames/chai-sizes-*.png`.
+3. Current-app captures: build the app, then run `npx vite preview --port 4173` and
+   ```
+   node review/round-6-mockups/build/capture-current.mjs celebrate <light|dark> <390 844 phone | 1440 900 desktop>
+   ```
+   The output goes to `current-app/`.
+4. `node review/round-6-mockups/build/board.mjs review/round-6-mockups/build/exports.json` builds `exports/`. Copy the two motion videos into `exports/` as 7a and 7b.
+5. `node review/round-6-mockups/build/record-motion.mjs dark|light` records the motion prototype.
+6. Room stills:
    ```
    node review/round-6-mockups/build/render-engine.mjs <out> <w> <h> '<query>'
    ```

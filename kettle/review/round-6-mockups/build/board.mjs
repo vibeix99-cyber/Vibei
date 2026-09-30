@@ -1,5 +1,5 @@
 // Build review boards at realistic viewing sizes. usage: node board.mjs <specs.json> [name-filter]  (a spec or an array of specs)
-// spec: { out, title, note?, colW, cols, dpr?, cells: [{ file, label } | { head }] }  (files relative to ..)
+// spec: { out, title, note?, colW, cols, dpr?, cells: [{ file, label, kind?: 'current'|'proposed' } | { head }] }  (files relative to ..)
 // Phone frames are placed at 390 CSS px (dpr 2 = what a phone shows); desktop frames at 1440 CSS px (dpr 1).
 import { chromium } from 'playwright';
 import { readFileSync } from 'node:fs';
@@ -12,7 +12,7 @@ const cells = S.cells
   .map((c) =>
     c.head
       ? `<div style="grid-column:1/-1;font:800 18px system-ui;color:#3b2a20;padding:14px 0 0">${esc(c.head)}</div>`
-      : `<figure style="margin:0"><figcaption style="font:700 14px system-ui;color:#3b2a20;padding:0 0 6px">${esc(c.label ?? '')}</figcaption><img style="width:${S.colW}px;display:block;border-radius:${S.colW < 600 ? 22 : 10}px;box-shadow:0 0 0 1px rgba(0,0,0,.18)" src="data:image/png;base64,${readFileSync(root + c.file).toString('base64')}"></figure>`,
+      : `<figure style="margin:0"><figcaption style="font:700 14px system-ui;color:#3b2a20;padding:0 0 6px;display:flex;gap:8px;align-items:center">${c.kind ? `<span style="font:800 11px system-ui;letter-spacing:.06em;padding:3px 8px;border-radius:99px;color:#fff;background:${c.kind === 'current' ? '#6b5a4c' : '#d9582b'}">${c.kind === 'current' ? 'CURRENT APP' : 'PROPOSED MOCKUP'}</span>` : ''}${esc(c.label ?? '')}</figcaption><img style="width:${S.colW}px;display:block;border-radius:${S.colW < 600 ? 22 : 10}px;box-shadow:0 0 0 1px rgba(0,0,0,.18)" src="data:image/png;base64,${readFileSync(root + c.file).toString('base64')}"></figure>`,
   )
   .join('');
 const width = S.cols * S.colW + (S.cols - 1) * 24 + 64;

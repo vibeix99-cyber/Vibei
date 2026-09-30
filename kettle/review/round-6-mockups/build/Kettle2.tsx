@@ -15,7 +15,8 @@
  */
 import { PAL } from '@/art';
 
-export type KettleState = 'run' | 'paused' | 'whistle';
+/** rest = the tea break: off the flame, gauge full, a small curl of steam as it cools */
+export type KettleState = 'run' | 'paused' | 'whistle' | 'rest';
 
 const BODY = 'M88 232 C80 204 90 172 118 158 C136 149 194 149 212 158 C240 172 250 204 242 232 C239 242 230 247 218 247 H112 C100 247 91 242 88 232 Z';
 const SPOUT = 'M100 205 C80 204 66 196 58 178 C54 168 51 158 49 149 L65 144 C67 156 71 167 77 175 C85 186 95 191 106 193 Z';
@@ -125,9 +126,10 @@ export function Kettle2({
 }) {
   const whistle = state === 'whistle';
   const paused = state === 'paused';
-  const p = whistle ? 1 : Math.min(1, Math.max(0, progress));
-  const heat = paused ? 0 : whistle ? 1 : 0.25 + 0.75 * p; // flame + glow (never zero while brewing)
-  const stage = p < 0.2 ? 1 : p < 0.6 ? 2 : 3; // steam steps: a small curl from the start, fuller later
+  const rest = state === 'rest';
+  const p = whistle || rest ? 1 : Math.min(1, Math.max(0, progress));
+  const heat = paused || rest ? 0 : whistle ? 1 : 0.25 + 0.75 * p; // flame + glow (never zero while brewing)
+  const stage = rest ? 1 : p < 0.2 ? 1 : p < 0.6 ? 2 : 3; // steam steps: a small curl from the start, fuller later
   const live = !reduced;
   const sway = live ? Math.sin(t * 1.3) * 3 : 0;
   const flick = live ? 1 + Math.sin(t * 9) * 0.06 + Math.sin(t * 13.7) * 0.04 : 1;
@@ -148,7 +150,7 @@ export function Kettle2({
   const lidTilt = whistle ? (live ? -8 + Math.sin(t * 31) * 4 : -8) : 0;
 
   return (
-    <svg viewBox="-70 -40 370 340" width={size} height={(size * 340) / 370} role="img" aria-label={whistle ? 'The kettle is whistling' : paused ? 'The kettle is resting (paused)' : `The kettle is ${Math.round(p * 100)}% of the way to the whistle`}>
+    <svg viewBox="-70 -40 370 340" width={size} height={(size * 340) / 370} role="img" aria-label={whistle ? 'The kettle is whistling' : rest ? 'The kettle is resting (tea time)' : paused ? 'The kettle is resting (paused)' : `The kettle is ${Math.round(p * 100)}% of the way to the whistle`}>
       <defs>
         <clipPath id={`${id}-b`}>
           <path d={BODY} />

@@ -14,12 +14,13 @@ import '@/styles/global.css';
 import { createRoot } from 'react-dom/client';
 import { flushSync } from 'react-dom';
 import { useState, type CSSProperties, type ReactNode } from 'react';
-import { Badge, Icon, LevelBadge, Logo, Mascot, StreakMug, TeaTin, Leaf, type MascotPose } from '@/art';
+import { Badge, Icon, LevelBadge, Logo, Mascot, StreakMug, TeaTin, Leaf } from '@/art';
 import { Button, Chip, IconButton, ProgressBar, Ring, TextField } from '@/ui';
 import { ItemGlyph } from '@/screens/nook/ItemGlyph';
 import { ITEMS } from '@/progress/items';
 import { FocusScene, PHONE_SCENE, DESK_SCENE } from './FocusScene';
 import { Kettle2, type KettleState } from './Kettle2';
+import { ChaiArt, ChaiFace, chaiSize, type ChaiPose } from './ChaiArt';
 
 const q = new URLSearchParams(location.search);
 const screen = q.get('screen') ?? 'home';
@@ -222,7 +223,7 @@ function Home() {
           <StatusLine />
           <h1 style={{ ...display, fontSize: 30, marginTop: 16 }}>Good afternoon, Mika</h1>
           <div style={{ marginTop: 10, display: 'flex', gap: 12, alignItems: 'center' }}>
-            <Mascot pose="idle" size={80} animate={false} />
+            <ChaiArt pose="happy" height={104} />
             <p style={{ ...body, fontSize: 16, color: 'var(--ink)', fontWeight: 700, lineHeight: 1.35 }}>One more brew and today’s cup is full.</p>
           </div>
           <div style={{ marginTop: 12 }}>
@@ -246,7 +247,7 @@ function Home() {
         <StatusLine big />
         <h1 style={{ ...display, fontSize: 50, marginTop: 26, letterSpacing: '-0.5px' }}>Good afternoon, Mika</h1>
         <div style={{ marginTop: 18, display: 'flex', gap: 20, alignItems: 'center' }}>
-          <Mascot pose="idle" size={150} animate={false} />
+          <ChaiArt pose="happy" height={196} />
           <p style={{ ...body, fontSize: 22, color: 'var(--ink)', fontWeight: 700, lineHeight: 1.35, maxWidth: 360 }}>One more brew and today’s cup is full.</p>
         </div>
         <div style={{ marginTop: 26 }}>
@@ -280,15 +281,24 @@ const FOCUS: Record<string, FocusModel> = {
   paused: { state: 'paused', p: 0.5, digits: '12:30', line: 'The kettle will wait.', meta: '12 min brewed so far', pill: 'Paused' },
   extended: { state: 'run', p: 20 / 30, extended: true, digits: '10:00', line: 'Kettle’s warming up.', meta: '20 min brewed · now a 30 min brew', toast: '+5 min · whistles at 3:35 now' },
   whistle: { state: 'whistle', p: 1, digits: '0:00', line: 'Tea’s ready!', meta: '25 min brewed' },
+  break: { state: 'rest', p: 1, digits: '4:12', line: 'Tea time. Sip slowly.', meta: 'Next brew whenever you’re ready', pill: 'Tea break' },
 };
 
-function TopBar({ whistle, wide = false }: { whistle: boolean; wide?: boolean }) {
+function TopBar({ whistle, wide = false, rest = false }: { whistle: boolean; wide?: boolean; rest?: boolean }) {
   const pill: CSSProperties = { display: 'flex', alignItems: 'center', gap: 8, padding: wide ? '10px 16px' : '8px 14px', borderRadius: 999, background: 'var(--surface)', boxShadow: '0 1px 0 var(--line)', font: `800 ${wide ? 16 : 15}px var(--font-body)`, color: 'var(--ink)' };
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10 }}>
       <span style={pill}>
-        <Icon name="pencil" size={16} tone="color" /> Chapter 3 notes
-        <span style={{ color: 'var(--ink-3)', fontWeight: 700 }}>· Study</span>
+        {rest ? (
+          <>
+            <Icon name="cup" size={16} tone="color" /> Tea break <span style={{ color: 'var(--ink-3)', fontWeight: 700 }}>· 5 min</span>
+          </>
+        ) : (
+          <>
+            <Icon name="pencil" size={16} tone="color" /> Chapter 3 notes
+            <span style={{ color: 'var(--ink-3)', fontWeight: 700 }}>· Study</span>
+          </>
+        )}
       </span>
       {!whistle && (
         <span style={{ ...pill, color: 'var(--ink-2)', fontSize: wide ? 15 : 14 }}>
@@ -302,11 +312,17 @@ function TopBar({ whistle, wide = false }: { whistle: boolean; wide?: boolean })
 function Controls({ m, wide = false }: { m: FocusModel; wide?: boolean }) {
   if (m.state === 'whistle') return null;
   const paused = m.state === 'paused';
-  const items: [string, string, boolean][] = [
-    ['plus', m.extended ? 'Add 5 more' : 'Add 5', false],
-    [paused ? 'play' : 'pause', paused ? 'Resume' : 'Pause', true],
-    ['stop', 'End', false],
-  ];
+  const items: [string, string, boolean][] =
+    m.state === 'rest'
+      ? [
+          ['pause', 'Pause', true],
+          ['chevronRight', 'Skip break', false],
+        ]
+      : [
+          ['plus', m.extended ? 'Add 5 more' : 'Add 5', false],
+          [paused ? 'play' : 'pause', paused ? 'Resume' : 'Pause', true],
+          ['stop', 'End', false],
+        ];
   return (
     <div style={{ display: 'flex', justifyContent: wide ? 'flex-start' : 'center', gap: wide ? 40 : 34, alignItems: 'flex-start' }}>
       {items.map(([ic, l, big]) => (
@@ -325,8 +341,8 @@ function Readout({ m, wide = false, opacity = 1 }: { m: FocusModel; wide?: boole
     <div style={{ display: 'grid', justifyItems: wide ? 'start' : 'center', gap: wide ? 10 : 6, opacity }}>
       <div style={{ height: wide ? 34 : 30, display: 'flex', alignItems: 'center' }}>
         {m.pill && (
-          <span style={{ padding: '5px 12px', borderRadius: 999, background: 'var(--surface-2)', font: '800 13px var(--font-body)', color: 'var(--ink-2)', display: 'flex', gap: 6, alignItems: 'center' }}>
-            <Icon name="pause" size={13} /> {m.pill}
+          <span style={{ padding: '5px 12px', borderRadius: 999, background: m.state === 'rest' ? 'var(--sky-soft)' : 'var(--surface-2)', font: '800 13px var(--font-body)', color: m.state === 'rest' ? 'var(--sky-ink)' : 'var(--ink-2)', display: 'flex', gap: 6, alignItems: 'center' }}>
+            <Icon name={m.state === 'rest' ? 'cup' : 'pause'} size={13} /> {m.pill}
           </span>
         )}
         {m.toast && (
@@ -342,7 +358,7 @@ function Readout({ m, wide = false, opacity = 1 }: { m: FocusModel; wide?: boole
           fontSize: wide ? 148 : 84,
           lineHeight: 0.92,
           letterSpacing: wide ? '-3px' : '-1.5px',
-          color: whistle ? 'var(--persimmon-ink)' : m.state === 'paused' ? 'var(--ink-2)' : 'var(--ink)',
+          color: whistle ? 'var(--persimmon-ink)' : m.state === 'paused' ? 'var(--ink-2)' : m.state === 'rest' ? 'var(--sky-ink)' : 'var(--ink)',
           fontVariantNumeric: 'tabular-nums',
         }}
         aria-label={whistle ? 'Brew complete' : `${m.digits} remaining`}
@@ -362,7 +378,7 @@ function FocusPhone({ m, t = 0, reduced = true, controlsOpacity = 1, readoutOpac
       <FocusScene L={PHONE_SCENE} night={dark} p={m.p} state={m.state} extended={m.extended} t={t} reduced={reduced} />
       <div style={{ position: 'absolute', left: 0, right: 0, top: 0, height: 90, background: `linear-gradient(180deg, color-mix(in srgb, var(--bg) ${dark ? 40 : 30}%, transparent), transparent)` }} />
       <div style={{ position: 'absolute', left: 16, right: 16, top: 16 }}>
-        <TopBar whistle={m.state === 'whistle'} />
+        <TopBar whistle={m.state === 'whistle'} rest={m.state === 'rest'} />
       </div>
       <div style={{ position: 'absolute', left: 0, right: 0, top: PHONE_SCENE.h + 8 }}>
         <Readout m={m} opacity={readoutOpacity} />
@@ -383,7 +399,15 @@ function FocusDesk({ m }: { m: FocusModel }) {
       <div style={{ position: 'absolute', left: 960, top: 50, width: 440, height: DESK_SCENE.h, display: 'grid', alignContent: 'space-between' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span style={{ display: 'flex', alignItems: 'center', gap: 8, font: '800 17px var(--font-body)', color: 'var(--ink)' }}>
-            <Icon name="pencil" size={18} tone="color" /> Chapter 3 notes <span style={{ color: 'var(--ink-3)', fontWeight: 700 }}>· Study</span>
+            {m.state === 'rest' ? (
+              <>
+                <Icon name="cup" size={18} tone="color" /> Tea break <span style={{ color: 'var(--ink-3)', fontWeight: 700 }}>· 5 min</span>
+              </>
+            ) : (
+              <>
+                <Icon name="pencil" size={18} tone="color" /> Chapter 3 notes <span style={{ color: 'var(--ink-3)', fontWeight: 700 }}>· Study</span>
+              </>
+            )}
           </span>
           {m.state !== 'whistle' && (
             <span style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 16px', borderRadius: 999, background: 'var(--surface)', boxShadow: '0 0 0 2px var(--line)', font: '800 15px var(--font-body)', color: 'var(--ink-2)' }}>
@@ -476,7 +500,7 @@ function Unlock({ wide }: { wide: boolean }) {
           <LevelBadge level={8} size={24} /> Cozy level 8
         </span>
       </div>
-      <div style={{ height: wide ? 250 : 150, borderRadius: 16, overflow: 'hidden', background: dark ? '#2a1f33' : '#f4e6d4' }}>
+      <div style={{ height: wide ? 212 : 124, borderRadius: 16, overflow: 'hidden', background: dark ? '#2a1f33' : '#f4e6d4' }}>
         <img src={`${R}/unlock-record-${dark ? 'night' : 'day'}.png`} alt="The record player in the nook" style={{ width: '118%', height: '100%', objectFit: 'cover', objectPosition: '0% 50%' }} />
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10 }}>
@@ -492,16 +516,20 @@ function Unlock({ wide }: { wide: boolean }) {
   );
 }
 
-function SummarySheet({ v, wide = false, stagger }: { v: Variant; wide?: boolean; stagger?: (i: number) => CSSProperties }) {
+function SummarySheet({ v, wide = false, stagger, chai = false }: { v: Variant; wide?: boolean; stagger?: (i: number) => CSSProperties; chai?: boolean }) {
   const first = v === 'first';
   const S = stagger ?? (() => ({}));
   return (
     <div style={{ display: 'grid', gap: wide ? 18 : 14 }}>
       {/* 1 · the message: time brewed + tea time */}
-      <div style={S(0)}>
-        <p style={{ ...body, fontSize: wide ? 15 : 14, fontWeight: 800, color: 'var(--ink-3)' }}>{first ? 'Your first brew' : 'Chapter 3 notes · Study'}</p>
-        <h2 style={{ ...display, fontSize: wide ? 44 : 36, lineHeight: 1.05, marginTop: 4, letterSpacing: '-0.5px' }}>{first ? '15 minutes brewed' : '25 minutes brewed'}</h2>
-        <p style={{ ...body, fontSize: wide ? 18 : 16, fontWeight: 700, marginTop: 6, color: 'var(--ink)' }}>Tea’s ready. Take five before the next one.</p>
+      <div style={{ display: 'flex', gap: 12, alignItems: 'center', justifyContent: 'space-between', ...S(0) }}>
+        <div>
+          <p style={{ ...body, fontSize: wide ? 15 : 14, fontWeight: 800, color: 'var(--ink-3)' }}>{first ? 'Your first brew' : 'Chapter 3 notes · Study'}</p>
+          <h2 style={{ ...display, fontSize: wide ? 44 : 36, lineHeight: 1.05, marginTop: 4, letterSpacing: '-0.5px' }}>{first ? '15 minutes brewed' : '25 minutes brewed'}</h2>
+          <p style={{ ...body, fontSize: wide ? 18 : 16, fontWeight: 700, marginTop: 6, color: 'var(--ink)' }}>Tea’s ready. Take five before the next one.</p>
+        </div>
+        {/* cheering Chai joins the headline only when the sheet covers the scene's Chai (one Chai on screen, always) */}
+        {chai && <ChaiArt pose="cheering" height={wide ? 150 : 104} style={{ flex: 'none', marginRight: wide ? 0 : -6 }} />}
       </div>
       {!first && (
         <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap', ...S(1) }}>
@@ -570,7 +598,7 @@ function SummaryFooter({ wide = false, style }: { wide?: boolean; style?: CSSPro
   );
 }
 
-const SHEET_TOP: Record<Variant, number> = { routine: 288, details: 104, unlock: 34, first: 300 };
+const SHEET_TOP: Record<Variant, number> = { routine: 288, details: 104, unlock: 66, first: 300 };
 const SCENE_PAN = 176; // how far the Focus scene pans up under the sheet (phone)
 
 function SummaryPhone({ v, rise = 1, t = 0, reduced = true, stagger }: { v: Variant; rise?: number; t?: number; reduced?: boolean; stagger?: (i: number) => CSSProperties }) {
@@ -606,6 +634,12 @@ function SummaryPhone({ v, rise = 1, t = 0, reduced = true, stagger }: { v: Vari
         </div>
         <SummaryFooter style={{ padding: '12px 20px 26px', borderTop: '2px solid var(--line)', background: 'var(--surface)', ...(stagger ? stagger(5) : {}) }} />
       </div>
+      {/* when the sheet covers the scene's Chai, cheering Chai sits on the sheet's edge instead (one Chai on screen) */}
+      {top < 200 && (
+        <div style={{ position: 'absolute', right: 20, top: top - chaiSize('cheering', 110).h * 0.64, transform: `translateY(${(1 - rise) * (H - top)}px)` }}>
+          <ChaiArt pose="cheering" height={110} />
+        </div>
+      )}
     </>
   );
 }
@@ -642,7 +676,7 @@ function Summary() {
           gap: 22,
         }}
       >
-        <SummarySheet v={v} wide />
+        <SummarySheet v={v} wide chai />
         <SummaryFooter wide />
       </div>
     </Frame>
@@ -791,13 +825,14 @@ function KettleSheet() {
     ['Paused', 0.5, 'paused', false],
     ['+5 added · 10:00', 20 / 30, 'run', true],
     ['Whistle', 1, 'whistle', false],
+    ['Tea break (resting)', 1, 'rest', false],
   ];
   return (
     <div style={{ width: 1400, padding: '18px 20px', background: 'var(--bg)', boxSizing: 'border-box' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 4 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 4 }}>
         {S.map(([l, p, s, x]) => (
           <div key={l} style={{ display: 'grid', justifyItems: 'center' }}>
-            <Kettle2 progress={p} state={s} extended={x} night={dark} size={196} />
+            <Kettle2 progress={p} state={s} extended={x} night={dark} size={172} />
             <span style={{ font: '800 14px var(--font-body)', color: 'var(--ink-2)' }}>{l}</span>
           </div>
         ))}
@@ -810,30 +845,76 @@ function KettleSheet() {
   );
 }
 
-/* ------------------------------------------------------------------ Chai baseline (for the A/B concept comparison) */
-function ChaiBaseline() {
-  const poses: [MascotPose, string][] = [
-    ['idle', '1 · Greeting (Home)'],
-    ['focus', '2 · Focus with mug'],
-    ['think', '3 · Waiting (paused)'],
-    ['cheer', '4 · Cheer (whistle)'],
-    ['concerned', '5 · Concerned (streak at risk)'],
-    ['sleep', '6 · Asleep (loaf)'],
-  ];
-  const sizes = [160, 72, 56, 24];
+/* ------------------------------------------------------------------ Chai size check (approved art, actual CSS sizes) */
+function Clip({ w, h, top, left = 0, children, label }: { w: number; h: number; top: number; left?: number; children: ReactNode; label: string }) {
   return (
-    <div style={{ width: 1180, padding: '16px 20px 22px', background: 'var(--bg)', boxSizing: 'border-box' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '240px repeat(4, 1fr)', alignItems: 'center', rowGap: 6, columnGap: 10 }}>
-        <span />
-        {sizes.map((s) => (
-          <span key={s} style={{ font: '800 14px var(--font-body)', color: 'var(--ink-3)', textAlign: 'center' }}>{s} px</span>
+    <figure style={{ margin: 0 }}>
+      <figcaption style={{ font: '800 14px var(--font-body)', color: 'var(--ink-2)', marginBottom: 6 }}>{label}</figcaption>
+      <div style={{ position: 'relative', width: w, height: h, overflow: 'hidden', borderRadius: 16, boxShadow: '0 0 0 2px var(--line)' }}>
+        <div style={{ position: 'absolute', left: -left, top: -top }}>{children}</div>
+      </div>
+    </figure>
+  );
+}
+
+function ChaiSizes() {
+  const cap: CSSProperties = { font: '800 13px var(--font-body)', color: 'var(--ink-3)', textAlign: 'center', marginTop: 6 };
+  const head: CSSProperties = { ...display, fontSize: 20, margin: '26px 0 12px' };
+  const phone = (m: FocusModel) => (
+    <div style={{ position: 'relative', width: PHONE_SCENE.w, height: PHONE_SCENE.h }}>
+      <FocusScene L={PHONE_SCENE} night={dark} p={m.p} state={m.state} extended={m.extended} />
+    </div>
+  );
+  const small = [72, 56, 40, 32, 24];
+  return (
+    <div style={{ width: 1300, padding: '12px 28px 30px', background: 'var(--bg)', boxSizing: 'border-box' }}>
+      <h2 style={{ ...head, marginTop: 8 }}>In the Focus scene · phone (390 px wide, Chai {Math.round(PHONE_SCENE.chai.h)} px tall)</h2>
+      <div style={{ display: 'flex', gap: 24 }}>
+        <Clip w={390} h={286} top={230} label="Focus · reading">{phone(FOCUS.mid)}</Clip>
+        <Clip w={390} h={286} top={230} label="Tea break · sipping">{phone(FOCUS.break)}</Clip>
+        <Clip w={390} h={286} top={230} label="Whistle · cheering">{phone(FOCUS.whistle)}</Clip>
+      </div>
+      <h2 style={head}>In the Focus scene · desktop (1440 × 900 layout, Chai {DESK_SCENE.chai.h} px tall)</h2>
+      <Clip w={860} h={420} top={380} label="Focus · reading, next to the kettle">
+        <div style={{ position: 'relative', width: DESK_SCENE.w, height: DESK_SCENE.h }}>
+          <FocusScene L={DESK_SCENE} night={dark} p={0.5} state="run" />
+        </div>
+      </Clip>
+      <h2 style={head}>Home and gentle support</h2>
+      <div style={{ display: 'flex', gap: 44, alignItems: 'flex-end' }}>
+        {(
+          [
+            ['happy', 104, 'Home greeting · phone'],
+            ['happy', 196, 'Home greeting · desktop'],
+            ['concerned', 104, 'Gentle support (e.g. streak at risk) · phone'],
+          ] as [ChaiPose, number, string][]
+        ).map(([p, h, l]) => (
+          <div key={l} style={{ display: 'grid', justifyItems: 'center' }}>
+            <ChaiArt pose={p} height={h} />
+            <div style={cap}>{l} · {h} px</div>
+          </div>
         ))}
-        {poses.map(([p, l]) => (
-          <div key={p} style={{ display: 'contents' }}>
-            <span style={{ font: '800 16px var(--font-body)', color: 'var(--ink)' }}>{l}</span>
-            {sizes.map((s) => (
-              <div key={s} style={{ display: 'grid', placeItems: 'center', height: 166 }}>
-                <Mascot pose={p} size={s} animate={false} />
+      </div>
+      <h2 style={head}>Small sizes: full pose vs face crop</h2>
+      <div style={{ display: 'grid', gridTemplateColumns: `180px repeat(${small.length}, 110px)`, alignItems: 'end', rowGap: 14 }}>
+        <span />
+        {small.map((h) => (
+          <span key={h} style={cap}>
+            {h} px
+          </span>
+        ))}
+        {(
+          [
+            ['Full pose · reading', (h: number) => <ChaiArt pose="reading" height={h} />],
+            ['Full pose · cheering', (h: number) => <ChaiArt pose="cheering" height={h * (CHAI_RH / CHAI_CH)} />],
+            ['Face avatar · happy', (h: number) => <ChaiFace size={h} />],
+          ] as [string, (h: number) => ReactNode][]
+        ).map(([l, r]) => (
+          <div key={l} style={{ display: 'contents' }}>
+            <span style={{ font: '800 14px var(--font-body)', color: 'var(--ink)', alignSelf: 'center' }}>{l}</span>
+            {small.map((h) => (
+              <div key={h} style={{ display: 'grid', placeItems: 'end center', height: 80 }}>
+                {r(h)}
               </div>
             ))}
           </div>
@@ -842,7 +923,9 @@ function ChaiBaseline() {
     </div>
   );
 }
+const CHAI_CH = chaiSize('cheering', 100).h;
+const CHAI_RH = chaiSize('reading', 100).h;
 
-const SCREENS: Record<string, () => ReactNode> = { hello: Hello, home: Home, focus: Focus, summary: Summary, nook: Nook, motion: () => <Motion />, kettle: KettleSheet, chai: ChaiBaseline };
+const SCREENS: Record<string, () => ReactNode> = { hello: Hello, home: Home, focus: Focus, summary: Summary, nook: Nook, motion: () => <Motion />, kettle: KettleSheet, chaisize: ChaiSizes };
 createRoot(document.getElementById('root')!).render(<>{(SCREENS[screen] ?? Home)()}</>);
 setTimeout(() => ((window as unknown as { __ready: boolean }).__ready = true), 500);

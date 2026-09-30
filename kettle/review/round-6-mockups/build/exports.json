@@ -1,0 +1,322 @@
+[
+ {
+  "out": "exports/1-focus-phone-current-vs-proposed.png",
+  "title": "1 \u00b7 Focus on a phone: current app vs proposed mockup (390 px wide = real phone size)",
+  "note": "Proposed: the kettle is the timer; Chai (approved art, reading) shares the counter under the nook's window; the countdown sits on a solid surface. Current app: 3D room card + ring timer.",
+  "colW": 390,
+  "cols": 4,
+  "cells": [
+   {
+    "head": "Light theme"
+   },
+   {
+    "file": "current-app/phone-light-celebrate-04-focus.png",
+    "label": "Focus",
+    "kind": "current"
+   },
+   {
+    "file": "frames/phone-light-focus-mid.png",
+    "label": "Focus \u00b7 midpoint",
+    "kind": "proposed"
+   },
+   {
+    "file": "current-app/phone-light-celebrate-07-whistle-1500ms.png",
+    "label": "Whistle",
+    "kind": "current"
+   },
+   {
+    "file": "frames/phone-light-focus-whistle.png",
+    "label": "Whistle",
+    "kind": "proposed"
+   },
+   {
+    "head": "Dark theme"
+   },
+   {
+    "file": "current-app/phone-dark-celebrate-04-focus.png",
+    "label": "Focus",
+    "kind": "current"
+   },
+   {
+    "file": "frames/phone-dark-focus-mid.png",
+    "label": "Focus \u00b7 midpoint",
+    "kind": "proposed"
+   },
+   {
+    "file": "current-app/phone-dark-celebrate-07-whistle-1500ms.png",
+    "label": "Whistle",
+    "kind": "current"
+   },
+   {
+    "file": "frames/phone-dark-focus-whistle.png",
+    "label": "Whistle",
+    "kind": "proposed"
+   },
+   {
+    "head": "Proposed states (light): start \u00b7 paused \u00b7 +5 added \u00b7 tea break"
+   },
+   {
+    "file": "frames/phone-light-focus-start.png",
+    "label": "Start \u00b7 25:00",
+    "kind": "proposed"
+   },
+   {
+    "file": "frames/phone-light-focus-paused.png",
+    "label": "Paused",
+    "kind": "proposed"
+   },
+   {
+    "file": "frames/phone-light-focus-extended.png",
+    "label": "+5 added \u00b7 10:00",
+    "kind": "proposed"
+   },
+   {
+    "file": "frames/phone-light-focus-break.png",
+    "label": "Tea break \u00b7 sipping",
+    "kind": "proposed"
+   },
+   {
+    "head": "Proposed states (dark)"
+   },
+   {
+    "file": "frames/phone-dark-focus-start.png",
+    "label": "Start \u00b7 25:00",
+    "kind": "proposed"
+   },
+   {
+    "file": "frames/phone-dark-focus-paused.png",
+    "label": "Paused",
+    "kind": "proposed"
+   },
+   {
+    "file": "frames/phone-dark-focus-extended.png",
+    "label": "+5 added \u00b7 10:00",
+    "kind": "proposed"
+   },
+   {
+    "file": "frames/phone-dark-focus-break.png",
+    "label": "Tea break \u00b7 sipping",
+    "kind": "proposed"
+   }
+  ]
+ },
+ {
+  "out": "exports/2-focus-desktop-current-vs-proposed.png",
+  "title": "2 \u00b7 Focus on desktop: current app vs proposed mockup (1440 \u00d7 900, real size)",
+  "colW": 1440,
+  "cols": 1,
+  "dpr": 1,
+  "cells": [
+   {
+    "file": "current-app/desktop-light-celebrate-04-focus.png",
+    "label": "Light",
+    "kind": "current"
+   },
+   {
+    "file": "frames/desktop-light-focus-mid.png",
+    "label": "Light \u00b7 midpoint",
+    "kind": "proposed"
+   },
+   {
+    "file": "current-app/desktop-dark-celebrate-04-focus.png",
+    "label": "Dark",
+    "kind": "current"
+   },
+   {
+    "file": "frames/desktop-dark-focus-mid.png",
+    "label": "Dark \u00b7 midpoint",
+    "kind": "proposed"
+   },
+   {
+    "file": "frames/desktop-dark-focus-whistle.png",
+    "label": "Dark \u00b7 whistle",
+    "kind": "proposed"
+   },
+   {
+    "file": "frames/desktop-light-focus-break.png",
+    "label": "Light \u00b7 tea break",
+    "kind": "proposed"
+   }
+  ]
+ },
+ {
+  "out": "exports/3-kettle-state-sheet.png",
+  "title": "3 \u00b7 Kettle state sheet (proposed art): start \u2192 whistle, paused, +5 added, tea break",
+  "note": "Progress = heat gauge + flame + under-glow + three steam sizes; the body is orange from the first second and never fills. Paused: flame out, no steam, gauge holds. +5: needle eases back, honey '+5' segment at the end of the gauge. Whistle: cap open, steam jet, lid lifted, notes (a still, so reduced motion shows the same). Top row = the size used on phones; large pair = detail.",
+  "colW": 1400,
+  "cols": 1,
+  "cells": [
+   {
+    "file": "frames/kettle-sheet-light.png",
+    "label": "Light",
+    "kind": "proposed"
+   },
+   {
+    "file": "frames/kettle-sheet-dark.png",
+    "label": "Dark",
+    "kind": "proposed"
+   }
+  ]
+ },
+ {
+  "out": "exports/4a-completion-phone-current-vs-proposed.png",
+  "title": "4a \u00b7 Completion on a phone: current app (5 cards) vs proposed single summary",
+  "note": "Proposed hierarchy: minutes brewed + Tea time first (the footer never scrolls away); routine rewards as one compact band; the leaf arithmetic behind 'How your leaves added up'; a major room unlock gets a full-width picture.",
+  "colW": 390,
+  "cols": 4,
+  "cells": [
+   {
+    "head": "Routine brew"
+   },
+   {
+    "file": "current-app/phone-light-celebrate-08-done-0.png",
+    "label": "Card 1 of 5 \u00b7 light",
+    "kind": "current"
+   },
+   {
+    "file": "current-app/phone-dark-celebrate-08-done-0.png",
+    "label": "Card 1 of 5 \u00b7 dark",
+    "kind": "current"
+   },
+   {
+    "file": "frames/phone-light-summary-routine.png",
+    "label": "Routine \u00b7 light",
+    "kind": "proposed"
+   },
+   {
+    "file": "frames/phone-dark-summary-routine.png",
+    "label": "Routine \u00b7 dark",
+    "kind": "proposed"
+   },
+   {
+    "head": "Major room unlock (level 8, record player)"
+   },
+   {
+    "file": "current-app/phone-light-celebrate-08-done-3.png",
+    "label": "Card 4 of 5 \u00b7 light",
+    "kind": "current"
+   },
+   {
+    "file": "current-app/phone-dark-celebrate-08-done-3.png",
+    "label": "Card 4 of 5 \u00b7 dark",
+    "kind": "current"
+   },
+   {
+    "file": "frames/phone-light-summary-unlock.png",
+    "label": "Unlock \u00b7 light",
+    "kind": "proposed"
+   },
+   {
+    "file": "frames/phone-dark-summary-unlock.png",
+    "label": "Unlock \u00b7 dark",
+    "kind": "proposed"
+   }
+  ]
+ },
+ {
+  "out": "exports/4b-completion-desktop-current-vs-proposed.png",
+  "title": "4b \u00b7 Completion on desktop: current app vs proposed (1440 \u00d7 900)",
+  "colW": 1440,
+  "cols": 1,
+  "dpr": 1,
+  "cells": [
+   {
+    "file": "current-app/desktop-light-celebrate-08-done-0.png",
+    "label": "Routine \u00b7 card 1 of 5 \u00b7 light",
+    "kind": "current"
+   },
+   {
+    "file": "frames/desktop-light-summary-routine.png",
+    "label": "Routine \u00b7 light",
+    "kind": "proposed"
+   },
+   {
+    "file": "current-app/desktop-dark-celebrate-08-done-3.png",
+    "label": "Unlock \u00b7 card 4 of 5 \u00b7 dark",
+    "kind": "current"
+   },
+   {
+    "file": "frames/desktop-dark-summary-unlock.png",
+    "label": "Unlock \u00b7 dark",
+    "kind": "proposed"
+   }
+  ]
+ },
+ {
+  "out": "exports/5a-home-phone-current-vs-proposed.png",
+  "title": "5a \u00b7 Home on a phone: current app vs proposed (390 px)",
+  "note": "Proposed: today's minutes in words (12 min brewed \u00b7 18 min to go) over the goal bar; Chai uses the approved art (happy pose).",
+  "colW": 390,
+  "cols": 4,
+  "cells": [
+   {
+    "file": "current-app/phone-light-celebrate-01-home.png",
+    "label": "Light",
+    "kind": "current"
+   },
+   {
+    "file": "frames/phone-light-home.png",
+    "label": "Light",
+    "kind": "proposed"
+   },
+   {
+    "file": "current-app/phone-dark-celebrate-01-home.png",
+    "label": "Dark",
+    "kind": "current"
+   },
+   {
+    "file": "frames/phone-dark-home.png",
+    "label": "Dark",
+    "kind": "proposed"
+   }
+  ]
+ },
+ {
+  "out": "exports/5b-home-desktop-current-vs-proposed.png",
+  "title": "5b \u00b7 Home on desktop: current app vs proposed (1440 \u00d7 900)",
+  "colW": 1440,
+  "cols": 1,
+  "dpr": 1,
+  "cells": [
+   {
+    "file": "current-app/desktop-light-celebrate-01-home.png",
+    "label": "Light",
+    "kind": "current"
+   },
+   {
+    "file": "frames/desktop-light-home.png",
+    "label": "Light",
+    "kind": "proposed"
+   },
+   {
+    "file": "current-app/desktop-dark-celebrate-01-home.png",
+    "label": "Dark",
+    "kind": "current"
+   },
+   {
+    "file": "frames/desktop-dark-home.png",
+    "label": "Dark",
+    "kind": "proposed"
+   }
+  ]
+ },
+ {
+  "out": "exports/6-chai-size-checks.png",
+  "title": "6 \u00b7 Chai (approved art) at actual display sizes, light and dark",
+  "note": "Sizes are CSS px (this image is 2\u00d7 for sharpness: view at 50% for true size). Full pose reads down to about 40 px; below that, use the round face avatar.",
+  "colW": 1300,
+  "cols": 1,
+  "cells": [
+   {
+    "file": "frames/chai-sizes-light.png",
+    "label": "Light",
+    "kind": "proposed"
+   },
+   {
+    "file": "frames/chai-sizes-dark.png",
+    "label": "Dark",
+    "kind": "proposed"
+   }
+  ]
+ }
+]

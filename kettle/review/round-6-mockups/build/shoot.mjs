@@ -8,7 +8,7 @@ mkdirSync(OUT, { recursive: true });
 
 const PER_DEVICE = [
   ['home', { screen: 'home' }],
-  ...['start', 'mid', 'paused', 'extended', 'whistle'].map((s) => [`focus-${s}`, { screen: 'focus', state: s }]),
+  ...['start', 'mid', 'paused', 'extended', 'whistle', 'break'].map((s) => [`focus-${s}`, { screen: 'focus', state: s }]),
   ...['routine', 'unlock', 'details'].map((v) => [`summary-${v}`, { screen: 'summary', variant: v }]),
 ];
 const PHONE_ONLY = [

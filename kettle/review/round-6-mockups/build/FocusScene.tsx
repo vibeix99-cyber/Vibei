@@ -8,7 +8,7 @@
  * light, a warm pool on the counter that also warms Chai's near side. Paused = the stove's light goes out.
  */
 import type { CSSProperties } from 'react';
-import { Mascot, type MascotPose } from '@/art';
+import { ChaiArt, chaiSize, type ChaiPose } from './ChaiArt';
 import { Kettle2, type KettleState } from './Kettle2';
 
 const R = '../renders';
@@ -20,7 +20,8 @@ export type SceneLayout = {
   bg: { file: 'phone' | 'wide'; w: number; h: number; top: number; blur: number };
   counter: { back: number; front: number; bottom: number };
   kettle: { size: number; x: number; base: number };
-  chai: { size: number; x: number; base: number };
+  /** h = the reading pose's CSS height; every pose shares that scale */
+  chai: { h: number; x: number; base: number };
   /** the window's horizontal span where it meets the counter (for the light spill) */
   win: { l: number; r: number };
 };
@@ -31,7 +32,7 @@ export const PHONE_SCENE: SceneLayout = {
   bg: { file: 'phone', w: 390, h: 844, top: -112, blur: 1 },
   counter: { back: 382, front: 482, bottom: 516 },
   kettle: { size: 290, x: 146, base: 456 },
-  chai: { size: 158, x: 298, base: 468 },
+  chai: { h: 178, x: 296, base: 470 },
   win: { l: 40, r: 350 },
 };
 
@@ -41,7 +42,7 @@ export const DESK_SCENE: SceneLayout = {
   bg: { file: 'wide', w: 860, h: 820, top: -6, blur: 0.8 },
   counter: { back: 476, front: 748, bottom: 800 },
   kettle: { size: 530, x: 318, base: 694 },
-  chai: { size: 292, x: 646, base: 706 },
+  chai: { h: 322, x: 642, base: 708 },
   win: { l: 236, r: 630 },
 };
 
@@ -66,22 +67,24 @@ export function FocusScene({
   p: number;
   state: KettleState;
   extended?: boolean;
-  chaiPose?: MascotPose;
+  chaiPose?: ChaiPose;
   t?: number;
   reduced?: boolean;
   style?: CSSProperties;
 }) {
   const whistle = state === 'whistle';
   const paused = state === 'paused';
-  const heat = paused ? 0 : whistle ? 1 : 0.25 + 0.75 * p;
-  const pose: MascotPose = chaiPose ?? (whistle ? 'cheer' : paused ? 'idle' : 'focus');
+  const heat = paused || state === 'rest' ? 0 : whistle ? 1 : 0.25 + 0.75 * p;
+  const pose: ChaiPose = chaiPose ?? (whistle ? 'cheering' : state === 'rest' ? 'sipping' : 'reading');
   const { counter: C, kettle: K, chai: M, win } = L;
   const kH = (K.size * 340) / 370;
   const kLeft = K.x - K_CX * K.size;
   const kTop = K.base - K_BASE * kH;
   const plateHalf = K_HALF * K.size;
-  const mLeft = M.x - M.size / 2;
-  const mTop = M.base - (189 / 200) * M.size;
+  const ms = chaiSize(pose, M.h);
+  const mLeft = M.x - ms.w / 2;
+  const mTop = M.base - ms.h + ms.margin;
+  const foot = ms.w * 0.44; // half-width of Chai's footprint
   const depth = C.front - C.back;
   const id = `fs${L.w}${night ? 'n' : 'd'}`;
   // wood, graded for the time of day (room palette: wood #C98B55, hi #E2AE74, mid #B07443, deep #8A5534, dark #6B3F26)
@@ -91,7 +94,7 @@ export function FocusScene({
   const planks = [0.16, 0.38, 0.66];
   const shadowInk = night ? '14,8,16' : '74,44,26';
   const kx = K.x;
-  const hop = !reduced && whistle ? Math.abs(Math.sin(t * 7)) * M.size * 0.05 * Math.max(0, 1 - t / 2.4) : 0;
+  const hop = !reduced && whistle ? Math.abs(Math.sin(t * 7)) * M.h * 0.05 * Math.max(0, 1 - t / 2.4) : 0;
 
   return (
     <div style={{ position: 'absolute', left: 0, top: 0, width: L.w, height: L.h, overflow: 'hidden', ...style }}>
@@ -160,8 +163,8 @@ export function FocusScene({
         <g>
           <ellipse cx={kx + plateHalf * 0.04} cy={K.base + depth * 0.07} rx={plateHalf * 1.18} ry={depth * 0.1} fill={`rgb(${shadowInk})`} opacity={night ? 0.34 : 0.16} filter={`url(#${id}-soft)`} />
           <ellipse cx={kx} cy={K.base + 1} rx={plateHalf * 1.02} ry={depth * 0.035} fill={`rgb(${shadowInk})`} opacity={night ? 0.7 : 0.42} filter={`url(#${id}-contact)`} />
-          <ellipse cx={M.x + M.size * 0.01} cy={M.base + depth * 0.07} rx={M.size * 0.38} ry={depth * 0.1} fill={`rgb(${shadowInk})`} opacity={(night ? 0.34 : 0.16) * (1 - hop / (M.size * 0.08))} filter={`url(#${id}-soft)`} />
-          <ellipse cx={M.x} cy={M.base + 1} rx={M.size * 0.3 - hop * 0.6} ry={depth * 0.035} fill={`rgb(${shadowInk})`} opacity={(night ? 0.7 : 0.42) * (1 - hop / (M.size * 0.08))} filter={`url(#${id}-contact)`} />
+          <ellipse cx={M.x} cy={M.base + depth * 0.07} rx={foot * 1.08} ry={depth * 0.1} fill={`rgb(${shadowInk})`} opacity={(night ? 0.34 : 0.16) * (1 - hop / (M.h * 0.08))} filter={`url(#${id}-soft)`} />
+          <ellipse cx={M.x} cy={M.base + 1} rx={foot * 0.92 - hop * 0.6} ry={depth * 0.035} fill={`rgb(${shadowInk})`} opacity={(night ? 0.7 : 0.42) * (1 - hop / (M.h * 0.08))} filter={`url(#${id}-contact)`} />
         </g>
       </svg>
 
@@ -170,8 +173,8 @@ export function FocusScene({
         <Kettle2 progress={p} state={state} extended={extended} night={night} size={K.size} t={t} reduced={reduced} ground={false} />
       </div>
       {/* Chai, on the same counter, same scale and shadow */}
-      <div style={{ position: 'absolute', left: mLeft, top: mTop - hop, ['--art-shadow' as string]: 'transparent' }}>
-        <Mascot pose={pose} size={M.size} animate={false} />
+      <div style={{ position: 'absolute', left: mLeft, top: mTop - hop }}>
+        <ChaiArt pose={pose} height={M.h} />
       </div>
 
       {/* one light over everything: window light from the top (day) / stove warmth + moonlight (night) */}
