@@ -1,0 +1,64 @@
+{
+ "ad": "ad-02-chais-deal",
+ "updated": "2026-09-30 (final)",
+ "rule": "Before any paid call, read generated/<job>.state.json: if it has request_id, only poll/download (hf-run.py does this). Never submit a new body under an existing job name.",
+ "jobs": {
+  "g1-opening": {
+   "endpoint": "kling-video/o3/first-last-frame",
+   "request_id": "d40ae7a0-cda1-44a6-abfc-36116aa807fb",
+   "state": "generated/g1-opening.state.json",
+   "request": "generated/g1-opening.request.json",
+   "refs": [
+    "generated/refs/opening-first.png",
+    "generated/refs/opening-last.png"
+   ],
+   "output": "generated/g1-opening-0.mp4",
+   "estimate_credits": "2.957",
+   "status": "completed; downloaded; usable (Chai on-model)"
+  },
+  "g2-pencil-mug": {
+   "endpoint": "kling-video/v3.0/pro/text-to-video",
+   "request_id": "d2605f19-6962-4399-b007-21733c050094",
+   "state": "generated/g2-pencil-mug.state.json",
+   "request": "generated/g2-pencil-mug.request.json",
+   "output": "generated/g2-pencil-mug-0.mp4",
+   "estimate_credits": "6.900",
+   "status": "completed; downloaded; shot B usable (src 24fps f100-f165); shot A rejected: page pre-filled with two lines of pseudo-handwriting, so no real first line"
+  },
+  "g2r-first-line": {
+   "endpoint": "kling-video/v3.0/pro/image-to-video",
+   "request_id": "0a399b08-0fde-4ae1-9497-54de2f38b4cd",
+   "state": "generated/g2r-first-line.state.json",
+   "request": "generated/g2r-first-line.request.json",
+   "refs": [
+    "generated/refs/g2r-first-frame.png (G2 frame 1, pre-written handwriting removed by build/clean-plate.py)"
+   ],
+   "output": "generated/g2r-first-line-0.mp4",
+   "estimate_credits": "3.943",
+   "why": "the one allowed targeted replacement: G2 shot A defect",
+   "status": "completed; downloaded; used for 7.0\u201310.0 s"
+  }
+ },
+ "replacement_budget": "USED (g2r-first-line). No further generation.",
+ "stages": {
+  "preflight": "done",
+  "refs_uploaded": "done",
+  "jobs_submitted": "done",
+  "app_sources": "done (ad-01 masters reused, copied to sources/app)",
+  "sound": "done (build/sound.py + build/cues.json)",
+  "edit": "done (build/compose.mjs, 540 frames)",
+  "review": "done (exports/review-phone-size.png, loudness measured)",
+  "export": "done: exports/kettle-ad02-chais-deal-v1.mp4"
+ },
+ "spend": {
+  "credits": "13.800",
+  "usd": "0.864",
+  "source": "generated/ledger.jsonl (estimate endpoint value for each completed job, 45% Kling promotion applied)"
+ },
+ "outputs": {
+  "video": "exports/kettle-ad02-chais-deal-v1.mp4",
+  "cover": "exports/cover.jpg",
+  "review": "exports/review-phone-size.png",
+  "waveform": "exports/audio-waveform.png"
+ }
+}

@@ -1,0 +1,38 @@
+{
+ "fps": 30,
+ "viewport": {
+  "width": 600,
+  "height": 1000,
+  "dpr": 2.5
+ },
+ "segments": {
+  "a-home-focus": {
+   "taps": [
+    {
+     "frame": 30,
+     "label": "start",
+     "x": 292.5,
+     "y": 704.328125
+    }
+   ],
+   "marks": {
+    "startTap": 30
+   },
+   "frames": 180
+  },
+  "b-whistle": {
+   "taps": [],
+   "marks": {
+    "jump": 0
+   },
+   "frames": 210
+  },
+  "c-break": {
+   "taps": [],
+   "marks": {
+    "break": 0
+   },
+   "frames": 135
+  }
+ }
+}

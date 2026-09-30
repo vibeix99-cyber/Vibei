@@ -1,0 +1,23 @@
+<!doctype html>
+<!-- Edit layer for ad 02 "Chai's deal": the illustrated opening, captions and end card, drawn with the
+     app's own styles, fonts and art components. Every frame is a pure function of the query string
+     (no clocks), so renders are deterministic.
+     Served by the Kettle Vite dev server: /marketing/ad-02-chais-deal/build/stage.html?mode=… -->
+<html data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<style>
+  html, body { margin: 0; width: 1080px; height: 1920px; background: transparent !important; overflow: hidden !important; scrollbar-gutter: auto !important; }
+  #root { width: 1080px; height: 1920px; position: relative; overflow: hidden; }
+  .band { position: absolute; left: 90px; right: 120px; top: 250px; height: 220px; display: grid; place-items: center; }
+  .pill { font-family: var(--font-display); font-weight: 700; font-size: 76px; line-height: 1.08; letter-spacing: -0.5px;
+          color: #fff9f0; text-align: center; padding: 26px 46px 30px; border-radius: 40px;
+          background: rgba(36, 26, 45, 0.86); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35); }
+  .pill em { font-style: normal; color: #ffc23d; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="module" src="./stage.tsx"></script>
+</body>
+</html>
