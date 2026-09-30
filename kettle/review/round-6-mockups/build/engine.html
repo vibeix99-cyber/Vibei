@@ -1,0 +1,20 @@
+<!doctype html>
+<!-- Renders the real Kettle 3D engine (src/scene/engine) at any size/camera for the round-6 mockups.
+     ?w=&h=&dpr=&cam={pos,at,fov}|default &time=night|day &p= &mode= &items=a,b &dim= -->
+<html><head><meta charset="utf-8"><style>html,body{margin:0;background:transparent}canvas{display:block}</style></head>
+<body><div id="host"></div>
+<script type="module">
+import { NookEngine } from '/src/scene/engine/Engine.ts';
+const q = new URLSearchParams(location.search);
+const W = +(q.get('w') || 405), H = +(q.get('h') || 720);
+const canvas = document.createElement('canvas'); canvas.style.cssText = `width:${W}px;height:${H}px`;
+document.getElementById('host').appendChild(canvas);
+const e = new NookEngine({ canvas, quality: 'high', adaptive: false, mobile: false, software: true });
+e.setState({ mode: q.get('mode') || 'focus', progress: +(q.get('p') || 0.5), whistling: false, weather: q.get('weather') || 'rain', time: q.get('time') || 'night',
+  items: (q.get('items') || 'pothos,books,cushion,fairyLights,shelf,teaSet,recordPlayer,blanket,painting,lantern').split(','), highlightItem: null, interactive: false, reducedMotion: false, dim: +(q.get('dim') || 1) });
+const cam = JSON.parse(q.get('cam') || 'null');
+if (cam) e.updateCamera = function () { this.camera.position.set(...cam.pos); this.camera.fov = cam.fov; this.camera.updateProjectionMatrix(); this.camera.lookAt(...cam.at); };
+e.setSize(W, H, +(q.get('dpr') || 2));
+e.setRunning(true);
+window.__ready = true;
+</script></body></html>
