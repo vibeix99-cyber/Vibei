@@ -1,4 +1,4 @@
-// Render every round-6 mockup frame to ../frames (Kettle dev server on 5191). usage: node shoot.mjs [name-filter]
+// Render every round-6 v2 mockup frame to ../frames (Kettle dev server on 5191). usage: node shoot.mjs [name-filter]
 import { chromium } from 'playwright';
 import { mkdirSync } from 'node:fs';
 
@@ -8,17 +8,12 @@ mkdirSync(OUT, { recursive: true });
 
 const PER_DEVICE = [
   ['home', { screen: 'home' }],
-  ['focus-start', { screen: 'focus', p: 0 }],
-  ['focus-mid', { screen: 'focus', p: 0.5 }],
-  ['focus-whistle', { screen: 'focus', whistle: 1 }],
-  ['focus-mid-rm', { screen: 'focus', p: 0.5, rm: 1 }],
-  ['focus-whistle-rm', { screen: 'focus', whistle: 1, rm: 1 }],
-  ['summary', { screen: 'summary' }],
-  ['nook', { screen: 'nook' }],
+  ...['start', 'mid', 'paused', 'extended', 'whistle'].map((s) => [`focus-${s}`, { screen: 'focus', state: s }]),
+  ...['routine', 'unlock', 'details'].map((v) => [`summary-${v}`, { screen: 'summary', variant: v }]),
 ];
 const PHONE_ONLY = [
   ['hello', { screen: 'hello' }],
-  ['summary-first', { screen: 'summary', first: 1 }],
+  ['summary-first', { screen: 'summary', variant: 'first' }],
 ];
 
 const jobs = [];
