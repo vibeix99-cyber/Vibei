@@ -16,6 +16,23 @@ const errs = [];
       eq(r.overlap, false, 'overlap');
     });
     await t(`Come in button is in the first screen (${w}x${h})`, async () => { await p.goto(base); const bx = await p.getByRole('link', { name: /Come in/ }).boundingBox(); eq(bx.y + bx.height <= h + 2, true, 'button bottom ' + Math.round(bx.y + bx.height)); });
+    await t(`Kettle hero: "Take the tour" is in the first screen (${w}x${h})`, async () => { await p.goto(base + 'kettle/'); await p.waitForTimeout(300); const bx = await p.locator('.rhero__cta .btn').first().boundingBox(); if (h >= 700 && w >= 900) eq(bx.y < h, true, 'cta top ' + Math.round(bx.y)); });
+    await ctx.close();
+  }
+  for (const [w, h] of [[390, 844], [820, 1180], [1024, 768], [1440, 900]]) {
+    const ctx = await b.newContext({ viewport: { width: w, height: h } }); const p = await ctx.newPage();
+    await t(`rail highlights the section in view while scrolling (${w}x${h})`, async () => {
+      await p.goto(base + 'kettle/'); await p.waitForTimeout(400);
+      const ids = await p.evaluate(() => [...document.querySelectorAll('.rail__list a')].map((a) => a.getAttribute('href').slice(1)));
+      for (const id of ids) {
+        await p.evaluate((id) => { const el = document.getElementById(id); scrollTo(0, el.getBoundingClientRect().top + scrollY - innerHeight * 0.2); }, id); await p.waitForTimeout(250);
+        const cur = await p.evaluate(() => document.querySelector('.rail__list a[aria-current]')?.getAttribute('href').slice(1));
+        const atBottom = await p.evaluate(() => scrollY + innerHeight >= document.documentElement.scrollHeight - 4);
+        if (!(cur === id || (atBottom && cur === ids[ids.length - 1]))) throw new Error(`at #${id} the rail says #${cur}`);
+      }
+      await p.evaluate(() => scrollTo(0, document.documentElement.scrollHeight)); await p.waitForTimeout(250);
+      eq(await p.evaluate(() => document.querySelector('.rail__list a[aria-current]')?.getAttribute('href')), '#visit', 'bottom');
+    });
     await ctx.close();
   }
 }

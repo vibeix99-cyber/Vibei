@@ -57,7 +57,7 @@ ${rail ? html`<nav class="rail" aria-label="In this room"><ul class="rail__list"
   <div class="wrap">
     <span>© ${site.year} ${site.name}</span>
     <span>${site.contact.email ? html`<a href="mailto:${site.contact.email}">${site.contact.email}</a>` : 'Made slowly, one room at a time.'}</span>
-    ${current ? html`<a href="${root}">← Back to the hall</a>` : html`<span>${rooms.length} room open</span>`}
+    ${current ? '' : html`<span>${rooms.length} room open</span>`}
   </div>
 </footer>
 <script src="${root}assets/site.js?v=__JSHASH__" defer></script>

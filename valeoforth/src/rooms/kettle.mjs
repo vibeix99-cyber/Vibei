@@ -108,7 +108,7 @@ export default {
     S.push({ id: 'nook', label: 'The nook', html: html`
 <section class="section band--night" id="nook" aria-labelledby="nook-t">
   <div class="wrap">
-    ${sectionHead({ kicker: 'The cozy room', title: 'A room that grows as you do.', lede: 'Every brew earns leaves; leaves raise your cozy level; levels unlock things for the nook — fourteen in all, from a trailing pothos to a record player. It’s a real 3D scene you can drag around. Change the light and the weather:' })}
+    ${sectionHead({ kicker: 'The cozy room', title: 'A room that grows as you do.', lede: 'Every brew earns leaves; leaves raise your cozy level; levels unlock things for the nook — fourteen in all, from a trailing pothos to a record player. In the app it’s a real 3D scene you can drag around; here, change the light and the weather:' })}
     ${scene({ root, id: 'nook', groups: [{ name: 'light', label: 'Light', options: light }, { name: 'window', label: 'Window', options: windows }], images: sceneImages, initial: { light: 'dusk', window: 'rain' }, alt: 'Kettle’s 3D nook: a stove with a steaming kettle, a floor lamp, a low table with a tea set on a round rug, books, a plant, a record player, and Chai on a cushion.', caption: 'Captured from the running app with seven of the fourteen things unlocked. In the app, the time of day can follow your clock and the window can match your sound.' })}
   </div>
 </section>` });

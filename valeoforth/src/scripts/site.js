@@ -93,17 +93,21 @@
     }));
   }
 
-  /* Rail scrollspy */
+  /* Rail scrollspy: the last section whose top has passed ~35% of the viewport; the last one at the page bottom */
   const links = $$('.rail__list a');
-  if (links.length && 'IntersectionObserver' in window) {
-    const map = new Map(links.map((a) => [a.getAttribute('href').slice(1), a]));
+  if (links.length) {
+    const rail = $('.rail__list'); const map = new Map(links.map((a) => [a.getAttribute('href').slice(1), a]));
     const secs = [...map.keys()].map((id) => document.getElementById(id)).filter(Boolean);
-    const rail = $('.rail__list');
-    const set = (id) => links.forEach((a) => {
-      const on = a === map.get(id); on ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current');
-      if (on && rail.scrollWidth > rail.clientWidth && scrollY > 200) rail.scrollTo({ left: a.offsetLeft - (rail.clientWidth - a.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' }); // move the rail only, never the page
-    });
-    const io = new IntersectionObserver((es) => { const v = es.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]; if (v) set(v.target.id); }, { rootMargin: '-25% 0px -60% 0px', threshold: [0, 0.1, 0.5, 1] });
-    secs.forEach((s) => io.observe(s));
+    let cur = null, tick = false;
+    const update = () => {
+      tick = false; let id = secs[0].id;
+      for (const s of secs) if (s.getBoundingClientRect().top <= innerHeight * 0.35) id = s.id;
+      if (scrollY + innerHeight >= document.documentElement.scrollHeight - 4) id = secs[secs.length - 1].id;
+      if (id === cur) return; cur = id;
+      links.forEach((a) => { const on = a === map.get(id); on ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current');
+        if (on && rail.scrollWidth > rail.clientWidth && scrollY > 200) rail.scrollTo({ left: a.offsetLeft - (rail.clientWidth - a.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' }); }); // move the rail only, never the page
+    };
+    addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(update); } }, { passive: true });
+    addEventListener('resize', update); update();
   }
 })();

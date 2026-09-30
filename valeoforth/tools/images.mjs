@@ -19,7 +19,7 @@ const phone = (name, src = name, crop) => jobs.push({ name, src, widths: [390, 7
   'm-done-1', 'm-done-2', 'm-done-3', 'm-done-4', 'm-tea-break', 'm-settings', 'd-home', 'd-focus', 'd-nook', 'd-stats', 'd-tea-break',
 ].forEach((n) => phone(n));
 // tile crops (source is 780x1688): each cut sits on a clean edge of the UI
-phone('tile-sounds', 'm-ob-sound', { left: 0, top: 440, width: 780, height: 975 });
+phone('tile-sounds', 'm-ob-sound', { left: 0, top: 420, width: 780, height: 995 });
 phone('tile-rhythm', 'm-ob-rhythm', { left: 0, top: 456, width: 780, height: 930 });
 phone('tile-recipes', 'm-done-2', { left: 0, top: 844, width: 780, height: 650 });
 phone('tile-badge', 'm-done-3', { left: 0, top: 557, width: 780, height: 726 });

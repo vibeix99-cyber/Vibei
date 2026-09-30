@@ -4,7 +4,7 @@ import fs from 'node:fs'; import path from 'node:path';
 const out = path.resolve(process.argv[2] ?? 'shots'); const base = process.argv[3] ?? 'http://localhost:4173/';
 const CHROME = process.env.CHROME ?? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 fs.mkdirSync(out, { recursive: true });
-const vps = { '320': [320, 640, 2], '390': [390, 844, 2], 'tablet': [820, 1180, 1.5], '1024': [1024, 768, 1], 'desktop': [1440, 900, 1], 'landscape': [844, 390, 2] };
+const vps = { '320': [320, 640, 2], '390': [390, 844, 2], 'tablet': [820, 1180, 1.5], '900': [900, 800, 1], '1024': [1024, 768, 1], 'desktop': [1440, 900, 1], 'landscape': [844, 390, 2] };
 const pages = { hall: '', kettle: 'kettle/' };
 const b = await chromium.launch({ executablePath: CHROME });
 for (const [vn, [w, h, dpr]] of Object.entries(vps)) {
