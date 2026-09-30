@@ -155,6 +155,25 @@ async function shot(page: Page, name: string, fullPage = false) {
 
 // ---------------------------------------------------------------- 1. onboarding
 
+test('welcome: Chai stands in a decorative valley picture that follows the theme and fits every size', async ({ page }) => {
+  const bg = async () =>
+    page.locator('[data-scene="valley"]').evaluate((el) => ({ hidden: el.getAttribute('aria-hidden'), image: getComputedStyle(el).backgroundImage }));
+  await boot(page, { seed: 'fresh', onboarded: '0', theme: 'light', motion: 'reduce', route: '/welcome' });
+  const light = await bg();
+  expect(light.hidden).toBe('true'); // decorative: screen readers skip it
+  expect(light.image).toMatch(/welcome-scene-day|svg/);
+  await boot(page, { seed: 'fresh', onboarded: '0', theme: 'dark', motion: 'reduce', route: '/welcome' });
+  const dark = await bg();
+  expect(dark.image).not.toBe(light.image); // dusk in dark theme
+  for (const [w, h] of [[320, 640], [390, 640], [390, 844], [844, 390], [1440, 900]]) {
+    await page.setViewportSize({ width: w, height: h });
+    await page.waitForTimeout(250);
+    const fit = await page.evaluate(() => ({ sw: document.scrollingElement!.scrollWidth, iw: innerWidth }));
+    expect(fit.sw, `no sideways scroll at ${w}×${h}`).toBeLessThanOrEqual(fit.iw);
+    await expect(page.getByRole('button', { name: /^get started/i })).toBeInViewport();
+  }
+});
+
 test('onboarding: welcome → name → goal → rhythm → (ambience) → notifications → put the kettle on', async ({ page }) => {
   test.setTimeout(240_000);
   await boot(page, { seed: 'fresh', onboarded: '0', route: '/welcome' });

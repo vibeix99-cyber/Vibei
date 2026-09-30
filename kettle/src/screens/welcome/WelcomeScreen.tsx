@@ -274,7 +274,8 @@ function Hello({ onStart }: { onStart: () => void }) {
   const wideHello = useMediaQuery('(min-width: 720px)');
   const compactHello = useMediaQuery('(max-height: 680px)');
   const landscapeHello = useMediaQuery('(orientation: landscape) and (max-height: 520px)');
-  const chaiSize = landscapeHello ? 150 : wideHello ? 248 : compactHello ? 160 : 200;
+  const bigHello = useMediaQuery('(min-width: 1024px) and (min-height: 820px)');
+  const chaiSize = landscapeHello ? 128 : bigHello ? 276 : wideHello ? 248 : compactHello ? 128 : 200;
   const fileRef = useRef<HTMLInputElement>(null);
   const [msg, setMsg] = useState<{ tone: 'error' | 'ok'; text: string } | null>(null);
   const set = useSettings((st) => st.set);
@@ -328,12 +329,12 @@ function Hello({ onStart }: { onStart: () => void }) {
           style={{ '--chai': `${chaiSize}px` } as CSSProperties}
         >
           {/* Chai's valley: decorative, drawn behind him (theme picks day or dusk in CSS). */}
-          <span className={s.helloScene} aria-hidden="true" />
+          <span className={s.helloScene} aria-hidden="true" data-scene="valley" />
           <Mascot pose="wave" size={chaiSize} animate />
         </motion.div>
         <div className={s.brand}>
           <div className={s.wordmark}>
-            <Logo variant="full" size={52} title="Kettle" />
+            <Logo variant="full" size={bigHello ? 62 : 52} title="Kettle" />
           </div>
           <p className={s.tagline}>Put the kettle on. Get cozy. Get it done.</p>
         </div>
