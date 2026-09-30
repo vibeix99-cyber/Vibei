@@ -1,0 +1,15 @@
+<!doctype html>
+<!-- UGC pack: renders the app's own Logo component (src/art) on a transparent background. ?theme=light|dark -->
+<html><head><meta charset="utf-8"><script>document.documentElement.setAttribute('data-theme', new URLSearchParams(location.search).get('theme')==='dark'?'dark':'light');</script>
+<style>html,body{margin:0;background:transparent!important}#root>div{display:inline-flex;gap:40px;padding:24px;align-items:center}</style></head>
+<body><div id="root"></div>
+<script type="module">
+import '/src/styles/global.css';
+import { createRoot } from 'react-dom/client';
+import { createElement as h } from 'react';
+import { Logo } from '/src/art/index.ts';
+createRoot(document.getElementById('root')).render(h('div', null,
+  h('span', { id: 'full' }, h(Logo, { size: 160, animate: false })),
+  h('span', { id: 'mark' }, h(Logo, { variant: 'mark', size: 512, animate: false }))));
+document.fonts.ready.then(() => setTimeout(() => (window.__ready = true), 400));
+</script></body></html>
