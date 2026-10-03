@@ -155,7 +155,6 @@ export function Composer({ recent }: { recent: string[] }) {
         </div>
         <ChipGroup<TagId>
           label="Tag"
-          layout="scroll"
           allowEmpty
           value={tag}
           onChange={setTag}

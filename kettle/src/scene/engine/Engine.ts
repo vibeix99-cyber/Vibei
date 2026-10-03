@@ -138,6 +138,10 @@ const FOV = 30;
  * (scene/stills, same camera) line up exactly at any host aspect.
  */
 export const WINDOW_CAM = { pos: [1.75, 1.62, 2.7] as const, at: [0.3, 1.66, -2.5] as const, fov: 44, aspect: 1.25 };
+/** Showcase close-up: the camera sits this many item radii (over the half-FOV tangent) from the item. */
+const ITEM_FILL = 1;
+/** Items whose bounds include a stand: frame the part that names them (fill, and lift in item radii). */
+const FRAME_CLOSE: Record<string, { fill: number; lift: number }> = { recordPlayer: { fill: 0.66, lift: 0.12 } };
 /** Turn a little toward items that face along +x (left wall) when framing them. */
 const FRAME_AZ: Record<string, number> = { painting: 0.4, lantern: 0.2, catBed: 0.15, fairyLights: -0.1 };
 
@@ -795,8 +799,9 @@ export class NookEngine {
     }
     const k = snap ? 1 : 1 - Math.exp(-dt * 7);
     // Highlight: on the Nook screen (interactive) a gentle nudge toward the item;
-    // in small showcase cards (level-up) the camera frames the item itself so it
-    // fills about half of the card with a little room around it.
+    // in small showcase cards (the unlock in the summary) the camera comes in close
+    // on the item itself so it fills most of the card: what you earned, recognisable
+    // at a glance, with just enough of the room around it to say where it lives.
     const hiId = this.state.highlightItem;
     const hiB = hiId ? this.items.get(hiId) : undefined;
     const hi = hiB && hiB.root.visible ? hiB : undefined;
@@ -811,10 +816,13 @@ export class NookEngine {
       const aspect = this.width / this.height;
       const tanV = Math.tan(MathUtils.degToRad(FOV / 2));
       const tanMin = Math.min(tanV, tanV * aspect);
-      const itemDist = (hi.radius * 2.0) / tanMin;
-      zoomGoal = MathUtils.clamp(itemDist / this.fitDist, 0.22, 1);
+      const close = FRAME_CLOSE[hi.id];
+      const itemDist = (hi.radius * (close?.fill ?? ITEM_FILL)) / tanMin;
+      zoomGoal = MathUtils.clamp(itemDist / this.fitDist, 0.1, 1);
       azGoal += FRAME_AZ[hi.id] ?? 0;
+      // aim a touch above the item's middle: its top (the turntable, the lamp's shade) is what reads
       _v.copy(hi.focus);
+      _v.y += hi.radius * (close?.lift ?? 0.18);
     }
     this.azC += (azGoal - this.azC) * k;
     this.elC += (this.elT + this.baseEl() - this.elC) * k;

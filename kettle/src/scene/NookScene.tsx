@@ -193,7 +193,7 @@ export default function NookScene(props: NookSceneProps) {
     >
       {(!ready || !covered || showStatic) && (
         <div aria-hidden style={{ position: 'absolute', inset: 0 }}>
-          <NookStatic weather={weather} mode={mode} progress={progress} items={items} time={props.timeOfDay} />
+          {props.still ?? <NookStatic weather={weather} mode={mode} progress={progress} items={items} time={props.timeOfDay} />}
         </div>
       )}
       {tier !== 'off' && (

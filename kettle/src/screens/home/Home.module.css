@@ -324,12 +324,10 @@
   /* keep the field clear of the page top and the docked CTA when the browser scrolls it into view */
   scroll-margin-block: 24px 180px;
 }
-/* Tag row: bleed to the card edge and fade the trailing edge so it reads as scrollable. */
+/* Tags: every category in view on any width, wrapping onto a second line on phones (no sideways scroller to
+   discover). Each chip keeps its 44px touch target; the row gap keeps two lines from crowding. */
 .composerCard .tagGroup {
-  --gutter: 18px;
-  padding-right: 40px;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 40px), transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 40px), transparent);
+  gap: 8px;
 }
 .recent {
   display: flex;
@@ -836,15 +834,6 @@
   .chaiRow,
   .bubbleWrap {
     min-width: 0;
-  }
-  /* The column is wide enough to show every tag: wrap them instead of a scroller that looks clipped. */
-  .composerCard .tagGroup {
-    flex-wrap: wrap;
-    overflow: visible;
-    margin: 0;
-    padding: 0;
-    -webkit-mask-image: none;
-    mask-image: none;
   }
 }
 

@@ -41,7 +41,8 @@ Dev port 5188. Screenshots in `.shots/home/`.
   - Two-button footers wrapped labels on phones. They now stack with the primary first (correct focus order). On desktop they sit in a row, primary on the right.
   - Name step: Continue is disabled until you type; Skip handles "no name".
 - Home fixes:
-  - The CTA was below the fold on a 390×844 phone. Recents now appear only when the field is focused, tags sit in one scrolling row, and the rhythm header row is gone. The CTA now sits above the tab bar.
+  - The CTA was below the fold on a 390×844 phone. Recents now appear only when the field is focused, and the rhythm header row is gone. The CTA now sits above the tab bar.
+  - Tags wrap instead of scrolling sideways (round 6 follow-up): on phones Create and Life were off the edge of a one-line scroller. All five now show on two lines, each with a 44 px touch target.
   - The night greeting read "Hello, night owl, Robin". It's now "Still up, Robin?".
   - A nowrap chip blew out the page width. Fixed with `minmax(0, 1fr)` grid columns and a wrapping chip.
   - Quest rows: title and reward share one line, with the bar and count underneath.

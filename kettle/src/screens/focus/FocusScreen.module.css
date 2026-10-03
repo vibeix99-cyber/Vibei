@@ -282,17 +282,17 @@
   margin: 0 4px;
 }
 
-/* ---------- the summary: a sheet that rises over the counter's front edge ---------- */
+/* ---------- the summary: a sheet that rests on the counter's front edge, just under Chai's feet ---------- */
+/* Stacked, the panel takes the whole screen for the summary; the stage keeps its place and size underneath. The
+   sheet starts over the counter's edge and scrolls up over the scene for as much room as its content needs. */
+.screen[data-view='summary'] .panel {
+  grid-row: 1 / -1;
+}
 .summaryBox {
+  --sheet-top: calc(var(--stage-h) - 28px);
   position: relative;
   min-height: 0;
-  height: calc(100% + 18px);
-  margin-top: -18px;
-  border-radius: 24px 24px 0 0;
-  background: var(--surface);
-  box-shadow:
-    0 -2px 0 var(--surface-edge),
-    0 -10px 30px rgb(40 22 10 / 0.16);
+  height: 100%;
   overflow: hidden;
 }
 
@@ -405,7 +405,6 @@
   .summaryBox {
     width: min(640px, 100% - 32px);
     margin-inline: auto;
-    border-radius: 28px 28px 0 0;
   }
 }
 
@@ -457,11 +456,9 @@
   .timer {
     padding-inline: 0;
   }
-  .screen[data-view='summary'] .panel {
-    grid-row: 1 / -1;
-  }
   /* A card sized to its content (up to the column's height, then the content scrolls). */
   .summaryBox {
+    --sheet-top: 0px;
     align-self: center;
     display: flex;
     flex-direction: column;
@@ -469,6 +466,7 @@
     max-height: 100%;
     margin: 0;
     border-radius: var(--r-xl);
+    background: var(--surface);
     box-shadow:
       0 0 0 2px var(--surface-edge),
       0 4px 0 2px var(--surface-edge);

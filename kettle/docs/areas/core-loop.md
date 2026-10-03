@@ -29,8 +29,11 @@ layer key (`session`), so the brew, the whistle, the summary and the tea break n
 
 **Layouts:**
 - **Stacked** (portrait): stage on top, full-bleed (`--stage-h: clamp(250px, 50dvh, 150vw)`; 56 dvh on tablets). The
-  task and ambience chips sit on the window. The panel is below; on the summary it is a sheet that rises over the
-  counter's front edge.
+  task and ambience chips sit on the window. The panel is below. On the summary the panel spans the whole screen
+  and the sheet rests on the counter's front edge (`--sheet-top: calc(var(--stage-h) - 28px)`). Scrolling slides
+  the sheet up over the scene, which keeps its place and size. If the unlock (or, without one, the rewards) would
+  start under the footer, the sheet opens higher before the first paint, by at most 22% of its resting offset
+  (30% for an unlock).
 - **Side by side** (aspect ≥ 5/4 and ≥ 560 px wide): stage left in a rounded frame, panel right. The summary is a
   content-sized card in that column (no modal). Landscape phones tighten everything.
 
@@ -51,10 +54,13 @@ layer key (`session`), so the brew, the whistle, the summary and the tea break n
   tested, and checked across a real reload).
 - **Order:**
   1. "25 minutes brewed" and the sub-line; **Tea time · 5 min** sits in a footer that never scrolls away.
-  2. The task, only when there was one: its name, then Done / Carry forward, with a line saying what each means.
-  3. Routine rewards as compact pills: leaves; today's goal; streak; Tea Cozy; recipes (once one is done); level
+  2. The task, only when there was one: its name and tag on one line, then Done / Carry forward (no card). The
+     group's label asks the question, and a polite live region confirms the choice to screen readers.
+  3. A major room unlock gets a close-up of the item in the user's room. The 3D camera frames the item itself
+     (the record player's turntable fills the card). While the room loads, or with 3D off, the card shows the
+     item's own drawing (`ItemGlyph`) instead of the whole-room illustration.
+  4. Routine rewards as compact pills: leaves; today's goal; streak; Tea Cozy; recipes (once one is done); level
      progress; badges.
-  4. A major room unlock gets a full-width picture of the item in the user's room.
   5. "How your leaves added up" expands the arithmetic, level progress and the streak rule.
 - **First brew:** the first brew started from the welcome adds "Make Kettle yours · Set up".
 - **Motion:** the content rises in a 60 ms stagger. With reduced motion it is a single fade and nothing moves.
@@ -171,9 +177,6 @@ layer key (`session`), so the brew, the whistle, the summary and the tea break n
 
 ## Open issues / requests
 
-- **scene**: `mode="showcase"` + `highlightItem` renders the whole room small in the 180–230 px level-up card —
-  please frame/zoom the highlighted item there. The scene needs a few seconds under swiftshader; the card shows
-  its loading gradient meanwhile.
 - **design-system**: `html { scrollbar-gutter: stable }` shows a strip on full-screen routes (overridden locally via
   `html:has([data-focus-view]) / html:has([data-done-screen])`). Consider an `xl` round `IconButton` with a caption
   slot (would replace `RoundButton`).
