@@ -1,6 +1,6 @@
 # Round 6 implementation: evidence
 
-Captures and recordings from the **real app**, at the final build of this round (commit `eeff3a0`). They were taken with Playwright on the dev server, using `?debug&seed=…`. Light-theme captures pin the window to day (`nooktime=day`). Dark-theme captures use the evening room that the dark theme always shows.
+Captures and recordings from the **real app**, at the final build of this round (app code at commit `eeff3a0`; regenerated after the last visual fixes). They were taken with Playwright on the dev server, using `?debug&seed=…`. Light-theme captures pin the window to day (`nooktime=day`). Dark-theme captures use the evening room that the dark theme always shows.
 
 The renderer is CPU-only (SwiftShader), so the 3D window and the frame rate here are pessimistic. Animation smoothness and sound still need a real device (`docs/REAL_DEVICE_CHECKLIST.md` §7).
 
