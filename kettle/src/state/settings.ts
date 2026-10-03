@@ -39,6 +39,8 @@ export interface Settings {
   // identity / onboarding
   name: string;
   onboarded: boolean;
+  /** Started with a first brew straight from the welcome: the optional setup is still on offer. */
+  setupPending: boolean;
   // rhythm
   rhythm: RhythmId;
   focusMin: number;
@@ -70,6 +72,7 @@ export interface Settings {
 export const DEFAULT_SETTINGS: Settings = {
   name: '',
   onboarded: false,
+  setupPending: false,
   rhythm: 'classic',
   ...pickRhythm('classic'),
   autoStartBreaks: true,

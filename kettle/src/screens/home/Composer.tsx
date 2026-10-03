@@ -104,18 +104,15 @@ export function Composer({ recent }: { recent: string[] }) {
       <Card className={s.composerCard}>
         <div className={s.composerHead}>
           <h2 id="home-brew" className={s.cardTitle}>
-            What are you brewing?
+            What are you brewing? <span className={s.optional}>(optional)</span>
           </h2>
-          <span className={s.optional} aria-hidden="true">
-            Optional
-          </span>
         </div>
         <div ref={fieldRef} className={s.field} onFocus={() => setInputFocus(true)} onBlur={onFieldBlur}>
           <TextField
             ref={inputRef}
             label="What are you brewing? (optional)"
             hideLabel
-            placeholder="e.g. Chapter 3 notes"
+            placeholder="e.g. Chapter 3 notes, or leave it blank"
             value={text}
             maxLength={80}
             autoComplete="off"
@@ -186,14 +183,18 @@ function RhythmPicker() {
   const applyRhythm = useSettings((st) => st.applyRhythm);
   const [customOpen, setCustomOpen] = useState(false);
   const customMin = rhythm === 'custom' ? focusMin : null;
+  // Minutes first: this row chooses how long the brew is (the rhythm's name is the small print).
   const options = [
-    ...RHYTHM_OPTIONS.map((r) => ({ value: r.id as RhythmId, label: r.label, sublabel: `${r.focusMin} min` })),
-    { value: 'custom' as RhythmId, label: 'Custom', sublabel: customMin ? `${customMin} min` : 'Set it' },
+    ...[...RHYTHM_OPTIONS].sort((a, b) => a.focusMin - b.focusMin).map((r) => ({ value: r.id as RhythmId, label: `${r.focusMin} min`, sublabel: r.label })),
+    { value: 'custom' as RhythmId, label: customMin ? `${customMin} min` : 'Custom', sublabel: customMin ? 'Custom' : 'Set it' },
   ];
   return (
     <div className={s.rhythm}>
+      <p className={s.rhythmLabel} aria-hidden="true">
+        Brew length
+      </p>
       <SegmentedControl<RhythmId>
-        label="Rhythm"
+        label="Brew length"
         options={options}
         value={rhythm}
         className={s.rhythmSeg}

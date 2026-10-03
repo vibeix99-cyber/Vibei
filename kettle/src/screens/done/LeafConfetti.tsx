@@ -5,7 +5,7 @@
  */
 import { useMemo } from 'react';
 import { motion } from 'motion/react';
-import s from './Done.module.css';
+import s from './LeafConfetti.module.css';
 
 const COLORS = [
   ['#4F9E3D', '#3A7A2C'],

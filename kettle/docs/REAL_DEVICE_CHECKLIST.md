@@ -84,4 +84,18 @@ Mark each item ✅ / ❌ / ➖ (couldn't test) and add a note.
 | 6.3 | Settings → **Import a backup**, pick that same file | The sheet shows what's in the backup and what's on this device, says every brew is already here, and has nothing to add. Cancel changes nothing |  |
 | 6.4 | Import a backup from another device or browser | **Add to what's here** is preselected and says how many brews it adds. **Replace** says what would be lost. After either, **Undo** on the message puts everything back |  |
 
+## 7. The kettle, the summary and the first visit (round 6)
+
+| # | Do this | Expect | Result |
+|---|---|---|---|
+| 7.1 | Fresh install (or a new browser profile): open Kettle | Painted Chai on the valley, "Start a 15-min brew". One tap starts a 15:00 brew; nothing asked first |  |
+| 7.2 | During a brew, glance at the kettle from arm's length | The gauge needle and its fill read without the digits; the countdown is crisp |  |
+| 7.3 | Pause, wait, resume; then **+5** | Flame goes out and the steam stops while paused. +5 shows "whistles at …" and a honey part on the gauge |  |
+| 7.4 | Lock the phone mid-brew for a minute, unlock | Same brew, same remaining time, the kettle where it was |  |
+| 7.5 | **Listen** to the whistle with sound on, then the summary | One happy whistle, the summary rises with no blank moment, one cheering Chai. The whistle should not be shrill |  |
+| 7.6 | On the summary, scroll the rewards with your thumb | Smooth, the Tea time button never moves; Done / Carry forward are easy to hit |  |
+| 7.7 | Tea time, then let the break end | Sipping Chai, kettle off the heat; then "Break's over" with stretching Chai |  |
+| 7.8 | Turn on Reduce Motion and complete a brew | The kettle and Chai stay still; the summary just fades in |  |
+| 7.9 | On a Retina laptop, open a brew full-screen and look at Chai from normal distance | Chai looks painted and crisp (if it looks soft, note it: higher-resolution poses are ready to be made) |  |
+
 Send the table back (screenshots are fine), and I'll turn any ❌ into a fix.

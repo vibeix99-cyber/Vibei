@@ -4,295 +4,234 @@
 }
 
 /* ==========================================================================
-   Focus / Break screen. Layout: portrait (stacked) → landscape phone / desktop
-   (scene | panel). Phase colors flow through CSS vars so everything crossfades.
+   Session screen: one stage that never moves + one panel.
+   Stacked (portrait): stage on top, full-bleed; the panel below.
+   Side by side (landscape phones, tablets, desktop): stage left, panel right.
    ========================================================================== */
 .screen {
-  --accent: var(--persimmon);
-  --accent-edge: var(--persimmon-edge);
-  --ring-arc: var(--persimmon);
-  --ring-edge: var(--persimmon-edge);
-  --ring-track: var(--oat);
-  --ring-head: #fff;
-  --dial: min(72vw, 33dvh, 320px);
+  --stage-h: clamp(250px, 50dvh, 150vw);
+  --pad-b: max(14px, env(safe-area-inset-bottom));
 
   position: relative;
   isolation: isolate;
   height: 100dvh;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: auto minmax(110px, 1fr) auto;
-  grid-template-areas: 'top' 'scene' 'panel';
-  gap: 10px;
-  padding: max(8px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(14px, env(safe-area-inset-bottom))
-    max(16px, env(safe-area-inset-left));
-  background: var(--paper);
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-:global([data-theme='dark']) .screen {
-  --ring-head: var(--paper);
+  grid-template-rows: var(--stage-h) minmax(0, 1fr);
+  grid-template-areas: 'stage' 'panel';
+  background: var(--bg);
+  overflow: hidden;
 }
 
-/* ---------- phase moods ---------- */
-.wash {
-  position: fixed;
+/* ---------- stage ---------- */
+.stageBox {
+  grid-area: stage;
+  position: relative;
+  min-height: 0;
+  min-width: 0;
+}
+.stage {
+  position: absolute;
   inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background: linear-gradient(180deg, var(--sky-soft) 0%, color-mix(in srgb, var(--sky-soft) 45%, var(--paper)) 70%);
-  opacity: 0;
-  transition: opacity 900ms ease;
-}
-.screen[data-long] .wash {
-  background: radial-gradient(120% 60% at 50% 0%, var(--honey-soft), transparent 70%),
-    linear-gradient(180deg, var(--sky-soft) 0%, color-mix(in srgb, var(--sky-soft) 45%, var(--paper)) 75%);
-}
-.screen[data-view='break'] .wash,
-.screen[data-view='over'] .wash {
-  opacity: 1;
-}
-.screen[data-view='break'],
-.screen[data-view='over'] {
-  --accent: var(--sky);
-  --accent-edge: var(--sky-edge);
-  --ring-arc: var(--sky);
-  --ring-edge: var(--sky-edge);
-  --ring-track: color-mix(in srgb, var(--sky) 22%, var(--surface));
-  --break-edge: color-mix(in srgb, var(--sky) 30%, var(--surface-edge));
-}
-.screen[data-paused] {
-  --ring-arc: color-mix(in srgb, var(--ink-3) 70%, var(--oat));
-  --ring-edge: var(--ink-3);
-}
-.screen[data-view='whistle'] {
-  --ring-arc: var(--matcha);
-  --ring-edge: var(--matcha-edge);
 }
 
-/* ---------- top bar ---------- */
+/* ---------- top bar (over the stage when stacked) ---------- */
 .top {
-  grid-area: top;
+  grid-area: stage;
+  align-self: start;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  min-height: 48px;
+  padding: max(10px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) 0 max(12px, env(safe-area-inset-left));
+  pointer-events: none;
+}
+.top > * {
+  pointer-events: auto;
 }
 .topLeft {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   min-width: 0;
 }
 .topRight {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  flex: none;
 }
-.ambBtn {
-  min-height: 44px;
-}
-.phasePill {
-  display: none;
-  align-items: center;
-  padding: 6px 12px;
-  border-radius: var(--r-pill);
-  /* --sky-strong keeps white 14px text AA (≈4.8:1); plain --sky was 3.3:1. */
-  background: var(--sky-strong);
-  color: var(--sky-on);
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 0.875rem;
-  box-shadow: inset 0 -3px 0 var(--sky-edge);
-}
-.screen[data-long] .phasePill {
-  background: var(--honey);
-  color: var(--ink);
-  box-shadow: inset 0 -3px 0 var(--honey-edge);
-}
-
-/* ---------- scene ---------- */
-.scene {
-  grid-area: scene;
-  position: relative;
-  min-height: 0;
-  border-radius: var(--r-xl);
-  overflow: hidden;
-  background: #3b3158;
-  border: 2px solid var(--surface-edge);
-  box-shadow: 0 4px 0 var(--surface-edge);
-  transition: filter 700ms ease;
-}
-.nookBox {
-  position: absolute;
-  inset: 0;
-}
-.nook {
-  width: 100%;
-  height: 100%;
-}
-.screen[data-paused] .scene {
-  filter: saturate(0.55) brightness(0.9);
-}
-.veil {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  background: rgba(31, 26, 46, 0.18);
-}
-.veilPill {
+/* Chips that sit on the window: a soft, solid-enough surface so the words never fight the view. */
+.chip,
+.dots {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px;
+  min-height: 40px;
+  min-width: 0;
+  padding: 0 14px;
   border-radius: var(--r-pill);
-  background: color-mix(in srgb, var(--paper) 88%, transparent);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 0 color-mix(in srgb, var(--surface-edge) 70%, transparent);
+  color: var(--ink);
   font-family: var(--font-display);
   font-weight: 600;
-  color: var(--ink);
+  font-size: 0.9375rem;
+}
+.chip > svg {
+  flex: none;
+  color: var(--persimmon-ink);
+}
+.chip[data-tone='sky'] > svg {
+  color: var(--sky-ink);
+}
+.chipText {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.chipSub {
+  color: var(--ink-2);
+}
+.dots {
+  flex: none;
+  padding: 0 12px;
+}
+.dots > * {
+  min-height: 0;
+}
+/* Stacked, the cycle dots sit under the controls (the top of the stage keeps just the task and ambience);
+   side by side they join the top bar. */
+.dotsTop {
+  display: none;
+}
+.dotsPanel {
+  display: flex;
+  justify-content: center;
+  margin-top: -4px;
+}
+.dotsPanel > * {
+  min-height: 32px;
+}
+.screen[data-view='whistle'] .dotsPanel {
+  visibility: hidden;
+}
+.topBtn {
+  box-shadow: 0 2px 0 color-mix(in srgb, var(--surface-edge) 70%, transparent);
+}
+.ambLabel {
+  white-space: nowrap;
 }
 
 /* ---------- panel ---------- */
 .panel {
   grid-area: panel;
+  position: relative;
+  z-index: 1;
+  min-height: 0;
   display: grid;
-  /* One shrinkable column: an auto track would grow to the widest unbreakable line (a long intention). */
   grid-template-columns: minmax(0, 1fr);
-  align-content: end;
 }
-.panelInner {
+.timer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  /* safe: if the panel is ever too short, the countdown stays at the top rather than clipping */
+  justify-content: safe center;
+  gap: clamp(10px, 2.4dvh, 26px);
   width: 100%;
   max-width: 560px;
+  min-height: 0;
   margin: 0 auto;
+  padding: clamp(8px, 2dvh, 20px) 16px var(--pad-b);
 }
-.intention {
+
+/* the readout: flag · countdown · status · meta */
+.readout {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 4px;
+  max-width: 100%;
+}
+.flagSlot {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  max-width: 100%;
   min-height: 28px;
-  /* A scroll container's automatic minimum width is 0, so a long unbroken intention can't widen the
-     column (it ellipsizes instead) and the tag chip keeps its full size. */
-  min-width: 0;
-  overflow: hidden;
 }
-.intention > :not(.intentionText) {
-  flex: none;
-}
-.intentionText {
+.flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  padding: 0 12px;
+  border-radius: var(--r-pill);
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 1.25rem;
-  line-height: 1.25;
+  font-size: 0.875rem;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-width: 0;
 }
-
-/* dial */
-.dialWrap {
-  position: relative;
-  width: var(--dial);
-  flex: none;
+.flag[data-tone='paused'] {
+  background: var(--surface-2);
+  color: var(--ink-2);
+  box-shadow: inset 0 0 0 2px var(--line);
 }
-.dial {
-  transition: filter 600ms ease;
+.flag[data-tone='honey'] {
+  background: var(--honey-soft);
+  color: var(--honey-ink);
+  box-shadow: inset 0 0 0 2px var(--honey-soft-edge);
 }
-.screen[data-view='whistle'] .dial {
-  filter: drop-shadow(0 0 28px color-mix(in srgb, var(--matcha) 45%, transparent));
-}
-.dialInner {
-  display: grid;
-  justify-items: center;
-  align-content: center;
-  gap: 3cqw;
-  width: 100%;
-  height: 100%;
+.flag[data-tone='sky'] {
+  background: var(--sky-soft);
+  color: var(--sky-ink);
+  box-shadow: inset 0 0 0 2px var(--sky-soft-edge);
 }
 .clock {
   display: block;
+  line-height: 1;
   color: var(--ink);
   transition: color 500ms ease;
 }
-.digits {
-  font-size: 25cqw;
+.digits,
+.digitsLong {
+  font-size: clamp(3.25rem, min(20vw, 10dvh), 6.25rem);
   letter-spacing: -0.01em;
 }
 .digitsLong {
-  font-size: 17cqw;
+  font-size: clamp(2.75rem, min(15vw, 8.5dvh), 5rem);
+}
+.screen[data-view='whistle'] .clock {
+  color: var(--persimmon-ink);
+}
+.screen[data-view='break'] .clock {
+  color: var(--sky-ink);
 }
 .screen[data-paused] .clock {
   color: var(--ink-3);
   animation: breathe 3.6s ease-in-out infinite;
 }
 .status {
+  margin-top: 4px;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: max(0.8125rem, 5cqw);
-  color: var(--ink-2);
-  max-width: 70%;
-  line-height: 1.2;
+  font-size: clamp(1.0625rem, 2.4dvh, 1.3125rem);
+  line-height: 1.25;
+  color: var(--ink);
   text-wrap: balance;
 }
-.whistleChai {
-  display: grid;
-  place-items: center;
-  width: 62cqw;
-  height: 62cqw;
-  margin-top: -6cqw;
+.screen[data-view='whistle'] .status {
+  color: var(--persimmon-ink);
 }
-.whistleChai svg {
-  width: 100%;
-  height: 100%;
-}
-.statusDone {
-  font-size: max(1.125rem, 7cqw);
-  color: var(--matcha-ink);
-  max-width: none;
-}
-/* one soft ripple off the ring as the kettle whistles */
-.screen[data-view='whistle'] .dialWrap::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 4px solid var(--matcha);
-  opacity: 0;
-  pointer-events: none;
-  animation: ripple 0.9s var(--ease-out, ease-out) 0.1s 1 both;
-}
-@keyframes ripple {
-  0% {
-    transform: scale(0.96);
-    opacity: 0.7;
-  }
-  100% {
-    transform: scale(1.35);
-    opacity: 0;
-  }
-}
-.screen[data-reduced][data-view='whistle'] .dialWrap::after {
-  animation: none;
-}
-/* the ring's inside swells into the celebration (same background as the Done screen) */
-.bloom {
-  position: fixed;
-  inset: 0;
-  z-index: 40;
-  pointer-events: none;
-  background:
-    radial-gradient(90% 55% at 50% 12%, var(--honey-soft), transparent 70%),
-    var(--bg);
+.meta {
+  font-size: 0.875rem;
+  color: var(--ink-2);
+  font-weight: 600;
+  text-wrap: balance;
 }
 @keyframes breathe {
   0%,
@@ -304,49 +243,36 @@
   }
 }
 
-/* +5 min bump */
-.bump {
-  position: absolute;
-  right: 4%;
-  bottom: 14%;
-  padding: 4px 10px;
-  border-radius: var(--r-pill);
-  background: var(--honey);
-  color: var(--ink);
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 0.9375rem;
-  box-shadow: 0 3px 0 var(--honey-edge);
-  pointer-events: none;
-}
-
 /* controls */
 .controls {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: center;
   gap: clamp(22px, 9vw, 44px);
-  padding-top: 2px;
   transition: opacity 400ms ease;
 }
 .controlsGone {
   opacity: 0;
   pointer-events: none;
 }
-.plusFive {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.25rem;
-  letter-spacing: -0.01em;
-}
 .main {
   transition: opacity 700ms ease;
+}
+.ideas {
+  display: none;
+  width: 100%;
+}
+/* Stacked, the break ideas need a tall phone or a tablet; below that the countdown and controls have the panel. */
+@media (min-height: 900px) {
+  .ideas {
+    display: block;
+  }
 }
 
 /* keyboard hints (desktop only) */
 .keys {
   display: none;
-  margin-top: 14px;
+  margin: 0;
   text-align: center;
   font-size: 0.8125rem;
   color: var(--ink-3);
@@ -356,123 +282,44 @@
   margin: 0 4px;
 }
 
-/* ---------- zen: chrome fades after inactivity ---------- */
-/* Top bar, intention and hints disappear completely (a tap there only wakes).
-   The three round controls stay visible, dimmed, and fully tappable: the first tap wakes AND acts. */
-.chrome {
-  transition: opacity 700ms ease;
-}
-.screen[data-zen] .chrome {
-  opacity: 0;
-  pointer-events: none;
-}
-.controls > * {
-  transition: opacity 700ms ease;
-}
-/* Zen dims the round faces (kept AA for the "+5" label) and fades the captions out entirely,
-   so no dimmed text ever falls below contrast. Captions are aria-hidden; buttons keep their names. */
-.screen[data-zen] .controls > * {
-  opacity: 0.62;
-}
-.screen[data-zen] .controls [data-caption] {
-  opacity: 0;
-  transition: opacity 700ms ease;
-}
-.screen[data-zen] .controls > *:hover [data-caption],
-.screen[data-zen] .controls > *:focus-within [data-caption] {
-  opacity: 1;
-  transition-duration: 150ms;
-}
-.screen[data-zen] .controls > *:hover,
-.screen[data-zen] .controls > *:focus-within {
-  opacity: 1;
-  transition-duration: 150ms;
-}
-@media (hover: hover) and (pointer: fine) {
-  .screen[data-zen] {
-    cursor: none;
-  }
-}
-
-/* ---------- break ---------- */
-.breakHead {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-}
-.breakChai {
-  flex: none;
-  width: 84px;
-  height: 84px;
-  margin: -6px 0 -6px -4px;
-}
-.breakChai svg {
-  width: 100%;
-  height: 100%;
-}
-.breakTitle {
-  font-size: 1.625rem;
-}
-.breakSub {
-  color: var(--ink-2);
-  line-height: 1.35;
-}
-.screen[data-view='break'] {
-  --dial: min(48vw, 22dvh, 230px);
-}
-.screen[data-view='break'] .digits {
-  font-size: 23cqw;
-}
-.screen[data-view='break'] .status {
-  font-size: max(0.75rem, 5.2cqw);
-}
-.breakText {
-  flex: 1;
-  min-width: 0;
-}
-.breakActions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-}
-.skipBtn {
-  flex: 0 1 auto;
-  white-space: nowrap;
-}
-.nextBtn {
-  flex: 1 1 0;
-  min-width: 0;
-  white-space: nowrap;
-}
-.labelShort {
-  display: none;
-}
-@media (max-width: 359px) {
-  .labelLong {
-    display: none;
-  }
-  .labelShort {
-    display: inline;
-  }
+/* ---------- the summary: a sheet that rises over the counter's front edge ---------- */
+.summaryBox {
+  position: relative;
+  min-height: 0;
+  height: calc(100% + 18px);
+  margin-top: -18px;
+  border-radius: 24px 24px 0 0;
+  background: var(--surface);
+  box-shadow:
+    0 -2px 0 var(--surface-edge),
+    0 -10px 30px rgb(40 22 10 / 0.16);
+  overflow: hidden;
 }
 
 /* ---------- break's over ---------- */
 .over {
   display: grid;
+  align-content: center;
   justify-items: center;
   text-align: center;
   gap: 8px;
   width: 100%;
   max-width: 440px;
   margin: 0 auto;
-}
-.overChai {
-  margin-bottom: -4px;
+  padding: 12px 16px var(--pad-b);
 }
 .overTitle {
   font-size: 1.875rem;
+}
+.overSub {
+  color: var(--ink-2);
+  font-size: 1.0625rem;
+  max-width: 34ch;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.overSub strong {
+  color: var(--ink);
 }
 .overMark {
   appearance: none;
@@ -488,157 +335,204 @@
   font-weight: 800;
   cursor: pointer;
 }
-.overSub {
-  color: var(--ink-2);
-  font-size: 1.0625rem;
-  max-width: 34ch;
-  text-wrap: balance;
-  overflow-wrap: anywhere;
-}
-.overSub strong {
-  color: var(--ink);
-}
 .overActions {
   display: grid;
   gap: 6px;
   width: 100%;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
-/* ---------- short / narrow phones ---------- */
-@media (orientation: portrait) and (max-height: 700px) {
-  /* A tea break on a short screen: Chai + the sky wash carry the mood; the room steps aside. */
-  .screen[data-view='break'] {
-    grid-template-rows: auto 0 auto;
-    row-gap: 6px;
-  }
-  .screen[data-view='break'] .scene {
-    visibility: hidden;
-    border: 0;
-    box-shadow: none;
-  }
-  .screen[data-view='break'] .panel {
-    align-content: center;
+/* ---------- zen: chrome fades after inactivity ---------- */
+/* The top bar and hints disappear completely (a tap there only wakes). The round controls stay visible,
+   dimmed and fully tappable: the first tap wakes AND acts. */
+.chrome {
+  transition: opacity 700ms ease;
+}
+.screen[data-zen] .chrome {
+  opacity: 0;
+  pointer-events: none;
+}
+.controls > * {
+  transition: opacity 700ms ease;
+}
+.screen[data-zen] .controls > * {
+  opacity: 0.62;
+}
+.screen[data-zen] .controls [data-caption] {
+  opacity: 0;
+  transition: opacity 700ms ease;
+}
+.screen[data-zen] .controls > *:hover,
+.screen[data-zen] .controls > *:focus-within,
+.screen[data-zen] .controls > *:hover [data-caption],
+.screen[data-zen] .controls > *:focus-within [data-caption] {
+  opacity: 1;
+  transition-duration: 150ms;
+}
+@media (hover: hover) and (pointer: fine) {
+  .screen[data-zen] {
+    cursor: none;
   }
 }
+
+/* ---------- narrow / short stacked ---------- */
 @media (max-width: 359px) {
-  .top [data-cycle-label],
-  .ambLabel {
+  .ambLabel,
+  .dots [data-cycle-label] {
     display: none;
   }
-  .topLeft {
+}
+@media (orientation: portrait) and (max-height: 700px) {
+  .screen {
+    --stage-h: clamp(230px, 47dvh, 150vw);
+  }
+  .timer {
     gap: 8px;
+  }
+  .flagSlot {
+    min-height: 24px;
   }
 }
 
 /* ---------- tablet portrait ---------- */
 @media (min-width: 640px) and (orientation: portrait) {
   .screen {
-    --dial: min(56vw, 34dvh, 400px);
-    padding-left: 32px;
-    padding-right: 32px;
+    --stage-h: min(56dvh, 120vw);
   }
-  .screen[data-view='break'] {
-    --dial: min(40vw, 24dvh, 280px);
+  .top {
+    padding: max(16px, env(safe-area-inset-top)) 20px 0;
+  }
+  .summaryBox {
+    width: min(640px, 100% - 32px);
+    margin-inline: auto;
+    border-radius: 28px 28px 0 0;
   }
 }
 
-/* ---------- phone landscape ---------- */
-@media (orientation: landscape) and (max-height: 560px) {
+/* ---------- side by side: landscape phones, tablets, desktop ---------- */
+@media (min-aspect-ratio: 5/4) and (min-width: 560px) {
   .screen {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    grid-template-columns: minmax(0, 1fr) clamp(320px, 36vw, 500px);
     grid-template-rows: auto minmax(0, 1fr);
-    grid-template-areas: 'scene top' 'scene panel';
-    gap: 6px 20px;
-    --dial: min(44dvh, 34vw);
+    grid-template-areas: 'stage top' 'stage panel';
+    gap: 12px clamp(16px, 3vw, 40px);
+    padding: max(12px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom))
+      max(12px, env(safe-area-inset-left));
+    --pad-b: 8px;
   }
-  .panel {
-    align-content: center;
+  .stageBox {
+    border-radius: var(--r-xl);
+    overflow: hidden;
+    box-shadow:
+      0 0 0 2px var(--surface-edge),
+      0 4px 0 2px var(--surface-edge);
   }
-  .panelInner {
+  .top {
+    grid-area: top;
+    align-self: center;
+    padding: 0;
+  }
+  /* In the column the chips read as plain labels. */
+  .chip,
+  .dots {
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: none;
+    padding: 0 6px 0 0;
+  }
+  .topBtn {
+    box-shadow: none;
+  }
+  .dotsTop {
+    display: inline-flex;
+  }
+  .dotsPanel {
+    display: none;
+  }
+  /* With the task named, the dots speak for themselves. */
+  .topLeft[data-has-chip] [data-cycle-label] {
+    display: none;
+  }
+  .timer {
+    padding-inline: 0;
+  }
+  .screen[data-view='summary'] .panel {
+    grid-row: 1 / -1;
+  }
+  /* A card sized to its content (up to the column's height, then the content scrolls). */
+  .summaryBox {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    max-height: 100%;
+    margin: 0;
+    border-radius: var(--r-xl);
+    box-shadow:
+      0 0 0 2px var(--surface-edge),
+      0 4px 0 2px var(--surface-edge);
+  }
+  .digits {
+    font-size: clamp(3rem, min(9vw, 15dvh), 8.5rem);
+  }
+  .digitsLong {
+    font-size: clamp(2.5rem, min(6.5vw, 11dvh), 6rem);
+  }
+  .ideas {
+    display: none;
+  }
+}
+@media (min-aspect-ratio: 5/4) and (min-width: 560px) and (min-height: 700px) {
+  .ideas {
+    display: block;
+  }
+}
+/* Landscape phones: the panel is short, so everything tightens. */
+@media (min-aspect-ratio: 5/4) and (min-width: 560px) and (max-height: 560px) {
+  .screen {
+    gap: 6px 16px;
+  }
+  .timer {
     gap: 8px;
   }
-  .intentionText {
-    font-size: 1.0625rem;
-  }
-  .controls {
-    gap: 24px;
+  .flagSlot {
+    min-height: 0;
   }
   .controls [data-caption] {
     display: none;
   }
   .main {
-    --size: 68px !important;
+    --size: 64px !important;
   }
   .controls > :not(.main) {
-    --size: 52px !important;
+    --size: 50px !important;
   }
-  .screen[data-view='break'] {
-    --dial: min(30dvh, 22vw);
+  .ideas {
+    display: none;
   }
-  .screen[data-view='break'] .panelInner {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    grid-template-areas: 'head head' 'dial ideas' 'actions actions';
-    align-items: center;
-    column-gap: 14px;
-  }
-  .screen[data-view='break'] .breakHead {
-    grid-area: head;
-  }
-  .screen[data-view='break'] .dialWrap {
-    grid-area: dial;
-  }
-  .screen[data-view='break'] .breakActions {
-    grid-area: actions;
-  }
-  .breakChai {
-    width: 60px;
-    height: 60px;
-  }
-  .breakTitle {
-    font-size: 1.25rem;
-  }
-  .overChai {
+  .meta {
     display: none;
   }
 }
-
-/* ---------- desktop ---------- */
-@media (min-width: 1024px) and (min-height: 560px) {
+/* Desktop: roomier gutters and the keyboard hints. */
+@media (min-width: 1024px) and (min-height: 600px) {
   .screen {
     grid-template-columns: minmax(0, 1fr) clamp(400px, 34vw, 520px);
-    grid-template-rows: auto minmax(0, 1fr);
-    grid-template-areas: 'scene top' 'scene panel';
-    gap: 12px 40px;
+    gap: 16px 40px;
     padding: 24px 40px 24px 24px;
-    --dial: min(380px, 48dvh);
   }
-  .screen[data-view='break'] {
-    --dial: min(260px, 30dvh);
+  .timer {
+    gap: clamp(16px, 3dvh, 32px);
   }
-  .panel {
-    align-content: center;
-    padding-bottom: 48px;
+  .status {
+    font-size: 1.375rem;
   }
-  .panelInner {
-    gap: 20px;
-  }
-  .intentionText {
-    font-size: 1.5rem;
-  }
-  .phasePill {
-    display: inline-flex;
-  }
-  .breakTitle {
-    font-size: 2rem;
-  }
-  .breakChai {
-    width: 104px;
-    height: 104px;
+  .meta {
+    font-size: 0.9375rem;
   }
 }
-@media (min-width: 1024px) and (min-height: 560px) and (hover: hover) {
+@media (min-width: 1024px) and (min-height: 600px) and (hover: hover) {
   .keys {
     display: block;
   }
@@ -646,9 +540,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .screen[data-paused] .clock {
-    animation: none;
-  }
-  .screen[data-view='whistle'] .dialWrap::after {
     animation: none;
   }
 }

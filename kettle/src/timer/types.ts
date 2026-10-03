@@ -18,6 +18,8 @@ export interface TimerState {
   phase: Phase;
   /** Planned total length of the current phase, including any added time. */
   plannedMs: number;
+  /** How much of `plannedMs` was added during this phase (+5 min…). 0 when nothing was added. */
+  addedMs: number;
   /** Epoch ms the current phase first started (null when idle). */
   startedAt: number | null;
   /** Epoch ms the phase will end — authoritative while running. */
@@ -51,6 +53,8 @@ export interface TimerView {
   phase: Phase;
   sessionId: string | null;
   plannedMs: number;
+  /** Time added to this phase (see TimerState.addedMs). */
+  addedMs: number;
   /** Remaining ms at the moment the snapshot was taken. */
   remainingMs: number;
   /** Whole seconds shown on the clock (ceil — never shows 0:00 early). */

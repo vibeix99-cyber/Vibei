@@ -132,6 +132,12 @@ const STILL_T = 7.35;
 const BASE_AZ = 0.56;
 const BASE_EL = 0.4;
 const FOV = 30;
+/**
+ * The `window` view: a fixed camera on the nook's window (Focus backdrop). It behaves like an image with
+ * `object-fit: cover` of a WINDOW_ASPECT reference frame, so the live canvas and the pre-rendered stills
+ * (scene/stills, same camera) line up exactly at any host aspect.
+ */
+export const WINDOW_CAM = { pos: [1.75, 1.62, 2.7] as const, at: [0.3, 1.66, -2.5] as const, fov: 44, aspect: 1.25 };
 /** Turn a little toward items that face along +x (left wall) when framing them. */
 const FRAME_AZ: Record<string, number> = { painting: 0.4, lantern: 0.2, catBed: 0.15, fairyLights: -0.1 };
 
@@ -770,6 +776,7 @@ export class NookEngine {
 
   /** Fit the diorama into the viewport for the current aspect + mode. */
   private fit() {
+    if (this.state.mode === 'window') return;
     const aspect = this.width / this.height;
     const tight = this.state.mode === 'focus' || this.state.mode === 'break';
     const res = fitPoints(silhouette(tight, aspect), BASE_AZ, this.baseEl(), FOV, aspect, tight ? 0.02 : 0.035);
@@ -778,6 +785,14 @@ export class NookEngine {
   }
 
   private updateCamera(dt: number, snap: boolean) {
+    if (this.state.mode === 'window') {
+      this.windowCamera();
+      return;
+    }
+    if (this.camera.fov !== FOV) {
+      this.camera.fov = FOV;
+      this.camera.updateProjectionMatrix();
+    }
     const k = snap ? 1 : 1 - Math.exp(-dt * 7);
     // Highlight: on the Nook screen (interactive) a gentle nudge toward the item;
     // in small showcase cards (level-up) the camera frames the item itself so it
@@ -816,6 +831,21 @@ export class NookEngine {
       this.targetC.z + Math.cos(this.az) * Math.cos(this.el) * d,
     );
     this.camera.lookAt(this.targetC);
+  }
+
+  /** Fixed window framing (cover-fit of a WINDOW_CAM.aspect frame). */
+  private windowCamera() {
+    const aspect = this.width / Math.max(1, this.height);
+    const tanRef = Math.tan(MathUtils.degToRad(WINDOW_CAM.fov / 2));
+    // Wider than the reference: show its full width, crop top and bottom. Taller: crop the sides.
+    const tanV = aspect > WINDOW_CAM.aspect ? (tanRef * WINDOW_CAM.aspect) / aspect : tanRef;
+    const fov = MathUtils.radToDeg(Math.atan(tanV) * 2);
+    if (Math.abs(this.camera.fov - fov) > 1e-4) {
+      this.camera.fov = fov;
+      this.camera.updateProjectionMatrix();
+    }
+    this.camera.position.set(WINDOW_CAM.pos[0], WINDOW_CAM.pos[1], WINDOW_CAM.pos[2]);
+    this.camera.lookAt(WINDOW_CAM.at[0], WINDOW_CAM.at[1], WINDOW_CAM.at[2]);
   }
 
   private baseEl() {
@@ -887,7 +917,9 @@ export class NookEngine {
     }
     const ks = this.ket.steam.u;
     ks.uTime.value = t;
-    ks.uIntensity.value = this.steamLevel;
+    // The window view is the Focus backdrop: the stage's own kettle is the only kettle, so the room's
+    // kettle (off frame, but its steam drifts into view) stays quiet.
+    ks.uIntensity.value = s.mode === 'window' ? 0 : this.steamLevel;
     ks.uBurst.value = this.burst;
     const lv = this.steamLevel;
     ks.uSize.value = 0.5 + 0.55 * lv;
@@ -936,7 +968,7 @@ export class NookEngine {
     r.fireflies.u.uTime.value = t;
     r.fireflies.u.uAlpha.value = 0.9 * this.mood.lamp;
     r.mugSteam.u.uTime.value = t + 3.1;
-    r.mugSteam.u.uIntensity.value = s.mode === 'idle' ? 0.6 : 1;
+    r.mugSteam.u.uIntensity.value = s.mode === 'window' ? 0 : s.mode === 'idle' ? 0.6 : 1;
     r.lampGlow.u.uTime.value = t;
     r.clouds.position.x = still ? 0 : ((t * 0.04) % 2.4) - 1.2;
 

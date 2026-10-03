@@ -140,7 +140,7 @@ function EmptyHero() {
           </Button>
         }
       >
-        Your first cup is one tap away. Your streak, charts and badges will fill in as you brew.
+        Your first brew is one tap away. Your streak, charts and badges will fill in as you brew.
       </EmptyState>
     </Card>
   );

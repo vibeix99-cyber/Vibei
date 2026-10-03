@@ -1,6 +1,6 @@
 # Chai posture exploration: a kit for GPT Image 2.5 or Nano Banana Pro (run it yourself)
 
-> **Closed.** The mascot art direction is the approved sheet in `review/round-6-mockups/assets/chai/source/`. Kept for history.
+> **Superseded.** Superseded first by the A/B brief (`review/round-6-mockups/chai-ab-brief.md`), which is itself superseded. The mascot art is the approved painted sheet (`art-src/chai/`), shipped as raster WebP poses (`src/art/chai/`), not redrawn in vector. Kept for history.
 
 Neither model is reachable from this session:
 - Nano Banana Pro is website-only.

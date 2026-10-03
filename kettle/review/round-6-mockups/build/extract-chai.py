@@ -31,7 +31,12 @@ POSES = {
     'chai-concerned': (628, 96, 938, 612),  # gentle support only
     'chai-happy': (934, 96, 1254, 612),    # Home greeting (content, eyes closed)
     'chai-cheering': (930, 656, 1254, 1110),  # the whistle / completion
+    'chai-stretch': (0, 656, 318, 1110),     # big stretch / yawn (break's over, mornings)
+    'chai-look': (318, 656, 632, 1110),      # three-quarter, looking (thinking, peeking)
+    'chai-sleep': (628, 656, 1254, 1110),    # asleep in a loaf (late nights); shares columns with cheering
 }
+# poses that share columns with a neighbour: keep only components whose centre lies left of x (crop coords)
+KEEP_LEFT_OF = {'chai-sleep': 318}
 # face crops for very small sizes (head + yuzu), relative to the extracted pose image, as fractions
 FACES = {'chai-happy': (0.0, 0.0, 1.0, 0.63)}
 
@@ -41,7 +46,7 @@ border = np.concatenate([sheet[:6].reshape(-1, 3), sheet[-6:].reshape(-1, 3), sh
 BG = np.median(border, axis=0)
 
 
-def extract(box):
+def extract(box, keep_left_of=None):
     x0, y0, x1, y1 = box
     im = sheet[y0:y1, x0:x1]
     d = np.abs(im - BG).max(axis=2)
@@ -67,7 +72,10 @@ def extract(box):
         m = clab == i
         ys, xs = np.nonzero(m)
         touches_side = xs.min() == 0 or xs.max() == core.shape[1] - 1
-        if touches_side or m.sum() < 25:
+        if keep_left_of is not None:
+            if xs.mean() > keep_left_of or m.sum() < 25:
+                continue
+        elif touches_side or m.sum() < 25:
             continue
         if m.sum() < 400 and sat[m].mean() < 60:  # small, unsaturated leftovers (shadow / compression specks)
             continue
@@ -119,7 +127,7 @@ def extract(box):
 
 OUT.mkdir(parents=True, exist_ok=True)
 for name, box in POSES.items():
-    img = extract(box)
+    img = extract(box, KEEP_LEFT_OF.get(name))
     img.save(OUT / f'{name}.png', optimize=True)
     img.save(OUT / f'{name}.webp', quality=92, method=6, exact=True)
     print(name, img.size, (OUT / f'{name}.png').stat().st_size // 1024, 'KB png', (OUT / f'{name}.webp').stat().st_size // 1024, 'KB webp')

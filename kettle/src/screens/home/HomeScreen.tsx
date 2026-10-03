@@ -22,8 +22,26 @@ export default function HomeScreen() {
   if (route === '/') shown.current = live;
   const active = shown.current;
   const tablet = useMediaQuery('(min-width: 720px) and (max-width: 899px) and (min-height: 521px)');
+  // Desktop: two real columns, start a brew | today (minutes, today's brews, recipes). The shell's right rail
+  // steps aside on Today (data-layout="home"), so nothing on this page is shown twice.
+  const desk = useMediaQuery('(min-width: 1200px)');
   // Build the 3D nook off-screen while Home idles, so "Put the kettle on" doesn't stall on it.
   usePrewarmNook(useUnlockedItems());
+  if (desk) {
+    return (
+      <div className={s.screen} data-tablet="wide" data-layout="home">
+        <div className={s.colA}>
+          <Hero data={data} status={<StatusBar data={data} />} />
+          {active ? <ResumeBanner /> : <Composer recent={data.recentIntentions} />}
+        </div>
+        <div className={s.colB}>
+          <GoalCard data={data} />
+          <TodayBrews sessions={data.todays} />
+          <RecipesCard quests={data.quests} />
+        </div>
+      </div>
+    );
+  }
   return (
     <div className={s.screen} data-tablet="wide">
       {/* Two columns on landscape phones and tablets (greeting + goal | composer + CTA); one flow elsewhere. */}

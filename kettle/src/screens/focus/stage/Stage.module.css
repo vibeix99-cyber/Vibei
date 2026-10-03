@@ -1,0 +1,275 @@
+/* The Focus still life: window · counter · kettle + Chai · one light. All sizes in --u (see Stage.tsx). */
+.stage {
+  /* One design unit: the set is laid out on a 400 × 330 grid, capped so painted Chai stays crisp. */
+  --u: min(0.25cqw, 0.3cqh, 1.6px);
+  --depth: calc(84 * var(--u));
+  --face: calc(24 * var(--u));
+  --counter-h: calc(var(--depth) + var(--face));
+  /* Where the kettle and Chai stand: a little behind the middle of the counter top. */
+  --base: calc(var(--face) + var(--depth) * 0.4);
+  --k-x: calc(-50 * var(--u));
+  --c-x: calc(100 * var(--u));
+  /* wood (the room's palette: #C98B55 / #E2AE74 / #B07443 / #8A5534) */
+  --wood-back: #e6b47c;
+  --wood-front: #c98b55;
+  --wood-grain: #b07443;
+  --wood-edge: #edc08a;
+  --wood-face: #94592f;
+  --wood-face-lo: #7a4726;
+  --shadow-ink: 74 44 26;
+  --spill: #fff6de;
+  --spill-a: 0.5;
+
+  position: relative;
+  container-type: size;
+  overflow: hidden;
+  isolation: isolate;
+}
+.stage[data-night] {
+  --wood-back: #5c3b3a;
+  --wood-front: #7a4b35;
+  --wood-grain: #4a2e2c;
+  --wood-edge: #9a6444;
+  --wood-face: #3a2426;
+  --wood-face-lo: #2a1a1e;
+  --shadow-ink: 14 8 16;
+  --spill: #a99cff;
+  --spill-a: 0.14;
+}
+
+/* ---------- back: the window, quieted ---------- */
+.back {
+  position: absolute;
+  inset: 0 0 calc(var(--counter-h) - 12 * var(--u)) 0;
+  overflow: hidden;
+}
+.window {
+  position: absolute;
+  inset: -2px;
+  /* A touch of depth and less colour so the window recedes behind the kettle and Chai (more blur on the
+     bigger desktop stage, where the room would otherwise be as sharp as the hero pair). */
+  filter: blur(max(0.9px, calc(1.05 * var(--u)))) saturate(0.76);
+}
+.quiet {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--bg) 40%, transparent) 0%, color-mix(in srgb, var(--bg) 18%, transparent) 55%, color-mix(in srgb, var(--bg) 6%, transparent) 100%);
+}
+.stage[data-night] .quiet {
+  background: linear-gradient(180deg, rgb(20 12 28 / 0.36) 0%, rgb(20 12 28 / 0.18) 60%, rgb(20 12 28 / 0.1) 100%);
+}
+
+/* ---------- middle: the counter ---------- */
+.counter {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--counter-h);
+}
+.top {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: var(--depth);
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--wood-back), var(--wood-front));
+  box-shadow: inset 0 calc(5 * var(--u)) calc(9 * var(--u)) calc(-5 * var(--u)) rgb(var(--shadow-ink) / 0.28);
+}
+.grain {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent calc(16% - 1px), var(--wood-grain) 16%, transparent calc(16% + 1px)),
+    linear-gradient(180deg, transparent calc(38% - 1px), var(--wood-grain) 38%, transparent calc(38% + 1px)),
+    linear-gradient(180deg, transparent calc(66% - 1.5px), var(--wood-grain) 66%, transparent calc(66% + 1.5px));
+  opacity: 0.32;
+}
+.stage[data-night] .grain {
+  opacity: 0.55;
+}
+/* Window light spilling forward over the counter: the pane shape, split by the mullion. */
+.spill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0 25%, var(--spill) 25% 48.6%, transparent 48.6% 51.4%, var(--spill) 51.4% 75%, transparent 75%);
+  clip-path: polygon(33% 0, 67% 0, 84% 100%, 16% 100%);
+  filter: blur(calc(5 * var(--u)));
+  opacity: var(--spill-a);
+}
+/* The stove's warm pool (key light at night; out while paused or resting). */
+.pool {
+  position: absolute;
+  left: calc(50% + var(--k-x));
+  bottom: calc(var(--depth) * 0.18);
+  width: calc(var(--plate) * 6.2 * var(--u));
+  height: calc(var(--depth) * 1.2);
+  translate: -50% 0;
+  background: radial-gradient(closest-side, rgb(255 184 92 / 0.95), rgb(242 137 78 / 0.35) 55%, transparent);
+  opacity: calc(var(--heat) * 0.26);
+  transition: opacity 900ms ease;
+}
+.stage[data-night] .pool {
+  opacity: calc(var(--heat) * 0.62);
+}
+.edge {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--depth);
+  height: max(2px, calc(3 * var(--u)));
+  translate: 0 -1px;
+  background: var(--wood-edge);
+  opacity: 0.9;
+}
+.stage[data-night] .edge {
+  opacity: 0.5;
+}
+.face {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--depth) + max(2px, 3 * var(--u)) - 1px);
+  bottom: 0;
+  background: linear-gradient(180deg, var(--wood-face), var(--wood-face-lo));
+}
+
+/* ---------- front: the kettle and Chai on one line ---------- */
+.set {
+  position: absolute;
+  left: 50%;
+  bottom: var(--base);
+  width: 0;
+  height: 0;
+}
+.kettle {
+  position: absolute;
+  left: calc(var(--k-x) - var(--k-foot-x) * var(--u));
+  top: calc(-1 * var(--k-foot-y) * var(--u));
+  width: calc(var(--k-w) * var(--u));
+  height: calc(var(--k-h) * var(--u));
+}
+.chai {
+  position: absolute;
+  left: calc(var(--c-x) - var(--chai-w) * var(--u) / 2);
+  top: calc((var(--chai-drop) - var(--chai-h)) * var(--u) + 4 * var(--u));
+  width: calc(var(--chai-w) * var(--u));
+  height: calc(var(--chai-h) * var(--u));
+  transform-origin: 50% 100%;
+}
+.chai > span,
+.chai img {
+  width: 100% !important;
+  height: 100% !important;
+}
+/* One contact-shadow style for both: a tight dark contact + a soft shadow cast toward the viewer. */
+.shadow {
+  position: absolute;
+  translate: -50% -50%;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.shadow::before,
+.shadow::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  left: 50%;
+  translate: -50% -50%;
+}
+.shadow::before {
+  /* soft, cast forward */
+  top: calc(50% + 7 * var(--u));
+  width: 118%;
+  height: calc(20 * var(--u));
+  background: radial-gradient(closest-side, rgb(var(--shadow-ink) / 0.2), transparent);
+}
+.shadow::after {
+  /* tight contact */
+  top: 50%;
+  width: 104%;
+  height: calc(7 * var(--u));
+  background: radial-gradient(closest-side, rgb(var(--shadow-ink) / 0.5), rgb(var(--shadow-ink) / 0.18) 70%, transparent);
+}
+.stage[data-night] .shadow::before {
+  background: radial-gradient(closest-side, rgb(var(--shadow-ink) / 0.4), transparent);
+}
+.stage[data-night] .shadow::after {
+  background: radial-gradient(closest-side, rgb(var(--shadow-ink) / 0.75), rgb(var(--shadow-ink) / 0.3) 70%, transparent);
+}
+.kShadow {
+  left: var(--k-x);
+  top: calc(1 * var(--u));
+  width: calc(var(--plate) * 2.1 * var(--u));
+  height: 0;
+}
+.cShadow {
+  left: var(--c-x);
+  top: calc(4 * var(--u));
+  width: calc(var(--chai-w) * 0.78 * var(--u));
+  height: 0;
+}
+
+/* The whistle: Chai hops for joy (three small hops), its shadow tightening under it. */
+.stage[data-state='whistle'] .chai {
+  animation: hop 0.46s cubic-bezier(0.3, 0, 0.4, 1) 3;
+}
+.stage[data-state='whistle'] .cShadow {
+  animation: hop-shadow 0.46s cubic-bezier(0.3, 0, 0.4, 1) 3;
+}
+@keyframes hop {
+  0%,
+  100% {
+    transform: translateY(0) scale(1, 1);
+  }
+  12% {
+    transform: translateY(0) scale(1.04, 0.95);
+  }
+  45% {
+    transform: translateY(calc(-11 * var(--u))) scale(0.98, 1.03);
+  }
+  80% {
+    transform: translateY(0) scale(1.02, 0.98);
+  }
+}
+@keyframes hop-shadow {
+  0%,
+  100% {
+    scale: 1;
+    opacity: 1;
+  }
+  45% {
+    scale: 0.82;
+    opacity: 0.7;
+  }
+}
+
+/* ---------- one light over everything ---------- */
+.light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  background:
+    radial-gradient(75% 50% at 50% 22%, rgb(255 250 236 / 0.55), transparent 75%),
+    linear-gradient(180deg, transparent 72%, rgb(90 50 30 / 0.22));
+}
+.stage[data-night] .light {
+  background:
+    radial-gradient(calc(150 * var(--u)) calc(120 * var(--u)) at calc(50% + var(--k-x)) calc(100% - var(--base) - 60 * var(--u)), rgb(255 160 70 / calc(var(--heat) * 0.75)), transparent 100%),
+    radial-gradient(70% 45% at 50% 18%, rgb(150 140 255 / 0.32), transparent 70%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage .chai,
+  .stage .cShadow {
+    animation: none !important;
+  }
+}
+.stage[data-reduced] .chai,
+.stage[data-reduced] .cShadow {
+  animation: none !important;
+}

@@ -3,7 +3,20 @@
 Owner: art area · files: `src/art/**`, `public/icons/**`, `public/favicon.svg`, `scripts/render-icons.mjs`
 Gallery: `#/kit?part=art` (`&view=chai|small|icons|objects|badges|spots|nook|appicon|pose&size=&pose=&animate=0`)
 
-## System
+## Chai: the approved painted art (round 6)
+
+- **Source:** Chai is the approved painted sheet (`art-src/chai/chai-sheet-approved.webp`).
+- **Shipped as raster:** nine poses are cut from the sheet with their pixels unchanged:
+  - masters: `art-src/chai/*.png`;
+  - delivery: `src/art/chai/*.webp`, about 180 KB in total.
+- **Rendering:** `PaintedChai` draws a pose at one shared scale. `ChaiFace` is the round avatar used below 44 px.
+- **Mapping:** `Mascot` maps every legacy pose name onto the painted poses (`PAINTED_POSE`), so all screens show the same Chai.
+- **Superseded:**
+  - the vector construction below is kept as `MascotVector` for history;
+  - the A/B concept brief (`review/round-6-mockups/chai-ab-brief.md`) is superseded.
+- **More:** sizes, the sharpness table and the prompts for higher-resolution poses are in `art-src/chai/README.md`.
+
+## System (vector art: icons, objects, badges; the pre-round-6 vector Chai)
 - **Construction:** flat geometric forms, one shade + one highlight per form. The shade is a
   crisp bottom-right crescent: the form is filled with its shade colour, then the same path
   nudged up-left in the base colour, clipped to itself (`Shaded` in `kit.tsx`). Light always comes

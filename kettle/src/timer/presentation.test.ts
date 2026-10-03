@@ -17,6 +17,7 @@ const view = (p: Partial<TimerView>): TimerView => ({
   phase: 'focus',
   sessionId: 's1',
   plannedMs: 25 * MIN,
+  addedMs: 0,
   remainingMs: 0,
   seconds: 0,
   progress: 0,

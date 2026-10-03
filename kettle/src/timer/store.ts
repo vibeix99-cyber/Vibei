@@ -36,6 +36,7 @@ export const INITIAL_TIMER: TimerState = {
   status: 'idle',
   phase: 'focus',
   plannedMs: 25 * MIN,
+  addedMs: 0,
   startedAt: null,
   endsAt: null,
   remainingMs: 25 * MIN,
@@ -127,7 +128,7 @@ export function sanitizeTimer(raw: unknown, now: number = clock.now()): Partial<
   const sessionId = typeof p.sessionId === 'string' ? p.sessionId : null;
   const idle = (): Partial<TimerState> => {
     const len = phaseLengthMs('focus');
-    return { ...out, status: 'idle', phase: 'focus', plannedMs: len, remainingMs: len, startedAt: null, endsAt: null, pausedAt: null, pausedTotalMs: 0, sessionId: null };
+    return { ...out, status: 'idle', phase: 'focus', plannedMs: len, addedMs: 0, remainingMs: len, startedAt: null, endsAt: null, pausedAt: null, pausedTotalMs: 0, sessionId: null };
   };
   if (status !== 'running' && status !== 'paused') return idle();
   if (planned == null || planned <= 0 || !sessionId) return idle();
@@ -136,6 +137,8 @@ export function sanitizeTimer(raw: unknown, now: number = clock.now()): Partial<
     ...out,
     phase,
     plannedMs,
+    // Older saves have no addedMs; it can never exceed the part of the plan beyond its first minute.
+    addedMs: Math.min(Math.max(0, num(p.addedMs) ?? 0), Math.max(0, plannedMs - MIN)),
     sessionId,
     startedAt: startedAt ?? now,
     pausedTotalMs: Math.max(0, num(p.pausedTotalMs) ?? 0),
@@ -242,6 +245,7 @@ export const useTimer = create<TimerStore>()(
             status: 'running',
             phase: 'focus',
             plannedMs,
+            addedMs: 0,
             startedAt: now,
             endsAt: now + plannedMs,
             remainingMs: plannedMs,
@@ -263,6 +267,7 @@ export const useTimer = create<TimerStore>()(
             status: 'running',
             phase,
             plannedMs,
+            addedMs: 0,
             startedAt: now,
             endsAt: now + plannedMs,
             remainingMs: plannedMs,
@@ -321,10 +326,11 @@ export const useTimer = create<TimerStore>()(
           const target = Math.max(0, Math.min(rem + ms, MAX_PHASE_MS - (s.plannedMs - rem)));
           const delta = target - rem;
           if (delta === 0) return;
+          const addedMs = Math.max(0, s.addedMs + delta);
           if (s.status === 'running' && s.endsAt != null) {
-            set({ endsAt: now + target, plannedMs: s.plannedMs + delta });
+            set({ endsAt: now + target, plannedMs: s.plannedMs + delta, addedMs });
           } else {
-            set({ remainingMs: target, plannedMs: s.plannedMs + delta });
+            set({ remainingMs: target, plannedMs: s.plannedMs + delta, addedMs });
           }
           emit('timer:addTime', { phase: s.phase, addedMs: delta });
           if (target === 0) get().tick();
@@ -420,6 +426,7 @@ export const useTimer = create<TimerStore>()(
         status: s.status,
         phase: s.phase,
         plannedMs: s.plannedMs,
+        addedMs: s.addedMs,
         startedAt: s.startedAt,
         endsAt: s.endsAt,
         remainingMs: s.remainingMs,

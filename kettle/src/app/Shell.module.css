@@ -331,3 +331,15 @@
     max-width: 880px;
   }
 }
+
+/* ---------------- Today on desktop ----------------
+   Home (data-layout="home") lays out its own two columns, start a brew | today, so the right rail (which
+   would repeat the goal and recipes) steps aside and the column takes its width. */
+@media (min-width: 1200px) {
+  .main:has([data-layout='home']) {
+    max-width: 1120px;
+  }
+  .stage:has([data-layout='home']) .rail {
+    display: none;
+  }
+}

@@ -5,12 +5,30 @@ Dev port 5188. Screenshots in `.shots/home/`.
 
 ## Structure
 
-- `home/HomeScreen.tsx`: StatusBar → Hero (greeting + Chai line) → ResumeBanner (when a brew or break is live) → GoalCard (ring) → Composer (intention, tags, rhythm, CTA) → Today's recipes → Today's brews.
-- `home/chai.ts`: pure, unit-tested (`chai.test.ts`) logic for the greeting and Chai's contextual line. Priority: first ever → goal met → late night (suggest Gentle, mention a streak at risk) → back after 3+ days → evening streak at risk (invite, never warn; mentions a Tea Cozy on standby) → progress → first visit today (by time of day) → idle. Copy is seeded per day so it doesn't flicker. Non-breaking hyphens in "5‑day" and "15‑minute".
-- `home/useHomeData.ts`: derives everything from stores and `useNow()` (re-renders on debug clock jumps, so `__kettle.ff` works). Today's minutes are computed from sessions + the current day key, not a memo that could go stale.
-- `home/content.ts`: goal, rhythm, tag and ambience metadata shared by all three screens (ambience comes from `AMBIENTS` in `@/audio`).
-- `welcome/`: 7 steps (hello, name, goal, rhythm, ambience, notify, ready). Chai and the bubble stay put while the body slides. Native radios inside tactile option cards give arrow keys and screen-reader semantics. Enter advances, the question heading takes focus on each step, and there's a sticky footer CTA.
-- `settings/`: kit `ListGroup` / `ListRow` sections, plus `DataSection` (export, import with preview + replace/merge confirm, reset with a serious confirm).
+- **`home/HomeScreen.tsx`:** StatusBar → Hero (greeting + Chai line) → ResumeBanner (when a brew or break is live) → GoalCard → Composer (task, tags, brew length, CTA) → Today's recipes → Today's brews.
+  - **Desktop (≥ 1200 px):** two real columns, start a brew | today (minutes, today's brews, recipes). The shell's right rail steps aside on Today (`data-layout="home"`), so nothing on the page appears twice.
+- **GoalCard (`home/Hero.tsx`)** states today's minutes explicitly: "**12 min** brewed · **18 min** to go" over the goal bar, then "Today's goal · 30 min (a cup)". When the goal is met, the right side reads "✓ Goal met".
+- **Composer (`home/Composer.tsx`):**
+  - The task heading is "What are you brewing? (optional)", with the placeholder "e.g. Chapter 3 notes, or leave it blank".
+  - "Brew length" is a segmented control with **minutes first** (15 min Gentle · 25 min Classic · 50 min Deep · Custom), sorted by length.
+  - The CTA names the selected length.
+- **`home/chai.ts`:** pure, unit-tested (`chai.test.ts`) logic for the greeting and Chai's contextual line.
+  - *Priority:* first ever → goal met → late night → back after 3+ days → evening streak at risk (invite, never warn; mentions a Tea Cozy on standby) → progress → first visit today (by time of day) → idle.
+  - *Wording follows the user's own numbers:*
+    - The goal's own vessel: "today's cup is full" for 30 min, pot for 60, kettle for 120, "today's goal is met" otherwise (`goalFull`).
+    - The selected brew length: "One 25‑minute brew keeps your 5‑day streak warm".
+    - "One more brew and …" appears only when the selected brew covers what's left; otherwise "18 min to go, about 2 more 15‑minute brews".
+    - The Gentle chip is offered only when the selected brew is longer than 15 minutes.
+  - Copy is seeded per day so it doesn't flicker. Non-breaking hyphens keep "5‑day" and "15‑minute" together.
+- **`home/useHomeData.ts`:** derives everything from stores and `useNow()` (re-renders on debug clock jumps, so `__kettle.ff` works).
+- **`home/content.ts`:** goal, rhythm, tag and ambience metadata shared by all three screens (ambience comes from `AMBIENTS` in `@/audio`).
+- **`welcome/`:** the first visit is one tap to a real brew, with setup optional.
+  - **Hello:** painted Chai on the valley; "Let's start small: one 15‑minute brew"; an optional "What's the first thing?" field. Then **Start a 15-min brew** (Enter in the field works too), "Set things up first", and "I have a backup".
+  - **Starting the brew** sets `onboarded` and `setupPending`, and starts a real 15-minute brew (`FIRST_BREW_MIN`) without changing the user's rhythm.
+  - **After the whistle**, the first summary offers "Make Kettle yours · Set up", which opens the setup at the name question. "Back to Today" leaves it and clears `setupPending`.
+  - **"Set things up first"** runs the six questions (name, goal, rhythm, ambience, nudges, ready) as before. Chai and the bubble stay put while the body slides. Native radios give arrow keys and screen-reader semantics. Enter advances (except inside a form), the question heading takes focus on each step, and the footer CTA is sticky.
+  - **The App gate** allows `#/welcome` for an onboarded user only while `setupPending`.
+- **`settings/`:** kit `ListGroup` / `ListRow` sections, plus `DataSection` (export, import with preview + replace/merge confirm, reset with a serious confirm).
 
 ## Iteration 1
 
@@ -79,6 +97,21 @@ Dev port 5188. Screenshots in `.shots/home/`.
   - axe is clean on all onboarding steps, Home (5 seeds × light/dark × 390/1024/1440) and Settings.
   - The keyboard-only onboarding walk completes and lands on `#/focus` with the timer running.
 
+## Iteration 6 (round 6: the approved direction)
+
+- **Goal card:**
+  - The ring and the uppercase "Daily goal · A cup" eyebrow are gone.
+  - Minutes are stated in words: brewed on the left, to go on the right in persimmon.
+  - The bar sits underneath, with the goal and its vessel in plain words.
+- **Brew length:** the minutes are the option labels and the rhythm names are the small print. Previously "Classic / Deep / Gentle" read like moods rather than durations.
+- **Optional task:** "(optional)" sits next to the question instead of floating at the card's far edge.
+- **Chai copy agrees with the screen:**
+  - it uses the goal's own vessel (a cup is not a pot);
+  - it names the selected brew length;
+  - it never promises "one more brew" when that brew is shorter than what's left.
+- **Desktop:** two columns; the rail is hidden on Today.
+- **Welcome:** one tap to a real 15-minute first brew, with setup after the first whistle. The 25-minute placeholder from the mockups is gone.
+
 ## Final screenshots
 
 `.shots/home/final/`:
@@ -91,7 +124,7 @@ Data-flow sheets are in `.shots/home/flows/`.
 ## Known gaps
 
 - The daily goal can only be one of the four presets (no custom-minutes goal).
-- The onboarding step isn't persisted across a reload; choices are saved as you go, so a reload just restarts at hello with selections kept.
+- The setup step isn't persisted across a reload; choices are saved as you go, so a reload restarts the questions (at hello before the first brew, at the name question after it) with selections kept.
 - First-visit-today uses a `kettle:home:lastVisit` localStorage key. It isn't part of backups, by design.
 - Ambience previews call `audio.preview`; checked in code, not by ear.
 

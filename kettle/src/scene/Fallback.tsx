@@ -18,9 +18,32 @@ interface Props {
   time?: SceneTime;
 }
 
-const POSE: Record<SceneMode, MascotPose> = { focus: 'sleep', break: 'sip', idle: 'idle', showcase: 'idle' };
+const POSE: Record<SceneMode, MascotPose> = { focus: 'sleep', break: 'sip', idle: 'idle', showcase: 'idle', window: 'idle' };
+
+/**
+ * Pre-rendered stills of the `window` view (same engine, same camera, base room without unlocked items),
+ * one per time of day and weather. Shown while the engine loads and whenever 3D is off, so the Focus
+ * backdrop never swaps to a differently framed picture. Only the URL map is bundled; each file loads on use.
+ */
+const STILLS = import.meta.glob<string>('./stills/window-*.webp', { eager: true, query: '?url', import: 'default' });
+
+export function windowStill(time: string, weather: SceneWeather): string | undefined {
+  return STILLS[`./stills/window-${time}-${weather}.webp`] ?? STILLS[`./stills/window-${time}-clear.webp`];
+}
+
+export function WindowStill({ weather, time: pref = 'auto' }: { weather: SceneWeather; time?: SceneTime }) {
+  const time = useSceneTime(pref);
+  const src = windowStill(time, weather);
+  if (!src) return null;
+  return <img src={src} alt="" aria-hidden draggable={false} decoding="async" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 50%' }} />;
+}
 
 export function NookStatic({ weather, mode, progress = 0, items = [], time: pref = 'auto' }: Props) {
+  if (mode === 'window') return <WindowStill weather={weather} time={pref} />;
+  return <NookStaticRoom weather={weather} mode={mode} progress={progress} items={items} time={pref} />;
+}
+
+function NookStaticRoom({ weather, mode, progress = 0, items = [], time: pref = 'auto' }: Props) {
   const reduced = useReducedMotion();
   const time = useSceneTime(pref);
   const steam = mode === 'focus' ? 0.15 + 0.85 * progress : mode === 'break' ? 0.4 : 0.3;

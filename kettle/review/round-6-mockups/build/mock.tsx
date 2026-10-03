@@ -9,6 +9,7 @@
  *   motion:  the whistle → summary transition, normal and reduced motion side by side; time is set with
  *            window.__setT(seconds) (the recorder steps it at 30 fps)
  * v1 lives in git history (commit 3a161cf) and in ../frames-v1.
+ * Rewards, streak, leaves, level, today's minutes, recipes and brews: ../fixtures/rewards.json (real engine).
  */
 import '@/styles/global.css';
 import { createRoot } from 'react-dom/client';
@@ -21,6 +22,9 @@ import { ITEMS } from '@/progress/items';
 import { FocusScene, PHONE_SCENE, DESK_SCENE } from './FocusScene';
 import { Kettle2, type KettleState } from './Kettle2';
 import { ChaiArt, ChaiFace, chaiSize, type ChaiPose } from './ChaiArt';
+// Every reward number below comes from the app's own progress engine and summary model
+// (../fixtures/rewards.gen.ts writes this file); nothing is typed by hand.
+import F from '../fixtures/rewards.json';
 
 const q = new URLSearchParams(location.search);
 const screen = q.get('screen') ?? 'home';
@@ -85,13 +89,13 @@ function StatusLine({ big = false }: { big?: boolean }) {
   return (
     <div style={{ display: 'flex', gap: big ? 20 : 14, alignItems: 'center', font: f, color: 'var(--ink-2)' }}>
       <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-        <StreakMug state="warm" size={big ? 28 : 24} animate={false} /> 6 days warm
+        <StreakMug state="warm" size={big ? 28 : 24} animate={false} /> {F.routine.home.streak} days warm
       </span>
       <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-        <Leaf size={big ? 20 : 18} /> 690
+        <Leaf size={big ? 20 : 18} /> {F.routine.home.leaves}
       </span>
       <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-        <LevelBadge level={7} size={big ? 26 : 22} /> Level 7
+        <LevelBadge level={F.routine.home.level} size={big ? 26 : 22} /> Level {F.routine.home.level}
       </span>
     </div>
   );
@@ -124,7 +128,7 @@ function Hello() {
 }
 
 /* ------------------------------------------------------------------ Home: one action, today's minutes explicit */
-const TODAY = { done: 12, goal: 30 };
+const TODAY = F.routine.home.today;
 
 /** Completed and remaining minutes, both in words; the bar is the goal. */
 function TodayMinutes({ big = false }: { big?: boolean }) {
@@ -166,16 +170,19 @@ function Composer({ wide = false }: { wide?: boolean }) {
 }
 
 function Recipes({ big = false }: { big?: boolean }) {
-  const rows: [string, string, number, string][] = [
-    ['Finish a full brew', '+10', 1, 'Done'],
-    ['Brew with 2 different tags', '+15', 1, 'Done'],
-    ['Brew for 30 minutes', '+20', TODAY.done / 30, `${TODAY.done} / 30 min`],
-  ];
+  const rows: [string, string, number, string][] = TODAY.recipes.map((q) => [
+    q.title,
+    `+${q.reward}`,
+    q.target ? q.progress / q.target : 0,
+    q.done ? 'Done' : `${q.progress} / ${q.target}`,
+  ]);
   return (
     <div style={{ display: 'grid', gap: big ? 14 : 12 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
         <h2 style={{ ...display, fontSize: big ? 22 : 19 }}>Today’s recipes</h2>
-        <span style={{ ...body, fontSize: big ? 15 : 14, fontWeight: 800 }}>2 of 3</span>
+        <span style={{ ...body, fontSize: big ? 15 : 14, fontWeight: 800 }}>
+          {TODAY.recipes.filter((q) => q.done).length} of {TODAY.recipes.length}
+        </span>
       </div>
       {rows.map(([t, l, v, s]) => (
         <div key={t} style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '5px 10px', alignItems: 'center' }}>
@@ -196,10 +203,12 @@ function TodayBrews({ big = false }: { big?: boolean }) {
   return (
     <div style={{ display: 'grid', gap: 12 }}>
       <h2 style={{ ...display, fontSize: big ? 22 : 19 }}>Today’s brews</h2>
-      {[
-        ['9:05', 'Roadmap draft', 'Work', '8 min · ended early'],
-        ['1:20', 'Reading', 'Read', '4 min · ended early'],
-      ].map(([t, n, g, d]) => (
+      {TODAY.brews.map((b) => [
+        new Date(b.at).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }).replace(/\s?[AP]M/, ''),
+        b.intention || 'Focus',
+        b.tag ? b.tag[0].toUpperCase() + b.tag.slice(1) : '',
+        `${b.min} min${b.completed ? '' : ' · ended early'}`,
+      ]).map(([t, n, g, d]) => (
         <div key={t} style={{ display: 'flex', gap: 12, alignItems: 'center', font: `700 ${big ? 16 : 15}px var(--font-body)`, color: 'var(--ink)' }}>
           <span style={{ color: 'var(--ink-3)', width: 40 }}>{t}</span>
           <span style={{ width: 24, height: 24, borderRadius: 12, background: 'var(--surface-2)', display: 'grid', placeItems: 'center', color: 'var(--ink-2)' }}>
@@ -442,17 +451,9 @@ function RewardPill({ art, children, tone }: { art: ReactNode; children: ReactNo
 }
 
 function Details({ open, first }: { open: boolean; first: boolean }) {
-  const rows: [string, string][] = first
-    ? [
-        ['15 focused minutes', '+15'],
-        ['First brew ever', '+3'],
-      ]
-    : [
-        ['25 focused minutes', '+25'],
-        ['Full brew (no early end)', '+5'],
-        ['Recipe: Brew for 30 minutes', '+20'],
-      ];
-  const total = first ? 18 : 50;
+  const d = (first ? F.first : F.routine).summary.details;
+  const rows: [string, string][] = d.rows.map((r) => [r.label, `+${r.amount}`]);
+  const total = d.total;
   return (
     <div style={{ borderRadius: 16, border: '2px solid var(--line)', overflow: 'hidden' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '11px 14px', font: '800 15px var(--font-body)', color: 'var(--ink-2)' }}>
@@ -477,10 +478,12 @@ function Details({ open, first }: { open: boolean; first: boolean }) {
             <>
               <div style={{ display: 'grid', gap: 5, marginTop: 4 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', font: '700 13px var(--font-body)', color: 'var(--ink-2)' }}>
-                  <span>Level 7 → 8</span>
-                  <span>690 of 720 leaves</span>
+                  <span>
+                    Level {d.level} → {d.level + 1}
+                  </span>
+                  <span>{d.toNext} leaves to go</span>
                 </div>
-                <ProgressBar value={(690 - 465) / (720 - 465)} tone="honey" height={8} label="Level progress" valueText="690 of 720" />
+                <ProgressBar value={d.into / d.size} tone="honey" height={8} label="Level progress" valueText={`${d.into} of ${d.size}`} />
               </div>
               <p style={{ ...body, fontSize: 13, fontWeight: 700 }}>Your streak stays warm with one full brew a day.</p>
             </>
@@ -492,12 +495,14 @@ function Details({ open, first }: { open: boolean; first: boolean }) {
 }
 
 function Unlock({ wide }: { wide: boolean }) {
+  const u = F.unlock.summary.unlock!;
+  const item = u.items[0];
   return (
     <div style={{ display: 'grid', gap: 10, padding: wide ? 16 : 12, borderRadius: 22, background: 'var(--honey-soft)' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span style={{ font: '800 13px var(--font-body)', letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--ink-2)' }}>New in your nook</span>
         <span style={{ display: 'flex', alignItems: 'center', gap: 6, font: '800 14px var(--font-body)', color: 'var(--ink)' }}>
-          <LevelBadge level={8} size={24} /> Cozy level 8
+          <LevelBadge level={u.level} size={24} /> Cozy level {u.level}
         </span>
       </div>
       <div style={{ height: wide ? 212 : 124, borderRadius: 16, overflow: 'hidden', background: dark ? '#2a1f33' : '#f4e6d4' }}>
@@ -505,8 +510,8 @@ function Unlock({ wide }: { wide: boolean }) {
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10 }}>
         <div>
-          <div style={{ font: `600 ${wide ? 24 : 21}px var(--font-display)`, color: 'var(--ink)' }}>Record player</div>
-          <div style={{ ...body, fontSize: 14, fontWeight: 700 }}>It plays softly while you brew.</div>
+          <div style={{ font: `600 ${wide ? 24 : 21}px var(--font-display)`, color: 'var(--ink)' }}>{item.name}</div>
+          <div style={{ ...body, fontSize: 14, fontWeight: 700 }}>{item.story}</div>
         </div>
         <Button variant="secondary" size="sm" sfx={false}>
           See it
@@ -516,16 +521,37 @@ function Unlock({ wide }: { wide: boolean }) {
   );
 }
 
+/** The same art per reward kind as the app's summary (src/screens/done/Summary.tsx). */
+function PillArt({ kind, value, id, tier, streak }: { kind: string; value: number | null; id: string | null; tier: number | null; streak: number }) {
+  switch (kind) {
+    case 'leaves':
+      return <Leaf size={20} />;
+    case 'goal':
+      return <Ring value={value ?? 0} size={20} thickness={4} tone={(value ?? 0) >= 1 ? 'matcha' : 'persimmon'} label="Daily goal" />;
+    case 'streak':
+      return <StreakMug state="warm" count={streak} size={26} animate={false} />;
+    case 'recipes':
+      return <TeaTin state="open" size={24} animate={false} />;
+    case 'level':
+      return <LevelBadge level={value ?? 1} size={22} />;
+    case 'badge':
+      return <Badge id={id ?? ''} tier={tier ?? 1} size={26} />;
+    default:
+      return null;
+  }
+}
+
 function SummarySheet({ v, wide = false, stagger, chai = false }: { v: Variant; wide?: boolean; stagger?: (i: number) => CSSProperties; chai?: boolean }) {
   const first = v === 'first';
   const S = stagger ?? (() => ({}));
+  const model = (first ? F.first : v === 'unlock' ? F.unlock : F.routine).summary;
   return (
     <div style={{ display: 'grid', gap: wide ? 18 : 14 }}>
       {/* 1 · the message: time brewed + tea time */}
       <div style={{ display: 'flex', gap: 12, alignItems: 'center', justifyContent: 'space-between', ...S(0) }}>
         <div>
           <p style={{ ...body, fontSize: wide ? 15 : 14, fontWeight: 800, color: 'var(--ink-3)' }}>{first ? 'Your first brew' : 'Chapter 3 notes · Study'}</p>
-          <h2 style={{ ...display, fontSize: wide ? 44 : 36, lineHeight: 1.05, marginTop: 4, letterSpacing: '-0.5px' }}>{first ? '15 minutes brewed' : '25 minutes brewed'}</h2>
+          <h2 style={{ ...display, fontSize: wide ? 44 : 36, lineHeight: 1.05, marginTop: 4, letterSpacing: '-0.5px' }}>{model.headline}</h2>
           <p style={{ ...body, fontSize: wide ? 18 : 16, fontWeight: 700, marginTop: 6, color: 'var(--ink)' }}>Tea’s ready. Take five before the next one.</p>
         </div>
         {/* cheering Chai joins the headline only when the sheet covers the scene's Chai (one Chai on screen, always) */}
@@ -543,22 +569,11 @@ function SummarySheet({ v, wide = false, stagger, chai = false }: { v: Variant; 
       )}
       {/* 2 · routine rewards, compact */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, ...S(2) }}>
-        {first ? (
-          <>
-            <RewardPill art={<Leaf size={20} />}>+18 leaves</RewardPill>
-            <RewardPill art={<StreakMug state="warm" count={1} size={26} animate={false} />}>Day 1 warm</RewardPill>
-            <RewardPill art={<Badge id="first-brew" tier={1} size={26} />}>Badge: First Brew</RewardPill>
-            <RewardPill art={<Ring value={15 / 30} size={20} thickness={4} tone="persimmon" label="Daily goal" valueText="15 of 30" />}>15 / 30 min today</RewardPill>
-          </>
-        ) : (
-          <>
-            <RewardPill art={<Leaf size={20} />}>+50 leaves</RewardPill>
-            <RewardPill art={<Ring value={1} size={20} thickness={4} tone="matcha" label="Daily goal" valueText="37 of 30" />}>Goal met · 37 / 30 min</RewardPill>
-            <RewardPill art={<StreakMug state="warm" count={6} size={26} animate={false} />}>6 days warm</RewardPill>
-            <RewardPill art={<TeaTin state="open" size={24} animate={false} />}>Recipes 3 of 3</RewardPill>
-            {v !== 'unlock' && <RewardPill art={<LevelBadge level={7} size={22} />}>30 leaves to level 8</RewardPill>}
-          </>
-        )}
+        {model.pills.map((p, i) => (
+          <RewardPill key={`${p.kind}-${i}`} art={<PillArt kind={p.kind} value={p.value} id={p.id} tier={p.tier} streak={model.streakDays} />}>
+            {p.text}
+          </RewardPill>
+        ))}
       </div>
       {/* 3 · a major unlock gets room */}
       {v === 'unlock' && (

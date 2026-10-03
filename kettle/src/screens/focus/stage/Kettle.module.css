@@ -1,0 +1,294 @@
+/* The kettle that is the timer. Motion = transforms and opacity only; every state is a readable still. */
+.kettle {
+  display: block;
+  overflow: visible;
+}
+.kettle * {
+  transform-box: view-box;
+}
+
+/* ---------- burner ---------- */
+.plate {
+  fill: #4a3d4e;
+}
+.plateHi {
+  fill: #655569;
+}
+.trivet {
+  fill: #584a5c;
+}
+.kettle[data-night] .plate {
+  fill: #2b2230;
+}
+.kettle[data-night] .plateHi,
+.kettle[data-night] .trivet {
+  fill: #3d3244;
+}
+.fade {
+  transition: opacity 900ms ease, rx 900ms ease, ry 900ms ease;
+}
+.flames {
+  transition: opacity 500ms ease;
+}
+.flame {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: flicker 1.7s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -0.37s);
+}
+@keyframes flicker {
+  0%,
+  100% {
+    transform: scale(1, 1);
+  }
+  30% {
+    transform: scale(0.94, 1.08);
+  }
+  55% {
+    transform: scale(1.05, 0.93);
+  }
+  80% {
+    transform: scale(0.97, 1.05);
+  }
+}
+
+/* ---------- steam ---------- */
+.steamShade {
+  fill: #e4dae6;
+}
+.steamLit {
+  fill: #fff;
+}
+.kettle[data-night] .steamShade {
+  fill: #cdbfd2;
+}
+.kettle[data-night] .steamLit {
+  fill: #fff3e8;
+}
+.plume {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+.plume[data-on] {
+  opacity: 1;
+}
+.plume > g,
+.plume > g > g {
+  transition: opacity 1s ease;
+}
+.sway0,
+.sway1,
+.sway2,
+.sway3 {
+  animation: sway 5.2s ease-in-out infinite;
+}
+.sway0 {
+  --amp: 1.2px;
+}
+.sway1 {
+  --amp: 2.6px;
+  animation-delay: -0.9s;
+}
+.sway2 {
+  --amp: 4px;
+  animation-delay: -1.8s;
+  animation-duration: 6.1s;
+}
+.sway3 {
+  --amp: 6px;
+  animation-delay: -2.6s;
+  animation-duration: 6.8s;
+}
+@keyframes sway {
+  0%,
+  100% {
+    transform: translateX(calc(var(--amp) * -1));
+  }
+  50% {
+    transform: translateX(var(--amp));
+  }
+}
+
+/* ---------- gauge ---------- */
+.track {
+  fill: none;
+  stroke: #ead8bf;
+  stroke-width: 7.5;
+  stroke-linecap: round;
+}
+.fill,
+.added {
+  fill: none;
+  stroke-width: 7.5;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.fill {
+  stroke: var(--persimmon, #f06c32);
+}
+.added {
+  stroke: var(--honey, #f5b937);
+}
+.needle {
+  transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* ---------- whistle ---------- */
+.lid {
+  transform-origin: 165px 152px;
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cap {
+  transform-origin: 64px 141px;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.mouth {
+  opacity: 0;
+}
+.kettle[data-state='whistle'] .mouth {
+  opacity: 1;
+}
+.kettle[data-state='whistle'] .cap {
+  transform: rotate(-75deg);
+}
+.kettle[data-state='whistle'] .lid {
+  transform: translate(0, -6px) rotate(-8deg);
+  animation: rattle 0.32s linear infinite;
+}
+@keyframes rattle {
+  0%,
+  100% {
+    transform: translate(0, -6px) rotate(-8deg);
+  }
+  25% {
+    transform: translate(0, -10px) rotate(-5deg);
+  }
+  50% {
+    transform: translate(0, -7px) rotate(-11deg);
+  }
+  75% {
+    transform: translate(0, -9.5px) rotate(-6deg);
+  }
+}
+.body {
+  transform-origin: 166px 250px;
+}
+.kettle[data-state='whistle'] .body {
+  animation: shake 0.3s linear 8;
+}
+@keyframes shake {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(1.1deg);
+  }
+  75% {
+    transform: rotate(-1.1deg);
+  }
+}
+
+/* The stream: puffs leave the spout one after another and drift outward along its axis. */
+.jetPuff {
+  animation:
+    puff-in 0.28s cubic-bezier(0.16, 1, 0.3, 1) both,
+    puff-flow 0.62s linear infinite;
+  animation-delay: calc(var(--i) * 0.05s), calc(var(--i) * -0.124s);
+}
+@keyframes puff-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes puff-flow {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(var(--dx), var(--dy));
+  }
+}
+.bloom,
+.bloomPuffs {
+  transform-box: fill-box;
+  transform-origin: 50% 70%;
+  animation: bloom-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.18s both;
+}
+.bloomPuffs {
+  animation:
+    bloom-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.32s both,
+    drift 4s ease-in-out 0.8s infinite;
+}
+@keyframes bloom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.55);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate(-3px, 0);
+  }
+  50% {
+    transform: translate(3px, -4px);
+  }
+}
+.speed {
+  stroke: rgba(120, 96, 104, 0.42);
+  stroke-width: 3.4;
+  animation: puff-in 0.3s ease 0.1s both;
+}
+.kettle[data-night] .speed {
+  stroke: rgba(255, 241, 228, 0.7);
+}
+.notes {
+  fill: var(--honey-shade, #d9961c);
+}
+.note {
+  animation: note 1.5s cubic-bezier(0.25, 0.6, 0.4, 1) infinite;
+  animation-delay: calc(var(--i) * 0.55s);
+}
+@keyframes note {
+  0% {
+    opacity: 0;
+    transform: translate(0, 10px);
+  }
+  20% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(6px, -26px);
+  }
+}
+
+/* ---------- reduced motion: the same states as stills ---------- */
+.kettle[data-reduced] *,
+.kettle[data-reduced] {
+  animation: none !important;
+}
+.kettle[data-reduced] .needle,
+.kettle[data-reduced] .fill,
+.kettle[data-reduced] .added,
+.kettle[data-reduced] .lid,
+.kettle[data-reduced] .cap {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .kettle *,
+  .kettle {
+    animation: none !important;
+  }
+}

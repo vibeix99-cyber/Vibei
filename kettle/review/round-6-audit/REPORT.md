@@ -223,6 +223,7 @@ B remains a credible second step once A lands.
 - **Direction A**, "the kettle is the timer".
 - **Gamification:** keep every system, but quieter. R1 merges them into one summary per brew; nothing is removed.
 - **Chai:** wait for your concept sheet. R4 moves out of round 1 and becomes round 1b, starting once you've picked from the sheet.
+  - *Update (October 2026):* superseded. The approved art is a painted sheet, shipped as raster poses (`art-src/chai/README.md`). The vector posture pass (R4) and the "must stay vector" note above no longer apply.
 
 **Adjusted round 1:**
 - **R1** One celebration.

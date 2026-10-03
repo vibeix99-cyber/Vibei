@@ -34,8 +34,12 @@ Chai is a small, round, unbothered capybara who keeps you company.
 - **Look:** a soft loaf shape. Warm chai-brown fur, lighter cream muzzle, big
   dark oval nose, small high-set dot eyes, tiny round ears, rosy blush.
   Signature accessory: a little **yuzu** (small citrus with a leaf) balanced on
-  its head. Stubby paws. Built from geometric, rounded shapes — simple enough to
-  read at 24px, charming at 240px.
+  its head. Stubby paws.
+- **Art (round 6):** the approved **painted** sheet (`art-src/chai/`). Its soft
+  shading is the character, so it ships as raster poses, not vector: reading
+  (Focus), sipping (tea break), cheering (whistle and summary), concerned (gentle
+  support only), happy, stretch, look, sleep, plus a round face avatar for sizes
+  under 44 px. One Chai on screen at a time.
 - **Poses (must all exist):** `idle` (sitting loaf), `wave`, `focus` (eyes
   closed, content, holding a mug or book), `sleep` (curled, zZ), `sip` (break,
   holding a mug with steam), `cheer` (jump, paws up), `proud` (chest out,
@@ -130,22 +134,31 @@ soft attack, short tails: kalimba / marimba / soft bell timbres.
 
 ## 7. Screens
 
-1. **Welcome / onboarding** — Chai says hi → name (optional) → daily goal →
-   default rhythm (Classic 25/5 · Deep 50/10 · Gentle 15/3) → notifications
-   (ask with context, skippable) → "Put the kettle on". Progress bar on top,
+1. **Welcome / first visit** — Chai says hi and offers one real 15-minute brew,
+   with an optional task: one tap to a running timer. Setup is optional: "Set
+   things up first" (name → daily goal → rhythm → sound → notifications →
+   ready), or "Make Kettle yours" on the first summary. Progress bar on top,
    speech bubbles, one question per screen.
-2. **Home ("Today")** — greeting by time of day, warm streak, leaves, daily goal
-   ring, today's recipes (quests) preview, intention input + tag chips, rhythm
-   selector, huge primary CTA. Chai reacting to your day.
-3. **Focus** — full-screen, calm. Nook scene, huge readable timer, progress ring,
-   intention label, pause/resume, +5 min, end early (confirm sheet with Chai
-   concerned), ambience picker. Keyboard: Space = pause/resume, Esc = end.
-4. **Break** — sky-toned. Chai sipping tea. Rotating gentle break suggestions
-   (stretch, water, eyes 20-20-20). Skip break / start next brew.
-5. **Session complete** — sequence of celebration cards (Duolingo-lesson-end
-   rhythm): "The kettle's whistling!" + stats (time, leaves, goal progress) →
-   warm streak extended (if first of the day) → recipe progress / tin opening →
-   level-up (if any) with unlocked nook item → continue to break.
+2. **Home ("Today")** — greeting by time of day, warm streak, leaves, today's
+   minutes in words ("12 min brewed · 18 min to go") over the goal bar, today's
+   recipes, an optional task + tag chips, a brew-length selector (minutes first),
+   huge primary CTA. Chai reacting to your day in words that match the goal and
+   the selected length.
+3. **Focus** — full-screen, calm. **The kettle is the timer:** an orange kettle
+   on a counter shared with reading Chai, under the nook's own (quieted) window.
+   Its gauge shows progress at a glance; the countdown is the exact reference,
+   with how long you've brewed and when it whistles. Pause (flame out), +5 min
+   (a honey segment on the gauge), end early (confirm sheet), ambience picker.
+   Keyboard: Space = pause/resume, Esc = end, + = 5 min, M = mute.
+4. **Whistle + summary** — the kettle whistles and Chai cheers on the same stage,
+   then one summary takes the panel: minutes brewed and **Tea time** first;
+   Done / Carry forward for the task (only when there was one); routine rewards
+   as compact pills; a major room unlock with a picture; the leaf arithmetic on
+   request. No blank hand-off; with reduced motion, a stable scene and a simple
+   fade.
+5. **Break** — sky-toned, on the same stage. Chai sipping tea, the kettle off the
+   heat. Countdown, pause, skip break / next brew, rotating gentle break ideas
+   when there's room.
 6. **Stats** — week bars vs goal, month calendar with warm-streak runs, totals,
    best streak, time-of-day pattern, tag breakdown, session history (editable),
    badges grid.

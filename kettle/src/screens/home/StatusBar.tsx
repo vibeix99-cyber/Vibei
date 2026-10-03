@@ -56,7 +56,7 @@ export function StatusBar({ data }: { data: HomeData }) {
         open={open === 'streak'}
         onClose={close}
         title={`${n} ${n === 1 ? 'day' : 'days'} warm`}
-        description={n === 0 ? 'Brew today to start a new streak. Every streak begins with one cup.' : streak.todayDone ? `You kept the kettle warm ${plural(n, 'day')} in a row.` : 'Brew once today to keep it warm.'}
+        description={n === 0 ? 'Brew today to start a new streak. Every streak begins with one brew.' : streak.todayDone ? `You kept the kettle warm ${plural(n, 'day')} in a row.` : 'Brew once today to keep it warm.'}
         hero={<StreakMug size={112} state={mugState} count={n} />}
         footer={
           <Button block onClick={close}>

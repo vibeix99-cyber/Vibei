@@ -9,7 +9,7 @@ import s from './Home.module.css';
 export function RecipesCard({ quests }: { quests: Quest[] }) {
   const done = quests.filter((q) => q.done).length;
   return (
-    <Card as="section" className={`${s.recipes} ${s.hideWithRail}`} aria-labelledby="home-recipes">
+    <Card as="section" className={s.recipes} aria-labelledby="home-recipes">
       <header className={s.cardHead}>
         <span className={s.cardHeadIcon} aria-hidden>
           <Icon name="tin" size={24} />
@@ -66,7 +66,7 @@ export function TodayBrews({ sessions }: { sessions: SessionRecord[] }) {
       {sessions.length === 0 ? (
         <div className={s.empty}>
           <Mascot pose="peek" size={72} />
-          <p>Nothing brewed yet today. Your first cup is one tap away.</p>
+          <p>Nothing brewed yet today. Your first brew is one tap away.</p>
         </div>
       ) : (
         <ol className={s.timeline}>

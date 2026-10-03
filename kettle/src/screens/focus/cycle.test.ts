@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { cycleInfo, focusStatus } from './cycle';
+import { cycleInfo, focusMeta, focusStatus, wallClock } from './cycle';
 import { suggestionsFor } from './break/suggestions';
 
 describe('cycleInfo', () => {
@@ -24,10 +24,27 @@ describe('cycleInfo', () => {
 
 describe('focusStatus', () => {
   it('moves from warming up to almost whistling', () => {
+    expect(focusStatus(0, 25 * 60_000)).toBe('Kettle’s on. Nice start.');
     expect(focusStatus(0.1, 20 * 60_000)).toBe('Kettle’s warming up…');
     expect(focusStatus(0.5, 12 * 60_000)).toBe('Deep in it. Nice.');
     expect(focusStatus(0.9, 3 * 60_000)).toBe('Nearly there…');
     expect(focusStatus(0.97, 45_000)).toBe('Almost whistling…');
+  });
+});
+
+describe('focusMeta', () => {
+  const now = new Date(2026, 9, 2, 15, 0, 0).getTime();
+  it('says minutes brewed and when the kettle whistles', () => {
+    expect(focusMeta({ brewedMs: 12.5 * 60_000, remainingMs: 12.5 * 60_000, plannedMs: 25 * 60_000, addedMs: 0, paused: false, now })).toBe(
+      `12 min brewed · whistles at ${wallClock(now + 12.5 * 60_000)}`,
+    );
+    expect(focusMeta({ brewedMs: 20_000, remainingMs: 24 * 60_000, plannedMs: 25 * 60_000, addedMs: 0, paused: false, now })).toMatch(/^Whistles at /);
+  });
+  it('drops the whistle time while paused, and names the longer brew after added time', () => {
+    expect(focusMeta({ brewedMs: 12 * 60_000, remainingMs: 13 * 60_000, plannedMs: 25 * 60_000, addedMs: 0, paused: true, now })).toBe('12 min brewed so far');
+    expect(focusMeta({ brewedMs: 20 * 60_000, remainingMs: 10 * 60_000, plannedMs: 30 * 60_000, addedMs: 5 * 60_000, paused: false, now })).toBe(
+      '20 min brewed · now a 30 min brew',
+    );
   });
 });
 

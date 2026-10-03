@@ -155,6 +155,22 @@ describe('addTime', () => {
     expect(rec(completes()[0])).toMatchObject({ plannedMs: 30 * MIN, focusedMs: 30 * MIN, completed: true });
   });
 
+  it('tracks how much was added (for the kettle gauge), and a new phase starts at zero', () => {
+    T().startFocus();
+    expect(T().addedMs).toBe(0);
+    clock.advance(20 * MIN);
+    T().addTime(5 * MIN);
+    T().addTime(5 * MIN);
+    expect(T().addedMs).toBe(10 * MIN);
+    expect(T().plannedMs).toBe(35 * MIN);
+    clock.advance(15 * MIN);
+    T().tick();
+    T().startBreak();
+    expect(T().addedMs).toBe(0);
+    T().startFocus();
+    expect(T().addedMs).toBe(0);
+  });
+
   it('never goes below zero or beyond the max, and is ignored when idle or already due', () => {
     T().addTime(5 * MIN);
     expect(T().status).toBe('idle');
@@ -400,6 +416,19 @@ describe('restore after reload (persist + rehydrate)', () => {
     expect(remainingAt(T())).toBe(18 * MIN);
   });
 
+  it('restores added time with the session (the gauge keeps its +5 segment)', () => {
+    T().startFocus();
+    clock.advance(20 * MIN);
+    T().addTime(5 * MIN);
+    const saved = storage.getItem(TIMER_STORAGE_KEY)!;
+    expect(saved).toContain('"addedMs":300000');
+    useTimer.setState({ ...INITIAL_TIMER });
+    storage.setItem(TIMER_STORAGE_KEY, saved);
+    void useTimer.persist.rehydrate();
+    expect(T()).toMatchObject({ status: 'running', plannedMs: 30 * MIN, addedMs: 5 * MIN });
+    expect(remainingAt(T())).toBe(10 * MIN);
+  });
+
   it('restores a paused session exactly, hours later', () => {
     T().startFocus();
     clock.advance(4 * MIN);
@@ -466,6 +495,11 @@ describe('sanitizeTimer', () => {
   it('clamps paused remaining into [0, plan] and unknown phases to focus', () => {
     const s = sanitizeTimer({ status: 'paused', phase: 'nap', plannedMs: 5 * MIN, remainingMs: 99 * MIN, sessionId: 's1' }, now);
     expect(s).toMatchObject({ phase: 'focus', remainingMs: 5 * MIN });
+  });
+  it('repairs addedMs from older or hand-edited saves', () => {
+    expect(sanitizeTimer({ status: 'running', phase: 'focus', plannedMs: 25 * MIN, endsAt: now + 5 * MIN, sessionId: 's1' }, now).addedMs).toBe(0);
+    expect(sanitizeTimer({ status: 'running', phase: 'focus', plannedMs: 30 * MIN, addedMs: 99 * MIN, endsAt: now + 5 * MIN, sessionId: 's1' }, now).addedMs).toBe(29 * MIN);
+    expect(sanitizeTimer({ status: 'paused', phase: 'focus', plannedMs: 30 * MIN, addedMs: -4, remainingMs: MIN, sessionId: 's1' }, now).addedMs).toBe(0);
   });
   it('idle state follows the current focus-length setting', () => {
     useSettings.getState().set({ focusMin: 40 });

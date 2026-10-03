@@ -1,6 +1,8 @@
 # Chai: approved art direction, extracted poses (mockup assets)
 
-**Source:** `source/chai-sheet-approved.webp`, the approved sheet (1254 × 1254, lossy WebP, 8 poses). This is the mascot art direction. The earlier A/B concept exploration is closed.
+**Source:** `source/chai-sheet-approved.webp`, the approved sheet (1254 × 1254, lossy WebP, 8 poses). This is the mascot art direction. The earlier A/B concept brief (`../../chai-ab-brief.md`) is superseded.
+
+> **Production copies:** the app's masters are now in `art-src/chai/` (all nine poses), and its delivery WebPs are in `src/art/chai/`. `art-src/chai/README.md` is the current document: sizes, sharpness at the app's display sizes, and per-pose prompts. This file describes the mockup assets.
 
 ## The assets
 | File | Pose | Used for | Size (px) | WebP | PNG master |

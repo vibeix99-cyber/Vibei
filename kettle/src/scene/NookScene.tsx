@@ -32,7 +32,8 @@ export default function NookScene(props: NookSceneProps) {
   const latest = useRef({ paused, reduced });
   latest.current = { paused, reduced };
   const latestState = useRef<Partial<EngineState>>({});
-  const dim = dark ? DARK_DIM : 1;
+  // The window view is quieted by its host (Focus stage) and must match its stills, which are lit at 1.
+  const dim = dark && mode !== 'window' ? DARK_DIM : 1;
   latestState.current = { mode, progress, whistling, weather, time, items, highlightItem, interactive, reducedMotion: reduced, dim };
 
   const applyRun = () => {

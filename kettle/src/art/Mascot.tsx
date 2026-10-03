@@ -12,6 +12,7 @@
 import { useId, type ReactNode } from 'react';
 import { useReducedMotion } from '@/lib/useReducedMotion';
 import { PAL, safeId } from './palette';
+import { PaintedChai, type PaintedPose } from './PaintedChai';
 import s from './art.module.css';
 
 export type MascotPose =
@@ -593,7 +594,36 @@ export function ChaiArt({ pose = 'idle', id, big = false }: { pose?: MascotPose;
   return <g data-pose={pose}>{renderPose(pose, id, big)}</g>;
 }
 
+/** Each legacy pose → the closest pose on the approved painted sheet. Cheering is kept for completions,
+ * concerned for gentle support; every other moment uses a calm pose. */
+export const PAINTED_POSE: Record<MascotPose, PaintedPose> = {
+  idle: 'happy',
+  wave: 'happy',
+  focus: 'reading',
+  sleep: 'sleep',
+  sip: 'sipping',
+  cheer: 'cheering',
+  proud: 'happy',
+  concerned: 'concerned',
+  think: 'look',
+  peek: 'look',
+  stretch: 'stretch',
+};
+
+/**
+ * Chai, as approved: the painted art (see ./PaintedChai). `size` keeps its meaning (a square box the
+ * character fills top to bottom), so every screen switched to the painted Chai without layout changes.
+ */
 export function Mascot({ pose = 'idle', size = 160, animate = true, className, title }: MascotProps) {
+  return (
+    <span className={className} style={{ display: 'inline-flex', width: size, height: size, alignItems: 'flex-end', justifyContent: 'center', flex: 'none' }} data-pose={pose}>
+      <PaintedChai pose={PAINTED_POSE[pose]} size={size} animate={animate} title={title} key={pose} />
+    </span>
+  );
+}
+
+/** The original vector Chai (kept for compositions drawn in SVG: app icon, static room, spots). */
+export function MascotVector({ pose = 'idle', size = 160, animate = true, className, title }: MascotProps) {
   const reduced = useReducedMotion();
   const live = animate && !reduced;
   const id = safeId(useId());

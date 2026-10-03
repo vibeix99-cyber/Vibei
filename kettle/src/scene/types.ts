@@ -1,4 +1,5 @@
-export type SceneMode = 'focus' | 'break' | 'idle' | 'showcase';
+/** `window`: a fixed, quiet view of the nook's window (the Focus backdrop); the kettle and Chai are out of frame. */
+export type SceneMode = 'focus' | 'break' | 'idle' | 'showcase' | 'window';
 export type SceneWeather = 'rain' | 'snow' | 'clear';
 export type SceneTime = 'auto' | 'morning' | 'day' | 'dusk' | 'night';
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { brewsToGo, chaiLine, greeting, type ChaiContext } from './chai';
+import { brewsToGo, chaiLine, goalFull, greeting, type ChaiContext } from './chai';
 
 const base: ChaiContext = {
   part: 'morning',
@@ -46,6 +46,24 @@ describe('chaiLine', () => {
     expect(l.suggestGentle).toBe(true);
     expect(l.text).toContain('5\u2011day');
   });
+  it('names the brew length that is selected, and only offers Gentle when it is shorter', () => {
+    expect(chaiLine({ ...base, part: 'night', streak: 5 }).text).toContain('25\u2011minute brew');
+    const gentle = chaiLine({ ...base, part: 'night', streak: 5, focusMin: 15 });
+    expect(gentle.text).toContain('15\u2011minute brew');
+    expect(gentle.suggestGentle).toBe(false);
+    expect(chaiLine({ ...base, part: 'evening', streak: 3, firstVisitToday: false, focusMin: 50 }).text).toContain('50\u2011minute brew');
+  });
+  it('agrees with the remaining goal and the goal’s own vessel', () => {
+    // 18 min left, a 25-min brew covers it: one more brew fills today's cup (30 min = "A cup").
+    expect(chaiLine({ ...base, part: 'afternoon', todayMin: 12, firstVisitToday: false }).text).toContain('One more brew and today’s cup is full.');
+    // 50 min left of a pot with 25-min brews: two more, and the length is named.
+    expect(chaiLine({ ...base, part: 'afternoon', goalMin: 60, todayMin: 10, firstVisitToday: false }).text).toContain('50 min to go, about 2 more 25\u2011minute brews.');
+    // A 15-min brew doesn't cover 18 min: no "one more brew" promise.
+    expect(chaiLine({ ...base, part: 'afternoon', todayMin: 12, focusMin: 15, firstVisitToday: false }).text).toContain('18 min to go, about 2 more 15\u2011minute brews.');
+    expect(chaiLine({ ...base, part: 'afternoon', todayMin: 70, goalMin: 60 }).text).not.toMatch(/cup/);
+    expect(goalFull(30).full).toBe('today’s cup is full');
+    expect(goalFull(45).full).toBe('today’s goal is met');
+  });
   it('welcomes people back after a break without guilt', () => {
     const l = chaiLine({ ...base, daysSinceLast: 6 });
     expect(l.mood).toBe('back');
@@ -60,7 +78,8 @@ describe('chaiLine', () => {
   it('reports progress toward the goal', () => {
     const l = chaiLine({ ...base, todayMin: 10, part: 'afternoon' });
     expect(l.mood).toBe('progress');
-    expect(l.text).toMatch(/20/);
+    expect(l.text).toMatch(/One more brew/);
+    expect(chaiLine({ ...base, todayMin: 10, goalMin: 60, part: 'afternoon' }).text).toMatch(/50 min to go/);
   });
   it('says hello on the first visit of the day', () => {
     expect(chaiLine(base).mood).toBe('hello');

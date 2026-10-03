@@ -114,25 +114,49 @@
     gap: 10px;
   }
   .goalCard {
-    gap: 12px;
     padding: 14px;
   }
-  .overline {
-    letter-spacing: 0.03em;
-    font-size: 0.75rem;
-  }
-  .goalBig {
-    font-size: 1.1875rem;
+  .minNum {
+    font-size: 1.375rem;
   }
   .goalSub {
     font-size: 0.875rem;
   }
 }
-/* The desktop rail shows streak, leaves, level, the goal ring and recipes. */
+/* Desktop: start a brew | today. (The shell's right rail steps aside on Today; see Shell.module.css.) */
 @media (min-width: 1200px) {
-  .screen .statusBar,
-  .screen .hideWithRail {
-    display: none;
+  .screen {
+    grid-template-columns: minmax(0, 1.12fr) minmax(300px, 0.88fr);
+    gap: 24px clamp(28px, 3.5vw, 56px);
+    align-items: start;
+    padding-top: 12px;
+  }
+  .screen > .colA,
+  .screen > .colB {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+    min-width: 0;
+  }
+  .screen > .colB {
+    position: sticky;
+    top: 24px;
+  }
+  .heroTop {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .heroTop .greeting {
+    order: 0;
+  }
+  .statusBar {
+    order: -1;
+    margin: 0 0 0 -10px;
+  }
+  .stat {
+    background: none;
+    border-color: transparent;
   }
 }
 
@@ -207,69 +231,52 @@
   padding-block: 6px;
 }
 
-/* ---------- Goal ---------- */
+/* ---------- Goal: today's minutes in words ---------- */
 .goalCard {
-  display: flex;
-  align-items: center;
-  gap: 18px;
+  display: grid;
+  gap: 10px;
   padding: 16px 18px;
 }
-.ringNum {
+.minutes {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.brewed,
+.toGo {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-weight: 700;
+  color: var(--ink-2);
+}
+.minNum {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 1.625rem;
   line-height: 1;
   font-variant-numeric: tabular-nums;
+  color: var(--ink);
 }
-.ringOf {
-  display: block;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--ink-2);
-  margin-top: 2px;
+.toGo .minNum {
+  font-size: 1.25rem;
+  color: var(--persimmon-ink);
 }
-.ringWrap {
-  position: relative;
-  flex: none;
-}
-.ringNum[data-met] {
-  color: var(--matcha-ink);
-}
-.ringCheck {
-  position: absolute;
-  top: -2px;
-  right: -2px;
-  display: grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--matcha);
-  color: #fff;
-  box-shadow: 0 0 0 3px var(--surface);
-}
-.goalText {
-  display: grid;
-  gap: 2px;
-  min-width: 0;
-}
-.overline {
-  font-family: var(--font-body);
-  font-size: 0.8125rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-2);
-}
-.goalBig {
+.toGo[data-met] {
+  align-self: center;
+  align-items: center;
+  gap: 4px;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 1.375rem;
-  line-height: 1.2;
+  font-size: 1.0625rem;
+  color: var(--matcha-ink);
 }
 .goalSub {
   color: var(--ink-2);
   font-size: 0.9375rem;
+  font-weight: 600;
 }
 
 /* ---------- Composer ---------- */
@@ -292,15 +299,11 @@
   gap: 12px;
 }
 .optional {
-  font-size: 0.8125rem;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
   font-weight: 700;
   color: var(--ink-2);
-}
-/* 320-wide phones: keep the question on one line (the field's name still says "optional"). */
-@media (max-width: 359px) {
-  .optional {
-    display: none;
-  }
+  white-space: nowrap;
 }
 .carried {
   display: flex;
@@ -342,6 +345,11 @@
 }
 .recentChip {
   max-width: 100%;
+}
+.rhythmLabel {
+  font-size: 0.9375rem;
+  font-weight: 800;
+  color: var(--ink);
 }
 .rhythm {
   display: grid;
@@ -888,10 +896,7 @@
   }
   .goalCard {
     padding: 12px 14px;
-    gap: 12px;
-  }
-  .goalBig {
-    font-size: 1.1875rem;
+    gap: 8px;
   }
   .composerCard {
     padding: 14px;
@@ -909,11 +914,6 @@
 @media (orientation: landscape) and (max-height: 520px) {
   .greeting {
     font-size: var(--text-display-m);
-  }
-}
-@media (orientation: landscape) and (max-height: 520px) and (max-width: 759px) {
-  .optional {
-    display: none;
   }
 }
 /* Smaller landscape phones (e.g. 667×375): the left column is too narrow for the tiny level bar; the badge stays. */

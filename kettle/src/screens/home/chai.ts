@@ -59,9 +59,23 @@ export function brewsToGo(minLeft: number, focusMin: number): number {
   return Math.max(1, Math.ceil(minLeft / Math.max(1, focusMin)));
 }
 
+/**
+ * The daily goal's own vessel ("A cup" is 30 min, "A pot" 60, "A whole kettle" 120), so Chai never calls a
+ * 30-minute goal a pot. A sip or a custom goal is just "today's goal".
+ */
+export function goalFull(goalMin: number): { full: string; short: string } {
+  if (goalMin === 30) return { full: 'today’s cup is full', short: 'The cup’s full' };
+  if (goalMin === 60) return { full: 'today’s pot is full', short: 'The pot’s full' };
+  if (goalMin === 120) return { full: 'today’s kettle is full', short: 'The kettle’s full' };
+  return { full: 'today’s goal is met', short: 'That’s today brewed' };
+}
+
 export function chaiLine(c: ChaiContext): ChaiLine {
   const left = Math.max(0, Math.ceil(c.goalMin - c.todayMin));
   const met = c.todayMin >= c.goalMin && c.goalMin > 0;
+  const goal = goalFull(c.goalMin);
+  // The brew on offer is the one selected on Home: its length is the one Chai names.
+  const brew = nb(`${c.focusMin}-minute brew`);
 
   if (c.live === 'focus') {
     return { mood: 'live', pose: 'focus', text: pick(c.seed, ['Kettle’s warming up. I’m keeping your seat warm.', 'Deep in it. Nice. Hop back whenever you’re ready.']) };
@@ -74,7 +88,7 @@ export function chaiLine(c: ChaiContext): ChaiLine {
     return {
       mood: 'first',
       pose: 'wave',
-      text: pick(c.seed, ['Your first cup is one tap away. I’ll keep you company.', 'Let’s brew your very first cup. No rush.']),
+      text: pick(c.seed, ['Your first brew is one tap away. I’ll keep you company.', 'Let’s brew your very first one. No rush.']),
     };
   }
 
@@ -84,15 +98,17 @@ export function chaiLine(c: ChaiContext): ChaiLine {
     return {
       mood: 'met',
       pose: 'proud',
-      text: pick(c.seed, ['Goal met. The pot’s full. Anything more is a bonus.', 'You did it. Today’s pot is brewed. Extra cups are just for fun.']),
+      text: pick(c.seed, [`Goal met. ${goal.short}. Anything more is a bonus.`, 'You did it. Today’s goal is brewed. Extra brews are just for fun.']),
     };
   }
 
   if (c.part === 'night') {
+    // Names the selected length; the Gentle chip (shown when it's longer than 15) offers the shorter brew.
+    const gentle = c.focusMin > 15;
     if (c.streak > 0 && !c.todayDone) {
-      return { mood: 'night', pose: 'sleep', text: nb(`It’s late. One gentle 15-minute brew keeps your ${c.streak}-day streak warm.`), suggestGentle: true };
+      return { mood: 'night', pose: 'sleep', text: nb(`It’s late. One ${brew} keeps your ${c.streak}-day streak warm.`), suggestGentle: gentle };
     }
-    return { mood: 'night', pose: 'sleep', text: pick(c.seed, ['It’s getting late. A gentle one, then rest?', 'Late-night brew? Let’s keep it short and sweet.']), suggestGentle: true };
+    return { mood: 'night', pose: 'sleep', text: pick(c.seed, ['It’s getting late. A gentle one, then rest?', 'Late-night brew? Let’s keep it short and sweet.']), suggestGentle: gentle };
   }
 
   if (c.daysSinceLast != null && c.daysSinceLast >= 3 && c.sessionsToday === 0 && c.todayMin === 0) {
@@ -101,25 +117,26 @@ export function chaiLine(c: ChaiContext): ChaiLine {
 
   if (c.part === 'evening' && c.streak > 0 && !c.todayDone) {
     const cozy = c.cozies > 0 ? ' Your Tea Cozy is on standby, too.' : '';
-    return { mood: 'risk', pose: 'think', text: nb(`Your ${c.streak}-day streak is still warm. One short brew keeps it going.${cozy}`) };
+    return { mood: 'risk', pose: 'think', text: nb(`Your ${c.streak}-day streak is still warm. One ${brew} keeps it going.${cozy}`) };
   }
 
   if (c.todayMin > 0) {
+    // "One more brew" only when the selected brew really covers what's left.
     const n = brewsToGo(left, c.focusMin);
-    const more = n === 1 ? 'one more brew' : `${n} more brews`;
-    if (c.part === 'morning') return { mood: 'progress', pose: 'stretch', text: `Early start, nice. ${left} min to go, about ${more}.` };
-    if (c.part === 'evening') return { mood: 'progress', pose: 'sip', text: `Lamps on, pot’s nearly full. ${left} min to go, about ${more}.` };
+    const togo = n === 1 ? `One more brew and ${goal.full}.` : `${left} min to go, about ${n} more ${nb(`${c.focusMin}-minute`)} brews.`;
+    if (c.part === 'morning') return { mood: 'progress', pose: 'stretch', text: `Early start, nice. ${togo}` };
+    if (c.part === 'evening') return { mood: 'progress', pose: 'sip', text: `Lamps on. ${togo}` };
     return {
       mood: 'progress',
       pose: 'sip',
-      text: pick(c.seed, [`Nice going. ${left} min to go, about ${more}.`, `Lovely work so far. ${left} more minutes and today’s pot is full.`]),
+      text: pick(c.seed, [`Nice going. ${togo}`, `Lovely work so far. ${togo}`]),
     };
   }
 
   if (c.firstVisitToday) {
     const byPart: Record<Exclude<DayPart, 'night'>, ChaiLine> = {
-      morning: { mood: 'hello', pose: 'stretch', text: pick(c.seed, ['Morning. Big stretch, then a fresh pot?', 'Fresh day, fresh pot. What shall we brew first?']) },
-      afternoon: { mood: 'hello', pose: 'wave', text: pick(c.seed, ['Afternoon slump? A warm cup of focus helps.', 'Hello. Perfect time for a cup, don’t you think?']) },
+      morning: { mood: 'hello', pose: 'stretch', text: pick(c.seed, ['Morning. Big stretch, then a fresh brew?', 'Fresh day. What shall we brew first?']) },
+      afternoon: { mood: 'hello', pose: 'wave', text: pick(c.seed, ['Afternoon slump? A warm brew of focus helps.', 'Hello. Perfect time for a brew, don’t you think?']) },
       evening: { mood: 'hello', pose: 'sip', text: pick(c.seed, ['Evening brew? Let’s keep it cozy.', 'Lamps on, kettle on. Ready when you are.']) },
     };
     return byPart[c.part];

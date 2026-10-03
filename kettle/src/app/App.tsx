@@ -11,7 +11,7 @@
  *    removed. Its paper covers the old screen within ~90 ms and its content
  *    rises over that: never a gap and never text over text.
  */
-import { lazy, Suspense, useEffect, useRef, type ComponentType, type ReactNode, type Ref } from 'react';
+import { lazy, Suspense, useEffect, type ComponentType, type ReactNode, type Ref } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useSettings } from '@/state/settings';
 import { useTimer } from '@/timer';
@@ -47,8 +47,8 @@ const Home = lazyScreen(() => import('@/screens/home/HomeScreen'));
 const Stats = lazyScreen(() => import('@/screens/stats/StatsScreen'));
 const NookScreen = lazyScreen(() => import('@/screens/nook/NookScreen'));
 const Settings = lazyScreen(() => import('@/screens/settings/SettingsScreen'));
-const Focus = lazyScreen(() => import('@/screens/focus/FocusScreen'));
-const Done = lazyScreen(() => import('@/screens/done/DoneScreen'));
+// Focus and the summary are one session screen: the same stage stays put from the brew to the tea break.
+const Session = lazyScreen(() => import('@/screens/focus/FocusScreen'));
 const Welcome = lazyScreen(() => import('@/screens/welcome/WelcomeScreen'));
 const Kit = lazyScreen(() => import('./KitRoute'));
 
@@ -57,8 +57,8 @@ const SCREENS: Record<Route, { area: string; Screen: ReturnType<typeof lazyScree
   '/stats': { area: 'stats', Screen: Stats },
   '/nook': { area: 'nook', Screen: NookScreen },
   '/settings': { area: 'settings', Screen: Settings },
-  '/focus': { area: 'focus', Screen: Focus },
-  '/done': { area: 'done', Screen: Done },
+  '/focus': { area: 'focus', Screen: Session },
+  '/done': { area: 'focus', Screen: Session },
   '/welcome': { area: 'welcome', Screen: Welcome },
   '/kit': { area: 'kit', Screen: Kit },
 };
@@ -145,6 +145,7 @@ export function App() {
   useApplyTheme();
   const route = useRoute();
   const onboarded = useSettings((s) => s.onboarded);
+  const setupPending = useSettings((s) => s.setupPending);
   const timerStatus = useTimer((s) => s.status);
   const reduced = useReducedMotion();
 
@@ -152,8 +153,9 @@ export function App() {
   useEffect(() => {
     if (route === '/kit') return;
     if (!onboarded && route !== '/welcome') navigate('/welcome', { replace: true });
-    else if (onboarded && route === '/welcome') navigate('/', { replace: true });
-  }, [onboarded, route]);
+    // Onboarded users only come back to the welcome for the optional setup they skipped to brew first.
+    else if (onboarded && route === '/welcome' && !setupPending) navigate('/', { replace: true });
+  }, [onboarded, setupPending, route]);
   useEffect(() => {
     if (onboarded && timerStatus !== 'idle' && route !== '/focus') navigate('/focus', { replace: true });
     // only on first mount
@@ -162,20 +164,25 @@ export function App() {
   useEffect(preloadScreens, []);
 
   const inShell = TAB_ROUTES.includes(route);
-  const layerKey = inShell ? 'shell' : route;
-  // The whistle "bloom" already paints the celebration's background, so focus → done
-  // must not fade in again from zero on top of it (that read as a blank cream beat).
-  const prevRoute = useRef(route);
-  const fromBloom = prevRoute.current === '/focus' && route === '/done';
-  useEffect(() => {
-    prevRoute.current = route;
-  }, [route]);
-  const transition = layerTransition(reduced, fromBloom);
+  // #/focus and #/done share one layer (the session screen), so focus → whistle → summary → tea break never
+  // dissolves: the stage stays put and only its panel changes.
+  const layerKey = inShell ? 'shell' : route === '/focus' || route === '/done' ? 'session' : route;
+  const transition = layerTransition(reduced);
 
   let layer: ReactNode;
-  if (inShell) {
+  if (layerKey === 'session') {
     layer = (
-      <Shell rail={<Rail />}>
+      <ErrorBoundary area="focus">
+        <Suspense fallback={null}>
+          <Session />
+        </Suspense>
+      </ErrorBoundary>
+    );
+  } else if (inShell) {
+    layer = (
+      // Today lays out its own two columns on desktop (start a brew | today), so it has no right rail — decided
+      // here rather than after Home's chunk loads, so the rail never flashes on a cold start.
+      <Shell rail={route === '/' ? null : <Rail />}>
         <TabSwitch route={route} reduced={reduced} />
       </Shell>
     );

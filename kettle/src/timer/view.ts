@@ -17,6 +17,7 @@ export function computeView(s: TimerState, now: number): TimerView {
     phase: s.phase,
     sessionId: s.sessionId,
     plannedMs: s.plannedMs,
+    addedMs: s.addedMs ?? 0,
     remainingMs,
     seconds: Math.ceil(remainingMs / 1000),
     progress: progressAt(s, now),
@@ -30,6 +31,7 @@ export function sameView(a: TimerView, b: TimerView): boolean {
     a.phase === b.phase &&
     a.sessionId === b.sessionId &&
     a.plannedMs === b.plannedMs &&
+    a.addedMs === b.addedMs &&
     a.seconds === b.seconds &&
     a.due === b.due
   );

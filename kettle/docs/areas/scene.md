@@ -16,6 +16,18 @@ Owner: scene agent. Files: `src/scene/**`, `src/screens/nook/**`.
   - `fx.ts` GPU particles (steam, rain, snow, fireflies, twinkling glows), sky + glass shaders — all animated from one `uTime` uniform, zero per-frame allocation.
   - `kit.ts` material cache, geometry helpers, **static merge with vertex-colour baking** (roughness/metalness quantised to 3×2 finishes) so each prop collapses to 1–3 draw calls.
 
+## The Focus backdrop: `mode="window"` (round 6)
+- **The view:**
+  - The engine renders the nook's own window from a fixed camera (`WINDOW_CAM`), cover-fitted to any aspect.
+  - It shows the user's room, weather and time of day.
+  - The session stage holds it as a still (`paused`), so a 25-minute brew costs no GPU.
+  - In this mode the room's kettle steam and mug steam are silenced (the stage has its own kettle), and the dark-theme dimming is skipped (the stage quiets the window itself).
+  - The tea set is left out of the backdrop's items, because its teapot read as a second kettle.
+- **Stills:**
+  - Same view, base room, transparent: `src/scene/stills/window-{morning,day,dusk,night}-{rain,snow,clear}.webp`, 12 files, 1250 × 1000.
+  - Used while the engine loads and when 3D is off or unavailable (`WindowStill` in `Fallback.tsx`).
+  - Regenerate with `scripts/stills/render-window-stills.mjs` and `encode.py`, against the dev server.
+
 ## Debug / screenshots
 `?debug&nooktime=morning|day|dusk|night&nookweather=clear|rain|snow&nookq=high|low|off&nookitems=all|none|a,b`.
 `window.__nook` = engine (`__nook.stats` has calls/triangles/frameMs).

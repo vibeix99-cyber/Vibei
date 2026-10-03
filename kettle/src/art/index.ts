@@ -1,5 +1,7 @@
 /** Art public API. OWNER: art area. See src/art/Gallery.tsx (#/kit?part=art) for every piece in isolation. */
-export { Mascot, ChaiArt } from './Mascot';
+export { Mascot, MascotVector, ChaiArt, PAINTED_POSE } from './Mascot';
+export { PaintedChai, ChaiFace, PAINTED, paintedBox, SHEET_REF_H, SHEET_MARGIN } from './PaintedChai';
+export type { PaintedPose } from './PaintedChai';
 export type { MascotPose, MascotProps } from './Mascot';
 export { Icon, ICON_NAMES } from './Icon';
 export type { IconName, IconProps, IconTone } from './Icon';

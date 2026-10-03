@@ -1,0 +1,19 @@
+<!doctype html>
+<!-- Renders the nook engine in `window` mode (the Focus backdrop) for the pre-rendered stills.
+     ?w=&h=&time=morning|day|dusk|night&weather=rain|snow|clear  — see render-window-stills.mjs -->
+<html><head><meta charset="utf-8"><style>html,body{margin:0;background:transparent}canvas{display:block}</style></head>
+<body><div id="host"></div>
+<script type="module">
+import { NookEngine } from '/src/scene/engine/Engine.ts';
+const q = new URLSearchParams(location.search);
+const W = +(q.get('w') || 1000), H = +(q.get('h') || 800);
+const canvas = document.createElement('canvas'); canvas.style.cssText = `width:${W}px;height:${H}px`;
+document.getElementById('host').appendChild(canvas);
+const e = new NookEngine({ canvas, quality: 'high', adaptive: false, mobile: false, software: true });
+// Base room (no unlocked items), the settled reduced-motion moment, full exposure (the stage quiets it in CSS).
+e.setState({ mode: 'window', progress: 0, whistling: false, weather: q.get('weather') || 'rain', time: q.get('time') || 'night',
+  items: [], highlightItem: null, interactive: false, reducedMotion: true, dim: 1 });
+e.setSize(W, H, 1);
+e.setRunning(true);
+window.__ready = true;
+</script></body></html>

@@ -164,8 +164,14 @@ The sound plays in both, subject to the app's sound setting.
 - **Visual quality is checked by eye, not by passing tests.** The approved v2 frames become visual-regression references, but only after you approve them. Test passes and SVG output are not evidence that it looks right.
 
 ## Honest limits
-- **Data is static and typed by hand** (a veteran with 690 leaves at level 7).
-- **The first brew** is shown with a 25-minute Focus frame; in production it would read 15:00.
+- **Data comes from the app's real calculations.**
+  - *Source:* every reward, streak, leaf, level, recipe and today's-minutes figure is read from `fixtures/rewards.json`. That file is written by `fixtures/rewards.gen.ts`, which runs the app's progress engine and summary model.
+  - *Scenarios:* a 5-day-warm level-7 brewer with 12 minutes brewed today, then a 25-minute brew (routine); the same brew on a history where it crosses into level 8 (unlock); a brand-new brewer's 15-minute first brew.
+  - *Earlier versions* used hand-typed numbers that contradicted each other (690 leaves at level 7 next to "30 leaves to level 8", +50 vs +43 leaves). Exports 4a, 4b, 5a and 5b were re-rendered from the fixtures (October 2026).
+  - *Regenerate:* `npx vitest run -c review/round-6-mockups/fixtures/vitest.config.ts`, then `node build/shoot.mjs summary`, `node build/shoot.mjs home` and `node build/board.mjs build/exports.json exports/4` (or `5`).
+  - *Not covered:* the Nook frame still shows a separate level-12 profile (its room renders were made for level 12).
+- **This is now implemented** in the app (see `docs/areas/core-loop.md` and `docs/areas/home.md`). These mockups are the approved reference, not the current state.
+- **The first brew** is shown with a 25-minute Focus frame here; the app now starts a real 15:00 first brew.
 - **Chai's resolution:** the approved sheet gives about 490 px per pose. That is sharp everywhere except the desktop Focus Chai on a 2× (Retina) monitor, where it is upscaled about 1.3×. `assets/chai/README.md` has a precise prompt for transparent 2048 px poses for production.
 - **Paused Focus** keeps reading Chai; the "Paused" pill, dimmed digits and the unlit stove carry the state.
 - **The whistle jet** reads well at Focus size. At 520 px its core still looks like a smooth cone; a final art pass could break its edge into small billows.

@@ -1,13 +1,12 @@
-/** Greeting + Chai's contextual line, and the daily goal ring. */
+/** Greeting + Chai's contextual line, and today's minutes against the daily goal. */
 import { motion } from 'motion/react';
 import { Mascot, Icon } from '@/art';
 import { useReducedMotion } from '@/lib/useReducedMotion';
 import { spring } from '@/lib/motion';
 import { useSettings, RHYTHMS } from '@/state/settings';
-import { Card, Ring, SpeechBubble, Chip, useMediaQuery } from '@/ui';
+import { Card, ProgressBar, SpeechBubble, Chip, useMediaQuery } from '@/ui';
 import type { ReactNode } from 'react';
-import { goalName, RHYTHM_OPTIONS } from './content';
-import { brewsToGo } from './chai';
+import { goalName } from './content';
 import type { HomeData } from './useHomeData';
 import s from './Home.module.css';
 
@@ -55,42 +54,45 @@ export function Hero({ data, status }: { data: HomeData; status?: ReactNode }) {
   );
 }
 
+/**
+ * Today's minutes, in words: "12 min brewed · 18 min to go" over the goal bar. The numbers are the message;
+ * the bar only shows how far along the goal they are.
+ */
 export function GoalCard({ data }: { data: HomeData }) {
   const { goalMin, todayMin, goalMet, goalProgress } = data;
-  const narrow = useMediaQuery('(max-width: 359px), (max-width: 899px) and (orientation: landscape) and (max-height: 520px)');
   const left = Math.max(0, goalMin - todayMin);
-  const rhythm = useSettings((st) => st.rhythm);
-  const rhythmLabel = RHYTHM_OPTIONS.find((r) => r.id === rhythm)?.label ?? 'your';
-  const n = brewsToGo(left, data.focusMin);
-  const sub = goalMet
-    ? data.completedToday > 1
-      ? `${data.completedToday} brews today. Anything more is a bonus.`
-      : 'Anything more is a bonus.'
-    : todayMin === 0
-      ? `That’s ${n === 1 ? 'one' : n} ${rhythmLabel} ${n === 1 ? 'brew' : 'brews'}.`
-      : `About ${n === 1 ? 'one more' : `${n} more`} ${rhythmLabel} ${n === 1 ? 'brew' : 'brews'}.`;
+  const vessel = goalName(goalMin);
+  const named = vessel !== `${goalMin} min` ? ` (${vessel.toLowerCase()})` : '';
   return (
-    <Card as="section" className={`${s.goalCard} ${s.hideWithRail}`} aria-labelledby="home-goal" data-met={goalMet || undefined}>
-      <div className={s.ringWrap}>
-        <Ring value={goalProgress} size={narrow ? 76 : 92} thickness={narrow ? 9 : 11} tone={goalMet ? 'matcha' : 'persimmon'} label={`Daily goal: ${todayMin} of ${goalMin} minutes brewed today${goalMet ? ', goal met' : ''}`}>
-          <span className={s.ringNum} data-met={goalMet || undefined}>
-            {todayMin}
-            <span className={s.ringOf}>/{goalMin}</span>
-          </span>
-        </Ring>
-        {goalMet && (
-          <span className={s.ringCheck} aria-hidden>
-            <Icon name="check" size={16} />
-          </span>
+    <Card as="section" className={s.goalCard} aria-labelledby="home-goal" data-met={goalMet || undefined}>
+      <h2 id="home-goal" className="sr-only">
+        Today’s goal
+      </h2>
+      <div className={s.minutes}>
+        <p className={s.brewed}>
+          <strong className={s.minNum}>{todayMin} min</strong> brewed
+        </p>
+        {goalMet ? (
+          <p className={s.toGo} data-met="">
+            <Icon name="check" size={18} /> Goal met
+          </p>
+        ) : (
+          <p className={s.toGo}>
+            <strong className={s.minNum}>{left} min</strong> to go
+          </p>
         )}
       </div>
-      <div className={s.goalText}>
-        <h2 id="home-goal" className={s.overline}>
-          Daily goal · {goalName(goalMin)}
-        </h2>
-        <p className={s.goalBig}>{goalMet ? 'Goal met. Lovely.' : todayMin === 0 ? `${goalMin} min to brew` : `${left} min to go`}</p>
-        <p className={s.goalSub}>{sub}</p>
-      </div>
+      <ProgressBar
+        value={Math.min(1, goalProgress)}
+        tone={goalMet ? 'matcha' : 'persimmon'}
+        height={12}
+        label="Today’s goal"
+        valueText={`${todayMin} of ${goalMin} minutes brewed today${goalMet ? ', goal met' : ''}`}
+      />
+      <p className={s.goalSub}>
+        Today’s goal · {goalMin} min{named}
+        {goalMet ? ' · anything more is a bonus' : ''}
+      </p>
     </Card>
   );
 }

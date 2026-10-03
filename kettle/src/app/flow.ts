@@ -1,10 +1,14 @@
 /**
  * Session flow orchestration — what happens between phases. OWNER: core-loop area.
  *
- *   focus completes ─┬─ user watching ─▶ ~1.7 s "whistle" beat on /focus ─▶ /done
+ *   focus completes ─┬─ user watching ─▶ ~2.2 s "whistle" beat on /focus ─▶ /done
  *                    └─ away / hidden ──────────────────────────────────────▶ /done (whileAway copy)
- *   /done ── "Start tea break" (auto-countdown when settings.autoStartBreaks) ─▶ break on /focus
+ *   /done ── "Tea time" (auto-countdown when settings.autoStartBreaks) ─▶ break on /focus
  *   /done ── "Skip break" ─▶ home
+ *   /done ── "Set up" (first brew started from the welcome) ─▶ the optional setup on /welcome
+ *
+ * /focus and /done are one screen (the session screen): the same stage stays put while its panel changes from
+ * the timer to the whistle to the summary to the tea break, so no hand-off ever shows an empty frame.
  *   break completes ─┬─ settings.autoStartFocus ─▶ next brew starts
  *                    └─ otherwise ─▶ "Break's over" card on /focus (CTA: put the kettle on)
  *   end focus early ─▶ home + toast "Saved 12 minutes of focus"
@@ -12,7 +16,7 @@
  *
  * Route guards live in the screens: /focus with nothing to show → home (or /done
  * when a celebration is still pending), /done without a report → home.
- * Reload-safety: `breakOver` + the celebration step persist in sessionStorage.
+ * Reload-safety: `breakOver` + the pending summary persist in sessionStorage.
  */
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
@@ -26,9 +30,9 @@ import type { Phase } from '@/timer/types';
 import { useProgress } from '@/progress';
 import { getRoute, navigate } from './router';
 
-/** How long the kettle whistles on the focus screen before the celebration (the last ~380 ms bloom into it). */
-export const WHISTLE_MS = 1250;
-export const WHISTLE_MS_REDUCED = 800;
+/** How long the kettle whistles (the panel reads "0:00 · Tea's ready") before the summary takes the panel. */
+export const WHISTLE_MS = 2200;
+export const WHISTLE_MS_REDUCED = 1200;
 /** A break that ended longer ago than this (app closed) just lands on home. */
 const STALE_BREAK_MS = 30 * 60_000;
 
@@ -37,7 +41,7 @@ export interface FlowState {
   whistle: { sessionId: string; at: number } | null;
   /** A break finished and the next brew wasn't auto-started. */
   breakOver: { phase: Phase; at: number; whileAway: boolean } | null;
-  /** Which celebration step the user is on (keyed by session id) — survives reload. */
+  /** The summary waiting to be seen (keyed by session id) — survives reload. `step` is kept for stored state. */
   celebration: { id: string; step: number } | null;
 }
 
@@ -97,13 +101,6 @@ function clearWhistle() {
 // Actions used by the screens
 // ---------------------------------------------------------------------------
 
-/** Remember which celebration card the user is on (reload lands on the same card). */
-export function setCelebrationStep(id: string, step: number): void {
-  const c = useFlow.getState().celebration;
-  if (c?.id === id && c.step === step) return;
-  useFlow.setState({ celebration: { id, step } });
-}
-
 function finishCelebration(): void {
   useFlow.setState({ celebration: null });
   useProgress.getState().clearReport();
@@ -114,6 +111,12 @@ export function beginBreak(): void {
   finishCelebration();
   getTimer().startBreak();
   // timer:start routes to /focus.
+}
+
+/** Summary → the optional setup (first brew started straight from the welcome). */
+export function openSetupFromSummary(): void {
+  finishCelebration();
+  navigate('/welcome', { replace: true });
 }
 
 /** Celebration → home, no break. */
