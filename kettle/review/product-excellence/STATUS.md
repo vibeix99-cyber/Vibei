@@ -21,11 +21,11 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 
 | ID | Pri | Owner | State | Evidence / verdict |
 |---|---|---|---|---|
-| I01 Reliable time, exactly-once completion | P0 | M1 | NOT STARTED | |
-| I02 Recoverable End and task disposition | P0 | M1 | NOT STARTED | |
-| I03 Data safety, truthful storage consequences | P0 | M1 | NOT STARTED | |
-| I04 Access and short-screen reachability | P0 | M2 | NOT STARTED | gate: retest after all UI work |
-| I05 Real whistle, mute, ambience expectations | P0 | M2 | NOT STARTED | real-device cases BLOCKED in this environment |
+| I01 Reliable time, exactly-once completion | P0 | M1 | IN PROGRESS | maker M1 running (wave 1) |
+| I02 Recoverable End and task disposition | P0 | M1 | IN PROGRESS | maker M1 running |
+| I03 Data safety, truthful storage consequences | P0 | M1 | IN PROGRESS | maker M1 running |
+| I04 Access and short-screen reachability | P0 | M2 | IN PROGRESS | maker M2 running; gate: retest after all UI work |
+| I05 Real whistle, mute, ambience expectations | P0 | M2 | IN PROGRESS | real-device cases BLOCKED in this environment |
 | I06 Crisp approved Chai | P1 | M4 | NOT STARTED | |
 | I07 Effort → leaves → level → Nook, once | P1 | M3 | NOT STARTED | |
 | I08 Plain purpose, first useful brew | P1 | M3 | NOT STARTED | |
@@ -34,7 +34,7 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 | I11 Consistent settings and controls | P2 | M5 | NOT STARTED | conditional |
 | I12 Truthful history and Stats | P2 | M5 | NOT STARTED | conditional |
 | I13 Supportive return | P2 | M3 | NOT STARTED | conditional |
-| I14 Measured responsiveness | P2 | M2 | NOT STARTED | baseline before any art/motion change; real-device BLOCKED |
+| I14 Measured responsiveness | P2 | M2 | IN PROGRESS (baseline) | baseline before any art/motion change; real-device BLOCKED |
 | I15 Bounded comprehension check | P3 | M3 | NOT STARTED | only if I07/I08 comprehension stays uncertain |
 
 ## Waves and file ownership
@@ -54,8 +54,17 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 
 ## Log
 
-- 2026-10-07: preflight passed; execution authorized. Package extracted to `.tmp/pkg`. Capture tool written and smoke-tested. BEFORE baseline capture started (6 viewport/theme configs + reduced motion).
+- 2026-10-07: preflight passed; execution authorized. Package extracted to `.tmp/pkg`. Capture tool written and smoke-tested.
+- BEFORE baseline complete (`d17dda1`): 135 captures, zero page errors; inspected by the orchestrator. Observed for
+  later contracts: Home Brew length partly under the docked start at 390×844 and below the fold at 375×667 (I04);
+  Home duration order Gentle 15 / Classic 25 / Deep 50 / Custom vs Settings preset order Classic / Deep / Gentle /
+  Custom (I11 candidate); Chai masters are ~490 px tall, desktop Retina needs ~580 → 1.19× upscale; no genuinely
+  higher-resolution approved masters exist (I06).
+- Worktrees `/home/user/wt/m1` (`pe/m1`) and `/home/user/wt/m2` (`pe/m2`) created; makers M1 (I01–I03) and M2
+  (I14 baseline, I04, I05) launched in parallel (machine: 4 cores, so two makers at a time).
 
 ## Exact next action
 
-Finish BEFORE baseline → inspect it → write maker briefs → launch Wave 1 (M1, M2) in isolated worktrees.
+Wait for M1 / M2 READY FOR REVIEW → launch an independent Checker per submission → APPROVE/REJECT loop →
+merge approved branches into the integration branch → regression → write Wave 2 briefs (M3: I08, I07, I09;
+M4: I06) from the integrated revision.
