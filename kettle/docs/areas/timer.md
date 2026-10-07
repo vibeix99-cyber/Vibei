@@ -47,13 +47,24 @@ key) and reported to `onStorageWriteError` listeners.
   saved state, typically idle, and the brew vanished at 0:00 with no summary and no record). A `storage` event is
   different: another tab's write did land, so it is newer and is still mirrored.
 - **The brew completes normally** (whistle, summary, record, rewards) and lives in this tab's memory. Saved data is
-  never overwritten with anything partial. The next successful save (any later change once there is room) writes
-  everything the tab holds. Export still works and includes the unsaved brew.
+  never overwritten with anything partial. Once there is room, the next change to your brews or rewards (or an
+  export, which re-reads and re-saves progress) writes everything the tab holds; a settings change alone does not
+  re-save unsaved brews. Export still works and includes the unsaved brew.
 - **The person is told** (`src/app/flow.ts`): a warning toast, "Kettle couldn’t save your latest changes: this
   browser’s storage is full. Save a backup to keep them." (or "…in this browser…" when storage is blocked rather
-  than full) with a **Save backup** action. At most one per minute. While the ritual's docked controls are on
-  screen (the whistle, the summary with Tea time, a tea break, "Break’s over") it waits and appears as soon as the
-  person leaves that screen or starts the next brew, so it never covers Tea time.
+  than full) with a **Save backup** action. At most one per minute (a tap, its action or its 12 s timeout ends it).
+- **The warning never covers a control the person may need** (checked every 250 ms while a warning exists, and
+  right away when a phase starts or completes):
+  - never during the whistle, the summary (Done / Carry, Tea time, Skip break), a tea break or "Break’s over", on
+    any layout — a warning already on screen is taken away when one of these comes up, and held;
+  - never over a session control (Add 5, Pause / Resume, End …) or a screen's docked primary action
+    (`data-toast-above`, e.g. Today's "Put the kettle on"): the toast's area is measured against those controls.
+    On phones the session controls are docked exactly where toasts appear, so there the warning waits for the whole
+    brew; on wide layouts (controls beside the stage) it shows during the brew;
+  - a held warning shows as soon as the person is somewhere it covers nothing protected: on phones, Today after
+    the summary (it floats above "Put the kettle on"); on wide layouts, where Today's button sits under the toast,
+    the next other screen (Stats, Nook, Settings), or the next brew. Like any toast it may cover ordinary page
+    content (e.g. a Settings row) until it is tapped away or times out.
 - **Limit:** until storage has room again, closing the tab loses what was not saved (the warning and its backup
   action are the remedy). A restore that can't be saved is refused (see `docs/areas/progress.md`).
 

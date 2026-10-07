@@ -3,13 +3,21 @@
 //   node review/product-excellence/contracts/I03/capture-storage-full.mjs --base http://127.0.0.1:5201 --out <dir> \
 //        --w 390 --h 844 --dpr 2 --theme light [--rev <served revision>]
 //
-//   s0-brew-start-storage-full       a newbie profile whose localStorage quota is really full starts a brew (1.2 s in)
-//   s1-brew-completes-storage-full   …that brew reaches its end (6 s after 0:00: whistle → summary, or, before the
-//                                    repair, the brew vanishing). The s0 toast, if any, is tapped away first, as a
-//                                    real brew would long outlast it.
+//   s0-brew-start-storage-full       a newbie profile whose localStorage quota is really full starts a brew (when a toast
+//                                    appears + 0.6 s, or 3.6 s in when none does)
+//   s0b-paused-storage-full          …a visible warning is tapped away; 70 s later the person pauses (that save fails
+//                                    too), 1.2 s later
+//   s1-brew-completes-storage-full   …resumed, the brew reaches its end (6 s after 0:00: whistle → summary, or, before
+//                                    the I03 repair, the brew vanishing)
 //   s3-after-summary-storage-full    …the person leaves the summary with Skip break (before the repair there is no
 //                                    summary to leave: the page is already on Today), 1.5 s later
-//   s2-restore-storage-full          the same kind of profile adds a valid backup (one new brew) from Settings › Your data
+//   s3b-settings-storage-full        …then opens Settings, 1.5 s later
+//   s1a-warning-before-end           a second profile: brew started, visible warning tapped away, 70 s later and 4 s
+//                                    before 0:00 a pause + resume fail to save, 1.2 s later
+//   s1b-warning-before-end-summary   …the summary 3 s after it appears (Checker r1 defect A)
+//   s2-restore-storage-full          a third profile adds a valid backup (one new brew) from Settings › Your data
+//
+// --rev labels the code the server at --base serves (e.g. "src tree <hash>"), so captures can be tied to a commit.
 //
 // Each state runs in a fresh browser context (a disposable profile). The 3D scene is off (pre-rendered stills), so
 // both sides render the same stage. Writes <out>/<state>.png and <out>/capture-meta.json.
@@ -89,30 +97,77 @@ const fill = (page) =>
 
 const toasts = (page) => page.evaluate(() => [...document.querySelectorAll('[aria-label="Notifications"] li')].map((l) => l.textContent));
 
-// s0 → s1 → s3: a brew starts, completes and is left while storage is full.
+const dismissToasts = async (page) => {
+  for (const li of await page.locator('[aria-label="Notifications"] li').all()) await li.click({ position: { x: 12, y: 12 } }).catch(() => {});
+  await page.waitForTimeout(400);
+};
+const hashOf = (page) => page.evaluate(() => location.hash);
+const ffBy = (page, ms) => page.evaluate((m) => window.__kettle.ff(m), ms);
+const toEndMinus = (page, ms) =>
+  page.evaluate((b) => {
+    const k = window.__kettle;
+    const s = k.timer.getState();
+    k.ff(s.endsAt - k.clock.now() - b);
+  }, ms);
+
+// s0 → s0b → s1 → s3: a brew starts, is paused, completes and is left while storage is full.
 {
   const { ctx, page } = await profile();
   await fill(page);
   await page.evaluate(() => window.__kettle.timer.getState().startFocus({ intention: 'Chapter 3 notes', tag: 'study' }));
-  await page.waitForTimeout(1200);
-  meta.states.s0 = { hash: await page.evaluate(() => location.hash), toast: await toasts(page) };
+  // The warning shows once the session screen has settled (if it covers nothing there); give it up to 3 s.
+  await page.waitForFunction(() => document.querySelectorAll('[aria-label="Notifications"] li').length > 0, null, { timeout: 3000 }).catch(() => {});
+  await page.waitForTimeout(600);
+  meta.states.s0 = { hash: await hashOf(page), toast: await toasts(page) };
   await page.screenshot({ path: `${out}/s0-brew-start-storage-full.png` });
 
-  for (const li of await page.locator('[aria-label="Notifications"] li').all()) await li.click({ position: { x: 12, y: 12 } }).catch(() => {});
-  await page.evaluate(() => {
-    const k = window.__kettle;
-    const s = k.timer.getState();
-    k.ff(s.endsAt - k.clock.now() - 50);
-  });
-  await page.waitForTimeout(6000); // whistle → summary (or, before the repair, the brew vanishing)
-  meta.states.s1 = { hash: await page.evaluate(() => location.hash), sessions: await page.evaluate(() => window.__kettle.progress.getState().sessions.length), toast: await toasts(page) };
+  await dismissToasts(page);
+  await ffBy(page, 70_000);
+  await page.evaluate(() => window.__kettle.timer.getState().pause());
+  await page.waitForTimeout(1200);
+  meta.states.s0b = { hash: await hashOf(page), status: await page.evaluate(() => window.__kettle.timer.getState().status), toast: await toasts(page) };
+  await page.screenshot({ path: `${out}/s0b-paused-storage-full.png` });
+
+  await page.evaluate(() => window.__kettle.timer.getState().resume());
+  await dismissToasts(page);
+  await toEndMinus(page, 50);
+  await page.waitForTimeout(6000); // whistle → summary (or, before the I03 repair, the brew vanishing)
+  meta.states.s1 = { hash: await hashOf(page), sessions: await page.evaluate(() => window.__kettle.progress.getState().sessions.length), toast: await toasts(page) };
   await page.screenshot({ path: `${out}/s1-brew-completes-storage-full.png` });
 
   const skip = page.getByRole('button', { name: 'Skip break' });
   if (await skip.isVisible().catch(() => false)) await skip.click();
   await page.waitForTimeout(1500);
-  meta.states.s3 = { hash: await page.evaluate(() => location.hash), toast: await toasts(page) };
+  meta.states.s3 = { hash: await hashOf(page), toast: await toasts(page) };
   await page.screenshot({ path: `${out}/s3-after-summary-storage-full.png` });
+
+  await page.evaluate(() => window.__kettle.navigate('/settings'));
+  await page.waitForTimeout(1500);
+  meta.states.s3b = { hash: await hashOf(page), toast: await toasts(page) };
+  await page.screenshot({ path: `${out}/s3b-settings-storage-full.png` });
+  await ctx.close();
+}
+
+// s1a → s1b: a warning raised 4 s before 0:00, then the summary.
+{
+  const { ctx, page } = await profile();
+  await fill(page);
+  await page.evaluate(() => window.__kettle.timer.getState().startFocus({ intention: 'Chapter 3 notes', tag: 'study' }));
+  await page.waitForTimeout(1200);
+  await dismissToasts(page);
+  await ffBy(page, 70_000);
+  await toEndMinus(page, 4000);
+  await page.evaluate(() => {
+    window.__kettle.timer.getState().pause();
+    window.__kettle.timer.getState().resume();
+  });
+  await page.waitForTimeout(1200);
+  meta.states.s1a = { hash: await hashOf(page), toast: await toasts(page) };
+  await page.screenshot({ path: `${out}/s1a-warning-before-end.png` });
+  await page.waitForFunction(() => location.hash !== '#/focus', null, { timeout: 20_000 }).catch(() => {});
+  await page.waitForTimeout(3000);
+  meta.states.s1b = { hash: await hashOf(page), toast: await toasts(page) };
+  await page.screenshot({ path: `${out}/s1b-warning-before-end-summary.png` });
   await ctx.close();
 }
 

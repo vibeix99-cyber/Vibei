@@ -880,9 +880,10 @@ test.describe('I03 data safety', () => {
 
     // Exporting still works and includes the unsaved brew.
     await page.getByRole('button', { name: 'Skip break' }).click();
+    // (Where and when the warning shows is tested below; put it away if it is up.)
     const warning = page.getByRole('status', { name: 'Notifications' }).getByText(/storage is full/);
-    await warning.click(); // (the warning itself is the next test)
-    await expect(warning).toBeHidden();
+    await page.waitForTimeout(600);
+    if (await warning.isVisible()) await warning.click();
     const backup = JSON.parse(await exportViaSettings(page));
     expect(backup.progress.sessions.filter((r: Rec) => r.id === sessionId)).toHaveLength(1);
 
@@ -897,36 +898,6 @@ test.describe('I03 data safety', () => {
     const st = await stored(page);
     expect(st!.sessions).toHaveLength(n0 + 1);
     expect(recordsFor(st, sessionId!)).toHaveLength(1);
-  });
-
-  test('storage full: the person is told in plain words, with a Save backup action — at once, but never over the summary’s Tea time', async ({ page }) => {
-    test.setTimeout(120_000);
-    await newbieWithFullStorage(page);
-    const warning = page.getByRole('status', { name: 'Notifications' }).getByText(/storage is full\. Save a backup to keep them\./);
-    await page.evaluate(() => (window as any).__kettle.timer.getState().startFocus({ minutes: 25, intention: 'Storage full' }));
-    // The first failed save (the brew's start) is told at once.
-    await expect.poll(() => hash(page)).toBe('#/focus');
-    await expect(warning).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Save backup' })).toBeVisible();
-    await warning.click(); // a tap puts it away (a real brew outlasts it anyway)
-    await expect(warning).toBeHidden();
-
-    await toEnd(page, 50);
-    await expect.poll(() => hash(page), { timeout: 15_000 }).toBe('#/done');
-    // The completion's failed saves don't put a toast over the summary and its Tea time button…
-    await page.waitForTimeout(1500);
-    await expect(warning).toHaveCount(0);
-    const tea = page.getByRole('button', { name: /^Tea time/ });
-    const box = (await tea.boundingBox())!;
-    expect(await page.evaluate(([x, y]) => !!document.elementFromPoint(x, y)?.closest('button')?.textContent?.startsWith('Tea time'), [box.x + box.width / 2, box.y + box.height / 2])).toBe(true);
-    // …the warning comes as soon as the person leaves the summary.
-    await page.getByRole('button', { name: 'Skip break' }).click();
-    await expect.poll(() => hash(page)).toBe('#/');
-    await expect(warning).toBeVisible();
-    // Its action saves a backup file of what this tab holds.
-    const [download] = await Promise.all([page.waitForEvent('download'), page.getByRole('button', { name: 'Save backup' }).click()]);
-    const backup = JSON.parse(readFileSync((await download.path())!, 'utf8'));
-    expect(backup.progress.sessions.some((r: Rec) => r.intention === 'Storage full')).toBe(true);
   });
 
   test('storage full: a restore that cannot be saved is refused with a plain reason and changes nothing', async ({ page }) => {
@@ -975,3 +946,129 @@ test.describe('I03 data safety', () => {
     expect(requests.filter((r) => r.method !== 'GET')).toEqual([]);
   });
 });
+
+// ---------------------------------------------------------------------------------------------------------------
+// I03 — the storage-full warning is told plainly, but never over a control (phones and desktop)
+// ---------------------------------------------------------------------------------------------------------------
+
+/** Is `name`'s button the element a tap at its centre would hit (nothing on top of it)? */
+const hitOk = (page: Page, name: string | RegExp) =>
+  page.getByRole('button', { name }).evaluate((el) => {
+    const r = el.getBoundingClientRect();
+    const top = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
+    return !!top && (top === el || el.contains(top));
+  });
+/** A real tap / click at the centre of `name`'s button (whatever is on top there receives it). */
+async function pressAt(page: Page, name: string | RegExp, touch: boolean) {
+  const box = (await page.getByRole('button', { name }).boundingBox())!;
+  const [x, y] = [box.x + box.width / 2, box.y + box.height / 2];
+  if (touch) await page.touchscreen.tap(x, y);
+  else await page.mouse.click(x, y);
+}
+const saveWarning = (page: Page) => page.getByRole('status', { name: 'Notifications' }).getByText(/storage is full\. Save a backup to keep them\./);
+const CONTROLS = ['Add 5 minutes', 'Pause', 'End session'];
+
+for (const vp of [
+  { name: 'phone 390×844', width: 390, height: 844, dpr: 2, touch: true },
+  { name: 'phone 375×667', width: 375, height: 667, dpr: 2, touch: true },
+  { name: 'desktop 1440×900', width: 1440, height: 900, dpr: 1, touch: false },
+]) {
+  test.describe(`I03 storage-full warning never covers a control (${vp.name})`, () => {
+    test.use({ viewport: { width: vp.width, height: vp.height }, deviceScaleFactor: vp.dpr, isMobile: vp.touch, hasTouch: vp.touch });
+    test.beforeEach(async ({ context }) => prime(context));
+
+    test('while brewing (running and paused): Add 5, Pause, Resume and End stay tappable; End opens its sheet, never a download', async ({ page }) => {
+      test.setTimeout(120_000);
+      await newbieWithFullStorage(page);
+      let downloads = 0;
+      page.on('download', () => downloads++);
+      await page.evaluate(() => (window as any).__kettle.timer.getState().startFocus({ minutes: 25, intention: 'Storage full' }));
+      await expect.poll(() => hash(page)).toBe('#/focus');
+      for (let i = 0; i < 4; i++) {
+        await page.waitForTimeout(300);
+        for (const c of CONTROLS) expect(await hitOk(page, c), `${c} @${i}`).toBe(true);
+      }
+      await pressAt(page, 'End session', vp.touch);
+      await expect(endDialog(page)).toBeVisible();
+      await endDialog(page).getByRole('button', { name: 'Keep brewing' }).click();
+      await expect(endDialog(page)).toBeHidden();
+      // Where nothing is covered (wide layouts) the warning is up now; put it away, as a person would.
+      if (await saveWarning(page).isVisible()) await saveWarning(page).click();
+
+      // A minute later a pause fails to save too: a new warning, and the paused controls stay clear.
+      await ff(page, 70_000);
+      await pressAt(page, 'Pause', vp.touch);
+      await expect.poll(async () => (await timer(page)).status).toBe('paused');
+      for (let i = 0; i < 4; i++) {
+        await page.waitForTimeout(300);
+        for (const c of ['Add 5 minutes', 'Resume', 'End session']) expect(await hitOk(page, c), `${c} paused @${i}`).toBe(true);
+      }
+      await pressAt(page, 'End session', vp.touch);
+      await expect(endDialog(page)).toBeVisible();
+      await endDialog(page).getByRole('button', { name: 'Keep brewing' }).click();
+      await pressAt(page, 'Resume', vp.touch);
+      await expect.poll(async () => (await timer(page)).status).toBe('running');
+      expect(downloads).toBe(0);
+      expect((await timer(page)).status).toBe('running');
+    });
+
+    test('a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after', async ({ page }) => {
+      test.setTimeout(120_000);
+      await newbieWithFullStorage(page);
+      await page.evaluate(() => (window as any).__kettle.timer.getState().startFocus({ minutes: 25, intention: 'Storage full' }));
+      await expect.poll(() => hash(page)).toBe('#/focus');
+      await page.waitForTimeout(600);
+      if (await saveWarning(page).isVisible()) await saveWarning(page).click();
+      await ff(page, 70_000);
+      // 4 s before the end, pause and resume: both saves fail → a new warning, up (where it covers nothing) at the end.
+      await toEnd(page, 4000);
+      await page.evaluate(() => {
+        const t = (window as any).__kettle.timer.getState();
+        t.pause();
+        (window as any).__kettle.timer.getState().resume();
+      });
+      if (!vp.touch) await expect(saveWarning(page)).toBeVisible();
+      await expect.poll(() => hash(page), { timeout: 20_000 }).toBe('#/done');
+      await expect(summaryHeading(page)).toHaveText('25 minutes brewed');
+      for (let i = 0; i < 5; i++) {
+        await expect(saveWarning(page)).toHaveCount(0);
+        expect(await hitOk(page, /^Tea time/), `Tea time @${i}`).toBe(true);
+        expect(await hitOk(page, 'Skip break'), `Skip break @${i}`).toBe(true);
+        await page.waitForTimeout(300);
+      }
+      // Leaving the summary: on Today the warning comes (back) unless it would sit over "Put the kettle on" (wide
+      // layouts); then it waits for a screen where it covers nothing protected, e.g. Settings.
+      await pressAt(page, 'Skip break', vp.touch);
+      await expect.poll(() => hash(page)).toBe('#/');
+      const cta = /^Put the kettle on/;
+      if (vp.touch) {
+        await expect(saveWarning(page)).toBeVisible();
+        expect(await hitOk(page, cta), 'Put the kettle on').toBe(true);
+        // Starting the next brew with the warning still up: it is taken away from the session controls at once…
+        await pressAt(page, cta, true);
+        await expect.poll(() => hash(page)).toBe('#/focus');
+        for (let i = 0; i < 4; i++) {
+          await expect(saveWarning(page)).toHaveCount(0);
+          for (const c of CONTROLS) expect(await hitOk(page, c), `${c} next brew @${i}`).toBe(true);
+          await page.waitForTimeout(250);
+        }
+        // …and comes back on Today (the brew ended within its first minute: nothing saved, nothing lost).
+        await page.evaluate(() => (window as any).__kettle.timer.getState().end('user'));
+        await expect.poll(() => hash(page)).toBe('#/');
+        await expect(saveWarning(page)).toBeVisible();
+      } else {
+        expect(await hitOk(page, cta), 'Put the kettle on').toBe(true);
+        for (let i = 0; i < 4; i++) {
+          await page.waitForTimeout(300);
+          await expect(saveWarning(page)).toHaveCount(0);
+        }
+        await page.evaluate(() => (window as any).__kettle.navigate('/settings'));
+        await expect(saveWarning(page)).toBeVisible();
+      }
+      const [download] = await Promise.all([page.waitForEvent('download'), page.getByRole('button', { name: 'Save backup' }).click()]);
+      const backup = JSON.parse(readFileSync((await download.path())!, 'utf8'));
+      expect(backup.progress.sessions.some((r: Rec) => r.intention === 'Storage full')).toBe(true);
+    });
+  });
+}
+

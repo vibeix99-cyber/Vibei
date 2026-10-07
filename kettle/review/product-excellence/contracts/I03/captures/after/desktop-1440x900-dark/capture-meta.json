@@ -8,11 +8,18 @@
   "theme": "dark",
   "renderer": "Chromium (Playwright) + SwiftShader (CPU)",
   "scene": "off (stills)",
-  "revision": "49fcb3d+dirty",
-  "capturedAt": "2026-10-07T09:54:06.879Z",
+  "revision": "src tree e2d8326b6aa3b15b609eb1c8e76bda5f68b38d53 (= git rev-parse <r2 commit>:kettle/src)",
+  "capturedAt": "2026-10-07T17:31:13.120Z",
   "states": {
     "s0": {
       "hash": "#/focus",
+      "toast": [
+        "Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to keep them.Save backup"
+      ]
+    },
+    "s0b": {
+      "hash": "#/focus",
+      "status": "paused",
       "toast": [
         "Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to keep them.Save backup"
       ]
@@ -24,9 +31,23 @@
     },
     "s3": {
       "hash": "#/",
+      "toast": []
+    },
+    "s3b": {
+      "hash": "#/settings",
       "toast": [
         "Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to keep them.Save backup"
       ]
+    },
+    "s1a": {
+      "hash": "#/focus",
+      "toast": [
+        "Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to keep them.Save backup"
+      ]
+    },
+    "s1b": {
+      "hash": "#/done",
+      "toast": []
     },
     "s2": {
       "alert": "Kettle couldn’t save the backup: this browser’s storage is full. Nothing was changed.",
