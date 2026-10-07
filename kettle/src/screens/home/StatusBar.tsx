@@ -1,5 +1,5 @@
 /** Top status bar on Today: warm streak · leaves · cozy level, each opening a detail sheet. */
-import { useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { Mascot, StreakMug, Leaf, LevelBadge, TeaCozy, Icon } from '@/art';
 import { navigate } from '@/app/router';
 import { ITEMS, BONUS } from '@/progress';
@@ -20,10 +20,11 @@ export function StatusBar({ data }: { data: HomeData }) {
   const n = streak.current;
   const left = Math.max(0, level.size - level.into);
   const next = ITEMS.find((i) => i.unlockLevel > level.level);
+  const barRef = useWrapWhenCrowded();
 
   return (
     <>
-      <nav className={s.statusBar} aria-label="Your progress">
+      <nav ref={barRef} className={s.statusBar} aria-label="Your progress">
         <button type="button" className={s.stat} data-kind="streak" onClick={() => setOpen('streak')}>
           <StreakMug size={34} state={mugState} animate={false} title="" />
           <span className={s.statText}>
@@ -170,4 +171,37 @@ export function StatusBar({ data }: { data: HomeData }) {
       </Sheet>
     </>
   );
+}
+
+/**
+ * The three stats sit on one line. When they can't (very large text: measured 110 px of sideways scroll at 390 px with
+ * 200 % text; 14 px at 360 px), the row wraps instead. Decided by measuring the screen edge, not the bar's box: at
+ * 375 px the stats fit only by using the bar's negative side margins, and plain `flex-wrap` broke the row there.
+ */
+function useWrapWhenCrowded() {
+  const ref = useRef<HTMLElement>(null);
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    const fit = () => {
+      // Decide with the real fonts only: a wider fallback font would wrap the row for a moment and then unwrap it,
+      // shifting all of Today (measured CLS 0.26 on phone loads when this was plain `flex-wrap`).
+      if (document.fonts && document.fonts.status !== 'loaded') return;
+      delete el.dataset.wrap;
+      // On one line, does any stat (or the bar itself, which a crowded row widens) reach past the screen's edge?
+      const right = Math.max(el.getBoundingClientRect().right, ...[...el.children].map((c) => c.getBoundingClientRect().right));
+      if (right > document.documentElement.clientWidth + 0.5) el.dataset.wrap = '';
+    };
+    fit();
+    let live = true;
+    document.fonts?.ready.then(() => live && fit());
+    const ro = new ResizeObserver(fit);
+    ro.observe(el);
+    for (const c of el.children) ro.observe(c);
+    return () => {
+      live = false;
+      ro.disconnect();
+    };
+  }, []);
+  return ref;
 }

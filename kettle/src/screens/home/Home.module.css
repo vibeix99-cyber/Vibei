@@ -9,13 +9,14 @@
 /* ---------- Status bar ---------- */
 .statusBar {
   display: flex;
-  /* At 200 % text the three stats no longer fit one row: wrap instead of widening the page (measured 110 px of
-     sideways scroll at 390 px). At normal sizes they still sit on one line. */
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 4px;
   margin: -6px -8px -4px;
+}
+/* Set by StatusBar when the stats can't share one line (very large text): wrap instead of widening the page. */
+.statusBar[data-wrap] {
+  flex-wrap: wrap;
 }
 .stat {
   appearance: none;

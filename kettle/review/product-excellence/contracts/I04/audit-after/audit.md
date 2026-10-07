@@ -1,18 +1,18 @@
 # Kettle accessibility audit
 
-- Base http://127.0.0.1:5242 · revision ccb4ae4 · 2026-10-07T10:31:06.237Z
+- Base http://127.0.0.1:5242 · revision f28d803 · 2026-10-07T17:30:26.544Z
 - Chromium (Playwright) + SwiftShader (CPU); axe-core tags wcag2a, wcag2aa, wcag21a, wcag21aa, wcag22aa
 
 ## axe-core (main suite)
 
 | Viewport | Theme | States | Violations (serious/critical) | Violations (moderate/minor) | Contrast nodes passed by axe | Undecided → measured |
 |---|---|---:|---:|---:|---:|---:|
-| 390x844 | light | 17 | 0 (+1 scroll-dependent) | 0 | 522 | 84 |
+| 390x844 | light | 17 | 0 (+1 scroll-dependent) | 0 | 523 | 83 |
 | 390x844 | dark | 17 | 0 (+1 scroll-dependent) | 0 | 523 | 83 |
 | 375x667 | light | 17 | 0 (+1 scroll-dependent) | 0 | 520 | 84 |
 | 375x667 | dark | 17 | 0 (+1 scroll-dependent) | 0 | 520 | 84 |
 | 1440x900 | light | 17 | 0 | 0 | 619 | 76 |
-| 1440x900 | dark | 17 | 0 | 0 | 619 | 76 |
+| 1440x900 | dark | 17 | 0 | 0 | 618 | 77 |
 
 ### Violations
 
@@ -22,8 +22,8 @@
 |---|---|---|---|---|---|
 | target-size | serious | home 390x844 light | ._selected_chqjy_38 | Target has insufficient size because it is partially obscured (smallest space is 74.5px by 19.5px, should be at least 24px by 24px) | yes (passes scrolled clear) |
 | target-size | serious | home 390x844 dark | ._selected_chqjy_38 | Target has insufficient size because it is partially obscured (smallest space is 74.5px by 19.5px, should be at least 24px by 24px) | yes (passes scrolled clear) |
-| target-size | serious | home 375x667 light | #_r_n_-input | Target has insufficient size because it is partially obscured (smallest space is 303px by 15px, should be at least 24px by 24px) | yes (passes scrolled clear) |
-| target-size | serious | home 375x667 dark | #_r_d_-input | Target has insufficient size because it is partially obscured (smallest space is 303px by 15px, should be at least 24px by 24px) | yes (passes scrolled clear) |
+| target-size | serious | home 375x667 light | ._selected_kjzqi_87; button[data-tone="sky"] | Target has insufficient size because it is partially obscured (smallest space is 110px by 1px, should be at least 24px by 24px) | yes (passes scrolled clear) |
+| target-size | serious | home 375x667 dark | ._selected_kjzqi_87; button[data-tone="sky"] | Target has insufficient size because it is partially obscured (smallest space is 110px by 1px, should be at least 24px by 24px) | yes (passes scrolled clear) |
 
 ## Measured contrast (text axe could not decide)
 
@@ -31,7 +31,6 @@
 |---|---|---|---:|---:|---:|---:|---|
 | home 390x844 light | 23 | 20/700 | 3 | 5.76 | 5.76 | 5.76 | pass |
 | home 390x844 light | 2,361 | 20/700 | 3 | 5.98 | 5.98 | 5.98 | pass |
-| home 390x844 light | leaves | 11/800 | 4.5 | 6.74 | 6.74 | 6.74 | pass |
 | home 390x844 light | 12 | 14.8/700 | 4.5 | 4.55 | 4.55 | 4.55 | pass |
 | home 390x844 light | Put the kettle on · 25 min | 21/700 | 3 | 3.29 | 3.25 | 3.38 | pass |
 | home 390x844 light | Then a 5 min tea break. Change brew leng | 14/700 | 4.5 | 6.74 | 6.74 | 6.74 | pass |
@@ -45,8 +44,9 @@
 | ambience-sheet 390x844 light | Done | 21/700 | 3 | 3.3 | 3.28 | 3.38 | pass |
 | paused 390x844 light | Chapter 3 notes · Work | 15/600 | 4.5 | 12.8 | 12.72 | 12.89 | pass |
 | paused 390x844 light | · Work | 15/600 | 4.5 | 6.66 | 6.66 | 6.66 | pass |
-| added 390x844 light | · Work | 15/600 | null | undefined | undefined | undefined | pass |
-| whistle 390x844 light | Chapter 3 notes · Work | 15/600 | 4.5 | 7.05 | 6.77 | 8.86 | pass |
+| added 390x844 light | Chapter 3 notes · Work | 15/600 | 4.5 | 12.8 | 12.72 | 12.89 | pass |
+| added 390x844 light | · Work | 15/600 | 4.5 | 3.64 | 3.5 | 4.58 | **FAIL** |
+| whistle 390x844 light | Chapter 3 notes · Work | 15/600 | 4.5 | 7 | 6.77 | 8.86 | pass |
 | summary 390x844 light | 23 | 7/600 | 4.5 | 2.88 | 2.88 | 2.88 | below, incidental (art, aria-hidden, repeats adjacent text) |
 | summary 390x844 light | 12 | 8.7/700 | 4.5 | 4.55 | 4.55 | 4.55 | pass |
 | summary 390x844 light | Tea time · 5 min | 21/700 | 3 | 3.21 | 3.17 | 3.33 | pass |
@@ -117,8 +117,8 @@
 | home 390x844 dark | Then a 5 min tea break. Change brew leng | 14/700 | 4.5 | 10.21 | 10.21 | 10.21 | pass |
 | home 390x844 dark | Change brew length | 14/800 | 4.5 | 10.07 | 10.07 | 10.07 | pass |
 | home-custom 390x844 dark | Use 25/5 min | 19/700 | 3 | 3.29 | 3.28 | 3.38 | pass |
-| focus 390x844 dark | Chapter 3 notes · Work | 15/600 | 4.5 | 12.98 | 12.98 | 12.98 | pass |
-| focus 390x844 dark | · Work | 15/600 | null | undefined | undefined | undefined | pass |
+| focus 390x844 dark | Chapter 3 notes · Work | 15/600 | 4.5 | 12.28 | 12.12 | 12.96 | pass |
+| focus 390x844 dark | · Work | 15/600 | 4.5 | 8.98 | 8.83 | 8.99 | pass |
 | end-sheet 390x844 dark | That’s okay — your minutes still count. | 16/600 | 4.5 | 9.1 | 9.1 | 9.1 | pass |
 | end-sheet 390x844 dark | Keep brewing | 21/700 | 3 | 3.3 | 3.25 | 3.38 | pass |
 | ambience-sheet 390x844 dark | Tap to listen. The window in your nook f | 16/600 | 4.5 | 9.1 | 9.1 | 9.1 | pass |
@@ -126,9 +126,9 @@
 | ambience-sheet 390x844 dark | Done | 21/700 | 3 | 3.3 | 3.28 | 3.38 | pass |
 | paused 390x844 dark | Chapter 3 notes · Work | 15/600 | 4.5 | 12.28 | 12.12 | 12.96 | pass |
 | paused 390x844 dark | · Work | 15/600 | 4.5 | 8.98 | 8.83 | 8.99 | pass |
-| added 390x844 dark | Chapter 3 notes · Work | 15/600 | 4.5 | 12.98 | 12.98 | 12.98 | pass |
-| added 390x844 dark | · Work | 15/600 | null | undefined | undefined | undefined | pass |
-| whistle 390x844 dark | Chapter 3 notes · Work | 15/600 | 4.5 | 6.89 | 4.91 | 12.97 | pass |
+| added 390x844 dark | Chapter 3 notes · Work | 15/600 | 4.5 | 12.28 | 12.12 | 12.96 | pass |
+| added 390x844 dark | · Work | 15/600 | 4.5 | 8.98 | 8.83 | 8.99 | pass |
+| whistle 390x844 dark | Chapter 3 notes · Work | 15/600 | 4.5 | 12.98 | 12.98 | 12.98 | pass |
 | summary 390x844 dark | 23 | 7/600 | 4.5 | 2.88 | 2.88 | 2.88 | below, incidental (art, aria-hidden, repeats adjacent text) |
 | summary 390x844 dark | 12 | 8.7/700 | 4.5 | 4.55 | 4.55 | 4.55 | pass |
 | summary 390x844 dark | Tea time · 5 min | 21/700 | 3 | 3.21 | 3.17 | 3.33 | pass |
@@ -255,7 +255,7 @@
 | stats 1440x900 light | 12p | 13/800 | 4.5 | 5.65 | 5.65 | 5.65 | pass |
 | stats 1440x900 light | 6p | 13/800 | 4.5 | 5.65 | 5.65 | 5.65 | pass |
 | nook 1440x900 light | Kettle | 27/600 | 3 | 13.04 | 13.04 | 13.04 | pass |
-| nook 1440x900 light | Drag to look around · tap things | 13/800 | 4.5 | 1.05 | 1.04 | 1.05 | **FAIL** |
+| nook 1440x900 light | Drag to look around · tap things | 13/800 | 4.5 | 6.93 | 6.9 | 6.99 | pass |
 | nook 1440x900 light | 12 | 22.6/700 | 3 | 4.55 | 4.55 | 4.55 | pass |
 | settings 1440x900 light | Kettle | 27/600 | 3 | 13.04 | 13.04 | 13.04 | pass |
 | settings 1440x900 light | Settings | 36/600 | 3 | 13.04 | 13.04 | 13.04 | pass |
@@ -269,6 +269,7 @@
 | settings 1440x900 light | 83% | 17/600 | 4.5 | 13.45 | 13.45 | 13.45 | pass |
 | settings 1440x900 light | 12 | 19.1/700 | 3 | 4.55 | 4.55 | 4.55 | pass |
 | home 1440x900 dark | Kettle | 27/600 | 3 | 14.75 | 14.75 | 14.75 | pass |
+| home 1440x900 dark | leaves | 11/800 | 4.5 | 10.21 | 10.21 | 10.21 | pass |
 | home 1440x900 dark | 12 | 14.8/700 | 4.5 | 4.55 | 4.55 | 4.55 | pass |
 | home 1440x900 dark | Put the kettle on · 25 min | 21/700 | 3 | 3.3 | 3.28 | 3.38 | pass |
 | home 1440x900 dark | Then a 5 min tea break. Change brew leng | 14/700 | 4.5 | 10.21 | 10.21 | 10.21 | pass |
@@ -331,7 +332,7 @@
 | stats 1440x900 dark | 12p | 13/800 | 4.5 | 6.35 | 6.35 | 6.35 | pass |
 | stats 1440x900 dark | 6p | 13/800 | 4.5 | 6.35 | 6.35 | 6.35 | pass |
 | nook 1440x900 dark | Kettle | 27/600 | 3 | 14.75 | 14.75 | 14.75 | pass |
-| nook 1440x900 dark | Drag to look around · tap things | 13/800 | 4.5 | 2.34 | 1.04 | 16.3 | **FAIL** |
+| nook 1440x900 dark | Drag to look around · tap things | 13/800 | 4.5 | 15.2 | 15.18 | 15.22 | pass |
 | nook 1440x900 dark | 12 | 22.6/700 | 3 | 4.55 | 4.55 | 4.55 | pass |
 | settings 1440x900 dark | Kettle | 27/600 | 3 | 14.75 | 14.75 | 14.75 | pass |
 | settings 1440x900 dark | Settings | 36/600 | 3 | 14.75 | 14.75 | 14.75 | pass |
@@ -368,11 +369,11 @@
 | 390x844 | light | settings | 50 | 50 | 0 | 0 | 0 |  |
 | 390x844 | dark | home | 20 | 19 | 1 | 0 | 0 | Change brew length 146×24 (ok24) |
 | 390x844 | dark | home-custom | 9 | 9 | 0 | 0 | 0 |  |
-| 390x844 | dark | focus | 3 | 3 | 0 | 0 | 0 |  |
+| 390x844 | dark | focus | 5 | 5 | 0 | 0 | 0 |  |
 | 390x844 | dark | end-sheet | 3 | 3 | 0 | 0 | 0 |  |
 | 390x844 | dark | ambience-sheet | 10 | 10 | 0 | 0 | 0 |  |
 | 390x844 | dark | paused | 5 | 5 | 0 | 0 | 0 |  |
-| 390x844 | dark | added | 3 | 3 | 0 | 0 | 0 |  |
+| 390x844 | dark | added | 5 | 5 | 0 | 0 | 0 |  |
 | 390x844 | dark | whistle | 5 | 5 | 0 | 0 | 0 |  |
 | 390x844 | dark | summary | 5 | 5 | 0 | 0 | 0 |  |
 | 390x844 | dark | summary-details | 5 | 5 | 0 | 0 | 0 |  |
@@ -475,11 +476,11 @@
 | 390x844 | light | settings | 53 | — | 0 | — |
 | 390x844 | dark | home | 19 | — | 0 | — |
 | 390x844 | dark | home-custom | 9 | — | 0 | — |
-| 390x844 | dark | focus | 3 | — | 0 | — |
+| 390x844 | dark | focus | 5 | — | 0 | — |
 | 390x844 | dark | end-sheet | 3 | — | 0 | — |
 | 390x844 | dark | ambience-sheet | 10 | — | 0 | — |
 | 390x844 | dark | paused | 5 | — | 0 | — |
-| 390x844 | dark | added | 3 | — | 0 | — |
+| 390x844 | dark | added | 5 | — | 0 | — |
 | 390x844 | dark | whistle | 5 | — | 0 | — |
 | 390x844 | dark | summary | 5 | — | 0 | — |
 | 390x844 | dark | summary-details | 5 | — | 0 | — |
@@ -565,12 +566,12 @@
 |---|---|---|---:|---|---:|---|
 | 320x568 | light | home | 19 | — | 0 | placeholder: e.g. Chapter 3 notes, or leave it blank 216/283 |
 | 320x568 | light | home-custom | 9 | — | 0 | — |
-| 320x568 | light | focus | 5 | — | 0 | Chapter 3 notes · Work 130/154 |
+| 320x568 | light | focus | 5 | — | 0 | — |
 | 320x568 | light | end-sheet | 3 | — | 0 | — |
 | 320x568 | light | ambience-sheet | 10 | — | 0 | — |
-| 320x568 | light | paused | 5 | — | 0 | Chapter 3 notes · Work 130/154 |
-| 320x568 | light | added | 5 | — | 0 | Chapter 3 notes · Work 130/154 |
-| 320x568 | light | whistle | 2 | — | 0 | Chapter 3 notes · Work 130/154 |
+| 320x568 | light | paused | 5 | — | 0 | — |
+| 320x568 | light | added | 5 | — | 0 | — |
+| 320x568 | light | whistle | 2 | — | 0 | — |
 | 320x568 | light | summary | 5 | — | 0 | — |
 | 320x568 | light | summary-details | 3 | — | 0 | — |
 | 320x568 | light | break | 5 | — | 0 | — |
@@ -590,9 +591,9 @@
 | 390x844 | light | focus | 5 | — | 0 | — |
 | 390x844 | light | end-sheet | 3 | — | 0 | — |
 | 390x844 | light | ambience-sheet | 10 | — | 0 | — |
-| 390x844 | light | paused | 5 | — | 0 | Chapter 3 notes · Work 137/310 |
-| 390x844 | light | added | 3 | — | 0 | — |
-| 390x844 | light | whistle | 2 | — | 0 | Chapter 3 notes · Work 137/310 |
+| 390x844 | light | paused | 5 | — | 0 | — |
+| 390x844 | light | added | 5 | — | 0 | — |
+| 390x844 | light | whistle | 2 | — | 0 | — |
 | 390x844 | light | summary | 5 | — | 0 | — |
 | 390x844 | light | summary-details | 5 | — | 0 | — |
 | 390x844 | light | break | 5 | — | 0 | — |
@@ -609,7 +610,7 @@
 | 375x667 | light | ambience-sheet | 10 | — | 0 | — |
 | 375x667 | light | paused | 5 | — | 0 | — |
 | 375x667 | light | added | 3 | — | 0 | — |
-| 375x667 | light | whistle | 0 | — | 0 | — |
+| 375x667 | light | whistle | 2 | — | 0 | — |
 | 375x667 | light | summary | 5 | — | 0 | — |
 | 375x667 | light | summary-details | 3 | — | 0 | — |
 | 375x667 | light | break | 5 | — | 0 | — |
@@ -621,15 +622,15 @@
 | 375x667 | light | settings | 53 | — | 0 | — |
 | 1440x900 | light | home | 19 | — | 0 | placeholder: e.g. Chapter 3 notes, or leave it blank 519/573 |
 | 1440x900 | light | home-custom | 9 | — | 0 | — |
-| 1440x900 | light | focus | 5 | — | 0 | Chapter 3 notes · Study 203/315 |
+| 1440x900 | light | focus | 5 | — | 0 | — |
 | 1440x900 | light | end-sheet | 3 | — | 0 | — |
-| 1440x900 | light | ambience-sheet | 0 | — | 0 | — |
-| 1440x900 | light | paused | 5 | — | 0 | Chapter 3 notes · Study 203/315 |
-| 1440x900 | light | added | 5 | — | 0 | Chapter 3 notes · Study 203/315 |
-| 1440x900 | light | whistle | 2 | — | 0 | Chapter 3 notes · Study 203/315 |
+| 1440x900 | light | ambience-sheet | 10 | — | 0 | — |
+| 1440x900 | light | paused | 5 | — | 0 | — |
+| 1440x900 | light | added | 5 | — | 0 | — |
+| 1440x900 | light | whistle | 2 | — | 0 | — |
 | 1440x900 | light | summary | 5 | — | 0 | — |
 | 1440x900 | light | summary-details | 5 | — | 0 | — |
-| 1440x900 | light | break | 6 | — | 0 | Tea break · 5 min 201/222 |
+| 1440x900 | light | break | 6 | — | 0 | — |
 | 1440x900 | light | break-over | 4 | — | 0 | — |
 | 1440x900 | light | welcome | 4 | — | 0 | — |
 | 1440x900 | light | stats-empty | 13 | — | 0 | — |

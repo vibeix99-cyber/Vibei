@@ -1,7 +1,7 @@
 {
   "base": "http://127.0.0.1:5242",
-  "revision": "ccb4ae4",
-  "at": "2026-10-07T10:31:06.237Z",
+  "revision": "f28d803",
+  "at": "2026-10-07T17:30:26.544Z",
   "renderer": "Chromium (Playwright) + SwiftShader (CPU)",
   "suites": {},
   "results": [
@@ -26,12 +26,12 @@
             ]
           }
         ],
-        "contrastPasses": 51,
-        "contrastUndecided": 7
+        "contrastPasses": 52,
+        "contrastUndecided": 6
       },
       "contrast": [
         {
-          "selector": "button[data-kind=\"streak\"] > ._statText_zzzm6_54 > ._statNum_zzzm6_44",
+          "selector": "button[data-kind=\"streak\"] > ._statText_rkgym_55 > ._statNum_rkgym_45",
           "text": "23",
           "px": 20,
           "weight": 700,
@@ -45,7 +45,7 @@
           "incidental": false
         },
         {
-          "selector": "button[data-kind=\"leaves\"] > ._statText_zzzm6_54 > ._statNum_zzzm6_44",
+          "selector": "button[data-kind=\"leaves\"] > ._statText_rkgym_55 > ._statNum_rkgym_45",
           "text": "2,361",
           "px": 20,
           "weight": 700,
@@ -55,20 +55,6 @@
           "min": 5.98,
           "p5": 5.98,
           "median": 5.98,
-          "pass": true,
-          "incidental": false
-        },
-        {
-          "selector": "button[data-kind=\"leaves\"] > ._statText_zzzm6_54 > ._statLabel_zzzm6_59",
-          "text": "leaves",
-          "px": 11,
-          "weight": 800,
-          "need": 4.5,
-          "method": "glyphs",
-          "samples": 182,
-          "min": 6.74,
-          "p5": 6.74,
-          "median": 6.74,
           "pass": true,
           "incidental": false
         },
@@ -101,7 +87,7 @@
           "incidental": false
         },
         {
-          "selector": "._ctaNote_zzzm6_436",
+          "selector": "._ctaNote_rkgym_437",
           "text": "Then a 5 min tea break. Change brew leng",
           "px": 14,
           "weight": 700,
@@ -115,7 +101,7 @@
           "incidental": false
         },
         {
-          "selector": "._linkBtn_zzzm6_321",
+          "selector": "._linkBtn_rkgym_322",
           "text": "Change brew length",
           "px": 14,
           "weight": 800,
@@ -678,7 +664,7 @@
       },
       "contrast": [
         {
-          "selector": "._chipSub_vteyo_97",
+          "selector": "._chipSub_1wsyv_103",
           "text": "· Work",
           "px": 15,
           "weight": 600,
@@ -1093,7 +1079,7 @@
       },
       "contrast": [
         {
-          "selector": "._chipText_vteyo_91",
+          "selector": "._chipText_1wsyv_91",
           "text": "Chapter 3 notes · Work",
           "px": 15,
           "weight": 600,
@@ -1107,7 +1093,7 @@
           "incidental": false
         },
         {
-          "selector": "._chipSub_vteyo_97",
+          "selector": "._chipSub_1wsyv_103",
           "text": "· Work",
           "px": 15,
           "weight": 600,
@@ -1227,14 +1213,32 @@
       },
       "contrast": [
         {
-          "selector": "._chipSub_vteyo_97",
+          "selector": "._chipText_1wsyv_91",
+          "text": "Chapter 3 notes · Work",
+          "px": 15,
+          "weight": 600,
+          "need": 4.5,
+          "method": "glyphs",
+          "samples": 1256,
+          "min": 12.72,
+          "p5": 12.8,
+          "median": 12.89,
+          "pass": true,
+          "incidental": false
+        },
+        {
+          "selector": "._chipSub_1wsyv_103",
           "text": "· Work",
           "px": 15,
           "weight": 600,
-          "need": null,
-          "method": "not visible (opacity)",
-          "pass": true,
-          "invisible": true
+          "need": 4.5,
+          "method": "line box",
+          "samples": 874,
+          "min": 3.5,
+          "p5": 3.64,
+          "median": 4.58,
+          "pass": false,
+          "incidental": false
         }
       ],
       "targets": [
@@ -1309,15 +1313,15 @@
       },
       "contrast": [
         {
-          "selector": "._chipText_vteyo_91",
+          "selector": "._chipText_1wsyv_91",
           "text": "Chapter 3 notes · Work",
           "px": 15,
           "weight": 600,
           "need": 4.5,
           "method": "line box",
-          "samples": 1748,
+          "samples": 1539,
           "min": 6.77,
-          "p5": 7.05,
+          "p5": 7,
           "median": 8.86,
           "pass": true,
           "incidental": false
@@ -1725,7 +1729,7 @@
       },
       "contrast": [
         {
-          "selector": "._chipText_vteyo_91",
+          "selector": "._chipText_1wsyv_91",
           "text": "Tea break · 5 min",
           "px": 15,
           "weight": 600,
@@ -1739,7 +1743,7 @@
           "incidental": false
         },
         {
-          "selector": "._chipSub_vteyo_97",
+          "selector": "._chipSub_1wsyv_103",
           "text": "· 5 min",
           "px": 15,
           "weight": 600,
@@ -3361,7 +3365,7 @@
       },
       "contrast": [
         {
-          "selector": "._hint_8a2ib_67",
+          "selector": "._hint_1nqvr_67",
           "text": "Drag to look around · tap things",
           "px": 13,
           "weight": 800,
@@ -3781,7 +3785,7 @@
           "incidental": false
         },
         {
-          "selector": "#_r_lp_-l",
+          "selector": "#_r_n2_-l",
           "text": "Tea break",
           "px": 16,
           "weight": 800,
@@ -3795,7 +3799,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_lq_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"] > ._glyph_gpcny_29",
+          "selector": "div[aria-labelledby=\"_r_n3_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"] > ._glyph_gpcny_29",
           "text": "5",
           "px": 28,
           "weight": 600,
@@ -3809,7 +3813,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_lq_-label\"] > ._unit_15gpg_40",
+          "selector": "div[aria-labelledby=\"_r_n3_-label\"] > ._unit_15gpg_40",
           "text": "min",
           "px": 14,
           "weight": 800,
@@ -3823,7 +3827,7 @@
           "incidental": false
         },
         {
-          "selector": "#_r_lr_-l",
+          "selector": "#_r_n4_-l",
           "text": "Long tea break",
           "px": 16,
           "weight": 800,
@@ -3837,7 +3841,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_ls_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"]:nth-child(1) > ._glyph_gpcny_29",
+          "selector": "div[aria-labelledby=\"_r_n5_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"]:nth-child(1) > ._glyph_gpcny_29",
           "text": "1",
           "px": 28,
           "weight": 600,
@@ -3851,7 +3855,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_ls_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"]:nth-child(2) > ._glyph_gpcny_29",
+          "selector": "div[aria-labelledby=\"_r_n5_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"]:nth-child(2) > ._glyph_gpcny_29",
           "text": "5",
           "px": 28,
           "weight": 600,
@@ -3865,7 +3869,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_ls_-label\"] > ._unit_15gpg_40",
+          "selector": "div[aria-labelledby=\"_r_n5_-label\"] > ._unit_15gpg_40",
           "text": "min",
           "px": 14,
           "weight": 800,
@@ -3879,7 +3883,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_lu_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"] > ._glyph_gpcny_29",
+          "selector": "div[aria-labelledby=\"_r_n7_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"] > ._glyph_gpcny_29",
           "text": "4",
           "px": 28,
           "weight": 600,
@@ -3893,7 +3897,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_lu_-label\"] > ._unit_15gpg_40",
+          "selector": "div[aria-labelledby=\"_r_n7_-label\"] > ._unit_15gpg_40",
           "text": "brews",
           "px": 14,
           "weight": 800,
@@ -4792,7 +4796,7 @@
       },
       "contrast": [
         {
-          "selector": "button[data-kind=\"streak\"] > ._statText_zzzm6_54 > ._statNum_zzzm6_44",
+          "selector": "button[data-kind=\"streak\"] > ._statText_rkgym_55 > ._statNum_rkgym_45",
           "text": "23",
           "px": 20,
           "weight": 700,
@@ -4806,7 +4810,7 @@
           "incidental": false
         },
         {
-          "selector": "button[data-kind=\"leaves\"] > ._statText_zzzm6_54 > ._statNum_zzzm6_44",
+          "selector": "button[data-kind=\"leaves\"] > ._statText_rkgym_55 > ._statNum_rkgym_45",
           "text": "2,361",
           "px": 20,
           "weight": 700,
@@ -4848,7 +4852,7 @@
           "incidental": false
         },
         {
-          "selector": "._ctaNote_zzzm6_436",
+          "selector": "._ctaNote_rkgym_437",
           "text": "Then a 5 min tea break. Change brew leng",
           "px": 14,
           "weight": 700,
@@ -4862,7 +4866,7 @@
           "incidental": false
         },
         {
-          "selector": "._linkBtn_zzzm6_321",
+          "selector": "._linkBtn_rkgym_322",
           "text": "Change brew length",
           "px": 14,
           "weight": 800,
@@ -5425,31 +5429,69 @@
       },
       "contrast": [
         {
-          "selector": "._chipText_vteyo_91",
+          "selector": "._chipText_1wsyv_91",
           "text": "Chapter 3 notes · Work",
           "px": 15,
           "weight": 600,
           "need": 4.5,
           "method": "glyphs",
-          "samples": 8,
-          "min": 12.98,
-          "p5": 12.98,
-          "median": 12.98,
+          "samples": 1279,
+          "min": 12.12,
+          "p5": 12.28,
+          "median": 12.96,
           "pass": true,
           "incidental": false
         },
         {
-          "selector": "._chipSub_vteyo_97",
+          "selector": "._chipSub_1wsyv_103",
           "text": "· Work",
           "px": 15,
           "weight": 600,
-          "need": null,
-          "method": "not visible (opacity)",
+          "need": 4.5,
+          "method": "glyphs",
+          "samples": 267,
+          "min": 8.83,
+          "p5": 8.98,
+          "median": 8.99,
           "pass": true,
-          "invisible": true
+          "incidental": false
         }
       ],
       "targets": [
+        {
+          "name": "Ambience: Rain. Change",
+          "tag": "button",
+          "role": "",
+          "box": [
+            86.3,
+            44
+          ],
+          "center": [
+            282.8359375,
+            32
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Turn sound on",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            356,
+            32
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
         {
           "name": "Add 5 minutes",
           "tag": "button",
@@ -5503,7 +5545,7 @@
         }
       ],
       "reach": {
-        "checked": 3,
+        "checked": 5,
         "covered": [],
         "hScroll": 0,
         "clipped": []
@@ -5521,7 +5563,7 @@
       },
       "contrast": [
         {
-          "selector": "#_r_1e_-desc",
+          "selector": "#_r_14_-desc",
           "text": "That’s okay — your minutes still count.",
           "px": 16,
           "weight": 600,
@@ -5621,7 +5663,7 @@
       },
       "contrast": [
         {
-          "selector": "#_r_1i_-desc",
+          "selector": "#_r_18_-desc",
           "text": "Tap to listen. The window in your nook f",
           "px": 16,
           "weight": 600,
@@ -5854,7 +5896,7 @@
       },
       "contrast": [
         {
-          "selector": "._chipText_vteyo_91",
+          "selector": "._chipText_1wsyv_91",
           "text": "Chapter 3 notes · Work",
           "px": 15,
           "weight": 600,
@@ -5868,7 +5910,7 @@
           "incidental": false
         },
         {
-          "selector": "._chipSub_vteyo_97",
+          "selector": "._chipSub_1wsyv_103",
           "text": "· Work",
           "px": 15,
           "weight": 600,
@@ -5988,31 +6030,69 @@
       },
       "contrast": [
         {
-          "selector": "._chipText_vteyo_91",
+          "selector": "._chipText_1wsyv_91",
           "text": "Chapter 3 notes · Work",
           "px": 15,
           "weight": 600,
           "need": 4.5,
           "method": "glyphs",
-          "samples": 16,
-          "min": 12.98,
-          "p5": 12.98,
-          "median": 12.98,
+          "samples": 1279,
+          "min": 12.12,
+          "p5": 12.28,
+          "median": 12.96,
           "pass": true,
           "incidental": false
         },
         {
-          "selector": "._chipSub_vteyo_97",
+          "selector": "._chipSub_1wsyv_103",
           "text": "· Work",
           "px": 15,
           "weight": 600,
-          "need": null,
-          "method": "not visible (opacity)",
+          "need": 4.5,
+          "method": "glyphs",
+          "samples": 267,
+          "min": 8.83,
+          "p5": 8.98,
+          "median": 8.99,
           "pass": true,
-          "invisible": true
+          "incidental": false
         }
       ],
       "targets": [
+        {
+          "name": "Ambience: Rain. Change",
+          "tag": "button",
+          "role": "",
+          "box": [
+            86.3,
+            44
+          ],
+          "center": [
+            282.8359375,
+            32
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Turn sound on",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            356,
+            32
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
         {
           "name": "Add 5 minutes",
           "tag": "button",
@@ -6066,7 +6146,7 @@
         }
       ],
       "reach": {
-        "checked": 3,
+        "checked": 5,
         "covered": [],
         "hScroll": 0,
         "clipped": []
@@ -6084,16 +6164,16 @@
       },
       "contrast": [
         {
-          "selector": "._chipText_vteyo_91",
+          "selector": "._chipText_1wsyv_91",
           "text": "Chapter 3 notes · Work",
           "px": 15,
           "weight": 600,
           "need": 4.5,
           "method": "line box",
-          "samples": 1748,
-          "min": 4.91,
-          "p5": 6.89,
-          "median": 12.97,
+          "samples": 29,
+          "min": 12.98,
+          "p5": 12.98,
+          "median": 12.98,
           "pass": true,
           "incidental": false
         }
@@ -6500,7 +6580,7 @@
       },
       "contrast": [
         {
-          "selector": "._chipText_vteyo_91",
+          "selector": "._chipText_1wsyv_91",
           "text": "Tea break · 5 min",
           "px": 15,
           "weight": 600,
@@ -6514,7 +6594,7 @@
           "incidental": false
         },
         {
-          "selector": "._chipSub_vteyo_97",
+          "selector": "._chipSub_1wsyv_103",
           "text": "· 5 min",
           "px": 15,
           "weight": 600,
@@ -8136,7 +8216,7 @@
       },
       "contrast": [
         {
-          "selector": "._hint_8a2ib_67",
+          "selector": "._hint_1nqvr_67",
           "text": "Drag to look around · tap things",
           "px": 13,
           "weight": 800,
@@ -8556,7 +8636,7 @@
           "incidental": false
         },
         {
-          "selector": "#_r_p1_-l",
+          "selector": "#_r_nu_-l",
           "text": "Tea break",
           "px": 16,
           "weight": 800,
@@ -8570,7 +8650,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_p2_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"] > ._glyph_gpcny_29",
+          "selector": "div[aria-labelledby=\"_r_nv_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"] > ._glyph_gpcny_29",
           "text": "5",
           "px": 28,
           "weight": 600,
@@ -8584,7 +8664,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_p2_-label\"] > ._unit_15gpg_40",
+          "selector": "div[aria-labelledby=\"_r_nv_-label\"] > ._unit_15gpg_40",
           "text": "min",
           "px": 14,
           "weight": 800,
@@ -8598,7 +8678,7 @@
           "incidental": false
         },
         {
-          "selector": "#_r_p3_-l",
+          "selector": "#_r_o0_-l",
           "text": "Long tea break",
           "px": 16,
           "weight": 800,
@@ -8612,7 +8692,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_p4_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"]:nth-child(1) > ._glyph_gpcny_29",
+          "selector": "div[aria-labelledby=\"_r_o1_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"]:nth-child(1) > ._glyph_gpcny_29",
           "text": "1",
           "px": 28,
           "weight": 600,
@@ -8626,7 +8706,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_p4_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"]:nth-child(2) > ._glyph_gpcny_29",
+          "selector": "div[aria-labelledby=\"_r_o1_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"]:nth-child(2) > ._glyph_gpcny_29",
           "text": "5",
           "px": 28,
           "weight": 600,
@@ -8640,7 +8720,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_p4_-label\"] > ._unit_15gpg_40",
+          "selector": "div[aria-labelledby=\"_r_o1_-label\"] > ._unit_15gpg_40",
           "text": "min",
           "px": 14,
           "weight": 800,
@@ -8654,7 +8734,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_p6_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"] > ._glyph_gpcny_29",
+          "selector": "div[aria-labelledby=\"_r_o3_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"] > ._glyph_gpcny_29",
           "text": "4",
           "px": 28,
           "weight": 600,
@@ -8668,7 +8748,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_p6_-label\"] > ._unit_15gpg_40",
+          "selector": "div[aria-labelledby=\"_r_o3_-label\"] > ._unit_15gpg_40",
           "text": "brews",
           "px": 14,
           "weight": 800,
@@ -9551,13 +9631,15 @@
           {
             "id": "target-size",
             "impact": "serious",
-            "nodes": 1,
+            "nodes": 2,
             "targets": [
-              "#_r_n_-input"
+              "._selected_kjzqi_87",
+              "button[data-tone=\"sky\"]"
             ],
-            "summary": "Fix any of the following:   Target has insufficient size because it is partially obscured (smallest space is 303px by 15px, should be at least 24px by 24px)",
+            "summary": "Fix any of the following:   Target has insufficient size because it is partially obscured (smallest space is 110px by 1px, should be at least 24px by 24px)",
             "scrollDependent": true,
             "scrolledClear": [
+              "pass",
               "pass"
             ]
           }
@@ -9660,7 +9742,7 @@
             48
           ],
           "center": [
-            314,
+            191,
             34
           ],
           "hit44": true,
@@ -9677,8 +9759,8 @@
             48
           ],
           "center": [
-            71,
-            86
+            311,
+            34
           ],
           "hit44": true,
           "hit24": true,
@@ -9695,7 +9777,7 @@
           ],
           "center": [
             187.5,
-            510
+            458
           ],
           "hit44": true,
           "hit24": true,
@@ -9712,7 +9794,7 @@
           ],
           "center": [
             91,
-            572
+            520
           ],
           "hit44": true,
           "hit24": true,
@@ -9729,7 +9811,7 @@
           ],
           "center": [
             200.5,
-            572
+            520
           ],
           "hit44": true,
           "hit24": true,
@@ -9746,7 +9828,7 @@
           ],
           "center": [
             79,
-            624
+            572
           ],
           "hit44": true,
           "hit24": true,
@@ -9763,7 +9845,7 @@
           ],
           "center": [
             178.5,
-            624
+            572
           ],
           "hit44": true,
           "hit24": true,
@@ -9780,7 +9862,7 @@
           ],
           "center": [
             274,
-            624
+            572
           ],
           "hit44": true,
           "hit24": true,
@@ -9797,7 +9879,7 @@
           ],
           "center": [
             75.375,
-            731.4375
+            679.4375
           ],
           "hit44": true,
           "hit24": true,
@@ -9814,7 +9896,7 @@
           ],
           "center": [
             150.125,
-            731.4375
+            679.4375
           ],
           "hit44": true,
           "hit24": true,
@@ -9831,7 +9913,7 @@
           ],
           "center": [
             224.875,
-            731.4375
+            679.4375
           ],
           "hit44": true,
           "hit24": true,
@@ -9848,7 +9930,7 @@
           ],
           "center": [
             299.625,
-            731.4375
+            679.4375
           ],
           "hit44": true,
           "hit24": true,
@@ -9865,7 +9947,7 @@
           ],
           "center": [
             187.5,
-            830.375
+            778.375
           ],
           "hit44": true,
           "hit24": true,
@@ -9882,7 +9964,7 @@
           ],
           "center": [
             267,
-            878.375
+            826.375
           ],
           "hit44": false,
           "hit24": true,
@@ -9926,7 +10008,7 @@
           ],
           "center": [
             341,
-            840.03125
+            788.03125
           ],
           "hit44": true,
           "hit24": true,
@@ -9943,7 +10025,7 @@
           ],
           "center": [
             183,
-            937.21875
+            885.21875
           ],
           "hit44": true,
           "hit24": true,
@@ -9960,7 +10042,7 @@
           ],
           "center": [
             255,
-            937.21875
+            885.21875
           ],
           "hit44": true,
           "hit24": true,
@@ -9977,7 +10059,7 @@
           ],
           "center": [
             327,
-            937.21875
+            885.21875
           ],
           "hit44": true,
           "hit24": true,
@@ -9994,7 +10076,7 @@
           ],
           "center": [
             183,
-            1005.21875
+            953.21875
           ],
           "hit44": true,
           "hit24": true,
@@ -10011,7 +10093,7 @@
           ],
           "center": [
             255,
-            1005.21875
+            953.21875
           ],
           "hit44": true,
           "hit24": true,
@@ -10028,7 +10110,7 @@
           ],
           "center": [
             327,
-            1005.21875
+            953.21875
           ],
           "hit44": true,
           "hit24": true,
@@ -10045,7 +10127,7 @@
           ],
           "center": [
             104.25,
-            1106.109375
+            1054.109375
           ],
           "hit44": true,
           "hit24": true,
@@ -10062,7 +10144,7 @@
           ],
           "center": [
             270.75,
-            1106.109375
+            1054.109375
           ],
           "hit44": true,
           "hit24": true,
@@ -10098,7 +10180,7 @@
           ],
           "center": [
             267.8359375,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -10115,7 +10197,7 @@
           ],
           "center": [
             341,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -10461,7 +10543,7 @@
           ],
           "center": [
             267.8359375,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -10478,7 +10560,7 @@
           ],
           "center": [
             341,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -10565,7 +10647,7 @@
           ],
           "center": [
             267.8359375,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -10582,7 +10664,7 @@
           ],
           "center": [
             341,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -10669,7 +10751,7 @@
           ],
           "center": [
             267.8359375,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -10686,7 +10768,7 @@
           ],
           "center": [
             341,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -13092,13 +13174,15 @@
           {
             "id": "target-size",
             "impact": "serious",
-            "nodes": 1,
+            "nodes": 2,
             "targets": [
-              "#_r_d_-input"
+              "._selected_kjzqi_87",
+              "button[data-tone=\"sky\"]"
             ],
-            "summary": "Fix any of the following:   Target has insufficient size because it is partially obscured (smallest space is 303px by 15px, should be at least 24px by 24px)",
+            "summary": "Fix any of the following:   Target has insufficient size because it is partially obscured (smallest space is 110px by 1px, should be at least 24px by 24px)",
             "scrollDependent": true,
             "scrolledClear": [
+              "pass",
               "pass"
             ]
           }
@@ -13201,7 +13285,7 @@
             48
           ],
           "center": [
-            314,
+            191,
             34
           ],
           "hit44": true,
@@ -13218,8 +13302,8 @@
             48
           ],
           "center": [
-            71,
-            86
+            311,
+            34
           ],
           "hit44": true,
           "hit24": true,
@@ -13236,7 +13320,7 @@
           ],
           "center": [
             187.5,
-            510
+            458
           ],
           "hit44": true,
           "hit24": true,
@@ -13253,7 +13337,7 @@
           ],
           "center": [
             91,
-            572
+            520
           ],
           "hit44": true,
           "hit24": true,
@@ -13270,7 +13354,7 @@
           ],
           "center": [
             200.5,
-            572
+            520
           ],
           "hit44": true,
           "hit24": true,
@@ -13287,7 +13371,7 @@
           ],
           "center": [
             79,
-            624
+            572
           ],
           "hit44": true,
           "hit24": true,
@@ -13304,7 +13388,7 @@
           ],
           "center": [
             178.5,
-            624
+            572
           ],
           "hit44": true,
           "hit24": true,
@@ -13321,7 +13405,7 @@
           ],
           "center": [
             274,
-            624
+            572
           ],
           "hit44": true,
           "hit24": true,
@@ -13338,7 +13422,7 @@
           ],
           "center": [
             75.375,
-            731.4375
+            679.4375
           ],
           "hit44": true,
           "hit24": true,
@@ -13355,7 +13439,7 @@
           ],
           "center": [
             150.125,
-            731.4375
+            679.4375
           ],
           "hit44": true,
           "hit24": true,
@@ -13372,7 +13456,7 @@
           ],
           "center": [
             224.875,
-            731.4375
+            679.4375
           ],
           "hit44": true,
           "hit24": true,
@@ -13389,7 +13473,7 @@
           ],
           "center": [
             299.625,
-            731.4375
+            679.4375
           ],
           "hit44": true,
           "hit24": true,
@@ -13406,7 +13490,7 @@
           ],
           "center": [
             187.5,
-            830.375
+            778.375
           ],
           "hit44": true,
           "hit24": true,
@@ -13423,7 +13507,7 @@
           ],
           "center": [
             267,
-            878.375
+            826.375
           ],
           "hit44": false,
           "hit24": true,
@@ -13467,7 +13551,7 @@
           ],
           "center": [
             341,
-            840.03125
+            788.03125
           ],
           "hit44": true,
           "hit24": true,
@@ -13484,7 +13568,7 @@
           ],
           "center": [
             183,
-            937.21875
+            885.21875
           ],
           "hit44": true,
           "hit24": true,
@@ -13501,7 +13585,7 @@
           ],
           "center": [
             255,
-            937.21875
+            885.21875
           ],
           "hit44": true,
           "hit24": true,
@@ -13518,7 +13602,7 @@
           ],
           "center": [
             327,
-            937.21875
+            885.21875
           ],
           "hit44": true,
           "hit24": true,
@@ -13535,7 +13619,7 @@
           ],
           "center": [
             183,
-            1005.21875
+            953.21875
           ],
           "hit44": true,
           "hit24": true,
@@ -13552,7 +13636,7 @@
           ],
           "center": [
             255,
-            1005.21875
+            953.21875
           ],
           "hit44": true,
           "hit24": true,
@@ -13569,7 +13653,7 @@
           ],
           "center": [
             327,
-            1005.21875
+            953.21875
           ],
           "hit44": true,
           "hit24": true,
@@ -13586,7 +13670,7 @@
           ],
           "center": [
             104.25,
-            1106.109375
+            1054.109375
           ],
           "hit44": true,
           "hit24": true,
@@ -13603,7 +13687,7 @@
           ],
           "center": [
             270.75,
-            1106.109375
+            1054.109375
           ],
           "hit44": true,
           "hit24": true,
@@ -13639,7 +13723,7 @@
           ],
           "center": [
             267.8359375,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -13656,7 +13740,7 @@
           ],
           "center": [
             341,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -14002,7 +14086,7 @@
           ],
           "center": [
             267.8359375,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -14019,7 +14103,7 @@
           ],
           "center": [
             341,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -14106,7 +14190,7 @@
           ],
           "center": [
             267.8359375,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -14123,7 +14207,7 @@
           ],
           "center": [
             341,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -14210,7 +14294,7 @@
           ],
           "center": [
             267.8359375,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -14227,7 +14311,7 @@
           ],
           "center": [
             341,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -16677,7 +16761,7 @@
           "incidental": false
         },
         {
-          "selector": "._ctaNote_zzzm6_436",
+          "selector": "._ctaNote_rkgym_437",
           "text": "Then a 5 min tea break. Change brew leng",
           "px": 14,
           "weight": 700,
@@ -19986,17 +20070,17 @@
           "incidental": false
         },
         {
-          "selector": "._hint_8a2ib_67",
+          "selector": "._hint_1nqvr_67",
           "text": "Drag to look around · tap things",
           "px": 13,
           "weight": 800,
           "need": 4.5,
-          "method": "line box",
-          "samples": 1043,
-          "min": 1.04,
-          "p5": 1.05,
-          "median": 1.05,
-          "pass": false,
+          "method": "glyphs",
+          "samples": 1237,
+          "min": 6.9,
+          "p5": 6.93,
+          "median": 6.99,
+          "pass": true,
           "incidental": false
         },
         {
@@ -20437,7 +20521,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_jp_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"] > ._glyph_gpcny_29",
+          "selector": "div[aria-labelledby=\"_r_ja_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"] > ._glyph_gpcny_29",
           "text": "5",
           "px": 28,
           "weight": 600,
@@ -20451,7 +20535,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_jp_-label\"] > ._unit_15gpg_40",
+          "selector": "div[aria-labelledby=\"_r_ja_-label\"] > ._unit_15gpg_40",
           "text": "min",
           "px": 14,
           "weight": 800,
@@ -20465,7 +20549,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_jr_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"]:nth-child(1) > ._glyph_gpcny_29",
+          "selector": "div[aria-labelledby=\"_r_jc_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"]:nth-child(1) > ._glyph_gpcny_29",
           "text": "1",
           "px": 28,
           "weight": 600,
@@ -20479,7 +20563,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_jr_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"]:nth-child(2) > ._glyph_gpcny_29",
+          "selector": "div[aria-labelledby=\"_r_jc_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"]:nth-child(2) > ._glyph_gpcny_29",
           "text": "5",
           "px": 28,
           "weight": 600,
@@ -20493,7 +20577,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_jr_-label\"] > ._unit_15gpg_40",
+          "selector": "div[aria-labelledby=\"_r_jc_-label\"] > ._unit_15gpg_40",
           "text": "min",
           "px": 14,
           "weight": 800,
@@ -20507,7 +20591,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_jt_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"] > ._glyph_gpcny_29",
+          "selector": "div[aria-labelledby=\"_r_je_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"] > ._glyph_gpcny_29",
           "text": "4",
           "px": 28,
           "weight": 600,
@@ -20521,7 +20605,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_jt_-label\"] > ._unit_15gpg_40",
+          "selector": "div[aria-labelledby=\"_r_je_-label\"] > ._unit_15gpg_40",
           "text": "brews",
           "px": 14,
           "weight": 800,
@@ -21446,8 +21530,8 @@
       "suite": "main",
       "axe": {
         "violations": [],
-        "contrastPasses": 54,
-        "contrastUndecided": 4
+        "contrastPasses": 53,
+        "contrastUndecided": 5
       },
       "contrast": [
         {
@@ -21461,6 +21545,20 @@
           "min": 14.75,
           "p5": 14.75,
           "median": 14.75,
+          "pass": true,
+          "incidental": false
+        },
+        {
+          "selector": "button[data-kind=\"leaves\"] > ._statText_rkgym_55 > ._statLabel_rkgym_60",
+          "text": "leaves",
+          "px": 11,
+          "weight": 800,
+          "need": 4.5,
+          "method": "glyphs",
+          "samples": 183,
+          "min": 10.21,
+          "p5": 10.21,
+          "median": 10.21,
           "pass": true,
           "incidental": false
         },
@@ -21493,7 +21591,7 @@
           "incidental": false
         },
         {
-          "selector": "._ctaNote_zzzm6_436",
+          "selector": "._ctaNote_rkgym_437",
           "text": "Then a 5 min tea break. Change brew leng",
           "px": 14,
           "weight": 700,
@@ -24802,17 +24900,17 @@
           "incidental": false
         },
         {
-          "selector": "._hint_8a2ib_67",
+          "selector": "._hint_1nqvr_67",
           "text": "Drag to look around · tap things",
           "px": 13,
           "weight": 800,
           "need": 4.5,
-          "method": "line box",
-          "samples": 1043,
-          "min": 1.04,
-          "p5": 2.34,
-          "median": 16.3,
-          "pass": false,
+          "method": "glyphs",
+          "samples": 1242,
+          "min": 15.18,
+          "p5": 15.2,
+          "median": 15.22,
+          "pass": true,
           "incidental": false
         },
         {
@@ -25253,7 +25351,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_k2_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"] > ._glyph_gpcny_29",
+          "selector": "div[aria-labelledby=\"_r_jj_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"] > ._glyph_gpcny_29",
           "text": "5",
           "px": 28,
           "weight": 600,
@@ -25267,7 +25365,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_k2_-label\"] > ._unit_15gpg_40",
+          "selector": "div[aria-labelledby=\"_r_jj_-label\"] > ._unit_15gpg_40",
           "text": "min",
           "px": 14,
           "weight": 800,
@@ -25281,7 +25379,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_k4_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"]:nth-child(1) > ._glyph_gpcny_29",
+          "selector": "div[aria-labelledby=\"_r_jl_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"]:nth-child(1) > ._glyph_gpcny_29",
           "text": "1",
           "px": 28,
           "weight": 600,
@@ -25295,7 +25393,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_k4_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"]:nth-child(2) > ._glyph_gpcny_29",
+          "selector": "div[aria-labelledby=\"_r_jl_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"]:nth-child(2) > ._glyph_gpcny_29",
           "text": "5",
           "px": 28,
           "weight": 600,
@@ -25309,7 +25407,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_k4_-label\"] > ._unit_15gpg_40",
+          "selector": "div[aria-labelledby=\"_r_jl_-label\"] > ._unit_15gpg_40",
           "text": "min",
           "px": 14,
           "weight": 800,
@@ -25323,7 +25421,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_k6_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"] > ._glyph_gpcny_29",
+          "selector": "div[aria-labelledby=\"_r_jn_-label\"] > ._num_15gpg_31._digits_gpcny_1 > ._row_gpcny_15[aria-hidden=\"true\"] > ._rolling_gpcny_24._cell_gpcny_19[data-dir=\"up\"] > ._glyph_gpcny_29",
           "text": "4",
           "px": 28,
           "weight": 600,
@@ -25337,7 +25435,7 @@
           "incidental": false
         },
         {
-          "selector": "div[aria-labelledby=\"_r_k6_-label\"] > ._unit_15gpg_40",
+          "selector": "div[aria-labelledby=\"_r_jn_-label\"] > ._unit_15gpg_40",
           "text": "brews",
           "px": 14,
           "weight": 800,
@@ -26798,7 +26896,7 @@
           ],
           "center": [
             229,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -26815,7 +26913,7 @@
           ],
           "center": [
             286,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -26878,19 +26976,7 @@
         "checked": 5,
         "covered": [],
         "hScroll": 0,
-        "clipped": [
-          {
-            "text": "Chapter 3 notes · Work",
-            "w": [
-              130,
-              154
-            ],
-            "h": [
-              23,
-              23
-            ]
-          }
-        ]
+        "clipped": []
       }
     },
     {
@@ -27173,7 +27259,7 @@
           ],
           "center": [
             229,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -27190,7 +27276,7 @@
           ],
           "center": [
             286,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -27253,19 +27339,7 @@
         "checked": 5,
         "covered": [],
         "hScroll": 0,
-        "clipped": [
-          {
-            "text": "Chapter 3 notes · Work",
-            "w": [
-              130,
-              154
-            ],
-            "h": [
-              23,
-              23
-            ]
-          }
-        ]
+        "clipped": []
       }
     },
     {
@@ -27289,7 +27363,7 @@
           ],
           "center": [
             229,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -27306,7 +27380,7 @@
           ],
           "center": [
             286,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -27369,19 +27443,7 @@
         "checked": 5,
         "covered": [],
         "hScroll": 0,
-        "clipped": [
-          {
-            "text": "Chapter 3 notes · Work",
-            "w": [
-              130,
-              154
-            ],
-            "h": [
-              23,
-              23
-            ]
-          }
-        ]
+        "clipped": []
       }
     },
     {
@@ -27405,7 +27467,7 @@
           ],
           "center": [
             229,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -27422,7 +27484,7 @@
           ],
           "center": [
             286,
-            32
+            34.75
           ],
           "hit44": true,
           "hit24": true,
@@ -27434,19 +27496,7 @@
         "checked": 2,
         "covered": [],
         "hScroll": 0,
-        "clipped": [
-          {
-            "text": "Chapter 3 notes · Work",
-            "w": [
-              130,
-              154
-            ],
-            "h": [
-              23,
-              23
-            ]
-          }
-        ]
+        "clipped": []
       }
     },
     {
@@ -29907,19 +29957,7 @@
         "checked": 5,
         "covered": [],
         "hScroll": 0,
-        "clipped": [
-          {
-            "text": "Chapter 3 notes · Work",
-            "w": [
-              137,
-              310
-            ],
-            "h": [
-              45,
-              45
-            ]
-          }
-        ]
+        "clipped": []
       }
     },
     {
@@ -29928,7 +29966,7 @@
       "theme": "light",
       "suite": "text200",
       "reach": {
-        "checked": 3,
+        "checked": 5,
         "covered": [],
         "hScroll": 0,
         "clipped": []
@@ -29943,19 +29981,7 @@
         "checked": 2,
         "covered": [],
         "hScroll": 0,
-        "clipped": [
-          {
-            "text": "Chapter 3 notes · Work",
-            "w": [
-              137,
-              310
-            ],
-            "h": [
-              45,
-              45
-            ]
-          }
-        ]
+        "clipped": []
       }
     },
     {
@@ -30164,7 +30190,7 @@
       "theme": "light",
       "suite": "text200",
       "reach": {
-        "checked": 0,
+        "checked": 2,
         "covered": [],
         "hScroll": 0,
         "clipped": []
@@ -30319,19 +30345,7 @@
         "checked": 5,
         "covered": [],
         "hScroll": 0,
-        "clipped": [
-          {
-            "text": "Chapter 3 notes · Study",
-            "w": [
-              203,
-              315
-            ],
-            "h": [
-              45,
-              45
-            ]
-          }
-        ]
+        "clipped": []
       }
     },
     {
@@ -30352,7 +30366,7 @@
       "theme": "light",
       "suite": "text200",
       "reach": {
-        "checked": 0,
+        "checked": 10,
         "covered": [],
         "hScroll": 0,
         "clipped": []
@@ -30367,19 +30381,7 @@
         "checked": 5,
         "covered": [],
         "hScroll": 0,
-        "clipped": [
-          {
-            "text": "Chapter 3 notes · Study",
-            "w": [
-              203,
-              315
-            ],
-            "h": [
-              45,
-              45
-            ]
-          }
-        ]
+        "clipped": []
       }
     },
     {
@@ -30391,19 +30393,7 @@
         "checked": 5,
         "covered": [],
         "hScroll": 0,
-        "clipped": [
-          {
-            "text": "Chapter 3 notes · Study",
-            "w": [
-              203,
-              315
-            ],
-            "h": [
-              45,
-              45
-            ]
-          }
-        ]
+        "clipped": []
       }
     },
     {
@@ -30415,19 +30405,7 @@
         "checked": 2,
         "covered": [],
         "hScroll": 0,
-        "clipped": [
-          {
-            "text": "Chapter 3 notes · Study",
-            "w": [
-              203,
-              315
-            ],
-            "h": [
-              45,
-              45
-            ]
-          }
-        ]
+        "clipped": []
       }
     },
     {
@@ -30463,19 +30441,7 @@
         "checked": 6,
         "covered": [],
         "hScroll": 0,
-        "clipped": [
-          {
-            "text": "Tea break · 5 min",
-            "w": [
-              201,
-              222
-            ],
-            "h": [
-              45,
-              45
-            ]
-          }
-        ]
+        "clipped": []
       }
     },
     {
