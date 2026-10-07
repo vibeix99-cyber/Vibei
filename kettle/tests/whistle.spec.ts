@@ -210,5 +210,5 @@ test('unsupported: the switch is off and disabled, and says what happens instead
   await open(page, base(baseURL), { seed: 'veteran', route: '/settings' });
   const nudges = page.getByRole('switch', { name: 'Nudges' });
   await expect(nudges).toBeDisabled();
-  await expect(page.getByText('This browser can’t show notifications. Kettle chimes instead, while it’s open.')).toBeVisible();
+  await expect(page.getByText('This browser can’t show notifications. With sound on, Kettle chimes while it’s on screen.')).toBeVisible();
 });

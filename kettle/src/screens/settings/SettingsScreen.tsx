@@ -179,7 +179,7 @@ function DeviceGroup() {
   const notifOn = st.notifications && status === 'granted';
   const notifDesc =
     status === 'unsupported'
-      ? 'This browser can’t show notifications. Kettle chimes instead, while it’s open.'
+      ? 'This browser can’t show notifications. With sound on, Kettle chimes while it’s on screen.'
       : status === 'denied'
         ? 'Blocked in your browser settings.'
         : status === 'granted'
