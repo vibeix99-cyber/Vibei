@@ -1,8 +1,11 @@
-# I02 — Recoverable End and task disposition · READY FOR REVIEW
+# I02 — Recoverable End and task disposition · READY FOR REVIEW (r2 re-confirmation)
 
 - **Maker:** M1. Branch `pe/m1`, worktree `/home/user/wt/m1/kettle`.
-- **Revision:** the commit that adds this file (`git log -1 --format=%H -- kettle/review/product-excellence/contracts/I02/READY-FOR-REVIEW.md`),
-  message `I01 I02 I03 READY FOR REVIEW: …`. Parent `49fcb3d`.
+- **Revision:** the r2 commit (message `I01 I02 I03 READY FOR REVIEW (r2): …`; `git log -1 --format=%H --
+  kettle/review/product-excellence/contracts/I02/READY-FOR-REVIEW.md`), parent `ade1195`. Checker r1 APPROVED I02 on
+  `6d5969e`; r2 changes only I03's storage-full warning placement, tests and docs, re-confirmed by re-running everything on
+  the r2 tree (`e2d8326b6aa3b15b609eb1c8e76bda5f68b38d53`). The End sheet, Done/Carry, Skip break and flow actions are
+  unchanged since r1 (r2's `flow.ts` diff touches only the save-failed warning).
 - **Diff base:** `c80d068` (app source identical to `8f1044a`).
 - **Proposed state:** **CLOSED — PASSES WITHOUT CHANGE.** Every I02 behaviour already held on the base revision; no
   application code was changed for I02. No confirmation was added (none was missing: End already confirms; Done/Carry are
@@ -19,7 +22,7 @@
 
 | Command | Result | Log |
 |---|---|---|
-| `KETTLE_PORT=5221 KETTLE_PWA_PORT=5231 npx playwright test --project=chromium tests/integrity.spec.ts` (final tree) | 20/20; I02 tests 10–14 ✓ | `../I01/runs/integrity-e2e-on-fix.txt` |
+| `KETTLE_PORT=5221 KETTLE_PWA_PORT=5231 npx playwright test --project=chromium tests/integrity.spec.ts` (final tree) | 25/25 on r2; I02 tests 10–14 ✓ | `../I01/runs/integrity-e2e-on-fix.txt` |
 | same spec on a clean `c80d068` copy | I02 tests 10–14 ✓ (unchanged behaviour) | `../I01/runs/integrity-e2e-on-base.txt` |
 | `npx tsc --noEmit --pretty false`; `npx vitest run` | exit 0; 265/265 (incl. `src/app/intention.test.ts`) | `../I03/runs/unit-on-fix.txt` |
 

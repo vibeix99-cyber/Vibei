@@ -1,8 +1,11 @@
-# I01 — Reliable session time and exactly-once completion · READY FOR REVIEW
+# I01 — Reliable session time and exactly-once completion · READY FOR REVIEW (r2 re-confirmation)
 
 - **Maker:** M1 (session and data integrity). Branch `pe/m1`, worktree `/home/user/wt/m1/kettle`.
-- **Revision:** the commit that adds this file (`git log -1 --format=%H -- kettle/review/product-excellence/contracts/I01/READY-FOR-REVIEW.md`),
-  message `I01 I02 I03 READY FOR REVIEW: …`. Parent `49fcb3d` (WIP checkpoint of this same maker work).
+- **Revision:** the r2 commit (message `I01 I02 I03 READY FOR REVIEW (r2): …`; `git log -1 --format=%H --
+  kettle/review/product-excellence/contracts/I01/READY-FOR-REVIEW.md`), parent `ade1195`. Checker r1 APPROVED I01 on
+  `6d5969e`; r2 changes only I03's warning placement (`src/app/flow.ts`), tests and docs, so I01 is re-confirmed by re-running
+  everything on the r2 tree (`git rev-parse <r2>:kettle/src` = `e2d8326b6aa3b15b609eb1c8e76bda5f68b38d53`). No timer code
+  changed since r1 (`git diff 6d5969e <r2> -- kettle/src/timer` is empty).
 - **Diff base:** `c80d068` (= `a8ffbd3` src + review tooling; app source identical to `8f1044a`). `git diff c80d068 <rev> -- kettle/src kettle/tests kettle/docs`.
 - **Proposed state:** **CLOSED — PASSES WITHOUT CHANGE** for every I01 behaviour (reload, pause/+5 survival, suspension,
   late return, exactly-once, duplicate tabs). The one timer defect found (a brew lost at 0:00 when storage is full) is a
@@ -12,7 +15,7 @@
 
 | File | Change |
 |---|---|
-| `tests/integrity.spec.ts` | **New** real-browser spec (20 tests; I01 = tests 1–9). Disposable profile per test. |
+| `tests/integrity.spec.ts` | **New** real-browser spec (25 tests; I01 = tests 1–9). Disposable profile per test. |
 | `docs/areas/timer.md` | New section "Integrity policies" (policy table below) + "Storage full"; test map; real-device gap. |
 | `src/timer/sync.ts`, `src/lib/storage.ts`, `src/timer/storageFull.test.ts` | I03 repair (storage full), listed here because they are timer files. |
 
@@ -24,9 +27,9 @@ No other timer behaviour was changed.
 |---|---|---|
 | `npx tsc --noEmit --pretty false` | exit 0 | `../I03/runs/unit-on-fix.txt` |
 | `npx vitest run` | 26 files, **265/265** passed | `../I03/runs/unit-on-fix.txt` |
-| `KETTLE_PORT=5221 KETTLE_PWA_PORT=5231 npx playwright test --project=chromium tests/integrity.spec.ts` | **20/20** passed (2.8 min) | `runs/integrity-e2e-on-fix.txt` |
-| same spec against a clean `git archive c80d068` copy (base) | 17/20: all I01 and I02 tests pass; the 3 storage-full tests fail (I03) | `runs/integrity-e2e-on-base.txt` |
-| `KETTLE_PORT=5221 KETTLE_PWA_PORT=5231 npx playwright test --project=timer-harness --project=timer-app` (existing suite) | **26/26** passed | `runs/timer-e2e-on-fix.txt` |
+| `KETTLE_PORT=5221 KETTLE_PWA_PORT=5231 npx playwright test --project=chromium tests/integrity.spec.ts` | **25/25** passed on r2 (4.3 min) | `runs/integrity-e2e-on-fix.txt` |
+| same spec against a clean `git archive c80d068` copy (base) | 20/25: all I01 and I02 tests pass; 5 I03 storage-full tests fail (see I03) | `runs/integrity-e2e-on-base.txt` |
+| `KETTLE_PORT=5221 KETTLE_PWA_PORT=5231 npx playwright test --project=timer-harness --project=timer-app` (existing suite) | **26/26** passed on r2 | `runs/timer-e2e-on-fix.txt` |
 
 ## Policy table (actual behaviour, verified; also in `docs/areas/timer.md`)
 
