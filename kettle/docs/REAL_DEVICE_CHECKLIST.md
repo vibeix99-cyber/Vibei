@@ -114,4 +114,19 @@ from a tap, denied/unsupported explained). Only a real phone proves what is *hea
 | 8.7 | Follow those steps to allow notifications, return to Kettle | The Nudges switch becomes available without a reload (or after the reload the steps ask for); turning it on works; **Send a test nudge** shows one |  |
 | 8.8 | iPhone Safari tab (not installed) | Nudges is disabled and says the browser can't show notifications; nothing asks for permission |  |
 
+## 9. Screen reader, big text and the on-screen keyboard (Product Excellence I04)
+
+Chromium checks the markup (names, roles, focus order, focus return, no spoken countdown). Only a person with a real
+screen reader and real phone settings can confirm how it feels.
+
+| # | Do this | Expect | Result |
+|---|---|---|---|
+| 9.1 | iPhone: VoiceOver on. Today → swipe through to "Put the kettle on", double-tap; on the brew screen swipe to Pause, Add 5 minutes, End session | Every control is announced with its name; the countdown is **not** read out every second; "Kettle's on" (or similar) is announced once |  |
+| 9.2 | Same with TalkBack on Android | Same as 9.1 |  |
+| 9.3 | During a brew open End session, then dismiss it (VoiceOver: two-finger scrub; TalkBack: back) | Focus stays inside the sheet while open; afterwards it returns to End session |  |
+| 9.4 | Let a brew finish with the screen reader on; mark the task Done, open "How your leaves added up", then Tea time | The summary is reachable in order; Done reads as pressed; the details read as expanded |  |
+| 9.5 | Phone text size to the largest standard setting (iOS Larger Text / Android Font size max). Go through Today, a brew, the summary, Stats, Nook, Settings | Nothing is cut off or needs sideways scrolling; Today's three stats may wrap onto two lines; every button stays reachable above the docked start and the tab bar |  |
+| 9.6 | On Today tap "What are you brewing?" so the keyboard opens | The field stays visible above the keyboard and the docked start; you can see what you type |  |
+| 9.7 | On a small phone (iPhone SE size) tap "Change brew length" under the start button | The 15 / 25 / 50 / Custom choice scrolls into view above the start button |  |
+
 Send the table back (screenshots are fine), and I'll turn any ❌ into a fix.

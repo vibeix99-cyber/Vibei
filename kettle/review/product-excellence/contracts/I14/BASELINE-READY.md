@@ -46,7 +46,39 @@ and re-measured it with this tool below. Chai's DPR-2 desktop softness is report
 
 ## Re-measurement on this branch (paired A/B, same tool)
 
-AB_PLACEHOLDER
+Command (both production builds served side by side, alternating order, fresh context per journey):
+
+```
+npx vite build --outDir <scratch>/perf-before          # at 6ddcdaa (git archive into scratch)
+npx vite build --outDir <scratch>/perf-after           # at this revision
+npx vite preview --outDir <scratch>/perf-before --port 5243 --strictPort
+npx vite preview --outDir <scratch>/perf-after  --port 5242 --strictPort
+node review/product-excellence/tools/perf.mjs --base http://127.0.0.1:5243 --name before-6ddcdaa \
+     --base http://127.0.0.1:5242 --name after-m2 --runs 3 --profiles phone,desktop --out review/product-excellence/perf/ab-m2
+```
+
+Result `perf/ab-m2/summary.md` + `perf.json` (2026-10-07 17:21–17:30 UTC, load average 8.6–13.9 from other agents:
+timings are noisy; CLS, heap and bytes are not timing-sensitive). Median of 3, before → after:
+
+| Metric | Phone | Desktop |
+|---|---|---|
+| **CLS whistle → summary** | **0.50 → 0** (0.5/0.5/0.5 → 0/0/0) | 0 → 0 |
+| CLS whole journey / Today load / Nook load | 0.50 → 0 / 0 → 0 / 0 → 0 | 0 → 0 / 0 → 0 / 0 → 0 |
+| JS heap Today · Focus · Summary · Nook 3D | 8.9 · 10.2 · 10.9 · 9.7 → 8.9 · 10.2 · 10.9 · 9.8 MB | 8.9 · 10.2 · 10.9 · 9.6 → same |
+| Bytes Today settled (JS / CSS / total, gzip) | 280.2 / 41.2 / 581.7 → 281.0 / 41.5 / 582.8 KB (+1.1 KB) | same |
+| Main-thread busy: Today→focus · focus controls · whistle→summary · break | 455 · 323 · 419 · 201 → 462 · 324 · 469 · 207 ms | — |
+| TBT during journey | 52 → 19 ms | — |
+| Click → next paint: Start · Pause · Resume · +5 · Tea time | 319 · 126 · 34 · 288 · 109 → 305 · 279 · 37 · 217 · 75 ms | 284 · 36 · 25 · 31 · 19 → 318 · 24 · 110 · 177 · 15 ms |
+| 3D: Start → focus window · cold Nook | 1157 · 2560 → 1163 · 2546 ms | 3003 · 5358 → 2675 · 5603 ms |
+
+Reading: the one measured defect (phone CLS 0.50) is gone in every run, with no heap, byte or main-thread cost.
+Click-to-paint differences go both ways per control and per profile (phone Pause +153 ms but desktop Pause −12 ms;
+desktop +5 +146 ms but phone +5 −71 ms) with run-to-run spread larger than the differences
+(phone Pause before [126, 136, 51] / after [328, 210, 279]; the baseline's own five runs spread 86–266 ms), and the
+main-thread work for the focus controls is unchanged (323 → 324 ms): renderer/load noise on a shared CPU-rendered
+host, not a regression I can attribute. None of my changes touch the Pause path except CSS on the session screen.
+During this work a first version of the 200 %-text status-bar fix measured **CLS 0.26 on phone Today loads**
+(2 of 3 runs, `section._card` / greeting shifting); it was replaced before this A/B (see I04 F6), which measures 0.
 
 ## BLOCKED / UNKNOWN (never PASS)
 
