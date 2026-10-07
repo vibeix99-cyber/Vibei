@@ -90,7 +90,9 @@
   --sidebar-w: 248px;
   --rail-w: 344px;
   --content-max: 680px;
-  --tabbar-h: 68px;
+  /* The phone tab bar: 68px, or taller when the reader's text size grows (12px padding + 36px icon + 2px gap +
+     one 0.75rem label line), so the page's bottom padding and the docked start keep clearing it. */
+  --tabbar-h: max(68px, calc(50px + 0.9rem));
 }
 
 /* ================= Light — "paper" ================= */

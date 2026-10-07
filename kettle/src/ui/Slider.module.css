@@ -116,8 +116,14 @@
 .dragging .thumb {
   transition-property: transform;
 }
-.disabled {
+/* Off (e.g. volumes while muted): the track and thumb fade, the words stay readable (ink-3 is ≥ 4.5:1 on cards),
+   so you can still see what you'll get when sound comes back. */
+.disabled .row {
   opacity: 0.5;
+}
+.disabled .label,
+.disabled .value {
+  color: var(--ink-3);
 }
 .disabled .hit,
 .disabled .thumb {

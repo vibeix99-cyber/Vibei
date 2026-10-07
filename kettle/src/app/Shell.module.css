@@ -45,7 +45,8 @@
   padding: 0 4px;
   max-width: 560px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* minmax(0, …): with large text the labels must not widen the bar past the screen (no sideways scroll). */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 .item {
   min-width: 0;
