@@ -21,9 +21,9 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 
 | ID | Pri | Owner | State | Evidence / verdict |
 |---|---|---|---|---|
-| I01 Reliable time, exactly-once completion | P0 | M1 | READY FOR REVIEW | `pe/m1@6d5969e`: passes without change; Checker r1 running |
-| I02 Recoverable End and task disposition | P0 | M1 | READY FOR REVIEW | `6d5969e`: passes without change; Checker r1 running |
-| I03 Data safety, truthful storage consequences | P0 | M1 | READY FOR REVIEW | `6d5969e`: 3 storage-full defects fixed (D1 brew lost, D2 false restore success, D3 silent failed saves); Checker r1 running |
+| I01 Reliable time, exactly-once completion | P0 | M1 | APPROVED r1 on `6d5969e` (must be re-confirmed on r2) | passes without change |
+| I02 Recoverable End and task disposition | P0 | M1 | APPROVED r1 on `6d5969e` (must be re-confirmed on r2) | passes without change |
+| I03 Data safety, truthful storage consequences | P0 | M1 | REJECTED r1 → IN REVISION | `6d5969e` Checker r1 REJECT: (A) warning visible at 0:00 stays over Tea time; (B) on phones it covers Add 5/Pause/Resume/End and Save backup sits over End. r2 in progress (`pe/m1@ade1195` WIP) |
 | I04 Access and short-screen reachability | P0 | M2 | IN PROGRESS | maker M2 running; gate: retest after all UI work |
 | I05 Real whistle, mute, ambience expectations | P0 | M2 | IN PROGRESS | real-device cases BLOCKED in this environment |
 | I06 Crisp approved Chai | P1 | M4 | NOT STARTED | |
@@ -78,6 +78,13 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - 16:16 UTC recovery: M2's uncommitted work preserved as `pe/m2@651bc54` (WIP 2, NOT READY FOR REVIEW); the
   checker's stale worktrees removed; M1 Checker r1 relaunched fresh on `6d5969e`; M2 resumed from `651bc54` with
   the relayed requests.
+
+- Checker r1 on `6d5969e` (`contracts/I0{1,2,3}/CHECKER-r1.md`, commit `a2b096c`): I01 APPROVE, I02 APPROVE,
+  I03 REJECT (defects A and B above). Rejection routed back to M1. A third usage-limit stop (resets 21:10 UTC)
+  interrupted M1's r2 and M2.
+- 21:35 UTC recovery: M1's r2 work preserved as `pe/m1@ade1195`, M2's as `pe/m2@16bde5a` (M2 had also saved its
+  own WIP commits 3–4); both resumed with context intact. Integration rule: Wave 1 merges only when M1's current
+  revision has APPROVE for I01, I02 and I03 and M2's current revision has APPROVE for I04/I05/I14.
 
 ## Exact next action
 
