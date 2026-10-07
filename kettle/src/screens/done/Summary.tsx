@@ -232,7 +232,7 @@ export function Summary({ reduced }: { reduced: boolean }) {
         </div>
       </div>
 
-      <motion.footer className={s.footer} {...enter(3)}>
+      <motion.footer className={s.footer} {...enter(3)} data-toast-above="">
         <Button ref={ctaRef} size="lg" variant="sky" sfx="start" icon={<Icon name="cup" size={22} />} onClick={() => leave('break')} className={s.cta} data-done-cta="">
           {isLong ? `Long tea break · ${breakMin} min` : `Tea time · ${breakMin} min`}
         </Button>

@@ -6,6 +6,7 @@ import { useSettings, type TagId, type RhythmId } from '@/state/settings';
 import { useTimer, useRemaining, nextBreakKind } from '@/timer';
 import { formatClock } from '@/lib/format';
 import { useShortcut } from '@/lib/shortcuts';
+import { useReducedMotion } from '@/lib/useReducedMotion';
 import { Button, Card, Chip, ChipGroup, Ring, SegmentedControl, Sheet, NumberStepper, TextField, toast } from '@/ui';
 import { useDayKey, useProgress } from '@/progress';
 import { carriedFrom, setIntentionOutcome } from '@/app/intention';
@@ -98,6 +99,14 @@ export function Composer({ recent }: { recent: string[] }) {
     if (!fieldRef.current?.contains(e.relatedTarget as Node | null)) setInputFocus(false);
   };
 
+  const reduced = useReducedMotion();
+  /** Bring the brew length into view (clear of the dock) and put focus on the chosen length. */
+  const showLength = () => {
+    const box = document.getElementById('home-brew-length');
+    if (!box) return;
+    box.scrollIntoView({ block: 'center', behavior: reduced ? 'auto' : 'smooth' });
+    (box.querySelector<HTMLElement>('[role=radio][aria-checked=true]') ?? box.querySelector<HTMLElement>('[role=radio]'))?.focus({ preventScroll: true });
+  };
   return (
     <>
     <section className={s.composer} aria-labelledby="home-brew">
@@ -169,7 +178,13 @@ export function Composer({ recent }: { recent: string[] }) {
       <Button size="lg" block sfx="start" className={s.cta} onClick={start} icon={<Icon name="play" size={22} />}>
         Put the kettle on · {focusMin} min
       </Button>
-      <p className={s.ctaNote}>{longNext ? `Then a long tea break, ${longBreakMin} min. You’ve earned it.` : `Then a ${shortBreakMin} min tea break.`}</p>
+      <p className={s.ctaNote}>
+        {longNext ? `Then a long tea break, ${longBreakMin} min. You’ve earned it.` : `Then a ${shortBreakMin} min tea break.`}{' '}
+        {/* Phones: the brew length sits below the fold or under this dock at first; this takes you to it. */}
+        <button type="button" className={`${s.linkBtn} ${s.lengthLink}`} onClick={showLength}>
+          Change brew length
+        </button>
+      </p>
     </div>
     </>
   );
@@ -188,7 +203,7 @@ function RhythmPicker() {
     { value: 'custom' as RhythmId, label: customMin ? `${customMin} min` : 'Custom', sublabel: customMin ? 'Custom' : 'Set it' },
   ];
   return (
-    <div className={s.rhythm}>
+    <div className={s.rhythm} id="home-brew-length">
       <p className={s.rhythmLabel} aria-hidden="true">
         Brew length
       </p>

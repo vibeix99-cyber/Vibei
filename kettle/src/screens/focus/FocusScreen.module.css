@@ -285,14 +285,13 @@
 /* ---------- the summary: a sheet that rests on the counter's front edge, just under Chai's feet ---------- */
 /* Stacked, the panel takes the whole screen for the summary; the stage keeps its place and size underneath. The
    sheet starts over the counter's edge and scrolls up over the scene for as much room as its content needs. */
-.screen[data-view='summary'] .panel {
-  grid-row: 1 / -1;
-}
+/* The panel box itself never moves (moving it from the lower row to the whole screen measured CLS 0.5 on every
+   phone completion, and the exiting countdown jumped with it): the summary box reaches up over the stage instead. */
 .summaryBox {
   --sheet-top: calc(var(--stage-h) - 28px);
-  position: relative;
+  position: absolute;
+  inset: calc(-1 * var(--stage-h)) 0 0;
   min-height: 0;
-  height: 100%;
   overflow: hidden;
 }
 
@@ -456,9 +455,14 @@
   .timer {
     padding-inline: 0;
   }
+  .screen[data-view='summary'] .panel {
+    grid-row: 1 / -1;
+  }
   /* A card sized to its content (up to the column's height, then the content scrolls). */
   .summaryBox {
     --sheet-top: 0px;
+    position: relative;
+    inset: auto;
     align-self: center;
     display: flex;
     flex-direction: column;

@@ -250,7 +250,8 @@
   line-height: 1.25;
   color: var(--ink);
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  /* Names take ≤ 2 lines at normal sizes; 3 keeps "Stack of books" whole at 200 % text (it was cut at 2). */
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

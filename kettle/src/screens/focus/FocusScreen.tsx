@@ -345,7 +345,7 @@ export default function FocusScreen() {
                   <Icon name="check" size={18} /> Mark it done, start fresh
                 </button>
               )}
-              <div className={s.overActions}>
+              <div className={s.overActions} data-toast-above="">
                 <Button block size="lg" sfx="start" icon={<Icon name="play" size={24} />} onClick={startNextBrew}>
                   Put the kettle on
                 </Button>
@@ -378,7 +378,7 @@ export default function FocusScreen() {
 
               {view === 'break' ? (
                 <>
-                  <div className={s.controls}>
+                  <div className={s.controls} data-toast-above="">
                     <RoundButton size={60} sfx="cancel" label="Skip break" icon={<Icon name="close" size={24} />} onClick={skipBreak} />
                     <RoundButton
                       ref={mainRef}
@@ -398,7 +398,7 @@ export default function FocusScreen() {
                   </div>
                 </>
               ) : (
-                <div className={`${s.controls} ${view === 'whistle' ? s.controlsGone : ''}`} aria-hidden={view === 'whistle' || undefined}>
+                <div className={`${s.controls} ${view === 'whistle' ? s.controlsGone : ''}`} aria-hidden={view === 'whistle' || undefined} data-toast-above="">
                   <RoundButton
                     size={60}
                     sfx="addTime"

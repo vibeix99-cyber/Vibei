@@ -32,9 +32,10 @@ export async function walkJourney(page, base, visit, { theme = 'light', motion, 
   const want = (id) => !only || only.includes(id);
   const w = (ms) => page.waitForTimeout(ms * wait);
   // Zen: the focus chrome fades after 7 s without input; any pointer movement brings it back.
+  // The chrome fades back in over 700 ms: sample after it has finished (a mid-fade task chip read 3.6:1).
   const wake = async () => {
     await page.evaluate(() => window.dispatchEvent(new PointerEvent('pointermove')));
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(1200);
   };
   const ev = (fn, arg) => page.evaluate(fn, arg);
   // Scroll the control to the middle first: Playwright's own scrolling parks it at an edge, where sticky chrome
@@ -72,7 +73,9 @@ export async function walkJourney(page, base, visit, { theme = 'light', motion, 
     await w(600);
   }
   await ev(() => window.__kettle.timer.getState().pause());
-  await w(900);
+  // The Paused flag fades in over 250 ms; on a loaded CPU renderer that can take longer than a second, and a
+  // mid-fade sample reads as low contrast (measured 1.29:1 at ~10 % opacity, 4.5:1+ once settled).
+  await w(2000);
   if (want('paused')) await visit('paused', page);
   await ev(() => window.__kettle.timer.getState().resume());
   await click(page.getByRole('button', { name: 'Add 5 minutes' }));

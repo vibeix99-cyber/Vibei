@@ -97,6 +97,26 @@ test('late return: one whistle, the while-away summary, nothing more on later vi
   expect(count((await sounds(page)).requested, 'complete')).toBe(1);
 });
 
+test('another tab in front (page hidden): the whistle is still scheduled once', async ({ page, baseURL }) => {
+  await openWithSound(page, baseURL);
+  await page.getByRole('button', { name: /Put the kettle on/ }).click();
+  await page.waitForFunction(() => location.hash === '#/focus');
+  await page.waitForTimeout(1000);
+  // What the engine sees when the user switches tabs on a computer (a locked phone freezes the page instead: that
+  // case is the late return above, and real phones are on docs/REAL_DEVICE_CHECKLIST.md).
+  await page.evaluate(() => {
+    Object.defineProperty(document, 'visibilityState', { configurable: true, get: () => 'hidden' });
+    Object.defineProperty(document, 'hidden', { configurable: true, get: () => true });
+    document.dispatchEvent(new Event('visibilitychange'));
+  });
+  await page.waitForTimeout(500);
+  await page.evaluate(() => (window as any).__kettle.finish());
+  await page.waitForTimeout(3000);
+  const s = await sounds(page);
+  expect(count(s.requested, 'complete')).toBe(1);
+  expect(count(s.scheduled, 'complete')).toBe(1);
+});
+
 test('muted: no sound at all, the visual whistle and summary remain', async ({ page, baseURL }) => {
   await openWithSound(page, baseURL);
   await settings(page, { muted: true });
@@ -109,6 +129,9 @@ test('muted: no sound at all, the visual whistle and summary remain', async ({ p
   await expect(page.getByRole('heading', { name: /minutes brewed/ })).toBeVisible();
   await page.waitForTimeout(1500);
   expect((await sounds(page)).scheduled).toEqual([]);
+  // The Sounds row says so where the switch is.
+  await page.evaluate(() => (window as any).__kettle.navigate('/settings'));
+  await expect(page.getByText('Everything’s quiet. The kettle still shows when it whistles.')).toBeVisible();
 });
 
 /** A controllable Notification permission (Chromium's real prompt can't be answered in a test). */
@@ -176,6 +199,8 @@ test('denied: Settings says so, shows the browser path, and turning it on later 
   await expect(page.getByText(/To turn nudges on:/)).toBeHidden();
   await nudges.click();
   await expect(nudges).toBeChecked();
+  // The one platform limit, stated once at the switch: no promise of lock-screen delivery.
+  await expect(page.getByText(/A locked phone may hold the nudge until you’re back/)).toBeVisible();
   await page.getByRole('button', { name: 'Send a test nudge' }).click();
   await expect(page.getByRole('button', { name: /Sent/ })).toBeVisible();
 });
@@ -185,5 +210,5 @@ test('unsupported: the switch is off and disabled, and says what happens instead
   await open(page, base(baseURL), { seed: 'veteran', route: '/settings' });
   const nudges = page.getByRole('switch', { name: 'Nudges' });
   await expect(nudges).toBeDisabled();
-  await expect(page.getByText(/can’t show notifications/)).toBeVisible();
+  await expect(page.getByText('This browser can’t show notifications. Kettle chimes instead, while it’s open.')).toBeVisible();
 });

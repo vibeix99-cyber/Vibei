@@ -177,11 +177,39 @@ async function measure(page, selectors) {
   return rows;
 }
 
+/**
+ * axe's target-size reports a target that a sticky bar (the docked start) covers *at the current scroll offset* as
+ * "partially obscured". Re-check each such node scrolled to the middle of the screen: `clearPasses` says whether the
+ * same target then meets 2.5.8 (a scroll-position artifact) or still fails (a real defect).
+ */
+async function clearPasses(page, target) {
+  const y = await page.evaluate(() => scrollY);
+  await page.locator(target).first().evaluate((el) => el.scrollIntoView({ block: 'center' }));
+  await page.waitForTimeout(300);
+  const r = await new AxeBuilder({ page }).include(target).withRules(['target-size']).analyze();
+  await page.evaluate((y) => scrollTo(0, y), y);
+  await page.waitForTimeout(200);
+  return r.violations.length === 0;
+}
+
 async function axe(page) {
   const r = await new AxeBuilder({ page }).withTags(TAGS).analyze();
   const cc = r.incomplete.find((x) => x.id === 'color-contrast');
+  for (const v of r.violations) {
+    if (v.id !== 'target-size') continue;
+    for (const n of v.nodes) if (/partially obscured/.test(n.failureSummary ?? '')) n.scrolledClear = (await clearPasses(page, n.target.join(' '))) ? 'pass' : 'fail';
+  }
   return {
-    violations: r.violations.map((v) => ({ id: v.id, impact: v.impact, nodes: v.nodes.length, targets: v.nodes.slice(0, 6).map((n) => n.target.join(' ')), summary: v.nodes[0]?.failureSummary?.split('\n').slice(0, 2).join(' ') })),
+    violations: r.violations.map((v) => ({
+      id: v.id,
+      impact: v.impact,
+      nodes: v.nodes.length,
+      targets: v.nodes.slice(0, 6).map((n) => n.target.join(' ')),
+      summary: v.nodes[0]?.failureSummary?.split('\n').slice(0, 2).join(' '),
+      // every node only partly covered by sticky chrome, and each passes once scrolled clear
+      scrollDependent: v.nodes.every((n) => n.scrolledClear === 'pass'),
+      scrolledClear: v.nodes.map((n) => n.scrolledClear ?? null),
+    })),
     contrastPasses: r.passes.find((x) => x.id === 'color-contrast')?.nodes.length ?? 0,
     contrastIncomplete: (cc?.nodes ?? []).filter((n) => n.target.length === 1 && typeof n.target[0] === 'string').map((n) => n.target[0]),
   };
@@ -206,7 +234,7 @@ async function auditState(page, id, cfg, theme, opts) {
     row.error = String(e.message || e).split('\n')[0];
   }
   results.push(row);
-  const v = row.axe?.violations?.filter((x) => x.impact === 'serious' || x.impact === 'critical').length;
+  const v = row.axe?.violations?.filter((x) => (x.impact === 'serious' || x.impact === 'critical') && !x.scrollDependent).length;
   log(`  ${opts.suite} ${row.viewport} ${theme} ${id}: axe ${row.axe ? `${row.axe.violations.length} (${v} serious+)` : '-'}${row.contrast ? `, measured ${row.contrast.length} (${row.contrast.filter((c) => !c.pass && !c.incidental).length} fail)` : ''}${row.targets ? `, targets <24: ${row.targets.filter((t) => t.result === 'fail').length}` : ''}${row.reach ? `, covered ${row.reach.covered.length}, hscroll ${row.reach.hScroll}, clipped ${row.reach.clipped.length}` : ''}${row.error ? ' ERROR ' + row.error : ''}`);
 }
 
@@ -325,12 +353,12 @@ if (main.length) {
   for (const r of main) (groups[`${r.viewport} ${r.theme}`] ??= []).push(r);
   for (const [k, rows] of Object.entries(groups)) {
     const v = rows.flatMap((r) => r.axe?.violations ?? []);
-    md += `| ${k.split(' ')[0]} | ${k.split(' ')[1]} | ${rows.length} | ${v.filter((x) => x.impact === 'serious' || x.impact === 'critical').length} | ${v.filter((x) => x.impact !== 'serious' && x.impact !== 'critical').length} | ${rows.reduce((a, r) => a + (r.axe?.contrastPasses ?? 0), 0)} | ${rows.reduce((a, r) => a + (r.axe?.contrastUndecided ?? 0), 0)} |\n`;
+    md += `| ${k.split(' ')[0]} | ${k.split(' ')[1]} | ${rows.length} | ${v.filter((x) => (x.impact === 'serious' || x.impact === 'critical') && !x.scrollDependent).length}${v.some((x) => x.scrollDependent) ? ` (+${v.filter((x) => x.scrollDependent).length} scroll-dependent)` : ''} | ${v.filter((x) => x.impact !== 'serious' && x.impact !== 'critical').length} | ${rows.reduce((a, r) => a + (r.axe?.contrastPasses ?? 0), 0)} | ${rows.reduce((a, r) => a + (r.axe?.contrastUndecided ?? 0), 0)} |\n`;
   }
   const allV = main.flatMap((r) => (r.axe?.violations ?? []).map((v) => ({ ...v, where: `${r.state} ${r.viewport} ${r.theme}` })));
   if (allV.length) {
-    md += `\n### Violations\n\n| Rule | Impact | Where | Targets |\n|---|---|---|---|\n`;
-    for (const v of allV) md += `| ${v.id} | ${v.impact} | ${v.where} | ${v.targets.join('; ').replace(/\|/g, '\\|')} |\n`;
+    md += `\n### Violations\n\n"Scroll-dependent" = every node is only partly covered by sticky chrome at the captured scroll offset and passes target-size when scrolled to the middle of the screen (re-checked by axe on that node).\n\n| Rule | Impact | Where | Targets | Summary | Scroll-dependent |\n|---|---|---|---|---|---|\n`;
+    for (const v of allV) md += `| ${v.id} | ${v.impact} | ${v.where} | ${v.targets.join('; ').replace(/\|/g, '\\|')} | ${(v.summary ?? '').replace(/\|/g, '/').replace(/^Fix any of the following:\s*/, '')} | ${v.scrolledClear?.some((x) => x) ? (v.scrollDependent ? 'yes (passes scrolled clear)' : 'no') : '—'} |\n`;
   }
   const meas = main.flatMap((r) => (r.contrast ?? []).map((c) => ({ ...c, where: `${r.state} ${r.viewport} ${r.theme}` })));
   if (meas.length) {

@@ -98,4 +98,20 @@ Mark each item ✅ / ❌ / ➖ (couldn't test) and add a note.
 | 7.8 | Turn on Reduce Motion and complete a brew | The kettle and Chai stay still; the summary just fades in |  |
 | 7.9 | On a Retina laptop, open a brew full-screen and look at Chai from normal distance | Chai looks painted and crisp (if it looks soft, note it: higher-resolution poses are ready to be made) |  |
 
+## 8. Whistle, mute and nudges: what a phone really does (Product Excellence I05)
+
+Headless Chromium proves the engine's side (one whistle request, nothing scheduled when muted, permission asked only
+from a tap, denied/unsupported explained). Only a real phone proves what is *heard* and *shown*. Use a 5-min brew.
+
+| # | Do this | Expect | Result |
+|---|---|---|---|
+| 8.1 | Fresh profile, sound on, phone ringer on. Open Kettle, tap **Start a 15-min brew** (or Settings → Brew 5 min first), keep the screen on until it ends | No sound before your first tap. One whistle at the end, then the summary. Nothing plays twice |  |
+| 8.2 | Same, with the iPhone silent switch on (Android: media volume at 0) | Note whether the whistle is heard. Either way the kettle steams and the summary appears. Settings → Sounds says a silent switch or lock screen can keep it quiet |  |
+| 8.3 | Mute in Kettle (speaker button, **M**, or Settings → Sounds off), finish a brew | Silent. The kettle still whistles visually, the summary appears. Settings → Sounds reads "Everything’s quiet. The kettle still shows when it whistles." |  |
+| 8.4 | Start a brew, lock the phone, wait past the end, unlock | Record: was anything heard while locked (expected: no, browsers pause pages); on unlock, at most **one** whistle and the "whistled while you were away" summary; no second whistle on later lock/unlock |  |
+| 8.5 | Nudges on and allowed, start a brew, lock the phone, wait past the end | Record **when** the nudge appears (at the end, or only once you unlock). Settings → Nudges says a locked phone may hold it until you're back; it must not be promised |  |
+| 8.6 | Deny the notification prompt (or block it in site settings), open Settings | Nudges is off and disabled, says "Blocked in your browser settings." and the steps for how you opened Kettle (installed app / phone browser / computer). Kettle still chimes |  |
+| 8.7 | Follow those steps to allow notifications, return to Kettle | The Nudges switch becomes available without a reload (or after the reload the steps ask for); turning it on works; **Send a test nudge** shows one |  |
+| 8.8 | iPhone Safari tab (not installed) | Nudges is disabled and says the browser can't show notifications; nothing asks for permission |  |
+
 Send the table back (screenshots are fine), and I'll turn any ❌ into a fix.
