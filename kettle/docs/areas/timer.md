@@ -16,6 +16,47 @@ Owner: timer area. Files: `src/timer/**`, `src/pwa/**`, `src/lib/shortcuts.ts`, 
 | All tabs live | A `storage` event rehydrates the timer (`persist.rehydrate()` reads the *current* value, so racing writes converge), settings, and any store registered with `registerTabSync`. Progress syncs itself (rev-aware). Changes from another tab are re-emitted as `timer:sync {kind: start|pause|resume|addTime|complete|stop|reset}` so UI can react without re-recording, re-playing sounds or re-notifying. |
 | Exactly one tab has side effects | Web Locks leader (`kettle:leader`). The tab you **look at steals** leadership (on visible/focus), so the tab with audio permission plays the whistle. Frozen or bfcached tabs release it. A follower that sees a phase overdue by 4 s takes over; at 12 s any tab may complete, still gated by the IDB claim. Fallback without Web Locks: a localStorage lease, confirmed over two heartbeats. |
 
+## Integrity policies (verified end to end in a real browser, Product Excellence I01 / I02 / I03)
+
+What actually happens, as `tests/integrity.spec.ts` checks it in Chromium (each test in a disposable profile).
+
+| Situation | Policy |
+|---|---|
+| Reload mid-brew | The same brew continues against the same `endsAt`; nothing is recorded by the reload. |
+| Pause → reload → resume | Still paused after the reload with the same remaining time; Resume sets `endsAt = now + remaining`, so neither the pause nor the reload costs or adds time. Paused time is added to `pausedTotalMs` and never counts as focus. |
+| +5 → reload | The extension is persisted (`plannedMs`, `addedMs`, `endsAt` +5 min); completion records the full extended minutes (`focusedMs = plannedMs`). |
+| Tab suspended (Page Lifecycle freeze) across the end | Nothing runs while frozen; on resume the brew completes once, at its **real** end (`endedAt = endsAt`), with the "while you were away" summary. With two tabs, the unfrozen one completes it; the frozen one wakes up and mirrors it (no second record). |
+| Late return (app closed past the end) | Completes once on the next load, at the real end, with the right minutes and `whileAway`; later reloads add nothing. A brew left **paused** never completes while away: the same remaining time is waiting. |
+| Repeated completion attempts | `finish()`, `tick()`, `end()`/`pause()` at 0:00 and a double-clicked Tea time give one record, one set of leaf grants (`focus:<id>`, `full:<id>`), one summary and one break. |
+| Reload during the whistle / on the summary | The summary comes back (sessionStorage); the record and rewards are not granted again. |
+| Two tabs on one profile | One record and one grant; both tabs show the same summary; Tea time in one moves both. |
+| End during a brew | A confirmation sheet ("Leave the kettle early?"). Esc, the backdrop and "Keep brewing" all keep the brew running untouched. Confirmed with ≥ 1 active minute (`MIN_RECORDABLE_MS`): saved as an **unfinished** brew with its active minutes (pauses excluded), 1 leaf per whole minute, no full-brew bonus, the cycle count unchanged, the task kept for the next brew. Under 1 minute: the sheet says nothing will be saved, and nothing is. |
+| Leaving the session screen | Back, the tab bar, another route or a reload never stop a brew; an active brew owns the screen on load and Home offers "Back to your brew". |
+| Skip break / Next brew / That’s all for now | A skipped break is never recorded; Next brew keeps the task; a break that ran out is recorded as a completed break. |
+| Storage full or blocked | See below. |
+
+### Storage full (or blocked)
+
+Every write goes through `safeStorage` (`src/lib/storage.ts`). A failed write never throws, but it is no longer
+silent: it is counted, remembered per key (`lastWriteFailed(key)`, cleared by the next successful write of that
+key) and reported to `onStorageWriteError` listeners.
+
+- **The tab's own state wins over older saved state.** Right before completing, the tab re-reads storage for other
+  tabs' writes (`mirrorTimerFromStorage`). If this tab's own last timer save failed, storage holds an *older* timer
+  than the tab, so that self-initiated re-read does not adopt it (it used to roll the running brew back to the last
+  saved state, typically idle, and the brew vanished at 0:00 with no summary and no record). A `storage` event is
+  different: another tab's write did land, so it is newer and is still mirrored.
+- **The brew completes normally** (whistle, summary, record, rewards) and lives in this tab's memory. Saved data is
+  never overwritten with anything partial. The next successful save (any later change once there is room) writes
+  everything the tab holds. Export still works and includes the unsaved brew.
+- **The person is told** (`src/app/flow.ts`): a warning toast, "Kettle couldn’t save your latest changes: this
+  browser’s storage is full. Save a backup to keep them." (or "…in this browser…" when storage is blocked rather
+  than full) with a **Save backup** action. At most one per minute. While the ritual's docked controls are on
+  screen (the whistle, the summary with Tea time, a tea break, "Break’s over") it waits and appears as soon as the
+  person leaves that screen or starts the next brew, so it never covers Tea time.
+- **Limit:** until storage has room again, closing the tab loses what was not saved (the warning and its backup
+  action are the remedy). A restore that can't be saved is refused (see `docs/areas/progress.md`).
+
 ## Modules
 `store.ts` (state + actions + pure math + sanitize + completion guard) · `ticker.ts` (wake loop,
 jump detection, leader/claim wiring, hooks, `initTimer`) · `scheduler.ts` + `tick.worker.ts` ·
@@ -98,6 +139,10 @@ jump detection, leader/claim wiring, hooks, `initTimer`) · `scheduler.ts` + `ti
   fonts, three chunk and tick worker; that an offline reload boots and times a brew with the worker;
   and the update flow: the new SW waits, `needRefresh` fires, nothing reloads mid-brew, applying
   reloads, and the same brew is still running.
+- Integrity e2e (`KETTLE_PORT=5221 npx playwright test --project=chromium tests/integrity.spec.ts`, 20 tests): the
+  policies in the table above, I02 End/dismissal/task disposition, and I03 backup round trip, invalid files,
+  storage full and no network use. Storage-full unit tests: `src/timer/storageFull.test.ts`,
+  `src/progress/storageFull.test.ts`.
 - Also verified by probes (not in CI): 4 tabs × 3 cycles of ~15 random cross-tab pause/resume/+time
   actions gave exactly one completion per session, identical state in all tabs and always one leader.
 
@@ -128,6 +173,8 @@ jump detection, leader/claim wiring, hooks, `initTimer`) · `scheduler.ts` + `ti
    Added `isTimerLeader()` / `onLeaderChange()` for audio (it was reading the diagnostics API).
 
 ## Known gaps / notes
+- Real mobile OS suspension (iOS Safari / Android Chrome backgrounded or killed) is not reproducible here; the CDP
+  Page Lifecycle freeze is the closest emulation. A whistle while the page is suspended is not promised anywhere.
 - Headless can't show real OS throttling or real wake locks. They're simulated: dead main-thread
   timers, CDP freeze, fake `wakeLock`. A real-device pass on Android Chrome (SW notification path)
   and iOS Safari (the page is suspended in background, and completion happens on return with whileAway) is still worth doing.

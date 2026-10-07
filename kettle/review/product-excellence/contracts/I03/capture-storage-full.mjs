@@ -3,8 +3,13 @@
 //   node review/product-excellence/contracts/I03/capture-storage-full.mjs --base http://127.0.0.1:5201 --out <dir> \
 //        --w 390 --h 844 --dpr 2 --theme light [--rev <served revision>]
 //
-//   s1-brew-completes-storage-full   a newbie profile whose localStorage quota is really full finishes a brew
-//   s2-restore-storage-full          the same profile adds a valid backup (one new brew) from Settings › Your data
+//   s0-brew-start-storage-full       a newbie profile whose localStorage quota is really full starts a brew (1.2 s in)
+//   s1-brew-completes-storage-full   …that brew reaches its end (6 s after 0:00: whistle → summary, or, before the
+//                                    repair, the brew vanishing). The s0 toast, if any, is tapped away first, as a
+//                                    real brew would long outlast it.
+//   s3-after-summary-storage-full    …the person leaves the summary with Skip break (before the repair there is no
+//                                    summary to leave: the page is already on Today), 1.5 s later
+//   s2-restore-storage-full          the same kind of profile adds a valid backup (one new brew) from Settings › Your data
 //
 // Each state runs in a fresh browser context (a disposable profile). The 3D scene is off (pre-rendered stills), so
 // both sides render the same stage. Writes <out>/<state>.png and <out>/capture-meta.json.
@@ -62,6 +67,10 @@ async function profile() {
   await page.reload();
   await ready();
   await page.evaluate(() => document.fonts.ready);
+  // A returning person's profile always holds a saved timer (every brew writes one); a freshly seeded one may not
+  // have it yet, depending on boot timing. Save it now so every run starts from the same state.
+  await page.evaluate(() => window.__kettle.timer.setState({}));
+  if (!(await page.evaluate(() => localStorage.getItem('kettle:timer')))) throw new Error('timer not saved');
   return { ctx, page };
 }
 
@@ -78,20 +87,32 @@ const fill = (page) =>
     }
   });
 
-// s1: a brew completes while storage is full.
+const toasts = (page) => page.evaluate(() => [...document.querySelectorAll('[aria-label="Notifications"] li')].map((l) => l.textContent));
+
+// s0 → s1 → s3: a brew starts, completes and is left while storage is full.
 {
   const { ctx, page } = await profile();
   await fill(page);
+  await page.evaluate(() => window.__kettle.timer.getState().startFocus({ intention: 'Chapter 3 notes', tag: 'study' }));
+  await page.waitForTimeout(1200);
+  meta.states.s0 = { hash: await page.evaluate(() => location.hash), toast: await toasts(page) };
+  await page.screenshot({ path: `${out}/s0-brew-start-storage-full.png` });
+
+  for (const li of await page.locator('[aria-label="Notifications"] li').all()) await li.click({ position: { x: 12, y: 12 } }).catch(() => {});
   await page.evaluate(() => {
     const k = window.__kettle;
-    k.timer.getState().startFocus({ intention: 'Chapter 3 notes', tag: 'study' });
     const s = k.timer.getState();
     k.ff(s.endsAt - k.clock.now() - 50);
   });
   await page.waitForTimeout(6000); // whistle → summary (or, before the repair, the brew vanishing)
-  const state = await page.evaluate(() => ({ hash: location.hash, sessions: window.__kettle.progress.getState().sessions.length, toast: [...document.querySelectorAll('[aria-label="Notifications"] li')].map((l) => l.textContent) }));
+  meta.states.s1 = { hash: await page.evaluate(() => location.hash), sessions: await page.evaluate(() => window.__kettle.progress.getState().sessions.length), toast: await toasts(page) };
   await page.screenshot({ path: `${out}/s1-brew-completes-storage-full.png` });
-  meta.states.s1 = state;
+
+  const skip = page.getByRole('button', { name: 'Skip break' });
+  if (await skip.isVisible().catch(() => false)) await skip.click();
+  await page.waitForTimeout(1500);
+  meta.states.s3 = { hash: await page.evaluate(() => location.hash), toast: await toasts(page) };
+  await page.screenshot({ path: `${out}/s3-after-summary-storage-full.png` });
   await ctx.close();
 }
 

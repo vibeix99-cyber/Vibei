@@ -654,7 +654,7 @@ test.describe('I02 End, dismissal and task disposition', () => {
     await page.getByRole('button', { name: /^Tea time/ }).click();
     await expect.poll(async () => (await timer(page)).phase).toBe('shortBreak');
     await toEnd(page, 50);
-    await expect(page.getByRole('heading', { name: 'Break’s over' })).toBeVisible({ timeout: 15_000 });
+    await expect(page.getByRole('heading', { name: 'Break’s over', level: 2 })).toBeVisible({ timeout: 15_000 }); // the card (an sr-only h1 names the screen too)
     await page.getByRole('button', { name: 'That’s all for now' }).click();
     await expect.poll(() => hash(page)).toBe('#/');
     expect((await stored(page))!.sessions.map((r) => `${r.phase}:${r.completed}`)).toEqual(['focus:true', 'focus:true', 'shortBreak:true']);
@@ -709,7 +709,8 @@ const profilePills = async (page: Page) => {
   await expect(page.getByRole('heading', { name: 'Settings', level: 1 })).toBeVisible();
   return page.evaluate(() => {
     const text = document.body.innerText;
-    return ['Level \\d+', '[\\d,]+ leaves', '\\d+ days? warm'].map((re) => text.match(new RegExp(re))?.[0] ?? null);
+    // (Not "32 leaves to level 5" from a side card that may or may not have rendered yet.)
+    return ['Level \\d+', '[\\d,]+ leaves(?! to level)', '\\d+ days? warm'].map((re) => text.match(new RegExp(re))?.[0] ?? null);
   });
 };
 /** Export through Settings, as a person would, and return the file's text. */
@@ -723,6 +724,43 @@ const nookItems = async (page: Page) => {
   await page.waitForTimeout(800);
   return page.evaluate(() => (window as any).__kettle.progress.getState().leaves as number);
 };
+
+/**
+ * A fresh "newbie" profile whose real localStorage quota is then filled (filler keys are not Kettle's), so every
+ * further Kettle save fails with the browser's own QuotaExceededError. Returns what was saved before.
+ */
+async function newbieWithFullStorage(page: Page, opts: { seeded?: boolean } = {}) {
+  if (!opts.seeded) {
+    await open(page);
+    await page.evaluate(() => (window as any).__kettle.seed('newbie'));
+    await reload(page);
+  }
+  // A returning person's profile always holds a saved timer (every brew writes one). A freshly seeded profile may
+  // not have one yet, depending on boot timing, so save it now: the storage-full case is then deterministic.
+  await page.evaluate(() => (window as any).__kettle.timer.setState({}));
+  expect(await page.evaluate(() => localStorage.getItem('kettle:timer'))).toContain('"status":"idle"');
+  const raw0 = await rawData(page);
+  const n0 = JSON.parse(raw0.progress!).state.sessions.length as number;
+  const err = await page.evaluate(() => {
+    let chunk = 'x'.repeat(1024 * 1024);
+    let i = 0;
+    while (chunk.length >= 8) {
+      try {
+        localStorage.setItem(`filler${i++}`, chunk);
+      } catch {
+        chunk = chunk.slice(0, chunk.length / 2);
+      }
+    }
+    try {
+      localStorage.setItem('filler-probe', 'x'.repeat(4096));
+      return 'no error';
+    } catch (e) {
+      return (e as DOMException).name;
+    }
+  });
+  expect(err).toBe('QuotaExceededError');
+  return { raw0, n0 };
+}
 
 test.describe('I03 data safety', () => {
   test.beforeEach(async ({ context }) => prime(context));
@@ -826,67 +864,32 @@ test.describe('I03 data safety', () => {
     expect(await rawData(page)).toEqual(raw0);
   });
 
-  test('storage full: a clear warning, saved data never corrupted, a backup still carries the unsaved brew, a restore that cannot be saved changes nothing', async ({ page }) => {
-    test.setTimeout(150_000);
-    await open(page);
-    await page.evaluate(() => (window as any).__kettle.seed('newbie'));
-    await reload(page);
-    const exported = await exportViaSettings(page);
-    const raw0 = await rawData(page);
-    const n0 = JSON.parse(raw0.progress!).state.sessions.length;
-
-    // Fill this profile's real localStorage quota (filler keys are not Kettle's).
-    const err = await page.evaluate(() => {
-      let chunk = 'x'.repeat(1024 * 1024);
-      let i = 0;
-      while (chunk.length >= 8) {
-        try {
-          localStorage.setItem(`filler${i++}`, chunk);
-        } catch {
-          chunk = chunk.slice(0, chunk.length / 2);
-        }
-      }
-      try {
-        localStorage.setItem('probe', 'x'.repeat(4096));
-        return 'no error';
-      } catch (e) {
-        return (e as DOMException).name;
-      }
-    });
-    expect(err).toBe('QuotaExceededError');
-
+  test('storage full: a brew that completes still reaches its summary, once; saved data stays intact; a backup carries the brew; making room saves it', async ({ page }) => {
+    test.setTimeout(120_000);
+    const { raw0, n0 } = await newbieWithFullStorage(page);
     await page.evaluate(() => (window as any).__kettle.timer.getState().startFocus({ minutes: 25, intention: 'Storage full' }));
     const { sessionId } = await timer(page);
     await toEnd(page, 50);
+    // Not lost at 0:00: the whistle, then the summary of this brew.
     await expect.poll(() => hash(page), { timeout: 15_000 }).toBe('#/done');
-    // The person is told, in words, that saving failed and what to do.
-    await expect(page.getByText(/storage is full/)).toBeVisible();
-    // What was saved before is intact and readable; the brew lives in memory only.
+    await expect(summaryHeading(page)).toHaveText('25 minutes brewed');
+    expect(await timer(page)).toMatchObject({ status: 'idle', lastEnded: { sessionId, reason: 'complete' } });
+    // What was saved before is intact and readable; the brew lives in this tab only, exactly once.
     expect((await rawData(page)).progress).toBe(raw0.progress);
     expect((await memory(page)).sessions.filter((r) => r.id === sessionId)).toHaveLength(1);
 
     // Exporting still works and includes the unsaved brew.
-    await page.evaluate(() => (window as any).__kettle.navigate('/settings'));
-    const [download] = await Promise.all([page.waitForEvent('download'), page.getByRole('button', { name: /Export a backup/ }).click()]);
-    const backup = JSON.parse(readFileSync((await download.path())!, 'utf8'));
+    await page.getByRole('button', { name: 'Skip break' }).click();
+    const warning = page.getByRole('status', { name: 'Notifications' }).getByText(/storage is full/);
+    await warning.click(); // (the warning itself is the next test)
+    await expect(warning).toBeHidden();
+    const backup = JSON.parse(await exportViaSettings(page));
     expect(backup.progress.sessions.filter((r: Rec) => r.id === sessionId)).toHaveLength(1);
 
-    // A restore that can't be saved is refused, and nothing changes (memory or storage).
-    const extra = JSON.parse(exported);
-    extra.progress.sessions.push({ ...extra.progress.sessions[0], id: 's_full_import' });
-    const memBefore = (await memory(page)).sessions.length;
-    const [chooser] = await Promise.all([page.waitForEvent('filechooser'), page.getByRole('button', { name: /Import a backup/ }).click()]);
-    await chooser.setFiles({ name: 'more.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(extra)) });
-    const sheet = page.getByRole('dialog', { name: 'Add this backup?' });
-    await sheet.getByRole('button', { name: 'Add' }).click();
-    await expect(page.getByRole('alert')).toContainText('storage is full');
-    expect((await memory(page)).sessions.length).toBe(memBefore);
-    expect((await memory(page)).sessions.some((r) => r.id === 's_full_import')).toBe(false);
-    expect((await rawData(page)).progress).toBe(raw0.progress);
-
-    // Make room: the next save writes everything the tab holds, and it survives a reload.
+    // Make room: the next save writes everything the tab holds (here: the export's re-read of storage), and it
+    // survives a reload.
     await page.evaluate(() => {
-      for (const k of Object.keys(localStorage)) if (k.startsWith('filler') || k === 'probe') localStorage.removeItem(k);
+      for (const k of Object.keys(localStorage)) if (k.startsWith('filler')) localStorage.removeItem(k);
     });
     await page.getByRole('button', { name: /Export a backup/ }).click();
     await page.waitForTimeout(500);
@@ -894,6 +897,62 @@ test.describe('I03 data safety', () => {
     const st = await stored(page);
     expect(st!.sessions).toHaveLength(n0 + 1);
     expect(recordsFor(st, sessionId!)).toHaveLength(1);
+  });
+
+  test('storage full: the person is told in plain words, with a Save backup action — at once, but never over the summary’s Tea time', async ({ page }) => {
+    test.setTimeout(120_000);
+    await newbieWithFullStorage(page);
+    const warning = page.getByRole('status', { name: 'Notifications' }).getByText(/storage is full\. Save a backup to keep them\./);
+    await page.evaluate(() => (window as any).__kettle.timer.getState().startFocus({ minutes: 25, intention: 'Storage full' }));
+    // The first failed save (the brew's start) is told at once.
+    await expect.poll(() => hash(page)).toBe('#/focus');
+    await expect(warning).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Save backup' })).toBeVisible();
+    await warning.click(); // a tap puts it away (a real brew outlasts it anyway)
+    await expect(warning).toBeHidden();
+
+    await toEnd(page, 50);
+    await expect.poll(() => hash(page), { timeout: 15_000 }).toBe('#/done');
+    // The completion's failed saves don't put a toast over the summary and its Tea time button…
+    await page.waitForTimeout(1500);
+    await expect(warning).toHaveCount(0);
+    const tea = page.getByRole('button', { name: /^Tea time/ });
+    const box = (await tea.boundingBox())!;
+    expect(await page.evaluate(([x, y]) => !!document.elementFromPoint(x, y)?.closest('button')?.textContent?.startsWith('Tea time'), [box.x + box.width / 2, box.y + box.height / 2])).toBe(true);
+    // …the warning comes as soon as the person leaves the summary.
+    await page.getByRole('button', { name: 'Skip break' }).click();
+    await expect.poll(() => hash(page)).toBe('#/');
+    await expect(warning).toBeVisible();
+    // Its action saves a backup file of what this tab holds.
+    const [download] = await Promise.all([page.waitForEvent('download'), page.getByRole('button', { name: 'Save backup' }).click()]);
+    const backup = JSON.parse(readFileSync((await download.path())!, 'utf8'));
+    expect(backup.progress.sessions.some((r: Rec) => r.intention === 'Storage full')).toBe(true);
+  });
+
+  test('storage full: a restore that cannot be saved is refused with a plain reason and changes nothing', async ({ page }) => {
+    test.setTimeout(120_000);
+    await open(page);
+    await page.evaluate(() => (window as any).__kettle.seed('newbie'));
+    await reload(page);
+    const exported = await exportViaSettings(page);
+    const extra = JSON.parse(exported);
+    extra.progress.sessions.push({ ...extra.progress.sessions[0], id: 's_full_import' });
+    const { raw0 } = await newbieWithFullStorage(page, { seeded: true });
+    const memBefore = (await memory(page)).sessions.length;
+    await page.evaluate(() => (window as any).__kettle.navigate('/settings'));
+    const [chooser] = await Promise.all([page.waitForEvent('filechooser'), page.getByRole('button', { name: /Import a backup/ }).click()]);
+    await chooser.setFiles({ name: 'more.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(extra)) });
+    const sheet = page.getByRole('dialog', { name: 'Add this backup?' });
+    await sheet.getByRole('button', { name: 'Add' }).click();
+    await expect(page.getByRole('alert')).toHaveText('Kettle couldn’t save the backup: this browser’s storage is full. Nothing was changed.');
+    expect((await memory(page)).sessions.length).toBe(memBefore);
+    expect((await memory(page)).sessions.some((r) => r.id === 's_full_import')).toBe(false);
+    expect(await rawData(page)).toEqual(raw0);
+    // It says why itself; no second, general "couldn't save your latest changes" warning (there are none).
+    await page.waitForTimeout(800);
+    await expect(page.getByText(/Save a backup to keep them/)).toHaveCount(0);
+    await reload(page);
+    expect((await memory(page)).sessions.some((r) => r.id === 's_full_import')).toBe(false);
   });
 
   test('“Everything lives on this device”: a brew, an export and an import send nothing anywhere', async ({ page }) => {

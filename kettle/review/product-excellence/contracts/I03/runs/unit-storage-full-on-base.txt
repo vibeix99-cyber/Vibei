@@ -1,0 +1,29 @@
+# Unit tests with the repair reverted: src/timer/sync.ts, src/progress/portability.ts, src/app/flow.ts as on c80d068; src/lib/storage.ts (additive failure reporting) and the test files as in the final commit.
+# cmd: npx vitest run src/timer/storageFull.test.ts src/progress/storageFull.test.ts
+     × a brew started after storage filled up still completes once and is recorded (not rolled back to the saved idle kettle) 15ms
+     × +5 added after storage filled up: the brew completes at its extended end with all 30 minutes 33ms
+     × merge: refused with a plain reason; memory, storage and settings unchanged; nothing to undo 57ms
+     × replace: refused with a plain reason; memory, storage and settings unchanged; nothing to undo 12ms
+     × only part of it fits (progress lands, settings don’t) while this tab holds an unsaved brew: storage is put back exactly 7ms
+     × a refused restore does not raise the general “couldn’t save your latest changes” warning (it says why itself) 5ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected { ok: true, summary: { …(19) } } to deeply equal { ok: false, error: StringMatching{…} }
+- Expected
++ Received
+AssertionError: expected { ok: true, summary: { …(19) } } to deeply equal { ok: false, error: StringMatching{…} }
+- Expected
++ Received
+AssertionError: expected { ok: true, summary: { …(19) } } to deeply equal { ok: false, error: StringMatching{…} }
+- Expected
++ Received
+AssertionError: expected true to be false // Object.is equality
+- Expected
++ Received
+AssertionError: expected [] to have a length of 1 but got +0
+- Expected
++ Received
+AssertionError: expected { id: 's_mul2tds0fb1edd83', …(9) } to match object { id: 's_mul2tds0fb1edd83', …(2) }
+- Expected
++ Received
+ Test Files  2 failed (2)
+      Tests  6 failed | 3 passed (9)

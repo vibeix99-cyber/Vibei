@@ -7,12 +7,12 @@
  */
 import { clock } from '@/lib/clock';
 import { dayKey } from '@/lib/dates';
-import { onStorageWriteError, storageWriteFailures } from '@/lib/storage';
+import { checkWrites, lastWriteFailed, safeStorage } from '@/lib/storage';
 import { DEFAULT_SETTINGS, getSettings, useSettings, type Settings } from '@/state/settings';
 import { emptyData, refreshCaches, replay, SCHEMA_VERSION } from './engine';
 import { levelFromLeaves } from './levels';
 import { localeWeekStart } from './streak';
-import { pickData, syncFromStorage, useProgress } from './store';
+import { pickData, PROGRESS_KEY, syncFromStorage, useProgress } from './store';
 import { coerceData } from './validate';
 import type { ProgressData, SessionRecord } from './types';
 
@@ -257,24 +257,31 @@ export function importData(json: string, opts: ImportOptions = {}): ImportResult
   if (!res.ok) return res;
   const { data, settings, summary } = res.parsed;
   const before = { progress: { ...pickData(useProgress.getState()), lastReport: null }, settings: exportableSettings() };
+  // A restore is all or nothing: if any part of it can't be saved (storage full or blocked), none of it happens.
   const exact = { progress: pickData(useProgress.getState()), settings: useSettings.getState() };
-  const failuresBefore = storageWriteFailures();
-  let quota = false;
-  const off = onStorageWriteError((e) => (quota ||= e.quota));
-  try {
+  const settingsKey = useSettings.persist.getOptions().name ?? 'kettle:settings';
+  const saved = { [PROGRESS_KEY]: safeStorage.getItem(PROGRESS_KEY), [settingsKey]: safeStorage.getItem(settingsKey) };
+  const attempt = checkWrites(() => {
     useProgress.getState().load(data);
     if (settings) useSettings.getState().set({ ...settings, onboarded: settings.onboarded ?? true });
-  } finally {
-    off();
-  }
-  if (storageWriteFailures() > failuresBefore) {
-    // It couldn't be saved, so it isn't restored: put this tab back exactly as it was (storage never changed).
-    useProgress.setState(exact.progress);
-    useSettings.setState(exact.settings);
+  });
+  if (attempt.failed) {
+    checkWrites(() => {
+      // This tab goes back exactly as it was…
+      useProgress.setState(exact.progress);
+      useSettings.setState(exact.settings);
+      // …and so does storage: a part of the restore that did land is overwritten with what was saved before
+      // (it fitted then, so it fits again), even when this tab's own copy can't be saved right now.
+      for (const [key, raw] of Object.entries(saved)) {
+        if (!lastWriteFailed(key) || safeStorage.getItem(key) === raw) continue;
+        if (raw === null) safeStorage.removeItem(key);
+        else safeStorage.setItem(key, raw);
+      }
+    });
     undoSnapshot = null;
     return {
       ok: false,
-      error: quota
+      error: attempt.quota
         ? 'Kettle couldn’t save the backup: this browser’s storage is full. Nothing was changed.'
         : 'Kettle couldn’t save the backup in this browser. Nothing was changed.',
     };

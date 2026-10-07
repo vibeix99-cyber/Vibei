@@ -4,6 +4,7 @@
  */
 import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { addDays } from '@/lib/dates';
+import { onStorageWriteError } from '@/lib/storage';
 import { useSettings } from '@/state/settings';
 import { canUndoImport, exportData, importData, undoLastImport } from './portability';
 import { useProgress, PROGRESS_KEY } from './store';
@@ -14,11 +15,13 @@ const TODAY = '2026-09-28';
 class FillableStorage {
   map = new Map<string, string>();
   full = false;
+  /** Finer control: a write this returns true for fails like a full quota. */
+  refuse: ((k: string, v: string) => boolean) | null = null;
   getItem(k: string) {
     return this.map.has(k) ? this.map.get(k)! : null;
   }
   setItem(k: string, v: string) {
-    if (this.full) throw Object.assign(new Error('The quota has been exceeded.'), { name: 'QuotaExceededError', code: 22 });
+    if (this.full || this.refuse?.(k, String(v))) throw Object.assign(new Error('The quota has been exceeded.'), { name: 'QuotaExceededError', code: 22 });
     this.map.set(k, String(v));
   }
   removeItem(k: string) {
@@ -43,6 +46,7 @@ beforeAll(() => {
 beforeEach(() => {
   setNow(2026, 9, 28, 16, 0);
   storage.full = false;
+  storage.refuse = null;
   storage.clear();
   undoLastImport();
   useProgress.getState().resetAll();
@@ -79,6 +83,40 @@ describe('restoring while storage is full', () => {
       expect(canUndoImport()).toBe(false);
     });
   }
+
+  it('only part of it fits (progress lands, settings don’t) while this tab holds an unsaved brew: storage is put back exactly', () => {
+    // A brew this tab couldn't save (storage full at the time): memory has it, storage doesn't.
+    storage.refuse = (k, v) => k === PROGRESS_KEY && v.includes('Unsaved brew');
+    useProgress.getState().recordSession(brew(TODAY, 13, 0, { intention: 'Unsaved brew' }));
+    const memBefore = JSON.stringify(useProgress.getState().sessions);
+    expect(memBefore).toContain('Unsaved brew');
+    const storedBefore = storage.getItem(PROGRESS_KEY);
+    const settingsBefore = storage.getItem('kettle:settings');
+    expect(storedBefore).not.toContain('Unsaved brew');
+    // A smaller backup replaces progress (that write fits); its settings don't fit; nor does this tab's own
+    // copy (with the unsaved brew) when it is put back. Only the earlier saved copy fits again.
+    const doc = JSON.parse(exportData());
+    doc.progress.sessions = doc.progress.sessions.filter((r: { intention: string }) => r.intention !== 'Unsaved brew').slice(0, 1);
+    doc.progress.ledger = [];
+    doc.settings = { ...doc.settings, name: 'Someone else' };
+    storage.refuse = (k, v) => (k === PROGRESS_KEY && v.includes('Unsaved brew')) || (k === 'kettle:settings' && v.includes('Someone else'));
+    const res = importData(JSON.stringify(doc), { mode: 'replace', settings: true });
+    expect(res).toEqual({ ok: false, error: expect.stringMatching(/storage is full.*[Nn]othing was changed/) });
+    expect(JSON.stringify(useProgress.getState().sessions)).toBe(memBefore);
+    expect(useSettings.getState()).toMatchObject({ name: 'Robin', dailyGoalMin: 60 });
+    expect(storage.getItem(PROGRESS_KEY)).toBe(storedBefore);
+    expect(storage.getItem('kettle:settings')).toBe(settingsBefore);
+    expect(canUndoImport()).toBe(false);
+  });
+
+  it('a refused restore does not raise the general “couldn’t save your latest changes” warning (it says why itself)', () => {
+    const seen: string[] = [];
+    const off = onStorageWriteError((e) => seen.push(e.key));
+    storage.full = true;
+    expect(importData(biggerBackup(), { mode: 'merge', settings: true }).ok).toBe(false);
+    off();
+    expect(seen).toEqual([]);
+  });
 
   it('with room to save, the same restore goes through (and is saved)', () => {
     const res = importData(biggerBackup(), { mode: 'merge' });

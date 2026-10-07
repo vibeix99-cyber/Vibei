@@ -8,21 +8,29 @@
   "theme": "dark",
   "renderer": "Chromium (Playwright) + SwiftShader (CPU)",
   "scene": "off (stills)",
-  "revision": "c80d068+dirty",
-  "capturedAt": "2026-10-07T01:13:14.728Z",
+  "revision": "49fcb3d+dirty",
+  "capturedAt": "2026-10-07T09:52:50.974Z",
   "states": {
+    "s0": {
+      "hash": "#/focus",
+      "toast": [
+        "Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to keep them.Save backup"
+      ]
+    },
     "s1": {
       "hash": "#/done",
       "sessions": 7,
+      "toast": []
+    },
+    "s3": {
+      "hash": "#/",
       "toast": [
         "Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to keep them.Save backup"
       ]
     },
     "s2": {
       "alert": "Kettle couldn’t save the backup: this browser’s storage is full. Nothing was changed.",
-      "toast": [
-        "Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to keep them.Save backup"
-      ],
+      "toast": [],
       "sessions": 6,
       "imported": false
     }

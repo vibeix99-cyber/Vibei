@@ -164,12 +164,28 @@ export function endFocusEarly(): void {
 /** One warning at a time, repeated at most this often while saves keep failing. */
 const SAVE_WARNING_EVERY_MS = 60_000;
 let saveWarnedAt = -Infinity;
+/** A warning waiting for a moment when it covers nothing the ritual needs (null: none waiting). */
+let heldWarning: { quota: boolean } | null = null;
+let heldPoll: ReturnType<typeof setInterval> | null = null;
+
+/**
+ * Where a bottom toast would cover the ritual's own docked controls — the whistle, the summary (Done / Carry,
+ * Tea time, Skip break), a tea break or "Break's over" — the warning waits until that moment is over: the
+ * person leaves the session screen or starts the next brew. Same rule as the "Break's over" toast.
+ */
+function ritualOnScreen(): boolean {
+  const route = getRoute();
+  if (route === '/done') return true;
+  if (route !== '/focus') return false;
+  const t = getTimer();
+  return t.status === 'idle' || t.phase !== 'focus' || !!useFlow.getState().whistle;
+}
 
 /**
  * Brews, rewards and settings then live only in this tab until a save succeeds again. Say so plainly, and
  * offer the one thing that keeps them: a backup file (exported from what this tab holds).
  */
-function warnSaveFailed({ quota }: StorageWriteError): void {
+function showSaveWarning(quota: boolean): void {
   const now = clock.now();
   if (now - saveWarnedAt < SAVE_WARNING_EVERY_MS) return;
   saveWarnedAt = now;
@@ -190,6 +206,23 @@ function warnSaveFailed({ quota }: StorageWriteError): void {
       },
     },
   );
+}
+
+function warnSaveFailed({ quota }: StorageWriteError): void {
+  if (!ritualOnScreen()) {
+    showSaveWarning(quota);
+    return;
+  }
+  heldWarning = { quota: quota || !!heldWarning?.quota };
+  if (heldPoll) return;
+  heldPoll = setInterval(() => {
+    if (ritualOnScreen() || !heldWarning) return;
+    if (heldPoll) clearInterval(heldPoll);
+    heldPoll = null;
+    const held = heldWarning;
+    heldWarning = null;
+    showSaveWarning(held.quota);
+  }, 500);
 }
 
 // ---------------------------------------------------------------------------

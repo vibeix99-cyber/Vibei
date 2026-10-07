@@ -2,7 +2,7 @@
  * Storage full (or blocked) while a brew runs. The in-memory timer is then the only up-to-date copy:
  * the pre-completion re-read of shared storage (for other tabs' writes) must not roll it back to the
  * last state that did get saved, or the brew is lost at 0:00 (reproduced in a real browser, see
- * review/product-excellence/contracts/I01).
+ * review/product-excellence/contracts/I03).
  */
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { clock } from '@/lib/clock';
