@@ -21,9 +21,9 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 
 | ID | Pri | Owner | State | Evidence / verdict |
 |---|---|---|---|---|
-| I01 Reliable time, exactly-once completion | P0 | M1 | IN PROGRESS | maker M1 running (wave 1) |
-| I02 Recoverable End and task disposition | P0 | M1 | IN PROGRESS | maker M1 running |
-| I03 Data safety, truthful storage consequences | P0 | M1 | IN PROGRESS | maker M1 running |
+| I01 Reliable time, exactly-once completion | P0 | M1 | READY FOR REVIEW | `pe/m1@6d5969e`: passes without change; Checker r1 running |
+| I02 Recoverable End and task disposition | P0 | M1 | READY FOR REVIEW | `6d5969e`: passes without change; Checker r1 running |
+| I03 Data safety, truthful storage consequences | P0 | M1 | READY FOR REVIEW | `6d5969e`: 3 storage-full defects fixed (D1 brew lost, D2 false restore success, D3 silent failed saves); Checker r1 running |
 | I04 Access and short-screen reachability | P0 | M2 | IN PROGRESS | maker M2 running; gate: retest after all UI work |
 | I05 Real whistle, mute, ambience expectations | P0 | M2 | IN PROGRESS | real-device cases BLOCKED in this environment |
 | I06 Crisp approved Chai | P1 | M4 | NOT STARTED | |
@@ -70,6 +70,14 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
   M2 — I14 baseline recorded (`perf/BASELINE.md`; phone CLS 0.5 at whistle → summary); I04 audit-before found
   serious axe violations (Home target size, disabled-slider contrast in Settings, Paused flag contrast at desktop
   light); fixes in progress. Both makers relaunched from their WIP commits and existing briefs.
+
+- 2026-10-07 ~09:20–14:10 UTC: M1 submitted `pe/m1@6d5969e` READY FOR REVIEW (tsc clean, vitest 265/265,
+  integrity spec 20/20 on fix vs 17/20 on base, timer suites 26/26). M1 relayed two requests to M2 (toasts must
+  float above session controls and the summary footer; Settings "Kettle will chime instead" overstates background
+  audio). A second usage-limit stop (resets 14:10 UTC) interrupted M2 and the first M1 Checker (no verdict written).
+- 16:16 UTC recovery: M2's uncommitted work preserved as `pe/m2@651bc54` (WIP 2, NOT READY FOR REVIEW); the
+  checker's stale worktrees removed; M1 Checker r1 relaunched fresh on `6d5969e`; M2 resumed from `651bc54` with
+  the relayed requests.
 
 ## Exact next action
 
