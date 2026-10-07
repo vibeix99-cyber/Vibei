@@ -171,7 +171,7 @@ test('keyboard-only critical journey with focus restoration', async ({ page, bas
   expect(await timer(page)).toBe('running');
   // Let Today finish leaving (its controls are still in the page for the length of the transition).
   await expect(page.getByRole('button', { name: /^Pause$/ })).toBeVisible();
-  await page.waitForFunction(() => !document.querySelector('[data-toast-above]'));
+  await expect(page.getByRole('button', { name: /Put the kettle on ·/ })).toHaveCount(0, { timeout: 15_000 });
 
   // Focus: pause / resume / +5 by Tab + Enter
   await tabTo(page, /^Pause$/, log);

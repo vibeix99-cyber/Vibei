@@ -90,9 +90,15 @@
 }
 .chipText {
   min-width: 0;
-  white-space: nowrap;
+  /* The task and its tag wrap (up to three lines) instead of being cut off: one line ended "Chapter 3 notes · Wo…"
+     at 375 px and lost the tag entirely at 320 px and at 200 % text. Short tasks still sit on one line. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
   overflow: hidden;
-  text-overflow: ellipsis;
+  overflow-wrap: anywhere;
+  line-height: 1.25;
+  padding-block: 6px;
 }
 .chipSub {
   color: var(--ink-2);
