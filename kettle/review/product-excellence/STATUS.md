@@ -63,6 +63,14 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - Worktrees `/home/user/wt/m1` (`pe/m1`) and `/home/user/wt/m2` (`pe/m2`) created; makers M1 (I01–I03) and M2
   (I14 baseline, I04, I05) launched in parallel (machine: 4 cores, so two makers at a time).
 
+- 2026-10-07 ~05:00 UTC: both Wave 1 makers stopped by an API usage limit (not an implementation failure). On
+  recovery (09:15 UTC) their uncommitted work was preserved as WIP commits `pe/m1@49fcb3d` and `pe/m2@ccb4ae4`
+  (explicitly NOT READY FOR REVIEW). Recovered findings: M1 — `tests/integrity.spec.ts` 17/18 pass on unmodified
+  code; one reproduced I03 defect (storage full → a completed brew never reaches the summary); fix in progress.
+  M2 — I14 baseline recorded (`perf/BASELINE.md`; phone CLS 0.5 at whistle → summary); I04 audit-before found
+  serious axe violations (Home target size, disabled-slider contrast in Settings, Paused flag contrast at desktop
+  light); fixes in progress. Both makers relaunched from their WIP commits and existing briefs.
+
 ## Exact next action
 
 Wait for M1 / M2 READY FOR REVIEW → launch an independent Checker per submission → APPROVE/REJECT loop →
