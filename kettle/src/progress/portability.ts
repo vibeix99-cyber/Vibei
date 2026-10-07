@@ -7,6 +7,7 @@
  */
 import { clock } from '@/lib/clock';
 import { dayKey } from '@/lib/dates';
+import { onStorageWriteError, storageWriteFailures } from '@/lib/storage';
 import { DEFAULT_SETTINGS, getSettings, useSettings, type Settings } from '@/state/settings';
 import { emptyData, refreshCaches, replay, SCHEMA_VERSION } from './engine';
 import { levelFromLeaves } from './levels';
@@ -256,8 +257,28 @@ export function importData(json: string, opts: ImportOptions = {}): ImportResult
   if (!res.ok) return res;
   const { data, settings, summary } = res.parsed;
   const before = { progress: { ...pickData(useProgress.getState()), lastReport: null }, settings: exportableSettings() };
-  useProgress.getState().load(data);
-  if (settings) useSettings.getState().set({ ...settings, onboarded: settings.onboarded ?? true });
+  const exact = { progress: pickData(useProgress.getState()), settings: useSettings.getState() };
+  const failuresBefore = storageWriteFailures();
+  let quota = false;
+  const off = onStorageWriteError((e) => (quota ||= e.quota));
+  try {
+    useProgress.getState().load(data);
+    if (settings) useSettings.getState().set({ ...settings, onboarded: settings.onboarded ?? true });
+  } finally {
+    off();
+  }
+  if (storageWriteFailures() > failuresBefore) {
+    // It couldn't be saved, so it isn't restored: put this tab back exactly as it was (storage never changed).
+    useProgress.setState(exact.progress);
+    useSettings.setState(exact.settings);
+    undoSnapshot = null;
+    return {
+      ok: false,
+      error: quota
+        ? 'Kettle couldn’t save the backup: this browser’s storage is full. Nothing was changed.'
+        : 'Kettle couldn’t save the backup in this browser. Nothing was changed.',
+    };
+  }
   undoSnapshot = { ...before, after: pickData(useProgress.getState()), afterSettings: JSON.stringify(exportableSettings()) };
   return { ok: true, summary };
 }

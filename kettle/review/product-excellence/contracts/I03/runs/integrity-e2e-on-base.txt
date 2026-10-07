@@ -1,0 +1,23 @@
+  ✓   1 tests/integrity.spec.ts:217:3 › I01 session time survives reload, suspension and late return › pause → reload → resume: the paused time is kept and the deadline moves by exactly the pause (8.1s)
+  ✓   2 tests/integrity.spec.ts:244:3 › I01 session time survives reload, suspension and late return › +5 → reload: the extension, its deadline and the gauge segment survive; completion records the full 30 min once (4.6s)
+  ✓   3 tests/integrity.spec.ts:267:3 › I01 session time survives reload, suspension and late return › suspended tab (a real Page Lifecycle freeze) across the end: one completion right after resume, at the real end, "while away" summary (17.6s)
+  ✓   4 tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (17.1s)
+  ✓   5 tests/integrity.spec.ts:340:3 › I01 session time survives reload, suspension and late return › late return: an extended brew that ended 2 h ago while the app was closed completes once, at its real end, with the right minutes (4.6s)
+  ✓   6 tests/integrity.spec.ts:373:3 › I01 session time survives reload, suspension and late return › late return to a paused brew: nothing completes; the same time is waiting (1.2s)
+  ✓   7 tests/integrity.spec.ts:395:3 › I01 exactly once › repeated finish / tick / end / pause at 0:00 and a double-clicked Tea time: one record, one grant, one break (5.6s)
+  ✓   8 tests/integrity.spec.ts:430:3 › I01 exactly once › reload during the whistle and again on the summary: one record, rewards granted once, the summary still there (4.2s)
+  ✓   9 tests/integrity.spec.ts:459:3 › I01 exactly once › two tabs on one profile: one record and one grant; both show the same summary; Tea time in one moves both (10.1s)
+  ✓  10 tests/integrity.spec.ts:502:3 › I02 End, dismissal and task disposition › dismissing the End sheet (Esc, backdrop, Keep brewing) or leaving the screen never stops the brew (6.5s)
+  ✓  11 tests/integrity.spec.ts:543:3 › I02 End, dismissal and task disposition › End early after 12 active minutes (with a pause): 12 minutes saved as an unfinished brew, 12 leaves, no full-brew bonus, task kept (3.1s)
+  ✓  12 tests/integrity.spec.ts:575:3 › I02 End, dismissal and task disposition › End within the first minute: the sheet says nothing will be saved, and nothing is (2.1s)
+  ✓  13 tests/integrity.spec.ts:586:3 › I02 End, dismissal and task disposition › Done / Carry forward are reversible; the carried task returns on Home; editing it and Mark done → Undo never add a focus record (7.1s)
+  ✓  14 tests/integrity.spec.ts:637:3 › I02 End, dismissal and task disposition › Skip break, Next brew and That’s all for now do what they say, and never record a skipped break (11.5s)
+  ✓  15 tests/integrity.spec.ts:730:3 › I03 data safety › export → reset (explicit confirmation) → import restores brews, settings and every reward exactly (10.1s)
+  ✓  16 tests/integrity.spec.ts:789:3 › I03 data safety › invalid files change nothing and say why (not JSON, another app, truncated, newer version, huge, empty, damaged) (7.4s)
+  ✘  17 tests/integrity.spec.ts:829:3 › I03 data safety › storage full: a clear warning, saved data never corrupted, a backup still carries the unsaved brew, a restore that cannot be saved changes nothing (19.9s)
+  ✓  18 tests/integrity.spec.ts:899:3 › I03 data safety › “Everything lives on this device”: a brew, an export and an import send nothing anywhere (6.8s)
+    Expected: "#/done"
+    Received: "#/"
+      862 |     // The person is told, in words, that saving failed and what to do.
+  1 failed
+  17 passed (2.5m)

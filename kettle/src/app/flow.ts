@@ -23,7 +23,10 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import { on, emit } from '@/lib/events';
 import { clock } from '@/lib/clock';
 import { plural } from '@/lib/format';
+import { onStorageWriteError, type StorageWriteError } from '@/lib/storage';
 import { audio } from '@/audio';
+import { toast } from '@/ui/Toast';
+import { downloadBackup } from '@/screens/home/shims/data';
 import { getSettings } from '@/state/settings';
 import { getTimer } from '@/timer';
 import type { Phase } from '@/timer/types';
@@ -155,6 +158,41 @@ export function endFocusEarly(): void {
 }
 
 // ---------------------------------------------------------------------------
+// Saving failed (storage full or blocked)
+// ---------------------------------------------------------------------------
+
+/** One warning at a time, repeated at most this often while saves keep failing. */
+const SAVE_WARNING_EVERY_MS = 60_000;
+let saveWarnedAt = -Infinity;
+
+/**
+ * Brews, rewards and settings then live only in this tab until a save succeeds again. Say so plainly, and
+ * offer the one thing that keeps them: a backup file (exported from what this tab holds).
+ */
+function warnSaveFailed({ quota }: StorageWriteError): void {
+  const now = clock.now();
+  if (now - saveWarnedAt < SAVE_WARNING_EVERY_MS) return;
+  saveWarnedAt = now;
+  toast.warning(
+    quota
+      ? 'Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to keep them.'
+      : 'Kettle couldn’t save your latest changes in this browser. Save a backup to keep them.',
+    {
+      id: 'kettle:save-failed',
+      duration: 12_000,
+      action: {
+        label: 'Save backup',
+        onClick: () => {
+          downloadBackup()
+            .then((name) => name && toast.success(`Saved ${name}. Keep it somewhere safe.`))
+            .catch(() => toast.warning('Couldn’t save the backup. Try again from Settings › Your data.'));
+        },
+      },
+    },
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Event wiring
 // ---------------------------------------------------------------------------
 
@@ -163,6 +201,8 @@ let started = false;
 export function initFlow(): void {
   if (started) return;
   started = true;
+
+  onStorageWriteError(warnSaveFailed);
 
   on('timer:start', () => {
     clearWhistle();

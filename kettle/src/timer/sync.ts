@@ -12,6 +12,7 @@
  * (so the leader doesn't notify while you're looking at another Kettle tab).
  */
 import { emit } from '@/lib/events';
+import { lastWriteFailed } from '@/lib/storage';
 import { useSettings } from '@/state/settings';
 import { useProgress, syncFromStorage } from '@/progress';
 import type { SessionRecord } from '@/progress/types';
@@ -57,8 +58,9 @@ let mirroring = false;
 /**
  * Re-read the shared timer from storage and emit `timer:sync` for whatever
  * another tab changed. Safe to call any time (also used right before completing).
+ * `event`: called for a `storage` event, i.e. another tab's write just landed.
  */
-export function mirrorTimerFromStorage(opts: { removed?: boolean } = {}): SyncKind | null {
+export function mirrorTimerFromStorage(opts: { removed?: boolean; event?: boolean } = {}): SyncKind | null {
   if (mirroring) return null;
   mirroring = true;
   try {
@@ -71,7 +73,11 @@ export function mirrorTimerFromStorage(opts: { removed?: boolean } = {}): SyncKi
     if (opts.removed) {
       // Another tab wiped data (reset/import). Mirror an idle kettle.
       if (prev.status !== 'idle') useTimer.getState().reset();
-    } else {
+    } else if (opts.event || !lastWriteFailed(TIMER_STORAGE_KEY)) {
+      // Not when this tab re-reads on its own after its own last save failed (storage full or blocked):
+      // storage then holds an older timer than this tab, and adopting it would roll a running brew back
+      // to an earlier state (or to idle) and lose it at 0:00. Another tab's write (a storage event) did
+      // land, so it is newer and is still mirrored.
       void useTimer.persist.rehydrate();
     }
     const next = useTimer.getState();
@@ -160,12 +166,12 @@ export function initTabSync(opts: TabSyncOptions = {}): () => void {
       // localStorage.clear() in another tab.
       void useSettings.persist.rehydrate();
       extraStores.forEach((s) => void s.persist.rehydrate());
-      mirrorTimerFromStorage({ removed: true });
+      mirrorTimerFromStorage({ removed: true, event: true });
       opts.onOtherKey?.(null);
       return;
     }
     if (e.key === TIMER_STORAGE_KEY) {
-      mirrorTimerFromStorage({ removed: e.newValue === null });
+      mirrorTimerFromStorage({ removed: e.newValue === null, event: true });
       return;
     }
     if (e.key === useSettings.persist.getOptions().name) {
