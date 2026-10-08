@@ -25,7 +25,7 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 | I02 Recoverable End and task disposition | P0 | M1 | APPROVED r1 on `6d5969e` (must be re-confirmed on r2) | passes without change |
 | I03 Data safety, truthful storage consequences | P0 | M1 | REJECTED r1 → IN REVISION | `6d5969e` Checker r1 REJECT: (A) warning visible at 0:00 stays over Tea time; (B) on phones it covers Add 5/Pause/Resume/End and Save backup sits over End. r2 in progress (`pe/m1@ade1195` WIP) |
 | I04 Access and short-screen reachability | P0 | M2 | IN PROGRESS | maker M2 running; gate: retest after all UI work |
-| I05 Real whistle, mute, ambience expectations | P0 | M2 | IN PROGRESS | real-device cases BLOCKED in this environment |
+| I05 Real whistle, mute, ambience expectations | P0 | M2 | APPROVED r1 on `pe/m2@2becb78` (PARTLY BLOCKED: real-device audio) | real-device cases BLOCKED in this environment |
 | I06 Crisp approved Chai | P1 | M4 | NOT STARTED | |
 | I07 Effort → leaves → level → Nook, once | P1 | M3 | NOT STARTED | |
 | I08 Plain purpose, first useful brew | P1 | M3 | NOT STARTED | |
@@ -85,6 +85,14 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - 21:35 UTC recovery: M1's r2 work preserved as `pe/m1@ade1195`, M2's as `pe/m2@16bde5a` (M2 had also saved its
   own WIP commits 3–4); both resumed with context intact. Integration rule: Wave 1 merges only when M1's current
   revision has APPROVE for I01, I02 and I03 and M2's current revision has APPROVE for I04/I05/I14.
+
+- M1 submitted r2 `pe/m1@a6ebe00` (defects A and B fixed; integrity spec 25/25; vitest 265/265; timer suites
+  26/26). M2 submitted `pe/m2@2becb78` (I04/I05/I14: 13 fixes; axe serious/critical 11 → 0; phone whistle →
+  summary CLS 0.50 → 0). Checkers launched on both exact commits; a fourth usage-limit stop (resets 02:30 UTC)
+  interrupted both. I05 verdict was already written: **APPROVE** on `2becb78`.
+- 08:39 UTC: both checkers resumed with context intact. The M2 checker was asked to decide explicitly whether
+  the new sky-blue "Change brew length" link (F10) weakens the orange-focus / blue-rest colour semantics
+  (REFERENCE → BEFORE → AFTER); the orchestrator does not decide it.
 
 ## Exact next action
 
