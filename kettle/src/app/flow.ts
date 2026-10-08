@@ -25,7 +25,7 @@ import { clock } from '@/lib/clock';
 import { plural } from '@/lib/format';
 import { onStorageWriteError, type StorageWriteError } from '@/lib/storage';
 import { audio } from '@/audio';
-import { toast } from '@/ui/Toast';
+import { toast, toastLiftBottom } from '@/ui/Toast';
 import { downloadBackup } from '@/screens/home/shims/data';
 import { getSettings } from '@/state/settings';
 import { getTimer } from '@/timer';
@@ -187,38 +187,54 @@ function ritualOnScreen(): boolean {
 }
 
 /**
- * Would a bottom toast sit over a protected control? Protected: every control of the session screen (Add 5,
- * Pause / Resume, End …) and a screen's docked primary action (marked `data-toast-above`, e.g. Today's "Put the
- * kettle on"). On phones the session controls are docked at the bottom, exactly where toasts appear; on wide layouts
- * they sit beside the stage, but there Today's docked action can sit under the toast. Measured, not guessed from
- * breakpoints, so any layout where they overlap counts.
+ * Would the warning sit over something protected? Protected:
+ *  - on the session screen, every control (Add 5, Pause / Resume, End …) and the timer readout (the countdown
+ *    digits, the status line and the meta line under it: the brew's truth, PRESERVE 4);
+ *  - on any screen, a docked primary action (marked `data-toast-above`, e.g. Today's "Put the kettle on").
+ * Measured against where the toast is, or would be, drawn: the stylesheet's position, or — when the toast region
+ * floats above `data-toast-above` elements (`toastLiftBottom`, src/ui/Toast.tsx) — that lifted position. So it holds
+ * wherever the layout puts the toast: on phones the session panel (readout + docked controls) fills the lower half and
+ * a toast always lands in it, so the warning waits for the whole brew; on wide layouts the toast sits under the stage,
+ * beside the panel, and shows.
  */
-function protectedControlsUnderToasts(): boolean {
+function protectedUnderToasts(): boolean {
   if (typeof document === 'undefined') return false;
   const live = document.querySelector('[aria-label="Notifications"]');
   const region = live?.parentElement;
   if (!live || !region) return false;
   const route = getRoute();
+  const session = route === '/focus' || route === '/done';
   const sel = 'button, a[href], [role="button"], input, textarea, select';
-  const candidates = [
-    ...(route === '/focus' || route === '/done' ? document.querySelectorAll(sel) : []),
+  const candidates: Element[] = [
+    ...(session ? document.querySelectorAll(sel) : []),
     ...document.querySelectorAll(`[data-toast-above] :is(${sel})`),
   ];
+  if (session) {
+    // The readout is the parent of its role="timer" status line (flag, digits, status, meta).
+    const readouts = [...document.querySelectorAll('main [role="timer"]')].flatMap((t) => (t.parentElement ? [t.parentElement] : []));
+    // Not drawn yet (the route just changed): nothing can be measured, so nothing may be covered — wait for it.
+    if (route === '/focus' && readouts.length === 0) return true;
+    candidates.push(...readouts);
+  }
   const area = live.getBoundingClientRect();
-  const bottom = region.getBoundingClientRect().bottom;
-  const top = Math.min(region.getBoundingClientRect().top, bottom - TOAST_ZONE_PX);
+  const lift = toastLiftBottom();
+  const bottom = lift != null ? innerHeight - lift : region.getBoundingClientRect().bottom;
+  const zones = [{ top: bottom - TOAST_ZONE_PX, bottom }];
+  const shown = document.getElementById(`toast-${SAVE_TOAST_ID}`)?.getBoundingClientRect();
+  if (shown && shown.height > 0) zones.push({ top: shown.top, bottom: shown.bottom });
   for (const el of candidates) {
     if (live.contains(el)) continue;
     const r = el.getBoundingClientRect();
     if (r.width === 0 || r.height === 0) continue;
-    if (r.right > area.left && r.left < area.right && r.bottom > top && r.top < bottom) return true;
+    if (r.right <= area.left || r.left >= area.right) continue;
+    if (zones.some((z) => r.bottom > z.top && r.top < z.bottom)) return true;
   }
   return false;
 }
 
 /** Would the warning cover something the person may need to tap right now? */
 function warningWouldBlock(): boolean {
-  return ritualOnScreen() || protectedControlsUnderToasts();
+  return ritualOnScreen() || protectedUnderToasts();
 }
 
 function toastOnScreen(): boolean {

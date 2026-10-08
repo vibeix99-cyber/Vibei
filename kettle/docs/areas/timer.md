@@ -53,18 +53,22 @@ key) and reported to `onStorageWriteError` listeners.
 - **The person is told** (`src/app/flow.ts`): a warning toast, "Kettle couldn’t save your latest changes: this
   browser’s storage is full. Save a backup to keep them." (or "…in this browser…" when storage is blocked rather
   than full) with a **Save backup** action. At most one per minute (a tap, its action or its 12 s timeout ends it).
-- **The warning never covers a control the person may need** (checked every 250 ms while a warning exists, and
-  right away when a phase starts or completes):
+- **The warning never covers anything protected** (checked every 250 ms while a warning exists, and right away when
+  a phase starts, completes or syncs):
   - never during the whistle, the summary (Done / Carry, Tea time, Skip break), a tea break or "Break’s over", on
     any layout — a warning already on screen is taken away when one of these comes up, and held;
-  - never over a session control (Add 5, Pause / Resume, End …) or a screen's docked primary action
-    (`data-toast-above`, e.g. Today's "Put the kettle on"): the toast's area is measured against those controls.
-    On phones the session controls are docked exactly where toasts appear, so there the warning waits for the whole
-    brew; on wide layouts (controls beside the stage) it shows during the brew;
-  - a held warning shows as soon as the person is somewhere it covers nothing protected: on phones, Today after
-    the summary (it floats above "Put the kettle on"); on wide layouts, where Today's button sits under the toast,
-    the next other screen (Stats, Nook, Settings), or the next brew. Like any toast it may cover ordinary page
-    content (e.g. a Settings row) until it is tapped away or times out.
+  - never over the session screen's controls (Add 5, Pause / Resume, End …) or its readout (the countdown digits,
+    the status line and the meta line; found as the parent of the `role="timer"` status), and never over a screen's
+    docked primary action (`data-toast-above`, e.g. Today's "Put the kettle on"). The check uses where the toast is,
+    or would be, drawn — the stylesheet position, or the position `toastLiftBottom()` (`src/ui/Toast.tsx`) floats
+    toasts to above `data-toast-above` elements — so it stays right whatever the layout or the toast region does.
+    While the session screen has not drawn its readout yet (just after a route change), it counts as covered.
+  - Result on phones (every size): the session panel (readout + docked controls) fills the lower half and a toast
+    always lands in it, so the warning waits for the whole brew, running or paused. On wide layouts the toast sits
+    under the stage, beside the panel, and shows during the brew.
+  - A held warning shows as soon as the person is somewhere it covers nothing protected: Today after the summary,
+    floating above "Put the kettle on" (every layout), or any other screen. Like any toast it may cover ordinary
+    page content (the task field, a Settings row) until it is tapped away or times out.
 - **Limit:** until storage has room again, closing the tab loses what was not saved (the warning and its backup
   action are the remedy). A restore that can't be saved is refused (see `docs/areas/progress.md`).
 

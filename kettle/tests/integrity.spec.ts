@@ -967,6 +967,23 @@ async function pressAt(page: Page, name: string | RegExp, touch: boolean) {
 }
 const saveWarning = (page: Page) => page.getByRole('status', { name: 'Notifications' }).getByText(/storage is full\. Save a backup to keep them\./);
 const CONTROLS = ['Add 5 minutes', 'Pause', 'End session'];
+/** No visible toast overlaps the session readout (flag, countdown digits, status line, meta line). */
+const readoutClear = (page: Page) =>
+  page.evaluate(() => {
+    const ro = document.querySelector('main [role="timer"]')?.parentElement;
+    if (!ro) return true;
+    const r = ro.getBoundingClientRect();
+    return [...document.querySelectorAll('[aria-label="Notifications"] li')].every((li) => {
+      const t = li.getBoundingClientRect();
+      return Number(getComputedStyle(li).opacity) === 0 || t.bottom <= r.top || t.top >= r.bottom || t.right <= r.left || t.left >= r.right;
+    });
+  });
+/** On the session screen: the controls are tappable and the readout is clear; on phones the warning waits. */
+async function sessionClear(page: Page, touch: boolean, controls: string[], tag: string) {
+  if (touch) await expect(saveWarning(page), `phone: no warning during the brew (${tag})`).toHaveCount(0);
+  for (const c of controls) expect(await hitOk(page, c), `${c} ${tag}`).toBe(true);
+  expect(await readoutClear(page), `readout clear ${tag}`).toBe(true);
+}
 
 for (const vp of [
   { name: 'phone 390×844', width: 390, height: 844, dpr: 2, touch: true },
@@ -986,7 +1003,7 @@ for (const vp of [
       await expect.poll(() => hash(page)).toBe('#/focus');
       for (let i = 0; i < 4; i++) {
         await page.waitForTimeout(300);
-        for (const c of CONTROLS) expect(await hitOk(page, c), `${c} @${i}`).toBe(true);
+        await sessionClear(page, vp.touch, CONTROLS, `@${i}`);
       }
       await pressAt(page, 'End session', vp.touch);
       await expect(endDialog(page)).toBeVisible();
@@ -1001,7 +1018,7 @@ for (const vp of [
       await expect.poll(async () => (await timer(page)).status).toBe('paused');
       for (let i = 0; i < 4; i++) {
         await page.waitForTimeout(300);
-        for (const c of ['Add 5 minutes', 'Resume', 'End session']) expect(await hitOk(page, c), `${c} paused @${i}`).toBe(true);
+        await sessionClear(page, vp.touch, ['Add 5 minutes', 'Resume', 'End session'], `paused @${i}`);
       }
       await pressAt(page, 'End session', vp.touch);
       await expect(endDialog(page)).toBeVisible();
@@ -1028,6 +1045,7 @@ for (const vp of [
         (window as any).__kettle.timer.getState().resume();
       });
       if (!vp.touch) await expect(saveWarning(page)).toBeVisible();
+      await sessionClear(page, vp.touch, CONTROLS, 'just before 0:00');
       await expect.poll(() => hash(page), { timeout: 20_000 }).toBe('#/done');
       await expect(summaryHeading(page)).toHaveText('25 minutes brewed');
       for (let i = 0; i < 5; i++) {
@@ -1036,35 +1054,25 @@ for (const vp of [
         expect(await hitOk(page, 'Skip break'), `Skip break @${i}`).toBe(true);
         await page.waitForTimeout(300);
       }
-      // Leaving the summary: on Today the warning comes (back) unless it would sit over "Put the kettle on" (wide
-      // layouts); then it waits for a screen where it covers nothing protected, e.g. Settings.
+      // Leaving the summary: on Today the warning comes (back), floating above "Put the kettle on" (the toast region
+      // lifts above Today's docked start), on every layout.
       await pressAt(page, 'Skip break', vp.touch);
       await expect.poll(() => hash(page)).toBe('#/');
       const cta = /^Put the kettle on/;
-      if (vp.touch) {
-        await expect(saveWarning(page)).toBeVisible();
-        expect(await hitOk(page, cta), 'Put the kettle on').toBe(true);
-        // Starting the next brew with the warning still up: it is taken away from the session controls at once…
-        await pressAt(page, cta, true);
-        await expect.poll(() => hash(page)).toBe('#/focus');
-        for (let i = 0; i < 4; i++) {
-          await expect(saveWarning(page)).toHaveCount(0);
-          for (const c of CONTROLS) expect(await hitOk(page, c), `${c} next brew @${i}`).toBe(true);
-          await page.waitForTimeout(250);
-        }
-        // …and comes back on Today (the brew ended within its first minute: nothing saved, nothing lost).
-        await page.evaluate(() => (window as any).__kettle.timer.getState().end('user'));
-        await expect.poll(() => hash(page)).toBe('#/');
-        await expect(saveWarning(page)).toBeVisible();
-      } else {
-        expect(await hitOk(page, cta), 'Put the kettle on').toBe(true);
-        for (let i = 0; i < 4; i++) {
-          await page.waitForTimeout(300);
-          await expect(saveWarning(page)).toHaveCount(0);
-        }
-        await page.evaluate(() => (window as any).__kettle.navigate('/settings'));
-        await expect(saveWarning(page)).toBeVisible();
+      await expect(saveWarning(page)).toBeVisible();
+      expect(await hitOk(page, cta), 'Put the kettle on').toBe(true);
+      // Starting the next brew with the warning still up: it never covers the session controls or the readout (on
+      // phones it is taken away for the brew; on wide layouts it may stay, beside the panel)…
+      await pressAt(page, cta, vp.touch);
+      await expect.poll(() => hash(page)).toBe('#/focus');
+      for (let i = 0; i < 4; i++) {
+        await sessionClear(page, vp.touch, CONTROLS, `next brew @${i}`);
+        await page.waitForTimeout(250);
       }
+      // …and it is there again on Today (the brew ended within its first minute: nothing saved, nothing lost).
+      await page.evaluate(() => (window as any).__kettle.timer.getState().end('user'));
+      await expect.poll(() => hash(page)).toBe('#/');
+      await expect(saveWarning(page)).toBeVisible();
       const [download] = await Promise.all([page.waitForEvent('download'), page.getByRole('button', { name: 'Save backup' }).click()]);
       const backup = JSON.parse(readFileSync((await download.path())!, 'utf8'));
       expect(backup.progress.sessions.some((r: Rec) => r.intention === 'Storage full')).toBe(true);
