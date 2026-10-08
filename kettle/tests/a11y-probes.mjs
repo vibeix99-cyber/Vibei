@@ -248,7 +248,9 @@ export function probeReach(selector) {
     const cs = getComputedStyle(el);
     const hides = /(hidden|clip)/.test(cs.overflowX + cs.overflowY) || cs.textOverflow === 'ellipsis';
     if (!hides) continue;
-    const sr = cs.position === 'absolute' && el.getBoundingClientRect().width <= 1;
+    // Visually hidden on purpose (`.sr-only`: a 1×1 px absolutely positioned box). Layout size, not the on-screen rect:
+    // inside a sheet that is still scaling in, the 1 px box measures a fraction over 1 px.
+    const sr = cs.position === 'absolute' && el.clientWidth <= 1 && el.clientHeight <= 1;
     if (sr) continue;
     if (el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 2) clipped.push({ text: name(el), w: [el.clientWidth, el.scrollWidth], h: [el.clientHeight, el.scrollHeight] });
   }

@@ -1,6 +1,6 @@
 # Kettle accessibility audit
 
-- Base http://127.0.0.1:5242 · revision 3bc0c66 · 2026-10-08T09:34:31.693Z
+- Base http://127.0.0.1:5242 · revision d3f4e06 · 2026-10-08T13:33:47.044Z
 - Chromium (Playwright) + SwiftShader (CPU); axe-core tags wcag2a, wcag2aa, wcag21a, wcag21aa, wcag22aa
 
 ## axe-core (main suite)
@@ -9,8 +9,8 @@
 |---|---|---:|---:|---:|---:|---:|
 | 390x844 | light | 2 | 0 (+1 scroll-dependent) | 0 | 61 | 8 |
 | 390x844 | dark | 2 | 0 (+1 scroll-dependent) | 0 | 62 | 7 |
-| 375x667 | light | 2 | 0 (+1 scroll-dependent) | 0 | 62 | 7 |
-| 375x667 | dark | 2 | 0 (+1 scroll-dependent) | 0 | 61 | 8 |
+| 375x667 | light | 2 | 0 (+1 scroll-dependent) | 0 | 60 | 9 |
+| 375x667 | dark | 2 | 0 (+1 scroll-dependent) | 0 | 62 | 7 |
 
 ### Violations
 
@@ -85,7 +85,7 @@
 | 375x667 | light | home | 19 | — | 0 | placeholder: e.g. Chapter 3 notes, or leave it blank 271/573 |
 | 375x667 | light | home-custom | 9 | — | 0 | — |
 | 1440x900 | light | home | 19 | — | 0 | placeholder: e.g. Chapter 3 notes, or leave it blank 519/573 |
-| 1440x900 | light | home-custom | 9 | — | 0 | Brew length 1/179; Tea break length 1/241 |
+| 1440x900 | light | home-custom | 9 | — | 0 | — |
 
 ## Reach, overflow, clipping — keyboard
 
