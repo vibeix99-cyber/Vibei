@@ -81,8 +81,9 @@
     0 0 0 var(--edge-c);
 }
 @media (hover: hover) {
+  /* Warmer, not lighter: brightening the face took white labels under 3:1 (measured 2.9 on persimmon). */
   .btn:hover:not(:disabled):not([data-loading]) .face {
-    filter: brightness(1.06) saturate(1.04);
+    filter: saturate(1.1);
   }
 }
 

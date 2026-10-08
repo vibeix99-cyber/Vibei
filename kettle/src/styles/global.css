@@ -23,6 +23,13 @@ html {
   scrollbar-gutter: stable;
   transition: background-color var(--dur-base) var(--ease-out);
 }
+/* Phones (bottom tab bar): a control reached with Tab is scrolled into view above the bar, not under it (measured:
+   Stats history rows landed at 776–844 px, entirely behind the 68 px bar at 390×844). */
+@media (max-width: 899px) and (not ((orientation: landscape) and (max-height: 520px))) {
+  html {
+    scroll-padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 8px);
+  }
+}
 /* While a sheet/dialog is open the page can't scroll; the reserved scrollbar gutter
    takes the scrim tint so no undimmed strip shows at the edge. */
 html.kettle-modal-open {

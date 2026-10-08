@@ -14,6 +14,10 @@
   gap: 4px;
   margin: -6px -8px -4px;
 }
+/* Set by StatusBar when the stats can't share one line (very large text): wrap instead of widening the page. */
+.statusBar[data-wrap] {
+  flex-wrap: wrap;
+}
 .stat {
   appearance: none;
   display: inline-flex;
@@ -324,6 +328,11 @@
   /* keep the field clear of the page top and the docked CTA when the browser scrolls it into view */
   scroll-margin-block: 24px 180px;
 }
+/* The browser scrolls the focused input itself (not its wrapper) into view when the on-screen keyboard opens:
+   it needs the same margin, or it lands under the docked start and the tab bar (measured at 375×376). */
+.field input {
+  scroll-margin-block: 24px 180px;
+}
 /* Tags: every category in view on any width, wrapping onto a second line on phones (no sideways scroller to
    discover). Each chip keeps its 44px touch target; the row gap keeps two lines from crowding. */
 .composerCard .tagGroup {
@@ -386,23 +395,33 @@
 
 .ctaDock {
   position: sticky;
-  bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 10px);
+  /* The dock's own box reaches down to the tab bar (the 10px gap is padding): the strip under it used to be painted
+     over by the fade yet still passed taps to the hidden tag chips beneath (measured at 375×667). */
+  bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
+  padding-bottom: 10px;
   z-index: 3;
   display: grid;
   gap: 8px;
+}
+/* Phones: anything that takes focus (Tab, a skip link, the keyboard opening) is scrolled clear of the dock. */
+@media (max-width: 899px) {
+  :global(html):has(.ctaDock) {
+    scroll-padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 120px);
+  }
 }
 /* A paper fade behind the dock: invisible at rest (page is paper), hides content it floats over. */
 .ctaDock::before {
   content: '';
   position: absolute;
-  inset: -18px -12px -12px;
+  inset: -18px -12px 0;
   background: linear-gradient(to bottom, transparent, var(--paper) 18px);
   z-index: -1;
   pointer-events: none;
 }
 @media (min-width: 900px) {
   .ctaDock {
-    bottom: 16px;
+    bottom: 0;
+    padding-bottom: 16px;
   }
 }
 .cta {
@@ -421,6 +440,20 @@
   font-size: 0.875rem;
   font-weight: 700;
   color: var(--ink-2);
+  text-wrap: balance;
+}
+/* Inline in the note: a 24px-tall target keeps the dock as short as before (it is not a primary control). */
+.ctaNote .lengthLink {
+  min-height: 24px;
+  font-size: 0.875rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+@media (min-width: 900px) {
+  /* Wide screens show the brew length beside the start already. */
+  .ctaNote .lengthLink {
+    display: none;
+  }
 }
 
 /* ---------- Resume banner ---------- */
@@ -895,7 +928,8 @@
     font-size: 1.0625rem;
   }
   .ctaDock {
-    bottom: 10px;
+    bottom: 0;
+    padding-bottom: 10px;
   }
 }
 /* Short landscape phones: the greeting heads a narrow column, so it takes the next size down

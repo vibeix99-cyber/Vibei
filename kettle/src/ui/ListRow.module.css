@@ -110,9 +110,8 @@ button.row:focus-visible {
   font-weight: 700;
   text-align: right;
   font-variant-numeric: tabular-nums;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  /* Wraps rather than clips when text is enlarged (it measured "Kettle 0.1.0" cut to 138 of 170 px at 200 %). */
+  overflow-wrap: anywhere;
 }
 .trailing {
   flex: none;

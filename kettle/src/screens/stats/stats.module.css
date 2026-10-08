@@ -27,6 +27,12 @@
 .headerWrap {
   min-width: 0;
 }
+/* …and below the compact title bar that sticks to the top on phones (Shift+Tab upwards). */
+@media (max-width: 899px) {
+  :global(html):has(.compactBar) {
+    scroll-padding-top: calc(52px + env(safe-area-inset-top) + 8px);
+  }
+}
 .compactBar {
   position: sticky;
   top: 0;
@@ -922,6 +928,8 @@
   background: transparent;
   width: 100%;
   display: grid;
+  /* One column no wider than the tile: enlarged text wraps inside it instead of pushing the page sideways. */
+  grid-template-columns: minmax(0, 1fr);
   justify-items: center;
   gap: 4px;
   padding: var(--space-3) 0;
@@ -945,6 +953,8 @@
   line-height: 1.2;
   color: var(--ink);
   margin-top: 4px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 .badgeMeta {
   font-size: var(--text-body-s);

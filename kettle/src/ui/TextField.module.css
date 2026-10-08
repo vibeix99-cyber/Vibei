@@ -55,6 +55,8 @@
   font-size: 1.0625rem; /* ≥16px so iOS doesn't zoom */
   color: var(--ink);
   border-radius: inherit;
+  /* A hint longer than a narrow field (375 px, 200 % text) ends in "…" instead of being cut mid-letter. */
+  text-overflow: ellipsis;
 }
 .icon + .input {
   padding-left: 10px;

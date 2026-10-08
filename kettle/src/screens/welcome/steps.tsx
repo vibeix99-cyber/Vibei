@@ -233,12 +233,12 @@ export function NotifyStep({ status, focusMin }: { status: NotifyStatus; focusMi
       </ul>
       {status === 'denied' && (
         <p className={s.callout} role="status">
-          Notifications are blocked in this browser. No problem: Kettle will still chime. You can allow them later in your browser’s site settings.
+          Notifications are blocked in this browser. No problem: Kettle still chimes while it’s on screen. You can allow them later in your browser’s site settings.
         </p>
       )}
       {status === 'unsupported' && (
         <p className={s.callout} role="status">
-          This browser can’t show notifications, so Kettle will chime instead.
+          This browser can’t show notifications, so Kettle chimes instead while it’s on screen.
         </p>
       )}
       {status === 'granted' && (

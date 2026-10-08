@@ -131,7 +131,7 @@ function SoundGroup() {
   const current = AMBIENT_OPTIONS.find((a) => a.id === st.ambient);
   return (
     <ListGroup title="Sound">
-      <ListRow icon={st.muted ? 'mute' : 'sound'} iconTone="honey" label="Sounds" description={st.muted ? 'Everything’s quiet.' : 'Effects, the kettle’s whistle and ambience.'} toggle={{ checked: !st.muted, onChange: (v) => st.set({ muted: !v }) }} />
+      <ListRow icon={st.muted ? 'mute' : 'sound'} iconTone="honey" label="Sounds" description={st.muted ? 'Everything’s quiet. The kettle still shows when it whistles.' : 'Effects, the kettle’s whistle and ambience, while Kettle is open. A phone’s silent switch or lock screen can keep them quiet.'} toggle={{ checked: !st.muted, onChange: (v) => st.set({ muted: !v }) }} />
       <VolumeRow title="Master volume" value={st.masterVolume} onChange={(v) => st.set({ masterVolume: v })} disabled={st.muted} />
       <VolumeRow title="Effects" value={st.sfxVolume} onChange={(v) => st.set({ sfxVolume: v })} disabled={st.muted} tone="honey" />
       <VolumeRow title="Ambience" value={st.ambientVolume} onChange={(v) => st.set({ ambientVolume: v })} disabled={st.muted} tone="sky" />
@@ -179,12 +179,12 @@ function DeviceGroup() {
   const notifOn = st.notifications && status === 'granted';
   const notifDesc =
     status === 'unsupported'
-      ? 'This browser can’t show notifications. Kettle will chime instead.'
+      ? 'This browser can’t show notifications. With sound on, Kettle chimes while it’s on screen.'
       : status === 'denied'
         ? 'Blocked in your browser settings.'
         : status === 'granted'
           ? notifOn
-            ? 'On. I’ll nudge you when a brew or tea break ends.'
+            ? 'On. I’ll nudge you when a brew or tea break ends. A locked phone may hold the nudge until you’re back.'
             : 'Off. Turn on for a nudge when the kettle whistles.'
           : 'A nudge when the kettle whistles. Your browser will ask first.';
   return (

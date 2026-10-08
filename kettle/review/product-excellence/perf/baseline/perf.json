@@ -1,0 +1,5983 @@
+{
+  "env": {
+    "startedAt": "2026-10-07T00:41:06.660Z",
+    "host": {
+      "cpus": 4,
+      "nproc": 4,
+      "cpuModel": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+      "memGB": 15.7,
+      "platform": "Linux 6.18.44-fc-v77"
+    },
+    "node": "v22.22.2",
+    "chromium": "141.0.7390.37",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "uptimeStart": "00:41:06 up 30 min,  0 user,  load average: 1.69, 2.65, 2.51",
+    "bases": [
+      {
+        "name": "8f1044a",
+        "base": "http://127.0.0.1:5242"
+      }
+    ],
+    "runs": 5,
+    "profiles": [
+      "phone",
+      "desktop"
+    ],
+    "theme": "light",
+    "serviceWorkers": "block",
+    "cpuThrottle": 1,
+    "nookq": "auto (default settings)",
+    "method": "fresh context per journey; alternating base order per run; median of runs",
+    "finishedAt": "2026-10-07T00:48:16.277Z",
+    "uptimeEnd": "00:48:16 up 37 min,  0 user,  load average: 8.09, 5.88, 4.01"
+  },
+  "summary": {
+    "phone": {
+      "TTFB (ms)": {
+        "8f1044a": {
+          "median": 3.4,
+          "runs": [
+            3.4,
+            3.2,
+            10.4,
+            3.8,
+            3.2
+          ]
+        }
+      },
+      "FCP (ms)": {
+        "8f1044a": {
+          "median": 176,
+          "runs": [
+            244,
+            176,
+            168,
+            204,
+            176
+          ]
+        }
+      },
+      "LCP (ms)": {
+        "8f1044a": {
+          "median": 520,
+          "runs": [
+            700,
+            512,
+            520,
+            536,
+            516
+          ]
+        }
+      },
+      "DOMContentLoaded (ms)": {
+        "8f1044a": {
+          "median": 126.5,
+          "runs": [
+            121.3,
+            126.5,
+            124.2,
+            161.5,
+            132.1
+          ]
+        }
+      },
+      "load (ms)": {
+        "8f1044a": {
+          "median": 126.9,
+          "runs": [
+            121.6,
+            126.9,
+            124.5,
+            161.9,
+            132.6
+          ]
+        }
+      },
+      "Start button ready (ms)": {
+        "8f1044a": {
+          "median": 490.7,
+          "runs": [
+            486.6,
+            494.4,
+            484.6,
+            520.1,
+            490.7
+          ]
+        }
+      },
+      "first click handled → #/focus (ms)": {
+        "8f1044a": {
+          "median": 1126.2,
+          "runs": [
+            888.6,
+            1126.2,
+            754.3,
+            1154.9,
+            1209.3
+          ]
+        }
+      },
+      "TBT to first interaction (ms)": {
+        "8f1044a": {
+          "median": 67,
+          "runs": [
+            83,
+            51,
+            88,
+            51,
+            67
+          ]
+        }
+      },
+      "Start, cold: event duration (ms)": {
+        "8f1044a": {
+          "median": 400,
+          "runs": [
+            696,
+            160,
+            216,
+            400,
+            424
+          ]
+        }
+      },
+      "Start, cold: click → next paint (ms)": {
+        "8f1044a": {
+          "median": 309.9,
+          "runs": [
+            309.9,
+            251.6,
+            349.2,
+            286.6,
+            336
+          ]
+        }
+      },
+      "start: event duration (ms)": {
+        "8f1044a": {
+          "median": 144,
+          "runs": [
+            128,
+            128,
+            160,
+            144,
+            152
+          ]
+        }
+      },
+      "start: click → next paint (ms)": {
+        "8f1044a": {
+          "median": 263.6,
+          "runs": [
+            241.6,
+            263.6,
+            410.2,
+            247.5,
+            280.4
+          ]
+        }
+      },
+      "pause: event duration (ms)": {
+        "8f1044a": {
+          "median": 384,
+          "runs": [
+            264,
+            232,
+            384,
+            440,
+            448
+          ]
+        }
+      },
+      "pause: click → next paint (ms)": {
+        "8f1044a": {
+          "median": 187.7,
+          "runs": [
+            145.9,
+            85.6,
+            203.3,
+            187.7,
+            265.9
+          ]
+        }
+      },
+      "resume: event duration (ms)": {
+        "8f1044a": {
+          "median": 48,
+          "runs": [
+            40,
+            48,
+            64,
+            40,
+            48
+          ]
+        }
+      },
+      "resume: click → next paint (ms)": {
+        "8f1044a": {
+          "median": 36.7,
+          "runs": [
+            31.3,
+            30.6,
+            37,
+            36.7,
+            37.6
+          ]
+        }
+      },
+      "add5: event duration (ms)": {
+        "8f1044a": {
+          "median": 272,
+          "runs": [
+            296,
+            272,
+            136,
+            456,
+            200
+          ]
+        }
+      },
+      "add5: click → next paint (ms)": {
+        "8f1044a": {
+          "median": 86.4,
+          "runs": [
+            86.4,
+            81.3,
+            71.3,
+            312.7,
+            89.8
+          ]
+        }
+      },
+      "teaTime: event duration (ms)": {
+        "8f1044a": {
+          "median": 120,
+          "runs": [
+            120,
+            376,
+            328,
+            120,
+            120
+          ]
+        }
+      },
+      "teaTime: click → next paint (ms)": {
+        "8f1044a": {
+          "median": 49.7,
+          "runs": [
+            49.7,
+            154.4,
+            99.5,
+            47.8,
+            45.9
+          ]
+        }
+      },
+      "longest task during journey (ms)": {
+        "8f1044a": {
+          "median": 67,
+          "runs": [
+            59,
+            57,
+            79,
+            67,
+            76
+          ]
+        }
+      },
+      "TBT during journey (ms)": {
+        "8f1044a": {
+          "median": 26,
+          "runs": [
+            9,
+            7,
+            53,
+            31,
+            26
+          ]
+        }
+      },
+      "CLS homeLoad (session window)": {
+        "8f1044a": {
+          "median": 0,
+          "runs": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "CLS focus (session window)": {
+        "8f1044a": {
+          "median": 0,
+          "runs": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "CLS whistleToSummary (session window)": {
+        "8f1044a": {
+          "median": 0.5,
+          "runs": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      "CLS break (session window)": {
+        "8f1044a": {
+          "median": 0,
+          "runs": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "CLS journey (session window)": {
+        "8f1044a": {
+          "median": 0.5,
+          "runs": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      "CLS Nook load (session window)": {
+        "8f1044a": {
+          "median": 0,
+          "runs": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "JS heap used after GC, home (MB)": {
+        "8f1044a": {
+          "median": 8.9,
+          "runs": [
+            8.9,
+            8.9,
+            8.9,
+            8.9,
+            8.9
+          ]
+        }
+      },
+      "JS heap used after GC, focus (MB)": {
+        "8f1044a": {
+          "median": 10.2,
+          "runs": [
+            10.1,
+            10.1,
+            10.2,
+            10.3,
+            10.2
+          ]
+        }
+      },
+      "JS heap used after GC, summary (MB)": {
+        "8f1044a": {
+          "median": 10.9,
+          "runs": [
+            10.9,
+            10.9,
+            10.8,
+            10.9,
+            10.9
+          ]
+        }
+      },
+      "JS heap used after GC, Nook 3D (MB)": {
+        "8f1044a": {
+          "median": 9.8,
+          "runs": [
+            9.8,
+            9.7,
+            9.7,
+            9.8,
+            9.8
+          ]
+        }
+      },
+      "DOM nodes, summary": {
+        "8f1044a": {
+          "median": 548,
+          "runs": [
+            548,
+            548,
+            548,
+            548,
+            548
+          ]
+        }
+      },
+      "busy ms, homeToFocus": {
+        "8f1044a": {
+          "median": 468.4,
+          "runs": [
+            468.4,
+            477.9,
+            516.3,
+            458.4,
+            402.7
+          ]
+        }
+      },
+      "busy ms, focusControls": {
+        "8f1044a": {
+          "median": 330.9,
+          "runs": [
+            373.1,
+            353.3,
+            310.1,
+            330.9,
+            330.3
+          ]
+        }
+      },
+      "busy ms, whistleToSummary": {
+        "8f1044a": {
+          "median": 462.9,
+          "runs": [
+            464.5,
+            462.9,
+            367.4,
+            421.5,
+            480.7
+          ]
+        }
+      },
+      "busy ms, break": {
+        "8f1044a": {
+          "median": 211.4,
+          "runs": [
+            211.4,
+            193.9,
+            186.6,
+            216.2,
+            234.5
+          ]
+        }
+      },
+      "focus stage: Start → window scene ready (ms)": {
+        "8f1044a": {
+          "median": 1122.3,
+          "runs": [
+            1117,
+            1118.9,
+            1174.7,
+            1122.3,
+            1170.5
+          ]
+        }
+      },
+      "Nook cold load: nav → 3D ready (ms)": {
+        "8f1044a": {
+          "median": 2200.1,
+          "runs": [
+            2200.1,
+            2726.2,
+            2282.5,
+            1424.6,
+            1426.4
+          ]
+        }
+      },
+      "cold load through first Start + 1.2 s, total (KB on the wire)": {
+        "8f1044a": {
+          "median": 639.2,
+          "runs": [
+            639.2,
+            639.2,
+            639.2,
+            639.2,
+            639.2
+          ]
+        }
+      },
+      "cold load through first Start + 1.2 s, total (KB gzip -6 est.)": {
+        "8f1044a": {
+          "median": 625,
+          "runs": [
+            625,
+            625,
+            625,
+            625,
+            625
+          ]
+        }
+      },
+      "Home settled: js (KB on the wire)": {
+        "8f1044a": {
+          "median": 280.2,
+          "runs": [
+            280.2,
+            280.2,
+            280.2,
+            280.2,
+            280.2
+          ]
+        }
+      },
+      "Home settled: css (KB on the wire)": {
+        "8f1044a": {
+          "median": 41.2,
+          "runs": [
+            41.2,
+            41.2,
+            41.2,
+            41.2,
+            41.2
+          ]
+        }
+      },
+      "Home settled: font (KB on the wire)": {
+        "8f1044a": {
+          "median": 67.9,
+          "runs": [
+            67.9,
+            67.9,
+            67.9,
+            67.9,
+            67.9
+          ]
+        }
+      },
+      "Home settled: image (KB on the wire)": {
+        "8f1044a": {
+          "median": 19.7,
+          "runs": [
+            19.7,
+            19.7,
+            19.7,
+            19.7,
+            19.7
+          ]
+        }
+      },
+      "Home settled: three (KB on the wire)": {
+        "8f1044a": {
+          "median": 143.3,
+          "runs": [
+            143.3,
+            143.3,
+            143.3,
+            143.3,
+            143.3
+          ]
+        }
+      },
+      "Home settled: scene3d (KB on the wire)": {
+        "8f1044a": {
+          "median": 28.2,
+          "runs": [
+            28.2,
+            28.2,
+            28.2,
+            28.2,
+            28.2
+          ]
+        }
+      },
+      "Home settled: total (KB on the wire)": {
+        "8f1044a": {
+          "median": 581.7,
+          "runs": [
+            581.7,
+            581.7,
+            581.7,
+            581.7,
+            581.7
+          ]
+        }
+      },
+      "through summary: total (KB on the wire)": {
+        "8f1044a": {
+          "median": 659.6,
+          "runs": [
+            659.6,
+            659.6,
+            659.6,
+            659.6,
+            659.6
+          ]
+        }
+      },
+      "Nook cold: total (KB on the wire)": {
+        "8f1044a": {
+          "median": 562,
+          "runs": [
+            562,
+            562,
+            562,
+            562,
+            562
+          ]
+        }
+      }
+    },
+    "desktop": {
+      "TTFB (ms)": {
+        "8f1044a": {
+          "median": 2.9,
+          "runs": [
+            3.5,
+            4.2,
+            2.9,
+            2.6,
+            2.8
+          ]
+        }
+      },
+      "FCP (ms)": {
+        "8f1044a": {
+          "median": 176,
+          "runs": [
+            164,
+            256,
+            232,
+            164,
+            176
+          ]
+        }
+      },
+      "LCP (ms)": {
+        "8f1044a": {
+          "median": 532,
+          "runs": [
+            532,
+            704,
+            572,
+            516,
+            508
+          ]
+        }
+      },
+      "DOMContentLoaded (ms)": {
+        "8f1044a": {
+          "median": 129.9,
+          "runs": [
+            117.6,
+            200.7,
+            168.8,
+            123,
+            129.9
+          ]
+        }
+      },
+      "load (ms)": {
+        "8f1044a": {
+          "median": 130.2,
+          "runs": [
+            118,
+            201.1,
+            169.3,
+            123.3,
+            130.2
+          ]
+        }
+      },
+      "Start button ready (ms)": {
+        "8f1044a": {
+          "median": 486.5,
+          "runs": [
+            471,
+            646,
+            532.2,
+            486.5,
+            482.1
+          ]
+        }
+      },
+      "first click handled → #/focus (ms)": {
+        "8f1044a": {
+          "median": 1118.8,
+          "runs": [
+            677,
+            1209.4,
+            972,
+            1118.8,
+            1142.9
+          ]
+        }
+      },
+      "TBT to first interaction (ms)": {
+        "8f1044a": {
+          "median": 97,
+          "runs": [
+            94,
+            166,
+            231,
+            79,
+            97
+          ]
+        }
+      },
+      "Start, cold: event duration (ms)": {
+        "8f1044a": {
+          "median": 912,
+          "runs": [
+            344,
+            1472,
+            1072,
+            912,
+            0
+          ]
+        }
+      },
+      "Start, cold: click → next paint (ms)": {
+        "8f1044a": {
+          "median": 279.1,
+          "runs": [
+            274.9,
+            279.1,
+            450.2,
+            250.5,
+            313.1
+          ]
+        }
+      },
+      "start: event duration (ms)": {
+        "8f1044a": {
+          "median": 264,
+          "runs": [
+            264,
+            264,
+            408,
+            264,
+            336
+          ]
+        }
+      },
+      "start: click → next paint (ms)": {
+        "8f1044a": {
+          "median": 230.8,
+          "runs": [
+            218.4,
+            230.8,
+            272.6,
+            213.8,
+            230.9
+          ]
+        }
+      },
+      "pause: event duration (ms)": {
+        "8f1044a": {
+          "median": 312,
+          "runs": [
+            312,
+            672,
+            280,
+            272,
+            1080
+          ]
+        }
+      },
+      "pause: click → next paint (ms)": {
+        "8f1044a": {
+          "median": 42.6,
+          "runs": [
+            112.6,
+            48.9,
+            42.6,
+            20.2,
+            35.1
+          ]
+        }
+      },
+      "resume: event duration (ms)": {
+        "8f1044a": {
+          "median": 384,
+          "runs": [
+            384,
+            336,
+            664,
+            320,
+            528
+          ]
+        }
+      },
+      "resume: click → next paint (ms)": {
+        "8f1044a": {
+          "median": 21.8,
+          "runs": [
+            53.8,
+            24.3,
+            19.3,
+            19.4,
+            21.8
+          ]
+        }
+      },
+      "add5: event duration (ms)": {
+        "8f1044a": {
+          "median": 768,
+          "runs": [
+            368,
+            856,
+            768,
+            1040,
+            0
+          ]
+        }
+      },
+      "add5: click → next paint (ms)": {
+        "8f1044a": {
+          "median": 177.1,
+          "runs": [
+            95.6,
+            618.7,
+            193.6,
+            98.1,
+            177.1
+          ]
+        }
+      },
+      "teaTime: event duration (ms)": {
+        "8f1044a": {
+          "median": 528,
+          "runs": [
+            528,
+            640,
+            488,
+            576,
+            352
+          ]
+        }
+      },
+      "teaTime: click → next paint (ms)": {
+        "8f1044a": {
+          "median": 112.5,
+          "runs": [
+            106.5,
+            112.5,
+            14.9,
+            112.9,
+            119.3
+          ]
+        }
+      },
+      "longest task during journey (ms)": {
+        "8f1044a": {
+          "median": 84,
+          "runs": [
+            79,
+            84,
+            112,
+            76,
+            99
+          ]
+        }
+      },
+      "TBT during journey (ms)": {
+        "8f1044a": {
+          "median": 34,
+          "runs": [
+            29,
+            34,
+            69,
+            33,
+            49
+          ]
+        }
+      },
+      "CLS homeLoad (session window)": {
+        "8f1044a": {
+          "median": 0,
+          "runs": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "CLS focus (session window)": {
+        "8f1044a": {
+          "median": 0,
+          "runs": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "CLS whistleToSummary (session window)": {
+        "8f1044a": {
+          "median": 0,
+          "runs": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "CLS break (session window)": {
+        "8f1044a": {
+          "median": 0,
+          "runs": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "CLS journey (session window)": {
+        "8f1044a": {
+          "median": 0,
+          "runs": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "CLS Nook load (session window)": {
+        "8f1044a": {
+          "median": 0,
+          "runs": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "JS heap used after GC, home (MB)": {
+        "8f1044a": {
+          "median": 8.9,
+          "runs": [
+            8.9,
+            8.9,
+            8.9,
+            8.9,
+            8.9
+          ]
+        }
+      },
+      "JS heap used after GC, focus (MB)": {
+        "8f1044a": {
+          "median": 10.1,
+          "runs": [
+            10.1,
+            10.1,
+            10.3,
+            10.1,
+            10.3
+          ]
+        }
+      },
+      "JS heap used after GC, summary (MB)": {
+        "8f1044a": {
+          "median": 10.9,
+          "runs": [
+            10.9,
+            10.9,
+            11,
+            10.9,
+            11
+          ]
+        }
+      },
+      "JS heap used after GC, Nook 3D (MB)": {
+        "8f1044a": {
+          "median": 9.6,
+          "runs": [
+            9.7,
+            9.5,
+            9.6,
+            9.6,
+            9.8
+          ]
+        }
+      },
+      "DOM nodes, summary": {
+        "8f1044a": {
+          "median": 548,
+          "runs": [
+            548,
+            548,
+            548,
+            548,
+            548
+          ]
+        }
+      },
+      "busy ms, homeToFocus": {
+        "8f1044a": {
+          "median": 380.7,
+          "runs": [
+            376.6,
+            388.6,
+            373.2,
+            380.7,
+            392.6
+          ]
+        }
+      },
+      "busy ms, focusControls": {
+        "8f1044a": {
+          "median": 215.1,
+          "runs": [
+            215.1,
+            232.7,
+            205.5,
+            218.2,
+            191.1
+          ]
+        }
+      },
+      "busy ms, whistleToSummary": {
+        "8f1044a": {
+          "median": 301,
+          "runs": [
+            301,
+            309.4,
+            255.3,
+            324.9,
+            254.5
+          ]
+        }
+      },
+      "busy ms, break": {
+        "8f1044a": {
+          "median": 138.7,
+          "runs": [
+            155,
+            138.7,
+            130.5,
+            198.9,
+            137.8
+          ]
+        }
+      },
+      "focus stage: Start → window scene ready (ms)": {
+        "8f1044a": {
+          "median": 1130.9,
+          "runs": [
+            1130.9,
+            1101.9,
+            2558.4,
+            1091.8,
+            3509
+          ]
+        }
+      },
+      "Nook cold load: nav → 3D ready (ms)": {
+        "8f1044a": {
+          "median": 4420.6,
+          "runs": [
+            3448,
+            4733.9,
+            4420.6,
+            4032.4,
+            5135.3
+          ]
+        }
+      },
+      "cold load through first Start + 1.2 s, total (KB on the wire)": {
+        "8f1044a": {
+          "median": 639.2,
+          "runs": [
+            639.2,
+            639.2,
+            639.2,
+            639.2,
+            639.2
+          ]
+        }
+      },
+      "cold load through first Start + 1.2 s, total (KB gzip -6 est.)": {
+        "8f1044a": {
+          "median": 625,
+          "runs": [
+            625,
+            625,
+            625,
+            625,
+            625
+          ]
+        }
+      },
+      "Home settled: js (KB on the wire)": {
+        "8f1044a": {
+          "median": 280.2,
+          "runs": [
+            280.2,
+            280.2,
+            280.2,
+            280.2,
+            280.2
+          ]
+        }
+      },
+      "Home settled: css (KB on the wire)": {
+        "8f1044a": {
+          "median": 41.2,
+          "runs": [
+            41.2,
+            41.2,
+            41.2,
+            41.2,
+            41.2
+          ]
+        }
+      },
+      "Home settled: font (KB on the wire)": {
+        "8f1044a": {
+          "median": 67.9,
+          "runs": [
+            67.9,
+            67.9,
+            67.9,
+            67.9,
+            67.9
+          ]
+        }
+      },
+      "Home settled: image (KB on the wire)": {
+        "8f1044a": {
+          "median": 19.7,
+          "runs": [
+            19.7,
+            19.7,
+            19.7,
+            19.7,
+            19.7
+          ]
+        }
+      },
+      "Home settled: three (KB on the wire)": {
+        "8f1044a": {
+          "median": 143.3,
+          "runs": [
+            143.3,
+            143.3,
+            143.3,
+            143.3,
+            143.3
+          ]
+        }
+      },
+      "Home settled: scene3d (KB on the wire)": {
+        "8f1044a": {
+          "median": 28.2,
+          "runs": [
+            28.2,
+            28.2,
+            28.2,
+            28.2,
+            28.2
+          ]
+        }
+      },
+      "Home settled: total (KB on the wire)": {
+        "8f1044a": {
+          "median": 581.7,
+          "runs": [
+            581.7,
+            581.7,
+            581.7,
+            581.7,
+            581.7
+          ]
+        }
+      },
+      "through summary: total (KB on the wire)": {
+        "8f1044a": {
+          "median": 659.6,
+          "runs": [
+            659.6,
+            659.6,
+            659.6,
+            659.6,
+            659.6
+          ]
+        }
+      },
+      "Nook cold: total (KB on the wire)": {
+        "8f1044a": {
+          "median": 562,
+          "runs": [
+            562,
+            562,
+            562,
+            562,
+            562
+          ]
+        }
+      }
+    }
+  },
+  "samples": [
+    {
+      "build": "8f1044a",
+      "base": "http://127.0.0.1:5242",
+      "profile": "phone",
+      "run": 1,
+      "loadBefore": [
+        1.69,
+        2.65,
+        2.51
+      ],
+      "cold": {
+        "ttfbMs": 3.4,
+        "fcpMs": 244,
+        "lcpMs": 700,
+        "lcpElement": "h1._greeting_18sz3_85 \"Good afternoon, Robin\"",
+        "dclMs": 121.3,
+        "loadMs": 121.6,
+        "startReadyMs": 486.6,
+        "firstClickHandledMs": 888.6,
+        "firstInputDelayMs": 22.3,
+        "startColdEventMs": 696,
+        "startColdClickToPaintMs": 309.9,
+        "tbtToInteractiveMs": 83,
+        "longestTaskMs": 85,
+        "bytesToInteractive": {
+          "requests": 38,
+          "by": {
+            "html": {
+              "kb": 1.1,
+              "gzipKb": 0.9,
+              "n": 1
+            },
+            "css": {
+              "kb": 41.2,
+              "gzipKb": 38.4,
+              "n": 8
+            },
+            "js": {
+              "kb": 280.2,
+              "gzipKb": 271.9,
+              "n": 21
+            },
+            "font": {
+              "kb": 67.9,
+              "gzipKb": 67.3,
+              "n": 2
+            },
+            "image": {
+              "kb": 77.3,
+              "gzipKb": 75.9,
+              "n": 4
+            },
+            "scene3d": {
+              "kb": 28.2,
+              "gzipKb": 27.8,
+              "n": 1
+            },
+            "three": {
+              "kb": 143.3,
+              "gzipKb": 142.8,
+              "n": 1
+            }
+          },
+          "totalKb": 639.2,
+          "totalGzipKb": 625
+        },
+        "errors": []
+      },
+      "journey": {
+        "input": {
+          "start": {
+            "eventMs": 128,
+            "inputDelayMs": 38.800000000046566,
+            "processingMs": 56.10000000009313,
+            "entries": "pointerdown:40 pointerup:40 click:128",
+            "clickToPaintMs": 241.60000000009313,
+            "target": "button._btn_qn6mf_1 \"Put the kettle on · 25 min\""
+          },
+          "pause": {
+            "eventMs": 264,
+            "inputDelayMs": 115.60000000009313,
+            "processingMs": 6,
+            "entries": "pointerdown:264 pointerup:264 click:264",
+            "clickToPaintMs": 145.9000000001397,
+            "target": "button._btn_qn6mf_1 \"Pause\""
+          },
+          "resume": {
+            "eventMs": 40,
+            "inputDelayMs": 15.899999999906868,
+            "processingMs": 6.400000000139698,
+            "entries": "pointerdown:40 pointerup:40 click:40",
+            "clickToPaintMs": 31.300000000046566,
+            "target": "button._btn_qn6mf_1 \"Resume\""
+          },
+          "add5": {
+            "eventMs": 296,
+            "inputDelayMs": 59.0999999998603,
+            "processingMs": 7.100000000093132,
+            "entries": "pointerdown:296 pointerup:296 click:296",
+            "clickToPaintMs": 86.39999999990687,
+            "target": "button._btn_qn6mf_1 \"Add 5 minutes\""
+          },
+          "teaTime": {
+            "eventMs": 120,
+            "inputDelayMs": 22.699999999953434,
+            "processingMs": 2.699999999953434,
+            "entries": "pointerdown:120 pointerup:112 click:112",
+            "clickToPaintMs": 49.699999999953434,
+            "target": "button._btn_qn6mf_1 \"Tea time · 5 min\""
+          }
+        },
+        "cls": {
+          "homeLoad": {
+            "sum": 0,
+            "window": 0,
+            "count": 0,
+            "top": []
+          },
+          "focus": {
+            "sum": 0,
+            "window": 0,
+            "count": 0,
+            "top": []
+          },
+          "whistleToSummary": {
+            "sum": 0.5194,
+            "window": 0.5,
+            "count": 4,
+            "top": [
+              "0.5000 main._panel_kjsz3_131 \"30 minutes brewedTea’s ready. Take five \"",
+              "0.0165 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:00Tea’s\" | div._controls_kjsz3_247 \"Add 5PauseEnd\"",
+              "0.0028 span._clock_kjsz3_194 \"0:01\" | span._status_kjsz3_218 \"1 second left\" | span._meta_kjsz3_230 \"29 min brewed · now a 30 min brew\""
+            ]
+          },
+          "break": {
+            "sum": 0,
+            "window": 0,
+            "count": 1,
+            "top": [
+              "0.0000 "
+            ]
+          },
+          "journey": {
+            "sum": 0.5194,
+            "window": 0.5,
+            "count": 5,
+            "top": [
+              "0.5000 main._panel_kjsz3_131 \"30 minutes brewedTea’s ready. Take five \"",
+              "0.0165 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:00Tea’s\" | div._controls_kjsz3_247 \"Add 5PauseEnd\"",
+              "0.0028 span._clock_kjsz3_194 \"0:01\" | span._status_kjsz3_218 \"1 second left\" | span._meta_kjsz3_230 \"29 min brewed · now a 30 min brew\""
+            ]
+          }
+        },
+        "heap": {
+          "home": {
+            "heapUsedMB": 8.9,
+            "heapTotalMB": 10,
+            "nodes": 619,
+            "listeners": 394,
+            "taskMs": 635,
+            "scriptMs": 182.2,
+            "layoutMs": 30,
+            "styleMs": 39.5
+          },
+          "focus": {
+            "heapUsedMB": 10.1,
+            "heapTotalMB": 10.8,
+            "nodes": 924,
+            "listeners": 413,
+            "taskMs": 1114.4,
+            "scriptMs": 297.5,
+            "layoutMs": 48.4,
+            "styleMs": 80.6
+          },
+          "summary": {
+            "heapUsedMB": 10.9,
+            "heapTotalMB": 11.8,
+            "nodes": 548,
+            "listeners": 396,
+            "taskMs": 1948.9,
+            "scriptMs": 432.1,
+            "layoutMs": 97.5,
+            "styleMs": 203.6
+          }
+        },
+        "busyMs": {
+          "homeToFocus": 468.4,
+          "focusControls": 373.1,
+          "whistleToSummary": 464.5,
+          "break": 211.4
+        },
+        "bytes": {
+          "home": {
+            "requests": 35,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 19.7,
+                "gzipKb": 19.5,
+                "n": 1
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 581.7,
+            "totalGzipKb": 568.6
+          },
+          "focus": {
+            "requests": 38,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 77.3,
+                "gzipKb": 75.9,
+                "n": 4
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 639.2,
+            "totalGzipKb": 625
+          },
+          "summary": {
+            "requests": 39,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 97.7,
+                "gzipKb": 96.1,
+                "n": 5
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 659.6,
+            "totalGzipKb": 645.2
+          }
+        },
+        "chai": {
+          "home": [
+            {
+              "file": "chai-sipping.webp",
+              "natural": [
+                302,
+                491
+              ],
+              "cssPx": [
+                67.7,
+                109.9
+              ],
+              "devicePx": [
+                135,
+                220
+              ],
+              "sourcePerDevicePx": 2.23,
+              "onScreen": true
+            }
+          ],
+          "focus": [
+            {
+              "file": "chai-reading.webp",
+              "natural": [
+                311,
+                487
+              ],
+              "cssPx": [
+                112.8,
+                176.6
+              ],
+              "devicePx": [
+                226,
+                353
+              ],
+              "sourcePerDevicePx": 1.38,
+              "onScreen": true
+            }
+          ],
+          "summary": [
+            {
+              "file": "chai-cheering.webp",
+              "natural": [
+                312,
+                428
+              ],
+              "cssPx": [
+                113.2,
+                155.2
+              ],
+              "devicePx": [
+                226,
+                310
+              ],
+              "sourcePerDevicePx": 1.38,
+              "onScreen": true
+            }
+          ],
+          "break": [
+            {
+              "file": "chai-sipping.webp",
+              "natural": [
+                302,
+                491
+              ],
+              "cssPx": [
+                109.5,
+                178.1
+              ],
+              "devicePx": [
+                219,
+                356
+              ],
+              "sourcePerDevicePx": 1.38,
+              "onScreen": true
+            }
+          ]
+        },
+        "scene": {
+          "focusWindowReadyMs": 1117,
+          "focusWindowStaticMs": 135.6
+        },
+        "tbtJourneyMs": 9,
+        "longestTaskJourneyMs": 59,
+        "errors": []
+      },
+      "nook": {
+        "scene3dReadyMs": 2200.1,
+        "staticShownMs": null,
+        "tier": "canvas",
+        "cls": {
+          "sum": 0,
+          "window": 0,
+          "count": 0,
+          "top": []
+        },
+        "heap": {
+          "heapUsedMB": 9.8,
+          "heapTotalMB": 11.3,
+          "nodes": 971,
+          "listeners": 401,
+          "taskMs": 753.8,
+          "scriptMs": 342.3,
+          "layoutMs": 27.4,
+          "styleMs": 18.9
+        },
+        "bytes": {
+          "requests": 34,
+          "by": {
+            "html": {
+              "kb": 1.1,
+              "gzipKb": 0.9,
+              "n": 1
+            },
+            "css": {
+              "kb": 41.2,
+              "gzipKb": 38.4,
+              "n": 8
+            },
+            "js": {
+              "kb": 280.2,
+              "gzipKb": 271.9,
+              "n": 21
+            },
+            "font": {
+              "kb": 67.9,
+              "gzipKb": 67.3,
+              "n": 2
+            },
+            "scene3d": {
+              "kb": 28.2,
+              "gzipKb": 27.8,
+              "n": 1
+            },
+            "three": {
+              "kb": 143.3,
+              "gzipKb": 142.8,
+              "n": 1
+            }
+          },
+          "totalKb": 562,
+          "totalGzipKb": 549.1
+        },
+        "longestTaskMs": 239,
+        "errors": []
+      },
+      "loadAfter": [
+        2.47,
+        2.72,
+        2.54
+      ],
+      "seconds": 38
+    },
+    {
+      "build": "8f1044a",
+      "base": "http://127.0.0.1:5242",
+      "profile": "desktop",
+      "run": 1,
+      "loadBefore": [
+        2.47,
+        2.72,
+        2.54
+      ],
+      "cold": {
+        "ttfbMs": 3.5,
+        "fcpMs": 164,
+        "lcpMs": 532,
+        "lcpElement": "p._bubbleText_18sz3_213 \"Nice going. One more brew and today’s po\"",
+        "dclMs": 117.6,
+        "loadMs": 118,
+        "startReadyMs": 471,
+        "firstClickHandledMs": 677,
+        "firstInputDelayMs": 1.7,
+        "startColdEventMs": 344,
+        "startColdClickToPaintMs": 274.9,
+        "tbtToInteractiveMs": 94,
+        "longestTaskMs": 131,
+        "bytesToInteractive": {
+          "requests": 38,
+          "by": {
+            "html": {
+              "kb": 1.1,
+              "gzipKb": 0.9,
+              "n": 1
+            },
+            "js": {
+              "kb": 280.2,
+              "gzipKb": 271.9,
+              "n": 21
+            },
+            "css": {
+              "kb": 41.2,
+              "gzipKb": 38.4,
+              "n": 8
+            },
+            "font": {
+              "kb": 67.9,
+              "gzipKb": 67.3,
+              "n": 2
+            },
+            "image": {
+              "kb": 77.3,
+              "gzipKb": 75.9,
+              "n": 4
+            },
+            "scene3d": {
+              "kb": 28.2,
+              "gzipKb": 27.8,
+              "n": 1
+            },
+            "three": {
+              "kb": 143.3,
+              "gzipKb": 142.8,
+              "n": 1
+            }
+          },
+          "totalKb": 639.2,
+          "totalGzipKb": 625
+        },
+        "errors": []
+      },
+      "journey": {
+        "input": {
+          "start": {
+            "eventMs": 264,
+            "inputDelayMs": 24.699999999953434,
+            "processingMs": 54.699999999953434,
+            "entries": "pointerdown:264 pointerup:264 click:264",
+            "clickToPaintMs": 218.39999999990687,
+            "target": "button._btn_qn6mf_1 \"Put the kettle on · 25 min\""
+          },
+          "pause": {
+            "eventMs": 312,
+            "inputDelayMs": 3,
+            "processingMs": 7.099999999860302,
+            "entries": "pointerdown:312 pointerup:312 click:312",
+            "clickToPaintMs": 112.5999999998603,
+            "target": "button._btn_qn6mf_1 \"Pause\""
+          },
+          "resume": {
+            "eventMs": 384,
+            "inputDelayMs": 5,
+            "processingMs": 6.199999999953434,
+            "entries": "pointerdown:384 pointerup:384 click:384",
+            "clickToPaintMs": 53.800000000046566,
+            "target": "button._btn_qn6mf_1 \"Resume\""
+          },
+          "add5": {
+            "eventMs": 368,
+            "inputDelayMs": 5.399999999906868,
+            "processingMs": 6.400000000139698,
+            "entries": "pointerdown:368 pointerup:368 click:368",
+            "clickToPaintMs": 95.60000000009313,
+            "target": "button._btn_qn6mf_1 \"Add 5 minutes\""
+          },
+          "teaTime": {
+            "eventMs": 528,
+            "inputDelayMs": 1.8000000000465661,
+            "processingMs": 2.800000000046566,
+            "entries": "pointerdown:528 pointerup:528 click:528",
+            "clickToPaintMs": 106.5,
+            "target": "button._btn_qn6mf_1 \"Tea time · 5 min\""
+          }
+        },
+        "cls": {
+          "homeLoad": {
+            "sum": 0,
+            "window": 0,
+            "count": 0,
+            "top": []
+          },
+          "focus": {
+            "sum": 0,
+            "window": 0,
+            "count": 0,
+            "top": []
+          },
+          "whistleToSummary": {
+            "sum": 0.0189,
+            "window": 0.0134,
+            "count": 3,
+            "top": [
+              "0.0134 main._panel_kjsz3_131 \"30 minutes brewedTea’s ready. Take five \"",
+              "0.0037 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:00Tea’s\" | div._controls_kjsz3_247 \"Add 5PauseEnd\"",
+              "0.0018 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:01Almos\""
+            ]
+          },
+          "break": {
+            "sum": 0,
+            "window": 0,
+            "count": 0,
+            "top": []
+          },
+          "journey": {
+            "sum": 0.0189,
+            "window": 0.0134,
+            "count": 3,
+            "top": [
+              "0.0134 main._panel_kjsz3_131 \"30 minutes brewedTea’s ready. Take five \"",
+              "0.0037 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:00Tea’s\" | div._controls_kjsz3_247 \"Add 5PauseEnd\"",
+              "0.0018 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:01Almos\""
+            ]
+          }
+        },
+        "heap": {
+          "home": {
+            "heapUsedMB": 8.9,
+            "heapTotalMB": 9.8,
+            "nodes": 619,
+            "listeners": 394,
+            "taskMs": 612.3,
+            "scriptMs": 190.2,
+            "layoutMs": 30,
+            "styleMs": 35.5
+          },
+          "focus": {
+            "heapUsedMB": 10.1,
+            "heapTotalMB": 10.8,
+            "nodes": 924,
+            "listeners": 413,
+            "taskMs": 997.1,
+            "scriptMs": 294.8,
+            "layoutMs": 47.4,
+            "styleMs": 53.7
+          },
+          "summary": {
+            "heapUsedMB": 10.9,
+            "heapTotalMB": 11.6,
+            "nodes": 548,
+            "listeners": 396,
+            "taskMs": 1519.3,
+            "scriptMs": 413.6,
+            "layoutMs": 86.7,
+            "styleMs": 109.6
+          }
+        },
+        "busyMs": {
+          "homeToFocus": 376.6,
+          "focusControls": 215.1,
+          "whistleToSummary": 301,
+          "break": 155
+        },
+        "bytes": {
+          "home": {
+            "requests": 35,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 19.7,
+                "gzipKb": 19.5,
+                "n": 1
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 581.7,
+            "totalGzipKb": 568.6
+          },
+          "focus": {
+            "requests": 38,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 77.3,
+                "gzipKb": 75.9,
+                "n": 4
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 639.2,
+            "totalGzipKb": 625
+          },
+          "summary": {
+            "requests": 39,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 97.7,
+                "gzipKb": 96.1,
+                "n": 5
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 659.6,
+            "totalGzipKb": 645.2
+          }
+        },
+        "chai": {
+          "home": [
+            {
+              "file": "chai-sipping.webp",
+              "natural": [
+                302,
+                491
+              ],
+              "cssPx": [
+                91.8,
+                149.2
+              ],
+              "devicePx": [
+                92,
+                149
+              ],
+              "sourcePerDevicePx": 3.29,
+              "onScreen": true
+            }
+          ],
+          "focus": [
+            {
+              "file": "chai-reading.webp",
+              "natural": [
+                311,
+                487
+              ],
+              "cssPx": [
+                185.1,
+                289.9
+              ],
+              "devicePx": [
+                185,
+                290
+              ],
+              "sourcePerDevicePx": 1.68,
+              "onScreen": true
+            }
+          ],
+          "summary": [
+            {
+              "file": "chai-cheering.webp",
+              "natural": [
+                312,
+                428
+              ],
+              "cssPx": [
+                185.7,
+                254.7
+              ],
+              "devicePx": [
+                186,
+                255
+              ],
+              "sourcePerDevicePx": 1.68,
+              "onScreen": true
+            }
+          ],
+          "break": [
+            {
+              "file": "chai-sipping.webp",
+              "natural": [
+                302,
+                491
+              ],
+              "cssPx": [
+                179.8,
+                292.2
+              ],
+              "devicePx": [
+                180,
+                292
+              ],
+              "sourcePerDevicePx": 1.68,
+              "onScreen": true
+            }
+          ]
+        },
+        "scene": {
+          "focusWindowReadyMs": 1130.9,
+          "focusWindowStaticMs": 125.6
+        },
+        "tbtJourneyMs": 29,
+        "longestTaskJourneyMs": 79,
+        "errors": []
+      },
+      "nook": {
+        "scene3dReadyMs": 3448,
+        "staticShownMs": null,
+        "tier": "canvas",
+        "cls": {
+          "sum": 0.0005,
+          "window": 0.0005,
+          "count": 4,
+          "top": [
+            "0.0004  |  | ",
+            "0.0000 ",
+            "0.0000 "
+          ]
+        },
+        "heap": {
+          "heapUsedMB": 9.7,
+          "heapTotalMB": 11,
+          "nodes": 971,
+          "listeners": 401,
+          "taskMs": 716.5,
+          "scriptMs": 279,
+          "layoutMs": 41.6,
+          "styleMs": 37.7
+        },
+        "bytes": {
+          "requests": 34,
+          "by": {
+            "html": {
+              "kb": 1.1,
+              "gzipKb": 0.9,
+              "n": 1
+            },
+            "css": {
+              "kb": 41.2,
+              "gzipKb": 38.4,
+              "n": 8
+            },
+            "js": {
+              "kb": 280.2,
+              "gzipKb": 271.9,
+              "n": 21
+            },
+            "font": {
+              "kb": 67.9,
+              "gzipKb": 67.3,
+              "n": 2
+            },
+            "scene3d": {
+              "kb": 28.2,
+              "gzipKb": 27.8,
+              "n": 1
+            },
+            "three": {
+              "kb": 143.3,
+              "gzipKb": 142.8,
+              "n": 1
+            }
+          },
+          "totalKb": 562,
+          "totalGzipKb": 549.1
+        },
+        "longestTaskMs": 153,
+        "errors": []
+      },
+      "loadAfter": [
+        3.22,
+        2.86,
+        2.59
+      ],
+      "seconds": 42
+    },
+    {
+      "build": "8f1044a",
+      "base": "http://127.0.0.1:5242",
+      "profile": "phone",
+      "run": 2,
+      "loadBefore": [
+        3.22,
+        2.86,
+        2.59
+      ],
+      "cold": {
+        "ttfbMs": 3.2,
+        "fcpMs": 176,
+        "lcpMs": 512,
+        "lcpElement": "h1._greeting_18sz3_85 \"Good afternoon, Robin\"",
+        "dclMs": 126.5,
+        "loadMs": 126.9,
+        "startReadyMs": 494.4,
+        "firstClickHandledMs": 1126.2,
+        "firstInputDelayMs": 30.1,
+        "startColdEventMs": 160,
+        "startColdClickToPaintMs": 251.6,
+        "tbtToInteractiveMs": 51,
+        "longestTaskMs": 86,
+        "bytesToInteractive": {
+          "requests": 38,
+          "by": {
+            "html": {
+              "kb": 1.1,
+              "gzipKb": 0.9,
+              "n": 1
+            },
+            "css": {
+              "kb": 41.2,
+              "gzipKb": 38.4,
+              "n": 8
+            },
+            "js": {
+              "kb": 280.2,
+              "gzipKb": 271.9,
+              "n": 21
+            },
+            "font": {
+              "kb": 67.9,
+              "gzipKb": 67.3,
+              "n": 2
+            },
+            "image": {
+              "kb": 77.3,
+              "gzipKb": 75.9,
+              "n": 4
+            },
+            "scene3d": {
+              "kb": 28.2,
+              "gzipKb": 27.8,
+              "n": 1
+            },
+            "three": {
+              "kb": 143.3,
+              "gzipKb": 142.8,
+              "n": 1
+            }
+          },
+          "totalKb": 639.2,
+          "totalGzipKb": 625
+        },
+        "errors": []
+      },
+      "journey": {
+        "input": {
+          "start": {
+            "eventMs": 128,
+            "inputDelayMs": 39.800000000046566,
+            "processingMs": 54,
+            "entries": "pointerdown:40 pointerup:40 click:128",
+            "clickToPaintMs": 263.60000000009313,
+            "target": "button._btn_qn6mf_1 \"Put the kettle on · 25 min\""
+          },
+          "pause": {
+            "eventMs": 232,
+            "inputDelayMs": 62,
+            "processingMs": 7.600000000093132,
+            "entries": "pointerdown:232 pointerup:232 click:232",
+            "clickToPaintMs": 85.60000000009313,
+            "target": "button._btn_qn6mf_1 \"Pause\""
+          },
+          "resume": {
+            "eventMs": 48,
+            "inputDelayMs": 15.299999999813735,
+            "processingMs": 7.100000000093132,
+            "entries": "pointerdown:48 pointerup:48 click:48",
+            "clickToPaintMs": 30.5999999998603,
+            "target": "button._btn_qn6mf_1 \"Resume\""
+          },
+          "add5": {
+            "eventMs": 272,
+            "inputDelayMs": 53.300000000046566,
+            "processingMs": 7.199999999953434,
+            "entries": "pointerdown:272 pointerup:272 click:272",
+            "clickToPaintMs": 81.30000000004657,
+            "target": "button._btn_qn6mf_1 \"Add 5 minutes\""
+          },
+          "teaTime": {
+            "eventMs": 376,
+            "inputDelayMs": 96.9000000001397,
+            "processingMs": 3.7999999998137355,
+            "entries": "pointerdown:376 pointerup:376 click:376",
+            "clickToPaintMs": 154.4000000001397,
+            "target": "button._btn_qn6mf_1 \"Tea time · 5 min\""
+          }
+        },
+        "cls": {
+          "homeLoad": {
+            "sum": 0,
+            "window": 0,
+            "count": 0,
+            "top": []
+          },
+          "focus": {
+            "sum": 0,
+            "window": 0,
+            "count": 0,
+            "top": []
+          },
+          "whistleToSummary": {
+            "sum": 0.5193,
+            "window": 0.5,
+            "count": 3,
+            "top": [
+              "0.5000 main._panel_kjsz3_131 \"30 minutes brewedTea’s ready. Take five \"",
+              "0.0165 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:00Tea’s\" | div._controls_kjsz3_247 \"Add 5PauseEnd\"",
+              "0.0028 span._clock_kjsz3_194 \"0:01\" | span._status_kjsz3_218 \"1 second left\" | span._meta_kjsz3_230 \"29 min brewed · now a 30 min brew\""
+            ]
+          },
+          "break": {
+            "sum": 0,
+            "window": 0,
+            "count": 1,
+            "top": [
+              "0.0000 "
+            ]
+          },
+          "journey": {
+            "sum": 0.5193,
+            "window": 0.5,
+            "count": 4,
+            "top": [
+              "0.5000 main._panel_kjsz3_131 \"30 minutes brewedTea’s ready. Take five \"",
+              "0.0165 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:00Tea’s\" | div._controls_kjsz3_247 \"Add 5PauseEnd\"",
+              "0.0028 span._clock_kjsz3_194 \"0:01\" | span._status_kjsz3_218 \"1 second left\" | span._meta_kjsz3_230 \"29 min brewed · now a 30 min brew\""
+            ]
+          }
+        },
+        "heap": {
+          "home": {
+            "heapUsedMB": 8.9,
+            "heapTotalMB": 10.5,
+            "nodes": 619,
+            "listeners": 394,
+            "taskMs": 675.7,
+            "scriptMs": 197.1,
+            "layoutMs": 29.6,
+            "styleMs": 41
+          },
+          "focus": {
+            "heapUsedMB": 10.1,
+            "heapTotalMB": 10.8,
+            "nodes": 925,
+            "listeners": 413,
+            "taskMs": 1160.7,
+            "scriptMs": 306.9,
+            "layoutMs": 47.5,
+            "styleMs": 82.4
+          },
+          "summary": {
+            "heapUsedMB": 10.9,
+            "heapTotalMB": 11.6,
+            "nodes": 548,
+            "listeners": 396,
+            "taskMs": 1982.4,
+            "scriptMs": 441,
+            "layoutMs": 97.2,
+            "styleMs": 204.3
+          }
+        },
+        "busyMs": {
+          "homeToFocus": 477.9,
+          "focusControls": 353.3,
+          "whistleToSummary": 462.9,
+          "break": 193.9
+        },
+        "bytes": {
+          "home": {
+            "requests": 35,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 19.7,
+                "gzipKb": 19.5,
+                "n": 1
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 581.7,
+            "totalGzipKb": 568.6
+          },
+          "focus": {
+            "requests": 38,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 77.3,
+                "gzipKb": 75.9,
+                "n": 4
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 639.2,
+            "totalGzipKb": 625
+          },
+          "summary": {
+            "requests": 39,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 97.7,
+                "gzipKb": 96.1,
+                "n": 5
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 659.6,
+            "totalGzipKb": 645.2
+          }
+        },
+        "chai": {
+          "home": [
+            {
+              "file": "chai-sipping.webp",
+              "natural": [
+                302,
+                491
+              ],
+              "cssPx": [
+                67.7,
+                109.9
+              ],
+              "devicePx": [
+                135,
+                220
+              ],
+              "sourcePerDevicePx": 2.23,
+              "onScreen": true
+            }
+          ],
+          "focus": [
+            {
+              "file": "chai-reading.webp",
+              "natural": [
+                311,
+                487
+              ],
+              "cssPx": [
+                112.8,
+                176.6
+              ],
+              "devicePx": [
+                226,
+                353
+              ],
+              "sourcePerDevicePx": 1.38,
+              "onScreen": true
+            }
+          ],
+          "summary": [
+            {
+              "file": "chai-cheering.webp",
+              "natural": [
+                312,
+                428
+              ],
+              "cssPx": [
+                113.2,
+                155.2
+              ],
+              "devicePx": [
+                226,
+                310
+              ],
+              "sourcePerDevicePx": 1.38,
+              "onScreen": true
+            }
+          ],
+          "break": [
+            {
+              "file": "chai-sipping.webp",
+              "natural": [
+                302,
+                491
+              ],
+              "cssPx": [
+                109.5,
+                178.1
+              ],
+              "devicePx": [
+                219,
+                356
+              ],
+              "sourcePerDevicePx": 1.38,
+              "onScreen": true
+            }
+          ]
+        },
+        "scene": {
+          "focusWindowReadyMs": 1118.9,
+          "focusWindowStaticMs": 136.4
+        },
+        "tbtJourneyMs": 7,
+        "longestTaskJourneyMs": 57,
+        "errors": []
+      },
+      "nook": {
+        "scene3dReadyMs": 2726.2,
+        "staticShownMs": null,
+        "tier": "canvas",
+        "cls": {
+          "sum": 0,
+          "window": 0,
+          "count": 0,
+          "top": []
+        },
+        "heap": {
+          "heapUsedMB": 9.7,
+          "heapTotalMB": 10.8,
+          "nodes": 971,
+          "listeners": 401,
+          "taskMs": 782.1,
+          "scriptMs": 337.6,
+          "layoutMs": 31.3,
+          "styleMs": 26
+        },
+        "bytes": {
+          "requests": 34,
+          "by": {
+            "html": {
+              "kb": 1.1,
+              "gzipKb": 0.9,
+              "n": 1
+            },
+            "css": {
+              "kb": 41.2,
+              "gzipKb": 38.4,
+              "n": 8
+            },
+            "js": {
+              "kb": 280.2,
+              "gzipKb": 271.9,
+              "n": 21
+            },
+            "font": {
+              "kb": 67.9,
+              "gzipKb": 67.3,
+              "n": 2
+            },
+            "scene3d": {
+              "kb": 28.2,
+              "gzipKb": 27.8,
+              "n": 1
+            },
+            "three": {
+              "kb": 143.3,
+              "gzipKb": 142.8,
+              "n": 1
+            }
+          },
+          "totalKb": 562,
+          "totalGzipKb": 549.1
+        },
+        "longestTaskMs": 190,
+        "errors": []
+      },
+      "loadAfter": [
+        4,
+        3.05,
+        2.67
+      ],
+      "seconds": 40
+    },
+    {
+      "build": "8f1044a",
+      "base": "http://127.0.0.1:5242",
+      "profile": "desktop",
+      "run": 2,
+      "loadBefore": [
+        4,
+        3.05,
+        2.67
+      ],
+      "cold": {
+        "ttfbMs": 4.2,
+        "fcpMs": 256,
+        "lcpMs": 704,
+        "lcpElement": "p._bubbleText_18sz3_213 \"Nice going. One more brew and today’s po\"",
+        "dclMs": 200.7,
+        "loadMs": 201.1,
+        "startReadyMs": 646,
+        "firstClickHandledMs": 1209.4,
+        "firstInputDelayMs": 1.8,
+        "startColdEventMs": 1472,
+        "startColdClickToPaintMs": 279.1,
+        "tbtToInteractiveMs": 166,
+        "longestTaskMs": 124,
+        "bytesToInteractive": {
+          "requests": 38,
+          "by": {
+            "html": {
+              "kb": 1.1,
+              "gzipKb": 0.9,
+              "n": 1
+            },
+            "css": {
+              "kb": 41.2,
+              "gzipKb": 38.4,
+              "n": 8
+            },
+            "js": {
+              "kb": 280.2,
+              "gzipKb": 271.9,
+              "n": 21
+            },
+            "font": {
+              "kb": 67.9,
+              "gzipKb": 67.3,
+              "n": 2
+            },
+            "image": {
+              "kb": 77.3,
+              "gzipKb": 75.9,
+              "n": 4
+            },
+            "scene3d": {
+              "kb": 28.2,
+              "gzipKb": 27.8,
+              "n": 1
+            },
+            "three": {
+              "kb": 143.3,
+              "gzipKb": 142.8,
+              "n": 1
+            }
+          },
+          "totalKb": 639.2,
+          "totalGzipKb": 625
+        },
+        "errors": []
+      },
+      "journey": {
+        "input": {
+          "start": {
+            "eventMs": 264,
+            "inputDelayMs": 24.300000000046566,
+            "processingMs": 60.699999999953434,
+            "entries": "pointerdown:264 pointerup:264 click:264",
+            "clickToPaintMs": 230.80000000004657,
+            "target": "button._btn_qn6mf_1 \"Put the kettle on · 25 min\""
+          },
+          "pause": {
+            "eventMs": 672,
+            "inputDelayMs": 3.800000000046566,
+            "processingMs": 8.199999999953434,
+            "entries": "pointerdown:672 pointerup:672 click:672",
+            "clickToPaintMs": 48.9000000001397,
+            "target": "button._btn_qn6mf_1 \"Pause\""
+          },
+          "resume": {
+            "eventMs": 336,
+            "inputDelayMs": 5,
+            "processingMs": 9.400000000139698,
+            "entries": "pointerdown:336 pointerup:336 click:336",
+            "clickToPaintMs": 24.300000000046566,
+            "target": "button._btn_qn6mf_1 \"Resume\""
+          },
+          "add5": {
+            "eventMs": 856,
+            "inputDelayMs": 9,
+            "processingMs": 4.5,
+            "entries": "pointerdown:856 pointerup:856 click:856",
+            "clickToPaintMs": 618.7000000001863,
+            "target": "button._btn_qn6mf_1 \"Add 5 minutes\""
+          },
+          "teaTime": {
+            "eventMs": 640,
+            "inputDelayMs": 2.0999999998603016,
+            "processingMs": 4.300000000046566,
+            "entries": "pointerdown:640 pointerup:640 click:640",
+            "clickToPaintMs": 112.5,
+            "target": "button._btn_qn6mf_1 \"Tea time · 5 min\""
+          }
+        },
+        "cls": {
+          "homeLoad": {
+            "sum": 0,
+            "window": 0,
+            "count": 0,
+            "top": []
+          },
+          "focus": {
+            "sum": 0,
+            "window": 0,
+            "count": 1,
+            "top": [
+              "0.0000 "
+            ]
+          },
+          "whistleToSummary": {
+            "sum": 0.0189,
+            "window": 0.0134,
+            "count": 3,
+            "top": [
+              "0.0134 main._panel_kjsz3_131 \"30 minutes brewedTea’s ready. Take five \"",
+              "0.0037 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:00Tea’s\" | div._controls_kjsz3_247 \"Add 5PauseEnd\"",
+              "0.0018 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:01Almos\""
+            ]
+          },
+          "break": {
+            "sum": 0,
+            "window": 0,
+            "count": 0,
+            "top": []
+          },
+          "journey": {
+            "sum": 0.0189,
+            "window": 0.0134,
+            "count": 4,
+            "top": [
+              "0.0134 main._panel_kjsz3_131 \"30 minutes brewedTea’s ready. Take five \"",
+              "0.0037 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:00Tea’s\" | div._controls_kjsz3_247 \"Add 5PauseEnd\"",
+              "0.0018 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:01Almos\""
+            ]
+          }
+        },
+        "heap": {
+          "home": {
+            "heapUsedMB": 8.9,
+            "heapTotalMB": 10,
+            "nodes": 619,
+            "listeners": 394,
+            "taskMs": 570.2,
+            "scriptMs": 178.9,
+            "layoutMs": 25.7,
+            "styleMs": 31.9
+          },
+          "focus": {
+            "heapUsedMB": 10.1,
+            "heapTotalMB": 10.6,
+            "nodes": 924,
+            "listeners": 413,
+            "taskMs": 967.9,
+            "scriptMs": 287.1,
+            "layoutMs": 44.9,
+            "styleMs": 51.1
+          },
+          "summary": {
+            "heapUsedMB": 10.9,
+            "heapTotalMB": 11.8,
+            "nodes": 548,
+            "listeners": 396,
+            "taskMs": 1518.3,
+            "scriptMs": 409.6,
+            "layoutMs": 86.9,
+            "styleMs": 107.2
+          }
+        },
+        "busyMs": {
+          "homeToFocus": 388.6,
+          "focusControls": 232.7,
+          "whistleToSummary": 309.4,
+          "break": 138.7
+        },
+        "bytes": {
+          "home": {
+            "requests": 35,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 19.7,
+                "gzipKb": 19.5,
+                "n": 1
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 581.7,
+            "totalGzipKb": 568.6
+          },
+          "focus": {
+            "requests": 38,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 77.3,
+                "gzipKb": 75.9,
+                "n": 4
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 639.2,
+            "totalGzipKb": 625
+          },
+          "summary": {
+            "requests": 39,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 97.7,
+                "gzipKb": 96.1,
+                "n": 5
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 659.6,
+            "totalGzipKb": 645.2
+          }
+        },
+        "chai": {
+          "home": [
+            {
+              "file": "chai-sipping.webp",
+              "natural": [
+                302,
+                491
+              ],
+              "cssPx": [
+                91.8,
+                149.2
+              ],
+              "devicePx": [
+                92,
+                149
+              ],
+              "sourcePerDevicePx": 3.29,
+              "onScreen": true
+            }
+          ],
+          "focus": [
+            {
+              "file": "chai-reading.webp",
+              "natural": [
+                311,
+                487
+              ],
+              "cssPx": [
+                185.1,
+                289.9
+              ],
+              "devicePx": [
+                185,
+                290
+              ],
+              "sourcePerDevicePx": 1.68,
+              "onScreen": true
+            }
+          ],
+          "summary": [
+            {
+              "file": "chai-cheering.webp",
+              "natural": [
+                312,
+                428
+              ],
+              "cssPx": [
+                185.7,
+                254.7
+              ],
+              "devicePx": [
+                186,
+                255
+              ],
+              "sourcePerDevicePx": 1.68,
+              "onScreen": true
+            }
+          ],
+          "break": [
+            {
+              "file": "chai-sipping.webp",
+              "natural": [
+                302,
+                491
+              ],
+              "cssPx": [
+                179.8,
+                292.2
+              ],
+              "devicePx": [
+                180,
+                292
+              ],
+              "sourcePerDevicePx": 1.68,
+              "onScreen": true
+            }
+          ]
+        },
+        "scene": {
+          "focusWindowReadyMs": 1101.9,
+          "focusWindowStaticMs": 119
+        },
+        "tbtJourneyMs": 34,
+        "longestTaskJourneyMs": 84,
+        "errors": []
+      },
+      "nook": {
+        "scene3dReadyMs": 4733.9,
+        "staticShownMs": null,
+        "tier": "canvas",
+        "cls": {
+          "sum": 0.0004,
+          "window": 0.0004,
+          "count": 6,
+          "top": [
+            "0.0002  | span._reward_sgyx9_179 \"+15 leaves\" | span._cozies_sgyx9_69 \"2 Tea Cozies\"",
+            "0.0001  |  | ",
+            "0.0000 "
+          ]
+        },
+        "heap": {
+          "heapUsedMB": 9.5,
+          "heapTotalMB": 10.5,
+          "nodes": 971,
+          "listeners": 401,
+          "taskMs": 704.4,
+          "scriptMs": 262.7,
+          "layoutMs": 41.5,
+          "styleMs": 26.2
+        },
+        "bytes": {
+          "requests": 34,
+          "by": {
+            "html": {
+              "kb": 1.1,
+              "gzipKb": 0.9,
+              "n": 1
+            },
+            "css": {
+              "kb": 41.2,
+              "gzipKb": 38.4,
+              "n": 8
+            },
+            "js": {
+              "kb": 280.2,
+              "gzipKb": 271.9,
+              "n": 21
+            },
+            "font": {
+              "kb": 67.9,
+              "gzipKb": 67.3,
+              "n": 2
+            },
+            "scene3d": {
+              "kb": 28.2,
+              "gzipKb": 27.8,
+              "n": 1
+            },
+            "three": {
+              "kb": 143.3,
+              "gzipKb": 142.8,
+              "n": 1
+            }
+          },
+          "totalKb": 562,
+          "totalGzipKb": 549.1
+        },
+        "longestTaskMs": 225,
+        "errors": []
+      },
+      "loadAfter": [
+        5.88,
+        3.63,
+        2.88
+      ],
+      "seconds": 47
+    },
+    {
+      "build": "8f1044a",
+      "base": "http://127.0.0.1:5242",
+      "profile": "phone",
+      "run": 3,
+      "loadBefore": [
+        5.88,
+        3.63,
+        2.88
+      ],
+      "cold": {
+        "ttfbMs": 10.4,
+        "fcpMs": 168,
+        "lcpMs": 520,
+        "lcpElement": "h1._greeting_18sz3_85 \"Good afternoon, Robin\"",
+        "dclMs": 124.2,
+        "loadMs": 124.5,
+        "startReadyMs": 484.6,
+        "firstClickHandledMs": 754.3,
+        "firstInputDelayMs": 31.6,
+        "startColdEventMs": 216,
+        "startColdClickToPaintMs": 349.2,
+        "tbtToInteractiveMs": 88,
+        "longestTaskMs": 126,
+        "bytesToInteractive": {
+          "requests": 38,
+          "by": {
+            "html": {
+              "kb": 1.1,
+              "gzipKb": 0.9,
+              "n": 1
+            },
+            "css": {
+              "kb": 41.2,
+              "gzipKb": 38.4,
+              "n": 8
+            },
+            "js": {
+              "kb": 280.2,
+              "gzipKb": 271.9,
+              "n": 21
+            },
+            "font": {
+              "kb": 67.9,
+              "gzipKb": 67.3,
+              "n": 2
+            },
+            "image": {
+              "kb": 77.3,
+              "gzipKb": 75.9,
+              "n": 4
+            },
+            "scene3d": {
+              "kb": 28.2,
+              "gzipKb": 27.8,
+              "n": 1
+            },
+            "three": {
+              "kb": 143.3,
+              "gzipKb": 142.8,
+              "n": 1
+            }
+          },
+          "totalKb": 639.2,
+          "totalGzipKb": 625
+        },
+        "errors": []
+      },
+      "journey": {
+        "input": {
+          "start": {
+            "eventMs": 160,
+            "inputDelayMs": 51.700000000186265,
+            "processingMs": 68.89999999990687,
+            "entries": "pointerdown:48 pointerup:48 click:160",
+            "clickToPaintMs": 410.20000000018626,
+            "target": "button._btn_qn6mf_1 \"Put the kettle on · 25 min\""
+          },
+          "pause": {
+            "eventMs": 384,
+            "inputDelayMs": 160,
+            "processingMs": 7.800000000046566,
+            "entries": "pointerdown:384 pointerup:384 click:384",
+            "clickToPaintMs": 203.30000000004657,
+            "target": "button._btn_qn6mf_1 \"Pause\""
+          },
+          "resume": {
+            "eventMs": 64,
+            "inputDelayMs": 16.300000000046566,
+            "processingMs": 8.5,
+            "entries": "pointerdown:64 pointerup:64 click:64",
+            "clickToPaintMs": 37,
+            "target": "button._btn_qn6mf_1 \"Resume\""
+          },
+          "add5": {
+            "eventMs": 136,
+            "inputDelayMs": 56.60000000009313,
+            "processingMs": 4.199999999953434,
+            "entries": "pointerdown:136 pointerup:136 click:136",
+            "clickToPaintMs": 71.30000000004657,
+            "target": "button._btn_qn6mf_1 \"Add 5 minutes\""
+          },
+          "teaTime": {
+            "eventMs": 328,
+            "inputDelayMs": 63.5,
+            "processingMs": 3.8999999999068677,
+            "entries": "pointerdown:328 pointerup:328 click:328",
+            "clickToPaintMs": 99.5,
+            "target": "button._btn_qn6mf_1 \"Tea time · 5 min\""
+          }
+        },
+        "cls": {
+          "homeLoad": {
+            "sum": 0,
+            "window": 0,
+            "count": 0,
+            "top": []
+          },
+          "focus": {
+            "sum": 0,
+            "window": 0,
+            "count": 0,
+            "top": []
+          },
+          "whistleToSummary": {
+            "sum": 0.5194,
+            "window": 0.5,
+            "count": 4,
+            "top": [
+              "0.5000 main._panel_kjsz3_131 \"30 minutes brewedTea’s ready. Take five \"",
+              "0.0165 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:00Tea’s\" | div._controls_kjsz3_247 \"Add 5PauseEnd\"",
+              "0.0028 span._clock_kjsz3_194 \"0:01\" | span._status_kjsz3_218 \"1 second left\" | span._meta_kjsz3_230 \"29 min brewed · now a 30 min brew\""
+            ]
+          },
+          "break": {
+            "sum": 0,
+            "window": 0,
+            "count": 1,
+            "top": [
+              "0.0000 "
+            ]
+          },
+          "journey": {
+            "sum": 0.5194,
+            "window": 0.5,
+            "count": 5,
+            "top": [
+              "0.5000 main._panel_kjsz3_131 \"30 minutes brewedTea’s ready. Take five \"",
+              "0.0165 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:00Tea’s\" | div._controls_kjsz3_247 \"Add 5PauseEnd\"",
+              "0.0028 span._clock_kjsz3_194 \"0:01\" | span._status_kjsz3_218 \"1 second left\" | span._meta_kjsz3_230 \"29 min brewed · now a 30 min brew\""
+            ]
+          }
+        },
+        "heap": {
+          "home": {
+            "heapUsedMB": 8.9,
+            "heapTotalMB": 9.5,
+            "nodes": 619,
+            "listeners": 394,
+            "taskMs": 644.7,
+            "scriptMs": 187.7,
+            "layoutMs": 31.3,
+            "styleMs": 39.4
+          },
+          "focus": {
+            "heapUsedMB": 10.2,
+            "heapTotalMB": 11.1,
+            "nodes": 924,
+            "listeners": 413,
+            "taskMs": 1166.5,
+            "scriptMs": 308.1,
+            "layoutMs": 50,
+            "styleMs": 69.9
+          },
+          "summary": {
+            "heapUsedMB": 10.8,
+            "heapTotalMB": 11.6,
+            "nodes": 548,
+            "listeners": 396,
+            "taskMs": 1848.6,
+            "scriptMs": 433.4,
+            "layoutMs": 93.9,
+            "styleMs": 163.9
+          }
+        },
+        "busyMs": {
+          "homeToFocus": 516.3,
+          "focusControls": 310.1,
+          "whistleToSummary": 367.4,
+          "break": 186.6
+        },
+        "bytes": {
+          "home": {
+            "requests": 35,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 19.7,
+                "gzipKb": 19.5,
+                "n": 1
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 581.7,
+            "totalGzipKb": 568.6
+          },
+          "focus": {
+            "requests": 38,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 77.3,
+                "gzipKb": 75.9,
+                "n": 4
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 639.2,
+            "totalGzipKb": 625
+          },
+          "summary": {
+            "requests": 39,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 97.7,
+                "gzipKb": 96.1,
+                "n": 5
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 659.6,
+            "totalGzipKb": 645.2
+          }
+        },
+        "chai": {
+          "home": [
+            {
+              "file": "chai-sipping.webp",
+              "natural": [
+                302,
+                491
+              ],
+              "cssPx": [
+                67.7,
+                109.9
+              ],
+              "devicePx": [
+                135,
+                220
+              ],
+              "sourcePerDevicePx": 2.23,
+              "onScreen": true
+            }
+          ],
+          "focus": [
+            {
+              "file": "chai-reading.webp",
+              "natural": [
+                311,
+                487
+              ],
+              "cssPx": [
+                112.8,
+                176.6
+              ],
+              "devicePx": [
+                226,
+                353
+              ],
+              "sourcePerDevicePx": 1.38,
+              "onScreen": true
+            }
+          ],
+          "summary": [
+            {
+              "file": "chai-cheering.webp",
+              "natural": [
+                312,
+                428
+              ],
+              "cssPx": [
+                113.2,
+                155.2
+              ],
+              "devicePx": [
+                226,
+                310
+              ],
+              "sourcePerDevicePx": 1.38,
+              "onScreen": true
+            }
+          ],
+          "break": [
+            {
+              "file": "chai-sipping.webp",
+              "natural": [
+                302,
+                491
+              ],
+              "cssPx": [
+                109.5,
+                178.1
+              ],
+              "devicePx": [
+                219,
+                356
+              ],
+              "sourcePerDevicePx": 1.38,
+              "onScreen": true
+            }
+          ]
+        },
+        "scene": {
+          "focusWindowReadyMs": 1174.7,
+          "focusWindowStaticMs": 169.5
+        },
+        "tbtJourneyMs": 53,
+        "longestTaskJourneyMs": 79,
+        "errors": []
+      },
+      "nook": {
+        "scene3dReadyMs": 2282.5,
+        "staticShownMs": null,
+        "tier": "canvas",
+        "cls": {
+          "sum": 0.0004,
+          "window": 0.0004,
+          "count": 1,
+          "top": [
+            "0.0004 "
+          ]
+        },
+        "heap": {
+          "heapUsedMB": 9.7,
+          "heapTotalMB": 10.8,
+          "nodes": 971,
+          "listeners": 401,
+          "taskMs": 724.7,
+          "scriptMs": 302.2,
+          "layoutMs": 30.5,
+          "styleMs": 20.3
+        },
+        "bytes": {
+          "requests": 34,
+          "by": {
+            "html": {
+              "kb": 1.1,
+              "gzipKb": 0.9,
+              "n": 1
+            },
+            "js": {
+              "kb": 280.2,
+              "gzipKb": 271.9,
+              "n": 21
+            },
+            "css": {
+              "kb": 41.2,
+              "gzipKb": 38.4,
+              "n": 8
+            },
+            "font": {
+              "kb": 67.9,
+              "gzipKb": 67.3,
+              "n": 2
+            },
+            "scene3d": {
+              "kb": 28.2,
+              "gzipKb": 27.8,
+              "n": 1
+            },
+            "three": {
+              "kb": 143.3,
+              "gzipKb": 142.8,
+              "n": 1
+            }
+          },
+          "totalKb": 562,
+          "totalGzipKb": 549.1
+        },
+        "longestTaskMs": 452,
+        "errors": []
+      },
+      "loadAfter": [
+        7.85,
+        4.43,
+        3.18
+      ],
+      "seconds": 40
+    },
+    {
+      "build": "8f1044a",
+      "base": "http://127.0.0.1:5242",
+      "profile": "desktop",
+      "run": 3,
+      "loadBefore": [
+        7.85,
+        4.43,
+        3.18
+      ],
+      "cold": {
+        "ttfbMs": 2.9,
+        "fcpMs": 232,
+        "lcpMs": 572,
+        "lcpElement": "p._bubbleText_18sz3_213 \"Nice going. One more brew and today’s po\"",
+        "dclMs": 168.8,
+        "loadMs": 169.3,
+        "startReadyMs": 532.2,
+        "firstClickHandledMs": 972,
+        "firstInputDelayMs": 5.3,
+        "startColdEventMs": 1072,
+        "startColdClickToPaintMs": 450.2,
+        "tbtToInteractiveMs": 231,
+        "longestTaskMs": 249,
+        "bytesToInteractive": {
+          "requests": 38,
+          "by": {
+            "html": {
+              "kb": 1.1,
+              "gzipKb": 0.9,
+              "n": 1
+            },
+            "css": {
+              "kb": 41.2,
+              "gzipKb": 38.4,
+              "n": 8
+            },
+            "js": {
+              "kb": 280.2,
+              "gzipKb": 271.9,
+              "n": 21
+            },
+            "font": {
+              "kb": 67.9,
+              "gzipKb": 67.3,
+              "n": 2
+            },
+            "image": {
+              "kb": 77.3,
+              "gzipKb": 75.9,
+              "n": 4
+            },
+            "scene3d": {
+              "kb": 28.2,
+              "gzipKb": 27.8,
+              "n": 1
+            },
+            "three": {
+              "kb": 143.3,
+              "gzipKb": 142.8,
+              "n": 1
+            }
+          },
+          "totalKb": 639.2,
+          "totalGzipKb": 625
+        },
+        "errors": []
+      },
+      "journey": {
+        "input": {
+          "start": {
+            "eventMs": 408,
+            "inputDelayMs": 37.4000000001397,
+            "processingMs": 73.89999999990687,
+            "entries": "pointerdown:408 pointerup:408 click:408",
+            "clickToPaintMs": 272.60000000009313,
+            "target": "button._btn_qn6mf_1 \"Put the kettle on · 25 min\""
+          },
+          "pause": {
+            "eventMs": 280,
+            "inputDelayMs": 5.300000000046566,
+            "processingMs": 9.399999999906868,
+            "entries": "pointerdown:280 pointerup:280 click:280",
+            "clickToPaintMs": 42.5999999998603,
+            "target": "button._btn_qn6mf_1 \"Pause\""
+          },
+          "resume": {
+            "eventMs": 664,
+            "inputDelayMs": 1.3999999999068677,
+            "processingMs": 10.800000000046566,
+            "entries": "pointerdown:664 pointerup:664 click:664",
+            "clickToPaintMs": 19.299999999813735,
+            "target": "button._btn_qn6mf_1 \"Resume\""
+          },
+          "add5": {
+            "eventMs": 768,
+            "inputDelayMs": 2.699999999953434,
+            "processingMs": 3.5,
+            "entries": "pointerdown:768 pointerup:768 click:768",
+            "clickToPaintMs": 193.5999999998603,
+            "target": "button._btn_qn6mf_1 \"Add 5 minutes\""
+          },
+          "teaTime": {
+            "eventMs": 488,
+            "inputDelayMs": 0.8000000000465661,
+            "processingMs": 4.400000000139698,
+            "entries": "pointerdown:488 pointerup:488 click:488",
+            "clickToPaintMs": 14.900000000139698,
+            "target": "button._btn_qn6mf_1 \"Tea time · 5 min\""
+          }
+        },
+        "cls": {
+          "homeLoad": {
+            "sum": 0,
+            "window": 0,
+            "count": 0,
+            "top": []
+          },
+          "focus": {
+            "sum": 0.0001,
+            "window": 0.0001,
+            "count": 2,
+            "top": [
+              "0.0001 ",
+              "0.0000 "
+            ]
+          },
+          "whistleToSummary": {
+            "sum": 0.0189,
+            "window": 0.0134,
+            "count": 3,
+            "top": [
+              "0.0134 main._panel_kjsz3_131 \"30 minutes brewedTea’s ready. Take five \"",
+              "0.0037 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:00Tea’s\" | div._controls_kjsz3_247 \"Add 5PauseEnd\"",
+              "0.0018 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:01Almos\""
+            ]
+          },
+          "break": {
+            "sum": 0,
+            "window": 0,
+            "count": 0,
+            "top": []
+          },
+          "journey": {
+            "sum": 0.019,
+            "window": 0.0134,
+            "count": 5,
+            "top": [
+              "0.0134 main._panel_kjsz3_131 \"30 minutes brewedTea’s ready. Take five \"",
+              "0.0037 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:00Tea’s\" | div._controls_kjsz3_247 \"Add 5PauseEnd\"",
+              "0.0018 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:01Almos\""
+            ]
+          }
+        },
+        "heap": {
+          "home": {
+            "heapUsedMB": 8.9,
+            "heapTotalMB": 9.8,
+            "nodes": 619,
+            "listeners": 394,
+            "taskMs": 618.9,
+            "scriptMs": 188.4,
+            "layoutMs": 29.2,
+            "styleMs": 33.3
+          },
+          "focus": {
+            "heapUsedMB": 10.3,
+            "heapTotalMB": 11.3,
+            "nodes": 925,
+            "listeners": 418,
+            "taskMs": 1006.2,
+            "scriptMs": 302.8,
+            "layoutMs": 50,
+            "styleMs": 51.6
+          },
+          "summary": {
+            "heapUsedMB": 11,
+            "heapTotalMB": 11.8,
+            "nodes": 548,
+            "listeners": 396,
+            "taskMs": 1464.7,
+            "scriptMs": 419.5,
+            "layoutMs": 86.1,
+            "styleMs": 89.9
+          }
+        },
+        "busyMs": {
+          "homeToFocus": 373.2,
+          "focusControls": 205.5,
+          "whistleToSummary": 255.3,
+          "break": 130.5
+        },
+        "bytes": {
+          "home": {
+            "requests": 35,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 19.7,
+                "gzipKb": 19.5,
+                "n": 1
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 581.7,
+            "totalGzipKb": 568.6
+          },
+          "focus": {
+            "requests": 38,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 77.3,
+                "gzipKb": 75.9,
+                "n": 4
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 639.2,
+            "totalGzipKb": 625
+          },
+          "summary": {
+            "requests": 39,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 97.7,
+                "gzipKb": 96.1,
+                "n": 5
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 659.6,
+            "totalGzipKb": 645.2
+          }
+        },
+        "chai": {
+          "home": [
+            {
+              "file": "chai-sipping.webp",
+              "natural": [
+                302,
+                491
+              ],
+              "cssPx": [
+                91.8,
+                149.2
+              ],
+              "devicePx": [
+                92,
+                149
+              ],
+              "sourcePerDevicePx": 3.29,
+              "onScreen": true
+            }
+          ],
+          "focus": [
+            {
+              "file": "chai-reading.webp",
+              "natural": [
+                311,
+                487
+              ],
+              "cssPx": [
+                185.1,
+                289.9
+              ],
+              "devicePx": [
+                185,
+                290
+              ],
+              "sourcePerDevicePx": 1.68,
+              "onScreen": true
+            }
+          ],
+          "summary": [
+            {
+              "file": "chai-cheering.webp",
+              "natural": [
+                312,
+                428
+              ],
+              "cssPx": [
+                185.7,
+                254.7
+              ],
+              "devicePx": [
+                186,
+                255
+              ],
+              "sourcePerDevicePx": 1.68,
+              "onScreen": true
+            }
+          ],
+          "break": [
+            {
+              "file": "chai-sipping.webp",
+              "natural": [
+                302,
+                491
+              ],
+              "cssPx": [
+                179.8,
+                292.2
+              ],
+              "devicePx": [
+                180,
+                292
+              ],
+              "sourcePerDevicePx": 1.68,
+              "onScreen": true
+            }
+          ]
+        },
+        "scene": {
+          "focusWindowReadyMs": 2558.4,
+          "focusWindowStaticMs": 157.6
+        },
+        "tbtJourneyMs": 69,
+        "longestTaskJourneyMs": 112,
+        "errors": []
+      },
+      "nook": {
+        "scene3dReadyMs": 4420.6,
+        "staticShownMs": null,
+        "tier": "canvas",
+        "cls": {
+          "sum": 0.0005,
+          "window": 0.0005,
+          "count": 5,
+          "top": [
+            "0.0004  |  | ",
+            "0.0000 ",
+            "0.0000 "
+          ]
+        },
+        "heap": {
+          "heapUsedMB": 9.6,
+          "heapTotalMB": 10.3,
+          "nodes": 971,
+          "listeners": 401,
+          "taskMs": 834.5,
+          "scriptMs": 351.6,
+          "layoutMs": 51.2,
+          "styleMs": 42.6
+        },
+        "bytes": {
+          "requests": 34,
+          "by": {
+            "html": {
+              "kb": 1.1,
+              "gzipKb": 0.9,
+              "n": 1
+            },
+            "css": {
+              "kb": 41.2,
+              "gzipKb": 38.4,
+              "n": 8
+            },
+            "js": {
+              "kb": 280.2,
+              "gzipKb": 271.9,
+              "n": 21
+            },
+            "font": {
+              "kb": 67.9,
+              "gzipKb": 67.3,
+              "n": 2
+            },
+            "scene3d": {
+              "kb": 28.2,
+              "gzipKb": 27.8,
+              "n": 1
+            },
+            "three": {
+              "kb": 143.3,
+              "gzipKb": 142.8,
+              "n": 1
+            }
+          },
+          "totalKb": 562,
+          "totalGzipKb": 549.1
+        },
+        "longestTaskMs": 180,
+        "errors": []
+      },
+      "loadAfter": [
+        7.44,
+        4.84,
+        3.39
+      ],
+      "seconds": 49
+    },
+    {
+      "build": "8f1044a",
+      "base": "http://127.0.0.1:5242",
+      "profile": "phone",
+      "run": 4,
+      "loadBefore": [
+        7.44,
+        4.84,
+        3.39
+      ],
+      "cold": {
+        "ttfbMs": 3.8,
+        "fcpMs": 204,
+        "lcpMs": 536,
+        "lcpElement": "h1._greeting_18sz3_85 \"Good afternoon, Robin\"",
+        "dclMs": 161.5,
+        "loadMs": 161.9,
+        "startReadyMs": 520.1,
+        "firstClickHandledMs": 1154.9,
+        "firstInputDelayMs": 24.4,
+        "startColdEventMs": 400,
+        "startColdClickToPaintMs": 286.6,
+        "tbtToInteractiveMs": 51,
+        "longestTaskMs": 90,
+        "bytesToInteractive": {
+          "requests": 38,
+          "by": {
+            "html": {
+              "kb": 1.1,
+              "gzipKb": 0.9,
+              "n": 1
+            },
+            "css": {
+              "kb": 41.2,
+              "gzipKb": 38.4,
+              "n": 8
+            },
+            "js": {
+              "kb": 280.2,
+              "gzipKb": 271.9,
+              "n": 21
+            },
+            "font": {
+              "kb": 67.9,
+              "gzipKb": 67.3,
+              "n": 2
+            },
+            "image": {
+              "kb": 77.3,
+              "gzipKb": 75.9,
+              "n": 4
+            },
+            "scene3d": {
+              "kb": 28.2,
+              "gzipKb": 27.8,
+              "n": 1
+            },
+            "three": {
+              "kb": 143.3,
+              "gzipKb": 142.8,
+              "n": 1
+            }
+          },
+          "totalKb": 639.2,
+          "totalGzipKb": 625
+        },
+        "errors": []
+      },
+      "journey": {
+        "input": {
+          "start": {
+            "eventMs": 144,
+            "inputDelayMs": 42,
+            "processingMs": 63.60000000009313,
+            "entries": "pointerdown:40 pointerup:40 click:144",
+            "clickToPaintMs": 247.5,
+            "target": "button._btn_qn6mf_1 \"Put the kettle on · 25 min\""
+          },
+          "pause": {
+            "eventMs": 440,
+            "inputDelayMs": 115.29999999981374,
+            "processingMs": 8.5,
+            "entries": "pointerdown:440 pointerup:440 click:440",
+            "clickToPaintMs": 187.70000000018626,
+            "target": "button._btn_qn6mf_1 \"Pause\""
+          },
+          "resume": {
+            "eventMs": 40,
+            "inputDelayMs": 17,
+            "processingMs": 8.700000000186265,
+            "entries": "pointerdown:40 pointerup:40 click:40",
+            "clickToPaintMs": 36.700000000186265,
+            "target": "button._btn_qn6mf_1 \"Resume\""
+          },
+          "add5": {
+            "eventMs": 456,
+            "inputDelayMs": 282.29999999981374,
+            "processingMs": 7,
+            "entries": "pointerdown:456 pointerup:456 click:456",
+            "clickToPaintMs": 312.70000000018626,
+            "target": "button._btn_qn6mf_1 \"Add 5 minutes\""
+          },
+          "teaTime": {
+            "eventMs": 120,
+            "inputDelayMs": 21.40000000037253,
+            "processingMs": 2.7999999998137355,
+            "entries": "pointerdown:120 pointerup:120 click:120",
+            "clickToPaintMs": 47.8000000002794,
+            "target": "button._btn_qn6mf_1 \"Tea time · 5 min\""
+          }
+        },
+        "cls": {
+          "homeLoad": {
+            "sum": 0,
+            "window": 0,
+            "count": 0,
+            "top": []
+          },
+          "focus": {
+            "sum": 0,
+            "window": 0,
+            "count": 0,
+            "top": []
+          },
+          "whistleToSummary": {
+            "sum": 0.5193,
+            "window": 0.5,
+            "count": 3,
+            "top": [
+              "0.5000 main._panel_kjsz3_131 \"30 minutes brewedTea’s ready. Take five \"",
+              "0.0165 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:00Tea’s\" | div._controls_kjsz3_247 \"Add 5PauseEnd\"",
+              "0.0028 span._clock_kjsz3_194 \"0:01\" | span._status_kjsz3_218 \"1 second left\" | span._meta_kjsz3_230 \"29 min brewed · now a 30 min brew\""
+            ]
+          },
+          "break": {
+            "sum": 0,
+            "window": 0,
+            "count": 1,
+            "top": [
+              "0.0000 "
+            ]
+          },
+          "journey": {
+            "sum": 0.5193,
+            "window": 0.5,
+            "count": 4,
+            "top": [
+              "0.5000 main._panel_kjsz3_131 \"30 minutes brewedTea’s ready. Take five \"",
+              "0.0165 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:00Tea’s\" | div._controls_kjsz3_247 \"Add 5PauseEnd\"",
+              "0.0028 span._clock_kjsz3_194 \"0:01\" | span._status_kjsz3_218 \"1 second left\" | span._meta_kjsz3_230 \"29 min brewed · now a 30 min brew\""
+            ]
+          }
+        },
+        "heap": {
+          "home": {
+            "heapUsedMB": 8.9,
+            "heapTotalMB": 10,
+            "nodes": 619,
+            "listeners": 394,
+            "taskMs": 685.2,
+            "scriptMs": 203.9,
+            "layoutMs": 30.2,
+            "styleMs": 41.7
+          },
+          "focus": {
+            "heapUsedMB": 10.3,
+            "heapTotalMB": 10.8,
+            "nodes": 925,
+            "listeners": 418,
+            "taskMs": 1164.1,
+            "scriptMs": 327.2,
+            "layoutMs": 48.8,
+            "styleMs": 76.3
+          },
+          "summary": {
+            "heapUsedMB": 10.9,
+            "heapTotalMB": 11.8,
+            "nodes": 548,
+            "listeners": 396,
+            "taskMs": 1904.1,
+            "scriptMs": 456,
+            "layoutMs": 94.8,
+            "styleMs": 179.8
+          }
+        },
+        "busyMs": {
+          "homeToFocus": 458.4,
+          "focusControls": 330.9,
+          "whistleToSummary": 421.5,
+          "break": 216.2
+        },
+        "bytes": {
+          "home": {
+            "requests": 35,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 19.7,
+                "gzipKb": 19.5,
+                "n": 1
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 581.7,
+            "totalGzipKb": 568.6
+          },
+          "focus": {
+            "requests": 38,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 77.3,
+                "gzipKb": 75.9,
+                "n": 4
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 639.2,
+            "totalGzipKb": 625
+          },
+          "summary": {
+            "requests": 39,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 97.7,
+                "gzipKb": 96.1,
+                "n": 5
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 659.6,
+            "totalGzipKb": 645.2
+          }
+        },
+        "chai": {
+          "home": [
+            {
+              "file": "chai-sipping.webp",
+              "natural": [
+                302,
+                491
+              ],
+              "cssPx": [
+                67.7,
+                109.9
+              ],
+              "devicePx": [
+                135,
+                220
+              ],
+              "sourcePerDevicePx": 2.23,
+              "onScreen": true
+            }
+          ],
+          "focus": [
+            {
+              "file": "chai-reading.webp",
+              "natural": [
+                311,
+                487
+              ],
+              "cssPx": [
+                112.8,
+                176.6
+              ],
+              "devicePx": [
+                226,
+                353
+              ],
+              "sourcePerDevicePx": 1.38,
+              "onScreen": true
+            }
+          ],
+          "summary": [
+            {
+              "file": "chai-cheering.webp",
+              "natural": [
+                312,
+                428
+              ],
+              "cssPx": [
+                113.2,
+                155.2
+              ],
+              "devicePx": [
+                226,
+                310
+              ],
+              "sourcePerDevicePx": 1.38,
+              "onScreen": true
+            }
+          ],
+          "break": [
+            {
+              "file": "chai-sipping.webp",
+              "natural": [
+                302,
+                491
+              ],
+              "cssPx": [
+                109.5,
+                178.1
+              ],
+              "devicePx": [
+                219,
+                356
+              ],
+              "sourcePerDevicePx": 1.38,
+              "onScreen": true
+            }
+          ]
+        },
+        "scene": {
+          "focusWindowReadyMs": 1122.3,
+          "focusWindowStaticMs": 149
+        },
+        "tbtJourneyMs": 31,
+        "longestTaskJourneyMs": 67,
+        "errors": []
+      },
+      "nook": {
+        "scene3dReadyMs": 1424.6,
+        "staticShownMs": null,
+        "tier": "canvas",
+        "cls": {
+          "sum": 0,
+          "window": 0,
+          "count": 0,
+          "top": []
+        },
+        "heap": {
+          "heapUsedMB": 9.8,
+          "heapTotalMB": 11,
+          "nodes": 971,
+          "listeners": 401,
+          "taskMs": 772.9,
+          "scriptMs": 337.9,
+          "layoutMs": 31.2,
+          "styleMs": 24.2
+        },
+        "bytes": {
+          "requests": 34,
+          "by": {
+            "html": {
+              "kb": 1.1,
+              "gzipKb": 0.9,
+              "n": 1
+            },
+            "css": {
+              "kb": 41.2,
+              "gzipKb": 38.4,
+              "n": 8
+            },
+            "js": {
+              "kb": 280.2,
+              "gzipKb": 271.9,
+              "n": 21
+            },
+            "font": {
+              "kb": 67.9,
+              "gzipKb": 67.3,
+              "n": 2
+            },
+            "scene3d": {
+              "kb": 28.2,
+              "gzipKb": 27.8,
+              "n": 1
+            },
+            "three": {
+              "kb": 143.3,
+              "gzipKb": 142.8,
+              "n": 1
+            }
+          },
+          "totalKb": 562,
+          "totalGzipKb": 549.1
+        },
+        "longestTaskMs": 124,
+        "errors": []
+      },
+      "loadAfter": [
+        6.63,
+        4.96,
+        3.49
+      ],
+      "seconds": 39
+    },
+    {
+      "build": "8f1044a",
+      "base": "http://127.0.0.1:5242",
+      "profile": "desktop",
+      "run": 4,
+      "loadBefore": [
+        6.63,
+        4.96,
+        3.49
+      ],
+      "cold": {
+        "ttfbMs": 2.6,
+        "fcpMs": 164,
+        "lcpMs": 516,
+        "lcpElement": "p._bubbleText_18sz3_213 \"Nice going. One more brew and today’s po\"",
+        "dclMs": 123,
+        "loadMs": 123.3,
+        "startReadyMs": 486.5,
+        "firstClickHandledMs": 1118.8,
+        "firstInputDelayMs": 2.7,
+        "startColdEventMs": 912,
+        "startColdClickToPaintMs": 250.5,
+        "tbtToInteractiveMs": 79,
+        "longestTaskMs": 118,
+        "bytesToInteractive": {
+          "requests": 38,
+          "by": {
+            "html": {
+              "kb": 1.1,
+              "gzipKb": 0.9,
+              "n": 1
+            },
+            "js": {
+              "kb": 280.2,
+              "gzipKb": 271.9,
+              "n": 21
+            },
+            "css": {
+              "kb": 41.2,
+              "gzipKb": 38.4,
+              "n": 8
+            },
+            "font": {
+              "kb": 67.9,
+              "gzipKb": 67.3,
+              "n": 2
+            },
+            "image": {
+              "kb": 77.3,
+              "gzipKb": 75.9,
+              "n": 4
+            },
+            "scene3d": {
+              "kb": 28.2,
+              "gzipKb": 27.8,
+              "n": 1
+            },
+            "three": {
+              "kb": 143.3,
+              "gzipKb": 142.8,
+              "n": 1
+            }
+          },
+          "totalKb": 639.2,
+          "totalGzipKb": 625
+        },
+        "errors": []
+      },
+      "journey": {
+        "input": {
+          "start": {
+            "eventMs": 264,
+            "inputDelayMs": 23.100000000093132,
+            "processingMs": 53.200000000186265,
+            "entries": "pointerdown:264 pointerup:264 click:264",
+            "clickToPaintMs": 213.8000000002794,
+            "target": "button._btn_qn6mf_1 \"Put the kettle on · 25 min\""
+          },
+          "pause": {
+            "eventMs": 272,
+            "inputDelayMs": 5,
+            "processingMs": 7.400000000372529,
+            "entries": "pointerdown:272 pointerup:272 click:272",
+            "clickToPaintMs": 20.200000000186265,
+            "target": "button._btn_qn6mf_1 \"Pause\""
+          },
+          "resume": {
+            "eventMs": 320,
+            "inputDelayMs": 1.2999999998137355,
+            "processingMs": 9.700000000186265,
+            "entries": "pointerdown:320 pointerup:320 click:320",
+            "clickToPaintMs": 19.399999999906868,
+            "target": "button._btn_qn6mf_1 \"Resume\""
+          },
+          "add5": {
+            "eventMs": 1040,
+            "inputDelayMs": 2.1000000000931323,
+            "processingMs": 3.8000000002793968,
+            "entries": "pointerdown:1040 pointerup:1040 click:1040",
+            "clickToPaintMs": 98.10000000009313,
+            "target": "button._btn_qn6mf_1 \"Add 5 minutes\""
+          },
+          "teaTime": {
+            "eventMs": 576,
+            "inputDelayMs": 3.2999999998137355,
+            "processingMs": 4.7000000001862645,
+            "entries": "pointerdown:576 pointerup:576 click:576",
+            "clickToPaintMs": 112.89999999990687,
+            "target": "button._btn_qn6mf_1 \"Tea time · 5 min\""
+          }
+        },
+        "cls": {
+          "homeLoad": {
+            "sum": 0,
+            "window": 0,
+            "count": 0,
+            "top": []
+          },
+          "focus": {
+            "sum": 0,
+            "window": 0,
+            "count": 0,
+            "top": []
+          },
+          "whistleToSummary": {
+            "sum": 0.0189,
+            "window": 0.0134,
+            "count": 3,
+            "top": [
+              "0.0134 main._panel_kjsz3_131 \"30 minutes brewedTea’s ready. Take five \"",
+              "0.0037 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:00Tea’s\" | div._controls_kjsz3_247 \"Add 5PauseEnd\"",
+              "0.0018 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:01Almos\""
+            ]
+          },
+          "break": {
+            "sum": 0,
+            "window": 0,
+            "count": 0,
+            "top": []
+          },
+          "journey": {
+            "sum": 0.0189,
+            "window": 0.0134,
+            "count": 3,
+            "top": [
+              "0.0134 main._panel_kjsz3_131 \"30 minutes brewedTea’s ready. Take five \"",
+              "0.0037 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:00Tea’s\" | div._controls_kjsz3_247 \"Add 5PauseEnd\"",
+              "0.0018 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:01Almos\""
+            ]
+          }
+        },
+        "heap": {
+          "home": {
+            "heapUsedMB": 8.9,
+            "heapTotalMB": 9.8,
+            "nodes": 619,
+            "listeners": 394,
+            "taskMs": 652,
+            "scriptMs": 196.3,
+            "layoutMs": 30.2,
+            "styleMs": 37.4
+          },
+          "focus": {
+            "heapUsedMB": 10.1,
+            "heapTotalMB": 10.3,
+            "nodes": 924,
+            "listeners": 413,
+            "taskMs": 1040.6,
+            "scriptMs": 297.7,
+            "layoutMs": 46.3,
+            "styleMs": 54.8
+          },
+          "summary": {
+            "heapUsedMB": 10.9,
+            "heapTotalMB": 11.8,
+            "nodes": 548,
+            "listeners": 396,
+            "taskMs": 1598.6,
+            "scriptMs": 420.8,
+            "layoutMs": 88.8,
+            "styleMs": 115
+          }
+        },
+        "busyMs": {
+          "homeToFocus": 380.7,
+          "focusControls": 218.2,
+          "whistleToSummary": 324.9,
+          "break": 198.9
+        },
+        "bytes": {
+          "home": {
+            "requests": 35,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 19.7,
+                "gzipKb": 19.5,
+                "n": 1
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 581.7,
+            "totalGzipKb": 568.6
+          },
+          "focus": {
+            "requests": 38,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 77.3,
+                "gzipKb": 75.9,
+                "n": 4
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 639.2,
+            "totalGzipKb": 625
+          },
+          "summary": {
+            "requests": 39,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 97.7,
+                "gzipKb": 96.1,
+                "n": 5
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 659.6,
+            "totalGzipKb": 645.2
+          }
+        },
+        "chai": {
+          "home": [
+            {
+              "file": "chai-sipping.webp",
+              "natural": [
+                302,
+                491
+              ],
+              "cssPx": [
+                91.9,
+                149.1
+              ],
+              "devicePx": [
+                92,
+                149
+              ],
+              "sourcePerDevicePx": 3.29,
+              "onScreen": true
+            }
+          ],
+          "focus": [
+            {
+              "file": "chai-reading.webp",
+              "natural": [
+                311,
+                487
+              ],
+              "cssPx": [
+                185.1,
+                289.9
+              ],
+              "devicePx": [
+                185,
+                290
+              ],
+              "sourcePerDevicePx": 1.68,
+              "onScreen": true
+            }
+          ],
+          "summary": [
+            {
+              "file": "chai-cheering.webp",
+              "natural": [
+                312,
+                428
+              ],
+              "cssPx": [
+                185.7,
+                254.7
+              ],
+              "devicePx": [
+                186,
+                255
+              ],
+              "sourcePerDevicePx": 1.68,
+              "onScreen": true
+            }
+          ],
+          "break": [
+            {
+              "file": "chai-sipping.webp",
+              "natural": [
+                302,
+                491
+              ],
+              "cssPx": [
+                179.8,
+                292.2
+              ],
+              "devicePx": [
+                180,
+                292
+              ],
+              "sourcePerDevicePx": 1.68,
+              "onScreen": true
+            }
+          ]
+        },
+        "scene": {
+          "focusWindowReadyMs": 1091.8,
+          "focusWindowStaticMs": 116.4
+        },
+        "tbtJourneyMs": 33,
+        "longestTaskJourneyMs": 76,
+        "errors": []
+      },
+      "nook": {
+        "scene3dReadyMs": 4032.4,
+        "staticShownMs": null,
+        "tier": "canvas",
+        "cls": {
+          "sum": 0.0005,
+          "window": 0.0005,
+          "count": 4,
+          "top": [
+            "0.0004  |  | ",
+            "0.0000 ",
+            "0.0000 "
+          ]
+        },
+        "heap": {
+          "heapUsedMB": 9.6,
+          "heapTotalMB": 10.5,
+          "nodes": 971,
+          "listeners": 401,
+          "taskMs": 794.8,
+          "scriptMs": 299.1,
+          "layoutMs": 46.4,
+          "styleMs": 35.7
+        },
+        "bytes": {
+          "requests": 34,
+          "by": {
+            "html": {
+              "kb": 1.1,
+              "gzipKb": 0.9,
+              "n": 1
+            },
+            "js": {
+              "kb": 280.2,
+              "gzipKb": 271.9,
+              "n": 21
+            },
+            "css": {
+              "kb": 41.2,
+              "gzipKb": 38.4,
+              "n": 8
+            },
+            "font": {
+              "kb": 67.9,
+              "gzipKb": 67.3,
+              "n": 2
+            },
+            "scene3d": {
+              "kb": 28.2,
+              "gzipKb": 27.8,
+              "n": 1
+            },
+            "three": {
+              "kb": 143.3,
+              "gzipKb": 142.8,
+              "n": 1
+            }
+          },
+          "totalKb": 562,
+          "totalGzipKb": 549.1
+        },
+        "longestTaskMs": 177,
+        "errors": []
+      },
+      "loadAfter": [
+        5.7,
+        4.88,
+        3.53
+      ],
+      "seconds": 45
+    },
+    {
+      "build": "8f1044a",
+      "base": "http://127.0.0.1:5242",
+      "profile": "phone",
+      "run": 5,
+      "loadBefore": [
+        5.7,
+        4.88,
+        3.53
+      ],
+      "cold": {
+        "ttfbMs": 3.2,
+        "fcpMs": 176,
+        "lcpMs": 516,
+        "lcpElement": "h1._greeting_18sz3_85 \"Good afternoon, Robin\"",
+        "dclMs": 132.1,
+        "loadMs": 132.6,
+        "startReadyMs": 490.7,
+        "firstClickHandledMs": 1209.3,
+        "firstInputDelayMs": 48.9,
+        "startColdEventMs": 424,
+        "startColdClickToPaintMs": 336,
+        "tbtToInteractiveMs": 67,
+        "longestTaskMs": 104,
+        "bytesToInteractive": {
+          "requests": 38,
+          "by": {
+            "html": {
+              "kb": 1.1,
+              "gzipKb": 0.9,
+              "n": 1
+            },
+            "css": {
+              "kb": 41.2,
+              "gzipKb": 38.4,
+              "n": 8
+            },
+            "js": {
+              "kb": 280.2,
+              "gzipKb": 271.9,
+              "n": 21
+            },
+            "font": {
+              "kb": 67.9,
+              "gzipKb": 67.3,
+              "n": 2
+            },
+            "image": {
+              "kb": 77.3,
+              "gzipKb": 75.9,
+              "n": 4
+            },
+            "scene3d": {
+              "kb": 28.2,
+              "gzipKb": 27.8,
+              "n": 1
+            },
+            "three": {
+              "kb": 143.3,
+              "gzipKb": 142.8,
+              "n": 1
+            }
+          },
+          "totalKb": 639.2,
+          "totalGzipKb": 625
+        },
+        "errors": []
+      },
+      "journey": {
+        "input": {
+          "start": {
+            "eventMs": 152,
+            "inputDelayMs": 50.1999999997206,
+            "processingMs": 73.70000000018626,
+            "entries": "pointerdown:48 pointerup:48 click:152",
+            "clickToPaintMs": 280.39999999990687,
+            "target": "button._btn_qn6mf_1 \"Put the kettle on · 25 min\""
+          },
+          "pause": {
+            "eventMs": 448,
+            "inputDelayMs": 228,
+            "processingMs": 5.600000000093132,
+            "entries": "pointerdown:448 pointerup:448 click:448",
+            "clickToPaintMs": 265.89999999990687,
+            "target": "button._btn_qn6mf_1 \"Pause\""
+          },
+          "resume": {
+            "eventMs": 48,
+            "inputDelayMs": 17.899999999906868,
+            "processingMs": 9.5,
+            "entries": "pointerdown:48 pointerup:48 click:48",
+            "clickToPaintMs": 37.60000000009313,
+            "target": "button._btn_qn6mf_1 \"Resume\""
+          },
+          "add5": {
+            "eventMs": 200,
+            "inputDelayMs": 51.8000000002794,
+            "processingMs": 5.199999999720603,
+            "entries": "pointerdown:200 pointerup:200 click:200",
+            "clickToPaintMs": 89.8000000002794,
+            "target": "button._btn_qn6mf_1 \"Add 5 minutes\""
+          },
+          "teaTime": {
+            "eventMs": 120,
+            "inputDelayMs": 22,
+            "processingMs": 2.6999999997206032,
+            "entries": "pointerdown:120 pointerup:120 click:120",
+            "clickToPaintMs": 45.89999999990687,
+            "target": "button._btn_qn6mf_1 \"Tea time · 5 min\""
+          }
+        },
+        "cls": {
+          "homeLoad": {
+            "sum": 0,
+            "window": 0,
+            "count": 0,
+            "top": []
+          },
+          "focus": {
+            "sum": 0,
+            "window": 0,
+            "count": 0,
+            "top": []
+          },
+          "whistleToSummary": {
+            "sum": 0.5193,
+            "window": 0.5,
+            "count": 3,
+            "top": [
+              "0.5000 main._panel_kjsz3_131 \"30 minutes brewedTea’s ready. Take five \"",
+              "0.0165 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:00Tea’s\" | div._controls_kjsz3_247 \"Add 5PauseEnd\"",
+              "0.0028 span._clock_kjsz3_194 \"0:01\" | span._status_kjsz3_218 \"1 second left\" | span._meta_kjsz3_230 \"29 min brewed · now a 30 min brew\""
+            ]
+          },
+          "break": {
+            "sum": 0,
+            "window": 0,
+            "count": 1,
+            "top": [
+              "0.0000 "
+            ]
+          },
+          "journey": {
+            "sum": 0.5193,
+            "window": 0.5,
+            "count": 4,
+            "top": [
+              "0.5000 main._panel_kjsz3_131 \"30 minutes brewedTea’s ready. Take five \"",
+              "0.0165 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:00Tea’s\" | div._controls_kjsz3_247 \"Add 5PauseEnd\"",
+              "0.0028 span._clock_kjsz3_194 \"0:01\" | span._status_kjsz3_218 \"1 second left\" | span._meta_kjsz3_230 \"29 min brewed · now a 30 min brew\""
+            ]
+          }
+        },
+        "heap": {
+          "home": {
+            "heapUsedMB": 8.9,
+            "heapTotalMB": 10,
+            "nodes": 619,
+            "listeners": 394,
+            "taskMs": 599.5,
+            "scriptMs": 178,
+            "layoutMs": 26.9,
+            "styleMs": 37.8
+          },
+          "focus": {
+            "heapUsedMB": 10.2,
+            "heapTotalMB": 11.1,
+            "nodes": 925,
+            "listeners": 413,
+            "taskMs": 1011.9,
+            "scriptMs": 293,
+            "layoutMs": 42.2,
+            "styleMs": 66.2
+          },
+          "summary": {
+            "heapUsedMB": 10.9,
+            "heapTotalMB": 11.6,
+            "nodes": 548,
+            "listeners": 396,
+            "taskMs": 1824.9,
+            "scriptMs": 423.4,
+            "layoutMs": 92.8,
+            "styleMs": 186.7
+          }
+        },
+        "busyMs": {
+          "homeToFocus": 402.7,
+          "focusControls": 330.3,
+          "whistleToSummary": 480.7,
+          "break": 234.5
+        },
+        "bytes": {
+          "home": {
+            "requests": 35,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 19.7,
+                "gzipKb": 19.5,
+                "n": 1
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 581.7,
+            "totalGzipKb": 568.6
+          },
+          "focus": {
+            "requests": 38,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 77.3,
+                "gzipKb": 75.9,
+                "n": 4
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 639.2,
+            "totalGzipKb": 625
+          },
+          "summary": {
+            "requests": 39,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 97.7,
+                "gzipKb": 96.1,
+                "n": 5
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 659.6,
+            "totalGzipKb": 645.2
+          }
+        },
+        "chai": {
+          "home": [
+            {
+              "file": "chai-sipping.webp",
+              "natural": [
+                302,
+                491
+              ],
+              "cssPx": [
+                67.7,
+                109.9
+              ],
+              "devicePx": [
+                135,
+                220
+              ],
+              "sourcePerDevicePx": 2.23,
+              "onScreen": true
+            }
+          ],
+          "focus": [
+            {
+              "file": "chai-reading.webp",
+              "natural": [
+                311,
+                487
+              ],
+              "cssPx": [
+                112.8,
+                176.6
+              ],
+              "devicePx": [
+                226,
+                353
+              ],
+              "sourcePerDevicePx": 1.38,
+              "onScreen": true
+            }
+          ],
+          "summary": [
+            {
+              "file": "chai-cheering.webp",
+              "natural": [
+                312,
+                428
+              ],
+              "cssPx": [
+                113.2,
+                155.2
+              ],
+              "devicePx": [
+                226,
+                310
+              ],
+              "sourcePerDevicePx": 1.38,
+              "onScreen": true
+            }
+          ],
+          "break": [
+            {
+              "file": "chai-sipping.webp",
+              "natural": [
+                302,
+                491
+              ],
+              "cssPx": [
+                109.5,
+                178.1
+              ],
+              "devicePx": [
+                219,
+                356
+              ],
+              "sourcePerDevicePx": 1.38,
+              "onScreen": true
+            }
+          ]
+        },
+        "scene": {
+          "focusWindowReadyMs": 1170.5,
+          "focusWindowStaticMs": 172.1
+        },
+        "tbtJourneyMs": 26,
+        "longestTaskJourneyMs": 76,
+        "errors": []
+      },
+      "nook": {
+        "scene3dReadyMs": 1426.4,
+        "staticShownMs": null,
+        "tier": "canvas",
+        "cls": {
+          "sum": 0,
+          "window": 0,
+          "count": 0,
+          "top": []
+        },
+        "heap": {
+          "heapUsedMB": 9.8,
+          "heapTotalMB": 11,
+          "nodes": 971,
+          "listeners": 401,
+          "taskMs": 774.1,
+          "scriptMs": 346.2,
+          "layoutMs": 30.7,
+          "styleMs": 20.6
+        },
+        "bytes": {
+          "requests": 34,
+          "by": {
+            "html": {
+              "kb": 1.1,
+              "gzipKb": 0.9,
+              "n": 1
+            },
+            "css": {
+              "kb": 41.2,
+              "gzipKb": 38.4,
+              "n": 8
+            },
+            "js": {
+              "kb": 280.2,
+              "gzipKb": 271.9,
+              "n": 21
+            },
+            "font": {
+              "kb": 67.9,
+              "gzipKb": 67.3,
+              "n": 2
+            },
+            "scene3d": {
+              "kb": 28.2,
+              "gzipKb": 27.8,
+              "n": 1
+            },
+            "three": {
+              "kb": 143.3,
+              "gzipKb": 142.8,
+              "n": 1
+            }
+          },
+          "totalKb": 562,
+          "totalGzipKb": 549.1
+        },
+        "longestTaskMs": 116,
+        "errors": []
+      },
+      "loadAfter": [
+        6.93,
+        5.33,
+        3.74
+      ],
+      "seconds": 40
+    },
+    {
+      "build": "8f1044a",
+      "base": "http://127.0.0.1:5242",
+      "profile": "desktop",
+      "run": 5,
+      "loadBefore": [
+        6.93,
+        5.33,
+        3.74
+      ],
+      "cold": {
+        "ttfbMs": 2.8,
+        "fcpMs": 176,
+        "lcpMs": 508,
+        "lcpElement": "p._bubbleText_18sz3_213 \"Nice going. One more brew and today’s po\"",
+        "dclMs": 129.9,
+        "loadMs": 130.2,
+        "startReadyMs": 482.1,
+        "firstClickHandledMs": 1142.9,
+        "firstInputDelayMs": null,
+        "startColdEventMs": 0,
+        "startColdClickToPaintMs": 313.1,
+        "tbtToInteractiveMs": 97,
+        "longestTaskMs": 139,
+        "bytesToInteractive": {
+          "requests": 38,
+          "by": {
+            "html": {
+              "kb": 1.1,
+              "gzipKb": 0.9,
+              "n": 1
+            },
+            "css": {
+              "kb": 41.2,
+              "gzipKb": 38.4,
+              "n": 8
+            },
+            "js": {
+              "kb": 280.2,
+              "gzipKb": 271.9,
+              "n": 21
+            },
+            "font": {
+              "kb": 67.9,
+              "gzipKb": 67.3,
+              "n": 2
+            },
+            "image": {
+              "kb": 77.3,
+              "gzipKb": 75.9,
+              "n": 4
+            },
+            "scene3d": {
+              "kb": 28.2,
+              "gzipKb": 27.8,
+              "n": 1
+            },
+            "three": {
+              "kb": 143.3,
+              "gzipKb": 142.8,
+              "n": 1
+            }
+          },
+          "totalKb": 639.2,
+          "totalGzipKb": 625
+        },
+        "errors": []
+      },
+      "journey": {
+        "input": {
+          "start": {
+            "eventMs": 336,
+            "inputDelayMs": 27.300000000279397,
+            "processingMs": 69.5,
+            "entries": "pointerdown:336 pointerup:336 click:336",
+            "clickToPaintMs": 230.90000000037253,
+            "target": "button._btn_qn6mf_1 \"Put the kettle on · 25 min\""
+          },
+          "pause": {
+            "eventMs": 1080,
+            "inputDelayMs": 5.7999999998137355,
+            "processingMs": 5,
+            "entries": "pointerdown:1080 pointerup:1080 click:1080",
+            "clickToPaintMs": 35.10000000009313,
+            "target": "button._btn_qn6mf_1 \"Pause\""
+          },
+          "resume": {
+            "eventMs": 528,
+            "inputDelayMs": 2,
+            "processingMs": 6.2999999998137355,
+            "entries": "pointerdown:528 pointerup:528 click:528",
+            "clickToPaintMs": 21.799999999813735,
+            "target": "button._btn_qn6mf_1 \"Resume\""
+          },
+          "add5": {
+            "eventMs": 0,
+            "inputDelayMs": null,
+            "processingMs": null,
+            "entries": "",
+            "clickToPaintMs": 177.10000000009313,
+            "target": "button._btn_qn6mf_1 \"Add 5 minutes\""
+          },
+          "teaTime": {
+            "eventMs": 352,
+            "inputDelayMs": 1.7999999998137355,
+            "processingMs": 3.400000000372529,
+            "entries": "pointerdown:352 pointerup:352 click:352",
+            "clickToPaintMs": 119.29999999981374,
+            "target": "button._btn_qn6mf_1 \"Tea time · 5 min\""
+          }
+        },
+        "cls": {
+          "homeLoad": {
+            "sum": 0,
+            "window": 0,
+            "count": 0,
+            "top": []
+          },
+          "focus": {
+            "sum": 0.0002,
+            "window": 0.0001,
+            "count": 3,
+            "top": [
+              "0.0001 ",
+              "0.0001 ",
+              "0.0000 "
+            ]
+          },
+          "whistleToSummary": {
+            "sum": 0.0189,
+            "window": 0.0134,
+            "count": 3,
+            "top": [
+              "0.0134 main._panel_kjsz3_131 \"30 minutes brewedTea’s ready. Take five \"",
+              "0.0037 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:00Tea’s\" | div._controls_kjsz3_247 \"Add 5PauseEnd\"",
+              "0.0018 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:01Almos\""
+            ]
+          },
+          "break": {
+            "sum": 0,
+            "window": 0,
+            "count": 0,
+            "top": []
+          },
+          "journey": {
+            "sum": 0.0191,
+            "window": 0.0134,
+            "count": 6,
+            "top": [
+              "0.0134 main._panel_kjsz3_131 \"30 minutes brewedTea’s ready. Take five \"",
+              "0.0037 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:00Tea’s\" | div._controls_kjsz3_247 \"Add 5PauseEnd\"",
+              "0.0018 div._readout_kjsz3_154 \"5 min · whistles at 4:00 PM now0:01Almos\""
+            ]
+          }
+        },
+        "heap": {
+          "home": {
+            "heapUsedMB": 8.9,
+            "heapTotalMB": 9.8,
+            "nodes": 619,
+            "listeners": 394,
+            "taskMs": 615.6,
+            "scriptMs": 189.8,
+            "layoutMs": 24.1,
+            "styleMs": 30.6
+          },
+          "focus": {
+            "heapUsedMB": 10.3,
+            "heapTotalMB": 11.3,
+            "nodes": 925,
+            "listeners": 418,
+            "taskMs": 1012.2,
+            "scriptMs": 304.7,
+            "layoutMs": 46.2,
+            "styleMs": 53.2
+          },
+          "summary": {
+            "heapUsedMB": 11,
+            "heapTotalMB": 11.6,
+            "nodes": 548,
+            "listeners": 396,
+            "taskMs": 1456.3,
+            "scriptMs": 414.5,
+            "layoutMs": 83.2,
+            "styleMs": 94
+          }
+        },
+        "busyMs": {
+          "homeToFocus": 392.6,
+          "focusControls": 191.1,
+          "whistleToSummary": 254.5,
+          "break": 137.8
+        },
+        "bytes": {
+          "home": {
+            "requests": 35,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 19.7,
+                "gzipKb": 19.5,
+                "n": 1
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 581.7,
+            "totalGzipKb": 568.6
+          },
+          "focus": {
+            "requests": 38,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 77.3,
+                "gzipKb": 75.9,
+                "n": 4
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 639.2,
+            "totalGzipKb": 625
+          },
+          "summary": {
+            "requests": 39,
+            "by": {
+              "html": {
+                "kb": 1.1,
+                "gzipKb": 0.9,
+                "n": 1
+              },
+              "js": {
+                "kb": 280.2,
+                "gzipKb": 271.9,
+                "n": 21
+              },
+              "css": {
+                "kb": 41.2,
+                "gzipKb": 38.4,
+                "n": 8
+              },
+              "font": {
+                "kb": 67.9,
+                "gzipKb": 67.3,
+                "n": 2
+              },
+              "image": {
+                "kb": 97.7,
+                "gzipKb": 96.1,
+                "n": 5
+              },
+              "scene3d": {
+                "kb": 28.2,
+                "gzipKb": 27.8,
+                "n": 1
+              },
+              "three": {
+                "kb": 143.3,
+                "gzipKb": 142.8,
+                "n": 1
+              }
+            },
+            "totalKb": 659.6,
+            "totalGzipKb": 645.2
+          }
+        },
+        "chai": {
+          "home": [
+            {
+              "file": "chai-sipping.webp",
+              "natural": [
+                302,
+                491
+              ],
+              "cssPx": [
+                91.8,
+                149.2
+              ],
+              "devicePx": [
+                92,
+                149
+              ],
+              "sourcePerDevicePx": 3.29,
+              "onScreen": true
+            }
+          ],
+          "focus": [
+            {
+              "file": "chai-reading.webp",
+              "natural": [
+                311,
+                487
+              ],
+              "cssPx": [
+                185.1,
+                289.9
+              ],
+              "devicePx": [
+                185,
+                290
+              ],
+              "sourcePerDevicePx": 1.68,
+              "onScreen": true
+            }
+          ],
+          "summary": [
+            {
+              "file": "chai-cheering.webp",
+              "natural": [
+                312,
+                428
+              ],
+              "cssPx": [
+                185.7,
+                254.7
+              ],
+              "devicePx": [
+                186,
+                255
+              ],
+              "sourcePerDevicePx": 1.68,
+              "onScreen": true
+            }
+          ],
+          "break": [
+            {
+              "file": "chai-sipping.webp",
+              "natural": [
+                302,
+                491
+              ],
+              "cssPx": [
+                179.8,
+                292.2
+              ],
+              "devicePx": [
+                180,
+                292
+              ],
+              "sourcePerDevicePx": 1.68,
+              "onScreen": true
+            }
+          ]
+        },
+        "scene": {
+          "focusWindowReadyMs": 3509,
+          "focusWindowStaticMs": 146.7
+        },
+        "tbtJourneyMs": 49,
+        "longestTaskJourneyMs": 99,
+        "errors": []
+      },
+      "nook": {
+        "scene3dReadyMs": 5135.3,
+        "staticShownMs": null,
+        "tier": "canvas",
+        "cls": {
+          "sum": 0.0005,
+          "window": 0.0005,
+          "count": 5,
+          "top": [
+            "0.0004  |  | ",
+            "0.0000 ",
+            "0.0000 "
+          ]
+        },
+        "heap": {
+          "heapUsedMB": 9.8,
+          "heapTotalMB": 10.8,
+          "nodes": 971,
+          "listeners": 401,
+          "taskMs": 713.3,
+          "scriptMs": 273.9,
+          "layoutMs": 36.2,
+          "styleMs": 26.8
+        },
+        "bytes": {
+          "requests": 34,
+          "by": {
+            "html": {
+              "kb": 1.1,
+              "gzipKb": 0.9,
+              "n": 1
+            },
+            "css": {
+              "kb": 41.2,
+              "gzipKb": 38.4,
+              "n": 8
+            },
+            "js": {
+              "kb": 280.2,
+              "gzipKb": 271.9,
+              "n": 21
+            },
+            "font": {
+              "kb": 67.9,
+              "gzipKb": 67.3,
+              "n": 2
+            },
+            "scene3d": {
+              "kb": 28.2,
+              "gzipKb": 27.8,
+              "n": 1
+            },
+            "three": {
+              "kb": 143.3,
+              "gzipKb": 142.8,
+              "n": 1
+            }
+          },
+          "totalKb": 562,
+          "totalGzipKb": 549.1
+        },
+        "longestTaskMs": 316,
+        "errors": []
+      },
+      "loadAfter": [
+        8.09,
+        5.88,
+        4.01
+      ],
+      "seconds": 50
+    }
+  ]
+}

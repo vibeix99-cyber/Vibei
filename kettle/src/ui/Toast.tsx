@@ -3,7 +3,7 @@
  * Also shows every `ui:toast` event from the event bus. OWNER: design-system area.
  * Polite live region, auto-dismiss (paused on hover/focus), tap to dismiss, max 3.
  */
-import { useEffect, useRef, useSyncExternalStore } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'motion/react';
 import { on } from '@/lib/events';
@@ -79,9 +79,10 @@ export function Toaster() {
       }),
     [],
   );
+  const above = useToastAbove(list.length > 0);
   if (typeof document === 'undefined') return null;
   return createPortal(
-    <div className={s.region}>
+    <div className={s.region} style={above != null ? { bottom: above } : undefined}>
       <div role="status" aria-live="polite" aria-relevant="additions text" aria-label="Notifications" className={s.live}>
         <ol className={s.list}>
           <AnimatePresence initial={false}>
@@ -94,6 +95,38 @@ export function Toaster() {
     </div>,
     document.body,
   );
+}
+
+/**
+ * While toasts are up, float them above every on-screen `[data-toast-above]` element (Today's docked start, the
+ * session's Pause/+5/End row, the summary's Tea time/Skip footer) by measuring where the highest one starts.
+ * Returns a CSS bottom in px, or null to keep the stylesheet's position (nothing marked on screen).
+ */
+function useToastAbove(active: boolean): number | null {
+  const [bottom, setBottom] = useState<number | null>(null);
+  useEffect(() => {
+    if (!active) return;
+    const measure = () => {
+      let top = Infinity;
+      for (const el of document.querySelectorAll<HTMLElement>('[data-toast-above]')) {
+        if (el.closest('[aria-hidden="true"], [inert]')) continue;
+        const r = el.getBoundingClientRect();
+        // Only what sits low enough for a bottom toast to cover (desktop's mid-screen controls are clear anyway).
+        if (r.height > 0 && r.top < innerHeight && r.bottom > innerHeight * 0.6) top = Math.min(top, r.top);
+      }
+      const next = top === Infinity ? null : Math.round(innerHeight - top + 10);
+      setBottom((b) => (b === next ? b : next));
+    };
+    measure();
+    // Layout under the toast can change while it shows (a route change, the summary rising): re-check briefly.
+    const id = window.setInterval(measure, 250);
+    window.addEventListener('resize', measure);
+    return () => {
+      window.clearInterval(id);
+      window.removeEventListener('resize', measure);
+    };
+  }, [active]);
+  return active ? bottom : null;
 }
 
 function ToastView({ item, reduced }: { item: ToastItem; reduced: boolean }) {

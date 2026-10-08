@@ -65,9 +65,14 @@ export function SegmentedControl<T extends string>({
       el.style.setProperty('--cols', String(n));
       if (!overflow()) return;
       el.dataset.fit = '1';
-      if (!overflow() || n < 4) return;
+      if (!overflow()) return;
       el.dataset.fit = '2';
-      el.style.setProperty('--cols', String(Math.ceil(n / 2)));
+      // Two rows; with very large text (200 %), one option per row rather than clipping a word.
+      if (n >= 3) {
+        el.style.setProperty('--cols', String(Math.ceil(n / 2)));
+        if (!overflow()) return;
+      }
+      el.style.setProperty('--cols', '1');
     };
     fit();
     const ro = new ResizeObserver(fit);

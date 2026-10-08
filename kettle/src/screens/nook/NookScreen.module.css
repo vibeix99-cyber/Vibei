@@ -250,7 +250,8 @@
   line-height: 1.25;
   color: var(--ink);
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  /* Names take ≤ 2 lines at normal sizes; 3 keeps "Stack of books" whole at 200 % text (it was cut at 2). */
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -275,10 +276,9 @@
     column-gap: var(--space-5);
     align-items: start;
   }
-  .stageCol {
-    position: sticky;
-    top: var(--space-4);
-  }
+  /* No sticky room here: `.root` is its own query container, so the side-panel grid above never applies and the
+     page stays one column. Pinned, the room (915 px tall at 1440×900) kept its bottom edge, and the "Drag to look
+     around" hint on it, below the screen, and the level card then slid over the room. It now scrolls with the page. */
   .stage {
     aspect-ratio: 1 / 0.92;
   }
