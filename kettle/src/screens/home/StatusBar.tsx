@@ -174,9 +174,14 @@ export function StatusBar({ data }: { data: HomeData }) {
 }
 
 /**
- * The three stats sit on one line. When they can't (very large text: measured 110 px of sideways scroll at 390 px with
- * 200 % text; 14 px at 360 px), the row wraps instead. Decided by measuring the screen edge, not the bar's box: at
- * 375 px the stats fit only by using the bar's negative side margins, and plain `flex-wrap` broke the row there.
+ * The three stats sit on one line. On a phone they only just fit: at 375 px the row needs 360-368 px of a 359 px
+ * bar, depending on the numbers (e.g. "2,361" vs "2,296" leaves). Ladder, decided by measurement:
+ *   1. as designed (12 px pill padding) when every stat ends inside the screen;
+ *   2. else the 6 px padding the 320 px layout already uses (`data-tight`), same row, same height;
+ *   3. else (very large text: 110 px of sideways scroll at 390 px with 200 % text) the row wraps (`data-wrap`).
+ * Only real fonts decide (a wider fallback font would wrap the row for a moment and then unwrap it, shifting all of
+ * Today: measured CLS 0.26 on phone loads when this was plain `flex-wrap`). Neither step 2 nor a font swap changes
+ * the row's height.
  */
 function useWrapWhenCrowded() {
   const ref = useRef<HTMLElement>(null);
@@ -184,13 +189,18 @@ function useWrapWhenCrowded() {
     const el = ref.current;
     if (!el || typeof ResizeObserver === 'undefined') return;
     const fit = () => {
-      // Decide with the real fonts only: a wider fallback font would wrap the row for a moment and then unwrap it,
-      // shifting all of Today (measured CLS 0.26 on phone loads when this was plain `flex-wrap`).
       if (document.fonts && document.fonts.status !== 'loaded') return;
+      // Does any stat (or the bar itself, which a crowded row widens) reach past the screen's edge?
+      const over = () =>
+        Math.max(el.getBoundingClientRect().right, ...[...el.children].map((c) => c.getBoundingClientRect().right)) >
+        document.documentElement.clientWidth + 0.5;
       delete el.dataset.wrap;
-      // On one line, does any stat (or the bar itself, which a crowded row widens) reach past the screen's edge?
-      const right = Math.max(el.getBoundingClientRect().right, ...[...el.children].map((c) => c.getBoundingClientRect().right));
-      if (right > document.documentElement.clientWidth + 0.5) el.dataset.wrap = '';
+      delete el.dataset.tight;
+      if (!over()) return;
+      el.dataset.tight = '';
+      if (!over()) return;
+      delete el.dataset.tight;
+      el.dataset.wrap = '';
     };
     fit();
     let live = true;

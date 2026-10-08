@@ -14,7 +14,11 @@
   gap: 4px;
   margin: -6px -8px -4px;
 }
-/* Set by StatusBar when the stats can't share one line (very large text): wrap instead of widening the page. */
+/* Set by StatusBar (measured): a row that would just overrun the screen takes the 320 px layout's 6 px padding;
+   one that still can't fit (very large text) wraps instead of widening the page. */
+.statusBar[data-tight] .stat {
+  padding-inline: 6px;
+}
 .statusBar[data-wrap] {
   flex-wrap: wrap;
 }
