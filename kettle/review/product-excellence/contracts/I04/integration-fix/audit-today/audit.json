@@ -1,0 +1,3418 @@
+{
+  "base": "http://127.0.0.1:5242",
+  "revision": "3bc0c66",
+  "at": "2026-10-08T09:34:31.693Z",
+  "renderer": "Chromium (Playwright) + SwiftShader (CPU)",
+  "suites": {},
+  "results": [
+    {
+      "state": "home",
+      "viewport": "390x844",
+      "theme": "light",
+      "suite": "main",
+      "axe": {
+        "violations": [
+          {
+            "id": "target-size",
+            "impact": "serious",
+            "nodes": 1,
+            "targets": [
+              "._selected_chqjy_38"
+            ],
+            "summary": "Fix any of the following:   Target has insufficient size because it is partially obscured (smallest space is 74.5px by 19.5px, should be at least 24px by 24px)",
+            "scrollDependent": true,
+            "scrolledClear": [
+              "pass"
+            ]
+          }
+        ],
+        "contrastPasses": 51,
+        "contrastUndecided": 7
+      },
+      "contrast": [
+        {
+          "selector": "button[data-kind=\"streak\"] > ._statText_np8ux_59 > ._statNum_np8ux_49",
+          "text": "23",
+          "px": 20,
+          "weight": 700,
+          "need": 3,
+          "method": "glyphs",
+          "samples": 284,
+          "min": 5.76,
+          "p5": 5.76,
+          "median": 5.76,
+          "pass": true,
+          "incidental": false
+        },
+        {
+          "selector": "button[data-kind=\"leaves\"] > ._statText_np8ux_59 > ._statNum_np8ux_49",
+          "text": "2,296",
+          "px": 20,
+          "weight": 700,
+          "need": 3,
+          "method": "glyphs",
+          "samples": 574,
+          "min": 5.98,
+          "p5": 5.98,
+          "median": 5.98,
+          "pass": true,
+          "incidental": false
+        },
+        {
+          "selector": "button[data-kind=\"leaves\"] > ._statText_np8ux_59 > ._statLabel_np8ux_64",
+          "text": "leaves",
+          "px": 11,
+          "weight": 800,
+          "need": 4.5,
+          "method": "glyphs",
+          "samples": 182,
+          "min": 6.74,
+          "p5": 6.74,
+          "median": 6.74,
+          "pass": true,
+          "incidental": false
+        },
+        {
+          "selector": "text[x=\"32\"]",
+          "text": "12",
+          "px": 14.8,
+          "weight": 700,
+          "need": 4.5,
+          "method": "glyphs",
+          "samples": 117,
+          "min": 4.55,
+          "p5": 4.55,
+          "median": 4.55,
+          "pass": true,
+          "incidental": false
+        },
+        {
+          "selector": "._label_1npvj_64",
+          "text": "Put the kettle on · 25 min",
+          "px": 21,
+          "weight": 700,
+          "need": 3,
+          "method": "glyphs",
+          "samples": 2218,
+          "min": 3.25,
+          "p5": 3.29,
+          "median": 3.38,
+          "pass": true,
+          "incidental": false
+        },
+        {
+          "selector": "._ctaNote_np8ux_441",
+          "text": "Then a 5 min tea break. Change brew leng",
+          "px": 14,
+          "weight": 700,
+          "need": 4.5,
+          "method": "glyphs",
+          "samples": 2637,
+          "min": 6.74,
+          "p5": 6.74,
+          "median": 6.74,
+          "pass": true,
+          "incidental": false
+        },
+        {
+          "selector": "._linkBtn_np8ux_326",
+          "text": "Change brew length",
+          "px": 14,
+          "weight": 800,
+          "need": 4.5,
+          "method": "glyphs",
+          "samples": 948,
+          "min": 6.04,
+          "p5": 6.04,
+          "median": 6.04,
+          "pass": true,
+          "incidental": false
+        }
+      ],
+      "targets": [
+        {
+          "name": "Skip to content",
+          "tag": "a",
+          "role": "",
+          "box": [
+            146,
+            44
+          ],
+          "center": [
+            85,
+            464.5999984741211
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Today",
+          "tag": "a",
+          "role": "",
+          "box": [
+            95.5,
+            68
+          ],
+          "center": [
+            51.75,
+            1311
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Stats",
+          "tag": "a",
+          "role": "",
+          "box": [
+            95.5,
+            68
+          ],
+          "center": [
+            147.25,
+            1311
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Nook",
+          "tag": "a",
+          "role": "",
+          "box": [
+            95.5,
+            68
+          ],
+          "center": [
+            242.75,
+            1311
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Settings",
+          "tag": "a",
+          "role": "",
+          "box": [
+            95.5,
+            68
+          ],
+          "center": [
+            338.25,
+            1311
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "23days warmstreak. Show details",
+          "tag": "button",
+          "role": "",
+          "box": [
+            126,
+            48
+          ],
+          "center": [
+            71,
+            34
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "2,296leavesShow details",
+          "tag": "button",
+          "role": "",
+          "box": [
+            108,
+            48
+          ],
+          "center": [
+            195,
+            34
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "12Level 12Cozy level 12, 149 leaves to the next.",
+          "tag": "button",
+          "role": "",
+          "box": [
+            126,
+            48
+          ],
+          "center": [
+            319,
+            34
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "What are you brewing? (optional)",
+          "tag": "input",
+          "role": "",
+          "box": [
+            318,
+            52
+          ],
+          "center": [
+            195,
+            458
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Work",
+          "tag": "button",
+          "role": "",
+          "box": [
+            110,
+            44
+          ],
+          "center": [
+            91,
+            520
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Study",
+          "tag": "button",
+          "role": "",
+          "box": [
+            93,
+            44
+          ],
+          "center": [
+            200.5,
+            520
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Read",
+          "tag": "button",
+          "role": "",
+          "box": [
+            86,
+            44
+          ],
+          "center": [
+            298,
+            520
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Create",
+          "tag": "button",
+          "role": "",
+          "box": [
+            97,
+            44
+          ],
+          "center": [
+            84.5,
+            572
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Life",
+          "tag": "button",
+          "role": "",
+          "box": [
+            78,
+            44
+          ],
+          "center": [
+            180,
+            572
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "15 minGentle",
+          "tag": "button",
+          "role": "radio",
+          "box": [
+            74.5,
+            48.2
+          ],
+          "center": [
+            77.25,
+            680.59375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "25 minClassic",
+          "tag": "button",
+          "role": "radio",
+          "box": [
+            74.5,
+            48.2
+          ],
+          "center": [
+            155.75,
+            680.59375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "50 minDeep",
+          "tag": "button",
+          "role": "radio",
+          "box": [
+            74.5,
+            48.2
+          ],
+          "center": [
+            234.25,
+            680.59375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "CustomSet it",
+          "tag": "button",
+          "role": "radio",
+          "box": [
+            74.5,
+            48.2
+          ],
+          "center": [
+            312.75,
+            680.59375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Put the kettle on · 25 min",
+          "tag": "button",
+          "role": "",
+          "box": [
+            358,
+            60
+          ],
+          "center": [
+            195,
+            780.6875
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Change brew length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            146,
+            24
+          ],
+          "center": [
+            274.5,
+            828.6875
+          ],
+          "hit44": false,
+          "hit24": true,
+          "inline": false,
+          "result": "ok24"
+        }
+      ],
+      "reach": {
+        "checked": 19,
+        "covered": [],
+        "hScroll": 0,
+        "clipped": []
+      }
+    },
+    {
+      "state": "home-custom",
+      "viewport": "390x844",
+      "theme": "light",
+      "suite": "main",
+      "axe": {
+        "violations": [],
+        "contrastPasses": 10,
+        "contrastUndecided": 1
+      },
+      "contrast": [
+        {
+          "selector": "._solid_1npvj_91._md_1npvj_173._block_1npvj_184 > ._face_1npvj_34 > ._content_1npvj_57 > ._label_1npvj_64",
+          "text": "Use 25/5 min",
+          "px": 19,
+          "weight": 700,
+          "need": 3,
+          "method": "glyphs",
+          "samples": 1050,
+          "min": 3.28,
+          "p5": 3.29,
+          "median": 3.38,
+          "pass": true,
+          "incidental": false
+        }
+      ],
+      "targets": [
+        {
+          "name": "Close",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            356,
+            883.8125
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Decrease brew length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            198,
+            981
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "25min",
+          "tag": "div",
+          "role": "spinbutton",
+          "box": [
+            84,
+            44
+          ],
+          "center": [
+            270,
+            981
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Increase brew length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            342,
+            981
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Decrease tea break length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            198,
+            1049
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "5min",
+          "tag": "div",
+          "role": "spinbutton",
+          "box": [
+            84,
+            44
+          ],
+          "center": [
+            270,
+            1049
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Increase tea break length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            342,
+            1049
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Cancel",
+          "tag": "button",
+          "role": "",
+          "box": [
+            164,
+            52
+          ],
+          "center": [
+            108,
+            1147
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Use 25/5 min",
+          "tag": "button",
+          "role": "",
+          "box": [
+            164,
+            52
+          ],
+          "center": [
+            282,
+            1147
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        }
+      ],
+      "reach": {
+        "checked": 9,
+        "covered": [],
+        "hScroll": 0,
+        "clipped": []
+      }
+    },
+    {
+      "state": "home",
+      "viewport": "390x844",
+      "theme": "dark",
+      "suite": "main",
+      "axe": {
+        "violations": [
+          {
+            "id": "target-size",
+            "impact": "serious",
+            "nodes": 1,
+            "targets": [
+              "._selected_chqjy_38"
+            ],
+            "summary": "Fix any of the following:   Target has insufficient size because it is partially obscured (smallest space is 74.5px by 19.5px, should be at least 24px by 24px)",
+            "scrollDependent": true,
+            "scrolledClear": [
+              "pass"
+            ]
+          }
+        ],
+        "contrastPasses": 52,
+        "contrastUndecided": 6
+      },
+      "contrast": [
+        {
+          "selector": "button[data-kind=\"streak\"] > ._statText_np8ux_59 > ._statNum_np8ux_49",
+          "text": "23",
+          "px": 20,
+          "weight": 700,
+          "need": 3,
+          "method": "glyphs",
+          "samples": 286,
+          "min": 9.12,
+          "p5": 9.12,
+          "median": 9.12,
+          "pass": true,
+          "incidental": false
+        },
+        {
+          "selector": "button[data-kind=\"leaves\"] > ._statText_np8ux_59 > ._statNum_np8ux_49",
+          "text": "2,296",
+          "px": 20,
+          "weight": 700,
+          "need": 3,
+          "method": "glyphs",
+          "samples": 564,
+          "min": 10.15,
+          "p5": 10.15,
+          "median": 10.15,
+          "pass": true,
+          "incidental": false
+        },
+        {
+          "selector": "text[x=\"32\"]",
+          "text": "12",
+          "px": 14.8,
+          "weight": 700,
+          "need": 4.5,
+          "method": "glyphs",
+          "samples": 117,
+          "min": 4.55,
+          "p5": 4.55,
+          "median": 4.55,
+          "pass": true,
+          "incidental": false
+        },
+        {
+          "selector": "._label_1npvj_64",
+          "text": "Put the kettle on · 25 min",
+          "px": 21,
+          "weight": 700,
+          "need": 3,
+          "method": "glyphs",
+          "samples": 2218,
+          "min": 3.25,
+          "p5": 3.29,
+          "median": 3.38,
+          "pass": true,
+          "incidental": false
+        },
+        {
+          "selector": "._ctaNote_np8ux_441",
+          "text": "Then a 5 min tea break. Change brew leng",
+          "px": 14,
+          "weight": 700,
+          "need": 4.5,
+          "method": "glyphs",
+          "samples": 2652,
+          "min": 10.21,
+          "p5": 10.21,
+          "median": 10.21,
+          "pass": true,
+          "incidental": false
+        },
+        {
+          "selector": "._linkBtn_np8ux_326",
+          "text": "Change brew length",
+          "px": 14,
+          "weight": 800,
+          "need": 4.5,
+          "method": "glyphs",
+          "samples": 955,
+          "min": 10.07,
+          "p5": 10.07,
+          "median": 10.07,
+          "pass": true,
+          "incidental": false
+        }
+      ],
+      "targets": [
+        {
+          "name": "Skip to content",
+          "tag": "a",
+          "role": "",
+          "box": [
+            146,
+            44
+          ],
+          "center": [
+            85,
+            464.5999984741211
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Today",
+          "tag": "a",
+          "role": "",
+          "box": [
+            95.5,
+            68
+          ],
+          "center": [
+            51.75,
+            1311
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Stats",
+          "tag": "a",
+          "role": "",
+          "box": [
+            95.5,
+            68
+          ],
+          "center": [
+            147.25,
+            1311
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Nook",
+          "tag": "a",
+          "role": "",
+          "box": [
+            95.5,
+            68
+          ],
+          "center": [
+            242.75,
+            1311
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Settings",
+          "tag": "a",
+          "role": "",
+          "box": [
+            95.5,
+            68
+          ],
+          "center": [
+            338.25,
+            1311
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "23days warmstreak. Show details",
+          "tag": "button",
+          "role": "",
+          "box": [
+            126,
+            48
+          ],
+          "center": [
+            71,
+            34
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "2,296leavesShow details",
+          "tag": "button",
+          "role": "",
+          "box": [
+            108,
+            48
+          ],
+          "center": [
+            195,
+            34
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "12Level 12Cozy level 12, 149 leaves to the next.",
+          "tag": "button",
+          "role": "",
+          "box": [
+            126,
+            48
+          ],
+          "center": [
+            319,
+            34
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "What are you brewing? (optional)",
+          "tag": "input",
+          "role": "",
+          "box": [
+            318,
+            52
+          ],
+          "center": [
+            195,
+            458
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Work",
+          "tag": "button",
+          "role": "",
+          "box": [
+            110,
+            44
+          ],
+          "center": [
+            91,
+            520
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Study",
+          "tag": "button",
+          "role": "",
+          "box": [
+            93,
+            44
+          ],
+          "center": [
+            200.5,
+            520
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Read",
+          "tag": "button",
+          "role": "",
+          "box": [
+            86,
+            44
+          ],
+          "center": [
+            298,
+            520
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Create",
+          "tag": "button",
+          "role": "",
+          "box": [
+            97,
+            44
+          ],
+          "center": [
+            84.5,
+            572
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Life",
+          "tag": "button",
+          "role": "",
+          "box": [
+            78,
+            44
+          ],
+          "center": [
+            180,
+            572
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "15 minGentle",
+          "tag": "button",
+          "role": "radio",
+          "box": [
+            74.5,
+            48.2
+          ],
+          "center": [
+            77.25,
+            680.59375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "25 minClassic",
+          "tag": "button",
+          "role": "radio",
+          "box": [
+            74.5,
+            48.2
+          ],
+          "center": [
+            155.75,
+            680.59375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "50 minDeep",
+          "tag": "button",
+          "role": "radio",
+          "box": [
+            74.5,
+            48.2
+          ],
+          "center": [
+            234.25,
+            680.59375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "CustomSet it",
+          "tag": "button",
+          "role": "radio",
+          "box": [
+            74.5,
+            48.2
+          ],
+          "center": [
+            312.75,
+            680.59375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Put the kettle on · 25 min",
+          "tag": "button",
+          "role": "",
+          "box": [
+            358,
+            60
+          ],
+          "center": [
+            195,
+            780.6875
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Change brew length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            146,
+            24
+          ],
+          "center": [
+            274.5,
+            828.6875
+          ],
+          "hit44": false,
+          "hit24": true,
+          "inline": false,
+          "result": "ok24"
+        }
+      ],
+      "reach": {
+        "checked": 19,
+        "covered": [],
+        "hScroll": 0,
+        "clipped": []
+      }
+    },
+    {
+      "state": "home-custom",
+      "viewport": "390x844",
+      "theme": "dark",
+      "suite": "main",
+      "axe": {
+        "violations": [],
+        "contrastPasses": 10,
+        "contrastUndecided": 1
+      },
+      "contrast": [
+        {
+          "selector": "._solid_1npvj_91._md_1npvj_173._block_1npvj_184 > ._face_1npvj_34 > ._content_1npvj_57 > ._label_1npvj_64",
+          "text": "Use 25/5 min",
+          "px": 19,
+          "weight": 700,
+          "need": 3,
+          "method": "glyphs",
+          "samples": 1050,
+          "min": 3.28,
+          "p5": 3.29,
+          "median": 3.38,
+          "pass": true,
+          "incidental": false
+        }
+      ],
+      "targets": [
+        {
+          "name": "Close",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            356,
+            883.8125
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Decrease brew length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            198,
+            981
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "25min",
+          "tag": "div",
+          "role": "spinbutton",
+          "box": [
+            84,
+            44
+          ],
+          "center": [
+            270,
+            981
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Increase brew length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            342,
+            981
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Decrease tea break length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            198,
+            1049
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "5min",
+          "tag": "div",
+          "role": "spinbutton",
+          "box": [
+            84,
+            44
+          ],
+          "center": [
+            270,
+            1049
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Increase tea break length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            342,
+            1049
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Cancel",
+          "tag": "button",
+          "role": "",
+          "box": [
+            164,
+            52
+          ],
+          "center": [
+            108,
+            1147
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Use 25/5 min",
+          "tag": "button",
+          "role": "",
+          "box": [
+            164,
+            52
+          ],
+          "center": [
+            282,
+            1147
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        }
+      ],
+      "reach": {
+        "checked": 9,
+        "covered": [],
+        "hScroll": 0,
+        "clipped": []
+      }
+    },
+    {
+      "state": "home",
+      "viewport": "375x667",
+      "theme": "light",
+      "suite": "main",
+      "axe": {
+        "violations": [
+          {
+            "id": "target-size",
+            "impact": "serious",
+            "nodes": 2,
+            "targets": [
+              "._selected_kjzqi_87",
+              "button[data-tone=\"sky\"]"
+            ],
+            "summary": "Fix any of the following:   Target has insufficient size because it is partially obscured (smallest space is 110px by 1px, should be at least 24px by 24px)",
+            "scrollDependent": true,
+            "scrolledClear": [
+              "pass",
+              "pass"
+            ]
+          }
+        ],
+        "contrastPasses": 52,
+        "contrastUndecided": 6
+      },
+      "targets": [
+        {
+          "name": "Today",
+          "tag": "a",
+          "role": "",
+          "box": [
+            91.8,
+            68
+          ],
+          "center": [
+            49.875,
+            633
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Stats",
+          "tag": "a",
+          "role": "",
+          "box": [
+            91.8,
+            68
+          ],
+          "center": [
+            141.625,
+            633
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Nook",
+          "tag": "a",
+          "role": "",
+          "box": [
+            91.8,
+            68
+          ],
+          "center": [
+            233.375,
+            633
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Settings",
+          "tag": "a",
+          "role": "",
+          "box": [
+            91.8,
+            68
+          ],
+          "center": [
+            325.125,
+            633
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "23days warmstreak. Show details",
+          "tag": "button",
+          "role": "",
+          "box": [
+            114,
+            48
+          ],
+          "center": [
+            65,
+            34
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "2,296leavesShow details",
+          "tag": "button",
+          "role": "",
+          "box": [
+            96,
+            48
+          ],
+          "center": [
+            187.5,
+            34
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "12Level 12Cozy level 12, 149 leaves to the next.",
+          "tag": "button",
+          "role": "",
+          "box": [
+            114,
+            48
+          ],
+          "center": [
+            310,
+            34
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "What are you brewing? (optional)",
+          "tag": "input",
+          "role": "",
+          "box": [
+            303,
+            52
+          ],
+          "center": [
+            187.5,
+            458
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Work",
+          "tag": "button",
+          "role": "",
+          "box": [
+            110,
+            44
+          ],
+          "center": [
+            91,
+            520
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Study",
+          "tag": "button",
+          "role": "",
+          "box": [
+            93,
+            44
+          ],
+          "center": [
+            200.5,
+            520
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Read",
+          "tag": "button",
+          "role": "",
+          "box": [
+            86,
+            44
+          ],
+          "center": [
+            79,
+            572
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Create",
+          "tag": "button",
+          "role": "",
+          "box": [
+            97,
+            44
+          ],
+          "center": [
+            178.5,
+            572
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Life",
+          "tag": "button",
+          "role": "",
+          "box": [
+            78,
+            44
+          ],
+          "center": [
+            274,
+            572
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "15 minGentle",
+          "tag": "button",
+          "role": "radio",
+          "box": [
+            70.8,
+            45.9
+          ],
+          "center": [
+            75.375,
+            679.4375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "25 minClassic",
+          "tag": "button",
+          "role": "radio",
+          "box": [
+            70.8,
+            45.9
+          ],
+          "center": [
+            150.125,
+            679.4375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "50 minDeep",
+          "tag": "button",
+          "role": "radio",
+          "box": [
+            70.8,
+            45.9
+          ],
+          "center": [
+            224.875,
+            679.4375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "CustomSet it",
+          "tag": "button",
+          "role": "radio",
+          "box": [
+            70.8,
+            45.9
+          ],
+          "center": [
+            299.625,
+            679.4375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Put the kettle on · 25 min",
+          "tag": "button",
+          "role": "",
+          "box": [
+            343,
+            60
+          ],
+          "center": [
+            187.5,
+            778.375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Change brew length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            146,
+            24
+          ],
+          "center": [
+            267,
+            826.375
+          ],
+          "hit44": false,
+          "hit24": true,
+          "inline": false,
+          "result": "ok24"
+        }
+      ],
+      "reach": {
+        "checked": 19,
+        "covered": [],
+        "hScroll": 0,
+        "clipped": [
+          {
+            "text": "placeholder: e.g. Chapter 3 notes, or leave it blank",
+            "w": [
+              271,
+              283
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "state": "home-custom",
+      "viewport": "375x667",
+      "theme": "light",
+      "suite": "main",
+      "axe": {
+        "violations": [],
+        "contrastPasses": 10,
+        "contrastUndecided": 1
+      },
+      "targets": [
+        {
+          "name": "Close",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            341,
+            788.03125
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Decrease brew length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            183,
+            885.21875
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "25min",
+          "tag": "div",
+          "role": "spinbutton",
+          "box": [
+            84,
+            44
+          ],
+          "center": [
+            255,
+            885.21875
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Increase brew length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            327,
+            885.21875
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Decrease tea break length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            183,
+            953.21875
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "5min",
+          "tag": "div",
+          "role": "spinbutton",
+          "box": [
+            84,
+            44
+          ],
+          "center": [
+            255,
+            953.21875
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Increase tea break length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            327,
+            953.21875
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Cancel",
+          "tag": "button",
+          "role": "",
+          "box": [
+            156.5,
+            57.8
+          ],
+          "center": [
+            104.25,
+            1054.109375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Use 25/5 min",
+          "tag": "button",
+          "role": "",
+          "box": [
+            156.5,
+            57.8
+          ],
+          "center": [
+            270.75,
+            1054.109375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        }
+      ],
+      "reach": {
+        "checked": 9,
+        "covered": [],
+        "hScroll": 0,
+        "clipped": []
+      }
+    },
+    {
+      "state": "home",
+      "viewport": "375x667",
+      "theme": "dark",
+      "suite": "main",
+      "axe": {
+        "violations": [
+          {
+            "id": "target-size",
+            "impact": "serious",
+            "nodes": 2,
+            "targets": [
+              "._selected_kjzqi_87",
+              "button[data-tone=\"sky\"]"
+            ],
+            "summary": "Fix any of the following:   Target has insufficient size because it is partially obscured (smallest space is 110px by 1px, should be at least 24px by 24px)",
+            "scrollDependent": true,
+            "scrolledClear": [
+              "pass",
+              "pass"
+            ]
+          }
+        ],
+        "contrastPasses": 51,
+        "contrastUndecided": 7
+      },
+      "targets": [
+        {
+          "name": "Today",
+          "tag": "a",
+          "role": "",
+          "box": [
+            91.8,
+            68
+          ],
+          "center": [
+            49.875,
+            633
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Stats",
+          "tag": "a",
+          "role": "",
+          "box": [
+            91.8,
+            68
+          ],
+          "center": [
+            141.625,
+            633
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Nook",
+          "tag": "a",
+          "role": "",
+          "box": [
+            91.8,
+            68
+          ],
+          "center": [
+            233.375,
+            633
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Settings",
+          "tag": "a",
+          "role": "",
+          "box": [
+            91.8,
+            68
+          ],
+          "center": [
+            325.125,
+            633
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "23days warmstreak. Show details",
+          "tag": "button",
+          "role": "",
+          "box": [
+            114,
+            48
+          ],
+          "center": [
+            65,
+            34
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "2,296leavesShow details",
+          "tag": "button",
+          "role": "",
+          "box": [
+            96,
+            48
+          ],
+          "center": [
+            187.5,
+            34
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "12Level 12Cozy level 12, 149 leaves to the next.",
+          "tag": "button",
+          "role": "",
+          "box": [
+            114,
+            48
+          ],
+          "center": [
+            310,
+            34
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "What are you brewing? (optional)",
+          "tag": "input",
+          "role": "",
+          "box": [
+            303,
+            52
+          ],
+          "center": [
+            187.5,
+            458
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Work",
+          "tag": "button",
+          "role": "",
+          "box": [
+            110,
+            44
+          ],
+          "center": [
+            91,
+            520
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Study",
+          "tag": "button",
+          "role": "",
+          "box": [
+            93,
+            44
+          ],
+          "center": [
+            200.5,
+            520
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Read",
+          "tag": "button",
+          "role": "",
+          "box": [
+            86,
+            44
+          ],
+          "center": [
+            79,
+            572
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Create",
+          "tag": "button",
+          "role": "",
+          "box": [
+            97,
+            44
+          ],
+          "center": [
+            178.5,
+            572
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Life",
+          "tag": "button",
+          "role": "",
+          "box": [
+            78,
+            44
+          ],
+          "center": [
+            274,
+            572
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "15 minGentle",
+          "tag": "button",
+          "role": "radio",
+          "box": [
+            70.8,
+            45.9
+          ],
+          "center": [
+            75.375,
+            679.4375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "25 minClassic",
+          "tag": "button",
+          "role": "radio",
+          "box": [
+            70.8,
+            45.9
+          ],
+          "center": [
+            150.125,
+            679.4375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "50 minDeep",
+          "tag": "button",
+          "role": "radio",
+          "box": [
+            70.8,
+            45.9
+          ],
+          "center": [
+            224.875,
+            679.4375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "CustomSet it",
+          "tag": "button",
+          "role": "radio",
+          "box": [
+            70.8,
+            45.9
+          ],
+          "center": [
+            299.625,
+            679.4375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Put the kettle on · 25 min",
+          "tag": "button",
+          "role": "",
+          "box": [
+            343,
+            60
+          ],
+          "center": [
+            187.5,
+            778.375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Change brew length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            146,
+            24
+          ],
+          "center": [
+            267,
+            826.375
+          ],
+          "hit44": false,
+          "hit24": true,
+          "inline": false,
+          "result": "ok24"
+        }
+      ],
+      "reach": {
+        "checked": 19,
+        "covered": [],
+        "hScroll": 0,
+        "clipped": [
+          {
+            "text": "placeholder: e.g. Chapter 3 notes, or leave it blank",
+            "w": [
+              271,
+              283
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "state": "home-custom",
+      "viewport": "375x667",
+      "theme": "dark",
+      "suite": "main",
+      "axe": {
+        "violations": [],
+        "contrastPasses": 10,
+        "contrastUndecided": 1
+      },
+      "targets": [
+        {
+          "name": "Close",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            341,
+            788.03125
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Decrease brew length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            183,
+            885.21875
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "25min",
+          "tag": "div",
+          "role": "spinbutton",
+          "box": [
+            84,
+            44
+          ],
+          "center": [
+            255,
+            885.21875
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Increase brew length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            327,
+            885.21875
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Decrease tea break length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            183,
+            953.21875
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "5min",
+          "tag": "div",
+          "role": "spinbutton",
+          "box": [
+            84,
+            44
+          ],
+          "center": [
+            255,
+            953.21875
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Increase tea break length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            327,
+            953.21875
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Cancel",
+          "tag": "button",
+          "role": "",
+          "box": [
+            156.5,
+            57.8
+          ],
+          "center": [
+            104.25,
+            1054.109375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Use 25/5 min",
+          "tag": "button",
+          "role": "",
+          "box": [
+            156.5,
+            57.8
+          ],
+          "center": [
+            270.75,
+            1054.109375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        }
+      ],
+      "reach": {
+        "checked": 9,
+        "covered": [],
+        "hScroll": 0,
+        "clipped": []
+      }
+    },
+    {
+      "state": "home",
+      "viewport": "320x568",
+      "theme": "light",
+      "suite": "reflow",
+      "axe": {
+        "violations": [],
+        "contrastPasses": 49,
+        "contrastUndecided": 8
+      },
+      "targets": [
+        {
+          "name": "Today",
+          "tag": "a",
+          "role": "",
+          "box": [
+            78,
+            68
+          ],
+          "center": [
+            43,
+            534
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Stats",
+          "tag": "a",
+          "role": "",
+          "box": [
+            78,
+            68
+          ],
+          "center": [
+            121,
+            534
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Nook",
+          "tag": "a",
+          "role": "",
+          "box": [
+            78,
+            68
+          ],
+          "center": [
+            199,
+            534
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Settings",
+          "tag": "a",
+          "role": "",
+          "box": [
+            78,
+            68
+          ],
+          "center": [
+            277,
+            534
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "23days warmstreak. Show details",
+          "tag": "button",
+          "role": "",
+          "box": [
+            114,
+            48
+          ],
+          "center": [
+            73,
+            34
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "2,296leavesShow details",
+          "tag": "button",
+          "role": "",
+          "box": [
+            96,
+            48
+          ],
+          "center": [
+            191,
+            34
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "12Level 12Cozy level 12, 149 leaves to the next.",
+          "tag": "button",
+          "role": "",
+          "box": [
+            52,
+            48
+          ],
+          "center": [
+            278,
+            34
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "What are you brewing? (optional)",
+          "tag": "input",
+          "role": "",
+          "box": [
+            248,
+            52
+          ],
+          "center": [
+            160,
+            532.578125
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Work",
+          "tag": "button",
+          "role": "",
+          "box": [
+            110,
+            44
+          ],
+          "center": [
+            91,
+            594.578125
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Study",
+          "tag": "button",
+          "role": "",
+          "box": [
+            93,
+            44
+          ],
+          "center": [
+            200.5,
+            594.578125
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Read",
+          "tag": "button",
+          "role": "",
+          "box": [
+            86,
+            44
+          ],
+          "center": [
+            79,
+            646.578125
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Create",
+          "tag": "button",
+          "role": "",
+          "box": [
+            97,
+            44
+          ],
+          "center": [
+            178.5,
+            646.578125
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Life",
+          "tag": "button",
+          "role": "",
+          "box": [
+            78,
+            44
+          ],
+          "center": [
+            75,
+            698.578125
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "15 minGentle",
+          "tag": "button",
+          "role": "radio",
+          "box": [
+            57,
+            45.9
+          ],
+          "center": [
+            68.5,
+            806.015625
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "25 minClassic",
+          "tag": "button",
+          "role": "radio",
+          "box": [
+            57,
+            45.9
+          ],
+          "center": [
+            129.5,
+            806.015625
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "50 minDeep",
+          "tag": "button",
+          "role": "radio",
+          "box": [
+            57,
+            45.9
+          ],
+          "center": [
+            190.5,
+            806.015625
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "CustomSet it",
+          "tag": "button",
+          "role": "radio",
+          "box": [
+            57,
+            45.9
+          ],
+          "center": [
+            251.5,
+            806.015625
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Put the kettle on · 25 min",
+          "tag": "button",
+          "role": "",
+          "box": [
+            288,
+            60
+          ],
+          "center": [
+            160,
+            904.953125
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Change brew length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            146,
+            24
+          ],
+          "center": [
+            182,
+            973.953125
+          ],
+          "hit44": false,
+          "hit24": true,
+          "inline": false,
+          "result": "ok24"
+        }
+      ],
+      "reach": {
+        "checked": 19,
+        "covered": [],
+        "hScroll": 0,
+        "clipped": [
+          {
+            "text": "placeholder: e.g. Chapter 3 notes, or leave it blank",
+            "w": [
+              216,
+              283
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "state": "home-custom",
+      "viewport": "320x568",
+      "theme": "light",
+      "suite": "reflow",
+      "axe": {
+        "violations": [],
+        "contrastPasses": 8,
+        "contrastUndecided": 3
+      },
+      "targets": [
+        {
+          "name": "Close",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            286,
+            837.03125
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Decrease brew length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            128,
+            958.21875
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "25min",
+          "tag": "div",
+          "role": "spinbutton",
+          "box": [
+            84,
+            44
+          ],
+          "center": [
+            200,
+            958.21875
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Increase brew length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            272,
+            958.21875
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Decrease tea break length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            128,
+            1028.21875
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "5min",
+          "tag": "div",
+          "role": "spinbutton",
+          "box": [
+            84,
+            44
+          ],
+          "center": [
+            200,
+            1028.21875
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Increase tea break length",
+          "tag": "button",
+          "role": "",
+          "box": [
+            44,
+            44
+          ],
+          "center": [
+            272,
+            1028.21875
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Cancel",
+          "tag": "button",
+          "role": "",
+          "box": [
+            129,
+            57.8
+          ],
+          "center": [
+            90.5,
+            1131.109375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        },
+        {
+          "name": "Use 25/5 min",
+          "tag": "button",
+          "role": "",
+          "box": [
+            129,
+            57.8
+          ],
+          "center": [
+            229.5,
+            1131.109375
+          ],
+          "hit44": true,
+          "hit24": true,
+          "inline": false,
+          "result": "ok44"
+        }
+      ],
+      "reach": {
+        "checked": 9,
+        "covered": [],
+        "hScroll": 0,
+        "clipped": []
+      }
+    },
+    {
+      "state": "home",
+      "viewport": "390x844",
+      "theme": "light",
+      "suite": "text200",
+      "reach": {
+        "checked": 19,
+        "covered": [],
+        "hScroll": 0,
+        "clipped": [
+          {
+            "text": "placeholder: e.g. Chapter 3 notes, or leave it blank",
+            "w": [
+              286,
+              573
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "state": "home-custom",
+      "viewport": "390x844",
+      "theme": "light",
+      "suite": "text200",
+      "reach": {
+        "checked": 9,
+        "covered": [],
+        "hScroll": 0,
+        "clipped": []
+      }
+    },
+    {
+      "state": "home",
+      "viewport": "375x667",
+      "theme": "light",
+      "suite": "text200",
+      "reach": {
+        "checked": 19,
+        "covered": [],
+        "hScroll": 0,
+        "clipped": [
+          {
+            "text": "placeholder: e.g. Chapter 3 notes, or leave it blank",
+            "w": [
+              271,
+              573
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "state": "home-custom",
+      "viewport": "375x667",
+      "theme": "light",
+      "suite": "text200",
+      "reach": {
+        "checked": 9,
+        "covered": [],
+        "hScroll": 0,
+        "clipped": []
+      }
+    },
+    {
+      "state": "home",
+      "viewport": "1440x900",
+      "theme": "light",
+      "suite": "text200",
+      "reach": {
+        "checked": 19,
+        "covered": [],
+        "hScroll": 0,
+        "clipped": [
+          {
+            "text": "placeholder: e.g. Chapter 3 notes, or leave it blank",
+            "w": [
+              519,
+              573
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "state": "home-custom",
+      "viewport": "1440x900",
+      "theme": "light",
+      "suite": "text200",
+      "reach": {
+        "checked": 9,
+        "covered": [],
+        "hScroll": 0,
+        "clipped": [
+          {
+            "text": "Brew length",
+            "w": [
+              1,
+              179
+            ],
+            "h": [
+              1,
+              48
+            ]
+          },
+          {
+            "text": "Tea break length",
+            "w": [
+              1,
+              241
+            ],
+            "h": [
+              1,
+              48
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "state": "home",
+      "viewport": "390x844",
+      "theme": "light",
+      "suite": "motion-full",
+      "facts": [
+        "Skip to content",
+        "Today",
+        "Stats",
+        "Nook",
+        "Settings",
+        "23",
+        "days warm",
+        "streak. Show details",
+        "2,296",
+        "leaves",
+        "Show details",
+        "12",
+        "Level 12",
+        "Cozy level 12, 149 leaves to the next. Show details",
+        "Good afternoon, Robin",
+        "Lovely work so far. One more brew and today’s pot is full.",
+        "Today’s goal",
+        "50 min",
+        "brewed",
+        "10 min",
+        "to go",
+        "Today’s goal · 60 min (a pot)",
+        "What are you brewing? (optional)",
+        "What are you brewing? (optional)",
+        "Work",
+        "Study",
+        "Read",
+        "Create",
+        "Life",
+        "Brew length",
+        "15 min",
+        "Gentle",
+        "25 min",
+        "Classic",
+        "50 min",
+        "Deep",
+        "Custom",
+        "Set it",
+        "Put the kettle on · 25 min",
+        "Then a 5 min tea break. Change brew length",
+        "Today’s recipes",
+        "1 of 3",
+        "Take a full tea break",
+        "+10",
+        "leaves, earned",
+        "1/1",
+        "Earn 80 leaves",
+        "+15",
+        "leaves",
+        "63/80",
+        "Finish 4 full brews",
+        "+20",
+        "leaves",
+        "2/4",
+        "Today’s brews",
+        "2 · 50 min",
+        "9:05 AM",
+        "Roadmap draft",
+        "Work",
+        "25 min",
+        "1:20 PM",
+        "Read brew",
+        "Read",
+        "25 min"
+      ]
+    },
+    {
+      "state": "home-custom",
+      "viewport": "390x844",
+      "theme": "light",
+      "suite": "motion-full",
+      "facts": [
+        "Skip to content",
+        "Today",
+        "Stats",
+        "Nook",
+        "Settings",
+        "23",
+        "days warm",
+        "streak. Show details",
+        "2,296",
+        "leaves",
+        "Show details",
+        "12",
+        "Level 12",
+        "Cozy level 12, 149 leaves to the next. Show details",
+        "Good afternoon, Robin",
+        "Lovely work so far. One more brew and today’s pot is full.",
+        "Today’s goal",
+        "50 min",
+        "brewed",
+        "10 min",
+        "to go",
+        "Today’s goal · 60 min (a pot)",
+        "What are you brewing? (optional)",
+        "What are you brewing? (optional)",
+        "Work",
+        "Study",
+        "Read",
+        "Create",
+        "Life",
+        "Brew length",
+        "15 min",
+        "Gentle",
+        "25 min",
+        "Classic",
+        "50 min",
+        "Deep",
+        "Custom",
+        "Set it",
+        "Put the kettle on · 25 min",
+        "Then a 5 min tea break. Change brew length",
+        "Today’s recipes",
+        "1 of 3",
+        "Take a full tea break",
+        "+10",
+        "leaves, earned",
+        "1/1",
+        "Earn 80 leaves",
+        "+15",
+        "leaves",
+        "63/80",
+        "Finish 4 full brews",
+        "+20",
+        "leaves",
+        "2/4",
+        "Today’s brews",
+        "2 · 50 min",
+        "9:05 AM",
+        "Roadmap draft",
+        "Work",
+        "25 min",
+        "1:20 PM",
+        "Read brew",
+        "Read",
+        "25 min"
+      ]
+    },
+    {
+      "state": "home",
+      "viewport": "390x844",
+      "theme": "light",
+      "suite": "motion-reduce",
+      "facts": [
+        "Skip to content",
+        "Today",
+        "Stats",
+        "Nook",
+        "Settings",
+        "23",
+        "days warm",
+        "streak. Show details",
+        "2,296",
+        "leaves",
+        "Show details",
+        "12",
+        "Level 12",
+        "Cozy level 12, 149 leaves to the next. Show details",
+        "Good afternoon, Robin",
+        "Lovely work so far. One more brew and today’s pot is full.",
+        "Today’s goal",
+        "50 min",
+        "brewed",
+        "10 min",
+        "to go",
+        "Today’s goal · 60 min (a pot)",
+        "What are you brewing? (optional)",
+        "What are you brewing? (optional)",
+        "Work",
+        "Study",
+        "Read",
+        "Create",
+        "Life",
+        "Brew length",
+        "15 min",
+        "Gentle",
+        "25 min",
+        "Classic",
+        "50 min",
+        "Deep",
+        "Custom",
+        "Set it",
+        "Put the kettle on · 25 min",
+        "Then a 5 min tea break. Change brew length",
+        "Today’s recipes",
+        "1 of 3",
+        "Take a full tea break",
+        "+10",
+        "leaves, earned",
+        "1/1",
+        "Earn 80 leaves",
+        "+15",
+        "leaves",
+        "63/80",
+        "Finish 4 full brews",
+        "+20",
+        "leaves",
+        "2/4",
+        "Today’s brews",
+        "2 · 50 min",
+        "9:05 AM",
+        "Roadmap draft",
+        "Work",
+        "25 min",
+        "1:20 PM",
+        "Read brew",
+        "Read",
+        "25 min"
+      ]
+    },
+    {
+      "state": "home-custom",
+      "viewport": "390x844",
+      "theme": "light",
+      "suite": "motion-reduce",
+      "facts": [
+        "Skip to content",
+        "Today",
+        "Stats",
+        "Nook",
+        "Settings",
+        "23",
+        "days warm",
+        "streak. Show details",
+        "2,296",
+        "leaves",
+        "Show details",
+        "12",
+        "Level 12",
+        "Cozy level 12, 149 leaves to the next. Show details",
+        "Good afternoon, Robin",
+        "Lovely work so far. One more brew and today’s pot is full.",
+        "Today’s goal",
+        "50 min",
+        "brewed",
+        "10 min",
+        "to go",
+        "Today’s goal · 60 min (a pot)",
+        "What are you brewing? (optional)",
+        "What are you brewing? (optional)",
+        "Work",
+        "Study",
+        "Read",
+        "Create",
+        "Life",
+        "Brew length",
+        "15 min",
+        "Gentle",
+        "25 min",
+        "Classic",
+        "50 min",
+        "Deep",
+        "Custom",
+        "Set it",
+        "Put the kettle on · 25 min",
+        "Then a 5 min tea break. Change brew length",
+        "Today’s recipes",
+        "1 of 3",
+        "Take a full tea break",
+        "+10",
+        "leaves, earned",
+        "1/1",
+        "Earn 80 leaves",
+        "+15",
+        "leaves",
+        "63/80",
+        "Finish 4 full brews",
+        "+20",
+        "leaves",
+        "2/4",
+        "Today’s brews",
+        "2 · 50 min",
+        "9:05 AM",
+        "Roadmap draft",
+        "Work",
+        "25 min",
+        "1:20 PM",
+        "Read brew",
+        "Read",
+        "25 min"
+      ]
+    },
+    {
+      "state": "home-typing",
+      "viewport": "390x508 (keyboard 336px)",
+      "theme": "light",
+      "suite": "keyboard",
+      "focusedFieldVisible": true,
+      "reach": {
+        "checked": 23,
+        "covered": [
+          {
+            "name": "Skip to content",
+            "by": "off-screen"
+          }
+        ],
+        "hScroll": 0,
+        "clipped": []
+      }
+    },
+    {
+      "state": "welcome-typing",
+      "viewport": "390x508 (keyboard 336px)",
+      "theme": "light",
+      "suite": "keyboard",
+      "focusedFieldVisible": true,
+      "reach": {
+        "checked": 4,
+        "covered": [],
+        "hScroll": 0,
+        "clipped": []
+      }
+    },
+    {
+      "state": "settings-name",
+      "viewport": "390x508 (keyboard 336px)",
+      "theme": "light",
+      "suite": "keyboard",
+      "focusedFieldVisible": true,
+      "reach": {
+        "checked": 53,
+        "covered": [],
+        "hScroll": 0,
+        "clipped": []
+      }
+    },
+    {
+      "state": "home-typing",
+      "viewport": "375x376 (keyboard 291px)",
+      "theme": "light",
+      "suite": "keyboard",
+      "focusedFieldVisible": true,
+      "reach": {
+        "checked": 23,
+        "covered": [
+          {
+            "name": "Skip to content",
+            "by": "off-screen"
+          }
+        ],
+        "hScroll": 0,
+        "clipped": [
+          {
+            "text": "placeholder: e.g. Chapter 3 notes, or leave it blank",
+            "w": [
+              271,
+              283
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "state": "welcome-typing",
+      "viewport": "375x376 (keyboard 291px)",
+      "theme": "light",
+      "suite": "keyboard",
+      "focusedFieldVisible": true,
+      "reach": {
+        "checked": 4,
+        "covered": [],
+        "hScroll": 0,
+        "clipped": []
+      }
+    },
+    {
+      "state": "settings-name",
+      "viewport": "375x376 (keyboard 291px)",
+      "theme": "light",
+      "suite": "keyboard",
+      "focusedFieldVisible": true,
+      "reach": {
+        "checked": 53,
+        "covered": [],
+        "hScroll": 0,
+        "clipped": []
+      }
+    }
+  ]
+}
