@@ -29,6 +29,20 @@ Owner: progress area (`src/progress/**`, `src/screens/stats/**`). Dev port 5186.
 - **Persisted schema v2** with `migrate` (v1 placeholder → replay + `carryOver` so nobody
   loses leaves) and a defensive `merge` (`validate.ts` coerces anything).
 
+## Data safety policies (verified end to end, Product Excellence I03)
+
+Checked by `tests/integrity.spec.ts` (Chromium, disposable profiles) and `src/progress/*.test.ts`.
+
+| Situation | Policy |
+|---|---|
+| Export (Settings › Your data › Export a backup) | A `.json` file with `{app: 'kettle', kind: 'backup', schema: 2, exportedAt, progress, settings}`: every brew, the leaf ledger, leaves, Tea Cozies, badges, recipes, tombstones and settings. Nothing leaves the device except that file (no request is made). |
+| Restore a valid backup (after a reset, or from Welcome › I have a backup) | Brews, ledger, leaves, Tea Cozies, badges, level (and so the Nook's items) and settings come back exactly, and are saved (they survive a reload). On a device that has data, the preview sheet shows the consequence first ("Add this backup?" merges; replace says the current brews will be swapped and can be undone right after). Cancel changes nothing. |
+| Invalid file | Not JSON, another app's file, truncated, a newer schema, > 20 MB, empty, missing progress, damaged sessions: refused before anything changes, with a plain inline reason; storage is byte-for-byte unchanged. |
+| Reset everything | Needs an explicit second step in a sheet that says "It can’t be undone." and offers an export first; Esc and "Keep my data" keep everything. |
+| Storage full / blocked while restoring | All or nothing: refused with "Kettle couldn’t save the backup: this browser’s storage is full. Nothing was changed." This tab goes back exactly as it was; if part of the restore did land in storage, the copy saved before is written back (it fitted then, so it fits again). No undo is offered (nothing to undo), and no second, general "couldn’t save" warning (`checkWrites` in `src/lib/storage.ts`). |
+| Storage full / blocked otherwise | Brews and rewards still complete and live in the tab; a warning offers a backup. See `docs/areas/timer.md`, "Storage full". |
+| "Everything lives on this device." | True: progress and settings are in this browser's localStorage, completion claims in its IndexedDB; a brew, an export and an import make no off-device request. Clearing the browser's site data removes them (hence the export). |
+
 ## Iterations
 
 1. **Data layer + first Stats pass.** Engine, streak/cozies, recipes, badges, levels,

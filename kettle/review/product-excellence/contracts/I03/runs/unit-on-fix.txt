@@ -1,0 +1,17 @@
+# r2 source tree e2d8326b6aa3b15b609eb1c8e76bda5f68b38d53
+# cmd: npx tsc --noEmit --pretty false
+exit 0
+# cmd: npx vitest run
+ Test Files  26 passed (26)
+      Tests  265 passed (265)
+# cmd: npx vitest run src/timer/storageFull.test.ts src/progress/storageFull.test.ts --reporter=verbose
+ ✓ src/progress/storageFull.test.ts > restoring while storage is full > merge: refused with a plain reason; memory, storage and settings unchanged; nothing to undo 38ms
+ ✓ src/progress/storageFull.test.ts > restoring while storage is full > replace: refused with a plain reason; memory, storage and settings unchanged; nothing to undo 6ms
+ ✓ src/progress/storageFull.test.ts > restoring while storage is full > only part of it fits (progress lands, settings don’t) while this tab holds an unsaved brew: storage is put back exactly 6ms
+ ✓ src/progress/storageFull.test.ts > restoring while storage is full > a refused restore does not raise the general “couldn’t save your latest changes” warning (it says why itself) 4ms
+ ✓ src/progress/storageFull.test.ts > restoring while storage is full > with room to save, the same restore goes through (and is saved) 4ms
+ ✓ src/timer/storageFull.test.ts > storage full while brewing > a brew started after storage filled up still completes once and is recorded (not rolled back to the saved idle kettle) 31ms
+ ✓ src/timer/storageFull.test.ts > storage full while brewing > +5 added after storage filled up: the brew completes at its extended end with all 30 minutes 3ms
+ ✓ src/timer/storageFull.test.ts > storage full while brewing > another tab’s successful write still wins: a storage event mirrors it even after this tab failed to save 1ms
+ ✓ src/timer/storageFull.test.ts > safeStorage write failures > never throws, reports each failure with whether storage is full, and clears the flag after a good write 1ms
+      Tests  9 passed (9)

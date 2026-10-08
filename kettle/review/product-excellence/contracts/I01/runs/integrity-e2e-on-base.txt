@@ -1,0 +1,139 @@
+Running 25 tests using 1 worker
+  ✓   1 [chromium] › tests/integrity.spec.ts:217:3 › I01 session time survives reload, suspension and late return › pause → reload → resume: the paused time is kept and the deadline moves by exactly the pause (11.1s)
+  ✓   2 [chromium] › tests/integrity.spec.ts:244:3 › I01 session time survives reload, suspension and late return › +5 → reload: the extension, its deadline and the gauge segment survive; completion records the full 30 min once (8.3s)
+  ✓   3 [chromium] › tests/integrity.spec.ts:267:3 › I01 session time survives reload, suspension and late return › suspended tab (a real Page Lifecycle freeze) across the end: one completion right after resume, at the real end, "while away" summary (18.5s)
+  ✓   4 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (18.6s)
+  ✓   5 [chromium] › tests/integrity.spec.ts:340:3 › I01 session time survives reload, suspension and late return › late return: an extended brew that ended 2 h ago while the app was closed completes once, at its real end, with the right minutes (5.2s)
+  ✓   6 [chromium] › tests/integrity.spec.ts:373:3 › I01 session time survives reload, suspension and late return › late return to a paused brew: nothing completes; the same time is waiting (2.0s)
+  ✓   7 [chromium] › tests/integrity.spec.ts:395:3 › I01 exactly once › repeated finish / tick / end / pause at 0:00 and a double-clicked Tea time: one record, one grant, one break (8.2s)
+  ✓   8 [chromium] › tests/integrity.spec.ts:430:3 › I01 exactly once › reload during the whistle and again on the summary: one record, rewards granted once, the summary still there (6.6s)
+  ✓   9 [chromium] › tests/integrity.spec.ts:459:3 › I01 exactly once › two tabs on one profile: one record and one grant; both show the same summary; Tea time in one moves both (12.7s)
+  ✓  10 [chromium] › tests/integrity.spec.ts:502:3 › I02 End, dismissal and task disposition › dismissing the End sheet (Esc, backdrop, Keep brewing) or leaving the screen never stops the brew (10.4s)
+  ✓  11 [chromium] › tests/integrity.spec.ts:543:3 › I02 End, dismissal and task disposition › End early after 12 active minutes (with a pause): 12 minutes saved as an unfinished brew, 12 leaves, no full-brew bonus, task kept (5.1s)
+  ✓  12 [chromium] › tests/integrity.spec.ts:575:3 › I02 End, dismissal and task disposition › End within the first minute: the sheet says nothing will be saved, and nothing is (3.3s)
+  ✓  13 [chromium] › tests/integrity.spec.ts:586:3 › I02 End, dismissal and task disposition › Done / Carry forward are reversible; the carried task returns on Home; editing it and Mark done → Undo never add a focus record (10.6s)
+  ✓  14 [chromium] › tests/integrity.spec.ts:637:3 › I02 End, dismissal and task disposition › Skip break, Next brew and That’s all for now do what they say, and never record a skipped break (18.3s)
+  ✓  15 [chromium] › tests/integrity.spec.ts:768:3 › I03 data safety › export → reset (explicit confirmation) → import restores brews, settings and every reward exactly (15.1s)
+  ✓  16 [chromium] › tests/integrity.spec.ts:827:3 › I03 data safety › invalid files change nothing and say why (not JSON, another app, truncated, newer version, huge, empty, damaged) (10.9s)
+  ✘  17 [chromium] › tests/integrity.spec.ts:867:3 › I03 data safety › storage full: a brew that completes still reaches its summary, once; saved data stays intact; a backup carries the brew; making room saves it (19.9s)
+  ✘  18 [chromium] › tests/integrity.spec.ts:903:3 › I03 data safety › storage full: a restore that cannot be saved is refused with a plain reason and changes nothing (16.3s)
+  ✓  19 [chromium] › tests/integrity.spec.ts:929:3 › I03 data safety › “Everything lives on this device”: a brew, an export and an import send nothing anywhere (10.3s)
+  ✓  20 [chromium] › tests/integrity.spec.ts:980:5 › I03 storage-full warning never covers a control (phone 390×844) › while brewing (running and paused): Add 5, Pause, Resume and End stay tappable; End opens its sheet, never a download (10.1s)
+  ✘  21 [chromium] › tests/integrity.spec.ts:1015:5 › I03 storage-full warning never covers a control (phone 390×844) › a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after (23.7s)
+  ✓  22 [chromium] › tests/integrity.spec.ts:980:5 › I03 storage-full warning never covers a control (phone 375×667) › while brewing (running and paused): Add 5, Pause, Resume and End stay tappable; End opens its sheet, never a download (9.1s)
+  ✘  23 [chromium] › tests/integrity.spec.ts:1015:5 › I03 storage-full warning never covers a control (phone 375×667) › a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after (23.4s)
+  ✓  24 [chromium] › tests/integrity.spec.ts:980:5 › I03 storage-full warning never covers a control (desktop 1440×900) › while brewing (running and paused): Add 5, Pause, Resume and End stay tappable; End opens its sheet, never a download (9.9s)
+  ✘  25 [chromium] › tests/integrity.spec.ts:1015:5 › I03 storage-full warning never covers a control (desktop 1440×900) › a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after (14.9s)
+  1) [chromium] › tests/integrity.spec.ts:867:3 › I03 data safety › storage full: a brew that completes still reaches its summary, once; saved data stays intact; a backup carries the brew; making room saves it 
+    Error: expect(received).toBe(expected) // Object.is equality
+    Expected: "#/done"
+    Received: "#/"
+    Call Log:
+    - Timeout 15000ms exceeded while waiting on the predicate
+      872 |     await toEnd(page, 50);
+      873 |     // Not lost at 0:00: the whistle, then the summary of this brew.
+    > 874 |     await expect.poll(() => hash(page), { timeout: 15_000 }).toBe('#/done');
+          |     ^
+      875 |     await expect(summaryHeading(page)).toHaveText('25 minutes brewed');
+      876 |     expect(await timer(page)).toMatchObject({ status: 'idle', lastEnded: { sessionId, reason: 'complete' } });
+      877 |     // What was saved before is intact and readable; the brew lives in this tab only, exactly once.
+        at <scratch>/base/kettle/tests/integrity.spec.ts:874:5
+    Error Context: ../../pw-base/integrity-I03-data-safety--3207e-e-brew-making-room-saves-it-chromium/error-context.md
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../pw-base/integrity-I03-data-safety--3207e-e-brew-making-room-saves-it-chromium/trace.zip
+    Usage:
+        npx playwright show-trace ../../pw-base/integrity-I03-data-safety--3207e-e-brew-making-room-saves-it-chromium/trace.zip
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+  2) [chromium] › tests/integrity.spec.ts:903:3 › I03 data safety › storage full: a restore that cannot be saved is refused with a plain reason and changes nothing 
+    Error: expect(locator).toHaveText(expected) failed
+    Locator: getByRole('alert')
+    Expected: "Kettle couldn’t save the backup: this browser’s storage is full. Nothing was changed."
+    Timeout: 10000ms
+    Error: element(s) not found
+    Call log:
+      - Expect "toHaveText" with timeout 10000ms
+      - waiting for getByRole('alert')
+      916 |     const sheet = page.getByRole('dialog', { name: 'Add this backup?' });
+      917 |     await sheet.getByRole('button', { name: 'Add' }).click();
+    > 918 |     await expect(page.getByRole('alert')).toHaveText('Kettle couldn’t save the backup: this browser’s storage is full. Nothing was changed.');
+          |                                           ^
+      919 |     expect((await memory(page)).sessions.length).toBe(memBefore);
+      920 |     expect((await memory(page)).sessions.some((r) => r.id === 's_full_import')).toBe(false);
+      921 |     expect(await rawData(page)).toEqual(raw0);
+        at <scratch>/base/kettle/tests/integrity.spec.ts:918:43
+    Error Context: ../../pw-base/integrity-I03-data-safety--ea847--reason-and-changes-nothing-chromium/error-context.md
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../pw-base/integrity-I03-data-safety--ea847--reason-and-changes-nothing-chromium/trace.zip
+    Usage:
+        npx playwright show-trace ../../pw-base/integrity-I03-data-safety--ea847--reason-and-changes-nothing-chromium/trace.zip
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+  3) [chromium] › tests/integrity.spec.ts:1015:5 › I03 storage-full warning never covers a control (phone 390×844) › a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after 
+    Error: expect(received).toBe(expected) // Object.is equality
+    Expected: "#/done"
+    Received: "#/"
+    Call Log:
+    - Timeout 20000ms exceeded while waiting on the predicate
+      1029 |       });
+      1030 |       if (!vp.touch) await expect(saveWarning(page)).toBeVisible();
+    > 1031 |       await expect.poll(() => hash(page), { timeout: 20_000 }).toBe('#/done');
+           |       ^
+      1032 |       await expect(summaryHeading(page)).toHaveText('25 minutes brewed');
+      1033 |       for (let i = 0; i < 5; i++) {
+      1034 |         await expect(saveWarning(page)).toHaveCount(0);
+        at <scratch>/base/kettle/tests/integrity.spec.ts:1031:7
+    Error Context: ../../pw-base/integrity-I03-storage-full-cc4d0-appable-it-comes-back-after-chromium/error-context.md
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../pw-base/integrity-I03-storage-full-cc4d0-appable-it-comes-back-after-chromium/trace.zip
+    Usage:
+        npx playwright show-trace ../../pw-base/integrity-I03-storage-full-cc4d0-appable-it-comes-back-after-chromium/trace.zip
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+  4) [chromium] › tests/integrity.spec.ts:1015:5 › I03 storage-full warning never covers a control (phone 375×667) › a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after 
+    Error: expect(received).toBe(expected) // Object.is equality
+    Expected: "#/done"
+    Received: "#/"
+    Call Log:
+    - Timeout 20000ms exceeded while waiting on the predicate
+      1029 |       });
+      1030 |       if (!vp.touch) await expect(saveWarning(page)).toBeVisible();
+    > 1031 |       await expect.poll(() => hash(page), { timeout: 20_000 }).toBe('#/done');
+           |       ^
+      1032 |       await expect(summaryHeading(page)).toHaveText('25 minutes brewed');
+      1033 |       for (let i = 0; i < 5; i++) {
+      1034 |         await expect(saveWarning(page)).toHaveCount(0);
+        at <scratch>/base/kettle/tests/integrity.spec.ts:1031:7
+    Error Context: ../../pw-base/integrity-I03-storage-full-2163e-appable-it-comes-back-after-chromium/error-context.md
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../pw-base/integrity-I03-storage-full-2163e-appable-it-comes-back-after-chromium/trace.zip
+    Usage:
+        npx playwright show-trace ../../pw-base/integrity-I03-storage-full-2163e-appable-it-comes-back-after-chromium/trace.zip
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+  5) [chromium] › tests/integrity.spec.ts:1015:5 › I03 storage-full warning never covers a control (desktop 1440×900) › a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after 
+    Error: expect(locator).toBeVisible() failed
+    Locator: getByRole('status', { name: 'Notifications' }).getByText(/storage is full\. Save a backup to keep them\./)
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for getByRole('status', { name: 'Notifications' }).getByText(/storage is full\. Save a backup to keep them\./)
+      1028 |         (window as any).__kettle.timer.getState().resume();
+      1029 |       });
+    > 1030 |       if (!vp.touch) await expect(saveWarning(page)).toBeVisible();
+           |                                                      ^
+      1031 |       await expect.poll(() => hash(page), { timeout: 20_000 }).toBe('#/done');
+      1032 |       await expect(summaryHeading(page)).toHaveText('25 minutes brewed');
+      1033 |       for (let i = 0; i < 5; i++) {
+        at <scratch>/base/kettle/tests/integrity.spec.ts:1030:54
+    Error Context: ../../pw-base/integrity-I03-storage-full-65e96-appable-it-comes-back-after-chromium/error-context.md
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../pw-base/integrity-I03-storage-full-65e96-appable-it-comes-back-after-chromium/trace.zip
+    Usage:
+        npx playwright show-trace ../../pw-base/integrity-I03-storage-full-65e96-appable-it-comes-back-after-chromium/trace.zip
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+  5 failed
+    [chromium] › tests/integrity.spec.ts:867:3 › I03 data safety › storage full: a brew that completes still reaches its summary, once; saved data stays intact; a backup carries the brew; making room saves it 
+    [chromium] › tests/integrity.spec.ts:903:3 › I03 data safety › storage full: a restore that cannot be saved is refused with a plain reason and changes nothing 
+    [chromium] › tests/integrity.spec.ts:1015:5 › I03 storage-full warning never covers a control (phone 390×844) › a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after 
+    [chromium] › tests/integrity.spec.ts:1015:5 › I03 storage-full warning never covers a control (phone 375×667) › a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after 
+    [chromium] › tests/integrity.spec.ts:1015:5 › I03 storage-full warning never covers a control (desktop 1440×900) › a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after 
+  20 passed (5.2m)
