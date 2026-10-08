@@ -24,7 +24,7 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 | I01 Reliable time, exactly-once completion | P0 | M1 | **APPROVED r2 on `pe/m1@a6ebe00`** | passes without change; awaiting Wave 1 integration |
 | I02 Recoverable End and task disposition | P0 | M1 | **APPROVED r2 on `a6ebe00`** | passes without change; awaiting integration |
 | I03 Data safety, truthful storage consequences | P0 | M1 | **APPROVED r2 on `a6ebe00`** (PARTLY BLOCKED: real Safari/Firefox/Android quota, real OS suspension) | r1 REJECT (A, B) fixed and re-verified with real taps; awaiting integration |
-| I04 Access and short-screen reachability | P0 | M2 | IN PROGRESS | maker M2 running; gate: retest after all UI work |
+| I04 Access and short-screen reachability | P0 | M2 | **APPROVED r1 on `pe/m2@2becb78`**, integrated | gate: retest after all UI work; sky "Change brew length" link judged acceptable by the checker |
 | I05 Real whistle, mute, ambience expectations | P0 | M2 | APPROVED r1 on `pe/m2@2becb78` (PARTLY BLOCKED: real-device audio) | real-device cases BLOCKED in this environment |
 | I06 Crisp approved Chai | P1 | M4 | NOT STARTED | |
 | I07 Effort → leaves → level → Nook, once | P1 | M3 | NOT STARTED | |
@@ -34,7 +34,7 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 | I11 Consistent settings and controls | P2 | M5 | NOT STARTED | conditional |
 | I12 Truthful history and Stats | P2 | M5 | NOT STARTED | conditional |
 | I13 Supportive return | P2 | M3 | NOT STARTED | conditional |
-| I14 Measured responsiveness | P2 | M2 | IN PROGRESS (baseline) | baseline before any art/motion change; real-device BLOCKED |
+| I14 Measured responsiveness | P2 | M2 | **Baseline + measured fix APPROVED r1 on `2becb78`**, integrated | phone whistle → summary CLS 0.50 → 0.003; real-device BLOCKED | baseline before any art/motion change; real-device BLOCKED |
 | I15 Bounded comprehension check | P3 | M3 | NOT STARTED | only if I07/I08 comprehension stays uncertain |
 
 ## Waves and file ownership
@@ -94,8 +94,20 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
   the new sky-blue "Change brew length" link (F10) weakens the orange-focus / blue-rest colour semantics
   (REFERENCE → BEFORE → AFTER); the orchestrator does not decide it.
 
+- Checker r2 APPROVED M1 `a6ebe00` (I01–I03); Checker r1 APPROVED M2 `2becb78` (I04, I05, I14; the sky
+  "Change brew length" link was explicitly judged acceptable: it reuses Home's existing link style, orange start
+  stays the only CTA, blue-for-rest lives on Tea time and the break clock).
+- Wave 1 merged into the integration branch: `7da58f1` (M1), `0d58c5e` (M2). Clean merge.
+- Wave 1 integration regression (`integration/wave1/REGRESSION.md`): tsc clean, vitest 265/265, timer/pwa
+  29 passed / 2 skipped, chromium e2e 41/42 — **one interaction failure**: the I03 warning shows on the session
+  screen after Next brew at 375×667 (M2's toast lift × M1's hold logic). Integration changed approved behavior →
+  returned to M1 on a new branch `pe/w1-fix` (worktree `/home/user/wt/w1fix`, from `455b6c6`); a fresh Checker
+  will review I03 (+ the toast part of I04) on that exact revision before it merges.
+- Integrated-revision captures (all 22 states × 6 configs + reduced motion) running into
+  `integration/wave1/captures/` — the BEFORE set for Wave 2.
+
 ## Exact next action
 
-Wait for M1 / M2 READY FOR REVIEW → launch an independent Checker per submission → APPROVE/REJECT loop →
-merge approved branches into the integration branch → regression → write Wave 2 briefs (M3: I08, I07, I09;
-M4: I06) from the integrated revision.
+M1 fixes the Wave 1 integration interaction on `pe/w1-fix` → fresh Checker on that exact commit (I03 + I04 toast
+behavior) → merge → re-run the chromium e2e gate → launch Wave 2: M3 (I08, I07, I09) and M4 (I06) from the clean
+integrated revision with the finalized briefs.
