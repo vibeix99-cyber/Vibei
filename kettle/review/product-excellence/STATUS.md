@@ -106,6 +106,13 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - Integrated-revision captures (all 22 states × 6 configs + reduced motion) running into
   `integration/wave1/captures/` — the BEFORE set for Wave 2.
 
+- Integrated-revision captures inspected by the orchestrator: second Wave 1 integration defect found — Today's
+  status bar wraps at 375×667, 100% text, both themes (M2 F6); returned to M2 on `pe/w1-fix-m2`
+  (`/home/user/wt/w1fix-m2`). A fifth usage-limit stop (resets 13:30 UTC) interrupted both fixes.
+- 13:31 UTC recovery: M1's fix preserved as `pe/w1-fix@5ebb01c` (WIP), M2's as `pe/w1-fix-m2@3bc0c66` (code) +
+  `d3f4e06` (WIP evidence). Both resumed with context intact. Each fix gets a fresh independent Checker on its
+  exact commit; Wave 1 is clean only after both merge and the full regression + affected captures pass.
+
 ## Exact next action
 
 M1 fixes the Wave 1 integration interaction on `pe/w1-fix` → fresh Checker on that exact commit (I03 + I04 toast
