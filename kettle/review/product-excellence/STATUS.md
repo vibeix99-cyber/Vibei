@@ -21,9 +21,9 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 
 | ID | Pri | Owner | State | Evidence / verdict |
 |---|---|---|---|---|
-| I01 Reliable time, exactly-once completion | P0 | M1 | APPROVED r1 on `6d5969e` (must be re-confirmed on r2) | passes without change |
-| I02 Recoverable End and task disposition | P0 | M1 | APPROVED r1 on `6d5969e` (must be re-confirmed on r2) | passes without change |
-| I03 Data safety, truthful storage consequences | P0 | M1 | REJECTED r1 → IN REVISION | `6d5969e` Checker r1 REJECT: (A) warning visible at 0:00 stays over Tea time; (B) on phones it covers Add 5/Pause/Resume/End and Save backup sits over End. r2 in progress (`pe/m1@ade1195` WIP) |
+| I01 Reliable time, exactly-once completion | P0 | M1 | **APPROVED r2 on `pe/m1@a6ebe00`** | passes without change; awaiting Wave 1 integration |
+| I02 Recoverable End and task disposition | P0 | M1 | **APPROVED r2 on `a6ebe00`** | passes without change; awaiting integration |
+| I03 Data safety, truthful storage consequences | P0 | M1 | **APPROVED r2 on `a6ebe00`** (PARTLY BLOCKED: real Safari/Firefox/Android quota, real OS suspension) | r1 REJECT (A, B) fixed and re-verified with real taps; awaiting integration |
 | I04 Access and short-screen reachability | P0 | M2 | IN PROGRESS | maker M2 running; gate: retest after all UI work |
 | I05 Real whistle, mute, ambience expectations | P0 | M2 | APPROVED r1 on `pe/m2@2becb78` (PARTLY BLOCKED: real-device audio) | real-device cases BLOCKED in this environment |
 | I06 Crisp approved Chai | P1 | M4 | NOT STARTED | |
