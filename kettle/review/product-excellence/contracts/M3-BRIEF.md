@@ -15,6 +15,26 @@ the earned thing lives. Earned objects must persist and always be recognizable, 
 - BEFORE captures: `/home/user/Vibei/kettle/review/product-excellence/baseline/*/` — states 12 (welcome), 13 (first
   brew), 14 (first-brew summary), 07/08 (routine summary), 11/11b (unlock), 17/18 (Nook early/earned).
 
+
+## Starting point (finalized against the integrated Wave 1 revision)
+
+- Base: the integration branch at the Wave 1 integration commit (`0d58c5e` = 8f1044a + approved M1 `a6ebe00`
+  + approved M2 `2becb78`). Your worktree starts there.
+- **BEFORE for your AFTER comparisons** is the integrated revision, captured in
+  `/home/user/Vibei/kettle/review/product-excellence/integration/wave1/captures/<config>/` (same 22 states,
+  6 configs). The original 8f1044a baseline (`review/product-excellence/baseline/`) stays the pre-rebuild record.
+- Approved Wave 1 changes you must preserve (they are approved contracts; changing their behavior needs re-review):
+  - M1 (I01–I03): storage-failure warning toast logic in `src/app/flow.ts` (held while whistle/summary/break or
+    while it would overlap session controls/docked buttons); storage-full safety in `src/lib/storage.ts`,
+    `src/timer/sync.ts`, `src/progress/portability.ts`. Integrity spec: `tests/integrity.spec.ts`.
+  - M2 (I04/I05/I14): summary sheet layout-shift fix (`Summary.tsx`/`.module.css`, CLS 0.5 → 0 — keep it 0);
+    Home "Change brew length" link beside "Then a 5 min tea break." (checker judged the sky link colour
+    acceptable; keep it); StatusBar wrapping at 200% text; toasts float above elements marked `data-toast-above`
+    (session controls, Tea time/Skip footer, Home docked start); Nook hint not sticky at desktop; disabled-slider
+    contrast; focus rings; Welcome step copy about notifications. Regression gates: `tests/a11y.spec.ts`,
+    `tests/whistle.spec.ts`, `review/product-excellence/tools/a11y-audit.mjs`, `review/product-excellence/tools/perf.mjs`.
+- Run `tests/a11y.spec.ts` and the integrity spec before submitting if you touched any screen they cover.
+
 ## I08 — Plain purpose and immediate first useful brew (P1)
 
 Current: Welcome says "Hi, I'm Chai. Let's start small: one 15-minute brew. I'll keep you company." The tea

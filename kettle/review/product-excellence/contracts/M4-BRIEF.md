@@ -12,12 +12,34 @@ whistle). Verify first; change only what evidence shows.
 - **File ownership:** `src/art/**`, `art-src/chai/**` (documentation only), `src/screens/focus/stage/**` (Chai
   placement/loading only), new tests/tools. Do not touch timer/progress/data, UI kit, or other screens.
 
+
+## Starting point (finalized against the integrated Wave 1 revision)
+
+- Base: the integration branch at the Wave 1 integration commit (`0d58c5e` = 8f1044a + approved M1 `a6ebe00`
+  + approved M2 `2becb78`). Your worktree starts there.
+- **BEFORE for your AFTER comparisons** is the integrated revision, captured in
+  `/home/user/Vibei/kettle/review/product-excellence/integration/wave1/captures/<config>/` (same 22 states,
+  6 configs). The original 8f1044a baseline (`review/product-excellence/baseline/`) stays the pre-rebuild record.
+- Approved Wave 1 changes you must preserve (they are approved contracts; changing their behavior needs re-review):
+  - M1 (I01–I03): storage-failure warning toast logic in `src/app/flow.ts` (held while whistle/summary/break or
+    while it would overlap session controls/docked buttons); storage-full safety in `src/lib/storage.ts`,
+    `src/timer/sync.ts`, `src/progress/portability.ts`. Integrity spec: `tests/integrity.spec.ts`.
+  - M2 (I04/I05/I14): summary sheet layout-shift fix (`Summary.tsx`/`.module.css`, CLS 0.5 → 0 — keep it 0);
+    Home "Change brew length" link beside "Then a 5 min tea break." (checker judged the sky link colour
+    acceptable; keep it); StatusBar wrapping at 200% text; toasts float above elements marked `data-toast-above`
+    (session controls, Tea time/Skip footer, Home docked start); Nook hint not sticky at desktop; disabled-slider
+    contrast; focus rings; Welcome step copy about notifications. Regression gates: `tests/a11y.spec.ts`,
+    `tests/whistle.spec.ts`, `review/product-excellence/tools/a11y-audit.mjs`, `review/product-excellence/tools/perf.mjs`.
+- Run `tests/a11y.spec.ts` and the integrity spec before submitting if you touched any screen they cover.
+
 ## Facts established by the orchestrator (verify, don't trust)
 
 - Approved masters (`art-src/chai/*.png`) are the sheet's native pixels: 288–323 × 300–496 px. No higher-resolution
   approved masters exist anywhere in the repo or the package.
 - The README's table: phone Focus 2× = downscale (sharp); phone 3× = 1.09× upscale; **desktop/tablet Focus at 2×
-  = 1.19× upscale ("slightly soft up close")**; Home/Welcome/summary ≤ 408 device px (sharp).
+  = 1.19× upscale ("slightly soft up close")**; Home/Welcome/summary ≤ 408 device px (sharp). M2's measured table
+  (`review/product-excellence/perf/BASELINE.md`, "Chai: intrinsic vs rendered size", checker-approved) confirms:
+  stage Chai (reading/cheering/sipping) at 1440×900 DPR 2 = 0.84 source px per device px; ≥1.38 everywhere else.
 - The stage (`src/screens/focus/stage/Stage.tsx`) renders one `<PaintedChai pose={chai}>`; the whistle switches
   `reading → cheering`, the break `→ sipping`, break's over `→ stretch`. Nothing preloads/decodes those poses
   before they are needed (`decoding="async"`), so a cold cache could blank Chai for a frame at the whistle.
