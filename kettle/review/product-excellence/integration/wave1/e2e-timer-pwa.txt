@@ -1,0 +1,40 @@
+[2m[WebServer] [22m[33m(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[2m[WebServer] [22m  - import "../vite.config" without a file extension (tests/e2e.vite.config.ts:6:18). Add the file extension
+[2m[WebServer] [22mSet `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.[39m
+
+Running 31 tests using 1 worker
+
+  ✓   1 [timer-harness] › tests/timer.spec.ts:74:3 › timer reliability › start → reload mid-session → same session, same end, correct remaining; paused survives reload (4.2s)
+  ✓   2 [timer-harness] › tests/timer.spec.ts:111:3 › timer reliability › a phase that ended while the app was closed (3 h ago) completes once, at its real end, whileAway (2.5s)
+  ✓   3 [timer-harness] › tests/timer.spec.ts:143:3 › timer reliability › reload exactly at 0:00 records the session once (4.3s)
+  ✓   4 [timer-harness] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (4.1s)
+  ✓   5 [timer-harness] › tests/timer.spec.ts:183:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (3.8s)
+  ✓   6 [timer-harness] › tests/timer.spec.ts:214:3 › timer reliability › frozen tab (OS suspended it) across the end completes once on resume, at the real end (4.9s)
+  ✓   7 [timer-harness] › tests/timer.spec.ts:232:3 › device integrations › wake lock: held while running and visible; released on pause, idle and setting off; re-acquired on return (662ms)
+  ✓   8 [timer-harness] › tests/timer.spec.ts:281:3 › device integrations › media session: metadata + play/pause handlers while a phase runs, cleared when idle (588ms)
+  ✓   9 [timer-harness] › tests/timer.spec.ts:294:3 › keyboard shortcuts infra › Space toggles — but never while typing, on a focused button, or on key repeat; ? toggles help, not over a dialog (980ms)
+  ✓  10 [timer-harness] › tests/timer.spec.ts:339:3 › multiple tabs › two tabs show the same session live and exactly one records it (7.5s)
+  ✓  11 [timer-harness] › tests/timer.spec.ts:377:3 › multiple tabs › two tabs pressing start at the same moment converge on one session (7.5s)
+  ✓  12 [timer-harness] › tests/timer.spec.ts:399:3 › multiple tabs › closing the leader tab mid-session hands over; the other tab completes it once (5.2s)
+  ✓  13 [timer-harness] › tests/timer.spec.ts:416:3 › multiple tabs › frozen leader: the other tab takes over at the end; the leader waking up later does not double-count (5.0s)
+  ✓  14 [timer-harness] › tests/timer.spec.ts:438:3 › rendering budget › useRemaining re-renders about once per displayed second (3.7s)
+  ✓  15 [timer-app] › tests/timer.spec.ts:74:3 › timer reliability › start → reload mid-session → same session, same end, correct remaining; paused survives reload (5.7s)
+  ✓  16 [timer-app] › tests/timer.spec.ts:111:3 › timer reliability › a phase that ended while the app was closed (3 h ago) completes once, at its real end, whileAway (4.6s)
+  ✓  17 [timer-app] › tests/timer.spec.ts:143:3 › timer reliability › reload exactly at 0:00 records the session once (8.0s)
+  ✓  18 [timer-app] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (8.6s)
+  ✓  19 [timer-app] › tests/timer.spec.ts:183:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (6.2s)
+  ✓  20 [timer-app] › tests/timer.spec.ts:214:3 › timer reliability › frozen tab (OS suspended it) across the end completes once on resume, at the real end (7.9s)
+  ✓  21 [timer-app] › tests/timer.spec.ts:232:3 › device integrations › wake lock: held while running and visible; released on pause, idle and setting off; re-acquired on return (2.3s)
+  ✓  22 [timer-app] › tests/timer.spec.ts:281:3 › device integrations › media session: metadata + play/pause handlers while a phase runs, cleared when idle (2.7s)
+  -  23 [timer-app] › tests/timer.spec.ts:294:3 › keyboard shortcuts infra › Space toggles — but never while typing, on a focused button, or on key repeat; ? toggles help, not over a dialog
+  ✓  24 [timer-app] › tests/timer.spec.ts:339:3 › multiple tabs › two tabs show the same session live and exactly one records it (13.6s)
+  ✓  25 [timer-app] › tests/timer.spec.ts:377:3 › multiple tabs › two tabs pressing start at the same moment converge on one session (14.4s)
+  ✓  26 [timer-app] › tests/timer.spec.ts:399:3 › multiple tabs › closing the leader tab mid-session hands over; the other tab completes it once (9.7s)
+  ✓  27 [timer-app] › tests/timer.spec.ts:416:3 › multiple tabs › frozen leader: the other tab takes over at the end; the leader waking up later does not double-count (8.3s)
+  -  28 [timer-app] › tests/timer.spec.ts:438:3 › rendering budget › useRemaining re-renders about once per displayed second
+  ✓  29 [pwa] › tests/pwa.spec.ts:48:1 › manifest is installable: name, colors, standalone, icons that exist (100ms)
+  ✓  30 [pwa] › tests/pwa.spec.ts:59:1 › precaches the shell, fonts, 3D chunk and tick worker; boots and times a brew offline (6.0s)
+  ✓  31 [pwa] › tests/pwa.spec.ts:85:1 › update: new version waits for the user (no reload mid-brew), then applies and the brew carries on (4.5s)
+
+  2 skipped
+  29 passed (2.9m)

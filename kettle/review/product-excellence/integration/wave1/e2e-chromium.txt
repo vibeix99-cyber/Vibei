@@ -40,3 +40,51 @@ Running 42 tests using 1 worker
   ✓  34 [chromium] › tests/integrity.spec.ts:1015:5 › I03 storage-full warning never covers a control (desktop 1440×900) › a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after (15.1s)
   ✓  35 [chromium] › tests/whistle.spec.ts:45:1 › no audio context before the first gesture; the first tap unlocks it (3.4s)
   ✓  36 [chromium] › tests/whistle.spec.ts:53:1 › the whistle sounds once at completion, and not again after a reload of the summary (11.1s)
+  ✓  37 [chromium] › tests/whistle.spec.ts:76:1 › late return: one whistle, the while-away summary, nothing more on later visibility changes (6.8s)
+  ✓  38 [chromium] › tests/whistle.spec.ts:100:1 › another tab in front (page hidden): the whistle is still scheduled once (11.4s)
+  ✓  39 [chromium] › tests/whistle.spec.ts:120:1 › muted: no sound at all, the visual whistle and summary remain (8.0s)
+  ✓  40 [chromium] › tests/whistle.spec.ts:165:1 › notification permission is asked only from the Nudges switch: not on load, not before or after the first brew (6.9s)
+  ✓  41 [chromium] › tests/whistle.spec.ts:183:1 › denied: Settings says so, shows the browser path, and turning it on later works (3.2s)
+  ✓  42 [chromium] › tests/whistle.spec.ts:208:1 › unsupported: the switch is off and disabled, and says what happens instead (2.2s)
+
+
+  1) [chromium] › tests/integrity.spec.ts:1015:5 › I03 storage-full warning never covers a control (phone 375×667) › a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  getByRole('status', { name: 'Notifications' }).getByText(/storage is full\. Save a backup to keep them\./)
+    Expected: [32m0[39m
+    Received: [31m1[39m
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toHaveCount" with timeout 10000ms[22m
+    [2m  - waiting for getByRole('status', { name: 'Notifications' }).getByText(/storage is full\. Save a backup to keep them\./)[22m
+    [2m    14 × locator resolved to 1 element[22m
+    [2m       - unexpected value "1"[22m
+
+
+      1049 |         await expect.poll(() => hash(page)).toBe('#/focus');
+      1050 |         for (let i = 0; i < 4; i++) {
+    > 1051 |           await expect(saveWarning(page)).toHaveCount(0);
+           |                                           ^
+      1052 |           for (const c of CONTROLS) expect(await hitOk(page, c), `${c} next brew @${i}`).toBe(true);
+      1053 |           await page.waitForTimeout(250);
+      1054 |         }
+        at /home/user/Vibei/kettle/tests/integrity.spec.ts:1051:43
+
+    Error Context: test-results/integrity-I03-storage-full-2163e-appable-it-comes-back-after-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/integrity-I03-storage-full-2163e-appable-it-comes-back-after-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/integrity-I03-storage-full-2163e-appable-it-comes-back-after-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  Slow test file: [chromium] › tests/a11y.spec.ts (6.2m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  1 failed
+    [chromium] › tests/integrity.spec.ts:1015:5 › I03 storage-full warning never covers a control (phone 375×667) › a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after 
+  41 passed (11.4m)
