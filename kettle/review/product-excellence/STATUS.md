@@ -25,10 +25,8 @@ pushed. **App code on it = `0d58c5e`** (Wave 1 merge: M1 `a6ebe00` + M2 `2becb78
 | `/home/user/Vibei` | `claude/wizardly-galileo-uy89d9` | integration | clean, pushed |
 | `/home/user/wt/m1` | `pe/m1@a6ebe00` | M1 Wave 1 | APPROVED r2, merged (`7da58f1`) — idle |
 | `/home/user/wt/m2` | `pe/m2@2becb78` | M2 Wave 1 | APPROVED r1, merged (`0d58c5e`) — idle |
-| `/home/user/wt/w1fix` | `pe/w1-fix@3f00b57` | **M1 integration fix** (I03 × I04) | **READY FOR REVIEW** (submitted by M1 on top of WIP `1351c99`; src tree `3c58bf9` unchanged) |
+| `/home/user/wt/w1fix` | `pe/w1-fix@3f00b57` | **M1 integration fix** (I03 × I04) | **APPROVED r1** — held unmerged until M2's fix is approved (any change voids the approval) |
 | `/home/user/wt/w1fix-m2` | `pe/w1-fix-m2@c9520db` | **M2 integration fix** (I04 status bar) | **REJECTED r1** → M2 correcting D1/D2 (r2 not yet submitted) |
-| `/home/user/wt/chk-w1m1` | detached `3f00b57` | fresh Checker for M1's fix | review **IN PROGRESS** — no verdict |
-| `/home/user/wt/chk-w1m1-base` | detached `455b6c6` | that Checker's base copy | scratch |
 
 Archive of both unmerged fix branches (in case the container is lost):
 `review/product-excellence/archive/maker-branches-2026-10-09.bundle` (heads `pe/w1-fix@1351c99`,
@@ -43,7 +41,7 @@ Archive of both unmerged fix branches (in case the container is lost):
 | I01, I02, I03 | `a6ebe00` | **APPROVE** (r2; I03 PARTLY BLOCKED: real browser quota, real OS suspension) | `contracts/I0{1,2,3}/CHECKER-r2.md` |
 | I04, I05, I14 | `2becb78` | **APPROVE** (r1; sky "Change brew length" link judged acceptable; I05/I14 real-device BLOCKED) | `contracts/{I04,I05,I14}/CHECKER-r1.md` |
 | I04 integration fix | `c9520db` | **REJECT** (r1, after the interrupted review resumed): D1 no re-fit after resize/rotation to 375×667 (2 px sideways scroll); D2 200 % text + ≥10,000 leaves spills "Level NN" (13 px sideways scroll, pre-existing but in I04 scope) | `contracts/I04/CHECKER-integration-fix-r1.md` |
-| I03 × I04 integration fix | `3f00b57` | **IN REVIEW — no verdict yet** (fresh Checker; also re-confirms I01/I02 and I04 toast behaviour) | `contracts/I03/CHECKER-integration-fix-r1.md` (to be written) |
+| I03 × I04 integration fix (+ I01, I02 re-confirmed; I04 toast lift unchanged) | `3f00b57` (src `3c58bf9`) | **APPROVE** (r1, fresh Checker; I03 still PARTLY BLOCKED: real browser quota, real OS suspension, real AT) | `contracts/I03/CHECKER-integration-fix-r1.md` |
 
 ### Open defects (both on the integrated revision `0d58c5e`)
 
@@ -201,13 +199,28 @@ BLOCKED/UNKNOWN — never PASS.
   regressions in 95 configs, CLS 0, protected Home elements intact. Routed back to M2 for r2 on `pe/w1-fix-m2`. Checker
   worktrees `chk-w1m2`/`chk-w1m2-base` removed by the Checker.
 
+- Fresh Checker r1 on M1's `3f00b57` → **APPROVE** (`contracts/I03/CHECKER-integration-fix-r1.md`): reproduced the
+  regression on `455b6c6` (base spec 1 fail; HEAD spec vs base app 4 fail), HEAD tsc clean, vitest 265/265, chromium
+  integrity + a11y + whistle 45/45, timer/pwa 29 + 2 skipped; per-frame placement probe at all 6 configs (warning never
+  over readout / controls / footer / docked start once settled; never lost); I01, I02 re-confirmed; I04 toast lift
+  identical to base. Held unmerged until M2's fix is approved. Non-blocking findings recorded:
+  1. "Back to your brew" re-checks the warning only on the next 250 ms tick (≈0.1–0.25 s transient; End taps 10/10 OK)
+     — M1-owned hardening candidate (`recheckSaveWarning()` on route → `/focus` | `/done`); not reopened (would void APPROVE).
+  2. Desktop Today: warning may cover part of the brew-length chooser for ≤12 s (disclosed).
+  3. 390×844 Today: "Save backup" lies over the "Read" chip while the warning shows (M2 lift geometry; non-destructive).
+  4. **200 % text, phones: the warning on Today runs off the top of the screen** → routed to M2 as r2 item **D3**
+     (`Toast.module.css` only; `Toast.tsx` / `flow.ts` are frozen by M1's approval).
+  5. Ordinary toasts on the phone session screen float over the readout (M2 lift); no ordinary toast fires during a
+     running brew in practice — M2 to judge with evidence.
+  Checker worktrees `chk-w1m1`/`chk-w1m1-base` removed after the verdict.
+
 ## Exact next action (when implementation resumes — not before)
 
-1. M1 (maker) turns `pe/w1-fix@1351c99` into its READY FOR REVIEW commit (message `I03 I04 INTEGRATION FIX READY FOR
+1. ~~M1 (maker) turns `pe/w1-fix@1351c99` into its READY FOR REVIEW commit~~ (done: `3f00b57`) (message `I03 I04 INTEGRATION FIX READY FOR
    REVIEW:`; packet already drafted; re-run nothing unless the tree changes).
-2. Resume or relaunch the independent Checker on `c9520db` (I04 status bar); a fresh Checker (not M1, not the `c9520db`
-   checker's maker) reviews M1's submitted commit for I03 and re-confirms I01/I02 and the I04 toast behaviour at 375×667,
-   390×844 and 1440×900.
+2. ~~Checker on `c9520db`~~ → REJECT (D1, D2); ~~fresh Checker on M1's commit~~ → APPROVE `3f00b57`. **Now:** M2 submits
+   r2 on `pe/w1-fix-m2` (D1 resize re-fit, D2 200 % level spill, D3 200 % warning toast clipping) → a fresh Checker
+   reviews that exact commit.
 3. Only after both APPROVE: merge `pe/w1-fix-m2` and `pe/w1-fix` into the integration branch → rerun tsc, vitest,
    timer/pwa, integrity + a11y + whistle (full chromium), recapture affected states (01/01b, session-screen warning
    states, 07/08) at 390×844 / 375×667 / 1440×900 both themes → confirm no interaction between the two fixes → update
