@@ -124,6 +124,63 @@ for (const theme of ['light', 'dark'] as const) {
   });
 }
 
+for (const theme of ['light', 'dark'] as const) {
+  test(`narrowing that leaves the bar's own box unchanged still re-fits: from 384 px, and 1 px at a time (${theme})`, async ({ browser, baseURL }) => {
+    test.setTimeout(240_000);
+    // One step from just above the overflow point (the bar is already at its min-content width there).
+    for (const [fromW, fromH, toW, toH] of [
+      [384, 854, 375, 667],
+      [380, 800, 375, 667],
+      [384, 854, 360, 740],
+    ] as const) {
+      const ctx = await browser.newContext({ ...phone, viewport: { width: fromW, height: fromH }, colorScheme: theme });
+      const page = await ctx.newPage();
+      await open(page, base(baseURL), { theme });
+      await page.evaluate(() => (window as any).__kettle.progress.setState({ leaves: 2296 }));
+      await settle(page);
+      await page.setViewportSize({ width: toW, height: toH });
+      await settle(page);
+      const r = await row(page);
+      expect(r.mode, `${fromW}×${fromH} → ${toW}×${toH}`).toBe('tight');
+      expect(r.rows).toBe(1);
+      noSidewaysScroll(r, toW);
+      expect(r.tabBottom, 'tab bar ends below the screen').toBeLessThanOrEqual(toH);
+      await ctx.close();
+    }
+    // A phone-width window narrowed 1 px at a time, like a dragged divider.
+    const ctx = await browser.newContext({ ...phone, viewport: { width: 414, height: 896 }, colorScheme: theme });
+    const page = await ctx.newPage();
+    await open(page, base(baseURL), { theme });
+    await page.evaluate(() => (window as any).__kettle.progress.setState({ leaves: 2296 }));
+    await settle(page);
+    for (let w = 413; w >= 375; w--) {
+      await page.setViewportSize({ width: w, height: 667 });
+      await page.waitForTimeout(20);
+    }
+    await settle(page);
+    const r = await row(page);
+    expect(r.mode, '414 → 375 one px at a time').toBe('tight');
+    noSidewaysScroll(r, 375);
+    expect(r.tabBottom).toBeLessThanOrEqual(667);
+    await ctx.close();
+    // A desktop window narrowed 1 px at a time: no horizontal scrollbar.
+    const dctx = await browser.newContext({ viewport: { width: 420, height: 800 }, colorScheme: theme });
+    const dpage = await dctx.newPage();
+    await open(dpage, base(baseURL), { theme });
+    await dpage.evaluate(() => (window as any).__kettle.progress.setState({ leaves: 2296 }));
+    await settle(dpage);
+    for (let w = 419; w >= 375; w--) {
+      await dpage.setViewportSize({ width: w, height: 800 });
+      await dpage.waitForTimeout(16);
+    }
+    await settle(dpage);
+    const d = await row(dpage);
+    expect(d.scrollWidth, 'desktop window: horizontal scrollbar').toBeLessThanOrEqual(d.clientWidth);
+    expect(d.barRight).toBeLessThanOrEqual(d.clientWidth);
+    await dctx.close();
+  });
+}
+
 test('normal text: one row at 390 (designed padding) and at 375 (tight) on a fresh load', async ({ browser, baseURL }) => {
   for (const [w, h, mode] of [
     [390, 844, 'normal'],
@@ -132,6 +189,8 @@ test('normal text: one row at 390 (designed padding) and at 375 (tight) on a fre
     const ctx = await browser.newContext({ ...phone, viewport: { width: w, height: h } });
     const page = await ctx.newPage();
     await open(page, base(baseURL));
+    // A fixed leaf total (the seed's own depends on the date; 9,999 legitimately fits `normal` at 375).
+    await page.evaluate(() => (window as any).__kettle.progress.setState({ leaves: 2296 }));
     await settle(page);
     const r = await row(page);
     expect(r.mode).toBe(mode);

@@ -220,12 +220,19 @@ function useWrapWhenCrowded() {
     };
     fit();
     document.fonts?.addEventListener('loadingdone', fit);
+    // The screen's width, not only the bar's: narrowing a window below ~385 px no longer changes the bar's own box
+    // (it is already at its min-content width), so its observer alone would never call `fit` again.
+    window.addEventListener('resize', fit);
+    window.visualViewport?.addEventListener('resize', fit);
     const ro = new ResizeObserver(fit);
     ro.observe(el);
+    ro.observe(document.documentElement);
     for (const c of el.children) ro.observe(c);
     return () => {
       live = false;
       document.fonts?.removeEventListener('loadingdone', fit);
+      window.removeEventListener('resize', fit);
+      window.visualViewport?.removeEventListener('resize', fit);
       ro.disconnect();
     };
   }, []);

@@ -98,32 +98,48 @@
   }
 }
 
-/* ---------- Long toasts at large text (I04 D3) ----------
+/* ---------- Tall stacks and long toasts at large text (I04 D3) ----------
    A long message (the storage-full warning) at 200 % text was ~700 px tall on a phone, one word per line beside its
-   action, and rose past the top of the screen. The region now spans from the top safe edge to its (lifted) bottom and
-   the stack still sits at its bottom; with large text the message keeps the toast's width, the action moves under it,
-   and a stack taller than the room left scrolls inside the region instead of leaving the screen. */
+   action, and rose past the top of the screen; stacked with other toasts it was taller still. The region now spans
+   from the top safe edge to its (lifted) bottom: that height is the room a stack has. The stack still sits at the
+   bottom of it. Every toast keeps its full height (rows sized to their content, never squeezed). */
 .region {
   top: calc(env(safe-area-inset-top) + 8px);
   align-items: flex-end;
+  container: toast-room / size;
 }
 .live {
   container: toasts / inline-size;
   display: flex;
   flex-direction: column;
-  max-height: 100%;
 }
 .list {
-  min-height: 0;
+  grid-auto-rows: max-content;
 }
-/* Large text for the width (≈150 % text on a phone, 200 % anywhere). At 100 % text the threshold
-   (106 px + 11 em = 282 px) is below any phone's toast width, so normal-size toasts are unchanged. */
-@container toasts (max-width: calc(106px + 11em)) {
+/* Where a stack can outgrow its room (a short room, e.g. a landscape phone, or large text for the width) it scrolls
+   inside it instead of leaving the screen. 24 em is 384 px at 100 % text: no portrait phone or desktop room is that
+   short, so normal-size toasts there are unchanged. */
+@container toast-room (max-height: 24em) or (max-width: calc(106px + 11em)) {
+  .live {
+    max-height: 100%;
+  }
   .list {
+    min-height: 0;
     overflow-y: auto;
     overscroll-behavior: contain;
-    border-radius: var(--r-lg);
+    /* Room for the toasts' shadows above and beside them inside the scroll box; negative margins give back exactly
+       what the padding takes, so nothing moves. (Below the stack the box ends at the toasts: nothing scrolls into
+       the space over the docked start.) */
+    width: calc(100% + 64px);
+    max-width: calc(440px + 64px);
+    margin: -20px -32px 0;
+    padding: 20px 32px 0;
   }
+}
+/* Large text for the toast's width (≈150 % text on a phone, 200 % anywhere): the message keeps the full width beside
+   the icon and the action moves under it. At 100 % text the threshold (106 px + 11 em = 282 px) is below any phone's
+   toast width, so normal-size toasts are unchanged. */
+@container toasts (max-width: calc(106px + 11em)) {
   .toast {
     flex-wrap: wrap;
     align-items: flex-start;
@@ -132,7 +148,7 @@
   .message {
     flex-basis: calc(100% - 32px - var(--space-3));
   }
-  /* Held in view at the bottom of the toast while a long message scrolls behind it. */
+  /* Held in view at the bottom of the box while a long message scrolls behind it. */
   .action {
     position: sticky;
     bottom: 0;
