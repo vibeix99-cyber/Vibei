@@ -186,6 +186,11 @@ BLOCKED/UNKNOWN — never PASS.
   `d3f4e06` (WIP evidence). Both resumed with context intact. Each fix gets a fresh independent Checker on its
   exact commit; Wave 1 is clean only after both merge and the full regression + affected captures pass.
 
+- 2026-10-09 (resume after checkpoint `8ec8875`): repository and worktrees verified against the checkpoint — integration
+  branch `8ec8875` = origin, clean; `pe/w1-fix@1351c99` (src tree `3c58bf9`) and `pe/w1-fix-m2@c9520db` clean; checker
+  worktrees unchanged; `8f1044a` untouched. Next actions 1–2 started: M1 resumed to make its READY FOR REVIEW commit;
+  the interrupted `c9520db` Checker resumed (still **no verdict** until it writes one). M1's maker runs are not approval.
+
 ## Exact next action (when implementation resumes — not before)
 
 1. M1 (maker) turns `pe/w1-fix@1351c99` into its READY FOR REVIEW commit (message `I03 I04 INTEGRATION FIX READY FOR
