@@ -97,3 +97,47 @@
     bottom: calc(env(safe-area-inset-bottom) + 118px);
   }
 }
+
+/* ---------- Long toasts at large text (I04 D3) ----------
+   A long message (the storage-full warning) at 200 % text was ~700 px tall on a phone, one word per line beside its
+   action, and rose past the top of the screen. The region now spans from the top safe edge to its (lifted) bottom and
+   the stack still sits at its bottom; with large text the message keeps the toast's width, the action moves under it,
+   and a stack taller than the room left scrolls inside the region instead of leaving the screen. */
+.region {
+  top: calc(env(safe-area-inset-top) + 8px);
+  align-items: flex-end;
+}
+.live {
+  container: toasts / inline-size;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+}
+.list {
+  min-height: 0;
+}
+/* Large text for the width (≈150 % text on a phone, 200 % anywhere). At 100 % text the threshold
+   (106 px + 11 em = 282 px) is below any phone's toast width, so normal-size toasts are unchanged. */
+@container toasts (max-width: calc(106px + 11em)) {
+  .list {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-radius: var(--r-lg);
+  }
+  .toast {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    row-gap: var(--space-2);
+  }
+  .message {
+    flex-basis: calc(100% - 32px - var(--space-3));
+  }
+  /* Held in view at the bottom of the toast while a long message scrolls behind it. */
+  .action {
+    position: sticky;
+    bottom: 0;
+    margin-left: auto;
+    background: color-mix(in oklab, var(--ink-inverse) 14%, var(--inverse));
+    box-shadow: 0 0 0 8px var(--inverse);
+  }
+}

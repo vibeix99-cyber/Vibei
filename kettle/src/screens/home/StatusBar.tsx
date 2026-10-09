@@ -179,37 +179,53 @@ export function StatusBar({ data }: { data: HomeData }) {
  *   1. as designed (12 px pill padding) when every stat ends inside the screen;
  *   2. else the 6 px padding the 320 px layout already uses (`data-tight`), same row, same height;
  *   3. else (very large text: 110 px of sideways scroll at 390 px with 200 % text) the row wraps (`data-wrap`).
- * Only real fonts decide (a wider fallback font would wrap the row for a moment and then unwrap it, shifting all of
- * Today: measured CLS 0.26 on phone loads when this was plain `flex-wrap`). Neither step 2 nor a font swap changes
- * the row's height.
+ * Only real fonts decide a near miss (a wider fallback font would wrap the row for a moment and then unwrap it,
+ * shifting all of Today: measured CLS 0.26 on phone loads when this was plain `flex-wrap`); a measurement that lands
+ * while fonts load (Chromium reports "loading" for a moment on every resize/rotation) is retried when they finish,
+ * never dropped. A row more than 40 px too wide even when tight (large text) wraps at once, before it is painted.
+ * Neither step 2 nor a font swap changes the row's height.
  */
 function useWrapWhenCrowded() {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el || typeof ResizeObserver === 'undefined') return;
+    let live = true;
     const fit = () => {
-      if (document.fonts && document.fonts.status !== 'loaded') return;
-      // Does any stat (or the bar itself, which a crowded row widens) reach past the screen's edge?
+      if (!live) return;
+      // Does any stat (or the bar itself, which a crowded row widens) reach past the screen's edge, and by how much?
       const over = () =>
-        Math.max(el.getBoundingClientRect().right, ...[...el.children].map((c) => c.getBoundingClientRect().right)) >
-        document.documentElement.clientWidth + 0.5;
+        Math.max(el.getBoundingClientRect().right, ...[...el.children].map((c) => c.getBoundingClientRect().right)) -
+        (document.documentElement.clientWidth + 0.5);
+      if (document.fonts && document.fonts.status !== 'loaded') {
+        // Fonts still loading (also for a moment on every resize/rotation in Chromium): a fallback font must not decide
+        // a near miss, and the decision must not be dropped: it is made again once they finish (re-armed promise, and
+        // `loadingdone` below). Only a row far too wide for any font (very large text) wraps now, before it is painted.
+        document.fonts.ready.then(fit);
+        if (el.dataset.wrap !== undefined) return;
+        const wasTight = el.dataset.tight !== undefined;
+        el.dataset.tight = '';
+        const far = over() > 40;
+        if (!wasTight || far) delete el.dataset.tight;
+        if (far) el.dataset.wrap = '';
+        return;
+      }
       delete el.dataset.wrap;
       delete el.dataset.tight;
-      if (!over()) return;
+      if (over() <= 0) return;
       el.dataset.tight = '';
-      if (!over()) return;
+      if (over() <= 0) return;
       delete el.dataset.tight;
       el.dataset.wrap = '';
     };
     fit();
-    let live = true;
-    document.fonts?.ready.then(() => live && fit());
+    document.fonts?.addEventListener('loadingdone', fit);
     const ro = new ResizeObserver(fit);
     ro.observe(el);
     for (const c of el.children) ro.observe(c);
     return () => {
       live = false;
+      document.fonts?.removeEventListener('loadingdone', fit);
       ro.disconnect();
     };
   }, []);

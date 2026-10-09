@@ -74,6 +74,9 @@
   display: grid;
   gap: 3px;
   width: 56px;
+  /* …or as wide as "Level NN" when text is enlarged (200 %: 76–89 px), so the label never spills out of its pill
+     past the screen edge, and the status bar's fit measurement sees the pill's real width. */
+  min-width: max-content;
 }
 .statLevelBar {
   display: block;
