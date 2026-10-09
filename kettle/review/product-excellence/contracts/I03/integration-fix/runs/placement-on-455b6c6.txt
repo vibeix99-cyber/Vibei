@@ -1,0 +1,140 @@
+Running 9 tests using 1 worker
+  ✓  1 [chromium] › tests/integrity.spec.ts:997:5 › I03 storage-full warning never covers a control (phone 390×844) › while brewing (running and paused): Add 5, Pause, Resume and End stay tappable; End opens its sheet, never a download (9.7s)
+  ✓  2 [chromium] › tests/integrity.spec.ts:1032:5 › I03 storage-full warning never covers a control (phone 390×844) › a warning already up when the next brew starts never covers the session readout or controls (wave-1 integration regression) (6.8s)
+  ✘  3 [chromium] › tests/integrity.spec.ts:1049:5 › I03 storage-full warning never covers a control (phone 390×844) › a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after (22.8s)
+  ✘  4 [chromium] › tests/integrity.spec.ts:997:5 › I03 storage-full warning never covers a control (phone 375×667) › while brewing (running and paused): Add 5, Pause, Resume and End stay tappable; End opens its sheet, never a download (14.5s)
+  ✘  5 [chromium] › tests/integrity.spec.ts:1032:5 › I03 storage-full warning never covers a control (phone 375×667) › a warning already up when the next brew starts never covers the session readout or controls (wave-1 integration regression) (14.1s)
+  ✘  6 [chromium] › tests/integrity.spec.ts:1049:5 › I03 storage-full warning never covers a control (phone 375×667) › a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after (21.3s)
+  ✓  7 [chromium] › tests/integrity.spec.ts:997:5 › I03 storage-full warning never covers a control (desktop 1440×900) › while brewing (running and paused): Add 5, Pause, Resume and End stay tappable; End opens its sheet, never a download (14.1s)
+  ✓  8 [chromium] › tests/integrity.spec.ts:1032:5 › I03 storage-full warning never covers a control (desktop 1440×900) › a warning already up when the next brew starts never covers the session readout or controls (wave-1 integration regression) (7.5s)
+  ✘  9 [chromium] › tests/integrity.spec.ts:1049:5 › I03 storage-full warning never covers a control (desktop 1440×900) › a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after (24.0s)
+  1) [chromium] › tests/integrity.spec.ts:1049:5 › I03 storage-full warning never covers a control (phone 390×844) › a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after 
+    Error: expect(locator).toBeVisible() failed
+    Locator: getByRole('status', { name: 'Notifications' }).getByText(/storage is full\. Save a backup to keep them\./)
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for getByRole('status', { name: 'Notifications' }).getByText(/storage is full\. Save a backup to keep them\./)
+      1077 |       await expect.poll(() => hash(page)).toBe('#/');
+      1078 |       const cta = /^Put the kettle on/;
+    > 1079 |       await expect(saveWarning(page)).toBeVisible();
+           |                                       ^
+      1080 |       expect(await hitOk(page, cta), 'Put the kettle on').toBe(true);
+      1081 |       // Starting the next brew with the warning still up: it never covers the session controls or the readout (on
+      1082 |       // phones it is taken away for the brew; on wide layouts it may stay, beside the panel)…
+        at <scratch>/int/kettle/tests/integrity.spec.ts:1079:39
+    Error Context: ../../pw-int/integrity-I03-storage-full-cc4d0-appable-it-comes-back-after-chromium/error-context.md
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../pw-int/integrity-I03-storage-full-cc4d0-appable-it-comes-back-after-chromium/trace.zip
+    Usage:
+        npx playwright show-trace ../../pw-int/integrity-I03-storage-full-cc4d0-appable-it-comes-back-after-chromium/trace.zip
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+  2) [chromium] › tests/integrity.spec.ts:997:5 › I03 storage-full warning never covers a control (phone 375×667) › while brewing (running and paused): Add 5, Pause, Resume and End stay tappable; End opens its sheet, never a download 
+    Error: phone: no warning during the brew (@2)
+    expect(locator).toHaveCount(expected) failed
+    Locator:  getByRole('status', { name: 'Notifications' }).getByText(/storage is full\. Save a backup to keep them\./)
+    Expected: 0
+    Received: 1
+    Timeout:  10000ms
+    Call log:
+      - phone: no warning during the brew (@2) with timeout 10000ms
+      - waiting for getByRole('status', { name: 'Notifications' }).getByText(/storage is full\. Save a backup to keep them\./)
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+      981 | /** On the session screen: the controls are tappable and the readout is clear; on phones the warning waits. */
+      982 | async function sessionClear(page: Page, touch: boolean, controls: string[], tag: string) {
+    > 983 |   if (touch) await expect(saveWarning(page), `phone: no warning during the brew (${tag})`).toHaveCount(0);
+          |                                                                                            ^
+      984 |   for (const c of controls) expect(await hitOk(page, c), `${c} ${tag}`).toBe(true);
+      985 |   expect(await readoutClear(page), `readout clear ${tag}`).toBe(true);
+      986 | }
+        at sessionClear (<scratch>/int/kettle/tests/integrity.spec.ts:983:92)
+        at <scratch>/int/kettle/tests/integrity.spec.ts:1006:15
+    Error Context: ../../pw-int/integrity-I03-storage-full-54350--its-sheet-never-a-download-chromium/error-context.md
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../pw-int/integrity-I03-storage-full-54350--its-sheet-never-a-download-chromium/trace.zip
+    Usage:
+        npx playwright show-trace ../../pw-int/integrity-I03-storage-full-54350--its-sheet-never-a-download-chromium/trace.zip
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+  3) [chromium] › tests/integrity.spec.ts:1032:5 › I03 storage-full warning never covers a control (phone 375×667) › a warning already up when the next brew starts never covers the session readout or controls (wave-1 integration regression) 
+    Error: phone: no warning during the brew (next brew @0)
+    expect(locator).toHaveCount(expected) failed
+    Locator:  getByRole('status', { name: 'Notifications' }).getByText(/storage is full\. Save a backup to keep them\./)
+    Expected: 0
+    Received: 1
+    Timeout:  10000ms
+    Call log:
+      - phone: no warning during the brew (next brew @0) with timeout 10000ms
+      - waiting for getByRole('status', { name: 'Notifications' }).getByText(/storage is full\. Save a backup to keep them\./)
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+      981 | /** On the session screen: the controls are tappable and the readout is clear; on phones the warning waits. */
+      982 | async function sessionClear(page: Page, touch: boolean, controls: string[], tag: string) {
+    > 983 |   if (touch) await expect(saveWarning(page), `phone: no warning during the brew (${tag})`).toHaveCount(0);
+          |                                                                                            ^
+      984 |   for (const c of controls) expect(await hitOk(page, c), `${c} ${tag}`).toBe(true);
+      985 |   expect(await readoutClear(page), `readout clear ${tag}`).toBe(true);
+      986 | }
+        at sessionClear (<scratch>/int/kettle/tests/integrity.spec.ts:983:92)
+        at <scratch>/int/kettle/tests/integrity.spec.ts:1044:15
+    Error Context: ../../pw-int/integrity-I03-storage-full-b97b5-e-1-integration-regression--chromium/error-context.md
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../pw-int/integrity-I03-storage-full-b97b5-e-1-integration-regression--chromium/trace.zip
+    Usage:
+        npx playwright show-trace ../../pw-int/integrity-I03-storage-full-b97b5-e-1-integration-regression--chromium/trace.zip
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+  4) [chromium] › tests/integrity.spec.ts:1049:5 › I03 storage-full warning never covers a control (phone 375×667) › a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after 
+    Error: expect(locator).toBeVisible() failed
+    Locator: getByRole('status', { name: 'Notifications' }).getByText(/storage is full\. Save a backup to keep them\./)
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for getByRole('status', { name: 'Notifications' }).getByText(/storage is full\. Save a backup to keep them\./)
+      1077 |       await expect.poll(() => hash(page)).toBe('#/');
+      1078 |       const cta = /^Put the kettle on/;
+    > 1079 |       await expect(saveWarning(page)).toBeVisible();
+           |                                       ^
+      1080 |       expect(await hitOk(page, cta), 'Put the kettle on').toBe(true);
+      1081 |       // Starting the next brew with the warning still up: it never covers the session controls or the readout (on
+      1082 |       // phones it is taken away for the brew; on wide layouts it may stay, beside the panel)…
+        at <scratch>/int/kettle/tests/integrity.spec.ts:1079:39
+    Error Context: ../../pw-int/integrity-I03-storage-full-2163e-appable-it-comes-back-after-chromium/error-context.md
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../pw-int/integrity-I03-storage-full-2163e-appable-it-comes-back-after-chromium/trace.zip
+    Usage:
+        npx playwright show-trace ../../pw-int/integrity-I03-storage-full-2163e-appable-it-comes-back-after-chromium/trace.zip
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+  5) [chromium] › tests/integrity.spec.ts:1049:5 › I03 storage-full warning never covers a control (desktop 1440×900) › a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after 
+    Error: expect(locator).toBeVisible() failed
+    Locator: getByRole('status', { name: 'Notifications' }).getByText(/storage is full\. Save a backup to keep them\./)
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for getByRole('status', { name: 'Notifications' }).getByText(/storage is full\. Save a backup to keep them\./)
+      1077 |       await expect.poll(() => hash(page)).toBe('#/');
+      1078 |       const cta = /^Put the kettle on/;
+    > 1079 |       await expect(saveWarning(page)).toBeVisible();
+           |                                       ^
+      1080 |       expect(await hitOk(page, cta), 'Put the kettle on').toBe(true);
+      1081 |       // Starting the next brew with the warning still up: it never covers the session controls or the readout (on
+      1082 |       // phones it is taken away for the brew; on wide layouts it may stay, beside the panel)…
+        at <scratch>/int/kettle/tests/integrity.spec.ts:1079:39
+    Error Context: ../../pw-int/integrity-I03-storage-full-65e96-appable-it-comes-back-after-chromium/error-context.md
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../pw-int/integrity-I03-storage-full-65e96-appable-it-comes-back-after-chromium/trace.zip
+    Usage:
+        npx playwright show-trace ../../pw-int/integrity-I03-storage-full-65e96-appable-it-comes-back-after-chromium/trace.zip
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+  5 failed
+    [chromium] › tests/integrity.spec.ts:1049:5 › I03 storage-full warning never covers a control (phone 390×844) › a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after 
+    [chromium] › tests/integrity.spec.ts:997:5 › I03 storage-full warning never covers a control (phone 375×667) › while brewing (running and paused): Add 5, Pause, Resume and End stay tappable; End opens its sheet, never a download 
+    [chromium] › tests/integrity.spec.ts:1032:5 › I03 storage-full warning never covers a control (phone 375×667) › a warning already up when the next brew starts never covers the session readout or controls (wave-1 integration regression) 
+    [chromium] › tests/integrity.spec.ts:1049:5 › I03 storage-full warning never covers a control (phone 375×667) › a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after 
+    [chromium] › tests/integrity.spec.ts:1049:5 › I03 storage-full warning never covers a control (desktop 1440×900) › a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after 
+  4 passed (2.4m)

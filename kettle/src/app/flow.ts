@@ -194,7 +194,7 @@ function ritualOnScreen(): boolean {
  * Measured against where the toast is, or would be, drawn: the stylesheet's position, or — when the toast region
  * floats above `data-toast-above` elements (`toastLiftBottom`, src/ui/Toast.tsx) — that lifted position. So it holds
  * wherever the layout puts the toast: on phones the session panel (readout + docked controls) fills the lower half and
- * a toast always lands in it, so the warning waits for the whole brew; on wide layouts the toast sits under the stage,
+ * a toast always lands in it, so the warning waits for the whole brew; on wide layouts the toast sits over the stage,
  * beside the panel, and shows.
  */
 function protectedUnderToasts(): boolean {

@@ -1029,6 +1029,23 @@ for (const vp of [
       expect((await timer(page)).status).toBe('running');
     });
 
+    test('a warning already up when the next brew starts never covers the session readout or controls (wave-1 integration regression)', async ({ page }) => {
+      test.setTimeout(120_000);
+      await newbieWithFullStorage(page);
+      // Raised where it covers nothing protected (Stats), so it is on screen when the brew starts.
+      await page.evaluate(() => (window as any).__kettle.navigate('/stats'));
+      await expect.poll(() => hash(page)).toBe('#/stats');
+      // A save that needs more room than is left (a longer name) fails.
+      await page.evaluate(() => (window as any).__kettle.settings.getState().set({ name: 'Sam, brewing through a full browser' }));
+      await expect(saveWarning(page)).toBeVisible();
+      await page.evaluate(() => (window as any).__kettle.timer.getState().startFocus({ minutes: 25, intention: 'Next brew' }));
+      await expect.poll(() => hash(page)).toBe('#/focus');
+      for (let i = 0; i < 6; i++) {
+        await sessionClear(page, vp.touch, CONTROLS, `next brew @${i}`);
+        await page.waitForTimeout(250);
+      }
+    });
+
     test('a warning raised just before 0:00 is taken away for the whistle and summary; Tea time and Skip break stay tappable; it comes back after', async ({ page }) => {
       test.setTimeout(120_000);
       await newbieWithFullStorage(page);

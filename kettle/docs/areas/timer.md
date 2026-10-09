@@ -65,10 +65,10 @@ key) and reported to `onStorageWriteError` listeners.
     While the session screen has not drawn its readout yet (just after a route change), it counts as covered.
   - Result on phones (every size): the session panel (readout + docked controls) fills the lower half and a toast
     always lands in it, so the warning waits for the whole brew, running or paused. On wide layouts the toast sits
-    under the stage, beside the panel, and shows during the brew.
+    over the stage, beside the panel, and shows during the brew.
   - A held warning shows as soon as the person is somewhere it covers nothing protected: Today after the summary,
     floating above "Put the kettle on" (every layout), or any other screen. Like any toast it may cover ordinary
-    page content (the task field, a Settings row) until it is tapped away or times out.
+    page content (the task field, a Settings row, on wide layouts part of Today's brew-length chooser) until it is tapped away or times out.
 - **Limit:** until storage has room again, closing the tab loses what was not saved (the warning and its backup
   action are the remedy). A restore that can't be saved is refused (see `docs/areas/progress.md`).
 
