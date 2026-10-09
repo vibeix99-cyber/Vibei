@@ -26,7 +26,7 @@ pushed. **App code on it = `0d58c5e`** (Wave 1 merge: M1 `a6ebe00` + M2 `2becb78
 | `/home/user/wt/m1` | `pe/m1@a6ebe00` | M1 Wave 1 | APPROVED r2, merged (`7da58f1`) — idle |
 | `/home/user/wt/m2` | `pe/m2@2becb78` | M2 Wave 1 | APPROVED r1, merged (`0d58c5e`) — idle |
 | `/home/user/wt/w1fix` | `pe/w1-fix@3f00b57` | **M1 integration fix** (I03 × I04) | **APPROVED r1** — held unmerged until M2's fix is approved (any change voids the approval) |
-| `/home/user/wt/w1fix-m2` | `pe/w1-fix-m2@c9520db` | **M2 integration fix** (I04 status bar) | **REJECTED r1** → M2 correcting D1/D2 (r2 not yet submitted) |
+| `/home/user/wt/w1fix-m2` | `pe/w1-fix-m2@e1e672d` | **M2 integration fix** (I04 status bar) | `c9520db` **REJECTED r1** → M2 correcting D1/D2/D3; `e1e672d` = orchestrator WIP preserve after a container restart (src tree `c873084`), **NOT READY FOR REVIEW** |
 
 Archive of both unmerged fix branches (in case the container is lost):
 `review/product-excellence/archive/maker-branches-2026-10-09.bundle` (heads `pe/w1-fix@1351c99`,
@@ -213,6 +213,10 @@ BLOCKED/UNKNOWN — never PASS.
   5. Ordinary toasts on the phone session screen float over the readout (M2 lift); no ordinary toast fires during a
      running brew in practice — M2 to judge with evidence.
   Checker worktrees `chk-w1m1`/`chk-w1m1-base` removed after the verdict.
+
+- Container restart stopped M2's r2 mid-work. Worktrees survived; M2's uncommitted edits (StatusBar.tsx, Home.module.css,
+  Toast.module.css, new tests/statusbar.spec.ts, 5 r2 run logs) preserved as WIP `pe/w1-fix-m2@e1e672d` (NOT READY FOR
+  REVIEW) and archived (`archive/pe-w1-fix-m2-r2wip.incremental.bundle`, on `c9520db`). M2 resumed with context intact.
 
 ## Exact next action (when implementation resumes — not before)
 
