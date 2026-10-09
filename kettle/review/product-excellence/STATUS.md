@@ -25,10 +25,12 @@ pushed. **App code on it = `0d58c5e`** (Wave 1 merge: M1 `a6ebe00` + M2 `2becb78
 | `/home/user/Vibei` | `claude/wizardly-galileo-uy89d9` | integration | clean, pushed |
 | `/home/user/wt/m1` | `pe/m1@a6ebe00` | M1 Wave 1 | APPROVED r2, merged (`7da58f1`) — idle |
 | `/home/user/wt/m2` | `pe/m2@2becb78` | M2 Wave 1 | APPROVED r1, merged (`0d58c5e`) — idle |
-| `/home/user/wt/w1fix` | `pe/w1-fix@1351c99` | **M1 integration fix** (I03 × I04) | **IN PROGRESS — no submission yet.** `1351c99` = orchestrator WIP preserve of M1's on-disk work; NOT READY FOR REVIEW |
+| `/home/user/wt/w1fix` | `pe/w1-fix@3f00b57` | **M1 integration fix** (I03 × I04) | **READY FOR REVIEW** (submitted by M1 on top of WIP `1351c99`; src tree `3c58bf9` unchanged) |
 | `/home/user/wt/w1fix-m2` | `pe/w1-fix-m2@c9520db` | **M2 integration fix** (I04 status bar) | **READY FOR REVIEW** (submitted by M2) |
 | `/home/user/wt/chk-w1m2` | detached `c9520db` (+2 untracked checker vite configs) | Checker for `c9520db` | review **INTERRUPTED** (usage limit) — no verdict |
 | `/home/user/wt/chk-w1m2-base` | detached `1bec1a8` | same Checker's base copy | scratch |
+| `/home/user/wt/chk-w1m1` | detached `3f00b57` | fresh Checker for M1's fix | review **IN PROGRESS** — no verdict |
+| `/home/user/wt/chk-w1m1-base` | detached `455b6c6` | that Checker's base copy | scratch |
 
 Archive of both unmerged fix branches (in case the container is lost):
 `review/product-excellence/archive/maker-branches-2026-10-09.bundle` (heads `pe/w1-fix@1351c99`,
@@ -42,8 +44,8 @@ Archive of both unmerged fix branches (in case the container is lost):
 | I03 | `6d5969e` | **REJECT** (r1): A warning over Tea time; B warning over Add 5/Pause/Resume/End on phones | `contracts/I03/CHECKER-r1.md` |
 | I01, I02, I03 | `a6ebe00` | **APPROVE** (r2; I03 PARTLY BLOCKED: real browser quota, real OS suspension) | `contracts/I0{1,2,3}/CHECKER-r2.md` |
 | I04, I05, I14 | `2becb78` | **APPROVE** (r1; sky "Change brew length" link judged acceptable; I05/I14 real-device BLOCKED) | `contracts/{I04,I05,I14}/CHECKER-r1.md` |
-| I04 integration fix | `c9520db` | **INTERRUPTED — no verdict** (not APPROVE, not REJECT) | none yet (`contracts/I04/CHECKER-integration-fix-r1.md` to be written) |
-| I03 × I04 integration fix | — | **not submitted** | — |
+| I04 integration fix | `c9520db` | **INTERRUPTED, review resumed — no verdict yet** (not APPROVE, not REJECT) | `contracts/I04/CHECKER-integration-fix-r1.md` (to be written) |
+| I03 × I04 integration fix | `3f00b57` | **IN REVIEW — no verdict yet** (fresh Checker; also re-confirms I01/I02 and I04 toast behaviour) | `contracts/I03/CHECKER-integration-fix-r1.md` (to be written) |
 
 ### Open defects (both on the integrated revision `0d58c5e`)
 
@@ -190,6 +192,10 @@ BLOCKED/UNKNOWN — never PASS.
   branch `8ec8875` = origin, clean; `pe/w1-fix@1351c99` (src tree `3c58bf9`) and `pe/w1-fix-m2@c9520db` clean; checker
   worktrees unchanged; `8f1044a` untouched. Next actions 1–2 started: M1 resumed to make its READY FOR REVIEW commit;
   the interrupted `c9520db` Checker resumed (still **no verdict** until it writes one). M1's maker runs are not approval.
+
+- M1 submitted `pe/w1-fix@3f00b57` (I03 I04 INTEGRATION FIX READY FOR REVIEW; src tree `3c58bf9`, packet + run logs
+  refreshed). Fresh independent Checker launched on `3f00b57` (worktree `chk-w1m1`, base `455b6c6`). Both fix reviews in
+  progress; no verdicts yet; nothing merged.
 
 ## Exact next action (when implementation resumes — not before)
 
