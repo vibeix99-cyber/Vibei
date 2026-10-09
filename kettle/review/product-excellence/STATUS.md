@@ -26,7 +26,9 @@ pushed. **App code on it = `0d58c5e`** (Wave 1 merge: M1 `a6ebe00` + M2 `2becb78
 | `/home/user/wt/m1` | `pe/m1@a6ebe00` | M1 Wave 1 | APPROVED r2, merged (`7da58f1`) — idle |
 | `/home/user/wt/m2` | `pe/m2@2becb78` | M2 Wave 1 | APPROVED r1, merged (`0d58c5e`) — idle |
 | `/home/user/wt/w1fix` | `pe/w1-fix@3f00b57` | **M1 integration fix** (I03 × I04) | **APPROVED r1** — held unmerged until M2's fix is approved (any change voids the approval) |
-| `/home/user/wt/w1fix-m2` | `pe/w1-fix-m2@e1e672d` | **M2 integration fix** (I04 status bar) | `c9520db` **REJECTED r1** → M2 correcting D1/D2/D3; `e1e672d` = orchestrator WIP preserve after a container restart (src tree `c873084`), **NOT READY FOR REVIEW** |
+| `/home/user/wt/w1fix-m2` | `pe/w1-fix-m2@e932f65` | **M2 integration fix** (I04 status bar + D3 toast) | `c9520db` REJECTED r1 → **r2 READY FOR REVIEW** `e932f65` (code `0818962`, src tree `c873084`) |
+| `/home/user/wt/chk-w1m2r2` (+ `-base` at `c9520db`) | detached `e932f65` | fresh Checker for M2 r2 | review **IN PROGRESS** — no verdict |
+| `/home/user/wt/trial-w1` | detached `db3418a` | trial merge: integration + `pe/w1-fix@3f00b57` + `pe/w1-fix-m2@e932f65` (clean, no conflicts) | scratch, for the r2 Checker's interaction check; not the real merge |
 
 Archive of both unmerged fix branches (in case the container is lost):
 `review/product-excellence/archive/maker-branches-2026-10-09.bundle` (heads `pe/w1-fix@1351c99`,
@@ -41,6 +43,7 @@ Archive of both unmerged fix branches (in case the container is lost):
 | I01, I02, I03 | `a6ebe00` | **APPROVE** (r2; I03 PARTLY BLOCKED: real browser quota, real OS suspension) | `contracts/I0{1,2,3}/CHECKER-r2.md` |
 | I04, I05, I14 | `2becb78` | **APPROVE** (r1; sky "Change brew length" link judged acceptable; I05/I14 real-device BLOCKED) | `contracts/{I04,I05,I14}/CHECKER-r1.md` |
 | I04 integration fix | `c9520db` | **REJECT** (r1, after the interrupted review resumed): D1 no re-fit after resize/rotation to 375×667 (2 px sideways scroll); D2 200 % text + ≥10,000 leaves spills "Level NN" (13 px sideways scroll, pre-existing but in I04 scope) | `contracts/I04/CHECKER-integration-fix-r1.md` |
+| I04 integration fix r2 (D1, D2, D3) | `e932f65` (src `c873084`) | **IN REVIEW — no verdict yet** (fresh Checker; also checks the interaction with M1's approved rule on trial merge `db3418a`) | `contracts/I04/CHECKER-integration-fix-r2.md` (to be written) |
 | I03 × I04 integration fix (+ I01, I02 re-confirmed; I04 toast lift unchanged) | `3f00b57` (src `3c58bf9`) | **APPROVE** (r1, fresh Checker; I03 still PARTLY BLOCKED: real browser quota, real OS suspension, real AT) | `contracts/I03/CHECKER-integration-fix-r1.md` |
 
 ### Open defects (both on the integrated revision `0d58c5e`)
@@ -217,6 +220,13 @@ BLOCKED/UNKNOWN — never PASS.
 - Container restart stopped M2's r2 mid-work. Worktrees survived; M2's uncommitted edits (StatusBar.tsx, Home.module.css,
   Toast.module.css, new tests/statusbar.spec.ts, 5 r2 run logs) preserved as WIP `pe/w1-fix-m2@e1e672d` (NOT READY FOR
   REVIEW) and archived (`archive/pe-w1-fix-m2-r2wip.incremental.bundle`, on `c9520db`). M2 resumed with context intact.
+
+- M2 submitted r2 `pe/w1-fix-m2@e932f65` (READY FOR REVIEW; code `0818962`): D1 re-fit on font load after resize,
+  D2 `.statLevel` min-width max-content, D3 long toasts stay on screen at 200 % text (`Toast.module.css` only; `Toast.tsx`,
+  `flow.ts`, `integrity.spec.ts` untouched); finding 5 no change with evidence; new `tests/statusbar.spec.ts` (fails on
+  `c9520db` 4/5, passes 5/5). Maker disclosures for the Checker: 200 % text + slow fonts load CLS 0.08–0.15 (vs 0); on M2's
+  branch alone the old hold rule reads the toast area's top. Archived (`archive/pe-w1-fix-m2-r2-e932f65.incremental.bundle`).
+  Trial merge of both fixes `db3418a`: clean. Fresh Checker launched on `e932f65` (+ interaction check on `db3418a`).
 
 ## Exact next action (when implementation resumes — not before)
 
