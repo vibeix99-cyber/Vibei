@@ -26,9 +26,7 @@ pushed. **App code on it = `0d58c5e`** (Wave 1 merge: M1 `a6ebe00` + M2 `2becb78
 | `/home/user/wt/m1` | `pe/m1@a6ebe00` | M1 Wave 1 | APPROVED r2, merged (`7da58f1`) — idle |
 | `/home/user/wt/m2` | `pe/m2@2becb78` | M2 Wave 1 | APPROVED r1, merged (`0d58c5e`) — idle |
 | `/home/user/wt/w1fix` | `pe/w1-fix@3f00b57` | **M1 integration fix** (I03 × I04) | **READY FOR REVIEW** (submitted by M1 on top of WIP `1351c99`; src tree `3c58bf9` unchanged) |
-| `/home/user/wt/w1fix-m2` | `pe/w1-fix-m2@c9520db` | **M2 integration fix** (I04 status bar) | **READY FOR REVIEW** (submitted by M2) |
-| `/home/user/wt/chk-w1m2` | detached `c9520db` (+2 untracked checker vite configs) | Checker for `c9520db` | review **INTERRUPTED** (usage limit) — no verdict |
-| `/home/user/wt/chk-w1m2-base` | detached `1bec1a8` | same Checker's base copy | scratch |
+| `/home/user/wt/w1fix-m2` | `pe/w1-fix-m2@c9520db` | **M2 integration fix** (I04 status bar) | **REJECTED r1** → M2 correcting D1/D2 (r2 not yet submitted) |
 | `/home/user/wt/chk-w1m1` | detached `3f00b57` | fresh Checker for M1's fix | review **IN PROGRESS** — no verdict |
 | `/home/user/wt/chk-w1m1-base` | detached `455b6c6` | that Checker's base copy | scratch |
 
@@ -44,7 +42,7 @@ Archive of both unmerged fix branches (in case the container is lost):
 | I03 | `6d5969e` | **REJECT** (r1): A warning over Tea time; B warning over Add 5/Pause/Resume/End on phones | `contracts/I03/CHECKER-r1.md` |
 | I01, I02, I03 | `a6ebe00` | **APPROVE** (r2; I03 PARTLY BLOCKED: real browser quota, real OS suspension) | `contracts/I0{1,2,3}/CHECKER-r2.md` |
 | I04, I05, I14 | `2becb78` | **APPROVE** (r1; sky "Change brew length" link judged acceptable; I05/I14 real-device BLOCKED) | `contracts/{I04,I05,I14}/CHECKER-r1.md` |
-| I04 integration fix | `c9520db` | **INTERRUPTED, review resumed — no verdict yet** (not APPROVE, not REJECT) | `contracts/I04/CHECKER-integration-fix-r1.md` (to be written) |
+| I04 integration fix | `c9520db` | **REJECT** (r1, after the interrupted review resumed): D1 no re-fit after resize/rotation to 375×667 (2 px sideways scroll); D2 200 % text + ≥10,000 leaves spills "Level NN" (13 px sideways scroll, pre-existing but in I04 scope) | `contracts/I04/CHECKER-integration-fix-r1.md` |
 | I03 × I04 integration fix | `3f00b57` | **IN REVIEW — no verdict yet** (fresh Checker; also re-confirms I01/I02 and I04 toast behaviour) | `contracts/I03/CHECKER-integration-fix-r1.md` (to be written) |
 
 ### Open defects (both on the integrated revision `0d58c5e`)
@@ -196,6 +194,12 @@ BLOCKED/UNKNOWN — never PASS.
 - M1 submitted `pe/w1-fix@3f00b57` (I03 I04 INTEGRATION FIX READY FOR REVIEW; src tree `3c58bf9`, packet + run logs
   refreshed). Fresh independent Checker launched on `3f00b57` (worktree `chk-w1m1`, base `455b6c6`). Both fix reviews in
   progress; no verdicts yet; nothing merged.
+
+- Checker r1 on `c9520db` (resumed after interruption) → **REJECT**: D1 (no re-fit after resize/rotation to 375×667;
+  `document.fonts.status` briefly "loading" on resize, only retry armed at mount) and D2 (200 % text, ≥10,000 leaves:
+  fixed 56 px level column spills; pre-existing at `1bec1a8` but inside I04). Passes kept: fresh-load 375 one row, no
+  regressions in 95 configs, CLS 0, protected Home elements intact. Routed back to M2 for r2 on `pe/w1-fix-m2`. Checker
+  worktrees `chk-w1m2`/`chk-w1m2-base` removed by the Checker.
 
 ## Exact next action (when implementation resumes — not before)
 
