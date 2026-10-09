@@ -10,6 +10,79 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
+## ▶ RECOVERY CHECKPOINT — 2026-10-09 19:30 UTC (read this first)
+
+**Restore point:** `8f1044a` — untouched; never reset or rewrite past it (local tag `pre-product-excellence`; on the
+remote it is an ancestor of the integration branch).
+**Integration branch:** `claude/wizardly-galileo-uy89d9` @ the commit that adds this checkpoint (parent `a9f94b6`),
+pushed. **App code on it = `0d58c5e`** (Wave 1 merge: M1 `a6ebe00` + M2 `2becb78`). Integration tree clean.
+**Wave 1 is NOT clean:** two integration defects are open (below). **Wave 2 has not started.** No Final Boss yet.
+
+### Branches and worktrees (local only — the git proxy accepts pushes to the integration branch only)
+
+| Worktree | Branch @ commit | Role | State |
+|---|---|---|---|
+| `/home/user/Vibei` | `claude/wizardly-galileo-uy89d9` | integration | clean, pushed |
+| `/home/user/wt/m1` | `pe/m1@a6ebe00` | M1 Wave 1 | APPROVED r2, merged (`7da58f1`) — idle |
+| `/home/user/wt/m2` | `pe/m2@2becb78` | M2 Wave 1 | APPROVED r1, merged (`0d58c5e`) — idle |
+| `/home/user/wt/w1fix` | `pe/w1-fix@1351c99` | **M1 integration fix** (I03 × I04) | **IN PROGRESS — no submission yet.** `1351c99` = orchestrator WIP preserve of M1's on-disk work; NOT READY FOR REVIEW |
+| `/home/user/wt/w1fix-m2` | `pe/w1-fix-m2@c9520db` | **M2 integration fix** (I04 status bar) | **READY FOR REVIEW** (submitted by M2) |
+| `/home/user/wt/chk-w1m2` | detached `c9520db` (+2 untracked checker vite configs) | Checker for `c9520db` | review **INTERRUPTED** (usage limit) — no verdict |
+| `/home/user/wt/chk-w1m2-base` | detached `1bec1a8` | same Checker's base copy | scratch |
+
+Archive of both unmerged fix branches (in case the container is lost):
+`review/product-excellence/archive/maker-branches-2026-10-09.bundle` (heads `pe/w1-fix@1351c99`,
+`pe/w1-fix-m2@c9520db`; restore with `git fetch <bundle> 'refs/heads/*:refs/heads/*'`).
+
+### Verdicts (exact revisions; independent Checkers only — no maker approved its own work)
+
+| Contract | Revision | Verdict | File |
+|---|---|---|---|
+| I01, I02 | `6d5969e` | APPROVE (r1) — superseded by r2 | `contracts/I01/CHECKER-r1.md`, `contracts/I02/CHECKER-r1.md` |
+| I03 | `6d5969e` | **REJECT** (r1): A warning over Tea time; B warning over Add 5/Pause/Resume/End on phones | `contracts/I03/CHECKER-r1.md` |
+| I01, I02, I03 | `a6ebe00` | **APPROVE** (r2; I03 PARTLY BLOCKED: real browser quota, real OS suspension) | `contracts/I0{1,2,3}/CHECKER-r2.md` |
+| I04, I05, I14 | `2becb78` | **APPROVE** (r1; sky "Change brew length" link judged acceptable; I05/I14 real-device BLOCKED) | `contracts/{I04,I05,I14}/CHECKER-r1.md` |
+| I04 integration fix | `c9520db` | **INTERRUPTED — no verdict** (not APPROVE, not REJECT) | none yet (`contracts/I04/CHECKER-integration-fix-r1.md` to be written) |
+| I03 × I04 integration fix | — | **not submitted** | — |
+
+### Open defects (both on the integrated revision `0d58c5e`)
+
+1. **I03 × I04 — storage-full warning on the session screen at 375×667** (found by the Wave 1 integration regression,
+   `integration/wave1/REGRESSION.md`). Verified root cause (M1, on disk): M2's F11 `data-toast-above` lifts toasts above
+   the session controls, so M1's r2 hold rule (controls only) shows the warning over the countdown/status/meta readout.
+   M1's fix (`src/app/flow.ts`, `src/ui/Toast.tsx`, `tests/integrity.spec.ts`, `docs/areas/timer.md`) is complete on disk
+   in `pe/w1-fix@1351c99` (src tree `3c58bf9`) with a drafted packet `contracts/I03/INTEGRATION-FIX-READY-FOR-REVIEW.md`,
+   BEFORE/AFTER captures (`contracts/I03/captures/{before,after}-integration/`) and runs: tsc clean, vitest 265/265,
+   chromium (integrity + a11y + whistle) **45/45**, timer/pwa 29 passed / 2 skipped, placement tests on `455b6c6`
+   5 fail / 4 pass (reproduction). **Not yet submitted** by the maker.
+2. **I04 — Today status bar wraps at 375×667, 100% text, both themes** (found by orchestrator inspection of the integrated
+   captures). M2 fix submitted as `c9520db` (app change `3bc0c66`, src tree `57f00c46…`): measured normal → tight padding →
+   wrap only if still too wide. M2's evidence (`contracts/I04/integration-fix/`): captures 01/01b at 390/375/1440 both
+   themes, compare sheets K01 / baseline / integrated / after, CLS 0 on Today load, 200% text and 320 px, brew-length
+   discovery, Today audit; tsc clean, vitest 265/265, `tests/a11y.spec.ts` 9/9. **Independent review interrupted.**
+
+### Tests and screenshots (revision each was taken on)
+
+| Evidence | Revision | Result |
+|---|---|---|
+| Pre-rebuild checks | `8f1044a` (= `0532913` code) | tsc clean, vitest 256/256, e2e 29 passed / 2 skipped, core-loop checker 85/85 |
+| BEFORE baseline, 135 captures | `8f1044a` (`baseline/`, commit `d17dda1`) | 0 page errors; orchestrator-inspected |
+| I14 baseline perf | `8f1044a` build (`perf/BASELINE.md`) | phone whistle → summary CLS 0.50; real-device BLOCKED |
+| Wave 1 integration regression | `0d58c5e` (`integration/wave1/`) | tsc clean, vitest 265/265, timer/pwa 29/2 skipped, chromium **41/42** (defect 1) |
+| Integrated captures, 135 | app `0d58c5e` (labelled `455b6c6`/`1bec1a8`, docs-only commits) (`integration/wave1/captures/`) | 0 page errors; orchestrator found defect 2 |
+| M1 fix runs | src tree `3c58bf9` (on disk = `1351c99`) | as defect 1 above (maker's own runs, unreviewed) |
+| M2 fix runs | src tree `57f00c46` (`3bc0c66` = `c9520db`) | as defect 2 above (maker's own runs, review interrupted) |
+
+### Unchanged commitments
+
+Maker/checker separation holds: makers only submit READY FOR REVIEW; a fresh Checker that did not build the change
+reviews the exact commit; any change after APPROVE needs re-review. Protected strengths (PRESERVE_LIST) are untouched by
+the open fixes: cream/purple identity, Fredoka/Nunito, orange focus / blue rest, approved Chai, orange kettle, continuous
+room, compact summary with sticky Tea time/Skip footer and final-line clearance, five wrapping categories,
+15/25/50/Custom with docked start, record-player drawing → close-up, four destinations, progression rules, data
+compatibility. Real-device audio, OS suspension, real-phone performance and human screen-reader sessions stay
+BLOCKED/UNKNOWN — never PASS.
+
 ## Recovered state at start (revision 8f1044a)
 
 - Working tree clean; `8f1044a` = `0532913` code (empty diff) + checkpoint commit.
@@ -21,10 +94,10 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 
 | ID | Pri | Owner | State | Evidence / verdict |
 |---|---|---|---|---|
-| I01 Reliable time, exactly-once completion | P0 | M1 | **APPROVED r2 on `pe/m1@a6ebe00`** | passes without change; awaiting Wave 1 integration |
-| I02 Recoverable End and task disposition | P0 | M1 | **APPROVED r2 on `a6ebe00`** | passes without change; awaiting integration |
-| I03 Data safety, truthful storage consequences | P0 | M1 | **APPROVED r2 on `a6ebe00`** (PARTLY BLOCKED: real Safari/Firefox/Android quota, real OS suspension) | r1 REJECT (A, B) fixed and re-verified with real taps; awaiting integration |
-| I04 Access and short-screen reachability | P0 | M2 | **APPROVED r1 on `pe/m2@2becb78`**, integrated | gate: retest after all UI work; sky "Change brew length" link judged acceptable by the checker |
+| I01 Reliable time, exactly-once completion | P0 | M1 | **APPROVED r2 on `pe/m1@a6ebe00`**, merged | passes without change; touched again by open defect 1 (re-confirm on the fix) |
+| I02 Recoverable End and task disposition | P0 | M1 | **APPROVED r2 on `a6ebe00`**, merged | passes without change; re-confirm on the defect-1 fix |
+| I03 Data safety, truthful storage consequences | P0 | M1 | **APPROVED r2 on `a6ebe00`**, merged — **integration defect 1 open** (fix in progress, `pe/w1-fix`) | PARTLY BLOCKED: real Safari/Firefox/Android quota, real OS suspension |
+| I04 Access and short-screen reachability | P0 | M2 | **APPROVED r1 on `pe/m2@2becb78`**, merged — **integration defect 2 open** (fix `c9520db` READY FOR REVIEW, review interrupted) | gate: retest after all UI work; sky link judged acceptable |
 | I05 Real whistle, mute, ambience expectations | P0 | M2 | APPROVED r1 on `pe/m2@2becb78` (PARTLY BLOCKED: real-device audio) | real-device cases BLOCKED in this environment |
 | I06 Crisp approved Chai | P1 | M4 | NOT STARTED | |
 | I07 Effort → leaves → level → Nook, once | P1 | M3 | NOT STARTED | |
@@ -34,7 +107,7 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 | I11 Consistent settings and controls | P2 | M5 | NOT STARTED | conditional |
 | I12 Truthful history and Stats | P2 | M5 | NOT STARTED | conditional |
 | I13 Supportive return | P2 | M3 | NOT STARTED | conditional |
-| I14 Measured responsiveness | P2 | M2 | **Baseline + measured fix APPROVED r1 on `2becb78`**, integrated | phone whistle → summary CLS 0.50 → 0.003; real-device BLOCKED | baseline before any art/motion change; real-device BLOCKED |
+| I14 Measured responsiveness | P2 | M2 | **Baseline + measured fix APPROVED r1 on `2becb78`**, merged | phone whistle → summary CLS 0.50 → 0.003; real-device BLOCKED |
 | I15 Bounded comprehension check | P3 | M3 | NOT STARTED | only if I07/I08 comprehension stays uncertain |
 
 ## Waves and file ownership
@@ -113,8 +186,16 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
   `d3f4e06` (WIP evidence). Both resumed with context intact. Each fix gets a fresh independent Checker on its
   exact commit; Wave 1 is clean only after both merge and the full regression + affected captures pass.
 
-## Exact next action
+## Exact next action (when implementation resumes — not before)
 
-M1 fixes the Wave 1 integration interaction on `pe/w1-fix` → fresh Checker on that exact commit (I03 + I04 toast
-behavior) → merge → re-run the chromium e2e gate → launch Wave 2: M3 (I08, I07, I09) and M4 (I06) from the clean
-integrated revision with the finalized briefs.
+1. M1 (maker) turns `pe/w1-fix@1351c99` into its READY FOR REVIEW commit (message `I03 I04 INTEGRATION FIX READY FOR
+   REVIEW:`; packet already drafted; re-run nothing unless the tree changes).
+2. Resume or relaunch the independent Checker on `c9520db` (I04 status bar); a fresh Checker (not M1, not the `c9520db`
+   checker's maker) reviews M1's submitted commit for I03 and re-confirms I01/I02 and the I04 toast behaviour at 375×667,
+   390×844 and 1440×900.
+3. Only after both APPROVE: merge `pe/w1-fix-m2` and `pe/w1-fix` into the integration branch → rerun tsc, vitest,
+   timer/pwa, integrity + a11y + whistle (full chromium), recapture affected states (01/01b, session-screen warning
+   states, 07/08) at 390×844 / 375×667 / 1440×900 both themes → confirm no interaction between the two fixes → update
+   this file and `EVIDENCE-MANIFEST.md`.
+4. Wave 1 clean → launch Wave 2 (M3: I08, I07, I09; M4: I06 incl. whistle pose preload/pop-in) from the clean revision
+   with the finalized briefs; BEFORE = the recaptured clean revision.
