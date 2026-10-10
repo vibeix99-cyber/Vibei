@@ -1,0 +1,95 @@
+# r4 gate tests (this branch's tests/a11y.spec.ts @ 9326de5) against app 0d58c5e (git-archive copy) on 5232, 2026-10-10T01:58:47Z
+# KETTLE_PORT=5232 npx playwright test tests/a11y.spec.ts -g 'short screen|break-over controls' --project=chromium --workers=2
+
+Running 3 tests using 1 worker
+
+  ✘  1 [chromium] › tests/a11y.spec.ts:109:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll (42.9s)
+  -  2 [chromium] › tests/a11y.spec.ts:364:3 › toasts never cover the break-over controls, carried task included (390×844)
+  -  3 [chromium] › tests/a11y.spec.ts:364:3 › toasts never cover the break-over controls, carried task included (375×667)
+
+
+  1) [chromium] › tests/a11y.spec.ts:109:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
+
+    [32m- Expected  - 1[39m
+    [31m+ Received  + 5[39m
+
+    [32m- Array [][39m
+    [31m+ Array [[39m
+    [31m+   "break-over: \"Mark it done, start fresh\" stays under span._message_12y3u_54",[39m
+    [31m+   "break-over + 1 toast: \"Mark it done, start fresh\" stays under span._message_12y3u_54",[39m
+    [31m+   "break-over + 2 toasts: \"Mark it done, start fresh\" stays under span._message_12y3u_54",[39m
+    [31m+ ][39m
+
+      134 |     await check(pg.id, page);
+      135 |   }
+    > 136 |   expect(out).toEqual([]);
+          |               ^
+      137 | });
+      138 |
+      139 | // ---------------------------------------------------------------- keyboard journey
+        at /home/user/wt/w1fix-m2/kettle/tests/a11y.spec.ts:136:15
+
+    Error Context: test-results/a11y-short-screen-375×667--859fd-y-chrome-no-sideways-scroll-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/a11y-short-screen-375×667--859fd-y-chrome-no-sideways-scroll-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/a11y-short-screen-375×667--859fd-y-chrome-no-sideways-scroll-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/a11y.spec.ts:109:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll 
+  2 did not run
+exit 1
+
+# the 2 serial tests that did not run, on their own: KETTLE_PORT=5232 npx playwright test tests/a11y.spec.ts -g 'break-over controls' --project=chromium --workers=2
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium] › tests/a11y.spec.ts:364:3 › toasts never cover the break-over controls, carried task included (390×844) (16.1s)
+  -  2 [chromium] › tests/a11y.spec.ts:364:3 › toasts never cover the break-over controls, carried task included (375×667)
+
+
+  1) [chromium] › tests/a11y.spec.ts:364:3 › toasts never cover the break-over controls, carried task included (390×844) 
+
+    Error: 1 toast(s)
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
+
+    [32m- Expected  - 1[39m
+    [31m+ Received  + 1[39m
+
+    [2m  Array [[22m
+    [32m-   "Mark it done, start fresh: clear",[39m
+    [31m+   "Mark it done, start fresh: under a toast (1 up)",[39m
+    [2m    "Put the kettle on: clear",[22m
+    [2m    "That’s all for now: clear",[22m
+    [2m  ][22m
+
+      391 |         });
+      392 |       }, names);
+    > 393 |       expect(r, `${n} toast(s)`).toEqual(names.map((nm) => `${nm}: clear`));
+          |                                  ^
+      394 |     }
+      395 |     await page.getByRole('button', { name: /Mark it done, start fresh/ }).click(); // operable with the toasts up
+      396 |     await expect(page.getByRole('button', { name: /Mark it done, start fresh/ })).toHaveCount(0);
+        at /home/user/wt/w1fix-m2/kettle/tests/a11y.spec.ts:393:34
+
+    Error Context: test-results/a11y-toasts-never-cover-th-f05ed-ried-task-included-390×844--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/a11y-toasts-never-cover-th-f05ed-ried-task-included-390×844--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/a11y-toasts-never-cover-th-f05ed-ried-task-included-390×844--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/a11y.spec.ts:364:3 › toasts never cover the break-over controls, carried task included (390×844) 
+  1 did not run
+exit 1

@@ -1,6 +1,7 @@
-# I04 integration fix — Today's stats wrap at 375×667 · READY FOR REVIEW (r3)
+# I04 integration fix — Today's stats wrap at 375×667 · READY FOR REVIEW (r4)
 
-> **r3 (this revision)** answers Checker r2's REJECT (`CHECKER-integration-fix-r2.md`: R2-D1, R2-D3, note 4, finding 5);
+> **r4 (this revision)** adds the orchestrator-adjudicated D4 (a toast covers the break-over "Mark it done, start
+> fresh" button); see **"r4"** at the end. r3 was not reviewed. **r3** answers Checker r2's REJECT (`CHECKER-integration-fix-r2.md`: R2-D1, R2-D3, note 4, finding 5);
 > see **"r3"** at the end. **r2** answered Checker r1's REJECT (`CHECKER-integration-fix-r1.md`, D1 and D2) and the I03 checker's
 > routed finding D3 (long toast at 200 % text) and note 5. See **"r2"** at the end. The r1 text below is kept as it was
 > submitted at `c9520db`.
@@ -592,3 +593,116 @@ stopped, and the trial worktree was removed.
   action inside it. Chromium only.
 - **BLOCKED:** real screen readers. The live region and DOM order are unchanged (only the visual layout is reversed and
   re-ordered back).
+
+---
+
+## r4
+
+- **Revision:** the commit that adds this section (`I04 INTEGRATION FIX READY FOR REVIEW (r4): …`). The r4 code is
+  `9326de5`; the final commit adds evidence only. `kettle/src` tree of `9326de5` and of the final commit:
+  `dcc3778dd31e832041817e95c8677be87406b617`. Base for review: `e4be56e` (r3, not reviewed).
+- **Files:** `src/screens/focus/FocusScreen.tsx`, `src/screens/focus/FocusScreen.module.css`, `tests/a11y.spec.ts`.
+  Not touched: `Toast.tsx`, `flow.ts`, `progress/**`, `integrity.spec.ts`. The r3 files are unchanged.
+- **Proposed state:** **FIXED**.
+- **Evidence:** `contracts/I04/integration-fix/r4/`. Probes in `.tmp/w1fix/` (gitignored).
+
+### D4: a toast covers the break-over "Mark it done, start fresh" button
+
+- **Adjudication (orchestrator):** pre-existing on the integration branch (`0d58c5e`), not caused by either fix. It
+  shows on dates when a recipe completes as the tea break ends ("Recipe done: Take 2 full tea breaks · +15 leaves").
+- **Cause:** the carried task's `.overMark` button sat outside the toast-above group (`.overActions[data-toast-above]`),
+  so the lift floated a toast just above "Put the kettle on", which is where "Mark it done" is (375×667: button
+  451–495, toast 445–501).
+- **Fix:** one toast-above group for every break-over control. A new `.overDock[data-toast-above]` wraps "Mark it
+  done" and `.overActions` (the attribute moves from `.overActions` to it). `useToastAbove` / M1's `toastLiftBottom()`
+  already read every `[data-toast-above]`; the group's top is now "Mark it done"'s top and its bottom stays at the
+  actions, so the lift's "low enough to cover" (60 %) test counts it at every tested size.
+  - `.overDock` is a centred 8 px-gap grid at full width, i.e. the same layout as when its children were direct items of
+    `.over`: **every control's rectangle is identical before and after in all 24 probe cases**.
+  - Without a carried task the group is just the two actions, as before.
+  - Effect: on phones a toast now sits over the "Ready for another brew of …" line (text, not a control) for its 3.2 s;
+    at 1440 the toast sits 60 px higher, still over the stage beside the panel.
+  - M1's rule (`[data-toast-above] :is(button…)`) now also lists "Mark it done". On break-over the ritual rule holds
+    the warning before that list matters (verified below).
+- **Gate, now independent of the date** (`tests/a11y.spec.ts`):
+  - "short screen (375×667)": after the existing break-over check, every toast is put away and 1, then 2, of the toasts
+    the end of a break can bring are raised (the app's own `toast()`, 60 s, "Recipe done: Take 2 full tea breaks · +15
+    leaves", "New badge: Tea Time"), and the reach check runs again (`break-over + 1 toast`, `break-over + 2 toasts`).
+  - New "toasts never cover the break-over controls, carried task included" at 390×844 and 375×667: the real journey to
+    break-over with the intention carried; with 1 and 2 toasts each of the three controls hit-tests as itself and no
+    toast's box overlaps it; then "Mark it done" is tapped with the toasts up and goes away.
+  - **Fails on `e4be56e` and on `0d58c5e`** (`r4/gate-on-e4be56e.txt`, `r4/gate-on-0d58c5e.txt`): short screen reports
+    `break-over`, `break-over + 1 toast` and `break-over + 2 toasts`: `"Mark it done, start fresh" stays under
+    span._message…`; the new test at 390×844: `Mark it done, start fresh: under a toast (1 up)` (its 375 twin does not
+    run after that in serial mode).
+  - **Passes on the fix:** `a11y.spec.ts` + `statusbar.spec.ts` **18/18** (`r4/specs-a11y-statusbar-on-fix.txt`).
+- **Retest, break-over probe** (`.tmp/w1fix/breakover.mjs`): 375×667 and 390×844 at DPR 2, 1440×900 at DPR 1, both
+  themes, 100 % and 200 % text, 1 and 2 toasts. Each control is scrolled to the middle of the screen (at 200 % the panel
+  is taller than a phone), the lift re-measures, then the control is hit-tested at its centre and checked against every
+  toast's box.
+  - `e4be56e`: **16 failures in 24** (`r4/breakover-before-e4be56e.txt`): every phone case, "Mark it done" under the
+    toast; 1440 clear (the toast is over the stage).
+  - Fix: **0 / 24** (`r4/breakover-after.txt`). Fresh trial merge: **0 / 24** (`r4/breakover-trial.txt`).
+  - "Put the kettle on" and "That's all for now" hit-test clear in every case, before and after.
+- **Captures** (`r4/breakover/breakover-{1,2}toast-<viewport>-t{100,200}-<theme>-{before,after}.png`, 48 frames).
+  Opened: 375×667 light and dark after (1 toast), 375×667 light after at 200 % (2 toasts), 390×844 dark before and after
+  (1 toast), 1440×900 light before and after (1 toast), 1440×900 dark after (2 toasts), and the orchestrator's
+  `adj/break-over-0d58c5e.png`.
+  - REFERENCE K04 (`VISUAL_BENCHMARK_LIBRARY/assets/current/whistle-to-summary-phone-dark-reduced-motion-frames.jpg`)
+    opened for continuity. It runs from Today through the whistle and summary to the tea break. Break-over continues
+    that panel: title, the "Ready for another brew" line, the carried task's green "Mark it done", the full-width orange
+    primary and the ghost "That's all for now". The after frames keep that layout unchanged; only the toast moves up.
+
+### Trial merge with M1 (fresh, r4)
+
+- **Setup:** `git worktree add --detach <scratch>/trial-r4 claude/wizardly-galileo-uy89d9` (`4b0507b`), merge
+  `pe/w1-fix` (`3f00b57`), then `pe/w1-fix-m2` (`9326de5`), giving `056931b`, `kettle/src`
+  `0d0db47afef52a7788d012e335e0c537cbb5532d`. The integration branch later moved to `4992956` with no change under
+  `kettle/src` or `kettle/tests` (its `kettle/src` is still `1fc4a1b…`, the same as `0d58c5e`).
+  - `flow.ts`, `Toast.tsx` and `integrity.spec.ts` are byte-identical to `3f00b57`.
+  - `StatusBar.tsx`, `Home.module.css`, `Toast.module.css`, `FocusScreen.tsx`, `FocusScreen.module.css`,
+    `statusbar.spec.ts` and `a11y.spec.ts` are byte-identical to `9326de5`.
+- tsc clean; vitest 26 files, 265 passed (`r4/tsc-vitest.txt`, branch and trial).
+- `integrity.spec.ts`, `a11y.spec.ts`, `statusbar.spec.ts` and `whistle.spec.ts` (`--workers=2`): **54/54 passed**
+  (`r4/trial-e2e.txt`). The full `a11y.spec.ts` is green, including "short screen", the two new break-over tests and
+  "a toast never covers the session controls or the summary footer"; the I03 storage-full tests in `integrity.spec.ts`
+  pass.
+- **M1's warning hold on break-over is unaffected** (`r4/warning-hold-on-breakover-trial.txt`,
+  `.tmp/w1fix/bo-warning.mjs`, frames in `r4/warning-hold/`). localStorage really full; brew → summary → tea break →
+  break-over with the carried task; 375×667, 390×844 and 1440×900, both themes:
+  - on break-over the warning is never on screen: **0 of 40 samples** over 4 s, in every config (on 1440 it had shown
+    during the brew, beside the panel);
+  - after "That's all for now" it shows on Today in every config; over 70 samples in 7 s the start button never
+    hit-tests as a toast, and at 7 s it hit-tests as itself with the warning up.
+  - In the first 0.3–0.6 s on Today the start's centre hits Today's own entering elements (the page transition), not a
+    toast. A first version of this probe hit-tested once, 1.2 s after the warning appeared, and failed once (dark
+    390×844) in that transition: the trace showed the warning re-shown by M1's watcher while Today settled, never
+    over the start. The probe now samples over 7 s.
+- The worktree was removed.
+
+### Commands and results (r4, final tree `dcc3778…`)
+
+```
+npx tsc --noEmit (branch and trial)                                               → clean
+npx vitest run (branch and trial)                                                 → 26 files, 265 passed
+KETTLE_PORT=5202 npx playwright test tests/a11y.spec.ts tests/statusbar.spec.ts \
+     --project=chromium --workers=2 (branch)                                      → 18 passed
+KETTLE_PORT=5222|5232 … tests/a11y.spec.ts -g "short screen|break-over controls"
+     against e4be56e / 0d58c5e (git-archive copies)                               → short screen failed (D4); then
+                                                                                     -g "break-over controls": failed
+KETTLE_PORT=5232 … integrity + a11y + statusbar + whistle (fresh trial)           → 54 passed
+node .tmp/w1fix/breakover.mjs <base> before|after|trial <dir>                     → e4be56e 16/24 failures; fix 0/24;
+                                                                                     trial 0/24
+node .tmp/w1fix/bo-warning.mjs http://127.0.0.1:5232 trial <dir>                  → 0 failures (6 configs)
+```
+
+Servers on 5202 / 5222 / 5232 were all stopped, and the trial worktree was removed.
+
+### Still open (r4)
+
+1. r3's "Still open" item 1 (a11y "short screen" failing on dates when a recipe completes at break end) is **resolved**
+   by D4, and the gate no longer depends on the date.
+2. On phones a progress toast raised at break end now sits over the "Ready for another brew of …" line for its 3.2 s.
+   That line is text, not a control; the toast is still raised there at all because of Finding 5 (I10 candidate).
+3. r3's "Still open" items 2–4 are unchanged.
+4. BLOCKED / UNKNOWN as in r3 (real devices, OS text size, iOS Safari, real screen readers).
