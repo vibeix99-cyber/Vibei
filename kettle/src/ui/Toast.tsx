@@ -98,23 +98,30 @@ export function Toaster() {
 }
 
 /**
- * While toasts are up, float them above every on-screen `[data-toast-above]` element (Today's docked start, the
- * session's Pause/+5/End row, the summary's Tea time/Skip footer) by measuring where the highest one starts.
- * Returns a CSS bottom in px, or null to keep the stylesheet's position (nothing marked on screen).
+ * Where toasts float right now: a CSS bottom in px that clears every on-screen `[data-toast-above]` element (Today's
+ * docked start, the session's Pause/+5/End row, the summary's Tea time/Skip footer), measured from where the highest
+ * one starts — or null to keep the stylesheet's position (nothing marked low enough on screen). Exported so callers
+ * can tell where a toast would land before showing one (`src/app/flow.ts`, the storage-full warning).
  */
+export function toastLiftBottom(): number | null {
+  if (typeof document === 'undefined') return null;
+  let top = Infinity;
+  for (const el of document.querySelectorAll<HTMLElement>('[data-toast-above]')) {
+    if (el.closest('[aria-hidden="true"], [inert]')) continue;
+    const r = el.getBoundingClientRect();
+    // Only what sits low enough for a bottom toast to cover (desktop's mid-screen controls are clear anyway).
+    if (r.height > 0 && r.top < innerHeight && r.bottom > innerHeight * 0.6) top = Math.min(top, r.top);
+  }
+  return top === Infinity ? null : Math.round(innerHeight - top + 10);
+}
+
+/** While toasts are up, keep them floated by `toastLiftBottom()` (re-measured as the layout under them changes). */
 function useToastAbove(active: boolean): number | null {
   const [bottom, setBottom] = useState<number | null>(null);
   useEffect(() => {
     if (!active) return;
     const measure = () => {
-      let top = Infinity;
-      for (const el of document.querySelectorAll<HTMLElement>('[data-toast-above]')) {
-        if (el.closest('[aria-hidden="true"], [inert]')) continue;
-        const r = el.getBoundingClientRect();
-        // Only what sits low enough for a bottom toast to cover (desktop's mid-screen controls are clear anyway).
-        if (r.height > 0 && r.top < innerHeight && r.bottom > innerHeight * 0.6) top = Math.min(top, r.top);
-      }
-      const next = top === Infinity ? null : Math.round(innerHeight - top + 10);
+      const next = toastLiftBottom();
       setBottom((b) => (b === next ? b : next));
     };
     measure();

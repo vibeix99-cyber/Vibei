@@ -15,6 +15,8 @@
 //   s1a-warning-before-end           a second profile: brew started, visible warning tapped away, 70 s later and 4 s
 //                                    before 0:00 a pause + resume fail to save, 1.2 s later
 //   s1b-warning-before-end-summary   …the summary 3 s after it appears (Checker r1 defect A)
+//   s4a-today-pending-warning        …Skip break: Today with the warning (when it appears + 0.6 s)
+//   s4b-next-brew-pending-warning    …"Put the kettle on" pressed while the warning is up, 1.5 s later (integration fix)
 //   s2-restore-storage-full          a third profile adds a valid backup (one new brew) from Settings › Your data
 //
 // --rev labels the code the server at --base serves (e.g. "src tree <hash>"), so captures can be tied to a commit.
@@ -168,6 +170,19 @@ const toEndMinus = (page, ms) =>
   await page.waitForTimeout(3000);
   meta.states.s1b = { hash: await hashOf(page), toast: await toasts(page) };
   await page.screenshot({ path: `${out}/s1b-warning-before-end-summary.png` });
+
+  // s4: Skip break → Today (the held warning shows) → the next brew is started while it is up.
+  const skip = page.getByRole('button', { name: 'Skip break' });
+  if (await skip.isVisible().catch(() => false)) await skip.click();
+  await page.waitForFunction(() => document.querySelectorAll('[aria-label="Notifications"] li').length > 0, null, { timeout: 3000 }).catch(() => {});
+  await page.waitForTimeout(600);
+  meta.states.s4a = { hash: await hashOf(page), toast: await toasts(page) };
+  await page.screenshot({ path: `${out}/s4a-today-pending-warning.png` });
+  const cta = page.getByRole('button', { name: /^Put the kettle on/ });
+  if (await cta.isVisible().catch(() => false)) await cta.click();
+  await page.waitForTimeout(1500);
+  meta.states.s4b = { hash: await hashOf(page), toast: await toasts(page) };
+  await page.screenshot({ path: `${out}/s4b-next-brew-pending-warning.png` });
   await ctx.close();
 }
 
