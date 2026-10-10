@@ -10,7 +10,88 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
-## ⏸ PAUSE CHECKPOINT — 2026-10-10 01:30 UTC (read this first) · ▶ RESUMED 01:40 UTC
+## ⏸ PAUSE CHECKPOINT (round 6) — 2026-10-10 15:12 UTC (read this first)
+
+**Paused by the user at M2's round-6 submission** (switching the session to Ultracode). No Checker has been launched,
+nothing is merged, round 7 and Wave 2 have not started. No agents, dev servers, browser tests or monitors are running.
+The last item stopped was an orphaned M2 wait loop for a probe that was no longer running; it was killed by PID and had
+no log.
+
+- **Restore point:** `8f1044a`, untouched (tag `pre-product-excellence`).
+- **Integration branch:** `claude/wizardly-galileo-uy89d9`.
+  - App code `0d58c5e` (Wave 1 merge), not yet clean.
+  - Branch HEAD: the commit that adds this checkpoint (parent `c6c7922`).
+- **Round-6 submission (combined I03 × I04 fix, maker M2, READY FOR REVIEW, NOT REVIEWED):**
+  - `pe/w1-fix-m2@51521cf`, the submission commit, which adds only evidence and the packet.
+    - Last code commit `091249a`.
+    - `kettle/src` tree `05bb3f8`.
+    - Contains M1's approved `pe/w1-fix@3f00b57` via merge `ca23385`.
+  - Scratch merge onto integration HEAD `c6c7922`: `859f9fb` (parents `c6c7922`, `091249a`).
+    - `kettle/src` tree `05bb3f8`, identical to the branch.
+    - No conflicts; tsc clean; vitest 265.
+    - Scratch worktree removed; the commit object is kept locally.
+  - **Packet:** `kettle/review/product-excellence/contracts/I04/INTEGRATION-FIX-READY-FOR-REVIEW.md` on `pe/w1-fix-m2`,
+    section "r6 (combined)", items (a)–(f).
+  - **Evidence:** `contracts/I04/integration-fix/r6/`.
+    - (c) logs and clips: `c-repro/`.
+    - (d) keyboard: `d-keyboard/`.
+    - (f) 64 captures: `captures/`.
+    - Test logs: `e2e-chromium.txt`, `e2e-timer-pwa.txt`, `tsc-vitest.txt`.
+    - Changed files: `changed-files.txt`.
+  - **Archived:** `archive/pe-w1-fix-m2-r6-51521cf.incremental.bundle` (38.8 MB, needs `db8220e`).
+- **Maker's claims, unverified by any Checker:**
+  - **R5-D1 removed by construction:** a stack holding an action toast is a plain top-down list led by that toast. Nothing
+    in it is sticky, reversed or transformed, so the warning's box sits at or above its resting place, which is inside
+    the room.
+  - **Code changes:** `Toast.tsx` changed only at the Toaster call site (lift kept until the last toast has faded out).
+    `toastLiftBottom()`, `useToastAbove()`, `flow.ts` and `integrity.spec.ts` are byte-identical to `3f00b57`.
+  - **(c) reproduction** (disposable profile, 200 % text, storage full, three toasts after a level-up, real timers, real
+    wheel and touch, expiry before / during / after the gesture):
+    - 375×667 light: 20 runs, 0 failures.
+    - 375×667 dark: 20 runs, 0 failures.
+    - 844×390 light: 20 runs, 0 failures.
+    - 0 hide/reset events and 0 overlaps throughout; one webm clip per configuration.
+  - **Earlier Checkers' probes:** `race` 0/60, `natural` 0/72, `race6` 0/288, R4-D1 reading set 0/72.
+  - **Tests:** tsc clean; vitest 265; chromium 66 passed, including M1's integrity spec (28); timer/PWA 29 passed and
+    2 skipped (harness-only by design).
+  - **Kept:** M1's 60 storage-full states unchanged; D4 0/24; 100 % toast geometry at 375, 390 and 1440 identical;
+    phone CLS 0.
+- **Disclosed as not fixed or changed (packet "Still open (r6)"):**
+  - **(d) 375×667 at 100 %:** forward Tab never reaches "Save backup" (Shift+Tab does, in 7 presses). The cause is
+    measured: once the page is scrolled to its end, the docked start falls outside `toastLiftBottom()`'s 60 % rule, so
+    M1's hold zone covers "Change brew length" and withdraws the warning. A fix would need frozen `flow.ts`, the must-keep
+    lift logic, or Today's 100 % geometry.
+  - **(d) at 200 %:** Tab reaches "Save backup" with visible focus and Enter downloads, but the warning blinks out for
+    73–92 ms in some runs (same as r5).
+  - **R4-D1 set at 667×375 @200 %:** 53 px and 100 px wheel notches are flagged in 12/12 runs (same class as r5). With 53 px
+    notches, 7 of 11 warning lines are read (r5: 9 of 11).
+  - **Short rooms at 100 %:** stacks holding the warning are reordered, warning first.
+  - **568×320, three-stack:** older toasts not yet scrolled in have layout boxes over the docked start. They are clipped,
+    not drawn and not clickable.
+  - **1440 Home after End:** toasts sit about 110 px higher for 0.5–4 s; BEFORE does the same, and the cause is not
+    established.
+- **Not produced:** none of (a)–(f). The planned r5-side BEFORE matrices were stopped by the pause; the r5 failure is shown
+  by the r5 Checker's runs, the new spec on the r5 trial, and `before-r5-trial/`.
+
+### Next action on resume (only when the user says so)
+
+**A fresh, independent, combined review of `pe/w1-fix-m2@51521cf`** (code `091249a`, src `05bb3f8`), together with a fresh
+trial merge onto the then-current integration HEAD.
+- **Checker:** a new instance that did not build any of it and is not any earlier Checker.
+- **Scope:**
+  - I03, I01 and I02 re-confirmed on the combined code;
+  - D1, D2, D3, R2-D1, R2-D3, D4, R4-D1, R4-D2 and R5-D1, all with real input and real timers;
+  - the (d) keyboard results;
+  - CLS;
+  - REFERENCE → BEFORE → AFTER using the (f) captures plus the Checker's own.
+- **Verdict file:** `contracts/I04/CHECKER-integration-fix-r6.md`.
+- **Only after APPROVE:** merge into the integration branch, then the full Wave 1 regression and recaptures. Then Wave 2.
+- If the container was lost, restore from the archive bundles listed below. The r6 bundle sits on top of `r6wip`, which
+  sits on `r5`, `r4`, and so on.
+
+---
+
+## ⏸ PAUSE CHECKPOINT — 2026-10-10 01:30 UTC (read this first) · ▶ RESUMED 01:40 UTC  *(superseded by the round-6 checkpoint above)*
 
 **Resumed by the user** on 2026-10-10 ~01:40 UTC, with instructions to reread the master prompt, plan and preserve list
 and to continue from this checkpoint.
@@ -49,13 +130,14 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
 | `/home/user/wt/m1` | `pe/m1@a6ebe00` | M1 Wave 1 | APPROVED r2, merged (`7da58f1`). Idle |
 | `/home/user/wt/m2` | `pe/m2@2becb78` | M2 Wave 1 | APPROVED r1, merged (`0d58c5e`). Idle |
 | `/home/user/wt/w1fix` | `pe/w1-fix@3f00b57` (src `3c58bf9`) | **M1 integration fix** (I03 × I04) | **APPROVED r1** (fresh Checker). Held unmerged; any change voids it. Clean |
-| `/home/user/wt/w1fix-m2` | `pe/w1-fix-m2@db8220e` (src `a758f54`) | **Combined** Wave 1 integration fix (M2; `pe/w1-fix@3f00b57` merged in `ca23385`) | r5 REJECTED → r6 in progress; `db8220e` = orchestrator WIP preserve after a container restart, **NOT READY FOR REVIEW** |
+| `/home/user/wt/w1fix-m2` | `pe/w1-fix-m2@51521cf` (src `05bb3f8`) | **Combined** Wave 1 integration fix (M2; `pe/w1-fix@3f00b57` merged in `ca23385`) | **r6 READY FOR REVIEW, not reviewed** (paused). Clean |
 
 **Archives** (`review/product-excellence/archive/`, pushed; restore with `git fetch <bundle> 'refs/heads/*:refs/heads/*'`):
 - `maker-branches-2026-10-09.bundle`: `pe/w1-fix@1351c99`, `pe/w1-fix-m2@c9520db` (full).
 - `pe-w1-fix-3f00b57.incremental.bundle`: `pe/w1-fix@3f00b57` (needs `1351c99`).
 - `pe-w1-fix-m2-r2wip.incremental.bundle`: `pe/w1-fix-m2@e1e672d` (needs `c9520db`).
 - `pe-w1-fix-m2-r2-e932f65.incremental.bundle`: `pe/w1-fix-m2@e932f65` (needs `e1e672d`).
+- `pe-w1-fix-m2-r6-51521cf.incremental.bundle`: `pe/w1-fix-m2@51521cf` (needs `db8220e`).
 - `pe-w1-fix-m2-r6wip.incremental.bundle`: `pe/w1-fix-m2@db8220e` (needs `33a72e6` and `3f00b57`).
 - `pe-w1-fix-m2-r5-33a72e6.incremental.bundle`: `pe/w1-fix-m2@33a72e6` (needs `adec1a2`).
 - `pe-w1-fix-m2-r4-adec1a2.incremental.bundle`: `pe/w1-fix-m2@adec1a2` (needs `e4be56e`).
@@ -78,7 +160,7 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
 | I04 integration fix r3 | `e4be56e` (src `97d26c5`) | **NOT REVIEWED** (no Checker launched: user pause; then superseded before review by r4 in progress, which adds D4). Not APPROVE, not REJECT | — |
 | I04 integration fix r4 (r3 + D4 break-over toast + date-independent short-screen gate) | `adec1a2` (src `dcc3778`; code `9326de5`; trial merge with `3f00b57` = `1f1558e`, src `0d0db47`) | **REJECT** (fresh Checker): R4-D1 a warning taller than its room can't be read by scrolling (scroll moves its box over the dock → M1's hold rule takes it away and re-shows it unscrolled; 375×667 @200 %, landscape @150–200 %, 568×320 three-stack); R4-D2 live mobile resizes at 150–200 % text leave Today zoomed ×1.2–3.2 (regression since r2). Passed: D1/R2-D1 (96 runs), D2 (216 cells), D4, M1 unchanged (60 states), CLS, preserve list; trial 54/54 + timer/pwa 29/2 | `contracts/I04/CHECKER-integration-fix-r4.md` |
 | I04 integration fix r5 (R4-D1 pinned warning, R4-D2 contained measurement) | `33a72e6` (src `8d4a979`; trial with `3f00b57` = `20671eb`, src `b38ad5e`) | **REJECT** (fresh Checker): **R5-D1** with real toast timers, an older toast leaving a scrolled reversed list makes scroll anchoring push the sticky warning's layout box 7–47 px below its room (over the dock) → M1's rule withdraws it and re-shows it reset (375×667 @200 % 4/8 light, 4/6 dark; 844×390 @200 % 2/7). Passed: D1, R2-D1, D2, D4, R4-D2 (100/100), M1 unchanged, preservation, trial 60/60 + timer/pwa 29/2. **CLS decided: not a regression** (r5 moves 159 px vs ≈1,600 px on `8f1044a`/`0d58c5e`, whose 0 is masked by a 534–570 px-wide page) | `contracts/I04/CHECKER-integration-fix-r5.md` |
-| I03 × I04 combined integration fix r6 (M2's branch with `pe/w1-fix` merged in) | — | **in progress (M2)**, not submitted | (`contracts/I04/CHECKER-integration-fix-r6.md` to be written) |
+| I03 × I04 combined integration fix r6 (M2's branch with `pe/w1-fix` merged in) | `51521cf` (code `091249a`, src `05bb3f8`; scratch merge on `c6c7922` = `859f9fb`, same src) | **READY FOR REVIEW — NOT REVIEWED** (user pause; no Checker launched) | (`contracts/I04/CHECKER-integration-fix-r6.md` to be written) |
 
 ### Submitted, awaiting review: M2 r3 `e4be56e` (maker's claims, unverified by any Checker)
 
@@ -436,6 +518,12 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
   - Preserved as WIP `db8220e` (NOT READY FOR REVIEW) and archived (`archive/pe-w1-fix-m2-r6wip.incremental.bundle`).
   - M2 resumed with context intact.
 
+- 2026-10-10: **user ordered a pause at M2's round-6 submission.** M2 let its running race and natural-expiry
+  probes finish and completed r6 with the user's packet items (a)–(f): **READY FOR REVIEW** `51521cf`. Not reviewed. The
+  round-6 checkpoint at the top has all details. One orphaned M2 wait loop, for a probe that was no longer running and had
+  no log, was stopped by PID.
+
 ## Exact next action
 
-See "Next action on resume" in the PAUSE CHECKPOINT at the top of this file (it supersedes the older list).
+See "Next action on resume" in the **round-6** pause checkpoint at the top: a fresh independent combined review of
+`pe/w1-fix-m2@51521cf`.
