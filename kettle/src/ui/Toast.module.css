@@ -123,7 +123,13 @@
   .live {
     max-height: 100%;
   }
+  /* A column: the toasts share the room. Short ones keep their height; a toast with an action (the storage-full
+     warning) gives way first and scrolls its own message, its action held in view, so the whole stack — and the
+     warning's real drawn box — stays inside the room. Only if even that cannot fit does the list itself scroll. */
   .list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     min-height: 0;
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -139,9 +145,14 @@
      so its box always ends above the docked start, and anything that measures the drawn toast sees where it really
      is. */
   .toast {
+    flex-shrink: 0;
     max-height: 100cqh;
     overflow-y: auto;
     overscroll-behavior: contain;
+  }
+  .toast:has(.action) {
+    flex-shrink: 1;
+    min-height: min(4em, 100cqh);
   }
 }
 /* Large text for the toast's width (≈150 % text on a phone, 200 % anywhere): the message keeps the full width beside
