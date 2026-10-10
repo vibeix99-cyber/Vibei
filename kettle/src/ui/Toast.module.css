@@ -123,12 +123,13 @@
   .live {
     max-height: 100%;
   }
-  /* A column: the toasts share the room. Short ones keep their height; a toast with an action (the storage-full
-     warning) gives way first and scrolls its own message, its action held in view, so the whole stack — and the
-     warning's real drawn box — stays inside the room. Only if even that cannot fit does the list itself scroll. */
+  /* The stack scrolls from the bottom up: the list is a reversed column whose scroll origin is its bottom edge, so
+     the newest toast (last, nearest the docked start) is in view at first and older ones scroll away upwards, never
+     downwards. No toast's box ever reaches below the room, over the docked start, and anything that measures where
+     a toast is drawn (the storage-full warning's hold rule) sees it inside the room. */
   .list {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-items: center;
     min-height: 0;
     overflow-y: auto;
@@ -141,18 +142,33 @@
     margin: -20px -32px 0;
     padding: 20px 32px 0;
   }
-  /* No single toast is taller than the room (100cqh is the region's height): a longer one scrolls its own message,
-     so its box always ends above the docked start, and anything that measures the drawn toast sees where it really
-     is. */
+  /* Reading order on screen stays the document's (oldest at the top, newest at the bottom): a reversed column lays
+     items out from the bottom, so the last toast goes first. At most 3 toasts are listed, plus any still leaving. */
+  .list > :nth-last-child(1) {
+    order: 1;
+  }
+  .list > :nth-last-child(2) {
+    order: 2;
+  }
+  .list > :nth-last-child(3) {
+    order: 3;
+  }
+  .list > :nth-last-child(4) {
+    order: 4;
+  }
+  .list > :nth-last-child(5) {
+    order: 5;
+  }
+  .list > :nth-last-child(6) {
+    order: 6;
+  }
+  /* Every toast keeps its content height, up to the room's (100cqh is the region's height): a longer one scrolls its
+     own message, its action held in view, so its box always fits the room. */
   .toast {
     flex-shrink: 0;
     max-height: 100cqh;
     overflow-y: auto;
     overscroll-behavior: contain;
-  }
-  .toast:has(.action) {
-    flex-shrink: 1;
-    min-height: min(4em, 100cqh);
   }
 }
 /* Large text for the toast's width (≈150 % text on a phone, 200 % anywhere): the message keeps the full width beside
@@ -174,5 +190,21 @@
     margin-left: auto;
     background: color-mix(in oklab, var(--ink-inverse) 14%, var(--inverse));
     box-shadow: 0 0 0 8px var(--inverse);
+  }
+}
+/* A room too short for even one line of message above an action under it (e.g. a landscape phone at 200 % text,
+   where the docked start leaves about 60 px): the action goes back beside the message and is held at the top, and
+   the message scrolls line by line beside it, so all of it can still be read and the action is always there. */
+@container toast-room (max-height: 4em) {
+  .toast {
+    flex-wrap: nowrap;
+  }
+  .message {
+    flex-basis: auto;
+  }
+  .action {
+    top: 0;
+    bottom: auto;
+    margin-left: 0;
   }
 }
