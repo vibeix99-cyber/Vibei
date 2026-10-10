@@ -340,18 +340,22 @@ export default function FocusScreen() {
                   'Ready for another brew?'
                 )}
               </p>
-              {carriedRec && (
-                <button type="button" className={s.overMark} onClick={() => setIntentionOutcome(carriedRec, 'done')}>
-                  <Icon name="check" size={18} /> Mark it done, start fresh
-                </button>
-              )}
-              <div className={s.overActions} data-toast-above="">
-                <Button block size="lg" sfx="start" icon={<Icon name="play" size={24} />} onClick={startNextBrew}>
-                  Put the kettle on
-                </Button>
-                <Button block variant="ghost" onClick={leaveBreakOver}>
-                  That’s all for now
-                </Button>
+              {/* Every break-over control, the carried task's "Mark it done" included, is one toast-above group:
+                  a toast (a recipe or badge earned as the break ends) floats above all of them, never over one. */}
+              <div className={s.overDock} data-toast-above="">
+                {carriedRec && (
+                  <button type="button" className={s.overMark} onClick={() => setIntentionOutcome(carriedRec, 'done')}>
+                    <Icon name="check" size={18} /> Mark it done, start fresh
+                  </button>
+                )}
+                <div className={s.overActions}>
+                  <Button block size="lg" sfx="start" icon={<Icon name="play" size={24} />} onClick={startNextBrew}>
+                    Put the kettle on
+                  </Button>
+                  <Button block variant="ghost" onClick={leaveBreakOver}>
+                    That’s all for now
+                  </Button>
+                </div>
               </div>
             </motion.div>
           ) : (

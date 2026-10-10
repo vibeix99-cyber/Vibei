@@ -340,6 +340,14 @@
   font-weight: 800;
   cursor: pointer;
 }
+/* The carried task's "Mark it done" and the two actions: one block for toasts to float above (data-toast-above),
+   laid out exactly as when they were direct items of .over (same 8 px gap, centred mark, full-width actions). */
+.overDock {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  width: 100%;
+}
 .overActions {
   display: grid;
   gap: 6px;

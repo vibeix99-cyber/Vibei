@@ -84,14 +84,49 @@ test('pointer targets are at least 24×24 px or meet a WCAG 2.5.8 exception', as
   expect(out).toEqual([]);
 });
 
+/**
+ * Put away every toast, then raise `n` of the toasts the end of a break can bring (the app's own toast(), the same
+ * module instance the dev server gives the app), held up long enough to be measured, and wait until they have
+ * settled where the lift puts them.
+ */
+async function raiseToasts(p: Page, n: number) {
+  await p.evaluate(async (n) => {
+    const { toast } = await import('/src/ui/Toast.tsx' as string);
+    toast.dismiss();
+    const items = [
+      ['Recipe done: Take 2 full tea breaks · +15 leaves', 'success'],
+      ['New badge: Tea Time', 'success'],
+    ];
+    if (n) await new Promise((r) => setTimeout(r, 600));
+    for (const [m, tone] of items.slice(0, n)) toast(m, { tone, duration: 60_000 });
+  }, n);
+  await p.waitForTimeout(n ? 1500 : 600);
+  await p
+    .waitForFunction(() => [...document.querySelectorAll('[aria-label="Notifications"] li')].every((li) => getComputedStyle(li).transform === 'none'), null, { timeout: 5000 })
+    .catch(() => {});
+}
+
 test('short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll', async ({ page, baseURL }) => {
   test.setTimeout(300_000);
   await page.setViewportSize({ width: 375, height: 667 });
   const out: string[] = [];
-  const check = async (id: string, p: Page) => {
+  const reach = async (id: string, p: Page) => {
     const r = (await p.evaluate(probeReach, INTERACTIVE)) as { covered: { name: string; by: string }[]; hScroll: number };
     for (const c of r.covered) out.push(`${id}: "${c.name}" stays under ${c.by}`);
     if (r.hScroll > 0) out.push(`${id}: horizontal scroll ${r.hScroll}px`);
+  };
+  const check = async (id: string, p: Page) => {
+    await reach(id, p);
+    // Break's over with toasts up, on every date: a recipe or badge toast raised as the break ends (the seeded
+    // profile only earns one on some dates) must leave every break-over control clear, the carried task's
+    // "Mark it done, start fresh" included (I04 D4).
+    if (id === 'break-over') {
+      for (const n of [1, 2]) {
+        await raiseToasts(p, n);
+        await reach(`break-over + ${n} toast${n > 1 ? 's' : ''}`, p);
+      }
+      await raiseToasts(p, 0);
+    }
   };
   await walkJourney(page, base(baseURL), check, { only: ['home', 'focus', 'paused', 'summary', 'summary-details', 'break', 'break-over'] });
   for (const pg of PAGES) {
@@ -319,5 +354,45 @@ for (const [w, h] of [
     await say('Couldn’t save just now. Your summary is still here.');
     await page.waitForTimeout(1200);
     expect(await overlap('footer[data-toast-above]')).toBe('clear');
+  });
+}
+
+for (const [w, h] of [
+  [390, 844],
+  [375, 667],
+] as const) {
+  test(`toasts never cover the break-over controls, carried task included (${w}×${h})`, async ({ page, baseURL }) => {
+    test.setTimeout(180_000);
+    await page.setViewportSize({ width: w, height: h });
+    await open(page, base(baseURL), { seed: 'newbie' });
+    await page.evaluate(() => (window as any).__kettle.timer.getState().startFocus({ intention: 'Chapter 3 notes', tag: 'study' }));
+    await page.waitForFunction(() => location.hash === '#/focus');
+    await page.waitForTimeout(2500);
+    await page.evaluate(() => (window as any).__kettle.finish());
+    await page.getByRole('button', { name: /Tea time|Long tea break/ }).waitFor({ timeout: 60_000 });
+    await page.waitForTimeout(1500);
+    await page.getByRole('button', { name: /Tea time|Long tea break/ }).click();
+    await page.waitForTimeout(2000);
+    await page.evaluate(() => (window as any).__kettle.finish());
+    await page.getByRole('button', { name: /Mark it done, start fresh/ }).waitFor({ timeout: 30_000 });
+    await page.waitForTimeout(1500);
+    const names = ['Mark it done, start fresh', 'Put the kettle on', 'That’s all for now'];
+    for (const n of [1, 2]) {
+      await raiseToasts(page, n);
+      const r = await page.evaluate((names) => {
+        const toasts = [...document.querySelectorAll('[aria-label="Notifications"] li')].map((li) => li.getBoundingClientRect());
+        return names.map((nm) => {
+          const el = [...document.querySelectorAll('button')].find((b) => (b.textContent ?? '').replace(/\s+/g, ' ').includes(nm));
+          if (!el) return `${nm}: missing`;
+          const q = el.getBoundingClientRect();
+          const hit = document.elementFromPoint(q.left + q.width / 2, q.top + q.height / 2);
+          const under = toasts.some((t) => t.bottom > q.top && t.top < q.bottom && t.right > q.left && t.left < q.right);
+          return hit && el.contains(hit) && !under ? `${nm}: clear` : `${nm}: under a toast (${toasts.length} up)`;
+        });
+      }, names);
+      expect(r, `${n} toast(s)`).toEqual(names.map((nm) => `${nm}: clear`));
+    }
+    await page.getByRole('button', { name: /Mark it done, start fresh/ }).click(); // operable with the toasts up
+    await expect(page.getByRole('button', { name: /Mark it done, start fresh/ })).toHaveCount(0);
   });
 }
