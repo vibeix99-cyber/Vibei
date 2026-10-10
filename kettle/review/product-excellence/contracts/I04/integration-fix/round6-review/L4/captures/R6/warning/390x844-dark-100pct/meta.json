@@ -21,14 +21,14 @@
  "screenshot": "viewport-size PNG at full device resolution (page.screenshot, fullPage false); doc scroll size recorded per state",
  "toastTimers": "default (3.2 s ordinary toast, 12 s storage-full warning); not extended",
  "startedAt": "2026-10-10T18:32:28.393Z",
- "endedAt": "2026-10-10T18:34:08.260Z",
+ "endedAt": "2026-10-10T21:16:05.682Z",
  "states": {
   "a-home-warning": {
-   "attempt": 2,
+   "attempt": 3,
    "quotaProbe": "QuotaExceededError",
    "dataState": "storage really full (QuotaExceededError on a 64-byte write): QuotaExceededError",
    "warningAppeared": true,
-   "route": "#/",
+   "settleMs": "polled (50 ms) until both toasts are at opacity >= 0.9 and neither toast moved for 300 ms",
    "toastsBefore": [
     {
      "id": "toast-t1",
@@ -45,19 +45,47 @@
      "id": "toast-kettle:save-failed",
      "text": "Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to",
      "rect": [
-      27,
-      560,
-      363,
-      670
+      16,
+      549,
+      374,
+      666
      ],
-     "opacity": 0.470445
+     "opacity": 1
     }
    ],
+   "capturedAt": "2026-10-10T21:16:04.317Z",
+   "screenshotAnimations": "allow",
+   "shotMs": 1315,
+   "toastsAfter": [
+    {
+     "id": "toast-t1",
+     "text": "Kettle’s off. See you soon.",
+     "rect": [
+      69,
+      489,
+      321,
+      541
+     ],
+     "opacity": 1
+    },
+    {
+     "id": "toast-kettle:save-failed",
+     "text": "Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to",
+     "rect": [
+      16,
+      549,
+      374,
+      666
+     ],
+     "opacity": 1
+    }
+   ],
+   "route": "#/",
    "warningRect": [
-    27,
-    560,
-    363,
-    670
+    16,
+    549,
+    374,
+    666
    ],
    "page": {
     "innerWidth": 390,
@@ -72,34 +100,12 @@
     "dataTheme": "dark",
     "summaryText": "3 days warm streak. Show details 168 leaves Show details 4 Level 4 Cozy level 4, 37 leaves to the next. Show details Good evening, Sam Lamps on. One more brew and today’s cup is full. Today’s goal 25 min brewed 5 min to "
    },
-   "capturedAt": "2026-10-10T18:32:52.849Z",
-   "toastsAfter": [
-    {
-     "id": "toast-t1",
-     "text": "Kettle’s off. See you soon.",
-     "rect": [
-      70,
-      490,
-      320,
-      542
-     ],
-     "opacity": 0.846155
-    },
-    {
-     "id": "toast-kettle:save-failed",
-     "text": "Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to",
-     "rect": [
-      16,
-      549,
-      374,
-      666
-     ],
-     "opacity": 1
-    }
-   ],
    "file": "a-home-warning.png",
    "pageErrors": [],
-   "stable": true
+   "toastsMovedDuringShot": false,
+   "stable": true,
+   "opacityThreshold": 0.9,
+   "fullyDrawn": true
   },
   "b-focus-warning-toasts": {
    "attempt": 1,
@@ -386,5 +392,25 @@
   "states": 6,
   "ok": 6,
   "failed": 0
- }
+ },
+ "rerun": [
+  {
+   "states": [
+    "a-home-warning"
+   ],
+   "startedAt": "2026-10-10T19:55:30.965Z",
+   "endedAt": "2026-10-10T19:55:43.819Z",
+   "asettleMs": 1000,
+   "note": "replaced after the first run left these states with toasts that expired during the shot"
+  },
+  {
+   "states": [
+    "a-home-warning"
+   ],
+   "startedAt": "2026-10-10T21:15:27.747Z",
+   "endedAt": "2026-10-10T21:16:05.682Z",
+   "asettleMs": 1000,
+   "note": "replaced after the first run left these states with toasts that expired during the shot"
+  }
+ ]
 }

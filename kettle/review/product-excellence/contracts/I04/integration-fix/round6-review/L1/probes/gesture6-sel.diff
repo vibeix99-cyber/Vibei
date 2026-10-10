@@ -1,0 +1,7 @@
+0a1
+> // L1 ADAPTATION of gesture6.mjs: env IDX=0,1,2,... selects run indices (timing class = i % 10); nothing else changed.
+49c50,51
+<   for (let i = 0; i < +runsArg; i++) {
+---
+>   for (let ii = 0; ii < +runsArg; ii++) {
+>     const i = process.env.IDX ? +process.env.IDX.split(',')[ii] : ii; // L1 ADAPTATION: IDX selects which timing classes (i % 10) to run

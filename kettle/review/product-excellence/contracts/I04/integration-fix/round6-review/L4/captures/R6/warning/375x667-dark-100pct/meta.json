@@ -21,23 +21,23 @@
  "screenshot": "viewport-size PNG at full device resolution (page.screenshot, fullPage false); doc scroll size recorded per state",
  "toastTimers": "default (3.2 s ordinary toast, 12 s storage-full warning); not extended",
  "startedAt": "2026-10-10T18:50:39.524Z",
- "endedAt": "2026-10-10T18:52:01.740Z",
+ "endedAt": "2026-10-10T21:17:29.536Z",
  "states": {
   "a-home-warning": {
-   "attempt": 1,
+   "attempt": 5,
    "quotaProbe": "QuotaExceededError",
    "dataState": "storage really full (QuotaExceededError on a 64-byte write): QuotaExceededError",
    "warningAppeared": true,
-   "route": "#/",
+   "settleMs": "polled (50 ms) until both toasts are at opacity >= 0.9 and neither toast moved for 300 ms",
    "toastsBefore": [
     {
      "id": "toast-t1",
      "text": "Kettle’s off. See you soon.",
      "rect": [
       62,
-      304,
+      312,
       314,
-      356
+      364
      ],
      "opacity": 1
     },
@@ -46,33 +46,16 @@
      "text": "Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to",
      "rect": [
       16,
-      364,
+      372,
       359,
-      481
+      489
      ],
      "opacity": 1
     }
    ],
-   "warningRect": [
-    16,
-    364,
-    359,
-    481
-   ],
-   "page": {
-    "innerWidth": 375,
-    "innerHeight": 667,
-    "dpr": 2,
-    "htmlFontPx": 16,
-    "dark": true,
-    "docScroll": [
-     375,
-     1392
-    ],
-    "dataTheme": "dark",
-    "summaryText": "3 days warm streak. Show details 168 leaves Show details 4 Level 4 Cozy level 4, 37 leaves to the next. Show details Good evening, Sam Lamps on. One more brew and today’s cup is full. Today’s goal 25 min brewed 5 min to "
-   },
-   "capturedAt": "2026-10-10T18:50:50.130Z",
+   "capturedAt": "2026-10-10T21:17:28.142Z",
+   "screenshotAnimations": "allow",
+   "shotMs": 1371,
    "toastsAfter": [
     {
      "id": "toast-t1",
@@ -97,9 +80,32 @@
      "opacity": 1
     }
    ],
+   "route": "#/",
+   "warningRect": [
+    16,
+    372,
+    359,
+    489
+   ],
+   "page": {
+    "innerWidth": 375,
+    "innerHeight": 667,
+    "dpr": 2,
+    "htmlFontPx": 16,
+    "dark": true,
+    "docScroll": [
+     375,
+     1392
+    ],
+    "dataTheme": "dark",
+    "summaryText": "3 days warm streak. Show details 168 leaves Show details 4 Level 4 Cozy level 4, 37 leaves to the next. Show details Good evening, Sam Lamps on. One more brew and today’s cup is full. Today’s goal 25 min brewed 5 min to "
+   },
    "file": "a-home-warning.png",
    "pageErrors": [],
-   "stable": true
+   "toastsMovedDuringShot": false,
+   "stable": true,
+   "opacityThreshold": 0.9,
+   "fullyDrawn": true
   },
   "b-focus-warning-toasts": {
    "attempt": 1,
@@ -386,5 +392,16 @@
   "states": 6,
   "ok": 6,
   "failed": 0
- }
+ },
+ "rerun": [
+  {
+   "states": [
+    "a-home-warning"
+   ],
+   "startedAt": "2026-10-10T21:16:32.859Z",
+   "endedAt": "2026-10-10T21:17:29.536Z",
+   "asettleMs": 1000,
+   "note": "replaced after the first run left these states with toasts that expired during the shot"
+  }
+ ]
 }

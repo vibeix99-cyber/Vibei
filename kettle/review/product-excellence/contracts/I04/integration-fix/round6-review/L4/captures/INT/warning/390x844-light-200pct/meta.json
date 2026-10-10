@@ -21,23 +21,23 @@
  "screenshot": "viewport-size PNG at full device resolution (page.screenshot, fullPage false); doc scroll size recorded per state",
  "toastTimers": "default (3.2 s ordinary toast, 12 s storage-full warning); not extended",
  "startedAt": "2026-10-10T18:55:45.822Z",
- "endedAt": "2026-10-10T18:58:13.930Z",
+ "endedAt": "2026-10-10T21:22:55.664Z",
  "states": {
   "a-home-warning": {
-   "attempt": 3,
+   "attempt": 2,
    "quotaProbe": "QuotaExceededError",
    "dataState": "storage really full (QuotaExceededError on a 64-byte write): QuotaExceededError",
    "warningAppeared": true,
-   "route": "#/",
+   "settleMs": "polled (50 ms) until both toasts are at opacity >= 0.9 and neither toast moved for 300 ms",
    "toastsBefore": [
     {
      "id": "toast-t1",
      "text": "Kettle’s off. See you soon.",
      "rect": [
       16,
-      399,
+      -308,
       374,
-      496
+      -211
      ],
      "opacity": 1
     },
@@ -45,34 +45,17 @@
      "id": "toast-kettle:save-failed",
      "text": "Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to",
      "rect": [
-      27,
-      -164,
-      363,
-      498
+      16,
+      -203,
+      374,
+      501
      ],
-     "opacity": 0
+     "opacity": 1
     }
    ],
-   "warningRect": [
-    27,
-    -164,
-    363,
-    498
-   ],
-   "page": {
-    "innerWidth": 390,
-    "innerHeight": 844,
-    "dpr": 2,
-    "htmlFontPx": 32,
-    "dark": false,
-    "docScroll": [
-     390,
-     2760
-    ],
-    "dataTheme": "light",
-    "summaryText": "3 days warm streak. Show details 168 leaves Show details 4 Level 4 Cozy level 4, 37 leaves to the next. Show details Good evening, Sam Lamps on. One more brew and today’s cup is full. Today’s goal 25 min brewed 5 min to "
-   },
-   "capturedAt": "2026-10-10T18:56:23.764Z",
+   "capturedAt": "2026-10-10T21:22:54.549Z",
+   "screenshotAnimations": "allow",
+   "shotMs": 1076,
    "toastsAfter": [
     {
      "id": "toast-t1",
@@ -97,18 +80,66 @@
      "opacity": 1
     }
    ],
+   "route": "#/",
+   "warningRect": [
+    16,
+    -203,
+    374,
+    501
+   ],
+   "page": {
+    "innerWidth": 390,
+    "innerHeight": 844,
+    "dpr": 2,
+    "htmlFontPx": 32,
+    "dark": false,
+    "docScroll": [
+     390,
+     2760
+    ],
+    "dataTheme": "light",
+    "summaryText": "3 days warm streak. Show details 168 leaves Show details 4 Level 4 Cozy level 4, 37 leaves to the next. Show details Good evening, Sam Lamps on. One more brew and today’s cup is full. Today’s goal 25 min brewed 5 min to "
+   },
    "file": "a-home-warning.png",
    "pageErrors": [],
-   "stable": true
+   "toastsMovedDuringShot": false,
+   "stable": true,
+   "opacityThreshold": 0.9,
+   "fullyDrawn": true
   },
   "b-focus-warning-toasts": {
-   "attempt": 3,
+   "attempt": 5,
    "quotaProbe": "QuotaExceededError",
    "dataState": "storage really full (QuotaExceededError on a 64-byte write): QuotaExceededError",
    "warningBeforeToasts": true,
-   "toastsRaisedAt": "2026-10-10T18:57:01.608Z",
-   "route": "#/focus",
+   "toastsRaisedAt": "2026-10-10T20:00:37.279Z",
    "toastsBefore": [
+    {
+     "id": "toast-t1",
+     "text": "Recipe done: Take 2 full tea breaks · +15 leaves",
+     "rect": [
+      16,
+      440,
+      374,
+      577
+     ],
+     "opacity": 1
+    },
+    {
+     "id": "toast-t2",
+     "text": "New badge: Tea Time",
+     "rect": [
+      16,
+      585,
+      374,
+      682
+     ],
+     "opacity": 1
+    }
+   ],
+   "capturedAt": "2026-10-10T20:00:38.383Z",
+   "shotMs": 2067,
+   "toastsAfter": [
     {
      "id": "toast-t1",
      "text": "Recipe done: Take 2 full tea breaks · +15 leaves",
@@ -143,10 +174,11 @@
      "opacity": 0
     }
    ],
+   "route": "#/focus",
    "warningRect": [
-    27,
-    17,
-    363,
+    26,
+    16,
+    364,
     679
    ],
    "page": {
@@ -160,47 +192,13 @@
      844
     ],
     "dataTheme": "light",
-    "summaryText": "2 4 : 5 6 Kettle’s on. Nice start. Whistles at 7:21 PM Add 5 Pause End Brew 1 of 4"
+    "summaryText": "2 4 : 5 2 Kettle’s on. Nice start. Whistles at 8:25 PM Add 5 Pause End Brew 1 of 4"
    },
-   "capturedAt": "2026-10-10T18:57:02.726Z",
-   "toastsAfter": [
-    {
-     "id": "toast-t1",
-     "text": "Recipe done: Take 2 full tea breaks · +15 leaves",
-     "rect": [
-      16,
-      -306,
-      374,
-      -169
-     ],
-     "opacity": 1
-    },
-    {
-     "id": "toast-t2",
-     "text": "New badge: Tea Time",
-     "rect": [
-      16,
-      -161,
-      374,
-      -64
-     ],
-     "opacity": 1
-    },
-    {
-     "id": "toast-kettle:save-failed",
-     "text": "Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to",
-     "rect": [
-      27,
-      -27,
-      363,
-      636
-     ],
-     "opacity": 0
-    }
-   ],
    "file": "b-focus-warning-toasts.png",
    "pageErrors": [],
-   "stable": true
+   "stable": false,
+   "fullyDrawn": false,
+   "unstableReason": "toasts before [\"Recipe done: Take 2 full\",\"New badge: Tea Time\"] vs after [\"Recipe done: Take 2 full\",\"New badge: Tea Time\",\"Kettle couldn’t save you\"]"
   },
   "c-breakover-toasts": {
    "attempt": 1,
@@ -411,7 +409,28 @@
  "kettleSrcTree": "1fc4a1b",
  "summary": {
   "states": 6,
-  "ok": 6,
-  "failed": 0
- }
+  "ok": 5,
+  "failed": 1
+ },
+ "rerun": [
+  {
+   "states": [
+    "a-home-warning",
+    "b-focus-warning-toasts"
+   ],
+   "startedAt": "2026-10-10T19:58:55.648Z",
+   "endedAt": "2026-10-10T20:00:40.474Z",
+   "asettleMs": 1000,
+   "note": "replaced after the first run left these states with toasts that expired during the shot"
+  },
+  {
+   "states": [
+    "a-home-warning"
+   ],
+   "startedAt": "2026-10-10T21:22:31.177Z",
+   "endedAt": "2026-10-10T21:22:55.664Z",
+   "asettleMs": 1000,
+   "note": "replaced after the first run left these states with toasts that expired during the shot"
+  }
+ ]
 }

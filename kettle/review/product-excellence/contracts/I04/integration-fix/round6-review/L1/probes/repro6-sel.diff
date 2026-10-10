@@ -1,0 +1,7 @@
+0a1
+> // L1 ADAPTATION of repro6.mjs: env IDX=6,8,10,... runs exactly those run indices (index i -> input wheel/touch = i%2, timing class = floor(i/2)%10); nothing else changed.
+41c42,43
+<   for (let i = 0; i < +runsArg; i++) {
+---
+>   for (let ii = 0; ii < +runsArg; ii++) {
+>     const i = process.env.IDX ? +process.env.IDX.split(',')[ii] : ii; // L1 ADAPTATION: IDX selects which of repro6's run indices (timing x input) to run

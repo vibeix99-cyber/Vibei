@@ -1,0 +1,60 @@
+0a1,7
+> // L1 EXTRA-GESTURE probe (natural-g): natural-x's flow (End -> go to the oldest toast -> wait -> come back and a few notches more; real toast
+> // timers; NO synthetic events, nothing held) with the input primitive replaced by a gesture type M2 did not use. GESTURE env:
+> //   fling : CDP Input.dispatchTouchEvent fast swipe (7 moves x 22 px, 8 ms apart, touchEnd -> fling), then wait until the scroll settles
+> //   fine  : trackpad-like wheel, 24 events of 2-5 px (seeded) ~8 ms apart per stroke (page.mouse.wheel)
+> //   kbd   : keyboard only: Shift+Tab to the last tabbable (Save backup), then 3 x ArrowDown/ArrowUp per stroke
+> // Direction-aware (list column-reverse on R5, top-down on R6); the pointer/finger goes onto the toast with the most visible area in the list.
+> // node natural-g.mjs <base> <label> <outdir> <WxH> <theme> <text> <waits=...> [reps=1]
+9a17
+> const GESTURE = process.env.GESTURE ?? 'fling';
+38c46
+<     await page.mouse.move(W / 2, Math.round(H * 0.25));
+---
+>     if (GESTURE === 'fine') await page.mouse.move(W / 2, Math.round(H * 0.25));
+62c70,95
+<     const st = () => page.evaluate((WARN) => { const l = document.querySelector('[aria-label="Notifications"] ol'); const w = document.getElementById(WARN); const r = w?.getBoundingClientRect(); return { x: r ? (r.left + r.right) / 2 : 180, y: r ? Math.max(r.top, 0) + 40 : 60, lst: l.scrollTop, lmin: -(l.scrollHeight - l.clientHeight), wst: w?.scrollTop ?? 0 }; }, WARN);
+---
+>     const st = () => page.evaluate((WARN) => { const l = document.querySelector('[aria-label="Notifications"] ol'); const w = document.getElementById(WARN); const r = w?.getBoundingClientRect(); return { x: r ? (r.left + r.right) / 2 : 180, y: r ? Math.max(r.top, 0) + 40 : 60, lst: l.scrollTop, lmin: -(l.scrollHeight - l.clientHeight), lmax: l.scrollHeight - l.clientHeight, rev: getComputedStyle(l).flexDirection === 'column-reverse', wst: w?.scrollTop ?? 0, wmax: w ? w.scrollHeight - w.clientHeight : 0, tx: r ? (r.left + r.right) / 2 : 180, ty: (() => { const lr = l.getBoundingClientRect(); let best = null; for (const li of l.children) { const q = li.getBoundingClientRect(); const t = Math.max(q.top, lr.top, 0), bt = Math.min(q.bottom, lr.bottom, innerHeight); if (bt - t > 8 && (!best || bt - t > best.h)) best = { h: bt - t, y: (t + bt) / 2 }; } return best ? best.y : 60; })() }; }, WARN);
+>     const cdp = GESTURE === 'fling' ? await ctx.newCDPSession(page) : null;
+>     let seed = 4242 + rep * 7919 + wait; const rnd = () => (seed = (seed * 1664525 + 1013904223) % 4294967296) / 4294967296;
+>     let kbdReady = false;
+>     // one stroke; dir +1 = scroll down (content moves up), -1 = scroll up
+>     const stroke = async (dir) => {
+>       const q = await st();
+>       const x = Math.round(q.tx), y = Math.round(Math.min(Math.max(q.ty, 4), H - 4));
+>       if (GESTURE === 'fine') {
+>         await page.mouse.move(x, y);
+>         for (let k = 0; k < 24; k++) { await page.mouse.wheel(0, dir * (2 + Math.round(rnd() * 3))); await sleep(8); }
+>         await sleep(60);
+>       } else if (GESTURE === 'fling') {
+>         const fd = dir > 0 ? -1 : 1; // finger up = scroll down
+>         await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x, y }] });
+>         for (let k = 1; k <= 7; k++) { await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x, y: Math.min(Math.max(y + fd * k * 22, 2), H - 2) }] }); await sleep(8); }
+>         await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+>         let prev = null;
+>         for (let k = 0; k < 10; k++) { await sleep(100); const cur = await page.evaluate((WARN) => { const l = document.querySelector('[aria-label="Notifications"] ol'); const w = document.getElementById(WARN); return `${l.scrollTop.toFixed(1)}/${w ? w.scrollTop.toFixed(1) : 0}`; }, WARN); if (cur === prev) break; prev = cur; }
+>       } else {
+>         for (let k = 0; k < 8 && !kbdReady; k++) { await page.keyboard.press('Shift+Tab'); await sleep(60); kbdReady = await page.evaluate(() => !!document.activeElement?.closest?.('[aria-label="Notifications"]')); }
+>         if (!kbdReady) throw new Error('keyboard focus never reached the toast list');
+>         for (let k = 0; k < 3; k++) { await page.keyboard.press(dir > 0 ? 'ArrowDown' : 'ArrowUp'); await sleep(40); }
+>         await sleep(150);
+>       }
+>     };
+64,65c97,98
+<     await page.mouse.move(Math.round(s.x), Math.round(s.y));
+<     for (let i = 0; i < 20; i++) { s = await st(); if (s.wst <= 0 && s.lst <= s.lmin + 1) break; await page.mouse.wheel(0, -40); await sleep(120); }
+---
+>     const toOlder = s.rev ? -1 : 1;
+>     for (let i = 0; i < 14; i++) { s = await st(); if (s.rev ? (s.wst <= 0 && s.lst <= s.lmin + 1) : (s.lst >= s.lmax - 1)) break; await stroke(toOlder); }
+70c103,104
+<     for (let i = 0; i < 30 && extra < 4; i++) { s = await st(); if (s.lst >= -1) extra++; await page.mouse.wheel(0, 20); await sleep(150); }
+---
+>     // (guard: on R5 a further 'down' stroke once the warning's own message is at its end would chain to the PAGE behind and lift the dock - a different mechanism)
+>     for (let i = 0; i < 20 && extra < 4; i++) { s = await st(); const atRest = s.rev ? s.lst >= -1 : s.lst <= 1; if (atRest && s.rev && s.wst >= s.wmax - 1) break; if (atRest) extra++; await stroke(-toOlder); }
+83,84c117,118
+<     appendFileSync(`${out}/natural-${label}.jsonl`, JSON.stringify({ tag, bad, ev: R.ev, frames: R.frames, tTop, tDown }) + '\n');
+<     if (bad.length) await page.screenshot({ path: `${out}/natural-${label}-${W}x${H}-${theme}-w${wait}-${rep}.png` });
+---
+>     appendFileSync(`${out}/natural-g-${label}.jsonl`, JSON.stringify({ tag, bad, ev: R.ev, frames: R.frames, tTop, tDown }) + '\n');
+>     if (bad.length) await page.screenshot({ path: `${out}/natural-g-${label}-${W}x${H}-${theme}-w${wait}-${rep}.png` });

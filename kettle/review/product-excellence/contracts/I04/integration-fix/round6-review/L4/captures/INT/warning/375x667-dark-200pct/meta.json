@@ -1,0 +1,420 @@
+{
+ "set": "375x667-dark-200pct",
+ "url": "http://127.0.0.1:5303",
+ "port": "5303",
+ "revisionLabel": "INT",
+ "revision": "0d58c5e",
+ "worktree": "/home/user/wt/rv6-int/kettle",
+ "viewport": {
+  "w": 375,
+  "h": 667
+ },
+ "dpr": 2,
+ "isMobileEmulation": true,
+ "hasTouch": true,
+ "theme": "dark",
+ "nooktime": null,
+ "textSizePct": 200,
+ "textSizeMethod": "html { font-size: 200% } injected at DOMContentLoaded",
+ "renderer": "Chromium (Playwright) + SwiftShader (CPU)",
+ "scene": "off (stills)",
+ "screenshot": "viewport-size PNG at full device resolution (page.screenshot, fullPage false); doc scroll size recorded per state",
+ "toastTimers": "default (3.2 s ordinary toast, 12 s storage-full warning); not extended",
+ "startedAt": "2026-10-10T19:17:52.688Z",
+ "endedAt": "2026-10-10T19:57:18.431Z",
+ "states": {
+  "a-home-warning": {
+   "attempt": 1,
+   "quotaProbe": "QuotaExceededError",
+   "dataState": "storage really full (QuotaExceededError on a 64-byte write): QuotaExceededError",
+   "warningAppeared": true,
+   "route": "#/",
+   "toastsBefore": [
+    {
+     "id": "toast-t1",
+     "text": "Kettle’s off. See you soon.",
+     "rect": [
+      16,
+      -485,
+      359,
+      -388
+     ],
+     "opacity": 1
+    },
+    {
+     "id": "toast-kettle:save-failed",
+     "text": "Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to",
+     "rect": [
+      16,
+      -380,
+      359,
+      324
+     ],
+     "opacity": 1
+    }
+   ],
+   "warningRect": [
+    16,
+    -380,
+    359,
+    324
+   ],
+   "page": {
+    "innerWidth": 375,
+    "innerHeight": 667,
+    "dpr": 2,
+    "htmlFontPx": 32,
+    "dark": true,
+    "docScroll": [
+     375,
+     2875
+    ],
+    "dataTheme": "dark",
+    "summaryText": "3 days warm streak. Show details 168 leaves Show details 4 Level 4 Cozy level 4, 37 leaves to the next. Show details Good evening, Sam Lamps on. One more brew and today’s cup is full. Today’s goal 25 min brewed 5 min to "
+   },
+   "capturedAt": "2026-10-10T19:18:02.202Z",
+   "toastsAfter": [
+    {
+     "id": "toast-t1",
+     "text": "Kettle’s off. See you soon.",
+     "rect": [
+      16,
+      -485,
+      359,
+      -388
+     ],
+     "opacity": 1
+    },
+    {
+     "id": "toast-kettle:save-failed",
+     "text": "Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to",
+     "rect": [
+      16,
+      -380,
+      359,
+      324
+     ],
+     "opacity": 1
+    }
+   ],
+   "file": "a-home-warning.png",
+   "pageErrors": [],
+   "stable": true
+  },
+  "b-focus-warning-toasts": {
+   "attempt": 5,
+   "quotaProbe": "QuotaExceededError",
+   "dataState": "storage really full (QuotaExceededError on a 64-byte write): QuotaExceededError",
+   "warningBeforeToasts": false,
+   "toastsRaisedAt": "2026-10-10T19:57:16.042Z",
+   "toastsBefore": [
+    {
+     "id": "toast-t1",
+     "text": "Recipe done: Take 2 full tea breaks · +15 leaves",
+     "rect": [
+      16,
+      -402,
+      359,
+      -264
+     ],
+     "opacity": 1
+    },
+    {
+     "id": "toast-t2",
+     "text": "New badge: Tea Time",
+     "rect": [
+      16,
+      -256,
+      359,
+      -159
+     ],
+     "opacity": 1
+    }
+   ],
+   "capturedAt": "2026-10-10T19:57:17.148Z",
+   "shotMs": 1258,
+   "toastsAfter": [
+    {
+     "id": "toast-t1",
+     "text": "Recipe done: Take 2 full tea breaks · +15 leaves",
+     "rect": [
+      16,
+      -377,
+      359,
+      -240
+     ],
+     "opacity": 1
+    },
+    {
+     "id": "toast-t2",
+     "text": "New badge: Tea Time",
+     "rect": [
+      16,
+      -232,
+      359,
+      -135
+     ],
+     "opacity": 1
+    },
+    {
+     "id": "toast-kettle:save-failed",
+     "text": "Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to",
+     "rect": [
+      19,
+      -142,
+      356,
+      548
+     ],
+     "opacity": 0.705708
+    }
+   ],
+   "route": "#/focus",
+   "warningRect": [
+    19,
+    -142,
+    356,
+    548
+   ],
+   "page": {
+    "innerWidth": 375,
+    "innerHeight": 667,
+    "dpr": 2,
+    "htmlFontPx": 32,
+    "dark": true,
+    "docScroll": [
+     375,
+     667
+    ],
+    "dataTheme": "dark",
+    "summaryText": "2 4 : 5 4 Kettle’s on. Nice start. Whistles at 8:22 PM Add 5 Pause End Brew 1 of 4"
+   },
+   "file": "b-focus-warning-toasts.png",
+   "pageErrors": [],
+   "stable": false,
+   "fullyDrawn": false,
+   "unstableReason": "toasts before [\"Recipe done: Take 2 full\",\"New badge: Tea Time\"] vs after [\"Recipe done: Take 2 full\",\"New badge: Tea Time\",\"Kettle couldn’t save you\"]"
+  },
+  "c-breakover-toasts": {
+   "attempt": 1,
+   "quotaProbe": "QuotaExceededError",
+   "dataState": "storage really full (QuotaExceededError on a 64-byte write): QuotaExceededError",
+   "carriedTaskControl": true,
+   "naturalToastsExpired": true,
+   "toastsRaisedAt": "2026-10-10T19:18:27.401Z",
+   "route": "#/focus",
+   "toastsBefore": [
+    {
+     "id": "toast-t1",
+     "text": "Recipe done: Take 2 full tea breaks · +15 leaves",
+     "rect": [
+      16,
+      228,
+      359,
+      365
+     ],
+     "opacity": 1
+    },
+    {
+     "id": "toast-t2",
+     "text": "New badge: Tea Time",
+     "rect": [
+      16,
+      373,
+      359,
+      470
+     ],
+     "opacity": 1
+    }
+   ],
+   "warningRect": null,
+   "page": {
+    "innerWidth": 375,
+    "innerHeight": 667,
+    "dpr": 2,
+    "htmlFontPx": 32,
+    "dark": true,
+    "docScroll": [
+     375,
+     667
+    ],
+    "dataTheme": "dark",
+    "summaryText": "Break’s over Ready for another brew of Chapter 3 notes? Mark it done, start fresh Put the kettle on That’s all for now"
+   },
+   "capturedAt": "2026-10-10T19:18:28.528Z",
+   "toastsAfter": [
+    {
+     "id": "toast-t1",
+     "text": "Recipe done: Take 2 full tea breaks · +15 leaves",
+     "rect": [
+      16,
+      228,
+      359,
+      365
+     ],
+     "opacity": 1
+    },
+    {
+     "id": "toast-t2",
+     "text": "New badge: Tea Time",
+     "rect": [
+      16,
+      373,
+      359,
+      470
+     ],
+     "opacity": 1
+    }
+   ],
+   "file": "c-breakover-toasts.png",
+   "pageErrors": [],
+   "stable": true
+  },
+  "d-summary-levelup": {
+   "attempt": 1,
+   "quotaProbe": "QuotaExceededError",
+   "dataState": "storage really full (QuotaExceededError on a 64-byte write): QuotaExceededError",
+   "levelBefore": 4,
+   "levelAfter": 5,
+   "route": "#/done",
+   "toastsBefore": [],
+   "warningRect": null,
+   "page": {
+    "innerWidth": 375,
+    "innerHeight": 667,
+    "dpr": 2,
+    "htmlFontPx": 32,
+    "dark": true,
+    "docScroll": [
+     375,
+     667
+    ],
+    "dataTheme": "dark",
+    "summaryText": "25 minutes brewed Tea’s ready. Take five before the next one. Chapter 3 notes Study Done Carry forward Fairy lights is in your nook 5 Cozy level 5 · Tiny warm stars for rainy evenings. +85 leaves Goal met · 50/30 min Dai"
+   },
+   "capturedAt": "2026-10-10T19:18:42.651Z",
+   "toastsAfter": [],
+   "file": "d-summary-levelup.png",
+   "pageErrors": [],
+   "stable": true
+  },
+  "c2-breakover-toasts-storage-ok": {
+   "attempt": 1,
+   "dataState": "storage NOT full (normal profile, newbie seed)",
+   "carriedTaskControl": true,
+   "naturalToastsExpired": true,
+   "toastsRaisedAt": "2026-10-10T19:18:57.468Z",
+   "route": "#/focus",
+   "toastsBefore": [
+    {
+     "id": "toast-t1",
+     "text": "Recipe done: Take 2 full tea breaks · +15 leaves",
+     "rect": [
+      16,
+      228,
+      359,
+      365
+     ],
+     "opacity": 1
+    },
+    {
+     "id": "toast-t2",
+     "text": "New badge: Tea Time",
+     "rect": [
+      16,
+      373,
+      359,
+      470
+     ],
+     "opacity": 1
+    }
+   ],
+   "warningRect": null,
+   "page": {
+    "innerWidth": 375,
+    "innerHeight": 667,
+    "dpr": 2,
+    "htmlFontPx": 32,
+    "dark": true,
+    "docScroll": [
+     375,
+     667
+    ],
+    "dataTheme": "dark",
+    "summaryText": "Break’s over Ready for another brew of Chapter 3 notes? Mark it done, start fresh Put the kettle on That’s all for now"
+   },
+   "capturedAt": "2026-10-10T19:18:58.578Z",
+   "toastsAfter": [
+    {
+     "id": "toast-t1",
+     "text": "Recipe done: Take 2 full tea breaks · +15 leaves",
+     "rect": [
+      16,
+      228,
+      359,
+      365
+     ],
+     "opacity": 1
+    },
+    {
+     "id": "toast-t2",
+     "text": "New badge: Tea Time",
+     "rect": [
+      16,
+      373,
+      359,
+      470
+     ],
+     "opacity": 1
+    }
+   ],
+   "file": "c2-breakover-toasts-storage-ok.png",
+   "pageErrors": [],
+   "stable": true
+  },
+  "d2-summary-levelup-storage-ok": {
+   "attempt": 1,
+   "dataState": "storage NOT full (normal profile, newbie seed)",
+   "levelBefore": 4,
+   "levelAfter": 5,
+   "route": "#/done",
+   "toastsBefore": [],
+   "warningRect": null,
+   "page": {
+    "innerWidth": 375,
+    "innerHeight": 667,
+    "dpr": 2,
+    "htmlFontPx": 32,
+    "dark": true,
+    "docScroll": [
+     375,
+     667
+    ],
+    "dataTheme": "dark",
+    "summaryText": "25 minutes brewed Tea’s ready. Take five before the next one. Chapter 3 notes Study Done Carry forward Fairy lights is in your nook 5 Cozy level 5 · Tiny warm stars for rainy evenings. +85 leaves Goal met · 50/30 min Dai"
+   },
+   "capturedAt": "2026-10-10T19:19:10.174Z",
+   "toastsAfter": [],
+   "file": "d2-summary-levelup-storage-ok.png",
+   "pageErrors": [],
+   "stable": true
+  }
+ },
+ "errors": [],
+ "kettleSrcTree": "1fc4a1b",
+ "summary": {
+  "states": 6,
+  "ok": 5,
+  "failed": 1
+ },
+ "rerun": [
+  {
+   "states": [
+    "b-focus-warning-toasts"
+   ],
+   "startedAt": "2026-10-10T19:56:17.172Z",
+   "endedAt": "2026-10-10T19:57:18.431Z",
+   "asettleMs": 1000,
+   "note": "replaced after the first run left these states with toasts that expired during the shot"
+  }
+ ]
+}

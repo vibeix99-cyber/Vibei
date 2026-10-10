@@ -1,0 +1,7 @@
+### 2026-10-10T19:40:32Z node --import ./L1hook.mjs race-x.mjs http://127.0.0.1:5302 R5 /tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/rv6/L1/racex-844L/R5 844x390 light 200 wheel 4 env={"POST": "100"}
+R5 844x390 light t200 wheel release=t2 #0: OK | rest scrollTop 1 | events after release []
+R5 844x390 light t200 wheel release=t2 #1: OK | rest scrollTop 1 | events after release []
+R5 844x390 light t200 wheel release=t2 #2: FAIL warning gone/faded in 4 frames; box below the room/over the dock in 3 frames (max +13 px) | rest scrollTop 0 | events after release [[8315,"+","toast-kettle:save-failed"],[10176,"-","toast-t1"]]
+  frames [t,n,op,top,bottom,dockTop,roomBottom,listST,warnST,transform]: [[8147,1,0,null,null,182,172,0,null,null],[8237,1,0,null,null,182,172,0,null,null],[8248,1,0,null,null,182,172,0,null,null],[8309,1,0,null,null,182,172,0,null,null],[8336,2,0,31,185,182,172,0,0,"matrix(0.94, 0, 0, 0.94, 0, 18)"],[8445,2,0.87,29,184,182,172,0,0,"matrix(0.944933, 0, 0, 0.944933, 0, 16.52)"],[8501,2,1,10,173,182,172,0,0,"matrix(0.994631, 0, 0, 0.994631, 0, 1.61061)"],[8566,2,1,7,172,182,172,0,0,"matrix(1.00211, 0, 0, 1.00211, 0, -0.634193)"],[8644,2,1,7,172,182,172,0,0,"matrix(1.00218, 0, 0, 1.00218, 0, -0.652621)"],[8694,2,1,8,172,182,172,0,0,"matrix(1.00045, 0, 0, 1.00045, 0, -0.133587)"]]
+R5 844x390 light t200 wheel release=t2 #3: OK | rest scrollTop 0 | events after release []
+R5: 1 failures in 4 runs

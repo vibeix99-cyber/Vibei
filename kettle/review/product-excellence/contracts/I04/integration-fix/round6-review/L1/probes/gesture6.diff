@@ -1,0 +1,67 @@
+0a1,8
+> // L1 EXTRA-GESTURE probe: a copy of M2's repro6.mjs (same setup, recorder, judge and timing classes) with only the input
+> // primitive replaced by gesture types M2 did not use (M2: 20 px wheel notches, 24 px finger drags). GESTURE env:
+> //   fling : CDP Input.dispatchTouchEvent, a fast large swipe (7 moves x 22 px, ~8 ms apart, then touchEnd -> Chromium fling)
+> //   fine  : trackpad-like wheel, 12 events of 2-5 px (seeded) 16 ms apart per stroke (page.mouse.wheel)
+> //   kbd   : keyboard only: Shift+Tab from the document start to the last tabbable (Save backup in the warning), then
+> //           ArrowDown/ArrowUp x3 per stroke (the focused toast list scrolls; focusin pauses only the warning)
+> //   node .tmp/L1/gesture6.mjs <base> <tag> <outDir> [configFilter] [runsPerConfig=10] [clip=0]   (GESTURE=fling|fine|kbd)
+> // All 10 repro6 timing classes (before / during / after) are run once each per 10 runs. Toast timers are never touched.
+42,43c50,52
+<     const how = i % 2 ? 'touch' : 'wheel';
+<     const T = TIMINGS[Math.floor(i / 2) % TIMINGS.length];
+---
+>     const GESTURE = process.env.GESTURE ?? 'fling';
+>     const how = GESTURE === 'fling' ? 'touch' : GESTURE === 'kbd' ? 'kbd' : 'wheel';
+>     const T = TIMINGS[i % TIMINGS.length];
+46c55
+<     const label = `${tag} ${cfg} ${how} ${T.cls} d=${T.d} #${i}`;
+---
+>     const label = `${tag} ${cfg} ${GESTURE} ${T.cls} d=${T.d} #${i}`;
+109a119,129
+>       let seed = 12345 + i * 7919; const rnd = () => (seed = (seed * 1664525 + 1013904223) % 4294967296) / 4294967296;
+>       let kbdReady = false;
+>       const kbdFocus = async () => {
+>         inputs.push(await p.evaluate(() => Math.round(performance.now() - window.__rec.t0)));
+>         for (let k = 0; k < 8 && !kbdReady; k++) {
+>           await p.keyboard.press('Shift+Tab'); await sleep(60);
+>           kbdReady = await p.evaluate(() => !!document.activeElement?.closest?.('[aria-label="Notifications"]'));
+>         }
+>         if (!kbdReady) throw new Error('keyboard focus never reached the toast list');
+>       };
+>       // one stroke: x, y = where the pointer/finger goes (ignored by the keyboard), dy > 0 = scroll down
+113,115c133,149
+<         if (!cdp) { await p.mouse.move(x, y); await p.mouse.wheel(0, dy); }
+<         else { const dir = dy > 0 ? -1 : 1; await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x, y }] }); for (let k = 1; k <= 3; k++) { await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x, y: y + dir * k * 8 }] }); await sleep(16); } await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }); }
+<         await sleep(how === 'wheel' ? 150 : 120);
+---
+>         if (GESTURE === 'fine') {
+>           await p.mouse.move(x, y);
+>           for (let k = 0; k < 12; k++) { await p.mouse.wheel(0, Math.sign(dy) * (2 + Math.round(rnd() * 3))); await sleep(16); }
+>           await sleep(100);
+>         } else if (GESTURE === 'fling') {
+>           const dir = dy > 0 ? -1 : 1; // finger up = scroll down
+>           const y0 = y; // the finger goes down on the toast (it picks the scroller), then swipes 154 px away from there
+>           await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x, y: y0 }] });
+>           for (let k = 1; k <= 7; k++) { await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x, y: Math.min(Math.max(y0 + dir * k * 22, 2), H - 2) }] }); await sleep(8); }
+>           await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+>           // let the fling run out: until the list and the warning stop moving (max 1.6 s)
+>           let prev = null;
+>           for (let k = 0; k < 16; k++) { await sleep(100); const cur = await p.evaluate((WARN) => { const l = document.querySelector('[aria-label="Notifications"] ol'); const w = document.getElementById(WARN); return `${l.scrollTop.toFixed(1)}/${w ? w.scrollTop.toFixed(1) : 0}`; }, WARN); if (cur === prev) break; prev = cur; }
+>         } else {
+>           for (let k = 0; k < 3; k++) { await p.keyboard.press(dy > 0 ? 'ArrowDown' : 'ArrowUp'); await sleep(40); }
+>           await sleep(150);
+>         }
+121c155,156
+<       const dy = how === 'wheel' ? 20 : 24;
+---
+>       const dy = 20;
+>       if (GESTURE === 'kbd') await kbdFocus();
+174c209
+<       appendFileSync(`${out}/repro6-${tag}.jsonl`, JSON.stringify({ label, cfg, how, timing: T, bad, ev: R.ev, inputs, tWarn, tLast, frames: R.frames }) + '\n');
+---
+>       appendFileSync(`${out}/gesture6-${tag}.jsonl`, JSON.stringify({ label, cfg, how, timing: T, bad, ev: R.ev, inputs, tWarn, tLast, frames: R.frames }) + '\n');
+179c214
+<     if (vid) { const src = await vid.path(); renameSync(src, `${out}/clip-${tag}-${W}x${H}-${theme}-${how}-${T.cls}-d${T.d}.webm`); rmSync(`${out}/video-tmp`, { recursive: true, force: true }); }
+---
+>     if (vid) { const src = await vid.path(); renameSync(src, `${out}/clip-${tag}-${W}x${H}-${theme}-${GESTURE}-${T.cls}-d${T.d}.webm`); rmSync(`${out}/video-tmp`, { recursive: true, force: true }); }

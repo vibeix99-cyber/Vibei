@@ -1,0 +1,14 @@
+0a1
+> // L1 ADAPTATION of chk-r5/natural.mjs: direction-aware (list column-reverse on R5, top-down on R6). The column-reverse branch is the original code path.
+62c63
+<     const st = () => page.evaluate((WARN) => { const l = document.querySelector('[aria-label="Notifications"] ol'); const w = document.getElementById(WARN); const r = w?.getBoundingClientRect(); return { x: r ? (r.left + r.right) / 2 : 180, y: r ? Math.max(r.top, 0) + 40 : 60, lst: l.scrollTop, lmin: -(l.scrollHeight - l.clientHeight), wst: w?.scrollTop ?? 0 }; }, WARN);
+---
+>     const st = () => page.evaluate((WARN) => { const l = document.querySelector('[aria-label="Notifications"] ol'); const w = document.getElementById(WARN); const r = w?.getBoundingClientRect(); return { x: r ? (r.left + r.right) / 2 : 180, y: r ? Math.max(r.top, 0) + 40 : 60, lst: l.scrollTop, lmin: -(l.scrollHeight - l.clientHeight), lmax: l.scrollHeight - l.clientHeight, rev: getComputedStyle(l).flexDirection === 'column-reverse', wst: w?.scrollTop ?? 0 }; }, WARN);
+65c66
+<     for (let i = 0; i < 20; i++) { s = await st(); if (s.wst <= 0 && s.lst <= s.lmin + 1) break; await page.mouse.wheel(0, -40); await sleep(120); }
+---
+>     for (let i = 0; i < 20; i++) { s = await st(); if (s.rev ? (s.wst <= 0 && s.lst <= s.lmin + 1) : (s.lst >= s.lmax - 1)) break; await page.mouse.wheel(0, s.rev ? -40 : 40); await sleep(120); }
+70c71
+<     for (let i = 0; i < 30 && extra < 4; i++) { s = await st(); if (s.lst >= -1) extra++; await page.mouse.wheel(0, 20); await sleep(150); }
+---
+>     for (let i = 0; i < 30 && extra < 4; i++) { s = await st(); if (s.rev ? s.lst >= -1 : s.lst <= 1) extra++; await page.mouse.wheel(0, s.rev ? 20 : -20); await sleep(150); }

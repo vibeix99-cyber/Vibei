@@ -21,7 +21,7 @@
  "screenshot": "viewport-size PNG at full device resolution (page.screenshot, fullPage false); doc scroll size recorded per state",
  "toastTimers": "default (3.2 s ordinary toast, 12 s storage-full warning); not extended",
  "startedAt": "2026-10-10T18:53:59.289Z",
- "endedAt": "2026-10-10T18:55:44.399Z",
+ "endedAt": "2026-10-10T19:55:29.916Z",
  "states": {
   "a-home-warning": {
    "attempt": 2,
@@ -106,8 +106,7 @@
    "quotaProbe": "QuotaExceededError",
    "dataState": "storage really full (QuotaExceededError on a 64-byte write): QuotaExceededError",
    "warningBeforeToasts": false,
-   "toastsRaisedAt": "2026-10-10T18:54:35.711Z",
-   "route": "#/focus",
+   "toastsRaisedAt": "2026-10-10T19:55:27.731Z",
    "toastsBefore": [
     {
      "id": "toast-t1",
@@ -132,6 +131,33 @@
      "opacity": 1
     }
    ],
+   "capturedAt": "2026-10-10T19:55:28.836Z",
+   "shotMs": 1052,
+   "toastsAfter": [
+    {
+     "id": "toast-t1",
+     "text": "Recipe done: Take 2 full tea breaks · +15 leaves",
+     "rect": [
+      16,
+      311,
+      359,
+      448
+     ],
+     "opacity": 1
+    },
+    {
+     "id": "toast-t2",
+     "text": "New badge: Tea Time",
+     "rect": [
+      16,
+      456,
+      359,
+      553
+     ],
+     "opacity": 1
+    }
+   ],
+   "route": "#/focus",
    "warningRect": null,
    "page": {
     "innerWidth": 375,
@@ -144,36 +170,12 @@
      667
     ],
     "dataTheme": "dark",
-    "summaryText": "2 4 : 5 6 Kettle’s on. Nice start. Whistles at 7:19 PM Add 5 Pause End Brew 1 of 4"
+    "summaryText": "2 4 : 5 3 Kettle’s on. Nice start. Whistles at 8:20 PM Add 5 Pause End Brew 1 of 4"
    },
-   "capturedAt": "2026-10-10T18:54:36.839Z",
-   "toastsAfter": [
-    {
-     "id": "toast-t1",
-     "text": "Recipe done: Take 2 full tea breaks · +15 leaves",
-     "rect": [
-      23,
-      319,
-      352,
-      451
-     ],
-     "opacity": 0.348164
-    },
-    {
-     "id": "toast-t2",
-     "text": "New badge: Tea Time",
-     "rect": [
-      23,
-      463,
-      352,
-      556
-     ],
-     "opacity": 0.365708
-    }
-   ],
    "file": "b-focus-warning-toasts.png",
    "pageErrors": [],
-   "stable": true
+   "stable": true,
+   "fullyDrawn": true
   },
   "c-breakover-toasts": {
    "attempt": 1,
@@ -386,5 +388,16 @@
   "states": 6,
   "ok": 6,
   "failed": 0
- }
+ },
+ "rerun": [
+  {
+   "states": [
+    "b-focus-warning-toasts"
+   ],
+   "startedAt": "2026-10-10T19:55:18.029Z",
+   "endedAt": "2026-10-10T19:55:29.916Z",
+   "asettleMs": 1000,
+   "note": "replaced after the first run left these states with toasts that expired during the shot"
+  }
+ ]
 }

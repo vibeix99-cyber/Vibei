@@ -1,0 +1,18 @@
+0a1
+> // L1 ADAPTATION of chk-r5/race.mjs: direction-aware (list column-reverse on R5, top-down on R6; pointer kept on the toast with the most visible area inside the list's scroll box on R6 (the list itself is pointer-events:none: a pointer in a gap scrolls the page, not the list)). The column-reverse branch is the original code path.
+66c67
+<       const st = () => page.evaluate((WARN) => { const l = document.querySelector('[aria-label="Notifications"] ol'); const w = document.getElementById(WARN); const r = w?.getBoundingClientRect(); const lr = l.getBoundingClientRect(); return { x: r ? (r.left + r.right) / 2 : 180, top: r ? Math.max(0, r.top) : 0, bottom: r ? r.bottom : 300, wst: w?.scrollTop ?? 0, wmax: w ? w.scrollHeight - w.clientHeight : 0, lst: l.scrollTop, lmin: -(l.scrollHeight - l.clientHeight), lbottom: lr.bottom }; }, WARN);
+---
+>       const st = () => page.evaluate((WARN) => { const l = document.querySelector('[aria-label="Notifications"] ol'); const w = document.getElementById(WARN); const r = w?.getBoundingClientRect(); const lr = l.getBoundingClientRect(); return { x: r ? (r.left + r.right) / 2 : 180, top: r ? Math.max(0, r.top) : 0, bottom: r ? r.bottom : 300, wst: w?.scrollTop ?? 0, wmax: w ? w.scrollHeight - w.clientHeight : 0, lst: l.scrollTop, lmin: -(l.scrollHeight - l.clientHeight), lmax: l.scrollHeight - l.clientHeight, rev: getComputedStyle(l).flexDirection === 'column-reverse', lbottom: lr.bottom, lmid: (() => { let best = null; for (const li of l.children) { const q = li.getBoundingClientRect(); const t = Math.max(q.top, lr.top, 0), bt = Math.min(q.bottom, lr.bottom, innerHeight); if (bt - t > 8 && (!best || bt - t > best.h)) best = { h: bt - t, y: (t + bt) / 2 }; } return best ? best.y : (Math.max(lr.top, 0) + Math.min(lr.bottom, innerHeight)) / 2; })() }; }, WARN);
+82c83
+<       for (let i = 0; i < 80; i++) { s = await st(); if (s.wst <= 0 && s.lst <= s.lmin + 1) break; await input(s.x, s.top + Math.max(14, 0.4 * (s.bottom - s.top)), -20); }
+---
+>       for (let i = 0; i < 80; i++) { s = await st(); if (s.rev ? (s.wst <= 0 && s.lst <= s.lmin + 1) : (s.lst >= s.lmax - 1)) break; await input(s.x, s.rev ? s.top + Math.max(14, 0.4 * (s.bottom - s.top)) : s.lmid, s.rev ? -20 : 20); }
+86c87
+<       for (let i = 0; i < 80; i++) { s = await st(); if (s.lst >= -1) break; await input(s.x, s.lbottom - 30, 20); }
+---
+>       for (let i = 0; i < 80; i++) { s = await st(); if (s.rev ? s.lst >= -1 : s.lst <= 1) break; await input(s.x, s.rev ? s.lbottom - 30 : s.lmid, s.rev ? 20 : -20); }
+96c97
+<         await input(s2.x, s2.lbottom - 30, 20);
+---
+>         await input(s2.x, s2.rev ? s2.lbottom - 30 : s2.lmid, s2.rev ? 20 : -20);
