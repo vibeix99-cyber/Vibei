@@ -49,13 +49,15 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
 | `/home/user/wt/m1` | `pe/m1@a6ebe00` | M1 Wave 1 | APPROVED r2, merged (`7da58f1`). Idle |
 | `/home/user/wt/m2` | `pe/m2@2becb78` | M2 Wave 1 | APPROVED r1, merged (`0d58c5e`). Idle |
 | `/home/user/wt/w1fix` | `pe/w1-fix@3f00b57` (src `3c58bf9`) | **M1 integration fix** (I03 × I04) | **APPROVED r1** (fresh Checker). Held unmerged; any change voids it. Clean |
-| `/home/user/wt/w1fix-m2` | `pe/w1-fix-m2@adec1a2` (src `dcc3778`; code `9326de5`) | **M2 integration fix** (I04 status bar + toasts + break-over) | r4 **REJECTED** → M2 correcting R4-D1 / R4-D2 (r5 not yet submitted) |
+| `/home/user/wt/w1fix-m2` | `pe/w1-fix-m2@33a72e6` (src `8d4a979`) | **M2 integration fix** (I04 status bar + toasts + break-over) | **r5 READY FOR REVIEW**, in review. Clean |
+| `/home/user/wt/chk-r5` / `chk-r5-base` / `trial-r5` | detached `33a72e6` / `bc5cfaa` / `20671eb` | fresh Checker for r5; trial merge (clean; frozen M1 files byte-identical to `3f00b57`) | scratch |
 
 **Archives** (`review/product-excellence/archive/`, pushed; restore with `git fetch <bundle> 'refs/heads/*:refs/heads/*'`):
 - `maker-branches-2026-10-09.bundle`: `pe/w1-fix@1351c99`, `pe/w1-fix-m2@c9520db` (full).
 - `pe-w1-fix-3f00b57.incremental.bundle`: `pe/w1-fix@3f00b57` (needs `1351c99`).
 - `pe-w1-fix-m2-r2wip.incremental.bundle`: `pe/w1-fix-m2@e1e672d` (needs `c9520db`).
 - `pe-w1-fix-m2-r2-e932f65.incremental.bundle`: `pe/w1-fix-m2@e932f65` (needs `e1e672d`).
+- `pe-w1-fix-m2-r5-33a72e6.incremental.bundle`: `pe/w1-fix-m2@33a72e6` (needs `adec1a2`).
 - `pe-w1-fix-m2-r4-adec1a2.incremental.bundle`: `pe/w1-fix-m2@adec1a2` (needs `e4be56e`).
 - `pe-w1-fix-m2-r3-e4be56e.incremental.bundle.part-00..02` + `.sha256`: `pe/w1-fix-m2@e4be56e` (needs `e932f65`).
   Split because the bundle is 112 MB. Reassemble with
@@ -75,7 +77,7 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
 | I04 integration fix r2 | `e932f65` (src `c873084`; trial with `3f00b57` = `db3418a`) | **REJECT** (fresh Checker): R2-D1 no re-fit when the window narrows without changing the bar's box; R2-D3 stacked toasts at large text collapse and the warning text spills out of its box | `contracts/I04/CHECKER-integration-fix-r2.md` |
 | I04 integration fix r3 | `e4be56e` (src `97d26c5`) | **NOT REVIEWED** (no Checker launched: user pause; then superseded before review by r4 in progress, which adds D4). Not APPROVE, not REJECT | — |
 | I04 integration fix r4 (r3 + D4 break-over toast + date-independent short-screen gate) | `adec1a2` (src `dcc3778`; code `9326de5`; trial merge with `3f00b57` = `1f1558e`, src `0d0db47`) | **REJECT** (fresh Checker): R4-D1 a warning taller than its room can't be read by scrolling (scroll moves its box over the dock → M1's hold rule takes it away and re-shows it unscrolled; 375×667 @200 %, landscape @150–200 %, 568×320 three-stack); R4-D2 live mobile resizes at 150–200 % text leave Today zoomed ×1.2–3.2 (regression since r2). Passed: D1/R2-D1 (96 runs), D2 (216 cells), D4, M1 unchanged (60 states), CLS, preserve list; trial 54/54 + timer/pwa 29/2 | `contracts/I04/CHECKER-integration-fix-r4.md` |
-| I04 integration fix r5 | — | **in progress (M2)**, not submitted | (`contracts/I04/CHECKER-integration-fix-r5.md` to be written) |
+| I04 integration fix r5 (R4-D1 pinned warning, R4-D2 contained measurement) | `33a72e6` (src `8d4a979`; trial with `3f00b57` = `20671eb`, src `b38ad5e`) | **IN REVIEW — no verdict yet** (fresh Checker, not any earlier Checker; must decide 200 %-slow-font CLS against the baseline) | `contracts/I04/CHECKER-integration-fix-r5.md` (to be written) |
 
 ### Submitted, awaiting review: M2 r3 `e4be56e` (maker's claims, unverified by any Checker)
 
@@ -389,6 +391,27 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
   - **Routed to M2 for r5.** The CSS-side fix is preferred for R4-D1. If it truly needs M1's rule to measure only the
     visible part, M2 must stop and report, and the orchestrator opens an M1 change with independent review. Checker and
     trial worktrees removed.
+
+- M2 submitted **r5** `pe/w1-fix-m2@33a72e6` (src `8d4a979`). No frozen M1 file changed; M1's hold rule needed no change.
+  - **R4-D1:** the warning is pinned to the bottom of the toast list in short rooms. Older toasts slide over it, and tall
+    toasts scroll their own message with the action in view.
+  - **R4-D2:** the bar is size-contained and clipped while measuring, so the page never widens.
+  - **New tests:** `toast-room.spec.ts` (real-input scrolling) and a page-scale assertion in `statusbar.spec.ts`. Both
+    fail on r4.
+  - **Maker's runs (unreviewed):** branch 24/24; trial `929576d` 60/60 plus M1's 60 storage-full states; real-input
+    scroll 0/64 (r4 64/64); live resize 0/60 (r4 27/60).
+  - **Maker disclosures:**
+    - 200 % slow-font load CLS reads 0.384 at 390×844 (r4: 0.147), with the maker claiming the same movement;
+    - a transient 1–4 px over-width during 150 % drags;
+    - in a 60 px room, a two-line older toast is wholly visible at only one offset;
+    - older toasts cover the pinned warning while slid down.
+  - Archived as `archive/pe-w1-fix-m2-r5-33a72e6.incremental.bundle`.
+- Trial merge `20671eb` built by the orchestrator (src identical to the maker's trial). A fresh independent Checker was
+  launched on `33a72e6` + trial, covering:
+  - all prior defects, with real input;
+  - CLS measured against `8f1044a` and `0d58c5e`;
+  - REFERENCE → BEFORE → AFTER;
+  - the disclosures.
 
 ## Exact next action
 
