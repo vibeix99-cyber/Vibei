@@ -10,7 +10,74 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
-## ⏸ PAUSE CHECKPOINT (round 6) — 2026-10-10 15:12 UTC (read this first)
+## ■ STOPPED: round-6 combined review REJECTED — 2026-10-10 23:10 UTC (read this first)
+
+**The run stopped on a REJECT, as instructed.** There is no round 7. Nothing was merged and Wave 2 has not started. No
+agents, servers, browser tests or monitors are running.
+
+- **Integration branch:** `claude/wizardly-galileo-uy89d9`. App code is still `0d58c5e`; Wave 1 is not closed.
+- **Restore point:** `8f1044a` and the `pre-product-excellence` tag, untouched.
+- **Reviewed:** trial merge `e866118`, which is integration `bc48a10` + `pe/w1-fix-m2@51521cf` with `kettle/src`
+  `05bb3f8`.
+  - Archived as `archive/rv6-trial-e866118.incremental.bundle`; local branch `pe/rv6-trial`.
+- **Verdict: REJECT.** It is in `contracts/I04/CHECKER-integration-fix-r6.md`.
+  - Reviewer: a newly launched lead Checker running Opus 5.5 (`claude-opus-5-5`, effort not inspectable). It
+    implemented none of the work.
+  - **Blocking: LEAD-D1.** An older action toast makes the warning come second. Its box leaves the room, and M1's hold
+    rule removes and re-shows it in a loop.
+    - R6 gives 9–12 removals in about 5 s, and the loop is unbounded behind a `duration: Infinity` toast. INT is
+      steady. Round 6 introduced it.
+    - Cause: `Toast.module.css` gives every action toast `order: -1`, so they tie. The lead verified this with a
+      counterfactual.
+  - **Passed gates:**
+    - R5-D1 fixed on the probes that count: race-x R5 9/10/8 → R6 0/0/0, and the natural-x R5-alone control.
+    - M1's `flow.ts` and `integrity.spec.ts` are byte-identical to `3f00b57`.
+    - Visual gate: no preserve-list regression.
+- **Regression:** not run on R6, by user adjustment (a). L4 ran only tsc (exit 0) and vitest (265/265). The chromium
+  and timer/PWA suites were not run, so this is partial and not a pass.
+- **Partial:** L1's R5 controls for natural.mjs at 844, natural-x under pair load, repro6 and the extra gestures were
+  never established. The solo rerun did not fit the user's 60-minute time box, so those R6 zeros don't count.
+- **Defect packet, causal analysis and architecture options:**
+  `contracts/I04/integration-fix/round6-review/DEFECT-PACKET-AND-OPTIONS.md`.
+  - **A:** deterministic precedence (smallest).
+  - **B:** move the storage warning into an in-flow banner; this removes the class and is recommended.
+  - **C:** a reserved non-scrolling notice slot.
+- **Lane receipts** are under `contracts/I04/integration-fix/round6-review/{L1,L2,L3,L4,LEAD}/`. Wall clock from the
+  18:24 UTC start:
+
+  | Lane | Finished | Duration / scope |
+  |---|---|---|
+  | L1 | 21:26 | 3 h 02 m, 862 runs |
+  | L4 captures | 21:44 | 3 h 20 m |
+  | L4 regression | 22:33 | 47 m, stopped |
+  | L3 | 22:46 | 4 h 22 m |
+  | L2 | 22:58 | 4 h 34 m |
+  | Lead verdict | ~23:04 | — |
+
+- **Never verified here (BLOCKED/UNKNOWN):**
+  - real phones and touch hardware;
+  - real-device audio, mute and late-return (I05);
+  - OS text size;
+  - real assistive technology;
+  - iOS Safari, WebKit and Firefox;
+  - real window managers;
+  - GPU timing.
+
+### Next action (only when the user says so)
+
+**User decision:** choose the architecture for the storage-full warning, A, B or C, in `DEFECT-PACKET-AND-OPTIONS.md`.
+Then:
+1. **Round 7** by one combined maker (the I03 × I04 shared contract), including follow-up 12 (controls below the edge
+   at 200 % text).
+2. **A fresh independent review** with the evidence the r6 verdict lists:
+   - LEAD-D1 retest on R6-new against INT;
+   - a new spec case that fails on `e866118`;
+   - R5-D1 and R4-D1 retests with the R5 control reproduced in the same session, including a solo L1 control.
+3. **Only on APPROVE:** the full Wave 1 regression on that trial merge, then the merge, then Wave 2.
+
+---
+
+## ⏸ PAUSE CHECKPOINT (round 6) — 2026-10-10 15:12 UTC (read this first)  *(superseded by the STOPPED section above)*
 
 **Paused by the user at M2's round-6 submission** (switching the session to Ultracode). No Checker has been launched,
 nothing is merged, round 7 and Wave 2 have not started. No agents, dev servers, browser tests or monitors are running.
@@ -160,7 +227,7 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
 | I04 integration fix r3 | `e4be56e` (src `97d26c5`) | **NOT REVIEWED** (no Checker launched: user pause; then superseded before review by r4 in progress, which adds D4). Not APPROVE, not REJECT | — |
 | I04 integration fix r4 (r3 + D4 break-over toast + date-independent short-screen gate) | `adec1a2` (src `dcc3778`; code `9326de5`; trial merge with `3f00b57` = `1f1558e`, src `0d0db47`) | **REJECT** (fresh Checker): R4-D1 a warning taller than its room can't be read by scrolling (scroll moves its box over the dock → M1's hold rule takes it away and re-shows it unscrolled; 375×667 @200 %, landscape @150–200 %, 568×320 three-stack); R4-D2 live mobile resizes at 150–200 % text leave Today zoomed ×1.2–3.2 (regression since r2). Passed: D1/R2-D1 (96 runs), D2 (216 cells), D4, M1 unchanged (60 states), CLS, preserve list; trial 54/54 + timer/pwa 29/2 | `contracts/I04/CHECKER-integration-fix-r4.md` |
 | I04 integration fix r5 (R4-D1 pinned warning, R4-D2 contained measurement) | `33a72e6` (src `8d4a979`; trial with `3f00b57` = `20671eb`, src `b38ad5e`) | **REJECT** (fresh Checker): **R5-D1** with real toast timers, an older toast leaving a scrolled reversed list makes scroll anchoring push the sticky warning's layout box 7–47 px below its room (over the dock) → M1's rule withdraws it and re-shows it reset (375×667 @200 % 4/8 light, 4/6 dark; 844×390 @200 % 2/7). Passed: D1, R2-D1, D2, D4, R4-D2 (100/100), M1 unchanged, preservation, trial 60/60 + timer/pwa 29/2. **CLS decided: not a regression** (r5 moves 159 px vs ≈1,600 px on `8f1044a`/`0d58c5e`, whose 0 is masked by a 534–570 px-wide page) | `contracts/I04/CHECKER-integration-fix-r5.md` |
-| I03 × I04 combined integration fix r6 (M2's branch with `pe/w1-fix` merged in) | `51521cf` (code `091249a`, src `05bb3f8`; scratch merge on `c6c7922` = `859f9fb`, same src) | **READY FOR REVIEW — NOT REVIEWED** (user pause; no Checker launched) | (`contracts/I04/CHECKER-integration-fix-r6.md` to be written) |
+| I03 × I04 combined integration fix r6 (M2's branch with `pe/w1-fix` merged in) | `51521cf` (code `091249a`, src `05bb3f8`); trial merge `e866118` on `bc48a10` | **REJECT** (lead Checker + 4 lanes; LEAD-D1: an older action toast makes the warning come second, so it is removed and re-shown in a loop; introduced in r6). R5-D1 met on the counted probes; regression not run (user adjustment) | `contracts/I04/CHECKER-integration-fix-r6.md` |
 
 ### Submitted, awaiting review: M2 r3 `e4be56e` (maker's claims, unverified by any Checker)
 
@@ -523,7 +590,15 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
   round-6 checkpoint at the top has all details. One orphaned M2 wait loop, for a probe that was no longer running and had
   no log, was stopped by PID.
 
+- 2026-10-10 18:16–23:10 UTC: **parallel fresh review of round 6** (lead Checker + lanes L1–L4), user-bounded.
+  - Prep: trial merge `e866118` (src `05bb3f8`); R6, R5 and INT servers verified byte-for-byte; a browser-slot gate
+    capped at nproc−1 = 3.
+  - User adjustments mid-run: no regression on R6; a 60-minute time box for L1–L3; Opus 5.5 for any new agent; the
+    lead verifies diagnoses itself.
+  - **Lead verdict: REJECT (LEAD-D1).**
+  - Run stopped. Defect packet and options: `round6-review/DEFECT-PACKET-AND-OPTIONS.md`.
+
 ## Exact next action
 
-See "Next action on resume" in the **round-6** pause checkpoint at the top: a fresh independent combined review of
-`pe/w1-fix-m2@51521cf`.
+See the "STOPPED" section at the top: a user decision on architecture A/B/C for the storage-full warning, then round 7,
+a fresh review and the regression.
