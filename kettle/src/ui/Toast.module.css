@@ -162,10 +162,28 @@
   .list > :nth-last-child(6) {
     order: 6;
   }
-  /* Every toast keeps its content height (never shrunk by the column); a toast taller than the whole room (the
-     storage-full warning at 200 % on a phone) is read by scrolling the list up, its action held in view. */
+  /* Every toast keeps its content height (never shrunk by the column), up to the room's own height (100cqh is the
+     region's height). A toast taller than the whole room (the storage-full warning at 200 % on a phone) scrolls its own
+     message inside its box, opening first, its action held in view at the bottom of the box; at its top it hands the
+     scroll on to the list. */
   .toast {
     flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+    max-height: 100cqh;
+    overflow-y: auto;
+  }
+  /* A toast with an action (the storage-full warning) never moves down: it is sticky at the bottom of the scroll box,
+     so at every scroll offset its drawn box stays inside the room, clear of the docked start. (M1's hold rule measures
+     that box: a warning scrolled down over the start would be taken away and shown again unscrolled.) Scrolling the
+     list up slides older toasts (above it) down over it, so each can be read; newer ones (below it) pass under it. */
+  .toast:has(.action) {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+  }
+  .toast:has(.action) ~ .toast {
+    z-index: 0;
   }
 }
 /* Large text for the toast's width (≈150 % text on a phone, 200 % anywhere): the message keeps the full width beside
@@ -180,7 +198,7 @@
   .message {
     flex-basis: calc(100% - 32px - var(--space-3));
   }
-  /* Held in view at the bottom of the room while a long message scrolls behind it. */
+  /* Held in view at the bottom of its toast while a long message scrolls behind it. */
   .action {
     position: sticky;
     bottom: 0;
@@ -190,8 +208,8 @@
   }
 }
 /* A room too short for even one line of message above an action under it (e.g. a landscape phone at 200 % text,
-   where the docked start leaves about 60 px): the action goes back beside the message and is held at the top of the
-   room, and the message scrolls past beside it line by line, so all of it can still be read and the action is always
+   where the docked start leaves about 60 px): the action goes back beside the message and is held at the top of its
+   toast, and the message scrolls past beside it line by line, so all of it can still be read and the action is always
    there. */
 @container toast-room (max-height: 4em) {
   .toast {

@@ -184,6 +184,11 @@ export function StatusBar({ data }: { data: HomeData }) {
  * while fonts load (Chromium reports "loading" for a moment on every resize/rotation) is retried when they finish,
  * never dropped. A row more than 40 px too wide even when tight (large text) wraps at once, before it is painted.
  * Neither step 2 nor a font swap changes the row's height.
+ * Measuring never widens the page: at large text the unwrapped row is wider than the screen (475-511 px at 200 %), and
+ * laid out as is it would widen its column, the document and, on a phone, the layout viewport for the length of the
+ * measurement. During a live resize Chromium's mobile page scale could settle on that transient width and leave Today
+ * zoomed in (I04 R4-D2). So while it measures, the bar is size-contained in the inline axis and clips what overflows
+ * it: nothing outside the bar moves, and the stats' own positions (what is measured) are the same.
  */
 function useWrapWhenCrowded() {
   const ref = useRef<HTMLElement>(null);
@@ -191,6 +196,25 @@ function useWrapWhenCrowded() {
     const el = ref.current;
     if (!el || typeof ResizeObserver === 'undefined') return;
     let live = true;
+    // Run a measurement with the bar contained (see above), only where that leaves the bar's own box as it is (a bar
+    // stretched to its column: every phone layout). A bar sized to its content (some desktop layouts) is measured as
+    // before; those are not mobile pages, so their page scale cannot drift.
+    const measuring = (fn: () => void) => {
+      const st = el.style;
+      const width = el.getBoundingClientRect().width;
+      st.contain = 'inline-size';
+      st.overflowX = 'clip';
+      if (Math.abs(el.getBoundingClientRect().width - width) > 0.5) {
+        st.contain = '';
+        st.overflowX = '';
+      }
+      try {
+        fn();
+      } finally {
+        st.contain = '';
+        st.overflowX = '';
+      }
+    };
     const fit = () => {
       if (!live) return;
       // Does any stat (or the bar itself, which a crowded row widens) reach past the screen's edge, and by how much?
@@ -203,20 +227,24 @@ function useWrapWhenCrowded() {
         // `loadingdone` below). Only a row far too wide for any font (very large text) wraps now, before it is painted.
         document.fonts.ready.then(fit);
         if (el.dataset.wrap !== undefined) return;
-        const wasTight = el.dataset.tight !== undefined;
-        el.dataset.tight = '';
-        const far = over() > 40;
-        if (!wasTight || far) delete el.dataset.tight;
-        if (far) el.dataset.wrap = '';
+        measuring(() => {
+          const wasTight = el.dataset.tight !== undefined;
+          el.dataset.tight = '';
+          const far = over() > 40;
+          if (!wasTight || far) delete el.dataset.tight;
+          if (far) el.dataset.wrap = '';
+        });
         return;
       }
-      delete el.dataset.wrap;
-      delete el.dataset.tight;
-      if (over() <= 0) return;
-      el.dataset.tight = '';
-      if (over() <= 0) return;
-      delete el.dataset.tight;
-      el.dataset.wrap = '';
+      measuring(() => {
+        delete el.dataset.wrap;
+        delete el.dataset.tight;
+        if (over() <= 0) return;
+        el.dataset.tight = '';
+        if (over() <= 0) return;
+        delete el.dataset.tight;
+        el.dataset.wrap = '';
+      });
     };
     fit();
     document.fonts?.addEventListener('loadingdone', fit);
