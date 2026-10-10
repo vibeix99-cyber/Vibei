@@ -49,8 +49,7 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
 | `/home/user/wt/m1` | `pe/m1@a6ebe00` | M1 Wave 1 | APPROVED r2, merged (`7da58f1`). Idle |
 | `/home/user/wt/m2` | `pe/m2@2becb78` | M2 Wave 1 | APPROVED r1, merged (`0d58c5e`). Idle |
 | `/home/user/wt/w1fix` | `pe/w1-fix@3f00b57` (src `3c58bf9`) | **M1 integration fix** (I03 × I04) | **APPROVED r1** (fresh Checker). Held unmerged; any change voids it. Clean |
-| `/home/user/wt/w1fix-m2` | `pe/w1-fix-m2@33a72e6` (src `8d4a979`) | **M2 integration fix** (I04 status bar + toasts + break-over) | **r5 READY FOR REVIEW**, in review. Clean |
-| `/home/user/wt/chk-r5` / `chk-r5-base` / `trial-r5` | detached `33a72e6` / `bc5cfaa` / `20671eb` | fresh Checker for r5; trial merge (clean; frozen M1 files byte-identical to `3f00b57`) | scratch |
+| `/home/user/wt/w1fix-m2` | `pe/w1-fix-m2@33a72e6` (src `8d4a979`) | **M2 integration fix**, becoming the **combined** Wave 1 integration fix in r6 | r5 **REJECTED** → M2 working on r6 (merges `pe/w1-fix` first) |
 
 **Archives** (`review/product-excellence/archive/`, pushed; restore with `git fetch <bundle> 'refs/heads/*:refs/heads/*'`):
 - `maker-branches-2026-10-09.bundle`: `pe/w1-fix@1351c99`, `pe/w1-fix-m2@c9520db` (full).
@@ -77,7 +76,8 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
 | I04 integration fix r2 | `e932f65` (src `c873084`; trial with `3f00b57` = `db3418a`) | **REJECT** (fresh Checker): R2-D1 no re-fit when the window narrows without changing the bar's box; R2-D3 stacked toasts at large text collapse and the warning text spills out of its box | `contracts/I04/CHECKER-integration-fix-r2.md` |
 | I04 integration fix r3 | `e4be56e` (src `97d26c5`) | **NOT REVIEWED** (no Checker launched: user pause; then superseded before review by r4 in progress, which adds D4). Not APPROVE, not REJECT | — |
 | I04 integration fix r4 (r3 + D4 break-over toast + date-independent short-screen gate) | `adec1a2` (src `dcc3778`; code `9326de5`; trial merge with `3f00b57` = `1f1558e`, src `0d0db47`) | **REJECT** (fresh Checker): R4-D1 a warning taller than its room can't be read by scrolling (scroll moves its box over the dock → M1's hold rule takes it away and re-shows it unscrolled; 375×667 @200 %, landscape @150–200 %, 568×320 three-stack); R4-D2 live mobile resizes at 150–200 % text leave Today zoomed ×1.2–3.2 (regression since r2). Passed: D1/R2-D1 (96 runs), D2 (216 cells), D4, M1 unchanged (60 states), CLS, preserve list; trial 54/54 + timer/pwa 29/2 | `contracts/I04/CHECKER-integration-fix-r4.md` |
-| I04 integration fix r5 (R4-D1 pinned warning, R4-D2 contained measurement) | `33a72e6` (src `8d4a979`; trial with `3f00b57` = `20671eb`, src `b38ad5e`) | **IN REVIEW — no verdict yet** (fresh Checker, not any earlier Checker; must decide 200 %-slow-font CLS against the baseline) | `contracts/I04/CHECKER-integration-fix-r5.md` (to be written) |
+| I04 integration fix r5 (R4-D1 pinned warning, R4-D2 contained measurement) | `33a72e6` (src `8d4a979`; trial with `3f00b57` = `20671eb`, src `b38ad5e`) | **REJECT** (fresh Checker): **R5-D1** with real toast timers, an older toast leaving a scrolled reversed list makes scroll anchoring push the sticky warning's layout box 7–47 px below its room (over the dock) → M1's rule withdraws it and re-shows it reset (375×667 @200 % 4/8 light, 4/6 dark; 844×390 @200 % 2/7). Passed: D1, R2-D1, D2, D4, R4-D2 (100/100), M1 unchanged, preservation, trial 60/60 + timer/pwa 29/2. **CLS decided: not a regression** (r5 moves 159 px vs ≈1,600 px on `8f1044a`/`0d58c5e`, whose 0 is masked by a 534–570 px-wide page) | `contracts/I04/CHECKER-integration-fix-r5.md` |
+| I03 × I04 combined integration fix r6 (M2's branch with `pe/w1-fix` merged in) | — | **in progress (M2)**, not submitted | (`contracts/I04/CHECKER-integration-fix-r6.md` to be written) |
 
 ### Submitted, awaiting review: M2 r3 `e4be56e` (maker's claims, unverified by any Checker)
 
@@ -181,7 +181,7 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
    screen" on the integration branch (`0d58c5e`) on the current date to establish whether it is pre-existing. The owner
    (M1 for flow/progress, M2 for toast layout, or I10) then fixes it through maker → independent Checker. Wave 1 is not
    clean while that gate is red.
-3. **Launch a fresh independent Checker** (not any previous Checker or maker) on M2 r3 `e4be56e`. It reviews
+3. *(superseded by the rounds logged below: r3 → r4 → r5 rejected; r6 = combined branch.)* **Launch a fresh independent Checker** (not any previous Checker or maker) on M2 r3 `e4be56e`. It reviews
    R2-D1/R2-D3 retests, D1/D2/D3, 100 % geometry, CLS, the a11y failure and the maker's disclosures, and checks a fresh
    trial merge with `3f00b57` (warning placement at 6 configs × 100/200 %, M1 behaviour unchanged). Verdict goes to
    `contracts/I04/CHECKER-integration-fix-r3.md`.
@@ -412,6 +412,22 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
   - CLS measured against `8f1044a` and `0d58c5e`;
   - REFERENCE → BEFORE → AFTER;
   - the disclosures.
+
+- Fresh Checker on r5 `33a72e6` (+ trial `20671eb`) → **REJECT, R5-D1** (see the verdict table).
+  - The Checker's CLS decision: 200 %-slow-font load CLS is not a regression.
+  - Recorded follow-ups:
+    - **I14:** a ≈0.24 late reflow on Today at 200 % (`::before`, `chaiRow`, `card`), now no longer masked.
+    - **M1/F11 (non-blocking):** entry flicker of the warning; and at 375×667 100 % keyboard Tab never reaches "Save backup"
+      because the warning is withdrawn while focus passes the dock. "Save backup" stays reachable in Settings › Your data.
+- **Orchestrator decision (shared contract I03 × I04, master prompt §4: combine makers where ownership overlaps).**
+  - Five rounds show the warning-toast interaction can't be fixed reliably with `Toast.tsx` frozen. M2 now owns the
+    combined fix: it merges M1's approved `pe/w1-fix@3f00b57` into `pe/w1-fix-m2` and may restructure the toast DOM in
+    `Toast.tsx` (a generic "action toasts pinned outside the scroll box" rule).
+  - Unchanged: `toastLiftBottom()`/`useToastAbove()` logic. `flow.ts`, `progress/**` and `integrity.spec.ts` stay untouched.
+  - The combined revision (r6) gets a fresh independent Checker as one unit, re-confirming I03 placement and M1's behaviour.
+    M1's `3f00b57` APPROVE stays on record but no longer covers the shipping code by itself once `Toast.tsx` changes.
+  - Retests must use real input **and real toast timers**.
+  - r5 review worktrees removed.
 
 ## Exact next action
 
