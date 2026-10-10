@@ -77,3 +77,19 @@ old D3 (the warning rises past the top of the screen).
 - `runs/pp2-R6`, `runs/pp2-INT`: the pwapair runs (with clips for 375x667 @200 light).
 - `runs/apv-*`, `runs/pv-*` (added later): clips for every other configuration.
 - `logs/`: stdout of every run.
+
+## Clip set for every configuration (added 21:50 UTC; `runs/apv-*`, `runs/pv-*`; video changes timing slightly)
+
+| Config | R6 adds/removals | INT adds/removals |
+|---|---|---|
+| 375x667 @200 dark | 11/10 | 1/0 |
+| 844x390 @200 light | 9/8 | 1/0 |
+| 667x375 @150 dark | 9/8 | 1/0 |
+| 375x667 @150 light | 1/0 | 1/0 |
+| 390x844 @100 light, 375x667 @100 dark | 1/0 each (no entry flicker this time) | 1/0 each |
+| 1440x900 @100 light | 2/2 | 1/1 (the known desktop entry gap, F11; outside LEAD-D1) |
+| pwapair 667x375 @150 dark | **29/28**, last removal at 16.3 s | 1 add, own 12 s end at 12.6 s |
+
+Pixel scan of the 844x390 @200 clips (`../trace/clipscan.py`, crop x230 y140 300×20; `../trace/scan-clip-*.txt`): on R6
+the crop alternates light/dark about 20 times from 12.7 s to the end (the loop window). On INT it settles dark (the
+warning) from 15.2 s.
