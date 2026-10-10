@@ -49,13 +49,14 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
 | `/home/user/wt/m1` | `pe/m1@a6ebe00` | M1 Wave 1 | APPROVED r2, merged (`7da58f1`). Idle |
 | `/home/user/wt/m2` | `pe/m2@2becb78` | M2 Wave 1 | APPROVED r1, merged (`0d58c5e`). Idle |
 | `/home/user/wt/w1fix` | `pe/w1-fix@3f00b57` (src `3c58bf9`) | **M1 integration fix** (I03 × I04) | **APPROVED r1** (fresh Checker). Held unmerged; any change voids it. Clean |
-| `/home/user/wt/w1fix-m2` | `pe/w1-fix-m2@33a72e6` (src `8d4a979`) | **M2 integration fix**, becoming the **combined** Wave 1 integration fix in r6 | r5 **REJECTED** → M2 working on r6 (merges `pe/w1-fix` first) |
+| `/home/user/wt/w1fix-m2` | `pe/w1-fix-m2@db8220e` (src `a758f54`) | **Combined** Wave 1 integration fix (M2; `pe/w1-fix@3f00b57` merged in `ca23385`) | r5 REJECTED → r6 in progress; `db8220e` = orchestrator WIP preserve after a container restart, **NOT READY FOR REVIEW** |
 
 **Archives** (`review/product-excellence/archive/`, pushed; restore with `git fetch <bundle> 'refs/heads/*:refs/heads/*'`):
 - `maker-branches-2026-10-09.bundle`: `pe/w1-fix@1351c99`, `pe/w1-fix-m2@c9520db` (full).
 - `pe-w1-fix-3f00b57.incremental.bundle`: `pe/w1-fix@3f00b57` (needs `1351c99`).
 - `pe-w1-fix-m2-r2wip.incremental.bundle`: `pe/w1-fix-m2@e1e672d` (needs `c9520db`).
 - `pe-w1-fix-m2-r2-e932f65.incremental.bundle`: `pe/w1-fix-m2@e932f65` (needs `e1e672d`).
+- `pe-w1-fix-m2-r6wip.incremental.bundle`: `pe/w1-fix-m2@db8220e` (needs `33a72e6` and `3f00b57`).
 - `pe-w1-fix-m2-r5-33a72e6.incremental.bundle`: `pe/w1-fix-m2@33a72e6` (needs `adec1a2`).
 - `pe-w1-fix-m2-r4-adec1a2.incremental.bundle`: `pe/w1-fix-m2@adec1a2` (needs `e4be56e`).
 - `pe-w1-fix-m2-r3-e4be56e.incremental.bundle.part-00..02` + `.sha256`: `pe/w1-fix-m2@e4be56e` (needs `e932f65`).
@@ -428,6 +429,12 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
     M1's `3f00b57` APPROVE stays on record but no longer covers the shipping code by itself once `Toast.tsx` changes.
   - Retests must use real input **and real toast timers**.
   - r5 review worktrees removed.
+
+- 2026-10-10 ~09:38 UTC: a container restart stopped M2 mid-r6.
+  - Worktrees survived. M2 had merged `pe/w1-fix` into its branch (`ca23385`) and had an uncommitted `Toast.module.css`
+    edit.
+  - Preserved as WIP `db8220e` (NOT READY FOR REVIEW) and archived (`archive/pe-w1-fix-m2-r6wip.incremental.bundle`).
+  - M2 resumed with context intact.
 
 ## Exact next action
 
