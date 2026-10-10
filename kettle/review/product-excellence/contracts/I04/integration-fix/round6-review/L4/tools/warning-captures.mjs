@@ -38,6 +38,7 @@ const aSettle = +(args.asettle ?? 1000); // ms after the warning appears before 
 const merge = args.merge === '1';
 const robust = args.robust === '1'; // warm-up shot + hover-hold of the short-lived toast in state a + strict settled check
 const scratch = args.scratch ?? '/tmp';
+const needA = +(args.needa ?? 0); // minimum toasts in state a (0 = default: 2 in robust mode, 1 otherwise)
 const noAnim = args.noanim === '1'; // Playwright animations:'disabled' for the shot (infinite CSS animations cancelled), used only where the shot outlasts a 3.2 s toast
 const maxAttempts = +(args.attempts ?? 3);
 const only = args.only ? new Set(args.only.split(',')) : null;
@@ -198,13 +199,18 @@ const STATES = {
     if (robust) {
       // "Settled" = both toasts (the 3.2 s "Kettle's off" and the storage-full warning) fully drawn. Poll every 50 ms and shoot at once:
       // the short toast keeps its real timer, so there is no room for a fixed wait.
-      info.settleMs = 'polled until both toasts at opacity >= 0.9';
+      info.settleMs = 'polled (50 ms) until both toasts are at opacity >= 0.9 and neither toast moved for 300 ms';
       await page
         .waitForFunction(() => {
           const li = [...document.querySelectorAll('[aria-label="Notifications"] li')];
           const off = li.find((l) => /Kettle’s off/.test(l.textContent));
           const warn = li.find((l) => l.id === 'toast-kettle:save-failed');
-          return !!off && !!warn && +getComputedStyle(off).opacity >= 0.9 && +getComputedStyle(warn).opacity >= 0.9;
+          if (!off || !warn || +getComputedStyle(off).opacity < 0.9 || +getComputedStyle(warn).opacity < 0.9) return false;
+          const key = JSON.stringify([off, warn].map((e) => { const r = e.getBoundingClientRect(); return [r.left, r.top, r.right, r.bottom].map(Math.round); }));
+          const now = performance.now();
+          const prev = window.__l4still;
+          if (!prev || prev.key !== key) { window.__l4still = { key, t: now }; return false; }
+          return now - prev.t >= 300;
         }, null, { polling: 50, timeout: 6000 })
         .catch(() => {});
     } else {
@@ -327,8 +333,10 @@ for (const [name, run] of Object.entries(STATES)) {
       await ctx.close();
       ctx = null;
       // The shot is only valid if the toasts the page showed did not change while it was taken.
-      const need = name.startsWith('a-') ? (robust ? 2 : 1) : name.startsWith('b-') || name.startsWith('c') ? 2 : 0;
-      const stable = sameToasts(info.toastsBefore, info.toastsAfter) && info.toastsBefore.length >= need;
+      const need = name.startsWith('a-') ? (needA || (robust ? 2 : 1)) : name.startsWith('b-') || name.startsWith('c') ? 2 : 0;
+      const moved = info.toastsBefore.some((b) => { const af = info.toastsAfter.find((x) => x.id === b.id); return af && b.rect.some((v, i) => Math.abs(v - af.rect[i]) > 1); });
+      info.toastsMovedDuringShot = moved;
+      const stable = sameToasts(info.toastsBefore, info.toastsAfter) && info.toastsBefore.length >= need && !(robust && name.startsWith('a-') && moved);
       info.stable = stable;
       const thr = name.startsWith('a-') ? 0.9 : 0.98;
       info.opacityThreshold = thr;

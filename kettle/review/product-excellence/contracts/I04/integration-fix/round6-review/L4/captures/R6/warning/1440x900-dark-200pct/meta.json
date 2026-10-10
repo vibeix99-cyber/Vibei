@@ -21,10 +21,10 @@
  "screenshot": "viewport-size PNG at full device resolution (page.screenshot, fullPage false); doc scroll size recorded per state",
  "toastTimers": "default (3.2 s ordinary toast, 12 s storage-full warning); not extended",
  "startedAt": "2026-10-10T19:09:15.769Z",
- "endedAt": "2026-10-10T21:14:28.752Z",
+ "endedAt": "2026-10-10T21:37:28.596Z",
  "states": {
   "a-home-warning": {
-   "attempt": 8,
+   "attempt": 1,
    "quotaProbe": "QuotaExceededError",
    "dataState": "storage really full (QuotaExceededError on a 64-byte write): QuotaExceededError",
    "warningAppeared": true,
@@ -53,18 +53,29 @@
      "opacity": 1
     }
    ],
-   "capturedAt": "2026-10-10T21:14:23.642Z",
+   "capturedAt": "2026-10-10T21:37:26.053Z",
    "screenshotAnimations": "allow",
-   "shotMs": 5059,
+   "shotMs": 2523,
    "toastsAfter": [
+    {
+     "id": "toast-t1",
+     "text": "Kettle’s off. See you soon.",
+     "rect": [
+      500,
+      706,
+      926,
+      762
+     ],
+     "opacity": 1
+    },
     {
      "id": "toast-kettle:save-failed",
      "text": "Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to",
      "rect": [
       493,
-      495,
+      431,
       933,
-      762
+      698
      ],
      "opacity": 1
     }
@@ -72,9 +83,9 @@
    "route": "#/",
    "warningRect": [
     493,
-    495,
+    431,
     933,
-    762
+    698
    ],
    "page": {
     "innerWidth": 1440,
@@ -91,11 +102,10 @@
    },
    "file": "a-home-warning.png",
    "pageErrors": [],
-   "toastsMovedDuringShot": true,
-   "stable": false,
+   "toastsMovedDuringShot": false,
+   "stable": true,
    "opacityThreshold": 0.9,
-   "fullyDrawn": true,
-   "unstableReason": "toasts before [\"Kettle’s off. See you so\",\"Kettle couldn’t save you\"] vs after [\"Kettle couldn’t save you\"]"
+   "fullyDrawn": true
   },
   "b-focus-warning-toasts": {
    "attempt": 1,
@@ -380,8 +390,8 @@
  "kettleSrcTree": "05bb3f8",
  "summary": {
   "states": 6,
-  "ok": 5,
-  "failed": 1
+  "ok": 6,
+  "failed": 0
  },
  "rerun": [
   {
@@ -399,6 +409,15 @@
    ],
    "startedAt": "2026-10-10T21:11:50.656Z",
    "endedAt": "2026-10-10T21:14:28.752Z",
+   "asettleMs": 1000,
+   "note": "replaced after the first run left these states with toasts that expired during the shot"
+  },
+  {
+   "states": [
+    "a-home-warning"
+   ],
+   "startedAt": "2026-10-10T21:37:10.307Z",
+   "endedAt": "2026-10-10T21:37:28.596Z",
    "asettleMs": 1000,
    "note": "replaced after the first run left these states with toasts that expired during the shot"
   }

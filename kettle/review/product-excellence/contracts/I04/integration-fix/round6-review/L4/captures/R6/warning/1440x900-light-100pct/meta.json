@@ -21,10 +21,10 @@
  "screenshot": "viewport-size PNG at full device resolution (page.screenshot, fullPage false); doc scroll size recorded per state",
  "toastTimers": "default (3.2 s ordinary toast, 12 s storage-full warning); not extended",
  "startedAt": "2026-10-10T18:58:56.625Z",
- "endedAt": "2026-10-10T21:28:39.058Z",
+ "endedAt": "2026-10-10T21:43:55.210Z",
  "states": {
   "a-home-warning": {
-   "attempt": 8,
+   "attempt": 2,
    "quotaProbe": "QuotaExceededError",
    "dataState": "storage really full (QuotaExceededError on a 64-byte write): QuotaExceededError",
    "warningAppeared": true,
@@ -42,9 +42,9 @@
      "opacity": 1
     }
    ],
-   "capturedAt": "2026-10-10T21:28:38.507Z",
+   "capturedAt": "2026-10-10T21:43:54.831Z",
    "screenshotAnimations": "disabled",
-   "shotMs": 531,
+   "shotMs": 343,
    "toastsAfter": [
     {
      "id": "toast-kettle:save-failed",
@@ -81,10 +81,9 @@
    "file": "a-home-warning.png",
    "pageErrors": [],
    "toastsMovedDuringShot": false,
-   "stable": false,
+   "stable": true,
    "opacityThreshold": 0.9,
-   "fullyDrawn": true,
-   "unstableReason": "toasts before [\"Kettle couldn’t save you\"] vs after [\"Kettle couldn’t save you\"]"
+   "fullyDrawn": true
   },
   "b-focus-warning-toasts": {
    "attempt": 1,
@@ -396,8 +395,8 @@
  "kettleSrcTree": "05bb3f8",
  "summary": {
   "states": 6,
-  "ok": 5,
-  "failed": 1
+  "ok": 6,
+  "failed": 0
  },
  "rerun": [
   {
@@ -478,6 +477,15 @@
    ],
    "startedAt": "2026-10-10T21:26:02.720Z",
    "endedAt": "2026-10-10T21:28:39.058Z",
+   "asettleMs": 1000,
+   "note": "replaced after the first run left these states with toasts that expired during the shot"
+  },
+  {
+   "states": [
+    "a-home-warning"
+   ],
+   "startedAt": "2026-10-10T21:43:20.190Z",
+   "endedAt": "2026-10-10T21:43:55.210Z",
    "asettleMs": 1000,
    "note": "replaced after the first run left these states with toasts that expired during the shot"
   }
