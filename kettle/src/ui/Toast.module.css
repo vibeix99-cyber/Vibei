@@ -135,8 +135,8 @@
     overflow-y: auto;
     overscroll-behavior: contain;
     /* Room for the toasts' shadows above and beside them inside the scroll box; negative margins give back exactly
-       what the padding takes, so nothing moves. (Below the stack the box ends at the toasts: nothing scrolls into
-       the space over the docked start.) */
+       what the padding takes, so nothing moves. (Below the stack the box ends at the toasts, or one gap below them
+       for a stack led by a warning, see below: nothing scrolls into the space over the docked start.) */
     width: calc(100% + 64px);
     max-width: calc(440px + 64px);
     margin: -20px -32px 0;
@@ -188,6 +188,13 @@
      here for the same reason: a transform would move the measured box, if only for a moment. */
   .list:has(.action) {
     flex-direction: column;
+    /* The scroll box reaches one toast gap (8 px) below the room, into the 10 px the lift keeps above the docked start
+       (never over it), as it reaches 20 px above the room for shadows; nothing at rest moves, and the warning's box
+       stays in the room. An older toast coming up from below the warning is then wholly in view over more offsets
+       (in a 60 px room, 17 px of offsets instead of 9 for a toast as tall as the room), so fine steps (20 px wheel
+       notches, finger drags) come to rest with it wholly in view. */
+    margin-bottom: -8px;
+    padding-bottom: 8px;
   }
   .list:has(.action) > * {
     order: 0;
