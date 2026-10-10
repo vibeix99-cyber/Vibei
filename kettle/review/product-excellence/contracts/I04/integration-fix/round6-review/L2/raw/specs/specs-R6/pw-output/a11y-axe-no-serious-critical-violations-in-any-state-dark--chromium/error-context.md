@@ -1,0 +1,372 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e6]:
+    - link "Skip to content" [ref=e7] [cursor=pointer]:
+      - /url: "#main"
+    - navigation "Main" [ref=e8]:
+      - list [ref=e9]:
+        - listitem [ref=e10]:
+          - link "Today" [ref=e11] [cursor=pointer]:
+            - /url: "#/"
+            - img [ref=e14]
+            - generic [ref=e18]: Today
+        - listitem [ref=e19]:
+          - link "Stats" [ref=e20] [cursor=pointer]:
+            - /url: "#/stats"
+            - img [ref=e23]
+            - generic [ref=e27]: Stats
+        - listitem [ref=e28]:
+          - link "Nook" [ref=e29] [cursor=pointer]:
+            - /url: "#/nook"
+            - img [ref=e32]
+            - generic [ref=e37]: Nook
+        - listitem [ref=e38]:
+          - link "Settings" [ref=e39] [cursor=pointer]:
+            - /url: "#/settings"
+            - img [ref=e43]
+            - generic [ref=e55]: Settings
+    - main [active] [ref=e57]:
+      - generic [ref=e61]:
+        - heading "Settings" [level=1] [ref=e62]
+        - region "Profile" [ref=e63]:
+          - generic [ref=e67]:
+            - generic [ref=e68]:
+              - generic [ref=e69]: Your name
+              - textbox "Your name" [ref=e71]:
+                - /placeholder: Add your name
+                - text: Robin
+            - generic [ref=e72]:
+              - generic [ref=e73]:
+                - img [ref=e75]
+                - text: Level 12
+              - generic [ref=e77]:
+                - img [ref=e79]
+                - text: 2,211 leaves
+              - generic [ref=e83]:
+                - img [ref=e85]
+                - text: 23 days warm
+        - region "Rhythm" [ref=e89]:
+          - heading "Rhythm" [level=2] [ref=e90]
+          - generic [ref=e91]:
+            - generic [ref=e92]:
+              - generic [ref=e94]: Preset
+              - radiogroup "Rhythm preset" [ref=e95]:
+                - radio "Classic" [checked] [ref=e96] [cursor=pointer]:
+                  - generic [ref=e100]: Classic
+                - radio "Deep" [ref=e101] [cursor=pointer]:
+                  - generic [ref=e104]: Deep
+                - radio "Gentle" [ref=e105] [cursor=pointer]:
+                  - generic [ref=e108]: Gentle
+                - radio "Custom" [ref=e109] [cursor=pointer]:
+                  - generic [ref=e112]: Custom
+            - generic [ref=e114]:
+              - generic [ref=e116]: Brew
+              - generic [ref=e118]:
+                - generic [ref=e119]: Brew length
+                - generic [ref=e120]:
+                  - button "Decrease brew length" [ref=e121] [cursor=pointer]:
+                    - img [ref=e125]
+                  - spinbutton "Brew length" [ref=e126]:
+                    - generic [ref=e128]:
+                      - generic [ref=e130]: "2"
+                      - generic [ref=e132]: "5"
+                    - generic [ref=e133]: min
+                  - button "Increase brew length" [ref=e134] [cursor=pointer]:
+                    - img [ref=e138]
+            - generic [ref=e141]:
+              - generic [ref=e143]: Tea break
+              - generic [ref=e145]:
+                - generic [ref=e146]: Tea break length
+                - generic [ref=e147]:
+                  - button "Decrease tea break length" [ref=e148] [cursor=pointer]:
+                    - img [ref=e152]
+                  - spinbutton "Tea break length" [ref=e153]:
+                    - generic [ref=e157]: "5"
+                    - generic [ref=e158]: min
+                  - button "Increase tea break length" [ref=e159] [cursor=pointer]:
+                    - img [ref=e163]
+            - generic [ref=e166]:
+              - generic [ref=e168]: Long tea break
+              - generic [ref=e170]:
+                - generic [ref=e171]: Long tea break length
+                - generic [ref=e172]:
+                  - button "Decrease long tea break length" [ref=e173] [cursor=pointer]:
+                    - img [ref=e177]
+                  - spinbutton "Long tea break length" [ref=e178]:
+                    - generic [ref=e180]:
+                      - generic [ref=e182]: "1"
+                      - generic [ref=e184]: "5"
+                    - generic [ref=e185]: min
+                  - button "Increase long tea break length" [ref=e186] [cursor=pointer]:
+                    - img [ref=e190]
+            - generic [ref=e193]:
+              - generic [ref=e195]: Long break after
+              - generic [ref=e197]:
+                - generic [ref=e198]: Brews before a long break
+                - generic [ref=e199]:
+                  - button "Decrease brews before a long break" [ref=e200] [cursor=pointer]:
+                    - img [ref=e204]
+                  - spinbutton "Brews before a long break" [ref=e205]:
+                    - generic [ref=e209]: "4"
+                    - generic [ref=e210]: brews
+                  - button "Increase brews before a long break" [ref=e211] [cursor=pointer]:
+                    - img [ref=e215]
+          - paragraph [ref=e217]: Pick a preset, or tweak any number to make it your own.
+        - region "Auto-start" [ref=e218]:
+          - heading "Auto-start" [level=2] [ref=e219]
+          - generic [ref=e220]:
+            - generic [ref=e222] [cursor=pointer]:
+              - img [ref=e224]
+              - generic [ref=e228]:
+                - generic [ref=e229]: Tea breaks
+                - generic [ref=e230]: When the kettle whistles, tea time begins on its own.
+              - switch "Tea breaks" [ref=e231]:
+                - img [ref=e234]
+            - generic [ref=e237] [cursor=pointer]:
+              - img [ref=e239]
+              - generic [ref=e241]:
+                - generic [ref=e242]: Next brew
+                - generic [ref=e243]: After tea, the next brew starts without a tap.
+              - switch "Next brew" [ref=e244]:
+                - img [ref=e247]
+        - region "Daily goal" [ref=e249]:
+          - heading "Daily goal" [level=2] [ref=e250]
+          - radiogroup "Daily goal" [ref=e253]:
+            - radio "A sip 15 min" [ref=e254] [cursor=pointer]:
+              - generic [ref=e255]:
+                - img [ref=e257]
+                - generic [ref=e271]:
+                  - generic [ref=e272]: A sip
+                  - generic [ref=e273]: 15 min
+            - radio "A cup 30 min" [ref=e275] [cursor=pointer]:
+              - generic [ref=e276]:
+                - img [ref=e278]
+                - generic [ref=e293]:
+                  - generic [ref=e294]: A cup
+                  - generic [ref=e295]: 30 min
+            - radio "A pot 60 min" [checked] [ref=e297] [cursor=pointer]:
+              - generic [ref=e298]:
+                - img [ref=e300]
+                - generic [ref=e317]:
+                  - generic [ref=e318]: A pot
+                  - generic [ref=e319]: 60 min
+                - img [ref=e320]
+            - radio "A whole kettle 120 min" [ref=e322] [cursor=pointer]:
+              - generic [ref=e323]:
+                - img [ref=e325]
+                - generic [ref=e350]:
+                  - generic [ref=e351]: A whole kettle
+                  - generic [ref=e352]: 120 min
+          - paragraph [ref=e354]: Your warm streak only needs one brew a day. The goal is just for you.
+        - region "Sound" [ref=e355]:
+          - heading "Sound" [level=2] [ref=e356]
+          - generic [ref=e357]:
+            - generic [ref=e359] [cursor=pointer]:
+              - img [ref=e361]
+              - generic [ref=e364]:
+                - generic [ref=e365]: Sounds
+                - generic [ref=e366]: Everything’s quiet. The kettle still shows when it whistles.
+              - switch "Sounds" [ref=e367]:
+                - img [ref=e370]
+            - generic [ref=e373]:
+              - generic [ref=e374]:
+                - generic [ref=e375]: Master volume
+                - generic [ref=e376]: 80%
+              - slider "Master volume" [disabled] [ref=e382]
+            - generic [ref=e384]:
+              - generic [ref=e385]:
+                - generic [ref=e386]: Effects
+                - generic [ref=e387]: 70%
+              - slider "Effects" [disabled] [ref=e393]
+            - generic [ref=e395]:
+              - generic [ref=e396]:
+                - generic [ref=e397]: Ambience
+                - generic [ref=e398]: 60%
+              - slider "Ambience" [disabled] [ref=e404]
+            - generic [ref=e405]:
+              - generic [ref=e406]:
+                - generic [ref=e407]: Brewing ambience
+                - generic [ref=e408]: Turn sounds on to hear a preview.
+              - radiogroup "Brewing ambience" [ref=e409]:
+                - radio "Rain" [checked] [ref=e410] [cursor=pointer]:
+                  - generic [ref=e411]:
+                    - img [ref=e413]
+                    - generic [ref=e416]: Rain
+                    - img [ref=e417]
+                - radio "Fireside" [ref=e419] [cursor=pointer]:
+                  - generic [ref=e420]:
+                    - img [ref=e422]
+                    - generic [ref=e425]: Fireside
+                - radio "Forest" [ref=e427] [cursor=pointer]:
+                  - generic [ref=e428]:
+                    - img [ref=e430]
+                    - generic [ref=e435]: Forest
+                - radio "Brown noise" [ref=e437] [cursor=pointer]:
+                  - generic [ref=e438]:
+                    - img [ref=e440]
+                    - generic [ref=e443]: Brown noise
+                - radio "Lo-fi keys" [ref=e445] [cursor=pointer]:
+                  - generic [ref=e446]:
+                    - img [ref=e448]
+                    - generic [ref=e453]: Lo-fi keys
+                - radio "Quiet" [ref=e455] [cursor=pointer]:
+                  - generic [ref=e456]:
+                    - img [ref=e458]
+                    - generic [ref=e461]: Quiet
+              - paragraph [ref=e463]: Soft rain on the window, drips on the sill.
+        - region "Notifications & device" [ref=e464]:
+          - heading "Notifications & device" [level=2] [ref=e465]
+          - generic [ref=e466]:
+            - generic [ref=e468] [cursor=pointer]:
+              - img [ref=e470]
+              - generic [ref=e474]:
+                - generic [ref=e475]: Nudges
+                - generic [ref=e476]: Blocked in your browser settings.
+              - switch "Nudges" [disabled] [ref=e477]:
+                - img [ref=e480]
+            - paragraph [ref=e482]:
+              - strong [ref=e483]: "To turn nudges on:"
+              - text: open your browser’s menu, find
+              - emphasis [ref=e484]: Site settings
+              - text: (or the page’s settings) for this site, set
+              - emphasis [ref=e485]: Notifications
+              - text: to
+              - emphasis [ref=e486]: Allow
+              - text: ", then reload."
+            - generic [ref=e488] [cursor=pointer]:
+              - img [ref=e490]
+              - generic [ref=e493]:
+                - generic [ref=e494]: Keep screen awake
+                - generic [ref=e495]: Stops your screen dimming during a brew.
+              - switch "Keep screen awake" [checked] [ref=e496]:
+                - img [ref=e499]
+            - generic [ref=e502] [cursor=pointer]:
+              - img [ref=e504]
+              - generic [ref=e506]:
+                - generic [ref=e507]: Haptics
+                - generic [ref=e508]: Little buzzes for key moments.
+              - switch "Haptics" [checked] [ref=e509]:
+                - img [ref=e512]
+        - region "Appearance" [ref=e514]:
+          - heading "Appearance" [level=2] [ref=e515]
+          - generic [ref=e516]:
+            - generic [ref=e517]:
+              - generic [ref=e519]: Theme
+              - radiogroup "Theme" [ref=e520]:
+                - radio "Auto" [ref=e521] [cursor=pointer]:
+                  - generic [ref=e524]: Auto
+                - radio "Light" [ref=e525] [cursor=pointer]:
+                  - generic [ref=e528]: Light
+                - radio "Night" [checked] [ref=e529] [cursor=pointer]:
+                  - generic [ref=e533]: Night
+            - generic [ref=e534]:
+              - generic [ref=e535]:
+                - generic [ref=e536]: Motion
+                - generic [ref=e537]: Reduced swaps bounces and slides for gentle fades.
+              - radiogroup "Motion" [ref=e538]:
+                - radio "System" [checked] [ref=e539] [cursor=pointer]:
+                  - generic [ref=e543]: System
+                - radio "Reduced" [ref=e544] [cursor=pointer]:
+                  - generic [ref=e547]: Reduced
+                - radio "Full" [ref=e548] [cursor=pointer]:
+                  - generic [ref=e551]: Full
+            - generic [ref=e552]:
+              - generic [ref=e553]:
+                - generic [ref=e554]: 3D nook
+                - generic [ref=e555]: Lower it if your device runs warm.
+              - radiogroup "3D nook quality" [ref=e556]:
+                - radio "Auto" [checked] [ref=e557] [cursor=pointer]:
+                  - generic [ref=e561]: Auto
+                - radio "High" [ref=e562] [cursor=pointer]:
+                  - generic [ref=e565]: High
+                - radio "Low" [ref=e566] [cursor=pointer]:
+                  - generic [ref=e569]: Low
+                - radio "Off" [ref=e570] [cursor=pointer]:
+                  - generic [ref=e573]: "Off"
+        - region "Your data" [ref=e574]:
+          - heading "Your data" [level=2] [ref=e575]
+          - generic [ref=e576]:
+            - button "Export a backup Save everything as a .json file." [ref=e577] [cursor=pointer]:
+              - generic [ref=e578]:
+                - img [ref=e580]
+                - generic [ref=e583]:
+                  - generic [ref=e584]: Export a backup
+                  - generic [ref=e585]: Save everything as a .json file.
+                - img [ref=e587]
+            - button "Import a backup Add or restore from a Kettle .json file." [ref=e589] [cursor=pointer]:
+              - generic [ref=e590]:
+                - img [ref=e592]
+                - generic [ref=e595]:
+                  - generic [ref=e596]: Import a backup
+                  - generic [ref=e597]: Add or restore from a Kettle .json file.
+                - img [ref=e599]
+            - button "Reset everything Start fresh on this device." [ref=e601] [cursor=pointer]:
+              - generic [ref=e602]:
+                - img [ref=e604]
+                - generic [ref=e609]:
+                  - generic [ref=e610]: Reset everything
+                  - generic [ref=e611]: Start fresh on this device.
+                - img [ref=e613]
+          - paragraph [ref=e615]: Everything lives on this device. Export a backup to move Kettle to another browser.
+        - button [ref=e616]
+        - region "Keyboard shortcuts" [ref=e617]:
+          - heading "Keyboard shortcuts" [level=2] [ref=e618]
+          - generic [ref=e619]:
+            - generic [ref=e620]:
+              - generic [ref=e621]: During a brew
+              - generic [ref=e622]:
+                - generic [ref=e623]:
+                  - term [ref=e624]: Pause or resume
+                  - definition [ref=e625]:
+                    - generic [ref=e627]: Space
+                - generic [ref=e628]:
+                  - term [ref=e629]: End the brew early
+                  - definition [ref=e630]:
+                    - generic [ref=e632]: Esc
+                - generic [ref=e633]:
+                  - term [ref=e634]: Add 5 minutes
+                  - definition [ref=e635]:
+                    - generic [ref=e637]: +
+                - generic [ref=e638]:
+                  - term [ref=e639]: Mute or unmute sounds
+                  - definition [ref=e640]:
+                    - generic [ref=e642]: M
+            - generic [ref=e643]:
+              - generic [ref=e644]: Today
+              - generic [ref=e646]:
+                - term [ref=e647]: Put the kettle on
+                - definition [ref=e648]:
+                  - generic [ref=e650]: Enter
+            - generic [ref=e651]:
+              - generic [ref=e652]: Anywhere
+              - generic [ref=e654]:
+                - term [ref=e655]: Show keyboard shortcuts
+                - definition [ref=e656]:
+                  - generic [ref=e658]: "?"
+        - region "About" [ref=e659]:
+          - heading "About" [level=2] [ref=e660]
+          - generic [ref=e661]:
+            - generic [ref=e662]:
+              - heading "Chai’s story" [level=3] [ref=e666]
+              - paragraph [ref=e667]: Chai is a small, round, thoroughly unbothered capybara who lives in a cozy nook with a kettle that’s always just about to boil. Chai believes big things get done one warm cup at a time, never rushes you, and has never once guilt-tripped anyone. The yuzu? Nobody knows how it stays up there.
+            - generic [ref=e669]:
+              - img [ref=e671]
+              - generic [ref=e676]: Version
+              - generic [ref=e677]: Kettle 0.1.0
+            - generic [ref=e679]:
+              - img [ref=e681]
+              - generic [ref=e684]:
+                - generic [ref=e685]: Privacy
+                - generic [ref=e686]: No accounts, no tracking. Your data never leaves this device unless you export it.
+            - generic [ref=e688]:
+              - img [ref=e690]
+              - generic [ref=e692]:
+                - generic [ref=e693]: Credits
+                - generic [ref=e694]: Type set in Fredoka and Nunito (SIL Open Font License). Every sound is synthesized live in your browser. The nook is built with three.js.
+  - status [ref=e695]
+  - generic:
+    - status "Notifications":
+      - list
+```

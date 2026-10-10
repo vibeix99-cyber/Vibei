@@ -1,0 +1,6 @@
+| configuration | windows (toasts up) | real taps that worked | protected controls covered after settling (hit-test or box) | countdown digits covered after settling (windows by toasts raised) | controls off-screen and not reachable by real scroll (state: control, centre y) | transient frames (first 600 ms) | journey errors |
+|---|---|---|---|---|---|---|---|
+| INT-375x667-light-t100 | 22 | 13/14 | over n1: Mark it done, start fresh|hit; over n1: Mark it done, start fresh|overlap; over tap DID NOT TAKE EFFECT; over n3: Mark it done, start fresh|hit; over n3: Mark it done, start fresh|overlap; over-c n3: Mark it done, start fresh|hit; over-c n3: Mark it done, start fresh|overlap | 1 toast: 0/3, 2: 2/2, 3: 7/7 | none | 416 | - |
+| INT-375x667-light-t200 | 22 | 11/13 | none | 1 toast: 0/3, 2: 2/2, 3: 7/7 | break-paused: 706; over-c: 840 | 394 | today+warning: page.waitForSelector: Timeout 8000ms exceeded. |
+| INT-844x390-light-t100 | 22 | 14/14 | none | 1 toast: 0/3, 2: 0/2, 3: 0/7 | none | 9 | - |
+| INT-844x390-light-t200 | 19 | 7/10 | none | 1 toast: 1/3, 2: 2/2, 3: 6/6 | break-paused: 428; over: 430; over-b: 548 | 316 | locator.waitFor: Timeout 60000ms exceeded.; today+warning: page.waitForSelector: Timeout 8000ms exceeded. |
