@@ -1,0 +1,45 @@
+R6-844x390-light-t100: windows 22, taps 14/14, transient frames 5, settled issues 0
+R6-844x390-light-t200: windows 19, taps 8/11, transient frames 316, settled issues 13
+    running n2: countdown overlap x120 (t6 102x57 ctl[155-251] toast[178-235])
+    running n3: countdown overlap x207 (t8 104x16 ctl[155-251] toast[73-170])
+    paused n1: countdown overlap x80 (t11 6x8 ctl[197-293] toast[285-341])
+    paused n3: countdown overlap x273 (t12 104x16 ctl[197-293] toast[115-212])
+    running-b n3: countdown overlap x198 (t15 104x16 ctl[155-251] toast[73-170])
+    running-c n3: countdown overlap x228 (t18 104x16 ctl[155-251] toast[73-170])
+    break n2: countdown overlap x84 (t26 73x57 ctl[155-251] toast[178-235])
+    break n3: countdown overlap x176 (t28 75x16 ctl[155-251] toast[73-170])
+    break-paused n3: tap not on screen
+    break-paused n3: countdown overlap x98 (t32 73x11 ctl[197-293] toast[151-208])
+    over n3: tap not on screen
+    over-b n3: tap not on screen
+    JOURNEY ERROR locator.waitFor: Timeout 60000ms exceeded.
+R6-844x390-dark-t100: windows 22, taps 14/14, transient frames 5, settled issues 0
+R6-844x390-dark-t200: windows 19, taps 8/11, transient frames 256, settled issues 13
+    running n2: countdown overlap x58 (t6 102x57 ctl[155-251] toast[178-235])
+    running n3: countdown overlap x143 (t8 104x16 ctl[155-251] toast[73-170])
+    paused n1: countdown overlap x82 (t11 6x8 ctl[197-293] toast[285-341])
+    paused n3: countdown overlap x237 (t12 104x16 ctl[197-293] toast[115-212])
+    running-b n3: countdown overlap x291 (t15 104x16 ctl[155-251] toast[73-170])
+    running-c n3: countdown overlap x255 (t18 104x16 ctl[155-251] toast[73-170])
+    break n2: countdown overlap x82 (t26 73x57 ctl[155-251] toast[178-235])
+    break n3: countdown overlap x172 (t28 75x16 ctl[155-251] toast[73-170])
+    break-paused n3: tap not on screen
+    break-paused n3: countdown overlap x83 (t32 73x11 ctl[197-293] toast[151-208])
+    over n3: tap not on screen
+    over-b n3: tap not on screen
+    JOURNEY ERROR locator.waitFor: Timeout 60000ms exceeded.
+
+per control (windows with toasts up; windows with a settled hit/overlap):
+  Put the kettle on: 22 windows, 0 covered
+  Add 5: 28 windows, 0 covered
+  Pause/Resume: 28 windows, 0 covered
+  End: 28 windows, 0 covered
+  countdown: 46 windows, 18 covered
+  Tea time: 10 windows, 0 covered
+  Skip (summary): 10 windows, 0 covered
+  Skip (break): 18 windows, 0 covered
+  Pause/Resume break: 18 windows, 0 covered
+  Next brew: 18 windows, 0 covered
+  Mark it done, start fresh: 10 windows, 0 covered
+  That's all for now: 14 windows, 0 covered
+  Put the kettle on (with real warning): 4 windows, 0 covered

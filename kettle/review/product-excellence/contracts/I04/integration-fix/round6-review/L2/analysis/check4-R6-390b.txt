@@ -1,0 +1,77 @@
+R6-390x844-light-t100: windows 20, taps 14/14, transient frames 357, settled issues 14
+    running n3: countdown hit x85 (li._toast_1fidq_27 [TOAST])
+    running n3: countdown overlap x170 (t6 211x27 ctl[498-576] toast[469-525])
+    paused n3: countdown hit x88 (li._toast_1fidq_27 [TOAST])
+    paused n3: countdown overlap x176 (t10 211x27 ctl[498-576] toast[469-525])
+    running-b n3: countdown hit x85 (li._toast_1fidq_27 [TOAST])
+    running-b n3: countdown overlap x170 (t13 211x27 ctl[498-576] toast[469-525])
+    running-c n3: countdown hit x94 (li._toast_1fidq_27 [TOAST])
+    running-c n3: countdown overlap x188 (t16 211x27 ctl[498-576] toast[469-525])
+    break n3: countdown hit x81 (li._toast_1fidq_27 [TOAST])
+    break n3: countdown overlap x162 (t24 164x27 ctl[498-576] toast[469-525])
+    break-paused n3: countdown hit x89 (li._toast_1fidq_27 [TOAST])
+    break-paused n3: countdown overlap x178 (t27 164x27 ctl[498-576] toast[469-525])
+    break-b n3: countdown hit x84 (li._toast_1fidq_27 [TOAST])
+    break-b n3: countdown overlap x168 (t40 164x27 ctl[498-576] toast[469-525])
+R6-390x844-light-t200: windows 20, taps 13/14, transient frames 322, settled issues 15
+    running n3: countdown hit x90 (li._toast_1fidq_27 [TOAST])
+    running n3: countdown overlap x180 (t6 281x42 ctl[471-575] toast[375-513])
+    paused n3: countdown hit x93 (span._message_1fidq_54 [TOAST])
+    paused n3: countdown overlap x186 (t10 281x84 ctl[485-589] toast[431-569])
+    running-b n3: countdown hit x98 (li._toast_1fidq_27 [TOAST])
+    running-b n3: countdown overlap x196 (t13 281x42 ctl[471-575] toast[375-513])
+    running-c n3: countdown hit x70 (span._message_1fidq_54 [TOAST])
+    running-c n3: countdown overlap x140 (t16 281x84 ctl[471-575] toast[418-555])
+    break n3: countdown hit x90 (span._message_1fidq_54 [TOAST])
+    break n3: countdown overlap x180 (t24 218x84 ctl[471-575] toast[417-555])
+    break-paused n3: countdown hit x90 (span._message_1fidq_54 [TOAST])
+    break-paused n3: countdown overlap x90 (t27 218x104 ctl[485-589] toast[473-611])
+    break-b n3: countdown hit x87 (span._message_1fidq_54 [TOAST])
+    break-b n3: countdown overlap x174 (t40 218x84 ctl[471-575] toast[417-555])
+    over-c n3: tap not on screen
+R6-390x844-dark-t100: windows 20, taps 14/14, transient frames 456, settled issues 14
+    running n3: countdown hit x88 (li._toast_1fidq_27 [TOAST])
+    running n3: countdown overlap x176 (t6 211x27 ctl[498-576] toast[469-525])
+    paused n3: countdown hit x91 (li._toast_1fidq_27 [TOAST])
+    paused n3: countdown overlap x182 (t10 211x27 ctl[498-576] toast[469-525])
+    running-b n3: countdown hit x94 (li._toast_1fidq_27 [TOAST])
+    running-b n3: countdown overlap x188 (t13 211x27 ctl[498-576] toast[469-525])
+    running-c n3: countdown hit x93 (li._toast_1fidq_27 [TOAST])
+    running-c n3: countdown overlap x186 (t16 211x27 ctl[498-576] toast[469-525])
+    break n3: countdown hit x90 (li._toast_1fidq_27 [TOAST])
+    break n3: countdown overlap x180 (t24 164x27 ctl[498-576] toast[469-525])
+    break-paused n3: countdown hit x87 (li._toast_1fidq_27 [TOAST])
+    break-paused n3: countdown overlap x174 (t27 164x27 ctl[498-576] toast[469-525])
+    break-b n3: countdown hit x88 (li._toast_1fidq_27 [TOAST])
+    break-b n3: countdown overlap x176 (t40 164x27 ctl[498-576] toast[469-525])
+R6-390x844-dark-t200: windows 20, taps 13/14, transient frames 309, settled issues 15
+    running n3: countdown hit x91 (li._toast_1fidq_27 [TOAST])
+    running n3: countdown overlap x182 (t6 281x42 ctl[471-575] toast[375-513])
+    paused n3: countdown hit x92 (span._message_1fidq_54 [TOAST])
+    paused n3: countdown overlap x184 (t10 281x84 ctl[485-589] toast[431-569])
+    running-b n3: countdown hit x93 (li._toast_1fidq_27 [TOAST])
+    running-b n3: countdown overlap x186 (t13 281x42 ctl[471-575] toast[375-513])
+    running-c n3: countdown hit x74 (span._message_1fidq_54 [TOAST])
+    running-c n3: countdown overlap x148 (t16 281x84 ctl[471-575] toast[418-555])
+    break n3: countdown hit x90 (span._message_1fidq_54 [TOAST])
+    break n3: countdown overlap x180 (t24 218x84 ctl[471-575] toast[417-555])
+    break-paused n3: countdown hit x91 (span._message_1fidq_54 [TOAST])
+    break-paused n3: countdown overlap x91 (t27 218x104 ctl[485-589] toast[473-611])
+    break-b n3: countdown hit x80 (span._message_1fidq_54 [TOAST])
+    break-b n3: countdown overlap x160 (t40 218x84 ctl[471-575] toast[417-555])
+    over-c n3: tap not on screen
+
+per control (windows with toasts up; windows with a settled hit/overlap):
+  Put the kettle on: 24 windows, 0 covered
+  Add 5: 24 windows, 0 covered
+  Pause/Resume: 24 windows, 0 covered
+  End: 24 windows, 0 covered
+  countdown: 40 windows, 28 covered
+  Tea time: 12 windows, 0 covered
+  Skip (summary): 12 windows, 0 covered
+  Skip (break): 16 windows, 0 covered
+  Pause/Resume break: 16 windows, 0 covered
+  Next brew: 16 windows, 0 covered
+  Mark it done, start fresh: 12 windows, 0 covered
+  That's all for now: 16 windows, 0 covered
+  Put the kettle on (with real warning): 4 windows, 0 covered
