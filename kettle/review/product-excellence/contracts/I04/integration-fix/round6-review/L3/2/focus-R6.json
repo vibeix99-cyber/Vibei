@@ -1,0 +1,1656 @@
+{
+ "tag": "R6",
+ "url": "http://127.0.0.1:5301",
+ "rev": "R6",
+ "commit": "e866118",
+ "results": {
+  "C1_settings_ordinary": {
+   "focusBefore": "button \"Import a backupAdd or restor\"",
+   "focusAfterExpiry": "button \"Import a backupAdd or restor\"",
+   "unchanged": true,
+   "toastExpiredMsAfterFocus": 3302,
+   "events": [
+    [
+     185,
+     "focusout",
+     "main#main \"SettingsYour nameLevel 4168 \"",
+     "to button \"Export a backupSave everythi\""
+    ],
+    [
+     185,
+     "focusin",
+     "button \"Export a backupSave everythi\""
+    ],
+    [
+     199,
+     "toast+",
+     "Saved kettle-backup-2026-10-10.json. Kee"
+    ],
+    [
+     342,
+     "focusout",
+     "button \"Export a backupSave everythi\"",
+     "to button \"Import a backupAdd or restor\""
+    ],
+    [
+     343,
+     "focusin",
+     "button \"Import a backupAdd or restor\""
+    ],
+    [
+     3640,
+     "toast-",
+     "Saved kettle-backup-2026-10-10.json. Kee"
+    ]
+   ]
+  },
+  "C2_today_ordinary": {
+   "full": false,
+   "text": 100,
+   "focusBefore": "input#_r_1d_-input \"abc\"",
+   "focusAfterAllToastsGone": "input#_r_1d_-input \"abcdef\"",
+   "unchanged": false,
+   "typedValue": "abcdef",
+   "toastsGoneMsAfterTyping": 1667,
+   "focusLossEvents": [
+    [
+     1793,
+     "focusout",
+     "main#main \"3days warmstreak. Show detai\"",
+     "to body"
+    ],
+    [
+     5168,
+     "focusout",
+     "button \"End session\"",
+     "to body"
+    ]
+   ],
+   "events": [
+    [
+     318,
+     "focusout",
+     "main#main \"3days warmstreak. Show detai\"",
+     "to button \"Put the kettle on · 25 min\""
+    ],
+    [
+     318,
+     "focusin",
+     "button \"Put the kettle on · 25 min\""
+    ],
+    [
+     590,
+     "focusout",
+     "button \"Put the kettle on · 25 min\"",
+     "to main#main \"3days warmstreak. Show detai\""
+    ],
+    [
+     591,
+     "focusin",
+     "main#main \"3days warmstreak. Show detai\""
+    ],
+    [
+     1793,
+     "focusout",
+     "main#main \"3days warmstreak. Show detai\"",
+     "to body"
+    ],
+    [
+     2982,
+     "focusin",
+     "button \"End session\""
+    ],
+    [
+     3023,
+     "focusout",
+     "button \"End session\"",
+     "to button \"Keep brewing\""
+    ],
+    [
+     3023,
+     "focusin",
+     "button \"Keep brewing\""
+    ],
+    [
+     4330,
+     "focusout",
+     "button \"Keep brewing\"",
+     "to button \"End session\""
+    ],
+    [
+     4330,
+     "focusin",
+     "button \"End session\""
+    ],
+    [
+     4420,
+     "toast+",
+     "Kettle’s off. See you soon."
+    ],
+    [
+     5168,
+     "focusout",
+     "button \"End session\"",
+     "to body"
+    ],
+    [
+     5183,
+     "focusin",
+     "main#main \"3days warmstreak. Show detai\""
+    ],
+    [
+     5718,
+     "focusout",
+     "main#main \"3days warmstreak. Show detai\"",
+     "to input#_r_1d_-input \"\""
+    ],
+    [
+     5720,
+     "focusin",
+     "input#_r_1d_-input \"\""
+    ],
+    [
+     7791,
+     "toast-",
+     "Kettle’s off. See you soon."
+    ]
+   ],
+   "series": [
+    [
+     51,
+     "main#main \"3days warmstreak. Show detai\"",
+     0,
+     false
+    ],
+    [
+     1795,
+     "body",
+     0,
+     false
+    ],
+    [
+     3092,
+     "button \"Keep brewing\"",
+     0,
+     false
+    ],
+    [
+     4483,
+     "button \"End session\"",
+     1,
+     false
+    ],
+    [
+     5184,
+     "main#main \"3days warmstreak. Show detai\"",
+     1,
+     false
+    ],
+    [
+     5798,
+     "input#_r_1d_-input \"\"",
+     1,
+     false
+    ],
+    [
+     5914,
+     "input#_r_1d_-input \"a\"",
+     1,
+     false
+    ],
+    [
+     6004,
+     "input#_r_1d_-input \"ab\"",
+     1,
+     false
+    ],
+    [
+     6131,
+     "input#_r_1d_-input \"abc\"",
+     1,
+     false
+    ],
+    [
+     7801,
+     "input#_r_1d_-input \"abc\"",
+     0,
+     false
+    ],
+    [
+     7850,
+     "input#_r_1d_-input \"abcd\"",
+     0,
+     false
+    ],
+    [
+     7906,
+     "input#_r_1d_-input \"abcde\"",
+     0,
+     false
+    ],
+    [
+     8000,
+     "input#_r_1d_-input \"abcdef\"",
+     0,
+     false
+    ]
+   ]
+  },
+  "C3_today_warning_expires": {
+   "full": true,
+   "text": 100,
+   "focusBefore": "input#_r_1d_-input \"abc\"",
+   "focusAfterAllToastsGone": "input#_r_1d_-input \"abcdef\"",
+   "unchanged": false,
+   "typedValue": "abcdef",
+   "toastsGoneMsAfterTyping": 11109,
+   "focusLossEvents": [
+    [
+     1228,
+     "focusout",
+     "main#main \"3days warmstreak. Show detai\"",
+     "to body"
+    ],
+    [
+     5045,
+     "focusout",
+     "button \"End session\"",
+     "to body"
+    ]
+   ],
+   "events": [
+    [
+     278,
+     "focusout",
+     "main#main \"3days warmstreak. Show detai\"",
+     "to button \"Put the kettle on · 25 min\""
+    ],
+    [
+     278,
+     "focusin",
+     "button \"Put the kettle on · 25 min\""
+    ],
+    [
+     546,
+     "focusout",
+     "button \"Put the kettle on · 25 min\"",
+     "to main#main \"3days warmstreak. Show detai\""
+    ],
+    [
+     547,
+     "focusin",
+     "main#main \"3days warmstreak. Show detai\""
+    ],
+    [
+     1228,
+     "focusout",
+     "main#main \"3days warmstreak. Show detai\"",
+     "to body"
+    ],
+    [
+     3169,
+     "focusin",
+     "button \"End session\""
+    ],
+    [
+     3231,
+     "focusout",
+     "button \"End session\"",
+     "to button \"Keep brewing\""
+    ],
+    [
+     3231,
+     "focusin",
+     "button \"Keep brewing\""
+    ],
+    [
+     4399,
+     "focusout",
+     "button \"Keep brewing\"",
+     "to button \"End session\""
+    ],
+    [
+     4399,
+     "focusin",
+     "button \"End session\""
+    ],
+    [
+     4491,
+     "toast+",
+     "Kettle’s off. See you soon."
+    ],
+    [
+     4558,
+     "toast+",
+     "Kettle couldn’t save your latest changes"
+    ],
+    [
+     5045,
+     "focusout",
+     "button \"End session\"",
+     "to body"
+    ],
+    [
+     5074,
+     "focusin",
+     "main#main \"3days warmstreak. Show detai\""
+    ],
+    [
+     5428,
+     "focusout",
+     "main#main \"3days warmstreak. Show detai\"",
+     "to input#_r_1d_-input \"\""
+    ],
+    [
+     5429,
+     "focusin",
+     "input#_r_1d_-input \"\""
+    ],
+    [
+     7877,
+     "toast-",
+     "Kettle’s off. See you soon."
+    ],
+    [
+     16739,
+     "toast-",
+     "Kettle couldn’t save your latest changes"
+    ]
+   ],
+   "series": [
+    [
+     51,
+     "main#main \"3days warmstreak. Show detai\"",
+     0,
+     false
+    ],
+    [
+     1230,
+     "body",
+     0,
+     false
+    ],
+    [
+     3259,
+     "button \"Keep brewing\"",
+     0,
+     false
+    ],
+    [
+     4535,
+     "button \"End session\"",
+     1,
+     false
+    ],
+    [
+     4568,
+     "button \"End session\"",
+     2,
+     true
+    ],
+    [
+     5078,
+     "main#main \"3days warmstreak. Show detai\"",
+     2,
+     true
+    ],
+    [
+     5527,
+     "input#_r_1d_-input \"a\"",
+     2,
+     true
+    ],
+    [
+     5600,
+     "input#_r_1d_-input \"ab\"",
+     2,
+     true
+    ],
+    [
+     5678,
+     "input#_r_1d_-input \"abc\"",
+     2,
+     true
+    ],
+    [
+     7901,
+     "input#_r_1d_-input \"abc\"",
+     1,
+     true
+    ],
+    [
+     16751,
+     "input#_r_1d_-input \"abc\"",
+     0,
+     false
+    ],
+    [
+     16851,
+     "input#_r_1d_-input \"abcd\"",
+     0,
+     false
+    ],
+    [
+     16901,
+     "input#_r_1d_-input \"abcde\"",
+     0,
+     false
+    ],
+    [
+     17001,
+     "input#_r_1d_-input \"abcdef\"",
+     0,
+     false
+    ]
+   ]
+  },
+  "C3b_today_warning_expires_200": {
+   "full": true,
+   "text": 200,
+   "focusBefore": "input#_r_1g_-input \"abc\"",
+   "focusAfterAllToastsGone": "input#_r_1g_-input \"abcdef\"",
+   "unchanged": false,
+   "typedValue": "abcdef",
+   "toastsGoneMsAfterTyping": 2,
+   "focusLossEvents": [
+    [
+     1102,
+     "focusout",
+     "main#main \"3days warmstreak. Show detai\"",
+     "to body"
+    ],
+    [
+     4897,
+     "focusout",
+     "button \"End session\"",
+     "to body"
+    ]
+   ],
+   "events": [
+    [
+     162,
+     "focusout",
+     "main#main \"3days warmstreak. Show detai\"",
+     "to button \"Put the kettle on · 25 min\""
+    ],
+    [
+     162,
+     "focusin",
+     "button \"Put the kettle on · 25 min\""
+    ],
+    [
+     313,
+     "focusout",
+     "button \"Put the kettle on · 25 min\"",
+     "to main#main \"3days warmstreak. Show detai\""
+    ],
+    [
+     314,
+     "focusin",
+     "main#main \"3days warmstreak. Show detai\""
+    ],
+    [
+     340,
+     "toast+",
+     "Kettle couldn’t save your latest changes"
+    ],
+    [
+     1102,
+     "focusout",
+     "main#main \"3days warmstreak. Show detai\"",
+     "to body"
+    ],
+    [
+     1105,
+     "toast-",
+     "Kettle couldn’t save your latest changes"
+    ],
+    [
+     2801,
+     "focusin",
+     "button \"End session\""
+    ],
+    [
+     2852,
+     "focusout",
+     "button \"End session\"",
+     "to button \"Keep brewing\""
+    ],
+    [
+     2852,
+     "focusin",
+     "button \"Keep brewing\""
+    ],
+    [
+     3928,
+     "focusout",
+     "button \"Keep brewing\"",
+     "to button \"End session\""
+    ],
+    [
+     3929,
+     "focusin",
+     "button \"End session\""
+    ],
+    [
+     4089,
+     "toast+",
+     "Kettle’s off. See you soon."
+    ],
+    [
+     4897,
+     "focusout",
+     "button \"End session\"",
+     "to body"
+    ],
+    [
+     4912,
+     "focusin",
+     "main#main \"3days warmstreak. Show detai\""
+    ],
+    [
+     4920,
+     "toast+",
+     "Kettle couldn’t save your latest changes"
+    ],
+    [
+     7460,
+     "toast-",
+     "Kettle’s off. See you soon."
+    ],
+    [
+     17091,
+     "toast-",
+     "Kettle couldn’t save your latest changes"
+    ],
+    [
+     17173,
+     "focusout",
+     "main#main \"3days warmstreak. Show detai\"",
+     "to input#_r_1g_-input \"\""
+    ],
+    [
+     17174,
+     "focusin",
+     "input#_r_1g_-input \"\""
+    ]
+   ],
+   "series": [
+    [
+     54,
+     "main#main \"3days warmstreak. Show detai\"",
+     0,
+     false
+    ],
+    [
+     377,
+     "main#main \"3days warmstreak. Show detai\"",
+     1,
+     true
+    ],
+    [
+     1111,
+     "body",
+     0,
+     false
+    ],
+    [
+     2886,
+     "button \"Keep brewing\"",
+     0,
+     false
+    ],
+    [
+     4150,
+     "button \"End session\"",
+     1,
+     false
+    ],
+    [
+     4914,
+     "main#main \"3days warmstreak. Show detai\"",
+     1,
+     false
+    ],
+    [
+     4952,
+     "main#main \"3days warmstreak. Show detai\"",
+     2,
+     true
+    ],
+    [
+     7505,
+     "main#main \"3days warmstreak. Show detai\"",
+     1,
+     true
+    ],
+    [
+     17100,
+     "main#main \"3days warmstreak. Show detai\"",
+     0,
+     false
+    ],
+    [
+     17200,
+     "input#_r_1g_-input \"\"",
+     0,
+     false
+    ],
+    [
+     17250,
+     "input#_r_1g_-input \"a\"",
+     0,
+     false
+    ],
+    [
+     17311,
+     "input#_r_1g_-input \"ab\"",
+     0,
+     false
+    ],
+    [
+     17400,
+     "input#_r_1g_-input \"abc\"",
+     0,
+     false
+    ],
+    [
+     17505,
+     "input#_r_1g_-input \"abcd\"",
+     0,
+     false
+    ],
+    [
+     17601,
+     "input#_r_1g_-input \"abcde\"",
+     0,
+     false
+    ],
+    [
+     17700,
+     "input#_r_1g_-input \"abcdef\"",
+     0,
+     false
+    ]
+   ]
+  },
+  "C4_in_toast_200_tab": {
+   "text": 200,
+   "key": "Tab",
+   "reached": 16,
+   "whileFocusedWarningUpSamples": "40/40",
+   "focusDuring": [
+    "button \"Save backup\""
+   ],
+   "focusAfterLeaving": "body",
+   "warningGoneAfterLeavingMs": 12190,
+   "focusAfterExpiry": "body",
+   "focusUnchangedAcrossExpiry": true,
+   "events": [
+    [
+     162,
+     "focusout",
+     "main#main \"3days warmstreak. Show detai\"",
+     "to button \"Put the kettle on · 25 min\""
+    ],
+    [
+     162,
+     "focusin",
+     "button \"Put the kettle on · 25 min\""
+    ],
+    [
+     438,
+     "focusout",
+     "button \"Put the kettle on · 25 min\"",
+     "to main#main \"3days warmstreak. Show detai\""
+    ],
+    [
+     439,
+     "focusin",
+     "main#main \"3days warmstreak. Show detai\""
+    ],
+    [
+     481,
+     "toast+",
+     "Kettle couldn’t save your latest changes"
+    ],
+    [
+     1147,
+     "focusout",
+     "main#main \"3days warmstreak. Show detai\"",
+     "to body"
+    ],
+    [
+     1148,
+     "toast-",
+     "Kettle couldn’t save your latest changes"
+    ],
+    [
+     2889,
+     "focusin",
+     "button \"End session\""
+    ],
+    [
+     2978,
+     "focusout",
+     "button \"End session\"",
+     "to button \"Keep brewing\""
+    ],
+    [
+     2978,
+     "focusin",
+     "button \"Keep brewing\""
+    ],
+    [
+     3832,
+     "focusout",
+     "button \"Keep brewing\"",
+     "to button \"End session\""
+    ],
+    [
+     3833,
+     "focusin",
+     "button \"End session\""
+    ],
+    [
+     3944,
+     "toast+",
+     "Kettle’s off. See you soon."
+    ],
+    [
+     4618,
+     "focusout",
+     "button \"End session\"",
+     "to body"
+    ],
+    [
+     4634,
+     "focusin",
+     "main#main \"3days warmstreak. Show detai\""
+    ],
+    [
+     4675,
+     "toast+",
+     "Kettle couldn’t save your latest changes"
+    ],
+    [
+     5446,
+     "focusout",
+     "main#main \"3days warmstreak. Show detai\"",
+     "to button \"3days warmstreak. Show detai\""
+    ],
+    [
+     5446,
+     "focusin",
+     "button \"3days warmstreak. Show detai\""
+    ],
+    [
+     5907,
+     "focusout",
+     "button \"3days warmstreak. Show detai\"",
+     "to button \"168leavesShow details\""
+    ],
+    [
+     5907,
+     "focusin",
+     "button \"168leavesShow details\""
+    ],
+    [
+     6370,
+     "focusout",
+     "button \"168leavesShow details\"",
+     "to button \"4Level 4Cozy level 4, 37 lea\""
+    ],
+    [
+     6370,
+     "focusin",
+     "button \"4Level 4Cozy level 4, 37 lea\""
+    ],
+    [
+     6825,
+     "focusout",
+     "button \"4Level 4Cozy level 4, 37 lea\"",
+     "to button \"Try Gentle · 15 min\""
+    ],
+    [
+     6826,
+     "focusin",
+     "button \"Try Gentle · 15 min\""
+    ],
+    [
+     7289,
+     "focusout",
+     "button \"Try Gentle · 15 min\"",
+     "to input#_r_1g_-input \"\""
+    ],
+    [
+     7291,
+     "focusin",
+     "input#_r_1g_-input \"\""
+    ],
+    [
+     7326,
+     "toast-",
+     "Kettle’s off. See you soon."
+    ],
+    [
+     7812,
+     "focusout",
+     "input#_r_1g_-input \"\"",
+     "to button \"Read: The Hobbit\""
+    ],
+    [
+     7813,
+     "focusin",
+     "button \"Read: The Hobbit\""
+    ],
+    [
+     8290,
+     "focusout",
+     "button \"Read: The Hobbit\"",
+     "to button \"Spanish practice\""
+    ],
+    [
+     8291,
+     "focusin",
+     "button \"Spanish practice\""
+    ],
+    [
+     8749,
+     "focusout",
+     "button \"Spanish practice\"",
+     "to button \"Work\""
+    ],
+    [
+     8807,
+     "focusin",
+     "button \"Work\""
+    ],
+    [
+     9284,
+     "focusout",
+     "button \"Work\"",
+     "to button \"Study\""
+    ],
+    [
+     9285,
+     "focusin",
+     "button \"Study\""
+    ],
+    [
+     9780,
+     "focusout",
+     "button \"Study\"",
+     "to button \"Read\""
+    ],
+    [
+     9781,
+     "focusin",
+     "button \"Read\""
+    ],
+    [
+     10284,
+     "focusout",
+     "button \"Read\"",
+     "to button \"Create\""
+    ],
+    [
+     10285,
+     "focusin",
+     "button \"Create\""
+    ],
+    [
+     10739,
+     "focusout",
+     "button \"Create\"",
+     "to button \"Life\""
+    ],
+    [
+     10740,
+     "focusin",
+     "button \"Life\""
+    ],
+    [
+     11195,
+     "focusout",
+     "button \"Life\"",
+     "to button \"25 minClassic\""
+    ],
+    [
+     11196,
+     "focusin",
+     "button \"25 minClassic\""
+    ],
+    [
+     11663,
+     "focusout",
+     "button \"25 minClassic\"",
+     "to button \"Put the kettle on · 25 min\""
+    ],
+    [
+     11663,
+     "focusin",
+     "button \"Put the kettle on · 25 min\""
+    ],
+    [
+     12119,
+     "focusout",
+     "button \"Put the kettle on · 25 min\"",
+     "to button \"Change brew length\""
+    ],
+    [
+     12119,
+     "focusin",
+     "button \"Change brew length\""
+    ],
+    [
+     12347,
+     "toast-",
+     "Kettle couldn’t save your latest changes"
+    ],
+    [
+     12425,
+     "toast+",
+     "Kettle couldn’t save your latest changes"
+    ],
+    [
+     12585,
+     "focusout",
+     "button \"Change brew length\"",
+     "to button \"Save backup\""
+    ],
+    [
+     12586,
+     "focusin",
+     "button \"Save backup\""
+    ],
+    [
+     29763,
+     "focusout",
+     "button \"Save backup\"",
+     "to body"
+    ],
+    [
+     41777,
+     "toast-",
+     "Kettle couldn’t save your latest changes"
+    ]
+   ]
+  },
+  "C4_in_toast_100_shifttab": {
+   "text": 100,
+   "key": "Shift+Tab",
+   "reached": 7,
+   "whileFocusedWarningUpSamples": "40/40",
+   "focusDuring": [
+    "button \"Save backup\""
+   ],
+   "focusAfterLeaving": "button \"Change brew length\"",
+   "warningGoneAfterLeavingMs": 402,
+   "focusAfterExpiry": "button \"Change brew length\"",
+   "focusUnchangedAcrossExpiry": true,
+   "events": [
+    [
+     459,
+     "focusout",
+     "main#main \"3days warmstreak. Show detai\"",
+     "to button \"Put the kettle on · 25 min\""
+    ],
+    [
+     459,
+     "focusin",
+     "button \"Put the kettle on · 25 min\""
+    ],
+    [
+     667,
+     "focusout",
+     "button \"Put the kettle on · 25 min\"",
+     "to main#main \"3days warmstreak. Show detai\""
+    ],
+    [
+     668,
+     "focusin",
+     "main#main \"3days warmstreak. Show detai\""
+    ],
+    [
+     1262,
+     "focusout",
+     "main#main \"3days warmstreak. Show detai\"",
+     "to body"
+    ],
+    [
+     3099,
+     "focusin",
+     "button \"End session\""
+    ],
+    [
+     3185,
+     "focusout",
+     "button \"End session\"",
+     "to button \"Keep brewing\""
+    ],
+    [
+     3186,
+     "focusin",
+     "button \"Keep brewing\""
+    ],
+    [
+     4393,
+     "focusout",
+     "button \"Keep brewing\"",
+     "to button \"End session\""
+    ],
+    [
+     4393,
+     "focusin",
+     "button \"End session\""
+    ],
+    [
+     4487,
+     "toast+",
+     "Kettle’s off. See you soon."
+    ],
+    [
+     4566,
+     "toast+",
+     "Kettle couldn’t save your latest changes"
+    ],
+    [
+     5184,
+     "focusout",
+     "button \"End session\"",
+     "to body"
+    ],
+    [
+     5220,
+     "focusin",
+     "main#main \"3days warmstreak. Show detai\""
+    ],
+    [
+     5331,
+     "focusout",
+     "main#main \"3days warmstreak. Show detai\"",
+     "to a \"Settings\""
+    ],
+    [
+     5332,
+     "focusin",
+     "a \"Settings\""
+    ],
+    [
+     5797,
+     "focusout",
+     "a \"Settings\"",
+     "to a \"Nook\""
+    ],
+    [
+     5797,
+     "focusin",
+     "a \"Nook\""
+    ],
+    [
+     6256,
+     "focusout",
+     "a \"Nook\"",
+     "to a \"Stats\""
+    ],
+    [
+     6256,
+     "focusin",
+     "a \"Stats\""
+    ],
+    [
+     6756,
+     "focusout",
+     "a \"Stats\"",
+     "to a \"Today\""
+    ],
+    [
+     6756,
+     "focusin",
+     "a \"Today\""
+    ],
+    [
+     7220,
+     "focusout",
+     "a \"Today\"",
+     "to a \"Skip to content\""
+    ],
+    [
+     7221,
+     "focusin",
+     "a \"Skip to content\""
+    ],
+    [
+     7681,
+     "focusout",
+     "a \"Skip to content\"",
+     "to body"
+    ],
+    [
+     7865,
+     "toast-",
+     "Kettle’s off. See you soon."
+    ],
+    [
+     8139,
+     "focusin",
+     "button \"Save backup\""
+    ],
+    [
+     25302,
+     "focusout",
+     "button \"Save backup\"",
+     "to button \"Change brew length\""
+    ],
+    [
+     25303,
+     "focusin",
+     "button \"Change brew length\""
+    ],
+    [
+     25651,
+     "toast-",
+     "Kettle couldn’t save your latest changes"
+    ],
+    [
+     25752,
+     "toast+",
+     "Kettle couldn’t save your latest changes"
+    ],
+    [
+     37935,
+     "toast-",
+     "Kettle couldn’t save your latest changes"
+    ]
+   ]
+  },
+  "C5_enter_200": {
+   "text": 200,
+   "key": "Tab",
+   "reached": 16,
+   "download": "kettle-backup-2026-10-10.json",
+   "focusAfterEnter": "body",
+   "toastsAfter": [
+    "Saved kettle-backup-2026-10-10.json. Keep it somewhere safe."
+   ],
+   "focusAfterNextTab": "a \"Skip to content\"",
+   "events": [
+    [
+     216,
+     "focusout",
+     "main#main \"3days warmstreak. Show detai\"",
+     "to button \"Put the kettle on · 25 min\""
+    ],
+    [
+     217,
+     "focusin",
+     "button \"Put the kettle on · 25 min\""
+    ],
+    [
+     415,
+     "focusout",
+     "button \"Put the kettle on · 25 min\"",
+     "to main#main \"3days warmstreak. Show detai\""
+    ],
+    [
+     416,
+     "focusin",
+     "main#main \"3days warmstreak. Show detai\""
+    ],
+    [
+     478,
+     "toast+",
+     "Kettle couldn’t save your latest changes"
+    ],
+    [
+     1202,
+     "focusout",
+     "main#main \"3days warmstreak. Show detai\"",
+     "to body"
+    ],
+    [
+     1204,
+     "toast-",
+     "Kettle couldn’t save your latest changes"
+    ],
+    [
+     2983,
+     "focusin",
+     "button \"End session\""
+    ],
+    [
+     3033,
+     "focusout",
+     "button \"End session\"",
+     "to button \"Keep brewing\""
+    ],
+    [
+     3033,
+     "focusin",
+     "button \"Keep brewing\""
+    ],
+    [
+     4200,
+     "focusout",
+     "button \"Keep brewing\"",
+     "to button \"End session\""
+    ],
+    [
+     4201,
+     "focusin",
+     "button \"End session\""
+    ],
+    [
+     4312,
+     "toast+",
+     "Kettle’s off. See you soon."
+    ],
+    [
+     4753,
+     "focusout",
+     "button \"End session\"",
+     "to body"
+    ],
+    [
+     4769,
+     "focusin",
+     "main#main \"3days warmstreak. Show detai\""
+    ],
+    [
+     5030,
+     "toast+",
+     "Kettle couldn’t save your latest changes"
+    ],
+    [
+     5929,
+     "focusout",
+     "main#main \"3days warmstreak. Show detai\"",
+     "to button \"3days warmstreak. Show detai\""
+    ],
+    [
+     5929,
+     "focusin",
+     "button \"3days warmstreak. Show detai\""
+    ],
+    [
+     6386,
+     "focusout",
+     "button \"3days warmstreak. Show detai\"",
+     "to button \"168leavesShow details\""
+    ],
+    [
+     6386,
+     "focusin",
+     "button \"168leavesShow details\""
+    ],
+    [
+     6847,
+     "focusout",
+     "button \"168leavesShow details\"",
+     "to button \"4Level 4Cozy level 4, 37 lea\""
+    ],
+    [
+     6848,
+     "focusin",
+     "button \"4Level 4Cozy level 4, 37 lea\""
+    ],
+    [
+     7303,
+     "focusout",
+     "button \"4Level 4Cozy level 4, 37 lea\"",
+     "to button \"Try Gentle · 15 min\""
+    ],
+    [
+     7304,
+     "focusin",
+     "button \"Try Gentle · 15 min\""
+    ],
+    [
+     7673,
+     "toast-",
+     "Kettle’s off. See you soon."
+    ],
+    [
+     7764,
+     "focusout",
+     "button \"Try Gentle · 15 min\"",
+     "to input#_r_1g_-input \"\""
+    ],
+    [
+     7765,
+     "focusin",
+     "input#_r_1g_-input \"\""
+    ],
+    [
+     8291,
+     "focusout",
+     "input#_r_1g_-input \"\"",
+     "to button \"Read: The Hobbit\""
+    ],
+    [
+     8292,
+     "focusin",
+     "button \"Read: The Hobbit\""
+    ],
+    [
+     8755,
+     "focusout",
+     "button \"Read: The Hobbit\"",
+     "to button \"Spanish practice\""
+    ],
+    [
+     8755,
+     "focusin",
+     "button \"Spanish practice\""
+    ],
+    [
+     9215,
+     "focusout",
+     "button \"Spanish practice\"",
+     "to button \"Work\""
+    ],
+    [
+     9242,
+     "focusin",
+     "button \"Work\""
+    ],
+    [
+     9704,
+     "focusout",
+     "button \"Work\"",
+     "to button \"Study\""
+    ],
+    [
+     9705,
+     "focusin",
+     "button \"Study\""
+    ],
+    [
+     10162,
+     "focusout",
+     "button \"Study\"",
+     "to button \"Read\""
+    ],
+    [
+     10162,
+     "focusin",
+     "button \"Read\""
+    ],
+    [
+     10617,
+     "focusout",
+     "button \"Read\"",
+     "to button \"Create\""
+    ],
+    [
+     10618,
+     "focusin",
+     "button \"Create\""
+    ],
+    [
+     11086,
+     "focusout",
+     "button \"Create\"",
+     "to button \"Life\""
+    ],
+    [
+     11086,
+     "focusin",
+     "button \"Life\""
+    ],
+    [
+     11541,
+     "focusout",
+     "button \"Life\"",
+     "to button \"25 minClassic\""
+    ],
+    [
+     11542,
+     "focusin",
+     "button \"25 minClassic\""
+    ],
+    [
+     12001,
+     "focusout",
+     "button \"25 minClassic\"",
+     "to button \"Put the kettle on · 25 min\""
+    ],
+    [
+     12001,
+     "focusin",
+     "button \"Put the kettle on · 25 min\""
+    ],
+    [
+     12473,
+     "focusout",
+     "button \"Put the kettle on · 25 min\"",
+     "to button \"Change brew length\""
+    ],
+    [
+     12473,
+     "focusin",
+     "button \"Change brew length\""
+    ],
+    [
+     12929,
+     "focusout",
+     "button \"Change brew length\"",
+     "to button \"Save backup\""
+    ],
+    [
+     12929,
+     "focusin",
+     "button \"Save backup\""
+    ],
+    [
+     13405,
+     "toast+",
+     "Saved kettle-backup-2026-10-10.json. Kee"
+    ],
+    [
+     13572,
+     "focusout",
+     "button \"Save backup\"",
+     "to body"
+    ],
+    [
+     13572,
+     "toast-",
+     "Kettle couldn’t save your latest changes"
+    ],
+    [
+     14927,
+     "focusin",
+     "a \"Skip to content\""
+    ]
+   ]
+  },
+  "F3a_desktop_brew": {
+   "warningSeen": true,
+   "windowMs": 15003,
+   "warningUpAt15s": false,
+   "countdownTexts": [
+    "Kettle’s on. Nice start."
+   ],
+   "label": "desktop 1440x900 brew running, warning up",
+   "notificationsAdded": 1,
+   "notificationsAddedWarning": 1,
+   "notificationsText": 0,
+   "otherLiveEvents": 1,
+   "allDomMutationsDuringRun": 52,
+   "liveEvents": [
+    [
+     775,
+     "status[polite]",
+     "added",
+     "Kettle’s on. Focus session started, 25 minutes."
+    ],
+    [
+     1458,
+     "Notifications[polite]",
+     "added",
+     "Kettle couldn’t save your latest changes: this bro"
+    ],
+    [
+     13673,
+     "Notifications[polite]",
+     "removed",
+     "Kettle couldn’t save your latest changes: this bro"
+    ]
+   ]
+  },
+  "F3a2_desktop_brew_200": {
+   "warningSeen": false,
+   "windowMs": 15001,
+   "warningUpAt15s": false,
+   "label": "desktop 1440x900 @200% brew running, warning up",
+   "notificationsAdded": 0,
+   "notificationsAddedWarning": 0,
+   "notificationsText": 0,
+   "otherLiveEvents": 1,
+   "allDomMutationsDuringRun": 65,
+   "liveEvents": [
+    [
+     656,
+     "status[polite]",
+     "added",
+     "Kettle’s on. Focus session started, 25 minutes."
+    ]
+   ]
+  },
+  "F3b_phone_today": {
+   "warningSeen": true,
+   "windowMs": 15000,
+   "warningUpAt15s": false,
+   "label": "phone 375x667 Today with warning",
+   "notificationsAdded": 2,
+   "notificationsAddedWarning": 1,
+   "notificationsText": 0,
+   "otherLiveEvents": 3,
+   "allDomMutationsDuringRun": 38,
+   "liveEvents": [
+    [
+     524,
+     "status[polite]",
+     "added",
+     "Kettle’s on. Focus session started, 25 minutes."
+    ],
+    [
+     4003,
+     "status[polite]",
+     "added",
+     "Kettle’s off."
+    ],
+    [
+     4003,
+     "status[polite]",
+     "removed",
+     "Kettle’s on. Focus session started, 25 minutes."
+    ],
+    [
+     4003,
+     "Notifications[polite]",
+     "added",
+     "Kettle’s off. See you soon."
+    ],
+    [
+     4098,
+     "Notifications[polite]",
+     "added",
+     "Kettle couldn’t save your latest changes: this bro"
+    ],
+    [
+     7372,
+     "Notifications[polite]",
+     "removed",
+     "Kettle’s off. See you soon."
+    ],
+    [
+     16271,
+     "Notifications[polite]",
+     "removed",
+     "Kettle couldn’t save your latest changes: this bro"
+    ]
+   ]
+  },
+  "F3c_phone_brew": {
+   "windowMs": 15000,
+   "warningUpAt15s": false,
+   "label": "phone 375x667 brew running, warning held",
+   "notificationsAdded": 0,
+   "notificationsAddedWarning": 0,
+   "notificationsText": 0,
+   "otherLiveEvents": 1,
+   "allDomMutationsDuringRun": 48,
+   "liveEvents": [
+    [
+     301,
+     "status[polite]",
+     "added",
+     "Kettle’s on. Focus session started, 25 minutes."
+    ]
+   ]
+  },
+  "F3d_phone_tab_cycle": {
+   "windowMs": 15393,
+   "warningUpAt15s": true,
+   "label": "phone 375x667 Today, Tab cycle (warning withdrawn + re-shown)",
+   "notificationsAdded": 3,
+   "notificationsAddedWarning": 2,
+   "notificationsText": 0,
+   "otherLiveEvents": 3,
+   "allDomMutationsDuringRun": 43,
+   "liveEvents": [
+    [
+     364,
+     "status[polite]",
+     "added",
+     "Kettle’s on. Focus session started, 25 minutes."
+    ],
+    [
+     3857,
+     "status[polite]",
+     "added",
+     "Kettle’s off."
+    ],
+    [
+     3857,
+     "status[polite]",
+     "removed",
+     "Kettle’s on. Focus session started, 25 minutes."
+    ],
+    [
+     3857,
+     "Notifications[polite]",
+     "added",
+     "Kettle’s off. See you soon."
+    ],
+    [
+     3972,
+     "Notifications[polite]",
+     "added",
+     "Kettle couldn’t save your latest changes: this bro"
+    ],
+    [
+     7226,
+     "Notifications[polite]",
+     "removed",
+     "Kettle’s off. See you soon."
+    ],
+    [
+     11639,
+     "Notifications[polite]",
+     "removed",
+     "Kettle couldn’t save your latest changes: this bro"
+    ],
+    [
+     15476,
+     "Notifications[polite]",
+     "added",
+     "Kettle couldn’t save your latest changes: this bro"
+    ]
+   ]
+  }
+ }
+}
