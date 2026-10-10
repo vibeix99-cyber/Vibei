@@ -68,6 +68,8 @@ for (const theme of ['light', 'dark'] as const) {
       const ctx = await browser.newContext({ ...phone, viewport: { width: fromW, height: fromH }, colorScheme: theme });
       const page = await ctx.newPage();
       await open(page, base(baseURL), { theme });
+      // A fixed leaf total: the seed's own follows the date, and with some totals 375 fits the designed padding.
+      await page.evaluate(() => (window as any).__kettle.progress.setState({ leaves: 2296 }));
       await settle(page);
       await page.setViewportSize({ width: 375, height: 667 });
       await settle(page);
@@ -86,6 +88,7 @@ for (const theme of ['light', 'dark'] as const) {
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, colorScheme: theme });
     const page = await ctx.newPage();
     await open(page, base(baseURL), { theme });
+    await page.evaluate(() => (window as any).__kettle.progress.setState({ leaves: 2296 }));
     await settle(page);
     await page.setViewportSize({ width: 375, height: 667 });
     await settle(page);

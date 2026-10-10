@@ -135,6 +135,14 @@
     margin: -20px -32px 0;
     padding: 20px 32px 0;
   }
+  /* No single toast is taller than the room (100cqh is the region's height): a longer one scrolls its own message,
+     so its box always ends above the docked start, and anything that measures the drawn toast sees where it really
+     is. */
+  .toast {
+    max-height: 100cqh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
 }
 /* Large text for the toast's width (≈150 % text on a phone, 200 % anywhere): the message keeps the full width beside
    the icon and the action moves under it. At 100 % text the threshold (106 px + 11 em = 282 px) is below any phone's
