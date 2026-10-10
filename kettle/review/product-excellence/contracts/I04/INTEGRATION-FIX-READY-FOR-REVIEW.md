@@ -349,12 +349,13 @@ node review/product-excellence/tools/capture.mjs … --only 01,01b              
 ## r3
 
 - **Revision:** the commit that adds this section (`I04 INTEGRATION FIX READY FOR REVIEW (r3): …`). The r3 code is in
-  `24bb9d0`. The final commit adds evidence only. Both have the same `kettle/src` tree,
-  `abb31ed0e9e3fa3886512c6fe6ebddd69f2ba239`. Base for review: `e932f65` (r2).
+  `24bb9d0` → `44f33d3` → `f62339d` → `e10297b` → `54bf8be` (each later commit replaces the toast CSS of the one before;
+  see R2-D3). The final commit adds evidence only. `kettle/src` tree of `54bf8be` and of the final commit:
+  `97d26c5c29fe7651fbc16af7b4cbd2aa30a6a0b2`. Base for review: `e932f65` (r2).
 - **Files:** `src/screens/home/StatusBar.tsx` (R2-D1), `src/ui/Toast.module.css` (R2-D3), `tests/statusbar.spec.ts`
   (new cases, determinism). I did not touch `Toast.tsx`, `flow.ts` or `integrity.spec.ts`.
-- **Proposed state:** **FIXED**.
-- **Evidence:** `contracts/I04/integration-fix/r3/`.
+- **Proposed state:** **FIXED**, with the disclosures under R2-D3 and "Still open".
+- **Evidence:** `contracts/I04/integration-fix/r3/`. Probes are in `.tmp/w1fix/` (gitignored, in the worktree).
 
 ### R2-D1: no re-fit after a resize that leaves the bar's own box unchanged
 
@@ -363,7 +364,8 @@ node review/product-excellence/tools/capture.mjs … --only 01,01b              
 - **Fix:** `fit` now also runs whenever the screen's size changes. It listens to `window` `resize` and
   `visualViewport` `resize`, and the same ResizeObserver also watches `document.documentElement`. All of these are
   removed on unmount. The r2 rules are unchanged: retry after fonts load, and no fallback-font near-miss decisions.
-- **Retest** (`r3/d1-race-fix.txt`, 3 repeats each, both themes): **0 failures in 46 runs.**
+- **Retest** (`r3/d1-race-fix.txt`, 3 repeats each, both themes; `StatusBar.tsx` is unchanged from `24bb9d0` to the
+  final commit): **0 failures in 46 runs.**
   - Single steps 384×854 → 375×667, 380×800 → 375×667 and 384×854 → 360×740.
   - Gradual narrowing 414 → 375 at 2 px / 16 ms and at 1 px / 20 ms.
   - A zero-wait bounce 414 / 375 / 390 / 375 / 400 / 375 / 384 / 375 / 414 / 375.
@@ -377,50 +379,109 @@ node review/product-excellence/tools/capture.mjs … --only 01,01b              
   window 420 → 375 in 1 px steps.
   - It **fails on `e932f65`** with `384×854 → 375×667: normal`, in both themes (`r3/statusbar-spec-on-e932f65.txt`:
     2 failed, 5 passed).
-  - It passes on the fix: 7/7.
-- **Note 4, fixed:** the fresh-load case now sets a fixed leaf total (2,296) before measuring, so it no longer
-  depends on the date.
+    That run used the spec as of `24bb9d0`; `44f33d3` only added the fixed leaf total to the resize cases.
+  - It passes on the fix (see "Commands and results").
+- **Note 4, fixed:** every `statusbar.spec.ts` case that expects a particular mode now sets a fixed leaf total (2,296)
+  before measuring: the fresh-load cases and the resize/rotation cases. (On 2026-10-10 the date-seeded veteran total,
+  2,211, fits `normal` at 375, so the r2 resize case would have failed today for a reason unrelated to the code.)
 
 ### R2-D3: stacked toasts squeezed at large text (and three toasts at 568×320, 100 %)
 
 - **Cause:** r2 capped the stack's height (`.live { max-height: 100% }`, `.list { min-height: 0 }`). The toasts sit in
   the list's auto grid rows, so those rows shrank toward each toast's `min-height` instead of the list scrolling, and
   text spilled out of its own box.
-- **Fix** (`Toast.module.css` only):
-  - The list's rows are `max-content`, so a toast always keeps its content height.
-  - The region (top safe edge to its lifted bottom) is now a size container, `toast-room`. The cap and the scrolling
-    apply only where a stack can outgrow its room: `@container toast-room (max-height: 24em) or (max-width: calc(106px
-    + 11em))`. That means a short room, such as a landscape phone or 320 px, or large text for the width.
-  - In that mode, `.live` is capped at the room and `.list` scrolls (`overflow-y: auto`, overscroll contained). The
-    scroll box reaches 20 px above and 32 px beside the stack, with negative margins giving the space back, so the
-    toasts don't move and their top and side shadows aren't clipped. Below the stack the box ends at the toasts, so
-    nothing scrolls into the space over the docked start.
-  - 24 em is 384 px at 100 %, and no portrait-phone or desktop room is that short. So at 100 % on 375, 390 and 1440,
-    nothing changes.
-  - The r2 large-text toast layout (action under the message, sticky "Save backup") is unchanged.
-- **Retest, toast stacks** (`r3/stack-after.txt` and screenshots `r3/stack/*-after.png`, against `e932f65` in
-  `r3/stack-e932f65.txt` / `*-before.png`; opened):
+- **Fix** (`Toast.module.css` only; final form in `54bf8be`):
+  - Outside short rooms the list's grid rows are `max-content`, so a toast always keeps its content height.
+  - The region (top safe edge to its lifted bottom) is a size container, `toast-room`. The scrolling applies only where
+    a stack can outgrow its room: `@container toast-room (max-height: 24em) or (max-width: calc(106px + 11em))`, i.e.
+    a short room (landscape phone, 320 px) or large text for the width. 24 em is 384 px at 100 %, and no portrait-phone
+    or desktop room is that short, so at 100 % on 375, 390 and 1440 nothing changes.
+  - In that mode:
+    - `.live` is capped at the room and `.list` is the scroll box (`overflow-y: auto`, overscroll contained).
+    - **Every toast keeps its full content height** (`flex-shrink: 0`; nothing caps or squeezes a toast).
+    - **The list scrolls from the bottom up.** It is a reversed flex column, whose scroll origin is its bottom edge,
+      and `order` on `:nth-last-child(1…6)` keeps the on-screen order the document's (oldest at the top, newest at the
+      bottom, as everywhere else). So the newest toast (nearest the docked start) is in view first, and the part of a
+      stack that does not fit is above it, reached by scrolling up. Nothing ever overflows downwards.
+    - The scroll box reaches 20 px above and 32 px beside the stack (negative margins give the space back), so the
+      toasts don't move and their top and side shadows aren't clipped. Below the stack the box ends at the toasts.
+  - The r2 large-text toast layout is kept: message beside the icon, the action under it, `position: sticky;
+    bottom: 0`. Inside the scrolling list "Save backup" therefore stays at the bottom of the room while the rest of a
+    tall warning is scrolled into view.
+  - **Rooms shorter than 4 em** (667×375 at 200 %: the docked start leaves 60 px above it) can't show a line of text
+    above an action under it. There the action goes back beside the message and sticks to the top of the room
+    instead, and the message scrolls past beside it a line at a time.
+- **Why bottom-up (interaction with M1's frozen hold rule).** `protectedUnderToasts()` in `flow.ts` measures the
+  warning's drawn box (`#toast-kettle:save-failed`) and holds the warning while that box overlaps the docked start.
+  With a list that scrolls top-down (my first r3 CSS, `24bb9d0`: `max-content` rows plus scrolling), any stack taller
+  than its room pushes the bottom toast's box below the room, over the docked start. The rule then takes the warning
+  away and puts it back every 250 ms: on the trial at 375×667 / 200 %, the warning was off the screen when measured in 3
+  of the 4 early-end runs (`hasWarning: false`; that log is in git at `44f33d3`, `r3/earlyend-trial.txt`). Two
+  intermediate commits did not remove it: with `44f33d3` (each toast capped at the room, scrolling its own message)
+  "Kettle's off" + warning at 375×667 / 200 % still put the warning's box at 113–429 with the room ending at 324; with
+  `f62339d` (the warning shrinking first) three toasts at 375×667 / 200 %, and 667×375 at 150–200 %, still did.
+  Scrolling bottom-up removes the cause: a toast's box can extend above the room (off the top of the screen, inside
+  the scroll box) but never below it.
+- **Retest, toast stacks** (`toast()` imported in dev; `r3/stack-after.txt`, screenshots `r3/stack/*-after.png`;
+  against `e932f65` in `r3/stack-e932f65.txt` / `*-before.png`):
   - Stacks: the warning alone; "Kettle's off" + warning; "Cozy level 5!" + "Saved 12 minutes" + warning; three
-    toasts.
+    toasts ("Recipe done …", "New badge …", warning).
   - Configs: 375×667, 390×844 and 1440×900 at 100 / 150 / 200 %; 667×375 and 844×390 at 100 / 125 / 150 / 200 %;
-    568×320 and 320×568 at 100 %. Both themes.
-  - Checks per case: **no text outside its toast's box**, the top of the stack on screen or inside the scroll box,
-    the scroll box clear of the docked start, "Save backup" hit-testing as itself.
-  - Result: **fix 0 failures in 176 cases; `e932f65` 50 failures** (all spill: 375 and 390 at 200 %, 667×375 and
-    844×390 at 125–200 %, 568×320 at 100 %).
-  - **100 % geometry: 52 of 56 cases are rect-identical to `e932f65`**, which the Checker found identical to
-    `c9520db`. That covers every case at 375, 390, 1440, 320, 667×375 and 844×390. The 4 that differ are the 568×320
-    stacks: the warning is now its full 77 px and the stack scrolls 18 px, where r2 squeezed it.
-  - Pixels at 100 % (`r3/stack-pixel-diff.txt`): 375, 390 and 1440 differ by 0.00–0.02 % (Chai's idle frames). In the
-    short rooms (320×568, 667×375, 844×390) 0.8–1.5 % differs: the shadow under the bottom toast is cut where the scroll
-    box ends. That is the price of keeping scrolled text off the docked start, and it happens only there.
-  - Sticky action at the top of the scroll (375 at 200 %, three-stack): "Save backup" is visible at the box's bottom,
-    hit-tests and clicks (`.tmp/w1fix/stick.mjs`: `clicked saved 1`).
-- **Retest, real flows on a trial merge (see below):** storage full, then the brew ended early, within 1 minute and
-  after 12 minutes (with a level-up). 375×667, 390×844 and 1440×900, both themes, 100 / 150 / 200 %
-  (`r3/earlyend-trial.txt`, screenshots `r3/earlyend/`):
+    568×320 and 320×568 at 100 %. Both themes. 152 cases.
+  - Checks per case (all must hold):
+    - **no text outside its toast's box** (every descendant of every toast inside the toast's rectangle);
+    - the newest toast in view as first shown (its whole box, or its bottom when it is taller than the room);
+    - **no toast's box below the room** (bottom ≤ the docked start's top), which is what M1's hold rule measures;
+    - **every toast reachable**: scrolling the list through its whole range brings each toast's top and bottom edge into
+      view;
+    - **the whole warning readable**: every line of its message is wholly in view, and not under its action, at some
+      scroll position;
+    - "Save backup" hit-tests as itself as first shown and again after scrolling;
+    - the scroll box clear of the docked start.
+  - Result: **fix: 0 failures in 152 cases** (`r3/stack-after.txt`). `e932f65`: **50 failures** in the same 152
+    (`r3/stack-e932f65.txt`), all text spilling out of a squeezed toast: 375 at 200 % (6), 390 at 200 % (2), 667×375
+    at 125–200 % (20), 844×390 at 125–200 % (18), 568×320 at 100 % (4). That run used the first r3 version of this
+    probe; its spill check is unchanged.
+  - Where the list scrolls on the fix: 375×667 at 200 % (32–283 px), 390×844 at 200 % with three toasts (65 px),
+    667×375 and 844×390 from 125 % (stacks of two or three; from 150 % also the warning alone), 568×320 at 100 % with
+    three toasts (18 px). The warning alone is taller
+    than its room at 375×667 / 200 % (348 px in 316), 667×375 / 150 % (229 in 158), 667×375 / 200 % (461 in 60) and
+    844×390 at 150–200 % (229 in 208, 267 in 164): there its last lines and "Save backup" are in view first, and its
+    first lines are read by scrolling the list up.
+  - **100 % geometry** (`r3/stack-geometry-100.txt`): 52 of 56 cases are rect-identical to `e932f65`, which the
+    Checker found identical to `c9520db`. That covers every case at 375, 390 and 1440 in both themes, and at 320×568,
+    667×375 and 844×390. The 4 that differ are the 568×320 stacks of three: r2 squeezed the warning to 59 px for 77 px
+    of text; now every toast keeps its height, the stack is 18 px taller than its room, and the oldest toast's top
+    10 px sit above the screen edge, reached by scrolling up (`c9520db` put that toast off-screen, per the Checker).
+  - Pixels at 100 % (`r3/stack-pixel-diff.txt`, the "three" stacks): inside the toasts' own rectangles, **0 differing
+    pixels** at 375, 390, 1440, 667×375 and 844×390 in both themes (320×568: 38 px in light, 0.01 %; 0 in dark).
+    568×320 differs, as above. In the short rooms (320×568, 568×320, 667×375, 844×390) the soft shadow under the bottom
+    toast is cut where the scroll box ends (19–53 % of a 16 px band under it differs); at 375, 390 and 1440 that band is
+    identical. Whole frames at 375, 390 and 1440 differ more only because the `e932f65` shots were taken on
+    2026-10-09 and the seeded profile's copy follows the date.
+- **Retest, real flows on the trial merge** (`.tmp/w1fix/earlyend.mjs`; `r3/earlyend-trial.txt`, screenshots
+  `r3/earlyend/`): a newbie profile whose localStorage quota is really full (`QuotaExceededError`) starts a brew; it is
+  ended with End within the first minute, or after 12 minutes (fast-forwarded); back on Today the toasts
+  are paused (pointer over them) and measured once their entry animation has finished. 375×667 and 390×844 at DPR 2,
+  1440×900 at DPR 1, both themes, 100 / 150 / 200 %: 36 runs. Same checks as above (newest in view, nothing below the
+  room, every toast reachable, every line of the warning read by scrolling, no text outside its box), then a real tap
+  (phones) or click (desktop) at the centre of "Save backup", which must hit-test as itself and **download the backup
+  file**.
 
-EARLYEND
+- **Default flows: 0 failures in 36 runs** (`r3/earlyend-trial.txt`). Today the newbie profile's 12 minutes do not reach a
+  new cozy level, so "after 12 minutes" gives "Saved 12 minutes of focus" + the warning.
+- **With a level-up: 0 failures in 18 runs** (`r3/earlyend-levelup-trial.txt`; `LEVELUP=1` parks the profile one leaf
+  below its next level before the brew). This gives the Checker's three-toast state: "Cozy level 5!" + "Saved 12
+  minutes of focus" + the warning.
+- In every run: `QuotaExceededError`, the warning on screen, every line of its message read (3–7 lines), nothing below
+  the room, every toast reachable, "Save backup" hit-testing as itself at the tap point, and the tap or click
+  **downloaded the backup**.
+
+| Config (both themes) | 100 % | 150 % | 200 % |
+|---|---|---|---|
+| 375×667 | fits: list 312–489 (level-up 252–489) | fits: 129–421 / 104–421 (level-up 44–421) | the warning is 348 px in a 316 px room: the list scrolls 137 px (202 with the level-up); the warning's box is −24…324, its last lines and "Save backup" in view, its first line read by scrolling up |
+| 390×844 | fits: 489–666 (429–666) | fits: 306–598 (246–598) | fits: 69–501 (4–501) |
+| 1440×900 | fits | fits | fits: 413–764 (348–764) |
 
 ### Finding 5: correction (no behaviour change this round)
 
@@ -436,40 +497,98 @@ here. The orchestrator is recording it as a candidate for I10 (calm state feedba
 
 ### Trial merge with M1
 
-- **Setup:** `git worktree add --detach <scratch>/trial-r3 claude/wizardly-galileo-uy89d9`, then merge `pe/w1-fix`
-  (`3f00b57`), then `pe/w1-fix-m2` (`24bb9d0`), giving `40ef7fe`.
+- **Setup:** `git worktree add --detach <scratch>/trial-r3 claude/wizardly-galileo-uy89d9` (`2f5f1f3`), merge
+  `pe/w1-fix` (`3f00b57`), then `pe/w1-fix-m2`; each later r3 code commit was merged in as it landed, ending at
+  `54bf8be` (trial `HEAD` `4c5ec7f`). Its `kettle/src` tree, `1e91ac3f9f80357387caa62449ea580271a6db69`, is the same
+  as a fresh two-step merge of the same three commits gives (`git merge-tree`).
   - `flow.ts`, `Toast.tsx` and `integrity.spec.ts` are byte-identical to `3f00b57`.
-  - My five files are byte-identical to `24bb9d0`.
-- **On `40ef7fe`:**
-  - tsc clean; vitest 26 files, 265 passed.
-  - `integrity.spec.ts`, `a11y.spec.ts`, `statusbar.spec.ts` and `whistle.spec.ts`: **52 passed**
-    (`r3/trial-40ef7fe-e2e.txt`).
-  - M1's `capture-storage-full.mjs` at the six configs: M1SCRIPT
+  - `StatusBar.tsx`, `Home.module.css`, `Toast.module.css` and `statusbar.spec.ts` are byte-identical to `54bf8be`.
+- **On the trial (final code):**
+  - tsc clean; vitest 26 files, 265 passed (`r3/tsc-vitest.txt`, branch and trial).
+  - `integrity.spec.ts`, `a11y.spec.ts`, `statusbar.spec.ts` and `whistle.spec.ts` (`--workers=2`): **51 of 52 pass**
+    (`r3/trial-e2e.txt`: 46 passed, 1 failed, 5 did not run). The failure is a11y "short screen (375×667)", which is
+    date-driven and fails identically on `c9520db` (see "Still open"). `a11y.spec.ts` runs serially, so the 5 a11y
+    tests after it did not run; run on their own they pass 5/5 (`r3/trial-e2e-a11y-rest.txt`), including "a toast
+    never covers the session controls or the summary footer" at 390×844 and 375×667. Every integrity, statusbar and
+    whistle test passes, including the I03 "storage-full warning never covers a control" tests.
+  - M1's `contracts/I03/capture-storage-full.mjs` at the six configs (`r3/m1-capture-storage-full/`): every state (s0,
+    s0b, s1, s3, s3b, s1a, s1b, s4a, s4b, s2) has the same route and the same toasts as M1's AFTER
+    (`/home/user/wt/w1fix/…/I03/captures/after-integration/*/capture-meta.json`) in all six configs, with 0 page
+    errors (`node .tmp/w1fix/metacmp.mjs <M1 AFTER> <mine>`: 0 states differ). Opened: 375×667 light s4a (the warning
+    above "Put the kettle on", the status bar one row).
 - The worktree was removed afterwards.
 
 ### Load CLS and captures
 
-CLSCAPS
+**Load CLS** (production build of the final source, `r3/cls-today-load.txt`; veteran seed; shifts without recent input):
 
-### Commands and results (r3)
+| Case | 390×844 | 375×667 | 360×740 | 1440×900 |
+|---|---|---|---|---|
+| 100 % text, 5 cold loads | 0 (`normal`) | 0 (`normal`*) | 0 (`tight`) | 0 |
+| 100 %, every `.woff2` delayed 2.5 s, 3 loads | 0 | 0 | 0 | 0.0028 (as in r2 and on `c9520db`) |
+| 200 % text, 3 loads | 0 (`wrap`) | 0 (`wrap`) | 0 (`wrap`) | 0 |
+
+\* Today the seeded veteran total is 2,211 leaves, which fits `normal` at 375; 360×740 covers `tight`. **The required
+phone cases at 100 %, including slow fonts, are all 0.** (The r2 row "200 % + slow fonts" was not re-run: r3 does not
+change what happens at load.)
+
+**Captures** (`tools/capture.mjs --only 01,01b`, dev server of this branch, capture-meta `"revision": "54bf8be"`, 0 page
+errors): `r3/after/{phone-390x844,phone-375x667,desktop-1440x900}-{light,dark}/01-home.png` and `01b-home-scrolled.png`.
+Opened: 375×667 light and dark 01, 375×667 dark 01b, 390×844 dark 01, 1440×900 light 01. 375×667: one row in both
+themes (`normal` today at 2,211 leaves), greeting right under it, as at 390. 390 and 1440 unchanged in layout from r2;
+data and copy follow the date.
+
+### Commands and results (r3, final tree `97d26c5…`)
 
 ```
-npx tsc --noEmit --pretty false (branch and trial)                              → clean
-npx vitest run (branch and trial)                                               → 26 files, 265 passed
-KETTLE_PORT=5222 … playwright test tests/a11y.spec.ts tests/statusbar.spec.ts   → SPECS_BRANCH
-… tests/statusbar.spec.ts against e932f65                                      → 2 failed (new R2-D1 cases), 5 passed
-trial 40ef7fe: integrity + a11y + statusbar + whistle (--workers=2)             → 52 passed
-node .tmp/w1fix/d1race.mjs <base> 3                                             → fix 0/46 failures; e932f65 27/34
-node .tmp/w1fix/toaststack.mjs <base> before|after <dir>                        → fix 0/176; e932f65 50 failures
-node .tmp/w1fix/earlyend.mjs http://127.0.0.1:5232 trial <dir>                  → see table
+npx tsc --noEmit (branch and trial)                                              → clean
+npx vitest run (branch and trial)                                                → 26 files, 265 passed
+KETTLE_PORT=5222 npx playwright test tests/a11y.spec.ts tests/statusbar.spec.ts \
+     --project=chromium --workers=2 (branch)                                     → 10 passed, 1 failed (a11y "short screen",
+                                                                                    date-driven), 5 did not run (serial);
+                                                                                    the 5 alone: 5 passed. statusbar 7/7
+                                                                                    (r3/specs-a11y-statusbar-on-fix.txt,
+                                                                                    r3/specs-a11y-rest-on-fix.txt)
+… tests/statusbar.spec.ts against e932f65                                       → 2 failed (new R2-D1 cases), 5 passed
+KETTLE_PORT=5232 … integrity + a11y + statusbar + whistle (trial, --workers=2)   → 46 passed, 1 failed (same), 5 did not run;
+                                                                                    the 5 alone: 5 passed (r3/trial-e2e.txt,
+                                                                                    r3/trial-e2e-a11y-rest.txt)
+… tests/a11y.spec.ts -g "short screen" against c9520db (5232)                  → 1 failed, same message
+node .tmp/w1fix/d1race.mjs <base> 3                                              → fix 0/46 failures; e932f65 27/34
+node .tmp/w1fix/toaststack.mjs <base> after <dir>                                → fix 0/152 failures; e932f65 50/152
+node .tmp/w1fix/earlyend.mjs http://127.0.0.1:5232 trial <dir>                   → 0/36 failures; LEVELUP=1 FLOW=after12min: 0/18
+node review/product-excellence/contracts/I03/capture-storage-full.mjs … (trial)  → 6 configs, 0 states differ from M1 AFTER
+node .tmp/w1fix/clsprobe.mjs <production build> 5   (+ SLOWFONTS=1)              → phones 0 (incl. slow fonts); see table
+node review/product-excellence/tools/capture.mjs … --only 01,01b                 (6 configs)
 ```
 
-Servers on 5202 / 5222 / 5232 (dev, the `e932f65` and `c9520db` copies, the trial) were all stopped, and the trial
-worktree was removed.
+Servers on 5202 / 5222 / 5232 (dev servers of this worktree and of the trial, production builds for CLS) were all
+stopped, and the trial worktree was removed.
+
+### Still open (disclosed, not fixed here)
+
+1. **a11y.spec "short screen (375×667)" fails today, on this branch, on the trial and on `c9520db` alike**
+   (`r3/specs-a11y-statusbar-on-fix.txt`, `r3/trial-e2e.txt`, `r3/a11y-short-screen-on-c9520db.txt`):
+   `break-over: "Mark it done, start fresh" stays under span._message…`. A progress toast raised when the tea break
+   completes sits over the break-over view's button. This is the Finding 5 case, and it depends on the date: the
+   seeded profile earns such a toast on some days, and the Checker's run on 2026-10-09 passed. Fixing it needs
+   `flow.ts`, `progress/store.ts` or `Toast.tsx` (frozen or M1-owned); it belongs with the I10 candidate. Because
+   `a11y.spec.ts` is serial, a full run skips the 5 tests after it; they pass on their own.
+2. **A warning taller than its whole room** (375×667 at 200 %; 667×375 and 844×390 at 150–200 %) is first shown with
+   its last lines and "Save backup" in view, and its first line or lines above the screen edge (at 375×667 / 200 %,
+   24 px). Reading them takes a scroll up of the list; "Save backup" stays in view throughout. At 667×375 / 200 % the
+   docked start leaves a 60 px room, so the message is read about a line at a time beside the action.
+3. **Short rooms** (landscape phones, 320 px): the soft shadow under the bottom toast is cut where the scroll box ends.
+4. The Checker's non-blocking notes 1–3 (M1's 200 % transients, I04 F11 lift timing, summary toasts at 320 / landscape
+   and on desktop at 150–200 %) are unchanged by this round.
 
 ### BLOCKED / UNKNOWN
 
-- **UNKNOWN:** real window managers (Stage Manager, split screen, Chromebook) and real OS text-size settings.
-- **UNKNOWN:** iOS Safari's handling of size container queries combined with `position: sticky` inside a scroller.
-  Chromium only.
-- **BLOCKED:** real screen readers.
+- **BLOCKED:** real phones and touch hardware; everything above is Chromium (Playwright) with SwiftShader, emulated
+  viewports.
+- **UNKNOWN:** real window managers (Stage Manager, split screen, Chromebook) and real OS text-size settings (large text
+  was simulated with an `html { font-size }` override).
+- **UNKNOWN:** iOS Safari's handling of size container queries, a reversed-column scroll box and a `position: sticky`
+  action inside it. Chromium only.
+- **BLOCKED:** real screen readers. The live region and DOM order are unchanged (only the visual layout is reversed and
+  re-ordered back).

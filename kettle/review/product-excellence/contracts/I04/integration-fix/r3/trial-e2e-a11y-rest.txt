@@ -1,0 +1,13 @@
+# trial 4c5ec7f (kettle/src 1e91ac3f…), dev server on 5232, 2026-10-10T01:24:43Z: the 5 serial a11y tests that did not run after the date-driven 'short screen' failure
+# KETTLE_PORT=5232 npx playwright test tests/a11y.spec.ts -g 'keyboard-only|welcome: first brew|live regions stay quiet|a toast never covers' --project=chromium --workers=2
+
+Running 5 tests using 1 worker
+
+  ✓  1 [chromium] › tests/a11y.spec.ts:138:1 › keyboard-only critical journey with focus restoration (1.4m)
+  ✓  2 [chromium] › tests/a11y.spec.ts:253:1 › welcome: first brew from the keyboard alone (2.5s)
+  ✓  3 [chromium] › tests/a11y.spec.ts:264:1 › live regions stay quiet while a brew runs (no spoken countdown) (12.5s)
+  ✓  4 [chromium] › tests/a11y.spec.ts:293:3 › a toast never covers the session controls or the summary footer (390×844) (12.3s)
+  ✓  5 [chromium] › tests/a11y.spec.ts:293:3 › a toast never covers the session controls or the summary footer (375×667) (12.3s)
+
+  5 passed (2.1m)
+exit 0
