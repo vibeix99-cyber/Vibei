@@ -93,3 +93,22 @@ old D3 (the warning rises past the top of the screen).
 Pixel scan of the 844x390 @200 clips (`../trace/clipscan.py`, crop x230 y140 300×20; `../trace/scan-clip-*.txt`): on R6
 the crop alternates light/dark about 20 times from 12.7 s to the end (the loop window). On INT it settles dark (the
 warning) from 15.2 s.
+
+## Cause verified by counterfactual (22:48–23:00 UTC; `probes/actionpair-cf.mjs`, `runs/cf-R6/`, `logs/cf-R6-*.txt`)
+
+The same flow on R6, run in the same session. With `INJECT=lead`, one scratch rule is added to the page before the tap
+(no app code changed): `[aria-label="Notifications"] ol > li[id="toast-kettle:save-failed"] { order: -2 !important }`.
+It makes only the warning lead.
+
+| Variant | Runs | Warning adds/removals | Frames with the box over the dock | Visual order |
+|---|---|---|---|---|
+| Injected (warning order -2) | 375x667@200 light ×2, 375x667@200 dark, 844x390@200 light, 667x375@150 dark | **1/0 in all 5** | 0 | WA |
+| Control (no injection) | 375x667@200 light, 844x390@200 light, 667x375@150 dark | **11/10 in all 3** | 197–250 per run | AW |
+
+In the control runs, **30 of 30 removals** come right after a frame where the warning (second in visual order "AW")
+has its box over the docked controls. Box bottom against dock top: 476 vs 334 at 375; 283 vs 182 at 844; 224 vs 176 at
+667. That is M1's zone-2 condition. Removing the tie (warning first) removes the loop.
+
+Cause: `.list:has(.action) > .toast:has(.action) { order: -1 }` gives every action toast the same order, and DOM order
+breaks the tie. An older action toast therefore leads, the warning's box runs past the room, and M1's own-rect check
+withdraws it again on every re-show.
