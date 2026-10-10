@@ -336,3 +336,50 @@ for (const theme of ['light', 'dark'] as const) {
     await ctx.close();
   });
 }
+
+// The last toast leaving on its own timer: the list empties the moment it times out, but it is drawn (fading out) until
+// its exit ends; the toasts' region must stay lifted until then, or it is drawn over the docked start meanwhile.
+for (const [w, h] of [
+  [375, 667],
+  [844, 390],
+] as const) {
+  test(`the last toast fades out where it was, never over the docked start (${w}×${h}, 200 % text)`, async ({ browser, baseURL }) => {
+    const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
+    await setUp(ctx, 200);
+    const page = await ctx.newPage();
+    await page.goto(`${base(baseURL)}/?debug&seed=veteran&theme=light&nooktime=day#/`);
+    await page.waitForFunction(() => !!(window as any).__kettle);
+    await page.evaluate(() => document.fonts.ready);
+    await page.waitForTimeout(1500);
+    await page.evaluate(async () => (await import('/src/ui/Toast.tsx' as string)).toast.dismiss());
+    await page.waitForTimeout(600);
+    await page.evaluate(() => {
+      const R: any = ((window as any).__exit = { frames: 0, over: 0, seen: false });
+      const tick = () => {
+        if (R.stop) return;
+        const list = document.querySelector('[aria-label="Notifications"] ol') as HTMLElement;
+        const lr = list.getBoundingClientRect();
+        const ctrls = [...document.querySelectorAll('[data-toast-above] :is(button, a[href], [role="button"])')].map((c) => c.getBoundingClientRect()).filter((r) => r.width && r.height);
+        for (const li of list.querySelectorAll(':scope > li')) {
+          R.seen = true;
+          const r = li.getBoundingClientRect();
+          const d = { l: Math.max(r.left, lr.left), t: Math.max(r.top, lr.top), r: Math.min(r.right, lr.right), b: Math.min(r.bottom, lr.bottom) };
+          const drawn = +getComputedStyle(li).opacity > 0.02 && d.r > d.l && d.b > d.t;
+          if (drawn && ctrls.some((c) => d.r > c.left + 0.5 && d.l < c.right - 0.5 && d.b > c.top + 0.5 && d.t < c.bottom - 0.5)) R.over++;
+        }
+        R.frames++;
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+    await page.evaluate(async () => {
+      const { toast } = await import('/src/ui/Toast.tsx' as string);
+      toast('Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to keep them.', { tone: 'warning', duration: 1500, action: { label: 'Save backup', onClick() {} } });
+    });
+    await page.waitForFunction(() => (window as any).__exit.seen && document.querySelectorAll('[aria-label="Notifications"] li').length === 0, null, { timeout: 10_000, polling: 'raf' });
+    await page.waitForTimeout(500);
+    const r = await page.evaluate(() => { const R = (window as any).__exit; R.stop = true; return { frames: R.frames, over: R.over }; });
+    expect(r.over, `frames with the leaving toast drawn over the docked start (of ${r.frames})`).toBe(0);
+    await ctx.close();
+  });
+}

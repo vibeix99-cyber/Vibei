@@ -79,13 +79,18 @@ export function Toaster() {
       }),
     [],
   );
-  const above = useToastAbove(list.length > 0);
+  // The lift is kept until the last toast has finished leaving: the list empties the moment that toast is dismissed or
+  // times out, but it is still drawn (fading out) until its exit ends, and the region dropping back under it then
+  // would draw it over the docked start for that moment.
+  const [drawn, setDrawn] = useState(false);
+  if (list.length > 0 && !drawn) setDrawn(true);
+  const above = useToastAbove(list.length > 0 || drawn);
   if (typeof document === 'undefined') return null;
   return createPortal(
     <div className={s.region} style={above != null ? { bottom: above } : undefined}>
       <div role="status" aria-live="polite" aria-relevant="additions text" aria-label="Notifications" className={s.live}>
         <ol className={s.list}>
-          <AnimatePresence initial={false}>
+          <AnimatePresence initial={false} onExitComplete={() => setDrawn(false)}>
             {list.map((t) => (
               <ToastView key={t.id} item={t} reduced={reduced} />
             ))}
