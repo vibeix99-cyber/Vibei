@@ -1,0 +1,18 @@
+[slots] L3 took 1/3 at 22:41:10: ./B5.sh
+##### 22:41:10 node m1.mjs --rev=INT --vp=phone --only=endFirstMinute
+RUN m1 INT-phone-only-endFirstMinute url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=375x667 start=2026-10-10T22:41:10.981Z
+SCENARIO endFirstMinute (16.9s): {"sheetText":"Leave the kettle early? | That’s okay. It’s been under a minute, so there’s nothing to save yet. | Keep brewing | End session","warningOnToday":true,"warning":{"text":"Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to keep them.Save backup","rect":[16,304,359,421]},"toastsAfterEnd":null,"sessionsBefore":6,"sessionsAfter":6,"rawUnchanged":true,"backupSessions":6,"recHitMs":6450,"hitSegments":[{"t0":2975,"t1":9425,"maxOp":1,"hits":["Add 5 minutes","Pause","End session","24:58Kettle’s on. Nice","24:57Kettle’s on. Nice","24:56Kettle’s on. Nice","24:55Kettle’s on. Nice","24:54Kettle’s on. N
+END 2026-10-10T22:41:28.041Z
+##### 22:41:28 node m1.mjs --rev=R6 --vp=phone --only=endFirstMinute
+RUN m1 R6-phone-only-endFirstMinute url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 start=2026-10-10T22:41:28.750Z
+SCENARIO endFirstMinute (18.1s): {"sheetText":"Leave the kettle early? | That’s okay. It’s been under a minute, so there’s nothing to save yet. | Keep brewing | End session","warningOnToday":true,"warning":{"text":"Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to keep them.Save backup","rect":[19,370,356,485]},"toastsAfterEnd":null,"sessionsBefore":6,"sessionsAfter":6,"rawUnchanged":true,"backupSessions":6,"recHitMs":0,"hitSegments":[],"errs":[]}
+END 2026-10-10T22:41:47.098Z
+##### 22:41:47 node back2.mjs --rev=INT --runs=4 --text=200
+RUN 3e INT-375x667-t200 url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=375x667 text=200% runs=4 start=2026-10-10T22:41:47.785Z
+  name: 'TimeoutError'
+##### 22:42:25 node back2.mjs --rev=R6 --runs=4 --text=200
+RUN 3e R6-375x667-t200 url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 text=200% runs=4 start=2026-10-10T22:42:25.450Z
+SUMMARY R6-375x667-t200: runs with overlap 4/4; hit ms per run [33,182,211,251]; warning-gone (ms after click) [1133,644,615,600]
+END 2026-10-10T22:43:01.179Z
+##### 22:43:01 B5 done
+[slots] L3 freed 1 at 22:43:01

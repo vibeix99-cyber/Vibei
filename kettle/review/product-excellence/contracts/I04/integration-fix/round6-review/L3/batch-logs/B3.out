@@ -1,0 +1,84 @@
+[slots] L3 took 1/3 at 22:05:19: ./B3.sh
+##### 22:05:19 node sweep.mjs --rev=R6
+RUN 3a-sweep R6-sweep-t100 url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 text=100% step=25 start=2026-10-10T22:05:20.462Z
+SUMMARY R6-sweep-t100: warning absent at scrollY [500,525,550,554,504]; max scroll 754
+END 2026-10-10T22:05:49.810Z
+##### 22:05:49 node sweep.mjs --rev=INT
+RUN 3a-sweep INT-sweep-t100 url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=375x667 text=100% step=25 start=2026-10-10T22:05:50.234Z
+SUMMARY INT-sweep-t100: warning absent at scrollY [325,350,375,400,425,450,475,500,525,550,554,504,454,404,354,304]; max scroll 754
+END 2026-10-10T22:06:19.924Z
+##### 22:06:19 node g.mjs --rev=R6
+RUN 3g R6 url=http://127.0.0.1:5301 rev=R6@e866118 start=2026-10-10T22:06:20.368Z
+END 2026-10-10T22:07:56.955Z
+##### 22:07:57 node g.mjs --rev=INT
+RUN 3g INT url=http://127.0.0.1:5303 rev=INT@0d58c5e start=2026-10-10T22:07:57.391Z
+END 2026-10-10T22:09:35.649Z
+##### 22:09:35 node cls.mjs --rev=R6 --runs=3
+RUN 3f R6 url=http://127.0.0.1:5321 (production preview) rev=R6@e866118 runs=3 texts=200,100 start=2026-10-10T22:09:36.411Z
+END 2026-10-10T22:13:02.344Z
+##### 22:13:02 node cls.mjs --rev=INT --runs=3
+RUN 3f INT url=http://127.0.0.1:5323 (production preview) rev=INT@0d58c5e runs=3 texts=200,100 start=2026-10-10T22:13:02.690Z
+END 2026-10-10T22:16:26.353Z
+##### 22:16:26 node nextbrew.mjs --rev=R6 --w=375 --h=667 --seed=veteran
+RUN 3c R6-375x667-veteran url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 seed=veteran theme=light start=2026-10-10T22:16:26.741Z
+final state {"hash":"#/focus","phase":"focus","status":"running"}
+toasts seen on the running next brew: [
+END 2026-10-10T22:16:47.668Z
+seed veteran -> toasts on next brew: 1
+##### 22:16:47 node nextbrew.mjs --rev=R6 --w=375 --h=667 --seed=celebrate
+RUN 3c R6-375x667-celebrate url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 seed=celebrate theme=light start=2026-10-10T22:16:48.068Z
+final state {"hash":"#/focus","phase":"focus","status":"running"}
+toasts seen on the running next brew: []
+END 2026-10-10T22:17:08.681Z
+seed celebrate -> toasts on next brew: 0
+##### 22:17:08 node nextbrew.mjs --rev=R6 --w=375 --h=667 --seed=newbie
+RUN 3c R6-375x667-newbie url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 seed=newbie theme=light start=2026-10-10T22:17:09.069Z
+final state {"hash":"#/focus","phase":"focus","status":"running"}
+toasts seen on the running next brew: []
+END 2026-10-10T22:17:29.494Z
+seed newbie -> toasts on next brew: 0
+##### 22:17:29 node nextbrew.mjs --rev=R6 --w=375 --h=667 --seed=atRisk
+RUN 3c R6-375x667-atRisk url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 seed=atRisk theme=light start=2026-10-10T22:17:29.844Z
+final state {"hash":"#/focus","phase":"focus","status":"running"}
+toasts seen on the running next brew: []
+END 2026-10-10T22:17:49.885Z
+seed atRisk -> toasts on next brew: 0
+##### 22:17:49 node nextbrew.mjs --rev=R6 --w=375 --h=667 --seed=blank
+RUN 3c R6-375x667-blank url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 seed=blank theme=light start=2026-10-10T22:17:50.263Z
+final state {"hash":"#/focus","phase":"focus","status":"running"}
+toasts seen on the running next brew: []
+END 2026-10-10T22:18:10.466Z
+seed blank -> toasts on next brew: 0
+picked seed: veteran
+##### 22:18:10 node nextbrew.mjs --rev=INT --w=375 --h=667 --seed=veteran --video
+RUN 3c INT-375x667-veteran url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=375x667 seed=veteran theme=light start=2026-10-10T22:18:10.859Z
+final state {"hash":"#/focus","phase":"focus","status":"running"}
+toasts seen on the running next brew: [
+END 2026-10-10T22:18:32.513Z
+##### 22:18:32 node nextbrew.mjs --rev=R6 --w=375 --h=667 --seed=veteran --video
+RUN 3c R6-375x667-veteran url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 seed=veteran theme=light start=2026-10-10T22:18:32.858Z
+final state {"hash":"#/focus","phase":"focus","status":"running"}
+toasts seen on the running next brew: [
+END 2026-10-10T22:18:55.147Z
+##### 22:18:55 node nextbrew.mjs --rev=R6 --w=390 --h=844 --seed=veteran
+RUN 3c R6-390x844-veteran url=http://127.0.0.1:5301 rev=R6@e866118 viewport=390x844 seed=veteran theme=light start=2026-10-10T22:18:55.579Z
+final state {"hash":"#/focus","phase":"focus","status":"running"}
+toasts seen on the running next brew: [
+END 2026-10-10T22:19:18.078Z
+##### 22:19:18 node nextbrew.mjs --rev=INT --w=390 --h=844 --seed=veteran
+RUN 3c INT-390x844-veteran url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=390x844 seed=veteran theme=light start=2026-10-10T22:19:18.484Z
+final state {"hash":"#/focus","phase":"focus","status":"running"}
+toasts seen on the running next brew: [
+END 2026-10-10T22:19:39.987Z
+##### 22:19:40 node nextbrew.mjs --rev=R6 --w=1440 --h=900 --seed=veteran
+RUN 3c R6-1440x900-veteran url=http://127.0.0.1:5301 rev=R6@e866118 viewport=1440x900 seed=veteran theme=light start=2026-10-10T22:19:40.353Z
+final state {"hash":"#/focus","phase":"focus","status":"running"}
+toasts seen on the running next brew: [
+END 2026-10-10T22:20:02.192Z
+##### 22:20:02 node nextbrew.mjs --rev=INT --w=1440 --h=900 --seed=veteran
+RUN 3c INT-1440x900-veteran url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=1440x900 seed=veteran theme=light start=2026-10-10T22:20:02.611Z
+final state {"hash":"#/focus","phase":"focus","status":"running"}
+toasts seen on the running next brew: [
+END 2026-10-10T22:20:24.872Z
+##### 22:20:24 B3 done
+[slots] L3 freed 1 at 22:20:24

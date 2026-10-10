@@ -1,0 +1,59 @@
+[slots] L3 took 1/3 at 22:20:26: ./B4.sh
+##### 22:20:26 node blink2.mjs --rev=R6 --runs=6 --video
+RUN 3b-v2 R6-375x667-t200-Tab url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 text=200% key=Tab runs=6 start=2026-10-10T22:20:26.568Z
+SUMMARY R6-375x667-t200-Tab: runs with a take-away 5/6; DOM-absent ms (removal -> re-add) [72.3,90.6,91.1,72.9,60.9]; runs reaching Save backup 6/6
+END 2026-10-10T22:22:27.480Z
+##### 22:22:27 node blink2.mjs --rev=INT --runs=6 --video
+RUN 3b-v2 INT-375x667-t200-Tab url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=375x667 text=200% key=Tab runs=6 start=2026-10-10T22:22:27.938Z
+SUMMARY INT-375x667-t200-Tab: runs with a take-away 4/6; DOM-absent ms (removal -> re-add) [330.6,null,null,267.8,null,null]; runs reaching Save backup 2/6
+END 2026-10-10T22:24:49.449Z
+##### 22:24:49 node flash2.mjs --rev=R6 --scenario=start --runs=5 --video
+RUN 3d R6-start-375x667-t200 url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 text=200% scenario=start runs=5 start=2026-10-10T22:24:49.892Z
+SUMMARY R6-start-375x667-t200: runs with the warning over a protected element 5/5; hit ms per run [699,246,163,370,309]; names ["3days warmstreak. Show","168leavesShow details","4Level 4Cozy level 4, ","25:00Kettle’s on. Nice"]
+END 2026-10-10T22:25:59.146Z
+##### 22:25:59 node flash2.mjs --rev=INT --scenario=start --runs=5 --video
+RUN 3d INT-start-375x667-t200 url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=375x667 text=200% scenario=start runs=5 start=2026-10-10T22:25:59.503Z
+SUMMARY INT-start-375x667-t200: runs with the warning over a protected element 5/5; hit ms per run [1788,2227,1999,2140,2108]; names ["3days warmstreak. Show","168leavesShow details","4Level 4Cozy level 4, ","Put the kettle on · 25","25:00Kettle’s on. Nice","24:59Kettle’s on. Nice","24:58Kettle’s on. Nice","24:57Kettle’s on. Nice"]
+END 2026-10-10T22:27:00.913Z
+##### 22:27:00 node flash2.mjs --rev=R6 --scenario=resume --runs=5 --video
+RUN 3d R6-resume-1440x900-t200 url=http://127.0.0.1:5301 rev=R6@e866118 viewport=1440x900 text=200% scenario=resume runs=5 start=2026-10-10T22:27:01.282Z
+SUMMARY R6-resume-1440x900-t200: runs with the warning over a protected element 0/5; hit ms per run [0,0,0,0,0]; names []
+END 2026-10-10T22:28:28.770Z
+##### 22:28:28 node flash2.mjs --rev=INT --scenario=resume --runs=5 --video
+RUN 3d INT-resume-1440x900-t200 url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=1440x900 text=200% scenario=resume runs=5 start=2026-10-10T22:28:29.128Z
+SUMMARY INT-resume-1440x900-t200: runs with the warning over a protected element 5/5; hit ms per run [6341,6325,6922,6394,6147]; names ["24:57Kettle’s on. Nice","24:55Kettle’s on. Nice","Paused24:55The kettle ","Paused24:55Kettle’s on","Paused24:54Kettle’s on","24:54Kettle’s on. Nice","24:53Kettle’s on. Nice","24:52Kettle’s on. Nice","24:58Kettle’s on. Nice","24:56Kettle’s on. Nice","Paused24:56The kettle ","Paused24:56Kettle’s on","Paused24:57The kettle ","Paused24:57Kettle’s on"]
+END 2026-10-10T22:29:38.123Z
+##### 22:29:38 node flash2.mjs --rev=R6 --scenario=start --w=1440 --h=900 --runs=5
+RUN 3d R6-start-1440x900-t200 url=http://127.0.0.1:5301 rev=R6@e866118 viewport=1440x900 text=200% scenario=start runs=5 start=2026-10-10T22:29:38.481Z
+SUMMARY R6-start-1440x900-t200: runs with the warning over a protected element 5/5; hit ms per run [854,1549,111,1177,1382]; names ["INPUT","Study","Read","Life","25:00Kettle’s on. Nice"]
+END 2026-10-10T22:31:22.667Z
+##### 22:31:22 node flash2.mjs --rev=INT --scenario=start --w=1440 --h=900 --runs=5
+RUN 3d INT-start-1440x900-t200 url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=1440x900 text=200% scenario=start runs=5 start=2026-10-10T22:31:23.200Z
+SUMMARY INT-start-1440x900-t200: runs with the warning over a protected element 5/5; hit ms per run [1241,1211,853,1879,4665]; names ["Put the kettle on · 25","INPUT","Study","Read","Life","24:57Kettle’s on. Nice"]
+END 2026-10-10T22:33:11.482Z
+##### 22:33:11 node flash2.mjs --rev=R6 --scenario=resume2 --w=1440 --h=900 --runs=5 --video
+RUN 3d R6-resume2-1440x900-t200 url=http://127.0.0.1:5301 rev=R6@e866118 viewport=1440x900 text=200% scenario=resume2 runs=5 start=2026-10-10T22:33:11.930Z
+SUMMARY R6-resume2-1440x900-t200: runs with the warning over a protected element 5/5; hit ms per run [940,66,1739,959,137]; names ["INPUT","Study","Read","Life"]
+END 2026-10-10T22:35:23.393Z
+##### 22:35:23 node flash2.mjs --rev=INT --scenario=resume2 --w=1440 --h=900 --runs=5 --video
+RUN 3d INT-resume2-1440x900-t200 url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=1440x900 text=200% scenario=resume2 runs=5 start=2026-10-10T22:35:23.760Z
+SUMMARY INT-resume2-1440x900-t200: runs with the warning over a protected element 5/5; hit ms per run [8010,7287,9257,7024,6675]; names ["Put the kettle on · 25","INPUT","Study","Read","Life","24:57Kettle’s on. Nice","24:56Kettle’s on. Nice","Paused24:56The kettle ","Paused24:56Kettle’s on","Paused24:55Kettle’s on","24:54Kettle’s on. Nice","24:53Kettle’s on. Nice","Paused24:58The kettle ","Paused24:58Kettle’s on","Paused24:57Kettle’s on","24:55Kettle’s on. Nice","25 minClassic","50 minDeep","CustomSet it","Paused24:55The kettle ","24:52Kettle’s on. Nice","24:58Kettle’s on. Nice","Paused24:57The kettle "]
+END 2026-10-10T22:37:31.352Z
+##### 22:37:31 node back2.mjs --rev=R6 --runs=8 --text=100 --video
+RUN 3e R6-375x667-t100 url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 text=100% runs=8 start=2026-10-10T22:37:31.828Z
+SUMMARY R6-375x667-t100: runs with overlap 8/8; hit ms per run [285,137,221,168,166,172,260,167]; warning-gone (ms after click) [966,530,478,520,416,353,567,472]
+END 2026-10-10T22:38:45.919Z
+##### 22:38:45 node back2.mjs --rev=INT --runs=8 --text=100 --video
+RUN 3e INT-375x667-t100 url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=375x667 text=100% runs=8 start=2026-10-10T22:38:46.281Z
+SUMMARY INT-375x667-t100: runs with overlap 8/8; hit ms per run [1960,1903,2029,1797,1897,1920,1941,1868]; warning-gone (ms after click) [437,472,566,345,414,null,485,467]
+END 2026-10-10T22:39:56.657Z
+##### 22:39:56 node focus.mjs --rev=R6 --only=C6
+RUN focus R6-only-C6 url=http://127.0.0.1:5301 rev=R6@e866118 start=2026-10-10T22:39:57.012Z
+SCENARIO C6_withdrawn_with_focus_inside (14.7s): {"reached":7,"rows":[{"scrollY":100,"warn":true,"focus":"button \"Save backup\""},{"scrollY":200,"warn":true,"focus":"button \"Save backup\""},{"scrollY":300,"warn":true,"focus":"body"},{"scrollY":400,"warn":false,"focus":"body"},{"scrollY":500,"warn":false,"focus":"body"},{"scrollY":600,"warn":true,"focus":"body"},{"scrollY":700,"warn":true,"focus":"body"},{"scrollY":754,"warn":true,"focus":"body"}],"eventsAfterFocus":[[9211,"focusout","button \"Save backup\"","to body"],[9212,"toast-","Kettle couldn’t save your latest changes"],[9293,"toast+","Kettle couldn’t save your latest changes"],[9713,"toast-","Kettle couldn’t save your latest c
+END 2026-10-10T22:40:11.853Z
+##### 22:40:11 node focus.mjs --rev=INT --only=C6
+RUN focus INT-only-C6 url=http://127.0.0.1:5303 rev=INT@0d58c5e start=2026-10-10T22:40:12.266Z
+SCENARIO C6_withdrawn_with_focus_inside (14.6s): {"reached":8,"rows":[{"scrollY":100,"warn":true,"focus":"button \"Save backup\""},{"scrollY":200,"warn":true,"focus":"button \"Save backup\""},{"scrollY":300,"warn":false,"focus":"body"},{"scrollY":400,"warn":false,"focus":"body"},{"scrollY":500,"warn":false,"focus":"body"},{"scrollY":600,"warn":true,"focus":"body"},{"scrollY":700,"warn":true,"focus":"body"},{"scrollY":754,"warn":true,"focus":"body"}],"eventsAfterFocus":[[9085,"focusout","button \"Save backup\"","to body"],[9086,"toast-","Kettle couldn’t save your latest changes"],[10163,"toast+","Kettle couldn’t save your latest changes"]]}
+END 2026-10-10T22:40:26.997Z
+##### 22:40:27 B4 done
+[slots] L3 freed 1 at 22:40:27

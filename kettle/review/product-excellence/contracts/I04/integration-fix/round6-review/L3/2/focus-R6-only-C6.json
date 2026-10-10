@@ -1,0 +1,81 @@
+{
+ "tag": "R6-only-C6",
+ "url": "http://127.0.0.1:5301",
+ "rev": "R6",
+ "commit": "e866118",
+ "results": {
+  "C6_withdrawn_with_focus_inside": {
+   "reached": 7,
+   "rows": [
+    {
+     "scrollY": 100,
+     "warn": true,
+     "focus": "button \"Save backup\""
+    },
+    {
+     "scrollY": 200,
+     "warn": true,
+     "focus": "button \"Save backup\""
+    },
+    {
+     "scrollY": 300,
+     "warn": true,
+     "focus": "body"
+    },
+    {
+     "scrollY": 400,
+     "warn": false,
+     "focus": "body"
+    },
+    {
+     "scrollY": 500,
+     "warn": false,
+     "focus": "body"
+    },
+    {
+     "scrollY": 600,
+     "warn": true,
+     "focus": "body"
+    },
+    {
+     "scrollY": 700,
+     "warn": true,
+     "focus": "body"
+    },
+    {
+     "scrollY": 754,
+     "warn": true,
+     "focus": "body"
+    }
+   ],
+   "eventsAfterFocus": [
+    [
+     9211,
+     "focusout",
+     "button \"Save backup\"",
+     "to body"
+    ],
+    [
+     9212,
+     "toast-",
+     "Kettle couldn’t save your latest changes"
+    ],
+    [
+     9293,
+     "toast+",
+     "Kettle couldn’t save your latest changes"
+    ],
+    [
+     9713,
+     "toast-",
+     "Kettle couldn’t save your latest changes"
+    ],
+    [
+     10295,
+     "toast+",
+     "Kettle couldn’t save your latest changes"
+    ]
+   ]
+  }
+ }
+}

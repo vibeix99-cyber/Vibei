@@ -1,0 +1,26 @@
+[slots] L3 took 1/3 at 19:35:29: ./run-3a.sh
+RUN 3a R6-375x667-t100-light-Tab url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 text=100% theme=light key=Tab gap=500ms max=45
+RESULT R6-375x667-t100-light-Tab: NOT reached in 45 presses
+RUN 3a R6-375x667-t100-light-ShiftTab url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 text=100% theme=light key=Shift+Tab gap=500ms max=45
+RESULT R6-375x667-t100-light-ShiftTab: REACHED after 7 presses; focus-visible {"matches":true,"outline":"solid 3px rgb(36, 119, 184)","offset":"3px"}; Enter -> kettle-backup-2026-10-10.json
+RUN 3a R6-375x667-t200-light-Tab url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 text=200% theme=light key=Tab gap=500ms max=45
+RESULT R6-375x667-t200-light-Tab: REACHED after 14 presses; focus-visible {"matches":true,"outline":"solid 3px rgb(36, 119, 184)","offset":"3px"}; Enter -> kettle-backup-2026-10-10.json
+RUN 3a R6-375x667-t200-light-ShiftTab url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 text=200% theme=light key=Shift+Tab gap=500ms max=45
+RESULT R6-375x667-t200-light-ShiftTab: REACHED after 7 presses; focus-visible {"matches":true,"outline":"solid 3px rgb(36, 119, 184)","offset":"3px"}; Enter -> kettle-backup-2026-10-10.json
+RUN 3a R6-375x667-t200-dark-Tab url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 text=200% theme=dark key=Tab gap=500ms max=45
+RESULT R6-375x667-t200-dark-Tab: REACHED after 14 presses; focus-visible {"matches":true,"outline":"solid 3px rgb(143, 208, 255)","offset":"3px"}; Enter -> kettle-backup-2026-10-10.json
+RUN 3a R6-375x667-t100-dark-Tab url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 text=100% theme=dark key=Tab gap=500ms max=45
+RESULT R6-375x667-t100-dark-Tab: NOT reached in 45 presses
+RUN 3a INT-375x667-t100-light-Tab url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=375x667 text=100% theme=light key=Tab gap=500ms max=45
+RESULT INT-375x667-t100-light-Tab: NOT reached in 45 presses
+RUN 3a INT-375x667-t100-light-ShiftTab url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=375x667 text=100% theme=light key=Shift+Tab gap=500ms max=45
+RESULT INT-375x667-t100-light-ShiftTab: REACHED after 7 presses; focus-visible {"matches":true,"outline":"solid 3px rgb(36, 119, 184)","offset":"3px"}; Enter -> kettle-backup-2026-10-10.json
+RUN 3a INT-375x667-t200-light-Tab url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=375x667 text=200% theme=light key=Tab gap=500ms max=45
+RESULT INT-375x667-t200-light-Tab: NOT reached in 45 presses
+RUN 3a INT-375x667-t200-light-ShiftTab url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=375x667 text=200% theme=light key=Shift+Tab gap=500ms max=45
+RESULT INT-375x667-t200-light-ShiftTab: REACHED after 7 presses; focus-visible {"matches":true,"outline":"solid 3px rgb(36, 119, 184)","offset":"3px"}; Enter -> kettle-backup-2026-10-10.json
+RUN 3a INT-375x667-t200-dark-Tab url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=375x667 text=200% theme=dark key=Tab gap=500ms max=45
+RESULT INT-375x667-t200-dark-Tab: REACHED after 14 presses; focus-visible {"matches":true,"outline":"solid 3px rgb(143, 208, 255)","offset":"3px"}; Enter -> kettle-backup-2026-10-10.json
+RUN 3a INT-375x667-t100-dark-Tab url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=375x667 text=100% theme=dark key=Tab gap=500ms max=45
+RESULT INT-375x667-t100-dark-Tab: NOT reached in 45 presses
+[slots] L3 freed 1 at 19:39:47

@@ -1,0 +1,71 @@
+{
+ "tag": "INT-only-C6",
+ "url": "http://127.0.0.1:5303",
+ "rev": "INT",
+ "commit": "0d58c5e",
+ "results": {
+  "C6_withdrawn_with_focus_inside": {
+   "reached": 8,
+   "rows": [
+    {
+     "scrollY": 100,
+     "warn": true,
+     "focus": "button \"Save backup\""
+    },
+    {
+     "scrollY": 200,
+     "warn": true,
+     "focus": "button \"Save backup\""
+    },
+    {
+     "scrollY": 300,
+     "warn": false,
+     "focus": "body"
+    },
+    {
+     "scrollY": 400,
+     "warn": false,
+     "focus": "body"
+    },
+    {
+     "scrollY": 500,
+     "warn": false,
+     "focus": "body"
+    },
+    {
+     "scrollY": 600,
+     "warn": true,
+     "focus": "body"
+    },
+    {
+     "scrollY": 700,
+     "warn": true,
+     "focus": "body"
+    },
+    {
+     "scrollY": 754,
+     "warn": true,
+     "focus": "body"
+    }
+   ],
+   "eventsAfterFocus": [
+    [
+     9085,
+     "focusout",
+     "button \"Save backup\"",
+     "to body"
+    ],
+    [
+     9086,
+     "toast-",
+     "Kettle couldn’t save your latest changes"
+    ],
+    [
+     10163,
+     "toast+",
+     "Kettle couldn’t save your latest changes"
+    ]
+   ]
+  }
+ }
+}

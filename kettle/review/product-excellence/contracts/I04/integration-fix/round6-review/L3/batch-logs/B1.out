@@ -1,0 +1,48 @@
+[slots] L3 took 1/3 at 21:44:16: ./smoke.sh
+##### 21:44:16 node scrollhold.mjs --rev=R6 --text=100
+RUN 3a-cause R6-scrollhold-t100 url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 text=100% start=2026-10-10T21:44:16.459Z
+END 2026-10-10T21:44:35.898Z
+##### 21:44:35 node scrollhold.mjs --rev=INT --text=100
+RUN 3a-cause INT-scrollhold-t100 url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=375x667 text=100% start=2026-10-10T21:44:36.263Z
+END 2026-10-10T21:44:56.223Z
+##### 21:44:56 node blink.mjs --rev=R6 --runs=5 --video
+RUN 3b R6-375x667-t200-Tab url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 text=200% key=Tab runs=5 start=2026-10-10T21:44:56.734Z
+SUMMARY R6-375x667-t200-Tab: runs with a blink 0/5; blink durations (ms, op<0.5 gap between visible frames) []; runs reaching Save backup 5/5
+END 2026-10-10T21:46:33.098Z
+##### 21:46:33 node blink.mjs --rev=INT --runs=5 --video
+RUN 3b INT-375x667-t200-Tab url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=375x667 text=200% key=Tab runs=5 start=2026-10-10T21:46:33.913Z
+SUMMARY INT-375x667-t200-Tab: runs with a blink 0/5; blink durations (ms, op<0.5 gap between visible frames) []; runs reaching Save backup 2/5
+END 2026-10-10T21:48:26.723Z
+##### 21:48:26 node flash.mjs --rev=R6 --scenario=start --runs=5 --video
+RUN 3d R6-start-375x667-t200 url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 text=200% scenario=start runs=5 start=2026-10-10T21:48:27.140Z
+SUMMARY R6-start-375x667-t200: runs with the warning over a protected element 5/5; hit ms per run [367,350,250,684,417]; names ["3days warmstreak. Show","168leavesShow details","4Level 4Cozy level 4, ","25:00Kettle’s on. Nice"]
+END 2026-10-10T21:49:35.608Z
+##### 21:49:35 node flash.mjs --rev=INT --scenario=start --runs=5 --video
+RUN 3d INT-start-375x667-t200 url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=375x667 text=200% scenario=start runs=5 start=2026-10-10T21:49:36.166Z
+SUMMARY INT-start-375x667-t200: runs with the warning over a protected element 5/5; hit ms per run [1833,2334,2167,2268,1333]; names ["3days warmstreak. Show","168leavesShow details","4Level 4Cozy level 4, ","Put the kettle on · 25","24:59Kettle’s on. Nice","24:58Kettle’s on. Nice","24:57Kettle’s on. Nice","25:00Kettle’s on. Nice"]
+END 2026-10-10T21:50:42.591Z
+##### 21:50:42 node flash.mjs --rev=R6 --scenario=resume --runs=5 --video
+RUN 3d R6-resume-1440x900-t200 url=http://127.0.0.1:5301 rev=R6@e866118 viewport=1440x900 text=200% scenario=resume runs=5 start=2026-10-10T21:50:43.009Z
+SUMMARY R6-resume-1440x900-t200: runs with the warning over a protected element 0/5; hit ms per run [0,0,0,0,0]; names []
+END 2026-10-10T21:52:27.657Z
+##### 21:52:27 node flash.mjs --rev=INT --scenario=resume --runs=5 --video
+RUN 3d INT-resume-1440x900-t200 url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=1440x900 text=200% scenario=resume runs=5 start=2026-10-10T21:52:28.049Z
+SUMMARY INT-resume-1440x900-t200: runs with the warning over a protected element 5/5; hit ms per run [5883,7150,6167,5150,7400]; names ["24:50Kettle’s on. Nice","Paused24:50The kettle ","Paused24:48Kettle’s on","24:47Kettle’s on. Nice","24:53Kettle’s on. Nice","24:51Kettle’s on. Nice","Paused24:51The kettle ","Paused24:51Kettle’s on","24:49Kettle’s on. Nice","24:48Kettle’s on. Nice","24:55Kettle’s on. Nice","24:54Kettle’s on. Nice","Paused24:54The kettle ","Paused24:54Kettle’s on","Paused24:53Kettle’s on","Paused24:52Kettle’s on","24:52Kettle’s on. Nice","Paused24:55The kettle ","Paused24:55Kettle’s on","24:57Kettle’s on. Nice","24:56Kettle’s on. Nice"]
+END 2026-10-10T21:54:05.756Z
+##### 21:54:05 node back.mjs --rev=R6 --runs=8 --text=100 --video
+RUN 3e R6-375x667-t100 url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 text=100% runs=8 start=2026-10-10T21:54:06.309Z
+SUMMARY R6-375x667-t100: runs with overlap 7/8; hit ms per run [0,83,250,350,250,283,484,184]; warning-gone (ms after click) [794,357,664,617,470,658,867,526]
+END 2026-10-10T21:55:20.494Z
+##### 21:55:20 node back.mjs --rev=INT --runs=8 --text=100 --video
+RUN 3e INT-375x667-t100 url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=375x667 text=100% runs=8 start=2026-10-10T21:55:20.877Z
+SUMMARY INT-375x667-t100: runs with overlap 8/8; hit ms per run [1933,1934,1749,1966,1833,1767,1867,2000]; warning-gone (ms after click) [858,533,510,null,496,533,493,512]
+END 2026-10-10T21:56:33.718Z
+##### 21:56:33 node back.mjs --rev=R6 --runs=4 --text=200
+RUN 3e R6-375x667-t200 url=http://127.0.0.1:5301 rev=R6@e866118 viewport=375x667 text=200% runs=4 start=2026-10-10T21:56:34.062Z
+SUMMARY R6-375x667-t200: runs with overlap 4/4; hit ms per run [1049,283,350,333]; warning-gone (ms after click) [1608,689,683,644]
+END 2026-10-10T21:57:13.754Z
+##### 21:57:13 node back.mjs --rev=INT --runs=4 --text=200
+RUN 3e INT-375x667-t200 url=http://127.0.0.1:5303 rev=INT@0d58c5e viewport=375x667 text=200% runs=4 start=2026-10-10T21:57:14.192Z
+  name: 'TimeoutError'
+##### 21:57:51 B1 done
+[slots] L3 freed 1 at 21:57:51
