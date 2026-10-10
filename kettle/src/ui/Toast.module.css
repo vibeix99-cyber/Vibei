@@ -164,12 +164,9 @@
   }
   /* Every toast keeps its content height (never shrunk by the column), up to the room's own height (100cqh is the
      region's height). A toast taller than the whole room (the storage-full warning at 200 % on a phone) scrolls its own
-     message inside its box, opening first, its action held in view at the bottom of the box; at its top it hands the
-     scroll on to the list. */
+     message inside its box, opening first, its action held in view; at its end it hands the scroll on to the list. */
   .toast {
     flex-shrink: 0;
-    position: relative;
-    z-index: 2;
     max-height: 100cqh;
     overflow-y: auto;
     /* Centred as before, but a message taller than the box starts at its top (plain centring would push its opening
@@ -183,17 +180,21 @@
     top: 0;
     bottom: 0;
   }
-  /* A toast with an action (the storage-full warning) never moves down: it is sticky at the bottom of the scroll box,
-     so at every scroll offset its drawn box stays inside the room, clear of the docked start. (M1's hold rule measures
-     that box: a warning scrolled down over the start would be taken away and shown again unscrolled.) Scrolling the
-     list up slides older toasts (above it) down over it, so each can be read; newer ones (below it) pass under it. */
-  .toast:has(.action) {
-    position: sticky;
-    bottom: 0;
-    z-index: 1;
+  /* A stack with a toast that has an action (the storage-full warning) leads with that toast: it is drawn first, at
+     the top, and the list scrolls from the top down, so the older toasts below it come into view as it moves up. Its
+     box therefore never moves below where it rests, at any scroll offset and whatever the other toasts do (arrive,
+     time out, scroll): the list's offset never goes below 0, and the room ends below it. (M1's hold rule measures
+     that box; one drawn over the docked start would be taken away.) Its own entry and layout motion is switched off
+     here for the same reason: a transform would move the measured box, if only for a moment. */
+  .list:has(.action) {
+    flex-direction: column;
   }
-  .toast:has(.action) ~ .toast {
-    z-index: 0;
+  .list:has(.action) > * {
+    order: 0;
+  }
+  .list:has(.action) > .toast:has(.action) {
+    order: -1;
+    transform: none !important;
   }
 }
 /* Large text for the toast's width (≈150 % text on a phone, 200 % anywhere): the message keeps the full width beside
