@@ -1,0 +1,10 @@
+# branch 091249a (kettle/src 05bb3f827117545cbbc9f212e0a5f7332490092c), 2026-10-10T12:50:27Z
+$ npx tsc --noEmit --pretty false
+exit 0
+$ npx vitest run
+ Test Files  26 passed (26)
+      Tests  265 passed (265)
+
+# scratch merge 859f9fb (091249a merged --no-ff onto integration c6c7922; kettle/src identical: 05bb3f827117…), in a scratch worktree, removed afterwards
+$ npx tsc --noEmit --pretty false → exit 0
+$ npx vitest run → Test Files 26 passed (26), Tests 265 passed (265)

@@ -1,6 +1,11 @@
-# I04 integration fix — Today's stats wrap at 375×667 · READY FOR REVIEW (r5)
+# I03 × I04 integration fix (combined) — Today's stats wrap at 375×667, toasts at large text, the storage-full warning · READY FOR REVIEW (r6, combined)
 
-> **r5 (this revision)** answers Checker r4's REJECT (`CHECKER-integration-fix-r4.md`: R4-D1, R4-D2); see **"r5"** at the
+> **r6 (this revision, combined)** answers Checker r5's REJECT (`CHECKER-integration-fix-r5.md`: R5-D1) on the
+> **combined** branch: M1's approved `pe/w1-fix` (`3f00b57`, I03) is merged in (`ca23385`). The branch is now the single
+> Wave 1 integration fix for I03 × I04. See **"r6 (combined)"** at the end, items (a)–(f) as the coordinator required.
+> M1's own packet is `contracts/I03/INTEGRATION-FIX-READY-FOR-REVIEW.md` (unchanged).
+>
+> **r5** answered Checker r4's REJECT (`CHECKER-integration-fix-r4.md`: R4-D1, R4-D2); see **"r5"** at the
 > end. **r4** added the orchestrator-adjudicated D4 (a toast covers the break-over "Mark it done, start
 > fresh" button); see **"r4"** at the end. r3 was not reviewed. **r3** answers Checker r2's REJECT (`CHECKER-integration-fix-r2.md`: R2-D1, R2-D3, note 4, finding 5);
 > see **"r3"** at the end. **r2** answered Checker r1's REJECT (`CHECKER-integration-fix-r1.md`, D1 and D2) and the I03 checker's
@@ -911,3 +916,527 @@ were all stopped, and the trial worktree was removed.
    - UNKNOWN: iOS Safari / WebKit handling of `align-items: safe center`, a sticky action inside a scrolling toast inside
      a sticky warning inside a reversed-column scroll box, and of `contain: inline-size` during measurement.
    - UNKNOWN: real window managers producing live resizes, and OS text-size settings.
+
+## r6 (combined) — I03 × I04 on one branch
+
+- **Proposed state:** **FIXED**. Disclosures are under "Still open (r6)", and anything not produced is under "Not
+  produced".
+- **Evidence:** `contracts/I04/integration-fix/r6/`. Probes are in `.tmp/w1fix/` (gitignored).
+  - The Checker's r5 scripts (`readscroll.mjs`, `race.mjs`, `natural.mjs`, `lib.mjs`) were copied and never edited.
+  - Where a probe had to change for the new layout, it is a new file (`readscroll6.mjs`, `race6.mjs`).
+
+### (a) Hashes
+
+| What | Commit | `kettle/src` tree |
+|---|---|---|
+| **Combined revision, code** (the last code commit) | **`091249a86c3be233d6724b0b36c814152c26208e`** | **`05bb3f827117545cbbc9f212e0a5f7332490092c`** |
+| Submission commit (`I03 I04 INTEGRATION FIX READY FOR REVIEW (r6, combined): …`) | the commit that adds this section | the same tree (it adds only this packet and `integration-fix/r6/**`) |
+| **Scratch merge** of `091249a` onto integration HEAD `c6c7922` (`--no-ff`, no conflicts) | **`859f9fb25b601d3cd1d09826045c0da74757aa0f`** | **`05bb3f827117545cbbc9f212e0a5f7332490092c`** (identical) |
+| Integration HEAD (app code = `0d58c5e`) | `c6c7922` | `1fc4a1b1091d92a947f6234641718c9ad6b87ba5` |
+| M1, approved | `3f00b57` | `3c58bf904d3d3df83726a56e52f83e82bf6f67c8` |
+| r5 | `33a72e6` | `8d4a9790c3032b253be8c67c14a85b68c2fec06a` |
+
+- **The scratch merge:**
+  - Made in a scratch worktree: `git worktree add --detach <scratch>/trial-r6 c6c7922`, then
+    `git merge --no-ff 091249a`.
+  - It differs from the branch only under `kettle/review` (the integration side's status and archive files).
+  - On it: tsc clean, vitest 26 files / 265 passed.
+  - The worktree was removed. The commit object stays in the repository, unreferenced.
+- **The branch for r6:**
+  - `ca23385`: M1's approved `pe/w1-fix` (`3f00b57`) merged into r5 `33a72e6` with `--no-ff`, no conflicts. Its
+    `kettle/src`, `b38ad5e…`, is the r5 trial's tree.
+  - `db8220e`: WIP checkpoint after a container restart.
+  - `cb1cd9e`, `d074863`: code, first and second versions.
+  - **`091249a`: code, final.**
+  - Then the submission commit.
+  - What each code step fixed is under "How r6 got here".
+
+### (e, part 1) Changed files
+
+Full lists (`git diff --stat` and `--name-status`) are in `r6/changed-files.txt`.
+
+- **vs integration `c6c7922`, outside `kettle/review`:** 13 files.
+  - M1 (I03): `docs/areas/timer.md`, `src/app/flow.ts`, `tests/integrity.spec.ts`.
+  - M1 and M2: `src/ui/Toast.tsx`.
+  - M2 (I04 r1–r6): `src/screens/focus/FocusScreen.{tsx,module.css}`, `src/screens/home/Home.module.css`,
+    `src/screens/home/StatusBar.tsx`, `src/ui/Toast.module.css`, `tests/a11y-probes.mjs`, `tests/a11y.spec.ts`,
+    `tests/statusbar.spec.ts` (new), `tests/toast-room.spec.ts` (new).
+- **vs r5 `33a72e6`:** 6 files.
+  - From M1's merge: `timer.md`, `flow.ts`, `Toast.tsx`, `integrity.spec.ts`.
+  - From r6: `Toast.module.css`, `Toast.tsx` (the Toaster call site) and `toast-room.spec.ts`.
+- **r6 alone (`ca23385` → `091249a`):** `src/ui/Toast.module.css`, `src/ui/Toast.tsx` (+7 −2) and
+  `tests/toast-room.spec.ts`.
+- **M1's files:**
+  - `$ git diff --stat 3f00b57 091249a -- kettle/tests/integrity.spec.ts` prints **nothing**: byte-identical.
+  - The same holds on the scratch merge `859f9fb`, and for `src/app/flow.ts`.
+  - `Toast.tsx` differs only at the Toaster's call site (see (b)). `toastLiftBottom()` and `useToastAbove()` are
+    byte-identical to `3f00b57`, compared function by function in `r6/toast-lift-identical.txt`.
+  - No toast id is special-cased.
+
+### (b) R5-D1: root cause, and why the new structure removes it by construction
+
+- **The defect (Checker r5).** An older toast leaving a scrolled list put the warning's **layout box** 7–47 px below its
+  room, over the docked start, for ≈150–250 ms.
+  - M1's hold rule (`protectedUnderToasts()` in `flow.ts`, unchanged) reads that box with `getBoundingClientRect()`.
+  - It therefore took the warning away and re-showed it reset.
+- **Root cause.** In r5, where the warning's box sat was not a fixed fact of the layout. It was recomputed every frame
+  from the list's scroll state:
+  - The warning was a `position: sticky; bottom: 0` item of a **reversed** (`column-reverse`) scroll list. Its in-flow
+    place is the list's end, below everything else.
+  - Only the sticky offset brought it back into view. That offset depends on the scroll offset and is clamped by the
+    sticky item's containing block, the list's content.
+  - When an older toast left, the content and the scroll range changed, and Chromium's scroll anchoring moved the
+    offset (+1 → −63 in the Checker's trace).
+  - On the next scroll step the in-flow position was below the scroll box, and the sticky offset did not bring it
+    back in that frame.
+  - The Checker showed anchoring is the trigger but not the whole cause: with `overflow-anchor: none` the box was
+    still up to 9 px low.
+  - So the box was correct only if anchoring, sticky resolution and input happened in a favourable order. That is a
+    race.
+- **New structure.** In short-room mode, a stack holding a toast with an action is a plain **top-down** column, with
+  that toast **first** (`order: -1`).
+  - It has no sticky item, no reversed scroll origin and no `z-index` layers.
+  - Its transform is forced to `none`.
+  - Where it rests ends **2 px above the room's bottom edge**: the list has `padding-bottom: 2px`, and that toast has
+    `max-height: calc(100cqh - 2px)`.
+- **Its box then follows from three invariants that hold in every frame,** whatever the timers, anchoring or input do:
+  1. **The list's offset is in [0, range].** A top-down block-axis scroller's `scrollTop` is clamped by the browser to
+     `0 … scrollHeight − clientHeight`. Removals and anchoring can move the offset only inside that range. The first
+     item's top is `content top − scrollTop`, so its box is at its resting place at offset 0 and higher at every other
+     offset. It is never lower than where it rests.
+  2. **Where it rests is inside the room, 2 px clear of its bottom edge.** The room is the toast region; the stack sits
+     at its bottom, and the list ends 2 px short of it.
+     - Content shorter than the room: the list is sized to its content, so the first item ends at or above the
+       content's end, 2 px above the room's bottom.
+     - Content taller: the list fills the room, and at offset 0 the first item starts at the room's top. It is at
+       most the room's height less 2 px.
+  3. **The measured box is the layout box.** `transform: none !important` overrides framer-motion's inline transforms
+     (entry `y: 18, scale: 0.94`, layout projection, exit `y: 8`). `getBoundingClientRect()` never sees a displaced
+     box.
+  - Nothing waits for a frame, a timer or an input. The warning's box is inside the room at any offset, with any set
+    of toasts, as toasts arrive or leave, with anchoring on or off.
+- **The two other ways the warning met the docked start,** both found by r6's own reproduction runs and both closed
+  by construction:
+  - **Entry (the warning taken away while Today rises into place).**
+    - Route changes bring the new screen in from 10 px lower (`App.tsx`, content `y: 10 → 0`, unchanged).
+    - `toastLiftBottom()` places the room 10 px above the docked start *as measured*. `useToastAbove()` re-measures
+      every 250 ms.
+    - If the measure came while Today was still up to 10 px low, the start rose by up to 10 px under a warning whose
+      box ended exactly at the room's edge.
+    - In the recorded frames both were at 334 px (375×667 @200 %) until the next measure. M1's watcher saw the boxes
+      meet and hid and re-showed the warning.
+    - This happened in 22 of 72 `race6.mjs` runs at 375×667 @200 % and 3 of 72 at 844×390 @200 % on `cb1cd9e`
+      (`intermediate-cb1cd9e/race6-natural-cb1cd9e.txt`, entry count at its end).
+    - With the 2 px slack, the start can come no closer than 2 px (−0.5 px rounding) to the warning's box before the
+      next measure. That holds wherever in the rise the measure fell.
+  - **The last toast's own end.**
+    - The list empties the moment the last toast is dismissed or times out. `useToastAbove(list.length > 0)` then
+      released the lift, although AnimatePresence still draws the toast while it fades (~160 ms).
+    - At 200 % the region's stylesheet place is over the docked start, so the fading toast was drawn over the start
+      for 2–9 frames. This was pre-existing; it shows here when the warning's own 12 s ends under touch.
+    - The Toaster now passes `list.length > 0 || drawn` (`Toast.tsx`, call site only). `drawn` is set while the list
+      has toasts and cleared by AnimatePresence's `onExitComplete`, so the lift is kept until nothing is drawn.
+    - `toastLiftBottom()` and `useToastAbove()` are unchanged.
+- **Not covered (timing outside the toast list, M1's and I04's own):**
+  - The room follows the docked start through the 250 ms lift poll. When the **page** scrolls the start itself (it
+    stops being sticky at the end of Today), the room catches up within 250 ms.
+  - See (d): keyboard focus scrolls the page there.
+- **Nothing of a warning-led stack is drawn below the room.** The list's scroll box ends at the room's edge, so no
+  toast is painted over the start at any offset.
+  - A first version (`cb1cd9e`) let the scroll box reach 8 px below the room. During Today's rise an older toast's
+    edge was drawn over the start for 1–2 frames, so that was removed.
+- **Reading in very short rooms.** In a room under 4 em (667×375 at 200 %: 60 px) the warning has a 14 px gap below it
+  instead of 8.
+  - An older toast nearly as tall as the room is wholly in view only over a narrow range of list offsets: 67.5–80.5 px
+    for a 56 px toast.
+  - 20, 24 and 40 px steps from rest come to rest inside that range (80, 72 and 80).
+  - 53 and 100 px wheel notches do not, as in r5 (see Still open).
+- **Removed from r5:** the sticky warning, its `z-index` layers, and `position: relative` on toasts.
+- **Unchanged:**
+  - Toasts are capped at the room's height and scroll their own message (`align-items: safe center`).
+  - The sticky action inside a toast.
+  - The large-text and tiny-room layouts.
+  - The bottom-up list for stacks **without** an action toast.
+  - Everything outside short-room mode: no change at 100 % on 375, 390 or 1440, apart from the lift being kept while
+    the last toast fades.
+- **What a person sees** (large text, or a short landscape room, with the warning):
+  - The warning is at the top of the stack, opening first, with "Save backup" in view.
+  - Reading down scrolls its message to the end, then hands the scroll on to the list: the warning moves up and the
+    older toasts come into view below it.
+  - Scrolling back up returns to the warning.
+  - In r5 the older toasts were above the warning and were revealed by scrolling up.
+
+### (c) The round-5 reproduction on a disposable profile (real timers, real input)
+
+Probe `.tmp/w1fix/repro6.mjs`; evidence in `r6/c-repro/` (`repro6-final.txt` log, `repro6-final.jsonl` every frame of
+every run, three clips).
+
+- **Setup, per run:**
+  - A fresh browser context, so a disposable profile.
+  - 200 % text; the newbie seed one leaf below its next level; localStorage really full (`QuotaExceededError`).
+  - A brew started, fast-forwarded 12 min with the debug build's brew clock (`__kettle.ff`, setup only), then ended:
+    Today with three toasts ("Cozy level 5!", "Saved 12 minutes of focus", the warning).
+- **Toast timers are never touched.** No synthetic `pointerenter`/`pointerleave`, no held toasts, no timer changes. A
+  toast pauses only under the real pointer (wheel runs) or a real touch, as in use. The older toasts expire after their
+  natural 3.2 s.
+- **Input is real only.** `page.mouse.wheel` in 20 px notches, or CDP `Input.dispatchTouchEvent` finger drags of 24 px.
+  It lands on a toast. There is no programmatic scrolling.
+  - The person reads the warning down, goes on down as far as the stack goes, pauses 0.3 s, then comes back up as far
+    as it goes.
+  - Each phase stops when nothing has moved twice.
+- **Timing varied** so the older toasts' expiry lands before, during or after the gesture:
+  - first input 3.6, 4.2 or 4.8 s after the warning appears ("before");
+  - 1.0, 1.6, 2.2 or 2.8 s ("during");
+  - 0.3, 0.6 or 0.9 s with a short gesture of 4 notches down and 4 up, after which the pointer leaves ("after").
+  - Each timing runs once by wheel and once by touch: 20 runs per configuration.
+- **Recording:** every animation frame, from before End to more than 2 s after the last input.
+- **Judged from the first frame the warning is at full opacity** (its fade-in, ≈0.2 s):
+  - **hide/reset:** the warning's element removed (any re-add counts: M1's rule re-shows it reset), or below 0.98
+    opacity. The one exception is its own 12 s timed end, judged to its first fading frame.
+  - **overlap**, any of:
+    1. the warning's layout box (what M1's rule measures) over a protected control;
+    2. the drawn part of **any** toast (its box clipped to the list's scroll box) over a protected control, in any
+       frame including the warning's own exit;
+    3. a protected control's centre hit-testing as a toast.
+  - Protected means M1's set on Today: `[data-toast-above] :is(button, a[href], [role="button"], input, textarea,
+    select)`.
+
+| Configuration | Runs (wheel / touch) | Failures | Hide/reset events | Overlaps (box / drawn / hit-test) | Older-toast expiry landed before / during / after the gesture (runs) |
+|---|---|---|---|---|---|
+| 375×667 @200 % light | 20 (10 / 10) | **0** | **0** | **0 / 0 / 0** | 6 / 10 / 4 |
+| 375×667 @200 % dark | 20 (10 / 10) | **0** | **0** | **0 / 0 / 0** | 6 / 9 / 5 |
+| 844×390 @200 % light | 20 (10 / 10) | **0** | **0** | **0 / 0 / 0** | 6 / 9 / 5 |
+
+- In 2 of the 844×390 touch runs the warning's own 12 s also ran out (no pointer holds it under touch).
+  - That is not a hide or reset: its element leaves once, with no re-add.
+  - Its exit was still judged for overlaps: 0 frames.
+- In every run the warning's bottom stayed at least 2 px above the room's bottom: the maximum of (warning bottom − room
+  bottom) over all judged frames is −2 px.
+- **Clips:** video, not a frame sequence. Playwright `recordVideo`, webm, 25 fps, at the viewport size. One per
+  configuration, each the first "during" wheel run, covering the whole run from setup to 2 s after the last input:
+  - `clip-final-375x667-light-wheel-during-d1000.webm`
+  - `clip-final-375x667-dark-wheel-during-d1000.webm`
+  - `clip-final-844x390-light-wheel-during-d1000.webm`
+  - Two frames of the first, extracted with Playwright's own ffmpeg, are next to them as PNG and were opened: the
+    warning scrolled up with "Save backup" in view, "Cozy level 5!" fading out on its timer and "Saved 12 minutes of
+    focus" below, all above the docked start.
+- **The same probe on earlier r6 code found two problems** (`r6/intermediate-*/`). Both are fixed in `091249a`; see (b):
+  - on `cb1cd9e`: entry hide/reset in 3 of 10 runs, and older toasts drawn over the start for 1–2 frames;
+  - on `d074863`: the fading warning drawn over the start at its own 12 s end, in 1 of 9 runs at 844×390.
+
+### (d) Keyboard: does Tab reach "Save backup" at 375×667?
+
+Probe `.tmp/w1fix/kbd6.mjs`; evidence in `r6/d-keyboard/` (`keyboard-final.txt`, `keyboard-why-100.txt`, screenshots).
+
+- **Setup:** Today with the warning. Storage is really full, and a brew was ended within its first minute, so the stack
+  is "Kettle's off" plus the warning.
+- **Input:** real key presses from the top of the document, one `Tab` every 500 ms, up to 80.
+- **Logged for every Tab:** the focused element, the warning, the toast region, the docked start and the page scroll.
+  Every removal or re-add of the warning is timed.
+
+| Text size | Theme | Result | Focus ring on "Save backup" | Enter |
+|---|---|---|---|---|
+| **200 %** | light | **reached** after 14 Tabs | `:focus-visible`; 3 px solid `rgb(36,119,184)`, 3 px offset | backup downloaded |
+| **200 %** | dark | **reached** after 14 Tabs | `:focus-visible`; 3 px solid `rgb(143,208,255)`, 3 px offset | backup downloaded |
+| **100 %** | light | **not reached** in 80 Tabs (4 full cycles) | — | — |
+| **100 %** | dark | **not reached** in 80 Tabs | — | — |
+| 100 %, **Shift+Tab** from the top | light / dark | reached after 7 presses | `:focus-visible`, same rings | backup downloaded |
+
+- **Screenshots, opened:**
+  - `kbd-final-375x667-200-{light,dark}-Tab-save-backup-focused.png`: the ring is visible round "Save backup", at the
+    bottom of the scrolled warning, above "Put the kettle on".
+  - `kbd-final-375x667-100-{light,dark}-ShiftTab-save-backup-focused.png`: the same ring at 100 %, reached in reverse
+    order.
+  - `kbd-final-375x667-100-{light,dark}-Tab-not-reached.png`: taken after the 80th Tab. Focus has wrapped back to the
+    composer's text field, and the warning has been re-shown, as at the end of every cycle; focus never reached it.
+- **Why forward Tab fails at 100 %.** Measured every 50 ms by `.tmp/w1fix/kbdwhy.mjs` (`keyboard-why-100.txt`); no
+  estimates:
+  1. In DOM order the toast region comes after Today's docked start. So "Save backup" is the next stop after "Change
+     brew length".
+  2. Tab 12 focuses "Put the kettle on". Chromium scrolls the focused element into view, and the page scrolls 223 → 513,
+     its end.
+  3. Until then the docked start (`Composer` `.ctaDock`, `data-toast-above`) was stuck to the bottom at 499–599. At the
+     page's end it sits in flow at 235–335.
+  4. `toastLiftBottom()` counts a `data-toast-above` element only if its bottom is below 60 % of the viewport
+     (`r.bottom > innerHeight * 0.6`, i.e. 400). 335 is not, so `lift = null`, and the region falls back to its
+     stylesheet bottom, 489 → 481.
+  5. M1's `protectedUnderToasts()` then uses that bottom. Its zone `[bottom − 170, bottom]` = `[319, 489]` (later
+     `[311, 481]`) overlaps "Change brew length" at 301–325.
+  6. `watchSaveWarning()` therefore dismisses the warning and holds it. It was gone ≈390 ms after the Tab, before the
+     next Tab.
+  7. Tab 13 reaches "Change brew length". Tab 14 leaves the document, because the warning is not there.
+  8. Tabs 15–19 go to the skip link and the tab bar. Tab 20 is back on the status bar at the top, and the page scrolls
+     back to 0.
+  9. The start sticks again at 499, the lift returns (bottom 489), the zone clears, and the warning is re-shown 3.8 s
+     after it went. Focus has passed it by then.
+  10. Every cycle repeats this.
+  - The Checker's r5 note 2 found the same on the r5 trial and on M1 alone. I did not re-measure those this round.
+  - It needs `toastLiftBottom()`'s 60 % rule, `protectedUnderToasts()`'s zone, or Today's page length to change.
+    `flow.ts` is frozen, `toastLiftBottom()` must keep its logic, and Today's 100 % geometry must not change. So it is
+    **not fixed in r6**.
+  - Keyboard users can reach the button in reverse order (Shift+Tab, 7 presses).
+- **At 200 % (passes):**
+  - At the end of the page the lift stays active: at Tab 13 the region's bottom is 245, the docked start's top 255 −
+    10 (logged). The room follows the start, and the zone stays clear of "Change brew length".
+  - **One timing blip remains:** on Tab 13 the page scroll moves the start under a room whose lift updates every
+    250 ms. The warning was briefly taken away and re-shown (60–90 ms) in 1 of 2 runs on the final code and in 4 of 6
+    on `cb1cd9e` (the same Today and lift code).
+  - Focus still reached "Save backup" on Tab 14 in 8/8 runs.
+  - The r5 trial had the blip in 6/6 runs, reaching the button on Tab 14–15 (`d-keyboard/keyboard-200-repeats.txt`).
+  - It is a page-scroll and lift-poll interaction outside the toast list, so (b)'s construction does not cover it.
+
+### (e, part 2) Test results on the combined revision `091249a`
+
+| Suite | Command | Result | File |
+|---|---|---|---|
+| Typecheck | `npx tsc --noEmit --pretty false` | **clean** (branch and scratch merge) | `r6/tsc-vitest.txt` |
+| Unit | `npx vitest run` | **26 files, 265 passed** (branch and scratch merge) | `r6/tsc-vitest.txt` |
+| Browser, chromium | `KETTLE_PORT=5202 npx playwright test --project=chromium --workers=1` (every spec except timer and PWA: `a11y` 11, `integrity` 28, `statusbar` 9, `toast-room` 10, `whistle` 8) | **66 passed**, 0 failed, 0 skipped | `r6/e2e-chromium.txt` |
+| Timer and PWA | `KETTLE_PORT=5202 KETTLE_PWA_PORT=5232 npx playwright test --project=timer-harness --project=timer-app --project=pwa --workers=1` | **29 passed, 2 skipped** | `r6/e2e-timer-pwa.txt` |
+
+- **Why 2 are skipped.** Both are timer-app tests, skipped by the spec itself because they test the harness only:
+  - "Space toggles …": `test.skip(!kettlePage.includes('harness'), 'infra is exercised in the harness; screens bind
+    their own keys')`;
+  - "useRemaining re-renders …": `'render counter lives in the harness'`.
+  - Both run and pass in `timer-harness`. The skips are the same as in every earlier run, M1's included.
+- **`tests/integrity.spec.ts`** (M1's, 28 tests) is byte-identical to `3f00b57` and passes. See (e, part 1) for
+  `git diff --stat 3f00b57 091249a -- kettle/tests/integrity.spec.ts`, which prints nothing.
+- **`tests/toast-room.spec.ts` (10 tests):**
+  - **R5-D1, real toast timers** (light, dark). Follows the Checker's targeted path:
+    1. every toast held once, as a pointer resting on the stack would;
+    2. read the warning to its end and scroll as far as the stack goes;
+    3. rest 2.3 s and come back;
+    4. the middle older toast's timer released, so it expires;
+    5. one more wheel step.
+    - It asserts no frame with the warning's box below the room or over the start, no frame below full opacity, and
+      the warning never leaving the page from End on.
+    - **It fails on the r5 trial.** The committed file: the warning left the page once in each theme
+      (`r6/before-r5-trial/toast-room-final-spec-on-r5-trial.txt`). The earlier working version: 23 and 24 frames out
+      of the room (`toast-room-on-r5-trial.txt`).
+  - **Reading** at 375×667, 844×390 and (new) 667×375 at 200 %, by wheel and by touch:
+    - every warning line read, every older toast wholly on screen (hit-tested), the list still after the last input;
+    - the warning never out of its room, and never taken away since End.
+    - Input lands on a toast, because the list between toasts lets input through to the page.
+  - **The last toast fades where it was** (375×667 and 844×390 at 200 %). It fails on `d074863` (8 and 9 frames;
+    `r6/intermediate-d074863/`) and on the r5 trial (4 frames each).
+  - On the r5 trial the committed file passes the 6 reading tests (r5's held-timer reading) and fails the 4 others.
+  - The file runs with tracing off. Per-action trace snapshots spaced the steps so far apart that the races never
+    happened.
+
+### (f) Full-size BEFORE / AFTER captures
+
+Probe `.tmp/w1fix/capture6.mjs`; files in `r6/captures/{before-0d58c5e,after-091249a}/<viewport>-<theme>/`.
+
+- **BEFORE** is app code `0d58c5e` (integration `c6c7922`, `kettle/src` `1fc4a1b…`), served from a `git archive` copy.
+  **AFTER** is `091249a`.
+- **Viewports:** 390×844, 375×667 and 844×390 (DPR 2, touch) and 1440×900 (DPR 1), each light and dark, 100 % text.
+- **Setup:** each state is captured in a fresh context with the newbie seed; the 3D scene is off (stills) and sound is
+  muted. 64 PNGs (2 × 8 configs × 4 states); 0 page errors on either side. Routes, toasts and warning boxes per state
+  are in `meta.json`.
+- **All 64 were opened at full size.**
+
+| State | BEFORE `0d58c5e` | AFTER `091249a` |
+|---|---|---|
+| **Home with the warning** (storage full, End within the first minute) | 390×844: "Kettle's off" above the warning, which sits just above "Put the kettle on". 375×667: the warning (312–429 px) above "Kettle's off". 844×390: "Kettle's off" above the warning, over the stats card. 1440: the warning over the composer, "Kettle's off" under it, both above the start. | 390×844 and 1440: the same as BEFORE in the screenshots (the 100 % geometry is unchanged). 375×667: "Kettle's off" above the warning, which sits 10 px above "Put the kettle on", as in r5. **844×390 (a short room):** the warning-led stack, with the warning first and "Kettle's off" below it, above the start. (1440's `meta.json` was read mid-settle; see Still open 10.) |
+| **Focus running with the warning plus toasts** (storage full; two toasts raised 3 s in) | Phones and 844×390: **the warning is shown over the countdown and readout** ("Kettle couldn't save …" over 24:56 at 390/375/844). This is the integration regression M1 fixed. 1440: the warning and toasts over the stage. | Phones and 844×390: the warning is **held** (M1's rule; it shows when the brew ends). The two toasts sit above Add 5 / Pause / End. At 844×390 "Recipe done" touches the top of the 24:56 digits (unchanged class, Still open 7). 1440: the warning and toasts over the stage, beside the panel (M1). |
+| **Break's over with toasts** | Phones and 844×390: the toasts cover **"Mark it done, start fresh"** (D4). 1440: over the stage. | The toasts sit above "Mark it done, start fresh" (over the "Break's over" heading on phones; D4, r4, accepted). Every control is clear. 1440: unchanged. |
+| **The summary after a level-up** | "25 minutes brewed", Done / Carry forward, "Fairy lights is in your nook · Cozy level 5", Tea time / Skip break. No toast. | The same, apart from date-driven copy. |
+
+### Real-input matrices on the final code (R5-D1 and R4-D1 retests, as the r5 Checker required)
+
+All on `091249a`, served on 5202. Logs in `r6/`.
+
+| Probe | Timers | Set | Result |
+|---|---|---|---|
+| The Checker's `race.mjs` (unedited copy, `POST=80`): the targeted R5-D1 path | held once; the middle older toast released after scroll-back, then one more step | 375×667 @200, 844×390 @200, 667×375 @150 and @200, 568×320 @100; light and dark; wheel and touch; 3 reps | **0 failures in 60** (`chk-race-final.txt`); strict re-judge 0 of 60, the warning's bottom at most −2 px from the room's |
+| The Checker's `natural.mjs` (unedited copy): no synthetic events at all | real | 375×667 and 844×390 @200, 667×375 @150 and @200; light and dark; waits 0.6, 1.2 and 1.8 s; 3 reps | **0 failures in 72** (`chk-natural-final.txt`); strict re-judge 0 of 72, at most −2 px |
+| `race6.mjs` natural (mine): up as far as the stack goes, wait, down in 20 px notches and keep going, wait, up and keep going; wheel and touch; End < 1 min and End after 12 min + level-up | real | the same 4 configs × 2 themes × 2 flows × 2 inputs × waits 0.6/1.2/1.8 s × 3 reps | **0 failures in 288** after re-judging; race6 itself flagged 5. Entry hide/reset: **0 of 288** (`cb1cd9e`: 25 of 288) (`race6-natural-final.txt`) |
+| `readscroll6.mjs`: the full R4-D1 set (the Checker's r5 `readscroll.mjs`, made independent of where older toasts sit) | held, as in the Checker's | 375×667 @200, 667×375 @150/@200, 844×390 @150/@200, 568×320 @100 × alone / End < 1 min / End + level-up × wheel 20 px and touch × light and dark | **0 failures in 72**. Every line of the warning and of every older toast read; every older toast wholly on screen; "Save backup" in view, hit-testing and **downloading** in 84/84 |
+| the same, coarse notches | held | 667×375 @200 × three flows × 53 px and 100 px × two themes | 12/12 flagged, as in r5 (see Still open 3) |
+
+- **The 5 runs race6 flagged** (667×375 @150 %, touch, 1.8 s waits) are the warning's **own** 12 s end. Its exit fade
+  began in the last 20–120 ms of the recording, before its element was removed. race6 recognises a timed end only by
+  that removal.
+  - `.tmp/w1fix/rejudge6.mjs` re-judges a run as an own end only if all of these hold:
+    - the warning was never removed or re-added;
+    - the fade is monotonic and lasts to the last frame;
+    - its box was inside the room and 12 px clear of the docked start in every judged frame.
+  - The faded frames (0.81 → 0.08) are logged in `race6-natural-final.txt`.
+- **How the Checker's two scripts behave on r6:**
+  - They were written for r5's bottom-up stack. `race.mjs` scrolls "up to the oldest toast" and back to an offset of
+    −1. On r6 the list cannot scroll up past 0, so the release happens with the list at rest.
+  - `natural.mjs` wheels up (nothing moves) and then down four notches.
+  - They are run unedited, as the Checker's own check. `race6.mjs` and `readscroll6.mjs` cover the r6 directions: down
+    to the older toasts, rest there, then back.
+- **The Checker's scripts judge the warning against the list's box.** In r6 that box ends at the room's edge, so they
+  are re-judged against the region's bottom by `.tmp/w1fix/strictjudge.mjs`: 0 of 60 and 0 of 72, with the warning's bottom at most −2 px from the room's bottom in every judged frame.
+- **Resting-list motion in readscroll.** In 12 of the 72 runs the resting list's offset changed in the very frame an
+  older toast timed out and left: the toasts above the one under the pointer slid down by its height.
+  - That is the real timer, not a scroll reset. The warning is unaffected.
+  - The probe still fails any other change. r5 shows the same in 11 runs (`r6/before-r5-trial/`), and the Checker
+    judged it "not a defect" in r5.
+
+### Kept (on the final code)
+
+- **M1's `contracts/I03/capture-storage-full.mjs`** at the six configs, compared with M1's AFTER by `metacmp.mjs`
+  (route and toasts, state by state): **0 of 60 states differ**, 0 page errors (`r6/m1-capture-storage-full/`).
+- **D4** (break-over controls never under a toast; `.tmp/w1fix/breakover.mjs`): **0 failures in 24**
+  (`r6/breakover-final.txt`).
+- **The last toast leaving** (`.tmp/w1fix/lastexit.mjs`, every frame, 6 configs × 2 themes × warning / plain toast):
+  **0 of 24** (`r6/lastexit-final.txt`). `d074863` failed 10 of 24, every 200 % case.
+- **100 % toast geometry** (`toaststack.mjs @100` vs r3's `stack-after.txt`, `geomcmp.py`; `r6/stack-geometry-100.txt`):
+  - **identical** for all 24 rectangles at 375×667, 390×844 and 1440×900 (four stacks, both themes);
+  - **different** for all 32 in the short rooms at 100 % (568×320, 667×375, 844×390, 320×568). A stack with the
+    warning leads with it, and a warning alone sits 2 px higher. See Still open 4 and 5.
+- **R4-D2 kept:** `StatusBar.tsx` is unchanged since r5. `statusbar.spec.ts` "rapid live resizes at large text leave
+  the page unzoomed" (light and dark) and the other 7 statusbar tests pass in the chromium run above.
+- **01 / 01b / 10 recaptures** (`review/product-excellence/tools/capture.mjs --only 01,01b,10`, the six usual configs,
+  AFTER `091249a` and BEFORE `0d58c5e`; `r6/captures-01-01b-10/`, `pixel-diff.txt`), 0 page errors:
+  - 01 and 01b vs r5's AFTER: phones **0.000 %**; 1440 ≤ 0.019 % (Chai's idle frame).
+  - 10 vs BEFORE: 12–16 % on phones and 3.3 % at 1440. The raised toast sits above "Mark it done, start fresh" (D4,
+    r4) instead of over it, plus Chai's frames.
+  - Opened: 375×667 light 10 (AFTER and BEFORE), 390×844 dark 01, 1440×900 light 01b.
+- **Phone load CLS at 100 %** (production build of `091249a`, `vite preview` on 5232, `clsprobe.mjs`;
+  `r6/cls-today-load.txt`):
+  - **0 on 390×844, 375×667 and 360×740** in every load: 5 loads with the seed, then 3 each with fonts delayed 2.5 s,
+    a saved profile of 2,296 leaves (`tight` at 375), and both together.
+  - 1440×900 is 0, or 0.0028 with slow fonts, as in r5.
+
+### How r6 got here (intermediate code, kept as evidence)
+
+1. **`cb1cd9e`: warning-led top-down stack.** Its scroll box reached 8 px below the room (for older toasts in a 60 px
+   room).
+   - The Checker's targeted `race.mjs`: 0/60. `natural.mjs`: 0/72. `race6.mjs` natural: 0/288. readscroll matrix:
+     72/72 on wheel and touch.
+   - `r6/intermediate-cb1cd9e/`.
+   - **But** `repro6.mjs`, which judges from the warning's full opacity rather than +1.2 s, found two things in its
+     first 10 runs:
+     - the entry hide/reset of (b), in 3 of 10 runs; race6's records show it in 25 of 288 runs, at 375×667 and
+       844×390 @200 %;
+     - an older toast's edge drawn over the start for 1–2 frames, through the 8 px strip, while Today rose.
+2. **`d074863`:** the stack ends 2 px above the room, and nothing is drawn below it. In rooms under 4 em the gap below
+   the warning is 14 px, so 20/24/40 px steps still stop with the older toast wholly in view. The spec checks that the
+   warning never leaves the page from End on.
+   - `repro6.mjs`: 0 failures in the first 11 runs at 375×667.
+   - At 844×390, 1 of 9 runs failed: the warning's own 12 s end under touch dropped the region, and the fading
+     warning was drawn over the start.
+   - `r6/intermediate-d074863/`, including `lastexit.mjs`: 10 of 24 cases drew the last toast over the start while
+     fading, every 200 % case of a warning or a plain toast.
+3. **`091249a`:** the Toaster keeps the lift until the last exit has finished. `lastexit.mjs`: 0 of 24 (see (e)). The
+   new spec test fails on `d074863` (8 and 9 frames) and passes on `091249a`.
+
+### Still open (r6)
+
+1. **Keyboard at 375×667 / 100 %:** forward Tab never reaches "Save backup"; Shift+Tab does. The exact mechanism is in
+   (d). It is not fixable without changing frozen or must-keep logic, or Today's 100 % geometry.
+2. **Page scroll moving the docked start** (keyboard focus at 200 %, or any page scroll at the end of Today) can still
+   make M1's rule hide and re-show the warning, for 73–92 ms on r6.
+   - The room follows the start through the 250 ms lift poll.
+   - The r5 trial does the same: 6 of 6 keyboard runs, 21–133 ms.
+   - It is outside the toast list.
+3. **Coarse wheel notches at 667×375 @200 %** (a 60 px room), as recorded by the Checker in r5:
+   - **53 px notches:**
+     - the warning alone: 9 of 11 lines read, the same as r5;
+     - End < 1 min and End + level-up: **7 of 11** lines (r5: 9 of 11). The warning's box is now 2 px shorter, 58 px,
+       so a line is wholly in its box over fewer offsets.
+   - **100 px notches:** 3 of 11 lines read, the same as r5.
+   - With 53 or 100 px notches one older toast is never wholly in view: r6's first older toast, r5's second.
+   - Sources: `readscroll-final.txt` and `before-r5-trial/readscroll-r5-trial.txt`.
+   - Lines that pass between notches are not stopped on. Touch, a touchpad and 20/24/40 px steps read every line.
+4. **Short rooms at 100 % reorder.** In 568×320, 667×375, 844×390 and 320×568, a stack with the warning shows it at the
+   top, with older toasts below; a warning alone sits 2 px higher.
+   - All 32 toast rectangles there differ from r5. For example, at 844×390 with "Kettle's off" the warning's box is at
+     141–218 instead of 203–280 (`r6/stack-geometry-100.txt`).
+   - 375, 390 and 1440 at 100 % are identical (24/24).
+5. **Older toasts scrolled out below the room have layout boxes over the docked start.**
+   - In a warning-led stack taller than its room, the older toasts not yet scrolled into view are laid out below the
+     room's edge, clipped by the list.
+   - They are not painted there and not hit-testable. The control-centre hit-tests and the drawn-area checks in (c),
+     `toaststack.mjs` and `lastexit.mjs` all pass.
+   - But their `getBoundingClientRect()` reaches over the docked start. `toaststack.mjs`'s layout-box check
+     ("noneBelowRoom") flags the 4 three-toast stacks at 568×320 @100 % for this.
+   - Only the warning's box is measured by M1's rule, and it never leaves the room.
+   - r5 laid the same overflow out above the room instead.
+6. **In short rooms the warning fades in and out without sliding** (transform off). Other toasts keep their motion.
+7. **Visual order differs from DOM order** for the warning in a short-room stack: it is drawn first and is last in the
+   DOM.
+   - The live region announces additions, so the order of announcements is unchanged.
+   - "Save backup" is the only focusable element in the stack.
+   - A screen reader browsing the list reads oldest first. That is BLOCKED for real assistive technology.
+8. **Ordinary toasts on the session screen at 844×390 / 100 %** sit over the stage and the top of the readout:
+   "Recipe done …" covers the top of the "24:56" digits in (f).
+   - This is unchanged: the bottom-up list without an action toast, as in r5. It is the r2 note 5 / I10 class.
+   - The warning itself is held there by M1's rule.
+9. **Break-over:** the two raised toasts sit above "Mark it done, start fresh" (D4, r4) and so over the "Break's over"
+   heading. This is unchanged since r4 and was accepted by Checker r5.
+10. **Home at 1440×900 right after End**, the same class on BEFORE and AFTER (`r6/captures/lift1440.txt`):
+    - for ≈0.5–2 s the leaving session layer's control row (`data-toast-above`) is still in the DOM, so
+      `toastLiftBottom()` lifts the toasts above it (378 instead of 266 px), and they float ≈110 px higher before
+      settling above "Put the kettle on";
+    - how long the region keeps the higher lift after the row has gone differs from run to run:
+      - BEFORE: under 1 s;
+      - AFTER: in the 3 repeats that also sample the app's own `toastLiftBottom()`, it returned 266 while the
+        region's style still said 378 for up to ≈1 s. In 1 earlier run the style stayed at 378 for 2–4 s;
+      - both of the slower samples were taken while another browser was capturing in parallel;
+    - the lift is M1's unchanged `useToastAbove()` (250 ms poll). The Toaster change cannot act here: toasts are on
+      screen throughout, so the hook is active either way. The cause of the longer lag is **not established**;
+    - the two capture sets' `meta.json` caught different moments of this. The screenshots show both settled.
+11. Unchanged from r5: the 150 % transient over-width during drags; 200 % + slow fonts at 390×844 counted 0.384; r3's
+   clipped bottom shadow in short rooms.
+
+### BLOCKED / UNKNOWN (never PASS)
+
+- **BLOCKED:**
+  - real phones and touch hardware, real mouse-wheel notch sizes, real window managers and OS text-size settings.
+    Everything here is Chromium headless with SwiftShader and emulated viewports, `isMobile` with touch at DPR 2, and
+    `html { font-size }` for large text;
+  - real assistive technology;
+  - real-device audio, lock screen and real-device performance.
+- **UNKNOWN:**
+  - iOS Safari / WebKit handling of `:has()` with `order` in a flex column, of `cqh`, `align-items: safe center`, the
+    sticky action inside a scrolling toast, and AnimatePresence's `onExitComplete` timing there;
+  - scroll anchoring in other engines. r6 no longer depends on it: the offset is clamped either way.
+
+### Not produced
+
+Nothing the coordinator listed is missing. These limits apply:
+
+- **Clips:** the three clips are video (webm). They are recorded by Playwright in headless Chromium with SwiftShader,
+  not on a phone.
+- **(d) at 100 %:** forward Tab does not reach "Save backup". The reason is measured and given in (d); it is reported
+  as a failure, not estimated away.
+- **BEFORE for the R5-D1 reproduction (c):** the 60 reproduction runs were made on the final code only. The r5 failure
+  was shown by:
+  - the Checker's own runs;
+  - the new spec test on the r5 trial (`before-r5-trial/`);
+  - `race6.mjs` natural on the r5 trial during development (375×667 @200 light, End + level-up, one wheel and one
+    touch run): the wheel run failed, with the warning's box below the room in 12 frames (up to +3 px).
+    `before-r5-trial/race6-natural-r5-trial-2runs.jsonl`.
+  - The coordinator's pause stopped the planned r5-side matrices (race6 and the Checker's race/natural on 5222)
+    before they started. The readscroll R4-D1 set *was* run on the r5 trial: `before-r5-trial/readscroll-r5-trial.txt`,
+    72/72 with held timers.
+
+### Commands (final code `091249a`; servers: 5202 the branch; 5222 `git archive` copies of BEFORE `0d58c5e`, and of the r5 trial `20671eb` at other times; 5232 previews)
+
+```
+npx tsc --noEmit --pretty false                                   → clean (branch; scratch merge 859f9fb)
+npx vitest run                                                    → 26 files, 265 passed (branch; scratch merge)
+KETTLE_PORT=5202 npx playwright test --project=chromium --workers=1                   → 66 passed
+KETTLE_PORT=5202 KETTLE_PWA_PORT=5232 npx playwright test --project=timer-harness \
+     --project=timer-app --project=pwa --workers=1                                    → 29 passed, 2 skipped (harness-only)
+node .tmp/w1fix/repro6.mjs http://127.0.0.1:5202 final <dir> '<cfg>' 20 1             → 0 failures in 60 (c)
+node .tmp/w1fix/kbd6.mjs http://127.0.0.1:5202 final <dir> 100,200 light,dark 500 80 Tab   (+ Shift+Tab; kbdwhy.mjs) (d)
+node .tmp/w1fix/capture6.mjs http://127.0.0.1:5202|5222 <rev> <dir>                   → 64 captures, 0 page errors (f)
+POST=80 node .tmp/w1fix/chk-r5/race.mjs … ; node .tmp/w1fix/chk-r5/natural.mjs …    → 0/60, 0/72
+node .tmp/w1fix/race6.mjs http://127.0.0.1:5202 final <dir> natural '<cfg>' 3         → 288 runs, 0 after rejudge6.mjs (5 own-end cuts)
+node .tmp/w1fix/readscroll6.mjs …                                                     → 0/72 (+ coarse 12 flagged)
+node .tmp/w1fix/strictjudge.mjs <Checker jsonl>                                       → 0 below the region
+node review/product-excellence/contracts/I03/capture-storage-full.mjs … ×6 + metacmp  → 0/60 states differ
+node .tmp/w1fix/breakover.mjs … ; lastexit.mjs … ; toaststack.mjs … @100 + geomcmp.py
+node review/product-excellence/tools/capture.mjs … --only 01,01b,10 (6 configs, AFTER and BEFORE)
+npx vite build --outDir <scratch> && npx vite preview --port 5232 ; node .tmp/w1fix/clsprobe.mjs …
+git worktree add --detach <scratch>/trial-r6 c6c7922 ; git merge --no-ff 091249a → 859f9fb ; git worktree remove
+```
+
+All servers (5202, 5222, 5232) and probes were stopped. The scratch worktree was removed, and the scratch copies in
+the session's scratch directory are not worktrees.

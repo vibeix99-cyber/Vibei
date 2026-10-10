@@ -1,0 +1,22 @@
+# tests/toast-room.spec.ts (the r6 working version of 2026-10-10 ~10:20Z: the reading tests at 375×667 / 844×390 and the
+# R5-D1 real-timer test, before the 667×375 case, the "never left the page since End" assertion and the last-exit test
+# were added — each only adds checks) against the Checker's r5 trial 20671eb, git-archive copy served on 5222.
+# KETTLE_PORT=5222 npx playwright test tests/toast-room.spec.ts --project=chromium --workers=2
+
+  ✓  1 [chromium] › tests/toast-room.spec.ts:155:5 › the storage-full warning can be read and an older toast revealed by wheel without the warning going away (375×667, 200 % text) (10.5s)
+  ✓  2 [chromium] › tests/toast-room.spec.ts:155:5 › the storage-full warning can be read and an older toast revealed by touch without the warning going away (375×667, 200 % text) (15.0s)
+  ✓  3 [chromium] › tests/toast-room.spec.ts:155:5 › the storage-full warning can be read and an older toast revealed by wheel without the warning going away (844×390, 200 % text) (11.4s)
+  ✓  4 [chromium] › tests/toast-room.spec.ts:155:5 › the storage-full warning can be read and an older toast revealed by touch without the warning going away (844×390, 200 % text) (17.3s)
+  ✘  5 [chromium] › tests/toast-room.spec.ts:238:3 › an older toast timing out after the list was scrolled never moves the warning out of its room (375×667, 200 % text, wheel, light) (15.0s)
+  ✘  6 [chromium] › tests/toast-room.spec.ts:238:3 › an older toast timing out after the list was scrolled never moves the warning out of its room (375×667, 200 % text, wheel, dark) (14.9s)
+    Error: frames with the warning's box below its room or over the docked start (of 157)
+    Expected: 0
+    Received: 23
+    Error: frames with the warning's box below its room or over the docked start (of 155)
+    Expected: 0
+    Received: 24
+  2 failed
+  4 passed (1.4m)
+
+# The reading tests pass on r5 (held timers, as r5 achieved); the R5-D1 test with real timers fails, as intended.
+# The same version passed 6/6 on the r6 code at that time; the final version passes 10/10 on 091249a (r6/e2e-chromium.txt).

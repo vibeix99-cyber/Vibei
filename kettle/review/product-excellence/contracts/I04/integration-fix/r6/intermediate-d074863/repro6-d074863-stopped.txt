@@ -1,0 +1,40 @@
+# repro6.mjs on d074863 (r6c CSS, before the Toaster lift-during-exit change), stopped after these runs; run #5 at 844×390 shows the last toast's
+# own timed end drawn over the docked start while it fades (the region dropping back when the list empties), fixed in 091249a
+final 375x667@200 light wheel before d=3600 #0: OK | 410 judged frames; gesture 3846–5611 ms (8 inputs), warning at 242; older toasts expired at [3461,3461] = ["before","before"] the gesture; list offsets 0..0; max (warning bottom − room bottom) -2 px; removals 0
+final 375x667@200 light touch before d=3600 #1: OK | 525 judged frames; gesture 3860–7493 ms (12 inputs), warning at 254; older toasts expired at [3499,3499] = ["before","before"] the gesture; list offsets 0..0; max (warning bottom − room bottom) -2 px; removals 0
+final 375x667@200 light wheel before d=4200 #2: OK | 462 judged frames; gesture 4363–6127 ms (8 inputs), warning at 157; older toasts expired at [3458,3458] = ["before","before"] the gesture; list offsets 0..0; max (warning bottom − room bottom) -2 px; removals 0
+final 375x667@200 light touch before d=4200 #3: OK | 558 judged frames; gesture 4372–7826 ms (11 inputs), warning at 165; older toasts expired at [3482,3482] = ["before","before"] the gesture; list offsets 0..0; max (warning bottom − room bottom) -2 px; removals 0
+final 375x667@200 light wheel before d=4800 #4: OK | 491 judged frames; gesture 5014–6769 ms (8 inputs), warning at 209; older toasts expired at [3502,3502] = ["before","before"] the gesture; list offsets 0..0; max (warning bottom − room bottom) -2 px; removals 0
+final 375x667@200 light touch before d=4800 #5: OK | 613 judged frames; gesture 5140–8692 ms (12 inputs), warning at 336; older toasts expired at [3472,3472] = ["before","before"] the gesture; list offsets 0..0; max (warning bottom − room bottom) -2 px; removals 0
+final 375x667@200 light wheel during d=1000 #6: OK | 405 judged frames; gesture 1227–5457 ms (21 inputs), warning at 223; older toasts expired at [4053,5053] = ["during","during"] the gesture; list offsets 0..170; max (warning bottom − room bottom) -2 px; removals 0 | VIDEO
+final 375x667@200 light touch during d=1000 #7: OK | 429 judged frames; gesture 1327–6024 ms (15 inputs), warning at 320; older toasts expired at [3512,3512] = ["during","during"] the gesture; list offsets 0..27; max (warning bottom − room bottom) -2 px; removals 0
+final 375x667@200 light wheel during d=1600 #8: OK | 429 judged frames; gesture 1834–5859 ms (20 inputs), warning at 231; older toasts expired at [4041,5457] = ["during","during"] the gesture; list offsets 0..170; max (warning bottom − room bottom) -2 px; removals 0
+final 375x667@200 light touch during d=1600 #9: OK | 467 judged frames; gesture 1765–6236 ms (15 inputs), warning at 161; older toasts expired at [3459,3459] = ["during","during"] the gesture; list offsets 0..18; max (warning bottom − room bottom) -2 px; removals 0
+final 375x667@200 light wheel during d=2200 #10: OK | 399 judged frames; gesture 2353–5191 ms (13 inputs), warning at 149; older toasts expired at [3442,4784] = ["during","during"] the gesture; list offsets 0..80; max (warning bottom − room bottom) -2 px; removals 0
+final 375x667@200 light touch during d=2200 #11: ERROR page.evaluate: Target page, context or browser has been closed
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+browser.newContext: Target page, context or browser has been closed
+    at async file:///home/user/wt/w1fix-m2/kettle/.tmp/w1fix/repro6.mjs:47:17
+
+Node.js v22.22.2
+final 844x390@200 light wheel before d=3600 #0: OK | 493 judged frames; gesture 3874–7099 ms (16 inputs), warning at 269; older toasts expired at [3516,3516] = ["before","before"] the gesture; list offsets 0..0; max (warning bottom − room bottom) -2 px; removals 0
+final 844x390@200 light touch before d=3600 #1: OK | 791 judged frames; gesture 3883–11865 ms (28 inputs), warning at 279; older toasts expired at [3523,3523] = ["before","before"] the gesture; list offsets 0..0; max (warning bottom − room bottom) -2 px; removals 0
+final 844x390@200 light wheel before d=4200 #2: OK | 546 judged frames; gesture 4446–7678 ms (16 inputs), warning at 239; older toasts expired at [3480,3480] = ["before","before"] the gesture; list offsets 0..0; max (warning bottom − room bottom) -2 px; removals 0
+final 844x390@200 light touch before d=4200 #3: OK | 815 judged frames; gesture 4369–11978 ms (26 inputs), warning at 164; older toasts expired at [3472,3472] = ["before","before"] the gesture; list offsets 0..0; max (warning bottom − room bottom) -2 px; removals 0
+final 844x390@200 light wheel before d=4800 #4: OK | 572 judged frames; gesture 5042–8272 ms (16 inputs), warning at 239; older toasts expired at [3489,3489] = ["before","before"] the gesture; list offsets 0..0; max (warning bottom − room bottom) -2 px; removals 0
+final 844x390@200 light touch before d=4800 #5: FAIL warning box over a protected control in 1 frames; a toast drawn over a protected control in 9 frames; a protected control's centre hit-testing as a toast in 9 frames | 821 judged frames (to the warning's own timed end at 14581); gesture 5063–13163 ms (28 inputs), warning at 255; older toasts expired at [3536,3536] = ["before","before"] the gesture; list offsets 0..0; max (warning bottom − room bottom) -2 px; removals 1
+final 844x390@200 light wheel during d=1000 #6: OK | 477 judged frames; gesture 1242–6665 ms (26 inputs), warning at 240; older toasts expired at [4074,5513] = ["during","during"] the gesture; list offsets 0..129; max (warning bottom − room bottom) -2 px; removals 0 | VIDEO
+final 844x390@200 light touch during d=1000 #7: OK | 658 judged frames; gesture 1231–9376 ms (28 inputs), warning at 226; older toasts expired at [3498,3498] = ["during","during"] the gesture; list offsets 0..0; max (warning bottom − room bottom) -2 px; removals 0
+final 844x390@200 light wheel during d=1600 #8: OK | 438 judged frames; gesture 1862–5857 ms (20 inputs), warning at 259; older toasts expired at [3474,4672] = ["during","during"] the gesture; list offsets 0..65; max (warning bottom − room bottom) -2 px; removals 0
+final 844x390@200 light touch during d=1600 #9: ERROR page.evaluate: Target page, context or browser has been closed
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+browser.newContext: Target page, context or browser has been closed
+    at async file:///home/user/wt/w1fix-m2/kettle/.tmp/w1fix/repro6.mjs:47:17
+
+Node.js v22.22.2

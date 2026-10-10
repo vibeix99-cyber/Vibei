@@ -1,0 +1,10 @@
+# tests/toast-room.spec.ts -g 'last toast fades' (091249a's test) against d074863's Toast.tsx, 5202
+  ✘  1 [chromium] › tests/toast-room.spec.ts:346:3 › the last toast fades out where it was, never over the docked start (375×667, 200 % text) (4.9s)
+  ✘  2 [chromium] › tests/toast-room.spec.ts:346:3 › the last toast fades out where it was, never over the docked start (844×390, 200 % text) (4.8s)
+    Error: frames with the leaving toast drawn over the docked start (of 130)
+    Expected: 0
+    Received: 8
+    Error: frames with the leaving toast drawn over the docked start (of 131)
+    Expected: 0
+    Received: 9
+  2 failed
