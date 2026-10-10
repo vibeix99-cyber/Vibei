@@ -49,13 +49,16 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
 | `/home/user/wt/m1` | `pe/m1@a6ebe00` | M1 Wave 1 | APPROVED r2, merged (`7da58f1`). Idle |
 | `/home/user/wt/m2` | `pe/m2@2becb78` | M2 Wave 1 | APPROVED r1, merged (`0d58c5e`). Idle |
 | `/home/user/wt/w1fix` | `pe/w1-fix@3f00b57` (src `3c58bf9`) | **M1 integration fix** (I03 × I04) | **APPROVED r1** (fresh Checker). Held unmerged; any change voids it. Clean |
-| `/home/user/wt/w1fix-m2` | `pe/w1-fix-m2@e4be56e` (src `97d26c5`; last code commit `54bf8be`) | **M2 integration fix** (I04 status bar + toasts) | **r3 READY FOR REVIEW: NOT REVIEWED** (Checker deliberately not launched: user pause). Clean |
+| `/home/user/wt/w1fix-m2` | `pe/w1-fix-m2@adec1a2` (src `dcc3778`; code `9326de5`) | **M2 integration fix** (I04 status bar + toasts + break-over) | **r4 READY FOR REVIEW**, in review. Clean |
+| `/home/user/wt/chk-r4` / `chk-r4-base` | detached `adec1a2` / `4992956` | fresh Checker for r4 | scratch |
+| `/home/user/wt/trial-r4` | detached `1f1558e` | trial merge `4992956` + `3f00b57` + `adec1a2` (clean; frozen M1 files byte-identical to `3f00b57`) | scratch, not the real merge |
 
 **Archives** (`review/product-excellence/archive/`, pushed; restore with `git fetch <bundle> 'refs/heads/*:refs/heads/*'`):
 - `maker-branches-2026-10-09.bundle`: `pe/w1-fix@1351c99`, `pe/w1-fix-m2@c9520db` (full).
 - `pe-w1-fix-3f00b57.incremental.bundle`: `pe/w1-fix@3f00b57` (needs `1351c99`).
 - `pe-w1-fix-m2-r2wip.incremental.bundle`: `pe/w1-fix-m2@e1e672d` (needs `c9520db`).
 - `pe-w1-fix-m2-r2-e932f65.incremental.bundle`: `pe/w1-fix-m2@e932f65` (needs `e1e672d`).
+- `pe-w1-fix-m2-r4-adec1a2.incremental.bundle`: `pe/w1-fix-m2@adec1a2` (needs `e4be56e`).
 - `pe-w1-fix-m2-r3-e4be56e.incremental.bundle.part-00..02` + `.sha256`: `pe/w1-fix-m2@e4be56e` (needs `e932f65`).
   Split because the bundle is 112 MB. Reassemble with
   `cat pe-w1-fix-m2-r3-e4be56e.incremental.bundle.part-* > pe-w1-fix-m2-r3-e4be56e.incremental.bundle` and check
@@ -73,7 +76,7 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
 | I04 integration fix r1 | `c9520db` (src `57f00c4`) | **REJECT** (review interrupted by a usage limit, then resumed): D1 no re-fit after resize/rotation to 375×667; D2 200 % text + ≥10,000 leaves spills "Level NN" | `contracts/I04/CHECKER-integration-fix-r1.md` |
 | I04 integration fix r2 | `e932f65` (src `c873084`; trial with `3f00b57` = `db3418a`) | **REJECT** (fresh Checker): R2-D1 no re-fit when the window narrows without changing the bar's box; R2-D3 stacked toasts at large text collapse and the warning text spills out of its box | `contracts/I04/CHECKER-integration-fix-r2.md` |
 | I04 integration fix r3 | `e4be56e` (src `97d26c5`) | **NOT REVIEWED** (no Checker launched: user pause; then superseded before review by r4 in progress, which adds D4). Not APPROVE, not REJECT | — |
-| I04 integration fix r4 (r3 + D4 break-over toast + date-independent short-screen gate) | — | **in progress (M2)**, not submitted | (`contracts/I04/CHECKER-integration-fix-r4.md` to be written) |
+| I04 integration fix r4 (r3 + D4 break-over toast + date-independent short-screen gate) | `adec1a2` (src `dcc3778`; code `9326de5`; trial merge with `3f00b57` = `1f1558e`, src `0d0db47`) | **IN REVIEW — no verdict yet** (fresh Checker, not any earlier Checker) | `contracts/I04/CHECKER-integration-fix-r4.md` (to be written) |
 
 ### Submitted, awaiting review: M2 r3 `e4be56e` (maker's claims, unverified by any Checker)
 
@@ -363,6 +366,18 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
   - Routed to M2 as **D4** on `pe/w1-fix-m2`, before r3 is reviewed: keep break-over controls clear of toasts, make the gate
     date-independent, and capture BEFORE/AFTER at 3 viewports × 2 themes. M2 is to submit r4. Then a fresh Checker reviews
     r4 plus a trial merge with `3f00b57`.
+
+- M2 submitted **r4** `pe/w1-fix-m2@adec1a2` (code `9326de5`, src `dcc3778`).
+  - D4: a new `.overDock[data-toast-above]` wrapper holds "Mark it done, start fresh" and both break-over actions.
+  - The short-screen a11y gate now raises 1–2 toasts on break-over on every date, and a new break-over toast test was added.
+  - Only `FocusScreen.tsx`/`.module.css` and `tests/a11y.spec.ts` changed vs r3. Frozen M1 files untouched.
+  - Maker's runs (unreviewed): branch a11y + statusbar 18/18; gate fails on `e4be56e` and `0d58c5e`; break-over probe
+    0/24 on the fix (16/24 on `e4be56e`); trial integrity + a11y + statusbar + whistle 54/54; M1 warning hold on
+    break-over 0/40 visible.
+  - Evidence: `contracts/I04/integration-fix/r4/` (48 BEFORE/AFTER frames). Archived as
+    `archive/pe-w1-fix-m2-r4-adec1a2.incremental.bundle`.
+- Trial merge `1f1558e` built by the orchestrator (clean). A fresh independent Checker was launched on `adec1a2` + the
+  trial, covering D1, D2, D3, R2-D1, R2-D3 and D4, the M1 interaction, CLS, REFERENCE → BEFORE → AFTER and the disclosures.
 
 ## Exact next action
 
