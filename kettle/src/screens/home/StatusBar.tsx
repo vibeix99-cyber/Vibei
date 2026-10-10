@@ -196,15 +196,17 @@ function useWrapWhenCrowded() {
     const el = ref.current;
     if (!el || typeof ResizeObserver === 'undefined') return;
     let live = true;
-    // Run a measurement with the bar contained (see above), only where that leaves the bar's own box as it is (a bar
-    // stretched to its column: every phone layout). A bar sized to its content (some desktop layouts) is measured as
-    // before; those are not mobile pages, so their page scale cannot drift.
+    // Run a measurement with the bar contained (see above), wherever that leaves what is measured as it is: the stats
+    // start at the bar's left edge (left-packed or spread rows, as on every phone), and containment does not move that
+    // edge. A row too wide for the bar then runs on from the same left edge, exactly as when it widened the bar. A
+    // right-packed bar sized to its content (some desktop layouts, not mobile pages) is measured as before.
     const measuring = (fn: () => void) => {
       const st = el.style;
-      const width = el.getBoundingClientRect().width;
+      const left = el.getBoundingClientRect().left;
+      const packed = getComputedStyle(el).justifyContent;
       st.contain = 'inline-size';
       st.overflowX = 'clip';
-      if (Math.abs(el.getBoundingClientRect().width - width) > 0.5) {
+      if (!/^(normal|flex-start|start|left|space-between)$/.test(packed) || Math.abs(el.getBoundingClientRect().left - left) > 0.5) {
         st.contain = '';
         st.overflowX = '';
       }

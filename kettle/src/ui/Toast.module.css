@@ -172,6 +172,16 @@
     z-index: 2;
     max-height: 100cqh;
     overflow-y: auto;
+    /* Centred as before, but a message taller than the box starts at its top (plain centring would push its opening
+       above the box, where no scrolling reaches). */
+    align-items: safe center;
+  }
+  /* The action stays in view while a long message scrolls inside its toast, whether it sits beside the message or
+     under it (the large-text layout below sets which edge it rests on). */
+  .action {
+    position: sticky;
+    top: 0;
+    bottom: 0;
   }
   /* A toast with an action (the storage-full warning) never moves down: it is sticky at the bottom of the scroll box,
      so at every scroll offset its drawn box stays inside the room, clear of the docked start. (M1's hold rule measures

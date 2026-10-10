@@ -1,7 +1,8 @@
 /**
  * Today's status bar (I04 F6 + integration fix r2): the three stats (warm days · leaves · level) stay on one row on
  * phones at normal text size, tighten before they wrap, wrap only when they genuinely can't fit, and never make Today
- * scroll sideways — including after a resize/rotation and at 200 % text with large leaf totals.
+ * scroll sideways — including after a resize/rotation and at 200 % text with large leaf totals — nor leave a phone page
+ * zoomed in after rapid live resizes at large text.
  *
  *   KETTLE_PORT=5222 npx playwright test tests/statusbar.spec.ts --project=chromium
  */
@@ -181,6 +182,47 @@ for (const theme of ['light', 'dark'] as const) {
     expect(d.scrollWidth, 'desktop window: horizontal scrollbar').toBeLessThanOrEqual(d.clientWidth);
     expect(d.barRight).toBeLessThanOrEqual(d.clientWidth);
     await dctx.close();
+  });
+}
+
+for (const theme of ['light', 'dark'] as const) {
+  // I04 R4-D2: the bar's measurement must never make the page wider than the screen, even for a moment. At large text the
+  // unwrapped row is far wider than a phone; laid out during a live resize it widened the mobile layout viewport, and
+  // Chromium's page scale settled on that width and left Today zoomed in until a pinch.
+  test(`rapid live resizes at large text leave the page unzoomed (${theme})`, async ({ browser, baseURL }) => {
+    test.setTimeout(240_000);
+    const runs: Record<string, (page: Page) => Promise<void>> = {
+      'zero-wait bounce': async (page) => {
+        for (const w of [414, 375, 390, 375, 400, 375, 384, 375, 414, 375]) await page.setViewportSize({ width: w, height: 667 });
+      },
+      '414↔376 drag, 2 px / 16 ms': async (page) => {
+        for (let w = 412; w >= 376; w -= 2) await page.setViewportSize({ width: w, height: 667 }).then(() => page.waitForTimeout(16));
+        for (let w = 376; w <= 412; w += 2) await page.setViewportSize({ width: w, height: 667 }).then(() => page.waitForTimeout(16));
+        await page.setViewportSize({ width: 375, height: 667 });
+      },
+      '414 → 375, 1 px, no wait': async (page) => {
+        for (let w = 413; w >= 375; w--) await page.setViewportSize({ width: w, height: 667 });
+      },
+    };
+    for (const pct of [200, 150]) {
+      const ctx = await browser.newContext({ ...phone, viewport: { width: 414, height: 667 }, colorScheme: theme });
+      await bigText(ctx, pct);
+      const page = await ctx.newPage();
+      await open(page, base(baseURL), { theme });
+      await page.evaluate(() => (window as any).__kettle.progress.setState({ leaves: 2296 }));
+      for (const [name, run] of Object.entries(runs)) {
+        await page.setViewportSize({ width: 414, height: 667 });
+        await settle(page);
+        await run(page);
+        await settle(page);
+        const vv = await page.evaluate(() => ({ scale: visualViewport!.scale, width: Math.round(visualViewport!.width), innerWidth }));
+        const where = `${pct} % text, ${name}`;
+        expect(vv.scale, `${where}: page left zoomed in`).toBe(1);
+        expect(vv.width, where).toBe(vv.innerWidth);
+        noSidewaysScroll(await row(page), 375);
+      }
+      await ctx.close();
+    }
   });
 }
 
