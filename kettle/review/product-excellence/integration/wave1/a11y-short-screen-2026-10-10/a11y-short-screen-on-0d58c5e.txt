@@ -1,0 +1,42 @@
+[WebServer] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[WebServer]   - import "../vite.config" without a file extension (tests/e2e.vite.config.ts:6:18). Add the file extension
+[WebServer] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › tests/a11y.spec.ts:87:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll (38.9s)
+
+
+  1) [chromium] › tests/a11y.spec.ts:87:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "break-over: \"Mark it done, start fresh\" stays under span._message_12y3u_54",
+    + ]
+
+       99 |     await check(pg.id, page);
+      100 |   }
+    > 101 |   expect(out).toEqual([]);
+          |               ^
+      102 | });
+      103 |
+      104 | // ---------------------------------------------------------------- keyboard journey
+        at /home/user/Vibei/kettle/tests/a11y.spec.ts:101:15
+
+    Error Context: test-results/a11y-short-screen-375×667--859fd-y-chrome-no-sideways-scroll-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/a11y-short-screen-375×667--859fd-y-chrome-no-sideways-scroll-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/a11y-short-screen-375×667--859fd-y-chrome-no-sideways-scroll-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/a11y.spec.ts:87:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll 

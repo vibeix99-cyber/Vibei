@@ -10,10 +10,27 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
-## ⏸ PAUSE CHECKPOINT — 2026-10-10 01:30 UTC (read this first)
+## ⏸ PAUSE CHECKPOINT — 2026-10-10 01:30 UTC (read this first) · ▶ RESUMED 01:40 UTC
 
-**Execution is PAUSED by the user** (switching to Ultracode). On resume, do nothing until the user says so. Then follow
-"Next action on resume" below. No Checker is running, no merge has been made, and Wave 2 has not started.
+**Resumed by the user** on 2026-10-10 ~01:40 UTC, with instructions to reread the master prompt, plan and preserve list
+and to continue from this checkpoint.
+- **Reread and hash-verified** against `PACKAGE-MANIFEST.json`:
+  - `CLAUDE_CODE_MASTER_PROMPT.md` `8bc6de59…`
+  - `PRODUCT_EXCELLENCE_PLAN.md` `7872d7bf…`
+  - `PRESERVE_LIST.md` `9fecdcfd…`
+  - The package review still reads **APPROVE 131/140** for this revision.
+- **In force:**
+  - maker/checker separation;
+  - approval bound to exact revisions, with any change voiding it;
+  - REFERENCE → BEFORE → AFTER review, with full-size media opened by the reviewer;
+  - integration regression after merge;
+  - a separate Final Product Boss.
+- **Session model:** configured `claude-opus-5-5`, last served `claude-opus-5-5` (via `get_session`), so the direct
+  visual-inspection requirement can be met.
+- **Progress since resume:** see the log entries dated 2026-10-10 at the end of the Log.
+
+*Paused state as it was recorded at 01:30 UTC:* execution was paused by the user (switching to Ultracode). No Checker
+was running, no merge had been made, and Wave 2 had not started.
 
 **Restore point:** `8f1044a`, untouched (local tag `pre-product-excellence`; on the remote it is an ancestor of the
 integration branch). Never reset or rewrite past it.
@@ -55,7 +72,8 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
 | I03 × I04 integration fix (+ I01, I02 re-confirmed; I04 toast lift unchanged) | `3f00b57` (src `3c58bf9`) | **APPROVE** (r1, fresh Checker; I03 still PARTLY BLOCKED: real browser quota, real OS suspension, real AT) | `contracts/I03/CHECKER-integration-fix-r1.md` |
 | I04 integration fix r1 | `c9520db` (src `57f00c4`) | **REJECT** (review interrupted by a usage limit, then resumed): D1 no re-fit after resize/rotation to 375×667; D2 200 % text + ≥10,000 leaves spills "Level NN" | `contracts/I04/CHECKER-integration-fix-r1.md` |
 | I04 integration fix r2 | `e932f65` (src `c873084`; trial with `3f00b57` = `db3418a`) | **REJECT** (fresh Checker): R2-D1 no re-fit when the window narrows without changing the bar's box; R2-D3 stacked toasts at large text collapse and the warning text spills out of its box | `contracts/I04/CHECKER-integration-fix-r2.md` |
-| I04 integration fix r3 | `e4be56e` (src `97d26c5`) | **NOT REVIEWED** (no Checker launched: user pause). Not APPROVE, not REJECT | (`contracts/I04/CHECKER-integration-fix-r3.md` to be written) |
+| I04 integration fix r3 | `e4be56e` (src `97d26c5`) | **NOT REVIEWED** (no Checker launched: user pause; then superseded before review by r4 in progress, which adds D4). Not APPROVE, not REJECT | — |
+| I04 integration fix r4 (r3 + D4 break-over toast + date-independent short-screen gate) | — | **in progress (M2)**, not submitted | (`contracts/I04/CHECKER-integration-fix-r4.md` to be written) |
 
 ### Submitted, awaiting review: M2 r3 `e4be56e` (maker's claims, unverified by any Checker)
 
@@ -99,7 +117,7 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
    merged.**
 2. **Integration defect 2** (I04: Today status bar at 375) and its follow-ups D1, D2, D3, R2-D1, R2-D3. **Claimed fixed by
    `e4be56e`; unreviewed.**
-3. **NEW, needs adjudication on resume:** `tests/a11y.spec.ts` "short screen (375×667)" fails on 2026-10-10 on `e4be56e`,
+3. **ADJUDICATED 2026-10-10 → pre-existing I04 defect D4, routed to M2** (evidence `integration/wave1/a11y-short-screen-2026-10-10/`). Original note: `tests/a11y.spec.ts` "short screen (375×667)" fails on 2026-10-10 on `e4be56e`,
    on the trial merge, and on `c9520db` (maker's run: `r3/a11y-short-screen-on-c9520db.txt`). The message is
    `break-over: "Mark it done, start fresh" stays under span._message…`: a date-dependent progress toast after the tea break
    covers the break-over button. It passed on 2026-10-09 runs. It is probably also red on the integration branch today,
@@ -150,6 +168,8 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
 
 ### Next action on resume (only when the user says so)
 
+0. *(2026-10-10 resume)* Step 2's adjudication is done (pre-existing → D4 routed to M2). Step 3 now reviews **r4**
+   (r3 + D4), not r3.
 1. **Restore if the container was lost:** fetch the archive bundles above in order (reassemble the r3 parts first), then
    recreate worktrees `/home/user/wt/w1fix` (`pe/w1-fix`) and `/home/user/wt/w1fix-m2` (`pe/w1-fix-m2`), with
    `node_modules` symlinked to `/home/user/Vibei/kettle/node_modules`.
@@ -330,6 +350,19 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
 - 2026-10-10 01:30 UTC: **user paused execution** (switching to Ultracode). M2 finished and committed r3 before stopping;
   no Checker launched, nothing merged, Wave 2 not started; no agents, servers or scratch worktrees running. See the
   PAUSE CHECKPOINT at the top.
+
+- 2026-10-10 ~01:40 UTC: **resumed by the user.** Master prompt, plan and preserve list reread and hash-verified; rules
+  reconfirmed (see the checkpoint header). The repository matched the pause checkpoint exactly.
+- **Adjudication of the a11y "short screen" failure:** it fails on the integration branch's app code `0d58c5e` too, so it
+  is **pre-existing**, not caused by either fix.
+  - Cause: today's recipe rotation completes "Take 2 full tea breaks" at the journey's break end, and the resulting toast is
+    lifted above "Put the kettle on", fully covering the carried-task button "Mark it done, start fresh". That button
+    (`.overMark`) sits outside the `data-toast-above` group.
+  - Evidence: `integration/wave1/a11y-short-screen-2026-10-10/` (run log, probe, full-size screenshot inspected by the
+    orchestrator).
+  - Routed to M2 as **D4** on `pe/w1-fix-m2`, before r3 is reviewed: keep break-over controls clear of toasts, make the gate
+    date-independent, and capture BEFORE/AFTER at 3 viewports × 2 themes. M2 is to submit r4. Then a fresh Checker reviews
+    r4 plus a trial merge with `3f00b57`.
 
 ## Exact next action
 
