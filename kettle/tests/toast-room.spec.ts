@@ -3,8 +3,9 @@
  * be read to its end, and an older toast stacked with it revealed, with REAL input (mouse wheel, touch drag), while the
  * app's warning watcher runs; and an older toast timing out on its real timer in a scrolled list never moves it. The
  * warning must stay on screen at full opacity the whole time, its drawn box never reaching below its room or over the
- * docked start (the watcher measures that box and would take the warning away), and the list must stay where it was
- * scrolled. Recorded every frame, for 2 s past the last input (the watcher ticks every 250 ms).
+ * docked start (the watcher measures that box and would take the warning away), never taken away from End on (its
+ * entry included), and the list must stay where it was scrolled. Recorded every frame, for 2 s past the last input (the
+ * watcher ticks every 250 ms).
  *
  *   KETTLE_PORT=5222 npx playwright test tests/toast-room.spec.ts --project=chromium
  */
@@ -76,6 +77,13 @@ async function warningAfterEarlyEnd(page: Page, url: string, { levelUp = false, 
   await page.waitForFunction(() => location.hash === '#/focus');
   await page.waitForTimeout(2500);
   if (levelUp) await page.evaluate(() => (window as any).__kettle.ff(12 * 60_000 + 5_000));
+  // From End on: every time the warning's element leaves the page (taken away by the hold rule, or its own end).
+  await page.evaluate((W) => {
+    const gone: number[] = ((window as any).__warningGone = []);
+    new MutationObserver((ms) => {
+      for (const m of ms) for (const n of m.removedNodes) if ((n as Element).id === W) gone.push(performance.now());
+    }).observe(document.body, { childList: true, subtree: true });
+  }, WARNING);
   await page.evaluate(() => (window as any).__kettle.timer.getState().end('user'));
   await page.waitForFunction(() => location.hash === '#/' || location.hash === '');
   await page.waitForSelector(`[id="${WARNING}"]`, { timeout: 10_000 });
@@ -235,6 +243,7 @@ for (const [w, h, pct, levelUp] of [
         };
       }, lastInput);
       expect(r.msAfter, 'recorded past the last input').toBeGreaterThanOrEqual(2000);
+      expect(await page.evaluate(() => (window as any).__warningGone.length), 'times the warning left the page since End').toBe(0);
       expect(r.gone, `frames without the warning at full opacity (of ${r.frames})`).toBe(0);
       expect(r.overDock, 'frames with the warning below its room or over the docked start').toBe(0);
       expect(r.scrollMoved, 'the list moved after the last input').toBeLessThanOrEqual(1);
@@ -320,6 +329,8 @@ for (const theme of ['light', 'dark'] as const) {
       [tRelease, lastInput] as const,
     );
     expect(r.msAfter, 'recorded past the last input').toBeGreaterThanOrEqual(2000);
+    // Not taken away at any point since End, its entry included (the docked start settles as Today rises into place).
+    expect(await page.evaluate(() => (window as any).__warningGone.length), 'times the warning left the page since End').toBe(0);
     expect(r.outOfRoom, `frames with the warning's box below its room or over the docked start (of ${r.frames})`).toBe(0);
     expect(r.gone, `frames without the warning at full opacity (of ${r.frames})`).toBe(0);
     await ctx.close();

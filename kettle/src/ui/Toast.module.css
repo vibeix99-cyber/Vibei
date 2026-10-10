@@ -135,8 +135,8 @@
     overflow-y: auto;
     overscroll-behavior: contain;
     /* Room for the toasts' shadows above and beside them inside the scroll box; negative margins give back exactly
-       what the padding takes, so nothing moves. (Below the stack the box ends at the toasts, or one gap below them
-       for a stack led by a warning, see below: nothing scrolls into the space over the docked start.) */
+       what the padding takes, so nothing moves. (Below the stack the box ends at the room's bottom edge: nothing
+       scrolls into the space over the docked start.) */
     width: calc(100% + 64px);
     max-width: calc(440px + 64px);
     margin: -20px -32px 0;
@@ -183,18 +183,16 @@
   /* A stack with a toast that has an action (the storage-full warning) leads with that toast: it is drawn first, at
      the top, and the list scrolls from the top down, so the older toasts below it come into view as it moves up. Its
      box therefore never moves below where it rests, at any scroll offset and whatever the other toasts do (arrive,
-     time out, scroll): the list's offset never goes below 0, and the room ends below it. (M1's hold rule measures
-     that box; one drawn over the docked start would be taken away.) Its own entry and layout motion is switched off
-     here for the same reason: a transform would move the measured box, if only for a moment. */
+     time out, scroll): the list's offset never goes below 0. (M1's hold rule measures that box; one drawn over the
+     docked start would be taken away.) Its own entry and layout motion is switched off here for the same reason: a
+     transform would move the measured box, if only for a moment. */
   .list:has(.action) {
     flex-direction: column;
-    /* The scroll box reaches one toast gap (8 px) below the room, into the 10 px the lift keeps above the docked start
-       (never over it), as it reaches 20 px above the room for shadows; nothing at rest moves, and the warning's box
-       stays in the room. An older toast coming up from below the warning is then wholly in view over more offsets
-       (in a 60 px room, 17 px of offsets instead of 9 for a toast as tall as the room), so fine steps (20 px wheel
-       notches, finger drags) come to rest with it wholly in view. */
-    margin-bottom: -8px;
-    padding-bottom: 8px;
+    /* Where it rests is 2 px above the room's bottom edge (the stack ends 2 px short of it, and the toast is at most
+       the room's height less those 2 px), so it stays clear of the docked start while that start settles: the lift
+       puts the room 10 px above the start as measured, and a screen rising into place (10 px) can bring the start
+       no closer than that until the lift is measured again. */
+    padding-bottom: 2px;
   }
   .list:has(.action) > * {
     order: 0;
@@ -202,6 +200,7 @@
   .list:has(.action) > .toast:has(.action) {
     order: -1;
     transform: none !important;
+    max-height: calc(100cqh - 2px);
   }
 }
 /* Large text for the toast's width (≈150 % text on a phone, 200 % anywhere): the message keeps the full width beside
@@ -240,5 +239,11 @@
     top: 0;
     bottom: auto;
     margin-left: 0;
+  }
+  /* Here an older toast is nearly as tall as the room, so it is wholly in view over only a few list offsets: a 14 px
+     gap under the warning puts them at 67.5–80.5 px for a 56 px toast in a 60 px room, where 20, 24 and 40 px steps
+     from rest come to rest (80, 72, 80). */
+  .list:has(.action) > .toast:has(.action) {
+    margin-bottom: 6px;
   }
 }
