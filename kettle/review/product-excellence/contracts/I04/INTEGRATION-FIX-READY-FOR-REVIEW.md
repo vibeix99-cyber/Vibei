@@ -1,6 +1,7 @@
-# I04 integration fix — Today's stats wrap at 375×667 · READY FOR REVIEW (r4)
+# I04 integration fix — Today's stats wrap at 375×667 · READY FOR REVIEW (r5)
 
-> **r4 (this revision)** adds the orchestrator-adjudicated D4 (a toast covers the break-over "Mark it done, start
+> **r5 (this revision)** answers Checker r4's REJECT (`CHECKER-integration-fix-r4.md`: R4-D1, R4-D2); see **"r5"** at the
+> end. **r4** added the orchestrator-adjudicated D4 (a toast covers the break-over "Mark it done, start
 > fresh" button); see **"r4"** at the end. r3 was not reviewed. **r3** answers Checker r2's REJECT (`CHECKER-integration-fix-r2.md`: R2-D1, R2-D3, note 4, finding 5);
 > see **"r3"** at the end. **r2** answered Checker r1's REJECT (`CHECKER-integration-fix-r1.md`, D1 and D2) and the I03 checker's
 > routed finding D3 (long toast at 200 % text) and note 5. See **"r2"** at the end. The r1 text below is kept as it was
@@ -706,3 +707,207 @@ Servers on 5202 / 5222 / 5232 were all stopped, and the trial worktree was remov
    That line is text, not a control; the toast is still raised there at all because of Finding 5 (I10 candidate).
 3. r3's "Still open" items 2–4 are unchanged.
 4. BLOCKED / UNKNOWN as in r3 (real devices, OS text size, iOS Safari, real screen readers).
+
+---
+
+## r5
+
+- **Revision:** the commit that adds this section (`I04 INTEGRATION FIX READY FOR REVIEW (r5): …`). r5 code: `c9c263a` →
+  `371f999`; tests: `f8997d2`. The final commit adds evidence only. `kettle/src` tree of `371f999`, `f8997d2` and the final
+  commit: `8d4a9790c3032b253be8c67c14a85b68c2fec06a`. Base for review: `adec1a2` (r4).
+- **Files:** `src/screens/home/StatusBar.tsx` (R4-D2), `src/ui/Toast.module.css` (R4-D1), `tests/statusbar.spec.ts`
+  (page-scale test; tracing off), `tests/toast-room.spec.ts` (new, real input). Not touched: `Toast.tsx`, `flow.ts`,
+  `progress/**`, `integrity.spec.ts`. M1's hold rule is unchanged and still measures the drawn box; r5 makes that box stay
+  in the room.
+- **Proposed state:** **FIXED**, with the disclosures under "Still open (r5)".
+- **Evidence:** `contracts/I04/integration-fix/r5/`. Probes in `.tmp/w1fix/` (gitignored).
+- **BEFORE** for every comparison below is the Checker's r4 trial `1f1558e` (integration `4992956` + `3f00b57` + `adec1a2`),
+  served from a `git archive` copy. **AFTER** is a fresh trial `929576d` (see "Trial merge (r5)") or this branch.
+
+### R4-D2: live resizes at large text left Today zoomed in
+
+- **Cause (measured, 375×667 at 200 %):** with the row unwrapped for measuring, the stats' min-content widened their column
+  (`.heroTop` 343 → 483 px), so the document and the layout viewport became 507 px wide inside `fit`. During a live
+  resize Chromium's page scale could settle on that width.
+- **Fix** (`StatusBar.tsx`): while `fit` measures, the bar is `contain: inline-size; overflow-x: clip`. Its column cannot
+  grow and its overflow does not reach the document: measured on r4 code at 375×667 / 200 %, `.heroTop` stays 343, the
+  document 375, `innerWidth` 375, and the stats' right edges (what is measured) are the same 507. Both properties are
+  removed again in the same task, before anything is painted.
+  - It is applied only where it cannot change the measurement: stats packed from the bar's left edge (`normal`,
+    `flex-start`, `space-between`, i.e. every phone layout) and the bar's left edge not moving under containment.
+    Right-packed bars sized to their content (the ≥ 720 px row layouts, not phones) are measured as before.
+  - The ladder (normal → tight → wrap), the 40 px "far too wide" rule, the fallback-font rule and every listener are
+    unchanged.
+- **Retest** (`r5/zoom-after.txt`, `.tmp/w1fix/zoom.mjs`): mobile viewport at DPR 2, 200 % and 150 %, both themes, 3 reps:
+  the zero-wait bounce 414/375/390/375/400/375/384/375/414/375; the 414↔376 drag (2 px / 16 ms) back and forth three
+  times; single drags 414 → 375 at 2 px / 16 ms and at 1 px / no wait; four zero-wait rotations 667×375 ↔ 375×667.
+  Final check 2 s later: `visualViewport.scale` = 1, `visualViewport.width` = `innerWidth`, no sideways scroll, bar inside.
+
+  | Sequence | AFTER 200 % | AFTER 150 % | BEFORE (r4 trial) 200 % | BEFORE 150 % |
+  |---|---|---|---|---|
+  | zero-wait bounce | 0/6 | 0/6 | **6/6** zoomed, up to ×2.15 | 3/6, ×1.06 |
+  | 414↔376 drag ×3 | 0/6 | 0/6 | **6/6**, up to ×2.78 | 1/6, ×1.02 |
+  | 414 → 375, 2 px / 16 ms | 0/6 | 0/6 | 2/6, ×1.18 | 2/6, ×1.003 |
+  | 414 → 375, 1 px, no wait | 0/6 | 0/6 | 5/6, ×1.18 | 0/6 |
+  | four zero-wait rotations | 0/6 | 0/6 | 1/6, ×1.26 | 1/6, ×1.06 |
+
+  **AFTER 0/60** (`r5/zoom-after.txt`, which also holds an earlier full run, 0/60, and five more reps of every sequence at
+  150 %, 0/40, all on the final `StatusBar.tsx`); **BEFORE 27/60 zoomed** (`r5/zoom-before-r4-trial.txt`).
+- **Mechanism check** (`r5/zoom-mechanism-after.txt`, `.tmp/w1fix/zoomwide.mjs`): every `getBoundingClientRect` on the bar
+  and every animation frame recorded during the drag and bounce sequences. At 200 %: 0 of 2,160 measurements and 0 frames
+  with the document wider than the screen (r4: 475–511 px inside every measurement, Checker r4). At 150 %: in some runs
+  one measurement starts 1–4 px wide, because the browser first lays out the new width with the previous decision (a
+  tight row that fitted at 402 px is 1–3 px too wide at 398–400 px) before `fit` corrects it; in 1 of 6 runs this showed
+  in 5 frames. No lasting zoom in 100 runs at 150 %.
+- **Regression test:** `tests/statusbar.spec.ts` "rapid live resizes at large text leave the page unzoomed" (light, dark):
+  200 % and 150 %; zero-wait bounce, 414↔376 drag, 1 px no-wait drag; then scale 1, `visualViewport.width` =
+  `innerWidth`, no sideways scroll.
+  - **Fails on the r4 trial** (scale 2.38 and 1.22 after the bounce; `r5/new-tests-on-r4-trial.txt`); passes on the
+    branch and on the trial.
+  - The spec file now runs with tracing off (`test.use({ trace: 'off' })`): Playwright's per-action trace snapshots spaced
+    the resizes so far apart that the race never happened, and the same test passed on r4 with tracing on.
+- **Kept:**
+  - D1/R2-D1 at 100 % (`r5/d1-race.txt`, fixed 2,296 leaves): **0 failures in 52 runs** on the branch and on the r4 trial.
+    (The probe used the date-seeded total until r5; today's 2,211 fits `normal` at 375, so it now fixes the total.)
+  - D2 (`r5/d2-matrix.txt`): the 144-cell large-text matrix is **byte-identical** to the r4 trial; its 2 failures are
+    360×740 at 100 % with 470,000 leaves wrapping, as on r4 and on base.
+  - Load CLS at 100 % on phones is 0, including slow fonts and a profile that loads `tight` (below).
+
+### R4-D1: a warning taller than its room could not be read by scrolling
+
+- **Cause (Checker):** scrolling the bottom-up list moved the warning's own box below the room, over the docked start; M1's
+  hold rule measures that box and took the warning away, then re-showed it unscrolled.
+- **Fix** (`Toast.module.css`, short-room mode only: `@container toast-room (max-height: 24em) or (max-width: …)`):
+  - **The warning never moves down.** A toast with an action is `position: sticky; bottom: 0` in the list, so at every
+    scroll offset its drawn box stays inside the room, clear of the docked start.
+  - **Older toasts can still be revealed.** Scrolling the list up slides the older toasts (above it) down over it:
+    `z-index` 2 over its 1. Newer toasts (below it) pass under it (0).
+  - **Every toast is at most as tall as the room** (`max-height: 100cqh`) and scrolls its own message when longer
+    (`overflow-y: auto`). Its items are centred as before but `safe`, so a longer message starts at its top: the opening
+    comes first and is reachable. Its action is sticky (`top: 0; bottom: 0` inside the toast), so "Save backup" stays in
+    view while the message scrolls, beside it or (large-text layout) under it.
+  - At its top the warning's own scroll hands on to the list, so scrolling up over it first returns to its opening and
+    then reveals the older toasts.
+  - The bottom-up list, its shadow padding and the tiny-room layout (action beside the message under 4 em) are as in r4.
+- **Retest with real input** (`.tmp/w1fix/realscroll.mjs`; `r5/realscroll-after-trial.txt`,
+  `r5/realscroll-before-r4-trial.txt`; frames in `r5/realscroll/`):
+  - Setup: localStorage really full (`QuotaExceededError`); Today with the warning alone, after End within the first
+    minute ("Kettle's off" + warning), or after End at 12 min with a level-up (three toasts).
+  - Input: `page.mouse.wheel`, or CDP `Input.dispatchTouchEvent` finger drags. First read the warning down to its end;
+    then scroll up past its opening to the oldest toast, in 20 px steps; then scroll inside any older toast taller than
+    the room.
+  - Recording: every animation frame, from before the first input to more than 2 s after the last.
+  - Configs: 375×667 @200 %; 667×375 and 844×390 @150 % and @200 %; three cases each; wheel and touch; plus the 568×320
+    @100 % three-stack (wheel, touch); both themes. 64 runs.
+  - Pass means all of:
+    - the warning mounted at ≥ 0.98 opacity in every frame;
+    - its box never below the docked start or the room in any frame;
+    - the list `scrollTop` unchanged for ≥ 2 s after the last input;
+    - every line of the warning wholly in view (not under its action or an older toast) in some frame;
+    - every other toast wholly in the room (not under a toast painted over it) in some frame, with each of its lines
+      read.
+  - **AFTER: 0 failures in 64.** **BEFORE (r4 trial): 64/64 fail.** In all 64 the warning was taken away (faded or
+    unmounted) and its box was over the docked start; in 36 an older toast was never wholly on screen, and in 36 a warning
+    line was never readable.
+- **Regression test:** `tests/toast-room.spec.ts`, 4 tests: 375×667 and 844×390 at 200 % × wheel and touch, storage really
+  full, End within the first minute.
+  - Each reads the warning to its end and scrolls up past its opening to "Kettle's off" with real input, then records
+    every frame to 2 s past the last input.
+  - It asserts: no frame without the warning at full opacity, no frame with it over the dock, the list unmoved, every
+    line of the warning read, and the older toast wholly on screen.
+  - **Fails 4/4 on the r4 trial** (261–404 frames without the warning; `r5/new-tests-on-r4-trial.txt`); passes on the
+    branch and on the trial.
+- **Kept:**
+  - "Save backup" taps and downloads: `r5/earlyend-save-backup-trial.txt`, 18/18 real taps or clicks downloaded the backup
+    (375×667 @150/200 %, 390×844 @200 %, both flows, both themes; the level-up flow at 375/390/1440 @200 %).
+  - **100 % toast geometry unchanged:** 56 of 56 toast rectangles at 100 % text are identical to r3/r4
+    (`r5/stack-geometry-100.txt`). That covers 375, 390, 1440, 320×568, 568×320, 667×375 and 844×390, all four stacks,
+    both themes.
+  - No squeeze: no text outside its toast's box in any run (a longer toast scrolls its own message).
+  - D4: break-over controls clear, 0/24 (`r5/breakover-r5.txt`).
+
+### Trial merge (r5)
+
+- `git worktree add --detach <scratch>/trial-r5 claude/wizardly-galileo-uy89d9` (`bc5cfaa`; its `kettle/src` is still
+  `1fc4a1b…` = `0d58c5e`'s), merge `pe/w1-fix` (`3f00b57`), merge `pe/w1-fix-m2` (`371f999`, then `f8997d2`): `929576d`,
+  `kettle/src` `b38ad5e527ce67a3237e51c640aabd0edf9b1f9e`.
+  - `flow.ts`, `Toast.tsx` and `integrity.spec.ts` are byte-identical to `3f00b57`.
+  - `StatusBar.tsx`, `Home.module.css`, `Toast.module.css`, `FocusScreen.tsx`, `FocusScreen.module.css`,
+    `statusbar.spec.ts`, `a11y.spec.ts` and `toast-room.spec.ts` are byte-identical to the branch.
+- tsc clean; vitest 26 files, 265 passed (`r5/tsc-vitest.txt`, branch and trial).
+- `integrity.spec.ts`, `a11y.spec.ts`, `statusbar.spec.ts`, `whistle.spec.ts` and `toast-room.spec.ts` (`--workers=2`):
+  **60/60 passed** (`r5/trial-e2e.txt`).
+- M1's `contracts/I03/capture-storage-full.mjs` at the six configs (`r5/m1-capture-storage-full/`): **every state
+  identical** to M1's AFTER (route, toasts, session counts; `node .tmp/w1fix/metacmp.mjs`: 0 of 60 differ), 0 page errors.
+- The worktree was removed afterwards.
+
+### Load CLS (production builds; `r5/cls-today-load.txt`)
+
+| Case | 390×844 | 375×667 | 360×740 | 1440×900 |
+|---|---|---|---|---|
+| 100 %, seed (2,211 → `normal` at 375), 5 loads | 0 | 0 | 0 (`tight`) | 0 |
+| 100 %, seed, fonts delayed 2.5 s, 3 loads | 0 | 0 | 0 | 0.0028 (as before) |
+| 100 %, a saved profile with 2,296 leaves (`tight` at load at 375), 3 loads | 0 | 0 (`tight`) | 0 | 0 |
+| the same, fonts delayed 2.5 s, 3 loads | 0 | 0 (`tight`) | 0 | 0.0028 |
+| 200 %, fonts delayed 2.5 s: every shift (counted + flagged) | 0.384 | 0.363 | 0.359 | 0.091–0.094 |
+| the same on the r4 trial | 0.384 | 0.363 | 0.359 | 0.094 |
+
+**The required phone cases at 100 % are all 0.**
+
+At 200 % with slow fonts **the movement is the same as r4** (identical sums of every shift). Chrome's *counted* value at
+390×844 differs, though:
+- r5 counts 0.384 in 8/8 loads; r4 counted 0.147 in 7/8.
+- On r4 the bar's measurement after the font swap widened the layout viewport. Chrome treats that like a viewport resize
+  and flags the following shifts `hadRecentInput`, so they were not counted.
+- r5 removes that widening, so the shift that was always there is now counted.
+- 375/360/1440 count the same as r4 (0.082 / 0.100 / 0.091–0.094).
+
+### Captures (01/01b; capture-meta `"revision": "f8997d2"`, 0 page errors)
+
+- Files: `r5/after/{phone-390x844,phone-375x667,desktop-1440x900}-{light,dark}/01-home.png` and `01b-home-scrolled.png`.
+- Phones: **pixel-identical** to r3/r4 (0.000 %), 375 and 390, both themes. 1440: ≤ 0.066 % (Chai's idle frame).
+- Opened: 375×667 dark 01 and 1440×900 dark 01b.
+
+### Commands and results (r5, final tree `8d4a979…`)
+
+```
+npx tsc --noEmit (branch and trial)                                              → clean
+npx vitest run (branch and trial)                                                → 26 files, 265 passed
+KETTLE_PORT=5202 npx playwright test tests/a11y.spec.ts tests/statusbar.spec.ts \
+     tests/toast-room.spec.ts --project=chromium --workers=2 (branch)            → 24 passed (r5/specs-on-branch.txt)
+KETTLE_PORT=5232 … integrity + a11y + statusbar + whistle + toast-room (trial)   → 60 passed (r5/trial-e2e.txt)
+KETTLE_PORT=5222 … toast-room + statusbar -g "rapid live resizes|…can be read"
+     against the r4 trial 1f1558e                                                → 6 failed (as intended)
+node .tmp/w1fix/zoom.mjs <base> <tag> 3   (+ 5 reps at 150 %)                     → AFTER 0/60 + 0/40; BEFORE 27/60
+node .tmp/w1fix/zoomwide.mjs <base> after <pct> <theme> <seq> 3                  → 200 %: 0 wider measurements/frames
+node .tmp/w1fix/realscroll.mjs <base> after|before <dir>                         → AFTER 0/64; BEFORE 64/64
+node .tmp/w1fix/d1race.mjs <base> 3                                              → 0/52 (branch and r4 trial)
+node .tmp/w1fix/matrix.mjs <base>                                                → D2 byte-identical to r4
+node .tmp/w1fix/toaststack.mjs <base> after <dir> @100 + geomcmp.py              → 56/56 identical to r3/r4
+node .tmp/w1fix/earlyend.mjs … (subset; + LEVELUP=1)                             → 18/18, every tap downloaded
+node .tmp/w1fix/breakover.mjs <base> r5 <dir>                                    → 0/24 (D4 kept)
+node review/…/I03/capture-storage-full.mjs … (trial, 6 configs)                  → 0/60 states differ from M1 AFTER
+node .tmp/w1fix/clsprobe.mjs / clsprobe200all.mjs <production build>             → see the table
+node review/product-excellence/tools/capture.mjs … --only 01,01b                 (6 configs)
+```
+
+Servers on 5202 / 5222 / 5232 (dev servers of the branch, the r4-trial copy and the trial; production previews for CLS)
+were all stopped, and the trial worktree was removed.
+
+### Still open (r5)
+
+1. **150 %, during a drag:** occasionally one layout pass (rarely a few frames) where the document is 1–4 px wider than
+   the screen, before `fit` corrects the previous decision for the new width. There was no lasting zoom in 100 runs.
+2. **667×375 at 200 %** (a 60 px room): an older two-line toast is capped at 60 px, so it is wholly in view at exactly one
+   list offset. Touch, a touchpad or 20 px wheel steps stop there; one coarse 40 px+ wheel notch can pass it. Its text is
+   then read inside it.
+3. **While older toasts are slid down to be read**, they cover part of the pinned warning (in a 60 px room, all of it,
+   "Save backup" included). Scrolling back down uncovers it; at rest nothing covers it.
+4. **200 % + slow fonts at 390×844:** Chrome now counts 0.384 instead of 0.147 for the same movement (see Load CLS).
+5. Unchanged from r4: Finding 5 / I10; Checker r4 non-blocking notes 1–5; r3's clipped shadow in short rooms.
+6. **BLOCKED / UNKNOWN:**
+   - BLOCKED: real phones and touch hardware, and real screen readers. Note that a warning no longer re-enters the live
+     region on scroll, since it is no longer taken away.
+   - UNKNOWN: iOS Safari / WebKit handling of `align-items: safe center`, a sticky action inside a scrolling toast inside
+     a sticky warning inside a reversed-column scroll box, and of `contain: inline-size` during measurement.
+   - UNKNOWN: real window managers producing live resizes, and OS text-size settings.

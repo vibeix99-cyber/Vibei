@@ -1,0 +1,35 @@
+# production build of the final r5 source (kettle/src 8d4a9790c3032b253be8c67c14a85b68c2fec06a, f8997d2), vite preview on 5222, 2026-10-10T06:36:32Z
+# node .tmp/w1fix/clsprobe.mjs http://127.0.0.1:5222 N — cold loads of Today, layout shifts without recent input (Chrome's counted CLS), first 6 s (8 s with slow fonts); value:mode
+## seed (2,211 leaves today: normal at 375), 5 loads
+390x844 CLS per run 0:normal 0:normal 0:normal 0:normal 0:normal 
+375x667 CLS per run 0:normal 0:normal 0:normal 0:normal 0:normal 
+360x740 CLS per run 0:tight 0:tight 0:tight 0:tight 0:tight 
+1440x900 CLS per run 0:normal 0:normal 0:normal 0:normal 0:normal 
+## seed, every .woff2 delayed 2.5 s, 3 loads
+390x844 CLS per run 0:normal 0:normal 0:normal 
+375x667 CLS per run 0:normal 0:normal 0:normal 
+360x740 CLS per run 0:tight 0:tight 0:tight 
+1440x900 CLS per run 0.0028:normal 0.0028:normal 0.0028:normal shifts [{"v":0.002840342881944444,"t":2688,"src":"?|_stat_ef3d0_10|?|?|_content_1npvj_57"}]
+## a saved profile with 2,296 leaves (ledger entry added, then a new page load: tight at 375), 3 loads
+390x844 CLS per run 0:normal 0:normal 0:normal 
+375x667 CLS per run 0:tight 0:tight 0:tight 
+360x740 CLS per run 0:tight 0:tight 0:tight 
+1440x900 CLS per run 0:normal 0:normal 0:normal 
+## the same, fonts delayed 2.5 s, 3 loads
+390x844 CLS per run 0:normal 0:normal 0:normal 
+375x667 CLS per run 0:tight 0:tight 0:tight 
+360x740 CLS per run 0:tight 0:tight 0:tight 
+1440x900 CLS per run 0.0028:normal 0.0028:normal 0.0028:normal shifts [{"v":0.0028458767361111107,"t":2681,"src":"?|?|?|?|_content_1npvj_57"}]
+## 200 % text, fonts delayed 2.5 s, 3 loads: counted CLS (all shifts incl. those Chrome flags hadRecentInput) — node .tmp/w1fix/clsprobe200all.mjs
+390x844 CLS per run 0.3838(all 0.384):wrap 0.3838(all 0.384):wrap 0.3838(all 0.384):wrap shifts [{"ri":false,"v":0.14737929421379367,"t":2778,"src":"_chai_ef3d0_124|_stat_ef3d0_10|_card_1tcuq_1 _pad-md_1tcuq_26|?|"},{"ri":false,"v":0.23640808155068277,"t":3080,"src":"?|_card_1tcuq_1 _pad-md_1tcuq_26|?|_chaiRow_ef3d0_124|"}]
+375x667 CLS per run 0.0824(all 0.363):wrap 0.0824(all 0.363):wrap 0.0824(all 0.363):wrap shifts [{"ri":true,"v":0.0007282715463857276,"t":494,"src":"_nav_lcfxu_28"},{"ri":false,"v":0.08241771018538706,"t":2679,"src":"|_stat_ef3d0_10|?|?|?"},{"ri":true,"v":0.27997843956582424,"t":3019,"src":"_nav_lcfxu_28|?||?|_chaiRow_ef3d0_124"}]
+360x740 CLS per run 0.1001(all 0.359):wrap 0.1001(all 0.359):wrap 0.1001(all 0.359):wrap shifts [{"ri":true,"v":0.005177136596055515,"t":500,"src":"_nav_lcfxu_28"},{"ri":false,"v":0.10009833820306793,"t":2668,"src":"|_card_1tcuq_1 _pad-md_1tcuq_26|_stat_ef3d0_10|_chai_ef3d0_124|?"},{"ri":true,"v":0.25354839298758214,"t":3014,"src":"_nav_lcfxu_28|?|_chaiRow_ef3d0_124|_card_1tcuq_1 _pad-md_1tcuq_26|"}]
+1440x900 CLS per run 0.0907(all 0.091):normal 0.0938(all 0.094):normal 0.0938(all 0.094):normal shifts [{"ri":false,"v":0.09383611218278465,"t":2786,"src":"|_card_1tcuq_1 _pad-md_1tcuq_26|_quest_ef3d0_527|_brews_ef3d0_599|?"}]
+## the same on the r4 trial 1f1558e (production build, 5232) for comparison
+390x844 CLS per run 0.1474(all 0.384):wrap 0.1474(all 0.384):wrap 0.3838(all 0.384):wrap shifts [{"ri":false,"v":0.14737929421379367,"t":2748,"src":"_chai_ef3d0_124|_stat_ef3d0_10|_card_1tcuq_1 _pad-md_1tcuq_26|?|"},{"ri":false,"v":0.23640808155068277,"t":3067,"src":"?|_card_1tcuq_1 _pad-md_1tcuq_26|?|_chaiRow_ef3d0_124|"}]
+375x667 CLS per run 0.0824(all 0.363):wrap 0.0824(all 0.363):wrap 0.0824(all 0.363):wrap shifts [{"ri":true,"v":0.0007282715463857276,"t":477,"src":"_nav_lcfxu_28"},{"ri":false,"v":0.08241771018538706,"t":2658,"src":"|_stat_ef3d0_10|?|?|?"},{"ri":true,"v":0.27997843956582424,"t":2999,"src":"_nav_lcfxu_28|?||?|_chaiRow_ef3d0_124"}]
+360x740 CLS per run 0.1001(all 0.359):wrap 0.1001(all 0.359):wrap 0.1001(all 0.359):wrap shifts [{"ri":true,"v":0.005177136596055515,"t":526,"src":"_nav_lcfxu_28"},{"ri":false,"v":0.10009833820306793,"t":2692,"src":"|_card_1tcuq_1 _pad-md_1tcuq_26|_stat_ef3d0_10|_chai_ef3d0_124|?"},{"ri":true,"v":0.25354839298758214,"t":3049,"src":"_nav_lcfxu_28|?|_chaiRow_ef3d0_124|_card_1tcuq_1 _pad-md_1tcuq_26|"}]
+1440x900 CLS per run 0.0938(all 0.094):normal 0.0938(all 0.094):normal 0.0938(all 0.094):normal shifts [{"ri":false,"v":0.09383611218278465,"t":2926,"src":"|_card_1tcuq_1 _pad-md_1tcuq_26|_quest_ef3d0_527|_brews_ef3d0_599|?"}]
+# 200 % text, fonts delayed 2.5 s, 390x844, 8 loads each (BIG=1 SLOWFONTS=1, clsprobe200all.mjs limited to 390x844): r5 build (5222) then r4 trial 1f1558e build (5232)
+390x844 CLS per run 0.3838(all 0.384):wrap 0.3838(all 0.384):wrap 0.3838(all 0.384):wrap 0.3838(all 0.384):wrap 0.3838(all 0.384):wrap 0.3838(all 0.384):wrap 0.3838(all 0.384):wrap 0.3838(all 0.384):wrap shifts [{"ri":false,"v":0.14737929421379367,"t":2675,"src":"_chai_ef3d0_124|_stat_ef3d0_10|_card_1tcuq_1 _pad-md_1tcuq_26|?|"},{"ri":false,"v":0.23640808155068277,"t":2996,"src":"?|_card_1tcuq_1 _pad-md_1tcuq_26|?|_chaiRow_ef3d0_124|"}]
+390x844 CLS per run 0.1474(all 0.384):wrap 0.3838(all 0.384):wrap 0.1474(all 0.384):wrap 0.1474(all 0.384):wrap 0.1474(all 0.384):wrap 0.1474(all 0.384):wrap 0.1474(all 0.384):wrap 0.1474(all 0.384):wrap shifts [{"ri":false,"v":0.14737929421379367,"t":2708,"src":"_chai_ef3d0_124|_stat_ef3d0_10|_card_1tcuq_1 _pad-md_1tcuq_26|?|"},{"ri":true,"v":0.23640808155068277,"t":3038,"src":"?|_card_1tcuq_1 _pad-md_1tcuq_26|?|_chaiRow_ef3d0_124|"}]

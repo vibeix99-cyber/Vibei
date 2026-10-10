@@ -1,0 +1,173 @@
+# r5's new tests (this branch's tests @ f8997d2) against BEFORE = trial 1f1558e (integration 4992956 + 3f00b57 + r4 adec1a2), git-archive copy on 5222, 2026-10-10T05:56:50Z
+# KETTLE_PORT=5222 npx playwright test tests/toast-room.spec.ts tests/statusbar.spec.ts -g 'rapid live resizes|storage-full warning can be read' --project=chromium --workers=2
+
+Running 6 tests using 2 workers
+
+  ✘  1 [chromium] › tests/statusbar.spec.ts:195:3 › rapid live resizes at large text leave the page unzoomed (light) (5.1s)
+  ✘  3 [chromium] › tests/statusbar.spec.ts:195:3 › rapid live resizes at large text leave the page unzoomed (dark) (6.0s)
+  ✘  2 [chromium] › tests/toast-room.spec.ts:137:5 › the storage-full warning can be read and an older toast revealed by wheel without the warning going away (375×667, 200 % text) (23.3s)
+  ✘  4 [chromium] › tests/toast-room.spec.ts:137:5 › the storage-full warning can be read and an older toast revealed by touch without the warning going away (375×667, 200 % text) (22.1s)
+  ✘  5 [chromium] › tests/toast-room.spec.ts:137:5 › the storage-full warning can be read and an older toast revealed by wheel without the warning going away (844×390, 200 % text) (23.0s)
+  ✘  6 [chromium] › tests/toast-room.spec.ts:137:5 › the storage-full warning can be read and an older toast revealed by touch without the warning going away (844×390, 200 % text) (20.5s)
+
+
+  1) [chromium] › tests/statusbar.spec.ts:195:3 › rapid live resizes at large text leave the page unzoomed (light) 
+
+    Error: 200 % text, zero-wait bounce: page left zoomed in
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m1[39m
+    Received: [31m2.375906467437744[39m
+
+      221 |         const vv = await page.evaluate(() => ({ scale: visualViewport!.scale, width: Math.round(visualViewport!.width), innerWidth }));
+      222 |         const where = `${pct} % text, ${name}`;
+    > 223 |         expect(vv.scale, `${where}: page left zoomed in`).toBe(1);
+          |                                                           ^
+      224 |         expect(vv.width, where).toBe(vv.innerWidth);
+      225 |         noSidewaysScroll(await row(page), 375);
+      226 |       }
+        at /home/user/wt/w1fix-m2/kettle/tests/statusbar.spec.ts:223:59
+
+    Error Context: test-results/statusbar-rapid-live-resiz-bd849-ve-the-page-unzoomed-light--chromium/error-context.md
+
+  2) [chromium] › tests/statusbar.spec.ts:195:3 › rapid live resizes at large text leave the page unzoomed (dark) 
+
+    Error: 200 % text, zero-wait bounce: page left zoomed in
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m1[39m
+    Received: [31m1.2174999713897705[39m
+
+      221 |         const vv = await page.evaluate(() => ({ scale: visualViewport!.scale, width: Math.round(visualViewport!.width), innerWidth }));
+      222 |         const where = `${pct} % text, ${name}`;
+    > 223 |         expect(vv.scale, `${where}: page left zoomed in`).toBe(1);
+          |                                                           ^
+      224 |         expect(vv.width, where).toBe(vv.innerWidth);
+      225 |         noSidewaysScroll(await row(page), 375);
+      226 |       }
+        at /home/user/wt/w1fix-m2/kettle/tests/statusbar.spec.ts:223:59
+
+    Error Context: test-results/statusbar-rapid-live-resiz-810c7-ave-the-page-unzoomed-dark--chromium/error-context.md
+
+  3) [chromium] › tests/toast-room.spec.ts:137:5 › the storage-full warning can be read and an older toast revealed by wheel without the warning going away (375×667, 200 % text) 
+
+    Error: frames without the warning at full opacity (of 624)
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m0[39m
+    Received: [31m404[39m
+
+      192 |       }, lastInput);
+      193 |       expect(r.msAfter, 'recorded past the last input').toBeGreaterThanOrEqual(2000);
+    > 194 |       expect(r.gone, `frames without the warning at full opacity (of ${r.frames})`).toBe(0);
+          |                                                                                     ^
+      195 |       expect(r.overDock, 'frames with the warning over the docked start').toBe(0);
+      196 |       expect(r.scrollMoved, 'the list moved after the last input').toBeLessThanOrEqual(1);
+      197 |       expect(r.lines[0], 'lines of the warning read').toBe(r.lines[1]);
+        at /home/user/wt/w1fix-m2/kettle/tests/toast-room.spec.ts:194:85
+
+    Error Context: test-results/toast-room-the-storage-ful-d8691-oing-away-375×667-200-text--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/toast-room-the-storage-ful-d8691-oing-away-375×667-200-text--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/toast-room-the-storage-ful-d8691-oing-away-375×667-200-text--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests/toast-room.spec.ts:137:5 › the storage-full warning can be read and an older toast revealed by touch without the warning going away (375×667, 200 % text) 
+
+    Error: frames without the warning at full opacity (of 881)
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m0[39m
+    Received: [31m316[39m
+
+      192 |       }, lastInput);
+      193 |       expect(r.msAfter, 'recorded past the last input').toBeGreaterThanOrEqual(2000);
+    > 194 |       expect(r.gone, `frames without the warning at full opacity (of ${r.frames})`).toBe(0);
+          |                                                                                     ^
+      195 |       expect(r.overDock, 'frames with the warning over the docked start').toBe(0);
+      196 |       expect(r.scrollMoved, 'the list moved after the last input').toBeLessThanOrEqual(1);
+      197 |       expect(r.lines[0], 'lines of the warning read').toBe(r.lines[1]);
+        at /home/user/wt/w1fix-m2/kettle/tests/toast-room.spec.ts:194:85
+
+    Error Context: test-results/toast-room-the-storage-ful-cb07d-oing-away-375×667-200-text--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/toast-room-the-storage-ful-cb07d-oing-away-375×667-200-text--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/toast-room-the-storage-ful-cb07d-oing-away-375×667-200-text--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › tests/toast-room.spec.ts:137:5 › the storage-full warning can be read and an older toast revealed by wheel without the warning going away (844×390, 200 % text) 
+
+    Error: frames without the warning at full opacity (of 618)
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m0[39m
+    Received: [31m383[39m
+
+      192 |       }, lastInput);
+      193 |       expect(r.msAfter, 'recorded past the last input').toBeGreaterThanOrEqual(2000);
+    > 194 |       expect(r.gone, `frames without the warning at full opacity (of ${r.frames})`).toBe(0);
+          |                                                                                     ^
+      195 |       expect(r.overDock, 'frames with the warning over the docked start').toBe(0);
+      196 |       expect(r.scrollMoved, 'the list moved after the last input').toBeLessThanOrEqual(1);
+      197 |       expect(r.lines[0], 'lines of the warning read').toBe(r.lines[1]);
+        at /home/user/wt/w1fix-m2/kettle/tests/toast-room.spec.ts:194:85
+
+    Error Context: test-results/toast-room-the-storage-ful-cd8a0-oing-away-844×390-200-text--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/toast-room-the-storage-ful-cd8a0-oing-away-844×390-200-text--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/toast-room-the-storage-ful-cd8a0-oing-away-844×390-200-text--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [chromium] › tests/toast-room.spec.ts:137:5 › the storage-full warning can be read and an older toast revealed by touch without the warning going away (844×390, 200 % text) 
+
+    Error: frames without the warning at full opacity (of 742)
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m0[39m
+    Received: [31m261[39m
+
+      192 |       }, lastInput);
+      193 |       expect(r.msAfter, 'recorded past the last input').toBeGreaterThanOrEqual(2000);
+    > 194 |       expect(r.gone, `frames without the warning at full opacity (of ${r.frames})`).toBe(0);
+          |                                                                                     ^
+      195 |       expect(r.overDock, 'frames with the warning over the docked start').toBe(0);
+      196 |       expect(r.scrollMoved, 'the list moved after the last input').toBeLessThanOrEqual(1);
+      197 |       expect(r.lines[0], 'lines of the warning read').toBe(r.lines[1]);
+        at /home/user/wt/w1fix-m2/kettle/tests/toast-room.spec.ts:194:85
+
+    Error Context: test-results/toast-room-the-storage-ful-78508-oing-away-844×390-200-text--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/toast-room-the-storage-ful-78508-oing-away-844×390-200-text--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/toast-room-the-storage-ful-78508-oing-away-844×390-200-text--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6 failed
+    [chromium] › tests/statusbar.spec.ts:195:3 › rapid live resizes at large text leave the page unzoomed (light) 
+    [chromium] › tests/statusbar.spec.ts:195:3 › rapid live resizes at large text leave the page unzoomed (dark) 
+    [chromium] › tests/toast-room.spec.ts:137:5 › the storage-full warning can be read and an older toast revealed by wheel without the warning going away (375×667, 200 % text) 
+    [chromium] › tests/toast-room.spec.ts:137:5 › the storage-full warning can be read and an older toast revealed by touch without the warning going away (375×667, 200 % text) 
+    [chromium] › tests/toast-room.spec.ts:137:5 › the storage-full warning can be read and an older toast revealed by wheel without the warning going away (844×390, 200 % text) 
+    [chromium] › tests/toast-room.spec.ts:137:5 › the storage-full warning can be read and an older toast revealed by touch without the warning going away (844×390, 200 % text) 
+exit 1

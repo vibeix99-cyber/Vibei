@@ -1,0 +1,13 @@
+# Mechanism check (node .tmp/w1fix/zoomwide.mjs): getBoundingClientRect on the status bar is hooked; 'widerInMeasure' counts calls made while the document was wider than the screen; 'framesWiderOrZoomed' counts animation frames with a wider document or a visual-viewport scale other than 1. BEFORE (Checker r4, zoom2.mjs): the unwrapped row widened innerWidth/clientWidth to 475-511 px inside every measurement at 200 %.
+after t200 light wiggle #0: {"measures":504,"widerInMeasure":0,"firstInMeasure":[],"framesWiderOrZoomed":0,"frames":[],"final":[1,375,375]}
+after t200 light wiggle #1: {"measures":648,"widerInMeasure":0,"firstInMeasure":[],"framesWiderOrZoomed":0,"frames":[],"final":[1,375,375]}
+after t200 light wiggle #2: {"measures":724,"widerInMeasure":0,"firstInMeasure":[],"framesWiderOrZoomed":0,"frames":[],"final":[1,375,375]}
+after t200 light bounce #0: {"measures":88,"widerInMeasure":0,"firstInMeasure":[],"framesWiderOrZoomed":0,"frames":[],"final":[1,375,375]}
+after t200 light bounce #1: {"measures":112,"widerInMeasure":0,"firstInMeasure":[],"framesWiderOrZoomed":0,"frames":[],"final":[1,375,375]}
+after t200 light bounce #2: {"measures":84,"widerInMeasure":0,"firstInMeasure":[],"framesWiderOrZoomed":0,"frames":[],"final":[1,375,375]}
+after t150 dark drag2 #0: {"measures":100,"widerInMeasure":1,"firstInMeasure":[[1942,399,398,399]],"framesWiderOrZoomed":0,"frames":[],"final":[1,375,375]}
+after t150 dark drag2 #1: {"measures":180,"widerInMeasure":1,"firstInMeasure":[[1784,403,402,403]],"framesWiderOrZoomed":0,"frames":[],"final":[1,375,375]}
+after t150 dark drag2 #2: {"measures":96,"widerInMeasure":1,"firstInMeasure":[[1894,403,402,403]],"framesWiderOrZoomed":0,"frames":[],"final":[1,375,375]}
+after t150 light wiggle #0: {"measures":552,"widerInMeasure":3,"firstInMeasure":[[1960,399,398,399],[2845,399,398,399],[4423,403,402,403]],"framesWiderOrZoomed":0,"frames":[],"final":[1,375,375]}
+after t150 light wiggle #1: {"measures":652,"widerInMeasure":4,"firstInMeasure":[[1929,403,400,403],[3231,403,400,403],[4364,403,400,403]],"framesWiderOrZoomed":0,"frames":[],"final":[1,375,375]}
+after t150 light wiggle #2: {"measures":716,"widerInMeasure":26,"firstInMeasure":[[1999,399,398,399],[2000,399,398,399],[2001,399,398,399]],"framesWiderOrZoomed":5,"frames":[[2002,399,398,399,1,["NAV._nav_lcfxu_28:399","UL._tabs_lcfxu_42:399","NAV._statusBar_ef3d0_10:399"]],[2013,399,398,399,1,["NAV._nav_lcfxu_28:399","UL._tabs_lcfxu_42:399","NAV._statusBar_ef3d0_10:399"]],[3028,399,398,399,1,["NAV._nav_lcfxu_28:399","UL._tabs_lcfxu_42:399","NAV._statusBar_ef3d0_10:399"]],[3035,399,398,399,1,["NAV._nav_lcfxu_28:399","UL._tabs_lcfxu_42:399","NAV._statusBar_ef3d0_10:399"]]],"final":[1,375,375]}
