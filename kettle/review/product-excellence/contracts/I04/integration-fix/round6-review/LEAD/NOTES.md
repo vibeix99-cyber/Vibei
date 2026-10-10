@@ -86,3 +86,37 @@ normal-room entry. This is M1's approved behaviour, recorded as non-blocking in 
 ### Probes
 /home/user/wt/rv6-r6/kettle/.tmp/LEAD/actionpair.mjs and pwapair.mjs. Outputs: $S/actionpair2/ (first R6 repro plus clip),
 $S/ap-R6, $S/ap-INT (plus clip), $S/ap-R5, $S/pp2-R6, $S/pp2-INT (clips), logs in $S/logs/.
+
+## L1 receipt: trace-checked (see trace/L1-TRACE.md)
+The results trace to raw data and clips. race-x zeros count. natural-x zeros count only against the R5-alone control
+(375L, 844L). repro6 and the extra gestures do not count (controls failed); the orchestrator's alone-rerun is pending.
+Page-scroll chain on R5 and R6 needs an INT comparison.
+
+## L4 phase 1 (captures): trace-checked, and the visual gate on these images
+- Metas: 43 sets, revisions e866118 / 0d58c5e, 0 page errors.
+- REFERENCE → BEFORE → AFTER, opened at full size (all 100 % unless stated):
+  - **Home with the warning:**
+    - 375x667 light: M2 pair, L4 set.
+    - 844x390 dark @100: M2 pair. 844x390 light @200: L4 pair. R6 reads the opening, with "Save backup" as a sticky
+      action masking the line behind it; INT's opening and button are off-screen above.
+    - 1440 dark: L4 pair, identical.
+    - 390x844 light @200: R6.
+  - **Focus with the warning and toasts:** 375x667 light (M2) and 390x844 light (L4). On R6 the warning is held, but
+    the two ordinary toasts cover the countdown digits and status line. INT covers them with three toasts. A
+    pre-existing I10 / Finding 5 class against PRESERVE 4; not worse.
+  - **Break's over with toasts:** 375x667 dark (L4). R6 keeps every control clear and covers the title and sentence for
+    the 3.2 s toasts. INT covers "Mark it done". The D4 trade-off, accepted in r5 (Still open 9).
+  - **Summary after level-up:** 390x844 dark (L4), identical (the K02 composition with the unlock card; the warning is
+    held off the summary).
+  - **Standard states:**
+    - 01 Home: 390 light identical; 375 light shows the status bar on one row (the I04 r1 fix, closer to K01); 844
+      light identical; 1440 light identical apart from date data.
+    - 07 summary at 390 dark and 08 summary end at 375 light: the final line clears the sticky footer.
+    - 10 break-over at 390 light: the timing-dependent "Recipe done" toast sits above "Mark it done".
+    - 09 break at 375 dark: blue rest, sipping Chai, K04's tea frame.
+- Preserve list: cream and purple identity; approved Chai (reading, cheering, sipping); orange focus and blue rest;
+  docked "Put the kettle on · 25 min"; five wrapping categories; 15/25/50/Custom (under the dock on phones, visible at
+  1440); compact summary with sticky Tea time/Skip and final-line clearance; break-over composition. All seen and
+  unchanged.
+- The LEAD-D1 blink is not in L4's states (no second action toast). It is evidenced in lead-d1/ (clips for every
+  configuration).
