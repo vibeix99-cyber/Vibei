@@ -49,9 +49,7 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
 | `/home/user/wt/m1` | `pe/m1@a6ebe00` | M1 Wave 1 | APPROVED r2, merged (`7da58f1`). Idle |
 | `/home/user/wt/m2` | `pe/m2@2becb78` | M2 Wave 1 | APPROVED r1, merged (`0d58c5e`). Idle |
 | `/home/user/wt/w1fix` | `pe/w1-fix@3f00b57` (src `3c58bf9`) | **M1 integration fix** (I03 × I04) | **APPROVED r1** (fresh Checker). Held unmerged; any change voids it. Clean |
-| `/home/user/wt/w1fix-m2` | `pe/w1-fix-m2@adec1a2` (src `dcc3778`; code `9326de5`) | **M2 integration fix** (I04 status bar + toasts + break-over) | **r4 READY FOR REVIEW**, in review. Clean |
-| `/home/user/wt/chk-r4` / `chk-r4-base` | detached `adec1a2` / `4992956` | fresh Checker for r4 | scratch |
-| `/home/user/wt/trial-r4` | detached `1f1558e` | trial merge `4992956` + `3f00b57` + `adec1a2` (clean; frozen M1 files byte-identical to `3f00b57`) | scratch, not the real merge |
+| `/home/user/wt/w1fix-m2` | `pe/w1-fix-m2@adec1a2` (src `dcc3778`; code `9326de5`) | **M2 integration fix** (I04 status bar + toasts + break-over) | r4 **REJECTED** → M2 correcting R4-D1 / R4-D2 (r5 not yet submitted) |
 
 **Archives** (`review/product-excellence/archive/`, pushed; restore with `git fetch <bundle> 'refs/heads/*:refs/heads/*'`):
 - `maker-branches-2026-10-09.bundle`: `pe/w1-fix@1351c99`, `pe/w1-fix-m2@c9520db` (full).
@@ -76,7 +74,8 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
 | I04 integration fix r1 | `c9520db` (src `57f00c4`) | **REJECT** (review interrupted by a usage limit, then resumed): D1 no re-fit after resize/rotation to 375×667; D2 200 % text + ≥10,000 leaves spills "Level NN" | `contracts/I04/CHECKER-integration-fix-r1.md` |
 | I04 integration fix r2 | `e932f65` (src `c873084`; trial with `3f00b57` = `db3418a`) | **REJECT** (fresh Checker): R2-D1 no re-fit when the window narrows without changing the bar's box; R2-D3 stacked toasts at large text collapse and the warning text spills out of its box | `contracts/I04/CHECKER-integration-fix-r2.md` |
 | I04 integration fix r3 | `e4be56e` (src `97d26c5`) | **NOT REVIEWED** (no Checker launched: user pause; then superseded before review by r4 in progress, which adds D4). Not APPROVE, not REJECT | — |
-| I04 integration fix r4 (r3 + D4 break-over toast + date-independent short-screen gate) | `adec1a2` (src `dcc3778`; code `9326de5`; trial merge with `3f00b57` = `1f1558e`, src `0d0db47`) | **IN REVIEW — no verdict yet** (fresh Checker, not any earlier Checker) | `contracts/I04/CHECKER-integration-fix-r4.md` (to be written) |
+| I04 integration fix r4 (r3 + D4 break-over toast + date-independent short-screen gate) | `adec1a2` (src `dcc3778`; code `9326de5`; trial merge with `3f00b57` = `1f1558e`, src `0d0db47`) | **REJECT** (fresh Checker): R4-D1 a warning taller than its room can't be read by scrolling (scroll moves its box over the dock → M1's hold rule takes it away and re-shows it unscrolled; 375×667 @200 %, landscape @150–200 %, 568×320 three-stack); R4-D2 live mobile resizes at 150–200 % text leave Today zoomed ×1.2–3.2 (regression since r2). Passed: D1/R2-D1 (96 runs), D2 (216 cells), D4, M1 unchanged (60 states), CLS, preserve list; trial 54/54 + timer/pwa 29/2 | `contracts/I04/CHECKER-integration-fix-r4.md` |
+| I04 integration fix r5 | — | **in progress (M2)**, not submitted | (`contracts/I04/CHECKER-integration-fix-r5.md` to be written) |
 
 ### Submitted, awaiting review: M2 r3 `e4be56e` (maker's claims, unverified by any Checker)
 
@@ -378,6 +377,18 @@ runs or trial-merge worktrees (`ps` shows no vite/playwright/chromium).
     `archive/pe-w1-fix-m2-r4-adec1a2.incremental.bundle`.
 - Trial merge `1f1558e` built by the orchestrator (clean). A fresh independent Checker was launched on `adec1a2` + the
   trial, covering D1, D2, D3, R2-D1, R2-D3 and D4, the M1 interaction, CLS, REFERENCE → BEFORE → AFTER and the disclosures.
+
+- Fresh Checker on r4 `adec1a2` (+ trial `1f1558e`) → **REJECT** (`contracts/I04/CHECKER-integration-fix-r4.md`).
+  - **R4-D1:** with real wheel or touch input, scrolling a warning taller than its room moves the warning's drawn box over
+    the dock. M1's approved hold rule then takes it away and re-shows it unscrolled, so the whole warning is never
+    readable. Earlier "readable by scrolling" checks scrolled inside one `evaluate`, which the 250 ms watcher never sees.
+  - **R4-D2:** the status-bar fit forces an unwrapped 475–511 px layout. On mobile viewports, during live resizes at
+    150–200 % text, that leaves the page zoomed ×1.2–3.2. This is a regression since r2; base and r1 never do it.
+  - **Passed:** everything else (see the verdict table). Non-blocking notes recorded in the verdict (desktop warning
+    entry flicker, owned by M1/F11; landscape 200 % break-over room nearly 0, an I10 item).
+  - **Routed to M2 for r5.** The CSS-side fix is preferred for R4-D1. If it truly needs M1's rule to measure only the
+    visible part, M2 must stop and report, and the orchestrator opens an M1 change with independent review. Checker and
+    trial worktrees removed.
 
 ## Exact next action
 
