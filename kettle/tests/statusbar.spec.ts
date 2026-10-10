@@ -12,6 +12,9 @@ import { open } from './a11y-probes.mjs';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const base = (u: string | undefined) => u ?? 'http://127.0.0.1:5183';
 const phone = { deviceScaleFactor: 2, isMobile: true, hasTouch: true };
+// Resizes here must follow each other as fast as a real window drag; tracing (a snapshot per action) spaces them out
+// and hides the race the "rapid live resizes" test is for.
+test.use({ trace: 'off' });
 
 type Row = { mode: string; rows: number; barRight: number; scrollWidth: number; clientWidth: number; innerWidth: number; tabBottom: number; screenH: number };
 

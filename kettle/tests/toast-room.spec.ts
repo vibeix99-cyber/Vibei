@@ -148,7 +148,8 @@ for (const [w, h, pct] of [
       const state = () =>
         page.evaluate((W) => {
           const list = document.querySelector('[aria-label="Notifications"] ol') as HTMLElement;
-          const el = document.getElementById(W)!;
+          const el = document.getElementById(W);
+          if (!el) return null; // taken away (what this test guards against): the recording counts those frames
           const r = el.getBoundingClientRect();
           const lr = list.getBoundingClientRect();
           return { x: (r.left + r.right) / 2, top: Math.max(0, r.top), bottom: r.bottom, at: el.scrollTop, end: el.scrollHeight - el.clientHeight, lTop: Math.max(0, lr.top), lst: list.scrollTop, lmin: -(list.scrollHeight - list.clientHeight) };
@@ -156,13 +157,21 @@ for (const [w, h, pct] of [
       // Read the warning to its end, then go back up past its opening to the older toast above it.
       for (let i = 0; i < 20; i++) {
         const s = await state();
+        if (!s) {
+          await page.waitForTimeout(100);
+          continue;
+        }
         if (s.at >= s.end - 1) break;
         await scroll(page, cdp, s.x, s.top + Math.max(12, 0.35 * (s.bottom - s.top)), 40);
       }
-      for (let i = 0; i < 40; i++) {
+      for (let i = 0; i < 60; i++) {
         const s = await state();
+        if (!s) {
+          await page.waitForTimeout(100);
+          continue;
+        }
         if (s.at <= 0 && s.lst <= s.lmin + 1) break;
-        await scroll(page, cdp, s.x, s.lTop + 20, -40);
+        await scroll(page, cdp, s.x, s.lTop + 20, -20);
       }
       const lastInput = await page.evaluate(() => performance.now());
       await page.waitForTimeout(2200);
