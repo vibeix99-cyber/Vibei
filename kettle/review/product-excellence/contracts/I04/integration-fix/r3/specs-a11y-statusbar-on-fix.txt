@@ -1,0 +1,58 @@
+# branch pe/w1-fix-m2 @ 54bf8be (kettle/src 97d26c5c29fe7651fbc16af7b4cbd2aa30a6a0b2), dev server .tmp/w1fix/vite.dev.config.ts on 5222, run 2026-10-10
+# KETTLE_PORT=5222 KETTLE_PWA_PORT=5232 npx playwright test tests/a11y.spec.ts tests/statusbar.spec.ts --project=chromium --workers=2
+
+Running 16 tests using 2 workers
+
+  ✓   1 [chromium] › tests/statusbar.spec.ts:61:3 › resize or rotation to 375×667 re-fits the row: one tight row, no sideways scroll (light) (25.8s)
+  ✓   2 [chromium] › tests/a11y.spec.ts:60:3 › axe: no serious/critical violations in any state (light) (1.1m)
+  ✓   3 [chromium] › tests/statusbar.spec.ts:102:3 › large text with large leaf totals never pushes "Level NN" past the screen (light) (51.2s)
+  ✓   5 [chromium] › tests/statusbar.spec.ts:61:3 › resize or rotation to 375×667 re-fits the row: one tight row, no sideways scroll (dark) (25.6s)
+  ✓   4 [chromium] › tests/a11y.spec.ts:60:3 › axe: no serious/critical violations in any state (dark) (1.1m)
+  ✓   6 [chromium] › tests/statusbar.spec.ts:102:3 › large text with large leaf totals never pushes "Level NN" past the screen (dark) (50.5s)
+  ✓   7 [chromium] › tests/a11y.spec.ts:72:1 › pointer targets are at least 24×24 px or meet a WCAG 2.5.8 exception (45.6s)
+  ✓   8 [chromium] › tests/statusbar.spec.ts:131:3 › narrowing that leaves the bar's own box unchanged still re-fits: from 384 px, and 1 px at a time (light) (28.6s)
+  ✓  10 [chromium] › tests/statusbar.spec.ts:131:3 › narrowing that leaves the bar's own box unchanged still re-fits: from 384 px, and 1 px at a time (dark) (28.6s)
+  ✓  11 [chromium] › tests/statusbar.spec.ts:187:1 › normal text: one row at 390 (designed padding) and at 375 (tight) on a fresh load (7.5s)
+  ✘   9 [chromium] › tests/a11y.spec.ts:87:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll (39.3s)
+  -  12 [chromium] › tests/a11y.spec.ts:138:1 › keyboard-only critical journey with focus restoration
+  -  13 [chromium] › tests/a11y.spec.ts:253:1 › welcome: first brew from the keyboard alone
+  -  14 [chromium] › tests/a11y.spec.ts:264:1 › live regions stay quiet while a brew runs (no spoken countdown)
+  -  15 [chromium] › tests/a11y.spec.ts:293:3 › a toast never covers the session controls or the summary footer (390×844)
+  -  16 [chromium] › tests/a11y.spec.ts:293:3 › a toast never covers the session controls or the summary footer (375×667)
+
+
+  1) [chromium] › tests/a11y.spec.ts:87:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
+
+    [32m- Expected  - 1[39m
+    [31m+ Received  + 3[39m
+
+    [32m- Array [][39m
+    [31m+ Array [[39m
+    [31m+   "break-over: \"Mark it done, start fresh\" stays under span._message_1wkvr_54",[39m
+    [31m+ ][39m
+
+       99 |     await check(pg.id, page);
+      100 |   }
+    > 101 |   expect(out).toEqual([]);
+          |               ^
+      102 | });
+      103 |
+      104 | // ---------------------------------------------------------------- keyboard journey
+        at /home/user/wt/w1fix-m2/kettle/tests/a11y.spec.ts:101:15
+
+    Error Context: test-results/a11y-short-screen-375×667--859fd-y-chrome-no-sideways-scroll-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/a11y-short-screen-375×667--859fd-y-chrome-no-sideways-scroll-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/a11y-short-screen-375×667--859fd-y-chrome-no-sideways-scroll-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/a11y.spec.ts:87:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll 
+  5 did not run
+  10 passed (3.7m)

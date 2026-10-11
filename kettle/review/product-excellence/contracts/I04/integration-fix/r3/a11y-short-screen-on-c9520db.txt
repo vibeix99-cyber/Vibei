@@ -1,0 +1,42 @@
+# Same test (this branch's tests/a11y.spec.ts) against c9520db (git-archive copy, src byte-identical to c9520db: 277/277 files) served on 5232, 2026-10-10T01:13:38Z
+# KETTLE_PORT=5232 npx playwright test tests/a11y.spec.ts -g 'short screen' --project=chromium --workers=1
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › tests/a11y.spec.ts:87:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll (37.6s)
+
+
+  1) [chromium] › tests/a11y.spec.ts:87:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
+
+    [32m- Expected  - 1[39m
+    [31m+ Received  + 3[39m
+
+    [32m- Array [][39m
+    [31m+ Array [[39m
+    [31m+   "break-over: \"Mark it done, start fresh\" stays under span._message_12y3u_54",[39m
+    [31m+ ][39m
+
+       99 |     await check(pg.id, page);
+      100 |   }
+    > 101 |   expect(out).toEqual([]);
+          |               ^
+      102 | });
+      103 |
+      104 | // ---------------------------------------------------------------- keyboard journey
+        at /home/user/wt/w1fix-m2/kettle/tests/a11y.spec.ts:101:15
+
+    Error Context: test-results/a11y-short-screen-375×667--859fd-y-chrome-no-sideways-scroll-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/a11y-short-screen-375×667--859fd-y-chrome-no-sideways-scroll-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/a11y-short-screen-375×667--859fd-y-chrome-no-sideways-scroll-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/a11y.spec.ts:87:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll 
+exit 1

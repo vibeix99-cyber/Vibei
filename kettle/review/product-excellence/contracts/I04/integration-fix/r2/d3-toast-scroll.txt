@@ -1,0 +1,10 @@
+# 375x667, 200 % text, long warning toast with 'Save backup' (fix, dev server)
+control: page scrollY after a touch drag on the page 231
+toast list scrollTop after a touch drag on the toast [ 28, 28 ] page scrollY 0
+# wheel + tap (synthesizeScrollGesture does not scroll even the page in this headless setup, so touch is tested with dispatched touch events above)
+initial {"scrollTop":0,"max":28,"pageScrollY":0}
+after wheel {"scrollTop":28,"max":28,"pageScrollY":0}
+after tap: saved 1 toasts 0
+# keyboard: focus Save backup, press Enter
+http://127.0.0.1:5202 200 1 Enter saved 1 hash #/ active 
+    Skip to content

@@ -17,7 +17,7 @@
  * tablets and desktop: stage left, panel right). Zen: chrome fades after 7 s idle.
  * Keys: Space pause/resume · Esc end sheet · + add 5 min · M mute.
  */
-import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { TimerAnnouncer, elapsedActiveMs, useRemaining, useTimer } from '@/timer';
 import { useShortcut } from '@/lib/shortcuts';
@@ -84,6 +84,9 @@ export default function FocusScreen() {
   const [ambOpen, setAmbOpen] = useState(false);
   const [added, setAdded] = useState<{ at: number; whistleAt: number } | null>(null);
   const mainRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLElement>(null);
+  /** Where the main control (Pause/Resume) was on screen when it was last pressed (kept there: see below). */
+  const mainAt = useRef<{ top: number; at: number } | null>(null);
   const frozen = useRef<ReactNode>(null);
 
   const view: View =
@@ -153,9 +156,23 @@ export default function FocusScreen() {
   const toggle = useCallback(() => {
     const st = useTimer.getState();
     if (st.status === 'idle') return;
+    mainAt.current = shownTop(mainRef.current, panelRef.current);
     audio.play(st.status === 'running' ? 'pause' : 'resume');
     st.toggle();
   }, []);
+
+  // With large text the panel scrolls, and pausing adds lines above the controls (the "Paused" flag, a longer status):
+  // the main control stays where it was when pressed (under the finger or the focus ring) instead of being pushed
+  // below the screen's edge. Only when the panel can scroll by that much; when everything fits nothing moves.
+  useLayoutEffect(() => {
+    const was = mainAt.current;
+    mainAt.current = null;
+    const el = mainRef.current;
+    const panel = panelRef.current;
+    if (!was || !el || !panel || performance.now() - was.at > 1000) return;
+    const shift = el.getBoundingClientRect().top - was.top;
+    if (Math.abs(shift) >= 1) panel.scrollTop += shift;
+  }, [paused]);
 
   const addFive = useCallback(() => {
     const st = useTimer.getState();
@@ -236,7 +253,9 @@ export default function FocusScreen() {
       {view !== 'summary' && <h1 className="sr-only">{heading}</h1>}
 
       {/* ---------- the stage: never moves ---------- */}
-      <div className={s.stageBox}>
+      {/* Side by side with the panel it is a column of its own with no control in it: toasts that have no room above
+          the panel's controls float over it (data-toast-dock, see src/ui/Toast.tsx; the stylesheet opts it in). */}
+      <div className={s.stageBox} data-toast-dock="">
         <Stage
           className={s.stage}
           state={kettle}
@@ -307,8 +326,15 @@ export default function FocusScreen() {
       )}
 
       {/* ---------- panel ---------- */}
-      <main className={s.panel}>
-        <AnimatePresence mode="wait" initial={false}>
+      <main className={s.panel} ref={panelRef}>
+        {/* A new view in the panel starts at its top (the panel scrolls when its content is taller, e.g. at 200 % text). */}
+        <AnimatePresence
+          mode="wait"
+          initial={false}
+          onExitComplete={() => {
+            if (panelRef.current) panelRef.current.scrollTop = 0;
+          }}
+        >
           {view === 'summary' ? (
             <motion.div
               key="summary"
@@ -340,18 +366,22 @@ export default function FocusScreen() {
                   'Ready for another brew?'
                 )}
               </p>
-              {carriedRec && (
-                <button type="button" className={s.overMark} onClick={() => setIntentionOutcome(carriedRec, 'done')}>
-                  <Icon name="check" size={18} /> Mark it done, start fresh
-                </button>
-              )}
-              <div className={s.overActions} data-toast-above="">
-                <Button block size="lg" sfx="start" icon={<Icon name="play" size={24} />} onClick={startNextBrew}>
-                  Put the kettle on
-                </Button>
-                <Button block variant="ghost" onClick={leaveBreakOver}>
-                  That’s all for now
-                </Button>
+              {/* Every break-over control, the carried task's "Mark it done" included, is one toast-above group:
+                  a toast (a recipe or badge earned as the break ends) floats above all of them, never over one. */}
+              <div className={s.overDock} data-toast-above="">
+                {carriedRec && (
+                  <button type="button" className={s.overMark} onClick={() => setIntentionOutcome(carriedRec, 'done')}>
+                    <Icon name="check" size={18} /> Mark it done, start fresh
+                  </button>
+                )}
+                <div className={s.overActions}>
+                  <Button block size="lg" sfx="start" icon={<Icon name="play" size={24} />} onClick={startNextBrew}>
+                    Put the kettle on
+                  </Button>
+                  <Button block variant="ghost" onClick={leaveBreakOver}>
+                    That’s all for now
+                  </Button>
+                </div>
               </div>
             </motion.div>
           ) : (
@@ -462,6 +492,14 @@ export default function FocusScreen() {
   );
   frozen.current = out;
   return out;
+}
+
+/** The control's top on screen while any of it shows in the panel, else null (it is scrolled out of sight). */
+function shownTop(el: HTMLElement | null, panel: HTMLElement | null): { top: number; at: number } | null {
+  if (!el || !panel) return null;
+  const r = el.getBoundingClientRect();
+  const p = panel.getBoundingClientRect();
+  return r.bottom > p.top && r.top < p.bottom ? { top: r.top, at: performance.now() } : null;
 }
 
 /** The countdown — the exact time reference — with one line of status and one of context. */

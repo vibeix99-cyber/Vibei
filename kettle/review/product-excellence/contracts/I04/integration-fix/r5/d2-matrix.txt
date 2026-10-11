@@ -1,0 +1,93 @@
+# node .tmp/w1fix/matrix.mjs <base> — AFTER = branch on 5202 (the D2 section is byte-identical to BEFORE = r4 trial 1f1558e on 5222, below; the 2 failures are 360x740 @100 % with 470,000 leaves wrapping, the same on both and on base, see Checker r4 D2)
+## D1: resize / rotation, then measure (settle 1.5 s)
+
+light 414x896 100% → 375x667: normal, rows 1, right 372, scrollW 375/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+light 667x375 100% → 375x667: normal, rows 1, right 372, scrollW 375/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+light 844x390 100% → 375x667: normal, rows 1, right 372, scrollW 375/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+light 390x844 100% → 375x667: normal, rows 1, right 372, scrollW 375/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+light 1440x900 (desktop window) 100% → 375x667: normal, rows 1, right 372, scrollW 372/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+light 800x900 (desktop window) 100% → 375x667: normal, rows 1, right 372, scrollW 372/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+light 414x896 200% → 375x667: wrap, rows 2, right 367, scrollW 375/clientW 375, innerW 375, tab bottom 667; → 414x896: wrap OK
+dark 414x896 100% → 375x667: normal, rows 1, right 372, scrollW 375/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+dark 667x375 100% → 375x667: normal, rows 1, right 372, scrollW 375/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+dark 844x390 100% → 375x667: normal, rows 1, right 372, scrollW 375/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+dark 390x844 100% → 375x667: normal, rows 1, right 372, scrollW 375/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+dark 1440x900 (desktop window) 100% → 375x667: normal, rows 1, right 372, scrollW 372/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+dark 800x900 (desktop window) 100% → 375x667: normal, rows 1, right 372, scrollW 372/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+dark 414x896 200% → 375x667: wrap, rows 2, right 367, scrollW 375/clientW 375, innerW 375, tab bottom 667; → 414x896: wrap OK
+
+## D2: text 100/150/175/200 % × leaves (live data change), phones
+
+light 375x667 100%: 2296:tight/1r/R367/lvl56  9999:normal/1r/R374/lvl56  10000:tight/1r/R367/lvl56  12345:tight/1r/R367/lvl56  123456:tight/1r/R367/lvl56  470000:tight/1r/R367/lvl56
+light 375x667 150%: 2296:wrap/2r/R367/lvl68  9999:wrap/2r/R367/lvl68  10000:wrap/2r/R367/lvl68  12345:wrap/2r/R367/lvl68  123456:wrap/2r/R367/lvl68  470000:wrap/2r/R367/lvl79
+light 375x667 175%: 2296:wrap/2r/R367/lvl80  9999:wrap/2r/R367/lvl80  10000:wrap/2r/R367/lvl80  12345:wrap/2r/R367/lvl80  123456:wrap/2r/R367/lvl80  470000:wrap/3r/R367/lvl92
+light 375x667 200%: 2296:wrap/2r/R367/lvl90  9999:wrap/2r/R367/lvl90  10000:wrap/3r/R367/lvl90  12345:wrap/3r/R367/lvl90  123456:wrap/3r/R367/lvl90  470000:wrap/3r/R367/lvl103
+light 390x844 100%: 2296:normal/1r/R382/lvl56  9999:normal/1r/R382/lvl56  10000:normal/1r/R386/lvl56  12345:normal/1r/R385/lvl56  123456:tight/1r/R382/lvl56  470000:tight/1r/R382/lvl56
+light 390x844 150%: 2296:wrap/2r/R382/lvl68  9999:wrap/2r/R382/lvl68  10000:wrap/2r/R382/lvl68  12345:wrap/2r/R382/lvl68  123456:wrap/2r/R382/lvl68  470000:wrap/2r/R382/lvl79
+light 390x844 175%: 2296:wrap/2r/R382/lvl80  9999:wrap/2r/R382/lvl80  10000:wrap/2r/R382/lvl80  12345:wrap/2r/R382/lvl80  123456:wrap/2r/R382/lvl80  470000:wrap/2r/R382/lvl92
+light 390x844 200%: 2296:wrap/2r/R382/lvl90  9999:wrap/2r/R382/lvl90  10000:wrap/2r/R382/lvl90  12345:wrap/2r/R382/lvl90  123456:wrap/3r/R382/lvl90  470000:wrap/3r/R382/lvl103
+light 360x740 100%: 2296:tight/1r/R352/lvl56  9999:tight/1r/R352/lvl56  10000:tight/1r/R352/lvl56  12345:tight/1r/R352/lvl56  123456:tight/1r/R359/lvl56  470000:wrap/2r/R352/lvl56 FAIL(sw 360, iw 360, tab 740)
+light 360x740 150%: 2296:wrap/2r/R352/lvl68  9999:wrap/2r/R352/lvl68  10000:wrap/2r/R352/lvl68  12345:wrap/2r/R352/lvl68  123456:wrap/2r/R352/lvl68  470000:wrap/2r/R352/lvl79
+light 360x740 175%: 2296:wrap/2r/R352/lvl80  9999:wrap/2r/R352/lvl80  10000:wrap/2r/R352/lvl80  12345:wrap/2r/R352/lvl80  123456:wrap/3r/R352/lvl80  470000:wrap/3r/R352/lvl92
+light 360x740 200%: 2296:wrap/3r/R352/lvl90  9999:wrap/2r/R352/lvl90  10000:wrap/3r/R352/lvl90  12345:wrap/3r/R352/lvl90  123456:wrap/3r/R352/lvl90  470000:wrap/3r/R352/lvl103
+dark 375x667 100%: 2296:tight/1r/R367/lvl56  9999:normal/1r/R374/lvl56  10000:tight/1r/R367/lvl56  12345:tight/1r/R367/lvl56  123456:tight/1r/R367/lvl56  470000:tight/1r/R367/lvl56
+dark 375x667 150%: 2296:wrap/2r/R367/lvl68  9999:wrap/2r/R367/lvl68  10000:wrap/2r/R367/lvl68  12345:wrap/2r/R367/lvl68  123456:wrap/2r/R367/lvl68  470000:wrap/2r/R367/lvl79
+dark 375x667 175%: 2296:wrap/2r/R367/lvl80  9999:wrap/2r/R367/lvl80  10000:wrap/2r/R367/lvl80  12345:wrap/2r/R367/lvl80  123456:wrap/2r/R367/lvl80  470000:wrap/3r/R367/lvl92
+dark 375x667 200%: 2296:wrap/2r/R367/lvl90  9999:wrap/2r/R367/lvl90  10000:wrap/3r/R367/lvl90  12345:wrap/3r/R367/lvl90  123456:wrap/3r/R367/lvl90  470000:wrap/3r/R367/lvl103
+dark 390x844 100%: 2296:normal/1r/R382/lvl56  9999:normal/1r/R382/lvl56  10000:normal/1r/R386/lvl56  12345:normal/1r/R385/lvl56  123456:tight/1r/R382/lvl56  470000:tight/1r/R382/lvl56
+dark 390x844 150%: 2296:wrap/2r/R382/lvl68  9999:wrap/2r/R382/lvl68  10000:wrap/2r/R382/lvl68  12345:wrap/2r/R382/lvl68  123456:wrap/2r/R382/lvl68  470000:wrap/2r/R382/lvl79
+dark 390x844 175%: 2296:wrap/2r/R382/lvl80  9999:wrap/2r/R382/lvl80  10000:wrap/2r/R382/lvl80  12345:wrap/2r/R382/lvl80  123456:wrap/2r/R382/lvl80  470000:wrap/2r/R382/lvl92
+dark 390x844 200%: 2296:wrap/2r/R382/lvl90  9999:wrap/2r/R382/lvl90  10000:wrap/2r/R382/lvl90  12345:wrap/2r/R382/lvl90  123456:wrap/3r/R382/lvl90  470000:wrap/3r/R382/lvl103
+dark 360x740 100%: 2296:tight/1r/R352/lvl56  9999:tight/1r/R352/lvl56  10000:tight/1r/R352/lvl56  12345:tight/1r/R352/lvl56  123456:tight/1r/R359/lvl56  470000:wrap/2r/R352/lvl56 FAIL(sw 360, iw 360, tab 740)
+dark 360x740 150%: 2296:wrap/2r/R352/lvl68  9999:wrap/2r/R352/lvl68  10000:wrap/2r/R352/lvl68  12345:wrap/2r/R352/lvl68  123456:wrap/2r/R352/lvl68  470000:wrap/2r/R352/lvl79
+dark 360x740 175%: 2296:wrap/2r/R352/lvl80  9999:wrap/2r/R352/lvl80  10000:wrap/2r/R352/lvl80  12345:wrap/2r/R352/lvl80  123456:wrap/3r/R352/lvl80  470000:wrap/3r/R352/lvl92
+dark 360x740 200%: 2296:wrap/3r/R352/lvl90  9999:wrap/2r/R352/lvl90  10000:wrap/3r/R352/lvl90  12345:wrap/3r/R352/lvl90  123456:wrap/3r/R352/lvl90  470000:wrap/3r/R352/lvl103
+
+failures: 2
+
+# BEFORE:
+## D1: resize / rotation, then measure (settle 1.5 s)
+
+light 414x896 100% → 375x667: normal, rows 1, right 372, scrollW 375/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+light 667x375 100% → 375x667: normal, rows 1, right 372, scrollW 375/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+light 844x390 100% → 375x667: normal, rows 1, right 372, scrollW 375/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+light 390x844 100% → 375x667: normal, rows 1, right 372, scrollW 375/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+light 1440x900 (desktop window) 100% → 375x667: normal, rows 1, right 372, scrollW 372/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+light 800x900 (desktop window) 100% → 375x667: normal, rows 1, right 372, scrollW 372/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+light 414x896 200% → 375x667: wrap, rows 2, right 367, scrollW 375/clientW 375, innerW 375, tab bottom 667; → 414x896: wrap OK
+dark 414x896 100% → 375x667: normal, rows 1, right 372, scrollW 375/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+dark 667x375 100% → 375x667: normal, rows 1, right 372, scrollW 375/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+dark 844x390 100% → 375x667: normal, rows 1, right 372, scrollW 375/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+dark 390x844 100% → 375x667: normal, rows 1, right 372, scrollW 375/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+dark 1440x900 (desktop window) 100% → 375x667: normal, rows 1, right 372, scrollW 372/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+dark 800x900 (desktop window) 100% → 375x667: normal, rows 1, right 372, scrollW 372/clientW 375, innerW 375, tab bottom 667; → 414x896: normal OK
+dark 414x896 200% → 375x667: wrap, rows 2, right 367, scrollW 375/clientW 375, innerW 375, tab bottom 667; → 414x896: wrap OK
+
+## D2: text 100/150/175/200 % × leaves (live data change), phones
+
+light 375x667 100%: 2296:tight/1r/R367/lvl56  9999:normal/1r/R374/lvl56  10000:tight/1r/R367/lvl56  12345:tight/1r/R367/lvl56  123456:tight/1r/R367/lvl56  470000:tight/1r/R367/lvl56
+light 375x667 150%: 2296:wrap/2r/R367/lvl68  9999:wrap/2r/R367/lvl68  10000:wrap/2r/R367/lvl68  12345:wrap/2r/R367/lvl68  123456:wrap/2r/R367/lvl68  470000:wrap/2r/R367/lvl79
+light 375x667 175%: 2296:wrap/2r/R367/lvl80  9999:wrap/2r/R367/lvl80  10000:wrap/2r/R367/lvl80  12345:wrap/2r/R367/lvl80  123456:wrap/2r/R367/lvl80  470000:wrap/3r/R367/lvl92
+light 375x667 200%: 2296:wrap/2r/R367/lvl90  9999:wrap/2r/R367/lvl90  10000:wrap/3r/R367/lvl90  12345:wrap/3r/R367/lvl90  123456:wrap/3r/R367/lvl90  470000:wrap/3r/R367/lvl103
+light 390x844 100%: 2296:normal/1r/R382/lvl56  9999:normal/1r/R382/lvl56  10000:normal/1r/R386/lvl56  12345:normal/1r/R385/lvl56  123456:tight/1r/R382/lvl56  470000:tight/1r/R382/lvl56
+light 390x844 150%: 2296:wrap/2r/R382/lvl68  9999:wrap/2r/R382/lvl68  10000:wrap/2r/R382/lvl68  12345:wrap/2r/R382/lvl68  123456:wrap/2r/R382/lvl68  470000:wrap/2r/R382/lvl79
+light 390x844 175%: 2296:wrap/2r/R382/lvl80  9999:wrap/2r/R382/lvl80  10000:wrap/2r/R382/lvl80  12345:wrap/2r/R382/lvl80  123456:wrap/2r/R382/lvl80  470000:wrap/2r/R382/lvl92
+light 390x844 200%: 2296:wrap/2r/R382/lvl90  9999:wrap/2r/R382/lvl90  10000:wrap/2r/R382/lvl90  12345:wrap/2r/R382/lvl90  123456:wrap/3r/R382/lvl90  470000:wrap/3r/R382/lvl103
+light 360x740 100%: 2296:tight/1r/R352/lvl56  9999:tight/1r/R352/lvl56  10000:tight/1r/R352/lvl56  12345:tight/1r/R352/lvl56  123456:tight/1r/R359/lvl56  470000:wrap/2r/R352/lvl56 FAIL(sw 360, iw 360, tab 740)
+light 360x740 150%: 2296:wrap/2r/R352/lvl68  9999:wrap/2r/R352/lvl68  10000:wrap/2r/R352/lvl68  12345:wrap/2r/R352/lvl68  123456:wrap/2r/R352/lvl68  470000:wrap/2r/R352/lvl79
+light 360x740 175%: 2296:wrap/2r/R352/lvl80  9999:wrap/2r/R352/lvl80  10000:wrap/2r/R352/lvl80  12345:wrap/2r/R352/lvl80  123456:wrap/3r/R352/lvl80  470000:wrap/3r/R352/lvl92
+light 360x740 200%: 2296:wrap/3r/R352/lvl90  9999:wrap/2r/R352/lvl90  10000:wrap/3r/R352/lvl90  12345:wrap/3r/R352/lvl90  123456:wrap/3r/R352/lvl90  470000:wrap/3r/R352/lvl103
+dark 375x667 100%: 2296:tight/1r/R367/lvl56  9999:normal/1r/R374/lvl56  10000:tight/1r/R367/lvl56  12345:tight/1r/R367/lvl56  123456:tight/1r/R367/lvl56  470000:tight/1r/R367/lvl56
+dark 375x667 150%: 2296:wrap/2r/R367/lvl68  9999:wrap/2r/R367/lvl68  10000:wrap/2r/R367/lvl68  12345:wrap/2r/R367/lvl68  123456:wrap/2r/R367/lvl68  470000:wrap/2r/R367/lvl79
+dark 375x667 175%: 2296:wrap/2r/R367/lvl80  9999:wrap/2r/R367/lvl80  10000:wrap/2r/R367/lvl80  12345:wrap/2r/R367/lvl80  123456:wrap/2r/R367/lvl80  470000:wrap/3r/R367/lvl92
+dark 375x667 200%: 2296:wrap/2r/R367/lvl90  9999:wrap/2r/R367/lvl90  10000:wrap/3r/R367/lvl90  12345:wrap/3r/R367/lvl90  123456:wrap/3r/R367/lvl90  470000:wrap/3r/R367/lvl103
+dark 390x844 100%: 2296:normal/1r/R382/lvl56  9999:normal/1r/R382/lvl56  10000:normal/1r/R386/lvl56  12345:normal/1r/R385/lvl56  123456:tight/1r/R382/lvl56  470000:tight/1r/R382/lvl56
+dark 390x844 150%: 2296:wrap/2r/R382/lvl68  9999:wrap/2r/R382/lvl68  10000:wrap/2r/R382/lvl68  12345:wrap/2r/R382/lvl68  123456:wrap/2r/R382/lvl68  470000:wrap/2r/R382/lvl79
+dark 390x844 175%: 2296:wrap/2r/R382/lvl80  9999:wrap/2r/R382/lvl80  10000:wrap/2r/R382/lvl80  12345:wrap/2r/R382/lvl80  123456:wrap/2r/R382/lvl80  470000:wrap/2r/R382/lvl92
+dark 390x844 200%: 2296:wrap/2r/R382/lvl90  9999:wrap/2r/R382/lvl90  10000:wrap/2r/R382/lvl90  12345:wrap/2r/R382/lvl90  123456:wrap/3r/R382/lvl90  470000:wrap/3r/R382/lvl103
+dark 360x740 100%: 2296:tight/1r/R352/lvl56  9999:tight/1r/R352/lvl56  10000:tight/1r/R352/lvl56  12345:tight/1r/R352/lvl56  123456:tight/1r/R359/lvl56  470000:wrap/2r/R352/lvl56 FAIL(sw 360, iw 360, tab 740)
+dark 360x740 150%: 2296:wrap/2r/R352/lvl68  9999:wrap/2r/R352/lvl68  10000:wrap/2r/R352/lvl68  12345:wrap/2r/R352/lvl68  123456:wrap/2r/R352/lvl68  470000:wrap/2r/R352/lvl79
+dark 360x740 175%: 2296:wrap/2r/R352/lvl80  9999:wrap/2r/R352/lvl80  10000:wrap/2r/R352/lvl80  12345:wrap/2r/R352/lvl80  123456:wrap/3r/R352/lvl80  470000:wrap/3r/R352/lvl92
+dark 360x740 200%: 2296:wrap/3r/R352/lvl90  9999:wrap/2r/R352/lvl90  10000:wrap/3r/R352/lvl90  12345:wrap/3r/R352/lvl90  123456:wrap/3r/R352/lvl90  470000:wrap/3r/R352/lvl103
+
+failures: 2

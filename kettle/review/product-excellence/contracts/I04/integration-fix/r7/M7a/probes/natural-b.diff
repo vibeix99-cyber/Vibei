@@ -1,0 +1,91 @@
+0a1
+> // M7a ROUND-7 ADAPTATION of L1's natural-x.mjs: measures WHICHEVER element presents the storage-full warning — the toast li#toast-kettle:save-failed (R5/R6/INT) or the in-page banner section[data-save-warning] (r7 banner). Toast: judged exactly as before (taken away/faded, drawn below its room). Banner: judged for being taken away/faded, moving within the page (its top + scrollY), and Save backup cut off (outside the banner's box, or clipped by an ancestor). The pointer rests on the toast stack (the warning itself when it is a toast, as before; the largest visible toast otherwise). Also counts additions to live regions that carry the warning's text. No synthetic events.
+12a14
+> const WSEL = `[id="${WARN}"], section[data-save-warning]`;
+42c44
+<       const R = (window.__rec = { frames: [], ev: [], t0: performance.now(), stop: false });
+---
+>       const R = (window.__rec = { frames: [], ev: [], said: [], t0: performance.now(), stop: false });
+44c46,58
+<       new MutationObserver((ms) => { for (const m of ms) { for (const n of m.addedNodes) if (n.tagName === 'LI') R.ev.push([t(), '+', n.id]); for (const n of m.removedNodes) if (n.tagName === 'LI') R.ev.push([t(), '-', n.id]); } }).observe(document.body, { childList: true, subtree: true });
+---
+>       const W = () => document.getElementById(WARN) ?? document.querySelector('section[data-save-warning]');
+>       const isW = (n) => n.nodeType === 1 && (n.id === WARN || n.matches?.('section[data-save-warning]') || !!n.querySelector?.('section[data-save-warning]'));
+>       new MutationObserver((ms) => {
+>         for (const m of ms) {
+>           for (const n of m.addedNodes) {
+>             if (n.tagName === 'LI') R.ev.push([t(), '+', n.id]);
+>             else if (isW(n)) R.ev.push([t(), '+', 'banner']);
+>             const live = (n.nodeType === 1 ? n : n.parentElement)?.closest?.('[aria-live]:not([aria-live="off"]), [role="status"], [role="alert"]');
+>             if (live && /storage is full|couldn’t save your latest/.test(n.textContent ?? '')) R.said.push([t(), live.id || live.getAttribute('aria-label') || live.className]);
+>           }
+>           for (const n of m.removedNodes) { if (n.tagName === 'LI') R.ev.push([t(), '-', n.id]); else if (isW(n)) R.ev.push([t(), '-', 'banner']); }
+>         }
+>       }).observe(document.body, { childList: true, subtree: true, characterData: true });
+48c62,63
+<         const w = document.getElementById(WARN);
+---
+>         const w = W();
+>         const banner = !!w && w.tagName === 'SECTION';
+54c69,82
+<         R.frames.push([t(), list ? list.children.length : 0, w ? +op.toFixed(2) : 0, r ? Math.round(r.top) : null, r ? Math.round(r.bottom) : null, d ? Math.round(d.top) : null, lr ? Math.round(lr.bottom) : null, list ? +list.scrollTop.toFixed(1) : null]);
+---
+>         let inside = null, clipped = null;
+>         if (banner) {
+>           const a = w.querySelector('button')?.getBoundingClientRect();
+>           inside = !!a && a.top >= r.top - 0.5 && a.bottom <= r.bottom + 0.5 && a.left >= r.left - 0.5 && a.right <= r.right + 0.5 ? 1 : 0;
+>           clipped = 0;
+>           for (let e = w.parentElement; e && e !== document.body; e = e.parentElement) {
+>             const cs = getComputedStyle(e);
+>             if (cs.overflowX !== 'visible' || cs.overflowY !== 'visible') {
+>               const q = e.getBoundingClientRect();
+>               if (a && (a.top < q.top - 0.5 || a.bottom > q.bottom + 0.5) && e.scrollHeight <= e.clientHeight) clipped = 1;
+>             }
+>           }
+>         }
+>         R.frames.push([t(), list ? list.children.length : 0, w ? +op.toFixed(2) : 0, r ? Math.round(r.top) : null, r ? Math.round(r.bottom) : null, d ? Math.round(d.top) : null, lr ? Math.round(lr.bottom) : null, list ? +list.scrollTop.toFixed(1) : null, banner ? 'B' : w ? 'T' : '-', r ? +(r.top + scrollY).toFixed(1) : null, inside, clipped]);
+61c89
+<     await page.waitForSelector(`[id="${WARN}"]`, { timeout: 8000 });
+---
+>     await page.waitForSelector(WSEL, { timeout: 8000 });
+63c91
+<     const st = () => page.evaluate((WARN) => { const l = document.querySelector('[aria-label="Notifications"] ol'); const w = document.getElementById(WARN); const r = w?.getBoundingClientRect(); return { x: r ? (r.left + r.right) / 2 : 180, y: r ? Math.max(r.top, 0) + 40 : 60, lst: l.scrollTop, lmin: -(l.scrollHeight - l.clientHeight), lmax: l.scrollHeight - l.clientHeight, rev: getComputedStyle(l).flexDirection === 'column-reverse', wst: w?.scrollTop ?? 0 }; }, WARN);
+---
+>     const st = () => page.evaluate((WARN) => { const l = document.querySelector('[aria-label="Notifications"] ol'); const w = document.getElementById(WARN); const lr = l?.getBoundingClientRect(); let x = 180, y = 60; if (w) { const r = w.getBoundingClientRect(); x = (r.left + r.right) / 2; y = Math.max(r.top, 0) + 40; } else if (l) { let best = null; for (const li of l.children) { const q = li.getBoundingClientRect(); const t = Math.max(q.top, lr.top, 0), b = Math.min(q.bottom, lr.bottom, innerHeight); if (b - t > 8 && (!best || b - t > best.h)) best = { h: b - t, x: (q.left + q.right) / 2, y: (t + b) / 2 }; } if (best) { x = best.x; y = best.y; } } return { x, y, lst: l ? l.scrollTop : 0, lmin: l ? -(l.scrollHeight - l.clientHeight) : 0, lmax: l ? l.scrollHeight - l.clientHeight : 0, rev: l ? getComputedStyle(l).flexDirection === 'column-reverse' : true, wst: w?.scrollTop ?? 0 }; }, WARN);
+73,77c101,105
+<     const R = await page.evaluate(() => { window.__rec.stop = true; return { frames: window.__rec.frames, ev: window.__rec.ev }; });
+<     const warnIn = R.ev.find((e) => e[2] === WARN && e[1] === '+')?.[0] ?? 0;
+<     const after = R.frames.filter((f) => f[0] >= warnIn + 1200);
+<     const gone = after.filter((f) => f[2] < 0.98);
+<     const below = after.filter((f) => f[4] != null && f[4] > Math.min(f[5], f[6]) + 0.5);
+---
+>     const R = await page.evaluate(() => { window.__rec.stop = true; return { frames: window.__rec.frames, ev: window.__rec.ev, said: window.__rec.said }; });
+>     const R2 = R;
+>     const warnIn = R2.ev.find((e) => (e[2] === WARN || e[2] === 'banner') && e[1] === '+')?.[0] ?? 0;
+>     const after = R2.frames.filter((f) => f[0] >= warnIn + 1200);
+>     const kind = [...new Set(after.map((f) => f[8]))].join('');
+79,80c107,121
+<     if (gone.length) bad.push(`warning taken away / faded in ${gone.length} frames`);
+<     if (below.length) bad.push(`drawn below its room in ${below.length} frames (max +${Math.max(...below.map((f) => f[4] - f[6]))} px; over the docked start by up to ${Math.max(0, ...below.map((f) => f[4] - f[5]))} px)`);
+---
+>     if (/B/.test(kind)) {
+>       const gone = after.filter((f) => f[8] !== 'B' || f[2] < 0.98);
+>       const tops = after.filter((f) => f[9] != null).map((f) => f[9]);
+>       const drift = tops.length ? Math.max(...tops) - Math.min(...tops) : 0;
+>       const cut = after.filter((f) => f[10] === 0 || f[11] === 1);
+>       if (gone.length) bad.push(`banner taken away / faded in ${gone.length} frames`);
+>       if (drift > 0.5) bad.push(`banner moved ${drift.toFixed(1)} px within the page`);
+>       if (cut.length) bad.push(`Save backup cut off in ${cut.length} frames`);
+>     } else {
+>       const gone = after.filter((f) => f[2] < 0.98);
+>       const below = after.filter((f) => f[4] != null && f[4] > Math.min(f[5], f[6]) + 0.5);
+>       if (gone.length) bad.push(`warning taken away / faded in ${gone.length} frames`);
+>       if (below.length) bad.push(`drawn below its room in ${below.length} frames (max +${Math.max(...below.map((f) => f[4] - f[6]))} px; over the docked start by up to ${Math.max(0, ...below.map((f) => f[4] - f[5]))} px)`);
+>     }
+>     const adds = R2.ev.filter((e) => (e[2] === WARN || e[2] === 'banner') && e[1] === '+').length, rems = R2.ev.filter((e) => (e[2] === WARN || e[2] === 'banner') && e[1] === '-').length;
+83,84c124,125
+<     console.log(`${tag}: ${bad.length ? 'FAIL ' + bad.join('; ') : 'OK'} | top at ${tTop} ms, down from ${tDown} | toasts ${JSON.stringify(R.ev)}`);
+<     appendFileSync(`${out}/natural-${label}.jsonl`, JSON.stringify({ tag, bad, ev: R.ev, frames: R.frames, tTop, tDown }) + '\n');
+---
+>     console.log(`${tag}: ${bad.length ? 'FAIL ' + bad.join('; ') : 'OK'} | presenter ${kind} | warning adds/removals ${adds}/${rems} | live-region additions with the warning ${R.said.length} | top at ${tTop} ms, down from ${tDown} | toasts ${JSON.stringify(R.ev)}`);
+>     appendFileSync(`${out}/natural-${label}.jsonl`, JSON.stringify({ tag, bad, kind, adds, rems, said: R.said, ev: R.ev, frames: R.frames, tTop, tDown }) + '\n');

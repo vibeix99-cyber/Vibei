@@ -1,0 +1,76 @@
+# The Checker's race.mjs (unedited copy in .tmp/w1fix/chk-r5/), POST=80, final code 091249a on 5202, 2026-10-10
+# POST=80 node .tmp/w1fix/chk-r5/race.mjs http://127.0.0.1:5202 final <dir> <WxH> light,dark <text> <wheel|touch> 3
+# configs: 375x667@200, 844x390@200, 667x375@150 (lane 1); 667x375@200, 568x320@100 (lane 2)
+final 375x667 light t200 wheel release=t2 #0: OK | rest scrollTop 0 | events after release [[16267,"-","toast-t2"]]
+final 375x667 light t200 wheel release=t2 #1: OK | rest scrollTop 0 | events after release [[16264,"-","toast-t2"]]
+final 375x667 light t200 wheel release=t2 #2: OK | rest scrollTop 0 | events after release [[16459,"-","toast-t2"]]
+final 375x667 dark t200 wheel release=t2 #0: OK | rest scrollTop 0 | events after release [[16275,"-","toast-t2"]]
+final 375x667 dark t200 wheel release=t2 #1: OK | rest scrollTop 0 | events after release [[16293,"-","toast-t2"]]
+final 375x667 dark t200 wheel release=t2 #2: OK | rest scrollTop 0 | events after release [[16195,"-","toast-t2"]]
+final: 0 failures in 6 runs
+final 375x667 light t200 touch release=t2 #0: OK | rest scrollTop 0 | events after release [[28369,"-","toast-t2"]]
+final 375x667 light t200 touch release=t2 #1: OK | rest scrollTop 0 | events after release [[28010,"-","toast-t2"]]
+final 375x667 light t200 touch release=t2 #2: OK | rest scrollTop 0 | events after release [[28170,"-","toast-t2"]]
+final 375x667 dark t200 touch release=t2 #0: OK | rest scrollTop 0 | events after release [[27799,"-","toast-t2"]]
+final 375x667 dark t200 touch release=t2 #1: OK | rest scrollTop 0 | events after release [[27985,"-","toast-t2"]]
+final 375x667 dark t200 touch release=t2 #2: OK | rest scrollTop 0 | events after release [[28022,"-","toast-t2"]]
+final: 0 failures in 6 runs
+final 844x390 light t200 wheel release=t2 #0: OK | rest scrollTop 0 | events after release [[16864,"-","toast-t2"]]
+final 844x390 light t200 wheel release=t2 #1: OK | rest scrollTop 0 | events after release [[16846,"-","toast-t2"]]
+final 844x390 light t200 wheel release=t2 #2: OK | rest scrollTop 0 | events after release [[16834,"-","toast-t2"]]
+final 844x390 dark t200 wheel release=t2 #0: OK | rest scrollTop 0 | events after release [[16872,"-","toast-t2"]]
+final 844x390 dark t200 wheel release=t2 #1: OK | rest scrollTop 0 | events after release [[16944,"-","toast-t2"]]
+final 844x390 dark t200 wheel release=t2 #2: OK | rest scrollTop 0 | events after release [[16886,"-","toast-t2"]]
+final: 0 failures in 6 runs
+final 844x390 light t200 touch release=t2 #0: OK | rest scrollTop 0 | events after release [[29576,"-","toast-t2"]]
+final 844x390 light t200 touch release=t2 #1: OK | rest scrollTop 0 | events after release [[29801,"-","toast-t2"]]
+final 844x390 light t200 touch release=t2 #2: OK | rest scrollTop 0 | events after release [[30051,"-","toast-t2"]]
+final 844x390 dark t200 touch release=t2 #0: OK | rest scrollTop 0 | events after release [[29979,"-","toast-t2"]]
+final 844x390 dark t200 touch release=t2 #1: OK | rest scrollTop 0 | events after release [[30038,"-","toast-t2"]]
+final 844x390 dark t200 touch release=t2 #2: OK | rest scrollTop 0 | events after release [[30164,"-","toast-t2"]]
+final: 0 failures in 6 runs
+final 667x375 light t150 wheel release=t2 #0: OK | rest scrollTop 0 | events after release [[16576,"-","toast-t2"]]
+final 667x375 light t150 wheel release=t2 #1: OK | rest scrollTop 0 | events after release [[16619,"-","toast-t2"]]
+final 667x375 light t150 wheel release=t2 #2: OK | rest scrollTop 0 | events after release [[16576,"-","toast-t2"]]
+final 667x375 dark t150 wheel release=t2 #0: OK | rest scrollTop 0 | events after release [[16565,"-","toast-t2"]]
+final 667x375 dark t150 wheel release=t2 #1: OK | rest scrollTop 0 | events after release [[16603,"-","toast-t2"]]
+final 667x375 dark t150 wheel release=t2 #2: OK | rest scrollTop 0 | events after release [[16634,"-","toast-t2"]]
+final: 0 failures in 6 runs
+final 667x375 light t150 touch release=t2 #0: OK | rest scrollTop 0 | events after release [[28925,"-","toast-t2"]]
+final 667x375 light t150 touch release=t2 #1: OK | rest scrollTop 0 | events after release [[29016,"-","toast-t2"]]
+final 667x375 light t150 touch release=t2 #2: OK | rest scrollTop 0 | events after release [[28317,"-","toast-t2"]]
+final 667x375 dark t150 touch release=t2 #0: OK | rest scrollTop 0 | events after release [[28738,"-","toast-t2"]]
+final 667x375 dark t150 touch release=t2 #1: OK | rest scrollTop 0 | events after release [[28954,"-","toast-t2"]]
+final 667x375 dark t150 touch release=t2 #2: OK | rest scrollTop 0 | events after release [[29017,"-","toast-t2"]]
+final: 0 failures in 6 runs
+final 667x375 light t200 wheel release=t2 #0: OK | rest scrollTop 0 | events after release [[19218,"-","toast-t2"]]
+final 667x375 light t200 wheel release=t2 #1: OK | rest scrollTop 0 | events after release [[19148,"-","toast-t2"]]
+final 667x375 light t200 wheel release=t2 #2: OK | rest scrollTop 0 | events after release [[19142,"-","toast-t2"]]
+final 667x375 dark t200 wheel release=t2 #0: OK | rest scrollTop 0 | events after release [[19117,"-","toast-t2"]]
+final 667x375 dark t200 wheel release=t2 #1: OK | rest scrollTop 0 | events after release [[19054,"-","toast-t2"]]
+final 667x375 dark t200 wheel release=t2 #2: OK | rest scrollTop 0 | events after release [[19152,"-","toast-t2"]]
+final: 0 failures in 6 runs
+final 667x375 light t200 touch release=t2 #0: OK | rest scrollTop 0 | events after release [[37334,"-","toast-t2"]]
+final 667x375 light t200 touch release=t2 #1: OK | rest scrollTop 0 | events after release [[36911,"-","toast-t2"]]
+final 667x375 light t200 touch release=t2 #2: OK | rest scrollTop 0 | events after release [[37203,"-","toast-t2"]]
+final 667x375 dark t200 touch release=t2 #0: OK | rest scrollTop 0 | events after release [[37204,"-","toast-t2"]]
+final 667x375 dark t200 touch release=t2 #1: OK | rest scrollTop 0 | events after release [[37482,"-","toast-t2"]]
+final 667x375 dark t200 touch release=t2 #2: OK | rest scrollTop 0 | events after release [[36902,"-","toast-t2"]]
+final: 0 failures in 6 runs
+final 568x320 light t100 wheel release=t2 #0: OK | rest scrollTop 0 | events after release [[16010,"-","toast-t2"]]
+final 568x320 light t100 wheel release=t2 #1: OK | rest scrollTop 0 | events after release [[15987,"-","toast-t2"]]
+final 568x320 light t100 wheel release=t2 #2: OK | rest scrollTop 0 | events after release [[16001,"-","toast-t2"]]
+final 568x320 dark t100 wheel release=t2 #0: OK | rest scrollTop 0 | events after release [[16017,"-","toast-t2"]]
+final 568x320 dark t100 wheel release=t2 #1: OK | rest scrollTop 0 | events after release [[16003,"-","toast-t2"]]
+final 568x320 dark t100 wheel release=t2 #2: OK | rest scrollTop 0 | events after release [[16001,"-","toast-t2"]]
+final: 0 failures in 6 runs
+final 568x320 light t100 touch release=t2 #0: OK | rest scrollTop 0 | events after release [[27005,"-","toast-t2"]]
+final 568x320 light t100 touch release=t2 #1: OK | rest scrollTop 0 | events after release [[26918,"-","toast-t2"]]
+final 568x320 light t100 touch release=t2 #2: OK | rest scrollTop 0 | events after release [[26875,"-","toast-t2"]]
+final 568x320 dark t100 touch release=t2 #0: OK | rest scrollTop 0 | events after release [[26923,"-","toast-t2"]]
+final 568x320 dark t100 touch release=t2 #1: OK | rest scrollTop 0 | events after release [[26887,"-","toast-t2"]]
+final 568x320 dark t100 touch release=t2 #2: OK | rest scrollTop 0 | events after release [[27072,"-","toast-t2"]]
+final: 0 failures in 6 runs
+
+# strict re-judge against the region's bottom (node .tmp/w1fix/strictjudge.mjs on the two jsonl records)
+chk-race/race-final.jsonl chk-race2/race-final.jsonl: 0 of 60 runs with the warning below the region; max warning bottom − region bottom over all judged frames: -2 px

@@ -1,0 +1,97 @@
+# repro6.mjs on cb1cd9e at 375×667 @200 % light, stopped after 10 runs: these runs found the two problems r6c (d074863) fixes
+after 375x667@200 light wheel before d=3600 #0: FAIL a toast drawn over a protected control in 1 frames | 421 judged frames; gesture 3820–5587 ms (8 inputs), warning at 216; older toasts expired at [3503,3503] = ["before","before"] the gesture; list offsets 0..0; max (warning bottom − room bottom) 0 px; removals 0
+after 375x667@200 light touch before d=3600 #1: OK | 530 judged frames; gesture 3814–7389 ms (12 inputs), warning at 210; older toasts expired at [3461,3462] = ["before","before"] the gesture; list offsets 0..0; max (warning bottom − room bottom) 0 px; removals 0
+after 375x667@200 light wheel before d=4200 #2: FAIL a toast drawn over a protected control in 1 frames | 458 judged frames; gesture 4373–6138 ms (8 inputs), warning at 170; older toasts expired at [3454,3454] = ["before","before"] the gesture; list offsets 0..0; max (warning bottom − room bottom) 0 px; removals 0
+after 375x667@200 light touch before d=4200 #3: OK | 554 judged frames; gesture 4434–8030 ms (12 inputs), warning at 230; older toasts expired at [3475,3475] = ["before","before"] the gesture; list offsets 0..0; max (warning bottom − room bottom) 0 px; removals 0
+after 375x667@200 light wheel before d=4800 #4: FAIL a toast drawn over a protected control in 1 frames | 494 judged frames; gesture 4961–6719 ms (8 inputs), warning at 158; older toasts expired at [3452,3452] = ["before","before"] the gesture; list offsets 0..0; max (warning bottom − room bottom) 0 px; removals 0
+after 375x667@200 light touch before d=4800 #5: FAIL hide/reset: 1 re-shown, 11 faded frames; a toast drawn over a protected control in 2 frames | 605 judged frames; gesture 5006–8614 ms (12 inputs), warning at 202; older toasts expired at [3505,3505] = ["before","before"] the gesture; list offsets 0..0; max (warning bottom − room bottom) 0 px; removals 1
+after 375x667@200 light wheel during d=1000 #6: FAIL hide/reset: 1 re-shown, 6 faded frames; a toast drawn over a protected control in 1 frames | 427 judged frames; gesture 1181–6318 ms (22 inputs), warning at 177; older toasts expired at [4074,5690] = ["during","during"] the gesture; list offsets 0..170; max (warning bottom − room bottom) 0 px; removals 1 | VIDEO
+after 375x667@200 light touch during d=1000 #7: FAIL a toast drawn over a protected control in 1 frames | 467 judged frames; gesture 1178–6201 ms (17 inputs), warning at 175; older toasts expired at [3540,3540] = ["during","during"] the gesture; list offsets 0..36; max (warning bottom − room bottom) 0 px; removals 0
+after 375x667@200 light wheel during d=1600 #8: OK | 435 judged frames; gesture 1855–5760 ms (19 inputs), warning at 250; older toasts expired at [4042,5274] = ["during","during"] the gesture; list offsets 0..170; max (warning bottom − room bottom) 0 px; removals 0
+after 375x667@200 light touch during d=1600 #9: FAIL hide/reset: 1 re-shown, 10 faded frames; a toast drawn over a protected control in 2 frames | 455 judged frames; gesture 1785–6139 ms (15 inputs), warning at 181; older toasts expired at [3481,3481] = ["during","during"] the gesture; list offsets 0..18; max (warning bottom − room bottom) 0 px; removals 1
+after 375x667@200 light wheel during d=2200 #10: ERROR page.evaluate: Target page, context or browser has been closed
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+browserContext.close: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --enable-unsafe-swiftshader --use-angle=swiftshader --ignore-gpu-blocklist --user-data-dir=/tmp/playwright_chromiumdev_profile-woZNnq --remote-debugging-pipe --no-startup-window
+<launched> pid=20295
+[pid=20295][err] [1010/121628.008807:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[pid=20295][err] [1010/121628.010795:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[pid=20295][err] [1010/121628.010844:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[pid=20295][err] [1010/121628.020388:WARNING:device/bluetooth/dbus/bluez_dbus_manager.cc:209] Floss manager service not available, cannot set Floss enable/disable.
+[pid=20295][err] [1010/121628.037760:WARNING:sandbox/policy/linux/sandbox_linux.cc:414] InitializeSandbox() called with multiple threads in process gpu-process.
+[pid=20295][err] [1010/121628.145165:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5202/@vite/client (883)
+[pid=20295][err] [1010/121628.169538:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5202/@vite/client (996)
+[pid=20295][err] [1010/121628.387227:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5202/node_modules/.vite/deps/react-dom_client.js?v=49a562e3 (15805)
+[pid=20295][err] [1010/121628.995440:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5202/@vite/client (883)
+[pid=20295][err] [1010/121629.022094:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5202/@vite/client (996)
+[pid=20295][err] [1010/121629.182116:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5202/node_modules/.vite/deps/react-dom_client.js?v=49a562e3 (15805)
+[pid=20295][err] [1010/121641.070849:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5202/@vite/client (883)
+[pid=20295][err] [1010/121641.089151:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5202/@vite/client (996)
+[pid=20295][err] [1010/121641.377124:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5202/node_modules/.vite/deps/react-dom_client.js?v=49a562e3 (15805)
+[pid=20295][err] [1010/121641.973721:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5202/@vite/client (883)
+[pid=20295][err] [1010/121641.986868:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5202/@vite/client (996)
+[pid=20295][err] [1010/121642.124543:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5202/node_modules/.vite/deps/react-dom_client.js?v=49a562e3 (15805)
+[pid=20295][err] [1010/121649.751079:WARNING:media/audio/linux/audio_manager_linux.cc:54] Falling back to ALSA for audio output. PulseAudio is not available or could not be initialized.
+[pid=20295][err] [1010/121655.823503:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5202/@vite/client (883)
+[pid=20295][err] [1010/121655.846836:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5202/@vite/client (996)
+[pid=20295][err] [1010/121656.036522:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5202/node_modules/.vite/deps/react-dom_client.js?v=49a562e3 (15805)
+[pid=20295][err] [1010/121656.642305:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5202/@vite/client (883)
+[pid=20295][err] [1010/121656.655625:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5202/@vite/client (996)
+[pid=20295][err] [1010/121656.762300:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5202/node_modules/.vite/deps/react-dom_client.js?v=49a562e3 (15805)
+[pid=20295][err] [1010/121709.049488:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5202/@vite/client (883)
+[pid=20295][err] [1010/121709.080882:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5202/@vite/client (996)
+[pid=20295][err] [1010/121709.257770:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5202/node_modules/.vite/deps/react-dom_client.js?v=49a562e3 (15805)
+[pid=20295][err] [1010/121709.918296:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5202/@vite/client (883)
+[pid=20295][err] [1010/121709.942172:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5202/@vite/client (996)
+[pid=20295][err] [1010/121710.186633:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5202/node_modules/.vite/deps/react-dom_client.js?v=49a562e3 (15805)
+[pid=20295][err] [1010/121724.737972:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5202/@vite/client (883)
+[pid=20295][err] [1010/121724.750714:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5202/@vite/client (996)
+[pid=20295][err] [1010/121724.958757:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5202/node_modules/.vite/deps/react-dom_client.js?v=49a562e3 (15805)
+[pid=20295][err] [1010/121725.569223:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5202/@vite/client (883)
+[pid=20295][err] [1010/121725.584738:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5202/@vite/client (996)
+[pid=20295][err] [1010/121725.710162:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5202/node_modules/.vite/deps/react-dom_client.js?v=49a562e3 (15805)
+[pid=20295][err] [1010/121738.655367:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5202/@vite/client (883)
+[pid=20295][err] [1010/121738.670285:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5202/@vite/client (996)
+[pid=20295][err] [1010/121738.986591:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5202/node_modules/.vite/deps/react-dom_client.js?v=49a562e3 (15805)
+[pid=20295][err] [1010/121739.610856:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5202/@vite/client (883)
+[pid=20295][err] [1010/121739.625269:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5202/@vite/client (996)
+[pid=20295][err] [1010/121739.847259:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5202/node_modules/.vite/deps/react-dom_client.js?v=49a562e3 (15805)
+[pid=20295][err] [1010/121755.001654:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5202/@vite/client (883)
+[pid=20295][err] [1010/121755.011735:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5202/@vite/client (996)
+[pid=20295][err] [1010/121755.243780:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5202/node_modules/.vite/deps/react-dom_client.js?v=49a562e3 (15805)
+[pid=20295][err] [1010/121755.890750:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5202/@vite/client (883)
+[pid=20295][err] [1010/121755.904918:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5202/@vite/client (996)
+[pid=20295][err] [1010/121756.046602:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5202/node_modules/.vite/deps/react-dom_client.js?v=49a562e3 (15805)
+[pid=20295][err] [1010/121808.486749:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5202/@vite/client (883)
+[pid=20295][err] [1010/121808.498134:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5202/@vite/client (996)
+[pid=20295][err] [1010/121808.713956:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5202/node_modules/.vite/deps/react-dom_client.js?v=49a562e3 (15805)
+[pid=20295][err] [1010/121809.327045:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5202/@vite/client (883)
+[pid=20295][err] [1010/121809.340822:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5202/@vite/client (996)
+[pid=20295][err] [1010/121809.495172:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5202/node_modules/.vite/deps/react-dom_client.js?v=49a562e3 (15805)
+[pid=20295][err] [1010/121822.013977:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5202/@vite/client (883)
+[pid=20295][err] [1010/121822.026176:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5202/@vite/client (996)
+[pid=20295][err] [1010/121822.309398:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5202/node_modules/.vite/deps/react-dom_client.js?v=49a562e3 (15805)
+[pid=20295][err] [1010/121822.962112:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5202/@vite/client (883)
+[pid=20295][err] [1010/121822.969351:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5202/@vite/client (996)
+[pid=20295][err] [1010/121823.111863:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5202/node_modules/.vite/deps/react-dom_client.js?v=49a562e3 (15805)
+[pid=20295][err] [1010/121835.118621:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5202/@vite/client (883)
+[pid=20295][err] [1010/121835.155571:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5202/@vite/client (996)
+[pid=20295][err] [1010/121835.360163:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5202/node_modules/.vite/deps/react-dom_client.js?v=49a562e3 (15805)
+[pid=20295][err] [1010/121835.953594:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5202/@vite/client (883)
+[pid=20295][err] [1010/121835.970886:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5202/@vite/client (996)
+[pid=20295][err] [1010/121836.091609:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5202/node_modules/.vite/deps/react-dom_client.js?v=49a562e3 (15805)
+[pid=20295][err] [1010/121848.469529:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5202/@vite/client (883)
+[pid=20295][err] [1010/121848.506816:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5202/@vite/client (996)
+[pid=20295][err] [1010/121848.708622:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5202/node_modules/.vite/deps/react-dom_client.js?v=49a562e3 (15805)
+[pid=20295][err] [1010/121849.309632:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5202/@vite/client (883)
+[pid=20295][err] [1010/121849.317842:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5202/@vite/client (996)
+[pid=20295][err] [1010/121849.460930:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5202/node_modules/.vite/deps/react-dom_client.js?v=49a562e3 (15805)
+[pid=20295] <gracefully close start>
+    at async file:///home/user/wt/w1fix-m2/kettle/.tmp/w1fix/repro6.mjs:178:5
+
+Node.js v22.22.2

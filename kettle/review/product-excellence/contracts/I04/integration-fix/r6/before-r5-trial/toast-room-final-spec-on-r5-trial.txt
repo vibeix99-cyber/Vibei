@@ -1,0 +1,26 @@
+# tests/toast-room.spec.ts as committed in 091249a, against the Checker's r5 trial 20671eb (git-archive copy on 5222), 2026-10-10T15:03:08Z
+# KETTLE_PORT=5222 npx playwright test tests/toast-room.spec.ts --project=chromium --workers=2
+  ✓   1 [chromium] › tests/toast-room.spec.ts:177:5 › the storage-full warning can be read and an older toast revealed by wheel without the warning going away (375×667, 200 % text) (10.8s)
+  ✓   2 [chromium] › tests/toast-room.spec.ts:177:5 › the storage-full warning can be read and an older toast revealed by touch without the warning going away (375×667, 200 % text) (14.8s)
+  ✓   3 [chromium] › tests/toast-room.spec.ts:177:5 › the storage-full warning can be read and an older toast revealed by wheel without the warning going away (844×390, 200 % text) (11.4s)
+  ✓   4 [chromium] › tests/toast-room.spec.ts:177:5 › the storage-full warning can be read and an older toast revealed by touch without the warning going away (844×390, 200 % text) (17.5s)
+  ✓   5 [chromium] › tests/toast-room.spec.ts:177:5 › the storage-full warning can be read and every older toast revealed by wheel without the warning going away (667×375, 200 % text) (15.9s)
+  ✓   6 [chromium] › tests/toast-room.spec.ts:177:5 › the storage-full warning can be read and every older toast revealed by touch without the warning going away (667×375, 200 % text) (32.7s)
+  ✘   7 [chromium] › tests/toast-room.spec.ts:263:3 › an older toast timing out after the list was scrolled never moves the warning out of its room (375×667, 200 % text, wheel, light) (14.8s)
+  ✘   8 [chromium] › tests/toast-room.spec.ts:263:3 › an older toast timing out after the list was scrolled never moves the warning out of its room (375×667, 200 % text, wheel, dark) (15.0s)
+  ✘   9 [chromium] › tests/toast-room.spec.ts:346:3 › the last toast fades out where it was, never over the docked start (375×667, 200 % text) (5.0s)
+  ✘  10 [chromium] › tests/toast-room.spec.ts:346:3 › the last toast fades out where it was, never over the docked start (844×390, 200 % text) (4.9s)
+    Error: times the warning left the page since End
+    Expected: 0
+    Received: 1
+    Error: times the warning left the page since End
+    Expected: 0
+    Received: 1
+    Error: frames with the leaving toast drawn over the docked start (of 109)
+    Expected: 0
+    Received: 4
+    Error: frames with the leaving toast drawn over the docked start (of 112)
+    Expected: 0
+    Received: 4
+  4 failed
+  6 passed (2.4m)

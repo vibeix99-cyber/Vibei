@@ -1,0 +1,107 @@
+{
+ "revision": "AFTER 091249a (kettle/src 05bb3f827117)",
+ "base": "http://127.0.0.1:5202",
+ "config": {
+  "id": "desktop-1440x900-dark",
+  "w": 1440,
+  "h": 900,
+  "phone": false,
+  "theme": "dark"
+ },
+ "states": {
+  "home-warning": {
+   "quota": "QuotaExceededError",
+   "warningAppeared": true,
+   "route": "#/",
+   "toasts": [
+    [
+     "Kettle couldn’t save your latest changes: this b",
+     493,
+     385,
+     933,
+     462,
+     1
+    ],
+    [
+     "Kettle’s off. See you soon.",
+     587,
+     470,
+     839,
+     522,
+     1
+    ]
+   ],
+   "warning": [
+    385,
+    462,
+    0
+   ],
+   "pageErrors": []
+  },
+  "focus-warning-toasts": {
+   "quota": "QuotaExceededError",
+   "route": "#/focus",
+   "toasts": [
+    [
+     "Kettle couldn’t save your latest changes: this b",
+     500,
+     325,
+     940,
+     402,
+     1
+    ],
+    [
+     "Recipe done: Take 2 full tea breaks · +15 leaves",
+     521,
+     410,
+     920,
+     462,
+     1
+    ],
+    [
+     "New badge: Tea Time",
+     610,
+     470,
+     830,
+     522,
+     1
+    ]
+   ],
+   "warning": [
+    325,
+    402,
+    0
+   ],
+   "pageErrors": []
+  },
+  "breakover-toasts": {
+   "route": "#/focus",
+   "toasts": [
+    [
+     "Recipe done: Take 2 full tea breaks · +15 leaves",
+     521,
+     322,
+     920,
+     374,
+     1
+    ],
+    [
+     "New badge: Tea Time",
+     610,
+     382,
+     830,
+     434,
+     1
+    ]
+   ],
+   "warning": null,
+   "pageErrors": []
+  },
+  "summary-levelup": {
+   "route": "#/done",
+   "toasts": [],
+   "warning": null,
+   "pageErrors": []
+  }
+ }
+}

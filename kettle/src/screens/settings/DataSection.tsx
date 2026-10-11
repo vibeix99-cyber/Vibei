@@ -7,6 +7,7 @@ import { parseDayKey } from '@/lib/dates';
 import { importData, previewImport, resetAllData, undoLastImport, type ImportSummary } from '@/progress';
 import { Button, ListGroup, ListRow, SegmentedControl, Sheet, toast } from '@/ui';
 import { downloadBackup } from '@/screens/home/shims/data';
+import { SaveWarningBanner } from '@/app/SaveWarning';
 import s from './Settings.module.css';
 
 type Msg = { tone: 'ok' | 'error'; text: string } | null;
@@ -110,6 +111,8 @@ export function DataSection() {
         <ListRow icon="upload" iconTone="matcha" label="Import a backup" description="Add or restore from a Kettle .json file." onClick={() => fileRef.current?.click()} />
         <ListRow icon="trash" label="Reset everything" description="Start fresh on this device." danger onClick={() => setResetOpen(true)} />
       </ListGroup>
+      {/* Storage full: the same warning as on Today, beside the backup tools. */}
+      <SaveWarningBanner home="/settings" />
       <input ref={fileRef} type="file" accept="application/json,.json" className="sr-only" tabIndex={-1} aria-hidden onChange={onFile} />
       <div aria-live="polite" className={s.msgSlot}>
         {msg && (

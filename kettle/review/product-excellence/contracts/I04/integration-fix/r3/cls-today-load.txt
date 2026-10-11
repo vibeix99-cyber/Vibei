@@ -1,0 +1,16 @@
+# production build of the final r3 source (kettle/src 97d26c5c29fe7651fbc16af7b4cbd2aa30a6a0b2, commit 54bf8be), vite preview on 5232, 2026-10-10T01:14:47Z
+# node .tmp/w1fix/clsprobe.mjs http://127.0.0.1:5232 5   — cold loads of Today, veteran seed, layout shifts without recent input in the first 6 s (8 s with slow fonts); value:mode
+390x844 CLS per run 0:normal 0:normal 0:normal 0:normal 0:normal 
+375x667 CLS per run 0:normal 0:normal 0:normal 0:normal 0:normal 
+360x740 CLS per run 0:tight 0:tight 0:tight 0:tight 0:tight 
+1440x900 CLS per run 0:normal 0:normal 0:normal 0:normal 0:normal 
+# SLOWFONTS=1 (every .woff2 delayed 2.5 s), 3 loads
+fonts delayed 2.5 s: 390x844 CLS per run 0:normal 0:normal 0:normal 
+fonts delayed 2.5 s: 375x667 CLS per run 0:normal 0:normal 0:normal 
+fonts delayed 2.5 s: 360x740 CLS per run 0:tight 0:tight 0:tight 
+fonts delayed 2.5 s: 1440x900 CLS per run 0.0028:normal 0.0028:normal 0.0028:normal shifts [{"v":0.002840342881944444,"t":2663,"src":"?|_stat_ef3d0_10|?|?|_content_1npvj_57"}]
+# BIG=1 (200 % text), 3 loads
+text200%: 390x844 CLS per run 0:wrap 0:wrap 0:wrap 
+text200%: 375x667 CLS per run 0:wrap 0:wrap 0:wrap 
+text200%: 360x740 CLS per run 0:wrap 0:wrap 0:wrap 
+text200%: 1440x900 CLS per run 0:normal 0:normal 0:normal shifts [{"v":0.000029836998456790124,"t":188,"src":"?|?|?|?"}]

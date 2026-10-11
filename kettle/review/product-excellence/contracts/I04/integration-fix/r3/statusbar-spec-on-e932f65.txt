@@ -1,0 +1,13 @@
+  ✓  1 [chromium] › tests/statusbar.spec.ts:61:3 › resize or rotation to 375×667 re-fits the row: one tight row, no sideways scroll (light) (24.1s)
+  ✓  2 [chromium] › tests/statusbar.spec.ts:99:3 › large text with large leaf totals never pushes "Level NN" past the screen (light) (48.2s)
+  ✓  3 [chromium] › tests/statusbar.spec.ts:61:3 › resize or rotation to 375×667 re-fits the row: one tight row, no sideways scroll (dark) (23.9s)
+  ✓  4 [chromium] › tests/statusbar.spec.ts:99:3 › large text with large leaf totals never pushes "Level NN" past the screen (dark) (48.2s)
+  ✘  5 [chromium] › tests/statusbar.spec.ts:128:3 › narrowing that leaves the bar's own box unchanged still re-fits: from 384 px, and 1 px at a time (light) (4.7s)
+  ✘  6 [chromium] › tests/statusbar.spec.ts:128:3 › narrowing that leaves the bar's own box unchanged still re-fits: from 384 px, and 1 px at a time (dark) (4.7s)
+  ✓  7 [chromium] › tests/statusbar.spec.ts:184:1 › normal text: one row at 390 (designed padding) and at 375 (tight) on a fresh load (6.8s)
+    Error: 384×854 → 375×667
+    Received: "normal"
+    Error: 384×854 → 375×667
+    Received: "normal"
+  2 failed
+  5 passed (2.7m)

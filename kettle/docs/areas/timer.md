@@ -50,21 +50,34 @@ key) and reported to `onStorageWriteError` listeners.
   never overwritten with anything partial. Once there is room, the next change to your brews or rewards (or an
   export, which re-reads and re-saves progress) writes everything the tab holds; a settings change alone does not
   re-save unsaved brews. Export still works and includes the unsaved brew.
-- **The person is told** (`src/app/flow.ts`): a warning toast, "Kettle couldn’t save your latest changes: this
-  browser’s storage is full. Save a backup to keep them." (or "…in this browser…" when storage is blocked rather
-  than full) with a **Save backup** action. At most one per minute (a tap, its action or its 12 s timeout ends it).
-- **The warning never covers a control the person may need** (checked every 250 ms while a warning exists, and
-  right away when a phase starts or completes):
-  - never during the whistle, the summary (Done / Carry, Tea time, Skip break), a tea break or "Break’s over", on
-    any layout — a warning already on screen is taken away when one of these comes up, and held;
-  - never over a session control (Add 5, Pause / Resume, End …) or a screen's docked primary action
-    (`data-toast-above`, e.g. Today's "Put the kettle on"): the toast's area is measured against those controls.
-    On phones the session controls are docked exactly where toasts appear, so there the warning waits for the whole
-    brew; on wide layouts (controls beside the stage) it shows during the brew;
-  - a held warning shows as soon as the person is somewhere it covers nothing protected: on phones, Today after
-    the summary (it floats above "Put the kettle on"); on wide layouts, where Today's button sits under the toast,
-    the next other screen (Stats, Nook, Settings), or the next brew. Like any toast it may cover ordinary page
-    content (e.g. a Settings row) until it is tapped away or times out.
+- **The person is told, in the page** (`src/app/saveWarning.ts` state, `src/app/SaveWarning.tsx` banner and note;
+  wired from `src/app/flow.ts`). It is a state, not a toast: it comes with the first failed save and stays while any
+  key whose save failed still holds an older value than the tab (`lastWriteFailed`, re-checked every 2 s while it is
+  on); once every one of them has been saved again (storage has room again) it goes. No timer takes it away and
+  nothing holds it back or withdraws it, so nothing measures where anything is drawn.
+  - **Today:** a banner in the page flow under the greeting (phones), or at the head of the scrolling column where
+    Today has two (landscape phones, tablets, desktop): "This browser’s storage is full. Kettle couldn’t save your
+    latest changes. Save a backup to keep them." (or "Kettle can’t save in this browser. Your latest changes are only
+    in this tab. …" when storage is blocked) with a **Save backup** button in the tab order. Calm honey tint, the
+    cards' radius and edge, no motion.
+  - **Settings › Your data:** the same banner, right after the backup tools.
+  - **The summary:** one line under the headline, "Not saved: storage is full." with **Save backup**. Nothing on the
+    summary says the brew was saved.
+  - **The brew, its whistle, the tea break and "Break’s over"** don't include it: nothing is laid over a session.
+    Ending early while saving fails says "N minutes of focus, kept in this tab: not saved yet" instead of "Saved N
+    minutes of focus".
+  - A screen on its way out (Today dissolving into the brew it started, the summary into the break) keeps the frame
+    the person left: the warning only appears on, or leaves, the current screen, and not from the moment a brew or
+    break starts on it (that start's own save can fail a moment before the route changes).
+  - **Nothing moves under the finger:** when the banner (or note) appears or goes while its screen is open, the page
+    is scrolled, in the same frame, by however far the element under the person's pointer, last touch or keyboard
+    focus moved, so it stays where it was (what sits above the banner moves up instead). On load it is simply part of
+    the first layout (CLS 0).
+  - **Said once:** a polite live region of its own (`#kettle-save-warning-said`, created at start-up) reads the
+    warning the first time a banner or the note shows it, once per spell of failing saves (at most once a minute).
+    The banner itself is not a live region, so visiting Today again does not read it out again.
+  - **Save backup** saves a file with everything the tab holds ("Saved kettle-….json. Keep it somewhere safe."); the
+    banner stays while storage is still full.
 - **Limit:** until storage has room again, closing the tab loses what was not saved (the warning and its backup
   action are the remedy). A restore that can't be saved is refused (see `docs/areas/progress.md`).
 

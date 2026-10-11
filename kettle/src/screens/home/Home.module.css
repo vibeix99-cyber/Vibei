@@ -14,7 +14,11 @@
   gap: 4px;
   margin: -6px -8px -4px;
 }
-/* Set by StatusBar when the stats can't share one line (very large text): wrap instead of widening the page. */
+/* Set by StatusBar (measured): a row that would just overrun the screen takes the 320 px layout's 6 px padding;
+   one that still can't fit (very large text) wraps instead of widening the page. */
+.statusBar[data-tight] .stat {
+  padding-inline: 6px;
+}
 .statusBar[data-wrap] {
   flex-wrap: wrap;
 }
@@ -70,6 +74,9 @@
   display: grid;
   gap: 3px;
   width: 56px;
+  /* …or as wide as "Level NN" when text is enlarged (200 %: 76–89 px), so the label never spills out of its pill
+     past the screen edge, and the status bar's fit measurement sees the pill's real width. */
+  min-width: max-content;
 }
 .statLevelBar {
   display: block;

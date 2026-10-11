@@ -1,0 +1,44 @@
+0a1
+> // M7a ROUND-7 ADAPTATION of LEAD's actionpair.mjs: measures WHICHEVER element presents the storage-full warning — the toast li#toast-kettle:save-failed (control) or the in-page banner section[data-save-warning] (r7). Counts the presenter's adds/removals, frames at full opacity, the toast's box over the docked controls (toast) or the banner moving within the page / its Save backup cut off (banner), and every addition of the warning's text to a live region. Setup change: NO seed (a fresh profile), because with the clock after midnight UTC the newbie seed's sessions sort after the new brew and Today offers no "Mark done"; the brew, End, the quota fill and the real tap are unchanged.
+28d28
+<     await p.evaluate(() => window.__kettle.seed('newbie')); await p.reload(); await ready();
+47c47
+<       const R = (window.__rec = { frames: [], ev: [], t0: performance.now(), stop: false });
+---
+>       const R = (window.__rec = { frames: [], ev: [], said: [], t0: performance.now(), stop: false });
+49c49,50
+<       new MutationObserver((ms) => { for (const m of ms) { for (const x of m.addedNodes) if (x.tagName === 'LI') R.ev.push([t(), '+', x.id, x.textContent.slice(0, 24)]); for (const x of m.removedNodes) if (x.tagName === 'LI') R.ev.push([t(), '-', x.id, x.textContent.slice(0, 24)]); } }).observe(document.body, { childList: true, subtree: true });
+---
+>       const isB = (x) => x.nodeType === 1 && (x.matches?.('section[data-save-warning]') || !!x.querySelector?.('section[data-save-warning]'));
+>       new MutationObserver((ms) => { for (const m of ms) { for (const x of m.addedNodes) { if (x.tagName === 'LI') R.ev.push([t(), '+', x.id, x.textContent.slice(0, 24)]); else if (isB(x)) R.ev.push([t(), '+', 'banner', 'banner']); const live = (x.nodeType === 1 ? x : x.parentElement)?.closest?.('[aria-live]:not([aria-live="off"]), [role="status"], [role="alert"]'); if (live && /storage is full|couldn’t save your latest/.test(x.textContent ?? '')) R.said.push([t(), live.id || live.getAttribute('aria-label') || live.className]); } for (const x of m.removedNodes) { if (x.tagName === 'LI') R.ev.push([t(), '-', x.id, x.textContent.slice(0, 24)]); else if (isB(x)) R.ev.push([t(), '-', 'banner', 'banner']); } } }).observe(document.body, { childList: true, subtree: true, characterData: true });
+56c57,58
+<         const w = document.getElementById(WARN);
+---
+>         const w = document.getElementById(WARN) ?? document.querySelector('section[data-save-warning]');
+>         const banner = !!w && w.tagName === 'SECTION';
+60,61c62,65
+<         const boxOver = wr && ctrls.some((r) => inter(wr, r)) ? 1 : 0;
+<         // visual order: toasts sorted by their drawn top
+---
+>         // A toast's box over the docked controls (the hold rule's trigger); the banner is in the page, so not judged so.
+>         const boxOver = !banner && wr && ctrls.some((r) => inter(wr, r)) ? 1 : 0;
+>         let inside = null;
+>         if (banner) { const a = w.querySelector('button')?.getBoundingClientRect(); inside = !!a && a.top >= wr.top - 0.5 && a.bottom <= wr.bottom + 0.5 && a.left >= wr.left - 0.5 && a.right <= wr.right + 0.5 ? 1 : 0; }
+63c67
+<         R.frames.push([t(), lis.length, w ? +op.toFixed(3) : 0, wr ? Math.round(wr.top) : null, wr ? Math.round(wr.bottom) : null, region ? Math.round(region.top) : null, region ? Math.round(region.bottom) : null, list ? Math.round(list.scrollTop) : null, boxOver, ctrls.length ? Math.round(Math.min(...ctrls.map((r) => r.top))) : null, order, list ? getComputedStyle(list).flexDirection : null]);
+---
+>         R.frames.push([t(), lis.length, w ? +op.toFixed(3) : 0, wr ? Math.round(wr.top) : null, wr ? Math.round(wr.bottom) : null, region ? Math.round(region.top) : null, region ? Math.round(region.bottom) : null, list ? Math.round(list.scrollTop) : null, boxOver, ctrls.length ? Math.round(Math.min(...ctrls.map((r) => r.top))) : null, order, list ? getComputedStyle(list).flexDirection : null, banner ? 'B' : w ? 'T' : '-', wr ? +(wr.top + scrollY).toFixed(1) : null, inside]);
+74c78
+<     try { await p.waitForSelector(`[id="${WARN}"]`, { timeout: 4000 }); await sleep(120); await p.screenshot({ path: `${out}/ap-${tag}-first.png` }); } catch { res.noWarning = true; }
+---
+>     try { await p.waitForSelector(`[id="${WARN}"], section[data-save-warning]`, { timeout: 4000 }); await sleep(120); await p.screenshot({ path: `${out}/ap-${tag}-first.png` }); } catch { res.noWarning = true; }
+77,78c81,82
+<     const R = await p.evaluate(() => { window.__rec.stop = true; return { frames: window.__rec.frames, ev: window.__rec.ev }; });
+<     const wev = R.ev.filter((e) => e[2] === WARN);
+---
+>     const R = await p.evaluate(() => { window.__rec.stop = true; return { frames: window.__rec.frames, ev: window.__rec.ev, said: window.__rec.said }; });
+>     const wev = R.ev.filter((e) => e[2] === WARN || e[2] === 'banner');
+86c90
+<     res = { ...res, errors: errors.length, crossed: R.ev.filter((e) => e[1] === '+' && /Crossed/.test(e[3])).map((e) => e[0]), warnAdds: adds, warnRemovals: rems, warnEvents: wev.map((e) => [e[0], e[1]]), judgedFrames: fr.length, framesFullOpacity: shown, framesBoxBelowRoom: below.length, maxBelowPx: below.length ? Math.max(...below.map((f) => f[4] - f[6])) : 0, framesBoxOverDock: over.length, visualOrders: orders, listDirections: [...new Set(fr.map((f) => f[11]))] };
+---
+>     res = { ...res, errors: errors.length, crossed: R.ev.filter((e) => e[1] === '+' && /Crossed/.test(e[3])).map((e) => e[0]), warnAdds: adds, warnRemovals: rems, warnEvents: wev.map((e) => [e[0], e[1]]), judgedFrames: fr.length, framesFullOpacity: shown, framesBoxBelowRoom: below.length, maxBelowPx: below.length ? Math.max(...below.map((f) => f[4] - f[6])) : 0, framesBoxOverDock: over.length, visualOrders: orders, listDirections: [...new Set(fr.map((f) => f[11]))], presenter: [...new Set(fr.map((f) => f[12]))].join(''), bannerDriftPx: (() => { const tops = fr.filter((f) => f[12] === 'B' && f[13] != null).map((f) => f[13]); return tops.length ? +(Math.max(...tops) - Math.min(...tops)).toFixed(1) : null; })(), framesSaveBackupCut: fr.filter((f) => f[12] === 'B' && f[14] === 0).length, liveRegionAdditions: R.said.length, said: R.said };

@@ -1,0 +1,37 @@
+light step 384x854 -> 375x667 #1: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":377,"ih":671,"tab":671}
+light step 384x854 -> 375x667 #2: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":377,"ih":671,"tab":671}
+light step 380x800 -> 375x667 #1: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":377,"ih":671,"tab":671}
+light step 380x800 -> 375x667 #2: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":377,"ih":671,"tab":671}
+light step 384x854 -> 360x740 #1: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":360,"iw":377,"ih":775,"tab":775}
+light step 384x854 -> 360x740 #2: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":360,"iw":377,"ih":775,"tab":775}
+light gradual 414 -> 375, 2 px / 16 ms #1: OK {"mode":"tight","rows":1,"right":367,"sw":375,"cw":375,"iw":375,"ih":667,"tab":667}
+light gradual 414 -> 375, 2 px / 16 ms #2: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":377,"ih":671,"tab":671}
+light gradual 414 -> 375, 1 px / 20 ms #1: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":377,"ih":671,"tab":671}
+light gradual 414 -> 375, 1 px / 20 ms #2: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":377,"ih":671,"tab":671}
+light bounce 414/375/390/375/400/375/384/375 zero wait #1: OK {"mode":"tight","rows":1,"right":367,"sw":375,"cw":375,"iw":375,"ih":667,"tab":667}
+light bounce 414/375/390/375/400/375/384/375 zero wait #2: OK {"mode":"tight","rows":1,"right":367,"sw":375,"cw":375,"iw":375,"ih":667,"tab":667}
+dark step 384x854 -> 375x667 #1: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":377,"ih":671,"tab":671}
+dark step 384x854 -> 375x667 #2: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":377,"ih":671,"tab":671}
+dark step 380x800 -> 375x667 #1: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":377,"ih":671,"tab":671}
+dark step 380x800 -> 375x667 #2: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":377,"ih":671,"tab":671}
+dark step 384x854 -> 360x740 #1: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":360,"iw":377,"ih":775,"tab":775}
+dark step 384x854 -> 360x740 #2: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":360,"iw":377,"ih":775,"tab":775}
+dark gradual 414 -> 375, 2 px / 16 ms #1: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":377,"ih":671,"tab":671}
+dark gradual 414 -> 375, 2 px / 16 ms #2: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":377,"ih":671,"tab":671}
+dark gradual 414 -> 375, 1 px / 20 ms #1: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":377,"ih":671,"tab":671}
+dark gradual 414 -> 375, 1 px / 20 ms #2: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":377,"ih":671,"tab":671}
+dark bounce 414/375/390/375/400/375/384/375 zero wait #1: OK {"mode":"tight","rows":1,"right":367,"sw":375,"cw":375,"iw":375,"ih":667,"tab":667}
+dark bounce 414/375/390/375/400/375/384/375 zero wait #2: OK {"mode":"tight","rows":1,"right":367,"sw":375,"cw":375,"iw":375,"ih":667,"tab":667}
+light desktop window 420 -> 375 in 1 px steps #1: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":375,"ih":800,"tab":800}
+light desktop window 420 -> 375 in 1 px steps #2: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":375,"ih":800,"tab":800}
+light desktop window 500 -> 375 in 5 px steps #1: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":375,"ih":800,"tab":800}
+light desktop window 500 -> 375 in 5 px steps #2: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":375,"ih":800,"tab":800}
+dark desktop window 420 -> 375 in 1 px steps #1: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":375,"ih":800,"tab":800}
+dark desktop window 420 -> 375 in 1 px steps #2: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":375,"ih":800,"tab":800}
+dark desktop window 500 -> 375 in 5 px steps #1: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":375,"ih":800,"tab":800}
+dark desktop window 500 -> 375 in 5 px steps #2: FAIL {"mode":"normal","rows":1,"right":377,"sw":377,"cw":375,"iw":375,"ih":800,"tab":800}
+light 384 -> 375 -> 414: OK {"mode":"normal","rows":1,"right":402,"sw":414,"cw":414,"iw":414,"ih":896,"tab":896}
+light 200% 384 -> 375: OK {"mode":"wrap","rows":2,"right":367,"sw":375,"cw":375,"iw":375,"ih":667,"tab":667}
+dark 384 -> 375 -> 414: OK {"mode":"normal","rows":1,"right":402,"sw":414,"cw":414,"iw":414,"ih":896,"tab":896}
+dark 200% 384 -> 375: OK {"mode":"wrap","rows":2,"right":367,"sw":375,"cw":375,"iw":375,"ih":667,"tab":667}
+failures: 27

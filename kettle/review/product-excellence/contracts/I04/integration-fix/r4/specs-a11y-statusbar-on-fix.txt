@@ -1,0 +1,28 @@
+# branch pe/w1-fix-m2 @ 9326de5 (kettle/src dcc3778dd31e832041817e95c8677be87406b617), dev server .tmp/w1fix/vite.dev.config.ts on 5202, 2026-10-10T02:00:22Z
+# KETTLE_PORT=5202 npx playwright test tests/a11y.spec.ts tests/statusbar.spec.ts --project=chromium --workers=2
+
+Running 18 tests using 2 workers
+
+  ✓   1 [chromium] › tests/statusbar.spec.ts:61:3 › resize or rotation to 375×667 re-fits the row: one tight row, no sideways scroll (light) (26.4s)
+  ✓   2 [chromium] › tests/a11y.spec.ts:60:3 › axe: no serious/critical violations in any state (light) (1.1m)
+  ✓   3 [chromium] › tests/statusbar.spec.ts:102:3 › large text with large leaf totals never pushes "Level NN" past the screen (light) (51.9s)
+  ✓   5 [chromium] › tests/statusbar.spec.ts:61:3 › resize or rotation to 375×667 re-fits the row: one tight row, no sideways scroll (dark) (26.2s)
+  ✓   4 [chromium] › tests/a11y.spec.ts:60:3 › axe: no serious/critical violations in any state (dark) (1.1m)
+  ✓   6 [chromium] › tests/statusbar.spec.ts:102:3 › large text with large leaf totals never pushes "Level NN" past the screen (dark) (51.0s)
+  ✓   7 [chromium] › tests/a11y.spec.ts:72:1 › pointer targets are at least 24×24 px or meet a WCAG 2.5.8 exception (46.5s)
+  ✓   8 [chromium] › tests/statusbar.spec.ts:131:3 › narrowing that leaves the bar's own box unchanged still re-fits: from 384 px, and 1 px at a time (light) (29.1s)
+  ✓  10 [chromium] › tests/statusbar.spec.ts:131:3 › narrowing that leaves the bar's own box unchanged still re-fits: from 384 px, and 1 px at a time (dark) (29.3s)
+  ✓  11 [chromium] › tests/statusbar.spec.ts:187:1 › normal text: one row at 390 (designed padding) and at 375 (tight) on a fresh load (7.3s)
+  ✓   9 [chromium] › tests/a11y.spec.ts:109:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll (44.2s)
+  ✓  12 [chromium] › tests/a11y.spec.ts:173:1 › keyboard-only critical journey with focus restoration (1.4m)
+  ✓  13 [chromium] › tests/a11y.spec.ts:288:1 › welcome: first brew from the keyboard alone (2.3s)
+  ✓  14 [chromium] › tests/a11y.spec.ts:299:1 › live regions stay quiet while a brew runs (no spoken countdown) (12.5s)
+  ✓  15 [chromium] › tests/a11y.spec.ts:328:3 › a toast never covers the session controls or the summary footer (390×844) (12.3s)
+  ✓  16 [chromium] › tests/a11y.spec.ts:328:3 › a toast never covers the session controls or the summary footer (375×667) (12.4s)
+  ✓  17 [chromium] › tests/a11y.spec.ts:364:3 › toasts never cover the break-over controls, carried task included (390×844) (19.8s)
+  ✓  18 [chromium] › tests/a11y.spec.ts:364:3 › toasts never cover the break-over controls, carried task included (375×667) (18.7s)
+
+  Slow test file: [chromium] › tests/a11y.spec.ts (6.4m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  18 passed (6.5m)
+exit 0

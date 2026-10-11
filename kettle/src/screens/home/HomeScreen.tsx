@@ -10,6 +10,7 @@ import { Hero, GoalCard } from './Hero';
 import { Composer, ResumeBanner } from './Composer';
 import { RecipesCard, TodayBrews } from './Recipes';
 import { useHomeData } from './useHomeData';
+import { SaveWarningBanner } from '@/app/SaveWarning';
 import s from './Home.module.css';
 
 export default function HomeScreen() {
@@ -25,6 +26,9 @@ export default function HomeScreen() {
   // Desktop: two real columns, start a brew | today (minutes, today's brews, recipes). The shell's right rail
   // steps aside on Today (data-layout="home"), so nothing on this page is shown twice.
   const desk = useMediaQuery('(min-width: 1200px)');
+  // Landscape phones lay Today out in two columns too (greeting + goal pinned | composer + CTA scrolling).
+  const landscape = useMediaQuery('(max-width: 899px) and (orientation: landscape) and (max-height: 520px)');
+  const sideBySide = tablet || landscape;
   // Build the 3D nook off-screen while Home idles, so "Put the kettle on" doesn't stall on it.
   usePrewarmNook(useUnlockedItems());
   if (desk) {
@@ -35,6 +39,8 @@ export default function HomeScreen() {
           {active ? <ResumeBanner /> : <Composer recent={data.recentIntentions} />}
         </div>
         <div className={s.colB}>
+          {/* Storage full: in the page, at the head of this column (a banner here moves nothing in the composer). */}
+          <SaveWarningBanner home="/" />
           <GoalCard data={data} />
           <TodayBrews sessions={data.todays} />
           <RecipesCard quests={data.quests} />
@@ -47,12 +53,16 @@ export default function HomeScreen() {
       {/* Two columns on landscape phones and tablets (greeting + goal | composer + CTA); one flow elsewhere. */}
       <div className={s.colA}>
         <Hero data={data} status={<StatusBar data={data} />} />
+        {/* Storage full: in the page flow, under the greeting (src/app/SaveWarning.tsx); side by side, at the head of
+            the column that scrolls (the left one is pinned there). */}
+        {!sideBySide && <SaveWarningBanner home="/" />}
         {active ? <ResumeBanner /> : null}
         <GoalCard data={data} />
         {/* Tablets balance the two columns with the recipes on the left; elsewhere they follow the composer. */}
         {tablet && <RecipesCard quests={data.quests} />}
       </div>
       <div className={s.colB}>
+        {sideBySide && <SaveWarningBanner home="/" />}
         {!active && <Composer recent={data.recentIntentions} />}
         {!tablet && <RecipesCard quests={data.quests} />}
         <TodayBrews sessions={data.todays} />

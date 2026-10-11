@@ -1,0 +1,86 @@
+# Changed files: integration c6c7922 → combined code commit 091249a (app, tests, docs; kettle/review summarised below)
+$ git diff --stat c6c7922 091249a -- . ":!kettle/review"
+ kettle/docs/areas/timer.md                      |  24 +-
+ kettle/src/app/flow.ts                          |  42 ++-
+ kettle/src/screens/focus/FocusScreen.module.css |   8 +
+ kettle/src/screens/focus/FocusScreen.tsx        |  28 +-
+ kettle/src/screens/home/Home.module.css         |   9 +-
+ kettle/src/screens/home/StatusBar.tsx           |  87 +++++-
+ kettle/src/ui/Toast.module.css                  | 150 +++++++++
+ kettle/src/ui/Toast.tsx                         |  38 ++-
+ kettle/tests/a11y-probes.mjs                    |   4 +-
+ kettle/tests/a11y.spec.ts                       |  77 ++++-
+ kettle/tests/integrity.spec.ts                  |  79 +++--
+ kettle/tests/statusbar.spec.ts                  | 249 +++++++++++++++
+ kettle/tests/toast-room.spec.ts                 | 385 ++++++++++++++++++++++++
+ 13 files changed, 1090 insertions(+), 90 deletions(-)
+
+$ git diff --name-status c6c7922 091249a -- . ":!kettle/review"
+M	kettle/docs/areas/timer.md
+M	kettle/src/app/flow.ts
+M	kettle/src/screens/focus/FocusScreen.module.css
+M	kettle/src/screens/focus/FocusScreen.tsx
+M	kettle/src/screens/home/Home.module.css
+M	kettle/src/screens/home/StatusBar.tsx
+M	kettle/src/ui/Toast.module.css
+M	kettle/src/ui/Toast.tsx
+M	kettle/tests/a11y-probes.mjs
+M	kettle/tests/a11y.spec.ts
+M	kettle/tests/integrity.spec.ts
+A	kettle/tests/statusbar.spec.ts
+A	kettle/tests/toast-room.spec.ts
+
+# kettle/review: 1052 paths differ (name-status: 888 A 156 D 3 M 5 R). The added ones are this branch's packets, evidence and captures
+# (contracts/I03 from M1, contracts/I04); the ones shown as deleted exist only on the integration side (STATUS.md, archive
+# bundles, integration/wave1, later notes): the branch never had them, and the scratch merge keeps them. By directory:
+      1 kettle/review/product-excellence/STATUS.md/
+      1 kettle/review/product-excellence/archive/maker-branches-2026-10-09.bundle
+      1 kettle/review/product-excellence/archive/pe-w1-fix-3f00b57.incremental.bundle
+      1 kettle/review/product-excellence/archive/pe-w1-fix-m2-r2-e932f65.incremental.bundle
+      1 kettle/review/product-excellence/archive/pe-w1-fix-m2-r2wip.incremental.bundle
+      1 kettle/review/product-excellence/archive/pe-w1-fix-m2-r3-e4be56e.incremental.bundle.part-00
+      1 kettle/review/product-excellence/archive/pe-w1-fix-m2-r3-e4be56e.incremental.bundle.part-01
+      1 kettle/review/product-excellence/archive/pe-w1-fix-m2-r3-e4be56e.incremental.bundle.part-02
+      1 kettle/review/product-excellence/archive/pe-w1-fix-m2-r3-e4be56e.incremental.bundle.sha256
+      1 kettle/review/product-excellence/archive/pe-w1-fix-m2-r4-adec1a2.incremental.bundle
+      1 kettle/review/product-excellence/archive/pe-w1-fix-m2-r5-33a72e6.incremental.bundle
+      1 kettle/review/product-excellence/archive/pe-w1-fix-m2-r6wip.incremental.bundle
+    139 kettle/review/product-excellence/contracts/I03
+    760 kettle/review/product-excellence/contracts/I04
+    141 kettle/review/product-excellence/integration/wave1
+
+# Changed files: r5 33a72e6 → 091249a
+$ git diff --stat 33a72e6 091249a -- . ":!kettle/review"
+ kettle/docs/areas/timer.md      |  24 ++--
+ kettle/src/app/flow.ts          |  42 ++++---
+ kettle/src/ui/Toast.module.css  |  47 +++++---
+ kettle/src/ui/Toast.tsx         |  38 +++---
+ kettle/tests/integrity.spec.ts  |  79 ++++++++-----
+ kettle/tests/toast-room.spec.ts | 249 ++++++++++++++++++++++++++++++++++------
+ 6 files changed, 366 insertions(+), 113 deletions(-)
+
+$ git diff --name-status 33a72e6 091249a -- . ":!kettle/review"
+M	kettle/docs/areas/timer.md
+M	kettle/src/app/flow.ts
+M	kettle/src/ui/Toast.module.css
+M	kettle/src/ui/Toast.tsx
+M	kettle/tests/integrity.spec.ts
+M	kettle/tests/toast-room.spec.ts
+# kettle/review: 138 paths differ (M1's contracts/I03 packet, script and captures from the merge ca23385)
+
+# r6 alone: the merge ca23385 → 091249a
+ kettle/src/ui/Toast.module.css  |  47 +++++---
+ kettle/src/ui/Toast.tsx         |   9 +-
+ kettle/tests/toast-room.spec.ts | 249 ++++++++++++++++++++++++++++++++++------
+ 3 files changed, 253 insertions(+), 52 deletions(-)
+
+# M1's files against 3f00b57 (branch 091249a, and the scratch merge 859f9fb):
+$ git diff --stat 3f00b57 091249a -- kettle/tests/integrity.spec.ts
+$ git diff --stat 3f00b57 859f9fb -- kettle/tests/integrity.spec.ts
+$ git diff --stat 3f00b57 091249a -- kettle/src/app/flow.ts
+(no output after a command: identical)
+$ git diff --stat 3f00b57 091249a -- kettle/src/ui/Toast.tsx
+ kettle/src/ui/Toast.tsx | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+# (Toast.tsx: the Toaster call site only — useToastAbove(list.length > 0 || drawn) and AnimatePresence onExitComplete;
+#  toastLiftBottom() and useToastAbove() byte-identical to 3f00b57, compared function by function in toast-lift-identical.txt)
