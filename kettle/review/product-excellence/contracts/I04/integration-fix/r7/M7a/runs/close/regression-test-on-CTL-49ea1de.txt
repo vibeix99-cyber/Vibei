@@ -1,0 +1,17 @@
+  ✘  1 [chromium] › tests/toast-room.spec.ts:327:3 › three toasts never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, light) (13.2s)
+  ✘  2 [chromium] › tests/toast-room.spec.ts:327:3 › three toasts never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, dark) (12.8s)
+    Error: controls covered (frames, of 31)
+    [32m- Expected  - 1[39m
+    [31m+ Received  + 3[39m
+    [31m+ Object {[39m
+    [31m+   "^Close$": 26,[39m
+    [31m+ }[39m
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/r7/M7a/tr-ctl/toast-room-three-toasts-ne-cf805-end-375×667-200-text-light--chromium/error-context.md
+    Error: controls covered (frames, of 50)
+    [32m- Expected  - 1[39m
+    [31m+ Received  + 3[39m
+    [31m+ Object {[39m
+    [31m+   "^Close$": 42,[39m
+    [31m+ }[39m
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/r7/M7a/tr-ctl/toast-room-three-toasts-ne-b4c0a--end-375×667-200-text-dark--chromium/error-context.md
+  2 failed

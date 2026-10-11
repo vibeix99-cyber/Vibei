@@ -1,0 +1,56 @@
+[slots] M7a took 1/3 at 01:31:42: node capture-r7.mjs http://127.0.0.1:5206 M7a /home/user/wt/r7a/kettle/review/product-excellence/contracts/I04/integration-fix/r7/M7a/captures/AFTER-M7a 390x844@100:light,375x667@100:light,1440x900@10
+{"tag":"390x844-t100-light","shots":["focus-toasts","summary","breakover-toasts","today","settings-data","lead-d1"],"markDone":1}
+{"tag":"375x667-t100-light","shots":["focus-toasts","summary","breakover-toasts","today","settings-data","lead-d1"],"markDone":1}
+{"tag":"1440x900-t100-light","shots":["focus-toasts","summary","breakover-toasts","today","settings-data","lead-d1"],"markDone":1}
+{"tag":"844x390-t100-light","shots":["focus-toasts","summary","breakover-toasts","today","settings-data","lead-d1"],"markDone":1}
+[slots] M7a freed 1 at 01:33:33
+[slots] M7a took 1/3 at 01:40:25: node capture-r7.mjs http://127.0.0.1:5206 M7a /home/user/wt/r7a/kettle/review/product-excellence/contracts/I04/integration-fix/r7/M7a/captures/AFTER-M7a 390x844@100:dark,375x667@100:dark,1440x900@100:
+{"tag":"390x844-t100-dark","shots":["focus-toasts","summary","breakover-toasts","today","settings-data","lead-d1"],"markDone":1}
+{"tag":"375x667-t100-dark","shots":["focus-toasts","summary","breakover-toasts","today","settings-data","lead-d1"],"markDone":1}
+{"tag":"1440x900-t100-dark","shots":["focus-toasts","summary","breakover-toasts","today","settings-data","lead-d1"],"markDone":1}
+{"tag":"844x390-t100-dark","error":"page.screenshot: Target page, context or browser has been closed","shots":["focus-toasts","summary","breakover-toasts","today","settings-data"],"markDone":1}
+[slots] M7a took 1/3 at 01:50:39: node capture-r7.mjs http://127.0.0.1:5206 M7a /home/user/wt/r7a/kettle/review/product-excellence/contracts/I04/integration-fix/r7/M7a/captures/AFTER-M7a 390x844@100:light,375x667@100:light,1440x900@10
+{"tag":"390x844-t100-light","shots":["focus-toasts","summary","breakover-toasts","today","settings-data","lead-d1"],"markDone":1}
+{"tag":"375x667-t100-light","shots":["focus-toasts","summary","breakover-toasts","today","settings-data","lead-d1"],"markDone":1}
+{"tag":"1440x900-t100-light","shots":["focus-toasts","summary","breakover-toasts","today","settings-data","lead-d1"],"markDone":1}
+{"tag":"844x390-t100-light","shots":["focus-toasts","summary","breakover-toasts","today","settings-data","lead-d1"],"markDone":1}
+[slots] M7a freed 1 at 01:52:35
+[slots] M7a took 1/3 at 01:53:04: node capture-r7.mjs http://127.0.0.1:5206 M7a /home/user/wt/r7a/kettle/review/product-excellence/contracts/I04/integration-fix/r7/M7a/captures/AFTER-M7a 390x844@100:dark,375x667@100:dark,1440x900@100:
+{"tag":"390x844-t100-dark","shots":["focus-toasts","summary","breakover-toasts","today","settings-data","lead-d1"],"markDone":1}
+{"tag":"375x667-t100-dark","error":"page.waitForFunction: Target page, context or browser has been closed","shots":["focus-toasts"]}
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+browserContext.close: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --enable-unsafe-swiftshader --use-angle=swiftshader --ignore-gpu-blocklist --user-data-dir=/tmp/playwright_chromiumdev_profile-efuAZ4 --remote-debugging-pipe --no-startup-window
+<launched> pid=9877
+[pid=9877][err] [1011/015304.556341:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[pid=9877][err] [1011/015304.559204:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[pid=9877][err] [1011/015304.559270:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[pid=9877][err] [1011/015304.576231:WARNING:device/bluetooth/dbus/bluez_dbus_manager.cc:209] Floss manager service not available, cannot set Floss enable/disable.
+[pid=9877][err] [1011/015304.631479:WARNING:sandbox/policy/linux/sandbox_linux.cc:414] InitializeSandbox() called with multiple threads in process gpu-process.
+[pid=9877][err] [1011/015304.904600:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5206/@vite/client (883)
+[pid=9877][err] [1011/015304.978418:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5206/@vite/client (996)
+[pid=9877][err] [1011/015305.403753:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5206/.tmp/vite-cache/deps/react-dom_client.js?v=72e5a5a5 (15805)
+[pid=9877][err] [1011/015320.381824:WARNING:media/audio/linux/audio_manager_linux.cc:54] Falling back to ALSA for audio output. PulseAudio is not available or could not be initialized.
+[pid=9877][err] [1011/015336.003811:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5206/@vite/client (883)
+[pid=9877][err] [1011/015336.074851:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5206/@vite/client (996)
+[pid=9877][err] [1011/015336.662598:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5206/.tmp/vite-cache/deps/react-dom_client.js?v=72e5a5a5 (15805)
+[pid=9877] <gracefully close start>
+[pid=9877][err] [1011/015342.696308:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:389] SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+[pid=9877][err] [1011/015342.698400:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:389] SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+[pid=9877][err] [1011/015342.699854:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:389] SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+[pid=9877][err] [1011/015342.700984:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:389] SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+[pid=9877][err] [1011/015342.701824:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:389] SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+[pid=9877][err] [1011/015342.702242:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:389] SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+[pid=9877][err] [1011/015342.702504:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:389] SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+[pid=9877][err] [1011/015342.702820:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:389] SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+[pid=9877][err] [1011/015342.703038:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:389] SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+[pid=9877][err] [1011/015342.703867:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:389] SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+[pid=9877][err] [1011/015342.705111:ERROR:gpu/command_buffer/service/shared_image/shared_image_manager.cc:389] SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+    at async file:///home/user/wt/r7a/kettle/.tmp/M7a/capture-r7.mjs:81:3
+
+Node.js v22.22.2

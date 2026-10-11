@@ -1,0 +1,15 @@
+announce-timing.mjs (revision 77ba760, :5206; 375×667, 3 fresh contexts): every addition to the warning's own polite
+live region (#kettle-save-warning-said) and every banner add/remove, from page load, through the R5-D1 probe's setup
+(newbie seed, quota fill, startFocus, ff 12 min, End). Times in ms from load; the [0,"filled"] / [0,"end"] markers
+are pushed when the quota fill finishes and just before End (their timestamp is a placeholder 0; their POSITION in
+the list is what matters).
+
+run 1: [[1625,"+banner","#/"],[0,"filled"],[1878,"said","#/focus","This browser’s storage is full"],[2598,"-banner","#/focus"],[0,"end"],[5013,"+banner","#/"]]
+run 2: [[0,"filled"],[0,"end"],[4378,"+banner","#/"],[4514,"said","#/","This browser’s storage is full"]]
+run 3: [[1305,"+banner","#/"],[0,"filled"],[1583,"said","#/focus","This browser’s storage is full"],[1932,"-banner","#/focus"],[0,"end"],[4723,"+banner","#/"]]
+
+Reading: in runs 1 and 3 an app save failed WHILE the probe was still filling storage on Today, so Today showed the
+banner and it was said then (once); Today then left for the brew (the banner left with it) and, back on Today after
+End, the banner came back without being said again. In run 2 nothing failed until the brew, so the first banner (on
+Today after End) was said. Either way: exactly one announcement per page. This is why R5-D1's recording window (which
+starts just before End) sees 0 or 1 additions on my revision.
