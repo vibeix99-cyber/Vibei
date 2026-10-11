@@ -46,6 +46,14 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
   - **Stage 2:** creative audit phase 2 (live walkthrough, one critic), on branch `audit/phase2`.
   - **Stage 3:** follow-up fixes, only if Wave 1 closed and time remains before 08:30 UTC.
 - M7b is READY at `38fc9c6` (archived). M7a merged it (`eea543d`) and is finishing the combined packet.
+- **03:20 UTC:** M7a is READY with the **combined** revision `pe/r7-banner@7ba0d98`.
+  - Code `980ef2a`, src `6db18ad`. It includes the Close fix: the toast room sits below the top bar when a bar control
+    is above it.
+  - Archived as split bundle parts.
+- **03:22 UTC:** the **packet gate passed** (`round7-review/GATE.md`).
+  - Official trial merge **R7 = `b39202f`** (`2e9095c` + `7ba0d98`, src `6db18ad`).
+  - Servers verified: R7 :5301 and :5321, INT :5303 and :5323, R5 :5302, `e866118` :5304, unfixed `49ea1de` :5305.
+  - **The lead resumed for the full review. Lanes A–D launched at about 03:25 UTC** (Opus 5.5, 90 minutes each).
 - **Next:**
   1. Check the packet gate.
   2. Run a fresh review: a new lead plus lanes A–D, 90 minutes per lane.
