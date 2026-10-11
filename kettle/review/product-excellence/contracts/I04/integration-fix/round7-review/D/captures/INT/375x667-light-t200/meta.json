@@ -23,9 +23,10 @@
       "file": "f2-focus-running-storage-full.png",
       "desc": "focus running, storage full (warning raised by the brew start save)",
       "url": "http://127.0.0.1:5303/?debug&theme=light#/focus",
-      "at": "2026-10-11T04:12:22.869Z",
+      "at": "2026-10-11T04:46:29.803Z",
+      "factsReadBeforeShot": true,
       "hash": "#/focus",
-      "clockNow": "2026-10-10T16:40:04.769Z",
+      "clockNow": "2026-10-10T16:40:04.196Z",
       "banner": null,
       "summaryNote": false,
       "warningToast": true,
@@ -38,34 +39,19 @@
         "docMax": 0,
         "main": 0,
         "mainMax": 60
-      }
+      },
+      "toastsAfterShot": [
+        "Kettle couldn’t save your latest changes: this browser’s sto"
+      ]
     },
     "c1-summary-note": {
       "file": "c1-summary-note.png",
       "desc": "summary after a brew completed with storage full (R7: one-line note)",
       "url": "http://127.0.0.1:5303/?debug&theme=light#/done",
-      "at": "2026-10-11T04:12:29.091Z",
+      "at": "2026-10-11T04:46:35.991Z",
+      "factsReadBeforeShot": true,
       "hash": "#/done",
-      "clockNow": "2026-10-10T16:40:10.701Z",
-      "banner": null,
-      "summaryNote": false,
-      "warningToast": false,
-      "toasts": [],
-      "close": null,
-      "scroll": {
-        "doc": 0,
-        "docMax": 0,
-        "main": 0,
-        "mainMax": 0
-      }
-    },
-    "c2-summary-end": {
-      "file": "c2-summary-end.png",
-      "desc": "summary, details expanded and scrolled to its end (setup scroll, as capture.mjs 08)",
-      "url": "http://127.0.0.1:5303/?debug&theme=light#/done",
-      "at": "2026-10-11T04:12:30.898Z",
-      "hash": "#/done",
-      "clockNow": "2026-10-10T16:40:12.487Z",
+      "clockNow": "2026-10-10T16:40:10.599Z",
       "banner": null,
       "summaryNote": false,
       "warningToast": false,
@@ -77,6 +63,28 @@
         "main": 0,
         "mainMax": 0
       },
+      "toastsAfterShot": []
+    },
+    "c2-summary-end": {
+      "file": "c2-summary-end.png",
+      "desc": "summary, details expanded and scrolled to its end (setup scroll, as capture.mjs 08)",
+      "url": "http://127.0.0.1:5303/?debug&theme=light#/done",
+      "at": "2026-10-11T04:46:37.919Z",
+      "factsReadBeforeShot": true,
+      "hash": "#/done",
+      "clockNow": "2026-10-10T16:40:12.844Z",
+      "banner": null,
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [],
+      "close": null,
+      "scroll": {
+        "doc": 0,
+        "docMax": 0,
+        "main": 0,
+        "mainMax": 0
+      },
+      "toastsAfterShot": [],
       "lastLine": {
         "lastLineBottom": 427,
         "footerTop": 475,
@@ -87,9 +95,10 @@
       "file": "a1-today-warning.png",
       "desc": "Today after Skip break, storage still full (R7: banner; INT: warning toast if shown)",
       "url": "http://127.0.0.1:5303/?debug&theme=light#/",
-      "at": "2026-10-11T04:12:33.686Z",
+      "at": "2026-10-11T04:46:40.737Z",
+      "factsReadBeforeShot": true,
       "hash": "#/",
-      "clockNow": "2026-10-10T16:40:14.960Z",
+      "clockNow": "2026-10-10T16:40:15.960Z",
       "banner": null,
       "summaryNote": false,
       "warningToast": false,
@@ -100,15 +109,17 @@
         "docMax": 2550,
         "main": null,
         "mainMax": null
-      }
+      },
+      "toastsAfterShot": []
     },
     "b1-settings-your-data": {
       "file": "b1-settings-your-data.png",
       "desc": "Settings › Your data, storage still full (setup scroll to the heading)",
       "url": "http://127.0.0.1:5303/?debug&theme=light#/settings",
-      "at": "2026-10-11T04:12:36.873Z",
+      "at": "2026-10-11T04:46:43.431Z",
+      "factsReadBeforeShot": true,
       "hash": "#/settings",
-      "clockNow": "2026-10-10T16:40:17.344Z",
+      "clockNow": "2026-10-10T16:40:17.855Z",
       "banner": null,
       "summaryNote": false,
       "warningToast": true,
@@ -121,7 +132,10 @@
         "docMax": 8113,
         "main": null,
         "mainMax": null
-      }
+      },
+      "toastsAfterShot": [
+        "Kettle couldn’t save your latest changes: this browser’s sto"
+      ]
     },
     "f1-focus-running": {
       "file": "f1-focus-running.png",
@@ -264,8 +278,198 @@
         "main": 0,
         "mainMax": 236
       }
+    },
+    "e0-breakover-top-3toasts": {
+      "file": "e0-breakover-top-3toasts.png",
+      "desc": "Break’s over at the panel top, three toasts raised via the app toast() (setup); toast rects in toastRects",
+      "url": "http://127.0.0.1:5303/?debug&theme=light#/focus",
+      "at": "2026-10-11T04:53:19.500Z",
+      "factsReadBeforeShot": true,
+      "hash": "#/focus",
+      "clockNow": "2026-10-10T16:40:13.446Z",
+      "banner": null,
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [
+        "Recipe done: Take 2 full tea breaks · +15 leaves",
+        "Saved 12 minutes of focus",
+        "Cozy level 5!"
+      ],
+      "close": {
+        "rect": [
+          319,
+          10,
+          44,
+          44
+        ],
+        "hitTestable": true
+      },
+      "scroll": {
+        "doc": 0,
+        "docMax": 0,
+        "main": 0,
+        "mainMax": 236
+      },
+      "toastsAfterShot": [
+        "Recipe done: Take 2 full tea breaks · +15 leaves",
+        "Saved 12 minutes of focus",
+        "Cozy level 5!"
+      ],
+      "toastRects": {
+        "list": [
+          16,
+          163,
+          343,
+          307
+        ],
+        "region": [
+          0,
+          163,
+          375,
+          307
+        ],
+        "toasts": [
+          {
+            "text": "Recipe done: Take 2 full tea b",
+            "rect": [
+              16,
+              163,
+              343,
+              138
+            ]
+          },
+          {
+            "text": "Saved 12 minutes of focus",
+            "rect": [
+              16,
+              309,
+              343,
+              97
+            ]
+          },
+          {
+            "text": "Cozy level 5!",
+            "rect": [
+              65,
+              414,
+              245,
+              57
+            ]
+          }
+        ],
+        "header": [
+          0,
+          0,
+          375,
+          54
+        ],
+        "mainScroll": 0
+      }
+    },
+    "e2-breakover-end-3toasts-rects": {
+      "file": "e2-breakover-end-3toasts-rects.png",
+      "desc": "as e1 (panel wheeled to its end, three toasts), with toast rects in toastRects",
+      "url": "http://127.0.0.1:5303/?debug&theme=light#/focus",
+      "at": "2026-10-11T04:53:23.081Z",
+      "factsReadBeforeShot": true,
+      "hash": "#/focus",
+      "clockNow": "2026-10-10T16:40:17.656Z",
+      "banner": null,
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [
+        "Recipe done: Take 2 full tea breaks · +15 leaves",
+        "Saved 12 minutes of focus",
+        "Cozy level 5!"
+      ],
+      "close": {
+        "rect": [
+          319,
+          10,
+          44,
+          44
+        ],
+        "hitTestable": true
+      },
+      "scroll": {
+        "doc": 0,
+        "docMax": 0,
+        "main": 0,
+        "mainMax": 236
+      },
+      "toastsAfterShot": [
+        "Recipe done: Take 2 full tea breaks · +15 leaves",
+        "Saved 12 minutes of focus",
+        "Cozy level 5!"
+      ],
+      "toastRects": {
+        "list": [
+          16,
+          163,
+          343,
+          307
+        ],
+        "region": [
+          0,
+          163,
+          375,
+          307
+        ],
+        "toasts": [
+          {
+            "text": "Recipe done: Take 2 full tea b",
+            "rect": [
+              16,
+              163,
+              343,
+              138
+            ]
+          },
+          {
+            "text": "Saved 12 minutes of focus",
+            "rect": [
+              16,
+              309,
+              343,
+              97
+            ]
+          },
+          {
+            "text": "Cozy level 5!",
+            "rect": [
+              65,
+              414,
+              245,
+              57
+            ]
+          }
+        ],
+        "header": [
+          0,
+          0,
+          375,
+          54
+        ],
+        "mainScroll": 0
+      }
     }
   },
   "errors": [],
-  "endedAt": "2026-10-11T04:13:04.286Z"
+  "endedAt": "2026-10-11T04:53:23.096Z",
+  "supplements": [
+    {
+      "profiles": [
+        "W"
+      ],
+      "startedAt": "2026-10-11T04:46:23.167Z",
+      "endedAt": "2026-10-11T04:46:43.443Z"
+    },
+    {
+      "profiles": [
+        "T"
+      ],
+      "startedAt": "2026-10-11T04:53:03.561Z",
+      "endedAt": "2026-10-11T04:53:23.096Z"
+    }
+  ]
 }

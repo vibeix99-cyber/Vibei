@@ -10,7 +10,19 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
-## ▶ ROUND 7 IN PROGRESS — option B (storage warning as an in-page banner) · 2026-10-11 (read this first)
+## ■ STOPPED: round-7 review interrupted by a usage limit · 2026-10-11 ~04:50 UTC (read this first)
+
+- **What happened:** the usage limit stopped the lead and lanes A–D mid-review. It also blocked this session until
+  09:31 UTC.
+- **Following the overnight rule:**
+  - State was saved and nothing was relaunched.
+  - **No verdict and no merge.** Wave 1 is not closed; app code is still `0d58c5e`.
+  - Stage 2 (audit phase 2) and Stage 3 did not run.
+- **Partial receipts** are in `round7-review/{A,B,C,D,LEAD}`. The summary is in `MORNING-2026-10-11.md`.
+- **To resume:** relaunch a lead and lanes on R7 `b39202f`, with servers rebuilt per `round7-review/SETUP.md`. The
+  container restarted, so no servers are running.
+
+## ROUND 7 (history) — option B (storage warning as an in-page banner) · 2026-10-11
 
 - **Decision:** the user chose option B from `round6-review/DEFECT-PACKET-AND-OPTIONS.md`. All agents run on Opus 5.5.
 - **Starting point:** round 7 starts from `pe/w1-fix-m2@51521cf`, which keeps round 6's fixes, including the verified

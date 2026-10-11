@@ -23,9 +23,10 @@
       "file": "f2-focus-running-storage-full.png",
       "desc": "focus running, storage full (warning raised by the brew start save)",
       "url": "http://127.0.0.1:5301/?debug&theme=dark#/focus",
-      "at": "2026-10-11T04:18:19.293Z",
+      "at": "2026-10-11T04:49:07.689Z",
+      "factsReadBeforeShot": true,
       "hash": "#/focus",
-      "clockNow": "2026-10-10T16:40:06.299Z",
+      "clockNow": "2026-10-10T16:40:04.453Z",
       "banner": null,
       "summaryNote": false,
       "warningToast": false,
@@ -36,34 +37,17 @@
         "docMax": 0,
         "main": 0,
         "mainMax": 60
-      }
+      },
+      "toastsAfterShot": []
     },
     "c1-summary-note": {
       "file": "c1-summary-note.png",
       "desc": "summary after a brew completed with storage full (R7: one-line note)",
       "url": "http://127.0.0.1:5301/?debug&theme=dark#/done",
-      "at": "2026-10-11T04:18:25.607Z",
+      "at": "2026-10-11T04:49:13.805Z",
+      "factsReadBeforeShot": true,
       "hash": "#/done",
-      "clockNow": "2026-10-10T16:40:12.372Z",
-      "banner": null,
-      "summaryNote": true,
-      "warningToast": false,
-      "toasts": [],
-      "close": null,
-      "scroll": {
-        "doc": 0,
-        "docMax": 0,
-        "main": 0,
-        "mainMax": 0
-      }
-    },
-    "c2-summary-end": {
-      "file": "c2-summary-end.png",
-      "desc": "summary, details expanded and scrolled to its end (setup scroll, as capture.mjs 08)",
-      "url": "http://127.0.0.1:5301/?debug&theme=dark#/done",
-      "at": "2026-10-11T04:18:27.520Z",
-      "hash": "#/done",
-      "clockNow": "2026-10-10T16:40:14.282Z",
+      "clockNow": "2026-10-10T16:40:10.617Z",
       "banner": null,
       "summaryNote": true,
       "warningToast": false,
@@ -75,6 +59,28 @@
         "main": 0,
         "mainMax": 0
       },
+      "toastsAfterShot": []
+    },
+    "c2-summary-end": {
+      "file": "c2-summary-end.png",
+      "desc": "summary, details expanded and scrolled to its end (setup scroll, as capture.mjs 08)",
+      "url": "http://127.0.0.1:5301/?debug&theme=dark#/done",
+      "at": "2026-10-11T04:49:15.677Z",
+      "factsReadBeforeShot": true,
+      "hash": "#/done",
+      "clockNow": "2026-10-10T16:40:12.769Z",
+      "banner": null,
+      "summaryNote": true,
+      "warningToast": false,
+      "toasts": [],
+      "close": null,
+      "scroll": {
+        "doc": 0,
+        "docMax": 0,
+        "main": 0,
+        "mainMax": 0
+      },
+      "toastsAfterShot": [],
       "lastLine": {
         "lastLineBottom": 427,
         "footerTop": 475,
@@ -85,9 +91,10 @@
       "file": "a1-today-warning.png",
       "desc": "Today after Skip break, storage still full (R7: banner; INT: warning toast if shown)",
       "url": "http://127.0.0.1:5301/?debug&theme=dark#/",
-      "at": "2026-10-11T04:18:30.349Z",
+      "at": "2026-10-11T04:49:18.611Z",
+      "factsReadBeforeShot": true,
       "hash": "#/",
-      "clockNow": "2026-10-10T16:40:16.955Z",
+      "clockNow": "2026-10-10T16:40:15.925Z",
       "banner": {
         "top": 690,
         "bottom": 1022,
@@ -103,15 +110,17 @@
         "docMax": 2903,
         "main": null,
         "mainMax": null
-      }
+      },
+      "toastsAfterShot": []
     },
     "b1-settings-your-data": {
       "file": "b1-settings-your-data.png",
       "desc": "Settings › Your data, storage still full (setup scroll to the heading)",
       "url": "http://127.0.0.1:5301/?debug&theme=dark#/settings",
-      "at": "2026-10-11T04:18:33.168Z",
+      "at": "2026-10-11T04:49:22.324Z",
+      "factsReadBeforeShot": true,
       "hash": "#/settings",
-      "clockNow": "2026-10-10T16:40:19.021Z",
+      "clockNow": "2026-10-10T16:40:18.718Z",
       "banner": {
         "top": 833,
         "bottom": 1165,
@@ -127,7 +136,8 @@
         "docMax": 8473,
         "main": null,
         "mainMax": null
-      }
+      },
+      "toastsAfterShot": []
     },
     "f1-focus-running": {
       "file": "f1-focus-running.png",
@@ -270,8 +280,69 @@
         "main": 236,
         "mainMax": 236
       }
+    },
+    "a2-today-banner-in-view": {
+      "file": "a2-today-banner-in-view.png",
+      "desc": "Today, the banner was not wholly in view at the top: scrolled into view (setup scrollIntoView)",
+      "url": "http://127.0.0.1:5301/?debug&theme=dark#/",
+      "at": "2026-10-11T04:49:19.462Z",
+      "factsReadBeforeShot": true,
+      "hash": "#/",
+      "clockNow": "2026-10-10T16:40:16.791Z",
+      "banner": {
+        "top": 68,
+        "bottom": 400,
+        "inView": true,
+        "partlyInView": true
+      },
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [],
+      "close": null,
+      "scroll": {
+        "doc": 622,
+        "docMax": 2903,
+        "main": null,
+        "mainMax": null
+      },
+      "toastsAfterShot": []
+    },
+    "b2-settings-banner-in-view": {
+      "file": "b2-settings-banner-in-view.png",
+      "desc": "Settings › Your data, the banner was not wholly in view under the heading: scrolled into view (setup scrollIntoView)",
+      "url": "http://127.0.0.1:5301/?debug&theme=dark#/settings",
+      "at": "2026-10-11T04:49:23.092Z",
+      "factsReadBeforeShot": true,
+      "hash": "#/settings",
+      "clockNow": "2026-10-10T16:40:19.659Z",
+      "banner": {
+        "top": 124,
+        "bottom": 456,
+        "inView": true,
+        "partlyInView": true
+      },
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [],
+      "close": null,
+      "scroll": {
+        "doc": 6053,
+        "docMax": 8473,
+        "main": null,
+        "mainMax": null
+      },
+      "toastsAfterShot": []
     }
   },
   "errors": [],
-  "endedAt": "2026-10-11T04:18:58.078Z"
+  "endedAt": "2026-10-11T04:49:23.113Z",
+  "supplements": [
+    {
+      "profiles": [
+        "W"
+      ],
+      "startedAt": "2026-10-11T04:49:01.149Z",
+      "endedAt": "2026-10-11T04:49:23.113Z"
+    }
+  ]
 }
