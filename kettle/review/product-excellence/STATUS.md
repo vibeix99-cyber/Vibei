@@ -38,11 +38,23 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
   - 16 configurations: 390×844, 375×667, 844×390 and 1440×900 × light/dark × 100/200 %.
   - 15 states each, 0 errors, frozen clock.
   - Finished 21:08 UTC, then the edit gate opened.
+- **Gates (23:10 UTC)** — record: `contracts/W2/review/GATE.md`:
+
+  | Maker | Packet | Revision | Trial merge (dev / preview) |
+  |---|---|---|---|
+  | **N** | READY FOR REVIEW, gate passed | `pe/w2-room@fc9f6d8` (code `5d7bb23`) | `2acc218` (:5340 / :5350) |
+  | **H** | WIP with a disclosed blocker: `integrity :1090` @390×844. The taller dock lifts End's toasts over Mark done | `pe/w2-home@acf1c6a` (code `7a961b7`) | `4921ee4` (:5342 / :5352) |
+  | **S** | WIP: code final, evidence gaps (13 of 16 big-day AFTER captures, same-session BEFORE, `:1090` on base) | `pe/w2-summary@e0f511a` (code `f95e0be`) | `3726a71` (:5341 / :5351) |
+
+  Combined trial for Lane R: `248415c` (N+S), :5345 / :5355.
+- **Review in progress:**
+  - **Lead (Opus):** a new Checker. It issues a separate verdict per maker in `contracts/W2/CHECKER-W2-{S,H,N}.md`.
+  - **Lanes (Sonnet):** N (room acceptance), S (acceptance plus the missing captures and `:1090` on both sides), and R (full regression and standard capture set on `248415c`). Receipts go to `contracts/W2/review/L{N,S,R}/`.
 - **Next:**
-  1. Gate each packet.
-  2. Review: a new lead plus Lanes S, H and N, and Lane R on the combined trial merge.
-  3. A separate verdict per maker; at most one 90-minute fix round for a rejected maker.
-  4. Merge the approved makers, then Lane R's regression on the merged tree.
+  1. Verdicts.
+  2. At most one 90-minute fix round per rejected maker, then a targeted re-review.
+  3. Merge the approved makers, then Lane R reruns on the merged tree if it differs from `248415c`.
+  4. Stop.
 
 ## ■ WAVE 1 CLOSED at `90a11e5` · 2026-10-11 19:40 UTC (read this first)
 
