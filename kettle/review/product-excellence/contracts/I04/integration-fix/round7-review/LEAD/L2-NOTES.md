@@ -279,3 +279,26 @@ Today, 13–14 stops to "Put the kettle on")
 - → pre-existing landscape-200 % defect: `html:has(.ctaDock) { scroll-padding-bottom: tabbar + 120px }` (Home.module.css
   l.416, phones only) is smaller than the 200 % dock; Save backup inherits it. FOLLOW-UP (owner M2/I04); not new in r7.
   (INT's own Save backup at that size is focused off screen above the view, §22.)
+
+## 25. Lane B FINAL receipt (Sonnet 5.5 relaunch 09:43–10:47Z) — traced by me
+- Probe hashes `B/probes/SHA256SUMS.txt`: all OK.
+- **Check 1 reading, re-judged from raw** (`B/logs/read/R7/read-R7.jsonl` + `B/logs/rl/read/R7{b,c,d,e}/read-R7.jsonl`):
+  77 R7 rows; 76 meet (all lines seen at rest, Save backup hit-testable, real download, no errors); the one that does
+  not = 667×375 @200 wheel100 (4/7 lines, Save backup never hit-testable). INT rows at 375×667 @200 and 667×375 @200:
+  no warning element at all (`read` null), INT 375×667 @100 5/5 lines.
+- **Check 4 summary note, from raw** (`B/logs/rl/sum4/{R7,R7b,INT}/*.jsonl`): last expanded line → footer gap R7 =
+  INT exactly (49, 50, 49, 49, 33, 34 px for 375@100, 375@200, 390@100, 390@200, 844@100, 844@200); `hitInDetails`
+  true; INT has no note and no "saved" words; R7 note "Not saved: storage is full." + Save backup; download 7 sessions
+  (includes the unsaved brew). 844×390@100 R7 sum4 row "no details body" (probe), covered by the R7b row.
+- Check 5 Settings, check 6 behave/episodes, markdone (LEAD probe byte-identical): consistent with §§14, 15, 17.
+- Check 3 cover (5-summary-toasts): the note's Save backup covered by 3 toasts at 375 and 390 (centre at @200) — my R7-5.
+
+## 26. Toast room, Break's over (carried task), landscape 200 % (`LEAD/runs/L2-toastroom/toastroom-b39202f.jsonl`, real wheel)
+- 844×390 dark, endless update toast (PwaUpdatePrompt shape, synthetic setup): panel top → toast whole (146 px, room
+  [205,372]), "Update" hit-testable; panel end (338/338) → room [−12,34], toast squeezed to 52 px box with 26 px
+  visible, **"Update" not hit-testable**; wheel back to top → whole again, "Update" hit-testable.
+- 667×375 light, update: INVALID for the end state (the 146 px toast lies over the panel's centre where the probe aims
+  the wheel; the panel never scrolled: 0/353).
+- 667×375 light, arrival (two ordinary toasts raised as Break's over shows): both whole at +0.5 s (97 + 57 px in room
+  [76,257]); by the time the real wheel reached the end (353/353) both had expired (3.2 s) → none left to squeeze.
+- INT update row pending (same file `toastroom-0d58c5e.jsonl`).
