@@ -26,8 +26,21 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
   - **Nothing merged.** App code is still `0d58c5e`; Wave 1 is not closed.
   - **Round 8 not started** (Vibei decides).
 - **Archive:** `archive/rv7-trial-b39202f.incremental.bundle`, local branch `pe/rv7-trial`.
-- **Next:** creative audit phase 2 on `audit/phase2`, using the integration build (INT preview :5323), as instructed for
-  a REJECT.
+- **Creative audit phase 2: DONE.** Branch `audit/phase2` @ `3508134`, file `kettle/review/creative-audit/PHASE2-REPORT.md`,
+  plus `CRITIC.md` and `evidence/`.
+  - **Build:** integration `0d58c5e`.
+  - **Coverage:** a live walkthrough at 390×844, 375×667, 820×1180, 1440×900 and 844×390; light and dark; reduced
+    motion; the static room; a frozen clock.
+  - **Critic:** one independent critic (Opus 5.5), reconciled.
+  - **Directions:**
+    - A "One Chai, one room" (recommended, after Wave 1 closes);
+    - B "Quiet clarity";
+    - C "Living Nook" (deferred).
+  - **First round:** 4 XS–S changes with acceptance criteria. Not started.
+- **Nothing running:** all servers, browsers and agents are stopped. The worktrees in `/home/user/wt/` are kept.
+- **Waiting for Vibei:**
+  - round 8 for R7-D1, or a ruling;
+  - the audit direction and its art approvals.
 
 ## ROUND 7 REVIEW RESUMED · 2026-10-11 09:50 UTC (history)
 
