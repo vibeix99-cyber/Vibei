@@ -259,3 +259,14 @@ the warning 1–2 more times. R7 same flow (section 18): warning said once, End 
 - R7: press 4 at both sizes; 844×390 focused and clear; 667×375 focused, inside the viewport, centre under the docked
   start. → keyboard reach of Save backup at landscape 200 %: R7 better than INT at both sizes; the 667×375 obscured
   focus is the r6 item-3 strip (docked start leaves ~60 px). FOLLOW-UP (owner M2/I04: scroll-padding vs the 200 % dock).
+
+## 23. :768 control (`LEAD/integrity-isolated/expimp2.log`, one slot, 10:43–10:46, load ~11–13)
+- R7 `--repeat-each=4`: **1 failed / 4** (repetition 1, 14.7 s): this time the FIRST read (`pillsBefore`, before the
+  export) caught Today's "184 leaves" and the read after import got "2,261 leaves" — the same read race, other side.
+- INT `--repeat-each=4`: **4/4 passed** (+ INT run 1 earlier: 5/5 on INT in total).
+- Tally R7: failed in gate maker run, my isolated run, expimp2 rep 1; passed D run1, D run2, gate rerun 10/10, my R7
+  run 1, expimp2 reps 2–4.
+- Why INT may not show it: the race needs the exiting Today layer's sr line to be the regex's first match; the status
+  bar (StatusBar.tsx / Home.module.css, I04 r3–r5) differs between INT and R7 but is byte-identical between round 6's
+  base `51521cf` and R7 (not in round 7's diff). Round-7 code is not involved (route transition, status bar, settings
+  unchanged by round 7). Data asserts pass every time. → FOLLOW-UP (test), owner M1 (test) / I04 (status bar text).
