@@ -10,7 +10,33 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
-## ▶ ROUND 8 IN PROGRESS: fix R7-D1 only · 2026-10-11 (read this first)
+## ■ WAVE 1 CLOSED at `90a11e5` · 2026-10-11 19:40 UTC (read this first)
+
+- **Round 8 APPROVED.** The independent lead (Opus 5.5) approved trial merge `9ff0d04` (src `42e106d`). Receipt:
+  `contracts/I04/CHECKER-integration-fix-r8.md`.
+- **Merged:** `90a11e5` merges `pe/r8-toastroom@2c3172c`, which includes the round-7 combined fix `7ba0d98`.
+  - The merged `kettle/src` is `42e106d`, equal to the trial merge, and nothing outside `kettle/review/` differs.
+- **R7-D1:**
+  - **Control:** `b39202f` reproduced it this session (the update prompt at 11 and 26 px of 52, Update not hittable).
+  - **R8:** the prompt is whole (146–186 px), 0 covered-control frames, and every real tap on a toast action
+    activated. Portrait is identical to `b39202f`.
+- **The R5-D1 and LEAD-D1 reruns:** controls reproduced; R8 0/12 and 0/12.
+- **Wave 1 regression (Lane 2):**
+
+  | Suite | Result |
+  |---|---|
+  | tsc | exit 0 |
+  | vitest | 267/267 |
+  | chromium | 73/74; `statusbar:106` flake, which passed 1/1 alone |
+  | timer/pwa | 29 passed, 2 skipped by design |
+
+  Captures: R8 against INT, light and dark.
+- **Record and follow-ups:** `WAVE1-CLOSED.md` holds the ranked follow-up list. The top two:
+  1. the third summary chip half under the footer at 375×667;
+  2. Brew length under the docked start, failing tap-target size.
+- **Stopped:** every server, browser and agent. Wave 2 is not started.
+
+## ROUND 8 (history): fix R7-D1 only · 2026-10-11
 
 - **Decision:** Vibei chose a round 8 scoped to R7-D1 only. All agents run on Opus 5.5.
 - **Not authorised:** other follow-ups, Wave 2, audit work, paid generation, publishing, PRs, or merging anywhere except
