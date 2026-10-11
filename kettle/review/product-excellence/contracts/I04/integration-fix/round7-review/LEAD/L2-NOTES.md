@@ -314,3 +314,47 @@ Today, 13–14 stops to "Put the kettle on")
 - Check 3 leftovers (`A/runs/readwarn-{int,r7}/`): INT fails all 5 (incl. 844×390 L 7/12 lines, 667×375 D 1/12, Save
   backup not hit at 4/5); R7 passes all 5 (Save backup hit 5/5).
 - LEAD-D1 case 2 key 844×390 (read earlier, §5): R7 1/0, said 1, scrollY 134→440; control 28/27.
+
+## 28. Lane D FINAL receipt (Sonnet 5.5 relaunch 09:43–10:51Z)
+- Chromium 72/72 (09:48–10:03), timer-harness/app/pwa 29 + 2 skipped: read from raw logs myself earlier (§6).
+- "R7's Break's over toast stack sits higher than INT, from the round-7 toast-room move": **mis-attributed.** Toast
+  boxes at Break's over with the panel at its top are identical on `49ea1de` (no Close fix) and R7 (prev-lead
+  closecheck rows, 375×667 / 667×375 @200, n1 and n3: same y for every toast, same clip). The difference vs INT is
+  `9326de5` (I04 r4, D4: the whole break-over group is one toast-above group) — `git merge-base`: NOT in INT, in the
+  combined fix since r4; round 6 item 9 ACCEPTED ("Break's over toasts sit above Mark it done and cover the title
+  and sentence; D4 trade-off"). Carried as ACCEPTED (r6 #9), not a round-7 item.
+- Standard capture set: light 3/3 configs only; dark + RM not run (cap-d covers all 16 incl. dark for round-7 states).
+
+## 29. Toast room v2 (`LEAD/runs/L2-toastroom/toastroom2-b39202f.jsonl`, probe toastroom2.mjs sha 7123da04; wheel
+aimed at the panel's lower-right corner; records top-bar text overlapped by a visible toast part)
+| config | panel top | panel end (real wheel) | back at top |
+|---|---|---|---|
+| 667×375 @200 light | update toast 146 px whole, "Update" hit | room [−12,19]: 52 px box, **11 px visible**, "Update" NOT hit, overlaps "Next: brew 2 of" | whole, hit |
+| 667×375 @200 dark | same | same (11 px, not hit, overlaps the top bar line) | whole, hit |
+| 844×390 @200 light | 146 px whole, hit | room [−12,34]: **26 px visible**, NOT hit, overlaps "Next: brew 2 of" | whole, hit |
+(+ v1 844×390 dark: 26 px visible, not hit.) INT v1 (`toastroom-0d58c5e.jsonl`) 667×375 L and 844×390 D: panel cannot
+scroll; update toast 97 px whole, "Update" hit at every position. Frame opened: `v2-b39202f-667x375-t200-light-update-
+b-end.png` (dark sliver at the top edge over the top bar; text and action unreadable). → **R7-6 BLOCKS** (decision §30).
+
+## 30. Decision on R7-6
+Introduced by round 7 (state unreachable on INT; same on 49ea1de → M7b's scroll × r4 D4 lift; the Close fix's
+MIN_ROOM fallback leaves the stylesheet top when `innerHeight − lift − 56 ≤ 8`). Hides text (the toasts' own; partly the
+top bar's progress line) and a control (an action toast's action), not transient for the endless update prompt. The
+narrow exception does not fit; Vibei's binding ruling covers the storage warning (option B's consequence), not
+toasts. The maker's packet calls the 26 px room at 844×390 @200 "pre-existing, r6 residual 3" — INT control shows it is
+not (r6 residual 3 is Today's 58 px strip). → BLOCKS → REJECT; single product blocker, owner M7a (combined owner,
+Toast.tsx room), M7b consulted. If Vibei extends the ruling's standard to toasts, it would become ACCEPTED.
+
+## 31. Verdict written (draft complete) 10:56 UTC → `contracts/I04/CHECKER-integration-fix-r7.md` (REJECT; R7-D1)
+Pending only: dark standard captures (mine, 390×844 / 375×667 / 1440 dark, `scratchpad/r7/LEAD2/std/`, D's std2.sh +
+std-freeze.mjs unchanged, capture.mjs unchanged) → fill {{STDDARK}} in the verdict.
+
+## 32. Dark standard captures (mine; `scratchpad/r7/LEAD2/std/`, matrix by D's `stdmatrix.cjs` unchanged)
+375×667@2 dark and 390×844@2 dark: 21/21 states both sides, exit 0. Differences > 0.5 % opened / attributed:
+- 10-break-over 23.1 % / 18.3 %: "Recipe done" toast above the whole Break's over group (D4, r4) — r6 #9 ACCEPTED
+  (opened R7 390 dark 10).
+- 03-focus-mid 375 dark 12.6 %: INT shot in zen (chrome faded, captions hidden), R7 not; same countdown 12:23 → 7 s zen
+  timing (C 3.2), identical code (opened both).
+- 14-summary-first 390 dark 46 %: same content, R7's sheet 17 css px lower (rising phase); 375 dark 14 = 0 % (opened).
+- 11/11b, 13, 17, 05: scene animation phase / clock second (bboxes on the scene/digits), as in D's light rows.
+- 18-nook-earned 375: page height flip (as D). 01, 01b, 07, 08, 09, 12, 15, 16, 19: 0 %.
