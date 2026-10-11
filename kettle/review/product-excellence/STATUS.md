@@ -50,8 +50,12 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Review in progress:**
   - **Lead (Opus):** a new Checker. It issues a separate verdict per maker in `contracts/W2/CHECKER-W2-{S,H,N}.md`.
   - **Lanes (Sonnet):** N (room acceptance), S (acceptance plus the missing captures and `:1090` on both sides), and R (full regression and standard capture set on `248415c`). Receipts go to `contracts/W2/review/L{N,S,R}/`.
+- **Verdict H (23:45 UTC): REJECT**, one blocker **W2H-D1**: End's toasts are lifted over Today's Mark done at 390×844 by the taller dock.
+  - Packet: `contracts/W2/CHECKER-W2-H.md` §7.
+  - Everything else in H verified independently, including the visual gate.
+  - The one 90-minute fix round started at 23:46 UTC; the hard stop is 01:16 UTC. A targeted re-review by Lane H follows.
 - **Next:**
-  1. Verdicts.
+  1. Verdicts (S and N pending).
   2. At most one 90-minute fix round per rejected maker, then a targeted re-review.
   3. Merge the approved makers, then Lane R reruns on the merged tree if it differs from `248415c`.
   4. Stop.
