@@ -85,6 +85,14 @@
   backdrop-filter: blur(6px);
   pointer-events: none;
 }
+/* The static drawing's hint: wraps inside the stage instead of running past its edges. */
+.hint[data-static] {
+  width: max-content;
+  max-width: calc(100% - 24px);
+  white-space: normal;
+  text-align: center;
+  justify-content: center;
+}
 
 /* ---------- story ---------- */
 .storySlot:empty {

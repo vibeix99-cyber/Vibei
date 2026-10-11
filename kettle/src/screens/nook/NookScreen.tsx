@@ -1,12 +1,13 @@
 /**
  * Nook — the cozy room collection. OWNER: scene area.
  * Big interactive 3D room (drag to look around, pinch/scroll to zoom, tap
- * things), level progress toward the next unlock, and the collection grid,
+ * things; with 3D off or no WebGL a static drawing, and a hint that says so),
+ * level progress toward the next unlock, and the collection grid,
  * which is also the accessible representation of the room.
  */
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { Nook, type SceneTime, type SceneWeather } from '@/scene';
+import { Nook, useStaticNook, type SceneTime, type SceneWeather } from '@/scene';
 import { ITEMS, ITEM_BY_ID, leavesForLevel, useLevel, useUnlockedItems, type NookItem } from '@/progress';
 import { Icon, LevelBadge, Mascot, type IconName } from '@/art';
 import { Card, IconButton, Pill, PressableCard, ProgressBar, ScreenHeader, SectionHeader, SpeechBubble, VisuallyHidden } from '@/ui';
@@ -25,10 +26,15 @@ const WEATHER_LABEL: Record<WeatherPref, string> = { auto: 'Matches your sounds'
 const WEATHER_ICON: Record<SceneWeather, IconName> = { clear: 'star', rain: 'rain', snow: 'snow' };
 
 const HINT_KEY = 'kettle:nook-hint-seen';
+/** The static drawing's hint has its own "seen" flag, so the drag hint still greets a later switch to 3D. */
+const STATIC_HINT_KEY = 'kettle:nook-static-hint-seen';
+const LIVE_HINT = 'Drag to look around · tap things';
+/** 3D off or no WebGL: the room is a drawing (no drag, no tapping it); the stories are in the Cozy things list. */
+const STATIC_HINT = 'A drawing of your room · stories in Cozy things';
 
-function readHintSeen(): boolean {
+function readHintSeen(key: string): boolean {
   try {
-    return localStorage.getItem(HINT_KEY) === '1';
+    return localStorage.getItem(key) === '1';
   } catch {
     return false;
   }
@@ -42,7 +48,9 @@ export default function NookScreen() {
   const [selected, setSelected] = useState<string | null>(null);
   const [time, setTime] = useState<SceneTime>('auto');
   const [weather, setWeather] = useState<WeatherPref>('auto');
-  const [hint, setHint] = useState(() => !readHintSeen());
+  const staticRoom = useStaticNook();
+  const [seen, setSeen] = useState(() => ({ live: readHintSeen(HINT_KEY), drawn: readHintSeen(STATIC_HINT_KEY) }));
+  const hint = staticRoom ? !seen.drawn : !seen.live;
   const stageRef = useRef<HTMLDivElement>(null);
   const storyId = useId();
 
@@ -53,13 +61,13 @@ export default function NookScreen() {
 
   const dismissHint = useCallback(() => {
     if (!hint) return;
-    setHint(false);
+    setSeen((v) => (staticRoom ? { ...v, drawn: true } : { ...v, live: true }));
     try {
-      localStorage.setItem(HINT_KEY, '1');
+      localStorage.setItem(staticRoom ? STATIC_HINT_KEY : HINT_KEY, '1');
     } catch {
       /* private mode: fine */
     }
-  }, [hint]);
+  }, [hint, staticRoom]);
 
   const onSceneSelect = useCallback((id: string | null) => {
     setSelected(id);
@@ -154,13 +162,23 @@ export default function NookScreen() {
           <AnimatePresence>
             {hint && (
               <motion.p
+                key={staticRoom ? 'drawn' : 'live'}
                 className={s.hint}
+                data-static={staticRoom || undefined}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.25, delay: reduced ? 0 : 0.8 }}
               >
-                <Icon name="eye" size={16} /> Drag to look around · tap things
+                {staticRoom ? (
+                  <>
+                    <Icon name="nook" size={16} /> {STATIC_HINT}
+                  </>
+                ) : (
+                  <>
+                    <Icon name="eye" size={16} /> {LIVE_HINT}
+                  </>
+                )}
               </motion.p>
             )}
           </AnimatePresence>

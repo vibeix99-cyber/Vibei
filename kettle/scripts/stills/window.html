@@ -1,6 +1,9 @@
 <!doctype html>
-<!-- Renders the nook engine in `window` mode (the Focus backdrop) for the pre-rendered stills.
-     ?w=&h=&time=morning|day|dusk|night&weather=rain|snow|clear  — see render-window-stills.mjs -->
+<!-- Renders the nook engine in `window` mode (the Focus backdrop) for the pre-rendered stills and item layers.
+     ?w=&h=&time=morning|day|dusk|night&weather=rain|snow|clear  — see render-window-stills.mjs
+     &items=pothos,books  unlocked items (default none: the base room); the driver may also change state through
+     window.__engine.setState (render-item-layers.mjs). &run=0 renders on demand only (each setState draws one
+     frame) instead of running the loop; with reduced motion both draw the same settled frame. -->
 <html><head><meta charset="utf-8"><style>html,body{margin:0;background:transparent}canvas{display:block}</style></head>
 <body><div id="host"></div>
 <script type="module">
@@ -10,10 +13,11 @@ const W = +(q.get('w') || 1000), H = +(q.get('h') || 800);
 const canvas = document.createElement('canvas'); canvas.style.cssText = `width:${W}px;height:${H}px`;
 document.getElementById('host').appendChild(canvas);
 const e = new NookEngine({ canvas, quality: 'high', adaptive: false, mobile: false, software: true });
-// Base room (no unlocked items), the settled reduced-motion moment, full exposure (the stage quiets it in CSS).
+// Base room (no unlocked items unless ?items=), the settled reduced-motion moment, full exposure (the stage quiets it in CSS).
 e.setState({ mode: 'window', progress: 0, whistling: false, weather: q.get('weather') || 'rain', time: q.get('time') || 'night',
-  items: [], highlightItem: null, interactive: false, reducedMotion: true, dim: 1 });
+  items: (q.get('items') || '').split(',').filter(Boolean), highlightItem: null, interactive: false, reducedMotion: true, dim: 1 });
 e.setSize(W, H, 1);
-e.setRunning(true);
+if (q.get('run') !== '0') e.setRunning(true);
+window.__engine = e;
 window.__ready = true;
 </script></body></html>
