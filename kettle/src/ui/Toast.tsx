@@ -167,9 +167,9 @@ function toastRoomTop(): number | null {
 const CONTROLS = 'button, a[href], input, select, textarea, [role="button"], [tabindex]:not([tabindex="-1"])';
 
 /**
- * The bottom of the screen's top bar (a page-level `<header>` near the top, as in `toastRoomTop()`) where the bar
- * reaches over the toasts' column, plus the same 24 px: what a stack must stay under to cover none of it, its words
- * included. Null where no bar reaches over the column.
+ * The bottom of the words of the screen's top bar (a page-level `<header>` near the top, as in `toastRoomTop()`) that
+ * sit above the toasts' column (e.g. "Next: brew 2 of 4" on a landscape phone), plus the same 24 px: what a stack must
+ * stay under to cover none of them. Its controls are `toastRoomTop()`'s. Null where no words sit above the column.
  */
 function topBarBottom(): number | null {
   const col = document.querySelector('[aria-label="Notifications"]')?.getBoundingClientRect();
@@ -181,7 +181,11 @@ function topBarBottom(): number | null {
     if (r.height <= 0 || r.bottom <= 0 || r.top > innerHeight * 0.4) continue;
     const cs = getComputedStyle(h);
     if (cs.visibility === 'hidden' || Number(cs.opacity) < 0.05) continue;
-    if (r.right > col.left && r.left < col.right) bottom = Math.max(bottom, r.bottom);
+    for (const w of h.querySelectorAll('*')) {
+      if (w.childElementCount > 0 || !w.textContent?.trim()) continue;
+      const q = w.getBoundingClientRect();
+      if (q.width > 0 && q.height > 0 && q.right > col.left && q.left < col.right) bottom = Math.max(bottom, q.bottom);
+    }
   }
   return bottom === -Infinity ? null : Math.round(bottom + 24);
 }
