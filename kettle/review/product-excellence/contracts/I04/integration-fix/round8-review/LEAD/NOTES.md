@@ -116,3 +116,46 @@ Frames opened at full size: R8 844 D end (whole over the stage, Update visible, 
   arrives and the cap drops one; no action toast ever not whole. Lane 1 1.6: page loss 3 of 8 R8 runs at 844×390 @200
   wheel; no navrequest / framenavigated / console / crash logged; control 0 of 2 (diag2).
 - Memory: 16 GB, 12.8 GB available, PSI memory 0, `oom_kill 0` → not the OOM killer.
+
+## 8. Sheet over a docked stack (dockcheck "sheet", Tea break running, 3 toasts, REAL tap on Ambience)
+- R8 667×375 @200 L: before: docked, all 3 folded, whole. **Sheet open: the stack leaves the dock** (the sheet's controls
+  now intersect the stage box) and returns to the old room [8,257] — **drawn above the sheet**, over its title
+  "Ambience", "Tap to listen…", "Rain"; the Undo toast cut at the room's clip (96/146, Undo not on top). Frame opened
+  (`9ff0d04-667x375-t200-light-sheet-sheet_open.jpg`). Per-frame (26 frames in 1.6 s, load ≈ 15): dialog buttons Rain /
+  Fireside not centre-hit in 14 frames (hit something else, no painted-toast overlap → sheet entry motion), docked
+  while the dialog was up for 8 frames (≤ 211 ms after the tap).
+- Sheet closed (Escape, +800 ms): docked again; a toast rect still outside the dock and Undo not on top → mid-animation.
+- Needs the b39202f sheet row to classify (the old room is the same; b39202f's stack was never docked).
+- b39202f 667×375 @200 L sheet: **"sheet open" sample identical to R8** (room [8,257], same rects, same under-text
+  "Ambience", "Tap to listen…", "Rain"; Undo 96/146 not on top). Before the sheet (break running) b39202f's stack sat over
+  the top bar's "· 5 min" and the countdown digits with Undo 23/146 not on top — R8's dock clears all of that.
+- R8 844×390 @200 D sheet: before: docked whole. **Sheet open: room [8,272]; toasts over the sheet's title, text,
+  "Sound is off right now · Turn on" and its Close** (underCtl Close, Turn on; per-frame covWho Rain/Fireside/Done/Close/
+  Turn on [T]). Frame opened. Control b39202f 844 D sheet + INT 667/844 sheet queued (job-nav) to classify. Expected
+  identical on b39202f (undocked path unchanged; the sheet voids the dock). Pre-existing class "toasts above modal
+  sheets" (z-order); R7-14 also concerns the Ambience dialog.
+
+## 9. Summary in landscape (dockcheck "summary", 3 toasts raised on the summary)
+- R8 667×375 @200 L and 844×390 @200 D: **docked over the stage**, oldest folded, actions on top, **nothing under**
+  (summary card, Tea time / Skip break fully clear). Frame opened (667 L top). → the new media-query reach of the dock
+  improves the R7-5 class (reward toasts over the summary) in landscape; portrait summary has no dock (unchanged).
+- b39202f 667×375 @200 L summary: **room [8,165]; update prompt over "25 minutes brewed" heading; Undo toast 4/146 px,
+  Undo NOT on top; Cozy 0 px** (both top and end). → R8's docked summary is a large improvement (R7-5 class, landscape).
+- R8 1440×900 @200 L summary: not docked (room [8,720]); toast rects overlap a "Done" control at the summary's top
+  sample (rect overlap only, not hit-tested). Undocked path = b39202f code; control + INT 1440 summary queued.
+
+## 10. Focus running (dockcheck "focus")
+- R8 667×375 @100 L: n1, n2 undocked, over the countdown digits and "Kettle’s on. Nice…" (r6 #8, unchanged); **n3 docked,
+  nothing under**. R8 844×390 @200 L: **docked from n1**, nothing under at n1–n3 (update folded at n3).
+- b39202f focus: 667 @100 n1–n3 all over the countdown digits and the status line, Cozy 17/52 at n3; 844 @200 n1–n3 over
+  digits and status line, Cozy 26/57 at n3. → R8 improves r6 #8 wherever it docks; identical where it does not.
+- dockcheck job ended 18:35:26 (load 7.8). 22 contexts; 1 lost (R8 844×390 @100 over, "Execution context was destroyed").
+
+## 11. INTERIM STATE (18:41 UTC) — waiting for lane receipts
+- Done by me: diff review; revision/tree; RERUN-LIST; control reproduction (R7-D1); toastroom2 on R8/INT; dockcheck 22
+  contexts (R8 / b39202f / INT; over, sheet, summary, focus); maker evidence audit (hashes, geom raw, captures opened);
+  Lane 2 chromium JSON pre-audit; RO-error attribution; statusbar flake snapshot; memory/OOM check.
+- Queued (detached, `slots --lane LEAD`, behind Lane 2's capture job): `.tmp/LEAD8/job-nav.sh` → `runs/navdiag/`
+  (navigation diagnosis ×4) and `runs/dockcheck/` (synthetic two-action-toast 375×667 rows; sheet controls b39202f 844 D,
+  INT 667/844; 1440 summary b39202f/INT). Read `runs/navdiag/navlog-*.jsonl` and `browser-stderr-*.log` first on resume.
+- Draft: `LEAD/VERDICT-DRAFT.md` (leanings; disclosure 4 OPEN → BLOCKS if R8-caused).

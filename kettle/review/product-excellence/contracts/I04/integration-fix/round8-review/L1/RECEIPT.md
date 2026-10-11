@@ -150,3 +150,49 @@ within about 0.5 s; under heavier load (1.3, 18:19 UTC, load ≈ 13) the same cl
   accept-diag2 0/3, l1dock 0/1); at every other configuration/input on R8 so far (accept 6 runs, l1dock 3, l1dock2 3): 0. Cause not established; the failing runs coincided with higher machine
   load (another lane's 2-browser suite). Every failure happened in the middle of the probe's own `page.evaluate`, so the
   event order after it is not captured.
+
+### 1.4 R8, `accept.mjs` at 150 % and 100 % (one input per configuration, both inputs per size)
+
+`runs/c1-r8-accept/`, 18:30:22–18:33:20 UTC.
+
+| Config | Input | Frames | Covered (all / >400 ms) | Samples | Not whole | Folded | Actions not on top | Bar words | Docked per sample | Taps | Notes |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 667×375 @150 light | wheel | 1694 | 0 / 0 | 16 | 0 | 0 | 0 | 0 | `-DDDDDDDDDDDDDDD` | 7/7 | |
+| 844×390 @150 dark | wheel | 3013 | 0 / 0 | 16 | 0 | 0 | 0 | 0 | `-DDDDDDDDDDDDDDD` | 7/7 | "middle: not reached" (80 px range, 60 px wheel step; as M8 noted) |
+| 667×375 @100 dark | touch | 1630 | 0 / 0 | 16 | 0 | 0 | 0 | 0 | `-DDDDDDDD--DDDDD` | 7/7 | panel does not scroll at 100 % (top = middle = end) |
+| 844×390 @100 light | touch | 1607 | 0 / 0 | 16 | 0 | 0 | 0 | 0 | `-DDDDDDDD--DDDDD` | 7/7 | panel does not scroll at 100 % |
+
+- At 150 % and 100 % a 2-toast stack already docks over the stage (`-D…`), at the panel's top too (M8's disclosure).
+  At 100 % the two `--` samples are the update prompt re-raised alone after the Update tap had emptied the stack: alone
+  it fits above the controls, so it is not docked; it docks again when the next toast arrives.
+- **Counting:** the control reproduced this probe's defect at 200 % only (1.0); no control row was run at 150 % / 100 %
+  (R7-D1 is defined at 200 %). These rows are no-regression rows for the new dock, not R7-D1 acceptance rows.
+- **Not run (time):** 667×375 @150 dark, 844×390 @150 light, 667×375 @100 light, 844×390 @100 dark with this probe, and
+  the second input at each 150 / 100 % configuration. (M8's packet reports all 16; not re-verified here.)
+
+### 1.7 Close / Ambience / Mute sweep (Lane C `closecheck2.mjs`, unedited), 667×375 @200 light, modes measure + tap
+
+Control `49ea1de` (:5305) first, 18:33:23–18:35:19 UTC (`runs/c1-close-ctl/`); then R8 18:35:19–18:37:15
+(`runs/c1-close-r8/`). States: focus running, paused break, Break's over (carried); panel top and end by real wheel;
+1 and 3 toasts; real touch taps on Ambience and Mute (top and end, 3 toasts). Close taps (`closetap` mode) were **not
+run** (time).
+
+| Rev | State | Close covered · centre hit | Ambience covered · hit | Mute covered · hit | Real taps |
+|---|---|---|---|---|---|
+| 49ea1de (control) | focus | — | **138/588** · 454/588 | 0/588 · 588/588 | Ambience **1/2**, Mute 2/2 |
+| 49ea1de (control) | paused | — | **316/665** · 353/665 | 0/665 · 665/665 | Ambience **0/2**, Mute 2/2 |
+| 49ea1de (control) | over-carried | 0/670 · 670/670 | — | — | — |
+| 9ff0d04 | focus | — | 0/511 · 511/511 | 0/511 · 511/511 | Ambience 2/2, Mute 2/2 |
+| 9ff0d04 | paused | — | 0/724 · 724/724 | 0/724 · 724/724 | Ambience 2/2, Mute 2/2 |
+| 9ff0d04 | over-carried | 0/703 · 703/703 | — | — | — |
+
+- Panel controls (Add 5 minutes, Pause/Resume, End session; Skip break, Resume break, Start next brew; Mark it done, Put
+  the kettle on, That's all for now): 0 covered frames on R8 in every sub-run.
+- **Counting:** Ambience's control reproduced (zeros count for Ambience at this configuration). **Mute and Close: control
+  not established** in this configuration this session (0 covered on `49ea1de` too), so their R8 zeros here do not count
+  as control-backed; Close is also measured per frame by `accept.mjs` and `l1dock` (1.2–1.5), whose controls reproduced
+  through other controls, not through Close.
+- Also seen on the control: Break's over at the end with 1 / 3 toasts, toasts 19/52 and 0/52 px visible (R7-D1 shape).
+  On R8 every toast was whole (min 57 px).
+- **New geometry seen here:** on R8 the toasts in the **focus-running and paused-break** states also sit in the stage
+  dock at this size (room clip [287, 363] for 1 toast, [77, 363] for 3), not above the panel's controls.
