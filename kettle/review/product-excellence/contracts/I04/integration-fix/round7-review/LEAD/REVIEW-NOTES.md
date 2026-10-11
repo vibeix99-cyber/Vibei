@@ -56,3 +56,29 @@ New in R7:
   INT always "Saved" → at worst FOLLOW-UP.
 - End sheet "will be saved" / announce.ts "saved": pre-existing → FOLLOW-UP (I03 owner M1).
 - Integrity export→import pill read race: test race under load (see §2) → pending Lane D.
+
+## 5. My own runs (binding: R7 :5301 / controls in this session)
+
+- **Close control, :5305 `49ea1de`, 03:57:59** (`runs/close-ctl5305/`): 375×667 @200 light Break's over (task), wheel to
+  236/236, 3 toasts → **Close COVERED 152/153 frames (134/134 settled), not hit-testable**; 1 toast clear; at top clear.
+  (Also reproduced on my own :5310 at 02:25: 154/155.) → control reproduced this session.
+- Slot gate: LEAD waited 03:25–03:58 (Lane A held all slots); orchestrator switched to fair share at 03:58.
+- **Close on R7 :5301** (04:24–): 375×667 @200 light and dark, Break's over (task) at top and wheeled to 236/236, paused
+  break at top and 177/177, 1 and 3 toasts → **0 covered frames in every row**; with 3 toasts at the end the list clip
+  starts at y 58 (Close bottom 54), top toast 90/138 px visible (scrolls inside the room).
+
+## 6. Lane trace checks
+
+- **C check 1a** (reach): `C/check1-reach/{R7,INT}-reach.jsonl` re-judged with `LEAD/tools/judge_reach.py` + tap rows:
+  R7 0/30 failing; INT 18 wheel/touch + 4 tap = 22/30. Probe sha256 = M7b's `9d8ef06e…`. Frames opened:
+  `R7-375x667-dark-t200-paused-touch-bottom.jpg`, `R7-844x390-dark-t200-over-carried-wheel-bottom.jpg` (match).
+- **A check 2** (LEAD-D1): `A/runs/leadd1-case1-r7/markdone-b39202f.jsonl` 12 rows: banner 1/0, min opacity 1, page top
+  constant (687 @375; 16 in the landscape column), in view 0 frames, said 1; control `leadd1-case1-ctl-a2` 11/10 ×4.
+  Frame opened: `b39202f-844x390-t200-light-t1.3.png` (only "Crossed off · Undo" visible).
+- **C check 2** (residuals): `C/check2-residuals/resid.jsonl` rows re-read: tab-t100 R7 press 5 vs INT 15 (INT 2 adds/2
+  removals); tab-t200 R7 press 5 vs INT never in 45 (703 gone/faded frames); read-100/53 R7 1/0/1 vs INT 6/6/6, 7/7/7;
+  back-t100 INT 74 hit frames over session controls vs R7 0. Match C's table.
+- **C 1d-1 (new, R7 only):** 12–19 device-px bottom shade during the break / Break's over entrance at 100 % (entrance
+  translate y 12/14 makes the panel scrollable for the entrance; frozen-clock shots hold that frame). 1d-2 duration pending.
+- **C item 3 (667×375 @200, coarse wheel):** R7 53 px: 8/8 lines + Save backup; 100 px: 4/8 lines, Save backup never wholly
+  in view; INT this session 7/12 + Save backup at both. Same class as r6 follow-up 3 (60 px strip above the docked start).

@@ -40,8 +40,13 @@ for (const [w, h, theme] of [[390, 844, 'light'], [390, 844, 'dark'], [375, 667,
 J.push({ id: 'firstreal-390x844-dark', kind: 'first', w: 390, h: 844, theme: 'dark', text: 100, mode: 'real', fix: 'r6day' });
 J.push({ id: 'zen04-390x844-dark-rm', kind: 'zen04', w: 390, h: 844, theme: 'dark', text: 100, rm: true, mode: 'step', fix: 'r6day' });
 for (const theme of ['light', 'dark']) J.push({ id: `shade-844x390-${theme}`, kind: 'shade', w: 844, h: 390, theme, text: 200, mode: 'step', fix: 'r6day' });
-// (the queued run's list predates 'zen04': it runs right after the reduced-motion flow)
-const jobs = which === 'all' ? J : [...new Set(which.split(',').flatMap((x) => [...J.filter((j) => j.id.startsWith(x)), ...(x === 'flow-390x844-dark-rm' ? J.filter((j) => j.id.startsWith('zen04')) : [])]))];
+// Order set while the run was still queued (slots were scarce): check 3's pairs first, then check 1's 100 % pairs
+// (light before dark), the real-clock pairs and the BEFORE-day flow; the 844x390 shade job is dropped (measured from
+// the reach probe's frames instead).
+const ORDER = ['home-375x667-light-r6day', 'home-375x667-dark-r6day', 'home-390x844-light-r6day', 'home-375x667-light-beforeday', 'home-375x667-dark-beforeday', 'home-390x844-light-beforeday',
+  'first-390x844-light', 'first-390x844-dark', 'first-375x667-dark', 'flow-390x844-dark-rm', 'zen04-390x844-dark-rm', 'flow-390x844-light', 'flow-390x844-light-beforeday', 'firstreal-390x844-dark', 'flowreal-390x844-dark-rm',
+  'flow-375x667-light', 'flow-1440x900-light', 'flow-390x844-dark', 'flow-375x667-dark', 'flow-1440x900-dark', 'flowreal-390x844-light'];
+const jobs = which === 'all' ? J : ORDER.map((id) => J.find((j) => j.id === id)).filter(Boolean);
 
 const browser = await chromium.launch({ args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] });
 const log = (o) => { appendFileSync(`${out}/pix.jsonl`, JSON.stringify(o) + '\n'); console.log(JSON.stringify(o).slice(0, 400)); };

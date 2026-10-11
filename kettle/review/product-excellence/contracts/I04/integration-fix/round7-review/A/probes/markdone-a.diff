@@ -1,0 +1,27 @@
+0a1
+> // LANE A r7 copy of the LEAD's markdone.mjs. Changes: (1) counts EVERY addition of the warning's text to any live region ([aria-live] not off, role=status/alert; text nodes and characterData included) as `live` (M7a natural-b's rule), alongside the LEAD's `said` (the banner's own announcer only); (2) per run: UTC start/end and /proc/loadavg in the jsonl; (3) where the banner is relative to the view after the tap (above/below/in view, px). Setup, input and the rest of the judgement unchanged.
+14c15,16
+< import { mkdirSync, appendFileSync, renameSync, rmSync } from 'node:fs';
+---
+> import { mkdirSync, appendFileSync, renameSync, rmSync, readFileSync } from 'node:fs';
+> const load = () => readFileSync('/proc/loadavg', 'utf8').split(' ').slice(0, 3).join(' ');
+31c33
+<   let res = { tag, rev, base, W, H, text, theme, pwa: pwaArg === '1' };
+---
+>   let res = { tag, rev, base, W, H, text, theme, pwa: pwaArg === '1', utcStart: new Date().toISOString(), loadStart: load() };
+65c67
+<       const R = (window.__rec = { frames: [], ev: [], said: [], t0: performance.now(), stop: false });
+---
+>       const R = (window.__rec = { frames: [], ev: [], said: [], live: [], t0: performance.now(), stop: false });
+68c70
+<       new MutationObserver((ms) => { for (const m of ms) { for (const x of m.addedNodes) { if (x.tagName === 'LI') R.ev.push([t(), '+', x.id || 'li', x.textContent.slice(0, 24)]); if (isW(x)) R.ev.push([t(), '+W', x.id || x.tagName, (x.textContent || '').slice(0, 30)]); } for (const x of m.removedNodes) { if (x.tagName === 'LI') R.ev.push([t(), '-', x.id || 'li', x.textContent.slice(0, 24)]); if (isW(x)) R.ev.push([t(), '-W', x.id || x.tagName, (x.textContent || '').slice(0, 30)]); } } }).observe(document.body, { childList: true, subtree: true });
+---
+>       new MutationObserver((ms) => { for (const m of ms) { for (const x of m.addedNodes) { if (x.tagName === 'LI') R.ev.push([t(), '+', x.id || 'li', x.textContent.slice(0, 24)]); if (isW(x)) R.ev.push([t(), '+W', x.id || x.tagName, (x.textContent || '').slice(0, 30)]); } for (const x of m.removedNodes) { if (x.tagName === 'LI') R.ev.push([t(), '-', x.id || 'li', x.textContent.slice(0, 24)]); if (isW(x)) R.ev.push([t(), '-W', x.id || x.tagName, (x.textContent || '').slice(0, 30)]); } if (m.type === 'characterData' || m.type === 'childList') { const nodes = m.type === 'characterData' ? [m.target] : [...m.addedNodes]; for (const n of nodes) { const live = (n.nodeType === 1 ? n : n.parentElement)?.closest?.('[aria-live]:not([aria-live="off"]), [role="status"], [role="alert"]'); if (live && /storage is full|couldn’t save your latest/.test(n.textContent ?? '')) R.live.push([t(), live.id || live.getAttribute('aria-label') || live.className, (n.textContent || '').slice(0, 40)]); } } } }).observe(document.body, { childList: true, subtree: true, characterData: true });
+105c107
+<     const R = await p.evaluate(() => { window.__rec.stop = true; return { frames: window.__rec.frames, ev: window.__rec.ev, said: window.__rec.said }; });
+---
+>     const R = await p.evaluate(() => { window.__rec.stop = true; return { frames: window.__rec.frames, ev: window.__rec.ev, said: window.__rec.said, live: window.__rec.live }; });
+122c124
+<       said: R.said, notificationsAdds: R.ev.filter((e) => e[1] === '+').map((e) => [e[0], e[3]]) };
+---
+>       said: R.said, live: R.live, liveAdds: R.live.length, bannerWhereLast: (() => { const l = bFr[bFr.length - 1]; if (!l) return null; return l[10] <= 0 ? `above the view by ${-l[10]} px (top ${l[9]})` : l[9] >= H ? `below the view by ${l[9] - H} px` : l[9] >= 0 && l[10] <= H ? 'whole in view' : `partly in view (top ${l[9]}, bottom ${l[10]})`; })(), utcEnd: new Date().toISOString(), loadEnd: load(), notificationsAdds: R.ev.filter((e) => e[1] === '+').map((e) => [e[0], e[3]]) };

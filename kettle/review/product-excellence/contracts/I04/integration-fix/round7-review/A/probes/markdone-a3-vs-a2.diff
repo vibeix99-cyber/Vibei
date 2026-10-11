@@ -1,0 +1,13 @@
+0a1
+> // LANE A r7 markdone-a3 = markdone-a2 + env KEY=1: "Mark done" is reached with real Tab presses (page.keyboard; the browser's own focus scrolling, no probe scrolling) and activated with a real Enter, instead of the view loop + tap. For 844x390 @200 % case 2, where the endless update toast covers the whole strip above the docked start so Mark done can never be tapped clear of it. KEY unset = markdone-a2 exactly.
+57c58,59
+<     for (let i = 0; i < 20; i++) {
+---
+>     const KEY = process.env.KEY === '1'; res.input = KEY ? 'keyboard (Tab… Enter)' : (phone ? 'touch tap' : 'click');
+>     for (let i = 0; i < (KEY ? 0 : 20); i++) {
+62a65
+>     if (KEY) { for (let i = 0; i < 60; i++) { await p.keyboard.press('Tab'); await sleep(40); if (await p.evaluate(() => !!document.activeElement?.matches?.('button[aria-label^="Mark “"]'))) { res.tabs = i + 1; break; } } if (!res.tabs) throw new Error('Tab never reached Mark done'); await sleep(400); }
+105c108
+<     if (phone) await p.touchscreen.tap(res.tapAt[0], res.tapAt[1]); else await p.mouse.click(res.tapAt[0], res.tapAt[1]);
+---
+>     if (KEY) { res.focusedBeforeEnter = await p.evaluate(() => !!document.activeElement?.matches?.('button[aria-label^="Mark “"]')); await p.keyboard.press('Enter'); } else if (phone) await p.touchscreen.tap(res.tapAt[0], res.tapAt[1]); else await p.mouse.click(res.tapAt[0], res.tapAt[1]);

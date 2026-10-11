@@ -1,0 +1,54 @@
+0a1
+> // LANE A r7 ADAPTATION of M7a's natural-b.mjs: (1) GESTURE=wheel (default; the original wheel path, unchanged) or GESTURE=touch (CDP Input.dispatchTouchEvent drags on the same point of the toast stack; no mouse moves); (2) STOP_ON_FAIL=1 stops a series at its first failing run (controls); (3) VIDEO=1 records the run (Playwright recordVideo) and keeps clip-*.webm; (4) per run: UTC, /proc/loadavg, URL, REV, gesture start/end times, and when each older toast left (before / during / after the gesture), list scrolled, older toast left while scrolled. Judgement unchanged.
+7c8
+< import { mkdirSync, appendFileSync } from 'node:fs';
+---
+> import { mkdirSync, appendFileSync, readFileSync, renameSync, rmSync } from 'node:fs';
+8a10,11
+> const GESTURE = process.env.GESTURE ?? 'wheel', STOP = process.env.STOP_ON_FAIL === '1', VIDEO = process.env.VIDEO === '1', REV = process.env.REV ?? '?';
+> const load = () => readFileSync('/proc/loadavg', 'utf8').split(' ').slice(0, 3).join(' ');
+17c20
+< for (const wait of waitArg.split(',').map(Number))
+---
+> outer: for (const wait of waitArg.split(',').map(Number))
+18a22,23
+>     if (STOP && fails) break outer;
+>     const meta = { utcStart: new Date().toISOString(), loadStart: load(), url: `${base}/?debug&theme=${theme}${theme === 'light' ? '&nooktime=day' : ''}#/`, rev: REV, gesture: GESTURE, wait, rep };
+20c25
+<     const ctx = await context(browser, { w: W, h: H, theme, text });
+---
+>     const ctx = VIDEO ? await (async () => { const c = await browser.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: W >= 900 ? 1 : 2, isMobile: W < 900, hasTouch: W < 900, colorScheme: theme, reducedMotion: 'no-preference', acceptDownloads: true, recordVideo: { dir: `${out}/video-tmp`, size: { width: W, height: H } } }); if (text !== 100) await c.addInitScript((pct) => { addEventListener('DOMContentLoaded', () => { const s = document.createElement('style'); s.textContent = `html{font-size:${pct}%!important}`; document.head.appendChild(s); }); }, text); return c; })() : await context(browser, { w: W, h: H, theme, text });
+41c46,49
+<     await page.mouse.move(W / 2, Math.round(H * 0.25));
+---
+>     if (GESTURE === 'wheel') await page.mouse.move(W / 2, Math.round(H * 0.25));
+>     const cdp = GESTURE === 'touch' ? await ctx.newCDPSession(page) : null;
+>     // touch stroke: finger on (x, y), moved by -dy (content scrolls by +dy), held 60 ms, lifted (no fling intended)
+>     const stroke = async (x, y, dy) => { y = Math.round(Math.min(Math.max(y, 30), H - 30)); x = Math.round(x); const n = 6; await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x, y }] }); for (let k = 1; k <= n; k++) { await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x, y: Math.round(Math.min(Math.max(y - (dy * k) / n, 2), H - 2)) }] }); await sleep(16); } await sleep(60); await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }); await sleep(100); };
+93,94c101,103
+<     await page.mouse.move(Math.round(s.x), Math.round(s.y));
+<     for (let i = 0; i < 20; i++) { s = await st(); if (s.rev ? (s.wst <= 0 && s.lst <= s.lmin + 1) : (s.lst >= s.lmax - 1)) break; await page.mouse.wheel(0, s.rev ? -40 : 40); await sleep(120); }
+---
+>     const tStart = await page.evaluate(() => Math.round(performance.now() - window.__rec.t0));
+>     if (GESTURE === 'wheel') await page.mouse.move(Math.round(s.x), Math.round(s.y));
+>     for (let i = 0; i < 20; i++) { s = await st(); if (s.rev ? (s.wst <= 0 && s.lst <= s.lmin + 1) : (s.lst >= s.lmax - 1)) break; if (GESTURE === 'wheel') { await page.mouse.wheel(0, s.rev ? -40 : 40); await sleep(120); } else await stroke(s.x, s.y, s.rev ? -60 : 60); }
+99c108,109
+<     for (let i = 0; i < 30 && extra < 4; i++) { s = await st(); if (s.rev ? s.lst >= -1 : s.lst <= 1) extra++; await page.mouse.wheel(0, s.rev ? 20 : -20); await sleep(150); }
+---
+>     for (let i = 0; i < 30 && extra < 4; i++) { s = await st(); if (s.rev ? s.lst >= -1 : s.lst <= 1) extra++; if (GESTURE === 'wheel') { await page.mouse.wheel(0, s.rev ? 20 : -20); await sleep(150); } else await stroke(s.x, s.y, s.rev ? 30 : -30); }
+>     const tEnd = await page.evaluate(() => Math.round(performance.now() - window.__rec.t0));
+122a133,136
+>     const older = R2.ev.filter((e) => e[1] === '-' && e[2] !== WARN && e[2] !== 'banner').map((e) => [e[0], e[2], e[0] < tStart ? 'before' : e[0] <= tEnd ? 'during' : 'after']);
+>     const listScrolled = R2.frames.some((f) => f[7] != null && Math.abs(f[7]) > 1);
+>     const leftWhileScrolled = older.filter(([t]) => R2.frames.some((f) => f[0] >= t - 300 && f[0] <= t && f[7] != null && Math.abs(f[7]) > 1)).length;
+>     Object.assign(meta, { utcEnd: new Date().toISOString(), loadEnd: load(), tStart, tTop, tDown, tEnd, olderLeft: older, expiryClass: [...new Set(older.map((o) => o[2]))].join('+') || 'none', listScrolled, leftWhileScrolled });
+124,125c138,139
+<     console.log(`${tag}: ${bad.length ? 'FAIL ' + bad.join('; ') : 'OK'} | presenter ${kind} | warning adds/removals ${adds}/${rems} | live-region additions with the warning ${R.said.length} | top at ${tTop} ms, down from ${tDown} | toasts ${JSON.stringify(R.ev)}`);
+<     appendFileSync(`${out}/natural-${label}.jsonl`, JSON.stringify({ tag, bad, kind, adds, rems, said: R.said, ev: R.ev, frames: R.frames, tTop, tDown }) + '\n');
+---
+>     console.log(`${tag} [${GESTURE}] ${meta.utcStart} load ${meta.loadStart}: ${bad.length ? 'FAIL ' + bad.join('; ') : 'OK'} | expiry ${meta.expiryClass} ${JSON.stringify(older)} | gesture ${tStart}-${tEnd} | list scrolled ${listScrolled}, older left while scrolled ${leftWhileScrolled} | presenter ${kind} | warning adds/removals ${adds}/${rems} | live-region additions with the warning ${R.said.length} | top at ${tTop} ms, down from ${tDown} | toasts ${JSON.stringify(R.ev)}`);
+>     appendFileSync(`${out}/natural-${label}.jsonl`, JSON.stringify({ ...meta, tag, bad, kind, adds, rems, said: R.said, ev: R.ev, frames: R.frames, tTop, tDown }) + '\n');
+126a141
+>     const vid = VIDEO ? page.video() : null;
+127a143
+>     if (vid) { const src = await vid.path(); renameSync(src, `${out}/clip-${label}-${W}x${H}-${theme}-${GESTURE}-w${wait}-${rep}${bad.length ? '-FAIL' : ''}.webm`); rmSync(`${out}/video-tmp`, { recursive: true, force: true }); }

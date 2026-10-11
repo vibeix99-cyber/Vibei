@@ -18,9 +18,9 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const browser = await chromium.launch({ args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist', '--autoplay-policy=no-user-gesture-required'] });
 const log = (o) => { appendFileSync(`${out}/resid.jsonl`, JSON.stringify(o) + '\n'); console.log(JSON.stringify(o).slice(0, 600)); };
 
-async function fresh({ w, h, text = 100, theme = 'light' }) {
+async function fresh({ w, h, text = 100, theme = 'light', video }) {
   const phone = w < 900;
-  const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: phone ? 2 : 1, isMobile: phone, hasTouch: phone, colorScheme: theme, acceptDownloads: true });
+  const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: phone ? 2 : 1, isMobile: phone, hasTouch: phone, colorScheme: theme, acceptDownloads: true, ...(video ? { recordVideo: { dir: video, size: { width: w, height: h } } } : {}) });
   if (text !== 100) await ctx.addInitScript((pct) => { const add = () => { const s = document.createElement('style'); s.textContent = `html{font-size:${pct}%!important}`; document.head.appendChild(s); }; if (document.head) add(); else addEventListener('DOMContentLoaded', add); }, text);
   await ctx.addInitScript(() => { try { if (!localStorage.getItem('kettle:settings')) localStorage.setItem('kettle:settings', JSON.stringify({ state: { onboarded: true, scene: 'off', autoStartBreaks: false, autoStartFocus: false, muted: true }, version: 1 })); } catch {} });
   const page = await ctx.newPage();
@@ -172,7 +172,8 @@ S['c6'] = async (rev, base) => {
 };
 // items 3, 13, 14, 24: 667x375 @200: read every line of the warning with coarse wheel notches (100 / 53 px)
 for (const notch of [100, 53]) S[`read-${notch}`] = async (rev, base) => {
-  const { ctx, page: p } = await fresh({ w: 667, h: 375, text: 200, theme: 'dark' });
+  // clip (item 24: what the screen shows, as round 6's L2 clip did, rather than a forced screenshot raster)
+  const { ctx, page: p } = await fresh({ w: 667, h: 375, text: 200, theme: 'dark', video: notch === 100 ? `${out}/video-${rev}-read-${notch}` : undefined });
   await openNewbie(p, base, 'dark');
   const q = await fill(p);
   await recStart(p);
@@ -192,18 +193,20 @@ for (const notch of [100, 53]) S[`read-${notch}`] = async (rev, base) => {
     const b = w.querySelector('button'); let sb = false; if (b) { const q = b.getBoundingClientRect(); const whole = q.top >= vis.t - 0.5 && q.bottom <= vis.b + 0.5; const hit = whole ? document.elementFromPoint(q.left + q.width / 2, q.top + q.height / 2) : null; sb = whole && !!hit && b.contains(hit); }
     return { n: lines.length, ok, sb, vis: [Math.round(vis.t), Math.round(vis.b)] }; })()`;
   const pi = await presInfo(p);
+  // aim over the presenter's column (side-by-side Today at 667x375 scrolls its right column, not the document)
   const aimY = pi && pi.kind === 'toast' ? Math.max(5, Math.min(370, (pi.top + pi.bottom) / 2)) : 200;
-  await p.mouse.move(pi && pi.kind === 'toast' ? (pi.left + pi.right) / 2 : 333, aimY);
+  await p.mouse.move(pi ? Math.max(5, Math.min(662, (pi.left + pi.right) / 2)) : 333, aimY);
+  const SCR = `(() => { const w = ${PRES}; const xs = [Math.round(scrollY)]; for (let e = w?.parentElement; e; e = e.parentElement) if (e.scrollHeight > e.clientHeight + 1 && /(auto|scroll)/.test(getComputedStyle(e).overflowY)) xs.push(Math.round(e.scrollTop)); return xs.join(','); })()`;
   const seen = new Set(); let sbSeen = false; const steps = [];
   const look = async () => { const L = await p.evaluate(LINES); if (!L) return null; L.ok.forEach((o, i) => o && seen.add(i)); if (L.sb) sbSeen = true; return L; };
   let L0 = await look(); let total = L0?.n ?? 0;
   for (const dir of [1, -1]) {
     let still = 0;
     for (let i = 0; i < 40 && still < 3; i++) {
-      const before = await p.evaluate(() => [scrollY, ...[...document.querySelectorAll('[aria-label="Notifications"] ol')].map((x) => x.scrollTop)].join(','));
+      const before = await p.evaluate(SCR);
       await p.mouse.wheel(0, dir * notch); await sleep(250);
       const L = await look(); if (L) total = Math.max(total, L.n);
-      const after = await p.evaluate(() => [scrollY, ...[...document.querySelectorAll('[aria-label="Notifications"] ol')].map((x) => x.scrollTop)].join(','));
+      const after = await p.evaluate(SCR);
       steps.push([dir, after, L ? L.ok.map((o) => (o ? 1 : 0)).join('') : '-', L?.sb ? 1 : 0]);
       still = before === after ? still + 1 : 0;
     }
@@ -299,21 +302,28 @@ S['lift10'] = async (rev, base) => {
   log({ s: 'lift10', rev, base, todayFrames: onToday.length, overFrames: over.length, overMs: over.length ? over[over.length - 1][0] - over[0][0] : 0, firstTodayT: onToday[0]?.[0] - tc, sample: over.slice(0, 5), errors: p.__errors.slice(-3) });
   await ctx.close();
 };
-// item 11: Today load at 150 % (transient over-width) and 200 % (CLS), 375x667
-for (const text of [150, 200]) S[`load-t${text}`] = async (rev, base) => {
-  const { ctx, page: p } = await fresh({ w: 375, h: 667, text });
-  await p.addInitScript(() => {
+// item 11 (as round 6's L3 3f): Today cold load on the PRODUCTION PREVIEWS (R7 :5321, INT :5323), veteran seed,
+// service workers blocked; layout-shift entries (all / without recent input) over 6 s (8.5 s with fonts delayed
+// 2.5 s); max document over-width per frame. 375x667 @150 (over-width) and 390x844 / 375x667 @200 (CLS)
+const PREV = { INT: 'http://127.0.0.1:5323', R7: 'http://127.0.0.1:5321' };
+for (const [w, h, text, fonts] of [[375, 667, 150, 'normal'], [390, 844, 200, 'normal'], [390, 844, 200, 'delayed'], [375, 667, 200, 'normal'], [375, 667, 200, 'delayed']]) S[`load-${w}x${h}-t${text}-${fonts}`] = async (rev) => {
+  const base = PREV[rev];
+  const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, serviceWorkers: 'block' });
+  await ctx.addInitScript((pct) => { const add = () => { const s = document.createElement('style'); s.textContent = `html{font-size:${pct}%!important}`; document.head.appendChild(s); }; if (document.head) add(); else addEventListener('DOMContentLoaded', add); }, text);
+  await ctx.addInitScript(() => {
     window.__ls = []; window.__ow = 0;
     try { new PerformanceObserver((l) => { for (const e of l.getEntries()) window.__ls.push([Math.round(e.startTime), +e.value.toFixed(4), e.hadRecentInput]); }).observe({ type: 'layout-shift', buffered: true }); } catch {}
-    const f = () => { const d = document.scrollingElement; if (d) window.__ow = Math.max(window.__ow, d.scrollWidth - d.clientWidth); if (performance.now() < 6000) requestAnimationFrame(f); }; requestAnimationFrame(f);
+    const f = () => { const d = document.scrollingElement; if (d) window.__ow = Math.max(window.__ow, d.scrollWidth - d.clientWidth); if (performance.now() < 9000) requestAnimationFrame(f); }; requestAnimationFrame(f);
   });
-  await p.goto(`${base}/?debug&seed=newbie&theme=light&nooktime=day#/`, { waitUntil: 'load' });
-  await sleep(4500);
-  const m = await p.evaluate(() => ({ ls: window.__ls, cls: +window.__ls.reduce((a, x) => a + x[1], 0).toFixed(4), clsNoInput: +window.__ls.filter((x) => !x[2]).reduce((a, x) => a + x[1], 0).toFixed(4), maxOverWidth: window.__ow, overWidthNow: document.scrollingElement.scrollWidth - document.scrollingElement.clientWidth }));
-  log({ s: `load-t${text}`, rev, base, ...m, errors: p.__errors.slice(-3) });
+  const p = await ctx.newPage();
+  const errors = []; p.on('pageerror', (e) => errors.push(e.message));
+  if (fonts !== 'normal') await p.route('**/*.woff2', async (r) => { await sleep(2500); await r.continue(); });
+  await p.goto(`${base}/?debug&seed=veteran&theme=light&nooktime=day#/`, { waitUntil: 'load' });
+  await sleep(fonts === 'normal' ? 6000 : 8500);
+  const m = await p.evaluate(() => ({ ls: window.__ls, cls: +window.__ls.reduce((a, x) => a + x[1], 0).toFixed(4), clsNoInput: +window.__ls.filter((x) => !x[2]).reduce((a, x) => a + x[1], 0).toFixed(4), maxOverWidth: window.__ow, overWidthNow: document.scrollingElement.scrollWidth - document.scrollingElement.clientWidth, hash: location.hash }));
+  log({ s: `load-${w}x${h}-t${text}-${fonts}`, rev, base, ...m, errors: errors.slice(-3) });
   await ctx.close();
 };
-
 // check 1 (footer): the summary's Tea time / Skip footer at 100 / 200 %: footer whole + hit-testable; details expanded by
 // a real click, the sheet wheeled (real wheel) to its end: the last line clears the footer
 for (const [w, h] of [[375, 667], [390, 844], [844, 390], [1440, 900]]) for (const text of [100, 200]) S[`footer-${w}x${h}-t${text}`] = async (rev, base) => {
@@ -375,10 +385,72 @@ for (const [w, h, theme, st] of [[375, 667, 'dark', 'paused'], [844, 390, 'light
   await ctx.close();
 };
 
+// check 1d diagnostic (added after the frozen-clock 100 % pairs showed R7's break / Break's over panel still empty
+// 2.6 s of PAGE-clock time after the action while INT's was drawn): REAL clock, real click on Tea time, then finish();
+// per frame (rAF): the current focus view's countdown (role=timer) and the Break's over heading, effective opacity
+// (product over ancestors) and box; first frame each is drawn at >= 0.99, in ms after the action.
+for (const [w, h, theme, rm] of [[390, 844, 'dark', true], [390, 844, 'light', false], [375, 667, 'light', false]]) S[`viewlag-${w}x${h}-${theme}${rm ? '-rm' : ''}`] = async (rev, base) => {
+  const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, colorScheme: theme, reducedMotion: rm ? 'reduce' : 'no-preference' });
+  await ctx.addInitScript(() => { try { if (!localStorage.getItem('kettle:settings')) localStorage.setItem('kettle:settings', JSON.stringify({ state: { onboarded: true, scene: 'off', autoStartBreaks: false, autoStartFocus: false, muted: true }, version: 1 })); } catch {} });
+  const p = await ctx.newPage();
+  const errors = []; p.on('pageerror', (e) => errors.push(e.message));
+  await openNewbie(p, base, theme);
+  await p.evaluate(() => window.__kettle.timer.getState().startFocus({ intention: 'Chapter 3 notes', tag: 'study' }));
+  await p.waitForFunction(() => location.hash === '#/focus'); await sleep(2000);
+  await p.evaluate(() => window.__kettle.nearEnd()); await sleep(400);
+  await p.evaluate(() => window.__kettle.finish()); await sleep(5500);
+  await p.evaluate(() => {
+    const R = (window.__V = { f: [], t0: 0, on: true });
+    const eop = (e) => { let o = 1; for (let x = e; x && x !== document.documentElement; x = x.parentElement) o *= +getComputedStyle(x).opacity; return o; };
+    const f = () => { if (!R.on) return; const fv = [...document.querySelectorAll('[data-focus-view]')].find((x) => !x.closest('[aria-hidden="true"],[inert]')); const tm = fv?.querySelector('main [role=timer]'); const ov = [...(fv?.querySelectorAll('main h1, main h2') ?? [])].find((x) => /Break.s over/.test(x.textContent)); const r = (e) => (e ? Math.round(e.getBoundingClientRect().top) : null); R.f.push([Math.round(performance.now()), tm ? +eop(tm).toFixed(2) : -1, r(tm), ov ? +eop(ov).toFixed(2) : -1, r(ov), fv?.getAttribute('data-view') ?? null]); requestAnimationFrame(f); }; requestAnimationFrame(f);
+  });
+  const t1 = await p.evaluate(() => performance.now());
+  await clickName(p, /^(Tea time|Long tea break)/);
+  await sleep(4000);
+  await p.evaluate(() => window.__kettle.settings.getState().set({ autoStartFocus: false }));
+  const t2 = await p.evaluate(() => { window.__kettle.finish(); return performance.now(); });
+  await sleep(4000);
+  const f = await p.evaluate(() => { window.__V.on = false; return window.__V.f; });
+  const first = (from, k) => { const x = f.find((r) => r[0] >= from && r[k] >= 0.99); return x ? x[0] - Math.round(from) : null; };
+  const gaps = f.reduce((m, x, i) => (i ? Math.max(m, x[0] - f[i - 1][0]) : m), 0);
+  log({ s: `viewlag-${w}x${h}-${theme}${rm ? '-rm' : ''}`, rev, base, breakCountdownDrawnMs: first(t1, 1), breakOverHeadingDrawnMs: first(t2, 3), frames: f.length, maxFrameGap: gaps, sampleAfterClick: f.filter((r) => r[0] >= t1).filter((_, i) => i % 6 === 0).slice(0, 12), sampleAfterFinish: f.filter((r) => r[0] >= t2).filter((_, i) => i % 6 === 0).slice(0, 12), errors: errors.slice(-3) });
+  await ctx.close();
+};
+
+// check 1d diagnostic 2 (added after frozen-clock 100 % pairs showed R7's bottom shade in a 12-14 px band while the
+// break / Break's over view had just entered): REAL clock, 100 % text, light; per frame (rAF) the session panel's
+// scroll range (scrollHeight - clientHeight), overflow-y and the countdown's / heading's top, for 1.6 s after a real
+// click on Tea time and after finish(). On R7 the panel scrolls (overflow auto) and paints the shade while range > 0.
+for (const [w, h] of [[390, 844], [375, 667]]) S[`flash-${w}x${h}`] = async (rev, base) => {
+  const { ctx, page: p } = await fresh({ w, h, text: 100 });
+  await openNewbie(p, base, 'light');
+  await p.evaluate(() => window.__kettle.timer.getState().startFocus({ intention: 'Chapter 3 notes', tag: 'study' }));
+  await p.waitForFunction(() => location.hash === '#/focus'); await sleep(2000);
+  await p.evaluate(() => window.__kettle.nearEnd()); await sleep(400);
+  await p.evaluate(() => window.__kettle.finish()); await sleep(5500);
+  await p.evaluate(() => {
+    const R = (window.__F = { f: [], on: true });
+    const f = () => { if (!R.on) return; const fv = [...document.querySelectorAll('[data-focus-view]')].find((x) => !x.closest('[aria-hidden="true"],[inert]')); const m = fv?.querySelector('main'); const t = fv?.querySelector('main [role=timer]') ?? [...(fv?.querySelectorAll('main h2') ?? [])][0]; R.f.push([Math.round(performance.now()), m ? m.scrollHeight - m.clientHeight : null, m ? getComputedStyle(m).overflowY : null, t ? Math.round(t.getBoundingClientRect().top) : null, fv?.getAttribute('data-view') ?? null]); requestAnimationFrame(f); }; requestAnimationFrame(f);
+  });
+  const t1 = await p.evaluate(() => performance.now());
+  await clickName(p, /^(Tea time|Long tea break)/);
+  await sleep(1600);
+  const shotA = `${out}/${rev}-flash-${w}x${h}-break-1.6s.png`; await p.screenshot({ path: shotA });
+  await p.evaluate(() => window.__kettle.settings.getState().set({ autoStartFocus: false }));
+  const t2 = await p.evaluate(() => { window.__kettle.finish(); return performance.now(); });
+  await sleep(1600);
+  const f = await p.evaluate(() => { window.__F.on = false; return window.__F.f; });
+  const win = (a, b) => { const xs = f.filter((r) => r[0] >= a && r[0] < b && r[1] > 0); return { framesWithRange: xs.length, framesTotal: f.filter((r) => r[0] >= a && r[0] < b).length, firstMs: xs.length ? xs[0][0] - Math.round(a) : null, lastMs: xs.length ? xs[xs.length - 1][0] - Math.round(a) : null, maxRange: xs.reduce((m, r) => Math.max(m, r[1]), 0), overflowY: [...new Set(xs.map((r) => r[2]))].join(',') }; };
+  log({ s: `flash-${w}x${h}`, rev, base, afterTeaTime: win(t1, t2), afterFinish: win(t2, t2 + 1600), sample: f.filter((r) => r[0] >= t1).filter((_, i) => i % 4 === 0).slice(0, 30), errors: p.__errors.slice(-3) });
+  await ctx.close();
+};
+
 // Order (set while the run was still queued, to put round 6's items first): the groups below, those named in the
 // argument list plus 'pend' (which the queued list predates).
-const ORDER = ['tab', 'scroll', 'start', 'back', 'c6', 'read', 'footer', 'pend', 't8', 'lift10', 'load'];
-const asked = which === 'all' ? ORDER : [...which.split(','), 'pend'];
+const ORDER = ['tab', 'scroll', 'start', 'back', 'c6', 'read', 'load', 't8', 'lift10', 'viewlag', 'footer', 'pend', 'flash'];
+// Split while queued: the run writing to .../resid skips footer + pend; spec15.sh runs them afterwards into .../resid2.
+const asked0 = which === 'all' ? ORDER : [...which.split(','), ...(which.split(',').includes('footer') ? ['viewlag', 'pend'] : [])];
+const asked = /\/resid$/.test(out) ? asked0.filter((g) => g !== 'footer' && g !== 'pend' && g !== 'viewlag') : asked0;
 const names = ORDER.filter((g) => asked.includes(g)).flatMap((g) => Object.keys(S).filter((k) => k.startsWith(g)));
 for (const n of names) for (const [rev, base] of REVS) {
   const t0 = Date.now();

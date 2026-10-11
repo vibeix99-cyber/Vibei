@@ -1,0 +1,153 @@
+// LANE A r7 ADAPTATION (natural-a2 = natural-a + a STRICT R5-D1 classification used by STOP_ON_FAIL: a bad toast frame outside the entry phase [L1 r6 definition A: >= first add + 1200 ms and >= 900 ms after the last re-show within 2 s] within 1000 ms after an older toast left the DOM while the list was scrolled [|scrollTop| > 1 in the 300 ms before]; the probe's own FAIL/OK judgement is unchanged and still printed) of M7a's natural-b.mjs: (1) GESTURE=wheel (default; the original wheel path, unchanged) or GESTURE=touch (CDP Input.dispatchTouchEvent drags on the same point of the toast stack; no mouse moves); (2) STOP_ON_FAIL=1 stops a series at its first failing run (controls); (3) VIDEO=1 records the run (Playwright recordVideo) and keeps clip-*.webm; (4) per run: UTC, /proc/loadavg, URL, REV, gesture start/end times, and when each older toast left (before / during / after the gesture), list scrolled, older toast left while scrolled. Judgement unchanged.
+// M7a ROUND-7 ADAPTATION of L1's natural-x.mjs: measures WHICHEVER element presents the storage-full warning — the toast li#toast-kettle:save-failed (R5/R6/INT) or the in-page banner section[data-save-warning] (r7 banner). Toast: judged exactly as before (taken away/faded, drawn below its room). Banner: judged for being taken away/faded, moving within the page (its top + scrollY), and Save backup cut off (outside the banner's box, or clipped by an ancestor). The pointer rests on the toast stack (the warning itself when it is a toast, as before; the largest visible toast otherwise). Also counts additions to live regions that carry the warning's text. No synthetic events.
+// L1 ADAPTATION of chk-r5/natural.mjs: direction-aware (list column-reverse on R5, top-down on R6). The column-reverse branch is the original code path.
+// Checker r5: fully natural real-input sequence, NO synthetic events at all. After End (storage full, level-up: three
+// toasts), the person puts the pointer on the stack, wheels up to the oldest toast, waits WAIT ms, then wheels back
+// down in 20 px notches (150 ms apart) and a few more. Toast timers run as in real use (paused only under the real
+// pointer). Every frame recorded. node natural.mjs <base> <label> <outdir> <WxH> <theme> <text> <waits=0,300,...> [reps=1]
+import { mkdirSync, appendFileSync, readFileSync, renameSync, rmSync } from 'node:fs';
+import { launch, context, sleep } from './lib.mjs';
+const GESTURE = process.env.GESTURE ?? 'wheel', STOP = process.env.STOP_ON_FAIL === '1', VIDEO = process.env.VIDEO === '1', REV = process.env.REV ?? '?';
+const load = () => readFileSync('/proc/loadavg', 'utf8').split(' ').slice(0, 3).join(' ');
+const [base, label, out, cfg, theme, textArg, waitArg, repArg] = process.argv.slice(2);
+mkdirSync(out, { recursive: true });
+const [W, H] = cfg.split('x').map(Number);
+const text = +textArg;
+const WARN = 'toast-kettle:save-failed';
+const WSEL = `[id="${WARN}"], section[data-save-warning]`;
+const browser = await launch();
+let fails = 0, runs = 0, strictFails = 0;
+outer: for (const wait of waitArg.split(',').map(Number))
+  for (let rep = 0; rep < +(repArg ?? 1); rep++) {
+    if (STOP && strictFails) break outer;
+    const meta = { utcStart: new Date().toISOString(), loadStart: load(), url: `${base}/?debug&theme=${theme}${theme === 'light' ? '&nooktime=day' : ''}#/`, rev: REV, gesture: GESTURE, wait, rep };
+    const tag = `${label} ${W}x${H} ${theme} t${text} wait=${wait} #${rep}`;
+    const ctx = VIDEO ? await (async () => { const c = await browser.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: W >= 900 ? 1 : 2, isMobile: W < 900, hasTouch: W < 900, colorScheme: theme, reducedMotion: 'no-preference', acceptDownloads: true, recordVideo: { dir: `${out}/video-tmp`, size: { width: W, height: H } } }); if (text !== 100) await c.addInitScript((pct) => { addEventListener('DOMContentLoaded', () => { const s = document.createElement('style'); s.textContent = `html{font-size:${pct}%!important}`; document.head.appendChild(s); }); }, text); return c; })() : await context(browser, { w: W, h: H, theme, text });
+    await ctx.addInitScript(() => { try { if (!localStorage.getItem('kettle:settings')) localStorage.setItem('kettle:settings', JSON.stringify({ state: { onboarded: true, scene: 'off', autoStartBreaks: false, autoStartFocus: false, muted: true }, version: 1 })); } catch {} });
+    const page = await ctx.newPage();
+    const ready = () => page.waitForFunction(() => { const i = window.__kettle?.timerInfo?.(); return !!(i && i.leader && i.leaderForMs > 400 && !i.settling); }, null, { timeout: 60_000 });
+    await page.goto(`${base}/?debug&theme=${theme}${theme === 'light' ? '&nooktime=day' : ''}#/`);
+    await ready();
+    await page.evaluate(() => window.__kettle.seed('newbie'));
+    await page.reload();
+    await ready();
+    await page.evaluate(() => document.fonts.ready);
+    await page.evaluate(async () => {
+      const { leavesForLevel, levelFromLeaves } = await import('/src/progress/levels.ts');
+      const L = levelFromLeaves(window.__kettle.progress.getState().leaves).level;
+      window.__kettle.progress.setState({ leaves: leavesForLevel(L + 1) - 1 });
+    });
+    await page.evaluate(() => { let c = 'x'.repeat(1 << 20), i = 0; while (c.length >= 1) { try { localStorage.setItem(`filler${i++}`, c); } catch { c = c.slice(0, c.length / 2); } } });
+    await page.evaluate(() => window.__kettle.timer.getState().startFocus({ intention: 'Chapter 3 notes', tag: 'study' }));
+    await page.waitForFunction(() => location.hash === '#/focus');
+    await sleep(2500);
+    await page.evaluate(() => window.__kettle.ff(12 * 60_000 + 5_000));
+    await sleep(500);
+    if (GESTURE === 'wheel') await page.mouse.move(W / 2, Math.round(H * 0.25));
+    const cdp = GESTURE === 'touch' ? await ctx.newCDPSession(page) : null;
+    // touch stroke: finger on (x, y), moved by -dy (content scrolls by +dy), held 60 ms, lifted (no fling intended)
+    const stroke = async (x, y, dy) => { y = Math.round(Math.min(Math.max(y, 30), H - 30)); x = Math.round(x); const n = 6; await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x, y }] }); for (let k = 1; k <= n; k++) { await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x, y: Math.round(Math.min(Math.max(y - (dy * k) / n, 2), H - 2)) }] }); await sleep(16); } await sleep(60); await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }); await sleep(100); };
+    if (process.env.CSS) await page.addStyleTag({ content: process.env.CSS });
+    await page.evaluate((WARN) => {
+      const R = (window.__rec = { frames: [], ev: [], said: [], t0: performance.now(), stop: false });
+      const t = () => Math.round(performance.now() - R.t0);
+      const W = () => document.getElementById(WARN) ?? document.querySelector('section[data-save-warning]');
+      const isW = (n) => n.nodeType === 1 && (n.id === WARN || n.matches?.('section[data-save-warning]') || !!n.querySelector?.('section[data-save-warning]'));
+      new MutationObserver((ms) => {
+        for (const m of ms) {
+          for (const n of m.addedNodes) {
+            if (n.tagName === 'LI') R.ev.push([t(), '+', n.id]);
+            else if (isW(n)) R.ev.push([t(), '+', 'banner']);
+            const live = (n.nodeType === 1 ? n : n.parentElement)?.closest?.('[aria-live]:not([aria-live="off"]), [role="status"], [role="alert"]');
+            if (live && /storage is full|couldn’t save your latest/.test(n.textContent ?? '')) R.said.push([t(), live.id || live.getAttribute('aria-label') || live.className]);
+          }
+          for (const n of m.removedNodes) { if (n.tagName === 'LI') R.ev.push([t(), '-', n.id]); else if (isW(n)) R.ev.push([t(), '-', 'banner']); }
+        }
+      }).observe(document.body, { childList: true, subtree: true, characterData: true });
+      const f = () => {
+        if (R.stop) return;
+        const list = document.querySelector('[aria-label="Notifications"] ol');
+        const w = W();
+        const banner = !!w && w.tagName === 'SECTION';
+        const d = document.querySelector('[data-toast-above]')?.getBoundingClientRect();
+        const lr = list?.getBoundingClientRect();
+        let op = 0;
+        for (let e = w, o = 1; e && e !== document.documentElement; e = e.parentElement) op = o *= +getComputedStyle(e).opacity;
+        const r = w?.getBoundingClientRect();
+        let inside = null, clipped = null;
+        if (banner) {
+          const a = w.querySelector('button')?.getBoundingClientRect();
+          inside = !!a && a.top >= r.top - 0.5 && a.bottom <= r.bottom + 0.5 && a.left >= r.left - 0.5 && a.right <= r.right + 0.5 ? 1 : 0;
+          clipped = 0;
+          for (let e = w.parentElement; e && e !== document.body; e = e.parentElement) {
+            const cs = getComputedStyle(e);
+            if (cs.overflowX !== 'visible' || cs.overflowY !== 'visible') {
+              const q = e.getBoundingClientRect();
+              if (a && (a.top < q.top - 0.5 || a.bottom > q.bottom + 0.5) && e.scrollHeight <= e.clientHeight) clipped = 1;
+            }
+          }
+        }
+        R.frames.push([t(), list ? list.children.length : 0, w ? +op.toFixed(2) : 0, r ? Math.round(r.top) : null, r ? Math.round(r.bottom) : null, d ? Math.round(d.top) : null, lr ? Math.round(lr.bottom) : null, list ? +list.scrollTop.toFixed(1) : null, banner ? 'B' : w ? 'T' : '-', r ? +(r.top + scrollY).toFixed(1) : null, inside, clipped]);
+        requestAnimationFrame(f);
+      };
+      requestAnimationFrame(f);
+    }, WARN);
+    await page.evaluate(() => window.__kettle.timer.getState().end('user'));
+    await page.waitForFunction(() => location.hash === '#/' || location.hash === '');
+    await page.waitForSelector(WSEL, { timeout: 8000 });
+    await sleep(500);
+    const st = () => page.evaluate((WARN) => { const l = document.querySelector('[aria-label="Notifications"] ol'); const w = document.getElementById(WARN); const lr = l?.getBoundingClientRect(); let x = 180, y = 60; if (w) { const r = w.getBoundingClientRect(); x = (r.left + r.right) / 2; y = Math.max(r.top, 0) + 40; } else if (l) { let best = null; for (const li of l.children) { const q = li.getBoundingClientRect(); const t = Math.max(q.top, lr.top, 0), b = Math.min(q.bottom, lr.bottom, innerHeight); if (b - t > 8 && (!best || b - t > best.h)) best = { h: b - t, x: (q.left + q.right) / 2, y: (t + b) / 2 }; } if (best) { x = best.x; y = best.y; } } return { x, y, lst: l ? l.scrollTop : 0, lmin: l ? -(l.scrollHeight - l.clientHeight) : 0, lmax: l ? l.scrollHeight - l.clientHeight : 0, rev: l ? getComputedStyle(l).flexDirection === 'column-reverse' : true, wst: w?.scrollTop ?? 0 }; }, WARN);
+    let s = await st();
+    const tStart = await page.evaluate(() => Math.round(performance.now() - window.__rec.t0));
+    if (GESTURE === 'wheel') await page.mouse.move(Math.round(s.x), Math.round(s.y));
+    for (let i = 0; i < 20; i++) { s = await st(); if (s.rev ? (s.wst <= 0 && s.lst <= s.lmin + 1) : (s.lst >= s.lmax - 1)) break; if (GESTURE === 'wheel') { await page.mouse.wheel(0, s.rev ? -40 : 40); await sleep(120); } else await stroke(s.x, s.y, s.rev ? -60 : 60); }
+    const tTop = await page.evaluate(() => Math.round(performance.now() - window.__rec.t0));
+    await sleep(wait);
+    const tDown = await page.evaluate(() => Math.round(performance.now() - window.__rec.t0));
+    let extra = 0;
+    for (let i = 0; i < 30 && extra < 4; i++) { s = await st(); if (s.rev ? s.lst >= -1 : s.lst <= 1) extra++; if (GESTURE === 'wheel') { await page.mouse.wheel(0, s.rev ? 20 : -20); await sleep(150); } else await stroke(s.x, s.y, s.rev ? 30 : -30); }
+    const tEnd = await page.evaluate(() => Math.round(performance.now() - window.__rec.t0));
+    await sleep(2500);
+    const R = await page.evaluate(() => { window.__rec.stop = true; return { frames: window.__rec.frames, ev: window.__rec.ev, said: window.__rec.said }; });
+    const R2 = R;
+    const warnIn = R2.ev.find((e) => (e[2] === WARN || e[2] === 'banner') && e[1] === '+')?.[0] ?? 0;
+    const after = R2.frames.filter((f) => f[0] >= warnIn + 1200);
+    const kind = [...new Set(after.map((f) => f[8]))].join('');
+    const bad = [];
+    if (/B/.test(kind)) {
+      const gone = after.filter((f) => f[8] !== 'B' || f[2] < 0.98);
+      const tops = after.filter((f) => f[9] != null).map((f) => f[9]);
+      const drift = tops.length ? Math.max(...tops) - Math.min(...tops) : 0;
+      const cut = after.filter((f) => f[10] === 0 || f[11] === 1);
+      if (gone.length) bad.push(`banner taken away / faded in ${gone.length} frames`);
+      if (drift > 0.5) bad.push(`banner moved ${drift.toFixed(1)} px within the page`);
+      if (cut.length) bad.push(`Save backup cut off in ${cut.length} frames`);
+    } else {
+      const gone = after.filter((f) => f[2] < 0.98);
+      const below = after.filter((f) => f[4] != null && f[4] > Math.min(f[5], f[6]) + 0.5);
+      if (gone.length) bad.push(`warning taken away / faded in ${gone.length} frames`);
+      if (below.length) bad.push(`drawn below its room in ${below.length} frames (max +${Math.max(...below.map((f) => f[4] - f[6]))} px; over the docked start by up to ${Math.max(0, ...below.map((f) => f[4] - f[5]))} px)`);
+    }
+    const adds = R2.ev.filter((e) => (e[2] === WARN || e[2] === 'banner') && e[1] === '+').length, rems = R2.ev.filter((e) => (e[2] === WARN || e[2] === 'banner') && e[1] === '-').length;
+    runs++;
+    const older = R2.ev.filter((e) => e[1] === '-' && e[2] !== WARN && e[2] !== 'banner').map((e) => [e[0], e[2], e[0] < tStart ? 'before' : e[0] <= tEnd ? 'during' : 'after']);
+    const listScrolled = R2.frames.some((f) => f[7] != null && Math.abs(f[7]) > 1);
+    const leftWhileScrolled = older.filter(([t]) => R2.frames.some((f) => f[0] >= t - 300 && f[0] <= t && f[7] != null && Math.abs(f[7]) > 1)).length;
+    const wAdds = R2.ev.filter((e) => e[2] === WARN && e[1] === '+').map((e) => e[0]);
+    const entryEnd = wAdds.length ? Math.max(wAdds[0] + 1200, ...wAdds.slice(1).filter((x) => x <= wAdds[0] + 2000).map((x) => x + 900)) : null;
+    const depScrolled = older.filter(([t]) => R2.frames.some((f) => f[0] >= t - 300 && f[0] <= t && f[7] != null && Math.abs(f[7]) > 1)).map((o) => o[0]);
+    const badT = entryEnd == null ? [] : R2.frames.filter((f) => f[8] !== 'B' && f[0] >= entryEnd && (f[2] < 0.98 || (f[4] != null && f[4] > Math.min(f[5], f[6]) + 0.5))).map((f) => f[0]);
+    const linked = badT.filter((t) => depScrolled.some((d) => t >= d && t <= d + 1000));
+    const r5d1Strict = { entryEnd, departuresWhileScrolled: depScrolled, badFramesAfterEntry: badT.length, badFramesLinked: linked.length, firstLinked: linked[0] ?? null, reproduced: linked.length > 0 };
+    if (r5d1Strict.reproduced) strictFails++;
+    Object.assign(meta, { r5d1Strict, utcEnd: new Date().toISOString(), loadEnd: load(), tStart, tTop, tDown, tEnd, olderLeft: older, expiryClass: [...new Set(older.map((o) => o[2]))].join('+') || 'none', listScrolled, leftWhileScrolled });
+    if (bad.length) fails++;
+    console.log(`${tag} [${GESTURE}] ${meta.utcStart} load ${meta.loadStart}: ${bad.length ? 'FAIL ' + bad.join('; ') : 'OK'} | STRICT R5-D1 ${r5d1Strict.reproduced ? 'REPRODUCED (' + linked.length + ' linked frames from ' + linked[0] + ' ms)' : 'no'} (bad after entry ${badT.length}, departures while scrolled ${JSON.stringify(depScrolled)}) | expiry ${meta.expiryClass} ${JSON.stringify(older)} | gesture ${tStart}-${tEnd} | list scrolled ${listScrolled}, older left while scrolled ${leftWhileScrolled} | presenter ${kind} | warning adds/removals ${adds}/${rems} | live-region additions with the warning ${R.said.length} | top at ${tTop} ms, down from ${tDown} | toasts ${JSON.stringify(R.ev)}`);
+    appendFileSync(`${out}/natural-${label}.jsonl`, JSON.stringify({ ...meta, tag, bad, kind, adds, rems, said: R.said, ev: R.ev, frames: R.frames, tTop, tDown }) + '\n');
+    if (bad.length) await page.screenshot({ path: `${out}/natural-${label}-${W}x${H}-${theme}-w${wait}-${rep}.png` });
+    const vid = VIDEO ? page.video() : null;
+    await ctx.close();
+    if (vid) { const src = await vid.path(); renameSync(src, `${out}/clip-${label}-${W}x${H}-${theme}-${GESTURE}-w${wait}-${rep}${bad.length ? '-FAIL' : ''}.webm`); rmSync(`${out}/video-tmp`, { recursive: true, force: true }); }
+  }
+await browser.close();
+console.log(`${label}: ${fails} failures in ${runs} runs (strict R5-D1: ${strictFails})`);

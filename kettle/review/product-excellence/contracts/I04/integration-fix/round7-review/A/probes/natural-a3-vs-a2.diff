@@ -1,0 +1,5 @@
+0a1
+> // LANE A r7 natural-a3 = natural-a2 + env PRE=<ms>: after the warning appears (+500 ms), the pointer (wheel only) moves off the stack to (2,2) and the probe waits PRE ms before the gesture, so older toasts expire on their real timers BEFORE the gesture starts. PRE unset/0 = natural-a2 exactly.
+98a100,101
+>     const PRE = +(process.env.PRE ?? 0); meta.pre = PRE;
+>     if (PRE > 0) { if (GESTURE === 'wheel') await page.mouse.move(2, 2); await sleep(PRE); }

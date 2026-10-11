@@ -1,0 +1,179 @@
+{
+  "side": "INT",
+  "url": "http://127.0.0.1:5303/?debug&theme=light#/",
+  "port": 5303,
+  "revision": "0d58c5e (integration app code; kettle/src tree 1fc4a1b)",
+  "viewport": {
+    "w": 390,
+    "h": 844
+  },
+  "dpr": 2,
+  "theme": "light",
+  "text": "100%",
+  "textCss": null,
+  "fixedTime": "2026-10-10T16:40:00.000Z",
+  "clock": "page.clock.install({time}) + resume",
+  "screenshot": "animations:'disabled', viewport-sized",
+  "isMobile": true,
+  "hasTouch": true,
+  "scene": "off",
+  "startedAt": "2026-10-11T04:13:48.025Z",
+  "states": {
+    "f2-focus-running-storage-full": {
+      "file": "f2-focus-running-storage-full.png",
+      "desc": "focus running, storage full (warning raised by the brew start save)",
+      "url": "http://127.0.0.1:5303/?debug&theme=light#/focus",
+      "at": "2026-10-11T04:13:54.446Z",
+      "hash": "#/focus",
+      "clockNow": "2026-10-10T16:40:05.597Z",
+      "banner": null,
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [],
+      "close": null,
+      "scroll": {
+        "doc": 0,
+        "docMax": 0,
+        "main": 0,
+        "mainMax": 0
+      }
+    },
+    "c1-summary-note": {
+      "file": "c1-summary-note.png",
+      "desc": "summary after a brew completed with storage full (R7: one-line note)",
+      "url": "http://127.0.0.1:5303/?debug&theme=light#/done",
+      "at": "2026-10-11T04:14:00.780Z",
+      "hash": "#/done",
+      "clockNow": "2026-10-10T16:40:11.650Z",
+      "banner": null,
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [],
+      "close": null,
+      "scroll": {
+        "doc": 0,
+        "docMax": 0,
+        "main": 0,
+        "mainMax": 0
+      }
+    },
+    "c2-summary-end": {
+      "file": "c2-summary-end.png",
+      "desc": "summary, details expanded and scrolled to its end (setup scroll, as capture.mjs 08)",
+      "url": "http://127.0.0.1:5303/?debug&theme=light#/done",
+      "at": "2026-10-11T04:14:03.616Z",
+      "hash": "#/done",
+      "clockNow": "2026-10-10T16:40:14.486Z",
+      "banner": null,
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [],
+      "close": null,
+      "scroll": {
+        "doc": 0,
+        "docMax": 0,
+        "main": 0,
+        "mainMax": 0
+      },
+      "lastLine": {
+        "lastLineBottom": 658,
+        "footerTop": 706,
+        "clears": true
+      }
+    },
+    "a1-today-warning": {
+      "file": "a1-today-warning.png",
+      "desc": "Today after Skip break, storage still full (R7: banner; INT: warning toast if shown)",
+      "url": "http://127.0.0.1:5303/?debug&theme=light#/",
+      "at": "2026-10-11T04:14:07.901Z",
+      "hash": "#/",
+      "clockNow": "2026-10-10T16:40:18.441Z",
+      "banner": null,
+      "summaryNote": false,
+      "warningToast": true,
+      "toasts": [
+        "Kettle couldn’t save your latest changes: this browser’s sto"
+      ],
+      "close": null,
+      "scroll": {
+        "doc": 0,
+        "docMax": 673,
+        "main": null,
+        "mainMax": null
+      }
+    },
+    "b1-settings-your-data": {
+      "file": "b1-settings-your-data.png",
+      "desc": "Settings › Your data, storage still full (setup scroll to the heading)",
+      "url": "http://127.0.0.1:5303/?debug&theme=light#/settings",
+      "at": "2026-10-11T04:14:10.689Z",
+      "hash": "#/settings",
+      "clockNow": "2026-10-10T16:40:20.378Z",
+      "banner": null,
+      "summaryNote": false,
+      "warningToast": true,
+      "toasts": [
+        "Kettle couldn’t save your latest changes: this browser’s sto"
+      ],
+      "close": null,
+      "scroll": {
+        "doc": 2717,
+        "docMax": 3306,
+        "main": null,
+        "mainMax": null
+      }
+    },
+    "f1-focus-running": {
+      "file": "f1-focus-running.png",
+      "desc": "focus running (normal storage)",
+      "url": "http://127.0.0.1:5303/?debug&theme=light#/focus",
+      "at": "2026-10-11T04:14:17.017Z",
+      "hash": "#/focus",
+      "clockNow": "2026-10-10T16:40:05.817Z",
+      "banner": null,
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [],
+      "close": null,
+      "scroll": {
+        "doc": 0,
+        "docMax": 0,
+        "main": 0,
+        "mainMax": 0
+      }
+    },
+    "e1-breakover-end-3toasts": {
+      "file": "e1-breakover-end-3toasts.png",
+      "desc": "Break’s over scrolled to its end (real wheel), three toasts raised via the app toast() (setup): the Close state",
+      "url": "http://127.0.0.1:5303/?debug&theme=light#/focus",
+      "at": "2026-10-11T04:14:30.953Z",
+      "hash": "#/focus",
+      "clockNow": "2026-10-10T16:40:19.091Z",
+      "banner": null,
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [
+        "Recipe done: Take 2 full tea breaks · +15 leaves",
+        "Saved 12 minutes of focus",
+        "Cozy level 5!"
+      ],
+      "close": {
+        "rect": [
+          334,
+          10,
+          44,
+          44
+        ],
+        "hitTestable": true
+      },
+      "scroll": {
+        "doc": 0,
+        "docMax": 0,
+        "main": 0,
+        "mainMax": 0
+      }
+    }
+  },
+  "errors": [],
+  "endedAt": "2026-10-11T04:14:30.988Z"
+}
