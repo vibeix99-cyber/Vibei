@@ -31,8 +31,12 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 
 - **Disk:** it filled up (old-round scratch). The scratch directories from rounds 1–6 were deleted, and their evidence
   is already committed. About 6.7 GB is free.
+- **18:05 UTC: M8 is READY** with `pe/r8-toastroom@2c3172c` (src `42e106d`). Archived.
+- **18:10 UTC: the gate PASSED** (`round8-review/GATE.md`).
+  - Trial merge **R8 = `9ff0d04`** (`61a60b2` + `2c3172c`), served on :5306 (dev) and :5326 (preview), both verified.
+  - A new lead and Lanes 1–2 (Opus 5.5) launched at about 18:12 UTC.
 - **Next:**
-  1. Gate the packet.
+  1. Gate the packet (done).
   2. Targeted review: a new lead plus Lane 1 (R7-D1 acceptance, geometry, R5-D1/LEAD-D1) and Lane 2 (full regression
      and standard captures), 75 minutes each.
   3. The verdict.
