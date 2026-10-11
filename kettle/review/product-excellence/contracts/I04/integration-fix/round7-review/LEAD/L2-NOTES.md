@@ -240,3 +240,9 @@ before it), ff 12 min (time only), REAL tap End session + the sheet's End sessio
   top > H/2) oscillated at 171–195 and never pushed it into the ~60 px clear strip; not counted. Fine-step reach is
   established by Lane B raw (`read` R7-667x375-t200 wheel20 / wheel53: Save backup hit-testable, 7/7 lines) and Lane C
   read-53 (8/8, Save backup yes). 100-px notches miss it (B 4/7, C 4/8).
+
+## 20. Lift timeline at 1440 (`LEAD/runs/L2-liftlag/`, 10:40–10:41, no input after End, 3 runs each)
+rAF starved (2–4 frames in 3 s under load 8–10) → timing inconclusive. Every recorded frame on BOTH revisions (R7 at
+217–2979 ms, INT at 305–2265 ms after End): End's toasts at y 410–462 / 470–522 and Mark done's centre (y 453) hits
+the toast. Consistent with the diag: End's toasts over Mark done at 1440 is pre-existing (INT 4/4 diag runs);
+R7 is not worse (diag: R7 settled below Mark done in 5/6). → :1090 flake = test timing; FOLLOW-UP (test M7a; lift M2).
