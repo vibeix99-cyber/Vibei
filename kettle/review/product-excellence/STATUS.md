@@ -10,6 +10,39 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
+## ▶ ROUND 7 IN PROGRESS — option B (storage warning as an in-page banner) · 2026-10-11 (read this first)
+
+- **Decision:** the user chose option B from `round6-review/DEFECT-PACKET-AND-OPTIONS.md`. All agents run on Opus 5.5.
+- **Starting point:** round 7 starts from `pe/w1-fix-m2@51521cf`, which keeps round 6's fixes, including the verified
+  R5-D1 fix.
+- **Integration branch:** `claude/wizardly-galileo-uy89d9`. App code is still `0d58c5e`, Wave 1 is not closed, and the
+  restore point `8f1044a` is untouched.
+- **Makers**, launched 00:07 UTC with a 3-hour budget (deadline about 03:10 UTC), working in parallel because their
+  files don't overlap:
+  - **M7a** (`pe/r7-banner`, `/home/user/wt/r7a`): the warning as an in-flow banner on Today and in Settings › Your
+    data, plus a one-line failed-save note on the summary. It removes the overlay and hide path. M7a is the combined
+    owner: it merges `pe/r7-break` and runs the packet gate on the combined revision.
+  - **M7b** (`pe/r7-break`, `/home/user/wt/r7b`): every break and Break's over control reachable at 200 % text.
+  - At 01:35 UTC both had committed first code (`217489c`, `886acd7`) and were running probes, controls and captures.
+- **Controls:** each control was verified byte-for-byte against its server.
+
+  | Revision | Port | Defect it controls |
+  |---|---|---|
+  | R5 `20671eb` | :5302 | R5-D1 |
+  | INT `0d58c5e` | :5303 | Break controls at 200 % text; BEFORE |
+  | `e866118` | :5304 | LEAD-D1 |
+
+- **Slot gate:** `contracts/I04/integration-fix/round7-review/tools/slots.py`, at most 3 browsers. Setup is in
+  `round7-review/SETUP.md`.
+- **Unrelated:** a separate desk-research report was pushed to branch `audit/phase1`. It is not part of round 7, and no
+  app code changed.
+- **Next:**
+  1. Check the packet gate.
+  2. Run a fresh review: a new lead plus lanes A–D, 90 minutes per lane.
+  3. Only on APPROVE: merge and close Wave 1.
+
+---
+
 ## ■ STOPPED: round-6 combined review REJECTED — 2026-10-10 23:10 UTC (read this first)
 
 **The run stopped on a REJECT, as instructed.** There is no round 7. Nothing was merged and Wave 2 has not started. No
