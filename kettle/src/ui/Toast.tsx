@@ -3,7 +3,7 @@
  * Also shows every `ui:toast` event from the event bus. OWNER: design-system area.
  * Polite live region, auto-dismiss (paused on hover/focus), tap to dismiss, max 3.
  */
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'motion/react';
 import { on } from '@/lib/events';
@@ -84,10 +84,11 @@ export function Toaster() {
   // would draw it over the docked start for that moment.
   const [drawn, setDrawn] = useState(false);
   if (list.length > 0 && !drawn) setDrawn(true);
-  const above = useToastAbove(list.length > 0 || drawn);
+  const { bottom: above, top: below } = useToastRoom(list.length > 0 || drawn);
   if (typeof document === 'undefined') return null;
+  const room = above != null || below != null ? { ...(above != null && { bottom: above }), ...(below != null && { top: below }) } : undefined;
   return createPortal(
-    <div className={s.region} style={above != null ? { bottom: above } : undefined}>
+    <div className={s.region} style={room}>
       <div role="status" aria-live="polite" aria-relevant="additions text" aria-label="Notifications" className={s.live}>
         <ol className={s.list}>
           <AnimatePresence initial={false} onExitComplete={() => setDrawn(false)}>
@@ -119,14 +120,45 @@ function toastLiftBottom(): number | null {
   return top === Infinity ? null : Math.round(innerHeight - top + 10);
 }
 
-/** While toasts are up, keep them floated by `toastLiftBottom()` (re-measured as the layout under them changes). */
-function useToastAbove(active: boolean): number | null {
+/**
+ * Where the toasts' room starts: a CSS top in px just below the screen's top bar — a visible top-level `<header>` (the
+ * page's banner landmark, e.g. the session screen's bar with Close, Ambience and Mute) near the top of the screen — or
+ * null to keep the stylesheet's top (the safe top edge). A stack taller than its room scrolls inside it, so it can
+ * never reach up over that bar's controls. 24 px clears the list's 20 px shadow padding above the room (the list's
+ * scrollport reaches that far) with 4 px to spare. Screens without such a bar (Today, Stats, Nook, Settings) keep the
+ * room exactly as before.
+ */
+function toastRoomTop(): number | null {
+  if (typeof document === 'undefined') return null;
+  let bottom = -Infinity;
+  for (const h of document.querySelectorAll<HTMLElement>('header')) {
+    // Only a page-level bar: a header inside main / a section / an article is a heading block within the content.
+    if (h.closest('main, section, article, aside, nav, [aria-hidden="true"], [inert]')) continue;
+    const r = h.getBoundingClientRect();
+    if (r.height <= 0 || r.bottom <= 0 || r.top > innerHeight * 0.4) continue;
+    const cs = getComputedStyle(h);
+    if (cs.visibility === 'hidden' || Number(cs.opacity) < 0.05) continue;
+    bottom = Math.max(bottom, r.bottom);
+  }
+  return bottom === -Infinity ? null : Math.round(bottom + 24);
+}
+
+/**
+ * While toasts are up, keep their room between the screen's top bar (`toastRoomTop()`) and the controls they float
+ * above (`toastLiftBottom()`), re-measured as the layout under them changes.
+ */
+function useToastRoom(active: boolean): { bottom: number | null; top: number | null } {
   const [bottom, setBottom] = useState<number | null>(null);
-  useEffect(() => {
+  const [top, setTop] = useState<number | null>(null);
+  // Measured before the first toast is painted (a layout effect), so a new stack is never drawn for a frame in a room
+  // that still reaches the top bar.
+  useLayoutEffect(() => {
     if (!active) return;
     const measure = () => {
       const next = toastLiftBottom();
       setBottom((b) => (b === next ? b : next));
+      const nextTop = toastRoomTop();
+      setTop((t) => (t === nextTop ? t : nextTop));
     };
     measure();
     // Layout under the toast can change while it shows (a route change, the summary rising): re-check briefly.
@@ -137,7 +169,7 @@ function useToastAbove(active: boolean): number | null {
       window.removeEventListener('resize', measure);
     };
   }, [active]);
-  return active ? bottom : null;
+  return active ? { bottom, top } : { bottom: null, top: null };
 }
 
 function ToastView({ item, reduced }: { item: ToastItem; reduced: boolean }) {

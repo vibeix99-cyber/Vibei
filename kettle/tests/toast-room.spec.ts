@@ -318,3 +318,96 @@ for (const [w, h] of [
     await ctx.close();
   });
 }
+
+// Round 7: with the session panel scrollable at 200 % text (break reach), Break's over scrolled to its end leaves a
+// room from the top bar down to the action group; three toasts used to fill it up over the top bar's Close. The room
+// now starts below the screen's top bar. Real wheel to the end, three toasts on their own timers, every frame checked
+// for Close and every Break's over control, then a real click on Close while the three toasts are up.
+for (const theme of ['light', 'dark'] as const) {
+  test(`three toasts never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, ${theme})`, async ({ browser, baseURL }) => {
+    test.setTimeout(120_000);
+    const ctx = await browser.newContext({ viewport: { width: 375, height: 667 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, colorScheme: theme });
+    await setUp(ctx, 200);
+    const page = await ctx.newPage();
+    await page.goto(`${base(baseURL)}/?debug&seed=newbie&theme=${theme}#/`);
+    await page.waitForFunction(() => !!(window as any).__kettle, null, { timeout: 60_000 });
+    await page.waitForTimeout(1200);
+    await page.evaluate(() => (window as any).__kettle.timer.getState().startFocus({ intention: 'Chapter 3 notes', tag: 'study' }));
+    await page.waitForTimeout(1500);
+    await page.evaluate(() => (window as any).__kettle.finish());
+    const tea = page.getByRole('button', { name: /Tea time|Long tea break/ });
+    await tea.waitFor({ state: 'visible', timeout: 60_000 });
+    await page.waitForTimeout(2000);
+    await tea.tap();
+    await page.getByRole('button', { name: 'Pause break' }).waitFor({ state: 'attached', timeout: 20_000 });
+    await page.waitForTimeout(1000);
+    await page.evaluate(() => (window as any).__kettle.finish());
+    await page.getByRole('button', { name: /Put the kettle on/ }).waitFor({ state: 'attached' });
+    await expect(page.locator('[aria-label="Notifications"] li')).toHaveCount(0, { timeout: 15_000 });
+    // Scroll the panel to its end with the wheel.
+    for (let i = 0; i < 30; i++) {
+      const p = await page.evaluate(() => {
+        const m = document.querySelector('[data-focus-view] main') as HTMLElement;
+        const r = m.getBoundingClientRect();
+        return { st: m.scrollTop, max: m.scrollHeight - m.clientHeight, x: Math.round((r.left + r.right) / 2), y: Math.round((Math.max(0, r.top) + Math.min(innerHeight, r.bottom)) / 2) };
+      });
+      if (p.st >= p.max - 1) break;
+      await page.mouse.move(p.x, p.y);
+      await page.mouse.wheel(0, 120);
+      await page.waitForTimeout(200);
+    }
+    await page.mouse.move(2, 2);
+    const names = ['^Close$', '^Mark it done', '^Put the kettle on', "^That's all for now$"];
+    await page.evaluate((N) => {
+      const w = window as any;
+      const R = (w.__cc = { frames: 0, with3: 0, covered: {} as Record<string, number>, stop: false, clicks: [] as string[] });
+      addEventListener('click', (e) => R.clicks.push(((e.target as Element).closest('button')?.getAttribute('aria-label') || '').trim()), { capture: true });
+      const norm = (s: string) => s.replace(/[’‘]/g, "'").replace(/\s+/g, ' ').trim();
+      const f = () => {
+        if (R.stop) return;
+        const ol = document.querySelector('[aria-label="Notifications"] ol') as HTMLElement | null;
+        const lis = [...document.querySelectorAll('[aria-label="Notifications"] li')];
+        const clip = ol && getComputedStyle(ol).overflowY !== 'visible' ? ol.getBoundingClientRect() : null;
+        const toasts = lis
+          .map((li) => {
+            const q = li.getBoundingClientRect();
+            const r = clip ? { l: Math.max(q.left, clip.left), t: Math.max(q.top, clip.top), r: Math.min(q.right, clip.right), b: Math.min(q.bottom, clip.bottom) } : { l: q.left, t: q.top, r: q.right, b: q.bottom };
+            return +getComputedStyle(li).opacity > 0.02 && r.r > r.l && r.b > r.t ? r : null;
+          })
+          .filter(Boolean) as { l: number; t: number; r: number; b: number }[];
+        if (lis.length === 3) R.with3++;
+        for (const n of N) {
+          const el = [...document.querySelectorAll('[data-focus-view] button')].find((b) => new RegExp(n).test(norm(b.getAttribute('aria-label') || b.textContent || '')));
+          if (!el) continue;
+          const q = el.getBoundingClientRect();
+          const t = Math.max(q.top, 0), b = Math.min(q.bottom, innerHeight);
+          if (b - t < 8) continue;
+          const hit = document.elementFromPoint(q.left + q.width / 2, (t + b) / 2);
+          const under = toasts.some((o) => o.b > t + 1 && o.t < b - 1 && o.r > q.left + 1 && o.l < q.right - 1);
+          if (!(hit && el.contains(hit)) || under) R.covered[n] = (R.covered[n] || 0) + 1;
+        }
+        R.frames++;
+        requestAnimationFrame(f);
+      };
+      requestAnimationFrame(f);
+    }, names);
+    await page.evaluate(async () => {
+      const { toast } = await import('/src/ui/Toast.tsx' as string);
+      for (const [m, tone] of [['Recipe done: Take 2 full tea breaks · +15 leaves', 'success'], ['Saved 12 minutes of focus', 'info'], ['Cozy level 5!', 'success']]) toast(m, { tone });
+    });
+    await page.waitForTimeout(1200);
+    const r = await page.evaluate(() => {
+      const w = window as any;
+      w.__cc.stop = true;
+      return { frames: w.__cc.frames, with3: w.__cc.with3, covered: w.__cc.covered };
+    });
+    expect(r.with3, 'frames with three toasts up').toBeGreaterThan(20);
+    expect(r.covered, `controls covered (frames, of ${r.frames})`).toEqual({});
+    // A real click on Close while the three toasts are still up reaches Close.
+    await expect(page.locator('[aria-label="Notifications"] li')).toHaveCount(3);
+    const close = (await page.getByRole('button', { name: 'Close' }).boundingBox())!;
+    await page.mouse.click(close.x + close.width / 2, close.y + close.height / 2);
+    expect(await page.evaluate(() => (window as any).__cc.clicks)).toContain('Close');
+    await ctx.close();
+  });
+}
