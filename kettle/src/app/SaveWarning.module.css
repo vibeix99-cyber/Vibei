@@ -67,7 +67,9 @@
   color: var(--honey-on);
 }
 .noteText {
-  flex: 1 1 auto;
+  /* Beside the button wherever 9 em of text fits (it wraps there, landscape phones' narrow panel included), so the
+     note stays one row; under it only where even that does not fit (200 % text on a phone). */
+  flex: 1 1 9em;
   min-width: 0;
 }
 .noteAction {
