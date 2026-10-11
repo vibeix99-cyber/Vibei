@@ -17,7 +17,8 @@ import { test, expect, type Page } from '@playwright/test';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const base = (u: string | undefined) => u ?? 'http://127.0.0.1:5183';
 const FIXED = Date.parse('2026-10-11T07:40:00Z');
-/** A line may show at most this much of its top edge in the fade before the fold (no text gets that high). */
+/** A box may show at most this much of its top edge in the fade before the fold (no text sits that high); text lines
+ *  count by their ink, which may not show at all. */
 const PEEK = 6;
 
 async function toSummary(page: Page, baseURL: string | undefined, seed: string, { text = 100, theme = 'light' } = {}) {
@@ -69,7 +70,17 @@ function fold(page: Page): Promise<Fold> {
       c.querySelectorAll('.sr-only, svg').forEach((n) => n.remove());
       return norm(c.textContent);
     };
+    // A text line counts by its ink: the line box is the font's ascent + descent, the glyphs sit inside it.
+    const cv = document.createElement('canvas').getContext('2d')!;
+    const ink = (el: Element) => {
+      const t = (el.textContent || '').trim();
+      const c = getComputedStyle(el);
+      cv.font = `${c.fontStyle} ${c.fontWeight} ${c.fontSize} ${c.fontFamily}`;
+      const m = cv.measureText(t);
+      return t ? { top: Math.max(0, m.fontBoundingBoxAscent - m.actualBoundingBoxAscent), bottom: Math.max(0, m.fontBoundingBoxDescent - m.actualBoundingBoxDescent) } : { top: 0, bottom: 0 };
+    };
     const linesOf = (el: Element) => {
+      const k = ink(el);
       const r = document.createRange();
       r.selectNodeContents(el);
       const out: { top: number; bottom: number; left: number; right: number }[] = [];
@@ -80,14 +91,15 @@ function fold(page: Page): Promise<Fold> {
           last.bottom = Math.max(last.bottom, x.bottom);
         } else out.push({ top: x.top, bottom: x.bottom, left: x.left, right: x.right });
       }
-      return out;
+      return out.map((L) => ({ ...L, top: L.top + k.top, bottom: L.bottom - k.bottom, ink: true }));
     };
     const units: (Line & { el: Element; left: number; right: number })[] = [];
-    const add = (kind: string, el: Element | null | undefined, R?: { top: number; bottom: number; left: number; right: number }) => {
+    const add = (kind: string, el: Element | null | undefined, R?: { top: number; bottom: number; left: number; right: number; ink?: boolean }) => {
       if (!el) return;
       const r = R ?? el.getBoundingClientRect();
       if (r.bottom - r.top < 1) return;
-      const status = r.bottom <= scR.top + 0.5 ? 'above' : r.top >= F - PEEK - 0.5 ? 'below' : r.bottom <= F - fade + 0.5 ? 'clear' : 'cut';
+      const peek = R?.ink ? 0 : PEEK;
+      const status = r.bottom <= scR.top + 0.5 ? 'above' : r.top >= F - peek - 0.5 ? 'below' : r.bottom <= F - fade + 0.5 ? 'clear' : 'cut';
       units.push({ kind, el, text: said(el).slice(0, 60), top: r.top, bottom: r.bottom, left: r.left, right: r.right, status });
     };
     const h1 = region.querySelector('h1');

@@ -438,44 +438,64 @@ function Details({ model, streakDays }: { model: ReturnType<typeof buildSummary>
 }
 
 // ---------- the fold (Wave-1 #1) ----------
-/** [top, bottom] of every line of the sheet, in the scroll area's content coordinates, ignoring the entrance motion. */
-function foldLines(sc: HTMLElement, sheet: HTMLElement): [number, number][] {
+/** A line of the sheet in the scroll area's content coordinates: [top, bottom, how much of its top may peek]. */
+type FoldLine = [number, number, number];
+
+let inkCtx: CanvasRenderingContext2D | null | undefined;
+/**
+ * How far a text line's ink sits inside its line box (the box is the font's full ascent + descent; capitals and
+ * descenders stop short of it), from the font's own metrics. A text line counts by its ink: no glyph may be cut.
+ */
+function inkInsets(el: HTMLElement): { top: number; bottom: number } {
+  inkCtx ??= document.createElement('canvas').getContext('2d');
+  const text = el.textContent?.trim();
+  if (!inkCtx || !text) return { top: 0, bottom: 0 };
+  const cs = getComputedStyle(el);
+  inkCtx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+  const m = inkCtx.measureText(text);
+  if (!m.fontBoundingBoxAscent) return { top: 0, bottom: 0 };
+  return { top: Math.max(0, m.fontBoundingBoxAscent - m.actualBoundingBoxAscent), bottom: Math.max(0, m.fontBoundingBoxDescent - m.actualBoundingBoxDescent) };
+}
+
+/** Every line of the sheet (marked `data-fold`), where it will rest once the entrance motion has finished. */
+function foldLines(sc: HTMLElement, sheet: HTMLElement): FoldLine[] {
   const origin = sc.getBoundingClientRect().top - sc.scrollTop;
-  const out: [number, number][] = [];
+  const out: FoldLine[] = [];
   for (const el of sheet.querySelectorAll<HTMLElement>('[data-fold]')) {
     // The entrance transform sits on the sheet's own children (motion); measure where the line will rest.
     let block: HTMLElement = el;
     while (block.parentElement && block.parentElement !== sheet) block = block.parentElement;
     const t = getComputedStyle(block).transform;
     const dy = t && t !== 'none' ? new DOMMatrixReadOnly(t).m42 : 0;
-    const rects: { top: number; bottom: number }[] = [];
     if (el.dataset.fold === 'lines') {
+      const ink = inkInsets(el);
       const range = document.createRange();
       range.selectNodeContents(el);
+      const rows: { top: number; bottom: number }[] = [];
       for (const r of [...range.getClientRects()].filter((x) => x.width > 0.5 && x.height > 0.5).sort((a, b) => a.top - b.top)) {
-        const last = rects.at(-1);
+        const last = rows.at(-1);
         if (last && r.top < last.bottom - Math.min(r.height, last.bottom - last.top) / 2) last.bottom = Math.max(last.bottom, r.bottom);
-        else rects.push({ top: r.top, bottom: r.bottom });
+        else rows.push({ top: r.top, bottom: r.bottom });
       }
+      for (const r of rows) out.push([r.top - origin - dy + ink.top, r.bottom - origin - dy - ink.bottom, 0]);
     } else {
       const r = el.getBoundingClientRect();
-      if (r.height > 0.5) rects.push({ top: r.top, bottom: r.bottom });
+      if (r.height > 0.5) out.push([r.top - origin - dy, r.bottom - origin - dy, PEEK]);
     }
-    for (const r of rects) out.push([r.top - origin - dy, r.bottom - origin - dy]);
   }
   return out;
 }
 
 /** With the fold at `fold` px (scroll coordinates): every line wholly clear of the fade, or wholly below it. */
-const cleanAt = (lines: [number, number][], fold: number) => lines.every(([t, b]) => b <= fold - FADE + 0.5 || t >= fold - PEEK - 0.5);
+const cleanAt = (lines: FoldLine[], fold: number) => lines.every(([t, b, peek]) => b <= fold - FADE + 0.5 || t >= fold - peek - 0.5);
 
 /**
  * The lift in [0, cap] nearest `want` that puts the fold between two lines — keeping `must` (the highlight) wholly
  * clear when some clean lift can — or `want` itself when no lift is clean.
  */
-function cleanLift(lines: [number, number][], h: number, want: number, cap: number, must: [number, number] | null): number {
+function cleanLift(lines: FoldLine[], h: number, want: number, cap: number, must: [number, number] | null): number {
   const cands = [want, 0, cap];
-  for (const [t, b] of lines) cands.push(b - h + FADE, t - h + PEEK);
+  for (const [t, b, peek] of lines) cands.push(b - h + FADE, t - h + peek);
   const pick = (needWhole: boolean) => {
     let best: number | null = null;
     for (const c of cands)
@@ -490,10 +510,10 @@ function cleanLift(lines: [number, number][], h: number, want: number, cap: numb
 }
 
 /** Side by side (no lift): the tallest scroll area, at most MAX_TRIM shorter, that ends between two lines. */
-function cleanEnd(lines: [number, number][], h: number): number {
+function cleanEnd(lines: FoldLine[], h: number): number {
   if (cleanAt(lines, h)) return h;
   const cands: number[] = [];
-  for (const [t, b] of lines) cands.push(Math.ceil(b + FADE), Math.floor(t + PEEK));
+  for (const [t, b, peek] of lines) cands.push(Math.ceil(b + FADE), Math.floor(t + peek));
   const ok = cands.filter((v) => v < h && v >= h * (1 - MAX_TRIM) && cleanAt(lines, v));
   return ok.length ? Math.max(...ok) : h;
 }
