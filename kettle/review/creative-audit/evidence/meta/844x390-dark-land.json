@@ -1,0 +1,518 @@
+{
+ "rev": "INT 0d58c5e preview (integration app code)",
+ "base": "http://127.0.0.1:5323",
+ "viewport": {
+  "w": 844,
+  "h": 390
+ },
+ "dpr": 3,
+ "theme": "dark",
+ "reducedMotion": false,
+ "staticRoom": false,
+ "fixedTime": "2026-10-11T07:40:00.000Z",
+ "isMobile": false,
+ "hasTouch": true,
+ "startedAt": "2026-10-11T11:54:00.158Z",
+ "states": {
+  "01-home": {
+   "desc": "Home, landscape, first viewport",
+   "hash": "#/",
+   "now": "2026-10-11T07:40:02.374Z",
+   "scroll": {
+    "y": 0,
+    "max": 599
+   },
+   "heads": [
+    "Good afternoon, Robin",
+    "What are you brewing? (optional)"
+   ],
+   "imgs": [
+    {
+     "src": "/assets/chai-sipping-DTyMuyps.webp",
+     "alt": "",
+     "box": [
+      117,
+      101,
+      46,
+      75
+     ],
+     "natural": [
+      302,
+      491
+     ],
+     "fit": "fill",
+     "upscale": 0.46,
+     "clip": null,
+     "needPx": 138
+    }
+   ],
+   "canvases": [],
+   "buttons": [
+    {
+     "name": "Today",
+     "box": [
+      6,
+      67,
+      70,
+      64
+     ]
+    },
+    {
+     "name": "Stats",
+     "box": [
+      6,
+      134,
+      70,
+      64
+     ]
+    },
+    {
+     "name": "Nook",
+     "box": [
+      6,
+      200,
+      70,
+      64
+     ]
+    },
+    {
+     "name": "Settings",
+     "box": [
+      6,
+      266,
+      70,
+      64
+     ]
+    },
+    {
+     "name": "23 days warm streak. Show details",
+     "box": [
+      100,
+      12,
+      118,
+      44
+     ]
+    },
+    {
+     "name": "2,261 leaves Show details",
+     "box": [
+      222,
+      12,
+      93,
+      44
+     ]
+    },
+    {
+     "name": "12 Cozy level 12, 184 leaves to the next. Show det",
+     "box": [
+      319,
+      12,
+      56,
+      44
+     ]
+    },
+    {
+     "name": "Work",
+     "box": [
+      452,
+      124,
+      110,
+      44
+     ]
+    },
+    {
+     "name": "Study",
+     "box": [
+      570,
+      124,
+      93,
+      44
+     ]
+    },
+    {
+     "name": "Read",
+     "box": [
+      671,
+      124,
+      86,
+      44
+     ]
+    },
+    {
+     "name": "Create",
+     "box": [
+      452,
+      176,
+      97,
+      44
+     ]
+    },
+    {
+     "name": "Life",
+     "box": [
+      557,
+      176,
+      78,
+      44
+     ]
+    },
+    {
+     "name": "15 min Gentle",
+     "box": [
+      456,
+      279,
+      79,
+      48
+     ]
+    },
+    {
+     "name": "25 min Classic",
+     "box": [
+      539,
+      279,
+      79,
+      48
+     ]
+    },
+    {
+     "name": "50 min Deep",
+     "box": [
+      622,
+      279,
+      79,
+      48
+     ]
+    },
+    {
+     "name": "Custom Set it",
+     "box": [
+      706,
+      279,
+      79,
+      48
+     ]
+    },
+    {
+     "name": "Put the kettle on · 25 min",
+     "box": [
+      436,
+      290,
+      369,
+      60
+     ]
+    },
+    {
+     "name": "Change brew length",
+     "box": [
+      627,
+      356,
+      146,
+      24
+     ]
+    }
+   ],
+   "brewLength": {
+    "text": "Brew length15 minGentle25 minClassic50 minDeepCustomSet it",
+    "top": 230,
+    "bottom": 331,
+    "inFirstViewport": true
+   }
+  },
+  "01-home-full": {
+   "desc": "Home, landscape, full page",
+   "hash": "#/",
+   "now": "2026-10-11T07:40:03.580Z",
+   "scroll": {
+    "y": 0,
+    "max": 599
+   },
+   "heads": [
+    "Good afternoon, Robin",
+    "What are you brewing? (optional)"
+   ],
+   "imgs": [
+    {
+     "src": "/assets/chai-sipping-DTyMuyps.webp",
+     "alt": "",
+     "box": [
+      117,
+      101,
+      46,
+      75
+     ],
+     "natural": [
+      302,
+      491
+     ],
+     "fit": "fill",
+     "upscale": 0.46,
+     "clip": null,
+     "needPx": 138
+    }
+   ],
+   "canvases": [],
+   "buttons": [
+    {
+     "name": "Today",
+     "box": [
+      6,
+      67,
+      70,
+      64
+     ]
+    },
+    {
+     "name": "Stats",
+     "box": [
+      6,
+      134,
+      70,
+      64
+     ]
+    },
+    {
+     "name": "Nook",
+     "box": [
+      6,
+      200,
+      70,
+      64
+     ]
+    },
+    {
+     "name": "Settings",
+     "box": [
+      6,
+      266,
+      70,
+      64
+     ]
+    },
+    {
+     "name": "23 days warm streak. Show details",
+     "box": [
+      100,
+      12,
+      118,
+      44
+     ]
+    },
+    {
+     "name": "2,261 leaves Show details",
+     "box": [
+      222,
+      12,
+      93,
+      44
+     ]
+    },
+    {
+     "name": "12 Cozy level 12, 184 leaves to the next. Show det",
+     "box": [
+      319,
+      12,
+      56,
+      44
+     ]
+    },
+    {
+     "name": "Work",
+     "box": [
+      452,
+      124,
+      110,
+      44
+     ]
+    },
+    {
+     "name": "Study",
+     "box": [
+      570,
+      124,
+      93,
+      44
+     ]
+    },
+    {
+     "name": "Read",
+     "box": [
+      671,
+      124,
+      86,
+      44
+     ]
+    },
+    {
+     "name": "Create",
+     "box": [
+      452,
+      176,
+      97,
+      44
+     ]
+    },
+    {
+     "name": "Life",
+     "box": [
+      557,
+      176,
+      78,
+      44
+     ]
+    },
+    {
+     "name": "15 min Gentle",
+     "box": [
+      456,
+      279,
+      79,
+      48
+     ]
+    },
+    {
+     "name": "25 min Classic",
+     "box": [
+      539,
+      279,
+      79,
+      48
+     ]
+    },
+    {
+     "name": "50 min Deep",
+     "box": [
+      622,
+      279,
+      79,
+      48
+     ]
+    },
+    {
+     "name": "Custom Set it",
+     "box": [
+      706,
+      279,
+      79,
+      48
+     ]
+    },
+    {
+     "name": "Put the kettle on · 25 min",
+     "box": [
+      436,
+      290,
+      369,
+      60
+     ]
+    },
+    {
+     "name": "Change brew length",
+     "box": [
+      627,
+      356,
+      146,
+      24
+     ]
+    }
+   ]
+  },
+  "02b-focus-mid": {
+   "desc": "Focus, landscape, about halfway",
+   "hash": "#/focus",
+   "now": "2026-10-11T07:40:11.796Z",
+   "scroll": {
+    "y": 0,
+    "max": 0
+   },
+   "heads": [],
+   "imgs": [
+    {
+     "src": "/assets/chai-reading-BrtgDZfI.webp",
+     "alt": "",
+     "box": [
+      298,
+      122,
+      127,
+      199
+     ],
+     "natural": [
+      311,
+      487
+     ],
+     "fit": "fill",
+     "upscale": 1.23,
+     "clip": null,
+     "needPx": 381
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      10,
+      10,
+      480,
+      261
+     ],
+     "backing": [
+      600,
+      325
+     ],
+     "pixelRatio": 1.25
+    }
+   ],
+   "buttons": [
+    {
+     "name": "Ambience: Rain. Change",
+     "box": [
+      690,
+      12,
+      86,
+      44
+     ]
+    },
+    {
+     "name": "Mute sounds",
+     "box": [
+      784,
+      12,
+      44,
+      44
+     ]
+    },
+    {
+     "name": "Add 5 minutes",
+     "box": [
+      539,
+      236,
+      52,
+      54
+     ]
+    },
+    {
+     "name": "Pause",
+     "box": [
+      635,
+      236,
+      66,
+      68
+     ]
+    },
+    {
+     "name": "End session",
+     "box": [
+      745,
+      236,
+      52,
+      54
+     ]
+    }
+   ],
+   "statusLine": [
+    "12 min brewed · whistles at 15:55"
+   ]
+  }
+ },
+ "errors": [],
+ "console": [],
+ "endedAt": "2026-10-11T11:54:12.978Z"
+}
