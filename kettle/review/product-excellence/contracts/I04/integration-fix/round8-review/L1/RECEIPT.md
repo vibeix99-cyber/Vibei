@@ -3,7 +3,7 @@
 - **Lane:** L1. Runs checks and writes receipts only. **No verdict is issued here.** No app code, test or maker file was
   edited; nothing committed or pushed.
 - **Model:** Claude Opus 5.5 (`claude-opus-5-5`), newly launched; implemented nothing in rounds 7 or 8.
-- **Wall clock:** start 2026-10-11 18:07:24 UTC; end: (pending).
+- **Wall clock:** start 2026-10-11 18:07:24 UTC; end 2026-10-11 19:13:41 UTC (about 67 minutes; budget 75). Last browser run ended 19:13:12 UTC.
 - **Under review:** R8 = trial merge `9ff0d04` (`kettle/src` `42e106daaf06…`, checked with `git rev-parse HEAD:kettle/src`
   in `/home/user/wt/r8-trial`), dev server http://127.0.0.1:5306.
 - **Raw evidence:** `L1/runs/<series>/` (jsonl, stdout, frames); every invocation's START/END line (UTC, URL, port,
