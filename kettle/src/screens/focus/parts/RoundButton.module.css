@@ -18,5 +18,9 @@
   font-size: 0.875rem;
   line-height: 1.1;
   color: var(--ink-2);
-  white-space: nowrap;
+  text-align: center;
+  /* One line whenever the row has room for it (always at 100 % text). With large text the three captions are wider
+     than a phone: a caption then wraps between its words ("Skip / break") instead of running off the screen's edge
+     ("kip break", "Next bre" at 375 and 390 px, 200 %). */
+  text-wrap: balance;
 }
