@@ -128,7 +128,7 @@ test.describe('Focus backdrop: earned items without the live 3D room', () => {
 });
 
 test.describe('Nook hint tells the truth', () => {
-  const hint = (page: Page) => page.locator('section[aria-label="The room"] p').filter({ hasText: /·/ }).first();
+  const hint = (page: Page) => page.locator('section[aria-label="The room"] p').filter({ hasText: /look around|drawing of your room/i }).first();
 
   test('3D off: no drag-and-tap promise over the drawing', async ({ page }) => {
     await boot(page, 'off');

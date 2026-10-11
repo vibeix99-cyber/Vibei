@@ -29,8 +29,9 @@ const HINT_KEY = 'kettle:nook-hint-seen';
 /** The static drawing's hint has its own "seen" flag, so the drag hint still greets a later switch to 3D. */
 const STATIC_HINT_KEY = 'kettle:nook-static-hint-seen';
 const LIVE_HINT = 'Drag to look around · tap things';
-/** 3D off or no WebGL: the room is a drawing (no drag, no tapping it); the stories are in the Cozy things list. */
-const STATIC_HINT = 'A drawing of your room · stories in Cozy things';
+/** 3D off or no WebGL: the room is a drawing (nothing to drag or tap; the Cozy things list below/beside it opens
+ *  the stories). Kept short so it stays one line on phones at 100 % text, like the 3D hint. */
+const STATIC_HINT = 'A drawing of your room';
 
 function readHintSeen(key: string): boolean {
   try {
