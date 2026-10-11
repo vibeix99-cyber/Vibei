@@ -6,14 +6,15 @@
 
 Count every browser process a command starts: one per Chromium launch, plus one per extra Playwright worker
 (e.g. `npx playwright test --workers=2` needs --n 2). Waiters are served by lane priority, then arrival:
-A (race) > LEAD = Dcap (captures) > M7a = M7b = B > C > D (regression). A waiter that does not fit blocks
-lower-priority waiters behind it, so L1 is never starved.
+FAIR SHARE (changed 2026-10-11 03:58 UTC after Lane A starved the others): waiters are served first by how
+many slots their lane already holds (fewest first), then by arrival time. A lane holds at most one job at a time
+while any other lane is waiting. A waiter that does not fit blocks the waiters behind it.
 """
 import fcntl, json, os, subprocess, sys, time
 
 DIR = '/tmp/rv7-slots'
 MAX = max(1, (os.cpu_count() or 4) - 1)
-RANK = {'A': 0, 'LEAD': 1, 'Dcap': 1, 'M7a': 2, 'M7b': 2, 'B': 2, 'C': 3, 'D': 4}
+RANK = {}  # fair share: every lane rank 0 (see docstring)
 
 def alive(pid):
     try:
@@ -37,14 +38,20 @@ def locked(fn):
         return out
 
 def run(lane, n, cmd):
-    me = {'pid': os.getpid(), 'lane': lane, 'n': n, 'rank': RANK.get(lane, 5), 't': time.time(), 'cmd': ' '.join(cmd)[:200]}
+    me = {'pid': os.getpid(), 'lane': lane, 'n': n, 'rank': RANK.get(lane, 0), 't': time.time(), 'cmd': ' '.join(cmd)[:200]}
     if n > MAX:
         sys.exit(f'slots: --n {n} exceeds the limit {MAX}')
     locked(lambda st: st['wait'].append(me))
     while True:
         def try_take(st):
             used = sum(h['n'] for h in st['hold'])
-            q = sorted(st['wait'], key=lambda w: (w['rank'], w['t']))
+            held = {}
+            for h in st['hold']:
+                held[h['lane']] = held.get(h['lane'], 0) + 1
+            others_waiting = any(w['lane'] != lane for w in st['wait'])
+            if held.get(lane, 0) >= 1 and others_waiting:
+                return False   # one job per lane while another lane waits
+            q = sorted(st['wait'], key=lambda w: (held.get(w['lane'], 0), w['rank'], w['t']))
             for w in q:
                 if w['pid'] == me['pid']:
                     if used + n <= MAX:

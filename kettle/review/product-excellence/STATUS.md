@@ -54,6 +54,11 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
   - Official trial merge **R7 = `b39202f`** (`2e9095c` + `7ba0d98`, src `6db18ad`).
   - Servers verified: R7 :5301 and :5321, INT :5303 and :5323, R5 :5302, `e866118` :5304, unfixed `49ea1de` :5305.
   - **The lead resumed for the full review. Lanes A–D launched at about 03:25 UTC** (Opus 5.5, 90 minutes each).
+- **03:58 UTC: the slot gate was changed to fair share.**
+  - Under strict priority, Lane A held all 3 browser slots while LEAD, B, C and D waited 23–32 minutes.
+  - `tools/slots.py` now serves waiters fewest-held-lane-first, and a lane holds at most one job while another waits.
+    The pre-patch copy is at `/tmp/rv7-servers/slots.py.v1`.
+  - Lanes B, C and D get +20 minutes (to about 05:15 UTC) for the wait the gate caused. Lane A's budget is unchanged.
 - **Next:**
   1. Check the packet gate.
   2. Run a fresh review: a new lead plus lanes A–D, 90 minutes per lane.
