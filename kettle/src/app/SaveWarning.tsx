@@ -9,20 +9,26 @@
 import { useEffect, useId, useLayoutEffect, useRef } from 'react';
 import { Icon } from '@/art';
 import { Button } from '@/ui/Button';
+import { useTimer } from '@/timer';
 import { useRoute, type Route } from './router';
 import { announceSaveWarning, saveBackupNow, saveWarningText, settleAnchor, useSaveWarning } from './saveWarning';
 import s from './SaveWarning.module.css';
 
 /**
  * Whether to show the warning on the screen of `home`: it follows the warning only while that screen is the current
- * one. A screen on its way out (Today dissolving into the brew it just started, the summary handing over to the tea
- * break) keeps the frame the person left, so nothing appears in it, or moves, as it goes.
+ * one and is staying. A screen on its way out keeps the frame the person left, so nothing appears in it, or moves, as
+ * it goes: once its route has changed, and from the moment a brew or break starts on it (Today's "Put the kettle on",
+ * the summary's "Tea time" — the start's own save can fail a moment before the route changes). A screen opened while
+ * a brew or break is already running (Today during a brew) follows the warning as usual.
  */
 function useShown(home: Route): boolean {
   const failing = useSaveWarning((st) => st.failing);
   const route = useRoute();
-  const shown = useRef(failing);
-  if (route === home) shown.current = failing;
+  const live = useTimer((t) => t.status !== 'idle');
+  const openedLive = useRef(live);
+  const staying = route === home && (!live || openedLive.current);
+  const shown = useRef(staying ? failing : false);
+  if (staying) shown.current = failing;
   return shown.current;
 }
 

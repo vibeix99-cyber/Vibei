@@ -67,7 +67,8 @@ key) and reported to `onStorageWriteError` listeners.
     Ending early while saving fails says "N minutes of focus, kept in this tab: not saved yet" instead of "Saved N
     minutes of focus".
   - A screen on its way out (Today dissolving into the brew it started, the summary into the break) keeps the frame
-    the person left: the warning only appears on, or leaves, the current screen.
+    the person left: the warning only appears on, or leaves, the current screen, and not from the moment a brew or
+    break starts on it (that start's own save can fail a moment before the route changes).
   - **Nothing moves under the finger:** when the banner (or note) appears or goes while its screen is open, the page
     is scrolled, in the same frame, by however far the element under the person's pointer, last touch or keyboard
     focus moved, so it stays where it was (what sits above the banner moves up instead). On load it is simply part of
