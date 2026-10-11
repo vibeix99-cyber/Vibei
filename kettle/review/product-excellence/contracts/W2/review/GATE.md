@@ -34,3 +34,29 @@
 | Archive | `archive/pe-w2-home-acf1c6a.incremental.bundle` (44 MB, verified) |
 
 **The orchestrator's handling:** H is a complete, reviewable revision with one disclosed blocker. It goes to the lead for a verdict now. On REJECT, H gets its one 90-minute fix round, followed by a targeted re-review (Lane H) of the fix revision.
+
+## Maker S: Summary (I07 + #1). Submitted as WIP: code final, evidence gaps, 23:10 UTC
+
+| Item | Result |
+|---|---|
+| Packet | `/home/user/wt/w2s/kettle/review/product-excellence/contracts/W2/S-READY-FOR-REVIEW.md` (status WIP, §9 lists what is missing). Evidence is in `…/W2/S/` (54 MB): `captures/AFTER/`, `control/`, `probes/`, `suites/`, `tools/` (`cap.mjs`, `caps.sh`), `acceptance-AFTER.md`, `facts-*.md` |
+| Revision | Branch `pe/w2-summary@e0f511a`. The last code commit is `f95e0be` (a harness fix to the maker's own spec); after it come only evidence and the packet. `kettle/src` is `67505713c6c04c6c9e536617b52f3b2549f2e918` |
+| **Trial merge** | **`3726a71`** = integration `d62c4a4` + `e0f511a`. Sparse worktree `/home/user/wt/w2t-s`. Dev **:5341** (served `Summary.tsx` verified against the commit), preview **:5351** |
+| Files (ownership OK) | `src/screens/done/{summary.ts,Summary.tsx,Summary.module.css}`, `src/screens/done/rank.test.ts` (new, 8 tests), `tests/w2-summary.spec.ts` (new, 8 tests). It does **not** touch `FocusScreen.*`, toasts, `src/ui`, Home or the scene |
+| Design | One highlight at most, by rank: unlock (the existing close-up) > level > best streak > badge > Tea Cozy. Everything else stays as the compact pills in the model's order, and nothing is dropped (`summary.test.ts` is untouched and green). Fix for #1: the opening lift is snapped so the fold falls between lines, and the fade drops from 22 to 14 px |
+| Control-first | On `90a11e5` (:5310), 375×667, settled: lines cut on arrival (the third pill row half under the footer). `w2-summary.spec` fails on `90a11e5` and passes on the branch (per the packet, §3 and §7) |
+| Suites (maker) | tsc pass; vitest 275/275; chromium 80/82: `:768` (load) and **`integrity.spec.ts:1090`, which failed twice** (Today flow, no summary; **not checked on `90a11e5`**). timer/pwa 29 passed + 2 skipped |
+| **Missing for READY** | (1) big-day AFTER captures on the final build for 13 of 16 configurations; 3 were retaken on `cdc6035` and 13 are from `da5f452`, which had an extra pill row on some sizes; (2) same-session BEFORE captures; (3) `:1090` on `90a11e5` |
+| Residual (maker) | At 844×390 @100 on the big day, the record-player close-up picture (no text) starts under the fold on arrival. The same happens on `90a11e5` |
+| Archive | `archive/pe-w2-summary-e0f511a.incremental.bundle` (40.9 MB, verified) |
+
+**The orchestrator's handling:** the code is final, and the gaps are evidence only. S goes to the lead now. Lane S takes
+the missing same-session BEFORE/AFTER big-day captures at all 16 configurations on :5330 and :5351. Lane S also runs
+`:1090` in isolation on `90a11e5` and on the S trial, so the lead can grade the S revision as it stands.
+
+## Combined trial for Lane R (every packet past the gate except H)
+
+**`248415c`** = `1215061` (integration `d62c4a4` + `pe/w2-room@fc9f6d8`) + `pe/w2-summary@e0f511a`. Sparse worktree
+`/home/user/wt/w2t-c`. src `5b0bc778ba020b122804fcd3eb568b5229236bb0`. Dev **:5345**, preview **:5355**. Served
+`Summary.tsx` and `Fallback.tsx` were verified against the commit. H joins only if it is approved; if H is merged, Lane R
+reruns on the merged tree.

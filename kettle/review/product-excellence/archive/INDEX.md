@@ -23,3 +23,4 @@ Restore a chain in order with `git fetch <bundle> 'refs/heads/*:refs/heads/*'` (
 | (not bundled) | pe/r5-control@20671eb (round-5 trial, R5-D1 control; obsolete — R5-D1 verified fixed in rounds 6–8) kept as a LOCAL branch only; a full bundle would be 281 MB | — | 2026-10-11 |
 | `pe-w2-room-fc9f6d8.incremental.bundle.part-00..02` (+ `.sha256`) | pe/w2-room@fc9f6d8 (Wave 2 R1, Maker N READY FOR REVIEW; code 5d7bb23) | 90a11e5 | parts reassembled and verified 2026-10-11 |
 | `pe-w2-home-acf1c6a.incremental.bundle` | pe/w2-home@acf1c6a (Wave 2 R1, Maker H WIP; code 7a961b7) | 90a11e5 | okay 2026-10-11 |
+| `pe-w2-summary-e0f511a.incremental.bundle` | pe/w2-summary@e0f511a (Wave 2 R1, Maker S WIP: code final, evidence gaps; code f95e0be) | 90a11e5 | okay 2026-10-11 |
