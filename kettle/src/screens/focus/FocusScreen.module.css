@@ -449,6 +449,10 @@
     --pad-b: 8px;
   }
   .stageBox {
+    /* A column of its own here, beside the top bar and the panel, with no control in it: the toasts' dock when there
+       is no room for them above the panel's controls (src/ui/Toast.tsx, I04 R7-D1). Stacked, the top bar sits over the
+       stage, so it is never a dock. */
+    --toast-dock: on;
     border-radius: var(--r-xl);
     overflow: hidden;
     box-shadow:

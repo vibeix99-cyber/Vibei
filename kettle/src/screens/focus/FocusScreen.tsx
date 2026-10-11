@@ -253,7 +253,9 @@ export default function FocusScreen() {
       {view !== 'summary' && <h1 className="sr-only">{heading}</h1>}
 
       {/* ---------- the stage: never moves ---------- */}
-      <div className={s.stageBox}>
+      {/* Side by side with the panel it is a column of its own with no control in it: toasts that have no room above
+          the panel's controls float over it (data-toast-dock, see src/ui/Toast.tsx; the stylesheet opts it in). */}
+      <div className={s.stageBox} data-toast-dock="">
         <Stage
           className={s.stage}
           state={kettle}
