@@ -107,6 +107,24 @@ test.describe('Focus backdrop: earned items without the live 3D room', () => {
     await assertLayersDrawn(page, want);
     await page.unrouteAll({ behavior: 'ignoreErrors' });
   });
+
+  test('3D failure (WebGL context lost): the still that takes over carries the same items', async ({ page }) => {
+    await boot(page, 'auto');
+    const want = await expectedItems(page);
+    await startBrew(page);
+    const host = page.locator('[data-scene-mode="window"]').first();
+    await expect(host).toHaveAttribute('data-scene-ready', 'true', { timeout: 45_000 });
+    // Simulate the GPU dropping the context (setup through the debug handle; the app reacts as to a real loss).
+    const lost = await page.evaluate(() => {
+      const gl = (window as any).__nook?.renderer?.getContext?.();
+      const ext = gl?.getExtension('WEBGL_lose_context');
+      ext?.loseContext();
+      return !!ext;
+    });
+    expect(lost).toBe(true);
+    await expect(host).toHaveAttribute('data-scene-ready', 'false');
+    await assertLayersDrawn(page, want);
+  });
 });
 
 test.describe('Nook hint tells the truth', () => {

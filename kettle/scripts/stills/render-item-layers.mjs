@@ -7,15 +7,30 @@
 // the item's box (one box per item across all lighting states). Painted in unlock order over the base still,
 // the layers rebuild the live 3D render of that item set exactly where it is in the live window view (same
 // engine, same camera, same 1250 × 1000 frame and cover-fit). No new artwork: every pixel comes from the existing
-// 3D items. Lighting states whose layer is the same within TOL share one file (e.g. snow and clear light the
-// items alike), so the variant count follows the measured lighting, not a guess.
+// 3D items. Because the layers are cumulative they are exact for the sets the app shows: the backdrop's items are
+// always the unlock-order prefix for the user's level (progress itemsUnlockedAt) minus teaSet.
 //
-// Usage (from kettle/, dev server running on --port, default 5213):
-//   node scripts/stills/render-item-layers.mjs [--port 5213] [--work .tmp/stills/items] [--q 0.72]
-// Writes src/scene/stills/items/<id>-<variant>.webp and src/scene/stills/items.json (boxes + variant map),
-// plus raw renders and a match report under --work. Regenerate whenever the room, an item, the window camera
-// (Engine.ts WINDOW_CAM) or the lighting (palette.ts MOODS, Engine.ts pushMood) changes, and re-render the base
-// stills at the same time (render-window-stills.mjs + encode.py) so the two stay pixel-matched.
+// Variants: all 12 lighting states are rendered, then states whose layer is the same within TOL share one file.
+// Weather changes item lighting only through the window light (rain × 0.65, Engine.ts pushMood) and the glass
+// behind an item's edges, so snow and clear usually merge, and rain merges wherever the window light barely
+// reaches the item; time of day (hemisphere, window and lamp light, emissive fairy lights) always differs. The
+// variant count therefore follows the measured lighting: at the time of writing 8 items, 40 files (4–8 per item),
+// 391,542 bytes in all (budget 400 KB). Stored at 0.75 × the frame resolution, WebP colour quality 0.45 and alpha
+// in steps of 43: the backdrop is blurred (Stage.module.css .window) and quieted, which hides all three.
+//
+// Regenerate (from kettle/), whenever the room, an item, the window camera (Engine.ts WINDOW_CAM) or the lighting
+// (palette.ts MOODS, Engine.ts pushMood) changes, together with the base stills so the two stay pixel-matched:
+//   1. npx vite --port 5213 --strictPort            (any dev server; pass its port below)
+//   2. node scripts/stills/render-window-stills.mjs && python3 scripts/stills/encode.py   (base stills, if needed)
+//   3. node scripts/stills/render-item-layers.mjs --port 5213 [--work .tmp/stills/items]
+//      → src/scene/stills/items/<id>-<variant>.webp + src/scene/stills/items.json (frame, order, per item: its box
+//        on the 1250 × 1000 frame and the file for each `${time}-${weather}`), plus the raw renders and match.json
+//        (still + layers vs the live render, per lighting state) under --work.
+//   4. Check the total stays within the budget, then run tests/w2-room.spec.ts.
+//   --reuse 1 re-cuts the layers from the renders already in --work (to tune --q / --scale / --aq / --tol / --lo /
+//   --hi without rendering again). --items overrides the list below if an item enters or leaves the window frame
+//   (an item with no changed pixels is reported as "no pixels" and gets no layer).
+// Browser: one Chromium (SwiftShader, like the base stills); about 4 minutes on a loaded 4-core machine.
 import { chromium } from 'playwright';
 import { mkdirSync, writeFileSync, readFileSync, readdirSync, rmSync } from 'node:fs';
 
@@ -31,7 +46,8 @@ const TIMES = (args.times || 'morning,day,dusk,night').split(',');
 const WEATHERS = (args.weathers || 'clear,rain,snow').split(',');
 /** The Focus backdrop's items in unlock order (progress/items.ts), minus the ones out of the window frame
  *  (cushion, blanket, painting, lantern, catBed: no pixel changes) and teaSet (kept out of the backdrop,
- *  Stage.tsx NOT_IN_BACKDROP). render: --probe lists every item's footprint to re-check this list. */
+ *  Stage.tsx NOT_IN_BACKDROP).
+ *  To re-check the list, run with --items set to all 14 ids: items with no changed pixels are reported. */
 const ORDER = (args.items || 'pothos,books,fairyLights,shelf,recordPlayer,monstera,telescope,kotatsu').split(',');
 /** Soft cut-out: per-pixel change below LO is the room (alpha 0), above HI fully the layer (alpha 1). */
 const LO = +(args.lo || 6), HI = +(args.hi || 18);
