@@ -192,3 +192,51 @@ R7 375×667 @100 and 1440 dark: episode 1 banner + said 1; room made + saves →
 episode 2 → NO warning at all (INT flow.ts `SAVE_WARNING_EVERY_MS` 60 s suppressed the toast) and no announcement.
 → R7 better than INT; the unannounced re-appearance only matters when it re-appears off screen (rare: storage must
 recover and fail again within a minute). FOLLOW-UP (owner M7a, saveWarning.ts announce throttle).
+
+## 16. Lane C FINAL receipt (Sonnet 5.5 relaunch, 09:43–10:32Z) — traced by me
+- Probe hashes: `C/probes/SHA256SUMS.txt` all OK (sha256sum -c). `closecheck2.mjs` 863c0a92…; copy of my predecessor's
+  `closecheck.mjs` c17efde4 (= LEAD/probes).
+- **Check 4 aggregated by me from raw** `C/check4-close/r7-b39202f-5301/closecheck2-b39202f.jsonl` (220 rows, 0 errors):
+  Close / Ambience / Mute **0 covered frames, centre = the control in every frame** in all 10 configurations (375×667,
+  390×844, 667×375, 844×390 @200 light+dark; 375×667 + 1440 @100 light) — Close 646–790 frames per config, Ambience and
+  Mute 476–1220 each; **taps 100/100 activated**. Control `…/ctl-49ea1de-5305/closecheck2-49ea1de.jsonl` (39 rows): Close
+  375×667 @200 L **166/657 covered**, 1 tap not activated (hit "Recipe done" span); Ambience 667×375 @200 L **435/1169
+  covered**, 3 taps not activated (hit the toast); Mute never covered. Frames opened: control
+  `49ea1de-375x667-t200-light-over-carried-end-n3.jpg` (Close under the top toast), R7
+  `b39202f-667x375-t200-light-paused-end-n3.jpg` (Ambience/Mute clear; room under the bar; toasts over the countdown =
+  r6 item 8).
+- 1440 focus "end" Ambience tap row: activated, `closed: false, closedBy: 'none'` after a real Escape (focus "top" row:
+  closed without the Escape step). Sheet + shortcut code untouched by round 7 (FocusScreen diff = panel ref / scroll
+  only; AmbienceSheet not in the diff) → not attributable to round 7; UNKNOWN (one row).
+- 5a M7b toastcheck unchanged (3380304f) 24 rows clear/off-screen; break-reach.spec 7/7 (`check4-close/logs/R7-break-
+  reach-spec.log`). Reach 1a re-judged by me (section 9).
+- 4d = the toast-room collapse at landscape @200 Break's over end (19/52 at 667×375, 34/52 at 844×390; two of three 0 px).
+  C's own Break's over control at those sizes not run; control = 49ea1de (lead's row), which is round 7 too.
+
+## 17. My SETUP=b runs (banner visible at the tap) — `LEAD/runs/L2-setupb/markdone-b39202f-setupb.jsonl`, Lane A's
+`markdone-a4.mjs` copied unedited (sha 561523f7 = A's series.log), R7 :5301
+| config | banner at tap | scroll jump after tap | banner after tap | said after tap |
+|---|---|---|---|---|
+| 390×844 @100 L | whole in view 149–292 | none | whole, same rect, 411/411 frames | 0 (said 1 on arrival) |
+| 375×667 @100 D | whole 9–152 | none | whole, same rect, 394/394 | 0 |
+| 1440×900 @100 L | whole 44–153 (right column) | none | whole, 360/360 | 0 |
+| 390×844 @150 L | partly (−143…103) | none | same partial, 403 in view | 0 |
+→ Mark done never scrolled a visible banner off screen (7 configurations incl. A's 3). Branch BLOCKS not met.
+
+## 18. Said-log, real taps (R7, 375×667 @200 light, 4 runs, 10:33 UTC): REAL tap "Put the kettle on" (storage full
+before it), ff 12 min (time only), REAL tap End session + the sheet's End session.
+- Sheet text 4/4: "That’s okay — your minutes still count. 12 minutes of focus will be saved" (storage already failing).
+- Live regions at End 4/4: "Kettle’s off. 12 minutes of focus saved." (timer announcer) → "12 minutes of focus, kept
+  in this tab: not saved yet" (toast) → ONE warning announcement ~140 ms later. Banner on arrival top 573 of 667
+  (94 px in view, empty profile). Item 6: both "saved" wordings fire with storage full on R7; files byte-identical to
+  INT (EndSheet.tsx a1a1653, announce.ts 7ff6535); R7's visible End toast is truthful where INT's said "Saved".
+
+## 19. Save backup reach v2 (`LEAD/runs/L2-savereach/savereach-*.jsonl`, probe sha 608d8cb9; v1 rows invalid → `invalid-v1/`)
+- R7 667×375 @200 light, REAL Tab from the top: Save backup focused at press 4; after the browser's focus scroll
+  (scrollY 303) its box is 63–112 (inside the viewport) but **its centre hit-tests to "Put the kettle on · 25 min"**:
+  focused control under the docked start. R7 844×390 @200: press 4, box 71–121, centre = Save backup (clear).
+- Is this general at 667×375 @200 (other Today controls, INT)? → `LEAD/runs/L2-focusobscure/` queued.
+- savereach v2 touch row R7 667×375: INVALID as a reach test — my direction rule (content up only while Save backup's
+  top > H/2) oscillated at 171–195 and never pushed it into the ~60 px clear strip; not counted. Fine-step reach is
+  established by Lane B raw (`read` R7-667x375-t200 wheel20 / wheel53: Save backup hit-testable, 7/7 lines) and Lane C
+  read-53 (8/8, Save backup yes). 100-px notches miss it (B 4/7, C 4/8).
