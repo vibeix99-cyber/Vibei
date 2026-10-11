@@ -1100,13 +1100,14 @@ for (const vp of [
       await markDone.scrollIntoViewIfNeeded();
       await newbieWithFullStorage(page, { seeded: true });
       await countSaid(page);
-      // The controls round the finger, where they are drawn, frame by frame from the tap on: the task field above the
-      // "Mark done" line and the docked start below it. (Below that line the composer closes up as the line goes: that
-      // is Mark done's own answer, on every revision, not the banner.)
+      // The controls round the finger, where they are drawn, frame by frame from the tap on: the task field and its
+      // clear button, just above the "Mark done" line. (Below that line the composer closes up as the line goes, and
+      // whatever follows it, the docked start included where it is not pinned, moves with it: that is Mark done's own
+      // answer, on every revision, not the banner's.)
       await page.evaluate(() => {
         const w = window as any;
         w.__moved = new Set<Element>();
-        const sel = 'main :is(input[type="text"], input:not([type]), [data-toast-above] button)';
+        const sel = 'main input, main input ~ button';
         const pos = () => new Map([...document.querySelectorAll(sel)].map((el) => [el, el.getBoundingClientRect().top] as const));
         let last = pos();
         const f = () => {
@@ -1127,7 +1128,7 @@ for (const vp of [
       await expect(banner(page)).toHaveCount(1);
       await page.waitForTimeout(800);
       // What may move is only what sits above the banner (the greeting scrolls up to make room for it); nothing at
-      // or below it (the field the finger was under, the docked start) moves on screen.
+      // or below it (the field next to the finger) moves on screen.
       const moved = await page.evaluate(() => {
         const w = window as any;
         w.__stopMoves = true;
