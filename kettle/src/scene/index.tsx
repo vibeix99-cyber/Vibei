@@ -7,11 +7,6 @@ export type { NookSceneProps, SceneMode, SceneWeather, SceneTime } from './types
 const LazyScene = lazy(() => import('./NookScene'));
 
 /**
- * The cozy nook. Lazy-loads the three.js scene; shows a matching flat
- * illustration (or the caller's `still`) while loading, when 3D is off
- * (settings.scene), or without WebGL.
- */
-/**
  * True when the nook can only be the static drawing: 3D is off (settings.scene) or the browser has no WebGL.
  * (While three.js loads, the drawing is a brief stand-in for the live room, so this is false.)
  */
@@ -20,6 +15,11 @@ export function useStaticNook(): boolean {
   return tier === 'off' || !hasWebGL();
 }
 
+/**
+ * The cozy nook. Lazy-loads the three.js scene; shows a matching flat
+ * illustration (or the caller's `still`) while loading, when 3D is off
+ * (settings.scene), or without WebGL.
+ */
 export function Nook(props: NookSceneProps) {
   const { tier } = useSceneTier();
   const time = useSceneTime(props.timeOfDay);
