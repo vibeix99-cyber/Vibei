@@ -270,3 +270,12 @@ the warning 1–2 more times. R7 same flow (section 18): warning said once, End 
   bar (StatusBar.tsx / Home.module.css, I04 r3–r5) differs between INT and R7 but is byte-identical between round 6's
   base `51521cf` and R7 (not in round 7's diff). Round-7 code is not involved (route transition, status bar, settings
   unchanged by round 7). Data asserts pass every time. → FOLLOW-UP (test), owner M1 (test) / I04 (status bar text).
+
+## 24. Focus obscured by the docked start (`LEAD/runs/L2-focusobscure/focusobscure-*.jsonl`, REAL Tab from the top of
+Today, 13–14 stops to "Put the kettle on")
+- 667×375 @200 light: **INT plain, INT storage-full, R7 plain → the same 7 controls focused under the docked start**
+  (Mark done, Work, Study, Read, Create, Life, "25 min Classic"; centre hit = "Put the kettle on · 25 min"). R7 with
+  the banner: the same 7 + Save backup (8). 844×390 @200: nothing obscured on either revision (incl. Save backup).
+- → pre-existing landscape-200 % defect: `html:has(.ctaDock) { scroll-padding-bottom: tabbar + 120px }` (Home.module.css
+  l.416, phones only) is smaller than the 200 % dock; Save backup inherits it. FOLLOW-UP (owner M2/I04); not new in r7.
+  (INT's own Save backup at that size is focused off screen above the view, §22.)
