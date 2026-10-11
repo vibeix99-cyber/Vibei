@@ -53,7 +53,7 @@ async function toSummary(page: Page, baseURL: string | undefined, seed: string, 
   await page.waitForTimeout(2500); // the entrance has settled
 }
 
-type Line = { kind: string; text: string; top: number; bottom: number; status: 'clear' | 'below' | 'above' | 'cut' };
+type Line = { kind: string; text: string; top: number; bottom: number; status: 'clear' | 'below' | 'above' | 'cut-top' | 'cut' };
 type Fold = { F: number; fade: number; lines: Line[]; cut: Line[]; occluded: string[]; footerHit: boolean[]; chaiShown: number | null; highlights: number; facts: string[] };
 
 /** Every line of the summary against the fold: the scroll area's bottom (= the footer's top) and its bottom fade. */
@@ -103,7 +103,8 @@ function fold(page: Page): Promise<Fold> {
       const r = R ?? el.getBoundingClientRect();
       if (r.bottom - r.top < 1) return;
       const peek = R?.ink ? 0 : PEEK;
-      const status = r.bottom <= scR.top + 0.5 ? 'above' : r.top >= F - peek - 0.5 ? 'below' : r.bottom <= F - fade + 0.5 ? 'clear' : 'cut';
+      // Scrolled partly above the top edge ('cut-top') is ordinary scrolling, not the fold.
+      const status = r.bottom <= scR.top + 0.5 ? 'above' : r.top < scR.top - 0.5 ? 'cut-top' : r.top >= F - peek - 0.5 ? 'below' : r.bottom <= F - fade + 0.5 ? 'clear' : 'cut';
       units.push({ kind, el, text: said(el).slice(0, 60), top: r.top, bottom: r.bottom, left: r.left, right: r.right, status });
     };
     const h1 = region.querySelector('h1');
@@ -187,7 +188,8 @@ for (const text of [100, 200]) {
       const end = await fold(page);
       const last = end.lines.filter((l) => l.status !== 'above').at(-1)!;
       expect(last.kind).toMatch(/^details/);
-      expect(last.status, `final line ${JSON.stringify(last)} against the footer at ${end.F} (fade ${end.fade})`).toBe('clear');
+      expect(last.bottom, `final line ${JSON.stringify(last)} against the footer at ${end.F} (fade ${end.fade})`).toBeLessThanOrEqual(end.F - end.fade + 0.5);
+      expect(['clear', 'cut-top']).toContain(last.status);
       expect(end.cut.filter((l) => l.top >= end.F - 60)).toEqual([]);
       expect(end.occluded).toEqual([]);
       expect(end.footerHit).toEqual([true, true]);
