@@ -122,15 +122,18 @@ function toastLiftBottom(): number | null {
 }
 
 /**
- * Where the toasts' room starts: a CSS top in px just below the screen's top bar — a visible top-level `<header>` (the
- * page's banner landmark, e.g. the session screen's bar with Close, Ambience and Mute) near the top of the screen — or
- * null to keep the stylesheet's top (the safe top edge). A stack taller than its room scrolls inside it, so it can
+ * Where the toasts' room starts: a CSS top in px just below the controls of the screen's top bar — a visible top-level
+ * `<header>` (the page's banner landmark, e.g. the session screen's bar with Close, Ambience and Mute) near the top of
+ * the screen — that sit above the toasts' column; or null to keep the stylesheet's top (the safe top edge). A stack taller than its room scrolls inside it, so it can
  * never reach up over that bar's controls. 24 px clears the list's 20 px shadow padding above the room (the list's
  * scrollport reaches that far) with 4 px to spare. Screens without such a bar (Today, Stats, Nook, Settings) keep the
  * room exactly as before.
  */
 function toastRoomTop(): number | null {
   if (typeof document === 'undefined') return null;
+  // The column the toasts are drawn in: only a bar control above that column can be covered.
+  const col = document.querySelector('[aria-label="Notifications"]')?.getBoundingClientRect();
+  if (!col || col.width <= 0) return null;
   let bottom = -Infinity;
   for (const h of document.querySelectorAll<HTMLElement>('header')) {
     // Only a page-level bar: a header inside main / a section / an article is a heading block within the content.
@@ -139,7 +142,10 @@ function toastRoomTop(): number | null {
     if (r.height <= 0 || r.bottom <= 0 || r.top > innerHeight * 0.4) continue;
     const cs = getComputedStyle(h);
     if (cs.visibility === 'hidden' || Number(cs.opacity) < 0.05) continue;
-    bottom = Math.max(bottom, r.bottom);
+    for (const c of h.querySelectorAll('button, a[href], [role="button"], input, select')) {
+      const q = c.getBoundingClientRect();
+      if (q.width > 0 && q.height > 0 && q.right > col.left && q.left < col.right) bottom = Math.max(bottom, q.bottom);
+    }
   }
   return bottom === -Infinity ? null : Math.round(bottom + 24);
 }
