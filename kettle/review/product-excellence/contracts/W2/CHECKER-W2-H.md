@@ -71,13 +71,13 @@ for Home and `seed=fresh&onboarded=0` for first visit. Raw: scratch `w2/LEAD/H/t
 
 | Side | Phone 390×844 | Phone 375×667 | Desktop 1440×900 | Logs (`review/LEAD/H/`) |
 |---|---|---|---|---|
-| Control `90a11e5` :5310 | **pass 1/1** (+3× queued, §4.4) | pass 1/1 | pass 1/1, then **2/3 (1 fail)** | `integrity-1090-control-5310-a.log`, `…-390x3-control-5310.log`, `…-1440x3-control-5310.log` |
-| Trial `4921ee4` :5342 | **fail 2/2** (+3× queued, §4.4) | pass 2/2 | fail 1/2, then 2/3 (1 fail) | `integrity-1090-trial-5342-{a,b}.log`, `…-390x3-trial-5342.log`, `…-1440x3-trial-5342.log` |
+| Control `90a11e5` :5310 | **pass 1/1, then 3/3** | pass 1/1 | pass 1/1, then **2/3 (1 fail)** | `integrity-1090-control-5310-a.log`, `…-390x3-control-5310.log`, `…-1440x3-control-5310.log` |
+| Trial `4921ee4` :5342 | **fail 2/2, then 1/3 pass** | pass 2/2 | fail 1/2, then 2/3 (1 fail) | `integrity-1090-trial-5342-{a,b}.log`, `…-390x3-trial-5342.log`, `…-1440x3-trial-5342.log` |
 | Maker (`7a961b7` :5212 / control :5310) | fails in suite and alone; control 3/3 pass | pass | pass | `W2/H/suites/*.log`, `W2/H/control/integrity-1090-on-90a11e5.log` |
 
 - **1440×900:** fails 1 in 3 on **control too**, with the same assertion ("Crossed off" never shown). H does not change the
   desktop layout. → pre-existing flake, R7-7 / Wave-1 follow-up #9 (FOLLOW-UP, not H's).
-- **390×844:** deterministic on the trial, green on control. This is the case to rule on.
+- **390×844:** fails 6 of 7 runs on the trial, passes 16/16 on the base (§4.4). This is the case to rule on.
 
 ### 4.2 What a person sees (real End, real tap), 390×844 @100
 
@@ -110,7 +110,8 @@ Other sizes (same probe; `toast/*/…-scrolled-prime.json`):
 - **Residual class: BLOCKS.** The narrow exception does not apply: the overlap hides a control (Mark done, and part of the
   task field and its clear button) and changes behaviour (the tap dismisses a toast instead of crossing the task off).
 - **Can H merge with the frozen spec failing? No.** `integrity.spec.ts:1090` @390×844 is green on the base and red on
-  this revision every time, and the red reflects the user-visible regression above, not test timing. R7-7 (follow-up #9,
+  this revision in 6 of 7 runs (I did not trace the one pass; the lift and the toasts' lifetime vary with load, see §4.2 and the default-motion runs), and the red
+  reflects the user-visible regression above, not test timing. R7-7 (follow-up #9,
   "wait for End's toasts") is a separate robustness fix owned by M7a; it does not license a regression in H's revision,
   and the spec is frozen for this round.
 
@@ -120,6 +121,12 @@ At 390×844 the count so far is **trial 0/4** (maker: suite + alone; me: runs a 
 me 1/1). A further `--repeat-each=3` on each side was queued behind Lane R / Lane N jobs at the time of writing
 (`review/LEAD/H/integrity-1090-390x3-{control-5310,trial-5342}.log`). The ruling does not depend on it: §4.2 measures the
 cause directly with real input. If it lands, its counts are appended here.
+
+Landed since: **control 390×844 `--repeat-each=3`: 3/3 pass**; **trial 390×844 `--repeat-each=3`: 1/3 pass, 2 fail**
+(`integrity-1090-390x3-{control-5310,trial-5342}.log`). Trial total at 390×844: **1 pass in 7** (maker 0/2, me 1/5).
+Independent corroboration from Lane S (`review/LS/t1090/`, same frozen spec on `90a11e5` :5310, 3 plain + 3 × repeat-each=2
+runs): **390×844 9/9 pass, 375×667 9/9 pass, 1440×900 5/9** on the base. So the base's 390×844 record is 16/16 across
+maker, Lane S and me, and the 1440×900 failure is a base flake (F1).
 
 ## 5. Visual gate — PASS for the layout change; the blocker is behavioural and is shown in §4.2 frames
 
