@@ -1,0 +1,8 @@
+#!/bin/bash
+# Lane C relaunch job 4 (optional addition): control 49ea1de :5305, Break's over frames only (no taps) at 667x375 and 844x390 @200 light,
+# to attribute the 4d toast-visibility observation (the lead's control row covers 667x375 light only)
+S=/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/r7/C/close
+cd /home/user/wt/rv7-r7/kettle
+echo "== $(date -u +%T) CONTROL 49ea1de :5305 over-carried frames 667x375, 844x390 @200 light"
+node /home/user/wt/rv7-r7/kettle/.tmp/C/closecheck2.mjs http://127.0.0.1:5305 49ea1de $S/ctl "667x375@200:light,844x390@200:light" over-carried measure > $S/ctl-p4.log 2>&1; echo "ctl p4 exit $?"
+echo "== $(date -u +%T) done"

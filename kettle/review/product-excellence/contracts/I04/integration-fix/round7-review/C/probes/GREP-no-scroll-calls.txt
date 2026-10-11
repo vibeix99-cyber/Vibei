@@ -10,3 +10,10 @@ m7b/reach.mjs:5:// Real input only for reaching: page.mouse.wheel, CDP touch dra
 m7b/reach.mjs:6:// scrollTo, scrollBy or sets scrollTop. The debug API (window.__kettle) is used for SETUP only: seed a profile, start a
 m7b/reach.mjs:65:      if (/(auto|scroll)/.test(cs.overflowY) && e.scrollHeight > e.clientHeight + 1) scrollers.push(`${e.tagName.toLowerCase()}.${String(e.className).split(' ')[0].slice(0, 22)} ${Mat
 m7b/reach.mjs:69:  scrollers.push(`doc ${Math.round(d.scrollTop)}/${d.scrollHeight - d.clientHeight}`);
+
+# relaunch: closecheck2.mjs (grep scrollIntoView|scrollTo|scrollBy|scrollTop|scrollLeft)
+closecheck2.mjs:16:// No scrollIntoView / scrollTo / scrollBy / scrollTop writes (reads only). Debug API for setup only.
+closecheck2.mjs:137:    const before = await page.evaluate(() => document.querySelector('[data-focus-view] main').scrollTop);
+closecheck2.mjs:139:    const after = await page.evaluate(() => document.querySelector('[data-focus-view] main').scrollTop);
+closecheck2.mjs:143:const scrollStr = (page) => page.evaluate(() => { const m = document.querySelector('[data-focus-view] main'); const d = document.scrollingElement; return `panel ${Mat
+# every hit: a comment, or a read of scrollTop / scrollHeight / scrollingElement (no write)

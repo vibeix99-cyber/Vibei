@@ -18,8 +18,16 @@ for r in rows:
     if k not in order: order.append(k)
 print('## Detail: frames (per cfg x state x scroll position x toasts)\n')
 print('Each cell: `hit/frames` centre-hit by the control · `ovl` frames a painted toast box overlapped it by > 1 px · `cov` frames counted COVERED (overlap or centre not hit) · `off` frames with < 8 px visible · rect = last frame [l,t,r,b].\n')
-print('| cfg | state | where | toasts | scroll | Close | Ambience | Mute | min toast visible px | zen frames |')
-print('|---|---|---|---|---|---|---|---|---|---|')
+print('| cfg | state | where | toasts | scroll | Close | Ambience | Mute | panel controls: covered frames / frames seen (off-screen frames) | min toast visible px | zen frames |')
+print('|---|---|---|---|---|---|---|---|---|---|---|')
+THREE = ('^Close$', '^Ambience:', '^(Mute sounds|Turn sound on)$')
+def panel(per):
+    out = []
+    for k, o in per.items():
+        if k in THREE: continue
+        seen = o['frames'] - o['off'] - o['missing']
+        out.append(f"{k.strip('^$')[:16]}: {o['covered']}/{seen}" + (f" ({o['off']} off)" if o['off'] else ''))
+    return '; '.join(out) or '—'
 def cell(per, pat):
     o = per.get(pat)
     if not o: return '—'
@@ -28,7 +36,7 @@ for k in order:
     for r in frames:
         if cfgkey(r) != k: continue
         per = r['per']
-        print(f"| {k} | {r['state']} | {r['where']} | {r['n']} | {r['scroll']} | {cell(per,'^Close$')} | {cell(per,'^Ambience:')} | {cell(per,'^(Mute sounds|Turn sound on)$')} | {r['minVisibleToast']} | {r['zenFrames']} |")
+        print(f"| {k} | {r['state']} | {r['where']} | {r['n']} | {r['scroll']} | {cell(per,'^Close$')} | {cell(per,'^Ambience:')} | {cell(per,'^(Mute sounds|Turn sound on)$')} | {panel(per)} | {r['minVisibleToast']} | {r['zenFrames']} |")
 print('\n## Detail: real taps\n')
 print('| cfg | state | control | where | toasts at tap | rect | centre hit before tap | hit element | activated | evidence |')
 print('|---|---|---|---|---|---|---|---|---|---|')
