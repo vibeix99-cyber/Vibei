@@ -1,0 +1,2402 @@
+{
+ "rev": "INT 0d58c5e preview (integration app code)",
+ "base": "http://127.0.0.1:5323",
+ "viewport": {
+  "w": 820,
+  "h": 1180
+ },
+ "dpr": 2,
+ "theme": "dark",
+ "reducedMotion": false,
+ "staticRoom": false,
+ "fixedTime": "2026-10-11T07:40:00.000Z",
+ "isMobile": true,
+ "hasTouch": true,
+ "startedAt": "2026-10-11T11:19:24.460Z",
+ "states": {
+  "00-first-visit": {
+   "desc": "First visit (fresh profile)",
+   "hash": "#/welcome",
+   "now": "2026-10-11T07:40:05.172Z",
+   "scroll": {
+    "y": 0,
+    "max": 0
+   },
+   "heads": [
+    "Hi, I’m Chai."
+   ],
+   "imgs": [
+    {
+     "src": "/assets/chai-happy-BAALIhDR.webp",
+     "alt": "",
+     "box": [
+      353,
+      511,
+      114,
+      186
+     ],
+     "natural": [
+      303,
+      496
+     ],
+     "fit": "fill",
+     "upscale": 0.75,
+     "clip": null,
+     "needPx": 228
+    }
+   ],
+   "canvases": [],
+   "buttons": [
+    {
+     "name": "Start a 15-min brew",
+     "box": [
+      200,
+      988,
+      420,
+      60
+     ]
+    },
+    {
+     "name": "Set things up first",
+     "box": [
+      200,
+      1054,
+      420,
+      60
+     ]
+    },
+    {
+     "name": "I have a backup",
+     "box": [
+      345,
+      1120,
+      131,
+      44
+     ]
+    }
+   ],
+   "axe": []
+  },
+  "00b-first-visit-setup": {
+   "desc": "First visit, setup step 1",
+   "hash": "#/welcome",
+   "now": "2026-10-11T07:40:08.909Z",
+   "scroll": {
+    "y": 0,
+    "max": 0
+   },
+   "heads": [
+    "What should I call you?"
+   ],
+   "imgs": [
+    {
+     "src": "/assets/chai-happy-BAALIhDR.webp",
+     "alt": "",
+     "box": [
+      115,
+      101,
+      90,
+      147
+     ],
+     "natural": [
+      303,
+      496
+     ],
+     "fit": "fill",
+     "upscale": 0.59,
+     "clip": null,
+     "needPx": 179
+    }
+   ],
+   "canvases": [],
+   "buttons": [
+    {
+     "name": "Back",
+     "box": [
+      70,
+      10,
+      50,
+      52
+     ]
+    },
+    {
+     "name": "Skip",
+     "box": [
+      705,
+      14,
+      45,
+      44
+     ]
+    },
+    {
+     "name": "Continue",
+     "box": [
+      550,
+      1102,
+      200,
+      60
+     ]
+    }
+   ],
+   "axe": []
+  },
+  "01-home": {
+   "desc": "Home (veteran profile)",
+   "hash": "#/",
+   "now": "2026-10-11T07:40:03.432Z",
+   "scroll": {
+    "y": 0,
+    "max": 0
+   },
+   "heads": [
+    "Good afternoon, Robin",
+    "Today’s recipes",
+    "What are you brewing? (optional)",
+    "Today’s brews"
+   ],
+   "imgs": [
+    {
+     "src": "/assets/chai-sipping-DTyMuyps.webp",
+     "alt": "",
+     "box": [
+      40,
+      116,
+      68,
+      110
+     ],
+     "natural": [
+      302,
+      491
+     ],
+     "fit": "fill",
+     "upscale": 0.45,
+     "clip": null,
+     "needPx": 135
+    }
+   ],
+   "canvases": [],
+   "buttons": [
+    {
+     "name": "Today",
+     "box": [
+      134,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Stats",
+     "box": [
+      272,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Nook",
+     "box": [
+      410,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Settings",
+     "box": [
+      548,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "23 days warm streak. Show details",
+     "box": [
+      16,
+      16,
+      122,
+      48
+     ]
+    },
+    {
+     "name": "2,261 leaves Show details",
+     "box": [
+      160,
+      16,
+      102,
+      48
+     ]
+    },
+    {
+     "name": "12 Level 12 Cozy level 12, 184 leaves to the next.",
+     "box": [
+      284,
+      16,
+      122,
+      48
+     ]
+    },
+    {
+     "name": "Work",
+     "box": [
+      442,
+      139,
+      110,
+      44
+     ]
+    },
+    {
+     "name": "Study",
+     "box": [
+      560,
+      139,
+      93,
+      44
+     ]
+    },
+    {
+     "name": "Read",
+     "box": [
+      661,
+      139,
+      86,
+      44
+     ]
+    },
+    {
+     "name": "Create",
+     "box": [
+      442,
+      191,
+      97,
+      44
+     ]
+    },
+    {
+     "name": "Life",
+     "box": [
+      547,
+      191,
+      78,
+      44
+     ]
+    },
+    {
+     "name": "15 min Gentle",
+     "box": [
+      446,
+      298,
+      79,
+      48
+     ]
+    },
+    {
+     "name": "25 min Classic",
+     "box": [
+      529,
+      298,
+      79,
+      48
+     ]
+    },
+    {
+     "name": "50 min Deep",
+     "box": [
+      611,
+      298,
+      79,
+      48
+     ]
+    },
+    {
+     "name": "Custom Set it",
+     "box": [
+      694,
+      298,
+      79,
+      48
+     ]
+    },
+    {
+     "name": "Put the kettle on · 25 min",
+     "box": [
+      422,
+      392,
+      374,
+      60
+     ]
+    },
+    {
+     "name": "Change brew length",
+     "box": [
+      616,
+      458,
+      146,
+      24
+     ]
+    }
+   ],
+   "axe": [],
+   "type": [
+    {
+     "t": "23",
+     "px": 20,
+     "w": "700"
+    },
+    {
+     "t": "days warm",
+     "px": 11,
+     "w": "800"
+    },
+    {
+     "t": "streak. Show details",
+     "px": 20,
+     "w": "700"
+    },
+    {
+     "t": "2,261",
+     "px": 20,
+     "w": "700"
+    },
+    {
+     "t": "leaves",
+     "px": 11,
+     "w": "800"
+    },
+    {
+     "t": "Show details",
+     "px": 20,
+     "w": "700"
+    },
+    {
+     "t": "Level 12",
+     "px": 11,
+     "w": "800"
+    },
+    {
+     "t": "Cozy level 12, 184 leaves to t",
+     "px": 20,
+     "w": "700"
+    },
+    {
+     "t": "Good afternoon, Robin",
+     "px": 32.98,
+     "w": "600"
+    },
+    {
+     "t": "Today’s goal",
+     "px": 24,
+     "w": "600"
+    },
+    {
+     "t": "Today’s recipes",
+     "px": 20,
+     "w": "600"
+    },
+    {
+     "t": "1 of 3",
+     "px": 14,
+     "w": "800"
+    },
+    {
+     "t": "Today’s brews",
+     "px": 20,
+     "w": "600"
+    },
+    {
+     "t": "2 · 50 min",
+     "px": 14,
+     "w": "800"
+    }
+   ]
+  },
+  "01-home-full": {
+   "desc": "Home, full page",
+   "hash": "#/",
+   "now": "2026-10-11T07:40:05.657Z",
+   "scroll": {
+    "y": 0,
+    "max": 0
+   },
+   "heads": [
+    "Good afternoon, Robin",
+    "Today’s recipes",
+    "What are you brewing? (optional)",
+    "Today’s brews"
+   ],
+   "imgs": [
+    {
+     "src": "/assets/chai-sipping-DTyMuyps.webp",
+     "alt": "",
+     "box": [
+      40,
+      116,
+      68,
+      110
+     ],
+     "natural": [
+      302,
+      491
+     ],
+     "fit": "fill",
+     "upscale": 0.45,
+     "clip": null,
+     "needPx": 135
+    }
+   ],
+   "canvases": [],
+   "buttons": [
+    {
+     "name": "Today",
+     "box": [
+      134,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Stats",
+     "box": [
+      272,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Nook",
+     "box": [
+      410,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Settings",
+     "box": [
+      548,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "23 days warm streak. Show details",
+     "box": [
+      16,
+      16,
+      122,
+      48
+     ]
+    },
+    {
+     "name": "2,261 leaves Show details",
+     "box": [
+      160,
+      16,
+      102,
+      48
+     ]
+    },
+    {
+     "name": "12 Level 12 Cozy level 12, 184 leaves to the next.",
+     "box": [
+      284,
+      16,
+      122,
+      48
+     ]
+    },
+    {
+     "name": "Work",
+     "box": [
+      442,
+      139,
+      110,
+      44
+     ]
+    },
+    {
+     "name": "Study",
+     "box": [
+      560,
+      139,
+      93,
+      44
+     ]
+    },
+    {
+     "name": "Read",
+     "box": [
+      661,
+      139,
+      86,
+      44
+     ]
+    },
+    {
+     "name": "Create",
+     "box": [
+      442,
+      191,
+      97,
+      44
+     ]
+    },
+    {
+     "name": "Life",
+     "box": [
+      547,
+      191,
+      78,
+      44
+     ]
+    },
+    {
+     "name": "15 min Gentle",
+     "box": [
+      446,
+      298,
+      79,
+      48
+     ]
+    },
+    {
+     "name": "25 min Classic",
+     "box": [
+      529,
+      298,
+      79,
+      48
+     ]
+    },
+    {
+     "name": "50 min Deep",
+     "box": [
+      611,
+      298,
+      79,
+      48
+     ]
+    },
+    {
+     "name": "Custom Set it",
+     "box": [
+      694,
+      298,
+      79,
+      48
+     ]
+    },
+    {
+     "name": "Put the kettle on · 25 min",
+     "box": [
+      422,
+      392,
+      374,
+      60
+     ]
+    },
+    {
+     "name": "Change brew length",
+     "box": [
+      616,
+      458,
+      146,
+      24
+     ]
+    }
+   ]
+  },
+  "02-focus": {
+   "desc": "Focus, 6 s in",
+   "hash": "#/focus",
+   "now": "2026-10-11T07:40:21.689Z",
+   "scroll": {
+    "y": 0,
+    "max": 0
+   },
+   "heads": [],
+   "imgs": [
+    {
+     "src": "/assets/chai-reading-BrtgDZfI.webp",
+     "alt": "",
+     "box": [
+      477,
+      288,
+      185,
+      290
+     ],
+     "natural": [
+      311,
+      487
+     ],
+     "fit": "fill",
+     "upscale": 1.19,
+     "clip": null,
+     "needPx": 370
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      820,
+      507
+     ],
+     "backing": [
+      1025,
+      634
+     ],
+     "pixelRatio": 1.25
+    }
+   ],
+   "buttons": [
+    {
+     "name": "Ambience: Rain. Change",
+     "box": [
+      662,
+      16,
+      86,
+      44
+     ]
+    },
+    {
+     "name": "Turn sound on",
+     "box": [
+      756,
+      16,
+      44,
+      44
+     ]
+    },
+    {
+     "name": "Add 5 minutes",
+     "box": [
+      265,
+      955,
+      62,
+      64
+     ]
+    },
+    {
+     "name": "Pause",
+     "box": [
+      371,
+      955,
+      78,
+      80
+     ]
+    },
+    {
+     "name": "End session",
+     "box": [
+      493,
+      955,
+      62,
+      64
+     ]
+    }
+   ],
+   "axe": []
+  },
+  "02b-focus-mid": {
+   "desc": "Focus, about halfway (clock fast-forwarded 12 min)",
+   "hash": "#/focus",
+   "now": "2026-10-11T07:40:35.815Z",
+   "scroll": {
+    "y": 0,
+    "max": 0
+   },
+   "heads": [],
+   "imgs": [
+    {
+     "src": "/assets/chai-reading-BrtgDZfI.webp",
+     "alt": "",
+     "box": [
+      477,
+      288,
+      185,
+      290
+     ],
+     "natural": [
+      311,
+      487
+     ],
+     "fit": "fill",
+     "upscale": 1.19,
+     "clip": null,
+     "needPx": 370
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      820,
+      507
+     ],
+     "backing": [
+      1025,
+      634
+     ],
+     "pixelRatio": 1.25
+    }
+   ],
+   "buttons": [
+    {
+     "name": "Ambience: Rain. Change",
+     "box": [
+      662,
+      16,
+      86,
+      44
+     ]
+    },
+    {
+     "name": "Turn sound on",
+     "box": [
+      756,
+      16,
+      44,
+      44
+     ]
+    },
+    {
+     "name": "Add 5 minutes",
+     "box": [
+      265,
+      955,
+      62,
+      64
+     ]
+    },
+    {
+     "name": "Pause",
+     "box": [
+      371,
+      955,
+      78,
+      80
+     ]
+    },
+    {
+     "name": "End session",
+     "box": [
+      493,
+      955,
+      62,
+      64
+     ]
+    }
+   ],
+   "axe": []
+  },
+  "03-paused": {
+   "desc": "Paused",
+   "hash": "#/focus",
+   "now": "2026-10-11T07:40:49.005Z",
+   "scroll": {
+    "y": 0,
+    "max": 0
+   },
+   "heads": [],
+   "imgs": [
+    {
+     "src": "/assets/chai-reading-BrtgDZfI.webp",
+     "alt": "",
+     "box": [
+      477,
+      288,
+      185,
+      290
+     ],
+     "natural": [
+      311,
+      487
+     ],
+     "fit": "fill",
+     "upscale": 1.19,
+     "clip": null,
+     "needPx": 370
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      820,
+      507
+     ],
+     "backing": [
+      1025,
+      634
+     ],
+     "pixelRatio": 1.25
+    }
+   ],
+   "buttons": [
+    {
+     "name": "Ambience: Rain. Change",
+     "box": [
+      662,
+      16,
+      86,
+      44
+     ]
+    },
+    {
+     "name": "Turn sound on",
+     "box": [
+      756,
+      16,
+      44,
+      44
+     ]
+    },
+    {
+     "name": "Add 5 minutes",
+     "box": [
+      266,
+      955,
+      62,
+      64
+     ]
+    },
+    {
+     "name": "Resume",
+     "box": [
+      372,
+      955,
+      76,
+      80
+     ]
+    },
+    {
+     "name": "End session",
+     "box": [
+      492,
+      955,
+      62,
+      64
+     ]
+    }
+   ],
+   "axe": []
+  },
+  "04-resumed": {
+   "desc": "Resumed",
+   "hash": "#/focus",
+   "now": "2026-10-11T07:41:00.909Z",
+   "scroll": {
+    "y": 0,
+    "max": 0
+   },
+   "heads": [],
+   "imgs": [
+    {
+     "src": "/assets/chai-reading-BrtgDZfI.webp",
+     "alt": "",
+     "box": [
+      477,
+      288,
+      185,
+      290
+     ],
+     "natural": [
+      311,
+      487
+     ],
+     "fit": "fill",
+     "upscale": 1.19,
+     "clip": null,
+     "needPx": 370
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      820,
+      507
+     ],
+     "backing": [
+      1025,
+      634
+     ],
+     "pixelRatio": 1.25
+    }
+   ],
+   "buttons": [
+    {
+     "name": "Ambience: Rain. Change",
+     "box": [
+      662,
+      16,
+      86,
+      44
+     ]
+    },
+    {
+     "name": "Turn sound on",
+     "box": [
+      756,
+      16,
+      44,
+      44
+     ]
+    },
+    {
+     "name": "Add 5 minutes",
+     "box": [
+      265,
+      955,
+      62,
+      64
+     ]
+    },
+    {
+     "name": "Pause",
+     "box": [
+      371,
+      955,
+      78,
+      80
+     ]
+    },
+    {
+     "name": "End session",
+     "box": [
+      493,
+      955,
+      62,
+      64
+     ]
+    }
+   ],
+   "axe": []
+  },
+  "05-end-sheet": {
+   "desc": "End sheet",
+   "hash": "#/focus",
+   "now": "2026-10-11T07:41:20.471Z",
+   "scroll": {
+    "y": 0,
+    "max": 0
+   },
+   "heads": [
+    "Leave the kettle early?"
+   ],
+   "imgs": [
+    {
+     "src": "/assets/chai-reading-BrtgDZfI.webp",
+     "alt": "",
+     "box": [
+      477,
+      288,
+      185,
+      290
+     ],
+     "natural": [
+      311,
+      487
+     ],
+     "fit": "fill",
+     "upscale": 1.19,
+     "clip": null,
+     "needPx": 370
+    },
+    {
+     "src": "/assets/chai-concerned-owi0mQpG.webp",
+     "alt": "",
+     "box": [
+      377,
+      398,
+      67,
+      106
+     ],
+     "natural": [
+      298,
+      474
+     ],
+     "fit": "fill",
+     "upscale": 0.45,
+     "clip": null,
+     "needPx": 134
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      820,
+      507
+     ],
+     "backing": [
+      1025,
+      634
+     ],
+     "pixelRatio": 1.25
+    }
+   ],
+   "buttons": [
+    {
+     "name": "Ambience: Rain. Change",
+     "box": [
+      662,
+      16,
+      86,
+      44
+     ]
+    },
+    {
+     "name": "Turn sound on",
+     "box": [
+      756,
+      16,
+      44,
+      44
+     ]
+    },
+    {
+     "name": "Add 5 minutes",
+     "box": [
+      265,
+      955,
+      62,
+      64
+     ]
+    },
+    {
+     "name": "Pause",
+     "box": [
+      371,
+      955,
+      78,
+      80
+     ]
+    },
+    {
+     "name": "End session",
+     "box": [
+      493,
+      955,
+      62,
+      64
+     ]
+    },
+    {
+     "name": "Close",
+     "box": [
+      564,
+      379,
+      44,
+      44
+     ]
+    },
+    {
+     "name": "Keep brewing",
+     "box": [
+      226,
+      671,
+      368,
+      60
+     ]
+    },
+    {
+     "name": "End session",
+     "box": [
+      226,
+      739,
+      368,
+      52
+     ]
+    }
+   ],
+   "axe": []
+  },
+  "06-whistle": {
+   "desc": "Whistle (phase just ended)",
+   "hash": "#/done",
+   "now": "2026-10-11T07:41:45.021Z",
+   "scroll": {
+    "y": 0,
+    "max": 0
+   },
+   "heads": [
+    "25 minutes brewed"
+   ],
+   "imgs": [
+    {
+     "src": "/assets/chai-cheering-CK8xIJCH.webp",
+     "alt": "",
+     "box": [
+      477,
+      323,
+      186,
+      255
+     ],
+     "natural": [
+      312,
+      428
+     ],
+     "fit": "fill",
+     "upscale": 1.19,
+     "clip": null,
+     "needPx": 371
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      820,
+      507
+     ],
+     "backing": [
+      1025,
+      634
+     ],
+     "pixelRatio": 1.25
+    }
+   ],
+   "buttons": [
+    {
+     "name": "How your leaves added up",
+     "box": [
+      110,
+      831,
+      600,
+      48
+     ]
+    },
+    {
+     "name": "Tea time · 5 min",
+     "box": [
+      110,
+      1056,
+      600,
+      60
+     ]
+    },
+    {
+     "name": "Skip break",
+     "box": [
+      342,
+      1120,
+      137,
+      52
+     ]
+    }
+   ],
+   "axe": []
+  },
+  "06b-whistle-late": {
+   "desc": "Whistle, 1.5 s later",
+   "hash": "#/done",
+   "now": "2026-10-11T07:41:58.216Z",
+   "scroll": {
+    "y": 0,
+    "max": 0
+   },
+   "heads": [
+    "25 minutes brewed"
+   ],
+   "imgs": [
+    {
+     "src": "/assets/chai-cheering-CK8xIJCH.webp",
+     "alt": "",
+     "box": [
+      477,
+      323,
+      186,
+      255
+     ],
+     "natural": [
+      312,
+      428
+     ],
+     "fit": "fill",
+     "upscale": 1.19,
+     "clip": null,
+     "needPx": 371
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      820,
+      507
+     ],
+     "backing": [
+      1025,
+      634
+     ],
+     "pixelRatio": 1.25
+    }
+   ],
+   "buttons": [
+    {
+     "name": "How your leaves added up",
+     "box": [
+      110,
+      831,
+      600,
+      48
+     ]
+    },
+    {
+     "name": "Tea time · 5 min",
+     "box": [
+      110,
+      1056,
+      600,
+      60
+     ]
+    },
+    {
+     "name": "Skip break",
+     "box": [
+      342,
+      1120,
+      137,
+      52
+     ]
+    }
+   ],
+   "axe": []
+  },
+  "07-summary": {
+   "desc": "Summary, first viewport (1.5 s after arrival)",
+   "hash": "#/done",
+   "now": "2026-10-11T07:42:16.788Z",
+   "scroll": {
+    "y": 0,
+    "max": 0
+   },
+   "heads": [
+    "25 minutes brewed"
+   ],
+   "imgs": [
+    {
+     "src": "/assets/chai-cheering-CK8xIJCH.webp",
+     "alt": "",
+     "box": [
+      477,
+      323,
+      186,
+      255
+     ],
+     "natural": [
+      312,
+      428
+     ],
+     "fit": "fill",
+     "upscale": 1.19,
+     "clip": null,
+     "needPx": 371
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      820,
+      507
+     ],
+     "backing": [
+      1025,
+      634
+     ],
+     "pixelRatio": 1.25
+    }
+   ],
+   "buttons": [
+    {
+     "name": "How your leaves added up",
+     "box": [
+      110,
+      831,
+      600,
+      48
+     ]
+    },
+    {
+     "name": "Tea time · 5 min",
+     "box": [
+      110,
+      1056,
+      600,
+      60
+     ]
+    },
+    {
+     "name": "Skip break",
+     "box": [
+      342,
+      1120,
+      137,
+      52
+     ]
+    }
+   ],
+   "axe": [],
+   "chips": [
+    {
+     "text": "+40 leaves",
+     "w": 131,
+     "h": 38,
+     "bg": "rgb(55, 42, 68)",
+     "weight": "700"
+    },
+    {
+     "text": "Goal met · 75/60 min Daily goal met: 75 of 60 minu",
+     "w": 203,
+     "h": 38,
+     "bg": "rgb(55, 42, 68)",
+     "weight": "700"
+    },
+    {
+     "text": "23 23 days warm",
+     "w": 154,
+     "h": 38,
+     "bg": "rgb(55, 42, 68)",
+     "weight": "700"
+    },
+    {
+     "text": "Recipes 1/3",
+     "w": 136,
+     "h": 38,
+     "bg": "rgb(55, 42, 68)",
+     "weight": "700"
+    },
+    {
+     "text": "12 144 leaves to level 13 144 leaves to cozy level",
+     "w": 210,
+     "h": 38,
+     "bg": "rgb(55, 42, 68)",
+     "weight": "700"
+    }
+   ]
+  },
+  "07a-summary-settled": {
+   "desc": "Summary, settled (4.5 s after arrival)",
+   "hash": "#/done",
+   "now": "2026-10-11T07:42:26.705Z",
+   "scroll": {
+    "y": 0,
+    "max": 0
+   },
+   "heads": [
+    "25 minutes brewed"
+   ],
+   "imgs": [
+    {
+     "src": "/assets/chai-cheering-CK8xIJCH.webp",
+     "alt": "",
+     "box": [
+      477,
+      323,
+      186,
+      255
+     ],
+     "natural": [
+      312,
+      428
+     ],
+     "fit": "fill",
+     "upscale": 1.19,
+     "clip": null,
+     "needPx": 371
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      820,
+      507
+     ],
+     "backing": [
+      1025,
+      634
+     ],
+     "pixelRatio": 1.25
+    }
+   ],
+   "buttons": [
+    {
+     "name": "How your leaves added up",
+     "box": [
+      110,
+      831,
+      600,
+      48
+     ]
+    },
+    {
+     "name": "Tea time · 5 min",
+     "box": [
+      110,
+      1056,
+      600,
+      60
+     ]
+    },
+    {
+     "name": "Skip break",
+     "box": [
+      342,
+      1120,
+      137,
+      52
+     ]
+    }
+   ],
+   "axe": []
+  },
+  "07b-summary-full": {
+   "desc": "Summary, details expanded, full page",
+   "hash": "#/done",
+   "now": "2026-10-11T07:42:39.433Z",
+   "scroll": {
+    "y": 0,
+    "max": 0
+   },
+   "heads": [
+    "25 minutes brewed"
+   ],
+   "imgs": [
+    {
+     "src": "/assets/chai-cheering-CK8xIJCH.webp",
+     "alt": "",
+     "box": [
+      477,
+      323,
+      186,
+      255
+     ],
+     "natural": [
+      312,
+      428
+     ],
+     "fit": "fill",
+     "upscale": 1.19,
+     "clip": null,
+     "needPx": 371
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      820,
+      507
+     ],
+     "backing": [
+      1025,
+      634
+     ],
+     "pixelRatio": 1.25
+    }
+   ],
+   "buttons": [
+    {
+     "name": "How your leaves added up",
+     "box": [
+      110,
+      831,
+      600,
+      48
+     ]
+    },
+    {
+     "name": "Tea time · 5 min",
+     "box": [
+      110,
+      1056,
+      600,
+      60
+     ]
+    },
+    {
+     "name": "Skip break",
+     "box": [
+      342,
+      1120,
+      137,
+      52
+     ]
+    }
+   ]
+  },
+  "08-tea-time": {
+   "desc": "Tea Time (break running)",
+   "hash": "#/focus",
+   "now": "2026-10-11T07:42:49.822Z",
+   "scroll": {
+    "y": 0,
+    "max": 0
+   },
+   "heads": [
+    "Sip some water"
+   ],
+   "imgs": [
+    {
+     "src": "/assets/chai-sipping-DTyMuyps.webp",
+     "alt": "",
+     "box": [
+      480,
+      285,
+      180,
+      292
+     ],
+     "natural": [
+      302,
+      491
+     ],
+     "fit": "fill",
+     "upscale": 1.19,
+     "clip": null,
+     "needPx": 360
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      820,
+      507
+     ],
+     "backing": [
+      1025,
+      634
+     ],
+     "pixelRatio": 1.25
+    }
+   ],
+   "buttons": [
+    {
+     "name": "Ambience: Rain. Change",
+     "box": [
+      662,
+      16,
+      86,
+      44
+     ]
+    },
+    {
+     "name": "Turn sound on",
+     "box": [
+      756,
+      16,
+      44,
+      44
+     ]
+    },
+    {
+     "name": "Skip break",
+     "box": [
+      263,
+      898,
+      62,
+      64
+     ]
+    },
+    {
+     "name": "Pause break",
+     "box": [
+      371,
+      898,
+      78,
+      80
+     ]
+    },
+    {
+     "name": "Start next brew",
+     "box": [
+      495,
+      898,
+      62,
+      64
+     ]
+    },
+    {
+     "name": "Another idea",
+     "box": [
+      533,
+      1127,
+      125,
+      44
+     ]
+    }
+   ],
+   "axe": []
+  },
+  "09-stats": {
+   "desc": "Stats",
+   "hash": "#/stats",
+   "now": "2026-10-11T07:42:58.824Z",
+   "scroll": {
+    "y": 0,
+    "max": 1207
+   },
+   "heads": [
+    "Stats",
+    "Cozy level 12",
+    "Last 7 days",
+    "23 days warm",
+    "Badges",
+    "Your rhythm",
+    "History",
+    "Today"
+   ],
+   "imgs": [
+    {
+     "src": "/assets/chai-happy-BAALIhDR.webp",
+     "alt": "",
+     "box": [
+      741,
+      33,
+      46,
+      75
+     ],
+     "natural": [
+      303,
+      496
+     ],
+     "fit": "fill",
+     "upscale": 0.3,
+     "clip": null,
+     "needPx": 92
+    }
+   ],
+   "canvases": [],
+   "buttons": [
+    {
+     "name": "Today",
+     "box": [
+      134,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Stats",
+     "box": [
+      272,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Nook",
+     "box": [
+      410,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Settings",
+     "box": [
+      548,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Earlier 7 days",
+     "box": [
+      294,
+      580,
+      44,
+      44
+     ]
+    },
+    {
+     "name": "Later 7 days",
+     "box": [
+      346,
+      580,
+      44,
+      44
+     ]
+    },
+    {
+     "name": "Morning Dew, tier 3 of 5. 15 of 40 toward the next",
+     "box": [
+      458,
+      208,
+      100,
+      202
+     ]
+    },
+    {
+     "name": "Nook Builder, tier 4 of 5. 10 of 14 toward the nex",
+     "box": [
+      566,
+      208,
+      100,
+      202
+     ]
+    },
+    {
+     "name": "Deep Steep, tier 2 of 5. 6 of 20 toward the next t",
+     "box": [
+      674,
+      208,
+      100,
+      202
+     ]
+    },
+    {
+     "name": "Warm Streak, tier 3 of 5. 23 of 30 toward the next",
+     "box": [
+      458,
+      418,
+      100,
+      202
+     ]
+    },
+    {
+     "name": "Leaf Collector, tier 3 of 5. 2,301 of 5,000 toward",
+     "box": [
+      566,
+      418,
+      100,
+      202
+     ]
+    },
+    {
+     "name": "Marathon, tier 1 of 5. 1 of 3 toward the next tier",
+     "box": [
+      674,
+      418,
+      100,
+      202
+     ]
+    },
+    {
+     "name": "Show 6 more badges",
+     "box": [
+      458,
+      636,
+      316,
+      52
+     ]
+    },
+    {
+     "name": "See your rhythm",
+     "box": [
+      458,
+      878,
+      316,
+      52
+     ]
+    },
+    {
+     "name": "Work brew, 15:30, 25 minutes, Full brew, tagged Wo",
+     "box": [
+      460,
+      1087,
+      312,
+      68
+     ]
+    },
+    {
+     "name": "Read brew, 13:20, 25 minutes, Full brew, tagged Re",
+     "box": [
+      460,
+      1157,
+      312,
+      68
+     ]
+    }
+   ],
+   "axe": []
+  },
+  "09-stats-full": {
+   "desc": "Stats, full page",
+   "hash": "#/stats",
+   "now": "2026-10-11T07:43:08.313Z",
+   "scroll": {
+    "y": 0,
+    "max": 1207
+   },
+   "heads": [
+    "Stats",
+    "Cozy level 12",
+    "Last 7 days",
+    "23 days warm",
+    "Badges",
+    "Your rhythm",
+    "History",
+    "Today"
+   ],
+   "imgs": [
+    {
+     "src": "/assets/chai-happy-BAALIhDR.webp",
+     "alt": "",
+     "box": [
+      741,
+      33,
+      46,
+      75
+     ],
+     "natural": [
+      303,
+      496
+     ],
+     "fit": "fill",
+     "upscale": 0.3,
+     "clip": null,
+     "needPx": 92
+    }
+   ],
+   "canvases": [],
+   "buttons": [
+    {
+     "name": "Today",
+     "box": [
+      134,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Stats",
+     "box": [
+      272,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Nook",
+     "box": [
+      410,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Settings",
+     "box": [
+      548,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Earlier 7 days",
+     "box": [
+      294,
+      580,
+      44,
+      44
+     ]
+    },
+    {
+     "name": "Later 7 days",
+     "box": [
+      346,
+      580,
+      44,
+      44
+     ]
+    },
+    {
+     "name": "Morning Dew, tier 3 of 5. 15 of 40 toward the next",
+     "box": [
+      458,
+      208,
+      100,
+      202
+     ]
+    },
+    {
+     "name": "Nook Builder, tier 4 of 5. 10 of 14 toward the nex",
+     "box": [
+      566,
+      208,
+      100,
+      202
+     ]
+    },
+    {
+     "name": "Deep Steep, tier 2 of 5. 6 of 20 toward the next t",
+     "box": [
+      674,
+      208,
+      100,
+      202
+     ]
+    },
+    {
+     "name": "Warm Streak, tier 3 of 5. 23 of 30 toward the next",
+     "box": [
+      458,
+      418,
+      100,
+      202
+     ]
+    },
+    {
+     "name": "Leaf Collector, tier 3 of 5. 2,301 of 5,000 toward",
+     "box": [
+      566,
+      418,
+      100,
+      202
+     ]
+    },
+    {
+     "name": "Marathon, tier 1 of 5. 1 of 3 toward the next tier",
+     "box": [
+      674,
+      418,
+      100,
+      202
+     ]
+    },
+    {
+     "name": "Show 6 more badges",
+     "box": [
+      458,
+      636,
+      316,
+      52
+     ]
+    },
+    {
+     "name": "See your rhythm",
+     "box": [
+      458,
+      878,
+      316,
+      52
+     ]
+    },
+    {
+     "name": "Work brew, 15:30, 25 minutes, Full brew, tagged Wo",
+     "box": [
+      460,
+      1087,
+      312,
+      68
+     ]
+    },
+    {
+     "name": "Read brew, 13:20, 25 minutes, Full brew, tagged Re",
+     "box": [
+      460,
+      1157,
+      312,
+      68
+     ]
+    }
+   ]
+  },
+  "10-nook": {
+   "desc": "Nook",
+   "hash": "#/nook",
+   "now": "2026-10-11T07:43:13.796Z",
+   "scroll": {
+    "y": 0,
+    "max": 702
+   },
+   "heads": [
+    "Your nook",
+    "Cozy level 12",
+    "Cozy things"
+   ],
+   "imgs": [],
+   "canvases": [
+    {
+     "box": [
+      26,
+      108,
+      768,
+      631
+     ],
+     "backing": [
+      960,
+      788
+     ],
+     "pixelRatio": 1.25
+    }
+   ],
+   "buttons": [
+    {
+     "name": "Today",
+     "box": [
+      134,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Stats",
+     "box": [
+      272,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Nook",
+     "box": [
+      410,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Settings",
+     "box": [
+      548,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Time of day: Right now. Change",
+     "box": [
+      688,
+      118,
+      44,
+      44
+     ]
+    },
+    {
+     "name": "Window: Rain, matching your sounds. Change",
+     "box": [
+      740,
+      118,
+      44,
+      44
+     ]
+    },
+    {
+     "name": "Trailing pothos",
+     "box": [
+      24,
+      1017,
+      184,
+      178
+     ]
+    },
+    {
+     "name": "Stack of books",
+     "box": [
+      220,
+      1017,
+      184,
+      178
+     ]
+    },
+    {
+     "name": "Floor cushion",
+     "box": [
+      416,
+      1017,
+      184,
+      178
+     ]
+    },
+    {
+     "name": "Fairy lights",
+     "box": [
+      612,
+      1017,
+      184,
+      178
+     ]
+    }
+   ],
+   "axe": [],
+   "hasCanvas": true
+  },
+  "10b-nook-dragged": {
+   "desc": "Nook after a real drag (orbit)",
+   "hash": "#/nook",
+   "now": "2026-10-11T07:43:21.543Z",
+   "scroll": {
+    "y": 0,
+    "max": 702
+   },
+   "heads": [
+    "Your nook",
+    "Cozy level 12",
+    "Cozy things"
+   ],
+   "imgs": [],
+   "canvases": [
+    {
+     "box": [
+      26,
+      108,
+      768,
+      631
+     ],
+     "backing": [
+      960,
+      788
+     ],
+     "pixelRatio": 1.25
+    }
+   ],
+   "buttons": [
+    {
+     "name": "Today",
+     "box": [
+      134,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Stats",
+     "box": [
+      272,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Nook",
+     "box": [
+      410,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Settings",
+     "box": [
+      548,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Time of day: Right now. Change",
+     "box": [
+      688,
+      118,
+      44,
+      44
+     ]
+    },
+    {
+     "name": "Window: Rain, matching your sounds. Change",
+     "box": [
+      740,
+      118,
+      44,
+      44
+     ]
+    },
+    {
+     "name": "Trailing pothos",
+     "box": [
+      24,
+      1017,
+      184,
+      178
+     ]
+    },
+    {
+     "name": "Stack of books",
+     "box": [
+      220,
+      1017,
+      184,
+      178
+     ]
+    },
+    {
+     "name": "Floor cushion",
+     "box": [
+      416,
+      1017,
+      184,
+      178
+     ]
+    },
+    {
+     "name": "Fairy lights",
+     "box": [
+      612,
+      1017,
+      184,
+      178
+     ]
+    }
+   ],
+   "axe": []
+  },
+  "10c-nook-tapped": {
+   "desc": "Nook after a tap at the canvas centre",
+   "hash": "#/nook",
+   "now": "2026-10-11T07:43:39.277Z",
+   "scroll": {
+    "y": 0,
+    "max": 702
+   },
+   "heads": [
+    "Your nook",
+    "Cozy level 12",
+    "Cozy things"
+   ],
+   "imgs": [],
+   "canvases": [
+    {
+     "box": [
+      26,
+      108,
+      768,
+      631
+     ],
+     "backing": [
+      960,
+      788
+     ],
+     "pixelRatio": 1.25
+    }
+   ],
+   "buttons": [
+    {
+     "name": "Today",
+     "box": [
+      134,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Stats",
+     "box": [
+      272,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Nook",
+     "box": [
+      410,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Settings",
+     "box": [
+      548,
+      1112,
+      138,
+      68
+     ]
+    },
+    {
+     "name": "Time of day: Right now. Change",
+     "box": [
+      688,
+      118,
+      44,
+      44
+     ]
+    },
+    {
+     "name": "Window: Rain, matching your sounds. Change",
+     "box": [
+      740,
+      118,
+      44,
+      44
+     ]
+    },
+    {
+     "name": "Trailing pothos",
+     "box": [
+      24,
+      1017,
+      184,
+      178
+     ]
+    },
+    {
+     "name": "Stack of books",
+     "box": [
+      220,
+      1017,
+      184,
+      178
+     ]
+    },
+    {
+     "name": "Floor cushion",
+     "box": [
+      416,
+      1017,
+      184,
+      178
+     ]
+    },
+    {
+     "name": "Fairy lights",
+     "box": [
+      612,
+      1017,
+      184,
+      178
+     ]
+    }
+   ],
+   "axe": []
+  }
+ },
+ "errors": [
+  "FATAL page.screenshot: Timeout 120000ms exceeded.\nCall log:\n\u001b[2m  - taking page screenshot\u001b[22m\n\u001b[2m    - disabled all CSS animations\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n"
+ ],
+ "console": [],
+ "endedAt": "2026-10-11T11:29:11.971Z"
+}

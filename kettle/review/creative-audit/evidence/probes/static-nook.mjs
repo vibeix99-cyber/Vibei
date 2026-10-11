@@ -1,0 +1,32 @@
+// Probe: static room fallback (scene off): does drag change the view, does tapping an item do anything? Compare with 3D.
+import { chromium } from 'playwright';
+const [base, scene] = [process.argv[2], process.argv[3] || 'off'];
+const b = await chromium.launch({ args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] });
+const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, colorScheme: 'light', serviceWorkers: 'block' });
+const p = await ctx.newPage();
+await p.goto(`${base}/?debug&seed=veteran&theme=light#/`);
+await p.waitForFunction(() => window.__kettle?.timerInfo?.()?.leader, null, { timeout: 60000 });
+await p.evaluate((s) => window.__kettle.settings.getState().set({ scene: s, muted: true }), scene);
+await p.evaluate(() => window.__kettle.navigate('/nook')); await p.waitForTimeout(6000);
+const info = () => p.evaluate(() => {
+  const hint = [...document.querySelectorAll('*')].find((e) => e.childElementCount === 0 && /drag to look around/i.test(e.textContent || ''));
+  const room = hint?.closest('section, div[class*=room], div[class*=stage]') ?? document.querySelector('main');
+  const svg = document.querySelector('svg[class*=room], svg[aria-label], [class*=Fallback] svg') ;
+  const canvas = document.querySelector('canvas');
+  const r = (canvas ?? hint?.parentElement?.parentElement)?.getBoundingClientRect();
+  return { hint: hint?.textContent?.trim(), canvas: !!canvas, roomRect: r && [r.x | 0, r.y | 0, r.width | 0, r.height | 0], dialogs: document.querySelectorAll('[role=dialog]').length, buttonsInRoom: [...document.querySelectorAll('button')].filter((x) => { const b = x.getBoundingClientRect(); return r && b.top > r.y && b.bottom < r.y + r.height; }).map((x) => x.getAttribute('aria-label') || x.textContent.trim()).slice(0, 20) };
+});
+const i0 = await info(); console.log('before', JSON.stringify(i0));
+const [x, y, w, h] = i0.roomRect; const cx = x + w / 2, cy = y + h / 2;
+const s0 = await p.screenshot({ clip: { x, y, width: w, height: h } });
+const cdp = await ctx.newCDPSession(p);
+const touch = async (type, px, py) => cdp.send('Input.dispatchTouchEvent', { type, touchPoints: type === 'touchEnd' ? [] : [{ x: px, y: py }] });
+await touch('touchStart', cx, cy); for (let i = 1; i <= 10; i++) { await touch('touchMove', cx - i * 12, cy); await p.waitForTimeout(30); } await touch('touchEnd');
+await p.waitForTimeout(1500);
+const s1 = await p.screenshot({ clip: { x, y, width: w, height: h } });
+let diff = 0; for (let k = 0; k < Math.min(s0.length, s1.length); k++) if (s0[k] !== s1[k]) diff++;
+console.log('drag: png bytes differ', diff, 'of', s0.length, s0.length === s1.length ? '(same length)' : '(length changed)');
+await p.touchscreen.tap(cx + w * 0.18, cy + h * 0.12); await p.waitForTimeout(2000);
+console.log('after tap', JSON.stringify(await info()));
+await p.screenshot({ path: process.argv[4] || '/tmp/static-nook-after-tap.png' });
+await b.close();
