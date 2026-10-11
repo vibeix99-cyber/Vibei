@@ -246,3 +246,16 @@ rAF starved (2–4 frames in 3 s under load 8–10) → timing inconclusive. Eve
 217–2979 ms, INT at 305–2265 ms after End): End's toasts at y 410–462 / 470–522 and Mark done's centre (y 453) hits
 the toast. Consistent with the diag: End's toasts over Mark done at 1440 is pre-existing (INT 4/4 diag runs);
 R7 is not worse (diag: R7 settled below Mark done in 5/6). → :1090 flake = test timing; FOLLOW-UP (test M7a; lift M2).
+
+## 21. Said-log INT control (real taps, 375×667 @200 light, 2 runs, `saidlog-0d58c5e.jsonl`)
+INT announces the warning toast **5 and 8 times during the brew** (toast mounted/removed every ~0.5–1.2 s on #/focus:
+r6 item 18 churn), then at End: "Kettle’s off. 12 minutes of focus saved." + toast "**Saved** 12 minutes of focus" +
+the warning 1–2 more times. R7 same flow (section 18): warning said once, End toast "…kept in this tab: not saved yet".
+→ item 6: R7 strictly better than INT on the visible End wording; End sheet + timer-announcer wording identical.
+
+## 22. Save backup by keyboard, INT control (`savereach-0d58c5e.jsonl`, same probe v2)
+- INT 667×375 @200: the warning is a toast at y −183…−142 (above the screen); Tab reaches its Save backup at press 15,
+  then at −326…−285 — focused but wholly off screen. INT 844×390 @200: not reached in 60 Tabs (toast at −79…−38).
+- R7: press 4 at both sizes; 844×390 focused and clear; 667×375 focused, inside the viewport, centre under the docked
+  start. → keyboard reach of Save backup at landscape 200 %: R7 better than INT at both sizes; the 667×375 obscured
+  focus is the r6 item-3 strip (docked start leaves ~60 px). FOLLOW-UP (owner M2/I04: scroll-padding vs the 200 % dock).

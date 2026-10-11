@@ -105,9 +105,12 @@ Times are ms relative to the tap's `pointerdown` (t = 0). `scrollTop` = `documen
 | readwarn-int | 0d58c5e-375x667-t200-dark-wheel | T | 9/18 | False (20) | None | 0 | 1/1 | 3 | [-517, -144] | E: 9/18 warning lines never wholly seen; F: Save backup never hit-tested |
 | readwarn-int | 0d58c5e-390x844-t200-light-wheel | T | 13/18 | True (0) | kettle-backup-2026-10-11.json | 0 | 1/0 | 3 | [-203, -154] | E: 5/18 warning lines never wholly seen |
 | readwarn-int | 0d58c5e-844x390-t200-light-wheel | T- | 7/12 | False (0) | None | 0 | 6/7 | 317 | [-386, -158] | E: 5/12 warning lines never wholly seen; F: Save backup never hit-tested |
+| readwarn-int | 0d58c5e-667x375-t200-dark-wheel | -T | 1/12 | False (0) | None | 0 | 1/1 | 296 | [-393, -257] | E: 11/12 warning lines never wholly seen; F: Save backup never hit-tested |
 | readwarn-r7 | b39202f-375x667-t200-light-wheel | B | 7/7 | True (14) | kettle-backup-2026-10-11.json | 0 | 1/0 | 3 | [-387, 583] | none |
 | readwarn-r7 | b39202f-375x667-t200-dark-wheel | B | 7/7 | True (14) | kettle-backup-2026-10-11.json | 0 | 1/0 | 3 | [-387, 583] | none |
 | readwarn-r7 | b39202f-390x844-t200-light-wheel | -B | 7/7 | True (8) | kettle-backup-2026-10-11.json | 0 | 1/0 | 3 | [-456, 514] | none |
+| readwarn-r7 | b39202f-844x390-t200-light-wheel | B | 6/6 | True (3) | kettle-backup-2026-10-11.json | 0 | 1/0 | 3 | [-944, 26] | none |
+| readwarn-r7 | b39202f-667x375-t200-dark-wheel | -B | 8/8 | True (8) | kettle-backup-2026-10-11.json | 0 | 1/0 | 3 | [-944, 26] | none |
 
 ## Appendix: every run
 
@@ -273,6 +276,9 @@ Times are ms relative to the tap's `pointerdown` (t = 0). `scrollTop` = `documen
 | 158 | readwarn-int | readwarn.mjs `71d1b5b7e1cc14cb…` :5303 0d58c5e | http://127.0.0.1:5303/?debug&theme=dark#/ | wheel | 2026-10-11T03:43:59.094Z | 12.70 12.28 11.13 | 0d58c5e-375x667-t200-dark-wheel | E: 9/18 warning lines never wholly seen; F: Save backup never hit-tested · lines 9/18 · download None |
 | 159 | readwarn-int | readwarn.mjs `71d1b5b7e1cc14cb…` :5303 0d58c5e | http://127.0.0.1:5303/?debug&theme=light&nooktime=day#/ | wheel | 2026-10-11T03:49:51.901Z | 13.57 12.19 11.32 | 0d58c5e-390x844-t200-light-wheel | E: 5/18 warning lines never wholly seen · lines 13/18 · download kettle-backup-2026-10-11.json |
 | 160 | readwarn-int | readwarn.mjs `71d1b5b7e1cc14cb…` :5303 0d58c5e | http://127.0.0.1:5303/?debug&theme=light&nooktime=day#/ | wheel | 2026-10-11T03:56:27.034Z | 10.32 11.27 11.30 | 0d58c5e-844x390-t200-light-wheel | E: 5/12 warning lines never wholly seen; F: Save backup never hit-tested · lines 7/12 · download None |
-| 161 | readwarn-r7 | readwarn.mjs `71d1b5b7e1cc14cb…` :5301 b39202f | http://127.0.0.1:5301/?debug&theme=light&nooktime=day#/ | wheel | 2026-10-11T03:40:25.953Z | 12.69 12.19 10.85 | b39202f-375x667-t200-light-wheel | OK · lines 7/7 · download kettle-backup-2026-10-11.json |
-| 162 | readwarn-r7 | readwarn.mjs `71d1b5b7e1cc14cb…` :5301 b39202f | http://127.0.0.1:5301/?debug&theme=dark#/ | wheel | 2026-10-11T03:47:34.778Z | 11.55 11.48 11.00 | b39202f-375x667-t200-dark-wheel | OK · lines 7/7 · download kettle-backup-2026-10-11.json |
-| 163 | readwarn-r7 | readwarn.mjs `71d1b5b7e1cc14cb…` :5301 b39202f | http://127.0.0.1:5301/?debug&theme=light&nooktime=day#/ | wheel | 2026-10-11T03:52:53.569Z | 13.04 12.76 11.71 | b39202f-390x844-t200-light-wheel | OK · lines 7/7 · download kettle-backup-2026-10-11.json |
+| 161 | readwarn-int | readwarn.mjs `71d1b5b7e1cc14cb…` :5303 0d58c5e | http://127.0.0.1:5303/?debug&theme=dark#/ | wheel | 2026-10-11T10:42:05.206Z | 10.99 9.87 10.43 | 0d58c5e-667x375-t200-dark-wheel | E: 11/12 warning lines never wholly seen; F: Save backup never hit-tested · lines 1/12 · download None |
+| 162 | readwarn-r7 | readwarn.mjs `71d1b5b7e1cc14cb…` :5301 b39202f | http://127.0.0.1:5301/?debug&theme=light&nooktime=day#/ | wheel | 2026-10-11T03:40:25.953Z | 12.69 12.19 10.85 | b39202f-375x667-t200-light-wheel | OK · lines 7/7 · download kettle-backup-2026-10-11.json |
+| 163 | readwarn-r7 | readwarn.mjs `71d1b5b7e1cc14cb…` :5301 b39202f | http://127.0.0.1:5301/?debug&theme=dark#/ | wheel | 2026-10-11T03:47:34.778Z | 11.55 11.48 11.00 | b39202f-375x667-t200-dark-wheel | OK · lines 7/7 · download kettle-backup-2026-10-11.json |
+| 164 | readwarn-r7 | readwarn.mjs `71d1b5b7e1cc14cb…` :5301 b39202f | http://127.0.0.1:5301/?debug&theme=light&nooktime=day#/ | wheel | 2026-10-11T03:52:53.569Z | 13.04 12.76 11.71 | b39202f-390x844-t200-light-wheel | OK · lines 7/7 · download kettle-backup-2026-10-11.json |
+| 165 | readwarn-r7 | readwarn.mjs `71d1b5b7e1cc14cb…` :5301 b39202f | http://127.0.0.1:5301/?debug&theme=light&nooktime=day#/ | wheel | 2026-10-11T10:41:42.165Z | 10.36 9.65 10.37 | b39202f-844x390-t200-light-wheel | OK · lines 6/6 · download kettle-backup-2026-10-11.json |
+| 166 | readwarn-r7 | readwarn.mjs `71d1b5b7e1cc14cb…` :5301 b39202f | http://127.0.0.1:5301/?debug&theme=dark#/ | wheel | 2026-10-11T10:42:23.828Z | 10.77 9.86 10.41 | b39202f-667x375-t200-dark-wheel | OK · lines 8/8 · download kettle-backup-2026-10-11.json |
