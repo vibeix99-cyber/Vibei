@@ -18,3 +18,6 @@ Restore a chain in order with `git fetch <bundle> 'refs/heads/*:refs/heads/*'` (
 | `pe-r7-banner-7ba0d98.incremental.bundle.part-00..02` (+ `.sha256`) | pe/r7-banner@7ba0d98 (round 7 combined, READY FOR REVIEW) | 51521cf 38fc9c6 | parts reassembled and checksum-verified 2026-10-11 |
 | `rv7-trial-b39202f.incremental.bundle` | pe/rv7-trial@b39202f (round-7 review trial merge, REJECTED: R7-D1) | 2e9095c 7ba0d98 | okay 2026-10-11 |
 | `pe-r8-toastroom-2c3172c.incremental.bundle` | pe/r8-toastroom@2c3172c (round 8, M8 READY FOR REVIEW: R7-D1) | 7ba0d98 | okay 2026-10-11 |
+| `rv8-trial-9ff0d04.incremental.bundle` | pe/rv8-trial@9ff0d04 (round-8 trial merge, APPROVED; merged as 90a11e5) | 61a60b2 2c3172c | okay 2026-10-11 |
+| `worktree-probes-2026-10-11.tar.gz` | review probe scripts from the round-6–8 worktrees (.tmp, git-ignored) before cleanup | — | tar ok 2026-10-11 |
+| (not bundled) | pe/r5-control@20671eb (round-5 trial, R5-D1 control; obsolete — R5-D1 verified fixed in rounds 6–8) kept as a LOCAL branch only; a full bundle would be 281 MB | — | 2026-10-11 |
