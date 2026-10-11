@@ -298,7 +298,7 @@ control, on Break's over scrolled to its end", has 2 rows.
 | `npx tsc --noEmit` | exit 0 (`logs/test-tsc.log`) |
 | `npx vitest run` | **267/267 passed** (`logs/test-vitest.log`) |
 | Playwright chromium, all specs: `KETTLE_PORT=5208 KETTLE_PWA_PORT=5228 npx playwright test --project=chromium --workers=2`, through the gate with `--n 2` | **74/74 passed** in 14.8 min, 0 skipped, 0 flaky (`logs/test-chromium-f3c9357.log`). This includes the 2 new R7-D1 rows and every existing `toast-room`, `break-reach`, `integrity`, `a11y`, `statusbar` and `whistle` test. |
-| `--project=timer-harness --project=timer-app --project=pwa`, through the gate with `--n 2` | (running when this commit was made; result in the next commit) |
+| `--project=timer-harness --project=timer-app --project=pwa`, through the gate with `--n 2` | **29 passed, 2 skipped** of 31 in 1.7 min, 0 failed (`logs/test-timer-pwa-f3c9357.log`). Both skips are by design in `timer.spec.ts` and run only in the harness project: l.295 "infra is exercised in the harness; screens bind their own keys", and l.439 "render counter lives in the harness" (timer-app). The same 2 skips were recorded on `b39202f` in round 7. |
 
 
 ## (g) Captures (full size, DPR 2, same session, frozen clock)
