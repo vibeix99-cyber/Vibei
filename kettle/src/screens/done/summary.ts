@@ -135,7 +135,7 @@ export interface Highlight {
 
 export interface RankedRewards {
   highlight: Highlight | null;
-  /** The compact group: leaves and the day's goal first, then any other milestones (biggest first), then the rest. */
+  /** The compact group: every other pill, in the model's own order (so an unlock day wraps exactly as before). */
   secondary: RewardPill[];
 }
 
@@ -171,11 +171,9 @@ export function rankRewards(m: SummaryModel, r: CompletionReport): RankedRewards
     highlight = { kind: top.kind!, pill: top.pill, note: noteFor(top.kind!, top.pill, m, r) };
   }
 
-  const rest = tagged.filter((t) => t.pill !== highlight?.pill);
-  const lead = rest.filter((t) => t.pill.kind === 'leaves' || t.pill.kind === 'goal');
-  const more = rest.filter((t) => t.kind).sort(byRank);
-  const routine = rest.filter((t) => !t.kind && t.pill.kind !== 'leaves' && t.pill.kind !== 'goal');
-  return { highlight, secondary: [...lead, ...more, ...routine].map((t) => t.pill) };
+  // The rest keep the model's order (leaves, goal, streak, Tea Cozy, recipes, level, badges): the accepted K02/K03
+  // rows wrap exactly as before, and the highlight is the only thing that moves.
+  return { highlight, secondary: m.pills.filter((p) => p !== highlight?.pill) };
 }
 
 function noteFor(kind: Milestone, pill: RewardPill, m: SummaryModel, r: CompletionReport): string {

@@ -27,12 +27,12 @@ function holdsEverything(r: CompletionReport) {
 beforeEach(() => setNow(2026, 9, 28, 16, 0));
 
 describe('rankRewards — from the engine’s own reports', () => {
-  it('a room unlock is the one highlight (its close-up card); every pill stays compact, leaves and goal first', () => {
+  it('a room unlock is the one highlight (its close-up card); every pill stays compact, in the model order', () => {
     const r = applyRecord(start(), brew(TODAY, 15, 0, { intention: 'Essay', tag: 'study' }), ctx()).report!;
     const { m, k } = holdsEverything(r);
     expect(m.unlock).not.toBeNull();
     expect(k.highlight).toEqual({ kind: 'unlock', pill: null, note: '' });
-    expect(k.secondary.slice(0, 2).map((p) => p.kind)).toEqual(['leaves', 'goal']);
+    expect(k.secondary).toEqual(m.pills);
     // The arithmetic is the model's, untouched.
     expect(m.details.rows.reduce((a, x) => a + x.amount, 0)).toBe(r.leaves.total);
   });
@@ -74,8 +74,8 @@ describe('rankRewards — the order of milestones (biggest first; shaped from a 
     expect(k.highlight?.kind).toBe('level');
     expect(k.highlight?.pill?.text).toBe('Cozy level 4');
     expect(k.highlight?.note).toBe(`${m.details.toNext} ${m.details.toNext === 1 ? 'leaf' : 'leaves'} to level 5`);
-    // The rest: leaves, goal, then the other milestones biggest first, then routine progress.
-    expect(k.secondary.slice(0, 5).map((p) => p.kind)).toEqual(['leaves', 'goal', 'streak', 'badge', 'cozy']);
+    // The rest keep the model's order: only the highlight moves.
+    expect(k.secondary).toEqual(m.pills.filter((p) => p.kind !== 'level'));
   });
 
   it('a new best streak beats a badge; the highest badge tier leads the badges', () => {
@@ -88,7 +88,7 @@ describe('rankRewards — the order of milestones (biggest first; shaped from a 
     const { k } = holdsEverything(r);
     expect(k.highlight?.kind).toBe('best');
     expect(k.highlight?.pill?.text).toBe('7 days warm, your best yet');
-    expect(k.secondary.filter((p) => p.kind === 'badge').map((p) => p.text)).toEqual(['Badge: Warm Streak II', 'Badge: Weekend Warmth']);
+    expect(k.secondary.filter((p) => p.kind === 'badge').map((p) => p.text)).toEqual(['Badge: Weekend Warmth', 'Badge: Warm Streak II']);
   });
 
   it('a badge beats a Tea Cozy; its note is the badge’s own description', () => {
