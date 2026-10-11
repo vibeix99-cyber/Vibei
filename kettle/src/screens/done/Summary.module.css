@@ -22,9 +22,10 @@
   overscroll-behavior: contain;
   padding-top: var(--sheet-top, 0px);
   scrollbar-width: none;
-  /* A soft fade at the bottom edge says "there's more" without a scrollbar's help. */
-  -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 22px), transparent);
-  mask-image: linear-gradient(180deg, #000 calc(100% - 22px), transparent);
+  /* A soft fade at the bottom edge says "there's more" without a scrollbar's help. 14px (was 22px) so the opening
+     position can put the fold between two lines (Summary.tsx: FADE, Wave-1 #1): only a line's empty top edge shows. */
+  -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 14px), transparent);
+  mask-image: linear-gradient(180deg, #000 calc(100% - 14px), transparent);
 }
 .scroll::-webkit-scrollbar {
   display: none;
@@ -93,11 +94,12 @@
   gap: 8px;
 }
 
-/* ---------- 3. routine rewards, compact ---------- */
+/* ---------- 3. the rewards: the one highlighted milestone (if any, and not an unlock), then the rest, compact ---------- */
 .pills {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  /* 8px at 100 % text; with large text the rows keep room between them for a clean fold */
+  gap: 0.5rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -126,6 +128,45 @@
 .pill[data-kind='goal'] .pillArt {
   /* the goal ring is drawn at 20px; keep its box the same as the others */
   width: 28px;
+}
+/* The highlight: the biggest milestone of this brew (summary.ts rankRewards), on the unlock's honey card — one line
+   wide, its drawing larger, one short line on what it means. Never more than one; an unlock uses its own card. */
+.highlight {
+  flex: 1 1 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 8px 14px 8px 10px;
+  border-radius: var(--r-lg);
+  background: var(--honey-soft);
+  box-shadow: inset 0 0 0 2px var(--honey-soft-edge);
+  color: var(--ink);
+}
+.highlightArt {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: none;
+}
+.highlightText {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+.highlightTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.highlightNote {
+  color: var(--ink-2);
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.3;
 }
 
 /* ---------- 4. a major room unlock, prominent ---------- */
