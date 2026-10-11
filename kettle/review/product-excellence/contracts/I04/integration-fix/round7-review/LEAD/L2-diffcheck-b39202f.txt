@@ -1,0 +1,68 @@
+== candidate b39202f = b39202f8d391de1e65b9b6c3aa9de902bbd79382 tree b7486794a2dba50fc5b3a5aba9da54e322d0bf4f src 6db18ada524d3ca6354151ee59a5e3e8c239c604
+== M1 frozen paths vs 51521cf (must be empty) ==
+   blobs: storage.ts b73a0c70d4e5 (base b73a0c70d4e5, M1 b73a0c70d4e5)  timer 748e7fb77f20 (base 748e7fb77f20)  progress f216f01521ee (base f216f01521ee)
+== integrity.spec.ts: prefix before the placement block byte-identical to 51521cf and 3f00b57 ==
+   51521cf: header at line 951 of 1099; prefix(1..949) sha 669ff6598fc1ad85; header-count 1
+   3f00b57: header at line 951 of 1099; prefix(1..949) sha 669ff6598fc1ad85; header-count 1
+   b39202f: header at line 951 of 1144; prefix(1..949) sha 669ff6598fc1ad85; header-count 1
+   lines after the block in 51521cf (block is last if the next top-level '// ----' header is absent):
+   dash-rules from header to EOF: 1
+== diff hunks in integrity.spec.ts 51521cf..b39202f ==
+@@ -951 +951,2 @@ test.describe('I03 data safety', () => {
+@@ -968 +969 @@ async function pressAt(page: Page, name: string | RegExp, touch: boolean) {
+@@ -970,2 +971,16 @@ const CONTROLS = ['Add 5 minutes', 'Pause', 'End session'];
+@@ -973,7 +988,5 @@ const readoutClear = (page: Page) =>
+@@ -981,6 +993,0 @@ const readoutClear = (page: Page) =>
+@@ -993,2 +1000,2 @@ for (const vp of [
+@@ -997,2 +1004,2 @@ for (const vp of [
+@@ -999,0 +1007 @@ for (const vp of [
+@@ -1003,0 +1012 @@ for (const vp of [
+@@ -1006 +1015,2 @@ for (const vp of [
+@@ -1008,9 +1017,0 @@ for (const vp of [
+@@ -1019,4 +1020 @@ for (const vp of [
+@@ -1029,19 +1027 @@ for (const vp of [
+@@ -1049,17 +1029,2 @@ for (const vp of [
+@@ -1068,8 +1033,10 @@ for (const vp of [
+@@ -1078,10 +1045,11 @@ for (const vp of [
+@@ -1089 +1057,39 @@ for (const vp of [
+@@ -1092,4 +1098,44 @@ for (const vp of [
+@@ -1099 +1144,0 @@ for (const vp of [
+== flow.ts: M1 detection/emission kept ==
+28:import { raiseSaveWarning, initSaveWarning, saveWarningActive } from './saveWarning';
+169:function warnSaveFailed(e: StorageWriteError): void {
+170:  raiseSaveWarning(e);
+183:  onStorageWriteError(warnSaveFailed);
+   leftovers anywhere in src (must be none): 0
+== flow.ts hunks vs 51521cf ==
+@@ -14 +14 @@
+@@ -28,2 +28 @@ import { audio } from '@/audio';
+@@ -164,80 +162,0 @@ export function endFocusEarly(): void {
+@@ -245,2 +164,4 @@ function toastOnScreen(): boolean {
+@@ -248,75 +169,2 @@ function toastOnScreen(): boolean {
+@@ -335,0 +184 @@ export function initFlow(): void {
+@@ -338 +186,0 @@ export function initFlow(): void {
+@@ -345 +192,0 @@ export function initFlow(): void {
+@@ -386 +232,0 @@ export function initFlow(): void {
+@@ -416 +262,4 @@ export function initFlow(): void {
+== all changed files vs 51521cf (src, tests) ==
+ kettle/src/app/SaveWarning.module.css              |  95 +++++
+ kettle/src/app/SaveWarning.tsx                     |  89 ++++
+ kettle/src/app/flow.ts                             | 177 +-------
+ kettle/src/app/saveWarning.test.ts                 |  80 ++++
+ kettle/src/app/saveWarning.ts                      | 181 +++++++++
+ kettle/src/screens/done/Summary.tsx                |   4 +
+ kettle/src/screens/focus/FocusScreen.module.css    |  16 +
+ kettle/src/screens/focus/FocusScreen.tsx           |  38 +-
+ .../src/screens/focus/parts/RoundButton.module.css |   6 +-
+ kettle/src/screens/home/HomeScreen.tsx             |  10 +
+ kettle/src/screens/settings/DataSection.tsx        |   3 +
+ kettle/src/ui/Toast.module.css                     |  17 +-
+ kettle/src/ui/Toast.tsx                            |  70 +++-
+ kettle/tests/break-reach.spec.ts                   | 239 +++++++++++
+ kettle/tests/integrity.spec.ts                     | 235 ++++++-----
+ kettle/tests/toast-room.spec.ts                    | 448 +++++++++++----------
+ 16 files changed, 1216 insertions(+), 492 deletions(-)
+== vs INT 0d58c5e (src) ==
+ kettle/src/ui/Toast.module.css                     | 149 +++++++++++++++++
+ kettle/src/ui/Toast.tsx                            |  98 +++++++++--
+ 15 files changed, 867 insertions(+), 195 deletions(-)
