@@ -2,7 +2,7 @@
 // Frozen start clock (page.clock.install + resume), animations:'disabled' screenshots, fresh profile per day.
 // node cap.mjs --base http://127.0.0.1:5330 --rev "90a11e5 …" --out <dir> --cfgs 390x844@2:light:100,…
 import { createRequire } from 'node:module';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { measureInPage } from './measure.mjs';
 const require = createRequire('/home/user/wt/w2s/kettle/package.json');
 const { chromium } = require('playwright');
@@ -26,6 +26,7 @@ async function one(cfg) {
   const dir = `${args.out}/${W}x${H}-${theme}-t${text}`;
   mkdirSync(dir, { recursive: true });
   const mobile = W < 900;
+  const prev = (() => { try { return JSON.parse(readFileSync(`${dir}/meta.json`, 'utf8')); } catch { return null; } })();
   const meta = { base: args.base, rev: args.rev, viewport: { w: W, h: H }, dpr: DPR, theme, text: `${text}%`, fixedTime: '2026-10-11T07:40:00Z', states: {}, errors: [] };
   async function context() {
     const ctx = await b.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: DPR, isMobile: mobile && W < H, hasTouch: mobile, colorScheme: theme, timezoneId: 'UTC', locale: 'en-GB', serviceWorkers: 'block' });
@@ -65,7 +66,8 @@ async function one(cfg) {
     await ctx.close();
   }
   try {
-    await group('routine', async (p) => {
+    const only = (args.days ?? 'routine,bigday').split(',');
+    if (only.includes('routine')) await group('routine', async (p) => {
       await p.goto(q('veteran') + '#/'); await ready(p); await p.evaluate(() => document.fonts.ready);
       await settings(p, { muted: true, autoStartBreaks: false, autoStartFocus: false }); await sleep(1500);
       const l = p.getByRole('button', { name: /put the kettle on/i }).first(); await l.click({ timeout: 30_000 });
@@ -77,7 +79,7 @@ async function one(cfg) {
       await shot(p, '07-summary-routine-full', 'Summary, routine day, full page', true);
       await toEnd(p); await shot(p, '07-summary-routine-end', 'Summary, routine day, arithmetic open, wheeled to the end');
     });
-    await group('big-day', async (p) => {
+    if (only.includes('bigday')) await group('big-day', async (p) => {
       await p.goto(q('celebrate') + '#/'); await ready(p); await p.evaluate(() => document.fonts.ready);
       await settings(p, { muted: true, autoStartBreaks: false, autoStartFocus: false }); await sleep(1200);
       const l = p.getByRole('button', { name: /put the kettle on/i }).first(); await l.click({ timeout: 30_000 });
@@ -90,6 +92,8 @@ async function one(cfg) {
       await toEnd(p); await shot(p, '07-summary-bigday-end', 'Summary, big day, arithmetic open, wheeled to the end');
     });
   } finally {
+    // A partial re-run (--days) keeps the other day's states from the previous run, labelled with their own revision.
+    if (prev && args.days) for (const [k, v] of Object.entries(prev.states)) if (!meta.states[k]) meta.states[k] = { ...v, rev: prev.rev };
     writeFileSync(`${dir}/meta.json`, JSON.stringify(meta, null, 1));
     console.log(args.rev.split(' ')[0], `${W}x${H}-${theme}-t${text}`, 'states', Object.keys(meta.states).length, 'errors', meta.errors.length, meta.errors.join(' ; ').slice(0, 300));
   }

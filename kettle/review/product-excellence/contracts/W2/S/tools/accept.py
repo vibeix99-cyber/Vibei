@@ -14,7 +14,7 @@ for cfg in sorted(os.listdir(root)):
     mp = os.path.join(root, cfg, 'meta.json')
     if not os.path.isfile(mp):
         continue
-    st = json.load(open(mp))['states']
+    M = json.load(open(mp)); st = M['states']
     for day in ('routine', 'bigday'):
         first, settled, end = st.get(f'07-summary-{day}', {}), st.get(f'07-summary-{day}-settled', {}), st.get(f'07-summary-{day}-end', {})
         cuts = [f"{c['kind']}" for c in first.get('cut', [])] + [f"{c['kind']}(settled)" for c in settled.get('cut', [])]
@@ -28,9 +28,10 @@ for cfg in sorted(os.listdir(root)):
         axe = (len(settled.get('axe', [])), len(end.get('axe', [])))
         chai = (first.get('chai') or {}).get('shownAboveSheet'), (settled.get('chai') or {}).get('shownAboveSheet')
         tot['cut'] += len(cuts); tot['occl'] += occl; tot['ovl'] += ovl; tot['foot'] += 0 if foot else 1; tot['end'] += 0 if endok and not endcut else 1; tot['axe'] += sum(axe)
-        rows.append(f"| {cfg} | {day} | {', '.join(cuts) or '0'} | {occl} | {ovl} | {'yes' if foot else '**no**'} | {chai[0]} / {chai[1]} | {last.get('kind')} bottom {last.get('bottom')} ≤ {F}−{fade} → {'clear' if endok else '**not clear**'}{' (end cut: ' + ', '.join(endcut) + ')' if endcut else ''} | {axe[0]} / {axe[1]} |")
+        rev = (settled.get('rev') or M.get('rev', '')).split(' ')[0]
+        rows.append(f"| {cfg} | {day} | {rev} | {', '.join(cuts) or '0'} | {occl} | {ovl} | {'yes' if foot else '**no**'} | {chai[0]} / {chai[1]} | {last.get('kind')} bottom {last.get('bottom')} ≤ {F}−{fade} → {'clear' if endok else '**not clear**'}{' (end cut: ' + ', '.join(endcut) + ')' if endcut else ''} | {axe[0]} / {axe[1]} |")
 with open(out, 'w') as f:
-    f.write(f'**{label}**\n\n| Configuration | Day | Lines cut by the fold on arrival (1.5/4 s, settled) | elementFromPoint misses | Box overlaps | Tea time + Skip hit-testable | Chai above the sheet (arrival / settled) | Final expanded line vs the footer | axe (settled / end) |\n|---|---|---|---|---|---|---|---|---|\n')
+    f.write(f'**{label}**\n\n| Configuration | Day | Rev | Lines cut by the fold on arrival (1.5/4 s, settled) | elementFromPoint misses | Box overlaps | Tea time + Skip hit-testable | Chai above the sheet (arrival / settled) | Final expanded line vs the footer | axe (settled / end) |\n|---|---|---|---|---|---|---|---|---|---|\n')
     f.write('\n'.join(rows) + '\n')
     f.write(f"\nTotals: cut lines {tot['cut']}, misses {tot['occl']}, overlaps {tot['ovl']}, footer failures {tot['foot']}, end-state failures {tot['end']}, axe violations {tot['axe']}.\n")
 print('\n'.join(rows)); print(tot)

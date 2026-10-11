@@ -29,9 +29,12 @@ Three tiers. Nothing is dropped; the model's `pills`, the announcement and the a
    *Why this order:* how much the moment changes the user's world — a new object in the room, a new cozy level, a
    personal record of the core habit, a collectible, a spare day of warmth. The brief's examples (unlock, level-up,
    best streak) are the top three.
-3. **Secondary: everything else**, the same compact pills (K02 styling), in this order: leaves, the day's goal, then any
-   remaining milestones biggest first, then routine progress (warm streak, recipes, level distance) in the model's
-   order. On a routine day (no milestone) this is exactly the old order, so K02 is unchanged.
+3. **Secondary: everything else**, the same compact pills (K02 styling), in the model's own order (leaves, goal,
+   streak, Tea Cozy, recipes, level distance, badges) minus the highlighted pill. Only the highlight moves. On a
+   routine day (no milestone) and on an unlock day the compact rows are exactly the old ones, so K02 and K03 keep
+   their wrapping. (A first cut ordered leftover milestones by rank; on the 1440×900 big day that wrapped the seven
+   pills into five rows instead of four and pushed "How your leaves added up" below the card's fold, so `cdc6035`
+   went back to the model order.)
 
 When an unlock is the highlight, every pill stays in the compact group (there is no level pill on an unlock, as
 before). The highlighted pill keeps its screen-reader wording and stays inside the "Rewards" list (first item), so
@@ -84,5 +87,46 @@ their full line box; the spec run on 90a11e5 below uses the final ink rule and f
 
 **#1 reproduced** in this session on `90a11e5` (row 1 of the table). axe: 0 in every control state.
 
-Sections to come: revision and tree; changed files; acceptance per configuration; fact-reachability diff; suites;
-captures.
+## 4. Revision, tree and changed files
+
+- **Revision:** see the header of this file (`REV` / `SRC` filled at hand-off).
+- **Changed files** (`git diff --stat 90a11e5..REV -- kettle/src kettle/tests`), all inside the files this maker owns:
+  - `src/screens/done/summary.ts` — `rankRewards`, `milestoneOf`, `MILESTONES` (+ header comment). `buildSummary`
+    is unchanged.
+  - `src/screens/done/Summary.tsx` — the highlight row, the ranked render, the fold snapping (`foldLines`,
+    `cleanAt`, `cleanLift`, `cleanEnd`), `data-fold` marks, `PillArt big`.
+  - `src/screens/done/Summary.module.css` — `.highlight*`, the 14 px fade, the pill gap in rem.
+  - `src/screens/done/rank.test.ts` — new (8 tests).
+  - `tests/w2-summary.spec.ts` — new (8 tests).
+  - Not touched: `FocusScreen.*`, `tests/whistle.spec.ts`, every other file. No toast, scene, stage, Home or art change.
+
+## 5. Acceptance per configuration (AFTER, production preview of the branch, frozen clock)
+
+Measured by `S/tools/measure.mjs` inside each capture (`S/captures/AFTER/<cfg>/meta.json`): every line of the sheet
+against the fold on arrival (1.5 s / 4 s and settled), `elementFromPoint` at the centre of every visible line, pairwise
+box overlaps, the footer's Tea time and Skip break hit-testable, Chai's share above the sheet, the final expanded line
+(arithmetic opened by a click, the wheel to the end) against the footer, axe (WCAG 2.0–2.2 A/AA tags) in the settled
+and end states. Routine-day states were captured on `da5f452` (the routine render is identical in the final revision:
+no milestone, so the compact group is the model's order in both); big-day states on the final build.
+
+ACCEPT_TABLE
+
+## 6. Fact reachability, BEFORE vs AFTER
+
+FACT_TABLE
+
+## 7. Suites (final revision unless stated)
+
+SUITES
+
+## 8. Captures
+
+- AFTER (branch, production preview :5231): `S/captures/AFTER/<WxH-theme-tNNN>/07-summary-{routine,bigday}{,-settled,-full,-end}.png`
+  + `meta.json` (16 configurations). `-end` is new: the arithmetic opened and the wheel to the end.
+- BEFORE (`90a11e5`, production preview :5330): BEFORE_NOTE
+- Same script for both: `S/tools/cap.mjs` (adapted from `before.mjs`: frozen clock `2026-10-11T07:40:00Z` installed
+  then resumed, `animations: 'disabled'`, fresh profile per day, same timings).
+
+## 9. Notes for the reviewer
+
+NOTES
