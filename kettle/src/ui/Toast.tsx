@@ -3,7 +3,7 @@
  * Also shows every `ui:toast` event from the event bus. OWNER: design-system area.
  * Polite live region, auto-dismiss (paused on hover/focus), tap to dismiss, max 3.
  */
-import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type RefObject } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'motion/react';
 import { on } from '@/lib/events';
@@ -84,11 +84,12 @@ export function Toaster() {
   // would draw it over the docked start for that moment.
   const [drawn, setDrawn] = useState(false);
   if (list.length > 0 && !drawn) setDrawn(true);
-  const { bottom: above, top: below } = useToastRoom(list.length > 0 || drawn);
+  const regionRef = useRef<HTMLDivElement>(null);
+  const { bottom: above, top: below } = useToastRoom(list.length > 0 || drawn, regionRef);
   if (typeof document === 'undefined') return null;
   const room = above != null || below != null ? { ...(above != null && { bottom: above }), ...(below != null && { top: below }) } : undefined;
   return createPortal(
-    <div className={s.region} style={room}>
+    <div ref={regionRef} className={s.region} style={room}>
       <div role="status" aria-live="polite" aria-relevant="additions text" aria-label="Notifications" className={s.live}>
         <ol className={s.list}>
           <AnimatePresence initial={false} onExitComplete={() => setDrawn(false)}>
@@ -147,7 +148,10 @@ function toastRoomTop(): number | null {
  * While toasts are up, keep their room between the screen's top bar (`toastRoomTop()`) and the controls they float
  * above (`toastLiftBottom()`), re-measured as the layout under them changes.
  */
-function useToastRoom(active: boolean): { bottom: number | null; top: number | null } {
+/** The least room a stack keeps under the top bar (a 200 % toast line plus its padding), so it never folds away. */
+const MIN_ROOM_PX = 56;
+
+function useToastRoom(active: boolean, regionRef: RefObject<HTMLDivElement | null>): { bottom: number | null; top: number | null } {
   const [bottom, setBottom] = useState<number | null>(null);
   const [top, setTop] = useState<number | null>(null);
   // Measured before the first toast is painted (a layout effect), so a new stack is never drawn for a frame in a room
@@ -157,7 +161,16 @@ function useToastRoom(active: boolean): { bottom: number | null; top: number | n
     const measure = () => {
       const next = toastLiftBottom();
       setBottom((b) => (b === next ? b : next));
-      const nextTop = toastRoomTop();
+      // Below the top bar, but never so low that the room folds up (a landscape phone at 200 % text, where the lift
+      // leaves only a strip): then it starts MIN_ROOM_PX above its bottom, as low as it can, still under the bar where
+      // there is room for that, or not moved at all where even that is above the stylesheet's own top.
+      let nextTop = toastRoomTop();
+      if (nextTop != null) {
+        const el = regionRef.current;
+        const roomBottom = next ?? (el ? parseFloat(getComputedStyle(el).bottom) || 0 : 0);
+        const lowest = innerHeight - roomBottom - MIN_ROOM_PX;
+        if (nextTop > lowest) nextTop = lowest > 8 ? Math.round(lowest) : null; // 8: the stylesheet's own top
+      }
       setTop((t) => (t === nextTop ? t : nextTop));
     };
     measure();
