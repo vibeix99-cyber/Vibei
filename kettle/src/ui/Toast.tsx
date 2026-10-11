@@ -192,8 +192,9 @@ function topBarBottom(): number | null {
 
 /**
  * A docked stack taller than its dock (three toasts at 200 % text on a landscape phone) folds its toasts, oldest
- * first, to their first line (`data-folded`, Toast.module.css: the icon, the message's opening and an ellipsis, the
- * action as always), only as many as it takes to fit, so every toast is in view, named, and its action can be tapped.
+ * first, to their first line (`data-folded`, Toast.module.css: the message's opening and an ellipsis, on the icon's
+ * width too; the action as always), only as many as it takes to fit, so every toast is in view, named, and its action
+ * can be tapped.
  * Measured unfolded each time (all in one task: nothing is painted in between). `height` Infinity unfolds them all.
  */
 function foldToFit(region: HTMLElement, height: number) {

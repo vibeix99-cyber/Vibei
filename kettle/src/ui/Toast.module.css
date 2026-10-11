@@ -255,9 +255,13 @@
   padding: 0 8px;
 }
 /* A docked stack still taller than its dock folds its oldest toasts to their first line (as many as it takes to fit):
-   icon, the message's opening and an ellipsis, the action where it always is. The whole text is still the toast's
-   own (the live region read it out on arrival). */
+   the message's opening and an ellipsis, given the icon's width too so it names the toast, and the action where it
+   always is. The whole text is still the toast's own (the live region read it out on arrival). */
+.region[data-docked] .toast[data-folded] .icon {
+  display: none;
+}
 .region[data-docked] .toast[data-folded] .message {
+  flex-basis: 100%;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
