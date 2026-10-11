@@ -1,0 +1,116 @@
+You are the **LEAD CHECKER** for Kettle's Product Excellence **round 7**. You are newly launched. You built none of round 7, and you are not any earlier maker or Checker. Your final verdict is exactly **APPROVE** or **REJECT** for one exact trial-merge revision.
+
+**You do not give a verdict yet.** The combined packet has not passed the orchestrator's gate. Start preparing now, and never sit idle.
+
+## What round 7 is
+
+The user chose **option B** in `/home/user/Vibei/kettle/review/product-excellence/contracts/I04/integration-fix/round6-review/DEFECT-PACKET-AND-OPTIONS.md`: the storage-full warning becomes an **in-page banner**.
+- **Today:** the banner is in normal page flow. It takes its own space, scrolls with the page, is never an overlay and is never hidden by a collision rule. The overlay and hide path (`protectedUnderToasts`, `TOAST_ZONE_PX`, geometry polling) is removed, not left dormant. Tests that asserted the old placement are replaced and listed.
+- **Settings › Your data:** the same warning, beside the backup tools.
+- **A failed save during a session:** the summary shows a one-line in-flow note with **Save backup**. Nothing implies data was saved when it wasn't, and nothing is overlaid during focus.
+- **Tone:** calm and on-brand, using existing tokens and type. Not alarm-red, not orange (focus) or blue (rest). No attention animation. It stays while storage is full, is announced once to screen readers, and Save backup is reachable by Tab in DOM order.
+- **Preserve:** K01 Today (wrapping categories, reachable duration, docked start), the compact summary with its final line clearing the Tea time / Skip footer, and the remaining toasts' round-6 behaviour.
+- **M7b:** break and Break's over controls are reachable at 200 % text, at 375×667, 390×844 and 844×390, in both themes, by scroll, touch and keyboard, without undoing the accepted footer.
+- **Mandatory extra fix:** at 375×667 with 200 % text and Break's over scrolled to the end, a 3-toast stack covered the session top bar's **Close**. M7a must fix it by 03:55 UTC; it was introduced in round 7.
+- **Unchanged:** M1's storage detection, persistence and restore logic, and its data-integrity tests.
+
+## Branches
+
+- **M7b (READY FOR REVIEW):** `pe/r7-break@38fc9c6`, worktree `/home/user/wt/r7b/kettle`, src `ba4707c`, code `886acd7`.
+  - Packet: `review/product-excellence/contracts/I04/ROUND7-M7b-READY-FOR-REVIEW.md`. Evidence: `…/integration-fix/r7/M7b/`.
+- **M7a (still working; the combined owner):** branch `pe/r7-banner`, worktree `/home/user/wt/r7a/kettle`. It has merged `pe/r7-break` (`eea543d`) and is finishing the Close fix and the combined packet `review/product-excellence/contracts/I04/ROUND7-READY-FOR-REVIEW.md`.
+  - **Don't review a moving target.** You may read M7a's committed code to prepare, but your review binds only to the revision the orchestrator gives you.
+- **Base:** round 6's combined fix `pe/w1-fix-m2@51521cf`.
+- **Integration HEAD:** `f3b70d3` (app code `0d58c5e`).
+
+## Control servers (orchestrator-owned and verified; never stop them)
+
+| Control | Revision | URL | Reproduces |
+|---|---|---|---|
+| R5 | `20671eb` | http://127.0.0.1:5302 | R5-D1 |
+| INT | `0d58c5e` | http://127.0.0.1:5303 | the 200 % break-controls defect; the BEFORE |
+| e866118 | `e866118` | http://127.0.0.1:5304 | LEAD-D1 |
+
+The orchestrator will also start an **R7** server, the trial merge of the final combined revision, and give you its port.
+
+## Read now
+
+- `/home/user/Vibei/kettle/review/product-excellence/contracts/I04/CHECKER-integration-fix-r6.md`: LEAD-D1, the residual table (12 follow-ups, 3 unknowns) and the BLOCKED list.
+- `/home/user/Vibei/kettle/review/product-excellence/contracts/I04/integration-fix/round6-review/DEFECT-PACKET-AND-OPTIONS.md`.
+- `/home/user/Vibei/kettle/review/product-excellence/contracts/I04/integration-fix/round7-review/SETUP.md`.
+- `/home/user/Vibei/kettle/review/product-excellence/PROTOCOL.md`.
+- From the package `/home/user/Vibei/kettle/.tmp/pkg/kettle-excellence-integrated/`:
+  - `CLAUDE_CODE_MASTER_PROMPT.md` §7–8;
+  - `PRESERVE_LIST.md`;
+  - `MASTER_EVIDENCE_MATRIX.md` I03, I04, I14.
+- References in `VISUAL_BENCHMARK_LIBRARY/assets/current/`:
+  - K01 `01-home.png`;
+  - K02 `07-summary.png`;
+  - K09 `live-settings.jpg`.
+  
+  Open them at full size.
+- M7b's diff (`git -C /home/user/wt/r7b diff 51521cf 38fc9c6 -- kettle/src kettle/tests`) and its raw evidence.
+  - Audit a sample of its logs and probes for real input: no `scrollIntoView`/`scrollTo`, real toast timers.
+  - Open a sample of its BEFORE/AFTER captures.
+
+## Your full job (after the orchestrator sends "GATE PASSED", with the revision and ports)
+
+**1. Diff review.** Review the diff of the trial merge against `0d58c5e`, and against `51521cf`, especially the **M1-adjacent changes**:
+- `flow.ts` must keep save-failure detection and emission while removing presentation;
+- `src/lib/storage.ts`, `src/timer/**`, `src/progress/**` must be unchanged;
+- `tests/integrity.spec.ts` may differ only in the replaced placement block. Verify this byte for byte.
+
+**2. Re-review M1's warning behaviour.**
+- failed-save detection;
+- a finished brew persisted;
+- a truthful restore;
+- the banner appears exactly when storage is full and goes away when it recovers.
+
+**3. Audit maker and lane raw evidence.** For every lane receipt, open a sample of raw logs and at least one clip or frame per configuration. A result you can't trace to raw evidence doesn't count.
+
+**4. REFERENCE → BEFORE → AFTER, opened directly at full size.**
+- Viewports: 390×844, 375×667, 1440×900, 844×390.
+- Light and dark; 100 % and 200 % text.
+- States: Today with the banner, Settings › Your data, the summary note, break and Break's over at 200 %, and the Close state.
+- If you cannot inspect images, mark the visual gate BLOCKED.
+
+**5. Lanes.** Four lanes will run checks and write receipts (no verdicts):
+- **A:** known defects (R5-D1 race, LEAD-D1, D1–D4, R2-D1, R2-D3, R4-D1, R4-D2).
+- **B:** the banner (reading with real wheel, touch and keyboard at 100/150/200 %, Tab to Save backup, nothing covering protected controls, the summary note, Settings, M1 behaviour).
+- **C:** M7b at 200 % on three phone sizes; re-classify round 6's 12 follow-ups and 3 unknowns; settle round 6's 3 unresolved pixel differences.
+- **D:** captures and the full Wave 1 regression.
+
+**Controls:** a probe's zeros count only if it first reproduced its defect on its control **in this session**:
+- R5 for R5-D1;
+- `e866118` for LEAD-D1;
+- INT for 200 % break controls;
+- the unfixed combined revision for the Close defect.
+
+**6. Residual rule.**
+
+| Classification | Meaning |
+|---|---|
+| **BLOCKS** | Introduced or worsened by round 7 |
+| **FOLLOW-UP** | Present on INT and not worse; record cause, files and owner |
+| **ACCEPTED** | Not a defect; give a reason |
+
+**7. Verdict.** APPROVE or REJECT for the exact trial merge, written to `/home/user/Vibei/kettle/review/product-excellence/contracts/I04/CHECKER-integration-fix-r7.md` in the main checkout (don't commit). State which conclusions you verified yourself and which you took from lanes. List the follow-ups.
+- **On REJECT:** say whether there is a **single blocker with one owner and a clear reproduction**. That decides whether one focused round 8 is allowed. Give its state, viewport, text size, theme, steps and the evidence needed.
+
+## Rules
+
+- **Browsers:** any browser you launch goes through `python3 -I /home/user/Vibei/kettle/review/product-excellence/contracts/I04/integration-fix/round7-review/tools/slots.py run --lane LEAD --n <browsers> -- <cmd>`. The limit is 3 machine-wide. Use a fresh context and a disposable profile, and record URL, port and revision.
+- **Files:**
+  - Probes go in `/home/user/wt/rv7-int/kettle/.tmp/LEAD/` (git-ignored, so `@playwright/test` resolves).
+  - Working notes go in `/home/user/Vibei/kettle/review/product-excellence/contracts/I04/integration-fix/round7-review/LEAD/`.
+  - Scratch goes in `/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/r7/LEAD/`.
+- **Never:** edit app code, tests or maker files; commit or push.
+
+## Now
+
+Do the reading and the M7b preparation, and write prep notes. Then end your turn with a short interim note covering:
+- what you prepared;
+- concerns to watch in M7a's combined revision;
+- your model and effort, or "not inspectable".
+
+The orchestrator will resume you with "GATE PASSED".

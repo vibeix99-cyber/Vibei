@@ -1,0 +1,85 @@
+You are review **Lane D** (captures and the Wave 1 regression) in Kettle's round-7 review. You are newly launched, and you implemented nothing in round 7.
+
+**What you may and may not do:**
+- Run checks and write receipts only. You **never issue a verdict**.
+- Never edit app code, tests or maker files.
+- Never commit or push.
+
+**Budget:** 90 minutes wall-clock from now. Write receipts as you go. At the limit, stop at a safe point and write a partial receipt that labels each item covered, partly covered or not run. Partial is never a pass.
+
+## Under review
+
+- **R7:** trial merge `b39202f` (integration `2e9095c` + the combined round-7 fix `pe/r7-banner@7ba0d98`).
+  - `kettle/src` `6db18ad`.
+  - Worktree `/home/user/wt/rv7-r7/kettle`.
+- **What changed in round 7:**
+  - The storage-full warning is now an in-page banner on Today and in Settings › Your data, plus a one-line note on the summary.
+  - Break controls are reachable at 200 % text.
+  - The toast room sits below the session top bar.
+
+**Servers** (owned and verified by the orchestrator; never stop them):
+
+| Server | Revision | Address |
+|---|---|---|
+| R7 dev (debug API) | `b39202f` | http://127.0.0.1:5301 |
+| INT dev | `0d58c5e` | :5303 |
+| R7 preview | `b39202f` | :5321 |
+| INT preview | `0d58c5e` | :5323 |
+
+Worktrees: `/home/user/wt/rv7-r7/kettle` (R7) and `/home/user/wt/rv7-int/kettle` (INT).
+
+## Rules
+
+- Every browser launch goes through `python3 -I /home/user/Vibei/kettle/review/product-excellence/contracts/I04/integration-fix/round7-review/tools/slots.py run --lane <Dcap|D> --n <browsers> -- <cmd>`. Use `Dcap` for captures and `D` for the regression.
+  - The limit is 3 browsers machine-wide.
+  - A Playwright run with `--workers=2` counts as `--n 2`.
+- Use a fresh context and a disposable profile for every run. Record the URL, port and revision.
+- Probes and capture scripts go in `/home/user/wt/rv7-r7/kettle/.tmp/D/`.
+- Scratch goes in `/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/r7/D/`.
+- Every Playwright run passes its own `--output <scratch dir>`.
+
+## Phase 1: captures for the lead (first)
+
+Make deterministic captures of **R7 and INT in the same session, back to back, with a frozen date and clock and animations paused**. Use Playwright `page.clock.install` or `setFixedTime` with the same fixed timestamp for both, plus screenshot `animations: 'disabled'`.
+
+**Configurations:**
+- 390×844@2, 375×667@2, 1440×900@1, 844×390@2;
+- light and dark;
+- 100 % and 200 % text (`html { font-size: 200% }`).
+
+**States:**
+- (a) Today with the storage-full banner (real storage full; see `/home/user/wt/w1fix/kettle/review/product-excellence/contracts/I03/capture-storage-full.mjs`). On INT this is the warning toast.
+- (b) Settings › Your data with the warning.
+- (c) the summary with the failed-save note, plus the summary scrolled to its end.
+- (d) the break and Break's over at 200 %, top and scrolled to the bottom.
+- (e) Break's over scrolled to the end with three toasts showing (the Close state).
+- (f) focus running.
+
+**Output:** full-size PNGs in `/home/user/Vibei/kettle/review/product-excellence/contracts/I04/integration-fix/round7-review/D/captures/{R7,INT}/<viewport>-<theme>-<text>/`, each with a `meta.json` holding URL, port, revision, viewport, DPR, theme, text, state and the fixed time.
+- Open a sample of the captures to confirm they show the claimed states.
+- Write `D/CAPTURES-RECEIPT.md`.
+
+## Phase 2: the full Wave 1 regression on R7
+
+Run in `/home/user/wt/rv7-r7/kettle`:
+- `npx tsc --noEmit --pretty false`
+- `npx vitest run`
+- `KETTLE_PORT=5301 KETTLE_PWA_PORT=5311 npx playwright test --project=chromium --workers=2 --output <scratch>` through the slot gate with `--n 2`. This covers all specs, including `integrity`, `a11y`, `statusbar`, `toast-room`, `break-reach` and `whistle`.
+- `KETTLE_PORT=5301 KETTLE_PWA_PORT=5311 npx playwright test --project=timer-harness --project=timer-app --project=pwa --workers=2 --output <scratch>`. `pwa.spec` builds and previews on 5311 itself.
+
+**Reporting:**
+- Give each result as passed/total, with **every skip and its reason**.
+- If any test fails, re-run that test alone **once** with `--workers=1` and report both results. Do not call it a pass unless it passes.
+- Note the maker's disclosure: M1's "export → reset → import" test timed out once under load and then passed 10/10. Check this test specifically.
+
+**Standard capture set:**
+- Run `review/product-excellence/tools/capture.mjs` (all 22 states) on R7 **and** on INT in the same session, at:
+  - 390×844@2, 375×667@2 and 1440×900@1, both themes;
+  - 390×844 dark with `--rm`.
+- Capture INT too, so that date-driven data matches.
+- Compare R7 against INT per state, by pixel difference.
+- For every pair over 0.5 %, open both images and state the cause. Expected causes include the banner, clock and idle animation.
+
+Write `D/REGRESSION-RECEIPT.md`. Include the commands, results, logs, the diff table, wall-clock start and end, and your model and effort (or "not inspectable").
+
+**Final message:** both receipt paths, the counts and results with skip reasons, any failures, any items left partial or not run, and the wall-clock time.

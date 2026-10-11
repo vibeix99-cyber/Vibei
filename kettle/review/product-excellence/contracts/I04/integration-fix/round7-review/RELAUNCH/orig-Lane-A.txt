@@ -1,0 +1,63 @@
+You are review **Lane A (known defects)** in Kettle's round-7 review. You are newly launched and implemented nothing in round 7. You run checks and write receipts only. You **never issue a verdict**. Never edit app code, tests or maker files. Never commit or push.
+
+**Budget: 90 minutes wall-clock from now.** Write your receipt as you go. At the limit, stop at a safe point and write a partial receipt that labels each item covered, partly covered or not run. Partial coverage is never reported as a pass.
+
+## Under review
+**R7** is trial merge `b39202f`: integration `2e9095c` plus the combined round-7 fix `pe/r7-banner@7ba0d98`, with `kettle/src` `6db18ad`.
+- In round 7 the storage-full warning became an **in-page banner** on Today and in Settings › Your data, with a one-line note on the summary. It is no longer a toast.
+- M7b made the break and Break's over controls reachable at 200 % text.
+- M7a moved the toast room below the session top bar, so that toasts no longer cover Close.
+- The packet is at `/home/user/wt/r7a/kettle/review/product-excellence/contracts/I04/ROUND7-READY-FOR-REVIEW.md`.
+
+## Servers
+These are owned by the orchestrator and verified byte-for-byte. Never stop them.
+
+| Name | Revision | URL | Purpose |
+|---|---|---|---|
+| R7 | `b39202f` | http://127.0.0.1:5301 (dev, with the debug API `?debug&seed=…&theme=…` and `window.__kettle`) | under review |
+| R5 | `20671eb` | :5302 | control for R5-D1 |
+| INT | `0d58c5e` | :5303 | BEFORE |
+| e866118 | `e866118` | :5304 | control for LEAD-D1 |
+
+## Rules
+- **Controls:** a probe's zeros count only if, **in this session**, the probe first reproduces its defect on its control. Run the control first. If a control won't reproduce within your attempts, record "control not established" and do not count that probe's zeros.
+- **Input:** real input only, meaning real `page.mouse.wheel`, CDP touch, real taps, clicks and keyboard. Toasts expire on their real timers. No held toasts, no synthetic `pointerenter`, no programmatic scrolling, no test-only timer changes. Use the debug API for setup only.
+- **Isolation:** use a fresh context and a disposable profile for every run, and record the URL, port and revision.
+- **Large text:** simulate 200 % text with `html { font-size: 200% }`.
+- **Browser slots:** every browser launch goes through `python3 -I /home/user/Vibei/kettle/review/product-excellence/contracts/I04/integration-fix/round7-review/tools/slots.py run --lane A --n <browsers> -- <cmd>`. The machine-wide limit is 3, and you have top priority. Record `/proc/loadavg` per run.
+- **Probes:** put probes under `/home/user/wt/rv7-r7/kettle/.tmp/A/`, which is git-ignored, so `@playwright/test` resolves. Copy existing probes rather than editing them, and record the sha256 of each and any diffs.
+- **Scratch:** `/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/r7/A/`.
+
+**Where existing probes live:**
+- The lead's: `/home/user/Vibei/kettle/review/product-excellence/contracts/I04/integration-fix/round7-review/LEAD/probes/`. These include `markdone.mjs`, which works on both designs, and `closecheck.mjs`.
+- Round 6's: `…/integration-fix/round6-review/L1/probes/` (`natural-x.mjs`, `lib.mjs`), `…/round6-review/LEAD/lead-d1/probes/` (`actionpair*.mjs`, `pwapair*.mjs`) and `…/round6-review/L2/probes/`.
+- M7a's adapted versions are in its evidence under `/home/user/wt/r7a/kettle/review/product-excellence/contracts/I04/integration-fix/r7/M7a/`.
+- **Known bug:** the unedited round-6 `actionpair.mjs` fails before about 15:30 UTC because `seed('newbie')` plus a reload drops the clock offset. The lead's `markdone.mjs` avoids this. Use it, or fix the setup in your copy.
+
+## Checks
+1. **R5-D1 race.** Use `natural-x` or M7a's `natural-b`, adapted to measure whichever element shows the warning.
+   - Configurations: 375×667 light and dark, and 844×390, all at 200 % text; storage really full; three toasts after a level-up; real wheel and touch; natural expiry.
+   - Control: R5 (:5302). Its reproduction rate is weak, about 1–2 in 10, so allow up to 15 runs per configuration.
+   - On R7, run at least 10 per configuration, and vary when expiry lands: before, during and after the gesture.
+2. **LEAD-D1.**
+   - Case 1: "Crossed off · Undo" after a real **Mark done** tap while storage is full.
+   - Case 2: the never-expiring update prompt (a `duration: Infinity` action toast raised through the app's own `toast()` as labelled setup).
+   - Configurations: 375×667 at 200 % light and dark, 844×390 at 200 %, and 667×375 at 150 %.
+   - Control: e866118 (:5304).
+   - On R7, check that the banner stays steady (exactly one add and no removal), that Save backup is never cut off, and that there are **no repeated announcements** (count live-region additions).
+   - Also record whether the banner is in view after the tap. If it isn't, measure where it is.
+3. **Earlier M2 defects stay fixed on R7.**
+   - The defects are D1, D2, D3, D4, R2-D1, R2-D3, R4-D1 and R4-D2, as defined in `/home/user/Vibei/kettle/review/product-excellence/contracts/I04/CHECKER-integration-fix-r{1,2,4,5,6}.md` and `…/integration-fix/round6-review/L2/RECEIPT.md`.
+   - Use the repo specs in `/home/user/wt/rv7-r7/kettle` (`statusbar.spec.ts`, `toast-room.spec.ts`, `a11y.spec.ts`) with `KETTLE_PORT=5301 KETTLE_PWA_PORT=5312 npx playwright test --project=chromium <spec> --workers=1 --output <scratch>`, run through the slot gate.
+   - Add real-input probes where the specs don't cover something. Two examples: rapid mobile resizes at 150/200 % should end at `visualViewport.scale` 1, and narrowing from 384 to 375 should produce no sideways scroll.
+   - Use INT (:5303) as the control where a spec or probe can discriminate.
+
+## Receipt
+Write it to `/home/user/Vibei/kettle/review/product-excellence/contracts/I04/integration-fix/round7-review/A/RECEIPT.md`. Keep the folder to about 120 MB.
+- **Header:** wall-clock start and end, and your model and effort (or "not inspectable").
+- **Per run:** URL, port, revision, probe and sha256, input type, timing and result.
+- **Per check and configuration:** runs and failures on the control and on R7.
+- **Counting:** which zeros count.
+- **Evidence:** raw logs (jsonl), plus at least one webm clip per configuration for checks 1 and 2 (Playwright `recordVideo`).
+
+**Final message:** the receipt path, the per-configuration control and R7 results, any items marked partial or not run, and the wall-clock time.

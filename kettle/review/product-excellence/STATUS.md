@@ -10,7 +10,35 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
-## ■ STOPPED: round-7 review interrupted by a usage limit · 2026-10-11 ~04:50 UTC (read this first)
+## ▶ ROUND 7 REVIEW RESUMED · 2026-10-11 09:50 UTC (read this first)
+
+- **Instruction:** Vibei's RESUME, which replaces the overnight plan.
+- **Recovery:**
+  - No agents were alive.
+  - Receipts: A partial, B header only (its tasks had finished), C mostly done, D partial.
+  - The lead's notes were saved.
+  - `b39202f` is intact (src `6db18ad`).
+  - All 7 servers were restarted at 09:40 and re-verified: the dev servers byte for byte; the previews by rebuild,
+    identical apart from source maps.
+- **Relaunched (each lane's one allowed relaunch):**
+  - a new lead on Opus 5.5;
+  - lanes A–D on Sonnet 5.5, starting from their partial receipts, with 75 minutes each. The original briefs are in
+    `round7-review/RELAUNCH/`.
+- **Added for the lead:**
+  - the isolated full integrity run;
+  - the banner after Mark done, under Vibei's ruling;
+  - Close, Ambience and Mute at every size;
+  - the summary note against the footer;
+  - M7b's probes that weren't rerun;
+  - the "saved" wordings.
+- **Vibei's rulings:**
+  - **Transient-artifact exception:** a transient visual artifact introduced in round 7 that hides no text or control
+    may be a FOLLOW-UP.
+  - **Mark done:** if Mark done itself scrolls a visible banner off screen, that BLOCKS.
+- **Next:** the verdict. On APPROVE: merge, confirm the tree matches, and record the Wave 1 regression. On REJECT: the
+  defect packet, and no round 8. Then creative audit phase 2 on `audit/phase2`.
+
+## ■ STOPPED (superseded by the resume above): round-7 review interrupted by a usage limit · 2026-10-11 ~04:50 UTC
 
 - **What happened:** the usage limit stopped the lead and lanes A–D mid-review. It also blocked this session until
   09:31 UTC.

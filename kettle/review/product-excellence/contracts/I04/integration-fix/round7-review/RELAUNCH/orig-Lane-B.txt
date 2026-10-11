@@ -1,0 +1,86 @@
+You are review **Lane B (the banner)** in Kettle's round-7 review. You are newly launched and implemented nothing in round 7.
+
+**What you may do:** run checks and write receipts only. Never issue a verdict. Never edit app code, tests or maker files. Never commit or push.
+
+**Budget:** 90 minutes of wall-clock time from now.
+- Write your receipt as you go.
+- At the limit, stop at a safe point and write a partial receipt that marks each item as covered, partly covered or not run.
+- Partial coverage is never a pass.
+
+## Under review
+
+**R7** is trial merge `b39202f`: integration `2e9095c` plus the combined round-7 fix `pe/r7-banner@7ba0d98` (`kettle/src` `6db18ad`).
+
+In round 7 the storage-full warning stops being a toast:
+- **Today:** a banner in normal page flow. It takes its own space and scrolls with the page. It is never an overlay and never hidden by a collision rule.
+- **Settings › Your data:** the same warning, beside the backup tools.
+- **The summary** after a failed save during a session: a one-line note in the page flow, with a **Save backup** action. Nothing is overlaid during focus.
+
+**Requirements:**
+- Calm styling: no alarm red, not orange (focus colour), not blue (rest colour), and no attention animation.
+- It stays while storage is full.
+- It is announced once to screen readers.
+- Save backup is reachable by Tab, in DOM order.
+- Nothing may imply data was saved when it wasn't.
+
+**Packet:** `/home/user/wt/r7a/kettle/review/product-excellence/contracts/I04/ROUND7-READY-FOR-REVIEW.md`. Read it, including its disclosed limits.
+
+**Servers:** the orchestrator owns and has verified these. Never stop them.
+- R7 dev, with the debug API: http://127.0.0.1:5301.
+- INT `0d58c5e`, the BEFORE, where the warning is still a toast: :5303.
+- R7 production preview: :5321.
+- INT production preview: :5323.
+
+**Storage full:** see `/home/user/wt/w1fix/kettle/review/product-excellence/contracts/I03/capture-storage-full.mjs`, or the probe libraries under `/home/user/Vibei/kettle/review/product-excellence/contracts/I04/integration-fix/round7-review/LEAD/probes/`.
+
+## Rules
+
+- **Input:** real input only (wheel, CDP touch, taps, keyboard). Toasts expire on their real timers. Never use programmatic scrolling or test-only timer changes. The debug API is for setup only.
+- **Profiles:** a fresh context and a disposable profile for every run. Record URL, port and revision.
+- **Large text:** `html { font-size: 150% | 200% }`.
+- **Browser slots:** run every browser through `python3 -I /home/user/Vibei/kettle/review/product-excellence/contracts/I04/integration-fix/round7-review/tools/slots.py run --lane B --n <browsers> -- <cmd>`. There are 3 slots machine-wide, and Lane A and the captures have priority.
+- **Probes:** put them in `/home/user/wt/rv7-r7/kettle/.tmp/B/` (git-ignored). Record a sha256 for each.
+- **Scratch:** `/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/r7/B/`.
+
+## Checks
+
+1. **Reading the banner on R7.**
+   - Text size 100 %, 150 % and 200 %.
+   - Viewports 375×667, 390×844, 844×390, 1440×900, light and dark.
+   - Read it with a real wheel (20 px steps), touch and keyboard.
+   - Expect the whole message readable and Save backup reachable and working (it downloads).
+   - At 667×375 and 200 %, also use **53 px and 100 px wheel steps**, on R7 and on INT for comparison.
+2. **Keyboard.** Starting from the top of Today, Tab reaches **Save backup** at 375×667, 100 % and 200 %, with a visible focus ring. Tab order follows DOM order. Compare INT, where Tab never reached it at 100 %.
+3. **Nothing covered.** With the banner up and toasts present, nothing covers the countdown or any protected control after layout settles. The protected controls are:
+   - Put the kettle on, Add 5, Pause/Resume, End;
+   - Tea time, Skip;
+   - every Break's over action, and Close, Ambience and Mute;
+   - next brew, That's all for now.
+   
+   Use bounding boxes and `elementFromPoint` hit-tests at 375×667, 390×844, 844×390 and 1440×900, at 100 % and 200 %.
+4. **The failed-save summary note.**
+   - It appears only after a save really failed, is one line where space allows, and has a working Save backup.
+   - Its wording is truthful.
+   - The last expanded summary line still clears the Tea time / Skip footer at 375×667, 390×844 and 844×390, at 100 % and 200 %.
+5. **Settings › Your data.** The warning sits beside the backup tools, in both themes, at 100 % and 200 %.
+6. **Behaviour.**
+   - Announced once. Count live-region additions while Today re-mounts and the route changes.
+   - The banner appears exactly when a save fails, and disappears when storage recovers. Record exactly when.
+   - The banner after a real "Mark done" tap while scrolled into the composer can end up above the view. Measure it on R7 and compare INT, where the toast showed the warning.
+7. **M1 behaviour on R7, compared with INT.** Re-run the integrity spec's I03 data-safety tests, and any related probe:
+   - failed-save detection;
+   - a finished brew is persisted (summary exactly once, one record after reload);
+   - a restore that cannot be saved is refused truthfully.
+   
+   For the spec, use `KETTLE_PORT=5301 KETTLE_PWA_PORT=5313 npx playwright test --project=chromium tests/integrity.spec.ts -g "I03" --workers=1 --output <scratch>` from `/home/user/wt/rv7-r7/kettle`.
+8. **Tone.** Using screenshots, record the banner's colours: computed background, border and text, with contrast ratios, in both themes. Confirm it is not red, orange or blue and has no animation.
+
+## Receipt
+
+Write `/home/user/Vibei/kettle/review/product-excellence/contracts/I04/integration-fix/round7-review/B/RECEIPT.md`, keeping the folder to about 120 MB. Include:
+- wall-clock start and end;
+- your model and effort, or "not inspectable";
+- for each check: runs and failures per configuration on R7, and on INT where compared;
+- raw logs, full-size screenshots of every state, and webm clips for checks 1, 2 and 6.
+
+**Final message:** the receipt path, results per check, items that are partial or not run, and the wall-clock time.

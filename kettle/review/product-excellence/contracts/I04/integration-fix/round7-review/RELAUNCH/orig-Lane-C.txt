@@ -1,0 +1,68 @@
+You are review **Lane C** in Kettle's round-7 review. You were just launched and implemented nothing in round 7.
+
+**What you may do:** run checks and write receipts only. Never issue a verdict. Never edit app code, tests or maker files. Never commit or push.
+
+**Budget:** 90 minutes of wall-clock time from now.
+- Write your receipt as you go.
+- At the limit, stop at a safe point and write a partial receipt that marks each item covered, partly covered or not run.
+- Partial coverage is never a pass.
+
+## Under review
+
+**R7** is trial merge `b39202f` (integration `2e9095c` plus the combined round-7 fix `pe/r7-banner@7ba0d98`; `kettle/src` `6db18ad`).
+
+**M7b's change:** at 200 % text, the break and Break's over panel scrolls, so every control can be reached by wheel, touch and Tab. M7b's packet is `/home/user/wt/r7b/kettle/review/product-excellence/contracts/I04/ROUND7-M7b-READY-FOR-REVIEW.md`. Its probe is `…/integration-fix/r7/M7b/probe/reach.mjs`; copy it rather than editing it.
+
+**Combined packet:** `/home/user/wt/r7a/kettle/review/product-excellence/contracts/I04/ROUND7-READY-FOR-REVIEW.md`.
+
+**Servers (orchestrator-owned and verified; never stop them):**
+- R7 dev server, debug API: http://127.0.0.1:5301
+- INT `0d58c5e` dev server, which is the BEFORE and the control for the 200 % break-controls defect: :5303
+- R7 preview: :5321
+- INT preview: :5323
+
+## Rules
+
+- **Input:** real input only (wheel, CDP touch, keyboard Tab, real taps). No `scrollIntoView` or `scrollTo` from probes. Toasts expire on their real timers. Use the debug API for setup only.
+- **Profiles:** a fresh context and a disposable profile per run. Record the URL, port and revision.
+- **Text size:** simulate 200 % with `html { font-size: 200% }`.
+- **Browser slots:** every browser goes through `python3 -I /home/user/Vibei/kettle/review/product-excellence/contracts/I04/integration-fix/round7-review/tools/slots.py run --lane C --n <browsers> -- <cmd>`. There are 3 slots machine-wide; Lanes A and B and the captures have priority.
+- **Probes** go in `/home/user/wt/rv7-r7/kettle/.tmp/C/`.
+- **Scratch:** `/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/r7/C/`.
+- **Controls:** zeros count only if the defect first reproduces on INT in this session.
+
+## Checks
+
+1. **M7b at 200 % on R7.**
+   - **Sizes and themes:** 375×667, 390×844 and 844×390, both themes.
+   - **States:** the break running, the break paused, Break's over with a carried task, and Break's over without one.
+   - **Requirement:** every control can be reached by real wheel, by CDP touch drag, and by Tab/Shift+Tab.
+   - **Control:** INT first. It must reproduce the off-screen controls.
+   - **Also check:**
+     - the accepted footer is undone nowhere (summary Tea time/Skip);
+     - 100 % layouts of the brew and break are unchanged at 375, 390 and 1440 (pixel diff against INT, taken in the same session with a frozen clock);
+     - the bottom shade hint is present at 844×390.
+2. **Re-classify round 6's 12 follow-ups and 3 unknowns on R7.**
+   - **Where they are:** `/home/user/Vibei/kettle/review/product-excellence/contracts/I04/CHECKER-integration-fix-r6.md`, section "Residual classification": items 1–3, 8, 10–14, 16, 18, 19 and the UNKNOWN rows 15, 22 and 24.
+   - **For each, give one of:** resolved, unchanged, or worse, with evidence from R7 against INT.
+   - **Expectation:** many warning-specific items should resolve now that the warning is a banner. Verify that; don't assume it.
+3. **Settle round 6's three unresolved pixel differences.**
+   - **The three:**
+     - the 375×667 status-bar row (`01-home`);
+     - the hidden session chrome at `13-first-brew` and reduced-motion `04`;
+     - the "Recipe done" toast at `10-break-over`.
+   - **Method:** capture **INT and R7 back to back in the same session, under the same load, with a frozen date and clock** (Playwright `page.clock`), with animations disabled. Use the repo tool `review/product-excellence/tools/capture.mjs` if it supports a fixed clock, or a scripted capture otherwise.
+   - **Background:** see `/home/user/Vibei/kettle/review/product-excellence/contracts/I04/integration-fix/round6-review/L4/REGRESSION-RECEIPT.md`.
+   - **Outcome:** state the cause of each.
+
+## Receipt
+
+Write `/home/user/Vibei/kettle/review/product-excellence/contracts/I04/integration-fix/round7-review/C/RECEIPT.md`, keeping the folder to about 120 MB. Include:
+- wall-clock start and end;
+- your model and effort, or "not inspectable";
+- runs and failures per configuration on INT and R7;
+- the follow-up table with resolved / unchanged / worse and evidence paths;
+- the pixel-difference causes;
+- raw logs, full-size screenshots and clips.
+
+**Final message:** the receipt path, results, partial or not-run items, and wall-clock time.
