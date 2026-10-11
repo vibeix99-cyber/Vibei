@@ -10,6 +10,34 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
+## ▶ ROUND 8 IN PROGRESS: fix R7-D1 only · 2026-10-11 (read this first)
+
+- **Decision:** Vibei chose a round 8 scoped to R7-D1 only. All agents run on Opus 5.5.
+- **Not authorised:** other follow-ups, Wave 2, audit work, paid generation, publishing, PRs, or merging anywhere except
+  `claude/wizardly-galileo-uy89d9`.
+- **Maker M8** (new; reviewed nothing in rounds 7–8), launched at about 16:35 UTC with a 2-hour budget.
+  - Branch `pe/r8-toastroom` from `7ba0d98` (the round-7 combined revision under trial merge `b39202f`).
+  - Worktree `/home/user/wt/r8`.
+  - Owns both the break panel and the toast lift and room rules.
+- **Controls:** restarted and verified byte for byte.
+
+  | Revision | Port | Role |
+  |---|---|---|
+  | `b39202f` | :5301 dev, :5321 preview | R7-D1 control |
+  | R5 `20671eb` | :5302 | |
+  | INT `0d58c5e` | :5303 dev, :5323 preview | |
+  | `e866118` | :5304 | |
+  | `49ea1de` | :5305 | |
+
+- **Disk:** it filled up (old-round scratch). The scratch directories from rounds 1–6 were deleted, and their evidence
+  is already committed. About 6.7 GB is free.
+- **Next:**
+  1. Gate the packet.
+  2. Targeted review: a new lead plus Lane 1 (R7-D1 acceptance, geometry, R5-D1/LEAD-D1) and Lane 2 (full regression
+     and standard captures), 75 minutes each.
+  3. The verdict.
+  4. On APPROVE: merge and close Wave 1. On REJECT: stop with the defect packet.
+
 ## ■ ROUND 7 REJECTED — 2026-10-11 11:15 UTC (read this first)
 
 - **Verdict:** **REJECT** of trial merge `b39202f` (src `6db18ad`), by the relaunched lead Checker on Opus 5.5.
