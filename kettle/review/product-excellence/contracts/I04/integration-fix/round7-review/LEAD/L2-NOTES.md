@@ -302,3 +302,15 @@ Today, 13–14 stops to "Put the kettle on")
 - 667×375 light, arrival (two ordinary toasts raised as Break's over shows): both whole at +0.5 s (97 + 57 px in room
   [76,257]); by the time the real wheel reached the end (353/353) both had expired (3.2 s) → none left to squeeze.
 - INT update row pending (same file `toastroom-0d58c5e.jsonl`).
+
+## 27. Lane A FINAL receipt (Sonnet 5.5 relaunch 09:43–10:50Z) — traced by me
+- Probe hashes: all OK except `analyze.py` (analysis script edited after its sha was recorded; not a browser probe).
+- Item 5 raw (`A/runs/markdone-cases/*/markdone-*.jsonl`, 17 rows), aggregated by me:
+  - setup a (first failure at the tap), R7 375×667 L/D @200 + 844×390 L @200 (+ smoke): banner added 63–122 ms after
+    the tap, 1/0; scrollTop +352 (375) / +306 (844); 0 in-view frames after; ONE warning live addition after the tap
+    each. INT setup a: toast added once, said once, 0 in view at 375 @200 and 844 @200.
+  - setup b (banner shown + said 12–25 s before the tap), 2 series + smoke = 7 R7 rows: tap scroll jump 0 at 375×667
+    (4/4), −54/−72/−74/−79 at 844×390 (toward the banner); banner never in view at the tap or after; no re-announcement.
+- Check 3 leftovers (`A/runs/readwarn-{int,r7}/`): INT fails all 5 (incl. 844×390 L 7/12 lines, 667×375 D 1/12, Save
+  backup not hit at 4/5); R7 passes all 5 (Save backup hit 5/5).
+- LEAD-D1 case 2 key 844×390 (read earlier, §5): R7 1/0, said 1, scrollY 134→440; control 28/27.
