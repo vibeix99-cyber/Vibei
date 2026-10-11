@@ -358,3 +358,9 @@ std-freeze.mjs unchanged, capture.mjs unchanged) → fill {{STDDARK}} in the ver
 - 14-summary-first 390 dark 46 %: same content, R7's sheet 17 css px lower (rising phase); 375 dark 14 = 0 % (opened).
 - 11/11b, 13, 17, 05: scene animation phase / clock second (bboxes on the scene/digits), as in D's light rows.
 - 18-nook-earned 375: page height flip (as D). 01, 01b, 07, 08, 09, 12, 15, 16, 19: 0 %.
+
+## 33. Final (11:15 UTC)
+1440×900@1 dark std: 21/21 both sides. 14/16 not comparable (R7's 16 shot mid-route-change: Stats active in the rail,
+Today's content), 11 = 3D record player rendered on INT, placeholder on R7 (render phase); others ≤ 2.9 % (scene,
+digits, D4 at 10). Verdict file filled and final: `contracts/I04/CHECKER-integration-fix-r7.md` — **REJECT**, single
+product blocker R7-D1 (owner M7a). Uncommitted (the orchestrator's efcd30f had snapshotted the in-progress file).

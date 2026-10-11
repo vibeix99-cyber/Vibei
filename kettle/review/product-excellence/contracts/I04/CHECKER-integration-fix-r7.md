@@ -9,8 +9,8 @@
 | **Servers** | Owned by the orchestrator, restarted at 09:40 UTC, never stopped by me. I re-verified them at 10:10 UTC with `/tmp/rv7-servers/verify.sh`, which compares the served `?raw` source with the committed blobs. Ports 5301 to 5305 were all VERIFIED (`round7-review/LEAD/L2-server-verify.txt`). |
 | **Checker** | Relaunched LEAD Checker. I replace the round-7 lead, who was stopped at about 04:50 UTC by a usage limit. I built none of round 7 and am not an earlier maker or Checker. I edited no application code, tests or maker files, and committed nothing. |
 | **Model** | Claude Opus 5.5 (`claude-opus-5-5`). Reasoning effort: not inspectable. |
-| **Environment** | 4 CPUs shared with lanes A–D, Dcap and other agents. Headless Chromium with SwiftShader and emulated viewports; large text is `html{font-size:…}`. Every browser launch went through `tools/slots.py --lane LEAD`, with a fresh context and a disposable profile each run. Work ran 09:42–11:20 UTC on 2026-10-11. The 1-minute load was 0.15 at my first run and 5–15 afterwards. |
-| **Notes and probes** | Working notes: `round7-review/LEAD/L2-NOTES.md`, sections 0–30, written as I went. Runs: `round7-review/LEAD/integrity-isolated/` and `round7-review/LEAD/runs/L2-*/`. Probes: `/home/user/wt/rv7-int/kettle/.tmp/LEAD2/` (git-ignored). Scratch: `/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/r7/LEAD2/`. |
+| **Environment** | 4 CPUs shared with lanes A–D, Dcap and other agents. Headless Chromium with SwiftShader and emulated viewports; large text is `html{font-size:…}`. Every browser launch went through `tools/slots.py --lane LEAD`, with a fresh context and a disposable profile each run. Work ran 09:42–11:15 UTC on 2026-10-11. The 1-minute load was 0.15 at my first run and 5–15 afterwards. |
+| **Notes and probes** | Working notes: `round7-review/LEAD/L2-NOTES.md`, sections 0–32, written as I went. Runs: `round7-review/LEAD/integrity-isolated/` and `round7-review/LEAD/runs/L2-*/`. Probes: `/home/user/wt/rv7-int/kettle/.tmp/LEAD2/` (git-ignored). Scratch: `/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/r7/LEAD2/`. |
 
 ## Short version
 
@@ -333,7 +333,7 @@ Whatever the fix, it must keep Close, Ambience, Mute and every Break's over acti
 - cap-d covers every round-7 state in all 16 configurations on both sides. The e0/e2 toast-rect states exist in 4 of 8 t200 configurations.
 - Standard set:
   - light at 390×844, 375×667 and 1440, by Lane D: differences explained;
-  - **dark at 390×844, 375×667 and 1440, captured by me: {{STDDARK}}**;
+  - **dark at 390×844, 375×667 and 1440, captured by me: 21/21 states on both sides at all three sizes, exit 0 (R7 10:52–11:05, INT to 11:11 UTC; Lane D's `std2.sh` and `std-freeze.mjs` unchanged, `capture.mjs` unchanged; matrix from D's `stdmatrix.cjs`). Every difference over 0.5 % was opened or attributed, and none is a round-7 build difference: 10-break-over = D4 (r6 #9); 03-focus-mid = the 7 s zen fade on one side (same countdown); 14-summary-first at 390 dark = the summary sheet's rising phase (17 css px; 375 dark is 0 %); 11/11b/13/17 = scene or 3D animation phase; 1440 14/16 = not the same screen (R7's 16 shot mid-route-change), as in Lane D's light 1440 run; 18 = page-height flip. 01, 01b, 07, 08, 12, 15 and 19 are 0 % (or ≤ 0.04 %)**;
   - 390×844 dark reduced-motion: not run.
 
 **Judgement:**
@@ -455,4 +455,4 @@ Rule:
   - `round7-review/LEAD/integrity-isolated/` (`run.log`, loadavg, `expimp.log`, `expimp2.log`, `md1440.log`);
   - `round7-review/LEAD/runs/L2-{saidlog,setupb,md1440diag,liftlag,savereach,focusobscure,toastroom}/`.
 - **Probes** (git-ignored): `/home/user/wt/rv7-int/kettle/.tmp/LEAD2/` (`saidlog.mjs`, `savereach.mjs` (v2, `608d8cb9`), `md1440diag.mjs`, `liftlag.mjs` (`bef126e3`), `focusobscure.mjs`, `toastroom.mjs`, `toastroom2.mjs` (`7123da04`), and `a4/markdone-a4.mjs` (Lane A's, `561523f7`)).
-- **Standard dark captures:** `/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/r7/LEAD2/std/`.
+- **Standard dark captures:** `/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/r7/LEAD2/std/` (with `diff-std/` and `std-diff.json`).
