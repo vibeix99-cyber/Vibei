@@ -62,7 +62,7 @@ scale** (`chai.ts:28–31`): `W = 0.8`, `H = 0.8`, `D = 0.74`, front face at `FZ
 baking plain colours into vertex colours (`bakeable`, `kit.ts:140`). Groups flagged `userData.dyn = true` are merged
 separately so they can still move or toggle.
 
-**Measured** (geometry walk of `buildChai` in Node, `.tmp/n/chai.probe.test.ts`, at `90a11e5`; visible meshes only,
+**Measured** (geometry walk of `buildChai` in Node, `contracts/W2/N/probes/chai.probe.test.ts`, at `90a11e5`; visible meshes only,
 raycast proxy excluded):
 
 | Pose | Meshes (≈ draw calls) | Triangles | Vertices | Bounds incl. root scale 1.12 (x × y × z) |
@@ -126,8 +126,10 @@ colour.
 | Focus / break (tight) | not mounted at `90a11e5` | Same azimuth and elevation, tighter silhouette, padding 2 % |
 | Window | Focus backdrop | Fixed camera at (1.75, 1.62, 2.7) looking at (0.3, 1.66, −2.5), FOV 44°. Chai is not in this frame |
 
-On a 390 × 844 phone the whole-room Nook shows Chai about 70–90 CSS px tall; on a 1440 × 900 desktop, about
-150–190 CSS px. Judge the model at these sizes as well as close up (§7).
+Measured on the captures in `captures/`: the whole-room Nook shows Chai about **45 CSS px tall** on a 390 × 844
+phone (3D, `10-nook-3d`), so about 140 device px at DPR 3, and about **140 CSS px** at 1440 × 900 (the same-framed
+drawing; the 3D view is framed alike), about 280 device px at DPR 2. Judge the model at these sizes as well as
+close up (§7): at 45 CSS px the silhouette, the nose and the yuzu carry the identity, not fine detail.
 
 ## 4. Poses and animation: what `setPose` and `update` do
 
