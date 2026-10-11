@@ -1,0 +1,62 @@
+1c1
+< // L1 (round-8 review) independent probe for R7-D1 / the toast dock. Setup copied from M8's accept.mjs (sha b65020ab) and the
+---
+> // L1 (round-8 review) l1dock2 = l1dock (sha d89b1906) + per-frame absolute time, sequence phase, stack size and docked flag on every bad frame (timeline). Independent probe for R7-D1 / the toast dock. Setup copied from M8's accept.mjs (sha b65020ab) and the
+23c23
+<   const R = (w.__l1 = { frames: 0, ctlBad: [], toastBad: [], last: performance.now(), stop: false, upd: 0, undo: 0 });
+---
+>   const R = (w.__l1 = { frames: 0, ctlBad: [], toastBad: [], last: performance.now(), stop: false, upd: 0, undo: 0, t0: performance.now(), phase: 'start' });
+64c64
+<     if (c.length) R.ctlBad.push({ since, c });
+---
+>     if (c.length) R.ctlBad.push({ since, t: Math.round(performance.now() - R.t0), phase: R.phase, c });
+66c66
+<     if (ts.length) R.toastBad.push({ since, ts: ts.map((x) => `${x.text}:${x.vis}/${x.box}/${x.natural}`) });
+---
+>     if (ts.length) R.toastBad.push({ since, t: Math.round(performance.now() - R.t0), phase: R.phase, n: document.querySelectorAll('[aria-label="Notifications"] li').length, docked: !!document.querySelector('[aria-label="Notifications"]')?.parentElement?.hasAttribute('data-docked'), ts: ts.map((x) => `${x.text}:${x.vis}/${x.box}/${x.natural}${x.folded ? 'F' : ''}@${Math.round(x.r.t)}`) });
+130a131
+>   const phase = (p) => page.evaluate((p) => { window.__l1.phase = p; }, p);
+150a152
+>     await phase('A raise 3 at top');
+154c156
+<     await goTo('end'); await sleep(300);
+---
+>     await phase('B gesture to end'); await goTo('end'); await phase('B at end'); await sleep(300);
+157c159
+<     await raise('cozy'); await sleep(250); await raise('undo'); await sleep(800);
+---
+>     await phase('C raise 2 at end'); await raise('cozy'); await sleep(250); await raise('undo'); await sleep(800);
+160c162
+<     await tap('Update', 'end n3');
+---
+>     await phase('C tap Update'); await tap('Update', 'end n3');
+163c165
+<     await raise('update'); await sleep(250); await raise('cozy'); await sleep(250); await raise('undo'); await sleep(800);
+---
+>     await phase('D raise 3 at end'); await raise('update'); await sleep(250); await raise('cozy'); await sleep(250); await raise('undo'); await sleep(800);
+165c167
+<     await tap('Undo', 'end n3 (2)');
+---
+>     await phase('D tap Undo'); await tap('Undo', 'end n3 (2)');
+167,168c169,170
+<     await raise('undo'); await sleep(500);
+<     await goTo('top'); await sleep(500);
+---
+>     await phase('E raise undo, gesture to top'); await raise('undo'); await sleep(500);
+>     await goTo('top'); await phase('E at top'); await sleep(500);
+171c173
+<     await tap('Update', 'back at top');
+---
+>     await phase('E tap Update'); await tap('Update', 'back at top'); await phase('F wait clear');
+174c176
+<     await raise('update'); await sleep(800);
+---
+>     await phase('F raise update'); await raise('update'); await sleep(800);
+176c178
+<     const rec = await page.evaluate(() => { const R = window.__l1; R.stop = true; return { frames: R.frames, ctlBad: R.ctlBad.length, ctlBadSettled: R.ctlBad.filter((x) => x.since > 600).length, ctlFirst: R.ctlBad.slice(0, 4), toastBad: R.toastBad.length, toastBadSettled: R.toastBad.filter((x) => x.since > 600).length, toastFirst: R.toastBad.filter((x) => x.since > 600).slice(0, 4), toastFirstAny: R.toastBad.slice(0, 3) }; });
+---
+>     const rec = await page.evaluate(() => { const R = window.__l1; R.stop = true; return { frames: R.frames, ctlBad: R.ctlBad.length, ctlBadSettled: R.ctlBad.filter((x) => x.since > 600).length, ctlFirst: R.ctlBad.slice(0, 4), toastBad: R.toastBad.length, toastBadSettled: R.toastBad.filter((x) => x.since > 600).length, toastFirst: R.toastBad.filter((x) => x.since > 600).slice(0, 4), toastFirstAny: R.toastBad.slice(0, 3), toastAll: R.toastBad, ctlAll: R.ctlBad.slice(0, 50) }; });
+181c183
+<   appendFileSync(`${out}/l1dock-${rev}.jsonl`, JSON.stringify(row) + '\n');
+---
+>   appendFileSync(`${out}/l1dock2-${rev}.jsonl`, JSON.stringify(row) + '\n');

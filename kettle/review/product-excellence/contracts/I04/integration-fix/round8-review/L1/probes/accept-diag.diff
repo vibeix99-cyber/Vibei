@@ -1,0 +1,13 @@
+114a115,121
+>   // L1 DIAGNOSTIC ADDITION (accept-diag.mjs only): log every main-frame navigation, navigation request, console line and page close/crash, with time.
+>   const diag = []; const t00 = Date.now(); const dlog = (k, v) => diag.push([Date.now() - t00, k, String(v).slice(0, 300)]);
+>   page.on('framenavigated', (f) => { if (f === page.mainFrame()) dlog('framenavigated', f.url()); });
+>   page.on('request', (r) => { if (r.isNavigationRequest()) dlog('navrequest', r.url() + ' ' + (r.redirectedFrom()?.url() || '')); });
+>   page.on('console', (m) => dlog('console.' + m.type(), m.text()));
+>   page.on('crash', () => dlog('crash', ''));
+>   page.on('close', () => dlog('close', ''));
+235c242,243
+<   appendFileSync(`${out}/accept-${rev}.jsonl`, JSON.stringify(row) + '\n');
+---
+>   row.diag = diag;
+>   appendFileSync(`${out}/accept-diag-${rev}.jsonl`, JSON.stringify(row) + '\n');

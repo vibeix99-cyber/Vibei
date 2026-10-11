@@ -1,0 +1,529 @@
+{
+  "side": "R8",
+  "url": "http://127.0.0.1:5306/?debug&theme=light#/",
+  "port": 5306,
+  "revision": "9ff0d04 (trial merge; kettle/src tree 42e106d)",
+  "viewport": {
+    "w": 667,
+    "h": 375
+  },
+  "dpr": 2,
+  "theme": "light",
+  "text": "200%",
+  "textCss": "html{font-size:200%!important} (init script at DOMContentLoaded)",
+  "fixedTime": "2026-10-10T16:40:00.000Z",
+  "clock": "page.clock.install({time}) + resume",
+  "screenshot": "animations:'disabled', viewport-sized",
+  "isMobile": false,
+  "hasTouch": true,
+  "scene": "off",
+  "startedAt": "2026-10-11T18:36:54.276Z",
+  "states": {
+    "f2-focus-running-storage-full": {
+      "file": "f2-focus-running-storage-full.png",
+      "desc": "focus running, storage full (warning raised by the brew start save)",
+      "url": "http://127.0.0.1:5306/?debug&theme=light#/focus",
+      "at": "2026-10-11T18:36:59.917Z",
+      "factsReadBeforeShot": true,
+      "hash": "#/focus",
+      "clockNow": "2026-10-10T16:40:03.817Z",
+      "banner": null,
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [],
+      "close": null,
+      "scroll": {
+        "doc": 0,
+        "docMax": 0,
+        "main": 0,
+        "mainMax": 56
+      },
+      "toastsAfterShot": []
+    },
+    "c1-summary-note": {
+      "file": "c1-summary-note.png",
+      "desc": "summary after a brew completed with storage full (R7: one-line note)",
+      "url": "http://127.0.0.1:5306/?debug&theme=light#/done",
+      "at": "2026-10-11T18:37:06.156Z",
+      "factsReadBeforeShot": true,
+      "hash": "#/done",
+      "clockNow": "2026-10-10T16:40:09.423Z",
+      "banner": null,
+      "summaryNote": true,
+      "warningToast": false,
+      "toasts": [],
+      "close": null,
+      "scroll": {
+        "doc": 0,
+        "docMax": 0,
+        "main": 0,
+        "mainMax": 0
+      },
+      "toastsAfterShot": []
+    },
+    "c2-summary-end": {
+      "file": "c2-summary-end.png",
+      "desc": "summary, details expanded and scrolled to its end (setup scroll, as capture.mjs 08)",
+      "url": "http://127.0.0.1:5306/?debug&theme=light#/done",
+      "at": "2026-10-11T18:37:07.947Z",
+      "factsReadBeforeShot": true,
+      "hash": "#/done",
+      "clockNow": "2026-10-10T16:40:11.619Z",
+      "banner": null,
+      "summaryNote": true,
+      "warningToast": false,
+      "toasts": [],
+      "close": null,
+      "scroll": {
+        "doc": 0,
+        "docMax": 0,
+        "main": 0,
+        "mainMax": 0
+      },
+      "toastsAfterShot": [],
+      "lastLine": {
+        "lastLineBottom": 143,
+        "footerTop": 175,
+        "clears": true
+      }
+    },
+    "a1-today-warning": {
+      "file": "a1-today-warning.png",
+      "desc": "Today after Skip break, storage still full (R7: banner; INT: warning toast if shown)",
+      "url": "http://127.0.0.1:5306/?debug&theme=light#/",
+      "at": "2026-10-11T18:37:10.617Z",
+      "factsReadBeforeShot": true,
+      "hash": "#/",
+      "clockNow": "2026-10-10T16:40:14.627Z",
+      "banner": {
+        "top": 16,
+        "bottom": 429,
+        "inView": false,
+        "partlyInView": true
+      },
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [],
+      "close": null,
+      "scroll": {
+        "doc": 0,
+        "docMax": 2632,
+        "main": null,
+        "mainMax": null
+      },
+      "toastsAfterShot": []
+    },
+    "a2-today-banner-in-view": {
+      "file": "a2-today-banner-in-view.png",
+      "desc": "Today, the banner was not wholly in view at the top: scrolled into view (setup scrollIntoView)",
+      "url": "http://127.0.0.1:5306/?debug&theme=light#/",
+      "at": "2026-10-11T18:37:11.316Z",
+      "factsReadBeforeShot": true,
+      "hash": "#/",
+      "clockNow": "2026-10-10T16:40:15.338Z",
+      "banner": {
+        "top": 0,
+        "bottom": 413,
+        "inView": false,
+        "partlyInView": true
+      },
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [],
+      "close": null,
+      "scroll": {
+        "doc": 16,
+        "docMax": 2632,
+        "main": null,
+        "mainMax": null
+      },
+      "toastsAfterShot": []
+    },
+    "b1-settings-your-data": {
+      "file": "b1-settings-your-data.png",
+      "desc": "Settings › Your data, storage still full (setup scroll to the heading)",
+      "url": "http://127.0.0.1:5306/?debug&theme=light#/settings",
+      "at": "2026-10-11T18:37:14.395Z",
+      "factsReadBeforeShot": true,
+      "hash": "#/settings",
+      "clockNow": "2026-10-10T16:40:17.112Z",
+      "banner": {
+        "top": 512,
+        "bottom": 762,
+        "inView": false,
+        "partlyInView": false
+      },
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [],
+      "close": null,
+      "scroll": {
+        "doc": 4027,
+        "docMax": 6203,
+        "main": null,
+        "mainMax": null
+      },
+      "toastsAfterShot": []
+    },
+    "b2-settings-banner-in-view": {
+      "file": "b2-settings-banner-in-view.png",
+      "desc": "Settings › Your data, the banner was not wholly in view under the heading: scrolled into view (setup scrollIntoView)",
+      "url": "http://127.0.0.1:5306/?debug&theme=light#/settings",
+      "at": "2026-10-11T18:37:16.276Z",
+      "factsReadBeforeShot": true,
+      "hash": "#/settings",
+      "clockNow": "2026-10-10T16:40:18.385Z",
+      "banner": {
+        "top": 63,
+        "bottom": 313,
+        "inView": true,
+        "partlyInView": true
+      },
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [],
+      "close": null,
+      "scroll": {
+        "doc": 4476,
+        "docMax": 6203,
+        "main": null,
+        "mainMax": null
+      },
+      "toastsAfterShot": []
+    },
+    "f1-focus-running": {
+      "file": "f1-focus-running.png",
+      "desc": "focus running (normal storage)",
+      "url": "http://127.0.0.1:5306/?debug&theme=light#/focus",
+      "at": "2026-10-11T18:37:23.077Z",
+      "factsReadBeforeShot": true,
+      "hash": "#/focus",
+      "clockNow": "2026-10-10T16:40:04.515Z",
+      "banner": null,
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [],
+      "close": null,
+      "scroll": {
+        "doc": 0,
+        "docMax": 0,
+        "main": 0,
+        "mainMax": 56
+      },
+      "toastsAfterShot": []
+    },
+    "d1-break-top": {
+      "file": "d1-break-top.png",
+      "desc": "tea break running, top",
+      "url": "http://127.0.0.1:5306/?debug&theme=light#/focus",
+      "at": "2026-10-11T18:37:31.429Z",
+      "factsReadBeforeShot": true,
+      "hash": "#/focus",
+      "clockNow": "2026-10-10T16:40:13.255Z",
+      "banner": null,
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [],
+      "close": null,
+      "scroll": {
+        "doc": 0,
+        "docMax": 0,
+        "main": 0,
+        "mainMax": 14
+      },
+      "toastsAfterShot": []
+    },
+    "d2-break-bottom": {
+      "file": "d2-break-bottom.png",
+      "desc": "tea break running, scrolled to the bottom (real wheel)",
+      "url": "http://127.0.0.1:5306/?debug&theme=light#/focus",
+      "at": "2026-10-11T18:37:33.327Z",
+      "factsReadBeforeShot": true,
+      "hash": "#/focus",
+      "clockNow": "2026-10-10T16:40:15.566Z",
+      "banner": null,
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [],
+      "close": null,
+      "scroll": {
+        "doc": 0,
+        "docMax": 0,
+        "main": 14,
+        "mainMax": 14
+      },
+      "toastsAfterShot": []
+    },
+    "d3-breakover-top": {
+      "file": "d3-breakover-top.png",
+      "desc": "Break’s over, top",
+      "url": "http://127.0.0.1:5306/?debug&theme=light#/focus",
+      "at": "2026-10-11T18:37:36.291Z",
+      "factsReadBeforeShot": true,
+      "hash": "#/focus",
+      "clockNow": "2026-10-10T16:40:17.998Z",
+      "banner": null,
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [],
+      "close": {
+        "rect": [
+          607,
+          13,
+          44,
+          44
+        ],
+        "hitTestable": true
+      },
+      "scroll": {
+        "doc": 0,
+        "docMax": 0,
+        "main": 0,
+        "mainMax": 353
+      },
+      "toastsAfterShot": []
+    },
+    "d4-breakover-bottom": {
+      "file": "d4-breakover-bottom.png",
+      "desc": "Break’s over, scrolled to the bottom (real wheel)",
+      "url": "http://127.0.0.1:5306/?debug&theme=light#/focus",
+      "at": "2026-10-11T18:37:39.340Z",
+      "factsReadBeforeShot": true,
+      "hash": "#/focus",
+      "clockNow": "2026-10-10T16:40:20.903Z",
+      "banner": null,
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [],
+      "close": {
+        "rect": [
+          607,
+          13,
+          44,
+          44
+        ],
+        "hitTestable": true
+      },
+      "scroll": {
+        "doc": 0,
+        "docMax": 0,
+        "main": 353,
+        "mainMax": 353
+      },
+      "toastsAfterShot": []
+    },
+    "e1-breakover-end-3toasts": {
+      "file": "e1-breakover-end-3toasts.png",
+      "desc": "Break’s over scrolled to its end (real wheel), three toasts raised via the app toast() (setup): the Close state",
+      "url": "http://127.0.0.1:5306/?debug&theme=light#/focus",
+      "at": "2026-10-11T18:37:42.491Z",
+      "factsReadBeforeShot": true,
+      "hash": "#/focus",
+      "clockNow": "2026-10-10T16:40:23.073Z",
+      "banner": null,
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [
+        "Recipe done: Take 2 full tea breaks · +15 leaves",
+        "Saved 12 minutes of focus",
+        "Cozy level 5!"
+      ],
+      "close": {
+        "rect": [
+          607,
+          13,
+          44,
+          44
+        ],
+        "hitTestable": true
+      },
+      "scroll": {
+        "doc": 0,
+        "docMax": 0,
+        "main": 353,
+        "mainMax": 353
+      },
+      "toastsAfterShot": [
+        "Recipe done: Take 2 full tea breaks · +15 leaves",
+        "Saved 12 minutes of focus",
+        "Cozy level 5!"
+      ]
+    },
+    "e0-breakover-top-3toasts": {
+      "file": "e0-breakover-top-3toasts.png",
+      "desc": "Break’s over at the panel top, three toasts raised via the app toast() (setup); toast rects in toastRects",
+      "url": "http://127.0.0.1:5306/?debug&theme=light#/focus",
+      "at": "2026-10-11T18:37:59.331Z",
+      "factsReadBeforeShot": true,
+      "hash": "#/focus",
+      "clockNow": "2026-10-10T16:40:13.529Z",
+      "banner": null,
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [
+        "Recipe done: Take 2 full tea breaks · +15 leaves",
+        "Saved 12 minutes of focus",
+        "Cozy level 5!"
+      ],
+      "close": {
+        "rect": [
+          607,
+          13,
+          44,
+          44
+        ],
+        "hitTestable": true
+      },
+      "scroll": {
+        "doc": 0,
+        "docMax": 0,
+        "main": 0,
+        "mainMax": 353
+      },
+      "toastsAfterShot": [
+        "Recipe done: Take 2 full tea breaks · +15 leaves",
+        "Saved 12 minutes of focus",
+        "Cozy level 5!"
+      ],
+      "toastRects": {
+        "list": [
+          20,
+          97,
+          287,
+          267
+        ],
+        "region": [
+          12,
+          12,
+          303,
+          351
+        ],
+        "toasts": [
+          {
+            "text": "Recipe done: Take 2 full tea b",
+            "rect": [
+              20,
+              97,
+              287,
+              57
+            ]
+          },
+          {
+            "text": "Saved 12 minutes of focus",
+            "rect": [
+              20,
+              161,
+              287,
+              138
+            ]
+          },
+          {
+            "text": "Cozy level 5!",
+            "rect": [
+              41,
+              307,
+              245,
+              57
+            ]
+          }
+        ],
+        "header": [
+          331,
+          12,
+          320,
+          45
+        ],
+        "mainScroll": 0
+      }
+    },
+    "e2-breakover-end-3toasts-rects": {
+      "file": "e2-breakover-end-3toasts-rects.png",
+      "desc": "as e1 (panel wheeled to its end, three toasts), with toast rects in toastRects",
+      "url": "http://127.0.0.1:5306/?debug&theme=light#/focus",
+      "at": "2026-10-11T18:38:04.697Z",
+      "factsReadBeforeShot": true,
+      "hash": "#/focus",
+      "clockNow": "2026-10-10T16:40:19.081Z",
+      "banner": null,
+      "summaryNote": false,
+      "warningToast": false,
+      "toasts": [
+        "Recipe done: Take 2 full tea breaks · +15 leaves",
+        "Saved 12 minutes of focus",
+        "Cozy level 5!"
+      ],
+      "close": {
+        "rect": [
+          607,
+          13,
+          44,
+          44
+        ],
+        "hitTestable": true
+      },
+      "scroll": {
+        "doc": 0,
+        "docMax": 0,
+        "main": 353,
+        "mainMax": 353
+      },
+      "toastsAfterShot": [
+        "Recipe done: Take 2 full tea breaks · +15 leaves",
+        "Saved 12 minutes of focus",
+        "Cozy level 5!"
+      ],
+      "toastRects": {
+        "list": [
+          20,
+          97,
+          287,
+          267
+        ],
+        "region": [
+          12,
+          12,
+          303,
+          351
+        ],
+        "toasts": [
+          {
+            "text": "Recipe done: Take 2 full tea b",
+            "rect": [
+              20,
+              97,
+              287,
+              57
+            ]
+          },
+          {
+            "text": "Saved 12 minutes of focus",
+            "rect": [
+              20,
+              161,
+              287,
+              138
+            ]
+          },
+          {
+            "text": "Cozy level 5!",
+            "rect": [
+              41,
+              307,
+              245,
+              57
+            ]
+          }
+        ],
+        "header": [
+          331,
+          12,
+          320,
+          45
+        ],
+        "mainScroll": 353
+      }
+    }
+  },
+  "errors": [],
+  "endedAt": "2026-10-11T18:38:04.706Z"
+}

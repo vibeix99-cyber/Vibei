@@ -1,0 +1,27 @@
+114a115,124
+>   // L1 DIAGNOSTIC ADDITION (accept-diag.mjs only): log every main-frame navigation, navigation request, console line and page close/crash, with time.
+>   const diag = []; const t00 = Date.now(); const dlog = (k, v) => diag.push([Date.now() - t00, k, String(v).slice(0, 300)]);
+>   page.on('framenavigated', (f) => { if (f === page.mainFrame()) dlog('framenavigated', f.url()); });
+>   page.on('load', () => dlog('load', page.url())); page.on('domcontentloaded', () => dlog('domcontentloaded', page.url()));
+>   page.on('requestfailed', (r) => dlog('requestfailed', r.url() + ' ' + (r.failure()?.errorText || '')));
+>   page.on('response', (r) => { if (r.status() >= 400) dlog('http' + r.status(), r.url()); });
+>   page.on('request', (r) => { if (r.isNavigationRequest()) dlog('navrequest', r.url() + ' ' + (r.redirectedFrom()?.url() || '')); });
+>   page.on('console', (m) => dlog('console.' + m.type(), m.text()));
+>   page.on('crash', () => dlog('crash', ''));
+>   page.on('close', () => dlog('close', ''));
+195a206
+>     row.timeOrigin0 = await page.evaluate(() => performance.timeOrigin);
+233c244,249
+<   } catch (e) { row.error = String(e.message).split('\n')[0]; }
+---
+>   } catch (e) {
+>     row.error = String(e.message).split('\n')[0];
+>     // L1 DIAGNOSTIC (accept-diag2): after the failure, wait and ask the page what document it is now.
+>     await sleep(2500);
+>     try { row.after = { url: page.url(), closed: page.isClosed(), doc: await page.evaluate(() => ({ nav: performance.getEntriesByType('navigation').map((n) => n.type), timeOrigin: performance.timeOrigin, hash: location.hash, ready: document.readyState, kettle: !!window.__kettle, l1: !!window.__acc })) }; } catch (e2) { row.after = { err: String(e2.message).split('\n')[0] }; }
+>   }
+235c251,252
+<   appendFileSync(`${out}/accept-${rev}.jsonl`, JSON.stringify(row) + '\n');
+---
+>   row.diag = diag;
+>   appendFileSync(`${out}/accept-diag2-${rev}.jsonl`, JSON.stringify(row) + '\n');
