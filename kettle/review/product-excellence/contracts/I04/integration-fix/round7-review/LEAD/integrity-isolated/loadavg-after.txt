@@ -1,0 +1,6 @@
+AFTER 09:48:25 2.76 3.23 1.81 1/370 8310 rc=1
+max 3; held 0
+WAIT D 2 5022 bash -c date -u +"start %T"; npx playwright test --project=chromium --workers=2 --output /tmp/claude-0/-home-user-Vibei/
+WAIT A 1 6981 bash -c ./one.sh markdone-cases/smoke-r7-b markdone-a4.mjs 5301 SETUP=b -- {BASE} {REV} {OUT} 844x390@200:light 0 4; ./o
+WAIT C 1 8049 bash /home/user/wt/rv7-r7/kettle/.tmp/C/runC1.sh
+WAIT B 1 8122 /home/user/wt/rv7-r7/kettle/.tmp/B/worker2.sh

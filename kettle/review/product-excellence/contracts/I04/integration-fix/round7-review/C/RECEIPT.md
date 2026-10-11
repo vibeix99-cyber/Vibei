@@ -5,12 +5,18 @@
 - Model: Claude Opus 5.5 (`claude-opus-5-5`). Effort: not inspectable.
 - Wall clock: start **2026-10-11T03:23:56Z**; end: see "Wall clock" at the bottom. Budget 90 min, extended by the
   orchestrator at 03:58Z by 20 min (to about 05:15Z) for the slot wait.
+- **Relaunch.** The first Lane C instance (model above) stopped at about 04:50Z on a usage limit. This receipt was
+  continued by a relaunched Lane C instance, **Claude Sonnet 5.5 (`claude-sonnet-5-5`), effort not inspectable**, started
+  **2026-10-11T09:43:11Z** with a 75-minute budget (to about 10:58Z). Every completed check of the first run (1a–1d, 2, 3) is kept
+  as it was; the relaunch adds Check 4 (Close / Ambience / Mute), Check 5 (the probes the maker did not re-run), the 1d-2
+  results and the closing wall clock, and updates "Not run / partial". Servers restarted by the orchestrator at 09:40Z on the
+  same ports and builds (R7 `b39202f` :5301, INT `0d58c5e` :5303, unfixed `49ea1de` :5305); earlier results on those builds stand.
 - Under review: **R7** = trial merge `b39202f` (worktree `/home/user/wt/rv7-r7`, `kettle/src` `6db18ad`), dev server +
   debug API http://127.0.0.1:5301; production preview :5321 (item 11 only). Control / BEFORE: **INT** `0d58c5e`
   (`kettle/src` `1fc4a1b`), http://127.0.0.1:5303; preview :5323 (item 11 only). At 03:26Z I checked that :5301 serves
   the R7 blobs and :5303 the INT blobs of `FocusScreen.module.css`, `Toast.tsx`, `flow.ts` (`?raw` text, sha256 equal
   to `git show <rev>:kettle/<path>`).
-- Folder `round7-review/C/`: `check1-reach/`, `check2-residuals/`, `check3-pixels/`, `probes/` (every probe I ran +
+- Folder `round7-review/C/`: `check1-reach/`, `check2-residuals/`, `check3-pixels/`, `check4-close/` (relaunch), `probes/` (every probe I ran +
   `SHA256SUMS.txt` + `GREP-no-scroll-calls.txt`), `logs/slots-status.log`. Full-size screenshots are stored as JPEG q88
   at their original pixel size to fit the folder; **every pixel count below was computed on the original PNGs**, kept in
   `/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/r7/C/` (`reach/`, `pix/`, `pix/diff/`,
@@ -46,6 +52,12 @@
   03:59:13Z, run started 03:59:54Z). `resid.mjs` only gained scenario definitions after a run had loaded it: the main
   `resid` run (03:59:55Z) predates the `viewlag` and `flash` scenarios; `resid2` (04:04:09Z) predates `flash`; `resid3`
   runs the final file. No scenario that ran was changed afterwards.
+
+**Relaunch slots (fair-share gate).** The lead's exclusive integrity run (`LEAD`, n 3) was gone from `slots.py status` by
+09:48Z. I queued two one-browser jobs: `runC1.sh` (control, then R7 Break's over / Close) took its slot at 09:49:08Z and
+freed it at 10:04:16Z (`check4-close/logs/slots-and-job1.log`); `runC2.sh` (R7 focus + paused break, then M7b's unchanged
+toastcheck) was queued at 09:49Z; its start time is in Check 4c / the wall clock section. I did not append work to a running
+job to keep a slot.
 
 ---
 
@@ -181,8 +193,7 @@ Causes (maps opened full size):
   The real-clock reduced-motion pair (`flowreal-390x844-dark-rm`) is 0 px at 09 and at 10 without toasts. Why the frozen
   clock leaves a panel empty is not explained (framer-motion's frame loop under a paused page clock).
 
-**1d-2 (real clock, 100 %): how long the R7 shade band shows after the break / Break's over view enters** — see the
-section at the end (filled when `resid3` lands, or marked not run).
+**1d-2 (real clock, 100 %): how long the R7 shade band shows after the break / Break's over view enters** — DONE at the relaunch from rows that landed at 04:46Z: see section 1d-2 at the end (about 0.15–0.3 s from the view's first painted frame, gone by 0.83 s / 0.60 s).
 
 ---
 
@@ -294,36 +305,142 @@ chrome follows the machine's timing, not the revision.
 
 ---
 
+## Check 4 (relaunch). Close, Ambience and Mute stay clear at every size and scroll position — Close: DONE; Ambience / Mute: see 4c
+
+Added at the relaunch (09:43Z). Probe: **`closecheck2.mjs`**, an extension of the lead's `closecheck.mjs`. The lead's file was
+checked against `LEAD/probes/SHA256SUMS.txt` first (`c17efde4…`, equal) and copied unedited as `probes/closecheck-lead.mjs`;
+the extension is a separate file (`probes/closecheck2.mjs`, `SHA256SUMS.txt`). What it adds to the lead's probe:
+- **Per frame (rAF, 2.4 s after the toasts are raised), for Close, Ambience, Mute and every panel control:** the control's
+  rect, whether `elementFromPoint` at its visible centre hits it, whether a painted toast box (clipped by the list's
+  scrollport) overlaps it by > 1 px, and what was hit instead. "Covered" = overlap or centre not hit; the three counts are
+  kept apart (`hit`, `ovl`, `cov` in the tables).
+- **A real tap per control**, with the toasts still up: CDP touch (`page.touchscreen.tap`) on the phone sizes, a real mouse
+  click at 1440. Activation is judged by its effect: Close → `#/focus` becomes `#/`; Mute → the label / `aria-pressed`
+  flips (then tapped back); Ambience → its dialog opens (then a real Escape closes it). Each tap row records the centre
+  hit-test before the tap and what element it hit.
+- **`focus` (running) as a third state**, kept awake with a real pointer move before each measurement: while a brew runs
+  unpaused the top bar fades to opacity 0 and ignores pointers after 7 s idle (`.screen[data-zen] .chrome`, by design:
+  "a tap there only wakes"); `zenFrames` is recorded per row (0 everywhere below).
+- Everything else as the lead's probe: states set up by the debug API, a real tap on Tea time, the panel scrolled to its
+  **end by real mouse wheel** (100 px notches until nothing moves), toasts raised through the app's own `toast()` as
+  labelled setup with `duration: 8000` (real timers, nothing held; dismissed between sub-runs), 1 and 3 toasts, panel at
+  its top and at its end, one fresh disposable context per (configuration, state); no `scrollIntoView` / `scrollTo` /
+  `scrollBy` / `scrollTop` writes.
+- **Close taps** are in separate fresh contexts (the tap leaves Break's over): panel top + 3 toasts, panel end + 3 toasts
+  (control additionally: end + 1 toast). **Ambience / Mute taps** (focus and paused break): 3 toasts, panel top and end.
+- Which control exists where (`FocusScreen.tsx` l.283–320): **Ambience** is in the top bar of the focus view and the break;
+  **Mute** likewise; in **Break's over** the bar holds **Close** instead, with no Ambience and no Mute.
+- Configurations as asked, in order: 375×667, 390×844, 667×375, 844×390 at 200 % text (`html{font-size:200%}`), light and
+  dark; then 375×667 and 1440×900 at 100 %, light. Revision / port: R7 `b39202f` :5301; control unfixed `49ea1de` :5305
+  (served byte for byte as re-verified by the orchestrator at 09:40Z). Newbie seed, `nooktime=day` in light.
+
+### 4a. Control, re-run once in this session first — Close covered (reproduced)
+
+`49ea1de` on :5305, 375×667 @200 light, Break's over with a carried task, 09:49–09:50Z (`check4-close/ctl-49ea1de-5305/`,
+`TABLES-control-49ea1de.md`). Today's earlier figure (lead): Close covered 152/153 frames.
+
+| Panel · toasts | Frames | Close centre hits Close | Close overlapped by a toast | Covered | Real touch tap on Close (3 toasts) |
+|---|---|---|---|---|---|
+| top · 1 | 179 | 179 | 0 | 0 | — |
+| top · 3 | 134 | 134 | 0 | 0 | hits Close; **activated** (`#/focus` → `#/`) |
+| end (236/236) · 1 | 176 | 176 | 0 | 0 | tap with 1 toast: hits Close; **activated** |
+| end (236/236) · 3 | 168 | **4** | **166** | **166 of 168** (139 of 139 settled) | centre hit = the "Recipe done" toast (`span`); **not activated** (`#/focus` stays) |
+
+Opened full size: `ctl-49ea1de-5305/49ea1de-375x667-t200-light-over-carried-end-n3.jpg` (Close hidden under the top toast,
+only the edge of its tile shows at the right) against R7's frame below.
+
+### 4b. R7 `b39202f` :5301, Break's over (Close) — 0 covered frames in every configuration, every tap activated
+
+Per configuration, frames pooled over the four sub-runs (panel top / end × 1 / 3 toasts); Close covered = overlap or centre
+not hit. Close rect is the same in every frame of a configuration (1 distinct rect). Taps: touch (phones) / click (1440),
+3 toasts, panel top and panel end. All rows: `check4-close/TABLES-R7-b39202f.md`, raw `r7-b39202f-5301/closecheck2-b39202f.jsonl`.
+
+| Configuration | Panel range at the end | Close rect [l,t,r,b] | Frames | Centre hits Close | Covered | Taps activated |
+|---|---|---|---|---|---|---|
+| 375×667 @200 light | 236 | [319,10,363,54] | 680 | 680 | **0** | 2/2 (top, end) |
+| 375×667 @200 dark | 236 | same | 713 | 713 | **0** | 2/2 |
+| 390×844 @200 light | 126 | [334,10,378,54] | 768 | 768 | **0** | 2/2 |
+| 390×844 @200 dark | 126 | same | 731 | 731 | **0** | 2/2 |
+| 667×375 @200 light | 353 | [607,13,651,57] | 758 | 758 | **0** | 2/2 |
+| 667×375 @200 dark | 353 | same | 752 | 752 | **0** | 2/2 |
+| 844×390 @200 light | 338 | [784,13,828,57] | 760 | 760 | **0** | 2/2 |
+| 844×390 @200 dark | 338 | same | 790 | 790 | **0** | 2/2 |
+| 375×667 @100 light | 0 (fits) | [319,10,363,54] | 646 | 646 | **0** | 2/2 |
+| 1440×900 @100 light | 0 (fits) | [1356,24,1400,68] | 568 | 568 | **0** | 2/2 (mouse click) |
+
+Opened full size: `r7-b39202f-5301/b39202f-375x667-t200-light-over-carried-end-n3.jpg` (the stack's room starts under the bar; Close
+whole above the top toast, which is cut at the room's top and scrolls inside it, 90 of 138 px visible; "Mark it done",
+"Put the kettle on", "That's all for now" in view) and `…-667x375-t200-light-over-carried-end-n1.jpg`. A 1-toast tap on R7
+was not run (the 1-toast frames are clear in every row; the control's 1-toast tap activated).
+
+### 4d. Toast visibility observed in the same rows (not a Close defect, identical on the control)
+
+With Break's over scrolled to its **end** at the two landscape sizes at 200 %, the toasts' room is a strip at the very top of
+the screen (clip `[−12, 19]` at 667×375, `[−12, 34]` at 844×390): **1 toast shows 19 of 52 px (667×375) / 34 of 52 px
+(844×390); with 3, two are 0 px (fully above the screen) and the newest shows the same 19 / 34 px**. Close is clear in all
+of these frames, and nothing covers the panel's controls, but the toasts cannot be read there. The same numbers are in the
+lead's control run on `49ea1de` at 667×375 light (`LEAD/runs/close-ctl5305/closecheck-49ea1de.jsonl`: end · 1 → 19/52,
+end · 3 → 0 · 0 · 19), so this is the room the lift leaves (it floats above the docked controls, which at the end of the
+range sit high on a short screen), not something the Close fix changed. I did not run my own control at 667×375 or 844×390.
+At 375×667 and 390×844 @200 and at 100 % the toasts are whole except the top one of three at 375×667 @200 (90/138 px, scrolls
+inside the room). Full table: `TABLES-R7-b39202f.md`, last section.
+
+### 4c. Ambience and Mute (focus running, paused break): PENDING — job 2 not yet started
+
+## Check 5 (relaunch). The probes the maker did not re-run on the final revision (GATE.md flags)
+
+| GATE.md flag | What I did | Status |
+|---|---|---|
+| **M7b reach at 390×844 and 844×390** on the final revision | **Already covered by check 1a, not re-run.** 1a used M7b's unedited `reach.mjs` (sha256 `9d8ef06e…`, equal to M7b's `SHA256SUMS.txt`) on R7 `b39202f` :5301 at **390×844 and 844×390 (and 375×667), light and dark, 200 %, five states each (break, paused break, Break's over with / without a task, tap)**, with real wheel, CDP touch drag and Tab / Shift+Tab: **R7 0 failing of 30 runs, 0 control × method failures**; 390×844: 10 runs 0 failing, 844×390: 10 runs 0 failing (`check1-reach/TABLE.md`, `R7-reach.jsonl`, judged twice). Control INT 390×844 4/10 and 844×390 8/10 failing, reproduced the same session. One run per configuration per revision (M7b ran two). | covered (1 run each) |
+| **M7a's toast / Close check at 390×844 dark and 667×375** | **Covered by check 4** (`closecheck2.mjs`, a superset of the lead's `closecheck.mjs`, itself the M7b toast check's flow plus Close taps): 390×844 @200 dark and 667×375 @200 light and dark, Break's over (Close), see 4b; paused break and focus running (Ambience, Mute), see 4c. In addition the unchanged M7b `toastcheck.mjs` (sha256 `3380304f…`, equal to M7b's `SHA256SUMS.txt`, the probe M7a re-ran on 375×667 light and 844×390 dark only) is re-run at those configurations: see 5a. | see 4b / 4c / 5a |
+| **Ambience and Mute by touch** | **Covered by check 4c**: a real touch tap (CDP, `page.touchscreen.tap`; a mouse click at 1440) on each, 3 toasts up, panel top and end, focus running and paused break, every configuration. | see 4c |
+
+### 5a. M7b toastcheck.mjs unchanged on R7: PENDING
+
 ## Runs and failures per configuration
 
-| Probe | Configurations | INT | R7 |
-|---|---|---|---|
-| `reach.mjs` (1a) | 3 sizes × 2 themes × 5 states @200 % | 30 runs / 22 failing | 30 runs / 0 failing |
-| `pix.mjs` (1d, 3) | 21 jobs: home ×6, first ×3 + 1 real, RM flow + zen, flows ×7 (incl. BEFORE-day), real flows ×2 | 21 run, 0 errors | 21 run, 0 errors |
-| `resid.mjs` (2) | 23 scenarios | 23 run (back-t200 invalid) | 23 run (back-t200 invalid) |
-| `resid.mjs` view timing / footer / panel end (1a, 1c, 1d) | 14 scenarios | 14 run (footer 390×844 @100 % invalid) | 14 run (same) |
-| `a11y.spec.ts` "short screen" (15) | ×3, `--retries=0`, each revision's own spec | 3 run / 3 failed (D4 entry) | 3 run / 0 failed |
+PENDING
 
 ## Not run / partial (never a pass)
 
-- 1a: one run per configuration per revision (M7b ran two).
-- 1c: 390×844 @100 % footer run invalid on both revisions (probe step).
-- 1d: 1440 dark 09 and the reduced-motion step flow (09, 10) are frozen-clock artifacts and not counted; the real-clock
-  checks replace them for the reduced-motion flow at 390×844 only. 1d-2 below.
-- 2: item 10 not settled (frame starvation at 1440); item 19 at 200 % not run validly; one run per scenario.
-- Everything: SwiftShader on 4 shared CPUs, CDP touch, synthetic wheel notches, `html{font-size}` for large text; no real
-  devices, no assistive technology, Chromium only.
+PENDING
 
-## 1d-2. Real-clock shade band after the view enters (100 %)
+## 1d-2. Real-clock shade band after the view enters (100 %) — DONE (rows landed at 04:46Z; used here, not re-run)
 
-**Not run (slot).** The real-clock diagnostic (`resid.mjs` `flash-390x844`, `flash-375x667`: per-frame panel scroll range
-for 1.6 s after a real Tea-time click and after `finish()`, INT and R7) was queued at 04:07:57Z and had not been given a
-slot when this receipt was closed (fair-share queue: a 2-slot Lane D job ahead). If it runs later its rows land in
-`…/scratchpad/r7/C/resid3/resid.jsonl`; they are not part of this receipt. What stands without it: the band exists only
-while the entering view is translated (12 / 14 px, 0.35 s ease-out, code above); at the frozen first frame it is
-present (pixel evidence); 3.8–5.8 s later in real time it is absent (0 px). Its real-time duration is therefore bounded
-by the 0.35 s entrance but **not measured**; under reduced motion the views enter with opacity only (no translate, by
-code), so no band is expected there (not measured either).
+Written at the relaunch (09:43Z+). The earlier close of this receipt said "not run (slot)"; the `resid3` job had in fact
+been given its slot at 04:45:58Z and finished at 04:46:59Z (`check2-residuals/resid3-flash/resid3.log`, rows
+`resid3.jsonl`, `…/resid.jsonl` in scratch), minutes before the previous instance stopped. Those rows are used as they
+are (not re-run). `resid.mjs` `flash-390x844` / `flash-375x667`: newbie seed, real clock, 100 % text, light,
+fresh context per revision, INT then R7; per animation frame the session panel's scroll range (`scrollHeight −
+clientHeight`) and `overflow-y`, from a real Tea-time click and from `finish()` (Break's over), 1.6 s each. One run per
+revision per size. R7's panel is `overflow: hidden auto` with the bottom shade; INT's is `overflow: visible`.
+
+| Size | Rev | After the real Tea-time click: frames with range > 0 (of frames in 1.6 s) · first–last ms after the click · max range · overflow-y | After `finish()` (Break's over): same |
+|---|---|---|---|
+| 390×844 | INT | 8 of 116 · 512–695 ms · 12 px · visible | 12 of 95 · 209–393 ms · 14 px · visible |
+| 390×844 | **R7** | 2 of 112 · 655–833 ms · 12 px · auto | 9 of 68 · 303–595 ms · 14 px · auto |
+| 375×667 | INT | 8 of 111 · 465–613 ms · 12 px · visible | 10 of 96 · 199–348 ms · 14 px · visible |
+| 375×667 | **R7** | 9 of 107 · 518–664 ms · 12 px · auto | 11 of 93 · 229–389 ms · 14 px · auto |
+
+Reading: the 12 / 14 px range exists only on the first painted frames of the entering view (the 0.35 s ease-out
+translate of `FocusScreen.tsx` l.389 / l.351); INT has the same range for the same time, and its panel does not clip or
+shade it. On R7, where the panel is `auto`, the shade can show only in those frames: 2–11 rAF frames within a window of
+0.15–0.29 s (R7 390×844: 178 ms after Tea time, 292 ms after `finish()`; 375×667: 146 ms and 160 ms), ending by 0.83 s
+after the Tea-time click and by 0.60 s after `finish()`. It starts at the view's first painted frame, on a view that is
+itself fading in. At 1.6 s after the click the real-clock shots are **0 px apart** at 390×844 and 327 px (21 > 24) at
+375×667, the kettle's animated steam wisp, not the panel's bottom
+(`check2-residuals/resid3-flash/{INT,R7}-flash-*-break-1.6s.jpg`; counts on the PNGs, `flashpair/diff`). So the band
+seen in the frozen-clock pairs (1d-1) is a transient of the first ~0.3 s of the entrance; **not measured:** the shade's
+painted alpha frame by frame, 200 % text, reduced motion (the views enter by opacity only there, by code, so no range
+is expected), and Break's over with toasts.
+
+## spec15.sh and the break-reach spec (relaunch note)
+
+`spec15.sh` is **not** a never-run item: it ran in the first session, **04:04:09–04:17:39Z** (`/…/scratchpad/r7/C/resid2.log`,
+`spec/run.log`; copies in `check2-residuals/`): its footer / panel-end group (1a panel end, 1c), then item 15, `a11y.spec.ts`
+"short screen (375×667)" × 3 per revision with `--retries=0`, each revision's own spec — **R7 3 passed / 3, INT 3 failed / 3**
+(the D4 entry on a toast). The results are in 1c and in the row for item 15 above, unchanged. `spec15.sh` does not run
+M7b's `tests/break-reach.spec.ts`; PENDING_BREAKREACH
 
 ## Wall clock
 

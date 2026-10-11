@@ -7,7 +7,7 @@
 //
 // node cap-d.mjs --cfgs "390x844@2:light:100,..." --root <captures root> --sides R7,INT
 import { chromium } from 'playwright';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 
 const args = Object.fromEntries(process.argv.slice(2).reduce((a, x, i, all) => (x.startsWith('--') && a.push([x.slice(2), all[i + 1]]), a), []));
 const FIXED_ISO = '2026-10-10T16:40:00.000Z';
@@ -17,6 +17,7 @@ const SIDES = {
   INT: { base: 'http://127.0.0.1:5303', port: 5303, revision: '0d58c5e (integration app code; kettle/src tree 1fc4a1b)' },
 };
 const sides = (args.sides ?? 'R7,INT').split(',');
+const profs = (args.profiles ?? 'W,N').split(',');
 const root = args.root;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const b = await chromium.launch({ args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] });
@@ -69,8 +70,12 @@ for (const c of args.cfgs.split(',')) {
     });
     const shot = async (p, state, desc) => {
       const file = `${state}.png`;
+      // Facts are read just BEFORE the shot (animations:'disabled' fast-forwards finite animations, which can end a
+      // toast right after the shot); the after-shot toast list is kept as `toastsAfterShot`.
+      const pre = await info(p);
       await p.screenshot({ path: `${dir}/${file}`, animations: 'disabled', timeout: 120_000 });
-      meta.states[state] = { file, desc, url: p.url(), at: new Date().toISOString(), ...(await info(p)) };
+      const post = await info(p);
+      meta.states[state] = { file, desc, url: p.url(), at: new Date().toISOString(), factsReadBeforeShot: true, ...pre, toastsAfterShot: post.toasts };
     };
     // Real wheel over the panel (or the page) until nothing scrolls any further.
     const wheelToEnd = async (p) => {
@@ -91,7 +96,7 @@ for (const c of args.cfgs.split(',')) {
     const tap = async (p, loc) => (W < 900 ? loc.tap() : loc.click());
 
     // ---- Profile W: storage really full (quota filled), a brew completes: summary note, Today, Settings › Your data
-    try {
+    if (profs.includes('W')) try {
       const { ctx, p } = await profile(true);
       await p.evaluate(() => window.__kettle.timer.getState().startFocus({ intention: 'Chapter 3 notes', tag: 'study' }));
       await p.waitForFunction(() => location.hash === '#/focus'); await sleep(1800);
@@ -114,15 +119,22 @@ for (const c of args.cfgs.split(',')) {
       await p.waitForFunction(() => location.hash === '#/', null, { timeout: 15_000 }); await sleep(1400);
       await p.evaluate(() => scrollTo(0, 0)); await sleep(300);
       await shot(p, 'a1-today-warning', 'Today after Skip break, storage still full (R7: banner; INT: warning toast if shown)');
+      const bannerToView = async () => {
+        const out = await p.evaluate(() => { const s = document.querySelector('section[data-save-warning]'); if (!s) return false; const r = s.getBoundingClientRect(); if (r.top >= 0 && r.bottom <= innerHeight) return false; s.scrollIntoView({ block: r.height > innerHeight ? 'start' : 'center' }); return true; });
+        if (out) await sleep(500);
+        return out;
+      };
+      if (await bannerToView()) await shot(p, 'a2-today-banner-in-view', 'Today, the banner was not wholly in view at the top: scrolled into view (setup scrollIntoView)');
       await p.evaluate(() => window.__kettle.navigate('/settings')); await sleep(1600);
       await p.evaluate(() => { const h = [...document.querySelectorAll('h2, h3')].find((e) => e.textContent?.trim() === 'Your data'); h?.scrollIntoView({ block: 'start' }); scrollBy(0, -12); });
       await sleep(500);
       await shot(p, 'b1-settings-your-data', 'Settings › Your data, storage still full (setup scroll to the heading)');
+      if (await bannerToView()) await shot(p, 'b2-settings-banner-in-view', 'Settings › Your data, the banner was not wholly in view under the heading: scrolled into view (setup scrollIntoView)');
       await ctx.close();
     } catch (e) { meta.errors.push(`W: ${String(e.message).split('\n')[0]}`); }
 
     // ---- Profile N: storage normal: focus running, break, Break's over (200 %: top and bottom), Close + 3 toasts
-    try {
+    if (profs.includes('N')) try {
       const { ctx, p } = await profile(false);
       await p.evaluate(() => window.__kettle.timer.getState().startFocus({ intention: 'Chapter 3 notes', tag: 'study' }));
       await p.waitForFunction(() => location.hash === '#/focus'); await sleep(1800);
@@ -148,7 +160,38 @@ for (const c of args.cfgs.split(',')) {
       await ctx.close();
     } catch (e) { meta.errors.push(`N: ${String(e.message).split('\n')[0]}`); }
 
+    // ---- Profile T (opt-in): Break's over with three toasts at the panel's TOP, then at its END; toast rects measured
+    if (profs.includes('T')) try {
+      const { ctx, p } = await profile(false);
+      const rects = () => p.evaluate(() => {
+        const ul = document.querySelector('[aria-label="Notifications"]');
+        const r = (e) => { const b = e.getBoundingClientRect(); return [Math.round(b.left), Math.round(b.top), Math.round(b.width), Math.round(b.height)]; };
+        return { list: ul ? r(ul) : null, region: ul?.parentElement ? r(ul.parentElement) : null, toasts: [...document.querySelectorAll('[aria-label="Notifications"] li')].map((li) => ({ text: li.textContent.slice(0, 30), rect: r(li) })), header: document.querySelector('[data-focus-view] header') ? r(document.querySelector('[data-focus-view] header')) : null, mainScroll: document.querySelector('[data-focus-view] main')?.scrollTop ?? null };
+      });
+      await p.evaluate(() => window.__kettle.timer.getState().startFocus({ intention: 'Chapter 3 notes', tag: 'study' }));
+      await p.waitForFunction(() => location.hash === '#/focus'); await sleep(1500);
+      await toEnd(p);
+      await p.waitForFunction(() => location.hash === '#/done', null, { timeout: 20_000 }); await sleep(2600);
+      await tap(p, p.getByRole('button', { name: /^Tea time|^Long tea break/ }));
+      await p.waitForFunction(() => location.hash === '#/focus' && window.__kettle.timer.getState().phase !== 'focus'); await sleep(1500);
+      await toEnd(p);
+      await p.waitForFunction(() => window.__kettle.timer.getState().status === 'idle', null, { timeout: 20_000 }); await sleep(1800);
+      await toasts3(p); await sleep(1000);
+      const topRects = await rects();
+      await shot(p, 'e0-breakover-top-3toasts', 'Break’s over at the panel top, three toasts raised via the app toast() (setup); toast rects in toastRects');
+      meta.states['e0-breakover-top-3toasts'].toastRects = topRects;
+      await p.evaluate(async () => (await import('/src/ui/Toast.tsx')).toast.dismiss()); await sleep(600);
+      await wheelToEnd(p);
+      await toasts3(p); await sleep(1000);
+      const endRects = await rects();
+      await shot(p, 'e2-breakover-end-3toasts-rects', 'as e1 (panel wheeled to its end, three toasts), with toast rects in toastRects');
+      meta.states['e2-breakover-end-3toasts-rects'].toastRects = endRects;
+      await ctx.close();
+    } catch (e) { meta.errors.push(`T: ${String(e.message).split('\n')[0]}`); }
+
     meta.endedAt = new Date().toISOString();
+    // --profiles subset: merge into the earlier meta.json of this directory (earlier states kept unless re-shot).
+    if (!(profs.includes('W') && profs.includes('N')) && existsSync(`${dir}/meta.json`)) { const old = JSON.parse(readFileSync(`${dir}/meta.json`, 'utf8')); meta.states = { ...old.states, ...meta.states }; meta.errors = [...old.errors, ...meta.errors]; meta.supplements = [...(old.supplements ?? []), { profiles: profs, startedAt: meta.startedAt, endedAt: meta.endedAt }]; meta.startedAt = old.startedAt; }
     writeFileSync(`${dir}/meta.json`, JSON.stringify(meta, null, 2));
     console.log(JSON.stringify({ side, dirName, shots: Object.keys(meta.states).length, errors: meta.errors }));
   }
