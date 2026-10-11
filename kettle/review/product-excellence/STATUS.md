@@ -10,6 +10,40 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
+## ▶ WAVE 2 ROUND 1 IN PROGRESS · 2026-10-11 (read this first)
+
+- **Decision:** Vibei chose audit direction A ("One Chai, one room") on top of the approved plan. The base is `90a11e5`,
+  where Wave 1 closed.
+- **Not authorised:**
+  - toast changes (follow-ups #3–#4 go to I10);
+  - new Chai or room artwork;
+  - Three.js material or lighting passes;
+  - paid generation, publishing, PRs, or merging anywhere except `claude/wizardly-galileo-uy89d9`.
+- **Prep:**
+  - 14 archive bundles verified.
+  - `rv8-trial` bundled. `pe/r5-control` is kept as a **local branch only**: its bundle would be 281 MB.
+  - Round 7–8 scratch deleted, 13 old worktrees removed. The audit-phase1 *worktree* is removed; the branch is
+    untouched.
+  - Maker worktrees are sparse. About 18 GB was free at the start.
+- **Makers** (Opus 5.5, about 20:47 UTC, 2.5 hours each, file sets disjoint):
+
+  | Maker | Item | Branch | Worktree | Port | Owns |
+  |---|---|---|---|---|---|
+  | **S** | Summary: I07 + follow-up #1 | `pe/w2-summary` | `/home/user/wt/w2s` | 5211 | `screens/done/**`, `FocusScreen.*` (summary container), `whistle.spec`, new spec |
+  | **H** | Home and first visit: I08 + #2 | `pe/w2-home` | `/home/user/wt/w2h` | 5212 | `screens/home/**`, `screens/welcome/**`, `a11y.spec` and probes, new spec |
+  | **N** | Room and Nook: I09 + I06 prep | `pe/w2-room` | `/home/user/wt/w2n` | 5213 | `scene/**`, `screens/nook/**`, `screens/focus/stage/**`, `scripts/stills/**`, new spec; plus CHAI-3D-SPEC.md |
+
+- **Control `90a11e5`:** :5310 (dev) and :5330 (preview), verified.
+- **BEFORE captures:** `contracts/W2/BEFORE-90a11e5/`.
+  - 16 configurations: 390×844, 375×667, 844×390 and 1440×900 × light/dark × 100/200 %.
+  - 15 states each, 0 errors, frozen clock.
+  - Finished 21:08 UTC, then the edit gate opened.
+- **Next:**
+  1. Gate each packet.
+  2. Review: a new lead plus Lanes S, H and N, and Lane R on the combined trial merge.
+  3. A separate verdict per maker; at most one 90-minute fix round for a rejected maker.
+  4. Merge the approved makers, then Lane R's regression on the merged tree.
+
 ## ■ WAVE 1 CLOSED at `90a11e5` · 2026-10-11 19:40 UTC (read this first)
 
 - **Round 8 APPROVED.** The independent lead (Opus 5.5) approved trial merge `9ff0d04` (src `42e106d`). Receipt:
