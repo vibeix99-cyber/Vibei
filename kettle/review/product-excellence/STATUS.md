@@ -10,7 +10,26 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
-## ▶ ROUND 7 REVIEW RESUMED · 2026-10-11 09:50 UTC (read this first)
+## ■ ROUND 7 REJECTED — 2026-10-11 11:15 UTC (read this first)
+
+- **Verdict:** **REJECT** of trial merge `b39202f` (src `6db18ad`), by the relaunched lead Checker on Opus 5.5.
+  - Receipt: `contracts/I04/CHECKER-integration-fix-r7.md`.
+  - Defect packet and decision: `round7-review/DEFECT-PACKET-R7.md`.
+- **Single blocker: R7-D1.**
+  - What: at 667×375 and 844×390 with 200 % text, Break's over scrolled to its end shrinks the toast room to a 27–42 px
+    strip. The update prompt's Update action cannot be hit.
+  - Introduced by round 7: M7b's scrollable panel combined with the D4 lift. INT is whole.
+  - Owner: M7a.
+- **Everything else holds:** the banner, the announcement, Close, Ambience and Mute, reach, the footer, and M1's data.
+  The Mark-done banner is ACCEPTED under Vibei's ruling.
+- **Not done:**
+  - **Nothing merged.** App code is still `0d58c5e`; Wave 1 is not closed.
+  - **Round 8 not started** (Vibei decides).
+- **Archive:** `archive/rv7-trial-b39202f.incremental.bundle`, local branch `pe/rv7-trial`.
+- **Next:** creative audit phase 2 on `audit/phase2`, using the integration build (INT preview :5323), as instructed for
+  a REJECT.
+
+## ROUND 7 REVIEW RESUMED · 2026-10-11 09:50 UTC (history)
 
 - **Instruction:** Vibei's RESUME, which replaces the overnight plan.
 - **Recovery:**
