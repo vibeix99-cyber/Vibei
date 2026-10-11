@@ -36,6 +36,16 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
   `round7-review/SETUP.md`.
 - **Unrelated:** a separate desk-research report was pushed to branch `audit/phase1`. It is not part of round 7, and no
   app code changed.
+- **Overnight run** (user asleep until about 10:00 UTC; hard stop 09:30 UTC; morning report at
+  `MORNING-2026-10-11.md`):
+  - **Stage 1:** finish round 7.
+    - The Close-covered-by-toasts fix is mandatory for M7a by 03:55 UTC.
+    - A new lead Checker (Opus 5.5) was launched at about 02:20 UTC to prepare; no verdict before the gate.
+    - Then lanes A–D and the verdict. On APPROVE: merge, then the Wave 1 regression.
+    - On REJECT: one focused round 8 only for a single blocker with one owner (90 minutes).
+  - **Stage 2:** creative audit phase 2 (live walkthrough, one critic), on branch `audit/phase2`.
+  - **Stage 3:** follow-up fixes, only if Wave 1 closed and time remains before 08:30 UTC.
+- M7b is READY at `38fc9c6` (archived). M7a merged it (`eea543d`) and is finishing the combined packet.
 - **Next:**
   1. Check the packet gate.
   2. Run a fresh review: a new lead plus lanes A–D, 90 minutes per lane.
