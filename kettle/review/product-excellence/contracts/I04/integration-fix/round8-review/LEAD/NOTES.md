@@ -159,3 +159,63 @@ Frames opened at full size: R8 844 D end (whole over the stage, Update visible, 
   (navigation diagnosis ×4) and `runs/dockcheck/` (synthetic two-action-toast 375×667 rows; sheet controls b39202f 844 D,
   INT 667/844; 1440 summary b39202f/INT). Read `runs/navdiag/navlog-*.jsonl` and `browser-stderr-*.log` first on resume.
 - Draft: `LEAD/VERDICT-DRAFT.md` (leanings; disclosure 4 OPEN → BLOCKS if R8-caused).
+
+## 12. After the lane receipts (resumed 19:13 UTC)
+- navdiag (`runs/navdiag/`, accept-nav sha 5529b38a): R8 844×390 @200 wheel: 2 of 3 complete (0 covered, 7/7 taps each);
+  run 3 lost the context at 34.06 s. Logged from CDP as it happened: after the hash change to #/focus at 9.6 s **no
+  document request, no frameStartedNavigating, no frameNavigated, no crash, no console line**. 4 s after the error the
+  page answered: same URL #/focus, `performance.now()` 38070 ms (continuous with the load at t≈0 → same document),
+  navigation type `navigate` (not `reload`). → **no reload, no navigation, no crash**. b39202f same config: complete,
+  22 covered frames, taps failing (R7-D1).
+- navdiag2 (accept-nav2 sha b1555081, + JS-liveness check after an error), load 1–7: 4/4 complete, 0 covered, 28/28 taps,
+  no loss. navdiag3 (same, 3 browsers at once for load) running.
+- Synthetic two-action-toast case, 375×667 @200 (dockcheck2): R8 = b39202f exactly: Undo toast 86/146, Undo not on top
+  at end n2/n3; after a REAL touch drag on the stack the Undo toast is whole, Undo on top, and a real tap activated it.
+  INT: toasts whole but cover Close at n3. → disclosure 5 FOLLOW-UP confirmed.
+- Ambience sheet: b39202f 844 D "sheet open" identical to R8 (Close and Turn on under toasts); INT 844 D also covers
+  Close and Turn on; INT 667 L: the Ambience tap never opened the sheet (a toast covered Ambience — the Close/Ambience
+  defect class on INT). → FOLLOW-UP (present on INT and b39202f, not worse).
+- 1440 @200 summary: b39202f = R8 (update toast's right edge overlaps the "Done" chip's left 8 px; chip centre clear);
+  INT's stack sits lower. Round-7 behaviour, unchanged → FOLLOW-UP (minor).
+- Lane 2 flag 1 (667×375 @200 Today, banner under the sticky start): I captured R7 b39202f with Lane D's cap-d
+  (sha fbd6cab0, unedited) → a1, a2, b1, b2, c1, c2 **pixel-identical (0 %) to Lane 2's R8** (f2 0.4 % clock/scene).
+  Round-7 behaviour = R7-11 / r6 #3 class → FOLLOW-UP (owner M2/I04). Frame a2 opened.
+- Lane 1 raw re-aggregated by me: Close control 159/671 covered, taps 1/2; R8 0/729 (375) + 0/694 (667 D), taps 4/4.
+  Ambience control 454/1253, taps 1/4; R8 0/1235, taps 4/4. Mute 0 on control (not established). R5-D1: control
+  strict reproduction in run 8 (light) per raw stdout; R8 0/6 (light) per raw stdout.
+- Lane 2 raw: tsc exit 0; vitest 27/27 files, 267/267; chromium JSON 73 expected / 1 unexpected; rerun 1/1;
+  timer-pwa JSON 29 expected, 2 skipped (timer.spec.ts 294, 438), 0 unexpected.
+- Queued: dark standard set (Lane 2's std-L2.sh 6b35ab94, unedited) at 390×844, 375×667, 1440 → `scratchpad/r8/LEAD/stddark`.
+- **navdiag3 (3 browsers at once, load 3.8→8.7): 1 of 6 R8 runs lost the context (844 D wheel, 25.7 s, after 7 samples,
+  2/2 taps OK).** CDP log: no document request, no frame navigation, no crash, no console after the hash changes.
+  **4 s later: same document (performance.now 29 698 ms, type `navigate`), route #/focus, `window.__kettle` and the
+  probe's own `window.__acc` (installed before the error) still present, its rAF recorder still counting (893 → 953 in
+  1 s), a toast raised after the error rendered (React alive), timer `idle` (Break's over).** → The page's JS world was
+  never replaced: the error is the automation channel's (Playwright/CDP evaluation), not a navigation, reload or crash.
+  Disclosure 4 = ACCEPTED (no user-observable effect). M8's "dev-client reload" reading is not supported (server has
+  hmr/watch off; nothing reloaded).
+- Std 07-summary 375×667 L (Lane 2, R8 = INT 0 %): third row of chips ("23 days warm", "Recipes 1/3") half under the
+  footer on arrival → ranked follow-up 1 present on INT. Std 01-home 375×667 L: Brew length below the docked start
+  (only "Change brew length" visible) → ranked follow-up 2 present on INT (01-home 0 % at all three sizes).
+- Verified M8's closecheck raw at 844×390: 0 covered in every control (Close 1488, Ambience 1249 visible frames),
+  taps 40/40. LEAD-D1 control raw (`leadd1-case1-ctl`, 375 L): warning toast adds 11 / removals 10, 209 frames over the
+  dock; R8 rows: banner adds 1, said once.
+- Verdict file written: `contracts/I04/CHECKER-integration-fix-r8.md` (APPROVE), dark-std section pending my run.
+- Dark std (Lane 2's std-L2.sh, unedited; R8 :5306 vs INT :5303 side by side; plus R8 vs the round-7 lead's R7 dark set):
+  - 390×844 dark 21/21 both, exit 0 (226/222 s). Over 0.5 % vs INT: 02 0.589 (scene; R7 0), 10 18.287 (D4 room; R8/R7 0),
+    11 / 11b (unlock scene), 18 0.565 (scene), 19 1.392 (= vs R7 too; text anti-aliasing across the page, crop opened:
+    identical to the eye; Settings untouched), 17 page-height flip (2912 vs 3238). 14 R8/R7 27 % = R7's own rising-sheet
+    frame (R8 = INT 0).
+  - 375×667 dark 21/21 both (236 s). 03 11.8 % = zen fade on the R8 side (chrome hidden; 12:23 vs 12:24; sbs opened),
+    10 23.3 % (D4; R8/R7 0), 11/11b/17/18 scene / page height. 01, 01b, 07, 08, 19 0 %.
+  - 1440 dark 21/21 both (514/483 s), 0 page errors. 02 29.8 % = **INT's room without decorations this time** (R8's
+    has them; sbs opened) → Lane 2's light 02 flag is load timing, not R8 (flips sides). 14 58 % / 16 52.5 % = INT shot
+    the whistle / a mid-route Today (sbs opened). 10 4.8 % vs INT (D4), 2.97 % vs R7 = "Recipe done" toast present in
+    R8's shot, gone in R7's (crop opened; round-6 #23 timing). 03/04/05/11/11b/17/18 scene and clock. 01, 01b, 07, 08,
+    12, 15 0 %; 19 0.107 %.
+  - Evidence: `LEAD/runs/stddark/diff-R8-{INT,R7}-*.jsonl`; images `scratchpad/r8/LEAD/stddark/` (56 MB).
+
+## 13. FINAL (19:40 UTC)
+- Verdict **APPROVE** written to `contracts/I04/CHECKER-integration-fix-r8.md` (uncommitted). Disclosure 4 = ACCEPTED
+  (navdiag3 liveness: same document, app JS and probe recorder alive after the error). Dark standard set completed by me.
+- Evidence sizes: LEAD 20 MB in repo dir; scratch 63 MB.

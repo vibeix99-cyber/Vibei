@@ -1,4 +1,4 @@
-# DRAFT (interim, 18:40 UTC, before lane receipts) — round-8 lead
+# SUPERSEDED by contracts/I04/CHECKER-integration-fix-r8.md (final: APPROVE). Interim draft kept for the record.
 
 Status: **interim, no verdict yet.** Pending:
 1. `runs/navdiag/` — who destroys the page's execution context (queued in `slots`, behind Lane 2's 2-slot capture job):
