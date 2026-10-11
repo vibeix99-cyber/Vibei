@@ -246,3 +246,21 @@
     margin-bottom: 6px;
   }
 }
+
+/* ---------- The dock (I04 R7-D1) ----------
+   With no room above the controls for the stack whole, the region fills a box with no control in it (the session's
+   stage, side by side with its panel: src/ui/Toast.tsx useToastRoom). The stack keeps the box's width, less a small
+   inset, so its toasts are as short as they can be there. */
+.region[data-docked] {
+  padding: 0 8px;
+}
+/* A docked stack still taller than its dock folds its oldest toasts to their first line (as many as it takes to fit):
+   icon, the message's opening and an ellipsis, the action where it always is. The whole text is still the toast's
+   own (the live region read it out on arrival). */
+.region[data-docked] .toast[data-folded] .message {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}

@@ -166,6 +166,38 @@ function toastRoomTop(): number | null {
 /** What a toast could cover: anything a person taps or types into. */
 const CONTROLS = 'button, a[href], input, select, textarea, [role="button"], [tabindex]:not([tabindex="-1"])';
 
+/**
+ * The bottom of the screen's top bar (a page-level `<header>` near the top, as in `toastRoomTop()`) where the bar
+ * reaches over the toasts' column, plus the same 24 px: what a stack must stay under to cover none of it, its words
+ * included. Null where no bar reaches over the column.
+ */
+function topBarBottom(): number | null {
+  const col = document.querySelector('[aria-label="Notifications"]')?.getBoundingClientRect();
+  if (!col || col.width <= 0) return null;
+  let bottom = -Infinity;
+  for (const h of document.querySelectorAll<HTMLElement>('header')) {
+    if (h.closest('main, section, article, aside, nav, [aria-hidden="true"], [inert]')) continue;
+    const r = h.getBoundingClientRect();
+    if (r.height <= 0 || r.bottom <= 0 || r.top > innerHeight * 0.4) continue;
+    const cs = getComputedStyle(h);
+    if (cs.visibility === 'hidden' || Number(cs.opacity) < 0.05) continue;
+    if (r.right > col.left && r.left < col.right) bottom = Math.max(bottom, r.bottom);
+  }
+  return bottom === -Infinity ? null : Math.round(bottom + 24);
+}
+
+/**
+ * A docked stack taller than its dock (three toasts at 200 % text on a landscape phone) folds its toasts, oldest
+ * first, to their first line (`data-folded`, Toast.module.css: the icon, the message's opening and an ellipsis, the
+ * action as always), only as many as it takes to fit, so every toast is in view, named, and its action can be tapped.
+ * Measured unfolded each time (all in one task: nothing is painted in between). `height` Infinity unfolds them all.
+ */
+function foldToFit(region: HTMLElement, height: number) {
+  const items = [...(region.querySelector('ol')?.children ?? [])] as HTMLElement[];
+  for (const li of items) li.removeAttribute('data-folded');
+  for (let k = 0; k < items.length && height !== Infinity && stackHeight(region) > height; k++) items[k].setAttribute('data-folded', '');
+}
+
 /** The least room a stack keeps under the top bar (a 200 % toast line plus its padding), so it never folds away. */
 const MIN_ROOM_PX = 56;
 
@@ -269,18 +301,23 @@ function useToastRoom(
       }
       setTop((t) => (t === nextTop ? t : nextTop));
       const where = toastDock(el);
+      const dockH = where ? innerHeight - where.top - where.bottom : 0;
       if (!where) {
         // Leaving the dock: measured again once the region is back in its own place.
         if (docked.current) later();
         docked.current = false;
       } else if (!docked.current && el) {
-        // Too short for the stack whole: shorter than the stack's own height, or than the least room, or short enough
-        // for the stylesheet's squeezed one-line layout (`@container toast-room (max-height: 4em)`, Toast.module.css).
-        const room = innerHeight - roomBottom - (nextTop ?? 8);
+        // The room above the controls, below the top bar (where the bar reaches over the toasts' column, its words too),
+        // is too short for the stack whole: shorter than the stack's own height, or than the least room, or short
+        // enough for the squeezed one-line layout (`@container toast-room (max-height: 4em)`, Toast.module.css).
+        const room = innerHeight - roomBottom - Math.max(nextTop ?? 8, topBarBottom() ?? -Infinity);
         const em = parseFloat(getComputedStyle(el).fontSize) || 16;
-        const dockH = innerHeight - where.top - where.bottom;
-        if ((room < MIN_ROOM_PX || room <= 4 * em || stackHeight(el) > room) && dockH > room) docked.current = true;
+        if ((room < MIN_ROOM_PX || room <= 4 * em || stackHeight(el) > room) && dockH > room) {
+          docked.current = true;
+          later(); // folded to fit once it is drawn in the dock
+        }
       }
+      if (el) foldToFit(el, docked.current && where && el.hasAttribute('data-docked') ? dockH : Infinity);
       const nextDock = docked.current ? where : null;
       setDock((d) =>
         d === nextDock || (d && nextDock && d.top === nextDock.top && d.bottom === nextDock.bottom && d.left === nextDock.left && d.right === nextDock.right)
