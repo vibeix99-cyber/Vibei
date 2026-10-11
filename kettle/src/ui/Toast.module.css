@@ -99,7 +99,7 @@
 }
 
 /* ---------- Tall stacks and long toasts at large text (I04 D3) ----------
-   A long message (the storage-full warning) at 200 % text was ~700 px tall on a phone, one word per line beside its
+   A long message at 200 % text was ~700 px tall on a phone, one word per line beside its
    action, and rose past the top of the screen; stacked with other toasts it was taller still. The region now spans
    from the top safe edge to its (lifted) bottom: that height is the room a stack has. The stack still sits at the
    bottom of it. Every toast keeps its full height (rows sized to their content, never squeezed). */
@@ -125,8 +125,7 @@
   }
   /* The stack scrolls from the bottom up: the list is a reversed column whose scroll origin is its bottom edge, so
      the newest toast (last, nearest the docked start) is in view at first and older ones scroll away upwards, never
-     downwards. No toast's box ever reaches below the room, over the docked start, and anything that measures where
-     a toast is drawn (the storage-full warning's hold rule) sees it inside the room. */
+     downwards. No toast's box ever reaches below the room, over the docked start. */
   .list {
     display: flex;
     flex-direction: column-reverse;
@@ -163,7 +162,7 @@
     order: 6;
   }
   /* Every toast keeps its content height (never shrunk by the column), up to the room's own height (100cqh is the
-     region's height). A toast taller than the whole room (the storage-full warning at 200 % on a phone) scrolls its own
+     region's height). A toast taller than the whole room (a long message at 200 % on a phone) scrolls its own
      message inside its box, opening first, its action held in view; at its end it hands the scroll on to the list. */
   .toast {
     flex-shrink: 0;
@@ -180,12 +179,12 @@
     top: 0;
     bottom: 0;
   }
-  /* A stack with a toast that has an action (the storage-full warning) leads with that toast: it is drawn first, at
+  /* A stack with a toast that has an action (e.g. "Crossed off · Undo") leads with that toast: it is drawn first, at
      the top, and the list scrolls from the top down, so the older toasts below it come into view as it moves up. Its
      box therefore never moves below where it rests, at any scroll offset and whatever the other toasts do (arrive,
-     time out, scroll): the list's offset never goes below 0. (M1's hold rule measures that box; one drawn over the
-     docked start would be taken away.) Its own entry and layout motion is switched off here for the same reason: a
-     transform would move the measured box, if only for a moment. */
+     time out, scroll): the list's offset never goes below 0, so its action is never drawn over the docked start.
+     Its own entry and layout motion is switched off here for the same reason: a transform would move it, if only for
+     a moment. (The storage-full warning is no longer a toast: it is a banner in the page, src/app/SaveWarning.tsx.) */
   .list:has(.action) {
     flex-direction: column;
     /* Where it rests is 2 px above the room's bottom edge (the stack ends 2 px short of it, and the toast is at most
@@ -241,7 +240,7 @@
     margin-left: 0;
   }
   /* Here an older toast is nearly as tall as the room, so it is wholly in view over only a few list offsets: a 14 px
-     gap under the warning puts them at 67.5–80.5 px for a 56 px toast in a 60 px room, where 20, 24 and 40 px steps
+     gap under the leading action toast puts them at 67.5–80.5 px for a 56 px toast in a 60 px room, where 20, 24 and 40 px steps
      from rest come to rest (80, 72, 80). */
   .list:has(.action) > .toast:has(.action) {
     margin-bottom: 6px;

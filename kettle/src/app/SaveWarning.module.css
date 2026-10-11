@@ -1,0 +1,93 @@
+/* The storage-full warning, in the page flow. Tokens only: a calm honey tint (not berry, persimmon or sky), the
+   cards' radius and 2 px edge, body type. No motion. */
+.banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: var(--r-lg);
+  background: var(--honey-soft);
+  border: var(--border) solid var(--honey-soft-edge);
+  color: var(--ink);
+}
+.icon {
+  flex: none;
+  align-self: flex-start;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-sm);
+  background: var(--honey);
+  color: var(--honey-on);
+}
+.text {
+  /* Beside the icon; the action sits beside the text where there is room for both, under it (at the end) where not. */
+  flex: 1 1 14em;
+  min-width: 0;
+  margin: 0;
+  font-size: var(--text-body-s);
+  font-weight: var(--weight-body);
+  line-height: 1.45;
+}
+.title {
+  font-weight: var(--weight-strong);
+}
+.action {
+  flex: none;
+  margin-left: auto;
+}
+
+/* The summary's one line: what this brew is (not saved), and the way to keep it. */
+.note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin: 0;
+  padding: 5px 5px 5px 10px;
+  border-radius: var(--r-md);
+  background: var(--honey-soft);
+  border: var(--border) solid var(--honey-soft-edge);
+  color: var(--ink);
+  font-size: var(--text-body-s);
+  font-weight: 700;
+  line-height: 1.35;
+}
+.noteIcon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--r-xs);
+  background: var(--honey);
+  color: var(--honey-on);
+}
+.noteText {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.noteAction {
+  appearance: none;
+  flex: none;
+  margin-left: auto;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 2px var(--line-strong);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+@media (hover: hover) {
+  .noteAction:hover {
+    background: var(--surface-2);
+  }
+}

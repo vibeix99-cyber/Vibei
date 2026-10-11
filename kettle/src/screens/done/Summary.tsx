@@ -29,6 +29,7 @@ import { plural } from '@/lib/format';
 import { getRoute, navigate } from '@/app/router';
 import { setIntentionOutcome } from '@/app/intention';
 import { beginBreak, openSetupFromSummary, skipBreakFromDone, useFlow } from '@/app/flow';
+import { SaveWarningNote } from '@/app/SaveWarning';
 import { usePageVisible } from '../focus/parts/hooks';
 import { TagChip } from '../focus/parts/bits';
 import { ItemGlyph } from '../nook/ItemGlyph';
@@ -186,6 +187,9 @@ export function Summary({ reduced }: { reduced: boolean }) {
             </h1>
             <p className={s.sub}>{sub}</p>
           </motion.header>
+
+          {/* Saving failed: this brew is only in this tab. One line, in the page, with the way to keep it. */}
+          <SaveWarningNote />
 
           {r.record.intention.trim() && (
             <motion.section className={s.task} aria-label="Your task" {...enter(1)}>

@@ -105,10 +105,9 @@ export function Toaster() {
 /**
  * Where toasts float right now: a CSS bottom in px that clears every on-screen `[data-toast-above]` element (Today's
  * docked start, the session's Pause/+5/End row, the summary's Tea time/Skip footer), measured from where the highest
- * one starts — or null to keep the stylesheet's position (nothing marked low enough on screen). Exported so callers
- * can tell where a toast would land before showing one (`src/app/flow.ts`, the storage-full warning).
+ * one starts — or null to keep the stylesheet's position (nothing marked low enough on screen).
  */
-export function toastLiftBottom(): number | null {
+function toastLiftBottom(): number | null {
   if (typeof document === 'undefined') return null;
   let top = Infinity;
   for (const el of document.querySelectorAll<HTMLElement>('[data-toast-above]')) {

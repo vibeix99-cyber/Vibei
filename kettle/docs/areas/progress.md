@@ -40,7 +40,7 @@ Checked by `tests/integrity.spec.ts` (Chromium, disposable profiles) and `src/pr
 | Invalid file | Not JSON, another app's file, truncated, a newer schema, > 20 MB, empty, missing progress, damaged sessions: refused before anything changes, with a plain inline reason; storage is byte-for-byte unchanged. |
 | Reset everything | Needs an explicit second step in a sheet that says "It can’t be undone." and offers an export first; Esc and "Keep my data" keep everything. |
 | Storage full / blocked while restoring | All or nothing: refused with "Kettle couldn’t save the backup: this browser’s storage is full. Nothing was changed." This tab goes back exactly as it was; if part of the restore did land in storage, the copy saved before is written back (it fitted then, so it fits again). No undo is offered (nothing to undo), and no second, general "couldn’t save" warning (`checkWrites` in `src/lib/storage.ts`). |
-| Storage full / blocked otherwise | Brews and rewards still complete and live in the tab; a warning offers a backup. See `docs/areas/timer.md`, "Storage full". |
+| Storage full / blocked otherwise | Brews and rewards still complete and live in the tab; a banner on Today and in Settings › Your data (and a line on the summary) says so and offers a backup. See `docs/areas/timer.md`, "Storage full". |
 | "Everything lives on this device." | True: progress and settings are in this browser's localStorage, completion claims in its IndexedDB; a brew, an export and an import make no off-device request. Clearing the browser's site data removes them (hence the export). |
 
 ## Iterations

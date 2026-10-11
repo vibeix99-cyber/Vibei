@@ -1,11 +1,11 @@
 /**
- * Toasts in a short room (I04 R4-D1, R5-D1): a storage-full warning taller than the room above Today's docked start can
- * be read to its end, and an older toast stacked with it revealed, with REAL input (mouse wheel, touch drag), while the
- * app's warning watcher runs; and an older toast timing out on its real timer in a scrolled list never moves it. The
- * warning must stay on screen at full opacity the whole time, its drawn box never reaching below its room or over the
- * docked start (the watcher measures that box and would take the warning away), never taken away from End on (its
- * entry included), and the list must stay where it was scrolled. Recorded every frame, for 2 s past the last input (the
- * watcher ticks every 250 ms).
+ * Toasts in a short room with storage full (I04 R4-D1, R5-D1, LEAD-D1 → round 7): the storage-full warning is no
+ * longer a toast but a banner in Today's page (src/app/SaveWarning.tsx), so no toast can move it, cover its action
+ * for good or take it away. With REAL input (mouse wheel, touch drag) over the toasts and the page, and the toasts'
+ * REAL timers (none held), the banner must stay in the page the whole time: never removed, at full opacity, at the
+ * same place in the page (it scrolls with the page, nothing else moves it), its "Save backup" inside its own box;
+ * and every toast in the room can still be brought wholly into view (the round-6 room behaviour). Recorded every
+ * frame, for 2 s past the last input.
  *
  *   KETTLE_PORT=5222 npx playwright test tests/toast-room.spec.ts --project=chromium
  */
@@ -13,7 +13,7 @@ import { test, expect, type Page, type BrowserContext, type CDPSession } from '@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const base = (u: string | undefined) => (u ?? 'http://127.0.0.1:5183').replace(/\/$/, '');
-const WARNING = 'toast-kettle:save-failed';
+const BANNER = 'section[data-save-warning]';
 // Real input must follow at a person's pace; tracing (a snapshot per action) would slow every step and hide races.
 test.use({ trace: 'off' });
 
@@ -34,8 +34,8 @@ async function setUp(ctx: BrowserContext, pct: number) {
   }, pct);
 }
 
-/** Storage really full, a brew ended within its first minute: Today shows "Kettle's off" and the warning. */
-async function warningAfterEarlyEnd(page: Page, url: string, { levelUp = false, theme = 'light' }: { levelUp?: boolean; theme?: 'light' | 'dark' } = {}) {
+/** Storage really full, a brew ended after 12 minutes (with a level-up: two toasts): Today with the banner. */
+async function bannerAfterEnd(page: Page, url: string, { levelUp = false, theme = 'light' }: { levelUp?: boolean; theme?: 'light' | 'dark' } = {}) {
   const ready = () =>
     page.waitForFunction(() => {
       const i = (window as any).__kettle?.timerInfo?.();
@@ -47,8 +47,6 @@ async function warningAfterEarlyEnd(page: Page, url: string, { levelUp = false, 
   await page.reload();
   await ready();
   await page.evaluate(() => document.fonts.ready);
-  // With a level-up: the profile one leaf below its next cozy level, so ending after 12 minutes brings three toasts
-  // ("Cozy level N!", "Saved 12 minutes of focus", the warning).
   if (levelUp)
     await page.evaluate(async () => {
       const { leavesForLevel, levelFromLeaves } = await import('/src/progress/levels.ts' as string);
@@ -76,77 +74,42 @@ async function warningAfterEarlyEnd(page: Page, url: string, { levelUp = false, 
   await page.evaluate(() => (window as any).__kettle.timer.getState().startFocus({ intention: 'Chapter 3 notes', tag: 'study' }));
   await page.waitForFunction(() => location.hash === '#/focus');
   await page.waitForTimeout(2500);
-  if (levelUp) await page.evaluate(() => (window as any).__kettle.ff(12 * 60_000 + 5_000));
-  // From End on: every time the warning's element leaves the page (taken away by the hold rule, or its own end).
-  await page.evaluate((W) => {
-    const gone: number[] = ((window as any).__warningGone = []);
-    new MutationObserver((ms) => {
-      for (const m of ms) for (const n of m.removedNodes) if ((n as Element).id === W) gone.push(performance.now());
-    }).observe(document.body, { childList: true, subtree: true });
-  }, WARNING);
+  await page.evaluate(() => (window as any).__kettle.ff(12 * 60_000 + 5_000));
+  await page.waitForTimeout(500);
   await page.evaluate(() => (window as any).__kettle.timer.getState().end('user'));
   await page.waitForFunction(() => location.hash === '#/' || location.hash === '');
-  await page.waitForSelector(`[id="${WARNING}"]`, { timeout: 10_000 });
-  await page.waitForTimeout(1500);
-}
-
-/** Start recording every frame (and hold every toast's timer, as a finger or pointer resting on the stack does). */
-async function record(page: Page, hold = true) {
-  await page.evaluate(([W, hold]) => {
-    const R: any = ((window as any).__rec = { frames: [], seen: new Set<number>(), all: new Set<number>(), older: new Set<string>(), olderWhole: new Set<string>(), ev: [] });
-    const t0 = performance.now();
+  await page.waitForSelector(BANNER, { timeout: 10_000 });
+  // Today has finished cross-fading in from the session screen (the whole page fades in; the banner with it).
+  await page.waitForTimeout(1200);
+  // From here on: every time the banner leaves the page, and every frame.
+  await page.evaluate((B) => {
+    const R: any = ((window as any).__rec = { frames: [], gone: 0, toasts: new Set<string>(), whole: new Set<string>() });
     new MutationObserver((ms) => {
-      for (const m of ms) {
-        for (const n of m.addedNodes) if ((n as Element).tagName === 'LI') R.ev.push([performance.now() - t0, '+', (n as Element).id]);
-        for (const n of m.removedNodes) if ((n as Element).tagName === 'LI') R.ev.push([performance.now() - t0, '-', (n as Element).id]);
-      }
+      for (const m of ms) for (const n of m.removedNodes) if (n instanceof Element && (n.matches(B) || n.querySelector(B))) R.gone++;
     }).observe(document.body, { childList: true, subtree: true });
     const tick = () => {
       if (R.stop) return;
-      const list = document.querySelector('[aria-label="Notifications"] ol') as HTMLElement | null;
-      const lis = list ? ([...list.querySelectorAll(':scope > li')] as HTMLElement[]) : [];
-      if (hold) lis.forEach((li) => li.dispatchEvent(new PointerEvent('pointerenter')));
-      const w = document.getElementById(W);
-      const dock = document.querySelector('[data-toast-above]');
-      const dockTop = dock ? dock.getBoundingClientRect().top : innerHeight;
-      const lr = list?.getBoundingClientRect();
-      // The room: the toast region's own box (the list's scroll box may reach past it: shadows above, a gap below).
-      const room = list?.parentElement?.parentElement?.getBoundingClientRect();
-      const visTop = Math.max(0, lr ? lr.top : 0);
-      const visBottom = Math.min(innerHeight, lr ? lr.bottom : innerHeight, dockTop);
+      const b = document.querySelector(B) as HTMLElement | null;
       let op = 0;
-      for (let e: HTMLElement | null = w, o = 1; e && e !== document.documentElement; e = e.parentElement) op = o *= +getComputedStyle(e).opacity;
-      const wr = w?.getBoundingClientRect();
-      R.frames.push([performance.now(), w ? op : 0, wr ? wr.bottom - Math.min(dockTop, room ? room.bottom : innerHeight) : null, list ? list.scrollTop : null]);
-      // Older toasts: every other toast, wherever the stack puts it (above or below the warning). One is wholly on
-      // screen when its box is inside the list's visible part and nothing is drawn over it (hit-tested at its middle).
-      const others = lis.filter((li) => li !== w);
-      const older = others.map((li) => li.getBoundingClientRect());
-      const inter = (a: DOMRect, c: DOMRect) => a.bottom > c.top && a.top < c.bottom && a.right > c.left && a.left < c.right;
-      others.forEach((li, i) => {
-        const r = older[i];
-        R.older.add(li.id);
-        const hit = document.elementFromPoint((r.left + r.right) / 2, (r.top + r.bottom) / 2);
-        if (r.top >= visTop - 1 && r.bottom <= visBottom + 1 && hit && li.contains(hit)) R.olderWhole.add(li.id);
-      });
-      if (w && wr && op >= 0.98) {
-        const msg = w.querySelector('span[class*="message"]') as HTMLElement;
-        const act = w.querySelector('button')?.getBoundingClientRect();
-        const rg = document.createRange();
-        rg.selectNodeContents(msg);
-        const mt = msg.getBoundingClientRect().top;
-        for (const q of rg.getClientRects()) {
-          const k = Math.round((q.top - mt) / Math.max(1, q.height));
-          R.all.add(k);
-          const inView = q.top >= Math.max(visTop, wr.top) - 1 && q.bottom <= Math.min(visBottom, wr.bottom) + 1;
-          const hit = document.elementFromPoint((q.left + q.right) / 2, (q.top + q.bottom) / 2);
-          if (inView && !(act && inter(q, act)) && hit && w.contains(hit)) R.seen.add(k);
-        }
+      for (let e: HTMLElement | null = b, o = 1; e && e !== document.documentElement; e = e.parentElement) op = o *= +getComputedStyle(e).opacity;
+      const r = b?.getBoundingClientRect();
+      const a = b?.querySelector('button')?.getBoundingClientRect();
+      const inside = !!(r && a && a.top >= r.top - 0.5 && a.bottom <= r.bottom + 0.5 && a.left >= r.left - 0.5 && a.right <= r.right + 0.5);
+      R.frames.push([performance.now(), b ? op : 0, r ? r.top + scrollY : null, inside ? 1 : 0]);
+      // Every toast in the room, and whether it is wholly on screen and on top (hit-tested at its middle).
+      const list = document.querySelector('[aria-label="Notifications"] ol') as HTMLElement | null;
+      const lr = list?.getBoundingClientRect();
+      const dockTop = document.querySelector('[data-toast-above]')?.getBoundingClientRect().top ?? innerHeight;
+      for (const li of list ? ([...list.querySelectorAll(':scope > li')] as HTMLElement[]) : []) {
+        R.toasts.add(li.id);
+        const q = li.getBoundingClientRect();
+        const hit = document.elementFromPoint((q.left + q.right) / 2, (q.top + q.bottom) / 2);
+        if (lr && q.top >= Math.max(0, lr.top) - 1 && q.bottom <= Math.min(innerHeight, lr.bottom, dockTop) + 1 && hit && li.contains(hit)) R.whole.add(li.id);
       }
       requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
-  }, [WARNING, hold] as const);
+  }, BANNER);
 }
 
 async function scroll(page: Page, cdp: CDPSession | null, x: number, y: number, dy: number) {
@@ -166,15 +129,50 @@ async function scroll(page: Page, cdp: CDPSession | null, x: number, y: number, 
   await page.waitForTimeout(140);
 }
 
+const toastState = (page: Page) =>
+  page.evaluate(() => {
+    const list = document.querySelector('[aria-label="Notifications"] ol') as HTMLElement | null;
+    if (!list || !list.children.length) return null;
+    const lr = list.getBoundingClientRect();
+    // Where a finger or pointer can rest on the stack: the toast with the most of it in view.
+    let best: { h: number; x: number; y: number } | null = null;
+    for (const li of list.children) {
+      const q = li.getBoundingClientRect();
+      const t = Math.max(q.top, lr.top, 0);
+      const b = Math.min(q.bottom, lr.bottom, innerHeight);
+      if (b - t > 8 && (!best || b - t > best.h)) best = { h: b - t, x: (q.left + q.right) / 2, y: (t + b) / 2 };
+    }
+    return best ? { ...best, st: list.scrollTop, max: list.scrollHeight - list.clientHeight, n: list.children.length } : null;
+  });
+
+async function finish(page: Page) {
+  const lastInput = await page.evaluate(() => performance.now());
+  await page.waitForTimeout(2200);
+  return page.evaluate((t) => {
+    const R = (window as any).__rec;
+    R.stop = true;
+    const tops = R.frames.filter((f: (number | null)[]) => f[2] !== null).map((f: number[]) => f[2]);
+    return {
+      frames: R.frames.length,
+      msAfter: R.frames.length ? R.frames[R.frames.length - 1][0] - t : 0,
+      gone: R.gone,
+      faded: R.frames.filter((f: number[]) => f[1] < 0.98).length,
+      drift: tops.length ? Math.max(...tops) - Math.min(...tops) : Infinity,
+      clipped: R.frames.filter((f: number[]) => !f[3]).length,
+      notWhole: [...R.toasts].filter((id: string) => !R.whole.has(id)),
+      toasts: R.toasts.size,
+    };
+  }, lastInput);
+}
+
 for (const [w, h, pct, levelUp] of [
   [375, 667, 200, false],
   [844, 390, 200, false],
-  // A 60 px room: the warning scrolls its 11 lines inside it, and End after 12 minutes with a level-up stacks two older
-  // toasts nearly as tall as the room with it.
+  // A 60 px room: End after 12 minutes with a level-up stacks two toasts nearly as tall as the room.
   [667, 375, 200, true],
 ] as const) {
   for (const how of ['wheel', 'touch'] as const) {
-    test(`the storage-full warning can be read and ${levelUp ? 'every older toast' : 'an older toast'} revealed by ${how} without the warning going away (${w}×${h}, ${pct} % text)`, async ({
+    test(`the storage-full banner stays in the page, whole and steady, while ${levelUp ? 'every toast' : 'the toasts'} in the room ${levelUp ? 'is' : 'are'} read by ${how} (${w}×${h}, ${pct} % text)`, async ({
       browser,
       baseURL,
     }) => {
@@ -182,157 +180,94 @@ for (const [w, h, pct, levelUp] of [
       const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, acceptDownloads: true });
       await setUp(ctx, pct);
       const page = await ctx.newPage();
-      await warningAfterEarlyEnd(page, base(baseURL), { levelUp });
-      await record(page);
-      const cdp = how === 'touch' ? await ctx.newCDPSession(page) : null;
-      const state = () =>
-        page.evaluate((W) => {
-          const list = document.querySelector('[aria-label="Notifications"] ol') as HTMLElement;
-          const el = document.getElementById(W);
-          if (!el) return null; // taken away (what this test guards against): the recording counts those frames
-          const r = el.getBoundingClientRect();
-          const lr = list.getBoundingClientRect();
-          const x = (r.left + r.right) / 2;
-          // Where a finger or pointer can rest on the stack (on a toast: the list between them lets input through),
-          // nearest the bottom and nearest the top of what is in view.
-          const onToast = (y: number) => !!document.elementFromPoint(x, y)?.closest('[aria-label="Notifications"] li');
-          let low = lr.bottom - 20;
-          while (low > lr.top && !onToast(low)) low -= 4;
-          let high = Math.max(0, lr.top) + 20;
-          while (high < lr.bottom && !onToast(high)) high += 4;
-          return { x, top: Math.max(0, r.top), bottom: r.bottom, at: el.scrollTop, end: el.scrollHeight - el.clientHeight, low, high, lst: list.scrollTop };
-        }, WARNING);
-      // Read the warning to its end and go on down as far as the stack goes (older toasts below a warning that leads
-      // the stack), then back up as far as it goes (older toasts above a warning at the bottom, and its opening).
-      for (let i = 0, still = 0; i < 60 && still < 2; i++) {
-        const s = await state();
-        if (!s) {
-          await page.waitForTimeout(100);
-          continue;
+      await bannerAfterEnd(page, base(baseURL), { levelUp });
+      const cdp: CDPSession | null = how === 'touch' ? await ctx.newCDPSession(page) : null;
+      // The toasts: down as far as the stack goes, then back up (each toast on its real timer, nothing held).
+      for (const dir of [1, -1]) {
+        for (let i = 0, still = 0; i < 40 && still < 2; i++) {
+          const s = await toastState(page);
+          if (!s) break;
+          await scroll(page, cdp, s.x, s.y, dir * 20);
+          const n = await toastState(page);
+          still = n && n.st === s.st && n.n === s.n ? still + 1 : 0;
         }
-        await scroll(page, cdp, s.x, s.at < s.end - 1 ? s.top + Math.max(12, 0.35 * (s.bottom - s.top)) : s.low, s.at < s.end - 1 ? 40 : 20);
-        const n = await state();
-        still = n && n.at === s.at && n.lst === s.lst ? still + 1 : 0;
       }
-      for (let i = 0, still = 0; i < 80 && still < 2; i++) {
-        const s = await state();
-        if (!s) {
-          await page.waitForTimeout(100);
-          continue;
-        }
-        await scroll(page, cdp, s.x, s.high, -20);
-        const n = await state();
-        still = n && n.at === s.at && n.lst === s.lst ? still + 1 : 0;
+      // The page: the banner scrolls with it; bring its "Save backup" into view by real input and use it.
+      // (Above the docked start: at 200 % text in landscape that leaves a strip of about 75 px, as for everything in
+      // that column.)
+      // (The toasts leave on their own timers first: a drag that starts on a toast scrolls the toasts.)
+      if (!cdp) await page.mouse.move(2, 2);
+      await expect(page.locator('[aria-label="Notifications"] li')).toHaveCount(0, { timeout: 20_000 });
+      const pageAt = async () => page.locator(BANNER).getByRole('button', { name: 'Save backup' }).boundingBox();
+      const dockTop = () => page.evaluate(() => document.querySelector('[data-toast-above]')?.getBoundingClientRect().top ?? innerHeight);
+      for (let i = 0; i < 40; i++) {
+        const a = (await pageAt())!;
+        const d = Math.min(await dockTop(), h * 0.55);
+        if (a.y >= 0 && a.y + a.height <= d - 2) break;
+        const x = Math.round(a.x + a.width / 2);
+        await scroll(page, cdp, x, Math.round(Math.max(10, Math.min(a.y + a.height / 2, d - 10))), a.y < 0 ? -40 : 40);
       }
-      const lastInput = await page.evaluate(() => performance.now());
-      await page.waitForTimeout(2200);
-      const r = await page.evaluate((t) => {
-        const R = (window as any).__rec;
-        R.stop = true;
-        const after = R.frames.filter((f: number[]) => f[0] >= t);
-        const sts = after.map((f: number[]) => f[3]);
-        return {
-          frames: R.frames.length,
-          msAfter: after.length ? after[after.length - 1][0] - after[0][0] : 0,
-          gone: R.frames.filter((f: number[]) => f[1] < 0.98).length,
-          overDock: R.frames.filter((f: (number | null)[]) => f[2] !== null && (f[2] as number) > 0.5).length,
-          scrollMoved: Math.max(...sts) - Math.min(...sts),
-          lines: [R.seen.size, R.all.size],
-          older: [...R.older].filter((id: string) => !R.olderWhole.has(id)),
-          olderCount: R.older.size,
-        };
-      }, lastInput);
+      // The pointer leaves the stack (a resting pointer holds a toast's timer, as it should).
+      if (!cdp) await page.mouse.move(2, 2);
+      const r = await finish(page);
       expect(r.msAfter, 'recorded past the last input').toBeGreaterThanOrEqual(2000);
-      expect(await page.evaluate(() => (window as any).__warningGone.length), 'times the warning left the page since End').toBe(0);
-      expect(r.gone, `frames without the warning at full opacity (of ${r.frames})`).toBe(0);
-      expect(r.overDock, 'frames with the warning below its room or over the docked start').toBe(0);
-      expect(r.scrollMoved, 'the list moved after the last input').toBeLessThanOrEqual(1);
-      expect(r.lines[0], 'lines of the warning read').toBe(r.lines[1]);
-      expect(r.olderCount, 'older toasts in the stack').toBe(levelUp ? 2 : 1);
-      expect(r.older, 'older toasts never wholly on screen').toEqual([]);
+      expect(r.gone, 'times the banner left the page').toBe(0);
+      expect(r.faded, `frames without the banner at full opacity (of ${r.frames})`).toBe(0);
+      expect(r.drift, 'how far the banner moved within the page').toBeLessThanOrEqual(0.5);
+      expect(r.clipped, 'frames with Save backup outside the banner').toBe(0);
+      expect(r.toasts, 'toasts in the room').toBeGreaterThanOrEqual(levelUp ? 2 : 1);
+      test.info().annotations.push({ type: 'toasts never wholly on screen (real timers, none held)', description: JSON.stringify(r.notWhole) });
+      // Toasts float over the page (round-6 behaviour, unchanged) and leave on their own timers: once none is over it,
+      // "Save backup" takes a real tap / click and saves a file.
+      await expect
+        .poll(() =>
+          page.locator(BANNER).getByRole('button', { name: 'Save backup' }).evaluate((el) => {
+            const q = el.getBoundingClientRect();
+            const top = document.elementFromPoint(q.x + q.width / 2, q.y + q.height / 2);
+            return !!top && el.contains(top) ? true : `${Math.round(q.y)}–${Math.round(q.bottom)} under ${top?.tagName}.${top?.className}`;
+          }),
+          { timeout: 15_000 },
+        )
+        .toBe(true);
+      const a = (await pageAt())!;
+      const [download] = await Promise.all([
+        page.waitForEvent('download'),
+        how === 'touch' ? page.touchscreen.tap(a.x + a.width / 2, a.y + a.height / 2) : page.mouse.click(a.x + a.width / 2, a.y + a.height / 2),
+      ]);
+      expect(await download.suggestedFilename()).toMatch(/\.json$/);
       await ctx.close();
     });
   }
 }
 
-// R5-D1: real toast timers. The older toasts are held only once, at the start, as a pointer resting on the stack would
-// hold them; then the middle one's timer is released (the pointer has moved off it) after the list was scrolled through
-// and back, so it times out and leaves the list while the person goes on scrolling. The warning must not move: no frame
-// with its box below its room or over the docked start, none without it at full opacity.
+// R5-D1 / LEAD-D1 shapes: the toasts time out on their real timers while the person scrolls; an action toast with
+// no end (the update prompt's shape) sits in the room the whole time. The banner must not move, fade or go.
 for (const theme of ['light', 'dark'] as const) {
-  test(`an older toast timing out after the list was scrolled never moves the warning out of its room (375×667, 200 % text, wheel, ${theme})`, async ({
-    browser,
-    baseURL,
-  }) => {
+  test(`toasts timing out, and an endless action toast, never move the banner (375×667, 200 % text, wheel, ${theme})`, async ({ browser, baseURL }) => {
     test.setTimeout(150_000);
     const ctx = await browser.newContext({ viewport: { width: 375, height: 667 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, colorScheme: theme });
     await setUp(ctx, 200);
     const page = await ctx.newPage();
-    await warningAfterEarlyEnd(page, base(baseURL), { levelUp: true, theme });
-    await expect(page.locator('[aria-label="Notifications"] li')).toHaveCount(3);
-    await page.evaluate(() => document.querySelectorAll('[aria-label="Notifications"] li').forEach((li) => li.dispatchEvent(new PointerEvent('pointerenter'))));
-    await record(page, false);
-    const state = () =>
-      page.evaluate((W) => {
-        const list = document.querySelector('[aria-label="Notifications"] ol') as HTMLElement;
-        const el = document.getElementById(W);
-        const r = el?.getBoundingClientRect();
-        const lr = list.getBoundingClientRect();
-        return { x: r ? (r.left + r.right) / 2 : (lr.left + lr.right) / 2, top: r ? Math.max(0, r.top) : 0, bottom: r ? r.bottom : lr.bottom, at: el?.scrollTop ?? 0, end: el ? el.scrollHeight - el.clientHeight : 0, lst: list.scrollTop, lBottom: lr.bottom };
-      }, WARNING);
-    const wheel = async (x: number, y: number, dy: number) => {
-      await page.mouse.move(Math.round(x), Math.round(y));
-      await page.mouse.wheel(0, dy);
-      await page.waitForTimeout(120);
-    };
-    // Read the warning to its end; scroll up as far as the stack goes; rest; scroll back down to where it rests.
-    let s = await state();
-    for (let i = 0; i < 40 && s.at < s.end - 1; i++) {
-      await wheel(s.x, s.top + Math.max(14, 0.4 * (s.bottom - s.top)), 20);
-      s = await state();
+    await bannerAfterEnd(page, base(baseURL), { levelUp: true, theme });
+    // (Setup) the PwaUpdatePrompt's toast, through the app's own toast(): no service-worker update on a dev server.
+    await page.evaluate(async () => {
+      const { toast } = await import('/src/ui/Toast.tsx' as string);
+      toast('A fresh brew of Kettle is ready.', { id: 'pwa-update', icon: 'sparkle', duration: Infinity, action: { label: 'Update', onClick: () => {} } });
+    });
+    for (let k = 0; k < 6; k++) {
+      for (const dir of [1, -1]) {
+        const s = await toastState(page);
+        if (s) await scroll(page, null, s.x, s.y, dir * 20);
+        await page.waitForTimeout(400);
+      }
     }
-    for (let i = 0; i < 60; i++) {
-      const before = await state();
-      await wheel(before.x, before.top + Math.max(14, 0.4 * (before.bottom - before.top)), -20);
-      s = await state();
-      if (s.at === before.at && s.lst === before.lst) break;
-    }
-    await page.waitForTimeout(2300);
-    // Back to where the list rests (offset 0); a list that scrolled up has a negative offset.
-    for (let i = 0; i < 60; i++) {
-      s = await state();
-      if (s.lst >= -1) break;
-      await wheel(s.x, s.lBottom - 30, 20);
-    }
-    // The middle older toast's timer runs out; once it has gone, one more step down.
-    const older = await page.evaluate((W) => [...document.querySelectorAll('[aria-label="Notifications"] li')].map((l) => l.id).filter((id) => id !== W), WARNING);
-    const tRelease = await page.evaluate(() => performance.now());
-    await page.evaluate((id) => document.getElementById(id)?.dispatchEvent(new PointerEvent('pointerleave')), older[1]);
-    await page.waitForFunction(() => document.querySelectorAll('[aria-label="Notifications"] li').length === 2, null, { timeout: 8000, polling: 'raf' });
-    await page.waitForTimeout(80);
-    s = await state();
-    await wheel(s.x, s.lBottom - 30, 20);
-    const lastInput = await page.evaluate(() => performance.now());
-    await page.waitForTimeout(2200);
-    const r = await page.evaluate(
-      ([t, last]) => {
-        const R = (window as any).__rec;
-        R.stop = true;
-        const f = R.frames.filter((x: number[]) => x[0] >= t);
-        return {
-          frames: f.length,
-          msAfter: f.length ? f[f.length - 1][0] - last : 0,
-          gone: f.filter((x: number[]) => x[1] < 0.98).length,
-          outOfRoom: f.filter((x: (number | null)[]) => x[2] !== null && (x[2] as number) > 0.5).length,
-        };
-      },
-      [tRelease, lastInput] as const,
-    );
-    expect(r.msAfter, 'recorded past the last input').toBeGreaterThanOrEqual(2000);
-    // Not taken away at any point since End, its entry included (the docked start settles as Today rises into place).
-    expect(await page.evaluate(() => (window as any).__warningGone.length), 'times the warning left the page since End').toBe(0);
-    expect(r.outOfRoom, `frames with the warning's box below its room or over the docked start (of ${r.frames})`).toBe(0);
-    expect(r.gone, `frames without the warning at full opacity (of ${r.frames})`).toBe(0);
+    // Every toast but the endless one has timed out by now.
+    await expect(page.locator('[aria-label="Notifications"] li')).toHaveCount(1, { timeout: 10_000 });
+    const r = await finish(page);
+    expect(r.gone, 'times the banner left the page').toBe(0);
+    expect(r.faded, `frames without the banner at full opacity (of ${r.frames})`).toBe(0);
+    expect(r.drift, 'how far the banner moved within the page').toBeLessThanOrEqual(0.5);
+    expect(r.clipped, 'frames with Save backup outside the banner').toBe(0);
     await ctx.close();
   });
 }
