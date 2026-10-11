@@ -142,6 +142,22 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
 }
+/* With large text (200 %) the countdown and its controls, or Break's over and its actions, can be taller than the
+   panel. The panel then scrolls (wheel, touch, and the keyboard bringing a focused control into view) instead of
+   leaving its lowest controls cut off below the screen's edge. When everything fits nothing scrolls and the layout is
+   exactly as before: the one implicit row still stretches to the panel, so the content stays centred.
+   Not while the panel holds the summary: its sheet reaches up over the stage and scrolls inside itself. (The summary
+   has finished leaving before the break mounts: AnimatePresence mode="wait".)
+   While more lies below the bottom edge, the edge carries a soft shade (fixed to the panel), which a band of the
+   screen's own colour at the very end of the content covers once the end is reached: a control wholly below the
+   edge is not a secret. */
+.panel:has(> .timer, > .over) {
+  overflow: hidden auto;
+  overscroll-behavior: contain;
+  background:
+    linear-gradient(var(--bg), var(--bg)) center bottom / 100% 20px no-repeat local,
+    radial-gradient(farthest-side at 50% 100%, var(--scrim), transparent) center bottom / 100% 18px no-repeat scroll;
+}
 .timer {
   display: flex;
   flex-direction: column;
