@@ -411,3 +411,148 @@ for (const theme of ['light', 'dark'] as const) {
     await ctx.close();
   });
 }
+
+// Round 8 (I04 R7-D1): on a landscape phone at 200 % text, Break's over scrolled to its end (the only way to reach
+// "Put the kettle on" there) brings its whole action group to the top of the screen. The room above it was a 27–42 px
+// strip: the update prompt showed 11–26 of its px over the top bar's "Next: brew 2 of" line and Update could not be
+// hit. With no room above the controls the stack now floats over the stage (a column with no control in it), every toast
+// whole (or folded to its first line when three do not fit), every action hit-testable. REAL wheel or touch to the end;
+// the update prompt is PwaUpdatePrompt's shape; the other toasts run on their own timers. Every frame: no Break's over
+// control and no Close under a toast; at rest: every toast wholly in view, its action on top at its centre, no top-bar
+// words under a toast; then a real click (wheel run) or CDP tap (touch run) on Update reaches it.
+for (const [w, h, how, theme] of [
+  [667, 375, 'wheel', 'light'],
+  [844, 390, 'touch', 'dark'],
+] as const) {
+  test(`the update prompt and every toast stay whole and tappable, never over a control, on Break's over scrolled to its end (${w}×${h}, 200 % text, ${how}, ${theme})`, async ({ browser, baseURL }) => {
+    test.setTimeout(120_000);
+    const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, colorScheme: theme });
+    await setUp(ctx, 200);
+    const page = await ctx.newPage();
+    const cdp = how === 'touch' ? await ctx.newCDPSession(page) : null;
+    await page.goto(`${base(baseURL)}/?debug&seed=newbie&theme=${theme}#/`);
+    await page.waitForFunction(() => !!(window as any).__kettle, null, { timeout: 60_000 });
+    await page.waitForTimeout(1200);
+    await page.evaluate(() => (window as any).__kettle.timer.getState().startFocus({ intention: 'Chapter 3 notes', tag: 'study' }));
+    await page.waitForTimeout(1500);
+    await page.evaluate(() => (window as any).__kettle.finish());
+    const tea = page.getByRole('button', { name: /Tea time|Long tea break/ });
+    await tea.waitFor({ state: 'visible', timeout: 60_000 });
+    await page.waitForTimeout(2000);
+    await tea.tap();
+    await page.getByRole('button', { name: 'Pause break' }).waitFor({ state: 'attached', timeout: 20_000 });
+    await page.waitForTimeout(1000);
+    await page.evaluate(() => (window as any).__kettle.finish());
+    await page.getByRole('button', { name: /Put the kettle on/ }).waitFor({ state: 'attached' });
+    await expect(page.locator('[aria-label="Notifications"] li')).toHaveCount(0, { timeout: 15_000 });
+    // The update prompt, as PwaUpdatePrompt raises it, with the panel at its top.
+    await page.evaluate(async () => {
+      const { toast } = await import('/src/ui/Toast.tsx' as string);
+      const w = window as any;
+      w.__upd = 0;
+      toast('A fresh brew of Kettle is ready.', { id: 'pwa-update', icon: 'sparkle', duration: Infinity, action: { label: 'Update', onClick: () => w.__upd++ } });
+    });
+    await page.waitForTimeout(800);
+    // Every frame from here: no Break's over control and no Close under a toast.
+    const names = ['^Close$', '^Mark it done', '^Put the kettle on', "^That's all for now$"];
+    await page.evaluate((N) => {
+      const w = window as any;
+      const R = (w.__dc = { frames: 0, covered: {} as Record<string, number>, stop: false });
+      const norm = (s: string) => s.replace(/[’‘]/g, "'").replace(/\s+/g, ' ').trim();
+      const f = () => {
+        if (R.stop) return;
+        const ol = document.querySelector('[aria-label="Notifications"] ol') as HTMLElement | null;
+        const clip = ol && getComputedStyle(ol).overflowY !== 'visible' ? ol.getBoundingClientRect() : null;
+        const boxes = [...document.querySelectorAll('[aria-label="Notifications"] li')]
+          .map((li) => {
+            const q = li.getBoundingClientRect();
+            const r = clip ? { l: Math.max(q.left, clip.left), t: Math.max(q.top, clip.top), r: Math.min(q.right, clip.right), b: Math.min(q.bottom, clip.bottom) } : { l: q.left, t: q.top, r: q.right, b: q.bottom };
+            return +getComputedStyle(li).opacity > 0.02 && r.r > r.l && r.b > r.t ? r : null;
+          })
+          .filter(Boolean) as { l: number; t: number; r: number; b: number }[];
+        const main = document.querySelector('[data-focus-view] main') as HTMLElement;
+        const mr = main.getBoundingClientRect();
+        for (const n of N) {
+          const el = [...document.querySelectorAll('[data-focus-view] button')].find((b) => new RegExp(n).test(norm(b.getAttribute('aria-label') || b.textContent || '')));
+          if (!el) continue;
+          const q = el.getBoundingClientRect();
+          const inPanel = main.contains(el);
+          const t = Math.max(q.top, 0, inPanel ? mr.top : 0), b = Math.min(q.bottom, innerHeight, inPanel ? mr.bottom : innerHeight);
+          if (b - t < 8) continue;
+          const hit = document.elementFromPoint(q.left + q.width / 2, (t + b) / 2);
+          const under = boxes.some((o) => o.b > t + 1 && o.t < b - 1 && o.r > q.left + 1 && o.l < q.right - 1);
+          if (!(hit && el.contains(hit)) || under) R.covered[n] = (R.covered[n] || 0) + 1;
+        }
+        R.frames++;
+        requestAnimationFrame(f);
+      };
+      requestAnimationFrame(f);
+    }, names);
+    // The panel to its end by REAL wheel / touch, aimed at its lower right corner (not at a toast).
+    for (let i = 0; i < 40; i++) {
+      const p = await page.evaluate(() => {
+        const m = document.querySelector('[data-focus-view] main') as HTMLElement;
+        const r = m.getBoundingClientRect();
+        return { st: m.scrollTop, max: m.scrollHeight - m.clientHeight, x: Math.round(r.right - 24), y: Math.round(Math.min(innerHeight, r.bottom) - 40) };
+      });
+      expect(p.max, 'Break’s over scrolls at this size').toBeGreaterThan(100);
+      if (p.st >= p.max - 1) break;
+      await scroll(page, cdp, p.x, p.y, 80);
+    }
+    await page.waitForTimeout(800);
+    const atRest = () =>
+      page.evaluate(() => {
+        const ol = document.querySelector('[aria-label="Notifications"] ol') as HTMLElement;
+        const clip = getComputedStyle(ol).overflowY !== 'visible' ? ol.getBoundingClientRect() : null;
+        const hdr = document.querySelector('[data-focus-view] header') as HTMLElement;
+        const words = [...hdr.querySelectorAll('*')].filter((e) => e.children.length === 0 && (e.textContent || '').trim()).map((e) => e.getBoundingClientRect()).filter((q) => q.width > 0);
+        return [...ol.querySelectorAll(':scope > li')].map((li) => {
+          const q = li.getBoundingClientRect();
+          const t = Math.max(q.top, 0, clip ? clip.top : 0), b = Math.min(q.bottom, innerHeight, clip ? clip.bottom : innerHeight);
+          const act = li.querySelector('button');
+          let actionOnTop: boolean | null = null;
+          if (act) {
+            const a = act.getBoundingClientRect();
+            const hit = document.elementFromPoint(a.left + a.width / 2, a.top + a.height / 2);
+            actionOnTop = !!hit && act.contains(hit);
+          }
+          const overBar = words.some((x) => q.right > x.left + 1 && q.left < x.right - 1 && t < x.bottom - 1 && b > x.top + 1);
+          return { text: (li.textContent || '').slice(0, 20), box: Math.round(q.height), own: (li as HTMLElement).scrollHeight, visible: Math.round(b - t), actionOnTop, overBar };
+        });
+      });
+    const whole = (rows: Awaited<ReturnType<typeof atRest>>) => rows.filter((r) => r.visible < r.box - 1 || r.own > r.box + 1 || r.actionOnTop === false || r.overBar);
+    const one = await atRest();
+    expect(one).toHaveLength(1);
+    expect(whole(one), 'the update prompt whole, Update on top, no top-bar words under it').toEqual([]);
+    // Two more toasts on their own timers (one with an action): all three whole (or folded), every action on top.
+    await page.evaluate(async () => {
+      const { toast } = await import('/src/ui/Toast.tsx' as string);
+      const w = window as any;
+      w.__undo = 0;
+      toast('Cozy level 5!', { tone: 'success' });
+      toast('Marked “Chapter 3 notes” done', { tone: 'success', action: { label: 'Undo', onClick: () => w.__undo++ } });
+    });
+    await page.waitForTimeout(900);
+    const three = await atRest();
+    expect(three).toHaveLength(3);
+    expect(whole(three), 'three toasts: each whole, each action on top').toEqual([]);
+    // A real click or tap on Undo and on Update reaches them.
+    for (const [label, key] of [['Undo', '__undo'], ['Update', '__upd']] as const) {
+      const box = (await page.locator('[aria-label="Notifications"] li button', { hasText: label }).boundingBox())!;
+      if (cdp) {
+        await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: Math.round(box.x + box.width / 2), y: Math.round(box.y + box.height / 2) }] });
+        await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+      } else await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+      await page.waitForTimeout(300);
+      expect(await page.evaluate((k) => (window as any)[k], key), `${label} reached`).toBe(1);
+    }
+    const r = await page.evaluate(() => {
+      const w = window as any;
+      w.__dc.stop = true;
+      return { frames: w.__dc.frames, covered: w.__dc.covered };
+    });
+    expect(r.frames).toBeGreaterThan(60);
+    expect(r.covered, `controls covered (frames, of ${r.frames})`).toEqual({});
+    await ctx.close();
+  });
+}

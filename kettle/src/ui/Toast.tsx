@@ -4,7 +4,7 @@
  * Polite live region, auto-dismiss (paused on hover/focus), tap to dismiss, max 3.
  */
 import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type RefObject } from 'react';
-import { createPortal } from 'react-dom';
+import { createPortal, flushSync } from 'react-dom';
 import { AnimatePresence, motion } from 'motion/react';
 import { on } from '@/lib/events';
 import { audio } from '@/audio';
@@ -284,8 +284,15 @@ function useToastRoom(
     if (!active) return;
     let raf = 0;
     const later = () => {
-      if (!raf) raf = requestAnimationFrame(() => ((raf = 0), measure()));
+      if (!raf)
+        raf = requestAnimationFrame(() => {
+          raf = 0;
+          flushSync(measure);
+        });
     };
+    // A panel scrolled under the toasts moves the controls they float above: the room follows at once, in the scroll
+    // event (the frame's scroll steps, before its animation-frame callbacks and its paint), never a frame later.
+    const onScroll = () => flushSync(measure);
     const measure = () => {
       const el = regionRef.current;
       const next = toastLiftBottom();
@@ -328,15 +335,15 @@ function useToastRoom(
     measureRef.current = measure;
     measure();
     // Layout under the toast can change while it shows (a route change, the summary rising): re-check briefly, and on
-    // every scroll (a panel scrolled under the toasts moves the controls they float above) in the next frame.
+    // every scroll (a panel scrolled under the toasts moves the controls they float above), in the frame it is drawn.
     const id = window.setInterval(measure, 250);
     window.addEventListener('resize', measure);
-    window.addEventListener('scroll', later, { capture: true, passive: true });
+    window.addEventListener('scroll', onScroll, { capture: true, passive: true });
     return () => {
       window.clearInterval(id);
       cancelAnimationFrame(raf);
       window.removeEventListener('resize', measure);
-      window.removeEventListener('scroll', later, { capture: true });
+      window.removeEventListener('scroll', onScroll, { capture: true });
       measureRef.current = null;
       docked.current = false;
     };
