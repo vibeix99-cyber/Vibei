@@ -7,7 +7,7 @@ def sha(f):
     return hashlib.sha256(open(os.path.join(P, f), 'rb').read()).hexdigest()
 def mt(f):
     return datetime.datetime.utcfromtimestamp(os.path.getmtime(os.path.join(P, f))).strftime('%H:%M:%S')
-PROBE = {'read': 'read.mjs', 'cover': 'cover.mjs', 'behave': 'behave.mjs', 'markdone': 'markdone-LEAD.mjs', 'truth': 'truth.mjs', 'hold': 'hold.mjs', 'sum4': 'sum4.mjs'}
+PROBE = {'read': 'read.mjs', 'cover': 'cover.mjs', 'behave': 'behave.mjs', 'markdone': 'markdone-LEAD.mjs', 'truth': 'truth.mjs', 'hold': 'hold.mjs', 'sum4': 'sum4.mjs', 'episodes': 'episodes.mjs'}
 # worker log windows for markdone (jsonl carries no timestamps)
 def worker_windows():
     w = []
@@ -26,7 +26,7 @@ def win(kind, base, outdir=None):
             return a, b
     return '', ''
 rows = []
-for kind in ('read', 'cover', 'behave', 'markdone', 'truth', 'hold', 'sum4'):
+for kind in ('read', 'cover', 'behave', 'markdone', 'truth', 'hold', 'sum4', 'episodes'):
     for f in sorted(glob.glob(os.path.join(S, '**', f'{kind}-*.jsonl'), recursive=True)) + sorted(glob.glob(os.path.join(S, '**', f'{kind}2-*.jsonl'), recursive=True)):
         sup = 'superseded' in f
         rel = os.path.relpath(f, S)
@@ -45,6 +45,7 @@ for kind in ('read', 'cover', 'behave', 'markdone', 'truth', 'hold', 'sum4'):
             if kind == 'behave': inp = 'real nav taps + wheel/touch'
             if kind == 'markdone': inp = 'real touch drag + tap (phone) / wheel + click'
             if kind == 'hold': inp = 'none (observation only)'
+            if kind == 'episodes': inp = 'none (setup by debug API, observation only)'
             if kind == 'truth': inp = 'real taps'
             pf = PROBE[kind]
             late = ''
