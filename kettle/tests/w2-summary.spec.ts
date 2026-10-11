@@ -21,7 +21,7 @@ const FIXED = Date.parse('2026-10-11T07:40:00Z');
  *  count by their ink, which may not show at all. */
 const PEEK = 6;
 
-async function toSummary(page: Page, baseURL: string | undefined, seed: string, { text = 100, theme = 'light' } = {}) {
+async function toSummary(page: Page, baseURL: string | undefined, seed: string, { text = 100, theme = 'light', task = '', motion = '' } = {}) {
   if (text !== 100)
     await page.addInitScript((pct) => {
       addEventListener('DOMContentLoaded', () => {
@@ -32,7 +32,7 @@ async function toSummary(page: Page, baseURL: string | undefined, seed: string, 
     }, text);
   await page.clock.install({ time: FIXED });
   await page.clock.resume();
-  await page.goto(`${base(baseURL)}/?debug&seed=${seed}&theme=${theme}#/`);
+  await page.goto(`${base(baseURL)}/?debug&seed=${seed}&theme=${theme}${motion ? `&motion=${motion}` : ''}#/`);
   await page.waitForFunction(() => {
     const t = (window as any).__kettle?.timerInfo?.();
     return !!(t && t.leader && t.leaderForMs > 400 && !t.settling);
@@ -40,6 +40,10 @@ async function toSummary(page: Page, baseURL: string | undefined, seed: string, 
   await page.evaluate(() => document.fonts.ready);
   await page.evaluate(() => (window as any).__kettle.settings.getState().set({ muted: true, autoStartBreaks: false, autoStartFocus: false }));
   await page.waitForTimeout(900);
+  if (task) {
+    await page.getByPlaceholder(/Chapter 3 notes/).click();
+    await page.keyboard.type(task, { delay: 15 });
+  }
   await page.getByRole('button', { name: /put the kettle on/i }).first().click();
   await page.waitForFunction(() => location.hash === '#/focus');
   await page.waitForTimeout(1200);
@@ -190,6 +194,21 @@ for (const text of [100, 200]) {
       await ctx.close();
     });
   }
+}
+
+for (const motion of ['', 'reduce']) {
+  test(`375×667 @100 %, a brew with a task (the K02 layout, Wave-1 #1 exactly)${motion ? ', reduced motion' : ''}: the third pill row does not start under the footer`, async ({ browser, baseURL }) => {
+    const ctx = await browser.newContext({ viewport: { width: 375, height: 667 }, isMobile: true, hasTouch: true, colorScheme: 'light' });
+    const page = await ctx.newPage();
+    await toSummary(page, baseURL, 'veteran', { task: 'Chapter 3 notes', motion });
+    const at = await fold(page);
+    expect(at.facts).toEqual(['+40 leaves', 'Goal met · 75/60 min', '23 days warm', 'Recipes 1/3', '144 leaves to level 13']);
+    expect(at.cut, `lines cut by the fold on arrival: ${JSON.stringify(at.cut)}`).toEqual([]);
+    expect(at.occluded).toEqual([]);
+    expect(at.footerHit).toEqual([true, true]);
+    expect(at.chaiShown ?? 0).toBeGreaterThanOrEqual(0.5);
+    await ctx.close();
+  });
 }
 
 test('big day: the unlock is the one highlight, whole on arrival; all seven rewards stay on the summary', async ({ browser, baseURL }) => {
