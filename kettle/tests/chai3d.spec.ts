@@ -15,7 +15,9 @@
 import { test, expect, type Page, type Request } from '@playwright/test';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const GLB = /\/chai(-[\w-]+)?\.glb(\?|$)/;
+const GLB = /\/chai(-[\w-]+)?\.glb$/;
+/** The model's data request only: in dev, Vite also serves `chai.glb?url` as the JS module that exports the URL. */
+const isModelFetch = (u: URL) => GLB.test(u.pathname) && !u.search;
 
 const ready = (page: Page) =>
   page.waitForFunction(() => {
@@ -60,7 +62,7 @@ const chaiFacts = (page: Page) =>
 
 function countGlb(page: Page) {
   const seen: string[] = [];
-  page.on('request', (r: Request) => GLB.test(new URL(r.url()).pathname) && seen.push(r.url()));
+  page.on('request', (r: Request) => isModelFetch(new URL(r.url())) && seen.push(r.url()));
   return seen;
 }
 
@@ -81,7 +83,7 @@ test.describe('3D Chai: fallbacks keep the procedural Chai', () => {
   test('404: procedural Chai, no error, the room is live', async ({ page }) => {
     const errors: string[] = [];
     page.on('pageerror', (e) => errors.push(e.message));
-    await page.route((u) => GLB.test(u.pathname), (r) => r.fulfill({ status: 404, body: 'nope' }));
+    await page.route(isModelFetch, (r) => r.fulfill({ status: 404, body: 'nope' }));
     await nook(page, 'high');
     await expect(host(page)).toHaveAttribute('data-scene-ready', 'true', { timeout: 60_000 });
     await expect.poll(() => status(page).then((s) => s?.state), { timeout: 20_000 }).toBe('failed');
@@ -93,7 +95,7 @@ test.describe('3D Chai: fallbacks keep the procedural Chai', () => {
 
   test('slow network: the first frame is the procedural Chai; after 8 s the load gives up and it stays', async ({ page }) => {
     test.setTimeout(120_000);
-    await page.route((u) => GLB.test(u.pathname), async (r) => {
+    await page.route(isModelFetch, async (r) => {
       await new Promise((res) => setTimeout(res, 15_000));
       await r.continue().catch(() => {});
     });
@@ -108,7 +110,7 @@ test.describe('3D Chai: fallbacks keep the procedural Chai', () => {
   });
 
   test('a file that fails validation (the r0 model: no eyes_sip) keeps the procedural Chai', async ({ page }) => {
-    await page.route((u) => GLB.test(u.pathname), async (r) => {
+    await page.route(isModelFetch, async (r) => {
       const res = await page.request.get('/art-src/chai/chai_r0.glb').catch(() => null);
       if (res?.ok()) await r.fulfill({ status: 200, contentType: 'model/gltf-binary', body: await res.body() });
       else await r.fulfill({ status: 200, contentType: 'model/gltf-binary', body: Buffer.from('glTF-not-really') });
@@ -118,6 +120,19 @@ test.describe('3D Chai: fallbacks keep the procedural Chai', () => {
     await expect.poll(() => status(page).then((s) => s?.state), { timeout: 20_000 }).toBe('failed');
     expect((await status(page)).reason).toMatch(/invalid: missing node "eyes_sip"|SyntaxError|Unexpected|glTF|magic/i);
     expect(await chaiKind(page)).toBe('procedural');
+  });
+
+  test('the loader chunk itself fails to load: procedural Chai, no error', async ({ page }) => {
+    const errors: string[] = [];
+    page.on('pageerror', (e) => errors.push(e.message));
+    const reqs = countGlb(page);
+    await page.route((u) => /\/scene\/engine\/chaiLoad\.ts$|\/assets\/chaiLoad-[\w-]+\.js$/.test(u.pathname), (r) => r.fulfill({ status: 404, body: '' }));
+    await nook(page, 'high');
+    await expect(host(page)).toHaveAttribute('data-scene-ready', 'true', { timeout: 60_000 });
+    await page.waitForTimeout(3000);
+    expect(await chaiKind(page)).toBe('procedural');
+    expect(reqs).toEqual([]);
+    expect(errors).toEqual([]);
   });
 
   test('3D off: the static drawing, no engine, no model request', async ({ page }) => {
