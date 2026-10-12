@@ -5,6 +5,7 @@
  * theme `auto` is an evening room; in the light theme it follows the clock),
  * and floating on the host's backdrop like the canvas so the cross-fade is quiet.
  */
+import { useEffect, useRef, useState } from 'react';
 import { NookFallback, type MascotPose } from '@/art';
 import { useReducedMotion, useSceneTime } from './resolve';
 import type { SceneMode, SceneTime, SceneWeather } from './types';
@@ -65,12 +66,29 @@ export function windowLayers(items: readonly string[], time: string, weather: Sc
 export function WindowStill({ weather, time: pref = 'auto', items = [] }: { weather: SceneWeather; time?: SceneTime; items?: readonly string[] }) {
   const time = useSceneTime(pref);
   const src = windowStill(time, weather);
+  // The items are drawn only once the base room behind them can paint: the still is a file that decodes
+  // asynchronously, while small layers are inlined in the bundle and would otherwise paint first, standing on
+  // the bare sky backdrop for a moment at brew start. A still that fails to load leaves no items either.
+  const imgRef = useRef<HTMLImageElement>(null);
+  const [roomReady, setRoomReady] = useState<string | null>(null);
+  useEffect(() => {
+    const img = imgRef.current;
+    if (!img || !src) return;
+    let alive = true;
+    img.decode().then(
+      () => alive && setRoomReady(src),
+      () => {},
+    );
+    return () => {
+      alive = false;
+    };
+  }, [src]);
   if (!src) return null;
-  const layers = windowLayers(items, time, weather);
+  const layers = roomReady === src ? windowLayers(items, time, weather) : [];
   const [fw, fh] = LAYERS.frame;
   return (
     <>
-      <img src={src} alt="" aria-hidden draggable={false} decoding="async" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 50%' }} />
+      <img ref={imgRef} src={src} alt="" aria-hidden draggable={false} decoding="async" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 50%' }} />
       {layers.length > 0 && (
         // `xMidYMid slice` on the still's own frame = the still's `object-fit: cover` (and the live camera's
         // cover-fit, Engine.ts windowCamera), so each item lands where the live window view draws it.

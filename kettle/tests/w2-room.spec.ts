@@ -108,6 +108,39 @@ test.describe('Focus backdrop: earned items without the live 3D room', () => {
     await page.unrouteAll({ behavior: 'ignoreErrors' });
   });
 
+  test('items never stand on the bare sky: no layer is drawn before the base room still has decoded', async ({ page }) => {
+    // Hold the base still back (slow network for that one file) while everything else, layers included, loads.
+    let release!: () => void;
+    const held = new Promise<void>((r) => (release = r));
+    // The image request only (dev also serves `…webp?url` / `?import` modules for the URL map: those must pass).
+    await page.route((u) => /\/window-[a-z]+-[a-z]+(-[\w-]+)?\.webp$/.test(u.pathname) && !u.search, async (route) => {
+      await held;
+      await route.continue().catch(() => {});
+    });
+    await boot(page, 'off');
+    const want = await expectedItems(page);
+    await startBrew(page);
+    const host = page.locator('[data-scene-mode="window"]').first();
+    await expect(host.locator('img')).toHaveCount(1);
+    // Every frame for 1.5 s: the still has not loaded, so no item layer may be in the backdrop.
+    const floating = await page.evaluate(
+      () =>
+        new Promise<number>((done) => {
+          let n = 0;
+          const t0 = performance.now();
+          const tick = () => {
+            if (document.querySelector('[data-scene-mode="window"] svg[data-window-items] image')) n++;
+            if (performance.now() - t0 < 1500) requestAnimationFrame(tick);
+            else done(n);
+          };
+          requestAnimationFrame(tick);
+        }),
+    );
+    expect(floating, 'frames with item layers but no base room').toBe(0);
+    release();
+    await assertLayersDrawn(page, want);
+  });
+
   test('3D failure (WebGL context lost): the still that takes over carries the same items', async ({ page }) => {
     await boot(page, 'auto');
     const want = await expectedItems(page);
