@@ -8,10 +8,12 @@
  *   2. the task (only when there was one) — Done / Carry forward;
  *   3. at most one highlighted milestone (`rankRewards`, below): a major room unlock, prominent, or else the
  *      biggest milestone of this brew;
- *   4. every other reward, compact — leaves, today's goal, streak, recipes, level, badges;
+ *   4. every other reward, compact — leaves, today's goal, warm days, recipes, level, badges;
  *   5. the arithmetic, on request.
+ * Words: Kettle's own "warm days" language ("23 days warm", "kept the kettle warm"), never "streak", in what is
+ * shown and in what a screen reader hears. (A badge keeps its catalogue name, e.g. "Warm Streak", as in Stats.)
  */
-import type { CompletionReport } from '@/progress';
+import { BADGES, type CompletionReport } from '@/progress';
 import { plural } from '@/lib/format';
 
 export type PillKind = 'leaves' | 'goal' | 'streak' | 'cozy' | 'recipes' | 'level' | 'badge';
@@ -50,6 +52,13 @@ export interface SummaryModel {
 }
 
 const ROMAN = ['', 'I', 'II', 'III', 'IV', 'V'];
+
+/** What a full brew a day does, in Kettle's words (Stats: "You kept the kettle warm 23 days in a row"). */
+export const WARM_RULE = 'One full brew a day keeps the kettle warm.';
+/** What a Tea Cozy does (Stats: "each covers one missed day"). */
+export const COZY_MEANS = 'Covers one missed day, so your warm days keep going.';
+/** The arithmetic's closing line: the warm days so far, and what keeps them going. */
+export const warmNote = (days: number) => (days > 0 ? `${plural(days, 'day')} warm. ${WARM_RULE}` : WARM_RULE);
 export const roman = (n: number) => ROMAN[n] ?? String(n);
 
 export function buildSummary(r: CompletionReport): SummaryModel {
@@ -70,7 +79,7 @@ export function buildSummary(r: CompletionReport): SummaryModel {
     const best = st.extended && st.newBest && st.after > 1 ? ', your best yet' : '';
     pills.push({ kind: 'streak', text: `${plural(st.after, 'day')} warm${best}`, value: st.after });
   }
-  if (st.cozyEarned) pills.push({ kind: 'cozy', text: 'Tea Cozy earned', sr: 'You earned a Tea Cozy: it keeps your streak warm for one missed day' });
+  if (st.cozyEarned) pills.push({ kind: 'cozy', text: 'Tea Cozy earned', sr: 'You earned a Tea Cozy: it covers one missed day, so your warm days keep going' });
 
   // Recipes earn a pill once one is done (progress alone — "Recipes 0/3" — would read as nothing happened).
   const moved = r.quests.filter((q) => q.after > q.before);
@@ -96,7 +105,7 @@ export function buildSummary(r: CompletionReport): SummaryModel {
 
   const parts = [`${headline}.`, `${r.leaves.total} leaves earned.`];
   parts.push(g.justMet ? 'Daily goal met.' : `Today: ${after} of ${g.goalMin} minutes.`);
-  if (st.extended) parts.push(`Warm streak: ${plural(st.after, 'day')}.`);
+  if (st.extended) parts.push(`${plural(st.after, 'day')} warm.`);
   if (unlocked.length) parts.push(`Cozy level ${lv.after}: something new in your nook.`);
   else if (leveled) parts.push(`Cozy level ${lv.after}.`);
   if (r.badges.length) parts.push(r.badges.map((b) => `New badge: ${b.title}.`).join(' '));
@@ -121,7 +130,7 @@ export function buildSummary(r: CompletionReport): SummaryModel {
 // The model's `pills` (and the arithmetic) are untouched: this only orders what is shown.
 // ---------------------------------------------------------------------------------------------------------------
 
-/** Milestones, biggest first: a new object in the nook, a new cozy level, a new best streak, a badge, a Tea Cozy. */
+/** Milestones, biggest first: a new object in the nook, a new cozy level, the most warm days yet, a badge, a Tea Cozy. */
 export const MILESTONES = ['unlock', 'level', 'best', 'badge', 'cozy'] as const;
 export type Milestone = (typeof MILESTONES)[number];
 
@@ -181,11 +190,18 @@ function noteFor(kind: Milestone, pill: RewardPill, m: SummaryModel, r: Completi
     case 'level':
       return `${plural(m.details.toNext, 'leaf', 'leaves')} to level ${m.details.level + 1}`;
     case 'best':
-      return 'One full brew a day keeps your streak warm.';
-    case 'badge':
+      return WARM_RULE;
+    case 'badge': {
+      // The badge's own line, except the warm-days badge, whose catalogue line ("Keep a 7-day warm streak") reads
+      // as a to-do: on the summary it says what was reached, in warm days. Same threshold, same tier.
+      if (pill.id === 'warm-streak') {
+        const n = BADGES.find((d) => d.id === pill.id)?.tiers[(pill.tier ?? 1) - 1];
+        if (n) return `${plural(n, 'warm day')} in a row`;
+      }
       return r.badges.find((b) => b.id === pill.id && b.tier === pill.tier)?.description ?? '';
+    }
     case 'cozy':
-      return 'Keeps your streak warm for one missed day.';
+      return COZY_MEANS;
     default:
       return '';
   }

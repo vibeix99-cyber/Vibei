@@ -9,6 +9,9 @@
  * - Ranking: minutes and Tea time stay primary; at most one milestone is highlighted (a room unlock is shown by its
  *   close-up card, otherwise the biggest milestone leads the rewards list), seen whole on arrival; every other reward
  *   stays on the summary, compact.
+ * - W2R2 polish: on arrival Chai's and the kettle's boxes are wholly above the sheet's top edge (375×667, 390×844;
+ *   routine, big and task day; 100 % and 200 %); the highlight is quieter than the minutes and Tea time; the summary
+ *   speaks of warm days, never of a "streak" (only a badge's catalogue name, "Warm Streak", is data).
  * The debug API is used for setup only (seed, settings, finishing the brew); scrolling is the wheel, opening the
  * arithmetic is a click.
  */
@@ -54,7 +57,19 @@ async function toSummary(page: Page, baseURL: string | undefined, seed: string, 
 }
 
 type Line = { kind: string; text: string; top: number; bottom: number; status: 'clear' | 'below' | 'above' | 'cut-top' | 'cut' };
-type Fold = { F: number; fade: number; lines: Line[]; cut: Line[]; occluded: string[]; footerHit: boolean[]; chaiShown: number | null; highlights: number; facts: string[] };
+type Fold = {
+  F: number;
+  fade: number;
+  lines: Line[];
+  cut: Line[];
+  occluded: string[];
+  footerHit: boolean[];
+  chaiShown: number | null;
+  /** Stacked: the sheet's top minus the bottom of Chai's / the kettle's box (≥ 0: wholly above the sheet). */
+  clear: { chai: number; kettle: number } | null;
+  highlights: number;
+  facts: string[];
+};
 
 /** Every line of the summary against the fold: the scroll area's bottom (= the footer's top) and its bottom fade. */
 function fold(page: Page): Promise<Fold> {
@@ -144,10 +159,13 @@ function fold(page: Page): Promise<Fold> {
     const sR = sheet.getBoundingClientRect();
     const beside = cR ? sR.left >= cR.right || sR.right <= cR.left : false;
     const chaiShown = cR ? Math.max(0, (beside ? cR.bottom : Math.min(cR.bottom, sR.top)) - Math.max(0, cR.top)) / cR.height : null;
+    const kettle = document.querySelector('[data-focus-view] svg[role=img][data-state]');
+    const kR = kettle?.getBoundingClientRect();
+    const clear = cR && kR && !beside ? { chai: sR.top - cR.bottom, kettle: sR.top - kR.bottom } : null;
     const facts = lis.map(said);
     const highlights = (unlock ? 1 : 0) + region.querySelectorAll('[aria-label="Rewards"] > li[data-highlight]').length;
     const lines = units.map(({ el, left, right, ...u }) => u);
-    return { F, fade, lines, cut: lines.filter((u) => u.status === 'cut'), occluded, footerHit, chaiShown, highlights, facts };
+    return { F, fade, lines, cut: lines.filter((u) => u.status === 'cut'), occluded, footerHit, chaiShown, clear, highlights, facts };
   }, PEEK);
 }
 
@@ -179,7 +197,9 @@ for (const text of [100, 200]) {
       expect(at.cut, `lines cut by the fold on arrival: ${JSON.stringify(at.cut)}`).toEqual([]);
       expect(at.occluded).toEqual([]);
       expect(at.footerHit).toEqual([true, true]);
-      expect(at.chaiShown ?? 0, 'Chai stays visible above the sheet').toBeGreaterThanOrEqual(0.5);
+      expect(at.clear, 'stacked: Chai and the kettle measured').not.toBeNull();
+      expect(at.clear!.chai, 'Chai wholly above the sheet').toBeGreaterThanOrEqual(0);
+      expect(at.clear!.kettle, 'the kettle wholly above the sheet').toBeGreaterThanOrEqual(0);
       expect(at.highlights).toBeLessThanOrEqual(1);
       // The arithmetic, opened by a click; then the wheel to the very end.
       await wheelToEnd(page);
@@ -208,7 +228,8 @@ for (const motion of ['', 'reduce']) {
     expect(at.cut, `lines cut by the fold on arrival: ${JSON.stringify(at.cut)}`).toEqual([]);
     expect(at.occluded).toEqual([]);
     expect(at.footerHit).toEqual([true, true]);
-    expect(at.chaiShown ?? 0).toBeGreaterThanOrEqual(0.5);
+    expect(at.clear!.chai).toBeGreaterThanOrEqual(0);
+    expect(at.clear!.kettle).toBeGreaterThanOrEqual(0);
     await ctx.close();
   });
 }
@@ -240,5 +261,80 @@ test('a milestone day without an unlock: the biggest milestone leads, highlighte
   expect(at.cut).toEqual([]);
   // Everything the summary said before is still there: leaves and the goal lead the compact group.
   expect(at.facts.slice(1).join(' | ')).toMatch(/leaves/);
+  await ctx.close();
+});
+
+// ---------- W2R2: Chai and the kettle stay whole above the sheet; the fold still falls between lines ----------
+for (const [w, h] of [
+  [390, 844],
+  [375, 667],
+] as const)
+  for (const text of [100, 200])
+    for (const [day, seed, task] of [
+      ['routine day', 'veteran', ''],
+      ['big day', 'celebrate', ''],
+      ['task day', 'newbie', 'Chapter 3 notes'],
+    ] as const) {
+      if (w === 375 && !task) continue; // 375 × routine / big day: the fold tests above check the same
+      test(`${w}×${h} @${text} %, ${day}: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut`, async ({ browser, baseURL }) => {
+        const ctx = await browser.newContext({ viewport: { width: w, height: h }, isMobile: true, hasTouch: true, colorScheme: text === 200 ? 'dark' : 'light' });
+        const page = await ctx.newPage();
+        await toSummary(page, baseURL, seed, { text, task, theme: text === 200 ? 'dark' : 'light' });
+        const at = await fold(page);
+        expect(at.clear, 'stacked: Chai and the kettle measured').not.toBeNull();
+        expect(at.clear!.chai, 'Chai wholly above the sheet').toBeGreaterThanOrEqual(0);
+        expect(at.clear!.kettle, 'the kettle wholly above the sheet').toBeGreaterThanOrEqual(0);
+        expect(at.cut, `lines cut by the fold on arrival: ${JSON.stringify(at.cut)}`).toEqual([]);
+        for (const l of at.lines.filter((x) => x.kind.startsWith('title'))) expect(l.status, `the minutes heading (${l.kind})`).toBe('clear');
+        expect(at.footerHit).toEqual([true, true]);
+        expect(at.highlights).toBeLessThanOrEqual(1);
+        await ctx.close();
+      });
+    }
+
+test('the highlight is quieter than the minutes and Tea time (milestone day, 375×667)', async ({ browser, baseURL }) => {
+  const ctx = await browser.newContext({ viewport: { width: 375, height: 667 }, isMobile: true, hasTouch: true });
+  const page = await ctx.newPage();
+  await toSummary(page, baseURL, 'atRisk');
+  const m = await page.evaluate(() => {
+    const region = document.querySelector('[data-focus-view] [role=region]')!;
+    const h1 = region.querySelector('h1')!;
+    const cta = region.querySelector('[data-done-cta]')!;
+    const hl = region.querySelector('[aria-label="Rewards"] > li[data-highlight]')!;
+    const title = hl.querySelector('[class*="highlightTitle"]')!;
+    const area = (e: Element) => e.getBoundingClientRect().width * e.getBoundingClientRect().height;
+    const f = (e: Element) => getComputedStyle(e);
+    return {
+      heading: { px: parseFloat(f(h1).fontSize), weight: +f(h1).fontWeight },
+      title: { px: parseFloat(f(title).fontSize), weight: +f(title).fontWeight },
+      ctaArea: area(cta),
+      ctaFilled: f(cta).backgroundImage !== 'none' || f(cta).backgroundColor !== 'rgba(0, 0, 0, 0)',
+      hlArea: area(hl),
+    };
+  });
+  expect(m.title.px).toBeLessThan(m.heading.px);
+  expect(m.title.weight).toBeLessThanOrEqual(m.heading.weight);
+  expect(m.ctaFilled).toBe(true);
+  expect(m.hlArea, 'the highlight card is smaller than Tea time').toBeLessThan(m.ctaArea);
+  await ctx.close();
+});
+
+test('warm days, never "streak": what the big day summary shows and what a screen reader hears', async ({ browser, baseURL }) => {
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  const page = await ctx.newPage();
+  await toSummary(page, baseURL, 'celebrate');
+  await page.getByRole('button', { name: /How your leaves added up/ }).click();
+  await page.waitForTimeout(800); // the announcement is set 600 ms after arrival
+  const words = await page.evaluate(() => {
+    const region = document.querySelector('[data-focus-view] [role=region]')!;
+    const reachable = [...region.querySelectorAll('[aria-label]')].filter((e) => !e.closest('[aria-hidden="true"]')).map((e) => e.getAttribute('aria-label'));
+    return [region.textContent ?? '', ...reachable].join(' | ');
+  });
+  // A badge's catalogue name is data (Stats › Badges uses the same name): everything else is the summary's own words.
+  const own = words.replace(/Warm Streak/g, '');
+  expect(own, own).not.toMatch(/streak/i);
+  expect(words).toContain('7 days warm, your best yet');
+  expect(words).toContain('7 days warm. One full brew a day keeps the kettle warm.');
+  expect(words).toContain('7 days warm.');
   await ctx.close();
 });

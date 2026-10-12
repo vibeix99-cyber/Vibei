@@ -12,12 +12,16 @@
  * Motion: the panel content rises in a short stagger; reduced motion: one simple fade, nothing moves.
  *
  * Stacked (phones), the scroll area spans the whole screen and the sheet rests just under Chai's feet: scrolling
- * slides the sheet up over the scene, which itself never moves. When the highlight (or, without one, the rewards)
- * would start under the footer, the sheet opens a little higher so it is seen whole: by at most 22% of its resting
- * offset (30% for a highlight).
- * The fold (Wave-1 #1): on arrival no line may start under the footer. The opening lift is snapped, within the same
- * limit, so the fold falls between two lines: each is wholly clear of the bottom fade or wholly below it (at most
- * its empty top edge peeks into the fade). Side by side the card does not lift; it ends between two lines instead.
+ * slides the sheet up over the scene, which itself never moves. On arrival the sheet never covers Chai or the kettle
+ * (W2R2): it may open higher only by the room between their boxes and its top edge (measured, a few px on phones),
+ * and, when the highlight (or, without one, the rewards) would start under the footer, by at most 22% of its resting
+ * offset (30% for a highlight) within that room.
+ * The fold (Wave-1 #1): on arrival no line may start under the footer. The opening is snapped so the fold falls
+ * between two lines: each is wholly clear of the bottom fade or wholly below it (at most its empty top edge peeks
+ * into the fade). When no lift within the room does that, the sheet opens with a little more air above its heading
+ * and between its blocks (at most MAX_AIR_REM each), an even rhythm, so the fold falls before the next block. The
+ * heading ("25 minutes brewed") stays whole whenever any clean opening allows it, then the highlight. Side by side
+ * the card does not lift; it ends between two lines instead.
  */
 import { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type ReactNode, type Ref } from 'react';
 import { motion } from 'motion/react';
@@ -38,7 +42,7 @@ import { usePageVisible } from '../focus/parts/hooks';
 import { TagChip } from '../focus/parts/bits';
 import { ItemGlyph } from '../nook/ItemGlyph';
 import { LeafConfetti } from './LeafConfetti';
-import { buildSummary, rankRewards, type RewardPill } from './summary';
+import { buildSummary, rankRewards, warmNote, type RewardPill } from './summary';
 import s from './Summary.module.css';
 
 const AUTO_BREAK_S = 10;
@@ -52,6 +56,13 @@ const MAX_LIFT_MOMENT = 0.3;
 const FADE = 14;
 /** How much of a line's top edge may show in the fade when the fold falls just above it (no text sits that high). */
 const PEEK = 6;
+/** Stacked, the sheet's top edge (its 2px line) stays this far below Chai's and the kettle's boxes on arrival. */
+const FIGURE_CLEAR = 2;
+/** When no lift within that room puts the fold between two lines, the sheet may open with up to this much more air
+ *  (rem: 24px at 100 % text, 48px at 200 %, where the text is twice as tall but the sheet's px spacing is not) above
+ *  its heading and between every two blocks (its padding is 20px and its gap 14px), which moves the lines down
+ *  instead, the lower ones more. */
+const MAX_AIR_REM = 1.5;
 /** Side by side, the card may end at most this share of its scroll area earlier, so the fold falls between lines. */
 const MAX_TRIM = 0.25;
 /** How long the summary steps aside before handing off to the break / home. */
@@ -94,7 +105,9 @@ export function Summary({ reduced }: { reduced: boolean }) {
   const breakMin = isLong ? longMin : shortMin;
 
   // Screen readers land on the headline and hear the whole summary once.
-  const headingRef = useCallback((el: HTMLHeadingElement | null) => {
+  const headingRef = useRef<HTMLHeadingElement | null>(null);
+  const headingFocus = useCallback((el: HTMLHeadingElement | null) => {
+    headingRef.current = el;
     if (el) requestAnimationFrame(() => el.focus({ preventScroll: true }));
   }, []);
   const [said, setSaid] = useState('');
@@ -129,11 +142,18 @@ export function Summary({ reduced }: { reduced: boolean }) {
     const h = sc.clientHeight;
     const lines = foldLines(sc, sheet);
     if (rest > 0) {
-      const cap = rest * (featured === 'pills' ? MAX_LIFT : MAX_LIFT_MOMENT);
+      const cap = Math.max(0, Math.min(rest * (featured === 'pills' ? MAX_LIFT : MAX_LIFT_MOMENT), figureRoom(sc, sheet)));
       const over = rest + el.offsetTop + el.offsetHeight + FEATURE_CLEAR - h;
-      // The highlight should end up whole if any clean opening allows it; the routine rewards just need a clean fold.
-      const must: [number, number] | null = featured === 'pills' ? null : [rest + el.offsetTop, rest + el.offsetTop + el.offsetHeight];
-      const lift = cleanLift(lines, h, over > 0 ? Math.min(over, cap) : 0, cap, must);
+      // Kept whole if any clean opening allows it, in this order: the heading, then the highlight (the routine
+      // rewards just need a clean fold).
+      const blocks = blocksOf(sheet);
+      const must = (x: HTMLElement): [number, number, number] => [rest + x.offsetTop, rest + x.offsetTop + x.offsetHeight, Math.max(0, blocks.indexOf(blockOf(sheet, x)))];
+      const musts: [number, number, number][] = [];
+      if (headingRef.current) musts.push(must(headingRef.current));
+      if (featured !== 'pills') musts.push(must(el));
+      const rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+      const { lift, air } = cleanOpen(lines, h, over > 0 ? Math.min(over, cap) : 0, cap, Math.round(MAX_AIR_REM * rem), musts);
+      if (air > 0) sheet.style.setProperty('--air', `${air}px`);
       if (lift > 0) sc.scrollTop = lift;
     } else if (sc.scrollHeight > h + 1) {
       const end = cleanEnd(lines, h);
@@ -213,7 +233,7 @@ export function Summary({ reduced }: { reduced: boolean }) {
       <div className={s.scroll} ref={scrollRef}>
         <div className={s.sheet} ref={sheetRef}>
           <motion.header className={s.head} {...enter(0)}>
-            <h1 id={headingId} ref={headingRef} tabIndex={-1} className={s.title} data-fold="lines">
+            <h1 id={headingId} ref={headingFocus} tabIndex={-1} className={s.title} data-fold="lines">
               {model.headline}
             </h1>
             <p className={s.sub} data-fold="lines">
@@ -278,7 +298,7 @@ export function Summary({ reduced }: { reduced: boolean }) {
           </motion.ul>
 
           <motion.div {...enter(5)}>
-            <Details model={model} streakDays={r.streak.after} />
+            <Details model={model} warmDays={r.streak.after} />
           </motion.div>
         </div>
       </div>
@@ -332,7 +352,7 @@ function TaskChoice({ record }: { record: SessionRecord }) {
 
 /** A reward's drawing: compact in a pill, larger (`big`) when it is the highlighted milestone. */
 function PillArt({ pill, report, big = false }: { pill: RewardPill; report: CompletionReport; big?: boolean }): ReactNode {
-  const k = big ? 1.45 : 1;
+  const k = big ? 1.2 : 1;
   switch (pill.kind) {
     case 'leaves':
       return <Leaf size={Math.round(20 * k)} />;
@@ -394,7 +414,7 @@ function Unlock({ ref, ids, level, reduced, visible, enter }: { ref?: Ref<HTMLEl
   );
 }
 
-function Details({ model, streakDays }: { model: ReturnType<typeof buildSummary>; streakDays: number }) {
+function Details({ model, warmDays }: { model: ReturnType<typeof buildSummary>; warmDays: number }) {
   const [open, setOpen] = useState(false);
   const id = useId();
   const d = model.details;
@@ -430,7 +450,7 @@ function Details({ model, streakDays }: { model: ReturnType<typeof buildSummary>
           <span className={s.barFill} style={{ width: `${pct}%` }} />
         </span>
         <p className={s.note}>
-          {streakDays > 0 ? `Your ${streakDays}-day streak stays warm with one full brew a day.` : 'One full brew a day keeps your streak warm.'}
+          {warmNote(warmDays)}
         </p>
       </div>
     </section>
@@ -438,8 +458,11 @@ function Details({ model, streakDays }: { model: ReturnType<typeof buildSummary>
 }
 
 // ---------- the fold (Wave-1 #1) ----------
-/** A line of the sheet in the scroll area's content coordinates: [top, bottom, how much of its top may peek]. */
-type FoldLine = [number, number, number];
+/**
+ * A line of the sheet in the scroll area's content coordinates: [top, bottom, how much of its top may peek, its block]
+ * (the block is its sheet child's place among the sheet's laid-out children: air moves block i down by (i + 1) × air).
+ */
+type FoldLine = [number, number, number, number];
 
 let inkCtx: CanvasRenderingContext2D | null | undefined;
 /**
@@ -457,14 +480,25 @@ function inkInsets(el: HTMLElement): { top: number; bottom: number } {
   return { top: Math.max(0, m.fontBoundingBoxAscent - m.actualBoundingBoxAscent), bottom: Math.max(0, m.fontBoundingBoxDescent - m.actualBoundingBoxDescent) };
 }
 
+/** The sheet's laid-out children, in order (the grid items the sheet's gap falls between). */
+const blocksOf = (sheet: HTMLElement) => [...sheet.children].filter((c) => getComputedStyle(c).display !== 'none');
+
+/** The sheet child holding `el`. */
+function blockOf(sheet: HTMLElement, el: HTMLElement): HTMLElement {
+  let block: HTMLElement = el;
+  while (block.parentElement && block.parentElement !== sheet) block = block.parentElement;
+  return block;
+}
+
 /** Every line of the sheet (marked `data-fold`), where it will rest once the entrance motion has finished. */
 function foldLines(sc: HTMLElement, sheet: HTMLElement): FoldLine[] {
   const origin = sc.getBoundingClientRect().top - sc.scrollTop;
+  const blocks = blocksOf(sheet);
   const out: FoldLine[] = [];
   for (const el of sheet.querySelectorAll<HTMLElement>('[data-fold]')) {
     // The entrance transform sits on the sheet's own children (motion); measure where the line will rest.
-    let block: HTMLElement = el;
-    while (block.parentElement && block.parentElement !== sheet) block = block.parentElement;
+    const block = blockOf(sheet, el);
+    const i = Math.max(0, blocks.indexOf(block));
     const t = getComputedStyle(block).transform;
     const dy = t && t !== 'none' ? new DOMMatrixReadOnly(t).m42 : 0;
     if (el.dataset.fold === 'lines') {
@@ -477,10 +511,10 @@ function foldLines(sc: HTMLElement, sheet: HTMLElement): FoldLine[] {
         if (last && r.top < last.bottom - Math.min(r.height, last.bottom - last.top) / 2) last.bottom = Math.max(last.bottom, r.bottom);
         else rows.push({ top: r.top, bottom: r.bottom });
       }
-      for (const r of rows) out.push([r.top - origin - dy + ink.top, r.bottom - origin - dy - ink.bottom, 0]);
+      for (const r of rows) out.push([r.top - origin - dy + ink.top, r.bottom - origin - dy - ink.bottom, 0, i]);
     } else {
       const r = el.getBoundingClientRect();
-      if (r.height > 0.5) out.push([r.top - origin - dy, r.bottom - origin - dy, PEEK]);
+      if (r.height > 0.5) out.push([r.top - origin - dy, r.bottom - origin - dy, PEEK, i]);
     }
   }
   return out;
@@ -489,24 +523,62 @@ function foldLines(sc: HTMLElement, sheet: HTMLElement): FoldLine[] {
 /** With the fold at `fold` px (scroll coordinates): every line wholly clear of the fade, or wholly below it. */
 const cleanAt = (lines: FoldLine[], fold: number) => lines.every(([t, b, peek]) => b <= fold - FADE + 0.5 || t >= fold - peek - 0.5);
 
+/** The lines as they lie with `air` px more above the heading and between every two blocks. */
+const aired = (lines: FoldLine[], air: number): FoldLine[] => (air ? lines.map(([t, b, p, i]) => [t + air * (i + 1), b + air * (i + 1), p, i]) : lines);
+
 /**
- * The lift in [0, cap] nearest `want` that puts the fold between two lines — keeping `must` (the highlight) wholly
- * clear when some clean lift can — or `want` itself when no lift is clean.
+ * How the sheet opens (stacked): a lift in [0, cap] (it scrolls up, over the scene) and, only when no lift alone puts
+ * the fold between two lines, `air` in [0, maxAir]: that much more room above the heading and between every two
+ * blocks, which moves the lines down, the lower ones more, so the fold falls before the next block while the sheet
+ * keeps an even rhythm. The fold sits at `h + lift` in the sheet's resting coordinates.
+ * `musts` (the heading, then the highlight: [top, bottom, block]) are kept wholly clear of the fade when some clean
+ * opening can — first all of them, then all but the last, and so on — and, for each, the least air wins, then the
+ * lift nearest `want`. When nothing is clean: `want`, no air.
  */
-function cleanLift(lines: FoldLine[], h: number, want: number, cap: number, must: [number, number] | null): number {
-  const cands = [want, 0, cap];
-  for (const [t, b, peek] of lines) cands.push(b - h + FADE, t - h + peek);
-  const pick = (needWhole: boolean) => {
+function cleanOpen(lines: FoldLine[], h: number, want: number, cap: number, maxAir: number, musts: [number, number, number][]): { lift: number; air: number } {
+  const pick = (need: [number, number, number][], air: number) => {
+    const ls = aired(lines, air);
+    const cands = [want, 0, cap];
+    for (const [t, b, peek] of ls) cands.push(b - h + FADE, t - h + peek);
     let best: number | null = null;
     for (const c of cands)
       for (const v of [Math.floor(c), Math.ceil(c)]) {
-        if (v < 0 || v > cap || !cleanAt(lines, v + h)) continue;
-        if (needWhole && must && must[1] - v > h - FADE + 0.5) continue;
+        if (v < 0 || v > cap || !cleanAt(ls, v + h)) continue;
+        if (need.some(([, b, i]) => b + air * (i + 1) - v > h - FADE + 0.5)) continue;
         if (best == null || Math.abs(v - want) < Math.abs(best - want) || (Math.abs(v - want) === Math.abs(best - want) && v > best)) best = v;
       }
     return best;
   };
-  return Math.round((must ? pick(true) : null) ?? pick(false) ?? want);
+  for (let k = musts.length; k >= 0; k--)
+    for (let air = 0; air <= maxAir; air++) {
+      const v = pick(musts.slice(0, k), air);
+      if (v != null) return { lift: Math.round(v), air };
+    }
+  return { lift: Math.round(want), air: 0 };
+}
+
+/**
+ * How far the sheet may rise from its rest before its top edge reaches Chai's or the kettle's box (stacked; the
+ * stage marks them `data-stage-figure`). Measured where everything will rest: without the summary's entrance
+ * transform or Chai's hop. No figures (no stage): no limit.
+ */
+function figureRoom(sc: HTMLElement, sheet: HTMLElement): number {
+  const figs = sc.closest('[data-focus-view]')?.querySelectorAll<Element>('[data-stage-figure]') ?? [];
+  let bottom = -Infinity;
+  for (const f of figs) bottom = Math.max(bottom, f.getBoundingClientRect().bottom - shiftY(f));
+  if (bottom === -Infinity) return Infinity;
+  const restTop = sc.getBoundingClientRect().top - shiftY(sc) + sheet.offsetTop;
+  return Math.floor(restTop - FIGURE_CLEAR - bottom);
+}
+
+/** The vertical translation an element and its ancestors carry right now (entrance motion, Chai's hop). */
+function shiftY(el: Element): number {
+  let dy = 0;
+  for (let e: Element | null = el; e && e !== document.documentElement; e = e.parentElement) {
+    const t = getComputedStyle(e).transform;
+    if (t && t !== 'none') dy += new DOMMatrixReadOnly(t).m42;
+  }
+  return dy;
 }
 
 /** Side by side (no lift): the tallest scroll area, at most MAX_TRIM shorter, that ends between two lines. */

@@ -34,11 +34,13 @@
   position: relative;
   display: grid;
   align-content: start;
-  gap: 14px;
+  gap: calc(14px + var(--air, 0px));
   /* fills the rest of the scroll area, so a short summary still reads as one sheet down to the footer */
   min-height: 100%;
-  /* the last block always clears the bottom fade above the footer */
-  padding: 20px 20px 34px;
+  /* the last block always clears the bottom fade above the footer; --air (Summary.tsx, stacked only) opens the sheet
+     with a little more room above the heading and between its blocks when that, not a lift over Chai, puts the fold
+     between two lines */
+  padding: calc(20px + var(--air, 0px)) 20px 34px;
   border-radius: 24px 24px 0 0;
   background: var(--surface);
   box-shadow:
@@ -130,14 +132,17 @@
   width: 28px;
 }
 /* The highlight: the biggest milestone of this brew (summary.ts rankRewards), on the unlock's honey card — one line
-   wide, its drawing larger, one short line on what it means. Never more than one; an unlock uses its own card. */
+   wide, its drawing a little larger than a pill's, one short line on what it means. Never more than one; an unlock
+   uses its own card. It is the third voice (W2R2): the honey fill marks it, but it stays quieter than the minutes
+   (28px display, 600) and Tea time (the filled sky button) — a 16px/600 title (was 17px/700, heavier than the
+   heading), a 34px drawing (was 42px) and a card about as tall as two pill rows' worth of text, not taller. */
 .highlight {
   flex: 1 1 100%;
   display: flex;
   align-items: center;
-  gap: 12px;
-  min-height: 56px;
-  padding: 8px 14px 8px 10px;
+  gap: 10px;
+  min-height: 50px;
+  padding: 6px 14px 6px 8px;
   border-radius: var(--r-lg);
   background: var(--honey-soft);
   box-shadow: inset 0 0 0 2px var(--honey-soft-edge);
@@ -146,8 +151,8 @@
 .highlightArt {
   display: grid;
   place-items: center;
-  width: 42px;
-  height: 42px;
+  width: 34px;
+  height: 34px;
   flex: none;
 }
 .highlightText {
@@ -157,16 +162,17 @@
 }
 .highlightTitle {
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.0625rem;
+  font-weight: 600;
+  font-size: 1rem;
   line-height: 1.2;
   overflow-wrap: anywhere;
 }
 .highlightNote {
   color: var(--ink-2);
   font-weight: 600;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   line-height: 1.3;
+  text-wrap: pretty;
 }
 
 /* ---------- 4. a major room unlock, prominent ---------- */
