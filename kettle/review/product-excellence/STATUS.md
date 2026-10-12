@@ -10,6 +10,41 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
+## ▶ WAVE 2 ROUND 2 IN PROGRESS · 2026-10-12 (read this first)
+
+- **Scope:** I10 toast architecture (Maker T), I07 summary polish (Maker P) and I06 3D Chai integration (Maker C).
+- **Base:** `b377c62` (src `e0aebbf`).
+- **Not authorised:**
+  - other follow-ups;
+  - new artwork beyond the supplied 3D Chai;
+  - paid generation, publishing and PRs;
+  - merging anywhere but `claude/wizardly-galileo-uy89d9`.
+- **C** also needs Vibei's art sign-off before it can merge.
+- **Prep:**
+  - The round-1 worktrees are removed; their probes are archived in `archive/w2r1-final-probes-2026-10-12.tar.gz`. 16 GB is free.
+  - The slot gate is back to nproc−1 = 3.
+  - `assets/chai3d-r1@68caa31`: the `chai.glb` SHA-256 matches `b401bc6c…63d7e`.
+- **Control `b377c62`:** `/home/user/wt/w3-base`, dev **:5410**, preview **:5430**, both verified.
+- **BEFORE set:** `contracts/W2R2/BEFORE-b377c62/`, made by `r2before.mjs`. It is running and covers three passes:
+  - 20 configurations (390×844, 375×667, 844×390, 667×375 and 1440×900 × light/dark × 100/200 %) on Sunday 2026-10-11 07:40Z;
+  - the toast flows again on Monday 2026-10-12 (`-mon`). Recipes change by day: Monday shows "Recipe done: Take a full tea break" on Break's over, Sunday shows nothing;
+  - night (`-night`) at 390×844 and 1440×900.
+- **Makers** (Opus, high effort; file sets disjoint):
+
+  | Maker | Item | Branch | Worktree | Ports | Owns |
+  |---|---|---|---|---|---|
+  | **T** | I10 toasts, design gate first | `pe/w2r2-toast` | `/home/user/wt/w3t` | 5421/5431 | `src/ui/**`, `screens/home/**`, `screens/focus/**` except `stage/**`, `src/app/**`, toast-related specs |
+  | **P** | I07 summary polish | `pe/w2r2-summary` | `/home/user/wt/w3p` | 5422/5432 | `screens/done/**`, `screens/focus/stage/**`, `w2-summary.spec` |
+  | **C** | I06 3D Chai | `pe/w2r2-chai3d` (from `68caa31`) | `/home/user/wt/w3c` | 5423/5433 | `src/scene/**`, `screens/nook/**`, `public/**`, `vite.config.ts`, `src/pwa/**` |
+
+- **Next:**
+  1. T's design note goes to the lead (APPROVE or REJECT, at most one revision).
+  2. Gate each packet.
+  3. Review by the lead, plus Lanes T, P, C and R.
+  4. Verdicts, with at most one 90-minute fix round per rejected maker.
+  5. Merge the approved makers (C after Vibei's sign-off) and run the regression.
+  6. Stop.
+
 ## ■ WAVE 2 ROUND 1 CLOSED at `b377c62` · 2026-10-12 02:10 UTC (read this first)
 
 Finished in economy mode after the usage-limit pause. Nothing is running, the slot gate is reset, and the gate is capped at 2 browsers.
