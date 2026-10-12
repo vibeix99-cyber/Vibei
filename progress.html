@@ -1,0 +1,385 @@
+<title>Grand Line Arena — Build Progress</title>
+<style>
+/* ─────────────────────────────────────────────────────────────
+   Palette: a dim arena scoreboard. Navy-biased ink (nautical,
+   not neutral grey), brass as the single accent, and a semantic
+   set kept deliberately separate from it so status never reads
+   as decoration.
+   ───────────────────────────────────────────────────────────── */
+:root{
+  --ground:      #eef1f6;
+  --surface:     #ffffff;
+  --surface-2:   #f6f8fb;
+  --line:        #d3dae6;
+  --line-soft:   #e4e9f1;
+  --ink:         #131b2b;
+  --ink-2:       #46536b;
+  --ink-3:       #7d889d;
+
+  --brass:       #a8721a;   /* accent — rails, wave marker, progress */
+  --brass-soft:  #f0e2c6;
+
+  --pass:        #1d7a4c;
+  --active:      #1f6fb8;
+  --review:      #9a6612;
+  --sent:        #b23a30;
+  --queued:      #7d889d;
+
+  --ours:        #a8721a;
+  --theirs:      #46536b;
+
+  --shadow: 0 1px 2px rgba(19,27,43,.06), 0 8px 24px rgba(19,27,43,.06);
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, "Cascadia Mono", Menlo, Consolas, monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:    #090e18;
+    --surface:   #111a2a;
+    --surface-2: #16202f;
+    --line:      #253247;
+    --line-soft: #1b2537;
+    --ink:       #eaeff8;
+    --ink-2:     #a3b0c6;
+    --ink-3:     #6d7b93;
+
+    --brass:      #e2a63f;
+    --brass-soft: #3a2e17;
+
+    --pass:      #52c489;
+    --active:    #56a6ee;
+    --review:    #e2a63f;
+    --sent:      #ef6f63;
+    --queued:    #6d7b93;
+
+    --ours:      #e2a63f;
+    --theirs:    #8ea0bd;
+
+    --shadow: 0 1px 0 rgba(0,0,0,.5), 0 14px 38px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:    #090e18;
+  --surface:   #111a2a;
+  --surface-2: #16202f;
+  --line:      #253247;
+  --line-soft: #1b2537;
+  --ink:       #eaeff8;
+  --ink-2:     #a3b0c6;
+  --ink-3:     #6d7b93;
+
+  --brass:      #e2a63f;
+  --brass-soft: #3a2e17;
+
+  --pass:      #52c489;
+  --active:    #56a6ee;
+  --review:    #e2a63f;
+  --sent:      #ef6f63;
+  --queued:    #6d7b93;
+
+  --ours:      #e2a63f;
+  --theirs:    #8ea0bd;
+
+  --shadow: 0 1px 0 rgba(0,0,0,.5), 0 14px 38px rgba(0,0,0,.45);
+}
+
+*{ box-sizing:border-box; }
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:15px;
+  line-height:1.6;
+  padding:clamp(28px,5vw,56px) clamp(16px,4vw,40px) 96px;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{ max-width:1080px; margin:0 auto; display:flex; flex-direction:column; gap:40px; }
+
+/* ── masthead ─────────────────────────────────────────────── */
+.head{ display:flex; flex-direction:column; gap:14px; }
+.eyebrow{
+  font-family:var(--mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--brass); font-weight:600;
+  display:flex; align-items:center; gap:10px;
+}
+.eyebrow::after{ content:""; flex:1; height:1px; background:var(--line); }
+h1{
+  margin:0; font-size:clamp(30px,5.4vw,52px); font-weight:800; letter-spacing:-.035em;
+  line-height:1.02; text-wrap:balance;
+}
+.lede{ margin:0; color:var(--ink-2); max-width:66ch; }
+
+.railwrap{ display:flex; flex-direction:column; gap:8px; margin-top:6px; }
+.rail{
+  height:10px; border-radius:2px; background:var(--line-soft);
+  border:1px solid var(--line); overflow:hidden; position:relative;
+}
+.rail i{
+  display:block; height:100%;
+  background:repeating-linear-gradient(115deg, var(--brass) 0 9px, color-mix(in srgb, var(--brass) 72%, transparent) 9px 18px);
+  transition:width .6s cubic-bezier(.16,1,.3,1);
+}
+.railmeta{
+  display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+  font-family:var(--mono); font-size:12px; color:var(--ink-3);
+}
+.railmeta b{ color:var(--ink); font-weight:600; }
+
+/* ── stat strip ───────────────────────────────────────────── */
+.stats{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(122px,1fr));
+  border:1px solid var(--line); border-radius:4px; background:var(--surface);
+  box-shadow:var(--shadow); overflow:hidden;
+}
+.stat{ padding:14px 16px; border-right:1px solid var(--line-soft); }
+.stat:last-child{ border-right:none; }
+.stat .n{
+  font-family:var(--mono); font-size:25px; font-weight:600; letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums; line-height:1.1;
+}
+.stat .l{
+  font-size:10.5px; letter-spacing:.15em; text-transform:uppercase;
+  color:var(--ink-3); margin-top:3px; font-weight:600;
+}
+
+/* ── sections ─────────────────────────────────────────────── */
+section{ display:flex; flex-direction:column; gap:4px; }
+h2{
+  margin:0; font-size:13px; font-weight:700; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--ink);
+  display:flex; align-items:center; gap:12px;
+}
+h2::after{ content:""; flex:1; height:1px; background:var(--line); }
+.note{ margin:0 0 8px; color:var(--ink-3); font-size:13.5px; }
+
+/* ── the bout record ──────────────────────────────────────── */
+.scroll{
+  overflow-x:auto; border:1px solid var(--line); border-radius:4px;
+  background:var(--surface); box-shadow:var(--shadow);
+}
+table{ width:100%; border-collapse:collapse; }
+th{
+  font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; font-weight:700;
+  color:var(--ink-3); text-align:left; padding:11px 14px; white-space:nowrap;
+  border-bottom:1px solid var(--line); background:var(--surface-2);
+}
+td{ padding:12px 14px; border-bottom:1px solid var(--line-soft); vertical-align:top; }
+tr:last-child td{ border-bottom:none; }
+th.num, td.num{ text-align:right; }
+
+/* status is carried by a left stripe as well as the word, so the
+   table reads at a glance without parsing every label */
+td.piece{
+  font-weight:650; white-space:nowrap; position:relative; padding-left:22px;
+}
+td.piece::before{
+  content:""; position:absolute; left:0; top:0; bottom:0; width:4px;
+  background:var(--stripe,var(--queued));
+}
+.st{ font-size:11px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; white-space:nowrap; color:var(--stripe,var(--queued)); }
+.rounds{ font-family:var(--mono); font-variant-numeric:tabular-nums; color:var(--ink-2); }
+
+/* verdict: a two-sided bar, so who is ahead is a shape not a sentence */
+.verdict{ min-width:180px; }
+.vbar{ display:flex; height:7px; border-radius:2px; overflow:hidden; background:var(--line-soft); margin-bottom:5px; }
+.vbar span{ display:block; height:100%; }
+.vbar .a{ background:var(--ours); }
+.vbar .b{ background:var(--theirs); opacity:.5; }
+.vlab{ font-family:var(--mono); font-size:11.5px; color:var(--ink-3); letter-spacing:.02em; }
+.vlab b{ font-weight:600; }
+.vlab.ours b{ color:var(--ours); }
+.vlab.theirs b{ color:var(--sent); }
+.gap{ color:var(--ink-2); font-size:13.5px; max-width:40ch; }
+.gap.none{ color:var(--ink-3); }
+
+/* ── ledger ───────────────────────────────────────────────── */
+.log{
+  border:1px solid var(--line); border-radius:4px; background:var(--surface);
+  box-shadow:var(--shadow); overflow:hidden;
+}
+.log div{
+  display:flex; gap:16px; padding:10px 16px; border-bottom:1px solid var(--line-soft);
+  font-size:14px; align-items:baseline;
+}
+.log div:last-child{ border-bottom:none; }
+.log .w{
+  font-family:var(--mono); font-size:11px; color:var(--brass); font-weight:600;
+  letter-spacing:.08em; flex:0 0 46px; text-transform:uppercase;
+}
+.log .m{ color:var(--ink-2); }
+.log .m b{ color:var(--ink); font-weight:600; }
+
+footer{
+  border-top:1px solid var(--line); padding-top:18px; color:var(--ink-3); font-size:13px;
+  display:flex; flex-direction:column; gap:6px;
+}
+code{
+  font-family:var(--mono); font-size:.88em; background:var(--surface-2);
+  border:1px solid var(--line-soft); border-radius:3px; padding:1px 5px; color:var(--ink-2);
+}
+a{ color:var(--brass); }
+@media (prefers-reduced-motion: reduce){ *{ transition:none !important; animation:none !important; } }
+</style>
+
+<div class="wrap">
+
+  <header class="head">
+    <div class="eyebrow" id="eyebrow">Wave 0 · Foundation</div>
+    <h1>Grand Line Arena</h1>
+    <p class="lede">A tactical turn-based PvP fighter battler in the Pokémon lineage, built in Three.js.
+      Every piece below is built by its own agent, then judged by a fresh critic that drives the actual
+      running build — never the builder's write-up — and compares it blind against the real Pokémon games.
+      A piece that loses gets sent back with its single biggest gap named.</p>
+    <div class="railwrap">
+      <div class="rail"><i id="rail" style="width:6%"></i></div>
+      <div class="railmeta"><span id="railnote">—</span><span><b id="railpct">6%</b> complete · updated <b id="ts">—</b></span></div>
+    </div>
+  </header>
+
+  <div class="stats" id="stats"></div>
+
+  <section>
+    <h2>Bout record</h2>
+    <p class="note">Rounds are build-and-critique cycles. A piece passes only when the critic picks it over Pokémon blind.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr>
+          <th>Piece</th><th>Status</th><th class="num">Rounds</th><th>Blind verdict</th><th>Biggest gap remaining</th>
+        </tr></thead>
+        <tbody id="pieces"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Ledger</h2>
+    <div class="log" id="log"></div>
+  </section>
+
+  <footer>
+    <div>Run it: <code>npm run serve</code> → <code>localhost:8080</code>. Probe the running build: <code>npm run probe</code>.</div>
+    <div>A non-commercial fan tribute. All characters belong to their respective creators; every model and effect in the build is generated procedurally from code.</div>
+  </footer>
+</div>
+
+<script>
+const DATA = {
+  wave: "Wave 5 · two scores moved",
+  updated: "10 Aug 2026",
+  percent: 74,
+  note: "Both re-judged and both moved: depth 5\u21926, audio 4\u21925. Switching still does not pay.",
+  stats: [
+    { n: "2/20", l: "critics run" },
+    { n: "5/10", l: "battle feel" },
+    { n: "6/10", l: "tactical depth" },
+    { n: "32",   l: "fighters" },
+    { n: "71/71", l: "abilities live" },
+    { n: "5/10", l: "audio" }
+  ],
+  pieces: [
+    ["The battle, as experienced", "review", 3, 5, 8, "Both critic findings fixed: the turn starts on commit, the camera is home when you choose"],
+    ["The game underneath",        "sent",   5, 6, 9, "Walls are real now, but the bench averages 44.6% incoming against the active\u2019s 28.1%"],
+    ["Battle engine & rules",      "review", 2, 0, 0, "Critic: 666/666 advertised move properties fire; formula faithful; determinism hole closed"],
+    ["Type chart & balance",       "review", 2, 0, 0, "Critic: healthy \u2014 offence +1 to \u22123, defence +6 to \u22124, no dominant typing"],
+    ["Status, weather & field",    "review", 2, 0, 0, "Chip damage is decorative: 95.4% of 12,999 KOs were direct, hazards caused 2"],
+    ["Move design",                "review", 2, 0, 0, "302 moves, full pivot / pursuit / perish families; 23 signatures still unreachable"],
+    ["Roster & characters",        "review", 3, 0, 0, "Four real walls now; bulk/offense spread 2.1\u00d7 \u2192 3.2\u00d7, against Pok\u00e9mon's 6.1\u00d7"],
+    ["Abilities",                  "review", 3, 0, 0, "All 71 now on a fighter (was 45); defaultAbility reached only 2 of 3 slots"],
+    ["Items & bag",                "review", 3, 0, 0, "Held items in default sets: 12 \u2192 28 of 38; weather stones make weather real"],
+    ["Opponent AI",                "review", 3, 0, 0, "Ladder monotonic; pivots and pursuit now priced; switching scored against staying in"],
+    ["Arena & lighting",           "review", 2, 0, 0, "Three of six floors were failing to compile \u2014 fixed"],
+    ["Character models",           "review", 1, 0, 0, "Praised: outlined low-poly fighters read well at a neutral two-shot"],
+    ["Move VFX",                   "review", 2, 0, 0, "Critic dismissed 'oversized' \u2014 it was the camera, not the effects"],
+    ["Camera direction",           "review", 4, 0, 0, "Prompts on the resting shot: 1 of 8 \u2192 8 of 8, no fighter offscreen"],
+    ["Battle HUD & menus",         "review", 2, 0, 0, "Move cards called better than any Pok\u00e9mon game \u2014 power, accuracy, PP, \u00d72, damage forecast"],
+    ["Audio",                      "sent",   2, 5, 9, "The level fix hit the stinger layer; the sound of a hit landing is still 5\u20139 dB under the music"],
+    ["Game feel & pacing",         "review", 3, 0, 0, "Reading floor added; \u00bd\u00d7 speed added; being re-judged now"],
+    ["Team builder & dex",         "review", 2, 0, 0, "Dex excellent; builder now offers each fighter's full 20\u201325 move learnset"],
+    ["Modes & progression",        "review", 2, 0, 0, "Tournament, gauntlet, daily and tutorial now routed from the title"],
+    ["PvP: hot-seat & link",       "review", 2, 0, 0, "Determinism hole closed, so lockstep link battle is sound again"]
+  ],
+  log: [
+    ["W0", "Pure deterministic sim, event-stream contract, probe harness driving the real build."],
+    ["W0", "Serverless <b>link battle</b>: only choices cross the wire, so two friends need no server."],
+    ["W1", "Twelve builders, all killed by the spend limit. Salvaged a crash that stopped every fighter spawning."],
+    ["W1", "Roster to 32, measured over 1400 battles; found a broken type chart and a fighter with no attacking moves."],
+    ["W2", "Four builders, all killed \u2014 two mid-write. Finished <code>scene.js</code> and <code>vfx.js</code> by hand; the game had stopped booting."],
+    ["W3", "<b>First two critics ran.</b> Both compared blind against Pok\u00e9mon. Both picked Pok\u00e9mon."],
+    ["W3", "Feel: <b>5/10 vs 8/10</b>. The camera abandons the fight after turn one \u2014 measured 21.7% of frame on turn 0, then 250\u00d7801%."],
+    ["W3", "Depth: <b>6/10 vs 9/10</b>. The engine is honest \u2014 <b>666/666 advertised move properties fire</b>, 71/71 abilities and 51/51 items work \u2014 but 60% of the moves reach nobody."],
+    ["W3", "The feel critic <b>dismissed</b> my own suspicion that VFX were oversized: every overflowing frame was a camera problem. Worth the protocol."],
+    ["W3", "Fixed: a <code>vec2</code> swizzle was failing to compile three of six arena floors."],
+    ["W3", "Fixed: a mutable module-level Set made the same seed produce different battles depending on process history \u2014 <b>replays and netplay were quietly broken</b>."],
+    ["W3", "Fixed: every single-player win ended on \"You wins!\"."],
+    ["W3", "Fixed: message lines averaged 0.40s on screen. Reading floor added, lines weighted by importance, \u00bd\u00d7 speed added."],
+    ["W4", "Camera rebuilt over 19 commits; every fighter now given a full 20\u201325 move learnset, library to 302."],
+    ["W4", "AI: pivots and pursuit are priced, and switching is finally scored <i>against staying in</i> rather than against nothing."],
+    ["W4", "<b>The finding that matters.</b> I went in to make the AI switch more and came out convinced it is right not to."],
+    ["W4", "The median best move takes <b>66% of its target's health</b> \u2014 1.5 hits to a KO, where Pok\u00e9mon runs 2\u20133. A quarter of all matchups are one-shots."],
+    ["W4", "Cause is the roster, not the formula: bulk/offense spans <b>0.63\u20131.31</b> against Pok\u00e9mon OU's 0.31\u20131.90. <b>Nothing here is a wall.</b>"],
+    ["W4", "So switching, status, hazards, screens, items and PP are all investments with no time to pay back. Sent to the roster with numbers."],
+    ["W4", "<b>Depth critic: 5/10 against Black 2.</b> Its instrument beat mine \u2014 handicap the AI, play it against itself: banning switching cost <b>1.0pp</b>, banning every status move <b>2.2pp</b>, clicking the biggest number <b>10.1pp</b>."],
+    ["W4", "It corrected me too. I blamed base stats; the binding cause was the defensive move economy \u2014 <b>0 of 32 sets carried a heal or a screen</b>."],
+    ["W4", "Recovery for the fighters whose bulk can cash it, Protect for all 32, and five fighters given real wall stat lines at unchanged BST."],
+    ["W4", "Then the thing never done at all: every set shipped with <b>zero EVs</b> while offensive base stats were tuned like invested ones. Pok\u00e9mon spends 508."],
+    ["W4", "Result: <b>1.51 \u2192 2.13 hits to a KO</b>, one-shots 24.5% \u2192 12.3%, games 9.1 \u2192 14.9 turns, first-hit KOs 38.7% \u2192 26.1%."],
+    ["W4", "On the critic's own ablation: status moves went from <b>2.2pp to 9.4pp</b> \u2014 noise to the second-biggest lever in the game. Switching is still weak at 2.4pp."],
+    ["W4", "Both critics and a builder were killed by the spend limit mid-run; the roster work above I did by hand."],
+    ["W4", "Reachability pass: <b>26 abilities were on no fighter at all</b> and 26 of 38 held items were held by nobody. All 71 abilities now have a home."],
+    ["W4", "Weather went from firing 0.3 times per 100 turns to sun, rain, sandstorm and blizzard all appearing in ordinary play."],
+    ["W4", "Checked the obvious way the roster pass could have failed: lead changes hands <b>1.75 times a game against 1.13</b> without recovery. Deeper, not just longer."],
+    ["W4", "<b>And the next gap, found by measuring instead of assuming.</b> Between two human-plausible strategies the whole tactical layer is worth about <b>4 points</b>."],
+    ["W4", "A novice who only clicks potions edges out a club player who switches and statuses. The gradient is steep at the top and flat where a beginner stands."],
+    ["W4", "Both critic re-runs were cut short before a verdict. Their harnesses are committed so the next attempt starts from them."],
+    ["W4", "<b>Feel critic: 5/10 against Sword/Shield.</b> Its gap was a real bug \u2014 choosing a move did not start the turn."],
+    ["W4", "The answered \"What will X do?\" line held the whole action queue behind it: <b>28.15 game-seconds</b> with 11 events backed up, and clicking the arena did not release it."],
+    ["W4", "Fixed. A question stops being a question once answered; the turn now starts <b>0.05s</b> after you commit. The link screen had the same bug by another route."],
+    ["W4", "Its second finding: at the command prompt the camera sat in the previous action\u2019s framing. Reproduced: only <b>1 of 8 prompts</b> was on the resting shot."],
+    ["W4", "Instrumenting changed the diagnosis \u2014 the camera was not stuck, it was <b>1.4s late</b>, and the menu was up for all of it. Now <b>8 of 8</b>, no fighter offscreen."],
+    ["W4", "It rated our impact feel and tempo <i>above</i> Sword/Shield: hitstop, chroma split, 0.45\u00d7 slow-mo, damage numbers, and ~5s per turn against ~20s."],
+    ["W5", "<b>Depth re-judged: still 5/10 against Black 2.</b> Status went from worth 2.2pp to 5.7pp and the skill ceiling nearly doubled \u2014 but switching did not move one point."],
+    ["W5", "It built the measurement nobody had: 120 real positions, every legal action rolled out 40 times under common random numbers. <b>51.7% of turns hold a decision that beats the dice.</b>"],
+    ["W5", "A switch is the best action on <b>32.3%</b> of those turns. Yet our ace AI carries 12.8pp of regret per turn and finds the best action <i>less often than clicking the biggest number does</i>."],
+    ["W5", "And the first step toward playing well pays nothing: learning to switch is worth <b>+0.7pp</b>, learning to status <b>+0.8pp</b>, both inside a \u00b13.1pp error bar."],
+    ["W5", "<b>It corrected my own fix.</b> I raised bulk to a roster median of 2\u20133 hits and hit the target. The target was wrong \u2014 Pok\u00e9mon\u2019s depth is in the <i>spread</i>, not the level."],
+    ["W5", "Sweepers should die in one hit and walls survive ten. Ours all sit at two to three, so a bench answer exists on only <b>15.4%</b> of turns and switching stays inert."],
+    ["W5", "Cheapest fix it found is a UI one: the move card is better than any Pok\u00e9mon game, the switch panel is a name and an HP bar. We instrument the option worth 1.7pp and leave the one that matters blank."],
+    ["W5", "Move audit was crying wolf: 121 problems, 80 of them a stale regex in the tool. Now 41 real ones \u2014 including <b>five moves that play no sound at all</b>."]
+  ]
+};
+
+const LABEL = { pass:"Passed", active:"Building", review:"In review", sent:"Sent back", queued:"Queued" };
+const COLOR = { pass:"var(--pass)", active:"var(--active)", review:"var(--review)", sent:"var(--sent)", queued:"var(--queued)" };
+
+document.getElementById('eyebrow').textContent = DATA.wave;
+document.getElementById('ts').textContent = DATA.updated;
+document.getElementById('rail').style.width = DATA.percent + '%';
+document.getElementById('railpct').textContent = DATA.percent + '%';
+document.getElementById('railnote').textContent = DATA.note;
+
+document.getElementById('stats').innerHTML = DATA.stats
+  .map(s => `<div class="stat"><div class="n">${s.n}</div><div class="l">${s.l}</div></div>`).join('');
+
+document.getElementById('pieces').innerHTML = DATA.pieces.map(([name, st, rounds, ours, theirs, gap]) => {
+  const col = COLOR[st] || COLOR.queued;
+  let verdict = '<span class="vlab">not yet judged</span>';
+  if (ours || theirs) {
+    const total = Math.max(1, ours + theirs);
+    const win = ours > theirs, tie = ours === theirs;
+    verdict =
+      `<div class="vbar"><span class="a" style="width:${ours / total * 100}%"></span><span class="b" style="width:${theirs / total * 100}%"></span></div>` +
+      `<div class="vlab ${win ? 'ours' : tie ? '' : 'theirs'}"><b>${win ? 'OURS' : tie ? 'TIED' : 'POKÉMON'}</b> ${ours}–${theirs}</div>`;
+  }
+  return `<tr>
+    <td class="piece" style="--stripe:${col}">${name}</td>
+    <td><span class="st" style="--stripe:${col}">${LABEL[st] || 'Queued'}</span></td>
+    <td class="num rounds">${rounds || '·'}</td>
+    <td class="verdict">${verdict}</td>
+    <td class="gap ${gap ? '' : 'none'}">${gap || '·'}</td>
+  </tr>`;
+}).join('');
+
+document.getElementById('log').innerHTML = DATA.log.slice().reverse()
+  .map(([w, m]) => `<div><span class="w">${w}</span><span class="m">${m}</span></div>`).join('');
+</script>

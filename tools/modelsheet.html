@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Model Sheet Harness</title>
+<style>html,body{margin:0;background:#0b0d14;overflow:hidden}canvas{display:block}</style>
+<script type="importmap">
+{ "imports": {
+  "three": "../vendor/three/three.module.js",
+  "three/addons/": "../vendor/three/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<script type="module">
+  // Standalone harness for tools/modelsheet.mjs. Imports ONLY three, the
+  // fighter model builder and the roster data, so a half-saved file in some
+  // other module can never break the model review loop.
+  const out = { err: null };
+  try {
+    const THREE = await import('three');
+    const { buildFighter } = await import('../src/render/fighterModel.js');
+    let FIGHTERS = [];
+    try { FIGHTERS = (await import('../src/data/fighters.js')).FIGHTERS; }
+    catch (e) { out.err = 'fighters.js: ' + e.message; }
+    let getArena = () => ({ sky:['#6b7fa8','#1a1f33'], ground:'#8fa3b8', accent:'#4a8fd0',
+      fog:{color:'#7a8aa0',density:0.018}, sun:{color:'#dce8ff',intensity:1.9,position:[-6,12,8]},
+      ambient:{color:'#3a4a6b',intensity:0.6} });
+    try { getArena = (await import('../src/data/arenas.js')).getArena; } catch (e) { /* default */ }
+    window.MS = { THREE, buildFighter, FIGHTERS, getArena, err: out.err };
+  } catch (e) {
+    window.MS = { fatal: (e && e.stack) || String(e) };
+  }
+  window.MS_READY = true;
+</script>
+</body>
+</html>
