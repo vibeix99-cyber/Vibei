@@ -1,0 +1,13 @@
+
+Running 8 tests using 1 worker
+
+  ✓  1 [chromium] › tests/chai3d.spec.ts:70:3 › 3D Chai: the model replaces the procedural Chai › high tier: loads, validates and swaps in place, awake = eyes_open, on the cushion (23.4s)
+  ✓  2 [chromium] › tests/chai3d.spec.ts:83:3 › 3D Chai: fallbacks keep the procedural Chai › 404: procedural Chai, no error, the room is live (23.4s)
+  ✓  3 [chromium] › tests/chai3d.spec.ts:96:3 › 3D Chai: fallbacks keep the procedural Chai › slow network: the first frame is the procedural Chai; after 8 s the load gives up and it stays (28.3s)
+  ✓  4 [chromium] › tests/chai3d.spec.ts:112:3 › 3D Chai: fallbacks keep the procedural Chai › a file that fails validation (the r0 model: no eyes_sip) keeps the procedural Chai (23.8s)
+  ✓  5 [chromium] › tests/chai3d.spec.ts:125:3 › 3D Chai: fallbacks keep the procedural Chai › the loader chunk itself fails to load: procedural Chai, no error (24.6s)
+  ✓  6 [chromium] › tests/chai3d.spec.ts:138:3 › 3D Chai: fallbacks keep the procedural Chai › 3D off: the static drawing, no engine, no model request (14.4s)
+  ✓  7 [chromium] › tests/chai3d.spec.ts:147:3 › 3D Chai: fallbacks keep the procedural Chai › low tier: the procedural Chai, no model request (19.6s)
+  ✓  8 [chromium] › tests/chai3d.spec.ts:157:3 › 3D Chai: fallbacks keep the procedural Chai › WebGL context lost and restored: the engine is rebuilt with the model from memory, no second request (35.9s)
+
+  8 passed (3.3m)

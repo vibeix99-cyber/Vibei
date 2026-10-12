@@ -1,0 +1,1095 @@
+{
+ "vp": "390x844@3",
+ "at": "2026-10-12T17:41:52.322Z",
+ "renderer": "SwiftShader (CPU)",
+ "results": [
+  {
+   "run": "5430:procedural:low",
+   "readyMs": 9828,
+   "finalMs": 9828,
+   "chaiKind": "procedural (control: no field)",
+   "quality": "low",
+   "canvas": [
+    442,
+    395
+   ],
+   "frame": {
+    "median": 246,
+    "mean": 260.38,
+    "p90": 365,
+    "min": 176,
+    "max": 411
+   },
+   "render": {
+    "calls": 111,
+    "triangles": 76752
+   },
+   "memory": {
+    "geometries": 114,
+    "textures": 8,
+    "programs": 19
+   },
+   "status": null,
+   "heapMB": 10.64,
+   "longTasks": {
+    "count": 8,
+    "maxMs": 2800,
+    "totalOver50": 3785,
+    "list": [
+     [
+      254,
+      81
+     ],
+     [
+      336,
+      75
+     ],
+     [
+      560,
+      72
+     ],
+     [
+      935,
+      303
+     ],
+     [
+      2789,
+      2800
+     ],
+     [
+      5590,
+      55
+     ],
+     [
+      8628,
+      556
+     ],
+     [
+      9334,
+      243
+     ]
+    ]
+   }
+  },
+  {
+   "run": "5433:procedural:low",
+   "readyMs": 10670,
+   "finalMs": 10670,
+   "chaiKind": "procedural",
+   "quality": "low",
+   "canvas": [
+    442,
+    395
+   ],
+   "frame": {
+    "median": 251,
+    "mean": 257.1,
+    "p90": 334,
+    "min": 178,
+    "max": 477
+   },
+   "render": {
+    "calls": 111,
+    "triangles": 76752
+   },
+   "memory": {
+    "geometries": 114,
+    "textures": 8,
+    "programs": 19
+   },
+   "status": {
+    "state": "idle"
+   },
+   "heapMB": 10.75,
+   "longTasks": {
+    "count": 4,
+    "maxMs": 617,
+    "totalOver50": 1241,
+    "list": [
+     [
+      94,
+      75
+     ],
+     [
+      2022,
+      617
+     ],
+     [
+      5380,
+      491
+     ],
+     [
+      9889,
+      258
+     ]
+    ]
+   }
+  },
+  {
+   "run": "5433:model:low",
+   "readyMs": 6493,
+   "finalMs": 6527,
+   "chaiKind": "model",
+   "quality": "low",
+   "canvas": [
+    442,
+    395
+   ],
+   "frame": {
+    "median": 250,
+    "mean": 251.4,
+    "p90": 340,
+    "min": 167,
+    "max": 429
+   },
+   "render": {
+    "calls": 108,
+    "triangles": 74910
+   },
+   "memory": {
+    "geometries": 111,
+    "textures": 10,
+    "programs": 23
+   },
+   "status": {
+    "state": "ready",
+    "ms": 18,
+    "bytes": 45572
+   },
+   "heapMB": 11.23,
+   "longTasks": {
+    "count": 8,
+    "maxMs": 892,
+    "totalOver50": 1405,
+    "list": [
+     [
+      200,
+      67
+     ],
+     [
+      269,
+      71
+     ],
+     [
+      588,
+      112
+     ],
+     [
+      784,
+      55
+     ],
+     [
+      1067,
+      68
+     ],
+     [
+      2282,
+      892
+     ],
+     [
+      5634,
+      321
+     ],
+     [
+      6226,
+      219
+     ]
+    ]
+   }
+  },
+  {
+   "run": "5430:procedural:high",
+   "readyMs": 7916,
+   "finalMs": 7916,
+   "chaiKind": "procedural (control: no field)",
+   "quality": "high",
+   "canvas": [
+    531,
+    474
+   ],
+   "frame": {
+    "median": 481,
+    "mean": 497.57,
+    "p90": 636,
+    "min": 314,
+    "max": 710
+   },
+   "render": {
+    "calls": 161,
+    "triangles": 129040
+   },
+   "memory": {
+    "geometries": 114,
+    "textures": 10,
+    "programs": 19
+   },
+   "status": null,
+   "heapMB": 10.91,
+   "longTasks": {
+    "count": 5,
+    "maxMs": 1072,
+    "totalOver50": 1829,
+    "list": [
+     [
+      135,
+      78
+     ],
+     [
+      215,
+      51
+     ],
+     [
+      1928,
+      1072
+     ],
+     [
+      6135,
+      552
+     ],
+     [
+      7007,
+      326
+     ]
+    ]
+   }
+  },
+  {
+   "run": "5433:procedural:high",
+   "readyMs": 6992,
+   "finalMs": 6992,
+   "chaiKind": "procedural",
+   "quality": "high",
+   "canvas": [
+    531,
+    474
+   ],
+   "frame": {
+    "median": 487,
+    "mean": 487.07,
+    "p90": 588,
+    "min": 361,
+    "max": 648
+   },
+   "render": {
+    "calls": 161,
+    "triangles": 129040
+   },
+   "memory": {
+    "geometries": 114,
+    "textures": 10,
+    "programs": 19
+   },
+   "status": {
+    "state": "idle"
+   },
+   "heapMB": 11.05,
+   "longTasks": {
+    "count": 5,
+    "maxMs": 756,
+    "totalOver50": 1332,
+    "list": [
+     [
+      136,
+      71
+     ],
+     [
+      814,
+      101
+     ],
+     [
+      1973,
+      756
+     ],
+     [
+      5434,
+      396
+     ],
+     [
+      6195,
+      258
+     ]
+    ]
+   }
+  },
+  {
+   "run": "5433:model:high",
+   "readyMs": 5941,
+   "finalMs": 5961,
+   "chaiKind": "model",
+   "quality": "high",
+   "canvas": [
+    531,
+    474
+   ],
+   "frame": {
+    "median": 485,
+    "mean": 511.83,
+    "p90": 705,
+    "min": 359,
+    "max": 837
+   },
+   "render": {
+    "calls": 155,
+    "triangles": 125748
+   },
+   "memory": {
+    "geometries": 111,
+    "textures": 12,
+    "programs": 25
+   },
+   "status": {
+    "state": "ready",
+    "ms": 19,
+    "bytes": 45572
+   },
+   "heapMB": 11.56,
+   "longTasks": {
+    "count": 4,
+    "maxMs": 506,
+    "totalOver50": 839,
+    "list": [
+     [
+      187,
+      72
+     ],
+     [
+      303,
+      103
+     ],
+     [
+      2069,
+      358
+     ],
+     [
+      4818,
+      506
+     ]
+    ]
+   }
+  },
+  {
+   "run": "5430:procedural:low",
+   "readyMs": 6227,
+   "finalMs": 6227,
+   "chaiKind": "procedural (control: no field)",
+   "quality": "low",
+   "canvas": [
+    442,
+    395
+   ],
+   "frame": {
+    "median": 257,
+    "mean": 259.33,
+    "p90": 317,
+    "min": 176,
+    "max": 429
+   },
+   "render": {
+    "calls": 111,
+    "triangles": 76752
+   },
+   "memory": {
+    "geometries": 114,
+    "textures": 8,
+    "programs": 19
+   },
+   "status": null,
+   "heapMB": 10.7,
+   "longTasks": {
+    "count": 7,
+    "maxMs": 654,
+    "totalOver50": 1145,
+    "list": [
+     [
+      145,
+      83
+     ],
+     [
+      232,
+      52
+     ],
+     [
+      555,
+      98
+     ],
+     [
+      806,
+      78
+     ],
+     [
+      1989,
+      654
+     ],
+     [
+      5291,
+      385
+     ],
+     [
+      6020,
+      145
+     ]
+    ]
+   }
+  },
+  {
+   "run": "5433:procedural:low",
+   "readyMs": 6323,
+   "finalMs": 6323,
+   "chaiKind": "procedural",
+   "quality": "low",
+   "canvas": [
+    442,
+    395
+   ],
+   "frame": {
+    "median": 240,
+    "mean": 260.82,
+    "p90": 365,
+    "min": 175,
+    "max": 473
+   },
+   "render": {
+    "calls": 111,
+    "triangles": 76752
+   },
+   "memory": {
+    "geometries": 114,
+    "textures": 8,
+    "programs": 19
+   },
+   "status": {
+    "state": "idle"
+   },
+   "heapMB": 10.75,
+   "longTasks": {
+    "count": 5,
+    "maxMs": 1004,
+    "totalOver50": 1394,
+    "list": [
+     [
+      216,
+      85
+     ],
+     [
+      1356,
+      78
+     ],
+     [
+      2206,
+      1004
+     ],
+     [
+      5478,
+      283
+     ],
+     [
+      6094,
+      194
+     ]
+    ]
+   }
+  },
+  {
+   "run": "5433:model:low",
+   "readyMs": 5223,
+   "finalMs": 5251,
+   "chaiKind": "model",
+   "quality": "low",
+   "canvas": [
+    442,
+    395
+   ],
+   "frame": {
+    "median": 233,
+    "mean": 245.5,
+    "p90": 346,
+    "min": 174,
+    "max": 380
+   },
+   "render": {
+    "calls": 108,
+    "triangles": 74910
+   },
+   "memory": {
+    "geometries": 111,
+    "textures": 10,
+    "programs": 23
+   },
+   "status": {
+    "state": "ready",
+    "ms": 26,
+    "bytes": 45572
+   },
+   "heapMB": 11.21,
+   "longTasks": {
+    "count": 4,
+    "maxMs": 799,
+    "totalOver50": 906,
+    "list": [
+     [
+      180,
+      83
+     ],
+     [
+      1332,
+      94
+     ],
+     [
+      2143,
+      799
+     ],
+     [
+      4993,
+      130
+     ]
+    ]
+   }
+  },
+  {
+   "run": "5430:procedural:high",
+   "readyMs": 6860,
+   "finalMs": 6860,
+   "chaiKind": "procedural (control: no field)",
+   "quality": "high",
+   "canvas": [
+    531,
+    474
+   ],
+   "frame": {
+    "median": 486,
+    "mean": 499.5,
+    "p90": 630,
+    "min": 334,
+    "max": 698
+   },
+   "render": {
+    "calls": 161,
+    "triangles": 129040
+   },
+   "memory": {
+    "geometries": 114,
+    "textures": 10,
+    "programs": 19
+   },
+   "status": null,
+   "heapMB": 10.99,
+   "longTasks": {
+    "count": 7,
+    "maxMs": 732,
+    "totalOver50": 1348,
+    "list": [
+     [
+      207,
+      71
+     ],
+     [
+      280,
+      66
+     ],
+     [
+      412,
+      87
+     ],
+     [
+      2289,
+      732
+     ],
+     [
+      5287,
+      364
+     ],
+     [
+      5998,
+      263
+     ],
+     [
+      8697,
+      115
+     ]
+    ]
+   }
+  },
+  {
+   "run": "5433:procedural:high",
+   "readyMs": 6070,
+   "finalMs": 6070,
+   "chaiKind": "procedural",
+   "quality": "high",
+   "canvas": [
+    531,
+    474
+   ],
+   "frame": {
+    "median": 582,
+    "mean": 587.57,
+    "p90": 755,
+    "min": 389,
+    "max": 910
+   },
+   "render": {
+    "calls": 161,
+    "triangles": 129040
+   },
+   "memory": {
+    "geometries": 114,
+    "textures": 10,
+    "programs": 19
+   },
+   "status": {
+    "state": "idle"
+   },
+   "heapMB": 11.01,
+   "longTasks": {
+    "count": 5,
+    "maxMs": 575,
+    "totalOver50": 1140,
+    "list": [
+     [
+      117,
+      61
+     ],
+     [
+      1898,
+      575
+     ],
+     [
+      4572,
+      393
+     ],
+     [
+      5266,
+      256
+     ],
+     [
+      7929,
+      105
+     ]
+    ]
+   }
+  },
+  {
+   "run": "5433:model:high",
+   "readyMs": 4493,
+   "finalMs": 4535,
+   "chaiKind": "model",
+   "quality": "high",
+   "canvas": [
+    531,
+    474
+   ],
+   "frame": {
+    "median": 530,
+    "mean": 539.65,
+    "p90": 684,
+    "min": 363,
+    "max": 952
+   },
+   "render": {
+    "calls": 155,
+    "triangles": 125748
+   },
+   "memory": {
+    "geometries": 111,
+    "textures": 12,
+    "programs": 25
+   },
+   "status": {
+    "state": "ready",
+    "ms": 17,
+    "bytes": 45572
+   },
+   "heapMB": 11.61,
+   "longTasks": {
+    "count": 4,
+    "maxMs": 660,
+    "totalOver50": 1209,
+    "list": [
+     [
+      168,
+      62
+     ],
+     [
+      933,
+      94
+     ],
+     [
+      2036,
+      660
+     ],
+     [
+      3370,
+      593
+     ]
+    ]
+   }
+  },
+  {
+   "run": "5430:procedural:low",
+   "readyMs": 6280,
+   "finalMs": 6280,
+   "chaiKind": "procedural (control: no field)",
+   "quality": "low",
+   "canvas": [
+    442,
+    395
+   ],
+   "frame": {
+    "median": 232,
+    "mean": 235.97,
+    "p90": 299,
+    "min": 167,
+    "max": 394
+   },
+   "render": {
+    "calls": 111,
+    "triangles": 76752
+   },
+   "memory": {
+    "geometries": 114,
+    "textures": 8,
+    "programs": 19
+   },
+   "status": null,
+   "heapMB": 10.66,
+   "longTasks": {
+    "count": 4,
+    "maxMs": 794,
+    "totalOver50": 871,
+    "list": [
+     [
+      213,
+      80
+     ],
+     [
+      755,
+      69
+     ],
+     [
+      2210,
+      794
+     ],
+     [
+      6006,
+      128
+     ]
+    ]
+   }
+  },
+  {
+   "run": "5433:procedural:low",
+   "readyMs": 5213,
+   "finalMs": 5213,
+   "chaiKind": "procedural",
+   "quality": "low",
+   "canvas": [
+    442,
+    395
+   ],
+   "frame": {
+    "median": 221,
+    "mean": 225.48,
+    "p90": 280,
+    "min": 179,
+    "max": 311
+   },
+   "render": {
+    "calls": 111,
+    "triangles": 76752
+   },
+   "memory": {
+    "geometries": 114,
+    "textures": 8,
+    "programs": 19
+   },
+   "status": {
+    "state": "idle"
+   },
+   "heapMB": 10.73,
+   "longTasks": {
+    "count": 5,
+    "maxMs": 709,
+    "totalOver50": 1048,
+    "list": [
+     [
+      90,
+      71
+     ],
+     [
+      1949,
+      709
+     ],
+     [
+      4364,
+      317
+     ],
+     [
+      5003,
+      134
+     ],
+     [
+      5238,
+      67
+     ]
+    ]
+   }
+  },
+  {
+   "run": "5433:model:low",
+   "readyMs": 4732,
+   "finalMs": 4750,
+   "chaiKind": "model",
+   "quality": "low",
+   "canvas": [
+    442,
+    395
+   ],
+   "frame": {
+    "median": 212,
+    "mean": 226.05,
+    "p90": 304,
+    "min": 175,
+    "max": 366
+   },
+   "render": {
+    "calls": 108,
+    "triangles": 74910
+   },
+   "memory": {
+    "geometries": 111,
+    "textures": 10,
+    "programs": 23
+   },
+   "status": {
+    "state": "ready",
+    "ms": 21,
+    "bytes": 45572
+   },
+   "heapMB": 11.21,
+   "longTasks": {
+    "count": 5,
+    "maxMs": 618,
+    "totalOver50": 677,
+    "list": [
+     [
+      223,
+      73
+     ],
+     [
+      298,
+      70
+     ],
+     [
+      2201,
+      618
+     ],
+     [
+      4438,
+      108
+     ],
+     [
+      5121,
+      58
+     ]
+    ]
+   }
+  },
+  {
+   "run": "5430:procedural:high",
+   "readyMs": 6491,
+   "finalMs": 6491,
+   "chaiKind": "procedural (control: no field)",
+   "quality": "high",
+   "canvas": [
+    531,
+    474
+   ],
+   "frame": {
+    "median": 548,
+    "mean": 568.75,
+    "p90": 733,
+    "min": 375,
+    "max": 892
+   },
+   "render": {
+    "calls": 161,
+    "triangles": 129040
+   },
+   "memory": {
+    "geometries": 114,
+    "textures": 10,
+    "programs": 19
+   },
+   "status": null,
+   "heapMB": 10.94,
+   "longTasks": {
+    "count": 5,
+    "maxMs": 963,
+    "totalOver50": 1792,
+    "list": [
+     [
+      131,
+      74
+     ],
+     [
+      1935,
+      963
+     ],
+     [
+      5259,
+      447
+     ],
+     [
+      6009,
+      244
+     ],
+     [
+      8645,
+      314
+     ]
+    ]
+   }
+  },
+  {
+   "run": "5433:procedural:high",
+   "readyMs": 5871,
+   "finalMs": 5871,
+   "chaiKind": "procedural",
+   "quality": "high",
+   "canvas": [
+    531,
+    474
+   ],
+   "frame": {
+    "median": 501,
+    "mean": 522.22,
+    "p90": 628,
+    "min": 377,
+    "max": 779
+   },
+   "render": {
+    "calls": 161,
+    "triangles": 129040
+   },
+   "memory": {
+    "geometries": 114,
+    "textures": 10,
+    "programs": 19
+   },
+   "status": {
+    "state": "idle"
+   },
+   "heapMB": 11.03,
+   "longTasks": {
+    "count": 10,
+    "maxMs": 880,
+    "totalOver50": 1663,
+    "list": [
+     [
+      182,
+      137
+     ],
+     [
+      323,
+      73
+     ],
+     [
+      1055,
+      67
+     ],
+     [
+      1135,
+      66
+     ],
+     [
+      2222,
+      880
+     ],
+     [
+      4853,
+      76
+     ],
+     [
+      4930,
+      288
+     ],
+     [
+      5386,
+      401
+     ],
+     [
+      5969,
+      106
+     ],
+     [
+      6204,
+      69
+     ]
+    ]
+   }
+  },
+  {
+   "run": "5433:model:high",
+   "readyMs": 8198,
+   "finalMs": 8237,
+   "chaiKind": "model",
+   "quality": "high",
+   "canvas": [
+    531,
+    474
+   ],
+   "frame": {
+    "median": 521,
+    "mean": 532.53,
+    "p90": 655,
+    "min": 371,
+    "max": 1008
+   },
+   "render": {
+    "calls": 155,
+    "triangles": 125748
+   },
+   "memory": {
+    "geometries": 111,
+    "textures": 12,
+    "programs": 25
+   },
+   "status": {
+    "state": "ready",
+    "ms": 20,
+    "bytes": 45572
+   },
+   "heapMB": 11.61,
+   "longTasks": {
+    "count": 6,
+    "maxMs": 924,
+    "totalOver50": 1783,
+    "list": [
+     [
+      92,
+      80
+     ],
+     [
+      174,
+      53
+     ],
+     [
+      919,
+      50
+     ],
+     [
+      2065,
+      924
+     ],
+     [
+      6353,
+      423
+     ],
+     [
+      7073,
+      553
+     ]
+    ]
+   }
+  }
+ ]
+}

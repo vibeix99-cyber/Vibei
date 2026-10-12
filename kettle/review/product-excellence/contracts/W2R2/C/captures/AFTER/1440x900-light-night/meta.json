@@ -1,0 +1,132 @@
+{
+ "label": "AFTER",
+ "base": "http://127.0.0.1:5433",
+ "viewport": {
+  "w": 1440,
+  "h": 900
+ },
+ "dpr": 2,
+ "theme": "light",
+ "clock": "2026-10-11T21:40:00Z",
+ "query": "nookq=high&nooktime=night",
+ "startedAt": "2026-10-12T19:11:58.593Z",
+ "states": {
+  "10-nook-3d": {
+   "desc": "Nook, 3D (high tier), 4 s after ready",
+   "hash": "#/nook",
+   "chaiKind": "model",
+   "chai3d": {
+    "state": "ready",
+    "ms": 24,
+    "bytes": 45572
+   },
+   "stats": {
+    "calls": 157,
+    "triangles": 125845,
+    "geometries": 114,
+    "textures": 13,
+    "frameMs": 119.1896551724138,
+    "fps": 0
+   },
+   "hosts": [
+    {
+     "mode": "showcase",
+     "ready": "true",
+     "static": null
+    }
+   ]
+  },
+  "11-nook-chai-close": {
+   "desc": "Nook, the same camera direction moved in on Chai (debug camera; art review)",
+   "hash": "#/nook",
+   "chaiKind": "model",
+   "chai3d": {
+    "state": "ready",
+    "ms": 24,
+    "bytes": 45572
+   },
+   "stats": {
+    "calls": 111,
+    "triangles": 105292,
+    "geometries": 114,
+    "textures": 13,
+    "frameMs": 144.8,
+    "fps": 0
+   },
+   "hosts": [
+    {
+     "mode": "showcase",
+     "ready": "true",
+     "static": null
+    }
+   ]
+  },
+  "07-unlock-early": {
+   "desc": "Summary unlock, ~0.9 s after Done (drawing or hand-off)",
+   "hash": "#/done",
+   "chaiKind": "procedural",
+   "chai3d": {
+    "state": "ready",
+    "ms": 5,
+    "bytes": 45572
+   },
+   "stats": {
+    "calls": 0,
+    "triangles": 0,
+    "geometries": 0,
+    "textures": 0,
+    "frameMs": 0,
+    "fps": 0
+   },
+   "hosts": [
+    {
+     "mode": "window",
+     "ready": "true",
+     "static": null
+    },
+    {
+     "mode": "showcase",
+     "ready": "false",
+     "static": null
+    }
+   ]
+  },
+  "07-unlock": {
+   "desc": "Summary unlock close-up, 3.5 s after the scene was ready",
+   "hash": "#/done",
+   "chaiKind": "procedural",
+   "chai3d": {
+    "state": "ready",
+    "ms": 5,
+    "bytes": 45572
+   },
+   "stats": {
+    "calls": 95,
+    "triangles": 80603,
+    "geometries": 75,
+    "textures": 9,
+    "frameMs": 56.75,
+    "fps": 0
+   },
+   "hosts": [
+    {
+     "mode": "window",
+     "ready": "true",
+     "static": null
+    },
+    {
+     "mode": "showcase",
+     "ready": "true",
+     "static": null
+    }
+   ]
+  }
+ },
+ "errors": [],
+ "unlockTiming": {
+  "doneMs": 10,
+  "mountedAfterDoneMs": 0,
+  "readyAfterDoneMs": 23263
+ },
+ "endedAt": "2026-10-12T19:16:27.509Z"
+}
