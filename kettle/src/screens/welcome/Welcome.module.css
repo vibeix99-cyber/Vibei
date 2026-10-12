@@ -677,9 +677,14 @@
 .helloField {
   margin-bottom: 8px;
 }
-.helloBackup {
+.helloLinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 8px;
+}
+.helloLink {
   appearance: none;
-  justify-self: center;
   min-height: 44px;
   padding: 0 12px;
   border: 0;
@@ -693,7 +698,7 @@
   text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
   text-underline-offset: 3px;
 }
-.helloBackup:hover {
+.helloLink:hover {
   color: var(--ink);
 }
 .helloMsg {
