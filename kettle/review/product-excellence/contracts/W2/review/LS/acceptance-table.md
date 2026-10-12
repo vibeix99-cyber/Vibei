@@ -16,54 +16,54 @@
 | 375x667-light-t200 | routine | AFTER | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 0/0/0 | 1/1/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 49.4 ; 14 | 0+0 ; 0+0 | [(1, 0.72), (1, 0.72)] | -  | PASS |
 | 375x667-light-t200 | bigday | BEFORE | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 1/1/0 [arrival: straddle-fold:Record player is in yo] [settled: straddle-fold:Record player is in yo] | 1/1/0 ; maker: {'arrival': ['unlock-title-line0@469-502'], 'settled': ['unlock-title-line0@469-502'], 'end': []} | True, 49.6 ; 22 | 0+0 ; 0+0 | [(1, 0.56), (1, 0.56)] | [True, True, True] ['straddle-fold', 'straddle-fold', 'above'] | FAIL(cut-text-line) |
 | 375x667-light-t200 | bigday | AFTER | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 0/0/0 | 1/1/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 49.6 ; 14 | 0+0 ; 0+0 | [(1, 0.6), (1, 0.6)] | [True, True, True] ['straddle-fold', 'straddle-fold', 'above'] | PASS |
-| 390x844-dark-t100 | routine | BEFORE | no capture |||||||||| 
-| 390x844-dark-t100 | routine | AFTER | no capture |||||||||| 
-| 390x844-dark-t100 | bigday | BEFORE | no capture |||||||||| 
-| 390x844-dark-t100 | bigday | AFTER | no capture |||||||||| 
-| 390x844-dark-t200 | routine | BEFORE | no capture |||||||||| 
-| 390x844-dark-t200 | routine | AFTER | no capture |||||||||| 
-| 390x844-dark-t200 | bigday | BEFORE | no capture |||||||||| 
-| 390x844-dark-t200 | bigday | AFTER | no capture |||||||||| 
-| 390x844-light-t100 | routine | BEFORE | no capture |||||||||| 
-| 390x844-light-t100 | routine | AFTER | no capture |||||||||| 
-| 390x844-light-t100 | bigday | BEFORE | no capture |||||||||| 
-| 390x844-light-t100 | bigday | AFTER | no capture |||||||||| 
-| 390x844-light-t200 | routine | BEFORE | no capture |||||||||| 
-| 390x844-light-t200 | routine | AFTER | no capture |||||||||| 
-| 390x844-light-t200 | bigday | BEFORE | no capture |||||||||| 
-| 390x844-light-t200 | bigday | AFTER | no capture |||||||||| 
-| 844x390-dark-t100 | routine | BEFORE | no capture |||||||||| 
-| 844x390-dark-t100 | routine | AFTER | no capture |||||||||| 
-| 844x390-dark-t100 | bigday | BEFORE | no capture |||||||||| 
-| 844x390-dark-t100 | bigday | AFTER | no capture |||||||||| 
-| 844x390-dark-t200 | routine | BEFORE | no capture |||||||||| 
-| 844x390-dark-t200 | routine | AFTER | no capture |||||||||| 
-| 844x390-dark-t200 | bigday | BEFORE | no capture |||||||||| 
-| 844x390-dark-t200 | bigday | AFTER | no capture |||||||||| 
-| 844x390-light-t100 | routine | BEFORE | no capture |||||||||| 
-| 844x390-light-t100 | routine | AFTER | no capture |||||||||| 
-| 844x390-light-t100 | bigday | BEFORE | no capture |||||||||| 
-| 844x390-light-t100 | bigday | AFTER | no capture |||||||||| 
-| 844x390-light-t200 | routine | BEFORE | no capture |||||||||| 
-| 844x390-light-t200 | routine | AFTER | no capture |||||||||| 
-| 844x390-light-t200 | bigday | BEFORE | no capture |||||||||| 
-| 844x390-light-t200 | bigday | AFTER | no capture |||||||||| 
-| 1440x900-dark-t100 | routine | BEFORE | no capture |||||||||| 
-| 1440x900-dark-t100 | routine | AFTER | no capture |||||||||| 
-| 1440x900-dark-t100 | bigday | BEFORE | no capture |||||||||| 
-| 1440x900-dark-t100 | bigday | AFTER | no capture |||||||||| 
-| 1440x900-dark-t200 | routine | BEFORE | no capture |||||||||| 
-| 1440x900-dark-t200 | routine | AFTER | no capture |||||||||| 
-| 1440x900-dark-t200 | bigday | BEFORE | no capture |||||||||| 
-| 1440x900-dark-t200 | bigday | AFTER | no capture |||||||||| 
-| 1440x900-light-t100 | routine | BEFORE | no capture |||||||||| 
-| 1440x900-light-t100 | routine | AFTER | no capture |||||||||| 
-| 1440x900-light-t100 | bigday | BEFORE | no capture |||||||||| 
-| 1440x900-light-t100 | bigday | AFTER | no capture |||||||||| 
-| 1440x900-light-t200 | routine | BEFORE | no capture |||||||||| 
-| 1440x900-light-t200 | routine | AFTER | no capture |||||||||| 
-| 1440x900-light-t200 | bigday | BEFORE | no capture |||||||||| 
-| 1440x900-light-t200 | bigday | AFTER | no capture |||||||||| 
+| 390x844-dark-t100 | routine | BEFORE | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 49.3 ; 22 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | -  | PASS |
+| 390x844-dark-t100 | routine | AFTER | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 49.3 ; 14 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | -  | PASS |
+| 390x844-dark-t100 | bigday | BEFORE | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 1/1/0 [arrival: in-fade:7 days warm, your best] [settled: in-fade:7 days warm, your best] | 1/1/0 ; maker: {'arrival': ['reward2@681-719'], 'settled': ['reward2@681-719'], 'end': []} | True, 49 ; 22 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | [True, True, True] ['clear', 'clear', 'cut-top'] | FAIL(cut-text-line,cut-box) |
+| 390x844-dark-t100 | bigday | AFTER | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 49 ; 14 | 0+0 ; 0+0 | [(1, 0.97), (1, 0.97)] | [True, True, True] ['clear', 'clear', 'cut-top'] | PASS |
+| 390x844-dark-t200 | routine | BEFORE | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 1/1/0 [arrival: in-fade:Goal met · 75/60 min] [settled: in-fade:Goal met · 75/60 min] | 1/1/0 ; maker: {'arrival': ['reward1@612-656'], 'settled': ['reward1@612-656'], 'end': []} | True, 49.9 ; 22 | 0+0 ; 0+0 | [(1, 0.59), (1, 0.59)] | -  | FAIL(cut-text-line,cut-box) |
+| 390x844-dark-t200 | routine | AFTER | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 0/0/0 | 1/1/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 49.9 ; 14 | 0+0 ; 0+0 | [(1, 0.75), (1, 0.75)] | -  | PASS |
+| 390x844-dark-t200 | bigday | BEFORE | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 1/1/0 [arrival: straddle-fold:Record player is in yo] [settled: straddle-fold:Record player is in yo] | 1/1/0 ; maker: {'arrival': ['unlock-media@639-753', 'unlock-title-line2@628-661'], 'settled': ['unlock-media@639-753', 'unlock-title-line2@628-661'], 'end': []} | True, 49.5 ; 22 | 0+0 ; 0+0 | [(1, 0.39), (1, 0.39)] | [True, True, True] ['straddle-fold', 'straddle-fold', 'above'] | FAIL(cut-text-line,cut-box,chai) |
+| 390x844-dark-t200 | bigday | AFTER | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 0/0/0 | 1/1/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 49.5 ; 14 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | [True, True, True] ['straddle-fold', 'straddle-fold', 'above'] | PASS |
+| 390x844-light-t100 | routine | BEFORE | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 49.3 ; 22 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | -  | PASS |
+| 390x844-light-t100 | routine | AFTER | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 49.3 ; 14 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | -  | PASS |
+| 390x844-light-t100 | bigday | BEFORE | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 1/1/0 [arrival: in-fade:7 days warm, your best] [settled: in-fade:7 days warm, your best] | 1/1/0 ; maker: {'arrival': ['reward2@681-719'], 'settled': ['reward2@681-719'], 'end': []} | True, 49 ; 22 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | [True, True, True] ['clear', 'clear', 'cut-top'] | FAIL(cut-text-line,cut-box) |
+| 390x844-light-t100 | bigday | AFTER | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 49 ; 14 | 0+0 ; 0+0 | [(1, 0.97), (1, 0.97)] | [True, True, True] ['clear', 'clear', 'cut-top'] | PASS |
+| 390x844-light-t200 | routine | BEFORE | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 1/1/0 [arrival: in-fade:Goal met · 75/60 min] [settled: in-fade:Goal met · 75/60 min] | 1/1/0 ; maker: {'arrival': ['reward1@612-656'], 'settled': ['reward1@612-656'], 'end': []} | True, 49.9 ; 22 | 0+0 ; 0+0 | [(1, 0.59), (1, 0.59)] | -  | FAIL(cut-text-line,cut-box) |
+| 390x844-light-t200 | routine | AFTER | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 0/0/0 | 1/1/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 49.9 ; 14 | 0+0 ; 0+0 | [(1, 0.75), (1, 0.75)] | -  | PASS |
+| 390x844-light-t200 | bigday | BEFORE | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 1/1/0 [arrival: straddle-fold:Record player is in yo] [settled: straddle-fold:Record player is in yo] | 1/1/0 ; maker: {'arrival': ['unlock-media@639-753', 'unlock-title-line2@628-661'], 'settled': ['unlock-media@639-753', 'unlock-title-line2@628-661'], 'end': []} | True, 49.5 ; 22 | 0+0 ; 0+0 | [(1, 0.39), (1, 0.39)] | [True, True, True] ['straddle-fold', 'straddle-fold', 'above'] | FAIL(cut-text-line,cut-box,chai) |
+| 390x844-light-t200 | bigday | AFTER | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 0/0/0 | 1/1/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 49.5 ; 14 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | [True, True, True] ['straddle-fold', 'straddle-fold', 'above'] | PASS |
+| 844x390-dark-t100 | routine | BEFORE | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 1/1/0 [arrival: in-fade:23 days warm] [settled: in-fade:23 days warm] | 1/1/0 ; maker: {'arrival': ['reward2@211-249'], 'settled': ['reward2@211-249'], 'end': []} | True, 33.3 ; 22 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | -  | FAIL(cut-text-line,cut-box) |
+| 844x390-dark-t100 | routine | AFTER | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 32.3 ; 14 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | -  | PASS |
+| 844x390-dark-t100 | bigday | BEFORE | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': ['unlock-media@129-279'], 'settled': ['unlock-media@129-279'], 'end': []} | True, 32.8 ; 22 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | [True, True, True] ['straddle-fold', 'straddle-fold', 'above'] | FAIL(cut-box) |
+| 844x390-dark-t100 | bigday | AFTER | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': ['unlock-media@129-279'], 'settled': ['unlock-media@129-279'], 'end': []} | True, 32.8 ; 14 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | [True, True, True] ['straddle-fold', 'straddle-fold', 'above'] | FAIL(cut-box) |
+| 844x390-dark-t200 | routine | BEFORE | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 1/1/0 [arrival: in-fade:Tea’s ready. Take five] [settled: in-fade:Tea’s ready. Take five] | 1/1/0 ; maker: {'arrival': ['sub-line0@161-193'], 'settled': ['sub-line0@161-193'], 'end': []} | True, 34 ; 22 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | -  | FAIL(cut-text-line) |
+| 844x390-dark-t200 | routine | AFTER | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 1/1/0 [arrival: straddle-fold:Tea’s ready. Take five] [settled: straddle-fold:Tea’s ready. Take five] | 2/2/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 34.1 ; 14 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | -  | FAIL(cut-text-line) |
+| 844x390-dark-t200 | bigday | BEFORE | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 1/1/0 [arrival: in-fade:Tea’s ready. Take five] [settled: in-fade:Tea’s ready. Take five] | 1/1/0 ; maker: {'arrival': ['sub-line0@161-193'], 'settled': ['sub-line0@161-193'], 'end': []} | True, 34.2 ; 22 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | [True, True, True] ['below', 'below', 'above'] | FAIL(cut-text-line) |
+| 844x390-dark-t200 | bigday | AFTER | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 1/1/0 [arrival: straddle-fold:Tea’s ready. Take five] [settled: straddle-fold:Tea’s ready. Take five] | 2/2/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 34.4 ; 14 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | [True, True, True] ['below', 'below', 'above'] | FAIL(cut-text-line) |
+| 844x390-light-t100 | routine | BEFORE | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 1/1/0 [arrival: in-fade:23 days warm] [settled: in-fade:23 days warm] | 1/1/0 ; maker: {'arrival': ['reward2@211-249'], 'settled': ['reward2@211-249'], 'end': []} | True, 33.3 ; 22 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | -  | FAIL(cut-text-line,cut-box) |
+| 844x390-light-t100 | routine | AFTER | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 32.3 ; 14 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | -  | PASS |
+| 844x390-light-t100 | bigday | BEFORE | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': ['unlock-media@129-279'], 'settled': ['unlock-media@129-279'], 'end': []} | True, 32.8 ; 22 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | [True, True, True] ['straddle-fold', 'straddle-fold', 'above'] | FAIL(cut-box) |
+| 844x390-light-t100 | bigday | AFTER | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': ['unlock-media@129-279'], 'settled': ['unlock-media@129-279'], 'end': []} | True, 32.8 ; 14 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | [True, True, True] ['straddle-fold', 'straddle-fold', 'above'] | FAIL(cut-box) |
+| 844x390-light-t200 | routine | BEFORE | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 1/1/0 [arrival: in-fade:Tea’s ready. Take five] [settled: in-fade:Tea’s ready. Take five] | 1/1/0 ; maker: {'arrival': ['sub-line0@161-193'], 'settled': ['sub-line0@161-193'], 'end': []} | True, 34 ; 22 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | -  | FAIL(cut-text-line) |
+| 844x390-light-t200 | routine | AFTER | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 1/1/0 [arrival: straddle-fold:Tea’s ready. Take five] [settled: straddle-fold:Tea’s ready. Take five] | 2/2/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 34.1 ; 14 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | -  | FAIL(cut-text-line) |
+| 844x390-light-t200 | bigday | BEFORE | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 1/1/0 [arrival: in-fade:Tea’s ready. Take five] [settled: in-fade:Tea’s ready. Take five] | 1/1/0 ; maker: {'arrival': ['sub-line0@161-193'], 'settled': ['sub-line0@161-193'], 'end': []} | True, 34.2 ; 22 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | [True, True, True] ['below', 'below', 'above'] | FAIL(cut-text-line) |
+| 844x390-light-t200 | bigday | AFTER | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 1/1/0 [arrival: straddle-fold:Tea’s ready. Take five] [settled: straddle-fold:Tea’s ready. Take five] | 2/2/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 34.4 ; 14 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | [True, True, True] ['below', 'below', 'above'] | FAIL(cut-text-line) |
+| 1440x900-dark-t100 | routine | BEFORE | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 39 ; 22 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | -  | PASS |
+| 1440x900-dark-t100 | routine | AFTER | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 39 ; 14 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | -  | PASS |
+| 1440x900-dark-t100 | bigday | BEFORE | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 39 ; 22 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | [True, True, True] ['clear', 'clear', 'cut-top'] | PASS |
+| 1440x900-dark-t100 | bigday | AFTER | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 39 ; 14 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | [True, True, True] ['clear', 'clear', 'cut-top'] | PASS |
+| 1440x900-dark-t200 | routine | BEFORE | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 40 ; 22 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | -  | PASS |
+| 1440x900-dark-t200 | routine | AFTER | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 40 ; 14 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | -  | PASS |
+| 1440x900-dark-t200 | bigday | BEFORE | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 1/1/0 [arrival: in-fade:Plays mostly rain soun] [settled: in-fade:Plays mostly rain soun] | 1/1/0 ; maker: {'arrival': ['unlock-sub-line1@686-714'], 'settled': ['unlock-sub-line1@686-714'], 'end': []} | True, 39.7 ; 22 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | [True, True, True] ['straddle-fold', 'straddle-fold', 'above'] | FAIL(cut-text-line) |
+| 1440x900-dark-t200 | bigday | AFTER | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 0/0/0 | 1/1/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 39.7 ; 14 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | [True, True, True] ['straddle-fold', 'straddle-fold', 'above'] | PASS |
+| 1440x900-light-t100 | routine | BEFORE | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 39 ; 22 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | -  | PASS |
+| 1440x900-light-t100 | routine | AFTER | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 39 ; 14 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | -  | PASS |
+| 1440x900-light-t100 | bigday | BEFORE | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 39 ; 22 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | [True, True, True] ['clear', 'clear', 'cut-top'] | PASS |
+| 1440x900-light-t100 | bigday | AFTER | [True, True] | [True, True] | [1, 1] unlock groups=[1, 1] | 0/0/- | 0/0/- ; maker: {'arrival': [], 'settled': []} | None, None ; None | 0+0 ; 0+0 | [(1, 1), (1, 1)] | [True, True] ['clear', 'clear'] | FAIL(end-gap) |
+| 1440x900-light-t200 | routine | BEFORE | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 40 ; 22 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | -  | PASS |
+| 1440x900-light-t200 | routine | AFTER | [True, True] | [True, True, True] | [0, 0, 0]  groups=[1, 1, 1] | 0/0/0 | 0/0/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 40 ; 14 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | -  | PASS |
+| 1440x900-light-t200 | bigday | BEFORE | [True, True] | [True, True] | [1, 1] unlock groups=[1, 1] | 1/1/- [arrival: in-fade:Plays mostly rain soun] [settled: in-fade:Plays mostly rain soun] | 1/1/- ; maker: {'arrival': ['unlock-sub-line1@686-714'], 'settled': ['unlock-sub-line1@686-714']} | None, None ; None | 0+0 ; 0+0 | [(1, 1), (1, 1)] | [True, True] ['straddle-fold', 'straddle-fold'] | FAIL(cut-text-line,end-gap) |
+| 1440x900-light-t200 | bigday | AFTER | [True, True] | [True, True, True] | [1, 1, 1] unlock groups=[1, 1, 1] | 0/0/0 | 1/1/0 ; maker: {'arrival': [], 'settled': [], 'end': []} | True, 39.7 ; 14 | 0+0 ; 0+0 | [(1, 1), (1, 1)] | [True, True, True] ['straddle-fold', 'straddle-fold', 'above'] | PASS |
 
 ## Rewards comparison BEFORE vs AFTER
 | cfg | day | pills B/A | missing in AFTER | extra in AFTER | numbers equal | announce equal | arithmetic differs |
@@ -76,27 +76,27 @@
 | 375x667-light-t100 | bigday | 7/7 | [] | [] | True | True | only_before=[] only_after=[] |
 | 375x667-light-t200 | routine | 5/5 | [] | [] | True | True | only_before=[] only_after=[] |
 | 375x667-light-t200 | bigday | 7/7 | [] | [] | True | True | only_before=[] only_after=[] |
-| 390x844-dark-t100 | routine | no BEFORE data |||||| 
-| 390x844-dark-t100 | bigday | no BEFORE data |||||| 
-| 390x844-dark-t200 | routine | no BEFORE data |||||| 
-| 390x844-dark-t200 | bigday | no BEFORE data |||||| 
-| 390x844-light-t100 | routine | no BEFORE data |||||| 
-| 390x844-light-t100 | bigday | no BEFORE data |||||| 
-| 390x844-light-t200 | routine | no BEFORE data |||||| 
-| 390x844-light-t200 | bigday | no BEFORE data |||||| 
-| 844x390-dark-t100 | routine | no BEFORE data |||||| 
-| 844x390-dark-t100 | bigday | no BEFORE data |||||| 
-| 844x390-dark-t200 | routine | no BEFORE data |||||| 
-| 844x390-dark-t200 | bigday | no BEFORE data |||||| 
-| 844x390-light-t100 | routine | no BEFORE data |||||| 
-| 844x390-light-t100 | bigday | no BEFORE data |||||| 
-| 844x390-light-t200 | routine | no BEFORE data |||||| 
-| 844x390-light-t200 | bigday | no BEFORE data |||||| 
-| 1440x900-dark-t100 | routine | no BEFORE data |||||| 
-| 1440x900-dark-t100 | bigday | no BEFORE data |||||| 
-| 1440x900-dark-t200 | routine | no BEFORE data |||||| 
-| 1440x900-dark-t200 | bigday | no BEFORE data |||||| 
-| 1440x900-light-t100 | routine | no BEFORE data |||||| 
-| 1440x900-light-t100 | bigday | no BEFORE data |||||| 
-| 1440x900-light-t200 | routine | no BEFORE data |||||| 
-| 1440x900-light-t200 | bigday | no BEFORE data |||||| 
+| 390x844-dark-t100 | routine | 5/5 | [] | [] | True | True | only_before=[] only_after=[] |
+| 390x844-dark-t100 | bigday | 7/7 | [] | [] | True | True | only_before=[] only_after=[] |
+| 390x844-dark-t200 | routine | 5/5 | [] | [] | True | True | only_before=[] only_after=[] |
+| 390x844-dark-t200 | bigday | 7/7 | [] | [] | True | True | only_before=[] only_after=[] |
+| 390x844-light-t100 | routine | 5/5 | [] | [] | True | True | only_before=[] only_after=[] |
+| 390x844-light-t100 | bigday | 7/7 | [] | [] | True | True | only_before=[] only_after=[] |
+| 390x844-light-t200 | routine | 5/5 | [] | [] | True | True | only_before=[] only_after=[] |
+| 390x844-light-t200 | bigday | 7/7 | [] | [] | True | True | only_before=[] only_after=[] |
+| 844x390-dark-t100 | routine | 5/5 | [] | [] | True | True | only_before=[] only_after=[] |
+| 844x390-dark-t100 | bigday | 7/7 | [] | [] | True | True | only_before=[] only_after=[] |
+| 844x390-dark-t200 | routine | 5/5 | [] | [] | True | True | only_before=[] only_after=[] |
+| 844x390-dark-t200 | bigday | 7/7 | [] | [] | True | True | only_before=[] only_after=[] |
+| 844x390-light-t100 | routine | 5/5 | [] | [] | True | True | only_before=[] only_after=[] |
+| 844x390-light-t100 | bigday | 7/7 | [] | [] | True | True | only_before=[] only_after=[] |
+| 844x390-light-t200 | routine | 5/5 | [] | [] | True | True | only_before=[] only_after=[] |
+| 844x390-light-t200 | bigday | 7/7 | [] | [] | True | True | only_before=[] only_after=[] |
+| 1440x900-dark-t100 | routine | 5/5 | [] | [] | True | True | only_before=[] only_after=[] |
+| 1440x900-dark-t100 | bigday | 7/7 | [] | [] | True | True | only_before=[] only_after=[] |
+| 1440x900-dark-t200 | routine | 5/5 | [] | [] | True | True | only_before=[] only_after=[] |
+| 1440x900-dark-t200 | bigday | 7/7 | [] | [] | True | True | only_before=[] only_after=[] |
+| 1440x900-light-t100 | routine | 5/5 | [] | [] | True | True | only_before=[] only_after=[] |
+| 1440x900-light-t100 | bigday | 7/7 | [] | [] | True | True | n/a |
+| 1440x900-light-t200 | routine | 5/5 | [] | [] | True | True | only_before=[] only_after=[] |
+| 1440x900-light-t200 | bigday | 7/7 | [] | [] | True | True | n/a |

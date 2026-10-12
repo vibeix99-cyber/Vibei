@@ -24,9 +24,9 @@
   old line, as required); `split-1b38509.log` 6/6 (390×844, 375×667, 844×390 × 100/200 %): one line, one primary
   button, the two others are quiet links ≥ 24×24, fits without scrolling at 375×667 @100, primary on top, a real tap
   starts a running 15-minute brew with no task.
-- **Real keyboard probe (myself, through the gate, trial preview :5353):** `/home/user/wt/w2t-n2/kettle/.tmp/LEAD2/fvk.mjs`.
+- **Real keyboard probe (myself, through the gate, trial preview :5353):** `contracts/W2/review/LEAD/FV/fvk.mjs` (result `fvk-result.json`).
   375×667 @100 and 390×844 @200: Tab order input → Start → "Set things up first" (third stop); focus ring 3 px solid
-  (visible, frame `.tmp/LEAD2/fvk/focus-375x667-1.png`); link box 149×44 (@100) and 276×45 (@200); Enter opens
+  (visible, frame `contracts/W2/review/LEAD/FV/focus-375x667-1.png`); link box 149×44 (@100) and 276×45 (@200); Enter opens
   "What should I call you?" (the setup flow).
 
 ## 2. What I opened (full size, REFERENCE → BEFORE → AFTER)
