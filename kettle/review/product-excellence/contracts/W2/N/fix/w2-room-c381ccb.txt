@@ -1,0 +1,14 @@
+[slots] N took 1/2 at 01:13:47: timeout 900 npx playwright test tests/w2-room.spec.ts --project=chromium --workers=1 --output /tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/w2/NF/pw-room2
+
+Running 7 tests using 1 worker
+
+  ✓  1 [chromium] › tests/w2-room.spec.ts:87:3 › Focus backdrop: earned items without the live 3D room › 3D off: the window still shows every earned window-visible item (21.1s)
+  ✓  2 [chromium] › tests/w2-room.spec.ts:96:3 › Focus backdrop: earned items without the live 3D room › 3D loading: the still shown before the engine is ready carries the same items (19.6s)
+  ✓  3 [chromium] › tests/w2-room.spec.ts:111:3 › Focus backdrop: earned items without the live 3D room › items never stand on the bare sky: no layer is drawn before the base room still has decoded (20.2s)
+  ✓  4 [chromium] › tests/w2-room.spec.ts:144:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items (38.2s)
+  ✓  5 [chromium] › tests/w2-room.spec.ts:166:3 › Nook hint tells the truth › 3D off: no drag-and-tap promise over the drawing (3.8s)
+  ✓  6 [chromium] › tests/w2-room.spec.ts:176:3 › Nook hint tells the truth › no WebGL: the same truthful hint (5.2s)
+  ✓  7 [chromium] › tests/w2-room.spec.ts:192:3 › Nook hint tells the truth › 3D on: the hint is unchanged (4.3s)
+
+  7 passed (1.9m)
+[slots] N freed 1 at 01:15:44

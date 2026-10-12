@@ -1,0 +1,166 @@
+[slots] MN took 1/3 at 21:13:22: timeout 900 npx playwright test tests/w2-room.spec.ts --project=chromium --workers=1 --output /tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/w2/N/pw-control
+
+Running 5 tests using 1 worker
+
+  ✘  1 [chromium] › tests/w2-room.spec.ts:87:3 › Focus backdrop: earned items without the live 3D room › 3D off: the window still shows every earned window-visible item (18.7s)
+  ✘  2 [chromium] › tests/w2-room.spec.ts:96:3 › Focus backdrop: earned items without the live 3D room › 3D loading: the still shown before the engine is ready carries the same items (20.2s)
+  ✘  3 [chromium] › tests/w2-room.spec.ts:115:3 › Nook hint tells the truth › 3D off: no drag-and-tap promise over the drawing (15.7s)
+  ✘  4 [chromium] › tests/w2-room.spec.ts:125:3 › Nook hint tells the truth › no WebGL: the same truthful hint (15.9s)
+  ✓  5 [chromium] › tests/w2-room.spec.ts:141:3 › Nook hint tells the truth › 3D on: the hint is unchanged (5.6s)
+
+
+  1) [chromium] › tests/w2-room.spec.ts:87:3 › Focus backdrop: earned items without the live 3D room › 3D off: the window still shows every earned window-visible item 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 7
+    + Received  + 1
+
+    - Array [
+    -   "pothos",
+    -   "books",
+    -   "fairyLights",
+    -   "shelf",
+    -   "recordPlayer",
+    - ]
+    + Array []
+
+    Call Log:
+    - Timeout 15000ms exceeded while waiting on the predicate
+
+      55 |   const host = page.locator('[data-scene-mode="window"]').first();
+      56 |   const layers = host.locator('svg[data-window-items] image[data-item]');
+    > 57 |   await expect.poll(async () => layers.evaluateAll((els) => els.map((e) => e.getAttribute('data-item'))), { timeout: 15_000 }).toEqual(want);
+         |   ^
+      58 |   const decoded = await layers.evaluateAll((els) =>
+      59 |     Promise.all(els.map(async (e) => {
+      60 |       const img = new Image();
+        at assertLayersDrawn (/home/user/wt/w2n/kettle/tests/w2-room.spec.ts:57:3)
+        at /home/user/wt/w2n/kettle/tests/w2-room.spec.ts:93:5
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/w2/N/pw-control/w2-room-Focus-backdrop-ear-d19a0--earned-window-visible-item-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/w2/N/pw-control/w2-room-Focus-backdrop-ear-d19a0--earned-window-visible-item-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/w2/N/pw-control/w2-room-Focus-backdrop-ear-d19a0--earned-window-visible-item-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/w2-room.spec.ts:96:3 › Focus backdrop: earned items without the live 3D room › 3D loading: the still shown before the engine is ready carries the same items 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 7
+    + Received  + 1
+
+    - Array [
+    -   "pothos",
+    -   "books",
+    -   "fairyLights",
+    -   "shelf",
+    -   "recordPlayer",
+    - ]
+    + Array []
+
+    Call Log:
+    - Timeout 15000ms exceeded while waiting on the predicate
+
+      55 |   const host = page.locator('[data-scene-mode="window"]').first();
+      56 |   const layers = host.locator('svg[data-window-items] image[data-item]');
+    > 57 |   await expect.poll(async () => layers.evaluateAll((els) => els.map((e) => e.getAttribute('data-item'))), { timeout: 15_000 }).toEqual(want);
+         |   ^
+      58 |   const decoded = await layers.evaluateAll((els) =>
+      59 |     Promise.all(els.map(async (e) => {
+      60 |       const img = new Image();
+        at assertLayersDrawn (/home/user/wt/w2n/kettle/tests/w2-room.spec.ts:57:3)
+        at /home/user/wt/w2n/kettle/tests/w2-room.spec.ts:107:5
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/w2/N/pw-control/w2-room-Focus-backdrop-ear-5f424-eady-carries-the-same-items-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/w2/N/pw-control/w2-room-Focus-backdrop-ear-5f424-eady-carries-the-same-items-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/w2/N/pw-control/w2-room-Focus-backdrop-ear-5f424-eady-carries-the-same-items-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/w2-room.spec.ts:115:3 › Nook hint tells the truth › 3D off: no drag-and-tap promise over the drawing 
+
+    Error: expect(locator).not.toContainText(expected) failed
+
+    Locator: locator('section[aria-label="The room"] p').filter({ hasText: /·/ }).first()
+    Expected pattern: not /drag|look around|tap things/i
+    Received string: " Drag to look around · tap things"
+    Timeout: 10000ms
+
+    Call log:
+      - Expect "not toContainText" with timeout 10000ms
+      - waiting for locator('section[aria-label="The room"] p').filter({ hasText: /·/ }).first()
+        13 × locator resolved to <p class="_hint_1nqvr_67">…</p>
+           - unexpected value " Drag to look around · tap things"
+
+
+      119 |     await expect(page.locator('[data-scene-static="true"]').first()).toBeVisible();
+      120 |     await expect(hint(page)).toBeVisible();
+    > 121 |     await expect(hint(page)).not.toContainText(/drag|look around|tap things/i);
+          |                                  ^
+      122 |     await expect(hint(page)).toContainText('A drawing of your room');
+      123 |   });
+      124 |
+        at /home/user/wt/w2n/kettle/tests/w2-room.spec.ts:121:34
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/w2/N/pw-control/w2-room-Nook-hint-tells-th-1a2a0-ap-promise-over-the-drawing-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/w2/N/pw-control/w2-room-Nook-hint-tells-th-1a2a0-ap-promise-over-the-drawing-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/w2/N/pw-control/w2-room-Nook-hint-tells-th-1a2a0-ap-promise-over-the-drawing-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests/w2-room.spec.ts:125:3 › Nook hint tells the truth › no WebGL: the same truthful hint 
+
+    Error: expect(locator).not.toContainText(expected) failed
+
+    Locator: locator('section[aria-label="The room"] p').filter({ hasText: /·/ }).first()
+    Expected pattern: not /drag|look around|tap things/i
+    Received string: " Drag to look around · tap things"
+    Timeout: 10000ms
+
+    Call log:
+      - Expect "not toContainText" with timeout 10000ms
+      - waiting for locator('section[aria-label="The room"] p').filter({ hasText: /·/ }).first()
+        13 × locator resolved to <p class="_hint_1nqvr_67">…</p>
+           - unexpected value " Drag to look around · tap things"
+
+
+      136 |     await expect(page.locator('[data-scene-static="true"]').first()).toBeVisible();
+      137 |     await expect(hint(page)).toBeVisible();
+    > 138 |     await expect(hint(page)).not.toContainText(/drag|look around|tap things/i);
+          |                                  ^
+      139 |   });
+      140 |
+      141 |   test('3D on: the hint is unchanged', async ({ page }) => {
+        at /home/user/wt/w2n/kettle/tests/w2-room.spec.ts:138:34
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/w2/N/pw-control/w2-room-Nook-hint-tells-th-03348-ebGL-the-same-truthful-hint-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/w2/N/pw-control/w2-room-Nook-hint-tells-th-03348-ebGL-the-same-truthful-hint-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/w2/N/pw-control/w2-room-Nook-hint-tells-th-03348-ebGL-the-same-truthful-hint-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [chromium] › tests/w2-room.spec.ts:87:3 › Focus backdrop: earned items without the live 3D room › 3D off: the window still shows every earned window-visible item 
+    [chromium] › tests/w2-room.spec.ts:96:3 › Focus backdrop: earned items without the live 3D room › 3D loading: the still shown before the engine is ready carries the same items 
+    [chromium] › tests/w2-room.spec.ts:115:3 › Nook hint tells the truth › 3D off: no drag-and-tap promise over the drawing 
+    [chromium] › tests/w2-room.spec.ts:125:3 › Nook hint tells the truth › no WebGL: the same truthful hint 
+  1 passed (1.5m)
+[slots] MN freed 1 at 21:14:53

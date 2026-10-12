@@ -1,0 +1,105 @@
+{
+ "label": "BEFORE",
+ "base": "http://127.0.0.1:5330",
+ "viewport": {
+  "w": 1440,
+  "h": 900
+ },
+ "dpr": 2,
+ "theme": "dark",
+ "text": "100%",
+ "fixedTime": "2026-10-11T07:40:00Z",
+ "startedAt": "2026-10-11T21:45:21.673Z",
+ "states": {
+  "02-focus": {
+   "desc": "Focus, 4 s (3D on, default)",
+   "hash": "#/focus",
+   "backdrop": {
+    "static": "live",
+    "still": null,
+    "layers": []
+   },
+   "canvases": [
+    [
+     846,
+     698
+    ]
+   ],
+   "hint": null,
+   "cls": null
+  },
+  "10-nook-3d": {
+   "desc": "Nook, 3D on",
+   "hash": "#/nook",
+   "backdrop": null,
+   "canvases": [
+    [
+     996,
+     914
+    ]
+   ],
+   "hint": "Drag to look around · tap things",
+   "cls": null
+  },
+  "02-focus-3doff": {
+   "desc": "Focus, 3D off (pre-rendered still backdrop)",
+   "hash": "#/focus",
+   "backdrop": {
+    "static": "true",
+    "still": "window-night-rain-DecmUibs.webp",
+    "layers": []
+   },
+   "canvases": [],
+   "hint": null,
+   "cls": 0.00012795621141975308
+  },
+  "10-nook-static": {
+   "desc": "Nook, 3D off (static room)",
+   "hash": "#/nook",
+   "backdrop": null,
+   "canvases": [],
+   "hint": "Drag to look around · tap things",
+   "cls": 0.027109936021090537
+  },
+  "02-focus-loading": {
+   "desc": "Focus 0.5 s after a cold start (3D loading)",
+   "hash": "#/focus",
+   "backdrop": {
+    "static": "loading",
+    "still": "window-night-rain-DecmUibs.webp",
+    "layers": []
+   },
+   "canvases": [
+    [
+     846,
+     698
+    ]
+   ],
+   "hint": null,
+   "cls": 0.00001968557098765432
+  },
+  "07-summary-bigday": {
+   "desc": "Summary, big day (unlock), 4 s",
+   "hash": "#/done",
+   "backdrop": {
+    "static": "live",
+    "still": null,
+    "layers": []
+   },
+   "canvases": [
+    [
+     846,
+     698
+    ],
+    [
+     426,
+     239
+    ]
+   ],
+   "hint": null,
+   "cls": null
+  }
+ },
+ "errors": [],
+ "endedAt": "2026-10-11T21:50:08.069Z"
+}
