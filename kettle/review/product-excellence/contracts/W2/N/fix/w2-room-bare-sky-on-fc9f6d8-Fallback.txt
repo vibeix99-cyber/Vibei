@@ -1,0 +1,38 @@
+[slots] N took 1/2 at 01:16:00: timeout 600 npx playwright test tests/w2-room.spec.ts -g bare sky --project=chromium --workers=1 --output /tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/w2/NF/pw-ctl
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › tests/w2-room.spec.ts:137:3 › Focus backdrop: earned items without the live 3D room › items never stand on the bare sky: no layer is drawn before the base room still has decoded (6.9s)
+
+
+  1) [chromium] › tests/w2-room.spec.ts:137:3 › Focus backdrop: earned items without the live 3D room › items never stand on the bare sky: no layer is drawn before the base room still has decoded 
+
+    Error: frames with item layers but no base room
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 2
+
+      137 |         }),
+      138 |     );
+    > 139 |     expect(floating, 'frames with item layers but no base room').toBe(0);
+          |                                                                  ^
+      140 |     release();
+      141 |     await assertLayersDrawn(page, want);
+      142 |   });
+        at /home/user/wt/w2n/kettle/tests/w2-room.spec.ts:139:66
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/w2/NF/pw-ctl/w2-room-Focus-backdrop-ear-9df6c-base-room-still-has-decoded-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/w2/NF/pw-ctl/w2-room-Focus-backdrop-ear-9df6c-base-room-still-has-decoded-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/w2/NF/pw-ctl/w2-room-Focus-backdrop-ear-9df6c-base-room-still-has-decoded-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/w2-room.spec.ts:137:3 › Focus backdrop: earned items without the live 3D room › items never stand on the bare sky: no layer is drawn before the base room still has decoded 
+[slots] N freed 1 at 01:16:12
