@@ -6,14 +6,18 @@
  * Reads the report the progress engine computed once at completion (see ./summary.ts): it grants nothing.
  *
  * Order: minutes brewed + Tea time (the footer never scrolls away) → the task (only if there was one) →
- * a major room unlock, prominent (above the routine rewards, so a phone shows it without scrolling) → the
- * optional setup after a first brew → compact routine rewards → the arithmetic, on request.
+ * the one highlighted milestone (./summary.ts `rankRewards`): a room unlock as its close-up card, or else the
+ * biggest milestone leading the rewards list → the optional setup after a first brew → every other reward,
+ * compact → the arithmetic, on request.
  * Motion: the panel content rises in a short stagger; reduced motion: one simple fade, nothing moves.
  *
  * Stacked (phones), the scroll area spans the whole screen and the sheet rests just under Chai's feet: scrolling
- * slides the sheet up over the scene, which itself never moves. When the unlock (or, without one, the rewards)
+ * slides the sheet up over the scene, which itself never moves. When the highlight (or, without one, the rewards)
  * would start under the footer, the sheet opens a little higher so it is seen whole: by at most 22% of its resting
- * offset (30% for an unlock).
+ * offset (30% for a highlight).
+ * The fold (Wave-1 #1): on arrival no line may start under the footer. The opening lift is snapped, within the same
+ * limit, so the fold falls between two lines: each is wholly clear of the bottom fade or wholly below it (at most
+ * its empty top edge peeks into the fade). Side by side the card does not lift; it ends between two lines instead.
  */
 import { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type ReactNode, type Ref } from 'react';
 import { motion } from 'motion/react';
@@ -34,7 +38,7 @@ import { usePageVisible } from '../focus/parts/hooks';
 import { TagChip } from '../focus/parts/bits';
 import { ItemGlyph } from '../nook/ItemGlyph';
 import { LeafConfetti } from './LeafConfetti';
-import { buildSummary, type RewardPill } from './summary';
+import { buildSummary, rankRewards, type RewardPill } from './summary';
 import s from './Summary.module.css';
 
 const AUTO_BREAK_S = 10;
@@ -42,8 +46,14 @@ const AUTO_BREAK_S = 10;
 const FEATURE_CLEAR = 30;
 /** The sheet may open at most this share of its resting offset higher over the scene. */
 const MAX_LIFT = 0.22;
-/** An unlock is the summary's moment: it may open the sheet a little higher to be seen whole. */
-const MAX_LIFT_UNLOCK = 0.3;
+/** The highlight (an unlock, or the biggest milestone) is the summary's moment: it may open the sheet a little higher. */
+const MAX_LIFT_MOMENT = 0.3;
+/** The scroll area's bottom fade, px (= the mask in Summary.module.css). */
+const FADE = 14;
+/** How much of a line's top edge may show in the fade when the fold falls just above it (no text sits that high). */
+const PEEK = 6;
+/** Side by side, the card may end at most this share of its scroll area earlier, so the fold falls between lines. */
+const MAX_TRIM = 0.25;
 /** How long the summary steps aside before handing off to the break / home. */
 const LEAVE_MS = 180;
 
@@ -77,6 +87,8 @@ export function Summary({ reduced }: { reduced: boolean }) {
   }, [liveReport]);
 
   const model = useMemo(() => (report ? buildSummary(report) : null), [report]);
+  const ranked = useMemo(() => (model && report ? rankRewards(model, report) : null), [model, report]);
+  const featured: 'unlock' | 'highlight' | 'pills' = model?.unlock ? 'unlock' : ranked?.highlight?.pill ? 'highlight' : 'pills';
   const breakKind = nextBreakKind(useTimer.getState().completedInCycle);
   const isLong = breakKind === 'longBreak';
   const breakMin = isLong ? longMin : shortMin;
@@ -101,7 +113,8 @@ export function Summary({ reduced }: { reduced: boolean }) {
     return () => clearTimeout(t);
   }, [model, visible]);
 
-  // Open the sheet high enough to show the unlock (or the rewards) whole; set before paint, so nothing jumps.
+  // Open the sheet high enough to show the highlight (or the rewards) whole, with the fold between two lines; set
+  // before paint, so nothing jumps.
   const scrollRef = useRef<HTMLDivElement>(null);
   const sheetRef = useRef<HTMLDivElement>(null);
   const featureRef = useRef<HTMLElement | null>(null);
@@ -113,11 +126,28 @@ export function Summary({ reduced }: { reduced: boolean }) {
     if (!model || opened.current || !sc || !sheet || !el) return;
     opened.current = true;
     const rest = sheet.offsetTop; // the sheet's resting distance from the top (0 beside the stage)
-    const over = rest + el.offsetTop + el.offsetHeight + FEATURE_CLEAR - sc.clientHeight;
-    if (rest > 0 && over > 0) sc.scrollTop = Math.min(over, rest * (model.unlock ? MAX_LIFT_UNLOCK : MAX_LIFT));
-  }, [model]);
-  const feature = (kind: 'unlock' | 'pills') => (el: HTMLElement | null) => {
-    if (el && (kind === 'unlock' || !model?.unlock)) featureRef.current = el;
+    const h = sc.clientHeight;
+    const lines = foldLines(sc, sheet);
+    if (rest > 0) {
+      const cap = rest * (featured === 'pills' ? MAX_LIFT : MAX_LIFT_MOMENT);
+      const over = rest + el.offsetTop + el.offsetHeight + FEATURE_CLEAR - h;
+      // The highlight should end up whole if any clean opening allows it; the routine rewards just need a clean fold.
+      const must: [number, number] | null = featured === 'pills' ? null : [rest + el.offsetTop, rest + el.offsetTop + el.offsetHeight];
+      const lift = cleanLift(lines, h, over > 0 ? Math.min(over, cap) : 0, cap, must);
+      if (lift > 0) sc.scrollTop = lift;
+    } else if (sc.scrollHeight > h + 1) {
+      const end = cleanEnd(lines, h);
+      if (end < h) sc.style.maxHeight = `${end}px`;
+    }
+  }, [model, featured]);
+  // A trimmed card (side by side) was measured for this size: let it fill again when the window changes.
+  useEffect(() => {
+    const reset = () => scrollRef.current?.style.removeProperty('max-height');
+    window.addEventListener('resize', reset);
+    return () => window.removeEventListener('resize', reset);
+  }, []);
+  const feature = (kind: 'unlock' | 'highlight' | 'pills') => (el: HTMLElement | null) => {
+    if (el && kind === featured) featureRef.current = el;
   };
 
   const leaving = useRef(false);
@@ -166,6 +196,7 @@ export function Summary({ reduced }: { reduced: boolean }) {
 
   if (!report || !model) return <div className={s.summary} />;
   const r = report;
+  const hl = ranked?.highlight ?? null;
   const sub = r.whileAway
     ? `The kettle whistled while you were away. Tea’s ready${isLong ? '' : ' when you are'}.`
     : isLong
@@ -182,10 +213,12 @@ export function Summary({ reduced }: { reduced: boolean }) {
       <div className={s.scroll} ref={scrollRef}>
         <div className={s.sheet} ref={sheetRef}>
           <motion.header className={s.head} {...enter(0)}>
-            <h1 id={headingId} ref={headingRef} tabIndex={-1} className={s.title}>
+            <h1 id={headingId} ref={headingRef} tabIndex={-1} className={s.title} data-fold="lines">
               {model.headline}
             </h1>
-            <p className={s.sub}>{sub}</p>
+            <p className={s.sub} data-fold="lines">
+              {sub}
+            </p>
           </motion.header>
 
           {/* Saving failed: this brew is only in this tab. One line, in the page, with the way to keep it. */}
@@ -193,7 +226,7 @@ export function Summary({ reduced }: { reduced: boolean }) {
 
           {r.record.intention.trim() && (
             <motion.section className={s.task} aria-label="Your task" {...enter(1)}>
-              <p className={s.taskName}>
+              <p className={s.taskName} data-fold="">
                 <Icon name="edit" size={16} />
                 <span className={s.taskText}>{r.record.intention}</span>
                 {r.record.tag && <TagChip tag={r.record.tag} />}
@@ -205,7 +238,7 @@ export function Summary({ reduced }: { reduced: boolean }) {
           {model.unlock && <Unlock ref={feature('unlock')} ids={model.unlock.ids} level={model.unlock.level} reduced={reduced} visible={visible} enter={enter(2)} />}
 
           {setupPending && r.firstEver && (
-            <motion.section className={s.setup} aria-labelledby={`${headingId}-setup`} {...enter(3)}>
+            <motion.section className={s.setup} aria-labelledby={`${headingId}-setup`} data-fold="" {...enter(3)}>
               <div>
                 <h2 id={`${headingId}-setup`} className={s.setupTitle}>
                   Make Kettle yours
@@ -219,8 +252,22 @@ export function Summary({ reduced }: { reduced: boolean }) {
           )}
 
           <motion.ul ref={feature('pills')} className={s.pills} aria-label="Rewards" {...enter(4)}>
-            {model.pills.map((p, i) => (
-              <li key={`${p.kind}-${i}`} className={s.pill} data-kind={p.kind}>
+            {hl?.pill && (
+              <li ref={feature('highlight')} className={s.highlight} data-kind={hl.pill.kind} data-milestone={hl.kind} data-highlight="" data-fold="">
+                <span className={s.highlightArt} aria-hidden="true">
+                  <PillArt pill={hl.pill} report={r} big />
+                </span>
+                <span className={s.highlightText}>
+                  <span className={s.highlightTitle} aria-hidden={hl.pill.sr ? true : undefined}>
+                    {hl.pill.text}
+                  </span>
+                  {hl.pill.sr && <span className="sr-only">{hl.pill.sr}</span>}
+                  {hl.note && <span className={s.highlightNote}>{hl.note}</span>}
+                </span>
+              </li>
+            )}
+            {(ranked?.secondary ?? model.pills).map((p, i) => (
+              <li key={`${p.kind}-${p.id ?? ''}-${i}`} className={s.pill} data-kind={p.kind} data-fold="">
                 <span className={s.pillArt} aria-hidden="true">
                   <PillArt pill={p} report={r} />
                 </span>
@@ -267,7 +314,7 @@ function TaskChoice({ record }: { record: SessionRecord }) {
   const outcome = useProgress((st) => st.sessions.find((x) => x.id === record.id)?.outcome);
   return (
     <>
-      <div className={s.choiceChips} role="group" aria-label={`“${record.intention}”: done, or carry it forward to your next brew?`}>
+      <div className={s.choiceChips} data-fold="" role="group" aria-label={`“${record.intention}”: done, or carry it forward to your next brew?`}>
         <Chip tone="matcha" icon={outcome === 'done' ? undefined : 'check'} selected={outcome === 'done'} onClick={() => setIntentionOutcome(record, outcome === 'done' ? null : 'done')}>
           Done
         </Chip>
@@ -283,26 +330,28 @@ function TaskChoice({ record }: { record: SessionRecord }) {
   );
 }
 
-function PillArt({ pill, report }: { pill: RewardPill; report: CompletionReport }): ReactNode {
+/** A reward's drawing: compact in a pill, larger (`big`) when it is the highlighted milestone. */
+function PillArt({ pill, report, big = false }: { pill: RewardPill; report: CompletionReport; big?: boolean }): ReactNode {
+  const k = big ? 1.45 : 1;
   switch (pill.kind) {
     case 'leaves':
-      return <Leaf size={20} />;
+      return <Leaf size={Math.round(20 * k)} />;
     case 'goal':
       return (
-        <Ring value={pill.value ?? 0} size={20} thickness={4} tone={(pill.value ?? 0) >= 1 ? 'matcha' : 'persimmon'} label="">
+        <Ring value={pill.value ?? 0} size={Math.round(20 * k)} thickness={4} tone={(pill.value ?? 0) >= 1 ? 'matcha' : 'persimmon'} label="">
           {null}
         </Ring>
       );
     case 'streak':
-      return <StreakMug state="warm" count={report.streak.after} size={26} animate={false} />;
+      return <StreakMug state="warm" count={report.streak.after} size={Math.round(26 * k)} animate={false} />;
     case 'cozy':
-      return <TeaCozy size={24} animate={false} />;
+      return <TeaCozy size={Math.round(24 * k)} animate={false} />;
     case 'recipes':
-      return <TeaTin state="open" size={24} animate={false} />;
+      return <TeaTin state="open" size={Math.round(24 * k)} animate={false} />;
     case 'level':
-      return <LevelBadge level={pill.value ?? report.level.after} size={22} />;
+      return <LevelBadge level={pill.value ?? report.level.after} size={Math.round(22 * k)} />;
     case 'badge':
-      return <Badge id={pill.id ?? ''} tier={pill.tier ?? 1} size={26} />;
+      return <Badge id={pill.id ?? ''} tier={pill.tier ?? 1} size={Math.round(26 * k)} />;
   }
 }
 
@@ -315,7 +364,7 @@ function Unlock({ ref, ids, level, reduced, visible, enter }: { ref?: Ref<HTMLEl
   const title = names.length > 1 ? `${names.slice(0, -1).join(', ')} and ${names.at(-1)} are in your nook` : `${names[0]} is in your nook`;
   return (
     <motion.section ref={ref} className={s.unlock} aria-label={`Cozy level ${level}: ${title}`} {...enter}>
-      <div className={s.unlockScene}>
+      <div className={s.unlockScene} data-fold="">
         {visible && (
           <Nook
             mode="showcase"
@@ -334,8 +383,10 @@ function Unlock({ ref, ids, level, reduced, visible, enter }: { ref?: Ref<HTMLEl
         {visible && <LeafConfetti burstKey={`unlock-${level}`} reduced={reduced} palette="gold" count={18} delay={0.5} spread={0.8} />}
       </div>
       <div className={s.unlockText}>
-        <h2 className={s.unlockTitle}>{title}</h2>
-        <p className={s.unlockSub}>
+        <h2 className={s.unlockTitle} data-fold="lines">
+          {title}
+        </h2>
+        <p className={s.unlockSub} data-fold="lines">
           <LevelBadge level={level} size={22} /> Cozy level {level} · {first.story}
         </p>
       </div>
@@ -350,7 +401,7 @@ function Details({ model, streakDays }: { model: ReturnType<typeof buildSummary>
   const pct = d.size > 0 ? Math.min(100, (d.into / d.size) * 100) : 0;
   return (
     <section className={s.details} data-open={open || undefined}>
-      <button type="button" className={s.detailsToggle} aria-expanded={open} aria-controls={id} onClick={() => setOpen((o) => !o)}>
+      <button type="button" className={s.detailsToggle} data-fold="" aria-expanded={open} aria-controls={id} onClick={() => setOpen((o) => !o)}>
         How your leaves added up
         <Icon name={open ? 'chevronUp' : 'chevronDown'} size={18} />
       </button>
@@ -384,4 +435,85 @@ function Details({ model, streakDays }: { model: ReturnType<typeof buildSummary>
       </div>
     </section>
   );
+}
+
+// ---------- the fold (Wave-1 #1) ----------
+/** A line of the sheet in the scroll area's content coordinates: [top, bottom, how much of its top may peek]. */
+type FoldLine = [number, number, number];
+
+let inkCtx: CanvasRenderingContext2D | null | undefined;
+/**
+ * How far a text line's ink sits inside its line box (the box is the font's full ascent + descent; capitals and
+ * descenders stop short of it), from the font's own metrics. A text line counts by its ink: no glyph may be cut.
+ */
+function inkInsets(el: HTMLElement): { top: number; bottom: number } {
+  inkCtx ??= document.createElement('canvas').getContext('2d');
+  const text = el.textContent?.trim();
+  if (!inkCtx || !text) return { top: 0, bottom: 0 };
+  const cs = getComputedStyle(el);
+  inkCtx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+  const m = inkCtx.measureText(text);
+  if (!m.fontBoundingBoxAscent) return { top: 0, bottom: 0 };
+  return { top: Math.max(0, m.fontBoundingBoxAscent - m.actualBoundingBoxAscent), bottom: Math.max(0, m.fontBoundingBoxDescent - m.actualBoundingBoxDescent) };
+}
+
+/** Every line of the sheet (marked `data-fold`), where it will rest once the entrance motion has finished. */
+function foldLines(sc: HTMLElement, sheet: HTMLElement): FoldLine[] {
+  const origin = sc.getBoundingClientRect().top - sc.scrollTop;
+  const out: FoldLine[] = [];
+  for (const el of sheet.querySelectorAll<HTMLElement>('[data-fold]')) {
+    // The entrance transform sits on the sheet's own children (motion); measure where the line will rest.
+    let block: HTMLElement = el;
+    while (block.parentElement && block.parentElement !== sheet) block = block.parentElement;
+    const t = getComputedStyle(block).transform;
+    const dy = t && t !== 'none' ? new DOMMatrixReadOnly(t).m42 : 0;
+    if (el.dataset.fold === 'lines') {
+      const ink = inkInsets(el);
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      const rows: { top: number; bottom: number }[] = [];
+      for (const r of [...range.getClientRects()].filter((x) => x.width > 0.5 && x.height > 0.5).sort((a, b) => a.top - b.top)) {
+        const last = rows.at(-1);
+        if (last && r.top < last.bottom - Math.min(r.height, last.bottom - last.top) / 2) last.bottom = Math.max(last.bottom, r.bottom);
+        else rows.push({ top: r.top, bottom: r.bottom });
+      }
+      for (const r of rows) out.push([r.top - origin - dy + ink.top, r.bottom - origin - dy - ink.bottom, 0]);
+    } else {
+      const r = el.getBoundingClientRect();
+      if (r.height > 0.5) out.push([r.top - origin - dy, r.bottom - origin - dy, PEEK]);
+    }
+  }
+  return out;
+}
+
+/** With the fold at `fold` px (scroll coordinates): every line wholly clear of the fade, or wholly below it. */
+const cleanAt = (lines: FoldLine[], fold: number) => lines.every(([t, b, peek]) => b <= fold - FADE + 0.5 || t >= fold - peek - 0.5);
+
+/**
+ * The lift in [0, cap] nearest `want` that puts the fold between two lines — keeping `must` (the highlight) wholly
+ * clear when some clean lift can — or `want` itself when no lift is clean.
+ */
+function cleanLift(lines: FoldLine[], h: number, want: number, cap: number, must: [number, number] | null): number {
+  const cands = [want, 0, cap];
+  for (const [t, b, peek] of lines) cands.push(b - h + FADE, t - h + peek);
+  const pick = (needWhole: boolean) => {
+    let best: number | null = null;
+    for (const c of cands)
+      for (const v of [Math.floor(c), Math.ceil(c)]) {
+        if (v < 0 || v > cap || !cleanAt(lines, v + h)) continue;
+        if (needWhole && must && must[1] - v > h - FADE + 0.5) continue;
+        if (best == null || Math.abs(v - want) < Math.abs(best - want) || (Math.abs(v - want) === Math.abs(best - want) && v > best)) best = v;
+      }
+    return best;
+  };
+  return Math.round((must ? pick(true) : null) ?? pick(false) ?? want);
+}
+
+/** Side by side (no lift): the tallest scroll area, at most MAX_TRIM shorter, that ends between two lines. */
+function cleanEnd(lines: FoldLine[], h: number): number {
+  if (cleanAt(lines, h)) return h;
+  const cands: number[] = [];
+  for (const [t, b, peek] of lines) cands.push(Math.ceil(b + FADE), Math.floor(t + peek));
+  const ok = cands.filter((v) => v < h && v >= h * (1 - MAX_TRIM) && cleanAt(lines, v));
+  return ok.length ? Math.max(...ok) : h;
 }

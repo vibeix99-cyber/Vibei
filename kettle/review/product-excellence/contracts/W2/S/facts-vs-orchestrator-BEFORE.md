@@ -1,0 +1,32 @@
+| Configuration | Day | BEFORE facts | AFTER facts | BEFORE facts not reachable in AFTER | Only in AFTER |
+|---|---|---|---|---|---|
+| 1440x900-dark-t100 | routine | 5 | 13 | **0** | (BEFORE set recorded reward lines only) |
+| 1440x900-dark-t100 | bigday | 7 | 11 | **0** | (BEFORE set recorded reward lines only) |
+| 1440x900-light-t100 | routine | 5 | 13 | **0** | (BEFORE set recorded reward lines only) |
+| 1440x900-light-t100 | bigday | 7 | 20 | **0** | (BEFORE set recorded reward lines only) |
+| 1440x900-light-t200 | routine | 5 | 13 | **0** | (BEFORE set recorded reward lines only) |
+| 1440x900-light-t200 | bigday | 7 | 11 | **0** | (BEFORE set recorded reward lines only) |
+| 375x667-dark-t100 | routine | 5 | 13 | **0** | (BEFORE set recorded reward lines only) |
+| 375x667-dark-t100 | bigday | 7 | 20 | **0** | (BEFORE set recorded reward lines only) |
+| 375x667-dark-t200 | routine | 5 | 13 | **0** | (BEFORE set recorded reward lines only) |
+| 375x667-dark-t200 | bigday | 7 | 20 | **0** | (BEFORE set recorded reward lines only) |
+| 375x667-light-t100 | routine | 5 | 13 | **0** | (BEFORE set recorded reward lines only) |
+| 375x667-light-t100 | bigday | 7 | 20 | **0** | (BEFORE set recorded reward lines only) |
+| 375x667-light-t200 | routine | 5 | 13 | **0** | (BEFORE set recorded reward lines only) |
+| 375x667-light-t200 | bigday | 7 | 20 | **0** | (BEFORE set recorded reward lines only) |
+| 390x844-dark-t100 | routine | 5 | 13 | **0** | (BEFORE set recorded reward lines only) |
+| 390x844-dark-t100 | bigday | 7 | 20 | **0** | (BEFORE set recorded reward lines only) |
+| 390x844-dark-t200 | routine | 5 | 13 | **0** | (BEFORE set recorded reward lines only) |
+| 390x844-dark-t200 | bigday | 7 | 20 | **0** | (BEFORE set recorded reward lines only) |
+| 390x844-light-t100 | routine | 5 | 13 | **0** | (BEFORE set recorded reward lines only) |
+| 390x844-light-t100 | bigday | 7 | 20 | **0** | (BEFORE set recorded reward lines only) |
+| 390x844-light-t200 | routine | 5 | 13 | **0** | (BEFORE set recorded reward lines only) |
+| 390x844-light-t200 | bigday | 7 | 20 | **0** | (BEFORE set recorded reward lines only) |
+| 844x390-dark-t100 | routine | 5 | 13 | **0** | (BEFORE set recorded reward lines only) |
+| 844x390-dark-t100 | bigday | 7 | 20 | **0** | (BEFORE set recorded reward lines only) |
+| 844x390-dark-t200 | routine | 5 | 13 | **0** | (BEFORE set recorded reward lines only) |
+| 844x390-dark-t200 | bigday | 7 | 20 | **0** | (BEFORE set recorded reward lines only) |
+| 844x390-light-t100 | routine | 5 | 13 | **0** | (BEFORE set recorded reward lines only) |
+| 844x390-light-t100 | bigday | 7 | 20 | **0** | (BEFORE set recorded reward lines only) |
+| 844x390-light-t200 | routine | 5 | 13 | **0** | (BEFORE set recorded reward lines only) |
+| 844x390-light-t200 | bigday | 7 | 20 | **0** | (BEFORE set recorded reward lines only) |
