@@ -308,7 +308,8 @@ test('the highlight is quieter than the minutes and Tea time (milestone day, 375
       heading: { px: parseFloat(f(h1).fontSize), weight: +f(h1).fontWeight },
       title: { px: parseFloat(f(title).fontSize), weight: +f(title).fontWeight },
       ctaArea: area(cta),
-      ctaFilled: f(cta).backgroundImage !== 'none' || f(cta).backgroundColor !== 'rgba(0, 0, 0, 0)',
+      // the Button paints its fill on its face (its first child), not on the <button>
+      ctaFilled: f(cta.firstElementChild ?? cta).backgroundColor !== 'rgba(0, 0, 0, 0)' && f(cta.firstElementChild ?? cta).backgroundColor !== f(region.querySelector('footer')!).backgroundColor,
       hlArea: area(hl),
     };
   });
