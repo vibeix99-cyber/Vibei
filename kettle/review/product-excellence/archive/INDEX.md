@@ -26,3 +26,4 @@ Restore a chain in order with `git fetch <bundle> 'refs/heads/*:refs/heads/*'` (
 | `pe-w2-summary-e0f511a.incremental.bundle` | pe/w2-summary@e0f511a (Wave 2 R1, Maker S WIP: code final, evidence gaps; code f95e0be) | 90a11e5 | okay 2026-10-11 |
 | `pe-w2-home-fixwip-4baf228.incremental.bundle` | pe/w2-home@4baf228 (Wave 2 R1, Maker H fix round for W2H-D1: WIP, interrupted by the usage limit, unvalidated) | acf1c6a | okay 2026-10-12 |
 | `w2r1-review-probes-2026-10-12.tar.gz` | W2R1 lead and Lane N/S/R probe scripts (worktree `.tmp`, git-ignored) at the usage-limit pause | — | tar ok 2026-10-12 |
+| `pe-w2-room-fix-92241c2.incremental.bundle` | pe/w2-room@92241c2 (Wave 2 R1, Maker N fix round READY FOR REVIEW: N-F1 items float; code c381ccb) | fc9f6d8 | okay 2026-10-12 |

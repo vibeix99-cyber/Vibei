@@ -60,3 +60,23 @@ the missing same-session BEFORE/AFTER big-day captures at all 16 configurations 
 `/home/user/wt/w2t-c`. src `5b0bc778ba020b122804fcd3eb568b5229236bb0`. Dev **:5345**, preview **:5355**. Served
 `Summary.tsx` and `Fallback.tsx` were verified against the commit. H joins only if it is approved; if H is merged, Lane R
 reruns on the merged tree.
+
+## Economy resume, 2026-10-12 (Vibei's rulings)
+
+### N fix round (N-F1, items floating on the bare sky). GATE PASSED, 01:12 UTC
+- Revision: `pe/w2-room@92241c2`. Code `c381ccb`, src `4b49254`. Packet `/home/user/wt/w2n/…/contracts/W2/N-FIX-READY-FOR-REVIEW.md`.
+- Changed: `src/scene/Fallback.tsx` (+22/−2: layers wait for the base still's `img.decode()`) and `tests/w2-room.spec.ts` (+1 test). Ownership is OK.
+- Maker's results: under CPU 6× with a cold cache, items floated in 6 of 6 brew starts on `fc9f6d8` (13 frames) and 0 of 6 on the fix. `w2-room.spec` passed 7/7; the new test fails on the old `Fallback.tsx`. tsc 0; vitest 267/267.
+- **Trial merge `55eb968`** = integration `3f78e0c` + `92241c2`, worktree `/home/user/wt/w2t-n2`, dev **:5346**, preview **:5356**. Served `Fallback.tsx` verified. Control: the old N trial `2acc218` on :5340 / :5350.
+- Archive: `archive/pe-w2-room-fix-92241c2.incremental.bundle`.
+
+### H split (Vibei: the fix round was cut off, so H is split)
+- **First visit only:** `pe/w2-firstvisit@1b38509`, src `58aac00`, made by the orchestrator as a mechanical split.
+  - `src/screens/welcome/{WelcomeScreen.tsx, Welcome.module.css}` are byte-identical to H's `7a961b7`.
+  - `tests/w2-firstvisit.spec.ts` is H's first-visit test from `w2-home.spec.ts`, unchanged, with only the helpers it uses.
+  - Content: the Hello line becomes "Kettle is focus time, then a tea break if you want one."; one primary action, the 15-minute brew; "Set things up first" and "I have a backup" become quiet links.
+  - vitest 267/267; tsc 0.
+  - Spec, base first: `90a11e5` **0/6** (6 failed), split **6/6** (`review/FV/spec/`).
+  - Matched AFTER captures: `review/FV/AFTER-1b38509-5353/` at 16 configurations (first visit, plus full page), 0 errors. BEFORE: `contracts/W2/BEFORE-90a11e5/<cfg>/00-first-visit*.png`.
+  - Servers: dev **:5343**, preview **:5353**.
+- **Brew length (#2): withdrawn.** It is recorded as a structural coupling for the I10 toast round: toasts anchor to the start panel's height (`[data-toast-above]`), so a taller dock lifts End's toasts over Today's Mark done (W2H-D1). H's branch `pe/w2-home` (`acf1c6a`, fix WIP `4baf228`) stays archived and unmerged.
