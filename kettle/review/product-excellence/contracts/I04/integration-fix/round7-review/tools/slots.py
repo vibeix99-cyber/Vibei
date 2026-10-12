@@ -13,7 +13,7 @@ while any other lane is waiting. A waiter that does not fit blocks the waiters b
 import fcntl, json, os, subprocess, sys, time
 
 DIR = '/tmp/rv7-slots'
-MAX = max(1, (os.cpu_count() or 4) - 1)
+MAX = int(os.environ.get("SLOTS_MAX", "2"))  # economy round: at most 2 browsers machine-wide
 RANK = {}  # fair share: every lane rank 0 (see docstring)
 
 def alive(pid):
