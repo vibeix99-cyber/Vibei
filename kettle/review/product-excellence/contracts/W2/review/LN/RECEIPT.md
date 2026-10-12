@@ -1,7 +1,7 @@
 # Lane N receipt · Wave 2 round 1 · Maker N (Room and Nook, I09)
 
 **Reviewer:** Lane N, model Sonnet 5.5 (`claude-sonnet-5-5`). **I issue no verdict.** This is a receipt of checks run.
-**Wall clock:** start 2026-10-11 22:59:24 UTC · end {{END}} UTC (budget 75 min).
+**Wall clock:** start 2026-10-11 22:59:24 UTC · end 23:55 UTC on 2026-10-11 (stopped on a usage limit; §3–§6 and the run log were not assembled into this file, their draft text is kept in `fix/receipt-sections-3-6-draft.md`).
 **Under review:** `pe/w2-room@fc9f6d8` (code `5d7bb23`, `kettle/src` `81cd36e`), trial merge `2acc218` (worktree `/home/user/wt/w2t-n`, `git rev-parse HEAD:kettle/src` = `81cd36ea83419e210f9360efea397153e1de7860`).
 **Control:** `90a11e5` (`/home/user/wt/w2-base`). Never stopped or touched.
 Packet and gate read in full. Nothing edited, committed or pushed outside my own lane directory and `.tmp/LN/` (git-ignored). **One slip, disclosed:** a `pip download pillow` run with its working directory in N's `…/W2/N/probes/` saved a 6.9 MB wheel there; I deleted it within a minute, N's probe files are byte-identical to the shas listed at the start (checked) and `git status` in `/home/user/wt/w2n/kettle` was clean afterwards. Python imaging for my analysis lives in `/tmp/claude-0/ln-pylib`.
