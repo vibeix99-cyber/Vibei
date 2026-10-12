@@ -3,8 +3,11 @@
  *
  *   hello ─┬─ "Start a 15-min brew" (optional task) ─▶ Focus, 15:00. After the whistle the summary offers
  *          │                                            "Make Kettle yours · Set up", which comes back here at `name`.
- *          ├─ "Set things up first" ─▶ name → goal → rhythm → ambience → notifications → ready
- *          └─ "I have a backup"
+ *          ├─ "Set things up first" (a quiet link) ─▶ name → goal → rhythm → ambience → notifications → ready
+ *          └─ "I have a backup" (a quiet link)
+ *
+ * Hello says what Kettle is in one plain line (focus time, then a tea break you can take or skip) and has one primary
+ * action, the 15-minute first brew (I08). The task and the name stay optional.
  *
  * Setup steps: one question per screen, Chai asks through a speech bubble; every one can be skipped.
  * OWNER: home/onboarding/settings area.
@@ -348,7 +351,7 @@ function Hello({ onBrew, onSetup }: { onBrew: (intention: string) => void; onSet
         >
           <SpeechBubble tail="bottom" tailAt="50%" size="lg" arrive={false}>
             <h1 className={s.helloTitle}>Hi, I’m Chai.</h1>
-            <p className={s.helloLine}>Let’s start small: one {FIRST_BREW_MIN}‑minute brew. I’ll keep you company.</p>
+            <p className={s.helloLine}>Kettle is focus time, then a tea break if you want one.</p>
           </SpeechBubble>
         </motion.div>
         <motion.div
@@ -384,12 +387,15 @@ function Hello({ onBrew, onSetup }: { onBrew: (intention: string) => void; onSet
           <Button type="submit" size="lg" block sfx="start" icon={<Icon name="play" size={22} />}>
             Start a {FIRST_BREW_MIN}-min brew
           </Button>
-          <Button type="button" size="lg" block variant="ghost" onClick={onSetup}>
-            Set things up first
-          </Button>
-          <button type="button" className={s.helloBackup} onClick={() => fileRef.current?.click()}>
-            I have a backup
-          </button>
+          {/* One primary action. Setup (offered again after the first whistle) and restore are quiet links. */}
+          <div className={s.helloLinks}>
+            <button type="button" className={s.helloLink} onClick={onSetup}>
+              Set things up first
+            </button>
+            <button type="button" className={s.helloLink} onClick={() => fileRef.current?.click()}>
+              I have a backup
+            </button>
+          </div>
           <input ref={fileRef} type="file" accept="application/json,.json" className="sr-only" tabIndex={-1} aria-hidden onChange={onFile} />
           {msg && (
             <p className={s.helloMsg} data-tone={msg.tone} role={msg.tone === 'error' ? 'alert' : 'status'}>
