@@ -1,28 +1,32 @@
-# CHECKER W2 · Maker N (Room and Nook: I09 + I06 prep) — round 1
+# CHECKER W2 · Maker N (Room and Nook: I09 + I06 prep) — round 1, after its one fix round
 
-**Verdict: VERDICT_PLACEHOLDER**
+**Verdict: APPROVE** `pe/w2-room@92241c2` (code `c381ccb`, kettle/src `4b49254fa25be7f9e2e4f788b9ad93181d2c8ff6`).
+The one blocker of round 1 (N-F1, earned items floating on the bare sky at brew start, ruled BLOCKING by Vibei) is fixed and
+verified control-first under load; no new defect. Sections 2, 3.1–3.2, 3.4–3.6, 4 and 6 are LEAD-1's work on `fc9f6d8`, which the fix leaves
+untouched (the fix changes `scene/Fallback.tsx` and adds one test, nothing else); LEAD-2 finished §3.3, §5, §7, §8 and the header.
 
 | | |
 |---|---|
-| Lead checker | Opus 5.5 (`claude-opus-5-5`), newly launched; implemented none of this work |
-| Revision | `pe/w2-room@fc9f6d8` = code `5d7bb23` + packet/evidence (docs only) |
-| `kettle/src` | `81cd36ea83419e210f9360efea397153e1de7860` (`git rev-parse` of `5d7bb23`, `fc9f6d8` and the trial merge: equal) |
-| Trial merge | `2acc218` = integration `cb79496` + `fc9f6d8`; dev :5340, preview :5350. `cb79496` vs `90a11e5` and `2acc218` vs `fc9f6d8` differ only in `kettle/review/**` (checked) |
+| Lead checkers | LEAD-1 (diff review, CHAI-3D-SPEC, visual gate on `fc9f6d8`; stopped by a usage limit) and LEAD-2 (fix round, residuals, verdict); Opus 5.5 (`claude-opus-5-5`); neither implemented any of this work |
+| Revision under verdict | `pe/w2-room@92241c2` = fix code `c381ccb` + fix packet/evidence (docs only) on top of `fc9f6d8` |
+| `kettle/src` | `4b49254fa25be7f9e2e4f788b9ad93181d2c8ff6` (`git rev-parse` of `c381ccb:kettle/src`, `92241c2:kettle/src` and trial `55eb968:kettle/src`: equal, LEAD-2) |
+| Trial merge (fix) | `55eb968` = integration + `92241c2`; dev :5346, preview :5356 (worktree `/home/user/wt/w2t-n2`). `git diff 2acc218 55eb968 -- kettle/src kettle/tests` = `scene/Fallback.tsx` (+22/−2) and `tests/w2-room.spec.ts` (+33) only (Lane N; consistent with `git diff fc9f6d8 c381ccb`, read by LEAD-2) |
+| Round-1 revision (control for the fix) | `pe/w2-room@fc9f6d8` (code `5d7bb23`, src `81cd36e`), trial `2acc218`, dev :5340, preview :5350 |
 | Base / control | `90a11e5` (src `42e106d`), dev :5310, preview :5330 |
-| Packet | `/home/user/wt/w2n/kettle/review/product-excellence/contracts/W2/N-READY-FOR-REVIEW.md`; evidence `…/W2/N/` |
-| Lane | Lane N (Sonnet 5.5) receipt `contracts/W2/review/LN/RECEIPT.md` + `LN/runs/` (frames opened by me where cited) |
-| My notes / probes | `contracts/W2/review/LEAD/N-interim.md`; probes `/home/user/wt/w2t-n/kettle/.tmp/LEAD/{n-cap,n-float}.mjs` |
+| Packets | `/home/user/wt/w2n/kettle/review/product-excellence/contracts/W2/N-READY-FOR-REVIEW.md` (round 1), `…/W2/N-FIX-READY-FOR-REVIEW.md` (fix); evidence `…/W2/N/`, `…/W2/N/fix/` |
+| Lane | Lane N (Sonnet 5.5): `contracts/W2/review/LN/RECEIPT.md` + `LN/runs/` (round 1) and `LN/FIX-RECHECK.md` + `LN/fix/` (fix, control-first) |
+| Notes | `contracts/W2/review/LEAD/N-interim.md` (LEAD-1). LEAD-1's probes `/home/user/wt/w2t-n/kettle/.tmp/LEAD/{n-cap,n-float,n-float2}.mjs` were written but left no output; nothing below relies on them |
 
 ## 1. What I verified myself, and what I took from others
 
-**Myself:** the diff review (§2); the bundle and precache effect on the served trial build (§2); the CHAI-3D-SPEC against
+**LEAD-1:** the diff review (§2); the bundle and precache effect on the served trial build (§2); the CHAI-3D-SPEC against
 `chai.ts`, `kit.ts`, `Engine.ts`, `layout.ts`, `resolve.ts` and three `0.186.1` (§6); the engine's paused-render paths for
-the 375×667 question (§5); the visual gate at full size (§4); the loading-order artifact reproduced on control and trial
-(§3.3, FLOAT_PLACEHOLDER).
+the 375×667 question (§5); the visual gate at full size (§4). **LEAD-2:** the fix diff `fc9f6d8..c381ccb` (§3.3), the Lane N re-check and its frames
+(§3.3), Lane R's combined N+S standard captures for the N-owned pairs (§3.7).
 **From Lane N, traced to its raw frames/rows:** the 12-configuration control-vs-trial backdrop table (0 → 5 layers,
 ±2 px position), the loading timeline, the 375×667 control samples, the night/low-tier difference. **From the maker:**
 the render-level match (`layers/match.json`), suites (tsc, vitest 267/267, chromium, timer/pwa), the control run of
-`w2-room.spec` (5 fail / 1 pass on `90a11e5`; 6/6 on the fix), the 375×667 reproduction attempts (67 samples).
+`w2-room.spec` (5 fail / 1 pass on `90a11e5`; 6/6 on `fc9f6d8`; 7/7 on `c381ccb` with the new test, also 7/7 by Lane N on :5346), the 375×667 reproduction attempts (67 samples).
 
 ## 2. Diff review (`90a11e5..5d7bb23`)
 
@@ -57,7 +61,41 @@ held-chunk and context-lost cases covered by `w2-room.spec` (5 fail on control).
 pre-existing 0.064 on both).
 
 ### 3.3 Loading-order artifact (new, found by Lane N; reproduced by me)
-FLOAT_SECTION
+**Round 1 (`fc9f6d8`):** BLOCKS (Vibei's ruling): the feature's own output, the earned items, stood on the bare sky
+gradient for 0.4–2.5 s at brew start. Cause: the base still is a hashed `<img decoding="async">`; the four shelf layers are
+inlined `data:` URIs (N-F7) and the others are small, so the layers painted first.
+
+**Fix (`c381ccb`, read by LEAD-2):** `WindowStill` keeps the base `<img>` in a ref; an effect keyed on `src` calls
+`img.decode()` and sets `roomReady = src` on success; the layer `<svg>` renders only while `roomReady === src`. Rejection is
+swallowed (`() => {}`); an `alive` flag drops a late resolve after unmount or a `src` change. Consequences, each checked:
+- **A still that never decodes** (404, corrupt, offline without precache): no items ever, i.e. the plain static fallback
+  (the base `90a11e5` look). Acceptable as ruled.
+- **Time / weather switch** (`src` changes): `roomReady !== src` at once, so the old time's items never sit on the new
+  room; items return when the new still has decoded. While the new file loads, the `<img>` keeps its current image (HTML
+  current/pending request), so the frames are "room without items" then "room with items", never items on the sky.
+- **3D-on path:** untouched. `WindowStill` exists only in the still paths (3D off, no WebGL, Suspense/loading, context
+  lost); the engine, the hand-over and the unlock close-up (own `still`) do not use it. Lane N: settled unlock summary
+  fix vs control mean abs 0.0; spec "3D on unchanged" passes.
+- **Host swap static → loading-live host** mounts a second `WindowStill`, which waits for its own `decode()` of the
+  already-loaded file: see N-F10 (the 5 → 0 → 5 over 74 ms Lane N saw once).
+- **New test** (`w2-room.spec.ts`, "items never stand on the bare sky"): holds back only the base still request
+  (layer files and `?url` modules pass), counts every animation frame for 1.5 s (expects 0 frames with a layer), then
+  releases and expects all layers. Fails on `fc9f6d8`'s `Fallback.tsx` (2 frames, maker log), passes on the fix.
+
+**Verification (raw rows and frames):**
+- Lane N re-check, control first (`LN/FIX-RECHECK.md` §1, `LN/fix/data`, `LN/fix/sheets`): control `2acc218` :5350
+  floats in **8/8** cold-cache starts (CPU 4–6× and 2 unthrottled; 390×844@3 ×7, 1440×900@2 ×1), 2–10 screencast frames,
+  **425–2,207 ms** of items on the bare sky; fix `55eb968` :5356 **0/9** (5 throttled + 3 unthrottled at 390×844, 1 at
+  1440×900), by DOM sampler and by screencast; the first frame with items is never before the first frame with the
+  painted room (items 0–802 ms after it).
+- Maker (`N/fix/float-*.json`): `fc9f6d8` 6/6 starts float, fix 0/6, CPU 6×, cold cache.
+- Opened by LEAD-2: `LN/fix/sheets/ctrl-5350-390x844-start4.jpg` (shelf, pothos, books and record-player stand on the
+  bare sky at 1,542 / 2,094 / 2,717 ms; room at 3,160 ms) and `fix-5356-390x844-start4.jpg` (bare sky at 1,501 ms with no
+  items — the base loading look —, room at 1,634 ms, items on the room at 2,026 ms).
+- Spec `w2-room.spec.ts` on the fix (dev :5346): **7/7** (`LN/fix/logs/spec.log`); maker: 7/7, tsc 0, vitest 267/267.
+
+**Result: FIXED.** The remaining cost is that the items can arrive after the room (0–0.8 s in Lane N's runs, up to 2.5 s
+under the maker's 6× throttle): every frame is either the base look (room without items) or the intended one.
 
 ### 3.4 Static Nook: truthful hint — MET
 "Drag to look around · tap things" → "A drawing of your room" with 3D off and with no WebGL (16/16 maker; spec); 3D on
@@ -74,7 +112,18 @@ idea (re-render the paused engine on `visibilitychange`/`pageshow`) stays an opt
 ### 3.6 Preserved — MET
 Drawing-then-close-up unlock (unchanged path; maker's `07-summary-bigday` sheets at 4 configurations), the static fallback
 (base `<img>` first; a failed layer is simply absent), reserved media space (the `<svg>` is absolutely positioned inside the
-existing host; host rect identical off/live at 12/12, Lane N).
+existing host; host rect identical off/live at 12/12, Lane N). On the fix (Lane N, 390×844 light and 375×667 dark): 3D-off
+backdrop, static Nook (3D off and no WebGL), hint, host rect and settled unlock summary pixel-identical to `2acc218`.
+
+### 3.7 Lane R combined N+S trial `248415c` (old N + S), N-owned pairs (LEAD-2)
+- `1440x900@1-{dark,light}-02-focus-start` (12.7 / 6.4 %): the trial frame is mid-hand-over: the room still (with the
+  item layers) cross-fading over the live canvas, so window frame and curtains show ghosted; clock digit. The hand-over
+  fade is the base mechanism (Lane N round 1: the still unmounts 0.5–2.5 s after the engine is ready on both sides); a
+  mid-fade frame of the CPU renderer that hides nothing interactive → transient exception (N-F11).
+- `17-nook-early` / `18-nook-earned` SIZE differences (390 light, 1440 dark): opened; same content, the full-page height
+  differs by trailing blank space, and the 1440 dark ctrl frame has the 3D Nook not yet drawn → capture phase.
+- Every other N-relevant pair under 0.5 %. Suites on `248415c` (Lane R): tsc 0, vitest 275/275, chromium 87/1 (the `:1004`
+  @1440 flake, F1), timer/pwa 29 + 2 skips, smoke 0 errors with the Nook hint "A drawing of your room".
 
 ## 4. Visual gate — PASS
 
@@ -92,7 +141,7 @@ loading | live), `375x667-light-t200-nook.jpg` (static hint before/after, 3D hin
 
 | # | Item | Configs | Class | Reason / owner |
 |---|---|---|---|---|
-| N-F1 | Item layers paint before the base window still at brew start (items over the bare sky gradient) | every size, first paint of the Focus backdrop; observed 1–2.5 s under load | FLOAT_CLASS | FLOAT_REASON |
+| N-F1 | Item layers paint before the base window still at brew start (items over the bare sky gradient) | every size, first paint of the Focus backdrop; observed 1–2.5 s under load | FIXED (was BLOCKS) | Round 1: introduced by N, ruled blocking by Vibei. Fix `c381ccb`: 0/9 (Lane N) and 0/6 (maker) float starts vs 8/8 and 6/6 on `fc9f6d8`, same load; new spec test (§3.3) |
 | N-F2 | Static Nook hint wraps to two lines at 375×667 @200 and sits over part of the drawing until the first tap | 375×667 @200 | ACCEPTED | One-time, `pointer-events: none`, dismissed on the first tap; BEFORE ran past both edges of the stage, unreadable |
 | N-F3 | At night the 3D-off/loading still (high-quality render) differs from the live view on low-tier devices (evenly lit room) | dark / night lighting, low tier | FOLLOW-UP | Pre-existing: the base still alone differs the same way (Lane N control column); the layers match the high tier (as-seen diff 3.0). Owner: scene area |
 | N-F4 | ♪ note particle baked into the record-player layer | where the record player is earned | ACCEPTED | It is the live engine's reduced-motion frame, which is what the base still already is |
@@ -101,6 +150,10 @@ loading | live), `375x667-light-t200-nook.jpg` (static hint before/after, 3D hin
 | N-F7 | Packet says only the manifest and URL map are bundled; 4 shelf layers are inlined (`scene` chunk 8.8 → 33 KB, gzip 3.8 → 17.3 KB) | build | ACCEPTED (note) | Within budget, lazy chunk; correct the packet wording; relevant to N-F1 |
 | N-F8 | 375×667 "room disappears" | 375×667 | ACCEPTED | Not reproducible (maker, critic, Lane N); no blanking path found in the engine; withdrawn by the audit |
 | N-F9 | CHAI-3D-SPEC stale line references (`setPose`, `update`, `root.scale`) | doc | FOLLOW-UP | Doc fix, owner N |
+| N-F10 | Host swap at brew start (static still → loading-live host): the second `WindowStill` waits for its own `decode()` of the already-loaded still, so the items left for 74 ms (5 → 0 → 5) once, at 375×667 dark, during the Home → Focus transition | 375×667 dark, loading, 1 run of 1 (not at 390×844 light, not in 9 float starts) | ACCEPTED | Not a defect: every frame is the room without items (the base look and the fix's own decode-pending state, accepted by Vibei) or the room with items; never items on the sky; under the route transition and the backdrop blur; hides nothing interactive. Optional hardening in §7 |
+| N-F11 | Mid-hand-over frame (still fading over the live canvas) shows ghosted window/curtains | 1440×900 brew start (Lane R `02-focus-start`) | ACCEPTED (transient exception) | Sub-second fade of the CPU renderer, base mechanism, hides nothing interactive |
+| N-F12 | CLS 0.00012 vs 0 in the same 375×667 dark loading run | 1 run | ACCEPTED (noise) | The layer `<svg>` is absolutely positioned and cannot shift layout; 0.00012 ≪ 0.1; not seen elsewhere |
+| N-F13 | Items can arrive after the room (0–0.8 s, Lane N; up to 2.5 s under 6× CPU, maker) | cold start, slow device | ACCEPTED | The intended degrade: room first (base look), then items; nothing floats |
 | F1 | `integrity.spec.ts:1090` @1440×900 flake | 1440×900 | FOLLOW-UP | Base fails 4/9 (Lane S). R7-7 / M7a. N's suites did not hit it; listed for completeness |
 
 ## 6. CHAI-3D-SPEC.md (I06 prep) — complete; accurate apart from three stale line references
@@ -122,4 +175,20 @@ Stale references (to fix in the doc, not blocking): `setPose` is `chai.ts:140–
 
 ## 7. Follow-ups with owners
 
-FOLLOWUP_PLACEHOLDER
+1. **N-F3** night still vs low-tier live lighting — scene area (pre-existing; consider low-tier stills or matching the
+   low tier's night lighting).
+2. **N-F6** context lost mid-session in the Nook keeps the drag hint over the drawing — Maker N / scene (key the hint on the
+   engine's state, not only on tier/WebGL).
+3. **N-F9** CHAI-3D-SPEC stale line refs (`setPose` 140–151, `update` 153–187, `root.scale` 190) — Maker N, doc fix with I06.
+4. **N-F7** packet wording on bundling (4 shelf layers inlined) — Maker N, doc fix.
+5. **N-F10 hardening (optional)** — Maker N / scene: remember decoded still URLs (module-level set) so a remounted
+   `WindowStill` with an already-decoded `src` draws its items at once.
+6. **F1** `integrity.spec.ts:1090`/`:1004` waits at 1440 — R7-7 / M7a owner.
+7. The 375×667 "room disappears" hardening (re-render a paused engine on `visibilitychange`/`pageshow`) — optional, scene.
+
+## 8. The one pair that shows the change
+
+3D off, Focus backdrop, 390×844 light: BEFORE `contracts/W2/BEFORE-90a11e5/390x844-light-t100/02-focus-3doff.png` →
+AFTER on the fix revision `contracts/W2/review/LN/fix/acceptance-backdrop/fxf/390x844-light-t100/off.jpg` (fairy lights,
+shelf, books, pothos and record player in the drawing, where the live room has them). For the fix itself:
+`contracts/W2/review/LN/fix/sheets/ctrl-5350-390x844-start4.jpg` → `fix-5356-390x844-start4.jpg`.
