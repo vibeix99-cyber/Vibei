@@ -1,0 +1,1636 @@
+{
+ "base": "http://127.0.0.1:5410",
+ "rev": "b377c62 (kettle/src e0aebbf), dev server",
+ "viewport": {
+  "w": 390,
+  "h": 844
+ },
+ "dpr": 2,
+ "theme": "dark",
+ "text": "200%",
+ "fixedTime": "2026-10-11T07:40:00.000Z",
+ "states": {
+  "01-home": {
+   "desc": "Today at rest (veteran): Brew length and the docked start",
+   "measuredAtMs": 1791824488748,
+   "hash": "#/",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [],
+   "small": [],
+   "dialog": null,
+   "pills": [],
+   "imgs": [
+    {
+     "src": "chai-sipping.webp",
+     "box": [
+      32,
+      427,
+      68,
+      109
+     ]
+    }
+   ],
+   "canvases": []
+  },
+  "01-home-full": {
+   "desc": "Today, full page",
+   "measuredAtMs": 1791824491411,
+   "hash": "#/",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [],
+   "small": [],
+   "dialog": null,
+   "pills": [],
+   "imgs": [
+    {
+     "src": "chai-sipping.webp",
+     "box": [
+      32,
+      426,
+      68,
+      110
+     ]
+    }
+   ],
+   "canvases": []
+  },
+  "02-end-sheet": {
+   "desc": "End sheet open (\"Leave the kettle early?\")",
+   "measuredAtMs": 1791824505875,
+   "hash": "#/focus",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [
+    {
+     "name": "Ambience: Rain. Change",
+     "box": [
+      209,
+      48,
+      117,
+      49
+     ],
+     "by": "div._backdrop_4dq2b_16"
+    },
+    {
+     "name": "Turn sound on",
+     "box": [
+      334,
+      50,
+      44,
+      44
+     ],
+     "by": "div._backdrop_4dq2b_16"
+    },
+    {
+     "name": "Add 5 minutes",
+     "box": [
+      59,
+      734,
+      62,
+      64
+     ],
+     "by": "div._backdrop_4dq2b_16"
+    },
+    {
+     "name": "Pause",
+     "box": [
+      161,
+      734,
+      78,
+      80
+     ],
+     "by": "div._backdrop_4dq2b_16"
+    },
+    {
+     "name": "End session",
+     "box": [
+      274,
+      734,
+      62,
+      64
+     ],
+     "by": "div._backdrop_4dq2b_16"
+    }
+   ],
+   "small": [],
+   "dialog": "Leave the kettle early? That’s okay — yo",
+   "pills": [],
+   "imgs": [
+    {
+     "src": "window-night-rain.webp",
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    },
+    {
+     "src": "chai-reading.webp",
+     "box": [
+      236,
+      195,
+      113,
+      177
+     ]
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    }
+   ]
+  },
+  "03-today-after-end-0.6s": {
+   "desc": "Today 0.6 s after End session: End's toasts, Mark done",
+   "measuredAtMs": 1791824514987,
+   "hash": "#/",
+   "scroll": 0,
+   "toasts": [
+    {
+     "text": "Recipe done: Name what you’re brewing · +10 leaves",
+     "box": [
+      16,
+      364,
+      358,
+      178
+     ],
+     "op": 1,
+     "icon": true
+    },
+    {
+     "text": "Saved 3 minutes of focus",
+     "box": [
+      16,
+      550,
+      358,
+      97
+     ],
+     "op": 1,
+     "icon": true
+    }
+   ],
+   "covered": [
+    {
+     "name": "Ambience: Rain. Change",
+     "box": [
+      209,
+      48,
+      117,
+      49
+     ],
+     "by": "div._backdrop_4dq2b_16"
+    },
+    {
+     "name": "Turn sound on",
+     "box": [
+      334,
+      50,
+      44,
+      44
+     ],
+     "by": "div._backdrop_4dq2b_16"
+    },
+    {
+     "name": "Add 5 minutes",
+     "box": [
+      59,
+      734,
+      62,
+      64
+     ],
+     "by": "span._face_1npvj_34"
+    },
+    {
+     "name": "Pause",
+     "box": [
+      161,
+      734,
+      78,
+      80
+     ],
+     "by": "span._label_1npvj_64"
+    },
+    {
+     "name": "End session",
+     "box": [
+      274,
+      734,
+      62,
+      64
+     ],
+     "by": "span._face_1npvj_34"
+    },
+    {
+     "name": "Today",
+     "box": [
+      4,
+      765,
+      96,
+      79
+     ],
+     "by": "span._face_1npvj_34"
+    },
+    {
+     "name": "Stats",
+     "box": [
+      100,
+      765,
+      96,
+      79
+     ],
+     "by": "span._label_1npvj_64"
+    },
+    {
+     "name": "Nook",
+     "box": [
+      195,
+      765,
+      96,
+      79
+     ],
+     "by": "span._label_1npvj_64"
+    },
+    {
+     "name": "Settings",
+     "box": [
+      291,
+      765,
+      96,
+      79
+     ],
+     "by": "span._face_1npvj_34"
+    },
+    {
+     "name": "3 days warm streak. Show details",
+     "box": [
+      8,
+      10,
+      184,
+      69
+     ],
+     "by": "div._backdrop_4dq2b_16"
+    },
+    {
+     "name": "171 leaves Show details",
+     "box": [
+      253,
+      10,
+      129,
+      69
+     ],
+     "by": "div._backdrop_4dq2b_16"
+    },
+    {
+     "name": "4 Level 4 Cozy level 4, 34 leaves to the next. Sho",
+     "box": [
+      8,
+      83,
+      147,
+      48
+     ],
+     "by": "div._backdrop_4dq2b_16"
+    },
+    {
+     "name": "Put the kettle on · 25 min",
+     "box": [
+      16,
+      511,
+      358,
+      155
+     ],
+     "by": "toast: Saved 3 minutes of focus"
+    },
+    {
+     "name": "Change brew length",
+     "box": [
+      56,
+      713,
+      279,
+      42
+     ],
+     "by": "span._label_1npvj_64"
+    }
+   ],
+   "small": [],
+   "dialog": "Leave the kettle early? That’s okay — yo",
+   "pills": [],
+   "imgs": [
+    {
+     "src": "window-night-rain.webp",
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    },
+    {
+     "src": "chai-reading.webp",
+     "box": [
+      236,
+      195,
+      113,
+      177
+     ]
+    },
+    {
+     "src": "chai-sipping.webp",
+     "box": [
+      32,
+      426,
+      68,
+      110
+     ]
+    },
+    {
+     "src": "chai-concerned.webp",
+     "box": [
+      161,
+      230,
+      67,
+      106
+     ]
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    }
+   ]
+  },
+  "03-today-after-end-1.5s": {
+   "desc": "Today 1.5 s after End session: End's toasts, Mark done",
+   "measuredAtMs": 1791824520518,
+   "hash": "#/",
+   "scroll": 0,
+   "toasts": [
+    {
+     "text": "Recipe done: Name what you’re brewing · +10 leaves",
+     "box": [
+      16,
+      364,
+      358,
+      178
+     ],
+     "op": 1,
+     "icon": true
+    },
+    {
+     "text": "Saved 3 minutes of focus",
+     "box": [
+      16,
+      550,
+      358,
+      97
+     ],
+     "op": 1,
+     "icon": true
+    }
+   ],
+   "covered": [],
+   "small": [],
+   "dialog": null,
+   "pills": [],
+   "imgs": [
+    {
+     "src": "chai-sipping.webp",
+     "box": [
+      32,
+      426,
+      68,
+      110
+     ]
+    }
+   ],
+   "canvases": []
+  },
+  "03-today-after-end-3.2s": {
+   "desc": "Today 3.2 s after End session: End's toasts, Mark done",
+   "measuredAtMs": 1791824521391,
+   "hash": "#/",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [],
+   "small": [],
+   "dialog": null,
+   "pills": [],
+   "imgs": [
+    {
+     "src": "chai-sipping.webp",
+     "box": [
+      32,
+      426,
+      68,
+      110
+     ]
+    }
+   ],
+   "canvases": []
+  },
+  "03-today-after-end-6.0s": {
+   "desc": "Today 6.0 s after End session: End's toasts, Mark done",
+   "measuredAtMs": 1791824522315,
+   "hash": "#/",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [],
+   "small": [],
+   "dialog": null,
+   "pills": [],
+   "imgs": [
+    {
+     "src": "chai-sipping.webp",
+     "box": [
+      32,
+      426,
+      68,
+      110
+     ]
+    }
+   ],
+   "canvases": []
+  },
+  "04-summary-task": {
+   "desc": "Summary, task day (K02), 1.5 s",
+   "measuredAtMs": 1791824534027,
+   "hash": "#/done",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [
+    {
+     "name": "Done",
+     "box": [
+      20,
+      646,
+      126,
+      44
+     ],
+     "by": "span._face_1npvj_34"
+    },
+    {
+     "name": "Carry forward",
+     "box": [
+      20,
+      698,
+      252,
+      44
+     ],
+     "by": "span._label_1npvj_64"
+    }
+   ],
+   "small": [],
+   "dialog": null,
+   "pills": [
+    {
+     "text": "+65 leaves",
+     "box": [
+      20,
+      1103,
+      207,
+      44
+     ]
+    },
+    {
+     "text": "Goal met · 50/30 min Daily goal met: 50 of 30 minutes today",
+     "box": [
+      20,
+      1163,
+      347,
+      44
+     ]
+    },
+    {
+     "text": "3 3 days warm",
+     "box": [
+      20,
+      1223,
+      235,
+      44
+     ]
+    },
+    {
+     "text": "2 recipes done",
+     "box": [
+      20,
+      1283,
+      258,
+      44
+     ]
+    }
+   ],
+   "imgs": [
+    {
+     "src": "window-night-rain.webp",
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    },
+    {
+     "src": "chai-cheering.webp",
+     "box": [
+      236,
+      216,
+      113,
+      155
+     ]
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    }
+   ]
+  },
+  "04-summary-task-settled": {
+   "desc": "Summary, task day, 4.5 s",
+   "measuredAtMs": 1791824543172,
+   "hash": "#/done",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [
+    {
+     "name": "Done",
+     "box": [
+      20,
+      646,
+      126,
+      44
+     ],
+     "by": "span._face_1npvj_34"
+    },
+    {
+     "name": "Carry forward",
+     "box": [
+      20,
+      698,
+      252,
+      44
+     ],
+     "by": "span._label_1npvj_64"
+    }
+   ],
+   "small": [],
+   "dialog": null,
+   "pills": [
+    {
+     "text": "+65 leaves",
+     "box": [
+      20,
+      1103,
+      207,
+      44
+     ]
+    },
+    {
+     "text": "Goal met · 50/30 min Daily goal met: 50 of 30 minutes today",
+     "box": [
+      20,
+      1163,
+      347,
+      44
+     ]
+    },
+    {
+     "text": "3 3 days warm",
+     "box": [
+      20,
+      1223,
+      235,
+      44
+     ]
+    },
+    {
+     "text": "2 recipes done",
+     "box": [
+      20,
+      1283,
+      258,
+      44
+     ]
+    }
+   ],
+   "imgs": [
+    {
+     "src": "chai-cheering.webp",
+     "box": [
+      236,
+      216,
+      113,
+      155
+     ]
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    }
+   ]
+  },
+  "04-summary-task-full": {
+   "desc": "Summary, task day, full page",
+   "measuredAtMs": 1791824546677,
+   "hash": "#/done",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [
+    {
+     "name": "Done",
+     "box": [
+      20,
+      646,
+      126,
+      44
+     ],
+     "by": "span._face_1npvj_34"
+    },
+    {
+     "name": "Carry forward",
+     "box": [
+      20,
+      698,
+      252,
+      44
+     ],
+     "by": "span._label_1npvj_64"
+    }
+   ],
+   "small": [],
+   "dialog": null,
+   "pills": [
+    {
+     "text": "+65 leaves",
+     "box": [
+      20,
+      1103,
+      207,
+      44
+     ]
+    },
+    {
+     "text": "Goal met · 50/30 min Daily goal met: 50 of 30 minutes today",
+     "box": [
+      20,
+      1163,
+      347,
+      44
+     ]
+    },
+    {
+     "text": "3 3 days warm",
+     "box": [
+      20,
+      1223,
+      235,
+      44
+     ]
+    },
+    {
+     "text": "2 recipes done",
+     "box": [
+      20,
+      1283,
+      258,
+      44
+     ]
+    }
+   ],
+   "imgs": [
+    {
+     "src": "chai-cheering.webp",
+     "box": [
+      236,
+      216,
+      113,
+      155
+     ]
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    }
+   ]
+  },
+  "05-break": {
+   "desc": "Tea break running",
+   "measuredAtMs": 1791824551873,
+   "hash": "#/focus",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [],
+   "small": [],
+   "dialog": null,
+   "pills": [],
+   "imgs": [
+    {
+     "src": "chai-sipping.webp",
+     "box": [
+      238,
+      193,
+      110,
+      178
+     ]
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    }
+   ]
+  },
+  "06-break-over-0.6s": {
+   "desc": "Break's over with a carried task, 0.6 s: toasts (folded?)",
+   "measuredAtMs": 1791824555038,
+   "hash": "#/focus",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [],
+   "small": [],
+   "dialog": null,
+   "pills": [],
+   "imgs": [
+    {
+     "src": "chai-stretch.webp",
+     "box": [
+      240,
+      214,
+      104,
+      157
+     ]
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    }
+   ]
+  },
+  "06-break-over-1.5s": {
+   "desc": "Break's over with a carried task, 1.5 s: toasts (folded?)",
+   "measuredAtMs": 1791824557485,
+   "hash": "#/focus",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [],
+   "small": [],
+   "dialog": null,
+   "pills": [],
+   "imgs": [
+    {
+     "src": "chai-stretch.webp",
+     "box": [
+      240,
+      214,
+      104,
+      157
+     ]
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    }
+   ]
+  },
+  "06-break-over-3.2s": {
+   "desc": "Break's over with a carried task, 3.2 s: toasts (folded?)",
+   "measuredAtMs": 1791824559541,
+   "hash": "#/focus",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [],
+   "small": [],
+   "dialog": null,
+   "pills": [],
+   "imgs": [
+    {
+     "src": "chai-stretch.webp",
+     "box": [
+      240,
+      214,
+      104,
+      157
+     ]
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    }
+   ]
+  },
+  "06-break-over-full": {
+   "desc": "Break's over, full page",
+   "measuredAtMs": 1791824561608,
+   "hash": "#/focus",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [],
+   "small": [],
+   "dialog": null,
+   "pills": [],
+   "imgs": [
+    {
+     "src": "chai-stretch.webp",
+     "box": [
+      240,
+      214,
+      104,
+      157
+     ]
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    }
+   ]
+  },
+  "07-nextbrew-0.6s": {
+   "desc": "Next brew auto-started, 0.6 s: reward toast over the status line?",
+   "measuredAtMs": 1791824592049,
+   "hash": "#/done",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [
+    {
+     "name": "Wait",
+     "box": [
+      193,
+      785,
+      80,
+      44
+     ],
+     "by": "span._label_1npvj_64"
+    }
+   ],
+   "small": [],
+   "dialog": null,
+   "pills": [
+    {
+     "text": "+55 leaves",
+     "box": [
+      20,
+      982,
+      207,
+      44
+     ]
+    },
+    {
+     "text": "Goal met · 50/30 min Daily goal met: 50 of 30 minutes today",
+     "box": [
+      20,
+      1042,
+      347,
+      44
+     ]
+    },
+    {
+     "text": "3 3 days warm",
+     "box": [
+      20,
+      1102,
+      235,
+      44
+     ]
+    },
+    {
+     "text": "Recipe done · Brew for 30 minutes",
+     "box": [
+      20,
+      1162,
+      350,
+      80
+     ]
+    }
+   ],
+   "imgs": [
+    {
+     "src": "chai-cheering.webp",
+     "box": [
+      236,
+      216,
+      113,
+      155
+     ]
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    },
+    {
+     "box": [
+      30,
+      745,
+      152,
+      114
+     ]
+    }
+   ]
+  },
+  "07-nextbrew-1.5s": {
+   "desc": "Next brew auto-started, 1.5 s: reward toast over the status line?",
+   "measuredAtMs": 1791824596060,
+   "hash": "#/focus",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [],
+   "small": [],
+   "dialog": null,
+   "pills": [],
+   "imgs": [
+    {
+     "src": "chai-sipping.webp",
+     "box": [
+      238,
+      193,
+      110,
+      178
+     ]
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    }
+   ]
+  },
+  "07-nextbrew-3.2s": {
+   "desc": "Next brew auto-started, 3.2 s: reward toast over the status line?",
+   "measuredAtMs": 1791824598611,
+   "hash": "#/focus",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [],
+   "small": [],
+   "dialog": null,
+   "pills": [],
+   "imgs": [
+    {
+     "src": "chai-sipping.webp",
+     "box": [
+      238,
+      193,
+      110,
+      178
+     ]
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    }
+   ]
+  },
+  "08-summary-routine": {
+   "desc": "Summary, routine day, 1.5 s",
+   "measuredAtMs": 1791824609610,
+   "hash": "#/done",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [],
+   "small": [],
+   "dialog": null,
+   "pills": [
+    {
+     "text": "+40 leaves",
+     "box": [
+      20,
+      586,
+      207,
+      44
+     ]
+    },
+    {
+     "text": "Goal met · 75/60 min Daily goal met: 75 of 60 minutes today",
+     "box": [
+      20,
+      646,
+      347,
+      44
+     ]
+    },
+    {
+     "text": "23 23 days warm",
+     "box": [
+      20,
+      706,
+      253,
+      44
+     ]
+    },
+    {
+     "text": "Recipes 1/3",
+     "box": [
+      20,
+      766,
+      217,
+      44
+     ]
+    },
+    {
+     "text": "12 144 leaves to level 13 144 leaves to cozy level 13",
+     "box": [
+      20,
+      826,
+      350,
+      80
+     ]
+    }
+   ],
+   "imgs": [
+    {
+     "src": "chai-cheering.webp",
+     "box": [
+      236,
+      216,
+      113,
+      155
+     ]
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    }
+   ]
+  },
+  "08-summary-routine-settled": {
+   "desc": "Summary, routine day, 4.5 s",
+   "measuredAtMs": 1791824615544,
+   "hash": "#/done",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [],
+   "small": [],
+   "dialog": null,
+   "pills": [
+    {
+     "text": "+40 leaves",
+     "box": [
+      20,
+      586,
+      207,
+      44
+     ]
+    },
+    {
+     "text": "Goal met · 75/60 min Daily goal met: 75 of 60 minutes today",
+     "box": [
+      20,
+      646,
+      347,
+      44
+     ]
+    },
+    {
+     "text": "23 23 days warm",
+     "box": [
+      20,
+      706,
+      253,
+      44
+     ]
+    },
+    {
+     "text": "Recipes 1/3",
+     "box": [
+      20,
+      766,
+      217,
+      44
+     ]
+    },
+    {
+     "text": "12 144 leaves to level 13 144 leaves to cozy level 13",
+     "box": [
+      20,
+      826,
+      350,
+      80
+     ]
+    }
+   ],
+   "imgs": [
+    {
+     "src": "chai-cheering.webp",
+     "box": [
+      236,
+      216,
+      113,
+      155
+     ]
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    }
+   ]
+  },
+  "08-summary-routine-full": {
+   "desc": "Summary, routine day, full page",
+   "measuredAtMs": 1791824617925,
+   "hash": "#/done",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [],
+   "small": [],
+   "dialog": null,
+   "pills": [
+    {
+     "text": "+40 leaves",
+     "box": [
+      20,
+      586,
+      207,
+      44
+     ]
+    },
+    {
+     "text": "Goal met · 75/60 min Daily goal met: 75 of 60 minutes today",
+     "box": [
+      20,
+      646,
+      347,
+      44
+     ]
+    },
+    {
+     "text": "23 23 days warm",
+     "box": [
+      20,
+      706,
+      253,
+      44
+     ]
+    },
+    {
+     "text": "Recipes 1/3",
+     "box": [
+      20,
+      766,
+      217,
+      44
+     ]
+    },
+    {
+     "text": "12 144 leaves to level 13 144 leaves to cozy level 13",
+     "box": [
+      20,
+      826,
+      350,
+      80
+     ]
+    }
+   ],
+   "imgs": [
+    {
+     "src": "chai-cheering.webp",
+     "box": [
+      236,
+      216,
+      113,
+      155
+     ]
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    }
+   ]
+  },
+  "09-summary-bigday": {
+   "desc": "Summary, big day (unlock), 4 s",
+   "measuredAtMs": 1791824637405,
+   "hash": "#/done",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [],
+   "small": [],
+   "dialog": null,
+   "pills": [
+    {
+     "text": "+68 leaves",
+     "box": [
+      20,
+      998,
+      207,
+      44
+     ]
+    },
+    {
+     "text": "Goal met · 37/30 min Daily goal met: 37 of 30 minutes today",
+     "box": [
+      20,
+      1058,
+      347,
+      44
+     ]
+    },
+    {
+     "text": "7 7 days warm, your best yet",
+     "box": [
+      20,
+      1118,
+      350,
+      80
+     ]
+    },
+    {
+     "text": "Tea Cozy earned You earned a Tea Cozy: it keeps your streak ",
+     "box": [
+      20,
+      1214,
+      283,
+      44
+     ]
+    },
+    {
+     "text": "2 recipes done",
+     "box": [
+      20,
+      1274,
+      258,
+      44
+     ]
+    },
+    {
+     "text": "7 II Badge: Warm Streak II",
+     "box": [
+      20,
+      1334,
+      350,
+      80
+     ]
+    },
+    {
+     "text": "I Badge: Weekend Warmth",
+     "box": [
+      20,
+      1430,
+      350,
+      80
+     ]
+    }
+   ],
+   "imgs": [
+    {
+     "src": "window-night-rain.webp",
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    },
+    {
+     "src": "chai-cheering.webp",
+     "box": [
+      236,
+      216,
+      113,
+      155
+     ]
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    },
+    {
+     "box": [
+      30,
+      758,
+      152,
+      114
+     ]
+    }
+   ]
+  },
+  "09-summary-bigday-settled": {
+   "desc": "Summary, big day / unlock close-up, 10 s",
+   "measuredAtMs": 1791824654688,
+   "hash": "#/done",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [],
+   "small": [],
+   "dialog": null,
+   "pills": [
+    {
+     "text": "+68 leaves",
+     "box": [
+      20,
+      982,
+      207,
+      44
+     ]
+    },
+    {
+     "text": "Goal met · 37/30 min Daily goal met: 37 of 30 minutes today",
+     "box": [
+      20,
+      1042,
+      347,
+      44
+     ]
+    },
+    {
+     "text": "7 7 days warm, your best yet",
+     "box": [
+      20,
+      1102,
+      350,
+      80
+     ]
+    },
+    {
+     "text": "Tea Cozy earned You earned a Tea Cozy: it keeps your streak ",
+     "box": [
+      20,
+      1198,
+      283,
+      44
+     ]
+    },
+    {
+     "text": "2 recipes done",
+     "box": [
+      20,
+      1258,
+      258,
+      44
+     ]
+    },
+    {
+     "text": "7 II Badge: Warm Streak II",
+     "box": [
+      20,
+      1318,
+      350,
+      80
+     ]
+    },
+    {
+     "text": "I Badge: Weekend Warmth",
+     "box": [
+      20,
+      1414,
+      350,
+      80
+     ]
+    }
+   ],
+   "imgs": [
+    {
+     "src": "chai-cheering.webp",
+     "box": [
+      236,
+      216,
+      113,
+      155
+     ]
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    },
+    {
+     "box": [
+      30,
+      745,
+      152,
+      114
+     ]
+    }
+   ]
+  },
+  "09-summary-bigday-full": {
+   "desc": "Summary, big day, full page",
+   "measuredAtMs": 1791824657755,
+   "hash": "#/done",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [],
+   "small": [],
+   "dialog": null,
+   "pills": [
+    {
+     "text": "+68 leaves",
+     "box": [
+      20,
+      982,
+      207,
+      44
+     ]
+    },
+    {
+     "text": "Goal met · 37/30 min Daily goal met: 37 of 30 minutes today",
+     "box": [
+      20,
+      1042,
+      347,
+      44
+     ]
+    },
+    {
+     "text": "7 7 days warm, your best yet",
+     "box": [
+      20,
+      1102,
+      350,
+      80
+     ]
+    },
+    {
+     "text": "Tea Cozy earned You earned a Tea Cozy: it keeps your streak ",
+     "box": [
+      20,
+      1198,
+      283,
+      44
+     ]
+    },
+    {
+     "text": "2 recipes done",
+     "box": [
+      20,
+      1258,
+      258,
+      44
+     ]
+    },
+    {
+     "text": "7 II Badge: Warm Streak II",
+     "box": [
+      20,
+      1318,
+      350,
+      80
+     ]
+    },
+    {
+     "text": "I Badge: Weekend Warmth",
+     "box": [
+      20,
+      1414,
+      350,
+      80
+     ]
+    }
+   ],
+   "imgs": [
+    {
+     "src": "chai-cheering.webp",
+     "box": [
+      236,
+      216,
+      113,
+      155
+     ]
+    }
+   ],
+   "canvases": [
+    {
+     "box": [
+      -2,
+      -2,
+      390,
+      328
+     ]
+    },
+    {
+     "box": [
+      30,
+      745,
+      152,
+      114
+     ]
+    }
+   ]
+  },
+  "10-nook-3d": {
+   "desc": "Nook, 3D on, 8 s",
+   "measuredAtMs": 1791824669692,
+   "hash": "#/nook",
+   "scroll": 0,
+   "toasts": [],
+   "covered": [],
+   "small": [],
+   "dialog": null,
+   "pills": [],
+   "imgs": [],
+   "canvases": [
+    {
+     "box": [
+      18,
+      214,
+      354,
+      316
+     ]
+    }
+   ]
+  }
+ },
+ "errors": []
+}
