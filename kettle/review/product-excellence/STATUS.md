@@ -10,7 +10,53 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
-## ⏸ WAVE 2 ROUND 1 PAUSED: usage limit, 2026-10-12 00:30 UTC (read this first)
+## ■ WAVE 2 ROUND 1 CLOSED at `b377c62` · 2026-10-12 02:10 UTC (read this first)
+
+Finished in economy mode after the usage-limit pause. Nothing is running, the slot gate is reset, and the gate is capped at 2 browsers.
+
+**Verdicts** (LEAD-2, Opus; LEAD-1 issued the H verdict). Files are in `contracts/W2/`.
+
+| Work | Verdict | Revision | File |
+|---|---|---|---|
+| **S**, summary: I07 + Wave-1 #1 | **APPROVE** | `pe/w2-summary@e0f511a` (code `f95e0be`, src `6750571`) | `CHECKER-W2-S.md` |
+| **N**, room and Nook: I09 + I06 prep | **APPROVE** after its one fix round (N-F1: items floated on the bare sky at brew start; Vibei ruled it not acceptable) | `pe/w2-room@92241c2` (fix `c381ccb`, src `4b49254`) | `CHECKER-W2-N.md` |
+| **H**, Home and first visit: I08 + #2 | **REJECT** (W2H-D1). The fix round was cut off by the usage limit, so Vibei's ruling split H | `pe/w2-home@acf1c6a` (fix WIP `4baf228`), archived, unmerged | `CHECKER-W2-H.md` |
+| **First visit only**, split from H | **APPROVE** | `pe/w2-firstvisit@1b38509` (src `58aac00`; welcome files byte-identical to H's `7a961b7`) | `CHECKER-W2-FV.md` |
+
+**Merged into `claude/wizardly-galileo-uy89d9`:**
+- `0aeddcd`: first visit;
+- `0698bdb`: N;
+- `b377c62`: S.
+
+Merged `kettle/src` is `e0aebbf`, identical to tested candidate `c99611a` (src, tests and configs checked).
+
+**Regression on the final tree** (`review/LR/final/`):
+- chromium **93 passed, 2 failed, 2 skipped**. The 2 failures are `break-reach.spec.ts:179` @200 % (375×667 light, 390×844 dark). They fail **identically on base `90a11e5`** (2 of 3 variants failed in 2 of 2 runs alone), so they are pre-existing. Not this round.
+- timer/pwa **29 passed + 2 skipped** by design.
+- tsc 0; vitest **275/275**.
+- Reused from Lane R on `248415c` (N+S): smoke, 0 errors; standard capture set, 6 configurations × 21 states, with every pair over 0.5 % classified by the lead (`review/LR/std/`).
+
+**CHAI-3D-SPEC.md:** `kettle/review/product-excellence/contracts/W2/N/CHAI-3D-SPEC.md` on `claude/wizardly-galileo-uy89d9` (from `pe/w2-room`).
+
+**BEFORE/AFTER pairs:**
+
+| Change | BEFORE | AFTER |
+|---|---|---|
+| Summary ranking and fold | `contracts/W2/review/LEAD/S/375x667-light-t100-atRisk-BEFORE.png` | `…-AFTER.png` |
+| First visit | `contracts/W2/BEFORE-90a11e5/375x667-light-t100/00-first-visit.png` | `contracts/W2/review/FV/AFTER-1b38509-5353/375x667-light-t100/00-first-visit.png` |
+| Earned items in the 3D-off backdrop | `contracts/W2/BEFORE-90a11e5/390x844-light-t100/02-focus-3doff.png` | `contracts/W2/review/LN/fix/acceptance-backdrop/fxf/390x844-light-t100/off.jpg` |
+| Static Nook hint | `contracts/W2/BEFORE-90a11e5/390x844-light-t100/10-nook-static.png` | `contracts/W2/N/captures/AFTER-5d7bb23-5233/390x844-light-t100/10-nook-static.png` |
+
+**Follow-ups added** (owners are in the verdict files):
+1. **Brew length / toast coupling, for I10:** toasts anchor to the start panel's height (`[data-toast-above]`, `src/ui/Toast.tsx` `toastLiftBottom`). Moving Brew length into the docked start (#2) lifted End's toasts over Today's Mark done at 390×844 (W2H-D1). Wave-1 #2 (Brew length under the dock, failing tap-target size) therefore **stays open** and must be solved together with the toast round. H's branch is archived (`archive/pe-w2-home-*.bundle`).
+2. `break-reach.spec.ts:179` @200 % fails on base too, as of 2026-10-12. It is likely date- or toast-dependent ("Break's over" with recipe toasts): wheel reach of "Put the kettle on".
+3. F1: `integrity.spec.ts:1090` and `:1004` waits at 1440 (R7-7 / M7a).
+4. At 200 % text, End's toasts already cover Mark done on the base (F2). The End sheet header takes taps over Mark done for 5–15 s after End (F3).
+5. 844×390 @100 big day: the unlock picture starts under the fold, same as on the base. The 3D close-up loads slowly under software rendering.
+6. N-F3, N-F6, N-F7 and N-F9, plus optional N-F10 hardening (a 74 ms layer blink on a host swap).
+7. The Wave-1 list in `WAVE1-CLOSED.md`: #1 is now fixed by S; #3–#14 are unchanged.
+
+## (superseded) ⏸ WAVE 2 ROUND 1 PAUSED: usage limit, 2026-10-12 00:30 UTC (read this first)
 
 At about 00:30 UTC a usage limit stopped every running agent: the lead, Lanes N, S and R, and Maker H in its fix
 round. As the brief requires, the orchestrator saved everything, pushed this STATUS and stopped. **Nothing is merged.**
@@ -57,7 +103,7 @@ are archived in `archive/w2r1-review-probes-2026-10-12.tar.gz`.
 Each server runs with the worktree's `.tmp/w2.vite.config.ts`. Each preview serves from `/tmp/rv7-servers/dist-<name>`,
 which a rebuild recreates.
 
-## ▶ WAVE 2 ROUND 1 IN PROGRESS · 2026-10-11 (read this first)
+## (superseded) WAVE 2 ROUND 1 IN PROGRESS · 2026-10-11
 
 - **Decision:** Vibei chose audit direction A ("One Chai, one room") on top of the approved plan. The base is `90a11e5`,
   where Wave 1 closed.
