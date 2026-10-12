@@ -10,6 +10,53 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
+## ⏸ WAVE 2 ROUND 1 PAUSED: usage limit, 2026-10-12 00:30 UTC (read this first)
+
+At about 00:30 UTC a usage limit stopped every running agent: the lead, Lanes N, S and R, and Maker H in its fix
+round. As the brief requires, the orchestrator saved everything, pushed this STATUS and stopped. **Nothing is merged.**
+Integration app code is still `90a11e5`. Every server and job is stopped, and the slot gate is reset.
+
+| Maker | Verdict so far | Where it stands |
+|---|---|---|
+| **N** (`pe/w2-room@fc9f6d8`) | **pending** | The lead finished the diff review, the CHAI-3D-SPEC check and the visual gate. It was reproducing Lane N's loading-order finding when it stopped: item layers paint before the base still, so items float on a bare sky for 1–2.5 s under load. Draft `contracts/W2/CHECKER-W2-N.md` (verdict line is a placeholder); notes in `review/LEAD/N-interim.md`. Lane N's receipt `review/LN/RECEIPT.md` is nearly complete (its end time is unset) |
+| **H** (`pe/w2-home@acf1c6a`) | **REJECT, W2H-D1** (`contracts/W2/CHECKER-W2-H.md`, §7 is the defect packet) | The one 90-minute fix round started at 23:46 and was cut off at about 00:30, unfinished and unmeasured. Its edits (`Composer.tsx`, `Home.module.css`) are saved as WIP commit **`4baf228`** on `pe/w2-home` (src `9d6600d`), archived as `archive/pe-w2-home-fixwip-4baf228.incremental.bundle`. About 46 of its 90 minutes remain. Lane H has not started |
+| **S** (`pe/w2-summary@e0f511a`) | **pending** | The lead had not started S beyond `review/LEAD/S-interim.md`. Lane S's partial evidence is in `review/LS/` (no receipt yet): `t1090/` (base vs S, see below), `acceptance-table.md`, `analysis.json`, `spot/`, and same-session captures for 7 AFTER and 8 BEFORE configurations in `captures/` |
+
+**Facts gathered before the stop** (raw logs are in the folders named):
+- **`integrity.spec.ts:1090`:**
+  - On base `90a11e5`, 390×844 passed every run: 16/16 by the lead's count, 9/9 in Lane S's.
+  - On S, 390×844 passed 9/9 and 375×667 passed 9/9. At 1440×900, S failed 3 of 9 runs and the base failed 4 of 9: a pre-existing flake (F1, R7-7). S's two earlier failures were also at 1440.
+  - On H (before the fix), 390×844 passed 1 of 7.
+- **Lane R on combined N+S trial `248415c`** (`review/LR/logs/`):
+  - tsc exit 0; vitest **275/275**.
+  - chromium **87 passed, 1 failed**: `integrity.spec.ts:1004`, the 1440×900 storage-full banner test. Rerun alone, it failed once in 3 on both the trial and control, so it is a base flake.
+  - timer/pwa **29 passed + 2 skipped** by design.
+  - Smoke at 390×844 through Home, focus, End, the summary, Skip and the Nook: 0 page errors, and the Nook hint reads "A drawing of your room".
+  - The standard capture set had started (job logs `jobA`–`jobC`). No matrix and no receipt yet.
+- **Disclosure from Lane N's receipt:** one lane slip. A `pip download` wrote a 6.9 MB wheel file into N's worktree folder `…/W2/N/probes/`. Checked at 00:40: the file is no longer there, it is not tracked on `pe/w2-room`, and N's worktree is clean.
+
+**To resume:** don't re-derive; follow these steps.
+1. Restart the servers listed in the table below, then verify them with `/tmp/rv7-servers/verify.sh` or by hash-checking the served sources against each commit.
+2. Resume the lead, sending it this section. It must rule on N first, using its own probes plus Lane N's receipt, then on S.
+3. Give Maker H the rest of its fix round (about 46 minutes) from `4baf228`. Then Lane H runs the targeted re-review against §7 "Done when".
+4. Relaunch Lane S for its missing captures and its receipt, and Lane R for its capture matrix and receipt.
+5. Merge only the approved makers. Lane R reruns on the merged tree if it differs from `248415c`.
+6. Stop.
+
+Scratch kept in `/tmp/claude-0/{lr,ln,ls}-scratch` survives only while this container lives. Lane and lead probe scripts
+are archived in `archive/w2r1-review-probes-2026-10-12.tar.gz`.
+
+| Server | Worktree | Revision | Dev / preview |
+|---|---|---|---|
+| control | `/home/user/wt/w2-base` | `90a11e5` | :5310 / :5330 |
+| trial N | `/home/user/wt/w2t-n` | `2acc218` | :5340 / :5350 |
+| trial S | `/home/user/wt/w2t-s` | `3726a71` | :5341 / :5351 |
+| trial H | `/home/user/wt/w2t-h` | `4921ee4` (pre-fix) | :5342 / :5352 |
+| combined N+S | `/home/user/wt/w2t-c` | `248415c` | :5345 / :5355 |
+
+Each server runs with the worktree's `.tmp/w2.vite.config.ts`. Each preview serves from `/tmp/rv7-servers/dist-<name>`,
+which a rebuild recreates.
+
 ## ▶ WAVE 2 ROUND 1 IN PROGRESS · 2026-10-11 (read this first)
 
 - **Decision:** Vibei chose audit direction A ("One Chai, one room") on top of the approved plan. The base is `90a11e5`,

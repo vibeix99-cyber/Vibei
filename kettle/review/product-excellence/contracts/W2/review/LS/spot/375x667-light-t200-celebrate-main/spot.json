@@ -1,0 +1,192 @@
+{
+ "cfg": "375x667@2:light:200",
+ "day": "celebrate",
+ "mode": "main",
+ "tap": "touch",
+ "base": "http://127.0.0.1:5351",
+ "steps": [
+  {
+   "name": "arrival",
+   "scrollTop": 80,
+   "max": 1213,
+   "atEnd": false,
+   "F": 474.8,
+   "cutBox": [
+    "straddle-fold:Record player is in your nook"
+   ],
+   "occluded": 0,
+   "last": {
+    "text": "How your leaves added up",
+    "bottom": 1572.2,
+    "gapToFooterTop": -1097.4
+   },
+   "highlights": 0,
+   "heading": {
+    "text": "25 minutes brewed",
+    "box": [
+     20,
+     225.5,
+     335,
+     123.2
+    ],
+    "inViewport": true,
+    "inScrollArea": true
+   },
+   "footer": [
+    "Tea time · 5 min hit5/5 inView=true",
+    "Skip break hit5/5 inView=true"
+   ],
+   "pills": 7
+  },
+  {
+   "name": "wheel-tries",
+   "wheelTries": [
+    {
+     "at": [
+      188,
+      237
+     ],
+     "over": "P._sub_1yi8z_59",
+     "before": 80,
+     "after": 230,
+     "delta": 150
+    },
+    {
+     "at": [
+      361,
+      237
+     ],
+     "over": "DIV._sheet_1yi8z_33",
+     "before": 230,
+     "after": 380,
+     "delta": 150
+    },
+    {
+     "at": [
+      14,
+      380
+     ],
+     "over": "DIV._sheet_1yi8z_33",
+     "before": 380,
+     "after": 530,
+     "delta": 150
+    },
+    {
+     "at": [
+      188,
+      404
+     ],
+     "over": "SPAN.",
+     "before": 530,
+     "after": 680,
+     "delta": 150
+    }
+   ]
+  },
+  {
+   "name": "touch-gesture",
+   "start": 680,
+   "afterSwipeDown160": 680,
+   "afterSwipeUp160": 680
+  },
+  {
+   "name": "top",
+   "scrollTop": 0,
+   "max": 1213,
+   "atEnd": false,
+   "F": 474.8,
+   "cutBox": [
+    "straddle-fold:Tea’s ready. Take five before the next one."
+   ],
+   "occluded": 0,
+   "last": {
+    "text": "How your leaves added up",
+    "bottom": 1652.2,
+    "gapToFooterTop": -1177.4
+   },
+   "highlights": 0
+  },
+  {
+   "name": "reachability-walk",
+   "total": 30,
+   "neverClear": []
+  },
+  {
+   "name": "before-toggle",
+   "scrollTop": 1213,
+   "max": 1213,
+   "atEnd": true,
+   "F": 474.8,
+   "cutBox": [
+    "cut-top:7 days warm, your best yet"
+   ],
+   "occluded": 0,
+   "last": {
+    "text": "How your leaves added up",
+    "bottom": 439.2,
+    "gapToFooterTop": 35.6
+   },
+   "highlights": 0,
+   "toggle": {
+    "box": [
+     20,
+     351.2,
+     335,
+     90
+    ],
+    "status": "clear",
+    "open": false
+   }
+  },
+  {
+   "name": "toggle-ready",
+   "status": "clear",
+   "box": {
+    "x": 20,
+    "y": 351.21875,
+    "width": 335,
+    "height": 90
+   },
+   "hitTarget": "How your leaves added up"
+  },
+  {
+   "name": "toggle-tapped",
+   "ariaExpanded": "true"
+  },
+  {
+   "name": "end-state",
+   "scrollTop": 1971,
+   "max": 1971,
+   "atEnd": true,
+   "F": 474.8,
+   "cutBox": [
+    "cut-top:Recipe: Finish a full brew"
+   ],
+   "occluded": 0,
+   "last": {
+    "text": "Your 7-day streak stays warm with one full brew ",
+    "bottom": 425.2,
+    "gapToFooterTop": 49.6
+   },
+   "highlights": 0,
+   "tallyBox": {
+    "above": 46,
+    "cut-top": 1,
+    "clear": 16
+   },
+   "cutInk": 1,
+   "lastGapToFooter": 49.6,
+   "footer": [
+    "Tea time · 5 min hit5/5",
+    "Skip break hit5/5"
+   ]
+  },
+  {
+   "name": "after-tea-tap",
+   "hash": "#/focus",
+   "summaryGone": true,
+   "body": "Tea break Tea break · 5 min Rain 4 : 5 9 Tea time. Sip slowly. Next brew whenever you’re ready Skip break Pause Next brew 1 of 4 brewed Tea break started, 5 min"
+  }
+ ],
+ "errors": []
+}

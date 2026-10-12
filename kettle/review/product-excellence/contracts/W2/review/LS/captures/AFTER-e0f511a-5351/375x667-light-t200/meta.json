@@ -1,0 +1,5925 @@
+{
+ "base": "http://127.0.0.1:5351",
+ "rev": "e0f511a (trial 3726a71, kettle/src 6750571), production preview 5351",
+ "viewport": {
+  "w": 375,
+  "h": 667
+ },
+ "dpr": 2,
+ "theme": "light",
+ "text": "200%",
+ "fixedTime": "2026-10-11T07:40:00Z",
+ "states": {
+  "07-summary-routine": {
+   "desc": "Summary, routine day, 1.5 s",
+   "phase": "07-summary-routine",
+   "vw": 375,
+   "vh": 667,
+   "scroll": {
+    "top": 62,
+    "max": 557,
+    "clientH": 475,
+    "rect": [
+     0,
+     0,
+     375,
+     475
+    ]
+   },
+   "sheetTop": 223,
+   "footerTop": 475,
+   "F": 475,
+   "fade": 14,
+   "units": [
+    {
+     "kind": "title-line0",
+     "text": "25 minutes brewed",
+     "top": 253,
+     "bottom": 296,
+     "left": 20,
+     "right": 292.203125,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "title-line1",
+     "text": "25 minutes brewed",
+     "top": 315,
+     "bottom": 358,
+     "left": 20,
+     "right": 203.328125,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "sub-line0",
+     "text": "Tea’s ready. Take five before the next one.",
+     "top": 379,
+     "bottom": 411,
+     "left": 20,
+     "right": 341,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "sub-line1",
+     "text": "Tea’s ready. Take five before the next one.",
+     "top": 425,
+     "bottom": 457,
+     "left": 20,
+     "right": 326,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "reward0",
+     "text": "+40 leaves",
+     "top": 476,
+     "bottom": 520,
+     "left": 20,
+     "right": 227,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward1",
+     "text": "Goal met · 75/60 min",
+     "top": 536,
+     "bottom": 616,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward2",
+     "text": "23 days warm",
+     "top": 632,
+     "bottom": 676,
+     "left": 20,
+     "right": 273,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward3",
+     "text": "Recipes 1/3",
+     "top": 692,
+     "bottom": 736,
+     "left": 20,
+     "right": 237,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward4",
+     "text": "144 leaves to level 13",
+     "top": 752,
+     "bottom": 832,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "details-toggle",
+     "text": "How your leaves added up",
+     "top": 846,
+     "bottom": 936,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    }
+   ],
+   "cut": [],
+   "occluded": [],
+   "overlaps": [],
+   "footerButtons": [
+    {
+     "name": "Tea time · 5 min",
+     "box": [
+      20,
+      489,
+      335,
+      108
+     ],
+     "hit": true,
+     "inView": true
+    },
+    {
+     "name": "Skip break",
+     "box": [
+      75,
+      601,
+      226,
+      58
+     ],
+     "hit": true,
+     "inView": true
+    }
+   ],
+   "chai": {
+    "box": [
+     227,
+     115,
+     109,
+     149
+    ],
+    "shownAboveSheet": 0.72
+   },
+   "toasts": [],
+   "facts": [
+    "25 minutes brewed",
+    "Tea’s ready. Take five before the next one.",
+    "+40 leaves",
+    "Goal met · 75/60 min",
+    "23 days warm",
+    "Recipes 1/3",
+    "144 leaves to level 13"
+   ],
+   "lastUnit": {
+    "kind": "details-toggle",
+    "text": "How your leaves added up",
+    "top": 846,
+    "bottom": 936,
+    "status": "below"
+   },
+   "ls": {
+    "phase": "07-summary-routine",
+    "vw": 375,
+    "vh": 667,
+    "dpr": 2,
+    "htmlFont": "32px",
+    "scroll": {
+     "top": 62,
+     "max": 557,
+     "atEnd": false,
+     "rect": [
+      0,
+      0,
+      375,
+      474.8
+     ]
+    },
+    "F": 474.8,
+    "footerTop": 474.8,
+    "fade": 14,
+    "heading": {
+     "text": "25 minutes brewed",
+     "box": [
+      20,
+      243.5,
+      335,
+      123.2
+     ],
+     "inViewport": true,
+     "inScrollArea": true
+    },
+    "footer": [
+     {
+      "name": "Tea time · 5 min",
+      "box": [
+       20,
+       488.8,
+       335,
+       108.4
+      ],
+      "hitsOfFive": 5,
+      "inViewport": true
+     },
+     {
+      "name": "Skip break",
+      "box": [
+       74.5,
+       601.2,
+       225.9,
+       57.8
+      ],
+      "hitsOfFive": 5,
+      "inViewport": true
+     }
+    ],
+    "lineCount": 13,
+    "tallyBox": {
+     "clear": 3,
+     "in-fade": 1,
+     "below": 9
+    },
+    "tallyInk": {
+     "clear": 4,
+     "below": 9
+    },
+    "cutLinesBox": [
+     {
+      "text": "Tea’s ready. Take five before the next one.",
+      "top": 416,
+      "bottom": 462,
+      "box": "in-fade",
+      "ink": "clear"
+     }
+    ],
+    "cutLinesInk": [],
+    "occluded": [],
+    "overlaps": [],
+    "lastLine": {
+     "text": "How your leaves added up",
+     "bottom": 934.5,
+     "gapToFooterTop": -459.6
+    },
+    "detailsToggle": {
+     "box": [
+      20,
+      846.5,
+      335,
+      90
+     ],
+     "status": "below",
+     "open": false
+    },
+    "rewardsListLabel": "Rewards",
+    "pills": [
+     {
+      "visible": "+40 leaves",
+      "full": "+40 leaves",
+      "kind": "leaves",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       476.5,
+       207,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Goal met · 75/60 min",
+      "full": "Goal met · 75/60 minDaily goal met: 75 of 60 minutes today",
+      "kind": "goal",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       536.5,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "23 days warm",
+      "full": "2323 days warm",
+      "kind": "streak",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       632.5,
+       253,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Recipes 1/3",
+      "full": "Recipes 1/3",
+      "kind": "recipes",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       692.5,
+       217,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "144 leaves to level 13",
+      "full": "12144 leaves to level 13144 leaves to cozy level 13",
+      "kind": "level",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       752.5,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     }
+    ],
+    "distinct": [
+     {
+      "sig": "[\"rgb(252, 244, 233)\",\"0px rgb(59, 42, 32)\",\"30px\",\"4px 6px\",\"999px\",\"rgb(237, 223, 203) 0px 0px 0px 2px inset\"]",
+      "n": 5,
+      "sample": [
+       "+40 leaves",
+       "Goal met · 75/60 min",
+       "23 days warm"
+      ]
+     }
+    ],
+    "highlightCount": 0,
+    "unlock": null,
+    "chai": {
+     "box": [
+      226.8,
+      115.4,
+      108.8,
+      149.3
+     ],
+     "inViewportShare": 1,
+     "notUnderSheetShare": 0.72,
+     "sideBySide": false,
+     "tag": "IMG"
+    },
+    "toasts": [],
+    "announce": "25 minutes brewed. 40 leaves earned. Daily goal met.",
+    "lines": [
+     {
+      "text": "25 minutes brewed",
+      "top": 239,
+      "bottom": 307,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "25 minutes brewed",
+      "top": 301,
+      "bottom": 369,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Tea’s ready. Take five before the next one.",
+      "top": 370,
+      "bottom": 416,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Tea’s ready. Take five before the next one.",
+      "top": 416,
+      "bottom": 462,
+      "box": "in-fade",
+      "ink": "clear"
+     },
+     {
+      "text": "+40 leaves",
+      "top": 477,
+      "bottom": 518,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Goal met · 75/60 min",
+      "top": 537,
+      "bottom": 578,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Goal met · 75/60 min",
+      "top": 573,
+      "bottom": 614,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "23 days warm",
+      "top": 633,
+      "bottom": 674,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Recipes 1/3",
+      "top": 693,
+      "bottom": 734,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "144 leaves to level 13",
+      "top": 753,
+      "bottom": 794,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "144 leaves to level 13",
+      "top": 789,
+      "bottom": 830,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "How your leaves added up",
+      "top": 848,
+      "bottom": 889,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "How your leaves added up",
+      "top": 893,
+      "bottom": 934,
+      "box": "below",
+      "ink": "below"
+     }
+    ]
+   },
+   "tMs": 1791762776219
+  },
+  "07-summary-routine-settled": {
+   "desc": "Summary, routine day, 4.5 s",
+   "phase": "07-summary-routine-settled",
+   "vw": 375,
+   "vh": 667,
+   "scroll": {
+    "top": 62,
+    "max": 557,
+    "clientH": 475,
+    "rect": [
+     0,
+     0,
+     375,
+     475
+    ]
+   },
+   "sheetTop": 223,
+   "footerTop": 475,
+   "F": 475,
+   "fade": 14,
+   "units": [
+    {
+     "kind": "title-line0",
+     "text": "25 minutes brewed",
+     "top": 253,
+     "bottom": 296,
+     "left": 20,
+     "right": 292.203125,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "title-line1",
+     "text": "25 minutes brewed",
+     "top": 315,
+     "bottom": 358,
+     "left": 20,
+     "right": 203.328125,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "sub-line0",
+     "text": "Tea’s ready. Take five before the next one.",
+     "top": 379,
+     "bottom": 411,
+     "left": 20,
+     "right": 341,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "sub-line1",
+     "text": "Tea’s ready. Take five before the next one.",
+     "top": 425,
+     "bottom": 457,
+     "left": 20,
+     "right": 326,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "reward0",
+     "text": "+40 leaves",
+     "top": 476,
+     "bottom": 520,
+     "left": 20,
+     "right": 227,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward1",
+     "text": "Goal met · 75/60 min",
+     "top": 536,
+     "bottom": 616,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward2",
+     "text": "23 days warm",
+     "top": 632,
+     "bottom": 676,
+     "left": 20,
+     "right": 273,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward3",
+     "text": "Recipes 1/3",
+     "top": 692,
+     "bottom": 736,
+     "left": 20,
+     "right": 237,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward4",
+     "text": "144 leaves to level 13",
+     "top": 752,
+     "bottom": 832,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "details-toggle",
+     "text": "How your leaves added up",
+     "top": 846,
+     "bottom": 936,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    }
+   ],
+   "cut": [],
+   "occluded": [],
+   "overlaps": [],
+   "footerButtons": [
+    {
+     "name": "Tea time · 5 min",
+     "box": [
+      20,
+      489,
+      335,
+      108
+     ],
+     "hit": true,
+     "inView": true
+    },
+    {
+     "name": "Skip break",
+     "box": [
+      75,
+      601,
+      226,
+      58
+     ],
+     "hit": true,
+     "inView": true
+    }
+   ],
+   "chai": {
+    "box": [
+     227,
+     115,
+     109,
+     149
+    ],
+    "shownAboveSheet": 0.72
+   },
+   "toasts": [],
+   "facts": [
+    "25 minutes brewed",
+    "Tea’s ready. Take five before the next one.",
+    "+40 leaves",
+    "Goal met · 75/60 min",
+    "23 days warm",
+    "Recipes 1/3",
+    "144 leaves to level 13"
+   ],
+   "lastUnit": {
+    "kind": "details-toggle",
+    "text": "How your leaves added up",
+    "top": 846,
+    "bottom": 936,
+    "status": "below"
+   },
+   "ls": {
+    "phase": "07-summary-routine-settled",
+    "vw": 375,
+    "vh": 667,
+    "dpr": 2,
+    "htmlFont": "32px",
+    "scroll": {
+     "top": 62,
+     "max": 557,
+     "atEnd": false,
+     "rect": [
+      0,
+      0,
+      375,
+      474.8
+     ]
+    },
+    "F": 474.8,
+    "footerTop": 474.8,
+    "fade": 14,
+    "heading": {
+     "text": "25 minutes brewed",
+     "box": [
+      20,
+      243.5,
+      335,
+      123.2
+     ],
+     "inViewport": true,
+     "inScrollArea": true
+    },
+    "footer": [
+     {
+      "name": "Tea time · 5 min",
+      "box": [
+       20,
+       488.8,
+       335,
+       108.4
+      ],
+      "hitsOfFive": 5,
+      "inViewport": true
+     },
+     {
+      "name": "Skip break",
+      "box": [
+       74.5,
+       601.2,
+       225.9,
+       57.8
+      ],
+      "hitsOfFive": 5,
+      "inViewport": true
+     }
+    ],
+    "lineCount": 13,
+    "tallyBox": {
+     "clear": 3,
+     "in-fade": 1,
+     "below": 9
+    },
+    "tallyInk": {
+     "clear": 4,
+     "below": 9
+    },
+    "cutLinesBox": [
+     {
+      "text": "Tea’s ready. Take five before the next one.",
+      "top": 416,
+      "bottom": 462,
+      "box": "in-fade",
+      "ink": "clear"
+     }
+    ],
+    "cutLinesInk": [],
+    "occluded": [],
+    "overlaps": [],
+    "lastLine": {
+     "text": "How your leaves added up",
+     "bottom": 934.5,
+     "gapToFooterTop": -459.6
+    },
+    "detailsToggle": {
+     "box": [
+      20,
+      846.5,
+      335,
+      90
+     ],
+     "status": "below",
+     "open": false
+    },
+    "rewardsListLabel": "Rewards",
+    "pills": [
+     {
+      "visible": "+40 leaves",
+      "full": "+40 leaves",
+      "kind": "leaves",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       476.5,
+       207,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Goal met · 75/60 min",
+      "full": "Goal met · 75/60 minDaily goal met: 75 of 60 minutes today",
+      "kind": "goal",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       536.5,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "23 days warm",
+      "full": "2323 days warm",
+      "kind": "streak",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       632.5,
+       253,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Recipes 1/3",
+      "full": "Recipes 1/3",
+      "kind": "recipes",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       692.5,
+       217,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "144 leaves to level 13",
+      "full": "12144 leaves to level 13144 leaves to cozy level 13",
+      "kind": "level",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       752.5,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     }
+    ],
+    "distinct": [
+     {
+      "sig": "[\"rgb(252, 244, 233)\",\"0px rgb(59, 42, 32)\",\"30px\",\"4px 6px\",\"999px\",\"rgb(237, 223, 203) 0px 0px 0px 2px inset\"]",
+      "n": 5,
+      "sample": [
+       "+40 leaves",
+       "Goal met · 75/60 min",
+       "23 days warm"
+      ]
+     }
+    ],
+    "highlightCount": 0,
+    "unlock": null,
+    "chai": {
+     "box": [
+      226.8,
+      115.4,
+      108.8,
+      149.3
+     ],
+     "inViewportShare": 1,
+     "notUnderSheetShare": 0.72,
+     "sideBySide": false,
+     "tag": "IMG"
+    },
+    "toasts": [],
+    "announce": "25 minutes brewed. 40 leaves earned. Daily goal met.",
+    "lines": [
+     {
+      "text": "25 minutes brewed",
+      "top": 239,
+      "bottom": 307,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "25 minutes brewed",
+      "top": 301,
+      "bottom": 369,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Tea’s ready. Take five before the next one.",
+      "top": 370,
+      "bottom": 416,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Tea’s ready. Take five before the next one.",
+      "top": 416,
+      "bottom": 462,
+      "box": "in-fade",
+      "ink": "clear"
+     },
+     {
+      "text": "+40 leaves",
+      "top": 477,
+      "bottom": 518,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Goal met · 75/60 min",
+      "top": 537,
+      "bottom": 578,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Goal met · 75/60 min",
+      "top": 573,
+      "bottom": 614,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "23 days warm",
+      "top": 633,
+      "bottom": 674,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Recipes 1/3",
+      "top": 693,
+      "bottom": 734,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "144 leaves to level 13",
+      "top": 753,
+      "bottom": 794,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "144 leaves to level 13",
+      "top": 789,
+      "bottom": 830,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "How your leaves added up",
+      "top": 848,
+      "bottom": 889,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "How your leaves added up",
+      "top": 893,
+      "bottom": 934,
+      "box": "below",
+      "ink": "below"
+     }
+    ]
+   },
+   "tMs": 1791762783386,
+   "axe": []
+  },
+  "07-summary-routine-full": {
+   "desc": "Summary, routine day, full page",
+   "phase": "07-summary-routine-full",
+   "vw": 375,
+   "vh": 667,
+   "scroll": {
+    "top": 62,
+    "max": 557,
+    "clientH": 475,
+    "rect": [
+     0,
+     0,
+     375,
+     475
+    ]
+   },
+   "sheetTop": 223,
+   "footerTop": 475,
+   "F": 475,
+   "fade": 14,
+   "units": [
+    {
+     "kind": "title-line0",
+     "text": "25 minutes brewed",
+     "top": 253,
+     "bottom": 296,
+     "left": 20,
+     "right": 292.203125,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "title-line1",
+     "text": "25 minutes brewed",
+     "top": 315,
+     "bottom": 358,
+     "left": 20,
+     "right": 203.328125,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "sub-line0",
+     "text": "Tea’s ready. Take five before the next one.",
+     "top": 379,
+     "bottom": 411,
+     "left": 20,
+     "right": 341,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "sub-line1",
+     "text": "Tea’s ready. Take five before the next one.",
+     "top": 425,
+     "bottom": 457,
+     "left": 20,
+     "right": 326,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "reward0",
+     "text": "+40 leaves",
+     "top": 476,
+     "bottom": 520,
+     "left": 20,
+     "right": 227,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward1",
+     "text": "Goal met · 75/60 min",
+     "top": 536,
+     "bottom": 616,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward2",
+     "text": "23 days warm",
+     "top": 632,
+     "bottom": 676,
+     "left": 20,
+     "right": 273,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward3",
+     "text": "Recipes 1/3",
+     "top": 692,
+     "bottom": 736,
+     "left": 20,
+     "right": 237,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward4",
+     "text": "144 leaves to level 13",
+     "top": 752,
+     "bottom": 832,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "details-toggle",
+     "text": "How your leaves added up",
+     "top": 846,
+     "bottom": 936,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    }
+   ],
+   "cut": [],
+   "occluded": [],
+   "overlaps": [],
+   "footerButtons": [
+    {
+     "name": "Tea time · 5 min",
+     "box": [
+      20,
+      489,
+      335,
+      108
+     ],
+     "hit": true,
+     "inView": true
+    },
+    {
+     "name": "Skip break",
+     "box": [
+      75,
+      601,
+      226,
+      58
+     ],
+     "hit": true,
+     "inView": true
+    }
+   ],
+   "chai": {
+    "box": [
+     227,
+     115,
+     109,
+     149
+    ],
+    "shownAboveSheet": 0.72
+   },
+   "toasts": [],
+   "facts": [
+    "25 minutes brewed",
+    "Tea’s ready. Take five before the next one.",
+    "+40 leaves",
+    "Goal met · 75/60 min",
+    "23 days warm",
+    "Recipes 1/3",
+    "144 leaves to level 13"
+   ],
+   "lastUnit": {
+    "kind": "details-toggle",
+    "text": "How your leaves added up",
+    "top": 846,
+    "bottom": 936,
+    "status": "below"
+   },
+   "ls": {
+    "phase": "07-summary-routine-full",
+    "vw": 375,
+    "vh": 667,
+    "dpr": 2,
+    "htmlFont": "32px",
+    "scroll": {
+     "top": 62,
+     "max": 557,
+     "atEnd": false,
+     "rect": [
+      0,
+      0,
+      375,
+      474.8
+     ]
+    },
+    "F": 474.8,
+    "footerTop": 474.8,
+    "fade": 14,
+    "heading": {
+     "text": "25 minutes brewed",
+     "box": [
+      20,
+      243.5,
+      335,
+      123.2
+     ],
+     "inViewport": true,
+     "inScrollArea": true
+    },
+    "footer": [
+     {
+      "name": "Tea time · 5 min",
+      "box": [
+       20,
+       488.8,
+       335,
+       108.4
+      ],
+      "hitsOfFive": 5,
+      "inViewport": true
+     },
+     {
+      "name": "Skip break",
+      "box": [
+       74.5,
+       601.2,
+       225.9,
+       57.8
+      ],
+      "hitsOfFive": 5,
+      "inViewport": true
+     }
+    ],
+    "lineCount": 13,
+    "tallyBox": {
+     "clear": 3,
+     "in-fade": 1,
+     "below": 9
+    },
+    "tallyInk": {
+     "clear": 4,
+     "below": 9
+    },
+    "cutLinesBox": [
+     {
+      "text": "Tea’s ready. Take five before the next one.",
+      "top": 416,
+      "bottom": 462,
+      "box": "in-fade",
+      "ink": "clear"
+     }
+    ],
+    "cutLinesInk": [],
+    "occluded": [],
+    "overlaps": [],
+    "lastLine": {
+     "text": "How your leaves added up",
+     "bottom": 934.5,
+     "gapToFooterTop": -459.6
+    },
+    "detailsToggle": {
+     "box": [
+      20,
+      846.5,
+      335,
+      90
+     ],
+     "status": "below",
+     "open": false
+    },
+    "rewardsListLabel": "Rewards",
+    "pills": [
+     {
+      "visible": "+40 leaves",
+      "full": "+40 leaves",
+      "kind": "leaves",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       476.5,
+       207,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Goal met · 75/60 min",
+      "full": "Goal met · 75/60 minDaily goal met: 75 of 60 minutes today",
+      "kind": "goal",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       536.5,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "23 days warm",
+      "full": "2323 days warm",
+      "kind": "streak",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       632.5,
+       253,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Recipes 1/3",
+      "full": "Recipes 1/3",
+      "kind": "recipes",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       692.5,
+       217,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "144 leaves to level 13",
+      "full": "12144 leaves to level 13144 leaves to cozy level 13",
+      "kind": "level",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       752.5,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     }
+    ],
+    "distinct": [
+     {
+      "sig": "[\"rgb(252, 244, 233)\",\"0px rgb(59, 42, 32)\",\"30px\",\"4px 6px\",\"999px\",\"rgb(237, 223, 203) 0px 0px 0px 2px inset\"]",
+      "n": 5,
+      "sample": [
+       "+40 leaves",
+       "Goal met · 75/60 min",
+       "23 days warm"
+      ]
+     }
+    ],
+    "highlightCount": 0,
+    "unlock": null,
+    "chai": {
+     "box": [
+      226.8,
+      115.4,
+      108.8,
+      149.3
+     ],
+     "inViewportShare": 1,
+     "notUnderSheetShare": 0.72,
+     "sideBySide": false,
+     "tag": "IMG"
+    },
+    "toasts": [],
+    "announce": "25 minutes brewed. 40 leaves earned. Daily goal met.",
+    "lines": [
+     {
+      "text": "25 minutes brewed",
+      "top": 239,
+      "bottom": 307,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "25 minutes brewed",
+      "top": 301,
+      "bottom": 369,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Tea’s ready. Take five before the next one.",
+      "top": 370,
+      "bottom": 416,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Tea’s ready. Take five before the next one.",
+      "top": 416,
+      "bottom": 462,
+      "box": "in-fade",
+      "ink": "clear"
+     },
+     {
+      "text": "+40 leaves",
+      "top": 477,
+      "bottom": 518,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Goal met · 75/60 min",
+      "top": 537,
+      "bottom": 578,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Goal met · 75/60 min",
+      "top": 573,
+      "bottom": 614,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "23 days warm",
+      "top": 633,
+      "bottom": 674,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Recipes 1/3",
+      "top": 693,
+      "bottom": 734,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "144 leaves to level 13",
+      "top": 753,
+      "bottom": 794,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "144 leaves to level 13",
+      "top": 789,
+      "bottom": 830,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "How your leaves added up",
+      "top": 848,
+      "bottom": 889,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "How your leaves added up",
+      "top": 893,
+      "bottom": 934,
+      "box": "below",
+      "ink": "below"
+     }
+    ]
+   },
+   "tMs": 1791762786212
+  },
+  "07-summary-routine-end": {
+   "desc": "Summary, routine day, arithmetic open, wheeled to the end",
+   "phase": "07-summary-routine-end",
+   "vw": 375,
+   "vh": 667,
+   "scroll": {
+    "top": 1114,
+    "max": 1114,
+    "clientH": 475,
+    "rect": [
+     0,
+     0,
+     375,
+     475
+    ]
+   },
+   "sheetTop": -829,
+   "footerTop": 475,
+   "F": 475,
+   "fade": 14,
+   "units": [
+    {
+     "kind": "title-line0",
+     "text": "25 minutes brewed",
+     "top": -799,
+     "bottom": -756,
+     "left": 20,
+     "right": 292.203125,
+     "peek": 0,
+     "status": "above"
+    },
+    {
+     "kind": "title-line1",
+     "text": "25 minutes brewed",
+     "top": -737,
+     "bottom": -694,
+     "left": 20,
+     "right": 203.328125,
+     "peek": 0,
+     "status": "above"
+    },
+    {
+     "kind": "sub-line0",
+     "text": "Tea’s ready. Take five before the next one.",
+     "top": -673,
+     "bottom": -641,
+     "left": 20,
+     "right": 341,
+     "peek": 0,
+     "status": "above"
+    },
+    {
+     "kind": "sub-line1",
+     "text": "Tea’s ready. Take five before the next one.",
+     "top": -627,
+     "bottom": -595,
+     "left": 20,
+     "right": 326,
+     "peek": 0,
+     "status": "above"
+    },
+    {
+     "kind": "reward0",
+     "text": "+40 leaves",
+     "top": -576,
+     "bottom": -532,
+     "left": 20,
+     "right": 227,
+     "peek": 6,
+     "status": "above"
+    },
+    {
+     "kind": "reward1",
+     "text": "Goal met · 75/60 min",
+     "top": -516,
+     "bottom": -436,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "above"
+    },
+    {
+     "kind": "reward2",
+     "text": "23 days warm",
+     "top": -420,
+     "bottom": -376,
+     "left": 20,
+     "right": 273,
+     "peek": 6,
+     "status": "above"
+    },
+    {
+     "kind": "reward3",
+     "text": "Recipes 1/3",
+     "top": -360,
+     "bottom": -316,
+     "left": 20,
+     "right": 237,
+     "peek": 6,
+     "status": "above"
+    },
+    {
+     "kind": "reward4",
+     "text": "144 leaves to level 13",
+     "top": -300,
+     "bottom": -220,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "above"
+    },
+    {
+     "kind": "details-toggle",
+     "text": "How your leaves added up",
+     "top": -206,
+     "bottom": -116,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "above"
+    },
+    {
+     "kind": "details0",
+     "text": "25 focused minutes+25",
+     "top": -116,
+     "bottom": -26,
+     "left": 34,
+     "right": 341,
+     "peek": 6,
+     "status": "above"
+    },
+    {
+     "kind": "details1",
+     "text": "Full brew+5",
+     "top": -20,
+     "bottom": 25,
+     "left": 34,
+     "right": 341,
+     "peek": 6,
+     "status": "cut-top"
+    },
+    {
+     "kind": "details2",
+     "text": "Daily goal met+10",
+     "top": 31,
+     "bottom": 76,
+     "left": 34,
+     "right": 341,
+     "peek": 6,
+     "status": "clear"
+    },
+    {
+     "kind": "details3",
+     "text": "This brew +40",
+     "top": 82,
+     "bottom": 135,
+     "left": 34,
+     "right": 341,
+     "peek": 6,
+     "status": "clear"
+    },
+    {
+     "kind": "details4",
+     "text": "Cozy level 12 → 13144 leaves to go",
+     "top": 145,
+     "bottom": 271,
+     "left": 34,
+     "right": 341,
+     "peek": 6,
+     "status": "clear"
+    },
+    {
+     "kind": "details5",
+     "text": "Your 23-day streak stays warm with one full brew a day.",
+     "top": 301,
+     "bottom": 427,
+     "left": 34,
+     "right": 341,
+     "peek": 6,
+     "status": "clear"
+    }
+   ],
+   "cut": [],
+   "occluded": [],
+   "overlaps": [],
+   "footerButtons": [
+    {
+     "name": "Tea time · 5 min",
+     "box": [
+      20,
+      489,
+      335,
+      108
+     ],
+     "hit": true,
+     "inView": true
+    },
+    {
+     "name": "Skip break",
+     "box": [
+      75,
+      601,
+      226,
+      58
+     ],
+     "hit": true,
+     "inView": true
+    }
+   ],
+   "chai": {
+    "box": [
+     227,
+     115,
+     109,
+     149
+    ],
+    "shownAboveSheet": 0
+   },
+   "toasts": [],
+   "facts": [
+    "25 minutes brewed",
+    "Tea’s ready. Take five before the next one.",
+    "+40 leaves",
+    "Goal met · 75/60 min",
+    "23 days warm",
+    "Recipes 1/3",
+    "144 leaves to level 13",
+    "25 focused minutes+25",
+    "Full brew+5",
+    "Daily goal met+10",
+    "This brew +40",
+    "Cozy level 12 → 13144 leaves to go",
+    "Your 23-day streak stays warm with one full brew a day."
+   ],
+   "lastUnit": {
+    "kind": "details5",
+    "text": "Your 23-day streak stays warm with one full brew a day.",
+    "top": 301,
+    "bottom": 427,
+    "status": "clear"
+   },
+   "ls": {
+    "phase": "07-summary-routine-end",
+    "vw": 375,
+    "vh": 667,
+    "dpr": 2,
+    "htmlFont": "32px",
+    "scroll": {
+     "top": 1114,
+     "max": 1114,
+     "atEnd": true,
+     "rect": [
+      0,
+      0,
+      375,
+      474.8
+     ]
+    },
+    "F": 474.8,
+    "footerTop": 474.8,
+    "fade": 14,
+    "heading": {
+     "text": "25 minutes brewed",
+     "box": [
+      20,
+      -808.5,
+      335,
+      123.2
+     ],
+     "inViewport": false,
+     "inScrollArea": false
+    },
+    "footer": [
+     {
+      "name": "Tea time · 5 min",
+      "box": [
+       20,
+       488.8,
+       335,
+       108.4
+      ],
+      "hitsOfFive": 5,
+      "inViewport": true
+     },
+     {
+      "name": "Skip break",
+      "box": [
+       74.5,
+       601.2,
+       225.9,
+       57.8
+      ],
+      "hitsOfFive": 5,
+      "inViewport": true
+     }
+    ],
+    "lineCount": 37,
+    "tallyBox": {
+     "above": 17,
+     "cut-top": 3,
+     "clear": 17
+    },
+    "tallyInk": {
+     "above": 17,
+     "cut-top": 3,
+     "clear": 17
+    },
+    "cutLinesBox": [
+     {
+      "text": "Full brew",
+      "top": -18,
+      "bottom": 23,
+      "box": "cut-top",
+      "ink": "cut-top"
+     },
+     {
+      "text": "+",
+      "top": -18,
+      "bottom": 23,
+      "box": "cut-top",
+      "ink": "cut-top"
+     },
+     {
+      "text": "5",
+      "top": -18,
+      "bottom": 23,
+      "box": "cut-top",
+      "ink": "cut-top"
+     }
+    ],
+    "cutLinesInk": [
+     {
+      "text": "Full brew",
+      "top": -18,
+      "bottom": 23,
+      "box": "cut-top",
+      "ink": "cut-top"
+     },
+     {
+      "text": "+",
+      "top": -18,
+      "bottom": 23,
+      "box": "cut-top",
+      "ink": "cut-top"
+     },
+     {
+      "text": "5",
+      "top": -18,
+      "bottom": 23,
+      "box": "cut-top",
+      "ink": "cut-top"
+     }
+    ],
+    "occluded": [],
+    "overlaps": [],
+    "lastLine": {
+     "text": "Your 23-day streak stays warm with one full brew",
+     "bottom": 425.5,
+     "gapToFooterTop": 49.4
+    },
+    "detailsToggle": {
+     "box": [
+      20,
+      -205.5,
+      335,
+      90
+     ],
+     "status": "above",
+     "open": true
+    },
+    "rewardsListLabel": "Rewards",
+    "pills": [
+     {
+      "visible": "+40 leaves",
+      "full": "+40 leaves",
+      "kind": "leaves",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       -575.5,
+       207,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Goal met · 75/60 min",
+      "full": "Goal met · 75/60 minDaily goal met: 75 of 60 minutes today",
+      "kind": "goal",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       -515.5,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "23 days warm",
+      "full": "2323 days warm",
+      "kind": "streak",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       -419.5,
+       253,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Recipes 1/3",
+      "full": "Recipes 1/3",
+      "kind": "recipes",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       -359.5,
+       217,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "144 leaves to level 13",
+      "full": "12144 leaves to level 13144 leaves to cozy level 13",
+      "kind": "level",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       -299.5,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     }
+    ],
+    "distinct": [
+     {
+      "sig": "[\"rgb(252, 244, 233)\",\"0px rgb(59, 42, 32)\",\"30px\",\"4px 6px\",\"999px\",\"rgb(237, 223, 203) 0px 0px 0px 2px inset\"]",
+      "n": 5,
+      "sample": [
+       "+40 leaves",
+       "Goal met · 75/60 min",
+       "23 days warm"
+      ]
+     }
+    ],
+    "highlightCount": 0,
+    "unlock": null,
+    "chai": {
+     "box": [
+      226.8,
+      115.4,
+      108.8,
+      149.3
+     ],
+     "inViewportShare": 1,
+     "notUnderSheetShare": 0,
+     "sideBySide": false,
+     "tag": "IMG"
+    },
+    "toasts": [],
+    "announce": "25 minutes brewed. 40 leaves earned. Daily goal met.",
+    "lines": [
+     {
+      "text": "25 minutes brewed",
+      "top": -813,
+      "bottom": -745,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "25 minutes brewed",
+      "top": -751,
+      "bottom": -683,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Tea’s ready. Take five before the next one.",
+      "top": -682,
+      "bottom": -636,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Tea’s ready. Take five before the next one.",
+      "top": -636,
+      "bottom": -590,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "+40 leaves",
+      "top": -575,
+      "bottom": -534,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Goal met · 75/60 min",
+      "top": -515,
+      "bottom": -474,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Goal met · 75/60 min",
+      "top": -479,
+      "bottom": -438,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "23 days warm",
+      "top": -419,
+      "bottom": -378,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Recipes 1/3",
+      "top": -359,
+      "bottom": -318,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "144 leaves to level 13",
+      "top": -299,
+      "bottom": -258,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "144 leaves to level 13",
+      "top": -263,
+      "bottom": -222,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "How your leaves added up",
+      "top": -204,
+      "bottom": -163,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "How your leaves added up",
+      "top": -159,
+      "bottom": -118,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "25 focused minutes",
+      "top": -114,
+      "bottom": -73,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "25 focused minutes",
+      "top": -69,
+      "bottom": -28,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "+",
+      "top": -91,
+      "bottom": -50,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "25",
+      "top": -91,
+      "bottom": -50,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Full brew",
+      "top": -18,
+      "bottom": 23,
+      "box": "cut-top",
+      "ink": "cut-top"
+     },
+     {
+      "text": "+",
+      "top": -18,
+      "bottom": 23,
+      "box": "cut-top",
+      "ink": "cut-top"
+     },
+     {
+      "text": "5",
+      "top": -18,
+      "bottom": 23,
+      "box": "cut-top",
+      "ink": "cut-top"
+     },
+     {
+      "text": "Daily goal met",
+      "top": 33,
+      "bottom": 74,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "+",
+      "top": 33,
+      "bottom": 74,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "10",
+      "top": 33,
+      "bottom": 74,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "This brew",
+      "top": 92,
+      "bottom": 133,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "+",
+      "top": 92,
+      "bottom": 133,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "40",
+      "top": 92,
+      "bottom": 133,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Cozy level",
+      "top": 147,
+      "bottom": 185,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "12",
+      "top": 189,
+      "bottom": 227,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "→",
+      "top": 189,
+      "bottom": 227,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "13",
+      "top": 189,
+      "bottom": 227,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "144 leaves",
+      "top": 147,
+      "bottom": 185,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "144 leaves",
+      "top": 189,
+      "bottom": 227,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "to go",
+      "top": 189,
+      "bottom": 227,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "to go",
+      "top": 231,
+      "bottom": 269,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Your 23-day streak stays warm with one full brew",
+      "top": 303,
+      "bottom": 341,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Your 23-day streak stays warm with one full brew",
+      "top": 345,
+      "bottom": 383,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Your 23-day streak stays warm with one full brew",
+      "top": 387,
+      "bottom": 425,
+      "box": "clear",
+      "ink": "clear"
+     }
+    ]
+   },
+   "tMs": 1791762795071,
+   "axe": []
+  },
+  "07-summary-bigday": {
+   "desc": "Summary, big day (unlock), 4 s",
+   "phase": "07-summary-bigday",
+   "vw": 375,
+   "vh": 667,
+   "scroll": {
+    "top": 80,
+    "max": 1213,
+    "clientH": 475,
+    "rect": [
+     0,
+     0,
+     375,
+     475
+    ]
+   },
+   "sheetTop": 205,
+   "footerTop": 475,
+   "F": 475,
+   "fade": 14,
+   "units": [
+    {
+     "kind": "title-line0",
+     "text": "25 minutes brewed",
+     "top": 235,
+     "bottom": 278,
+     "left": 20,
+     "right": 292.203125,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "title-line1",
+     "text": "25 minutes brewed",
+     "top": 297,
+     "bottom": 340,
+     "left": 20,
+     "right": 203.328125,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "sub-line0",
+     "text": "Tea’s ready. Take five before the next one.",
+     "top": 361,
+     "bottom": 393,
+     "left": 20,
+     "right": 341,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "sub-line1",
+     "text": "Tea’s ready. Take five before the next one.",
+     "top": 407,
+     "bottom": 439,
+     "left": 20,
+     "right": 326,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "unlock-media",
+     "text": "",
+     "top": 629,
+     "bottom": 738,
+     "left": 30,
+     "right": 174.890625,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-title-line0",
+     "text": "Record player is in your nook",
+     "top": 475,
+     "bottom": 508,
+     "left": 186.890625,
+     "right": 291.875,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-title-line1",
+     "text": "Record player is in your nook",
+     "top": 516,
+     "bottom": 549,
+     "left": 186.890625,
+     "right": 283.875,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-title-line2",
+     "text": "Record player is in your nook",
+     "top": 557,
+     "bottom": 590,
+     "left": 186.890625,
+     "right": 245.046875,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-title-line3",
+     "text": "Record player is in your nook",
+     "top": 598,
+     "bottom": 631,
+     "left": 186.890625,
+     "right": 338.375,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-sub-line0",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": 641,
+     "bottom": 667,
+     "left": 186.890625,
+     "right": 281.890625,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-sub-line1",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": 678,
+     "bottom": 704,
+     "left": 186.890625,
+     "right": 285.890625,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-sub-line2",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": 716,
+     "bottom": 742,
+     "left": 186.890625,
+     "right": 255.890625,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-sub-line3",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": 754,
+     "bottom": 780,
+     "left": 186.890625,
+     "right": 327.890625,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-sub-line4",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": 792,
+     "bottom": 818,
+     "left": 186.890625,
+     "right": 285.890625,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-sub-line5",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": 830,
+     "bottom": 856,
+     "left": 186.890625,
+     "right": 243.890625,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-sub-line6",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": 867,
+     "bottom": 893,
+     "left": 186.890625,
+     "right": 310.890625,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "reward0",
+     "text": "+68 leaves",
+     "top": 922,
+     "bottom": 966,
+     "left": 20,
+     "right": 227,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward1",
+     "text": "Goal met · 37/30 min",
+     "top": 982,
+     "bottom": 1062,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward2",
+     "text": "7 days warm, your best yet",
+     "top": 1078,
+     "bottom": 1158,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward3",
+     "text": "Tea Cozy earned",
+     "top": 1174,
+     "bottom": 1218,
+     "left": 20,
+     "right": 303,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward4",
+     "text": "2 recipes done",
+     "top": 1234,
+     "bottom": 1278,
+     "left": 20,
+     "right": 278,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward5",
+     "text": "Badge: Warm Streak II",
+     "top": 1294,
+     "bottom": 1374,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward6",
+     "text": "Badge: Weekend Warmth",
+     "top": 1390,
+     "bottom": 1470,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "details-toggle",
+     "text": "How your leaves added up",
+     "top": 1484,
+     "bottom": 1574,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    }
+   ],
+   "cut": [],
+   "occluded": [],
+   "overlaps": [],
+   "footerButtons": [
+    {
+     "name": "Tea time · 5 min",
+     "box": [
+      20,
+      489,
+      335,
+      108
+     ],
+     "hit": true,
+     "inView": true
+    },
+    {
+     "name": "Skip break",
+     "box": [
+      75,
+      601,
+      226,
+      58
+     ],
+     "hit": true,
+     "inView": true
+    }
+   ],
+   "chai": {
+    "box": [
+     227,
+     115,
+     109,
+     149
+    ],
+    "shownAboveSheet": 0.6
+   },
+   "toasts": [],
+   "facts": [
+    "25 minutes brewed",
+    "Tea’s ready. Take five before the next one.",
+    "Record player is in your nook",
+    "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+    "+68 leaves",
+    "Goal met · 37/30 min",
+    "7 days warm, your best yet",
+    "Tea Cozy earned",
+    "2 recipes done",
+    "Badge: Warm Streak II",
+    "Badge: Weekend Warmth"
+   ],
+   "lastUnit": {
+    "kind": "details-toggle",
+    "text": "How your leaves added up",
+    "top": 1484,
+    "bottom": 1574,
+    "status": "below"
+   },
+   "ls": {
+    "phase": "07-summary-bigday",
+    "vw": 375,
+    "vh": 667,
+    "dpr": 2,
+    "htmlFont": "32px",
+    "scroll": {
+     "top": 80,
+     "max": 1213,
+     "atEnd": false,
+     "rect": [
+      0,
+      0,
+      375,
+      474.8
+     ]
+    },
+    "F": 474.8,
+    "footerTop": 474.8,
+    "fade": 14,
+    "heading": {
+     "text": "25 minutes brewed",
+     "box": [
+      20,
+      225.5,
+      335,
+      123.2
+     ],
+     "inViewport": true,
+     "inScrollArea": true
+    },
+    "footer": [
+     {
+      "name": "Tea time · 5 min",
+      "box": [
+       20,
+       488.8,
+       335,
+       108.4
+      ],
+      "hitsOfFive": 5,
+      "inViewport": true
+     },
+     {
+      "name": "Skip break",
+      "box": [
+       74.5,
+       601.2,
+       225.9,
+       57.8
+      ],
+      "hitsOfFive": 5,
+      "inViewport": true
+     }
+    ],
+    "lineCount": 30,
+    "tallyBox": {
+     "clear": 4,
+     "straddle-fold": 1,
+     "below": 25
+    },
+    "tallyInk": {
+     "clear": 4,
+     "below": 26
+    },
+    "cutLinesBox": [
+     {
+      "text": "Record player is in your nook",
+      "top": 467,
+      "bottom": 508,
+      "box": "straddle-fold",
+      "ink": "below"
+     }
+    ],
+    "cutLinesInk": [],
+    "occluded": [],
+    "overlaps": [],
+    "lastLine": {
+     "text": "How your leaves added up",
+     "bottom": 1572.2,
+     "gapToFooterTop": -1097.4
+    },
+    "detailsToggle": {
+     "box": [
+      20,
+      1484.2,
+      335,
+      90
+     ],
+     "status": "below",
+     "open": false
+    },
+    "rewardsListLabel": "Rewards",
+    "pills": [
+     {
+      "visible": "+68 leaves",
+      "full": "+68 leaves",
+      "kind": "leaves",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       922.2,
+       207,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Goal met · 37/30 min",
+      "full": "Goal met · 37/30 minDaily goal met: 37 of 30 minutes today",
+      "kind": "goal",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       982.2,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "7 days warm, your best yet",
+      "full": "77 days warm, your best yet",
+      "kind": "streak",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       1078.2,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Tea Cozy earned",
+      "full": "Tea Cozy earnedYou earned a Tea Cozy: it keeps your streak warm for one missed day",
+      "kind": "cozy",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       1174.2,
+       283,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "2 recipes done",
+      "full": "2 recipes done",
+      "kind": "recipes",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       1234.2,
+       258,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Badge: Warm Streak II",
+      "full": "7IIBadge: Warm Streak II",
+      "kind": "badge",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       1294.2,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Badge: Weekend Warmth",
+      "full": "IBadge: Weekend Warmth",
+      "kind": "badge",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       1390.2,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     }
+    ],
+    "distinct": [
+     {
+      "sig": "[\"rgb(252, 244, 233)\",\"0px rgb(59, 42, 32)\",\"30px\",\"4px 6px\",\"999px\",\"rgb(237, 223, 203) 0px 0px 0px 2px inset\"]",
+      "n": 7,
+      "sample": [
+       "+68 leaves",
+       "Goal met · 37/30 min",
+       "7 days warm, your best yet"
+      ]
+     }
+    ],
+    "highlightCount": 0,
+    "unlock": {
+     "label": "Cozy level 8: Record player is in your nook",
+     "box": [
+      20,
+      458.5,
+      335,
+      449.8
+     ],
+     "hasCanvas": true,
+     "hasStillGlyph": true,
+     "status": "straddle-fold"
+    },
+    "chai": {
+     "box": [
+      226.8,
+      115.4,
+      108.8,
+      149.3
+     ],
+     "inViewportShare": 1,
+     "notUnderSheetShare": 0.6,
+     "sideBySide": false,
+     "tag": "IMG"
+    },
+    "toasts": [],
+    "announce": "25 minutes brewed. 68 leaves earned. Daily goal met. Warm streak: 7 days. Cozy level 8: something new in your nook. New badge: Warm Streak. New badge: Weekend Warmth.",
+    "lines": [
+     {
+      "text": "25 minutes brewed",
+      "top": 221,
+      "bottom": 289,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "25 minutes brewed",
+      "top": 283,
+      "bottom": 351,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Tea’s ready. Take five before the next one.",
+      "top": 352,
+      "bottom": 398,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Tea’s ready. Take five before the next one.",
+      "top": 398,
+      "bottom": 444,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Record player is in your nook",
+      "top": 467,
+      "bottom": 508,
+      "box": "straddle-fold",
+      "ink": "below"
+     },
+     {
+      "text": "Record player is in your nook",
+      "top": 508,
+      "bottom": 549,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Record player is in your nook",
+      "top": 549,
+      "bottom": 590,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Record player is in your nook",
+      "top": 590,
+      "bottom": 631,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Cozy level",
+      "top": 633,
+      "bottom": 671,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Cozy level",
+      "top": 670,
+      "bottom": 708,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "8",
+      "top": 670,
+      "bottom": 708,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "·",
+      "top": 670,
+      "bottom": 708,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Plays mostly rain sounds. Chai approves.",
+      "top": 708,
+      "bottom": 746,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Plays mostly rain sounds. Chai approves.",
+      "top": 746,
+      "bottom": 784,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Plays mostly rain sounds. Chai approves.",
+      "top": 784,
+      "bottom": 822,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Plays mostly rain sounds. Chai approves.",
+      "top": 822,
+      "bottom": 860,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Plays mostly rain sounds. Chai approves.",
+      "top": 859,
+      "bottom": 897,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "+68 leaves",
+      "top": 923,
+      "bottom": 964,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Goal met · 37/30 min",
+      "top": 983,
+      "bottom": 1024,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Goal met · 37/30 min",
+      "top": 1019,
+      "bottom": 1060,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "7 days warm, your best yet",
+      "top": 1079,
+      "bottom": 1120,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "7 days warm, your best yet",
+      "top": 1115,
+      "bottom": 1156,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Tea Cozy earned",
+      "top": 1175,
+      "bottom": 1216,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "2 recipes done",
+      "top": 1235,
+      "bottom": 1276,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Badge: Warm Streak II",
+      "top": 1295,
+      "bottom": 1336,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Badge: Warm Streak II",
+      "top": 1331,
+      "bottom": 1372,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Badge: Weekend Warmth",
+      "top": 1391,
+      "bottom": 1432,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Badge: Weekend Warmth",
+      "top": 1427,
+      "bottom": 1468,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "How your leaves added up",
+      "top": 1486,
+      "bottom": 1527,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "How your leaves added up",
+      "top": 1531,
+      "bottom": 1572,
+      "box": "below",
+      "ink": "below"
+     }
+    ]
+   },
+   "tMs": 1791762812251
+  },
+  "07-summary-bigday-settled": {
+   "desc": "Summary, big day, 10 s",
+   "phase": "07-summary-bigday-settled",
+   "vw": 375,
+   "vh": 667,
+   "scroll": {
+    "top": 80,
+    "max": 1213,
+    "clientH": 475,
+    "rect": [
+     0,
+     0,
+     375,
+     475
+    ]
+   },
+   "sheetTop": 205,
+   "footerTop": 475,
+   "F": 475,
+   "fade": 14,
+   "units": [
+    {
+     "kind": "title-line0",
+     "text": "25 minutes brewed",
+     "top": 235,
+     "bottom": 278,
+     "left": 20,
+     "right": 292.203125,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "title-line1",
+     "text": "25 minutes brewed",
+     "top": 297,
+     "bottom": 340,
+     "left": 20,
+     "right": 203.328125,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "sub-line0",
+     "text": "Tea’s ready. Take five before the next one.",
+     "top": 361,
+     "bottom": 393,
+     "left": 20,
+     "right": 341,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "sub-line1",
+     "text": "Tea’s ready. Take five before the next one.",
+     "top": 407,
+     "bottom": 439,
+     "left": 20,
+     "right": 326,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "unlock-media",
+     "text": "",
+     "top": 629,
+     "bottom": 738,
+     "left": 30,
+     "right": 174.890625,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-title-line0",
+     "text": "Record player is in your nook",
+     "top": 475,
+     "bottom": 508,
+     "left": 186.890625,
+     "right": 291.875,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-title-line1",
+     "text": "Record player is in your nook",
+     "top": 516,
+     "bottom": 549,
+     "left": 186.890625,
+     "right": 283.875,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-title-line2",
+     "text": "Record player is in your nook",
+     "top": 557,
+     "bottom": 590,
+     "left": 186.890625,
+     "right": 245.046875,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-title-line3",
+     "text": "Record player is in your nook",
+     "top": 598,
+     "bottom": 631,
+     "left": 186.890625,
+     "right": 338.375,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-sub-line0",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": 641,
+     "bottom": 667,
+     "left": 186.890625,
+     "right": 281.890625,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-sub-line1",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": 678,
+     "bottom": 704,
+     "left": 186.890625,
+     "right": 285.890625,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-sub-line2",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": 716,
+     "bottom": 742,
+     "left": 186.890625,
+     "right": 255.890625,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-sub-line3",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": 754,
+     "bottom": 780,
+     "left": 186.890625,
+     "right": 327.890625,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-sub-line4",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": 792,
+     "bottom": 818,
+     "left": 186.890625,
+     "right": 285.890625,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-sub-line5",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": 830,
+     "bottom": 856,
+     "left": 186.890625,
+     "right": 243.890625,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-sub-line6",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": 867,
+     "bottom": 893,
+     "left": 186.890625,
+     "right": 310.890625,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "reward0",
+     "text": "+68 leaves",
+     "top": 922,
+     "bottom": 966,
+     "left": 20,
+     "right": 227,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward1",
+     "text": "Goal met · 37/30 min",
+     "top": 982,
+     "bottom": 1062,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward2",
+     "text": "7 days warm, your best yet",
+     "top": 1078,
+     "bottom": 1158,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward3",
+     "text": "Tea Cozy earned",
+     "top": 1174,
+     "bottom": 1218,
+     "left": 20,
+     "right": 303,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward4",
+     "text": "2 recipes done",
+     "top": 1234,
+     "bottom": 1278,
+     "left": 20,
+     "right": 278,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward5",
+     "text": "Badge: Warm Streak II",
+     "top": 1294,
+     "bottom": 1374,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward6",
+     "text": "Badge: Weekend Warmth",
+     "top": 1390,
+     "bottom": 1470,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "details-toggle",
+     "text": "How your leaves added up",
+     "top": 1484,
+     "bottom": 1574,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    }
+   ],
+   "cut": [],
+   "occluded": [],
+   "overlaps": [],
+   "footerButtons": [
+    {
+     "name": "Tea time · 5 min",
+     "box": [
+      20,
+      489,
+      335,
+      108
+     ],
+     "hit": true,
+     "inView": true
+    },
+    {
+     "name": "Skip break",
+     "box": [
+      75,
+      601,
+      226,
+      58
+     ],
+     "hit": true,
+     "inView": true
+    }
+   ],
+   "chai": {
+    "box": [
+     227,
+     115,
+     109,
+     149
+    ],
+    "shownAboveSheet": 0.6
+   },
+   "toasts": [],
+   "facts": [
+    "25 minutes brewed",
+    "Tea’s ready. Take five before the next one.",
+    "Record player is in your nook",
+    "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+    "+68 leaves",
+    "Goal met · 37/30 min",
+    "7 days warm, your best yet",
+    "Tea Cozy earned",
+    "2 recipes done",
+    "Badge: Warm Streak II",
+    "Badge: Weekend Warmth"
+   ],
+   "lastUnit": {
+    "kind": "details-toggle",
+    "text": "How your leaves added up",
+    "top": 1484,
+    "bottom": 1574,
+    "status": "below"
+   },
+   "ls": {
+    "phase": "07-summary-bigday-settled",
+    "vw": 375,
+    "vh": 667,
+    "dpr": 2,
+    "htmlFont": "32px",
+    "scroll": {
+     "top": 80,
+     "max": 1213,
+     "atEnd": false,
+     "rect": [
+      0,
+      0,
+      375,
+      474.8
+     ]
+    },
+    "F": 474.8,
+    "footerTop": 474.8,
+    "fade": 14,
+    "heading": {
+     "text": "25 minutes brewed",
+     "box": [
+      20,
+      225.5,
+      335,
+      123.2
+     ],
+     "inViewport": true,
+     "inScrollArea": true
+    },
+    "footer": [
+     {
+      "name": "Tea time · 5 min",
+      "box": [
+       20,
+       488.8,
+       335,
+       108.4
+      ],
+      "hitsOfFive": 5,
+      "inViewport": true
+     },
+     {
+      "name": "Skip break",
+      "box": [
+       74.5,
+       601.2,
+       225.9,
+       57.8
+      ],
+      "hitsOfFive": 5,
+      "inViewport": true
+     }
+    ],
+    "lineCount": 30,
+    "tallyBox": {
+     "clear": 4,
+     "straddle-fold": 1,
+     "below": 25
+    },
+    "tallyInk": {
+     "clear": 4,
+     "below": 26
+    },
+    "cutLinesBox": [
+     {
+      "text": "Record player is in your nook",
+      "top": 467,
+      "bottom": 508,
+      "box": "straddle-fold",
+      "ink": "below"
+     }
+    ],
+    "cutLinesInk": [],
+    "occluded": [],
+    "overlaps": [],
+    "lastLine": {
+     "text": "How your leaves added up",
+     "bottom": 1572.2,
+     "gapToFooterTop": -1097.4
+    },
+    "detailsToggle": {
+     "box": [
+      20,
+      1484.2,
+      335,
+      90
+     ],
+     "status": "below",
+     "open": false
+    },
+    "rewardsListLabel": "Rewards",
+    "pills": [
+     {
+      "visible": "+68 leaves",
+      "full": "+68 leaves",
+      "kind": "leaves",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       922.2,
+       207,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Goal met · 37/30 min",
+      "full": "Goal met · 37/30 minDaily goal met: 37 of 30 minutes today",
+      "kind": "goal",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       982.2,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "7 days warm, your best yet",
+      "full": "77 days warm, your best yet",
+      "kind": "streak",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       1078.2,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Tea Cozy earned",
+      "full": "Tea Cozy earnedYou earned a Tea Cozy: it keeps your streak warm for one missed day",
+      "kind": "cozy",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       1174.2,
+       283,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "2 recipes done",
+      "full": "2 recipes done",
+      "kind": "recipes",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       1234.2,
+       258,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Badge: Warm Streak II",
+      "full": "7IIBadge: Warm Streak II",
+      "kind": "badge",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       1294.2,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Badge: Weekend Warmth",
+      "full": "IBadge: Weekend Warmth",
+      "kind": "badge",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       1390.2,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     }
+    ],
+    "distinct": [
+     {
+      "sig": "[\"rgb(252, 244, 233)\",\"0px rgb(59, 42, 32)\",\"30px\",\"4px 6px\",\"999px\",\"rgb(237, 223, 203) 0px 0px 0px 2px inset\"]",
+      "n": 7,
+      "sample": [
+       "+68 leaves",
+       "Goal met · 37/30 min",
+       "7 days warm, your best yet"
+      ]
+     }
+    ],
+    "highlightCount": 0,
+    "unlock": {
+     "label": "Cozy level 8: Record player is in your nook",
+     "box": [
+      20,
+      458.5,
+      335,
+      449.8
+     ],
+     "hasCanvas": true,
+     "hasStillGlyph": true,
+     "status": "straddle-fold"
+    },
+    "chai": {
+     "box": [
+      226.8,
+      115.4,
+      108.8,
+      149.3
+     ],
+     "inViewportShare": 1,
+     "notUnderSheetShare": 0.6,
+     "sideBySide": false,
+     "tag": "IMG"
+    },
+    "toasts": [],
+    "announce": "25 minutes brewed. 68 leaves earned. Daily goal met. Warm streak: 7 days. Cozy level 8: something new in your nook. New badge: Warm Streak. New badge: Weekend Warmth.",
+    "lines": [
+     {
+      "text": "25 minutes brewed",
+      "top": 221,
+      "bottom": 289,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "25 minutes brewed",
+      "top": 283,
+      "bottom": 351,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Tea’s ready. Take five before the next one.",
+      "top": 352,
+      "bottom": 398,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Tea’s ready. Take five before the next one.",
+      "top": 398,
+      "bottom": 444,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Record player is in your nook",
+      "top": 467,
+      "bottom": 508,
+      "box": "straddle-fold",
+      "ink": "below"
+     },
+     {
+      "text": "Record player is in your nook",
+      "top": 508,
+      "bottom": 549,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Record player is in your nook",
+      "top": 549,
+      "bottom": 590,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Record player is in your nook",
+      "top": 590,
+      "bottom": 631,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Cozy level",
+      "top": 633,
+      "bottom": 671,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Cozy level",
+      "top": 670,
+      "bottom": 708,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "8",
+      "top": 670,
+      "bottom": 708,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "·",
+      "top": 670,
+      "bottom": 708,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Plays mostly rain sounds. Chai approves.",
+      "top": 708,
+      "bottom": 746,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Plays mostly rain sounds. Chai approves.",
+      "top": 746,
+      "bottom": 784,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Plays mostly rain sounds. Chai approves.",
+      "top": 784,
+      "bottom": 822,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Plays mostly rain sounds. Chai approves.",
+      "top": 822,
+      "bottom": 860,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Plays mostly rain sounds. Chai approves.",
+      "top": 859,
+      "bottom": 897,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "+68 leaves",
+      "top": 923,
+      "bottom": 964,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Goal met · 37/30 min",
+      "top": 983,
+      "bottom": 1024,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Goal met · 37/30 min",
+      "top": 1019,
+      "bottom": 1060,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "7 days warm, your best yet",
+      "top": 1079,
+      "bottom": 1120,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "7 days warm, your best yet",
+      "top": 1115,
+      "bottom": 1156,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Tea Cozy earned",
+      "top": 1175,
+      "bottom": 1216,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "2 recipes done",
+      "top": 1235,
+      "bottom": 1276,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Badge: Warm Streak II",
+      "top": 1295,
+      "bottom": 1336,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Badge: Warm Streak II",
+      "top": 1331,
+      "bottom": 1372,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Badge: Weekend Warmth",
+      "top": 1391,
+      "bottom": 1432,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Badge: Weekend Warmth",
+      "top": 1427,
+      "bottom": 1468,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "How your leaves added up",
+      "top": 1486,
+      "bottom": 1527,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "How your leaves added up",
+      "top": 1531,
+      "bottom": 1572,
+      "box": "below",
+      "ink": "below"
+     }
+    ]
+   },
+   "tMs": 1791762821174,
+   "axe": []
+  },
+  "07-summary-bigday-full": {
+   "desc": "Summary, big day, full page",
+   "phase": "07-summary-bigday-full",
+   "vw": 375,
+   "vh": 667,
+   "scroll": {
+    "top": 80,
+    "max": 1213,
+    "clientH": 475,
+    "rect": [
+     0,
+     0,
+     375,
+     475
+    ]
+   },
+   "sheetTop": 205,
+   "footerTop": 475,
+   "F": 475,
+   "fade": 14,
+   "units": [
+    {
+     "kind": "title-line0",
+     "text": "25 minutes brewed",
+     "top": 235,
+     "bottom": 278,
+     "left": 20,
+     "right": 292.203125,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "title-line1",
+     "text": "25 minutes brewed",
+     "top": 297,
+     "bottom": 340,
+     "left": 20,
+     "right": 203.328125,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "sub-line0",
+     "text": "Tea’s ready. Take five before the next one.",
+     "top": 361,
+     "bottom": 393,
+     "left": 20,
+     "right": 341,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "sub-line1",
+     "text": "Tea’s ready. Take five before the next one.",
+     "top": 407,
+     "bottom": 439,
+     "left": 20,
+     "right": 326,
+     "peek": 0,
+     "status": "clear"
+    },
+    {
+     "kind": "unlock-media",
+     "text": "",
+     "top": 629,
+     "bottom": 738,
+     "left": 30,
+     "right": 174.890625,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-title-line0",
+     "text": "Record player is in your nook",
+     "top": 475,
+     "bottom": 508,
+     "left": 186.890625,
+     "right": 291.875,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-title-line1",
+     "text": "Record player is in your nook",
+     "top": 516,
+     "bottom": 549,
+     "left": 186.890625,
+     "right": 283.875,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-title-line2",
+     "text": "Record player is in your nook",
+     "top": 557,
+     "bottom": 590,
+     "left": 186.890625,
+     "right": 245.046875,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-title-line3",
+     "text": "Record player is in your nook",
+     "top": 598,
+     "bottom": 631,
+     "left": 186.890625,
+     "right": 338.375,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-sub-line0",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": 641,
+     "bottom": 667,
+     "left": 186.890625,
+     "right": 281.890625,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-sub-line1",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": 678,
+     "bottom": 704,
+     "left": 186.890625,
+     "right": 285.890625,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-sub-line2",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": 716,
+     "bottom": 742,
+     "left": 186.890625,
+     "right": 255.890625,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-sub-line3",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": 754,
+     "bottom": 780,
+     "left": 186.890625,
+     "right": 327.890625,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-sub-line4",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": 792,
+     "bottom": 818,
+     "left": 186.890625,
+     "right": 285.890625,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-sub-line5",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": 830,
+     "bottom": 856,
+     "left": 186.890625,
+     "right": 243.890625,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "unlock-sub-line6",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": 867,
+     "bottom": 893,
+     "left": 186.890625,
+     "right": 310.890625,
+     "peek": 0,
+     "status": "below"
+    },
+    {
+     "kind": "reward0",
+     "text": "+68 leaves",
+     "top": 922,
+     "bottom": 966,
+     "left": 20,
+     "right": 227,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward1",
+     "text": "Goal met · 37/30 min",
+     "top": 982,
+     "bottom": 1062,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward2",
+     "text": "7 days warm, your best yet",
+     "top": 1078,
+     "bottom": 1158,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward3",
+     "text": "Tea Cozy earned",
+     "top": 1174,
+     "bottom": 1218,
+     "left": 20,
+     "right": 303,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward4",
+     "text": "2 recipes done",
+     "top": 1234,
+     "bottom": 1278,
+     "left": 20,
+     "right": 278,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward5",
+     "text": "Badge: Warm Streak II",
+     "top": 1294,
+     "bottom": 1374,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "reward6",
+     "text": "Badge: Weekend Warmth",
+     "top": 1390,
+     "bottom": 1470,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    },
+    {
+     "kind": "details-toggle",
+     "text": "How your leaves added up",
+     "top": 1484,
+     "bottom": 1574,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "below"
+    }
+   ],
+   "cut": [],
+   "occluded": [],
+   "overlaps": [],
+   "footerButtons": [
+    {
+     "name": "Tea time · 5 min",
+     "box": [
+      20,
+      489,
+      335,
+      108
+     ],
+     "hit": true,
+     "inView": true
+    },
+    {
+     "name": "Skip break",
+     "box": [
+      75,
+      601,
+      226,
+      58
+     ],
+     "hit": true,
+     "inView": true
+    }
+   ],
+   "chai": {
+    "box": [
+     227,
+     115,
+     109,
+     149
+    ],
+    "shownAboveSheet": 0.6
+   },
+   "toasts": [],
+   "facts": [
+    "25 minutes brewed",
+    "Tea’s ready. Take five before the next one.",
+    "Record player is in your nook",
+    "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+    "+68 leaves",
+    "Goal met · 37/30 min",
+    "7 days warm, your best yet",
+    "Tea Cozy earned",
+    "2 recipes done",
+    "Badge: Warm Streak II",
+    "Badge: Weekend Warmth"
+   ],
+   "lastUnit": {
+    "kind": "details-toggle",
+    "text": "How your leaves added up",
+    "top": 1484,
+    "bottom": 1574,
+    "status": "below"
+   },
+   "ls": {
+    "phase": "07-summary-bigday-full",
+    "vw": 375,
+    "vh": 667,
+    "dpr": 2,
+    "htmlFont": "32px",
+    "scroll": {
+     "top": 80,
+     "max": 1213,
+     "atEnd": false,
+     "rect": [
+      0,
+      0,
+      375,
+      474.8
+     ]
+    },
+    "F": 474.8,
+    "footerTop": 474.8,
+    "fade": 14,
+    "heading": {
+     "text": "25 minutes brewed",
+     "box": [
+      20,
+      225.5,
+      335,
+      123.2
+     ],
+     "inViewport": true,
+     "inScrollArea": true
+    },
+    "footer": [
+     {
+      "name": "Tea time · 5 min",
+      "box": [
+       20,
+       488.8,
+       335,
+       108.4
+      ],
+      "hitsOfFive": 5,
+      "inViewport": true
+     },
+     {
+      "name": "Skip break",
+      "box": [
+       74.5,
+       601.2,
+       225.9,
+       57.8
+      ],
+      "hitsOfFive": 5,
+      "inViewport": true
+     }
+    ],
+    "lineCount": 30,
+    "tallyBox": {
+     "clear": 4,
+     "straddle-fold": 1,
+     "below": 25
+    },
+    "tallyInk": {
+     "clear": 4,
+     "below": 26
+    },
+    "cutLinesBox": [
+     {
+      "text": "Record player is in your nook",
+      "top": 467,
+      "bottom": 508,
+      "box": "straddle-fold",
+      "ink": "below"
+     }
+    ],
+    "cutLinesInk": [],
+    "occluded": [],
+    "overlaps": [],
+    "lastLine": {
+     "text": "How your leaves added up",
+     "bottom": 1572.2,
+     "gapToFooterTop": -1097.4
+    },
+    "detailsToggle": {
+     "box": [
+      20,
+      1484.2,
+      335,
+      90
+     ],
+     "status": "below",
+     "open": false
+    },
+    "rewardsListLabel": "Rewards",
+    "pills": [
+     {
+      "visible": "+68 leaves",
+      "full": "+68 leaves",
+      "kind": "leaves",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       922.2,
+       207,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Goal met · 37/30 min",
+      "full": "Goal met · 37/30 minDaily goal met: 37 of 30 minutes today",
+      "kind": "goal",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       982.2,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "7 days warm, your best yet",
+      "full": "77 days warm, your best yet",
+      "kind": "streak",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       1078.2,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Tea Cozy earned",
+      "full": "Tea Cozy earnedYou earned a Tea Cozy: it keeps your streak warm for one missed day",
+      "kind": "cozy",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       1174.2,
+       283,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "2 recipes done",
+      "full": "2 recipes done",
+      "kind": "recipes",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       1234.2,
+       258,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Badge: Warm Streak II",
+      "full": "7IIBadge: Warm Streak II",
+      "kind": "badge",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       1294.2,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Badge: Weekend Warmth",
+      "full": "IBadge: Weekend Warmth",
+      "kind": "badge",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       1390.2,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     }
+    ],
+    "distinct": [
+     {
+      "sig": "[\"rgb(252, 244, 233)\",\"0px rgb(59, 42, 32)\",\"30px\",\"4px 6px\",\"999px\",\"rgb(237, 223, 203) 0px 0px 0px 2px inset\"]",
+      "n": 7,
+      "sample": [
+       "+68 leaves",
+       "Goal met · 37/30 min",
+       "7 days warm, your best yet"
+      ]
+     }
+    ],
+    "highlightCount": 0,
+    "unlock": {
+     "label": "Cozy level 8: Record player is in your nook",
+     "box": [
+      20,
+      458.5,
+      335,
+      449.8
+     ],
+     "hasCanvas": true,
+     "hasStillGlyph": true,
+     "status": "straddle-fold"
+    },
+    "chai": {
+     "box": [
+      226.8,
+      115.4,
+      108.8,
+      149.3
+     ],
+     "inViewportShare": 1,
+     "notUnderSheetShare": 0.6,
+     "sideBySide": false,
+     "tag": "IMG"
+    },
+    "toasts": [],
+    "announce": "25 minutes brewed. 68 leaves earned. Daily goal met. Warm streak: 7 days. Cozy level 8: something new in your nook. New badge: Warm Streak. New badge: Weekend Warmth.",
+    "lines": [
+     {
+      "text": "25 minutes brewed",
+      "top": 221,
+      "bottom": 289,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "25 minutes brewed",
+      "top": 283,
+      "bottom": 351,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Tea’s ready. Take five before the next one.",
+      "top": 352,
+      "bottom": 398,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Tea’s ready. Take five before the next one.",
+      "top": 398,
+      "bottom": 444,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Record player is in your nook",
+      "top": 467,
+      "bottom": 508,
+      "box": "straddle-fold",
+      "ink": "below"
+     },
+     {
+      "text": "Record player is in your nook",
+      "top": 508,
+      "bottom": 549,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Record player is in your nook",
+      "top": 549,
+      "bottom": 590,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Record player is in your nook",
+      "top": 590,
+      "bottom": 631,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Cozy level",
+      "top": 633,
+      "bottom": 671,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Cozy level",
+      "top": 670,
+      "bottom": 708,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "8",
+      "top": 670,
+      "bottom": 708,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "·",
+      "top": 670,
+      "bottom": 708,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Plays mostly rain sounds. Chai approves.",
+      "top": 708,
+      "bottom": 746,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Plays mostly rain sounds. Chai approves.",
+      "top": 746,
+      "bottom": 784,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Plays mostly rain sounds. Chai approves.",
+      "top": 784,
+      "bottom": 822,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Plays mostly rain sounds. Chai approves.",
+      "top": 822,
+      "bottom": 860,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Plays mostly rain sounds. Chai approves.",
+      "top": 859,
+      "bottom": 897,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "+68 leaves",
+      "top": 923,
+      "bottom": 964,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Goal met · 37/30 min",
+      "top": 983,
+      "bottom": 1024,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Goal met · 37/30 min",
+      "top": 1019,
+      "bottom": 1060,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "7 days warm, your best yet",
+      "top": 1079,
+      "bottom": 1120,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "7 days warm, your best yet",
+      "top": 1115,
+      "bottom": 1156,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Tea Cozy earned",
+      "top": 1175,
+      "bottom": 1216,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "2 recipes done",
+      "top": 1235,
+      "bottom": 1276,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Badge: Warm Streak II",
+      "top": 1295,
+      "bottom": 1336,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Badge: Warm Streak II",
+      "top": 1331,
+      "bottom": 1372,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Badge: Weekend Warmth",
+      "top": 1391,
+      "bottom": 1432,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "Badge: Weekend Warmth",
+      "top": 1427,
+      "bottom": 1468,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "How your leaves added up",
+      "top": 1486,
+      "bottom": 1527,
+      "box": "below",
+      "ink": "below"
+     },
+     {
+      "text": "How your leaves added up",
+      "top": 1531,
+      "bottom": 1572,
+      "box": "below",
+      "ink": "below"
+     }
+    ]
+   },
+   "tMs": 1791762824663
+  },
+  "07-summary-bigday-end": {
+   "desc": "Summary, big day, arithmetic open, wheeled to the end",
+   "phase": "07-summary-bigday-end",
+   "vw": 375,
+   "vh": 667,
+   "scroll": {
+    "top": 1971,
+    "max": 1971,
+    "clientH": 475,
+    "rect": [
+     0,
+     0,
+     375,
+     475
+    ]
+   },
+   "sheetTop": -1686,
+   "footerTop": 475,
+   "F": 475,
+   "fade": 14,
+   "units": [
+    {
+     "kind": "title-line0",
+     "text": "25 minutes brewed",
+     "top": -1656,
+     "bottom": -1613,
+     "left": 20,
+     "right": 292.203125,
+     "peek": 0,
+     "status": "above"
+    },
+    {
+     "kind": "title-line1",
+     "text": "25 minutes brewed",
+     "top": -1594,
+     "bottom": -1551,
+     "left": 20,
+     "right": 203.328125,
+     "peek": 0,
+     "status": "above"
+    },
+    {
+     "kind": "sub-line0",
+     "text": "Tea’s ready. Take five before the next one.",
+     "top": -1530,
+     "bottom": -1498,
+     "left": 20,
+     "right": 341,
+     "peek": 0,
+     "status": "above"
+    },
+    {
+     "kind": "sub-line1",
+     "text": "Tea’s ready. Take five before the next one.",
+     "top": -1484,
+     "bottom": -1452,
+     "left": 20,
+     "right": 326,
+     "peek": 0,
+     "status": "above"
+    },
+    {
+     "kind": "unlock-media",
+     "text": "",
+     "top": -1262,
+     "bottom": -1153,
+     "left": 30,
+     "right": 174.890625,
+     "peek": 6,
+     "status": "above"
+    },
+    {
+     "kind": "unlock-title-line0",
+     "text": "Record player is in your nook",
+     "top": -1416,
+     "bottom": -1383,
+     "left": 186.890625,
+     "right": 291.875,
+     "peek": 0,
+     "status": "above"
+    },
+    {
+     "kind": "unlock-title-line1",
+     "text": "Record player is in your nook",
+     "top": -1375,
+     "bottom": -1342,
+     "left": 186.890625,
+     "right": 283.875,
+     "peek": 0,
+     "status": "above"
+    },
+    {
+     "kind": "unlock-title-line2",
+     "text": "Record player is in your nook",
+     "top": -1334,
+     "bottom": -1301,
+     "left": 186.890625,
+     "right": 245.046875,
+     "peek": 0,
+     "status": "above"
+    },
+    {
+     "kind": "unlock-title-line3",
+     "text": "Record player is in your nook",
+     "top": -1293,
+     "bottom": -1260,
+     "left": 186.890625,
+     "right": 338.375,
+     "peek": 0,
+     "status": "above"
+    },
+    {
+     "kind": "unlock-sub-line0",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": -1250,
+     "bottom": -1224,
+     "left": 186.890625,
+     "right": 281.890625,
+     "peek": 0,
+     "status": "above"
+    },
+    {
+     "kind": "unlock-sub-line1",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": -1213,
+     "bottom": -1187,
+     "left": 186.890625,
+     "right": 285.890625,
+     "peek": 0,
+     "status": "above"
+    },
+    {
+     "kind": "unlock-sub-line2",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": -1175,
+     "bottom": -1149,
+     "left": 186.890625,
+     "right": 255.890625,
+     "peek": 0,
+     "status": "above"
+    },
+    {
+     "kind": "unlock-sub-line3",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": -1137,
+     "bottom": -1111,
+     "left": 186.890625,
+     "right": 327.890625,
+     "peek": 0,
+     "status": "above"
+    },
+    {
+     "kind": "unlock-sub-line4",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": -1099,
+     "bottom": -1073,
+     "left": 186.890625,
+     "right": 285.890625,
+     "peek": 0,
+     "status": "above"
+    },
+    {
+     "kind": "unlock-sub-line5",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": -1061,
+     "bottom": -1035,
+     "left": 186.890625,
+     "right": 243.890625,
+     "peek": 0,
+     "status": "above"
+    },
+    {
+     "kind": "unlock-sub-line6",
+     "text": "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+     "top": -1024,
+     "bottom": -998,
+     "left": 186.890625,
+     "right": 310.890625,
+     "peek": 0,
+     "status": "above"
+    },
+    {
+     "kind": "reward0",
+     "text": "+68 leaves",
+     "top": -969,
+     "bottom": -925,
+     "left": 20,
+     "right": 227,
+     "peek": 6,
+     "status": "above"
+    },
+    {
+     "kind": "reward1",
+     "text": "Goal met · 37/30 min",
+     "top": -909,
+     "bottom": -829,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "above"
+    },
+    {
+     "kind": "reward2",
+     "text": "7 days warm, your best yet",
+     "top": -813,
+     "bottom": -733,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "above"
+    },
+    {
+     "kind": "reward3",
+     "text": "Tea Cozy earned",
+     "top": -717,
+     "bottom": -673,
+     "left": 20,
+     "right": 303,
+     "peek": 6,
+     "status": "above"
+    },
+    {
+     "kind": "reward4",
+     "text": "2 recipes done",
+     "top": -657,
+     "bottom": -613,
+     "left": 20,
+     "right": 278,
+     "peek": 6,
+     "status": "above"
+    },
+    {
+     "kind": "reward5",
+     "text": "Badge: Warm Streak II",
+     "top": -597,
+     "bottom": -517,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "above"
+    },
+    {
+     "kind": "reward6",
+     "text": "Badge: Weekend Warmth",
+     "top": -501,
+     "bottom": -421,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "above"
+    },
+    {
+     "kind": "details-toggle",
+     "text": "How your leaves added up",
+     "top": -407,
+     "bottom": -317,
+     "left": 20,
+     "right": 355,
+     "peek": 6,
+     "status": "above"
+    },
+    {
+     "kind": "details0",
+     "text": "25 focused minutes+25",
+     "top": -317,
+     "bottom": -227,
+     "left": 34,
+     "right": 341,
+     "peek": 6,
+     "status": "above"
+    },
+    {
+     "kind": "details1",
+     "text": "Full brew+5",
+     "top": -221,
+     "bottom": -176,
+     "left": 34,
+     "right": 341,
+     "peek": 6,
+     "status": "above"
+    },
+    {
+     "kind": "details2",
+     "text": "First brew today+3",
+     "top": -170,
+     "bottom": -125,
+     "left": 34,
+     "right": 341,
+     "peek": 6,
+     "status": "above"
+    },
+    {
+     "kind": "details3",
+     "text": "Daily goal met+10",
+     "top": -119,
+     "bottom": -74,
+     "left": 34,
+     "right": 341,
+     "peek": 6,
+     "status": "above"
+    },
+    {
+     "kind": "details4",
+     "text": "Recipe: Finish a full brew+10",
+     "top": -68,
+     "bottom": 22,
+     "left": 34,
+     "right": 341,
+     "peek": 6,
+     "status": "cut-top"
+    },
+    {
+     "kind": "details5",
+     "text": "Recipe: Brew for 30 minutes+15",
+     "top": 28,
+     "bottom": 118,
+     "left": 34,
+     "right": 341,
+     "peek": 6,
+     "status": "clear"
+    },
+    {
+     "kind": "details6",
+     "text": "This brew +68",
+     "top": 124,
+     "bottom": 177,
+     "left": 34,
+     "right": 341,
+     "peek": 6,
+     "status": "clear"
+    },
+    {
+     "kind": "details7",
+     "text": "Cozy level 8 → 9207 leaves to go",
+     "top": 187,
+     "bottom": 271,
+     "left": 34,
+     "right": 341,
+     "peek": 6,
+     "status": "clear"
+    },
+    {
+     "kind": "details8",
+     "text": "Your 7-day streak stays warm with one full brew a day.",
+     "top": 301,
+     "bottom": 427,
+     "left": 34,
+     "right": 341,
+     "peek": 6,
+     "status": "clear"
+    }
+   ],
+   "cut": [],
+   "occluded": [],
+   "overlaps": [],
+   "footerButtons": [
+    {
+     "name": "Tea time · 5 min",
+     "box": [
+      20,
+      489,
+      335,
+      108
+     ],
+     "hit": true,
+     "inView": true
+    },
+    {
+     "name": "Skip break",
+     "box": [
+      75,
+      601,
+      226,
+      58
+     ],
+     "hit": true,
+     "inView": true
+    }
+   ],
+   "chai": {
+    "box": [
+     227,
+     115,
+     109,
+     149
+    ],
+    "shownAboveSheet": 0
+   },
+   "toasts": [],
+   "facts": [
+    "25 minutes brewed",
+    "Tea’s ready. Take five before the next one.",
+    "Record player is in your nook",
+    "Cozy level 8 · Plays mostly rain sounds. Chai approves.",
+    "+68 leaves",
+    "Goal met · 37/30 min",
+    "7 days warm, your best yet",
+    "Tea Cozy earned",
+    "2 recipes done",
+    "Badge: Warm Streak II",
+    "Badge: Weekend Warmth",
+    "25 focused minutes+25",
+    "Full brew+5",
+    "First brew today+3",
+    "Daily goal met+10",
+    "Recipe: Finish a full brew+10",
+    "Recipe: Brew for 30 minutes+15",
+    "This brew +68",
+    "Cozy level 8 → 9207 leaves to go",
+    "Your 7-day streak stays warm with one full brew a day."
+   ],
+   "lastUnit": {
+    "kind": "details8",
+    "text": "Your 7-day streak stays warm with one full brew a day.",
+    "top": 301,
+    "bottom": 427,
+    "status": "clear"
+   },
+   "ls": {
+    "phase": "07-summary-bigday-end",
+    "vw": 375,
+    "vh": 667,
+    "dpr": 2,
+    "htmlFont": "32px",
+    "scroll": {
+     "top": 1971,
+     "max": 1971,
+     "atEnd": true,
+     "rect": [
+      0,
+      0,
+      375,
+      474.8
+     ]
+    },
+    "F": 474.8,
+    "footerTop": 474.8,
+    "fade": 14,
+    "heading": {
+     "text": "25 minutes brewed",
+     "box": [
+      20,
+      -1665.5,
+      335,
+      123.2
+     ],
+     "inViewport": false,
+     "inScrollArea": false
+    },
+    "footer": [
+     {
+      "name": "Tea time · 5 min",
+      "box": [
+       20,
+       488.8,
+       335,
+       108.4
+      ],
+      "hitsOfFive": 5,
+      "inViewport": true
+     },
+     {
+      "name": "Skip break",
+      "box": [
+       74.5,
+       601.2,
+       225.9,
+       57.8
+      ],
+      "hitsOfFive": 5,
+      "inViewport": true
+     }
+    ],
+    "lineCount": 63,
+    "tallyBox": {
+     "above": 46,
+     "cut-top": 1,
+     "clear": 16
+    },
+    "tallyInk": {
+     "above": 46,
+     "cut-top": 1,
+     "clear": 16
+    },
+    "cutLinesBox": [
+     {
+      "text": "Recipe: Finish a full brew",
+      "top": -21,
+      "bottom": 20,
+      "box": "cut-top",
+      "ink": "cut-top"
+     }
+    ],
+    "cutLinesInk": [
+     {
+      "text": "Recipe: Finish a full brew",
+      "top": -21,
+      "bottom": 20,
+      "box": "cut-top",
+      "ink": "cut-top"
+     }
+    ],
+    "occluded": [],
+    "overlaps": [],
+    "lastLine": {
+     "text": "Your 7-day streak stays warm with one full brew ",
+     "bottom": 425.2,
+     "gapToFooterTop": 49.6
+    },
+    "detailsToggle": {
+     "box": [
+      20,
+      -406.8,
+      335,
+      90
+     ],
+     "status": "above",
+     "open": true
+    },
+    "rewardsListLabel": "Rewards",
+    "pills": [
+     {
+      "visible": "+68 leaves",
+      "full": "+68 leaves",
+      "kind": "leaves",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       -968.8,
+       207,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Goal met · 37/30 min",
+      "full": "Goal met · 37/30 minDaily goal met: 37 of 30 minutes today",
+      "kind": "goal",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       -908.8,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "7 days warm, your best yet",
+      "full": "77 days warm, your best yet",
+      "kind": "streak",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       -812.8,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Tea Cozy earned",
+      "full": "Tea Cozy earnedYou earned a Tea Cozy: it keeps your streak warm for one missed day",
+      "kind": "cozy",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       -716.8,
+       283,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "2 recipes done",
+      "full": "2 recipes done",
+      "kind": "recipes",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       -656.8,
+       258,
+       44
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Badge: Warm Streak II",
+      "full": "7IIBadge: Warm Streak II",
+      "kind": "badge",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       -596.8,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     },
+     {
+      "visible": "Badge: Weekend Warmth",
+      "full": "IBadge: Weekend Warmth",
+      "kind": "badge",
+      "highlight": false,
+      "milestone": null,
+      "box": [
+       20,
+       -500.8,
+       335,
+       80
+      ],
+      "style": {
+       "bg": "rgb(252, 244, 233)",
+       "border": "0px rgb(59, 42, 32)",
+       "fs": "30px",
+       "fw": "700",
+       "pad": "4px 6px",
+       "rad": "999px",
+       "shadow": "rgb(237, 223, 203) 0px 0px 0px 2px inset"
+      }
+     }
+    ],
+    "distinct": [
+     {
+      "sig": "[\"rgb(252, 244, 233)\",\"0px rgb(59, 42, 32)\",\"30px\",\"4px 6px\",\"999px\",\"rgb(237, 223, 203) 0px 0px 0px 2px inset\"]",
+      "n": 7,
+      "sample": [
+       "+68 leaves",
+       "Goal met · 37/30 min",
+       "7 days warm, your best yet"
+      ]
+     }
+    ],
+    "highlightCount": 0,
+    "unlock": {
+     "label": "Cozy level 8: Record player is in your nook",
+     "box": [
+      20,
+      -1432.5,
+      335,
+      449.8
+     ],
+     "hasCanvas": true,
+     "hasStillGlyph": true,
+     "status": "above"
+    },
+    "chai": {
+     "box": [
+      226.8,
+      115.4,
+      108.8,
+      149.3
+     ],
+     "inViewportShare": 1,
+     "notUnderSheetShare": 0,
+     "sideBySide": false,
+     "tag": "IMG"
+    },
+    "toasts": [],
+    "announce": "25 minutes brewed. 68 leaves earned. Daily goal met. Warm streak: 7 days. Cozy level 8: something new in your nook. New badge: Warm Streak. New badge: Weekend Warmth.",
+    "lines": [
+     {
+      "text": "25 minutes brewed",
+      "top": -1670,
+      "bottom": -1602,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "25 minutes brewed",
+      "top": -1608,
+      "bottom": -1540,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Tea’s ready. Take five before the next one.",
+      "top": -1539,
+      "bottom": -1493,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Tea’s ready. Take five before the next one.",
+      "top": -1493,
+      "bottom": -1447,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Record player is in your nook",
+      "top": -1424,
+      "bottom": -1383,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Record player is in your nook",
+      "top": -1383,
+      "bottom": -1342,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Record player is in your nook",
+      "top": -1342,
+      "bottom": -1301,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Record player is in your nook",
+      "top": -1301,
+      "bottom": -1260,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Cozy level",
+      "top": -1258,
+      "bottom": -1220,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Cozy level",
+      "top": -1221,
+      "bottom": -1183,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "8",
+      "top": -1221,
+      "bottom": -1183,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "·",
+      "top": -1221,
+      "bottom": -1183,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Plays mostly rain sounds. Chai approves.",
+      "top": -1183,
+      "bottom": -1145,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Plays mostly rain sounds. Chai approves.",
+      "top": -1145,
+      "bottom": -1107,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Plays mostly rain sounds. Chai approves.",
+      "top": -1107,
+      "bottom": -1069,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Plays mostly rain sounds. Chai approves.",
+      "top": -1069,
+      "bottom": -1031,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Plays mostly rain sounds. Chai approves.",
+      "top": -1032,
+      "bottom": -994,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "+68 leaves",
+      "top": -968,
+      "bottom": -927,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Goal met · 37/30 min",
+      "top": -908,
+      "bottom": -867,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Goal met · 37/30 min",
+      "top": -872,
+      "bottom": -831,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "7 days warm, your best yet",
+      "top": -812,
+      "bottom": -771,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "7 days warm, your best yet",
+      "top": -776,
+      "bottom": -735,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Tea Cozy earned",
+      "top": -716,
+      "bottom": -675,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "2 recipes done",
+      "top": -656,
+      "bottom": -615,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Badge: Warm Streak II",
+      "top": -596,
+      "bottom": -555,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Badge: Warm Streak II",
+      "top": -560,
+      "bottom": -519,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Badge: Weekend Warmth",
+      "top": -500,
+      "bottom": -459,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Badge: Weekend Warmth",
+      "top": -464,
+      "bottom": -423,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "How your leaves added up",
+      "top": -405,
+      "bottom": -364,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "How your leaves added up",
+      "top": -360,
+      "bottom": -319,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "25 focused minutes",
+      "top": -315,
+      "bottom": -274,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "25 focused minutes",
+      "top": -270,
+      "bottom": -229,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "+",
+      "top": -292,
+      "bottom": -251,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "25",
+      "top": -292,
+      "bottom": -251,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Full brew",
+      "top": -219,
+      "bottom": -178,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "+",
+      "top": -219,
+      "bottom": -178,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "5",
+      "top": -219,
+      "bottom": -178,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "First brew today",
+      "top": -168,
+      "bottom": -127,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "+",
+      "top": -168,
+      "bottom": -127,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "3",
+      "top": -168,
+      "bottom": -127,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Daily goal met",
+      "top": -117,
+      "bottom": -76,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "+",
+      "top": -117,
+      "bottom": -76,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "10",
+      "top": -117,
+      "bottom": -76,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Recipe: Finish a full brew",
+      "top": -66,
+      "bottom": -25,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Recipe: Finish a full brew",
+      "top": -21,
+      "bottom": 20,
+      "box": "cut-top",
+      "ink": "cut-top"
+     },
+     {
+      "text": "+",
+      "top": -43,
+      "bottom": -2,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "10",
+      "top": -43,
+      "bottom": -2,
+      "box": "above",
+      "ink": "above"
+     },
+     {
+      "text": "Recipe: Brew for 30 minutes",
+      "top": 30,
+      "bottom": 71,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Recipe: Brew for 30 minutes",
+      "top": 75,
+      "bottom": 116,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "+",
+      "top": 53,
+      "bottom": 94,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "15",
+      "top": 53,
+      "bottom": 94,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "This brew",
+      "top": 134,
+      "bottom": 175,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "+",
+      "top": 134,
+      "bottom": 175,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "68",
+      "top": 134,
+      "bottom": 175,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Cozy level",
+      "top": 189,
+      "bottom": 227,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "8",
+      "top": 231,
+      "bottom": 269,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "→",
+      "top": 231,
+      "bottom": 269,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "9",
+      "top": 231,
+      "bottom": 269,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "207 leaves",
+      "top": 189,
+      "bottom": 227,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "to go",
+      "top": 231,
+      "bottom": 269,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Your 7-day streak stays warm with one full brew ",
+      "top": 303,
+      "bottom": 341,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Your 7-day streak stays warm with one full brew ",
+      "top": 345,
+      "bottom": 383,
+      "box": "clear",
+      "ink": "clear"
+     },
+     {
+      "text": "Your 7-day streak stays warm with one full brew ",
+      "top": 387,
+      "bottom": 425,
+      "box": "clear",
+      "ink": "clear"
+     }
+    ]
+   },
+   "tMs": 1791762832448,
+   "axe": []
+  }
+ },
+ "errors": []
+}

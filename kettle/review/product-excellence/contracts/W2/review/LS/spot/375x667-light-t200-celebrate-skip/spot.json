@@ -1,0 +1,123 @@
+{
+ "cfg": "375x667@2:light:200",
+ "day": "celebrate",
+ "mode": "skip",
+ "tap": "touch",
+ "base": "http://127.0.0.1:5351",
+ "steps": [
+  {
+   "name": "arrival",
+   "scrollTop": 80,
+   "max": 1213,
+   "atEnd": false,
+   "F": 474.8,
+   "cutBox": [
+    "straddle-fold:Record player is in your nook"
+   ],
+   "occluded": 0,
+   "last": {
+    "text": "How your leaves added up",
+    "bottom": 1572.2,
+    "gapToFooterTop": -1097.4
+   },
+   "highlights": 0,
+   "heading": {
+    "text": "25 minutes brewed",
+    "box": [
+     20,
+     225.5,
+     335,
+     123.2
+    ],
+    "inViewport": true,
+    "inScrollArea": true
+   },
+   "footer": [
+    "Tea time · 5 min hit5/5 inView=true",
+    "Skip break hit5/5 inView=true"
+   ],
+   "pills": 7
+  },
+  {
+   "name": "tab-stops",
+   "n": 4,
+   "stops": [
+    {
+     "tag": "BUTTON",
+     "name": "How your leaves added up",
+     "box": [
+      20,
+      351,
+      335,
+      90
+     ],
+     "inFooter": false,
+     "bottomVsF": -34,
+     "inRegionRect": true,
+     "hitOK": true,
+     "outline": "none 0px rgb(59, 42, 32) off 3px",
+     "boxShadow": "rgb(36, 119, 184) 0px 0px 0px 3px inset",
+     "focusVisible": true,
+     "scrollTop": 1213,
+     "inViewport": true
+    },
+    {
+     "tag": "BUTTON",
+     "name": "Tea time · 5 min",
+     "box": [
+      20,
+      489,
+      335,
+      108
+     ],
+     "inFooter": true,
+     "bottomVsF": 122,
+     "inRegionRect": false,
+     "hitOK": true,
+     "outline": "solid 3px rgb(36, 119, 184) off 3px",
+     "boxShadow": "none",
+     "focusVisible": true,
+     "scrollTop": 1213,
+     "inViewport": true
+    },
+    {
+     "tag": "BUTTON",
+     "name": "Skip break",
+     "box": [
+      75,
+      601,
+      226,
+      58
+     ],
+     "inFooter": true,
+     "bottomVsF": 184,
+     "inRegionRect": false,
+     "hitOK": true,
+     "outline": "solid 3px rgb(36, 119, 184) off 3px",
+     "boxShadow": "none",
+     "focusVisible": true,
+     "scrollTop": 1213,
+     "inViewport": true
+    },
+    {
+     "none": true
+    }
+   ]
+  },
+  {
+   "name": "skip-box",
+   "bx": {
+    "x": 74.546875,
+    "y": 601.203125,
+    "width": 225.90625,
+    "height": 57.796875
+   }
+  },
+  {
+   "name": "after-skip-tap",
+   "hash": "#/",
+   "summaryGone": true
+  }
+ ],
+ "errors": []
+}

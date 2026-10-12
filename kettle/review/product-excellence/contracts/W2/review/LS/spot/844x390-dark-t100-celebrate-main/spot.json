@@ -1,0 +1,190 @@
+{
+ "cfg": "844x390@2:dark:100",
+ "day": "celebrate",
+ "mode": "main",
+ "tap": "mouse",
+ "base": "http://127.0.0.1:5351",
+ "steps": [
+  {
+   "name": "arrival",
+   "scrollTop": 0,
+   "max": 532,
+   "atEnd": false,
+   "F": 244,
+   "cutBox": [],
+   "occluded": 0,
+   "last": {
+    "text": "How your leaves added up",
+    "bottom": 743.4,
+    "gapToFooterTop": -499.4
+   },
+   "highlights": 0,
+   "heading": {
+    "text": "25 minutes brewed",
+    "box": [
+     524,
+     26,
+     288,
+     30.8
+    ],
+    "inViewport": true,
+    "inScrollArea": true
+   },
+   "footer": [
+    "Tea time · 5 min hit5/5 inView=true",
+    "Skip break hit5/5 inView=true"
+   ],
+   "pills": 7
+  },
+  {
+   "name": "wheel-tries",
+   "wheelTries": [
+    {
+     "at": [
+      668,
+      128
+     ],
+     "over": "SPAN._unlockStill_1yi8z_193",
+     "before": 0,
+     "after": 150,
+     "delta": 150
+    },
+    {
+     "at": [
+      814,
+      128
+     ],
+     "over": "DIV._sheet_1yi8z_33",
+     "before": 150,
+     "after": 300,
+     "delta": 150
+    },
+    {
+     "at": [
+      522,
+      198
+     ],
+     "over": "DIV._sheet_1yi8z_33",
+     "before": 300,
+     "after": 450,
+     "delta": 150
+    },
+    {
+     "at": [
+      668,
+      209
+     ],
+     "over": "BUTTON._detailsToggle_1yi8z_275",
+     "before": 450,
+     "after": 532,
+     "delta": 82
+    }
+   ]
+  },
+  {
+   "name": "touch-gesture",
+   "start": 532,
+   "afterSwipeDown160": 532,
+   "afterSwipeUp160": 532
+  },
+  {
+   "name": "top",
+   "scrollTop": 0,
+   "max": 532,
+   "atEnd": false,
+   "F": 244,
+   "cutBox": [],
+   "occluded": 0,
+   "last": {
+    "text": "How your leaves added up",
+    "bottom": 743.4,
+    "gapToFooterTop": -499.4
+   },
+   "highlights": 0
+  },
+  {
+   "name": "reachability-walk",
+   "total": 17,
+   "neverClear": []
+  },
+  {
+   "name": "before-toggle",
+   "scrollTop": 532,
+   "max": 532,
+   "atEnd": true,
+   "F": 244,
+   "cutBox": [
+    "cut-top:Tea Cozy earned"
+   ],
+   "occluded": 0,
+   "last": {
+    "text": "How your leaves added up",
+    "bottom": 211.4,
+    "gapToFooterTop": 32.6
+   },
+   "highlights": 0,
+   "toggle": {
+    "box": [
+     524,
+     177.7,
+     288,
+     48
+    ],
+    "status": "clear",
+    "open": false
+   }
+  },
+  {
+   "name": "toggle-ready",
+   "status": "clear",
+   "box": {
+    "x": 524,
+    "y": 177.671875,
+    "width": 288,
+    "height": 48
+   },
+   "hitTarget": "How your leaves added up"
+  },
+  {
+   "name": "toggle-tapped",
+   "ariaExpanded": "true"
+  },
+  {
+   "name": "end-state",
+   "scrollTop": 850,
+   "max": 850,
+   "atEnd": true,
+   "F": 244,
+   "cutBox": [
+    "cut-top:Daily goal met",
+    "cut-top:+",
+    "cut-top:10"
+   ],
+   "occluded": 0,
+   "last": {
+    "text": "Your 7-day streak stays warm with one full brew ",
+    "bottom": 211.2,
+    "gapToFooterTop": 32.8
+   },
+   "highlights": 0,
+   "tallyBox": {
+    "above": 26,
+    "cut-top": 3,
+    "clear": 17
+   },
+   "cutInk": 0,
+   "lastGapToFooter": 32.8,
+   "footer": [
+    "Tea time · 5 min hit5/5",
+    "Skip break hit5/5"
+   ]
+  },
+  {
+   "name": "after-tea-tap",
+   "hash": "#/focus",
+   "summaryGone": false,
+   "body": "Tea break Tea break · 5 min Rain 25 minutes brewed Tea’s ready. Take five before the next one. Record player is in your nook 8 Cozy level 8 · Plays mostly rain "
+  }
+ ],
+ "errors": []
+}

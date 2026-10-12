@@ -90,7 +90,18 @@ loading | live), `375x667-light-t200-nook.jpg` (static hint before/after, 3D hin
 
 ## 5. Residual table
 
-RESIDUAL_PLACEHOLDER
+| # | Item | Configs | Class | Reason / owner |
+|---|---|---|---|---|
+| N-F1 | Item layers paint before the base window still at brew start (items over the bare sky gradient) | every size, first paint of the Focus backdrop; observed 1–2.5 s under load | FLOAT_CLASS | FLOAT_REASON |
+| N-F2 | Static Nook hint wraps to two lines at 375×667 @200 and sits over part of the drawing until the first tap | 375×667 @200 | ACCEPTED | One-time, `pointer-events: none`, dismissed on the first tap; BEFORE ran past both edges of the stage, unreadable |
+| N-F3 | At night the 3D-off/loading still (high-quality render) differs from the live view on low-tier devices (evenly lit room) | dark / night lighting, low tier | FOLLOW-UP | Pre-existing: the base still alone differs the same way (Lane N control column); the layers match the high tier (as-seen diff 3.0). Owner: scene area |
+| N-F4 | ♪ note particle baked into the record-player layer | where the record player is earned | ACCEPTED | It is the live engine's reduced-motion frame, which is what the base still already is |
+| N-F5 | While three.js loads in the Nook, the drawing shows the 3D hint ("Drag to look around") | Nook, 3D on, loading | ACCEPTED | Specified (the room becomes interactive moments later); unchanged from base |
+| N-F6 | A WebGL context lost mid-session in the Nook shows the drawing under the drag hint | Nook, context lost | FOLLOW-UP | Pre-existing (hint keyed on tier/WebGL, not on engine failure). Owner: N / scene |
+| N-F7 | Packet says only the manifest and URL map are bundled; 4 shelf layers are inlined (`scene` chunk 8.8 → 33 KB, gzip 3.8 → 17.3 KB) | build | ACCEPTED (note) | Within budget, lazy chunk; correct the packet wording; relevant to N-F1 |
+| N-F8 | 375×667 "room disappears" | 375×667 | ACCEPTED | Not reproducible (maker, critic, Lane N); no blanking path found in the engine; withdrawn by the audit |
+| N-F9 | CHAI-3D-SPEC stale line references (`setPose`, `update`, `root.scale`) | doc | FOLLOW-UP | Doc fix, owner N |
+| F1 | `integrity.spec.ts:1090` @1440×900 flake | 1440×900 | FOLLOW-UP | Base fails 4/9 (Lane S). R7-7 / M7a. N's suites did not hit it; listed for completeness |
 
 ## 6. CHAI-3D-SPEC.md (I06 prep) — complete; accurate apart from three stale line references
 
