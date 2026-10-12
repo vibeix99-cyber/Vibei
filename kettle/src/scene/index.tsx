@@ -67,6 +67,7 @@ export function usePrewarmNook(items: string[]): void {
       void import('./NookScene')
         // Wait for a calm page (boot / entry animations done) so the context doesn't stall on the GPU.
         .then(async (m) => {
+          m.preloadChai({ quality: tier });
           await m.settled(600, 5000);
           if (cancelled) return;
           m.prewarm(

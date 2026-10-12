@@ -36,6 +36,7 @@ import { buildRoom, type RoomParts } from './room';
 import { buildKettle, disposeNotes, type KettleParts } from './kettle';
 import { BUILDERS, type ItemBuild, type TableTop } from './items';
 import { buildChai, type Chai } from './chai';
+import { buildModelChai, type ChaiTemplate } from './chaiModel';
 
 export type Quality = 'high' | 'low';
 
@@ -160,6 +161,8 @@ export class NookEngine {
   private room: RoomParts;
   private ket: KettleParts;
   private chai: Chai;
+  /** Which Chai is in the room: the procedural one (first frame, fallback) or the Blender model (chaiModel.ts). */
+  chaiKind: 'procedural' | 'model' = 'procedural';
   private items = new Map<string, ItemBuild>();
   private itemsRoot = new Group();
   private opts: EngineOptions;
@@ -359,6 +362,54 @@ export class NookEngine {
     this.invalidate();
   }
 
+  /**
+   * Replace the procedural Chai with the model, in place (CHAI-3D-SPEC §6.2 step 4): same position, turn, base
+   * height, pose and tap proxy; the steam and zZ carry over. Synchronous; its programs compile on the next `warm`
+   * (or frame), so call it from `warm`'s `prepare`, as `upgradeChai` does. The procedural Chai's geometry is freed
+   * (nothing else uses it: a later fallback is a new engine, which builds its own). False if nothing changed.
+   */
+  useChaiModel(tpl: ChaiTemplate): boolean {
+    if (this.chaiKind === 'model' || this.disposed || this.contextLost) return false;
+    const old = this.chai;
+    const next = buildModelChai(this.kit, tpl, { steam: old.steam, sprites: old.sprites });
+    next.root.position.copy(old.root.position);
+    next.root.rotation.y = old.root.rotation.y;
+    next.root.userData.baseY = old.root.userData.baseY;
+    next.root.add(this.chaiProxy);
+    if (this.quality === 'low') this.kit.liteify(next.root);
+    this.scene.remove(old.root);
+    this.scene.add(next.root);
+    this.chai = next;
+    this.chaiKind = 'model';
+    this.applyLayout();
+    this.applyMode();
+    this.pushMood();
+    const shared = this.kit.unitPlane();
+    old.root.traverse((o) => {
+      const m = o as Mesh;
+      if (m.isMesh && m.geometry !== shared) m.geometry.dispose();
+    });
+    this.invalidate();
+    return true;
+  }
+
+  /**
+   * Swap the model in on a running engine: compile only its programs, a few per task, holding the last frame
+   * (the room never shows an uncompiled Chai and no frame compiles them all at once). Resolves true once swapped.
+   */
+  async upgradeChai(tpl: ChaiTemplate): Promise<boolean> {
+    if (this.chaiKind === 'model' || !this.usable) return false;
+    let swapped = false;
+    const ok = await this.warm(
+      nextTask,
+      () => {
+        swapped = this.useChaiModel(tpl);
+      },
+      () => (swapped ? this.chai.root : null),
+    );
+    return ok && swapped;
+  }
+
   get canvas(): HTMLCanvasElement {
     return this.opts.canvas;
   }
@@ -391,7 +442,7 @@ export class NookEngine {
    * Resolves false if the engine went away meanwhile. Rendering is held from
    * the call until it resolves; `prepare` runs one task in, before compiling.
    */
-  async warm(pause: () => Promise<void>, prepare?: () => void): Promise<boolean> {
+  async warm(pause: () => Promise<void>, prepare?: () => void, only?: () => Object3D | null): Promise<boolean> {
     this.compiling++; // no frames until done (a frame would compile everything at once)
     try {
       if (prepare) {
@@ -400,7 +451,9 @@ export class NookEngine {
         if (this.disposed || this.contextLost) return false;
         prepare();
       }
-      return await this.compileAll(pause);
+      const root = only ? only() : this.scene;
+      if (!root) return !this.disposed && !this.contextLost;
+      return await this.compileAll(pause, root);
     } finally {
       this.compiling--;
       this.loopFrames = 0;
@@ -408,12 +461,12 @@ export class NookEngine {
     }
   }
 
-  private async compileAll(pause: () => Promise<void>): Promise<boolean> {
+  private async compileAll(pause: () => Promise<void>, root: Object3D = this.scene): Promise<boolean> {
     const r = this.renderer;
     const isDrawable = (o: Object3D) =>
       !!((o as Mesh).isMesh || (o as Sprite).isSprite || (o as { isPoints?: boolean }).isPoints || (o as { isLine?: boolean }).isLine);
     const objects: Object3D[] = [];
-    this.scene.traverse((o) => {
+    root.traverse((o) => {
       if (isDrawable(o) && (o as Mesh).material) objects.push(o);
     });
     const parallel = r.extensions.has('KHR_parallel_shader_compile');

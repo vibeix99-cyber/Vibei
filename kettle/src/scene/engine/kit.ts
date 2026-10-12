@@ -117,6 +117,16 @@ export class Kit {
     return m;
   }
 
+  /**
+   * Adopt a material built elsewhere (a loaded model's): disposed with the kit; `unique` keeps it out of
+   * vertex-colour baking and out of the low tier's Lambert swap, like `uniqueMat`.
+   */
+  own<T extends Material>(m: T, unique = false): T {
+    this.mats.set(`own|${m.uuid}`, m);
+    if (unique) this.uniques.add(m);
+    return m;
+  }
+
   /** Shared vertex-colored material used when merging plain colored parts. */
   private vcMat(rough: number, metal: number, side: Side): MeshStandardMaterial {
     const key = `vc|${rough}|${metal}|${side}`;
