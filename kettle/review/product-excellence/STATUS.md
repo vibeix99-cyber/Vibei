@@ -26,6 +26,17 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
   - The model loads only on the high tier (`MODEL_ON_LOW=false`), so the default stays procedural on the low tier.
 - **Servers:** all were down after a container restart. The control `b377c62` (:5410 / :5430) and the P trial are rebuilt and verified.
 
+**Verdicts** (LEAD-2, Opus):
+
+| Maker | Verdict | Revision | Status |
+|---|---|---|---|
+| **P** | **APPROVE** | `pe/w2r2-summary@dc7a28d` | **Merged** as `2f67fc1`; its tree equals trial `d07bd2d` |
+| **C** | **APPROVE** | `pe/w2r2-chai3d@2843fb0` | **Not merged**: it waits for Vibei's art sign-off. Owner decision for Vibei: `MODEL_ON_LOW=false` |
+| **T** | **REJECT** | `4620796` | Defects T-D1 to T-D6. Its one 90-minute fix round started at 12:05 UTC (hard stop 13:35), followed by a targeted re-review by Lane T (Opus) and the lead. |
+
+- **Ruling R-3 needs Vibei's confirmation.** For Undo notices on screens with no zone (Stats, Settings), the lead ruled that the notice falls back to the base's position above the tab bar. That narrowly relaxes the brief's "no toast ever covers a control". The rows it can cover are follow-up F-T1.
+- **Lane R (Sonnet)** is running on the P+C combined trial `032d7a5` (:5445/:5455).
+
 **Follow-up recorded for next round:** rename the badge "Warm Streak" to "Warm Days". Vibei has approved it as a display-name-only change: no ids, stored data or arithmetic change.
 
 ## (round 2 start) ▶ WAVE 2 ROUND 2 IN PROGRESS · 2026-10-12 (read this first)
