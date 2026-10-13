@@ -964,5 +964,96 @@
   "pageerrors": [],
   "failedRequests": [],
   "responses": []
+ },
+ "09-low-tier": {
+  "name": "09-low-tier",
+  "scene": "low",
+  "t0": "10:43:15",
+  "glbRequests": 0,
+  "sceneReadyAt": "10:43:22",
+  "statusTimeline": [
+   {
+    "ms": 0,
+    "kind": "procedural",
+    "s": {
+     "state": "idle"
+    }
+   }
+  ],
+  "finalKind": "procedural",
+  "finalStatus": {
+   "state": "idle"
+  },
+  "hosts": [
+   {
+    "mode": "showcase",
+    "ready": "true",
+    "static": null,
+    "canvas": 1
+   }
+  ],
+  "facts": {
+   "kind": "procedural",
+   "model": false,
+   "shownParts": [],
+   "activeMorphs": [],
+   "rootScale": [
+    1.12,
+    1.12,
+    1.12
+   ],
+   "quality": "low"
+  },
+  "samples": {
+   "engSamples": 157,
+   "firstEngineAtMs": 5928,
+   "kindTransitions": [
+    {
+     "t": 5928,
+     "k": "procedural"
+    }
+   ],
+   "first3s": {
+    "n": 30,
+    "bad": 0,
+    "spanMs": 2972,
+    "maxGapMs": 174
+   },
+   "aroundSwap1_5s": null,
+   "whole": {
+    "n": 157,
+    "bad": 0,
+    "spanMs": 15672,
+    "maxGapMs": 174
+   },
+   "badSamplesTotal": 0,
+   "staticSamples": 3,
+   "noCanvasSamples": 16
+  },
+  "console": [
+   {
+    "t": "10:43:16",
+    "type": "warning",
+    "text": "Service Worker registration blocked by Playwright"
+   },
+   {
+    "t": "10:43:16",
+    "type": "warning",
+    "text": "[pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')\n    at http://127.0.0.1:5453/assets/workbox-window.prod.es5-Bd17z0YL.js:2:2838"
+   },
+   {
+    "t": "10:43:16",
+    "type": "warning",
+    "text": "Service Worker registration blocked by Playwright"
+   },
+   {
+    "t": "10:43:16",
+    "type": "warning",
+    "text": "[pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')\n    at http://127.0.0.1:5453/assets/workbox-window.prod.es5-Bd17z0YL.js:2:2838"
+   }
+  ],
+  "pageerrors": [],
+  "failedRequests": [],
+  "responses": []
  }
 }
