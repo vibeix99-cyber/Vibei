@@ -74,7 +74,15 @@ All three configurations gave identical results.
 |---|---|---|
 | `npx tsc --noEmit --pretty false` | exit 0 | `review/LEAD/B/tsc.txt` |
 | `npx vitest run` | 30 files, **290/290** | `review/LEAD/B/vitest.txt` |
-| `w2-summary.spec.ts` (chromium, :5475, workers 1) | _pending_ | `review/LEAD/B/e2e-w2-summary.txt` |
+| `w2-summary.spec.ts` (chromium, :5475, workers 1) | **18/18** in effect (details below) | `review/LEAD/B/e2e-w2-summary.txt`, `e2e-w2-summary-rerun.txt` |
+
+**How the w2-summary 18/18 was reached:**
+- The full run gave 17 passed and 1 failed.
+- The failure was the big-day test, at `ctx.close()` (line 248), after all its assertions had passed, `Badge: Warm Days II` included.
+- The error was `ENOENT …/test-results/.playwright-artifacts-0/traces/…trace`. Lane B started the same spec in the same worktree at 20:36, and Playwright's start-of-run cleanup deleted my run's trace file.
+- Rerun with a private `--output`: the big-day test and the "warm days, never streak" test passed **2/2**.
+- That the trial's spec was the one run is confirmed by the compile cache entry my run wrote at 20:31: it contains "Warm Days II" twice and "Warm Streak II" zero times.
+- **Process note:** two lanes running specs in one worktree must each pass `--output`.
 
 ### Opened at full size (REFERENCE → BEFORE → AFTER)
 
@@ -107,7 +115,7 @@ All three configurations gave identical results.
 |---|---|
 | The display name changes everywhere it shows | **Met.** Summary pill, its accessible name, the summary announcement, Stats tile, tile aria, sheet title, toast (code path from the catalogue) and art label. Zero "Warm Streak" anywhere in the UI or the built bundle |
 | No ids, stored data or arithmetic changed | **Met.** Ids are 5/5. Only the title string changed in the catalogue. Engines are untouched. The stored profile is byte-identical after load and use |
-| Migration-safe for existing users | **Met**, on a real pre-rename profile from the BEFORE build: the new name on every surface, nothing rewritten, no version bump. The unit test covers the same, plus an unknown id keeping its stored name |
+| Migration-safe for existing users | **Met**, on a real pre-rename profile from the BEFORE build: the new name on every surface, nothing rewritten, no version bump. The unit test covers the same, plus an unknown id keeping its stored name. The first write after load (any normal state change) stores the current report as it is in memory, so "Warm Days". That is the transient summary copy, not a schema or id change |
 | PRESERVE 9 (badge arithmetic) and 11 (compatible storage) | **Kept** |
 | Tests test real behaviour | Yes. The new engine test goes through `coerceData` on a stored-shape profile. The summary spec's "no streak" check is now strict (no exemption) and asserts `Warm Days II` |
 | File scope | In scope. `summary.ts` has a comment-only change (noted; no conflict with T2, whose tree does not touch it) |
