@@ -1,0 +1,176 @@
+START 2026-10-13T19:19:33Z load=3.36 4.16 5.34
+[slots] LR took 2/3 at 19:19:33: npx playwright test --project=chromium --workers=2 --output=/tmp/claude-0/lrc-scratch/out-full
+
+Running 114 tests using 2 workers
+
+  ✓    1 [chromium] › tests/chai3d.spec.ts:72:3 › 3D Chai: the model replaces the procedural Chai › high tier: loads, validates and swaps in place, awake = eyes_open, on the cushion (25.3s)
+  ✓    3 [chromium] › tests/chai3d.spec.ts:85:3 › 3D Chai: fallbacks keep the procedural Chai › 404: procedural Chai, no error, the room is live (26.5s)
+  ✓    4 [chromium] › tests/chai3d.spec.ts:98:3 › 3D Chai: fallbacks keep the procedural Chai › slow network: the first frame is the procedural Chai; after 8 s the load gives up and it stays (30.8s)
+  ✓    2 [chromium] › tests/a11y.spec.ts:60:3 › axe: no serious/critical violations in any state (light) (1.6m)
+  ✓    5 [chromium] › tests/chai3d.spec.ts:114:3 › 3D Chai: fallbacks keep the procedural Chai › a file that fails validation (the r0 model: no eyes_sip) keeps the procedural Chai (25.8s)
+  ✓    7 [chromium] › tests/chai3d.spec.ts:127:3 › 3D Chai: fallbacks keep the procedural Chai › the loader chunk itself fails to load: procedural Chai, no error (25.6s)
+  ✓    8 [chromium] › tests/chai3d.spec.ts:140:3 › 3D Chai: fallbacks keep the procedural Chai › 3D off: the static drawing, no engine, no model request (12.7s)
+  ✓    9 [chromium] › tests/chai3d.spec.ts:149:3 › 3D Chai: fallbacks keep the procedural Chai › low tier: the model too (liteified), one request; the room is live first (17.4s)
+  ✓   10 [chromium] › tests/chai3d.spec.ts:170:3 › 3D Chai: fallbacks keep the procedural Chai › default tier on this machine (auto → low on SwiftShader): the model, with no frame without Chai (23.4s)
+  ✓    6 [chromium] › tests/a11y.spec.ts:60:3 › axe: no serious/critical violations in any state (dark) (1.5m)
+  ✓   11 [chromium] › tests/chai3d.spec.ts:200:3 › 3D Chai: fallbacks keep the procedural Chai › WebGL context lost and restored: the engine is rebuilt with the model from memory, no second request (45.3s)
+  ✓   12 [chromium] › tests/a11y.spec.ts:72:1 › pointer targets are at least 24×24 px or meet a WCAG 2.5.8 exception (56.5s)
+  ✓   13 [chromium] › tests/integrity.spec.ts:217:3 › I01 session time survives reload, suspension and late return › pause → reload → resume: the paused time is kept and the deadline moves by exactly the pause (16.3s)
+  ✓   15 [chromium] › tests/integrity.spec.ts:244:3 › I01 session time survives reload, suspension and late return › +5 → reload: the extension, its deadline and the gauge segment survive; completion records the full 30 min once (10.6s)
+  ✓   16 [chromium] › tests/integrity.spec.ts:267:3 › I01 session time survives reload, suspension and late return › suspended tab (a real Page Lifecycle freeze) across the end: one completion right after resume, at the real end, "while away" summary (29.1s)
+  ✘   14 [chromium] › tests/a11y.spec.ts:109:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll (51.8s)
+  -   18 [chromium] › tests/a11y.spec.ts:173:1 › keyboard-only critical journey with focus restoration
+  -   19 [chromium] › tests/a11y.spec.ts:288:1 › welcome: first brew from the keyboard alone
+  -   20 [chromium] › tests/a11y.spec.ts:299:1 › live regions stay quiet while a brew runs (no spoken countdown)
+  -   21 [chromium] › tests/a11y.spec.ts:328:3 › a toast never covers the session controls or the summary footer (390×844)
+  -   22 [chromium] › tests/a11y.spec.ts:328:3 › a toast never covers the session controls or the summary footer (375×667)
+  -   23 [chromium] › tests/a11y.spec.ts:364:3 › toasts never cover the break-over controls, carried task included (390×844)
+  -   24 [chromium] › tests/a11y.spec.ts:364:3 › toasts never cover the break-over controls, carried task included (375×667)
+  ✓   25 [chromium] › tests/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (390×844, 100 % text) (4.3s)
+  ✓   17 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (19.1s)
+  ✓   26 [chromium] › tests/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (390×844, 200 % text) (4.7s)
+  ✓   28 [chromium] › tests/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (375×667, 100 % text) (5.5s)
+  ✓   27 [chromium] › tests/integrity.spec.ts:340:3 › I01 session time survives reload, suspension and late return › late return: an extended brew that ended 2 h ago while the app was closed completes once, at its real end, with the right minutes (8.0s)
+  ✓   29 [chromium] › tests/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (375×667, 200 % text) (4.7s)
+  ✓   30 [chromium] › tests/integrity.spec.ts:373:3 › I01 session time survives reload, suspension and late return › late return to a paused brew: nothing completes; the same time is waiting (4.4s)
+  ✓   31 [chromium] › tests/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (844×390, 100 % text) (4.5s)
+  ✓   33 [chromium] › tests/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (844×390, 200 % text) (5.0s)
+  ✓   32 [chromium] › tests/integrity.spec.ts:395:3 › I01 exactly once › repeated finish / tick / end / pause at 0:00 and a double-clicked Tea time: one record, one grant, one break (9.5s)
+  ✓   35 [chromium] › tests/integrity.spec.ts:430:3 › I01 exactly once › reload during the whistle and again on the summary: one record, rewards granted once, the summary still there (9.6s)
+  ✓   36 [chromium] › tests/integrity.spec.ts:459:3 › I01 exactly once › two tabs on one profile: one record and one grant; both show the same summary; Tea time in one moves both (15.8s)
+  ✓   34 [chromium] › tests/w2-room.spec.ts:87:3 › Focus backdrop: earned items without the live 3D room › 3D off: the window still shows every earned window-visible item (30.6s)
+  ✓   37 [chromium] › tests/integrity.spec.ts:502:3 › I02 End, dismissal and task disposition › dismissing the End sheet (Esc, backdrop, Keep brewing) or leaving the screen never stops the brew (14.0s)
+  ✓   39 [chromium] › tests/integrity.spec.ts:543:3 › I02 End, dismissal and task disposition › End early after 12 active minutes (with a pause): 12 minutes saved as an unfinished brew, 12 leaves, no full-brew bonus, task kept (7.5s)
+  ✓   40 [chromium] › tests/integrity.spec.ts:575:3 › I02 End, dismissal and task disposition › End within the first minute: the sheet says nothing will be saved, and nothing is (4.7s)
+  ✓   38 [chromium] › tests/w2-room.spec.ts:96:3 › Focus backdrop: earned items without the live 3D room › 3D loading: the still shown before the engine is ready carries the same items (26.9s)
+  ✓   41 [chromium] › tests/integrity.spec.ts:586:3 › I02 End, dismissal and task disposition › Done / Carry forward are reversible; the carried task returns on Home; editing it and Mark done → Undo never add a focus record (15.1s)
+  ✓   42 [chromium] › tests/w2-room.spec.ts:111:3 › Focus backdrop: earned items without the live 3D room › items never stand on the bare sky: no layer is drawn before the base room still has decoded (25.4s)
+  ✓   43 [chromium] › tests/integrity.spec.ts:637:3 › I02 End, dismissal and task disposition › Skip break, Next brew and That’s all for now do what they say, and never record a skipped break (23.6s)
+  ✓   45 [chromium] › tests/integrity.spec.ts:768:3 › I03 data safety › export → reset (explicit confirmation) → import restores brews, settings and every reward exactly (17.7s)
+  ✓   46 [chromium] › tests/integrity.spec.ts:827:3 › I03 data safety › invalid files change nothing and say why (not JSON, another app, truncated, newer version, huge, empty, damaged) (14.9s)
+  ✓   44 [chromium] › tests/w2-room.spec.ts:144:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items (51.2s)
+  ✓   48 [chromium] › tests/w2-room.spec.ts:166:3 › Nook hint tells the truth › 3D off: no drag-and-tap promise over the drawing (5.1s)
+  ✓   47 [chromium] › tests/integrity.spec.ts:867:3 › I03 data safety › storage full: a brew that completes still reaches its summary, once; saved data stays intact; a backup carries the brew; making room saves it (17.3s)
+  ✓   49 [chromium] › tests/w2-room.spec.ts:176:3 › Nook hint tells the truth › no WebGL: the same truthful hint (5.8s)
+  ✓   51 [chromium] › tests/w2-room.spec.ts:192:3 › Nook hint tells the truth › 3D on: the hint is unchanged (5.6s)
+  ✓   50 [chromium] › tests/integrity.spec.ts:903:3 › I03 data safety › storage full: a restore that cannot be saved is refused with a plain reason and changes nothing (10.5s)
+  ✓   53 [chromium] › tests/integrity.spec.ts:929:3 › I03 data safety › “Everything lives on this device”: a brew, an export and an import send nothing anywhere (12.7s)
+  ✓   52 [chromium] › tests/w2-summary.spec.ts:192:5 › 375×667 @100 %, routine day: no line starts under the footer on arrival; the final line clears it; nothing covers anything (16.8s)
+  ✓   55 [chromium] › tests/w2-summary.spec.ts:192:5 › 375×667 @100 %, big day: no line starts under the footer on arrival; the final line clears it; nothing covers anything (18.8s)
+  ✓   54 [chromium] › tests/integrity.spec.ts:1004:5 › I03 storage-full warning is a banner in the page (phone 390×844) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room (29.6s)
+  ✓   57 [chromium] › tests/integrity.spec.ts:1090:5 › I03 storage-full warning is a banner in the page (phone 390×844) › a banner that appears while Today is open moves nothing under the finger (Mark done with storage full) (5.2s)
+  ✓   56 [chromium] › tests/w2-summary.spec.ts:192:5 › 375×667 @200 %, routine day: no line starts under the footer on arrival; the final line clears it; nothing covers anything (15.4s)
+  ✓   59 [chromium] › tests/w2-summary.spec.ts:192:5 › 375×667 @200 %, big day: no line starts under the footer on arrival; the final line clears it; nothing covers anything (18.4s)
+  ✓   58 [chromium] › tests/integrity.spec.ts:1004:5 › I03 storage-full warning is a banner in the page (phone 375×667) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room (27.0s)
+  ✓   61 [chromium] › tests/integrity.spec.ts:1090:5 › I03 storage-full warning is a banner in the page (phone 375×667) › a banner that appears while Today is open moves nothing under the finger (Mark done with storage full) (4.2s)
+  ✓   60 [chromium] › tests/w2-summary.spec.ts:222:3 › 375×667 @100 %, a brew with a task (the K02 layout, Wave-1 #1 exactly): the third pill row does not start under the footer (15.0s)
+  ✓   63 [chromium] › tests/w2-summary.spec.ts:222:3 › 375×667 @100 %, a brew with a task (the K02 layout, Wave-1 #1 exactly), reduced motion: the third pill row does not start under the footer (11.4s)
+  ✓   62 [chromium] › tests/integrity.spec.ts:1004:5 › I03 storage-full warning is a banner in the page (desktop 1440×900) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room (29.3s)
+  ✓   65 [chromium] › tests/integrity.spec.ts:1090:5 › I03 storage-full warning is a banner in the page (desktop 1440×900) › a banner that appears while Today is open moves nothing under the finger (Mark done with storage full) (4.9s)
+  ✓   66 [chromium] › tests/whistle.spec.ts:45:1 › no audio context before the first gesture; the first tap unlocks it (3.5s)
+  ✓   64 [chromium] › tests/w2-summary.spec.ts:237:1 › big day: the unlock is the one highlight, whole on arrival; all seven rewards stay on the summary (23.5s)
+  ✓   68 [chromium] › tests/w2-summary.spec.ts:251:1 › a milestone day without an unlock: the biggest milestone leads, highlighted and whole on arrival; the rest stay compact (11.7s)
+  ✓   67 [chromium] › tests/whistle.spec.ts:53:1 › the whistle sounds once at completion, and not again after a reload of the summary (13.9s)
+  ✓   70 [chromium] › tests/whistle.spec.ts:76:1 › late return: one whistle, the while-away summary, nothing more on later visibility changes (8.7s)
+  ✓   69 [chromium] › tests/w2-summary.spec.ts:279:7 › 390×844 @100 %, routine day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (11.3s)
+  ✓   71 [chromium] › tests/whistle.spec.ts:100:1 › another tab in front (page hidden): the whistle is still scheduled once (10.0s)
+  ✓   73 [chromium] › tests/whistle.spec.ts:120:1 › muted: no sound at all, the visual whistle and summary remain (8.0s)
+  ✓   74 [chromium] › tests/whistle.spec.ts:165:1 › notification permission is asked only from the Nudges switch: not on load, not before or after the first brew (7.6s)
+  ✓   72 [chromium] › tests/w2-summary.spec.ts:279:7 › 390×844 @100 %, big day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (26.2s)
+  ✓   75 [chromium] › tests/whistle.spec.ts:183:1 › denied: Settings says so, shows the browser path, and turning it on later works (4.5s)
+  ✓   77 [chromium] › tests/whistle.spec.ts:208:1 › unsupported: the switch is off and disabled, and says what happens instead (3.7s)
+  ✓   76 [chromium] › tests/w2-summary.spec.ts:279:7 › 390×844 @100 %, task day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (23.9s)
+  ✓   78 [chromium] › tests/break-reach.spec.ts:179:3 › 200 % text, 375×667 light: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (17.8s)
+  ✓   79 [chromium] › tests/w2-summary.spec.ts:279:7 › 390×844 @200 %, routine day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (17.3s)
+  ✓   80 [chromium] › tests/break-reach.spec.ts:179:3 › 200 % text, 390×844 dark: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (17.3s)
+  ✓   81 [chromium] › tests/w2-summary.spec.ts:279:7 › 390×844 @200 %, big day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (20.4s)
+  ✓   82 [chromium] › tests/break-reach.spec.ts:179:3 › 200 % text, 844×390 light: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (20.8s)
+  ✓   84 [chromium] › tests/break-reach.spec.ts:192:3 › 200 % text, 375×667 dark: the paused tea break — Skip break, Resume break and Start next brew reachable by wheel, touch and Tab (16.3s)
+  ✓   83 [chromium] › tests/w2-summary.spec.ts:279:7 › 390×844 @200 %, task day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (24.5s)
+  ✓   85 [chromium] › tests/break-reach.spec.ts:192:3 › 200 % text, 844×390 dark: the paused tea break — Skip break, Resume break and Start next brew reachable by wheel, touch and Tab (16.6s)
+  ✓   86 [chromium] › tests/w2-summary.spec.ts:279:7 › 375×667 @100 %, task day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (18.4s)
+  ✓   87 [chromium] › tests/break-reach.spec.ts:203:1 › 200 % text, 375×667: tapping Pause break leaves Resume break under the finger, and back (15.2s)
+  ✓   88 [chromium] › tests/w2-summary.spec.ts:279:7 › 375×667 @200 %, task day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (17.8s)
+  ✓   90 [chromium] › tests/w2-summary.spec.ts:295:1 › the highlight is quieter than the minutes and Tea time (milestone day, 375×667) (12.3s)
+  ✓   89 [chromium] › tests/break-reach.spec.ts:223:1 › 100 % text, 375×667 and 390×844: the break and Break’s over fit without scrolling — every control wholly on screen (30.7s)
+  ✓   91 [chromium] › tests/w2-summary.spec.ts:323:1 › warm days, never "streak": what the big day summary shows and what a screen reader hears (21.4s)
+  ✓   92 [chromium] › tests/statusbar.spec.ts:65:3 › resize or rotation to 375×667 re-fits the row: one tight row, no sideways scroll (light) (24.9s)
+  ✓   93 [chromium] › tests/toast-room.spec.ts:175:5 › the storage-full banner stays in the page, whole and steady, while the toasts in the room are read by wheel (375×667, 200 % text) (16.7s)
+  ✓   95 [chromium] › tests/toast-room.spec.ts:175:5 › the storage-full banner stays in the page, whole and steady, while the toasts in the room are read by touch (375×667, 200 % text) (20.2s)
+  ✓   96 [chromium] › tests/toast-room.spec.ts:175:5 › the storage-full banner stays in the page, whole and steady, while the toasts in the room are read by wheel (844×390, 200 % text) (12.5s)
+  ✓   94 [chromium] › tests/statusbar.spec.ts:106:3 › large text with large leaf totals never pushes "Level NN" past the screen (light) (47.0s)
+  ✓   97 [chromium] › tests/toast-room.spec.ts:175:5 › the storage-full banner stays in the page, whole and steady, while the toasts in the room are read by touch (844×390, 200 % text) (14.2s)
+  ✓   99 [chromium] › tests/toast-room.spec.ts:175:5 › the storage-full banner stays in the page, whole and steady, while every toast in the room is read by wheel (667×375, 200 % text) (14.6s)
+  ✓   98 [chromium] › tests/statusbar.spec.ts:65:3 › resize or rotation to 375×667 re-fits the row: one tight row, no sideways scroll (dark) (23.5s)
+  ✓  100 [chromium] › tests/toast-room.spec.ts:175:5 › the storage-full banner stays in the page, whole and steady, while every toast in the room is read by touch (667×375, 200 % text) (16.1s)
+  ✓  102 [chromium] › tests/toast-room.spec.ts:246:3 › toasts timing out, and an endless action toast, never move the banner (375×667, 200 % text, wheel, light) (16.2s)
+  ✓  103 [chromium] › tests/toast-room.spec.ts:246:3 › toasts timing out, and an endless action toast, never move the banner (375×667, 200 % text, wheel, dark) (16.3s)
+  ✓  101 [chromium] › tests/statusbar.spec.ts:106:3 › large text with large leaf totals never pushes "Level NN" past the screen (dark) (47.3s)
+  ✓  104 [chromium] › tests/toast-room.spec.ts:281:3 › the last toast fades out where it was, never over the docked start (375×667, 200 % text) (5.0s)
+  ✓  106 [chromium] › tests/toast-room.spec.ts:281:3 › the last toast fades out where it was, never over the docked start (844×390, 200 % text) (4.8s)
+  ✓  107 [chromium] › tests/toast-room.spec.ts:327:3 › three toasts never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, light) (12.6s)
+  ✓  105 [chromium] › tests/statusbar.spec.ts:135:3 › narrowing that leaves the bar's own box unchanged still re-fits: from 384 px, and 1 px at a time (light) (26.3s)
+  ✓  108 [chromium] › tests/toast-room.spec.ts:327:3 › three toasts never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, dark) (12.6s)
+  ✓  110 [chromium] › tests/toast-room.spec.ts:427:3 › the update prompt and every toast stay whole and tappable, never over a control, on Break's over scrolled to its end (667×375, 200 % text, wheel, light) (14.5s)
+  ✓  109 [chromium] › tests/statusbar.spec.ts:135:3 › narrowing that leaves the bar's own box unchanged still re-fits: from 384 px, and 1 px at a time (dark) (25.7s)
+  ✓  111 [chromium] › tests/toast-room.spec.ts:427:3 › the update prompt and every toast stay whole and tappable, never over a control, on Break's over scrolled to its end (844×390, 200 % text, touch, dark) (16.6s)
+  ✓  112 [chromium] › tests/statusbar.spec.ts:195:3 › rapid live resizes at large text leave the page unzoomed (light) (25.6s)
+  ✓  113 [chromium] › tests/statusbar.spec.ts:195:3 › rapid live resizes at large text leave the page unzoomed (dark) (24.8s)
+  ✓  114 [chromium] › tests/statusbar.spec.ts:232:1 › normal text: one row at 390 (designed padding) and at 375 (tight) on a fresh load (6.2s)
+
+
+  1) [chromium] › tests/a11y.spec.ts:109:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
+
+    [32m- Expected  -  1[39m
+    [31m+ Received  + 18[39m
+
+    [32m- Array [][39m
+    [31m+ Array [[39m
+    [31m+   "settings: \"Time of day: Right now. Change\" stays under input._input_zasyt_45",[39m
+    [31m+   "settings: \"Window: Rain, matching your sounds. Change\" stays under input._input_zasyt_45",[39m
+    [31m+   "settings: \"Trailing pothos\" stays under h2._groupTitle_1yimv_6",[39m
+    [31m+   "settings: \"Stack of books\" stays under h2._groupTitle_1yimv_6",[39m
+    [31m+   "settings: \"Floor cushion\" stays under h2._groupTitle_1yimv_6",[39m
+    [31m+   "settings: \"Fairy lights\" stays under span._icon_1yimv_76",[39m
+    [31m+   "settings: \"Wall shelf\" stays under span._desc_1yimv_100",[39m
+    [31m+   "settings: \"Tea set\" stays under span._thumb_1jix7_46",[39m
+    [31m+   "settings: \"Record player\" stays under svg.[object",[39m
+    [31m+   "settings: \"Knitted blanket\" stays under div._group_kjzqi_114",[39m
+    [31m+   "settings: \"Mountain painting\" stays under span._goalMin_1nx6w_103",[39m
+    [31m+   "settings: \"Paper lantern\" stays under p._footer_1yimv_22",[39m
+    [31m+   "settings: \"Locked. Unlocks at cozy level 14\" stays under p._footer_1yimv_22",[39m
+    [31m+   "settings: \"Locked. Unlocks at cozy level 16\" stays under p._footer_1yimv_22",[39m
+    [31m+   "settings: \"Locked. Unlocks at cozy level 18\" stays under div._main_1yimv_52",[39m
+    [31m+   "settings: \"Locked. Unlocks at cozy level 20\" stays under span._desc_1yimv_100",[39m
+    [31m+ ][39m
+
+      134 |     await check(pg.id, page);
+      135 |   }
+    > 136 |   expect(out).toEqual([]);
+          |               ^
+      137 | });
+      138 |
+      139 | // ---------------------------------------------------------------- keyboard journey
+        at /home/user/wt/w4tr-c/kettle/tests/a11y.spec.ts:136:15
+
+    Error Context: ../../../../../tmp/claude-0/lrc-scratch/out-full/a11y-short-screen-375×667--859fd-y-chrome-no-sideways-scroll-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/claude-0/lrc-scratch/out-full/a11y-short-screen-375×667--859fd-y-chrome-no-sideways-scroll-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/claude-0/lrc-scratch/out-full/a11y-short-screen-375×667--859fd-y-chrome-no-sideways-scroll-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  Slow test file: [chromium] › tests/integrity.spec.ts (6.0m)
+  Slow test file: [chromium] › tests/w2-summary.spec.ts (5.4m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  1 failed
+    [chromium] › tests/a11y.spec.ts:109:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll 
+  7 did not run
+  106 passed (17.5m)
+[slots] LR freed 2 at 19:37:02
+EXIT 1 2026-10-13T19:37:02Z

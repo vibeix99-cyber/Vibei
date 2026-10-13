@@ -1,0 +1,757 @@
+{
+ "base": "http://127.0.0.1:5461",
+ "vp": "390x844@3",
+ "at": "2026-10-13T19:08:33.480Z",
+ "rounds": 3,
+ "frames": 60,
+ "warm": 10,
+ "results": [
+  {
+   "round": 1,
+   "variant": "model",
+   "glbRequests": [
+    "/assets/chai-B-OZIeNI.glb"
+   ],
+   "aborted": 0,
+   "errors": [],
+   "readyMs": 4126,
+   "finalMs": 4145,
+   "longTasks": {
+    "count": 4,
+    "maxMs": 631,
+    "list": [
+     [
+      72,
+      71
+     ],
+     [
+      216,
+      81
+     ],
+     [
+      1964,
+      631
+     ],
+     [
+      3827,
+      55
+     ]
+    ]
+   },
+   "chaiKind": "model",
+   "rootUserDataModel": true,
+   "quality": "low",
+   "canvas": [
+    442,
+    395
+   ],
+   "frame": {
+    "median": 96,
+    "mean": 96,
+    "p90": 107,
+    "min": 83,
+    "max": 119,
+    "n": 60
+   },
+   "rawMs": [
+    102,
+    113,
+    113,
+    107,
+    87,
+    104,
+    107,
+    103,
+    106,
+    111,
+    106,
+    93,
+    89,
+    91,
+    88,
+    93,
+    97,
+    94,
+    88,
+    102,
+    103,
+    88,
+    86,
+    92,
+    100,
+    100,
+    103,
+    97,
+    85,
+    84,
+    100,
+    101,
+    92,
+    91,
+    98,
+    94,
+    87,
+    119,
+    96,
+    87,
+    96,
+    89,
+    98,
+    100,
+    99,
+    95,
+    83,
+    100,
+    91,
+    87,
+    89,
+    92,
+    89,
+    96,
+    101,
+    97,
+    83,
+    90,
+    96,
+    92
+   ],
+   "render": {
+    "calls": 108,
+    "triangles": 74910,
+    "lines": 0,
+    "points": 0
+   },
+   "memory": {
+    "geometries": 111,
+    "textures": 10,
+    "programs": 23
+   },
+   "status": {
+    "state": "ready",
+    "ms": 8,
+    "bytes": 45572
+   },
+   "heapMB": 11.25,
+   "load1m": "4.62 7.69 7.18"
+  },
+  {
+   "round": 1,
+   "variant": "procedural",
+   "glbRequests": [
+    "/assets/chai-B-OZIeNI.glb",
+    "/assets/chai-B-OZIeNI.glb"
+   ],
+   "aborted": 2,
+   "errors": [],
+   "readyMs": 2570,
+   "finalMs": 2590,
+   "longTasks": {
+    "count": 3,
+    "maxMs": 140,
+    "list": [
+     [
+      80,
+      55
+     ],
+     [
+      1690,
+      140
+     ],
+     [
+      2154,
+      54
+     ]
+    ]
+   },
+   "chaiKind": "procedural",
+   "rootUserDataModel": false,
+   "quality": "low",
+   "canvas": [
+    442,
+    395
+   ],
+   "frame": {
+    "median": 94,
+    "mean": 96.12,
+    "p90": 111,
+    "min": 84,
+    "max": 118,
+    "n": 60
+   },
+   "rawMs": [
+    91,
+    107,
+    96,
+    88,
+    86,
+    85,
+    87,
+    91,
+    85,
+    107,
+    87,
+    102,
+    99,
+    88,
+    98,
+    100,
+    108,
+    100,
+    115,
+    99,
+    96,
+    91,
+    88,
+    94,
+    89,
+    99,
+    95,
+    105,
+    110,
+    111,
+    96,
+    105,
+    91,
+    89,
+    86,
+    84,
+    84,
+    88,
+    118,
+    109,
+    112,
+    95,
+    99,
+    94,
+    87,
+    92,
+    85,
+    89,
+    86,
+    87,
+    96,
+    115,
+    115,
+    103,
+    104,
+    89,
+    94,
+    91,
+    93,
+    94
+   ],
+   "render": {
+    "calls": 111,
+    "triangles": 76752,
+    "lines": 0,
+    "points": 0
+   },
+   "memory": {
+    "geometries": 114,
+    "textures": 8,
+    "programs": 19
+   },
+   "status": {
+    "state": "failed",
+    "reason": "TypeError: Failed to fetch",
+    "ms": 21
+   },
+   "heapMB": 10.91,
+   "load1m": "4.54 7.47 7.12"
+  },
+  {
+   "round": 2,
+   "variant": "model",
+   "glbRequests": [
+    "/assets/chai-B-OZIeNI.glb"
+   ],
+   "aborted": 0,
+   "errors": [],
+   "readyMs": 2642,
+   "finalMs": 2672,
+   "longTasks": {
+    "count": 3,
+    "maxMs": 154,
+    "list": [
+     [
+      67,
+      67
+     ],
+     [
+      1781,
+      154
+     ],
+     [
+      2314,
+      60
+     ]
+    ]
+   },
+   "chaiKind": "model",
+   "rootUserDataModel": true,
+   "quality": "low",
+   "canvas": [
+    442,
+    395
+   ],
+   "frame": {
+    "median": 88,
+    "mean": 91.22,
+    "p90": 104,
+    "min": 82,
+    "max": 111,
+    "n": 60
+   },
+   "rawMs": [
+    88,
+    83,
+    84,
+    85,
+    84,
+    103,
+    111,
+    101,
+    88,
+    95,
+    86,
+    92,
+    90,
+    96,
+    83,
+    85,
+    96,
+    101,
+    96,
+    88,
+    87,
+    86,
+    91,
+    106,
+    89,
+    86,
+    105,
+    98,
+    93,
+    110,
+    89,
+    85,
+    89,
+    110,
+    94,
+    88,
+    87,
+    94,
+    101,
+    86,
+    87,
+    86,
+    85,
+    87,
+    83,
+    86,
+    91,
+    82,
+    86,
+    89,
+    97,
+    88,
+    88,
+    104,
+    83,
+    85,
+    86,
+    87,
+    92,
+    92
+   ],
+   "render": {
+    "calls": 108,
+    "triangles": 74910,
+    "lines": 0,
+    "points": 0
+   },
+   "memory": {
+    "geometries": 111,
+    "textures": 10,
+    "programs": 23
+   },
+   "status": {
+    "state": "ready",
+    "ms": 16,
+    "bytes": 45572
+   },
+   "heapMB": 11.19,
+   "load1m": "4.57 7.33 7.08"
+  },
+  {
+   "round": 2,
+   "variant": "procedural",
+   "glbRequests": [
+    "/assets/chai-B-OZIeNI.glb",
+    "/assets/chai-B-OZIeNI.glb"
+   ],
+   "aborted": 2,
+   "errors": [],
+   "readyMs": 2734,
+   "finalMs": 2752,
+   "longTasks": {
+    "count": 3,
+    "maxMs": 180,
+    "list": [
+     [
+      64,
+      58
+     ],
+     [
+      1908,
+      180
+     ],
+     [
+      2440,
+      61
+     ]
+    ]
+   },
+   "chaiKind": "procedural",
+   "rootUserDataModel": false,
+   "quality": "low",
+   "canvas": [
+    442,
+    395
+   ],
+   "frame": {
+    "median": 97,
+    "mean": 98.38,
+    "p90": 113,
+    "min": 85,
+    "max": 121,
+    "n": 60
+   },
+   "rawMs": [
+    100,
+    101,
+    89,
+    91,
+    92,
+    89,
+    113,
+    121,
+    118,
+    89,
+    93,
+    87,
+    85,
+    95,
+    94,
+    117,
+    95,
+    111,
+    102,
+    98,
+    90,
+    106,
+    113,
+    101,
+    100,
+    120,
+    106,
+    102,
+    88,
+    86,
+    87,
+    100,
+    101,
+    95,
+    90,
+    87,
+    86,
+    92,
+    107,
+    113,
+    105,
+    91,
+    86,
+    91,
+    110,
+    108,
+    104,
+    102,
+    98,
+    93,
+    95,
+    97,
+    88,
+    102,
+    87,
+    92,
+    95,
+    109,
+    96,
+    104
+   ],
+   "render": {
+    "calls": 111,
+    "triangles": 76752,
+    "lines": 0,
+    "points": 0
+   },
+   "memory": {
+    "geometries": 114,
+    "textures": 8,
+    "programs": 19
+   },
+   "status": {
+    "state": "failed",
+    "reason": "TypeError: Failed to fetch",
+    "ms": 31
+   },
+   "heapMB": 10.89,
+   "load1m": "4.32 7.14 7.02"
+  },
+  {
+   "round": 3,
+   "variant": "model",
+   "glbRequests": [
+    "/assets/chai-B-OZIeNI.glb"
+   ],
+   "aborted": 0,
+   "errors": [],
+   "readyMs": 2697,
+   "finalMs": 2718,
+   "longTasks": {
+    "count": 3,
+    "maxMs": 176,
+    "list": [
+     [
+      59,
+      55
+     ],
+     [
+      1714,
+      176
+     ],
+     [
+      2416,
+      85
+     ]
+    ]
+   },
+   "chaiKind": "model",
+   "rootUserDataModel": true,
+   "quality": "low",
+   "canvas": [
+    442,
+    395
+   ],
+   "frame": {
+    "median": 94,
+    "mean": 93.97,
+    "p90": 105,
+    "min": 84,
+    "max": 113,
+    "n": 60
+   },
+   "rawMs": [
+    96,
+    88,
+    98,
+    104,
+    89,
+    103,
+    86,
+    96,
+    99,
+    107,
+    91,
+    90,
+    89,
+    99,
+    94,
+    96,
+    90,
+    85,
+    87,
+    85,
+    97,
+    90,
+    88,
+    94,
+    106,
+    105,
+    97,
+    87,
+    89,
+    98,
+    89,
+    97,
+    113,
+    97,
+    94,
+    89,
+    96,
+    101,
+    89,
+    86,
+    89,
+    88,
+    86,
+    85,
+    85,
+    88,
+    90,
+    84,
+    96,
+    86,
+    88,
+    86,
+    99,
+    104,
+    107,
+    101,
+    111,
+    103,
+    100,
+    88
+   ],
+   "render": {
+    "calls": 108,
+    "triangles": 74910,
+    "lines": 0,
+    "points": 0
+   },
+   "memory": {
+    "geometries": 111,
+    "textures": 10,
+    "programs": 23
+   },
+   "status": {
+    "state": "ready",
+    "ms": 33,
+    "bytes": 45572
+   },
+   "heapMB": 11.16,
+   "load1m": "4.68 7.08 7.00"
+  },
+  {
+   "round": 3,
+   "variant": "procedural",
+   "glbRequests": [
+    "/assets/chai-B-OZIeNI.glb",
+    "/assets/chai-B-OZIeNI.glb"
+   ],
+   "aborted": 2,
+   "errors": [],
+   "readyMs": 2584,
+   "finalMs": 2599,
+   "longTasks": {
+    "count": 2,
+    "maxMs": 135,
+    "list": [
+     [
+      74,
+      64
+     ],
+     [
+      1692,
+      135
+     ]
+    ]
+   },
+   "chaiKind": "procedural",
+   "rootUserDataModel": false,
+   "quality": "low",
+   "canvas": [
+    442,
+    395
+   ],
+   "frame": {
+    "median": 94,
+    "mean": 96.3,
+    "p90": 113,
+    "min": 83,
+    "max": 124,
+    "n": 60
+   },
+   "rawMs": [
+    95,
+    87,
+    83,
+    91,
+    84,
+    83,
+    85,
+    85,
+    101,
+    108,
+    92,
+    98,
+    108,
+    105,
+    89,
+    84,
+    86,
+    84,
+    88,
+    109,
+    107,
+    85,
+    87,
+    91,
+    116,
+    100,
+    85,
+    92,
+    124,
+    102,
+    95,
+    94,
+    87,
+    88,
+    93,
+    100,
+    113,
+    98,
+    98,
+    98,
+    106,
+    100,
+    91,
+    90,
+    84,
+    114,
+    116,
+    117,
+    101,
+    88,
+    108,
+    97,
+    90,
+    90,
+    91,
+    112,
+    102,
+    89,
+    87,
+    107
+   ],
+   "render": {
+    "calls": 111,
+    "triangles": 76752,
+    "lines": 0,
+    "points": 0
+   },
+   "memory": {
+    "geometries": 114,
+    "textures": 8,
+    "programs": 19
+   },
+   "status": {
+    "state": "failed",
+    "reason": "TypeError: Failed to fetch",
+    "ms": 19
+   },
+   "heapMB": 10.88,
+   "load1m": "4.55 6.93 6.95"
+  }
+ ]
+}

@@ -1,0 +1,25 @@
+START 2026-10-13T18:54:37Z load=2.78 4.05 4.81
+[slots] LR took 1/3 at 18:54:37: npx playwright test tests/chai3d.spec.ts tests/w2-room.spec.ts --project=chromium --workers=1
+
+Running 16 tests using 1 worker
+
+  ✓   1 [chromium] › tests/chai3d.spec.ts:72:3 › 3D Chai: the model replaces the procedural Chai › high tier: loads, validates and swaps in place, awake = eyes_open, on the cushion (15.3s)
+  ✓   2 [chromium] › tests/chai3d.spec.ts:85:3 › 3D Chai: fallbacks keep the procedural Chai › 404: procedural Chai, no error, the room is live (13.6s)
+  ✓   3 [chromium] › tests/chai3d.spec.ts:98:3 › 3D Chai: fallbacks keep the procedural Chai › slow network: the first frame is the procedural Chai; after 8 s the load gives up and it stays (18.0s)
+  ✓   4 [chromium] › tests/chai3d.spec.ts:114:3 › 3D Chai: fallbacks keep the procedural Chai › a file that fails validation (the r0 model: no eyes_sip) keeps the procedural Chai (16.9s)
+  ✓   5 [chromium] › tests/chai3d.spec.ts:127:3 › 3D Chai: fallbacks keep the procedural Chai › the loader chunk itself fails to load: procedural Chai, no error (19.8s)
+  ✓   6 [chromium] › tests/chai3d.spec.ts:140:3 › 3D Chai: fallbacks keep the procedural Chai › 3D off: the static drawing, no engine, no model request (10.6s)
+  ✓   7 [chromium] › tests/chai3d.spec.ts:149:3 › 3D Chai: fallbacks keep the procedural Chai › low tier: the model too (liteified), one request; the room is live first (14.8s)
+  ✓   8 [chromium] › tests/chai3d.spec.ts:170:3 › 3D Chai: fallbacks keep the procedural Chai › default tier on this machine (auto → low on SwiftShader): the model, with no frame without Chai (19.3s)
+  ✓   9 [chromium] › tests/chai3d.spec.ts:200:3 › 3D Chai: fallbacks keep the procedural Chai › WebGL context lost and restored: the engine is rebuilt with the model from memory, no second request (31.3s)
+  ✓  10 [chromium] › tests/w2-room.spec.ts:87:3 › Focus backdrop: earned items without the live 3D room › 3D off: the window still shows every earned window-visible item (24.9s)
+  ✓  11 [chromium] › tests/w2-room.spec.ts:96:3 › Focus backdrop: earned items without the live 3D room › 3D loading: the still shown before the engine is ready carries the same items (11.0s)
+  ✓  12 [chromium] › tests/w2-room.spec.ts:111:3 › Focus backdrop: earned items without the live 3D room › items never stand on the bare sky: no layer is drawn before the base room still has decoded (12.1s)
+  ✓  13 [chromium] › tests/w2-room.spec.ts:144:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items (20.3s)
+  ✓  14 [chromium] › tests/w2-room.spec.ts:166:3 › Nook hint tells the truth › 3D off: no drag-and-tap promise over the drawing (3.4s)
+  ✓  15 [chromium] › tests/w2-room.spec.ts:176:3 › Nook hint tells the truth › no WebGL: the same truthful hint (3.6s)
+  ✓  16 [chromium] › tests/w2-room.spec.ts:192:3 › Nook hint tells the truth › 3D on: the hint is unchanged (3.2s)
+
+  16 passed (4.0m)
+[slots] LR freed 1 at 18:58:38
+EXIT 0 2026-10-13T18:58:38Z

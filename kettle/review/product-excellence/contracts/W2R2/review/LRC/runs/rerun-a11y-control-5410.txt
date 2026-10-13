@@ -1,0 +1,15 @@
+START 2026-10-13T19:37:13Z port=5410 load=3.85 8.84 9.49
+[slots] LR took 1/3 at 19:37:13: npx playwright test tests/a11y.spec.ts --project=chromium --workers=1 --output=/tmp/claude-0/lrc-scratch/out-rerun-control
+
+Running 11 tests using 1 worker
+
+  ✓   1 [chromium] › tests/a11y.spec.ts:60:3 › axe: no serious/critical violations in any state (light) (1.3m)
+  ✓   2 [chromium] › tests/a11y.spec.ts:60:3 › axe: no serious/critical violations in any state (dark) (1.3m)
+  ✓   3 [chromium] › tests/a11y.spec.ts:72:1 › pointer targets are at least 24×24 px or meet a WCAG 2.5.8 exception (48.1s)
+  ✓   4 [chromium] › tests/a11y.spec.ts:109:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll (45.0s)
+  ✓   5 [chromium] › tests/a11y.spec.ts:173:1 › keyboard-only critical journey with focus restoration (3.0m)
+  ✓   6 [chromium] › tests/a11y.spec.ts:288:1 › welcome: first brew from the keyboard alone (3.3s)
+  ✓   7 [chromium] › tests/a11y.spec.ts:299:1 › live regions stay quiet while a brew runs (no spoken countdown) (17.5s)
+  ✓   8 [chromium] › tests/a11y.spec.ts:328:3 › a toast never covers the session controls or the summary footer (390×844) (17.3s)
+  ✓   9 [chromium] › tests/a11y.spec.ts:328:3 › a toast never covers the session controls or the summary footer (375×667) (15.8s)
+  ✓  10 [chromium] › tests/a11y.spec.ts:364:3 › toasts never cover the break-over controls, carried task included (390×844) (22.6s)

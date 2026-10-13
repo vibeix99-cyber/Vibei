@@ -1,0 +1,588 @@
+{
+ "base": "http://127.0.0.1:5461",
+ "startedAt": "2026-10-13T19:19:34.040Z",
+ "runs": [
+  {
+   "vp": "390x844@2",
+   "variant": "A",
+   "errors": [],
+   "console": [
+    "344ms warning: Service Worker registration blocked by Playwright",
+    "345ms warning: [pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')\n    at http://127.0.0.1:5461/assets/workbox-window.prod.es5-Bd17z0YL.js:2:2838",
+    "1296ms info: [chai3d] model ready {state: ready, ms: 20, bytes: 45572} {awake: Object, nap: Object, sip: Object, fileTris: 5372}"
+   ],
+   "glb": [
+    {
+     "at": 1275,
+     "url": "/assets/chai-B-OZIeNI.glb",
+     "type": "fetch",
+     "nav": "/",
+     "status": 200,
+     "fromSW": false
+    }
+   ],
+   "failedReq": [],
+   "startedAt": "2026-10-13T19:19:34.040Z",
+   "beforeNook": {
+    "glbRequestsSoFar": 0,
+    "scenePref": "auto",
+    "engineBeforeNavigate": null,
+    "glbRequestsAfter1500ms": 1
+   },
+   "navAt": 2477,
+   "readyAt": 7491,
+   "facts": {
+    "scenePref": "auto",
+    "hardwareConcurrency": 4,
+    "deviceMemory": 8,
+    "resolvedTier": "low",
+    "chaiKind": "model",
+    "rootUserDataModel": true,
+    "rootName": "chai",
+    "rootInScene": true,
+    "sceneGraphChai": {
+     "visible": true,
+     "userDataModel": false,
+     "childCount": 7
+    },
+    "chai3dStatus": {
+     "state": "ready",
+     "ms": 20,
+     "bytes": 45572
+    },
+    "hostAttrs": {
+     "mode": "showcase",
+     "ready": "true",
+     "static": null
+    },
+    "canvasSize": [
+     442,
+     395
+    ],
+    "stats": {
+     "calls": 108,
+     "triangles": 74910,
+     "geometries": 111,
+     "textures": 10,
+     "frameMs": 1.6,
+     "fps": 0
+    },
+    "hash": "#/nook"
+   },
+   "probe": {
+    "frames": 509,
+    "engines": [
+     {
+      "id": 0,
+      "mode": "showcase",
+      "quality": "low",
+      "firstAt": 2503,
+      "sampled": 355,
+      "noChai": 0,
+      "noChaiAt": [],
+      "kindFirst": "model",
+      "swapFrame": null,
+      "swapAt": null,
+      "framesIn3s": 188,
+      "noChaiIn3s": 0,
+      "firstKindIn3s": "model",
+      "lastKind": "model",
+      "canvasInDom": true,
+      "renders": 99,
+      "rendersNoChai": 0,
+      "rendersModel": 99,
+      "rendersProcedural": 0,
+      "lastHasModelFlag": true,
+      "lastRootModelFlag": true,
+      "firstRootModelFlag": true
+     }
+    ],
+    "elapsedMs": 8185
+   },
+   "endedAt": "2026-10-13T19:19:47.596Z"
+  },
+  {
+   "vp": "390x844@2",
+   "variant": "B",
+   "errors": [],
+   "console": [
+    "555ms warning: Service Worker registration blocked by Playwright",
+    "555ms warning: [pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')\n    at http://127.0.0.1:5461/assets/workbox-window.prod.es5-Bd17z0YL.js:2:2838",
+    "1172ms info: [chai3d] model ready {state: ready, ms: 8, bytes: 45572} {awake: Object, nap: Object, sip: Object, fileTris: 5372}"
+   ],
+   "glb": [
+    {
+     "at": 1121,
+     "url": "/assets/chai-B-OZIeNI.glb",
+     "type": "fetch",
+     "nav": "/nook",
+     "status": 200,
+     "fromSW": false
+    }
+   ],
+   "failedReq": [],
+   "startedAt": "2026-10-13T19:19:47.606Z",
+   "navAt": 351,
+   "readyAt": 12346,
+   "facts": {
+    "scenePref": "auto",
+    "hardwareConcurrency": 4,
+    "deviceMemory": 8,
+    "resolvedTier": "low",
+    "chaiKind": "model",
+    "rootUserDataModel": true,
+    "rootName": "chai",
+    "rootInScene": true,
+    "sceneGraphChai": {
+     "visible": true,
+     "userDataModel": false,
+     "childCount": 7
+    },
+    "chai3dStatus": {
+     "state": "ready",
+     "ms": 8,
+     "bytes": 45572
+    },
+    "hostAttrs": {
+     "mode": "showcase",
+     "ready": "true",
+     "static": null
+    },
+    "canvasSize": [
+     442,
+     395
+    ],
+    "stats": {
+     "calls": 108,
+     "triangles": 74910,
+     "geometries": 111,
+     "textures": 10,
+     "frameMs": 1.5666666666666667,
+     "fps": 0
+    },
+    "hash": "#/nook"
+   },
+   "probe": {
+    "frames": 660,
+    "engines": [
+     {
+      "id": 0,
+      "mode": "showcase",
+      "quality": "low",
+      "firstAt": 1265,
+      "sampled": 588,
+      "noChai": 0,
+      "noChaiAt": [],
+      "kindFirst": "model",
+      "swapFrame": null,
+      "swapAt": null,
+      "framesIn3s": 189,
+      "noChaiIn3s": 0,
+      "firstKindIn3s": "model",
+      "lastKind": "model",
+      "canvasInDom": true,
+      "renders": 97,
+      "rendersNoChai": 0,
+      "rendersModel": 97,
+      "rendersProcedural": 0,
+      "lastHasModelFlag": true,
+      "lastRootModelFlag": true,
+      "firstRootModelFlag": true
+     }
+    ],
+    "elapsedMs": 10668
+   },
+   "endedAt": "2026-10-13T19:20:24.583Z"
+  },
+  {
+   "vp": "390x844@2",
+   "variant": "C",
+   "errors": [],
+   "console": [
+    "605ms warning: Service Worker registration blocked by Playwright",
+    "605ms warning: [pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')\n    at http://127.0.0.1:5461/assets/workbox-window.prod.es5-Bd17z0YL.js:2:2838",
+    "9363ms info: [chai3d] model ready {state: ready, ms: 4423, bytes: 45572} {awake: Object, nap: Object, sip: Object, fileTris: 5372}"
+   ],
+   "glb": [
+    {
+     "at": 973,
+     "url": "/assets/chai-B-OZIeNI.glb",
+     "type": "fetch",
+     "nav": "/nook",
+     "status": 200,
+     "fromSW": false
+    }
+   ],
+   "failedReq": [],
+   "startedAt": "2026-10-13T19:20:24.592Z",
+   "navAt": 407,
+   "readyAt": 8281,
+   "releasedAt": 9281,
+   "facts": {
+    "scenePref": "auto",
+    "hardwareConcurrency": 4,
+    "deviceMemory": 8,
+    "resolvedTier": "low",
+    "chaiKind": "model",
+    "rootUserDataModel": true,
+    "rootName": "chai",
+    "rootInScene": true,
+    "sceneGraphChai": {
+     "visible": true,
+     "userDataModel": false,
+     "childCount": 7
+    },
+    "chai3dStatus": {
+     "state": "ready",
+     "ms": 4423,
+     "bytes": 45572
+    },
+    "hostAttrs": {
+     "mode": "showcase",
+     "ready": "true",
+     "static": null
+    },
+    "canvasSize": [
+     442,
+     395
+    ],
+    "stats": {
+     "calls": 108,
+     "triangles": 74910,
+     "geometries": 111,
+     "textures": 10,
+     "frameMs": 1.3333333333333333,
+     "fps": 0
+    },
+    "hash": "#/nook"
+   },
+   "probe": {
+    "frames": 574,
+    "engines": [
+     {
+      "id": 0,
+      "mode": "showcase",
+      "quality": "low",
+      "firstAt": 1324,
+      "sampled": 501,
+      "noChai": 0,
+      "noChaiAt": [],
+      "kindFirst": "procedural",
+      "swapFrame": 231,
+      "swapAt": 3696,
+      "framesIn3s": 187,
+      "noChaiIn3s": 0,
+      "firstKindIn3s": "procedural",
+      "lastKind": "model",
+      "canvasInDom": true,
+      "renders": 113,
+      "rendersNoChai": 0,
+      "rendersModel": 91,
+      "rendersProcedural": 22,
+      "lastHasModelFlag": true,
+      "lastRootModelFlag": true,
+      "firstRootModelFlag": false
+     }
+    ],
+    "elapsedMs": 9362
+   },
+   "endedAt": "2026-10-13T19:20:54.330Z"
+  },
+  {
+   "vp": "1440x900@1",
+   "variant": "A",
+   "errors": [],
+   "console": [
+    "837ms warning: Service Worker registration blocked by Playwright",
+    "837ms warning: [pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')\n    at http://127.0.0.1:5461/assets/workbox-window.prod.es5-Bd17z0YL.js:2:2838",
+    "1784ms info: [chai3d] model ready {state: ready, ms: 24, bytes: 45572} {awake: Object, nap: Object, sip: Object, fileTris: 5372}"
+   ],
+   "glb": [
+    {
+     "at": 1780,
+     "url": "/assets/chai-B-OZIeNI.glb",
+     "type": "fetch",
+     "nav": "/",
+     "status": 200,
+     "fromSW": false
+    }
+   ],
+   "failedReq": [],
+   "startedAt": "2026-10-13T19:20:54.341Z",
+   "beforeNook": {
+    "glbRequestsSoFar": 0,
+    "scenePref": "auto",
+    "engineBeforeNavigate": null,
+    "glbRequestsAfter1500ms": 1
+   },
+   "navAt": 2604,
+   "readyAt": 9808,
+   "facts": {
+    "scenePref": "auto",
+    "hardwareConcurrency": 4,
+    "deviceMemory": 8,
+    "resolvedTier": "low",
+    "chaiKind": "model",
+    "rootUserDataModel": true,
+    "rootName": "chai",
+    "rootInScene": true,
+    "sceneGraphChai": {
+     "visible": true,
+     "userDataModel": false,
+     "childCount": 7
+    },
+    "chai3dStatus": {
+     "state": "ready",
+     "ms": 24,
+     "bytes": 45572
+    },
+    "hostAttrs": {
+     "mode": "showcase",
+     "ready": "true",
+     "static": null
+    },
+    "canvasSize": [
+     996,
+     914
+    ],
+    "stats": {
+     "calls": 108,
+     "triangles": 74910,
+     "geometries": 111,
+     "textures": 10,
+     "frameMs": 2.0166666666666666,
+     "fps": 0
+    },
+    "hash": "#/nook"
+   },
+   "probe": {
+    "frames": 520,
+    "engines": [
+     {
+      "id": 0,
+      "mode": "showcase",
+      "quality": "low",
+      "firstAt": 2765,
+      "sampled": 360,
+      "noChai": 0,
+      "noChaiAt": [],
+      "kindFirst": "model",
+      "swapFrame": null,
+      "swapAt": null,
+      "framesIn3s": 188,
+      "noChaiIn3s": 0,
+      "firstKindIn3s": "model",
+      "lastKind": "model",
+      "canvasInDom": true,
+      "renders": 104,
+      "rendersNoChai": 0,
+      "rendersModel": 104,
+      "rendersProcedural": 0,
+      "lastHasModelFlag": true,
+      "lastRootModelFlag": true,
+      "firstRootModelFlag": true
+     }
+    ],
+    "elapsedMs": 8521
+   },
+   "endedAt": "2026-10-13T19:21:29.826Z"
+  },
+  {
+   "vp": "1440x900@1",
+   "variant": "B",
+   "errors": [],
+   "console": [
+    "640ms warning: Service Worker registration blocked by Playwright",
+    "640ms warning: [pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')\n    at http://127.0.0.1:5461/assets/workbox-window.prod.es5-Bd17z0YL.js:2:2838",
+    "1200ms info: [chai3d] model ready {state: ready, ms: 30, bytes: 45572} {awake: Object, nap: Object, sip: Object, fileTris: 5372}"
+   ],
+   "glb": [
+    {
+     "at": 1178,
+     "url": "/assets/chai-B-OZIeNI.glb",
+     "type": "fetch",
+     "nav": "/nook",
+     "status": 200,
+     "fromSW": false
+    }
+   ],
+   "failedReq": [],
+   "startedAt": "2026-10-13T19:21:29.837Z",
+   "navAt": 200,
+   "readyAt": 22342,
+   "facts": {
+    "scenePref": "auto",
+    "hardwareConcurrency": 4,
+    "deviceMemory": 8,
+    "resolvedTier": "low",
+    "chaiKind": "model",
+    "rootUserDataModel": true,
+    "rootName": "chai",
+    "rootInScene": true,
+    "sceneGraphChai": {
+     "visible": true,
+     "userDataModel": false,
+     "childCount": 7
+    },
+    "chai3dStatus": {
+     "state": "ready",
+     "ms": 30,
+     "bytes": 45572
+    },
+    "hostAttrs": {
+     "mode": "showcase",
+     "ready": "true",
+     "static": null
+    },
+    "canvasSize": [
+     996,
+     914
+    ],
+    "stats": {
+     "calls": 108,
+     "triangles": 74910,
+     "geometries": 111,
+     "textures": 10,
+     "frameMs": 2.05,
+     "fps": 0
+    },
+    "hash": "#/nook"
+   },
+   "probe": {
+    "frames": 954,
+    "engines": [
+     {
+      "id": 0,
+      "mode": "showcase",
+      "quality": "low",
+      "firstAt": 1207,
+      "sampled": 883,
+      "noChai": 0,
+      "noChaiAt": [],
+      "kindFirst": "model",
+      "swapFrame": null,
+      "swapAt": null,
+      "framesIn3s": 186,
+      "noChaiIn3s": 0,
+      "firstKindIn3s": "model",
+      "lastKind": "model",
+      "canvasInDom": true,
+      "renders": 97,
+      "rendersNoChai": 0,
+      "rendersModel": 97,
+      "rendersProcedural": 0,
+      "lastHasModelFlag": true,
+      "lastRootModelFlag": true,
+      "firstRootModelFlag": true
+     }
+    ],
+    "elapsedMs": 15367
+   },
+   "endedAt": "2026-10-13T19:22:22.703Z"
+  },
+  {
+   "vp": "1440x900@1",
+   "variant": "C",
+   "errors": [],
+   "console": [
+    "460ms warning: Service Worker registration blocked by Playwright",
+    "460ms warning: [pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')\n    at http://127.0.0.1:5461/assets/workbox-window.prod.es5-Bd17z0YL.js:2:2838",
+    "17756ms info: [chai3d] keeping the procedural Chai: timeout (8000 ms)",
+    "20376ms info: [chai3d] model ready {state: ready, ms: 1288, bytes: 45572} {awake: Object, nap: Object, sip: Object, fileTris: 5372}"
+   ],
+   "glb": [
+    {
+     "at": 986,
+     "url": "/assets/chai-B-OZIeNI.glb",
+     "type": "fetch",
+     "nav": "/nook",
+     "status": 200,
+     "fromSW": false
+    },
+    {
+     "at": 18718,
+     "url": "/assets/chai-B-OZIeNI.glb",
+     "type": "fetch",
+     "nav": "/nook"
+    }
+   ],
+   "failedReq": [
+    "17756ms http://127.0.0.1:5461/assets/chai-B-OZIeNI.glb net::ERR_ABORTED"
+   ],
+   "startedAt": "2026-10-13T19:22:22.715Z",
+   "navAt": 193,
+   "readyAt": 19297,
+   "releasedAt": 20301,
+   "facts": {
+    "scenePref": "auto",
+    "hardwareConcurrency": 4,
+    "deviceMemory": 8,
+    "resolvedTier": "low",
+    "chaiKind": "model",
+    "rootUserDataModel": true,
+    "rootName": "chai",
+    "rootInScene": true,
+    "sceneGraphChai": {
+     "visible": true,
+     "userDataModel": false,
+     "childCount": 7
+    },
+    "chai3dStatus": {
+     "state": "ready",
+     "ms": 1288,
+     "bytes": 45572
+    },
+    "hostAttrs": {
+     "mode": "showcase",
+     "ready": "true",
+     "static": null
+    },
+    "canvasSize": [
+     996,
+     914
+    ],
+    "stats": {
+     "calls": 108,
+     "triangles": 74910,
+     "geometries": 111,
+     "textures": 10,
+     "frameMs": 2.533333333333333,
+     "fps": 0
+    },
+    "hash": "#/nook"
+   },
+   "probe": {
+    "frames": 942,
+    "engines": [
+     {
+      "id": 0,
+      "mode": "showcase",
+      "quality": "low",
+      "firstAt": 1235,
+      "sampled": 869,
+      "noChai": 0,
+      "noChaiAt": [],
+      "kindFirst": "procedural",
+      "swapFrame": 585,
+      "swapAt": 9344,
+      "framesIn3s": 188,
+      "noChaiIn3s": 0,
+      "firstKindIn3s": "procedural",
+      "lastKind": "model",
+      "canvasInDom": true,
+      "renders": 122,
+      "rendersNoChai": 0,
+      "rendersModel": 95,
+      "rendersProcedural": 27,
+      "lastHasModelFlag": true,
+      "lastRootModelFlag": true,
+      "firstRootModelFlag": false
+     }
+    ],
+    "elapsedMs": 15139
+   },
+   "endedAt": "2026-10-13T19:23:25.269Z"
+  }
+ ],
+ "endedAt": "2026-10-13T19:23:25.277Z"
+}
