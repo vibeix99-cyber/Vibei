@@ -202,13 +202,15 @@ for (const [w, h, pct, levelUp] of [
       // The page, scrolled over the notice and back (each notice on its real clock, nothing held): down until the strip
       // has left the view, then back up to the top.
       for (const dir of [1, -1]) {
-        for (let i = 0; i < 12; i++) {
+        // Down 12 steps; then back up until the page is at its top again (a touch drag can fling further than it went).
+        for (let i = 0; i < (dir > 0 ? 12 : 60); i++) {
           const at = (await noticeAt(page)) ?? { x: Math.round(w / 2), y: Math.round(h / 3) };
           await scroll(page, cdp, at.x, at.y, dir * 40);
           const top = await page.evaluate(() => scrollY);
           if (dir < 0 && top <= 0) break;
         }
       }
+      expect(await page.evaluate(() => scrollY), 'back at the top, where the strip is').toBe(0);
       // Until every notice has been shown and has gone (the clock runs only while the strip is in view).
       if (!cdp) await page.mouse.move(2, 2);
       await expect.poll(() => queueLength(page), { timeout: 30_000 }).toBe(0);

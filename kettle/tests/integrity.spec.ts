@@ -555,7 +555,7 @@ test.describe('I02 End, dismissal and task disposition', () => {
     await expect(endDialog(page)).toContainText('12 minutes of focus will be saved');
     await endDialog(page).getByRole('button', { name: 'End session' }).click();
     await expect.poll(() => hash(page)).toBe('#/');
-    await expect(page.getByText('Saved 12 minutes of focus')).toBeVisible();
+    await expect(page.locator('main').getByText('Saved 12 minutes of focus')).toBeVisible();
 
     const st = await stored(page);
     const rec = recordsFor(st, sessionId!);
@@ -579,7 +579,7 @@ test.describe('I02 End, dismissal and task disposition', () => {
     await expect(endDialog(page)).toContainText('under a minute, so there’s nothing to save yet');
     await endDialog(page).getByRole('button', { name: 'End session' }).click();
     await expect.poll(() => hash(page)).toBe('#/');
-    await expect(page.getByText('Kettle’s off. See you soon.')).toBeVisible();
+    await expect(page.locator('main').getByText('Kettle’s off. See you soon.')).toBeVisible();
     expect((await stored(page))?.sessions ?? []).toHaveLength(0);
   });
 
@@ -809,7 +809,7 @@ test.describe('I03 data safety', () => {
     const [chooser] = await Promise.all([page.waitForEvent('filechooser'), page.getByRole('button', { name: 'I have a backup' }).click()]);
     await chooser.setFiles(file!);
     await expect.poll(() => hash(page)).toBe('#/');
-    await expect(page.getByText(`Welcome back. ${before.sessions.filter((r) => JSON.parse(r).phase === 'focus').length} brews restored.`)).toBeVisible();
+    await expect(page.locator('main').getByText(`Welcome back. ${before.sessions.filter((r) => JSON.parse(r).phase === 'focus').length} brews restored.`)).toBeVisible();
     const after = await snapshot(page);
     expect(after.sessions).toEqual(before.sessions);
     expect(after.ledger).toEqual(before.ledger);

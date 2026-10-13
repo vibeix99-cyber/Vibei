@@ -203,7 +203,11 @@ for (const [w, h, theme] of SIZES)
       const { ctx, page, cdp } = await phone(browser, w, h, theme, 200, day);
       await toBreak(page, baseURL, theme, true);
       await toBreakOver(page);
-      const said = await page.evaluate(() => [...((window as any).__kettle.noticesSaid()?.children ?? [])].map((p: Element) => p.textContent));
+      // What the break's end raised (this build's announcer, or an older build's toast list): for the record.
+      const said = await page.evaluate(() => {
+        const el = (window as any).__kettle.noticesSaid?.() ?? document.querySelector('[aria-label="Notifications"]');
+        return el ? [...el.querySelectorAll('p, li')].map((p: Element) => p.textContent) : [];
+      });
       test.info().annotations.push({ type: `notices on ${day}`, description: JSON.stringify(said) });
       await everyControlReached(page, cdp, [MARK, PUT, LEAVE]);
       await ctx.close();
