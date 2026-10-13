@@ -1,0 +1,136 @@
+{
+ "label": "AFTER",
+ "base": "http://127.0.0.1:5433",
+ "viewport": {
+  "w": 390,
+  "h": 844
+ },
+ "dpr": 3,
+ "theme": "dark",
+ "clock": "2026-10-11T07:40:00Z",
+ "query": "(default tier)",
+ "startedAt": "2026-10-13T18:38:14.797Z",
+ "states": {
+  "10-nook-3d": {
+   "desc": "Nook, 3D (high tier), 4 s after ready",
+   "hash": "#/nook",
+   "quality": "low",
+   "chaiKind": "model",
+   "chai3d": {
+    "state": "ready",
+    "ms": 36,
+    "bytes": 45572
+   },
+   "stats": {
+    "calls": 110,
+    "triangles": 75007,
+    "geometries": 114,
+    "textures": 11,
+    "frameMs": 1.6166666666666667,
+    "fps": 0
+   },
+   "hosts": [
+    {
+     "mode": "showcase",
+     "ready": "true",
+     "static": null
+    }
+   ]
+  },
+  "11-nook-chai-close": {
+   "desc": "Nook, the same camera direction moved in on Chai (debug camera; art review)",
+   "hash": "#/nook",
+   "quality": "low",
+   "chaiKind": "model",
+   "chai3d": {
+    "state": "ready",
+    "ms": 36,
+    "bytes": 45572
+   },
+   "stats": {
+    "calls": 64,
+    "triangles": 54454,
+    "geometries": 114,
+    "textures": 11,
+    "frameMs": 1.5666666666666667,
+    "fps": 0
+   },
+   "hosts": [
+    {
+     "mode": "showcase",
+     "ready": "true",
+     "static": null
+    }
+   ]
+  },
+  "07-unlock-early": {
+   "desc": "Summary unlock, ~0.9 s after Done (drawing or hand-off)",
+   "hash": "#/done",
+   "quality": "low",
+   "chaiKind": "model",
+   "chai3d": {
+    "state": "ready",
+    "ms": 41,
+    "bytes": 45572
+   },
+   "stats": {
+    "calls": 81,
+    "triangles": 54253,
+    "geometries": 99,
+    "textures": 9,
+    "frameMs": 130.25,
+    "fps": 0
+   },
+   "hosts": [
+    {
+     "mode": "window",
+     "ready": "true",
+     "static": null
+    },
+    {
+     "mode": "showcase",
+     "ready": "false",
+     "static": null
+    }
+   ]
+  },
+  "07-unlock": {
+   "desc": "Summary unlock close-up, 3.5 s after the scene was ready",
+   "hash": "#/done",
+   "quality": "low",
+   "chaiKind": "procedural",
+   "chai3d": {
+    "state": "ready",
+    "ms": 41,
+    "bytes": 45572
+   },
+   "stats": {
+    "calls": 50,
+    "triangles": 34379,
+    "geometries": 46,
+    "textures": 7,
+    "frameMs": 1.4,
+    "fps": 0
+   },
+   "hosts": [
+    {
+     "mode": "window",
+     "ready": "true",
+     "static": null
+    },
+    {
+     "mode": "showcase",
+     "ready": "true",
+     "static": null
+    }
+   ]
+  }
+ },
+ "errors": [],
+ "unlockTiming": {
+  "doneMs": 2233,
+  "mountedAfterDoneMs": 17,
+  "readyAfterDoneMs": 4640
+ },
+ "endedAt": "2026-10-13T18:39:23.421Z"
+}

@@ -23,7 +23,7 @@ async function shoot(html, out, width) {
 }
 
 // ---- art review
-{
+if (args.only !== 'captures') {
   const dir = join(C, 'art');
   const meta = existsSync(join(dir, 'art-meta.json')) ? JSON.parse(readFileSync(join(dir, 'art-meta.json'), 'utf8')) : {};
   const sheetCell = { awake: 'chai-happy.png', nap: 'chai-sleep.png', sip: 'chai-sipping.png' };
@@ -55,7 +55,7 @@ REPORT.md's orthographic render, the model in the room (day, dark theme = evenin
   const cfgs = ['390x844-light-day', '390x844-dark-day', '390x844-light-night', '1440x900-light-day', '1440x900-dark-day', '1440x900-light-night'];
   for (const state of [['10-nook-3d', 'Nook'], ['07-unlock', 'Summary unlock close-up'], ['07-unlock-early', 'Summary unlock ~0.9 s after Done']]) {
     const dir = join(C, 'captures');
-    let html = `<h1>${state[1]}: BEFORE b377c62 (:5430) vs AFTER (:5433), same session, high tier (nookq=high)</h1>`;
+    let html = `<h1>${state[1]}: BEFORE b377c62 (:5430) vs AFTER (:5433), same session, ${args.tierlabel ?? 'high tier (nookq=high)'}</h1>`;
     for (const cfg of cfgs) {
       const mb = join(dir, 'AFTER', cfg, 'meta.json');
       const t = (lab) => { const f = join(dir, lab, cfg, 'meta.json'); if (!existsSync(f)) return ''; const m = JSON.parse(readFileSync(f, 'utf8')); return m.unlockTiming ? ` · unlock ready ${m.unlockTiming.readyAfterDoneMs} ms after Done` : ''; };

@@ -14,7 +14,7 @@ mkdirSync(dir, { recursive: true });
 const mobile = W < 900;
 // NOTE: the debug seeds pin the time of day (progress/seed.ts pinTimeOfDay), so the clock alone does not make a night
 // room; night runs pass --extra "&nooktime=night" (the scene's own override).
-const meta = { label: args.label, base: args.base, viewport: { w: W, h: H }, dpr: DPR, theme, clock: AT, query: `nookq=high${args.extra ?? ''}`, startedAt: new Date().toISOString(), states: {}, errors: [] };
+const meta = { label: args.label, base: args.base, viewport: { w: W, h: H }, dpr: DPR, theme, clock: AT, query: `${args.tier === 'default' ? '(default tier)' : 'nookq=' + (args.tier ?? 'high')}${args.extra ?? ''}`, startedAt: new Date().toISOString(), states: {}, errors: [] };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const b = await chromium.launch({ args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] });
 async function context() {
@@ -25,9 +25,11 @@ async function context() {
   p.on('pageerror', (e) => meta.errors.push(e.message.slice(0, 200)));
   return { ctx, p };
 }
-const q = (seed) => `${args.base}/?debug&seed=${seed}&theme=${theme}&nookq=high${args.extra ?? ''}`;
+// --tier default: no nookq (the device's own tier; low on this SwiftShader machine). --tier high forces nookq=high.
+const tierQ = args.tier === 'default' ? '' : `&nookq=${args.tier ?? 'high'}`;
+const q = (seed) => `${args.base}/?debug&seed=${seed}&theme=${theme}${tierQ}${args.extra ?? ''}`;
 const ready = (p) => p.waitForFunction(() => { const t = window.__kettle?.timerInfo?.(); return !!(t && t.leader && t.leaderForMs > 400 && !t.settling); }, null, { timeout: 90_000 }).catch(() => {});
-const facts = (p) => p.evaluate(() => ({ hash: location.hash, chaiKind: window.__nook ? (window.__nook.chaiKind ?? 'procedural (no field: control)') : null, chai3d: window.__chai3d?.status?.() ?? null, stats: window.__nook?.stats ?? null, hosts: [...document.querySelectorAll('[data-scene-mode]')].map((h) => ({ mode: h.getAttribute('data-scene-mode'), ready: h.getAttribute('data-scene-ready'), static: h.getAttribute('data-scene-static') })) }));
+const facts = (p) => p.evaluate(() => ({ hash: location.hash, quality: window.__nook?.quality ?? null, chaiKind: window.__nook ? (window.__nook.chaiKind ?? 'procedural (no field: control)') : null, chai3d: window.__chai3d?.status?.() ?? null, stats: window.__nook?.stats ?? null, hosts: [...document.querySelectorAll('[data-scene-mode]')].map((h) => ({ mode: h.getAttribute('data-scene-mode'), ready: h.getAttribute('data-scene-ready'), static: h.getAttribute('data-scene-static') })) }));
 const shot = async (p, name, desc, hold = true) => {
   try {
     // Hold the live frame for the screenshot (a CPU rasterizer at full size is slow); the last frame stays up.
