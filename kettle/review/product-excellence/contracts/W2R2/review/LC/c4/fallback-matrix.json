@@ -348,5 +348,194 @@
     "len": "4"
    }
   ]
+ },
+ "02-abort": {
+  "name": "02-abort",
+  "scene": "high",
+  "t0": "10:36:34",
+  "glbRequests": 5,
+  "sceneReadyAt": "10:36:41",
+  "statusTimeline": [
+   {
+    "ms": 0,
+    "kind": "procedural",
+    "s": {
+     "state": "failed",
+     "reason": "TypeError: Failed to fetch",
+     "ms": 20
+    }
+   }
+  ],
+  "extra": {
+   "before": 2,
+   "after": 5,
+   "kind": "procedural",
+   "status": {
+    "state": "failed",
+    "reason": "TypeError: Failed to fetch",
+    "ms": 68
+   },
+   "hosts": [
+    {
+     "mode": "showcase",
+     "ready": "true",
+     "static": null,
+     "canvas": 1
+    }
+   ]
+  },
+  "finalKind": "procedural",
+  "finalStatus": {
+   "state": "failed",
+   "reason": "TypeError: Failed to fetch",
+   "ms": 68
+  },
+  "hosts": [
+   {
+    "mode": "showcase",
+    "ready": "true",
+    "static": null,
+    "canvas": 1
+   }
+  ],
+  "facts": {
+   "kind": "procedural",
+   "model": false,
+   "shownParts": [],
+   "activeMorphs": [],
+   "rootScale": [
+    1.12,
+    1.12,
+    1.12
+   ],
+   "quality": "high"
+  },
+  "samples": {
+   "engSamples": 377,
+   "firstEngineAtMs": 5626,
+   "kindTransitions": [
+    {
+     "t": 5626,
+     "k": "procedural"
+    }
+   ],
+   "first3s": {
+    "n": 28,
+    "bad": 0,
+    "spanMs": 2974,
+    "maxGapMs": 393
+   },
+   "aroundSwap1_5s": null,
+   "whole": {
+    "n": 377,
+    "bad": 0,
+    "spanMs": 44074,
+    "maxGapMs": 6200
+   },
+   "badSamplesTotal": 0,
+   "staticSamples": 3,
+   "noCanvasSamples": 45
+  },
+  "console": [
+   {
+    "t": "10:36:35",
+    "type": "warning",
+    "text": "Service Worker registration blocked by Playwright"
+   },
+   {
+    "t": "10:36:35",
+    "type": "warning",
+    "text": "[pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')\n    at http://127.0.0.1:5453/assets/workbox-window.prod.es5-Bd17z0YL.js:2:2838"
+   },
+   {
+    "t": "10:36:36",
+    "type": "warning",
+    "text": "Service Worker registration blocked by Playwright"
+   },
+   {
+    "t": "10:36:36",
+    "type": "warning",
+    "text": "[pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')\n    at http://127.0.0.1:5453/assets/workbox-window.prod.es5-Bd17z0YL.js:2:2838"
+   },
+   {
+    "t": "10:36:36",
+    "type": "error",
+    "text": "Failed to load resource: net::ERR_FAILED"
+   },
+   {
+    "t": "10:36:36",
+    "type": "info",
+    "text": "[chai3d] keeping the procedural Chai: TypeError: Failed to fetch"
+   },
+   {
+    "t": "10:36:41",
+    "type": "error",
+    "text": "Failed to load resource: net::ERR_FAILED"
+   },
+   {
+    "t": "10:36:41",
+    "type": "info",
+    "text": "[chai3d] keeping the procedural Chai: TypeError: Failed to fetch"
+   },
+   {
+    "t": "10:37:09",
+    "type": "error",
+    "text": "Failed to load resource: net::ERR_FAILED"
+   },
+   {
+    "t": "10:37:09",
+    "type": "info",
+    "text": "[chai3d] keeping the procedural Chai: TypeError: Failed to fetch"
+   },
+   {
+    "t": "10:37:11",
+    "type": "error",
+    "text": "Failed to load resource: net::ERR_FAILED"
+   },
+   {
+    "t": "10:37:11",
+    "type": "info",
+    "text": "[chai3d] keeping the procedural Chai: TypeError: Failed to fetch"
+   },
+   {
+    "t": "10:37:14",
+    "type": "error",
+    "text": "Failed to load resource: net::ERR_FAILED"
+   },
+   {
+    "t": "10:37:14",
+    "type": "info",
+    "text": "[chai3d] keeping the procedural Chai: TypeError: Failed to fetch"
+   }
+  ],
+  "pageerrors": [],
+  "failedRequests": [
+   {
+    "t": "10:36:36",
+    "failed": "net::ERR_FAILED",
+    "url": "http://127.0.0.1:5453/assets/chai-B-OZIeNI.glb"
+   },
+   {
+    "t": "10:36:41",
+    "failed": "net::ERR_FAILED",
+    "url": "http://127.0.0.1:5453/assets/chai-B-OZIeNI.glb"
+   },
+   {
+    "t": "10:37:09",
+    "failed": "net::ERR_FAILED",
+    "url": "http://127.0.0.1:5453/assets/chai-B-OZIeNI.glb"
+   },
+   {
+    "t": "10:37:11",
+    "failed": "net::ERR_FAILED",
+    "url": "http://127.0.0.1:5453/assets/chai-B-OZIeNI.glb"
+   },
+   {
+    "t": "10:37:14",
+    "failed": "net::ERR_FAILED",
+    "url": "http://127.0.0.1:5453/assets/chai-B-OZIeNI.glb"
+   }
+  ],
+  "responses": []
  }
 }
