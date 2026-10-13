@@ -19,6 +19,8 @@ Reviewer: Lane C (check runner; raw numbers only, no verdicts and no visual judg
 6. PRESERVE 8: the unlock card's engine is `procedural` in both builds at default and forced-high tiers, same camera (zoom 0.125, fitTarget identical), Chai out of frame (NDC x -10.26 at 390, -7.69 at 1440); pixel differences control vs C are listed with bounding boxes (1440x900 default and high settled frames: inside x 942..1367, y 145..384, which is the close-up canvas area of the card in the screenshot; 390x844: boxes listed, not checked against the layout); frames are not time-synchronised.
 7. Perf (high tier, 2 runs each, load 14 to 16): sync frame ms medians 530 (control) / 569 (C procedural) / 562 (C model); draw calls 161 / 161 / 155, triangles 128,792 / 128,792 / 125,500, programs 19 / 19 / 25, textures 10 / 10 / 12, geometries 114 / 114 / 111; JS heap 10.25 / 10.39 / 10.81 MB; process-tree RSS 671 / 675 / 685 MB.
 
+8. Specs on :5443: run 1 = 14 passed / 15 (1 failed: `w2-room.spec.ts:144` "3D failure (WebGL context lost)...", `page.screenshot` 60 s timeout after "fonts loaded", the failure the packet reports as also failing on control under load; control was not re-run by this lane); run 2 = 15 passed / 15.
+
 ## Times (UTC, 2026-10-13) and commands
 
 | Job | Start to end | Command |
@@ -30,7 +32,7 @@ Reviewer: Lane C (check runner; raw numbers only, no verdicts and no visual judg
 | Check 5 (offline) | 10:44:30 to 10:45:30 | `PW_EXPERIMENTAL_SERVICE_WORKER_NETWORK_EVENTS=1 node .tmp/LC/d-offline.mjs` |
 | Check 6 (PRESERVE 8) | 10:45:31 to 10:53:33 | `node .tmp/LC/e-unlock.mjs` then `node .tmp/LC/f-diff.mjs <c6 dir>` |
 | Check 7 (perf, memory) | invalid attempt 10:54:20 to 10:58:06 (killed); re-run 10:58:06 to 11:04:07 | `node .tmp/LC/g-perf.mjs --set high --reps 2` |
-| Check 8 (specs) | 11:05:02 to see the table | `KETTLE_PORT=5443 npx playwright test tests/chai3d.spec.ts tests/w2-room.spec.ts --project=chromium --workers=1 --reporter=list --output /tmp/claude-0/lc-scratch/pw-results-N` x2 (via `jobS.sh`, one slot) |
+| Check 8 (specs) | run 1 11:05:02 to 11:12:50, run 2 11:12:50 to 11:19:39 | `KETTLE_PORT=5443 npx playwright test tests/chai3d.spec.ts tests/w2-room.spec.ts --project=chromium --workers=1 --reporter=list --output /tmp/claude-0/lc-scratch/pw-results-N` x2 (via `jobS.sh`, one slot) |
 
 
 ## Results
@@ -290,8 +292,9 @@ Spec list = 8 tests in `chai3d.spec.ts` + 7 in `w2-room.spec.ts` = 15 total. Raw
 
 | Run | Started / ended (UTC) | Passed / total | Failed | Raw summary line(s) |
 |---|---|---|---|---|
-| 1 | 11:05:02 / NOT FINISHED at receipt time | 10 / 15 so far | 0 | (no summary line yet) |
-| 2 | not run | | | |
+| 1 | 11:05:02 / 11:12:50 (exit 1) | 14 / 15 | 1 | 1 failed / 14 passed (7.8m) |
+|  | failing test: ✘  12 [chromium] › tests/w2-room.spec.ts:144:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items (1.0m) | | | |
+| 2 | 11:12:50 / 11:19:39 (exit 0) | 15 / 15 | 0 | 15 passed (6.8m) |
 
 Run 1 test lines:
 ```
@@ -305,6 +308,29 @@ Run 1 test lines:
 ✓   8 [chromium] › tests/chai3d.spec.ts:157:3 › 3D Chai: fallbacks keep the procedural Chai › WebGL context lost and restored: the engine is rebuilt with the model from memory, no second request (57.7s)
 ✓   9 [chromium] › tests/w2-room.spec.ts:87:3 › Focus backdrop: earned items without the live 3D room › 3D off: the window still shows every earned window-visible item (43.3s)
 ✓  10 [chromium] › tests/w2-room.spec.ts:96:3 › Focus backdrop: earned items without the live 3D room › 3D loading: the still shown before the engine is ready carries the same items (35.9s)
+✓  11 [chromium] › tests/w2-room.spec.ts:111:3 › Focus backdrop: earned items without the live 3D room › items never stand on the bare sky: no layer is drawn before the base room still has decoded (36.1s)
+✘  12 [chromium] › tests/w2-room.spec.ts:144:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items (1.0m)
+✓  13 [chromium] › tests/w2-room.spec.ts:166:3 › Nook hint tells the truth › 3D off: no drag-and-tap promise over the drawing (7.2s)
+✓  14 [chromium] › tests/w2-room.spec.ts:176:3 › Nook hint tells the truth › no WebGL: the same truthful hint (7.5s)
+✓  15 [chromium] › tests/w2-room.spec.ts:192:3 › Nook hint tells the truth › 3D on: the hint is unchanged (9.2s)
+```
+Run 2 test lines:
+```
+✓   1 [chromium] › tests/chai3d.spec.ts:70:3 › 3D Chai: the model replaces the procedural Chai › high tier: loads, validates and swaps in place, awake = eyes_open, on the cushion (29.3s)
+✓   2 [chromium] › tests/chai3d.spec.ts:83:3 › 3D Chai: fallbacks keep the procedural Chai › 404: procedural Chai, no error, the room is live (33.9s)
+✓   3 [chromium] › tests/chai3d.spec.ts:96:3 › 3D Chai: fallbacks keep the procedural Chai › slow network: the first frame is the procedural Chai; after 8 s the load gives up and it stays (35.9s)
+✓   4 [chromium] › tests/chai3d.spec.ts:112:3 › 3D Chai: fallbacks keep the procedural Chai › a file that fails validation (the r0 model: no eyes_sip) keeps the procedural Chai (24.8s)
+✓   5 [chromium] › tests/chai3d.spec.ts:125:3 › 3D Chai: fallbacks keep the procedural Chai › the loader chunk itself fails to load: procedural Chai, no error (26.7s)
+✓   6 [chromium] › tests/chai3d.spec.ts:138:3 › 3D Chai: fallbacks keep the procedural Chai › 3D off: the static drawing, no engine, no model request (18.9s)
+✓   7 [chromium] › tests/chai3d.spec.ts:147:3 › 3D Chai: fallbacks keep the procedural Chai › low tier: the procedural Chai, no model request (23.4s)
+✓   8 [chromium] › tests/chai3d.spec.ts:157:3 › 3D Chai: fallbacks keep the procedural Chai › WebGL context lost and restored: the engine is rebuilt with the model from memory, no second request (46.4s)
+✓   9 [chromium] › tests/w2-room.spec.ts:87:3 › Focus backdrop: earned items without the live 3D room › 3D off: the window still shows every earned window-visible item (37.3s)
+✓  10 [chromium] › tests/w2-room.spec.ts:96:3 › Focus backdrop: earned items without the live 3D room › 3D loading: the still shown before the engine is ready carries the same items (31.2s)
+✓  11 [chromium] › tests/w2-room.spec.ts:111:3 › Focus backdrop: earned items without the live 3D room › items never stand on the bare sky: no layer is drawn before the base room still has decoded (34.4s)
+✓  12 [chromium] › tests/w2-room.spec.ts:144:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items (45.4s)
+✓  13 [chromium] › tests/w2-room.spec.ts:166:3 › Nook hint tells the truth › 3D off: no drag-and-tap promise over the drawing (4.2s)
+✓  14 [chromium] › tests/w2-room.spec.ts:176:3 › Nook hint tells the truth › no WebGL: the same truthful hint (5.2s)
+✓  15 [chromium] › tests/w2-room.spec.ts:192:3 › Nook hint tells the truth › 3D on: the hint is unchanged (5.0s)
 ```
 
 ## Incomplete, caveats and harness notes
@@ -325,7 +351,7 @@ Total 26.9 MB in 119 files.
 
 | File | KB |
 |---|---|
-| `RECEIPT-LC.md` | 56 |
+| `RECEIPT-LC.md` | 61 |
 | `c1-precache-manifest.json` | 1 |
 | `c1-validate-glb.json` | 2 |
 | `c8-vitest-chaiModel.txt` | 0 |
@@ -442,5 +468,5 @@ Total 26.9 MB in 119 files.
 | `c7/perf-high-run1-FAKECLOCK-invalid-live.json` | 1 |
 | `c7/perf-high.json` | 9 |
 | `c8/spec-run1.txt` | 5 |
-| `c8/spec-run2.txt` | 0 |
+| `c8/spec-run2.txt` | 3 |
 | `c8/spec-times.txt` | 0 |
