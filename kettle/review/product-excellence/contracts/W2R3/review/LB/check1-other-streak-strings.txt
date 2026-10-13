@@ -1,0 +1,29 @@
+### Lines mentioning warm streak / warm-streak (any case), non-test kettle/src, excluding lines containing the exact 'Warm Streak' or 'Warm Days'. Sorted, base vs trial.
+IDENTICAL on base and trial
+
+### the trial list (sorted), for the receipt:
+kettle/src/app/Rail.tsx:233:        <span className={s.miniStat} title="Warm streak">
+kettle/src/app/Rail.tsx:236:          <span className="sr-only">{streak.current} {word(streak.current, 'day')} warm streak</span>
+kettle/src/app/Rail.tsx:2: * Desktop right rail (≥ 1200px): warm streak, daily goal, cozy level, today's recipes.
+kettle/src/app/Rail.tsx:66:              'Start a warm streak'
+kettle/src/art/Badge.tsx:385:  'warm-streak': {
+kettle/src/progress/badgeEngine.ts:53:    'warm-streak': inp.bestStreak,
+kettle/src/progress/index.ts:3: * Leaves, cozy levels, warm streak + Tea Cozies, daily goal, today's recipes,
+kettle/src/progress/store.ts:269:/** Current and best warm streak (Tea Cozies included). */
+kettle/src/progress/streak.ts:2: * Warm streak engine — a pure replay of history, so it is always consistent
+kettle/src/progress/types.ts:165:  /** The run is the current, still-warm streak. */
+kettle/src/progress/types.ts:307:  /** Warm-streak runs for the calendar (oldest first). */
+kettle/src/screens/done/summary.ts:151:/** Which milestone a pill reports, if any (routine progress — leaves, the goal, a warm streak, recipes — is none). */
+kettle/src/screens/done/summary.ts:195:      // The badge's own line, except the warm-days badge, whose catalogue line ("Keep a 7-day warm streak") reads
+kettle/src/screens/done/summary.ts:197:      if (pill.id === 'warm-streak') {
+kettle/src/screens/home/StatusBar.tsx:1:/** Top status bar on Today: warm streak · leaves · cozy level, each opening a detail sheet. */
+kettle/src/screens/settings/DataSection.tsx:216:          This clears your brews, warm streak, leaves, recipes and settings on this device. <strong>It can’t be undone.</strong>
+kettle/src/screens/settings/SettingsScreen.tsx:105:    <ListGroup title="Daily goal" footer={known ? 'Your warm streak only needs one brew a day. The goal is just for you.' : `Custom goal: ${goal} min a day.`}>
+kettle/src/screens/stats/Badges.tsx:18:  'warm-streak': ['day', 'days'],
+kettle/src/screens/stats/StreakCard.tsx:100:        <caption className="sr-only">Warm streak calendar for {monthName}</caption>
+kettle/src/screens/stats/StreakCard.tsx:118:                const joinL = isWarm && ci > 0 && warm(streak.days[addDays(day, -1)]) && row[ci - 1] !== null;
+kettle/src/screens/stats/StreakCard.tsx:119:                const joinR = isWarm && ci < 6 && warm(streak.days[addDays(day, 1)]) && row[ci + 1] !== null;
+kettle/src/screens/stats/StreakCard.tsx:2: * Warm streak card: current streak, Tea Cozies, and a month calendar where
+kettle/src/screens/stats/StreakCard.tsx:48:  if (!alive) line = streak.best > 0 ? 'One brew today warms the kettle again.' : 'Finish a brew to start your warm streak.';
+kettle/src/ui/Gallery.tsx:193:            <p className="t-overline">Warm streak</p>
+kettle/src/ui/WeekStrip.tsx:2: * Warm-streak week row: 7 day dots with labels. OWNER: design-system area.
