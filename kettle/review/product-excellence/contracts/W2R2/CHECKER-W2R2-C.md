@@ -64,7 +64,15 @@ Re-read, not re-run:
 - timer 14 + 12 (+2 skipped by design);
 - pwa 3/3, whose own production build includes the glob (`C/runs/pwa.txt`).
 
-**My own Nook probe** (`c-lead.mjs`, one browser): control :5430, trial :5453 with the model, and trial :5453 with `chai3d=procedural`, each at 390×844@3 light and 1440×900@2 dark, high tier forced with `nookq=high`. Result: NOOK_RESULT.
+**My own Nook probe** (`c-lead.mjs`, one browser): control :5430, trial :5453 with the model, and trial :5453 with `chai3d=procedural`, each at 390×844@3 light and 1440×900@2 dark, high tier forced with `nookq=high`. Result (raw in `review/LEAD2/C/nook.log`):
+
+| Variant | `chaiKind` | glb requests | status | draw calls | triangles | geometries | textures | programs | visible face parts | root scale / baseY | page errors |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| control (390 and 1440) | (no field) | 0 | n/a | 161 | 128,792 | 114 | 10 | 19 | n/a | 1.12 / 0.255 | 0 |
+| trial, model (390 and 1440) | `model` | 1 | ready in 26–31 ms, 45,572 B | 155 | 125,500 | 111 | 12 | 25 | `eyes_open` | 1.12 / 0.255 | 0 |
+| trial, `chai3d=procedural` (390 and 1440) | `procedural` | 0 | idle | 161 | 128,792 | 114 | 10 | 19 | n/a | 1.12 / 0.255 | 0 |
+
+The forced-procedural trial is identical to control in every `renderer.info` figure, so C changes nothing on the procedural path. The model swaps in within 6–9 ms of the room being ready.
 
 ## 2. What I opened (full size)
 
@@ -78,7 +86,7 @@ Re-read, not re-run:
 - **PRESERVE 8 (K03):**
   - `VISUAL_BENCHMARK_LIBRARY/assets/current/11b-summary-unlock-settled.png`;
   - then `C/captures/{BEFORE,AFTER}/390x844-light-day/07-unlock.png`: the record-player close-up is identical in framing and content, and Chai is out of frame.
-- **My own probe frames:** `review/LEAD2/C/nook/*.png` (NOOK_FRAMES).
+- **My own probe frames:** `review/LEAD2/C/nook/*.png` (`1440x900-dark-{control,trial-model,trial-procedural}.png` and the 390×844 set: same room, same framing; the model Chai is the same height on the cushion and about 70 % as wide, see §5).
 
 ## 3. Acceptance
 
