@@ -1,0 +1,67 @@
+{
+ "base": "http://127.0.0.1:5455",
+ "viewport": {
+  "W": 390,
+  "H": 844,
+  "DPR": 2,
+  "theme": "light"
+ },
+ "startedAt": "2026-10-13T12:08:15.588Z",
+ "steps": [
+  {
+   "label": "load home",
+   "ok": true
+  },
+  {
+   "label": "click Put the kettle on",
+   "ok": true
+  },
+  {
+   "label": "click End session",
+   "ok": true
+  },
+  {
+   "label": "confirm End session",
+   "ok": true
+  },
+  {
+   "label": "start again (click)",
+   "ok": true
+  },
+  {
+   "label": "__kettle.finish()",
+   "ok": true
+  },
+  {
+   "label": "click Skip break",
+   "ok": true
+  },
+  {
+   "label": "click Nook tab",
+   "ok": true
+  }
+ ],
+ "info": {
+  "tier": "\"auto\"",
+  "hash": "#/nook"
+ },
+ "errors": [],
+ "log": [
+  "[+1.8s] hash #/",
+  "[+3.2s] OK   load home",
+  "[+10.3s] OK   click Put the kettle on",
+  "[+18.2s] end sheet text: Leave the kettle early? That’s okay. It’s been under a minute, so there’s nothing to save yet. Keep brewing End session",
+  "[+18.2s] OK   click End session",
+  "[+23.5s] back at #/",
+  "[+23.5s] OK   confirm End session",
+  "[+30.2s] OK   start again (click)",
+  "[+32.7s] at #/done",
+  "[+58.0s] summary text: 25 minutes brewed Tea’s ready. Take five before the next one. Trailing pothos is in your nook 2 Cozy level 2 · It grows a little every time you focus. Probably. +43 leaves 25/30 min today Daily goal: 25 of 30 minutes 1 1 day warm Recipe done · Finish a full brew Badge: First Brew I Badge: Nook Builder How your leaves added up Tea time · 5 min Skip break 25 minutes brewed. 43 leaves earned. Today: ",
+  "[+58.0s] OK   __kettle.finish()",
+  "[+64.1s] back at #/",
+  "[+64.1s] OK   click Skip break",
+  "[+74.6s] at #/nook",
+  "[+74.7s] nook hint count: 1",
+  "[+74.7s] OK   click Nook tab"
+ ]
+}
