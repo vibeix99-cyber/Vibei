@@ -1,0 +1,1360 @@
+[
+ {
+  "vp": "1440x900@1",
+  "variant": "light",
+  "t0": "10:33:58",
+  "poses": {
+   "awake": {
+    "kind": "model",
+    "model": true,
+    "quality": "high",
+    "mode": "showcase",
+    "time": "day",
+    "items": [
+     "pothos",
+     "books",
+     "cushion",
+     "fairyLights",
+     "shelf",
+     "teaSet",
+     "recordPlayer",
+     "blanket",
+     "painting",
+     "lantern"
+    ],
+    "root": {
+     "pos": [
+      -0.95,
+      0.255,
+      1.15
+     ],
+     "rotY": 0.62,
+     "scale": [
+      1.12,
+      1.12,
+      1.12
+     ],
+     "baseY": 0.255
+    },
+    "meshes": [
+     {
+      "name": "mesh_0",
+      "part": "body",
+      "shown": true,
+      "verts": 1878,
+      "tris": 3470,
+      "mat": "chai_fur",
+      "morphDict": {
+       "nap": 0
+      },
+      "morphInfl": [
+       0
+      ]
+     },
+     {
+      "name": "mesh_0_1",
+      "part": "body",
+      "shown": true,
+      "verts": 142,
+      "tris": 276,
+      "mat": "chai_gloss",
+      "morphDict": {
+       "nap": 0
+      },
+      "morphInfl": [
+       0
+      ]
+     },
+     {
+      "name": "eyes_happy",
+      "part": "eyes_happy",
+      "shown": false,
+      "verts": 74,
+      "tris": 140,
+      "mat": "chai_gloss",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": "eyes_open",
+      "part": "eyes_open",
+      "shown": true,
+      "verts": 144,
+      "tris": 272,
+      "mat": "chai_gloss",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": "eyes_sip",
+      "part": "eyes_sip",
+      "shown": false,
+      "verts": 94,
+      "tris": 180,
+      "mat": "chai_gloss",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": "eyes_sleep",
+      "part": "eyes_sleep",
+      "shown": false,
+      "verts": 94,
+      "tris": 180,
+      "mat": "chai_gloss",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": "mesh_5",
+      "part": "paws_mug",
+      "shown": false,
+      "verts": 104,
+      "tris": 200,
+      "mat": "chai_fur",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": "mesh_5_1",
+      "part": "paws_mug",
+      "shown": false,
+      "verts": 187,
+      "tris": 330,
+      "mat": "chai_mug",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": "yuzu",
+      "part": "yuzu",
+      "shown": true,
+      "verts": 176,
+      "tris": 324,
+      "mat": "chai_yuzu",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": null,
+      "part": null,
+      "shown": true,
+      "verts": 4,
+      "tris": 2,
+      "mat": "",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": null,
+      "part": null,
+      "shown": false,
+      "verts": 4,
+      "tris": 2,
+      "mat": "",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": null,
+      "part": null,
+      "shown": true,
+      "verts": 324,
+      "tris": 108,
+      "mat": "",
+      "morphDict": null,
+      "morphInfl": null
+     }
+    ],
+    "shownParts": [
+     "body",
+     "eyes_open",
+     "yuzu"
+    ],
+    "eyes": [
+     "eyes_open"
+    ],
+    "pawsMug": false,
+    "activeMorphs": [],
+    "bodyAncestors": [
+     {
+      "name": "chai",
+      "scale": [
+       1,
+       1,
+       1
+      ],
+      "pos": [
+       0,
+       0,
+       0
+      ],
+      "rotZ": 0
+     },
+     {
+      "name": "Group",
+      "scale": [
+       1.0057,
+       1.0163,
+       1.0049
+      ],
+      "pos": [
+       0,
+       0,
+       0
+      ],
+      "rotZ": 0.0117
+     },
+     {
+      "name": "chai",
+      "scale": [
+       1.12,
+       1.12,
+       1.12
+      ],
+      "pos": [
+       -0.95,
+       0.255,
+       1.15
+      ],
+      "rotZ": 0
+     }
+    ],
+    "yuzu": {
+     "pos": [
+      0.028,
+      0.8,
+      0
+     ],
+     "nap_offset": [
+      -0.09,
+      -0.3814,
+      0.154
+     ],
+     "shown": true
+    },
+    "bbox": {
+     "min": [
+      -1.2915,
+      0.253,
+      0.8157
+     ],
+     "max": [
+      -0.6147,
+      1.3912,
+      1.5027
+     ],
+     "size": [
+      0.6767,
+      1.1382,
+      0.6871
+     ],
+     "verts": 2340
+    },
+    "localBBox": {
+     "min": [
+      -0.2964,
+      -0.0018,
+      -0.2844
+     ],
+     "max": [
+      0.2922,
+      1.0145,
+      0.2854
+     ],
+     "size": [
+      0.5887,
+      1.0163,
+      0.5698
+     ]
+    },
+    "cushionMeshes": [
+     {
+      "type": "RoundedBoxGeometry",
+      "visible": true,
+      "matVisible": false,
+      "opacity": 1,
+      "transparent": false,
+      "colorWrite": true,
+      "min": [
+       -1.5,
+       0.01,
+       0.6
+      ],
+      "max": [
+       -0.4,
+       0.31,
+       1.7
+      ]
+     },
+     {
+      "type": "BufferGeometry",
+      "visible": true,
+      "matVisible": true,
+      "opacity": 1,
+      "transparent": false,
+      "colorWrite": true,
+      "min": [
+       -1.537,
+       0.0358,
+       0.563
+      ],
+      "max": [
+       -0.363,
+       0.2765,
+       1.737
+      ]
+     },
+     {
+      "type": "BufferGeometry",
+      "visible": true,
+      "matVisible": true,
+      "opacity": 1,
+      "transparent": false,
+      "colorWrite": true,
+      "min": [
+       -0.995,
+       0.238,
+       1.105
+      ],
+      "max": [
+       -0.905,
+       0.292,
+       1.195
+      ]
+     },
+     {
+      "type": "BufferGeometry",
+      "visible": true,
+      "matVisible": true,
+      "opacity": 0.5,
+      "transparent": true,
+      "colorWrite": true,
+      "min": [
+       -1.65,
+       0.09,
+       0.45
+      ],
+      "max": [
+       -0.25,
+       0.09,
+       1.85
+      ]
+     }
+    ],
+    "cushion": {
+     "puffMin": [
+      -1.537,
+      0.0358,
+      0.563
+     ],
+     "puffMax": [
+      -0.363,
+      0.2765,
+      1.737
+     ],
+     "topY": 0.2765,
+     "centre": [
+      -0.95,
+      1.15
+     ],
+     "rimRadius": 0.587,
+     "rootPos": [
+      -0.95,
+      0.04,
+      1.15
+     ],
+     "rootScale": [
+      1,
+      1,
+      1
+     ]
+    },
+    "placement": {
+     "undersideVerts": 264,
+     "rays": 263,
+     "rayMiss_overhang": 1,
+     "gapMin": -0.023,
+     "gapP05": -0.0169,
+     "gapMedian": 0.0164,
+     "gapMax": 0.0641,
+     "vertsBeyondRimRadius": 0,
+     "maxBeyondRim": 0,
+     "chaiMinY": 0.253,
+     "cushionTopY": 0.2765,
+     "chaiMinY_minus_cushionTopY": -0.0235,
+     "chaiCentreXZ_minus_cushionCentre": [
+      -0.0031,
+      0.0092
+     ],
+     "chaiBBoxXZ_halfExtents": [
+      0.3384,
+      0.3435
+     ]
+    },
+    "loafScaleSweep": {
+     "min": [
+      0.9937,
+      0.982,
+      0.9946
+     ],
+     "max": [
+      1.0063,
+      1.018,
+      1.0054
+     ]
+    },
+    "scaleFallbackSeen": false,
+    "screenBox": [
+     654.6,
+     565.9,
+     758.8,
+     716.5
+    ],
+    "stats": {
+     "calls": 155,
+     "triangles": 125500,
+     "geometries": 111,
+     "textures": 12,
+     "frameMs": 78.55000000004657,
+     "fps": 0
+    }
+   },
+   "nap": {
+    "kind": "model",
+    "model": true,
+    "quality": "high",
+    "mode": "focus",
+    "time": "day",
+    "items": [
+     "pothos",
+     "books",
+     "cushion",
+     "fairyLights",
+     "shelf",
+     "teaSet",
+     "recordPlayer",
+     "blanket",
+     "painting",
+     "lantern"
+    ],
+    "root": {
+     "pos": [
+      -0.95,
+      0.255,
+      1.15
+     ],
+     "rotY": 0.62,
+     "scale": [
+      1.12,
+      1.12,
+      1.12
+     ],
+     "baseY": 0.255
+    },
+    "meshes": [
+     {
+      "name": "mesh_0",
+      "part": "body",
+      "shown": true,
+      "verts": 1878,
+      "tris": 3470,
+      "mat": "chai_fur",
+      "morphDict": {
+       "nap": 0
+      },
+      "morphInfl": [
+       1
+      ]
+     },
+     {
+      "name": "mesh_0_1",
+      "part": "body",
+      "shown": true,
+      "verts": 142,
+      "tris": 276,
+      "mat": "chai_gloss",
+      "morphDict": {
+       "nap": 0
+      },
+      "morphInfl": [
+       1
+      ]
+     },
+     {
+      "name": "eyes_happy",
+      "part": "eyes_happy",
+      "shown": false,
+      "verts": 74,
+      "tris": 140,
+      "mat": "chai_gloss",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": "eyes_open",
+      "part": "eyes_open",
+      "shown": false,
+      "verts": 144,
+      "tris": 272,
+      "mat": "chai_gloss",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": "eyes_sip",
+      "part": "eyes_sip",
+      "shown": false,
+      "verts": 94,
+      "tris": 180,
+      "mat": "chai_gloss",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": "eyes_sleep",
+      "part": "eyes_sleep",
+      "shown": true,
+      "verts": 94,
+      "tris": 180,
+      "mat": "chai_gloss",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": "mesh_5",
+      "part": "paws_mug",
+      "shown": false,
+      "verts": 104,
+      "tris": 200,
+      "mat": "chai_fur",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": "mesh_5_1",
+      "part": "paws_mug",
+      "shown": false,
+      "verts": 187,
+      "tris": 330,
+      "mat": "chai_mug",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": "yuzu",
+      "part": "yuzu",
+      "shown": true,
+      "verts": 176,
+      "tris": 324,
+      "mat": "chai_yuzu",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": null,
+      "part": null,
+      "shown": true,
+      "verts": 4,
+      "tris": 2,
+      "mat": "",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": null,
+      "part": null,
+      "shown": false,
+      "verts": 4,
+      "tris": 2,
+      "mat": "",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": null,
+      "part": null,
+      "shown": true,
+      "verts": 324,
+      "tris": 108,
+      "mat": "",
+      "morphDict": null,
+      "morphInfl": null
+     }
+    ],
+    "shownParts": [
+     "body",
+     "eyes_sleep",
+     "yuzu"
+    ],
+    "eyes": [
+     "eyes_sleep"
+    ],
+    "pawsMug": false,
+    "activeMorphs": [
+     {
+      "mesh": "mesh_0",
+      "key": "nap",
+      "value": 1
+     },
+     {
+      "mesh": "mesh_0_1",
+      "key": "nap",
+      "value": 1
+     }
+    ],
+    "bodyAncestors": [
+     {
+      "name": "chai",
+      "scale": [
+       1,
+       1,
+       1
+      ],
+      "pos": [
+       0,
+       0,
+       0.031
+      ],
+      "rotZ": 0
+     },
+     {
+      "name": "Group",
+      "scale": [
+       1.0121,
+       1.0347,
+       1.0104
+      ],
+      "pos": [
+       0,
+       0,
+       0
+      ],
+      "rotZ": 0
+     },
+     {
+      "name": "chai",
+      "scale": [
+       1.12,
+       1.12,
+       1.12
+      ],
+      "pos": [
+       -0.95,
+       0.255,
+       1.15
+      ],
+      "rotZ": 0
+     }
+    ],
+    "yuzu": {
+     "pos": [
+      -0.062,
+      0.4186,
+      0.154
+     ],
+     "nap_offset": [
+      -0.09,
+      -0.3814,
+      0.154
+     ],
+     "shown": true
+    },
+    "bbox": {
+     "min": [
+      -1.3961,
+      0.255,
+      0.6001
+     ],
+     "max": [
+      -0.6227,
+      0.9674,
+      1.7173
+     ],
+     "size": [
+      0.7734,
+      0.7124,
+      1.1172
+     ],
+     "verts": 2290
+    },
+    "localBBox": {
+     "min": [
+      -0.3384,
+      0,
+      -0.5425
+     ],
+     "max": [
+      0.3514,
+      0.6361,
+      0.5001
+     ],
+     "size": [
+      0.6898,
+      0.6361,
+      1.0427
+     ]
+    },
+    "cushionMeshes": [
+     {
+      "type": "RoundedBoxGeometry",
+      "visible": true,
+      "matVisible": false,
+      "opacity": 1,
+      "transparent": false,
+      "colorWrite": true,
+      "min": [
+       -1.5,
+       0.01,
+       0.6
+      ],
+      "max": [
+       -0.4,
+       0.31,
+       1.7
+      ]
+     },
+     {
+      "type": "BufferGeometry",
+      "visible": true,
+      "matVisible": true,
+      "opacity": 1,
+      "transparent": false,
+      "colorWrite": true,
+      "min": [
+       -1.537,
+       0.0358,
+       0.563
+      ],
+      "max": [
+       -0.363,
+       0.2765,
+       1.737
+      ]
+     },
+     {
+      "type": "BufferGeometry",
+      "visible": true,
+      "matVisible": true,
+      "opacity": 1,
+      "transparent": false,
+      "colorWrite": true,
+      "min": [
+       -0.995,
+       0.238,
+       1.105
+      ],
+      "max": [
+       -0.905,
+       0.292,
+       1.195
+      ]
+     },
+     {
+      "type": "BufferGeometry",
+      "visible": true,
+      "matVisible": true,
+      "opacity": 0.5,
+      "transparent": true,
+      "colorWrite": true,
+      "min": [
+       -1.65,
+       0.09,
+       0.45
+      ],
+      "max": [
+       -0.25,
+       0.09,
+       1.85
+      ]
+     }
+    ],
+    "cushion": {
+     "puffMin": [
+      -1.537,
+      0.0358,
+      0.563
+     ],
+     "puffMax": [
+      -0.363,
+      0.2765,
+      1.737
+     ],
+     "topY": 0.2765,
+     "centre": [
+      -0.95,
+      1.15
+     ],
+     "rimRadius": 0.587,
+     "rootPos": [
+      -0.95,
+      0.04,
+      1.15
+     ],
+     "rootScale": [
+      1,
+      1,
+      1
+     ]
+    },
+    "placement": {
+     "undersideVerts": 457,
+     "rays": 455,
+     "rayMiss_overhang": 2,
+     "gapMin": -0.0215,
+     "gapP05": -0.0209,
+     "gapMedian": 0.0172,
+     "gapMax": 0.1628,
+     "vertsBeyondRimRadius": 2,
+     "maxBeyondRim": 0.0011,
+     "chaiMinY": 0.255,
+     "cushionTopY": 0.2765,
+     "chaiMinY_minus_cushionTopY": -0.0215,
+     "chaiCentreXZ_minus_cushionCentre": [
+      -0.0594,
+      0.0087
+     ],
+     "chaiBBoxXZ_halfExtents": [
+      0.3867,
+      0.5586
+     ]
+    },
+    "loafScaleSweep": {
+     "min": [
+      0.9878,
+      0.965,
+      0.9895
+     ],
+     "max": [
+      1.0122,
+      1.035,
+      1.0105
+     ]
+    },
+    "scaleFallbackSeen": false,
+    "screenBox": [
+     629,
+     595.5,
+     769.4,
+     727
+    ],
+    "stats": {
+     "calls": 158,
+     "triangles": 125414,
+     "geometries": 112,
+     "textures": 13,
+     "frameMs": 61.64444444447549,
+     "fps": 0
+    }
+   },
+   "sip": {
+    "kind": "model",
+    "model": true,
+    "quality": "high",
+    "mode": "break",
+    "time": "day",
+    "items": [
+     "pothos",
+     "books",
+     "cushion",
+     "fairyLights",
+     "shelf",
+     "teaSet",
+     "recordPlayer",
+     "blanket",
+     "painting",
+     "lantern"
+    ],
+    "root": {
+     "pos": [
+      -0.95,
+      0.255,
+      1.15
+     ],
+     "rotY": 0.62,
+     "scale": [
+      1.12,
+      1.12,
+      1.12
+     ],
+     "baseY": 0.255
+    },
+    "meshes": [
+     {
+      "name": "mesh_0",
+      "part": "body",
+      "shown": true,
+      "verts": 1878,
+      "tris": 3470,
+      "mat": "chai_fur",
+      "morphDict": {
+       "nap": 0
+      },
+      "morphInfl": [
+       0
+      ]
+     },
+     {
+      "name": "mesh_0_1",
+      "part": "body",
+      "shown": true,
+      "verts": 142,
+      "tris": 276,
+      "mat": "chai_gloss",
+      "morphDict": {
+       "nap": 0
+      },
+      "morphInfl": [
+       0
+      ]
+     },
+     {
+      "name": "eyes_happy",
+      "part": "eyes_happy",
+      "shown": false,
+      "verts": 74,
+      "tris": 140,
+      "mat": "chai_gloss",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": "eyes_open",
+      "part": "eyes_open",
+      "shown": false,
+      "verts": 144,
+      "tris": 272,
+      "mat": "chai_gloss",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": "eyes_sip",
+      "part": "eyes_sip",
+      "shown": true,
+      "verts": 94,
+      "tris": 180,
+      "mat": "chai_gloss",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": "eyes_sleep",
+      "part": "eyes_sleep",
+      "shown": false,
+      "verts": 94,
+      "tris": 180,
+      "mat": "chai_gloss",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": "mesh_5",
+      "part": "paws_mug",
+      "shown": true,
+      "verts": 104,
+      "tris": 200,
+      "mat": "chai_fur",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": "mesh_5_1",
+      "part": "paws_mug",
+      "shown": true,
+      "verts": 187,
+      "tris": 330,
+      "mat": "chai_mug",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": "yuzu",
+      "part": "yuzu",
+      "shown": true,
+      "verts": 176,
+      "tris": 324,
+      "mat": "chai_yuzu",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": null,
+      "part": null,
+      "shown": true,
+      "verts": 4,
+      "tris": 2,
+      "mat": "",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": null,
+      "part": null,
+      "shown": true,
+      "verts": 4,
+      "tris": 2,
+      "mat": "",
+      "morphDict": null,
+      "morphInfl": null
+     },
+     {
+      "name": null,
+      "part": null,
+      "shown": true,
+      "verts": 324,
+      "tris": 108,
+      "mat": "",
+      "morphDict": null,
+      "morphInfl": null
+     }
+    ],
+    "shownParts": [
+     "body",
+     "eyes_sip",
+     "paws_mug",
+     "yuzu"
+    ],
+    "eyes": [
+     "eyes_sip"
+    ],
+    "pawsMug": true,
+    "activeMorphs": [],
+    "bodyAncestors": [
+     {
+      "name": "chai",
+      "scale": [
+       1,
+       1,
+       1
+      ],
+      "pos": [
+       0,
+       0,
+       0
+      ],
+      "rotZ": 0
+     },
+     {
+      "name": "Group",
+      "scale": [
+       0.9991,
+       0.9974,
+       0.9992
+      ],
+      "pos": [
+       0,
+       0,
+       0
+      ],
+      "rotZ": 0
+     },
+     {
+      "name": "chai",
+      "scale": [
+       1.12,
+       1.12,
+       1.12
+      ],
+      "pos": [
+       -0.95,
+       0.255,
+       1.15
+      ],
+      "rotZ": 0
+     }
+    ],
+    "yuzu": {
+     "pos": [
+      0.028,
+      0.8,
+      0
+     ],
+     "nap_offset": [
+      -0.09,
+      -0.3814,
+      0.154
+     ],
+     "shown": true
+    },
+    "bbox": {
+     "min": [
+      -1.2874,
+      0.255,
+      0.8163
+     ],
+     "max": [
+      -0.5664,
+      1.3653,
+      1.5603
+     ],
+     "size": [
+      0.721,
+      1.1103,
+      0.7439
+     ],
+     "verts": 2581
+    },
+    "localBBox": {
+     "min": [
+      -0.2924,
+      0,
+      -0.2828
+     ],
+     "max": [
+      0.2924,
+      0.9913,
+      0.4166
+     ],
+     "size": [
+      0.5849,
+      0.9913,
+      0.6994
+     ]
+    },
+    "cushionMeshes": [
+     {
+      "type": "RoundedBoxGeometry",
+      "visible": true,
+      "matVisible": false,
+      "opacity": 1,
+      "transparent": false,
+      "colorWrite": true,
+      "min": [
+       -1.5,
+       0.01,
+       0.6
+      ],
+      "max": [
+       -0.4,
+       0.31,
+       1.7
+      ]
+     },
+     {
+      "type": "BufferGeometry",
+      "visible": true,
+      "matVisible": true,
+      "opacity": 1,
+      "transparent": false,
+      "colorWrite": true,
+      "min": [
+       -1.537,
+       0.0358,
+       0.563
+      ],
+      "max": [
+       -0.363,
+       0.2765,
+       1.737
+      ]
+     },
+     {
+      "type": "BufferGeometry",
+      "visible": true,
+      "matVisible": true,
+      "opacity": 1,
+      "transparent": false,
+      "colorWrite": true,
+      "min": [
+       -0.995,
+       0.238,
+       1.105
+      ],
+      "max": [
+       -0.905,
+       0.292,
+       1.195
+      ]
+     },
+     {
+      "type": "BufferGeometry",
+      "visible": true,
+      "matVisible": true,
+      "opacity": 0.5,
+      "transparent": true,
+      "colorWrite": true,
+      "min": [
+       -1.65,
+       0.09,
+       0.45
+      ],
+      "max": [
+       -0.25,
+       0.09,
+       1.85
+      ]
+     }
+    ],
+    "cushion": {
+     "puffMin": [
+      -1.537,
+      0.0358,
+      0.563
+     ],
+     "puffMax": [
+      -0.363,
+      0.2765,
+      1.737
+     ],
+     "topY": 0.2765,
+     "centre": [
+      -0.95,
+      1.15
+     ],
+     "rimRadius": 0.587,
+     "rootPos": [
+      -0.95,
+      0.04,
+      1.15
+     ],
+     "rootScale": [
+      1,
+      1,
+      1
+     ]
+    },
+    "placement": {
+     "undersideVerts": 265,
+     "rays": 264,
+     "rayMiss_overhang": 1,
+     "gapMin": -0.0213,
+     "gapP05": -0.0155,
+     "gapMedian": 0.014,
+     "gapMax": 0.0636,
+     "vertsBeyondRimRadius": 0,
+     "maxBeyondRim": 0,
+     "chaiMinY": 0.255,
+     "cushionTopY": 0.2765,
+     "chaiMinY_minus_cushionTopY": -0.0215,
+     "chaiCentreXZ_minus_cushionCentre": [
+      0.0231,
+      0.0383
+     ],
+     "chaiBBoxXZ_halfExtents": [
+      0.3605,
+      0.372
+     ]
+    },
+    "loafScaleSweep": {
+     "min": [
+      0.9937,
+      0.982,
+      0.9946
+     ],
+     "max": [
+      1.0063,
+      1.018,
+      1.0054
+     ]
+    },
+    "scaleFallbackSeen": false,
+    "screenBox": [
+     647.2,
+     566.7,
+     761.5,
+     721.5
+    ],
+    "stats": {
+     "calls": 160,
+     "triangles": 126484,
+     "geometries": 116,
+     "textures": 13,
+     "frameMs": 61.492000000029805,
+     "fps": 0
+    }
+   }
+  },
+  "model": {
+   "k": "model",
+   "st": {
+    "state": "ready",
+    "ms": 39,
+    "bytes": 45572
+   },
+   "ms": 5
+  },
+  "chai3d": {
+   "state": "ready",
+   "ms": 39,
+   "bytes": 45572
+  },
+  "hosts": [
+   {
+    "mode": "showcase",
+    "ready": "true",
+    "static": null,
+    "canvas": 1
+   }
+  ],
+  "samples": {
+   "n": 170,
+   "kinds": {
+    "model": 170
+   },
+   "notInScene": 0,
+   "notShown": 0,
+   "zeroVisMeshes": 0
+  },
+  "net": {
+   "chaiRequests": [
+    {
+     "t": "10:34:01",
+     "method": "GET",
+     "url": "http://127.0.0.1:5453/assets/three-gltf-DPXo6Yfo.js",
+     "type": "script"
+    },
+    {
+     "t": "10:34:01",
+     "method": "GET",
+     "url": "http://127.0.0.1:5453/assets/chai-B-OZIeNI.glb",
+     "type": "fetch"
+    }
+   ],
+   "chaiResponses": [
+    {
+     "t": "10:34:01",
+     "status": 200,
+     "url": "http://127.0.0.1:5453/assets/three-gltf-DPXo6Yfo.js",
+     "fromSW": false,
+     "len": null
+    },
+    {
+     "t": "10:34:01",
+     "status": 200,
+     "url": "http://127.0.0.1:5453/assets/chai-B-OZIeNI.glb",
+     "fromSW": false,
+     "len": "45572"
+    }
+   ],
+   "console": [
+    {
+     "t": "10:33:59",
+     "type": "warning",
+     "text": "Service Worker registration blocked by Playwright"
+    },
+    {
+     "t": "10:33:59",
+     "type": "warning",
+     "text": "[pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')\n    at http://127.0.0.1:5453/assets/workbox-window.prod.es5-Bd17z0YL.js:2:2838"
+    },
+    {
+     "t": "10:34:00",
+     "type": "warning",
+     "text": "Service Worker registration blocked by Playwright"
+    },
+    {
+     "t": "10:34:00",
+     "type": "warning",
+     "text": "[pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')\n    at http://127.0.0.1:5453/assets/workbox-window.prod.es5-Bd17z0YL.js:2:2838"
+    },
+    {
+     "t": "10:34:01",
+     "type": "info",
+     "text": "[chai3d] model ready {state: ready, ms: 39, bytes: 45572} {awake: Object, nap: Object, sip: Object, fileTris: 5372}"
+    }
+   ],
+   "pageerrors": []
+  }
+ }
+]
