@@ -36,3 +36,14 @@
 | Maker's results | A real pre-rename profile, made on the BEFORE build, shows "Warm Days II" on the summary pill, its aria label, the announcement and Stats › Badges. The stored data is byte-identical after load. tsc 0; vitest 290/290; `w2-summary` 18/18; `a11y` + `integrity` 24/24; `statusbar` 9/9. The full chromium suite was not run (time) |
 | Follow-ups noted | The badge description still says "warm streak". `docs/areas/progress.md` has a dated history entry. Non-badge "warm streak" wording sits in T2's files: `StreakCard`, `Rail`, Settings, `DataSection` and `Gallery` |
 | Archive | `archive/pe-w2r3-badge-2994005.incremental.bundle` |
+
+## Verdict B: APPROVE (`CHECKER-W2R3-B.md`), merged as `8df3076`
+- **Merge check:** the merged src `f40b306` and tests `cf55287` equal the B trial `e1ddf9d`.
+- **The lead's ruling B-A1, ACCEPTED:** the display name is persisted on the next ordinary write. `lastReport` is the summary's temporary copy, written as null in backups and never used in any arithmetic.
+- **Follow-ups:**
+  - B-F1: at 200 % the tier numeral can sit alone on the pill's last line. This already happens on the base; the fix is a no-break space.
+  - B-F2: the badge description still says "warm streak". Vibei decides the wording.
+  - B-F3: other "warm streak" wording (`StreakCard`, `Rail`, Settings). Vibei decides the wording.
+  - B-F5: Stats tiles break mid-word at 200 %. Already on the base.
+  - B-F6: floating toasts over the chips and Brew length. Already on the base; that is T2's work.
+- **Next:** T2's trial will be integration `8df3076` (with B) + T2. That trial is also the combined trial for Lane R.
