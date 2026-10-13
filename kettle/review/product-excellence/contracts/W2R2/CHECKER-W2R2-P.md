@@ -50,7 +50,7 @@ Re-read but not re-run:
 - a real click to start and a real touch tap on Tea time; `__kettle.finish()` used for setup only;
 - arrival measured at 1.5 s and settled at 4.5 s, then one 200 px wheel on the sheet.
 
-Raw rows are in `review/LEAD2/P/probe.log`, frames in `probe/`. The first run was stopped by the session's background time limit after 23 of 36 runs. The missing rows (390×844 @200 big day, 844×390 dark @200, 1440×900 dark @100) ran again as `probe-b/`.
+Raw rows are in `review/LEAD2/P/probe.log`, frames in `probe/`. The first run was stopped by the session's background time limit after 23 runs. The missing rows ran in `probe-b/` (`p2-lead.json` there): 390×844 light @200 big and task day, 844×390 dark @200 and 1440×900 dark @100, task and big day. On the side-by-side rows every number is identical on both builds except the "streak" count
 
 ## 2. What I opened (full size; REFERENCE → BEFORE → AFTER)
 
@@ -76,13 +76,13 @@ Raw rows are in `review/LEAD2/P/probe.log`, frames in `probe/`. The first run wa
 |---|---|---|
 | Minutes ("25 minutes brewed") and Tea time stay the strongest elements | **PASS** | Heading 28px/600 (56 at 200 %) and the filled sky Tea time button are unchanged. The highlight title is 16/600 (was 17/700, heavier than the heading). The card's area is 16,750 px² against Tea time's 20,100 at 375 (was 24,711, larger than Tea time); at 390 @200, 55,081 vs 37,931 for Tea time's box (was 72,718). Spec "the highlight is quieter…" |
 | The milestone card stays highlighted, but quieter than both | **PASS** | It is still the one honey card (fill and edge unchanged), full width and first in the rewards; frames opened |
-| "Warm days" replaces "streak" | **PASS** | The summary's own words contain no "streak" on any trial run (my probe: own = 0 in all 18 trial rows; control 1–3). The only hits are the badge's catalogue name "Warm Streak" (pill and "New badge: Warm Streak."), which is out of scope (§5, F-1). `rank.test.ts` "words" test; spec "warm days, never streak" |
+| "Warm days" replaces "streak" | **PASS** | The summary's own words contain no "streak" on any trial run (my probe: own = 0 in all 17 trial rows; control 1–3). The only hits are the badge's catalogue name "Warm Streak" (pill and "New badge: Warm Streak."), which is out of scope (§5, F-1). `rank.test.ts` "words" test; spec "warm days, never streak" |
 | Chai and the kettle fully visible above the sheet at 375×667 and 390×844, arrival and settled | **PASS** | Trial: Chai's box 10.8–22.8 px and the kettle's 2.4–14.4 px above the sheet in every stacked row, mine and the maker's (24/24 runs, arrival = settled). Control: a figure covered in 10 of my 12 stacked rows, by up to 88/97 px |
 | …without undoing footer clearance | **PASS** | End state: the last line ≥ 47.4 px above the footer stacked and ≥ 31.3 side by side, identical to control (P §4.1; LEAD-1 `gap` 47.5–48 both builds) |
 | …or hiding any fact | **PASS** | Same pill list, same count (4 or 7) and same order on both builds in every row; the announcement carries the same facts in warm-days words; nothing is clamped or removed. See the ruling in §4 for what moves below the fold |
 | Preserve: at most one highlight | **PASS** | 0 or 1 in every row (spec; frames) |
 | Preserve: fold between lines | **PASS** | 0 lines cut on every stacked run (P §4.1; spec). The 4 cut "lines" side by side are the base's R-1 unlock picture, identical on both builds |
-| Preserve: footer clearance | **PASS** | as above; Tea time and Skip hit-test on top 60/60 (P); a real tap on Tea time starts the break in all 36 of my runs (18 per build) |
+| Preserve: footer clearance | **PASS** | as above; Tea time and Skip hit-test on top 60/60 (P); a real tap on Tea time starts the break in all 35 of my runs (18 control, 17 trial) |
 | Preserve: record-player unlock close-up (PRESERVE 8) | **PASS** | The drawing-then-3D card code is untouched. The big day at 375×667 @100 and 390×844 @100 shows the card whole on arrival on both builds. 375 @200 had it a scroll away on control too (447 px) |
 | Side by side (844×390, 667×375, 1440×900) unchanged | **PASS** | `rest = 0` path untouched; P's 30 side-by-side rows identical lift (0), cut lines and end gap; LEAD-1 1440 light @100 and my `probe-b` (844×390 dark @200, 1440×900 dark @100) |
 | Reduced motion | **PASS** | LEAD-1 375 @100 `-rm` rows are identical to motion rows on both builds; spec's reduced-motion fold test |
