@@ -329,7 +329,7 @@ Evidence size: about 28 MB under `…/W2R2/review/LP/` (limit 150 MB).
 
 ## 6. Specs on the trial (check 6)
 
-**Not run.** `KETTLE_PORT=5442 npx playwright test tests/w2-summary.spec.ts tests/whistle.spec.ts --project=chromium --workers=1` was queued behind the slot gate as the fourth item of my gated job and was dropped at 10:45 when the time box ran short: my job had waited from 10:00:55 to 10:25:42 for a slot (3 slots, the T lane holding 2 of them and several LEAD/LC jobs queued ahead; machine load average 12–14 throughout), and the earlier items took priority. Result: **0 run, pass/total = n/a**. For reference only: the maker's packet reports w2-summary 18/18 and whistle 8/8 on `a4f1773`; I did not verify that. A queued LEAD job (`KETTLE_PORT=5442 … w2-summary whistle a11y`) was visible in the gate's waiting list.
+**Not run.** `KETTLE_PORT=5442 npx playwright test tests/w2-summary.spec.ts tests/whistle.spec.ts --project=chromium --workers=1` was queued behind the slot gate as the fourth item of my gated job and was dropped (edited out of the job script) at 10:45 when the time box ran short: my job had waited from 10:00:55 to 10:25:42 for a slot (3 slots, the T lane holding 2 of them and several LEAD/LC jobs queued ahead; machine load average 12–14 throughout), and the earlier items took priority. Result: **0 run, pass/total = n/a**. For reference only: the maker's packet reports w2-summary 18/18 and whistle 8/8 on `a4f1773`; I did not verify that. A queued LEAD job (`KETTLE_PORT=5442 … w2-summary whistle a11y`) was visible in the gate's waiting list.
 
 ## Incomplete / deviations (everything not done as briefed)
 
@@ -338,8 +338,8 @@ Evidence size: about 28 MB under `…/W2R2/review/LP/` (limit 150 MB).
 3. **Check 4 (wider configs):** run (big day, **light theme only**): 844×390 @100 and @200, 667×375 @100 and @200, 1440×900 @100 — control and P each; 1440×900 @200 — **control only** (the P context timed out after 30 s waiting for `#/done`: `NO DATA`, `check4/1440x900-light-t200/P-big.json` holds the error; machine load). **Not run:** the six dark-theme configs. Captures for 1440×900 light @100 exist for both builds.
 4. **Milestone day (extra to the brief's three days):** 2 of 8 configs (375×667 light @100 and @200); the 390×844 and dark configs were not run.
 5. **Kettle anatomy** was run for 375×667 and 390×844 light @100 only (routine day), not for 200 % or the other days; the per-run offsets in §1d for other widths/days are derived, not measured.
-6. **Captures:** all five requested captures that belong to check 1 exist (list below); the 1440×900 light @100 big-day capture belongs to check 4 (listed below only if it was produced).
+6. **Captures:** all five requested captures exist for both builds (four from check 1, the 1440×900 light @100 big-day one from check 4); see §5.
 7. Not measured: reduced-motion, DPR 1 phones, the BEFORE capture set's other tags (`-mon`, `-night`), the break screens, Home after Skip break beyond the hash/heading, autoplay/auto-start "Wait" countdown.
 8. First-attempt runs (09:48–09:54, 09:52–09:59 check 3 session A) and their problems are listed in the commands table; nothing from the discarded runs is in the evidence folder.
 9. Machine load average was 9–14 during all runs; arrival (1.5 s) and settled (4.5 s) are wall-clock from `#/done` and were identical for geometry in all 48 pairs, but the live-announcement text can lag the 1.5 s snapshot (1 of 8 control big-day arrivals).
-10. No source edit, commit, push or merge. No server started or stopped. Leftover processes of mine: none after the final cleanup (see the last line).
+10. No source edit, commit, push or merge. No server started or stopped. Leftover processes of mine: none (`pgrep` for my probe, input, kettle and gate-wrapper processes at 10:56 returned nothing).
