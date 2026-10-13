@@ -651,5 +651,135 @@
    }
   ],
   "responses": []
+ },
+ "05-corrupt-junk-200": {
+  "name": "05-corrupt-junk-200",
+  "scene": "high",
+  "t0": "10:38:20",
+  "glbRequests": 2,
+  "glbResp": [
+   {
+    "status": 200,
+    "t": "10:38:23"
+   },
+   {
+    "status": 200,
+    "t": "10:38:26"
+   }
+  ],
+  "sceneReadyAt": "10:38:26",
+  "statusTimeline": [
+   {
+    "ms": 0,
+    "kind": "procedural",
+    "s": {
+     "state": "failed",
+     "reason": "SyntaxError: Unexpected token '\u0007', \"\u0007�\r�\u0013�\u0019�\u001f�\"... is not valid JSON",
+     "ms": 23
+    }
+   }
+  ],
+  "finalKind": "procedural",
+  "finalStatus": {
+   "state": "failed",
+   "reason": "SyntaxError: Unexpected token '\u0007', \"\u0007�\r�\u0013�\u0019�\u001f�\"... is not valid JSON",
+   "ms": 23
+  },
+  "hosts": [
+   {
+    "mode": "showcase",
+    "ready": "true",
+    "static": null,
+    "canvas": 1
+   }
+  ],
+  "facts": {
+   "kind": "procedural",
+   "model": false,
+   "shownParts": [],
+   "activeMorphs": [],
+   "rootScale": [
+    1.12,
+    1.12,
+    1.12
+   ],
+   "quality": "high"
+  },
+  "samples": {
+   "engSamples": 259,
+   "firstEngineAtMs": 4936,
+   "kindTransitions": [
+    {
+     "t": 4936,
+     "k": "procedural"
+    }
+   ],
+   "first3s": {
+    "n": 30,
+    "bad": 0,
+    "spanMs": 2981,
+    "maxGapMs": 270
+   },
+   "aroundSwap1_5s": null,
+   "whole": {
+    "n": 259,
+    "bad": 0,
+    "spanMs": 25864,
+    "maxGapMs": 270
+   },
+   "badSamplesTotal": 0,
+   "staticSamples": 3,
+   "noCanvasSamples": 14
+  },
+  "console": [
+   {
+    "t": "10:38:20",
+    "type": "warning",
+    "text": "Service Worker registration blocked by Playwright"
+   },
+   {
+    "t": "10:38:20",
+    "type": "warning",
+    "text": "[pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')\n    at http://127.0.0.1:5453/assets/workbox-window.prod.es5-Bd17z0YL.js:2:2838"
+   },
+   {
+    "t": "10:38:21",
+    "type": "warning",
+    "text": "Service Worker registration blocked by Playwright"
+   },
+   {
+    "t": "10:38:21",
+    "type": "warning",
+    "text": "[pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')\n    at http://127.0.0.1:5453/assets/workbox-window.prod.es5-Bd17z0YL.js:2:2838"
+   },
+   {
+    "t": "10:38:23",
+    "type": "info",
+    "text": "[chai3d] keeping the procedural Chai: SyntaxError: Unexpected token '\u0007', \"\u0007�\r�\u0013�\u0019�\u001f�\"... is not valid JSON"
+   },
+   {
+    "t": "10:38:26",
+    "type": "info",
+    "text": "[chai3d] keeping the procedural Chai: SyntaxError: Unexpected token '\u0007', \"\u0007�\r�\u0013�\u0019�\u001f�\"... is not valid JSON"
+   }
+  ],
+  "pageerrors": [],
+  "failedRequests": [],
+  "responses": [
+   {
+    "t": "10:38:23",
+    "status": 200,
+    "url": "http://127.0.0.1:5453/assets/chai-B-OZIeNI.glb",
+    "fromSW": false,
+    "len": "24000"
+   },
+   {
+    "t": "10:38:26",
+    "status": 200,
+    "url": "http://127.0.0.1:5453/assets/chai-B-OZIeNI.glb",
+    "fromSW": false,
+    "len": "24000"
+   }
+  ]
  }
 }
