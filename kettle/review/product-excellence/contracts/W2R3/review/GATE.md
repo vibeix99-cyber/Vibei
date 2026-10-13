@@ -23,3 +23,16 @@
 **File ownership:**
 - **T2:** `src/ui/**`, `src/app/**`, `src/screens/home/**`, `src/screens/focus/**` except `stage/**`, the Undo parts of `stats/**` and `settings/**`, and the toast-related specs.
 - **B:** `src/progress/badges.ts` (names), display-time resolution under `progress/**`, and the tests that assert the name.
+
+## Maker B: "Warm Streak" → "Warm Days". GATE PASSED, 2026-10-13 ~20:25 UTC
+
+| Item | Result |
+|---|---|
+| Packet | `/home/user/wt/w4b/kettle/review/product-excellence/contracts/W2R3/B-READY-FOR-REVIEW.md`. Evidence is in `…/W2R3/B/` |
+| Revision | `pe/w2r3-badge@2994005`, code `0a95fbc`, kettle/src `f40b306` |
+| Files | `src/progress/{badges.ts, validate.ts, seed.ts (comments), engine.test.ts}`, `src/screens/done/{rank.test.ts, summary.ts}` and `tests/w2-summary.spec.ts`. `summary.ts` has a **one-line comment change only**; it is Maker P's merged file and owned by no maker this round, so it is noted, not a conflict. No T2 file changed |
+| Design | Title "Warm Days". `badgeTitle(id, stored)` resolves the name from the id. `coerceData` resolves `lastReport.badges[].title` from the id **on a copy**, so stored data is never rewritten. That field is the only place a title is persisted; backups and export store ids |
+| **Trial** | **`e1ddf9d`** = integration + `2994005`, worktree `/home/user/wt/w4tr-b`, src `f40b306`. Dev **:5475** (verified; served `badges.ts` matches), preview **:5485** |
+| Maker's results | A real pre-rename profile, made on the BEFORE build, shows "Warm Days II" on the summary pill, its aria label, the announcement and Stats › Badges. The stored data is byte-identical after load. tsc 0; vitest 290/290; `w2-summary` 18/18; `a11y` + `integrity` 24/24; `statusbar` 9/9. The full chromium suite was not run (time) |
+| Follow-ups noted | The badge description still says "warm streak". `docs/areas/progress.md` has a dated history entry. Non-badge "warm streak" wording sits in T2's files: `StreakCard`, `Rail`, Settings, `DataSection` and `Gallery` |
+| Archive | `archive/pe-w2r3-badge-2994005.incremental.bundle` |
