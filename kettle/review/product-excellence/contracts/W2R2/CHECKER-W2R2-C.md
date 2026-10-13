@@ -57,7 +57,7 @@ What the code does:
 |---|---|---|
 | `npx tsc --noEmit` | exit 0 | `review/LEAD2/C/tsc.log` |
 | `npx vitest run` | 29 files, **285/285** (incl. `chaiModel.test.ts`) | `review/LEAD2/C/vitest.log` |
-| chromium `chai3d.spec` + `w2-room.spec` vs dev :5443 | C_SPEC_RESULT | `review/LEAD2/C/chai3d-w2room-trial-5443.log` |
+| chromium `chai3d.spec` + `w2-room.spec` vs dev :5443 | **15/15** (chai3d 8, w2-room 7), 4.4 min | `review/LEAD2/C/chai3d-w2room-trial-5443.log` |
 
 Re-read, not re-run:
 - the maker's full chromium (99/103: `break-reach:179` ×2 identical on control; statusbar resize passes on rerun on both; `w2-room` context loss 1/3 on **both** builds when run concurrently, per `C/runs/ctxloss-parallel-{5410,5423}.txt`, which I read);
