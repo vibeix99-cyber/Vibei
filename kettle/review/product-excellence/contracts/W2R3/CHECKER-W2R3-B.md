@@ -48,7 +48,7 @@ The AFTER results:
 | Surface | BEFORE (pre-rename profile on :5480) | AFTER (same storage on :5485) |
 |---|---|---|
 | Summary pill | `Badge: Warm Streak II` | `Badge: Warm Days II` |
-| Pill accessible name | `Warm Streak II` | `Warm Days II` |
+| Badge art `aria-label` in the pill (an svg under an `aria-hidden` ancestor; the pill text is what is reachable) | `Warm Streak II` | `Warm Days II` |
 | Summary announcement (live region) | `… New badge: Warm Streak. New badge: Weekend Warmth.` | `… New badge: Warm Days. New badge: Weekend Warmth.` |
 | Stats › Badges name | `Warm Streak` | `Warm Days` |
 | Stats › Badges button aria | `Warm Streak, tier 2 of 5. 7 of 14 toward the next tier.` | `Warm Days, tier 2 of 5. 7 of 14 toward the next tier.` |
@@ -114,7 +114,7 @@ All three configurations gave identical results.
 | Criterion (brief / gate) | Result |
 |---|---|
 | The display name changes everywhere it shows | **Met.** Summary pill, its accessible name, the summary announcement, Stats tile, tile aria, sheet title, toast (code path from the catalogue) and art label. Zero "Warm Streak" anywhere in the UI or the built bundle |
-| No ids, stored data or arithmetic changed | **Met.** Ids are 5/5. Only the title string changed in the catalogue. Engines are untouched. The stored profile is byte-identical after load and use |
+| No ids, stored data or arithmetic changed | **Met.** Ids are 5/5. Only the title string changed in the catalogue. Engines are untouched. The stored profile is byte-identical after load and same-day use, until the app's next ordinary write (B-A1) |
 | Migration-safe for existing users | **Met**, on a real pre-rename profile from the BEFORE build: the new name on every surface, nothing rewritten, no version bump. The unit test covers the same, plus an unknown id keeping its stored name. The first write after load (any normal state change) stores the current report as it is in memory, so "Warm Days". That is the transient summary copy, not a schema or id change |
 | PRESERVE 9 (badge arithmetic) and 11 (compatible storage) | **Kept** |
 | Tests test real behaviour | Yes. The new engine test goes through `coerceData` on a stored-shape profile. The summary spec's "no streak" check is now strict (no exemption) and asserts `Warm Days II` |
@@ -148,6 +148,11 @@ Read in full: `review/LB/RECEIPT-LB.md`, written about 20:45 UTC. Its evidence i
 - Zustand persist writes on every `setState`. Adoption via `syncFromStorage` writes back on the base too; only the title string differs.
 - `reconcile` decides on epoch, rev and ids, never on titles, so the differing title cannot start a write loop between tabs.
 - **ACCEPTED** as intended behaviour: a normal app write stores the current report, and no id, badge state, session or arithmetic changes.
+
+**Ruling on the coordinator's question.** Persisting the display name on the next ordinary write is acceptable.
+- `lastReport` is transient UI state: the summary's own copy, dropped when the summary is left, `null` in every export, and never read for arithmetic. The brief protects ids, stored data and arithmetic, meaning the earned state (`badges` by id with tier and `unlockedAt`, sessions, ledger, leaves). That state is byte-identical in Lane B's diffs.
+- "Never rewritten" holds for reading: load, hydrate and cross-tab reads write nothing. A later write stores what is in memory, as the base also does on every write.
+- **Downgrade:** an older build reading a report saved as "Warm Days" would show "Warm Days" on that one summary while its own Stats says "Warm Streak", only until the summary is left. This is harmless and not a supported path.
 
 **Accessible name.** The pill's `aria-label="Warm Days II"` is on the art svg, under an `aria-hidden` ancestor. What a screen reader reaches is the pill text and the `role=status` announcement, both "Warm Days". The spec's reachable-text check asserts this and passed.
 
