@@ -1,0 +1,131 @@
+{
+ "00-baseline-ok": {
+  "name": "00-baseline-ok",
+  "scene": "high",
+  "t0": "10:34:51",
+  "glbRequests": 1,
+  "glbResp": [
+   {
+    "status": 200,
+    "t": "10:34:54"
+   }
+  ],
+  "sceneReadyAt": "10:35:00",
+  "statusTimeline": [
+   {
+    "ms": 0,
+    "kind": "model",
+    "s": {
+     "state": "ready",
+     "ms": 22,
+     "bytes": 45572
+    }
+   }
+  ],
+  "finalKind": "model",
+  "finalStatus": {
+   "state": "ready",
+   "ms": 22,
+   "bytes": 45572
+  },
+  "hosts": [
+   {
+    "mode": "showcase",
+    "ready": "true",
+    "static": null,
+    "canvas": 1
+   }
+  ],
+  "facts": {
+   "kind": "model",
+   "model": true,
+   "shownParts": [
+    "body",
+    "eyes_open",
+    "yuzu"
+   ],
+   "activeMorphs": [],
+   "rootScale": [
+    1.12,
+    1.12,
+    1.12
+   ],
+   "quality": "high"
+  },
+  "samples": {
+   "engSamples": 259,
+   "firstEngineAtMs": 6778,
+   "kindTransitions": [
+    {
+     "t": 6778,
+     "k": "model"
+    }
+   ],
+   "first3s": {
+    "n": 28,
+    "bad": 0,
+    "spanMs": 2922,
+    "maxGapMs": 461
+   },
+   "aroundSwap1_5s": null,
+   "whole": {
+    "n": 259,
+    "bad": 0,
+    "spanMs": 26314,
+    "maxGapMs": 461
+   },
+   "badSamplesTotal": 0,
+   "staticSamples": 4,
+   "noCanvasSamples": 34
+  },
+  "console": [
+   {
+    "t": "10:34:52",
+    "type": "warning",
+    "text": "Service Worker registration blocked by Playwright"
+   },
+   {
+    "t": "10:34:52",
+    "type": "warning",
+    "text": "[pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')\n    at http://127.0.0.1:5453/assets/workbox-window.prod.es5-Bd17z0YL.js:2:2838"
+   },
+   {
+    "t": "10:34:53",
+    "type": "warning",
+    "text": "Service Worker registration blocked by Playwright"
+   },
+   {
+    "t": "10:34:53",
+    "type": "warning",
+    "text": "[pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')\n    at http://127.0.0.1:5453/assets/workbox-window.prod.es5-Bd17z0YL.js:2:2838"
+   },
+   {
+    "t": "10:34:54",
+    "type": "info",
+    "text": "[chai3d] model ready {state: ready, ms: 22, bytes: 45572} {awake: Object, nap: Object, sip: Object, fileTris: 5372}"
+   }
+  ],
+  "pageerrors": [],
+  "failedRequests": [
+   {
+    "t": "10:34:53",
+    "failed": "net::ERR_ABORTED",
+    "url": "http://127.0.0.1:5453/assets/three-CuGugm9M.js"
+   },
+   {
+    "t": "10:34:53",
+    "failed": "net::ERR_ABORTED",
+    "url": "http://127.0.0.1:5453/assets/NookScene-BxjwMMOz.js"
+   }
+  ],
+  "responses": [
+   {
+    "t": "10:34:54",
+    "status": 200,
+    "url": "http://127.0.0.1:5453/assets/chai-B-OZIeNI.glb",
+    "fromSW": false,
+    "len": "45572"
+   }
+  ]
+ }
+}
