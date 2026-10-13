@@ -220,10 +220,12 @@ Script `tools/smoke.mjs` (Playwright mouse/touch input pipeline, one continuous 
 - The full-page states (stats, nook, settings) are tall images; "bbox" is the bounding box of pixels over tolerance 16, which for a few pairs spans most of the page.
 - Elapsed machine load was high during sections 5 to 6 (other lanes), so absolute durations are not comparable with a quiet-machine run.
 
-## 8. Evidence layout (73 MB, all under this directory)
+## 8. Evidence layout (90 MB, all under this directory)
 
 - `logs/`: tsc, vitest, chromium-full (log, start/end/exit, gate), jobA, timer-app-pwa, smoke, capture (per side), recheck, `pdiff-<config>.json` (raw per-state numbers), `rediff.json`.
 - `matrix/`: `compact-matrix.md` (21 states × 6 configurations), `over-0.5pct.md`, one full table per configuration (`matrix-*.md`).
 - `pairs/<config>/`: `<state>-trial.png`, `<state>-ctrl.png`, `<state>-diff.png` (red = pixels over tolerance 16 on a faded trial image) for every pair over 0.5 % at tolerance 16 or strict, or with differing sizes.
 - `capture/<side>/<config>/`: `capture-meta.json`, `freeze.json`, `run.log` (the full image sets were kept in scratch and deleted).
-- `smoke/`: 8 PNG + `smoke-log.json`. `tools/`: every script used.
+- `recheck-takes/`: the second-take images, `capture-meta.json` and `run.log` of section 5.3.
+- `smoke/`: 8 PNG + `smoke-log.json`. `tools/`: every script used (gate job wrappers, capture driver, smoke, diff/summary scripts).
+- Left in place (git-ignored, not source): `.tmp/LR/` in both worktrees (preload copy; smoke script copy in the trial one), `kettle/test-results/pwa-dist` in the trial worktree.
