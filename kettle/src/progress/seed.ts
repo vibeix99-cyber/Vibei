@@ -16,7 +16,7 @@
  *   celebrate — finishing the next brew (25 min) extends the streak to 7
  *               (+Tea Cozy, milestone), meets the goal, completes 2 recipes,
  *               levels up 7 → 8 (unlocks the record player) and earns exactly
- *               one badge: Warm Streak II
+ *               one badge: Warm Days II
  *   atRisk    — 5-day streak alive, nothing today, 7:40 pm
  */
 import { clock } from '@/lib/clock';
@@ -244,7 +244,7 @@ function seedCelebrate(today: DayKey): ProgressData {
   let data = build(records, 30, quests);
   // Park leaves 30 below level 8 so the next brew (≈68 leaves) levels up to 8 and unlocks
   // the record player — without also tipping Leaf Collector or Nook Builder into a new
-  // tier, so the celebration shows exactly one badge (Warm Streak II).
+  // tier, so the celebration shows exactly one badge (Warm Days II).
   const target = leavesForLevel(8) - 30;
   if (target > data.leaves) {
     const now = clock.now();

@@ -11,7 +11,7 @@
  *   stays on the summary, compact.
  * - W2R2 polish: on arrival Chai's and the kettle's boxes are wholly above the sheet's top edge (375×667, 390×844;
  *   routine, big and task day; 100 % and 200 %); the highlight is quieter than the minutes and Tea time; the summary
- *   speaks of warm days, never of a "streak" (only a badge's catalogue name, "Warm Streak", is data).
+ *   speaks of warm days, never of a "streak" (W2R3: the badge is "Warm Days" too, so nothing is exempt).
  * The debug API is used for setup only (seed, settings, finishing the brew); scrolling is the wheel, opening the
  * arithmetic is a click.
  */
@@ -243,7 +243,7 @@ test('big day: the unlock is the one highlight, whole on arrival; all seven rewa
   for (const l of at.lines.filter((x) => x.kind.startsWith('unlock'))) expect(l.status, l.kind).toBe('clear');
   expect(at.cut).toEqual([]);
   const facts = at.facts.join(' | ');
-  for (const f of ['+68 leaves', 'Goal met · 37/30 min', '7 days warm, your best yet', 'Tea Cozy earned', '2 recipes done', 'Badge: Warm Streak II', 'Badge: Weekend Warmth'])
+  for (const f of ['+68 leaves', 'Goal met · 37/30 min', '7 days warm, your best yet', 'Tea Cozy earned', '2 recipes done', 'Badge: Warm Days II', 'Badge: Weekend Warmth'])
     expect(facts).toContain(f);
   await ctx.close();
 });
@@ -331,9 +331,9 @@ test('warm days, never "streak": what the big day summary shows and what a scree
     const reachable = [...region.querySelectorAll('[aria-label]')].filter((e) => !e.closest('[aria-hidden="true"]')).map((e) => e.getAttribute('aria-label'));
     return [region.textContent ?? '', ...reachable].join(' | ');
   });
-  // A badge's catalogue name is data (Stats › Badges uses the same name): everything else is the summary's own words.
-  const own = words.replace(/Warm Streak/g, '');
-  expect(own, own).not.toMatch(/streak/i);
+  // W2R3: the badge is "Warm Days" (Stats › Badges uses the same name), so no word on the summary says "streak".
+  expect(words, words).not.toMatch(/streak/i);
+  expect(words).toContain('Warm Days II');
   expect(words).toContain('7 days warm, your best yet');
   expect(words).toContain('7 days warm. One full brew a day keeps the kettle warm.');
   expect(words).toContain('7 days warm.');

@@ -1,0 +1,50 @@
+## BEFORE (61aba17) git grep -n 'Warm Streak' -- kettle (excl. review/)
+61aba17:kettle/docs/areas/progress.md:69:   fires exactly Warm Streak II; gift no longer counts toward "Earn N leaves". Added
+61aba17:kettle/src/progress/badges.ts:18:  { id: 'warm-streak', title: 'Warm Streak', description: 'Keep a {n}-day warm streak', tiers: [3, 7, 14, 30, 100] },
+61aba17:kettle/src/progress/engine.test.ts:94:  it('streak milestone at 7 days earns a Tea Cozy and the Warm Streak II badge', () => {
+61aba17:kettle/src/progress/seed.ts:19: *               one badge: Warm Streak II
+61aba17:kettle/src/progress/seed.ts:247:  // tier, so the celebration shows exactly one badge (Warm Streak II).
+61aba17:kettle/src/screens/done/rank.test.ts:59:  const badge = (id: string, tier: number) => ({ id, tier, title: id === 'warm-streak' ? 'Warm Streak' : 'Weekend Warmth', description: `about ${id} ${tier}` });
+61aba17:kettle/src/screens/done/rank.test.ts:91:    expect(k.secondary.filter((p) => p.kind === 'badge').map((p) => p.text)).toEqual(['Badge: Weekend Warmth', 'Badge: Warm Streak II']);
+61aba17:kettle/src/screens/done/rank.test.ts:103:    expect(k.highlight?.pill?.text).toBe('Badge: Warm Streak II');
+61aba17:kettle/src/screens/done/summary.ts:14: * shown and in what a screen reader hears. (A badge keeps its catalogue name, e.g. "Warm Streak", as in Stats.)
+61aba17:kettle/tests/w2-summary.spec.ts:14: *   speaks of warm days, never of a "streak" (only a badge's catalogue name, "Warm Streak", is data).
+61aba17:kettle/tests/w2-summary.spec.ts:246:  for (const f of ['+68 leaves', 'Goal met · 37/30 min', '7 days warm, your best yet', 'Tea Cozy earned', '2 recipes done', 'Badge: Warm Streak II', 'Badge: Weekend Warmth'])
+61aba17:kettle/tests/w2-summary.spec.ts:335:  const own = words.replace(/Warm Streak/g, '');
+
+## AFTER (HEAD) git grep -n 'Warm Streak' -- kettle (excl. review/)
+HEAD:kettle/docs/areas/progress.md:69:   fires exactly Warm Streak II; gift no longer counts toward "Earn N leaves". Added
+HEAD:kettle/src/progress/engine.test.ts:104:  it('a profile stored before the rename (report says "Warm Streak") reads back as Warm Days; ids and data unchanged', () => {
+HEAD:kettle/src/progress/engine.test.ts:110:      JSON.stringify({ ...res.data, lastReport: { ...report, badges: report.badges.map((b) => (b.id === 'warm-streak' ? { ...b, title: 'Warm Streak' } : b)) } }),
+HEAD:kettle/src/progress/validate.ts:168: * renamed (Warm Streak → Warm Days) shows the catalogue's current name: resolved from the id on read, on a
+
+## AFTER (HEAD) git grep -n 'Warm Days' -- kettle (excl. review/)
+HEAD:kettle/src/progress/badges.ts:18:  { id: 'warm-streak', title: 'Warm Days', description: 'Keep a {n}-day warm streak', tiers: [3, 7, 14, 30, 100] },
+HEAD:kettle/src/progress/engine.test.ts:95:  it('streak milestone at 7 days earns a Tea Cozy and the Warm Days II badge', () => {
+HEAD:kettle/src/progress/engine.test.ts:101:    expect(r.badges.find((b) => b.id === 'warm-streak')).toMatchObject({ tier: 2, title: 'Warm Days' });
+HEAD:kettle/src/progress/engine.test.ts:104:  it('a profile stored before the rename (report says "Warm Streak") reads back as Warm Days; ids and data unchanged', () => {
+HEAD:kettle/src/progress/engine.test.ts:115:    expect(data.lastReport!.badges).toEqual([{ id: 'warm-streak', tier: 2, title: 'Warm Days', description: 'Keep a 7-day warm streak' }]);
+HEAD:kettle/src/progress/seed.ts:19: *               one badge: Warm Days II
+HEAD:kettle/src/progress/seed.ts:247:  // tier, so the celebration shows exactly one badge (Warm Days II).
+HEAD:kettle/src/progress/validate.ts:168: * renamed (Warm Streak → Warm Days) shows the catalogue's current name: resolved from the id on read, on a
+HEAD:kettle/src/screens/done/rank.test.ts:59:  const badge = (id: string, tier: number) => ({ id, tier, title: id === 'warm-streak' ? 'Warm Days' : 'Weekend Warmth', description: `about ${id} ${tier}` });
+HEAD:kettle/src/screens/done/rank.test.ts:91:    expect(k.secondary.filter((p) => p.kind === 'badge').map((p) => p.text)).toEqual(['Badge: Weekend Warmth', 'Badge: Warm Days II']);
+HEAD:kettle/src/screens/done/rank.test.ts:103:    expect(k.highlight?.pill?.text).toBe('Badge: Warm Days II');
+HEAD:kettle/src/screens/done/summary.ts:14: * shown and in what a screen reader hears. (A badge keeps its catalogue name, e.g. "Warm Days", as in Stats.)
+HEAD:kettle/tests/w2-summary.spec.ts:14: *   speaks of warm days, never of a "streak" (W2R3: the badge is "Warm Days" too, so nothing is exempt).
+HEAD:kettle/tests/w2-summary.spec.ts:246:  for (const f of ['+68 leaves', 'Goal met · 37/30 min', '7 days warm, your best yet', 'Tea Cozy earned', '2 recipes done', 'Badge: Warm Days II', 'Badge: Weekend Warmth'])
+HEAD:kettle/tests/w2-summary.spec.ts:334:  // W2R3: the badge is "Warm Days" (Stats › Badges uses the same name), so no word on the summary says "streak".
+HEAD:kettle/tests/w2-summary.spec.ts:336:  expect(words).toContain('Warm Days II');
+
+## id 'warm-streak' occurrences BEFORE vs AFTER (must be equal)
+before: 20  after: 23
+-  { id: 'warm-streak', title: 'Warm Streak', description: 'Keep a {n}-day warm streak', tiers: [3, 7, 14, 30, 100] },
++  { id: 'warm-streak', title: 'Warm Days', description: 'Keep a {n}-day warm streak', tiers: [3, 7, 14, 30, 100] },
+-    expect(r.badges.find((b) => b.id === 'warm-streak')).toMatchObject({ tier: 2 });
++    expect(r.badges.find((b) => b.id === 'warm-streak')).toMatchObject({ tier: 2, title: 'Warm Days' });
++      JSON.stringify({ ...res.data, lastReport: { ...report, badges: report.badges.map((b) => (b.id === 'warm-streak' ? { ...b, title: 'Warm Streak' } : b)) } }),
++    expect(data.lastReport!.badges).toEqual([{ id: 'warm-streak', tier: 2, title: 'Warm Days', description: 'Keep a 7-day warm streak' }]);
++    expect(data.badges['warm-streak'].tier).toBe(2);
+-  const badge = (id: string, tier: number) => ({ id, tier, title: id === 'warm-streak' ? 'Warm Streak' : 'Weekend Warmth', description: `about ${id} ${tier}` });
++  const badge = (id: string, tier: number) => ({ id, tier, title: id === 'warm-streak' ? 'Warm Days' : 'Weekend Warmth', description: `about ${id} ${tier}` });
+non-test warm-streak ids: before 5 after 5

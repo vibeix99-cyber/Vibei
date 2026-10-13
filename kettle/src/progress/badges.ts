@@ -15,7 +15,7 @@ export interface BadgeDef {
 
 export const BADGES: BadgeDef[] = [
   { id: 'first-brew', title: 'First Brew', description: 'Finish your first full brew', tiers: [1] },
-  { id: 'warm-streak', title: 'Warm Streak', description: 'Keep a {n}-day warm streak', tiers: [3, 7, 14, 30, 100] },
+  { id: 'warm-streak', title: 'Warm Days', description: 'Keep a {n}-day warm streak', tiers: [3, 7, 14, 30, 100] },
   { id: 'leaf-collector', title: 'Leaf Collector', description: 'Collect {n} leaves', tiers: [100, 500, 1500, 5000, 15000] },
   { id: 'deep-steep', title: 'Deep Steep', description: 'Finish {n} deep steeps (brews of 50+ minutes)', tiers: [1, 5, 20, 50, 100] },
   { id: 'morning-dew', title: 'Morning Dew', description: 'Finish {n} brews started before 9 am', tiers: [1, 5, 15, 40, 100] },
@@ -29,3 +29,12 @@ export const BADGES: BadgeDef[] = [
 ];
 
 export const BADGE_BY_ID: Record<string, BadgeDef> = Object.fromEntries(BADGES.map((b) => [b.id, b]));
+
+/**
+ * A badge's display name always comes from the catalogue, by id. Anything that keeps a copy of the
+ * name (the persisted `lastReport`, written before a rename) shows the current one; an id the
+ * catalogue doesn't know keeps the name it was stored with. Ids, tiers and descriptions are untouched.
+ */
+export function badgeTitle(id: string, stored: string): string {
+  return Object.prototype.hasOwnProperty.call(BADGE_BY_ID, id) ? BADGE_BY_ID[id].title : stored;
+}
