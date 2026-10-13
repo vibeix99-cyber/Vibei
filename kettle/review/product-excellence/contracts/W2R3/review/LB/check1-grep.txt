@@ -1,0 +1,159 @@
+### BASE 61aba17: git grep -n 'Warm Streak\|Warm Days' -- kettle/src kettle/tests
+61aba17:kettle/src/progress/badges.ts:18:  { id: 'warm-streak', title: 'Warm Streak', description: 'Keep a {n}-day warm streak', tiers: [3, 7, 14, 30, 100] },
+61aba17:kettle/src/progress/engine.test.ts:94:  it('streak milestone at 7 days earns a Tea Cozy and the Warm Streak II badge', () => {
+61aba17:kettle/src/progress/seed.ts:19: *               one badge: Warm Streak II
+61aba17:kettle/src/progress/seed.ts:247:  // tier, so the celebration shows exactly one badge (Warm Streak II).
+61aba17:kettle/src/screens/done/rank.test.ts:59:  const badge = (id: string, tier: number) => ({ id, tier, title: id === 'warm-streak' ? 'Warm Streak' : 'Weekend Warmth', description: `about ${id} ${tier}` });
+61aba17:kettle/src/screens/done/rank.test.ts:91:    expect(k.secondary.filter((p) => p.kind === 'badge').map((p) => p.text)).toEqual(['Badge: Weekend Warmth', 'Badge: Warm Streak II']);
+61aba17:kettle/src/screens/done/rank.test.ts:103:    expect(k.highlight?.pill?.text).toBe('Badge: Warm Streak II');
+61aba17:kettle/src/screens/done/summary.ts:14: * shown and in what a screen reader hears. (A badge keeps its catalogue name, e.g. "Warm Streak", as in Stats.)
+61aba17:kettle/tests/w2-summary.spec.ts:14: *   speaks of warm days, never of a "streak" (only a badge's catalogue name, "Warm Streak", is data).
+61aba17:kettle/tests/w2-summary.spec.ts:246:  for (const f of ['+68 leaves', 'Goal met · 37/30 min', '7 days warm, your best yet', 'Tea Cozy earned', '2 recipes done', 'Badge: Warm Streak II', 'Badge: Weekend Warmth'])
+61aba17:kettle/tests/w2-summary.spec.ts:335:  const own = words.replace(/Warm Streak/g, '');
+
+### TRIAL HEAD (e1ddf9d): grep -rn 'Warm Streak\|Warm Days' kettle/src kettle/tests
+kettle/src/progress/engine.test.ts:95:  it('streak milestone at 7 days earns a Tea Cozy and the Warm Days II badge', () => {
+kettle/src/progress/engine.test.ts:101:    expect(r.badges.find((b) => b.id === 'warm-streak')).toMatchObject({ tier: 2, title: 'Warm Days' });
+kettle/src/progress/engine.test.ts:104:  it('a profile stored before the rename (report says "Warm Streak") reads back as Warm Days; ids and data unchanged', () => {
+kettle/src/progress/engine.test.ts:110:      JSON.stringify({ ...res.data, lastReport: { ...report, badges: report.badges.map((b) => (b.id === 'warm-streak' ? { ...b, title: 'Warm Streak' } : b)) } }),
+kettle/src/progress/engine.test.ts:115:    expect(data.lastReport!.badges).toEqual([{ id: 'warm-streak', tier: 2, title: 'Warm Days', description: 'Keep a 7-day warm streak' }]);
+kettle/src/progress/validate.ts:168: * renamed (Warm Streak → Warm Days) shows the catalogue's current name: resolved from the id on read, on a
+kettle/src/progress/seed.ts:19: *               one badge: Warm Days II
+kettle/src/progress/seed.ts:247:  // tier, so the celebration shows exactly one badge (Warm Days II).
+kettle/src/progress/badges.ts:18:  { id: 'warm-streak', title: 'Warm Days', description: 'Keep a {n}-day warm streak', tiers: [3, 7, 14, 30, 100] },
+kettle/src/screens/done/rank.test.ts:59:  const badge = (id: string, tier: number) => ({ id, tier, title: id === 'warm-streak' ? 'Warm Days' : 'Weekend Warmth', description: `about ${id} ${tier}` });
+kettle/src/screens/done/rank.test.ts:91:    expect(k.secondary.filter((p) => p.kind === 'badge').map((p) => p.text)).toEqual(['Badge: Weekend Warmth', 'Badge: Warm Days II']);
+kettle/src/screens/done/rank.test.ts:103:    expect(k.highlight?.pill?.text).toBe('Badge: Warm Days II');
+kettle/src/screens/done/summary.ts:14: * shown and in what a screen reader hears. (A badge keeps its catalogue name, e.g. "Warm Days", as in Stats.)
+kettle/tests/w2-summary.spec.ts:14: *   speaks of warm days, never of a "streak" (W2R3: the badge is "Warm Days" too, so nothing is exempt).
+kettle/tests/w2-summary.spec.ts:246:  for (const f of ['+68 leaves', 'Goal met · 37/30 min', '7 days warm, your best yet', 'Tea Cozy earned', '2 recipes done', 'Badge: Warm Days II', 'Badge: Weekend Warmth'])
+kettle/tests/w2-summary.spec.ts:334:  // W2R3: the badge is "Warm Days" (Stats › Badges uses the same name), so no word on the summary says "streak".
+kettle/tests/w2-summary.spec.ts:336:  expect(words).toContain('Warm Days II');
+
+### case-insensitive variants (warm streak|warm days) in kettle/src kettle/tests, trial
+kettle/src/ui/WeekStrip.tsx:2: * Warm-streak week row: 7 day dots with labels. OWNER: design-system area.
+kettle/src/ui/Gallery.tsx:193:            <p className="t-overline">Warm streak</p>
+kettle/src/app/Rail.tsx:2: * Desktop right rail (≥ 1200px): warm streak, daily goal, cozy level, today's recipes.
+kettle/src/app/Rail.tsx:66:              'Start a warm streak'
+kettle/src/app/Rail.tsx:233:        <span className={s.miniStat} title="Warm streak">
+kettle/src/app/Rail.tsx:236:          <span className="sr-only">{streak.current} {word(streak.current, 'day')} warm streak</span>
+kettle/src/progress/engine.test.ts:119:    expect(data.badges['warm-streak'].tier).toBe(2);
+kettle/src/progress/seed.test.ts:89:    expect(r.badges.map((b) => `${b.id}:${b.tier}`)).toEqual(['warm-streak:2']);
+kettle/src/progress/index.ts:3: * Leaves, cozy levels, warm streak + Tea Cozies, daily goal, today's recipes,
+kettle/src/progress/streak.ts:2: * Warm streak engine — a pure replay of history, so it is always consistent
+kettle/src/progress/streak.ts:8: *  - The streak counts warm days in a row. Today is "pending" until you brew:
+kettle/src/progress/streak.ts:11: *    7 warm days, max 2 held. A missed day while the streak is alive and a
+kettle/src/progress/streak.ts:25:export function warmDays(sessions: SessionRecord[]): Set<DayKey> {
+kettle/src/progress/streak.ts:32:  const warm = sessions instanceof Set ? sessions : warmDays(sessions);
+kettle/src/progress/badgeEngine.ts:53:    'warm-streak': inp.bestStreak,
+kettle/src/progress/store.ts:27:import { daysToNextCozy, localeWeekStart, MAX_COZIES, streakTimeline, warmDays } from './streak';
+kettle/src/progress/store.ts:269:/** Current and best warm streak (Tea Cozies included). */
+kettle/src/progress/store.ts:289:    const t = streakTimeline(warmDays(sessions), today);
+kettle/src/progress/store.ts:359:    const best = streakTimeline(warmDays(sessions), today).best;
+kettle/src/progress/badges.test.ts:15:      'warm-streak',
+kettle/src/progress/badges.test.ts:35:    const def = BADGE_BY_ID['warm-streak'];
+kettle/src/progress/badges.test.ts:68:    const first = evaluateBadges({}, { 'warm-streak': 8 }, 1000);
+kettle/src/progress/badges.test.ts:69:    expect(first.awards).toEqual([expect.objectContaining({ id: 'warm-streak', tier: 2, description: 'Keep a 7-day warm streak' })]);
+kettle/src/progress/badges.test.ts:70:    expect(first.badges['warm-streak']).toEqual({ tier: 2, unlockedAt: [1000, 1000] });
+kettle/src/progress/badges.test.ts:71:    const again = evaluateBadges(first.badges, { 'warm-streak': 8 }, 2000);
+kettle/src/progress/badges.test.ts:73:    const down = evaluateBadges(first.badges, { 'warm-streak': 1 }, 3000);
+kettle/src/progress/badges.test.ts:74:    expect(down.badges['warm-streak'].tier).toBe(2);
+kettle/src/progress/badges.test.ts:75:    const up = evaluateBadges(first.badges, { 'warm-streak': 14 }, 4000);
+kettle/src/progress/badges.test.ts:76:    expect(up.badges['warm-streak'].unlockedAt).toEqual([1000, 1000, 4000]);
+kettle/src/progress/badges.test.ts:88:  it('warm streak badge follows the best streak including cozy-bridged runs', () => {
+kettle/src/progress/engine.ts:14:import { milestoneFor, streakTimeline, weekStrip, warmDays } from './streak';
+kettle/src/progress/engine.ts:328:  const cozies = streakTimeline(warmDays(data.sessions), today).cozies;
+kettle/src/progress/streak.test.ts:10:describe('warm streak', () => {
+kettle/src/progress/streak.test.ts:44:  it('earns a Tea Cozy every 7 warm days (max 2) and spends it on a missed day', () => {
+kettle/src/progress/streak.test.ts:45:    // 7 warm days → 1 cozy; miss one day → cozy used, streak survives; 3 more days.
+kettle/src/progress/types.ts:165:  /** The run is the current, still-warm streak. */
+kettle/src/progress/types.ts:307:  /** Warm-streak runs for the calendar (oldest first). */
+kettle/src/art/Badge.tsx:385:  'warm-streak': {
+kettle/src/screens/stats/StreakCard.tsx:2: * Warm streak card: current streak, Tea Cozies, and a month calendar where
+kettle/src/screens/stats/StreakCard.tsx:3: * consecutive warm days join into one pill (cozy days bridge the pill).
+kettle/src/screens/stats/StreakCard.tsx:48:  if (!alive) line = streak.best > 0 ? 'One brew today warms the kettle again.' : 'Finish a brew to start your warm streak.';
+kettle/src/screens/stats/StreakCard.tsx:100:        <caption className="sr-only">Warm streak calendar for {monthName}</caption>
+kettle/src/screens/stats/Badges.tsx:18:  'warm-streak': ['day', 'days'],
+kettle/src/screens/done/rank.test.ts:86:      badges: [badge('weekend-warmth', 1), badge('warm-streak', 2)],
+kettle/src/screens/done/rank.test.ts:94:  it('a badge beats a Tea Cozy; the warm-days badge says what was reached, in warm days (same tier threshold)', () => {
+kettle/src/screens/done/rank.test.ts:99:      badges: [badge('weekend-warmth', 1), badge('warm-streak', 2)],
+kettle/src/screens/done/rank.test.ts:104:    // tier II of "Keep a {n}-day warm streak" is 7 days (progress/badges.ts)
+kettle/src/screens/done/rank.test.ts:105:    expect(k.highlight?.note).toBe('7 warm days in a row');
+kettle/src/screens/done/rank.test.ts:106:    // Warm days that are not a best are routine: they stay in the compact group.
+kettle/src/screens/done/rank.test.ts:134:  it('the best warm days are highlighted with what keeps them going', () => {
+kettle/src/screens/done/rank.test.ts:160:describe('words — Kettle’s own “warm days”, never “streak” (W2R2)', () => {
+kettle/src/screens/done/rank.test.ts:163:    // Every streak-related reward at once: the most warm days yet, a Tea Cozy, a badge (catalogue names are data).
+kettle/src/screens/done/rank.test.ts:185:    expect(m.pills.find((p) => p.kind === 'cozy')?.sr).toBe('You earned a Tea Cozy: it covers one missed day, so your warm days keep going');
+kettle/src/screens/done/Summary.tsx:301:            <Details model={model} warmDays={r.streak.after} />
+kettle/src/screens/done/Summary.tsx:417:function Details({ model, warmDays }: { model: ReturnType<typeof buildSummary>; warmDays: number }) {
+kettle/src/screens/done/Summary.tsx:453:          {warmNote(warmDays)}
+kettle/src/screens/done/summary.ts:11: *   4. every other reward, compact — leaves, today's goal, warm days, recipes, level, badges;
+kettle/src/screens/done/summary.ts:13: * Words: Kettle's own "warm days" language ("23 days warm", "kept the kettle warm"), never "streak", in what is
+kettle/src/screens/done/summary.ts:59:export const COZY_MEANS = 'Covers one missed day, so your warm days keep going.';
+kettle/src/screens/done/summary.ts:60:/** The arithmetic's closing line: the warm days so far, and what keeps them going. */
+kettle/src/screens/done/summary.ts:82:  if (st.cozyEarned) pills.push({ kind: 'cozy', text: 'Tea Cozy earned', sr: 'You earned a Tea Cozy: it covers one missed day, so your warm days keep going' });
+kettle/src/screens/done/summary.ts:133:/** Milestones, biggest first: a new object in the nook, a new cozy level, the most warm days yet, a badge, a Tea Cozy. */
+kettle/src/screens/done/summary.ts:151:/** Which milestone a pill reports, if any (routine progress — leaves, the goal, a warm streak, recipes — is none). */
+kettle/src/screens/done/summary.ts:195:      // The badge's own line, except the warm-days badge, whose catalogue line ("Keep a 7-day warm streak") reads
+kettle/src/screens/done/summary.ts:196:      // as a to-do: on the summary it says what was reached, in warm days. Same threshold, same tier.
+kettle/src/screens/done/summary.ts:197:      if (pill.id === 'warm-streak') {
+kettle/src/screens/settings/SettingsScreen.tsx:105:    <ListGroup title="Daily goal" footer={known ? 'Your warm streak only needs one brew a day. The goal is just for you.' : `Custom goal: ${goal} min a day.`}>
+kettle/src/screens/settings/DataSection.tsx:216:          This clears your brews, warm streak, leaves, recipes and settings on this device. <strong>It can’t be undone.</strong>
+kettle/src/screens/home/StatusBar.tsx:1:/** Top status bar on Today: warm streak · leaves · cozy level, each opening a detail sheet. */
+kettle/tests/w2-summary.spec.ts:323:test('warm days, never "streak": what the big day summary shows and what a screen reader hears', async ({ browser, baseURL }) => {
+kettle/tests/statusbar.spec.ts:2: * Today's status bar (I04 F6 + integration fix r2): the three stats (warm days · leaves · level) stay on one row on
+kettle/tests/integrity.spec.ts:706:/** The profile card in Settings: level, leaves, warm days, as a person reads them. */
+
+### warm-streak id: BASE
+61aba17:kettle/src/art/Badge.tsx:385:  'warm-streak': {
+61aba17:kettle/src/progress/badgeEngine.ts:53:    'warm-streak': inp.bestStreak,
+61aba17:kettle/src/progress/badges.test.ts:15:      'warm-streak',
+61aba17:kettle/src/progress/badges.test.ts:35:    const def = BADGE_BY_ID['warm-streak'];
+61aba17:kettle/src/progress/badges.test.ts:68:    const first = evaluateBadges({}, { 'warm-streak': 8 }, 1000);
+61aba17:kettle/src/progress/badges.test.ts:69:    expect(first.awards).toEqual([expect.objectContaining({ id: 'warm-streak', tier: 2, description: 'Keep a 7-day warm streak' })]);
+61aba17:kettle/src/progress/badges.test.ts:70:    expect(first.badges['warm-streak']).toEqual({ tier: 2, unlockedAt: [1000, 1000] });
+61aba17:kettle/src/progress/badges.test.ts:71:    const again = evaluateBadges(first.badges, { 'warm-streak': 8 }, 2000);
+61aba17:kettle/src/progress/badges.test.ts:73:    const down = evaluateBadges(first.badges, { 'warm-streak': 1 }, 3000);
+61aba17:kettle/src/progress/badges.test.ts:74:    expect(down.badges['warm-streak'].tier).toBe(2);
+61aba17:kettle/src/progress/badges.test.ts:75:    const up = evaluateBadges(first.badges, { 'warm-streak': 14 }, 4000);
+61aba17:kettle/src/progress/badges.test.ts:76:    expect(up.badges['warm-streak'].unlockedAt).toEqual([1000, 1000, 4000]);
+61aba17:kettle/src/progress/badges.ts:18:  { id: 'warm-streak', title: 'Warm Streak', description: 'Keep a {n}-day warm streak', tiers: [3, 7, 14, 30, 100] },
+61aba17:kettle/src/progress/engine.test.ts:100:    expect(r.badges.find((b) => b.id === 'warm-streak')).toMatchObject({ tier: 2 });
+61aba17:kettle/src/progress/seed.test.ts:89:    expect(r.badges.map((b) => `${b.id}:${b.tier}`)).toEqual(['warm-streak:2']);
+61aba17:kettle/src/screens/done/rank.test.ts:59:  const badge = (id: string, tier: number) => ({ id, tier, title: id === 'warm-streak' ? 'Warm Streak' : 'Weekend Warmth', description: `about ${id} ${tier}` });
+61aba17:kettle/src/screens/done/rank.test.ts:86:      badges: [badge('weekend-warmth', 1), badge('warm-streak', 2)],
+61aba17:kettle/src/screens/done/rank.test.ts:99:      badges: [badge('weekend-warmth', 1), badge('warm-streak', 2)],
+61aba17:kettle/src/screens/done/summary.ts:197:      if (pill.id === 'warm-streak') {
+61aba17:kettle/src/screens/stats/Badges.tsx:18:  'warm-streak': ['day', 'days'],
+### warm-streak id: TRIAL
+kettle/src/progress/engine.test.ts:101:    expect(r.badges.find((b) => b.id === 'warm-streak')).toMatchObject({ tier: 2, title: 'Warm Days' });
+kettle/src/progress/engine.test.ts:110:      JSON.stringify({ ...res.data, lastReport: { ...report, badges: report.badges.map((b) => (b.id === 'warm-streak' ? { ...b, title: 'Warm Streak' } : b)) } }),
+kettle/src/progress/engine.test.ts:115:    expect(data.lastReport!.badges).toEqual([{ id: 'warm-streak', tier: 2, title: 'Warm Days', description: 'Keep a 7-day warm streak' }]);
+kettle/src/progress/engine.test.ts:119:    expect(data.badges['warm-streak'].tier).toBe(2);
+kettle/src/progress/seed.test.ts:89:    expect(r.badges.map((b) => `${b.id}:${b.tier}`)).toEqual(['warm-streak:2']);
+kettle/src/progress/badgeEngine.ts:53:    'warm-streak': inp.bestStreak,
+kettle/src/progress/badges.ts:18:  { id: 'warm-streak', title: 'Warm Days', description: 'Keep a {n}-day warm streak', tiers: [3, 7, 14, 30, 100] },
+kettle/src/progress/badges.test.ts:15:      'warm-streak',
+kettle/src/progress/badges.test.ts:35:    const def = BADGE_BY_ID['warm-streak'];
+kettle/src/progress/badges.test.ts:68:    const first = evaluateBadges({}, { 'warm-streak': 8 }, 1000);
+kettle/src/progress/badges.test.ts:69:    expect(first.awards).toEqual([expect.objectContaining({ id: 'warm-streak', tier: 2, description: 'Keep a 7-day warm streak' })]);
+kettle/src/progress/badges.test.ts:70:    expect(first.badges['warm-streak']).toEqual({ tier: 2, unlockedAt: [1000, 1000] });
+kettle/src/progress/badges.test.ts:71:    const again = evaluateBadges(first.badges, { 'warm-streak': 8 }, 2000);
+kettle/src/progress/badges.test.ts:73:    const down = evaluateBadges(first.badges, { 'warm-streak': 1 }, 3000);
+kettle/src/progress/badges.test.ts:74:    expect(down.badges['warm-streak'].tier).toBe(2);
+kettle/src/progress/badges.test.ts:75:    const up = evaluateBadges(first.badges, { 'warm-streak': 14 }, 4000);
+kettle/src/progress/badges.test.ts:76:    expect(up.badges['warm-streak'].unlockedAt).toEqual([1000, 1000, 4000]);
+kettle/src/art/Badge.tsx:385:  'warm-streak': {
+kettle/src/screens/stats/Badges.tsx:18:  'warm-streak': ['day', 'days'],
+kettle/src/screens/done/rank.test.ts:59:  const badge = (id: string, tier: number) => ({ id, tier, title: id === 'warm-streak' ? 'Warm Days' : 'Weekend Warmth', description: `about ${id} ${tier}` });
+kettle/src/screens/done/rank.test.ts:86:      badges: [badge('weekend-warmth', 1), badge('warm-streak', 2)],
+kettle/src/screens/done/rank.test.ts:99:      badges: [badge('weekend-warmth', 1), badge('warm-streak', 2)],
+kettle/src/screens/done/summary.ts:197:      if (pill.id === 'warm-streak') {
+
+### counts
+base src+tests warm-streak: 20
+trial src+tests warm-streak: 23
+base src only: 20
+trial src only: 23
+base src non-test: 5
+trial src non-test: 5

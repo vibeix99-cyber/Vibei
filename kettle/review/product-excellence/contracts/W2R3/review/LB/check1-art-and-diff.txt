@@ -1,0 +1,59 @@
+### git diff 61aba17 HEAD --stat -- kettle/src/art kettle/src/screens/stats kettle/src/progress/badgeEngine.ts (empty = unchanged)
+exit/lines: 0
+
+### git diff 61aba17 HEAD --name-only -- kettle/src kettle/tests kettle/public kettle/index.html kettle/art-src kettle/docs kettle/scripts kettle/package.json kettle/vite.config.ts
+kettle/src/progress/badges.ts
+kettle/src/progress/engine.test.ts
+kettle/src/progress/seed.ts
+kettle/src/progress/validate.ts
+kettle/src/screens/done/rank.test.ts
+kettle/src/screens/done/summary.ts
+kettle/tests/w2-summary.spec.ts
+
+### tree hashes: kettle/src base vs trial
+4556926237da740e9015ca24dcb335338873eb8b
+f40b3063e01c2765d67b31d3f7d0e28a3b0a7805
+f40b3063e01c2765d67b31d3f7d0e28a3b0a7805
+### tree hashes: kettle/src/art base vs trial
+9a0ebbf154c23c2c50e76c05eea680568b24b074
+9a0ebbf154c23c2c50e76c05eea680568b24b074
+### tree hashes: kettle/src/screens/stats base vs trial
+f50b0e31e78cddff2b89b73706ed3f1c14964f6f
+f50b0e31e78cddff2b89b73706ed3f1c14964f6f
+
+### Badge art map 'warm-streak' entry in src/art/Badge.tsx (trial) and blob equality
+495959fe470c7a233e4c95ed811c6efb92af6809
+495959fe470c7a233e4c95ed811c6efb92af6809
+      );
+    },
+  },
+
+  /* Stamina & goals — shields */
+  'warm-streak': {
+    shape: 'shield',
+    field: '#F7A064',
+    hero: ({ u, n, locked }) => {
+      const body = 'M-15 -7 H13 V8 C13 16 8 20 0 20 H-2 C-10 20 -15 16 -15 8 Z';
+      const digits = !locked && n != null ? String(n) : '';
+      return (
+        <g transform="translate(1 1) scale(1.1)">
+
+### whole-repo-kettle grep (trial, excluding node_modules, dist, review, .tmp) for 'Warm Streak'
+kettle/src/progress/engine.test.ts:104:  it('a profile stored before the rename (report says "Warm Streak") reads back as Warm Days; ids and data unchanged', () => {
+kettle/src/progress/engine.test.ts:110:      JSON.stringify({ ...res.data, lastReport: { ...report, badges: report.badges.map((b) => (b.id === 'warm-streak' ? { ...b, title: 'Warm Streak' } : b)) } }),
+kettle/src/progress/validate.ts:168: * renamed (Warm Streak → Warm Days) shows the catalogue's current name: resolved from the id on read, on a
+kettle/docs/areas/progress.md:69:   fires exactly Warm Streak II; gift no longer counts toward "Earn N leaves". Added
+
+### git diff 61aba17 HEAD numstat src/tests
+10	1	kettle/src/progress/badges.ts
+26	2	kettle/src/progress/engine.test.ts
+2	2	kettle/src/progress/seed.ts
+15	1	kettle/src/progress/validate.ts
+3	3	kettle/src/screens/done/rank.test.ts
+1	1	kettle/src/screens/done/summary.ts
+5	5	kettle/tests/w2-summary.spec.ts
+
+### search outside kettle/ for the badge name in served files (public, index.html)
+### git status of trial worktree
+e1ddf9d TRIAL (local): integration + pe/w2r3-badge@2994005
+e1ddf9dee818b1e1c98ed35043fe71c4016ffceb

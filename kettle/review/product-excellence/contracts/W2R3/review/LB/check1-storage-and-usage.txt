@@ -1,0 +1,72 @@
+### all 'kettle:' storage keys in src (trial)
+src/app/flow.ts:78:'kettle:flow
+src/progress/portability.ts:262:'kettle:settings
+src/progress/store.ts:5:`kettle:progress
+src/screens/nook/NookScreen.tsx:28:'kettle:nook-hint-seen
+src/screens/nook/NookScreen.tsx:30:'kettle:nook-static-hint-seen
+src/timer/leader.ts:84:'kettle:leader
+src/timer/sync.ts:193:'kettle:timer
+src/timer/ticker.ts:47:'kettle:leader
+
+### uses of badge titles (BADGE_BY_ID / BADGES / .title near badge) in non-test src
+src/progress/portability.ts:87:  const progress = { ...pickData(useProgress.getState()), lastReport: null };
+src/progress/portability.ts:158:    backup = { ...backup, badges: { ...backup.badges, ...incoming.badges } };
+src/progress/portability.ts:197:    const badges = { ...rebuilt.badges };
+src/progress/portability.ts:198:    for (const src of [backup.badges, current.badges])
+src/progress/portability.ts:205:  data = { ...data, lastReport: null };
+src/progress/portability.ts:259:  const before = { progress: { ...pickData(useProgress.getState()), lastReport: null }, settings: exportableSettings() };
+src/progress/validate.ts:7:import { badgeTitle } from './badges';
+src/progress/validate.ts:143:  if (isObj(v.badges))
+src/progress/validate.ts:144:    for (const [k, b] of Object.entries(v.badges)) {
+src/progress/validate.ts:146:      if (bs) data.badges[k] = bs;
+src/progress/validate.ts:159:  // lastReport is transient UI state; keep it only if it looks like a report for a known session.
+src/progress/validate.ts:160:  if (isObj(v.lastReport) && isObj(v.lastReport.record) && data.sessions.some((s) => s.id === (v.lastReport as Obj).id)) {
+src/progress/validate.ts:161:    data.lastReport = withCatalogTitles(v.lastReport as unknown as NonNullable<ProgressData['lastReport']>);
+src/progress/validate.ts:171:function withCatalogTitles(report: NonNullable<ProgressData['lastReport']>): NonNullable<ProgressData['lastReport']> {
+src/progress/validate.ts:172:  if (!Array.isArray(report.badges)) return report;
+src/progress/validate.ts:175:    badges: report.badges.map((b) => (isObj(b) && typeof b.id === 'string' && typeof b.title === 'string' ? { ...b, title: badgeTitle(b.id, b.title) } : b)),
+src/progress/badgeEngine.ts:6:import { BADGES, type BadgeDef } from './badges';
+src/progress/badgeEngine.ts:88:  for (const def of BADGES) {
+src/progress/badgeEngine.ts:108:  return BADGES.map((def) => {
+src/progress/seed.ts:168:  useProgress.getState().load({ ...data, lastReport: null });
+src/progress/seed.ts:256:    const { badges } = evaluateBadges(data.badges, badgeMetrics({ sessions: data.sessions, ledger, leaves, bestStreak: best }), at);
+src/progress/store.ts:58:const DATA_KEYS: (keyof ProgressData)[] = ['sessions', 'ledger', 'leaves', 'cozies', 'dayGoals', 'quests', 'badges', 'tombstones', 'deletedAt', 'lastReport', 'rev', 'epoch'];
+src/progress/store.ts:118:        if (res.duplicate) return s.lastReport?.id === record.id ? s.lastReport : null;
+src/progress/store.ts:120:        set({ ...res.data, lastReport: completedFocus && res.report ? res.report : s.lastReport });
+src/progress/store.ts:140:        const lastReport = s.lastReport && s.lastReport.id === id ? { ...s.lastReport, record: apply(s.lastReport.record) } : s.lastReport;
+src/progress/store.ts:141:        set({ sessions, lastReport, rev: s.rev + 1 });
+src/progress/store.ts:154:            lastReport: s.lastReport?.id === id ? null : s.lastReport,
+src/progress/store.ts:197:        if (!get().lastReport) return;
+src/progress/store.ts:199:        if (get().lastReport) set({ lastReport: null, rev: get().rev + 1 });
+src/progress/store.ts:234:  for (const b of res.badges) emit('progress:badge', { id: b.id, tier: b.tier });
+src/progress/store.ts:238:    for (const b of res.badges) emit('ui:toast', { message: `New badge: ${b.title}${b.tier > 1 ? ` ${ROMAN[b.tier]}` : ''}`, tone: 'success' });
+src/progress/store.ts:356:  const badges = useProgress((s) => s.badges);
+src/progress/merge.ts:74:  for (const [id, badge] of Object.entries(a.badges)) if ((b.badges[id]?.tier ?? 0) < badge.tier) return true;
+src/progress/merge.ts:135:  for (const id of new Set([...Object.keys(older.badges), ...Object.keys(newer.badges)]))
+src/progress/merge.ts:136:    badges[id] = mergeBadge(older.badges[id], newer.badges[id]);
+src/progress/merge.ts:148:    lastReport: newer.lastReport && alive.has(newer.lastReport.id) ? newer.lastReport : null,
+src/progress/badges.ts:16:export const BADGES: BadgeDef[] = [
+src/progress/badges.ts:31:export const BADGE_BY_ID: Record<string, BadgeDef> = Object.fromEntries(BADGES.map((b) => [b.id, b]));
+src/progress/badges.ts:35: * name (the persisted `lastReport`, written before a rename) shows the current one; an id the
+src/progress/badges.ts:38:export function badgeTitle(id: string, stored: string): string {
+src/progress/badges.ts:39:  return Object.prototype.hasOwnProperty.call(BADGE_BY_ID, id) ? BADGE_BY_ID[id].title : stored;
+src/progress/engine.ts:40:    lastReport: null,
+src/progress/engine.ts:200:    ? evaluateBadges(data.badges, badgeMetrics({ sessions, ledger, leaves, bestStreak: tlAfter.best }), at)
+src/progress/engine.ts:201:    : { badges: data.badges, awards: [] };
+src/progress/types.ts:344:  lastReport: CompletionReport | null;
+src/art/Gallery.tsx:7:import { BADGES } from '@/progress/badges';
+src/art/Gallery.tsx:194:            {BADGES.map((b) => (
+src/art/Badge.tsx:18:import { BADGE_BY_ID } from '@/progress/badges';
+src/art/Badge.tsx:24:  /** Badge id from BADGES (unknown ids get a generic sparkle emblem). */
+src/art/Badge.tsx:573:  const def = BADGE_BY_ID[id];
+src/screens/focus/FocusScreen.tsx:69:  const hasReport = useProgress((p) => p.lastReport != null);
+src/screens/focus/FocusScreen.tsx:70:  const lastMs = useProgress((p) => p.lastReport?.record.focusedMs ?? null);
+src/screens/focus/FocusScreen.tsx:74:  const unrevealed = useProgress((p) => p.lastReport?.level?.unlocked);
+src/screens/done/Summary.tsx:72:  const liveReport = useProgress((p) => p.lastReport);
+src/screens/done/Summary.tsx:90:    if (useProgress.getState().lastReport) return;
+src/screens/done/Summary.tsx:95:      if (!useProgress.getState().lastReport && getRoute() === '/done') navigate('/', { replace: true });
+src/screens/done/summary.ts:16:import { BADGES, type CompletionReport } from '@/progress';
+src/screens/done/summary.ts:100:  for (const b of r.badges) pills.push({ kind: 'badge', text: `Badge: ${b.title}${b.tier > 1 ? ` ${roman(b.tier)}` : ''}`, id: b.id, tier: b.tier });
+src/screens/done/summary.ts:111:  if (r.badges.length) parts.push(r.badges.map((b) => `New badge: ${b.title}.`).join(' '));
+src/screens/done/summary.ts:198:        const n = BADGES.find((d) => d.id === pill.id)?.tiers[(pill.tier ?? 1) - 1];
+src/screens/done/summary.ts:201:      return r.badges.find((b) => b.id === pill.id && b.tier === pill.tier)?.description ?? '';
