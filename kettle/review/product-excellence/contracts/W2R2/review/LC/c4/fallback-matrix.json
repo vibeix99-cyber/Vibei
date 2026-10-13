@@ -127,5 +127,226 @@
     "len": "45572"
    }
   ]
+ },
+ "01-404-fulfil": {
+  "name": "01-404-fulfil",
+  "scene": "high",
+  "t0": "10:35:35",
+  "glbRequests": 5,
+  "glbResp": [
+   {
+    "status": 404,
+    "t": "10:35:37"
+   },
+   {
+    "status": 404,
+    "t": "10:35:42"
+   },
+   {
+    "status": 404,
+    "t": "10:36:09"
+   },
+   {
+    "status": 404,
+    "t": "10:36:12"
+   },
+   {
+    "status": 404,
+    "t": "10:36:15"
+   }
+  ],
+  "sceneReadyAt": "10:35:42",
+  "statusTimeline": [
+   {
+    "ms": 0,
+    "kind": "procedural",
+    "s": {
+     "state": "failed",
+     "reason": "Error: HTTP 404",
+     "ms": 13
+    }
+   }
+  ],
+  "extra": {
+   "before": 2,
+   "after": 5,
+   "kind": "procedural",
+   "status": {
+    "state": "failed",
+    "reason": "Error: HTTP 404",
+    "ms": 7
+   },
+   "hosts": [
+    {
+     "mode": "showcase",
+     "ready": "true",
+     "static": null,
+     "canvas": 1
+    }
+   ]
+  },
+  "finalKind": "procedural",
+  "finalStatus": {
+   "state": "failed",
+   "reason": "Error: HTTP 404",
+   "ms": 7
+  },
+  "hosts": [
+   {
+    "mode": "showcase",
+    "ready": "true",
+    "static": null,
+    "canvas": 1
+   }
+  ],
+  "facts": {
+   "kind": "procedural",
+   "model": false,
+   "shownParts": [],
+   "activeMorphs": [],
+   "rootScale": [
+    1.12,
+    1.12,
+    1.12
+   ],
+   "quality": "high"
+  },
+  "samples": {
+   "engSamples": 385,
+   "firstEngineAtMs": 6066,
+   "kindTransitions": [
+    {
+     "t": 6066,
+     "k": "procedural"
+    }
+   ],
+   "first3s": {
+    "n": 30,
+    "bad": 0,
+    "spanMs": 2934,
+    "maxGapMs": 240
+   },
+   "aroundSwap1_5s": null,
+   "whole": {
+    "n": 385,
+    "bad": 0,
+    "spanMs": 44334,
+    "maxGapMs": 6000
+   },
+   "badSamplesTotal": 0,
+   "staticSamples": 3,
+   "noCanvasSamples": 55
+  },
+  "console": [
+   {
+    "t": "10:35:35",
+    "type": "warning",
+    "text": "Service Worker registration blocked by Playwright"
+   },
+   {
+    "t": "10:35:35",
+    "type": "warning",
+    "text": "[pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')\n    at http://127.0.0.1:5453/assets/workbox-window.prod.es5-Bd17z0YL.js:2:2838"
+   },
+   {
+    "t": "10:35:36",
+    "type": "warning",
+    "text": "Service Worker registration blocked by Playwright"
+   },
+   {
+    "t": "10:35:36",
+    "type": "warning",
+    "text": "[pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')\n    at http://127.0.0.1:5453/assets/workbox-window.prod.es5-Bd17z0YL.js:2:2838"
+   },
+   {
+    "t": "10:35:37",
+    "type": "error",
+    "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   },
+   {
+    "t": "10:35:37",
+    "type": "info",
+    "text": "[chai3d] keeping the procedural Chai: Error: HTTP 404"
+   },
+   {
+    "t": "10:35:42",
+    "type": "error",
+    "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   },
+   {
+    "t": "10:35:42",
+    "type": "info",
+    "text": "[chai3d] keeping the procedural Chai: Error: HTTP 404"
+   },
+   {
+    "t": "10:36:09",
+    "type": "error",
+    "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   },
+   {
+    "t": "10:36:09",
+    "type": "info",
+    "text": "[chai3d] keeping the procedural Chai: Error: HTTP 404"
+   },
+   {
+    "t": "10:36:12",
+    "type": "error",
+    "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   },
+   {
+    "t": "10:36:12",
+    "type": "info",
+    "text": "[chai3d] keeping the procedural Chai: Error: HTTP 404"
+   },
+   {
+    "t": "10:36:15",
+    "type": "error",
+    "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   },
+   {
+    "t": "10:36:15",
+    "type": "info",
+    "text": "[chai3d] keeping the procedural Chai: Error: HTTP 404"
+   }
+  ],
+  "pageerrors": [],
+  "failedRequests": [],
+  "responses": [
+   {
+    "t": "10:35:37",
+    "status": 404,
+    "url": "http://127.0.0.1:5453/assets/chai-B-OZIeNI.glb",
+    "fromSW": false,
+    "len": "4"
+   },
+   {
+    "t": "10:35:42",
+    "status": 404,
+    "url": "http://127.0.0.1:5453/assets/chai-B-OZIeNI.glb",
+    "fromSW": false,
+    "len": "4"
+   },
+   {
+    "t": "10:36:09",
+    "status": 404,
+    "url": "http://127.0.0.1:5453/assets/chai-B-OZIeNI.glb",
+    "fromSW": false,
+    "len": "4"
+   },
+   {
+    "t": "10:36:12",
+    "status": 404,
+    "url": "http://127.0.0.1:5453/assets/chai-B-OZIeNI.glb",
+    "fromSW": false,
+    "len": "4"
+   },
+   {
+    "t": "10:36:15",
+    "status": 404,
+    "url": "http://127.0.0.1:5453/assets/chai-B-OZIeNI.glb",
+    "fromSW": false,
+    "len": "4"
+   }
+  ]
  }
 }
