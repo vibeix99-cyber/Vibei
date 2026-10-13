@@ -238,7 +238,7 @@ Control lacks P's summary change, so text differences are expected from that. Pr
 - the unlock card section text (`section[aria-label^="Cozy level"]`): identical in 12 of 12 captures in each pass;
 - `main` text differs in 12 of 12 captures in each pass, always in the same four places: control "keeps your streak warm for one missed day" vs trial "covers one missed day, so your warm days keep going"; control "Warm streak:" present vs trial absent; control "days." vs trial "days warm.";
 - the Nook page `main` text: identical in 6 of 6 per pass.
-- Layout consequence, pass 2, 390×844 (all three looks): the unlock card section is at y=460 on control and y=499 on trial (both `scrollY` 0, same 350×134 box), i.e. 39 CSS px lower on the trial. At 1440×900 the card box is at the same place on both sides (`[932,135,446,321]`).
+- Layout consequence, pass 2 (card canvas rectangle from `meta.json`, `scrollY` 0 on both sides): at 390×844 in all three looks the card canvas is at y=470 on control and y=509 on trial (same 152×114 box; the card section is at y=460 vs 499 in light), i.e. 39 CSS px lower on the trial. At 1440×900 in all three looks the card canvas is at the same place on both sides (`[942,145,426,239]`).
 
 ### 3.4 Pixel numbers (raw, no interpretation)
 
@@ -339,7 +339,7 @@ Script `scripts/check4.mjs`. One Chromium launch; six contexts in sequence (3 ro
 - Frame time: `engine.frame(1/30)` followed by a 1-pixel `gl.readPixels` (forces the CPU rasterizer to finish), loop stopped with `setRunning(false)`, 10 warm-up frames, then 60 timed frames.
 - Counters: `renderer.info` read from `window.__nook.renderer` (a private field in TypeScript, present at run time because `?debug` exposes the engine): `info.render.calls`, `info.render.triangles`, `info.memory.geometries`, `info.memory.textures`, `info.programs.length`.
 - JS heap: CDP `HeapProfiler.collectGarbage` twice, then `Runtime.getHeapUsage`.
-- Set 1, model first in each round, 19:06:55 to 19:08:33: `perf/check4-perf-low-390x844.json`. Set 2 (extra, procedural first in each round), 19:08:5x to 19:10:2x: `perf/check4b-perf-low-390x844-procedural-first.json`. Machine otherwise idle (load average at the start of each run in the tables).
+- Set 1, model first in each round, 19:06:55 to 19:08:33: `perf/check4-perf-low-390x844.json`. Set 2 (extra, procedural first in each round), 19:08:42 to 19:10:23: `perf/check4b-perf-low-390x844-procedural-first.json`. Machine otherwise idle (load average at the start of each run in the tables).
 
 Set 1 (model first), per run and per variant:
 
@@ -421,8 +421,8 @@ Rerun alone (the whole `a11y.spec.ts`, 11 tests, one worker, nothing else of min
 
 | Where | Command | Start | End | Result | 109 (the failed case) | Log |
 |---|---|---|---|---|---|---|
-| trial `:5460` | `KETTLE_PORT=5460 npx playwright test tests/a11y.spec.ts --project=chromium --workers=1` | 2026-10-13T19:37:13Z | still running at write time | not finished at write time | ✓   46.7s | `runs/rerun-a11y-trial-5460.txt` |
-| control `:5410` | `KETTLE_PORT=5410 npx playwright test tests/a11y.spec.ts --project=chromium --workers=1` | 2026-10-13T19:37:13Z | still running at write time | not finished at write time | ✓   45.0s | `runs/rerun-a11y-control-5410.txt` |
+| trial `:5460` | `KETTLE_PORT=5460 npx playwright test tests/a11y.spec.ts --project=chromium --workers=1` | 2026-10-13T19:37:13Z | 2026-10-13T19:46:03Z | 11 passed (8.8m) | ✓   46.7s | `runs/rerun-a11y-trial-5460.txt` |
+| control `:5410` | `KETTLE_PORT=5410 npx playwright test tests/a11y.spec.ts --project=chromium --workers=1` | 2026-10-13T19:37:13Z | 2026-10-13T19:46:03Z | 11 passed (8.8m) | ✓   45.0s | `runs/rerun-a11y-control-5410.txt` |
 
 
 ## 7. Commands and times (chronological)
@@ -437,7 +437,7 @@ Rerun alone (the whole `a11y.spec.ts`, 11 tests, one worker, nothing else of min
 | 18:58:46 to 19:06:49 | check 3 pass 1 (`capture3.mjs`, 2 processes, gate `--n 2`) |
 | 18:59:00 to 19:02:44 | check 5 (timer-harness, timer-app, pwa); PID 9738 killed |
 | 19:06:55 to 19:08:33 | check 4 set 1 (`check4.mjs`, model first) |
-| 19:08:5x to 19:10:2x | check 4 set 2 (procedural first) |
+| 19:08:42 to 19:10:23 | check 4 set 2 (procedural first) |
 | 19:10:41 to 19:11:28 | check 2 variant D (`check2.mjs --variants D`) |
 | 19:11:28 to 19:19:24 | check 3 pass 2 (quiet) |
 | 19:19:33 onward | check 6 (full chromium, gate `--n 2`); check 2 run 2 (A, B, C) in parallel |
@@ -445,7 +445,7 @@ Rerun alone (the whole `a11y.spec.ts`, 11 tests, one worker, nothing else of min
 
 ## 8. Incomplete, deviations and caveats
 
-- **Nothing in the brief was left unrun.** Checks 1 to 6 ran. Check 6 had one failure under load; the rerun alone is in section 6 (the file reruns may still have been finishing when this receipt was generated: the end time and counts in that table are from the logs).
+- **Nothing in the brief was left unrun.** Checks 1 to 6 ran. Check 6 had one failure (plus 7 not run after it in the same serial file); the whole `a11y.spec.ts` was rerun alone on the trial and on control (11/11 passed on each, section 6).
 - **"4 s" and "10 s" captures are not at 4 s and 10 s.** The CPU rasterizer keeps the page's main thread busy, so the screenshot starts later than the target. The actual start after `finish()` is recorded per capture (section 3.2 for ranges; `sinceT0Ms` in each `meta.json`). At the "4 s" capture the card host reported `ready=false` in 24 of 24 captures (both passes, both sides), so the card shows its pre-ready state there; at "10 s" it varied (section 3.2). Section 3.5 gives the card at "scene ready + 3.5 s" for light at both sizes (not for dark and night).
 - **Pixel numbers are confounded** by (a) the card host ready flag differing between the two sides at the same capture index, (b) live animation in the unlock card (loop not held in the 4 s and 10 s shots), (c) layout shifts from the summary text change at 390×844. The control-vs-control baseline in 3.5 shows how much two captures of the same build differ.
 - **DPR:** captures use 390×844 at DPR 2 and 1440×900 at DPR 1 (the maker used 3 and 2) to keep the CPU rasterizer time down; the same on both sides.

@@ -10,7 +10,7 @@ No source edits, commits, pushes or merges. No server started or stopped by me, 
 | Trial | `0f01c47` (integration `2f67fc1` + `pe/w2r2-chai3d@6fb2136`), worktree `/home/user/wt/w4tr-c`, kettle/src `4556926`. Dev `:5460` (debug API), preview `:5461` (pid 5047, `--outDir /tmp/rv7-servers/dist-w4tr-c`, `index.html` mtime 18:49:26) |
 | Control | `b377c62` (src `e0aebbf`), dev `:5410`, preview `:5430` (`dist-w3base`). Lacks P's summary change as well as C's change |
 | Machine | 4 CPUs, Chromium headless shell with SwiftShader (`--enable-unsafe-swiftshader --use-angle=swiftshader --ignore-gpu-blocklist`); `navigator.hardwareConcurrency` = 4; `settings.scene` = `auto` (default) |
-| Gate | every browser job via `slots.py run --lane LR --n <1|2>`; I killed one PID, my own (section 5) |
+| Gate | every browser job via `slots.py run --lane LR --n 1 or --n 2`; I killed one PID, my own (section 5) |
 | Server verification (read-only `verify.sh`, curl of served sources vs committed blobs) | `:5460` VERIFIED as `0f01c47` (src `4556926`); `:5410` VERIFIED as `b377c62` (src `e0aebbf`). Log: `runs/server-verify.txt`. The trial preview's built `chai-B-OZIeNI.glb` has sha256 `b401bc6c0fa9dd7a2abe27c135821634e7d1a4d9f9ba5263f50a436ceb463d7e`, and the same bytes come back over HTTP from `:5461` |
 | Scripts | `/home/user/wt/w4tr-c/kettle/.tmp/LR/` (git-ignored); copies in `scripts/` |
 | Frozen clock | `page.clock.install({time})` then `page.clock.resume()` in every script of mine (day `2026-10-11T07:40:00Z`; night look `2026-10-11T21:40:00Z`); service workers blocked in my scripts (so the console shows "Service Worker registration blocked by Playwright", excluded from the error columns) |
@@ -79,6 +79,8 @@ Files per configuration and side: `nook-3d.png`, `unlock-4s.png`, `unlock-10s.pn
 
 ### 3.1 Pass 2 (quiet): engine facts
 
+In all 12 trial groups (6 Nook, 6 unlock) of pass 2 the single `.glb` request was made while the route was Home (`#/`), before the Nook or the Done route was entered (field `hash` in each `meta.json`); no `.glb` request was made on `#/nook` or `#/done`. Control: 0 requests in all 12.
+
 {{include:summaries/captures-pass2-quiet.md}}
 
 ### 3.2 Pass 1 (contended): the same tables
@@ -97,7 +99,7 @@ Control lacks P's summary change, so text differences are expected from that. Pr
 - the unlock card section text (`section[aria-label^="Cozy level"]`): identical in 12 of 12 captures in each pass;
 - `main` text differs in 12 of 12 captures in each pass, always in the same four places: control "keeps your streak warm for one missed day" vs trial "covers one missed day, so your warm days keep going"; control "Warm streak:" present vs trial absent; control "days." vs trial "days warm.";
 - the Nook page `main` text: identical in 6 of 6 per pass.
-- Layout consequence, pass 2, 390×844 (all three looks): the unlock card section is at y=460 on control and y=499 on trial (both `scrollY` 0, same 350×134 box), i.e. 39 CSS px lower on the trial. At 1440×900 the card box is at the same place on both sides (`[932,135,446,321]`).
+- Layout consequence, pass 2 (card canvas rectangle from `meta.json`, `scrollY` 0 on both sides): at 390×844 in all three looks the card canvas is at y=470 on control and y=509 on trial (same 152×114 box; the card section is at y=460 vs 499 in light), i.e. 39 CSS px lower on the trial. At 1440×900 in all three looks the card canvas is at the same place on both sides (`[942,145,426,239]`).
 
 ### 3.4 Pixel numbers (raw, no interpretation)
 
@@ -125,7 +127,7 @@ Script `scripts/check4.mjs`. One Chromium launch; six contexts in sequence (3 ro
 - Frame time: `engine.frame(1/30)` followed by a 1-pixel `gl.readPixels` (forces the CPU rasterizer to finish), loop stopped with `setRunning(false)`, 10 warm-up frames, then 60 timed frames.
 - Counters: `renderer.info` read from `window.__nook.renderer` (a private field in TypeScript, present at run time because `?debug` exposes the engine): `info.render.calls`, `info.render.triangles`, `info.memory.geometries`, `info.memory.textures`, `info.programs.length`.
 - JS heap: CDP `HeapProfiler.collectGarbage` twice, then `Runtime.getHeapUsage`.
-- Set 1, model first in each round, 19:06:55 to 19:08:33: `perf/check4-perf-low-390x844.json`. Set 2 (extra, procedural first in each round), 19:08:5x to 19:10:2x: `perf/check4b-perf-low-390x844-procedural-first.json`. Machine otherwise idle (load average at the start of each run in the tables).
+- Set 1, model first in each round, 19:06:55 to 19:08:33: `perf/check4-perf-low-390x844.json`. Set 2 (extra, procedural first in each round), 19:08:42 to 19:10:23: `perf/check4b-perf-low-390x844-procedural-first.json`. Machine otherwise idle (load average at the start of each run in the tables).
 
 Set 1 (model first), per run and per variant:
 
@@ -160,7 +162,7 @@ Command: `KETTLE_PORT=5460 KETTLE_PWA_PORT=5493 npx playwright test --project=ti
 | 18:58:46 to 19:06:49 | check 3 pass 1 (`capture3.mjs`, 2 processes, gate `--n 2`) |
 | 18:59:00 to 19:02:44 | check 5 (timer-harness, timer-app, pwa); PID 9738 killed |
 | 19:06:55 to 19:08:33 | check 4 set 1 (`check4.mjs`, model first) |
-| 19:08:5x to 19:10:2x | check 4 set 2 (procedural first) |
+| 19:08:42 to 19:10:23 | check 4 set 2 (procedural first) |
 | 19:10:41 to 19:11:28 | check 2 variant D (`check2.mjs --variants D`) |
 | 19:11:28 to 19:19:24 | check 3 pass 2 (quiet) |
 | 19:19:33 onward | check 6 (full chromium, gate `--n 2`); check 2 run 2 (A, B, C) in parallel |

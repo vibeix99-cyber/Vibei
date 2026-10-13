@@ -21,5 +21,5 @@ Rerun alone (the whole `a11y.spec.ts`, 11 tests, one worker, nothing else of min
 
 | Where | Command | Start | End | Result | 109 (the failed case) | Log |
 |---|---|---|---|---|---|---|
-| trial `:5460` | `KETTLE_PORT=5460 npx playwright test tests/a11y.spec.ts --project=chromium --workers=1` | 2026-10-13T19:37:13Z | still running at write time | not finished at write time | ✓   46.7s | `runs/rerun-a11y-trial-5460.txt` |
-| control `:5410` | `KETTLE_PORT=5410 npx playwright test tests/a11y.spec.ts --project=chromium --workers=1` | 2026-10-13T19:37:13Z | still running at write time | not finished at write time | ✓   45.0s | `runs/rerun-a11y-control-5410.txt` |
+| trial `:5460` | `KETTLE_PORT=5460 npx playwright test tests/a11y.spec.ts --project=chromium --workers=1` | 2026-10-13T19:37:13Z | 2026-10-13T19:46:03Z | 11 passed (8.8m) | ✓   46.7s | `runs/rerun-a11y-trial-5460.txt` |
+| control `:5410` | `KETTLE_PORT=5410 npx playwright test tests/a11y.spec.ts --project=chromium --workers=1` | 2026-10-13T19:37:13Z | 2026-10-13T19:46:03Z | 11 passed (8.8m) | ✓   45.0s | `runs/rerun-a11y-control-5410.txt` |
