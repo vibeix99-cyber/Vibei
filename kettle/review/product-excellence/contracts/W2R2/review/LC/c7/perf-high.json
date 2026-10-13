@@ -426,5 +426,93 @@
   },
   "loadAvg": "15.75 15.00 14.13",
   "wallMs": 56922
+ },
+ {
+  "name": "C-model-high",
+  "port": 5453,
+  "q": "&nookq=high&chai3d=model",
+  "t0": "11:03:08",
+  "readyMs": 10768,
+  "finalMs": 10806,
+  "live": {
+   "rafFrames": 20,
+   "intervalMs": {
+    "mean": 513.1,
+    "p50": 533.3,
+    "p90": 883.2,
+    "max": 1166.5
+   },
+   "renderCalls": 20,
+   "renderJsMs": {
+    "mean": 2.47,
+    "p50": 2.1
+   },
+   "engineStats": {
+    "calls": 155,
+    "triangles": 125500,
+    "geometries": 111,
+    "textures": 12,
+    "frameMs": 38.39999999999418,
+    "fps": 0
+   },
+   "statsStart": {
+    "calls": 155,
+    "triangles": 125500,
+    "geometries": 111,
+    "textures": 12,
+    "frameMs": 98.24166666677532,
+    "fps": 0
+   }
+  },
+  "sync": {
+   "n": 40,
+   "median": 545.4,
+   "mean": 550.6,
+   "p90": 681.8,
+   "min": 374.7,
+   "max": 806.3,
+   "info": {
+    "calls": 155,
+    "triangles": 125500,
+    "geometries": 111,
+    "textures": 12,
+    "programs": 25
+   },
+   "chaiKind": "model",
+   "quality": "high",
+   "canvas": [
+    531,
+    474
+   ],
+   "chai3d": {
+    "state": "ready",
+    "ms": 22,
+    "bytes": 45572
+   }
+  },
+  "memory": {
+   "heapUsedMB_afterGC": 10.85,
+   "heapTotalMB": 11.32,
+   "performanceMemoryUsedMB": 22.45,
+   "jsHeapUsedMB_metrics": 10.87,
+   "documents": 1,
+   "nodes": 988,
+   "listeners": 418
+  },
+  "processRssMB": {
+   "browser": 184.5,
+   "zygote": 71.4,
+   "gpu": 205.9,
+   "utility": 62.5,
+   "renderer": 164.6,
+   "total": 688.9
+  },
+  "longTasks": {
+   "count": 8,
+   "maxMs": 32467,
+   "over50Total": 34129
+  },
+  "loadAvg": "14.53 14.81 14.12",
+  "wallMs": 58275
  }
 ]
