@@ -236,6 +236,14 @@ export default function FocusScreen() {
       </>
     );
 
+  // The panel's notice strip is in use only once the view it heads is the one in the panel: while the previous view
+  // (the summary, which reaches up over the whole screen) is still leaving, nothing is drawn under it (the notice waits,
+  // its clock stopped, and comes in with the new view's first frame).
+  const panelKey = view === 'summary' ? 'summary' : view === 'over' ? 'over' : view === 'break' ? 'break' : 'timer';
+  const panelKeyRef = useRef(panelKey);
+  panelKeyRef.current = panelKey;
+  const [liveKey, setLiveKey] = useState(panelKey);
+
   // While this screen is the *outgoing* layer of a route change the session has already ended (view 'none'):
   // keep showing the last frame instead of an empty page.
   if (view === 'none') return frozen.current ?? <div className={s.screen} data-view="none" data-focus-view="none" />;
@@ -348,13 +356,14 @@ export default function FocusScreen() {
         {/* The session screen's notice strip (src/ui/Toast.tsx): the head of the panel, above the countdown or Break's
             over, in the panel's flow (it scrolls with it at 200 % text). Never on the stage, never over a control. A
             new view is a new screen: what it shows is laid out with it. The summary has its own (below). */}
-        <NoticeStrip prio={1} screen={`session:${view}`} off={view === 'summary'} className={s.notices} />
+        <NoticeStrip prio={1} screen={`session:${view}`} off={view === 'summary' || liveKey !== panelKey} className={s.notices} />
         {/* A new view in the panel starts at its top (the panel scrolls when its content is taller, e.g. at 200 % text). */}
         <AnimatePresence
           mode="wait"
           initial={false}
           onExitComplete={() => {
             if (panelRef.current) panelRef.current.scrollTop = 0;
+            setLiveKey(panelKeyRef.current);
           }}
         >
           {view === 'summary' ? (

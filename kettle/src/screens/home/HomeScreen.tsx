@@ -2,7 +2,7 @@
 import { useRef } from 'react';
 import { useRoute } from '@/app/router';
 import { useTimer } from '@/timer';
-import { useMediaQuery } from '@/ui';
+import { NoticeStrip, useMediaQuery } from '@/ui';
 import { useUnlockedItems } from '@/progress';
 import { usePrewarmNook } from '@/scene';
 import { StatusBar } from './StatusBar';
@@ -55,6 +55,10 @@ export default function HomeScreen() {
     <div className={s.screen} data-tablet="wide">
       {/* Two columns on landscape phones and tablets (greeting + goal | composer + CTA); one flow elsewhere. */}
       <div className={s.colA}>
+        {/* Landscape phones: Today's notice strip heads the pinned column (above the stats and greeting), so a notice
+            never pushes the composer column (the task field, Mark done, Brew length) down under the docked start, and is
+            in view whenever Today opens. Elsewhere the page's own strip, at the top of Today (src/app/Shell.tsx). */}
+        <NoticeStrip prio={1} screen="/" off={!landscape} className={s.notices} />
         <Hero data={data} status={<StatusBar data={data} />} />
         {/* Storage full: in the page flow, under the greeting (src/app/SaveWarning.tsx); side by side, at the head of
             the column that scrolls (the left one is pinned there). */}

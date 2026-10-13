@@ -121,19 +121,29 @@ export function Composer({ recent, lengthAt = 'card' }: { recent: string[]; leng
   // The page scrolls a focused control clear of the dock (scroll-padding in Home.module.css): tell it the dock's height,
   // which grows with the text size (and, on phones, carries the brew length).
   const dockRef = useRef<HTMLDivElement>(null);
+  const [tall, setTall] = useState(false);
   useLayoutEffect(() => {
     const el = dockRef.current;
     if (!el || typeof ResizeObserver === 'undefined') return;
     const root = document.documentElement;
-    const put = () => root.style.setProperty('--home-dock-h', `${Math.ceil(el.getBoundingClientRect().height)}px`);
+    const put = () => {
+      const h = el.getBoundingClientRect().height;
+      root.style.setProperty('--home-dock-h', `${Math.ceil(h)}px`);
+      // A landscape phone at large text: the start and its note wrap into a dock taller than most of the screen, which
+      // would sit over the brew length at the column's head (667×375 @200 %: 339 of 375 px). Then the dock stays in the
+      // page flow, right under the composer, instead of over it (W2H-D1: every length in view from the first frame).
+      setTall(lengthAt === 'top' && h > innerHeight * 0.6);
+    };
     put();
     const ro = new ResizeObserver(put);
     ro.observe(el);
+    addEventListener('resize', put);
     return () => {
       ro.disconnect();
+      removeEventListener('resize', put);
       root.style.removeProperty('--home-dock-h');
     };
-  }, []);
+  }, [lengthAt]);
 
   const length = <RhythmPicker at={lengthAt} />;
   return (
@@ -227,7 +237,7 @@ export function Composer({ recent, lengthAt = 'card' }: { recent: string[]; leng
     </section>
     {/* Docked: on short or landscape screens it sticks above the tab bar so the main action is never below the fold.
         On portrait phones the brew length rides in it, right above the start it sets. */}
-    <div ref={dockRef} className={s.ctaDock} data-length={lengthAt === 'dock' ? '' : undefined}>
+    <div ref={dockRef} className={s.ctaDock} data-length={lengthAt === 'dock' ? '' : undefined} data-tall={tall ? '' : undefined}>
       {lengthAt === 'dock' && length}
       <Button size="lg" block sfx="start" className={s.cta} onClick={start} icon={<Icon name="play" size={22} />}>
         Put the kettle on · {focusMin} min

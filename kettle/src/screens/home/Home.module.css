@@ -1002,3 +1002,18 @@
     display: none;
   }
 }
+
+/* Today's own notice strip (landscape phones: under the greeting in the pinned column). Empty, or not in use, it is not
+   laid out at all (no grid gap either). */
+.notices:not([data-has]) {
+  display: none;
+}
+/* A dock taller than most of a landscape phone's screen (200 % text) is not docked: it follows the composer in the page
+   (Composer.tsx `tall`), so it never sits over the brew length or the task. */
+.ctaDock[data-tall] {
+  position: relative;
+  bottom: auto;
+}
+.ctaDock[data-tall]::before {
+  display: none;
+}

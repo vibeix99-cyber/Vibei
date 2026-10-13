@@ -29,6 +29,8 @@ import { test, expect, type Browser, type Page, type BrowserContext } from '@pla
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const base = (u: string | undefined) => (u ?? 'http://127.0.0.1:5183').replace(/\/$/, '');
 test.use({ trace: 'off' });
+// Each configuration is its own browser context: they run side by side with --workers=2.
+test.describe.configure({ mode: 'parallel' });
 
 const MONDAY = Date.parse('2026-10-12T07:40:00.000Z');
 
@@ -196,10 +198,21 @@ async function press(page: Page, touch: boolean, el: ReturnType<Page['locator']>
     const d = e.closest('[role="dialog"]')?.getBoundingClientRect();
     return d ? { x: Math.round(d.left + d.width / 2), y: Math.round(Math.max(0, d.top) + (Math.min(innerHeight, d.bottom) - Math.max(0, d.top)) / 2) } : null;
   });
+  // Otherwise over the element's own scroller (the session panel, a column), where the wheel scrolls it.
+  const scroller = await el.evaluate((e) => {
+    for (let a = e.parentElement; a && a !== document.body; a = a.parentElement) {
+      const oy = getComputedStyle(a).overflowY;
+      if ((oy === 'auto' || oy === 'scroll') && a.scrollHeight > a.clientHeight) {
+        const r = a.getBoundingClientRect();
+        return { x: Math.round(r.left + r.width / 2), y: Math.round(Math.max(0, r.top) + (Math.min(innerHeight, r.bottom) - Math.max(0, r.top)) / 2) };
+      }
+    }
+    return null;
+  });
   for (let i = 0; !at && i < 60; i++) {
     const r = (await el.boundingBox())!;
     const vh = page.viewportSize()!.height;
-    const aim = over ?? sheet;
+    const aim = over ?? sheet ?? scroller;
     await page.mouse.move(aim?.x ?? Math.round(page.viewportSize()!.width / 2), aim?.y ?? Math.round(vh / 2));
     // Above the view: bring it down; anywhere else (below it, or under the docked start / tab bar): bring it up.
     await page.mouse.wheel(0, r.y < 4 ? -60 : r.y > vh ? 120 : 60);
