@@ -9,10 +9,10 @@ Maker B. Status at the end of this file. Evidence: `W2R3/B/`.
 | Base | `61aba17` (integration; kettle/src tree `4556926`) |
 | Code commit | `0a95fbc` (kettle/src tree **`f40b306`**) |
 | Packet commit | the commit that adds this file (touches only `kettle/review/…/W2R3/`; kettle/src tree stays `f40b306`) |
-| Trial-merge target | `origin/claude/wizardly-galileo-uy89d9` @ `16b5f85` |
+| Trial-merge target | `origin/claude/wizardly-galileo-uy89d9` @ `16b5f85` (code commit), `2a380ab` (packet commit) |
 
 **Trial merge:** `git merge-tree --write-tree HEAD origin/claude/wizardly-galileo-uy89d9` → exit 0, no conflicts
-(tree `df3630d` at the code commit; re-run at the packet commit, see `B/trial-merge.txt`). `61aba17` is an ancestor of the
+(tree `df3630d` at the code commit vs `16b5f85`; re-run at packet commit `f44970c` vs `2a380ab` → exit 0, tree `c78ee5a`, see `B/trial-merge.txt`). `61aba17` is an ancestor of the
 target and the target changes nothing under `kettle/src` or `kettle/tests` since it.
 
 ## What changed (7 files, all in-scope)
@@ -73,9 +73,10 @@ AFTER build (:5482, no seed, no debug) at `#/done`:
 |---|---|---|
 | `tsc --noEmit` | exit 0 | `B/tsc.txt` |
 | vitest | 30 files, **290/290** passed | `B/vitest.txt` |
-| chromium: a11y + integrity (badge-bearing / summary flows) | 24/24 run passed; run hit my 900 s cap before `statusbar` and `w2-summary` (slow shared host) | `B/e2e-badge-specs.txt` |
-| chromium: `w2-summary.spec.ts` (badge pill, strict "no streak" words) | see `B/e2e-w2-summary.txt` and Status | `B/e2e-w2-summary.txt` |
-| full chromium `--workers=2` | **not run** (time) | — |
+| chromium: `a11y.spec.ts` + `integrity.spec.ts` (summary / reload flows) | 24/24 run passed (the combined run hit my 900 s cap after these; `w2-summary` and `statusbar` re-run alone below) | `B/e2e-badge-specs.txt` |
+| chromium: `statusbar.spec.ts` | **9/9** passed | `B/e2e-statusbar.txt` |
+| chromium: `w2-summary.spec.ts` (badge pill "Badge: Warm Days II", strict "no streak" words incl. aria) | **18/18** passed | `B/e2e-w2-summary.txt` |
+| full chromium `--workers=2` | **not run** (time; shared host runs ~1–5 min per test) | — |
 
 ## Captures (same session, light)
 `B/captures/{before,after}-summary-{390x844,1440x900}.png`, `{before,after}-stats-badges-{…}.png` (+ `-card-` crops),
@@ -88,3 +89,9 @@ layout); its text is in `live-check.json`.
 3. Stats "warm streak" wording outside the badge (T2's files, not the badge name): `StreakCard.tsx` sr text
    "7 days warm streak" / caption "Warm streak calendar…", `Rail.tsx` "Start a warm streak" / title "Warm streak",
    `SettingsScreen.tsx`, `DataSection.tsx`, `ui/Gallery.tsx` overline. Not the badge; listed for completeness only.
+
+## Status
+All required evidence present except the optional full chromium `--workers=2` run (time). Servers I started (:5472 dev,
+:5482 preview) and every browser I launched are stopped.
+
+READY FOR REVIEW
