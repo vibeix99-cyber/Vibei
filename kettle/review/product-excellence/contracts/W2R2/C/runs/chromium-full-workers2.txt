@@ -1,0 +1,211 @@
+[slots] C took 2/3 at 19:44:05: env KETTLE_PORT=5423 timeout 3600 npx playwright test --project=chromium --workers=2
+
+Running 103 tests using 2 workers
+
+  ✓    2 [chromium] › tests/chai3d.spec.ts:70:3 › 3D Chai: the model replaces the procedural Chai › high tier: loads, validates and swaps in place, awake = eyes_open, on the cushion (21.1s)
+  ✓    3 [chromium] › tests/chai3d.spec.ts:83:3 › 3D Chai: fallbacks keep the procedural Chai › 404: procedural Chai, no error, the room is live (23.0s)
+  ✓    4 [chromium] › tests/chai3d.spec.ts:96:3 › 3D Chai: fallbacks keep the procedural Chai › slow network: the first frame is the procedural Chai; after 8 s the load gives up and it stays (28.5s)
+  ✓    1 [chromium] › tests/a11y.spec.ts:60:3 › axe: no serious/critical violations in any state (light) (1.6m)
+  ✓    5 [chromium] › tests/chai3d.spec.ts:112:3 › 3D Chai: fallbacks keep the procedural Chai › a file that fails validation (the r0 model: no eyes_sip) keeps the procedural Chai (25.4s)
+  ✓    7 [chromium] › tests/chai3d.spec.ts:125:3 › 3D Chai: fallbacks keep the procedural Chai › the loader chunk itself fails to load: procedural Chai, no error (22.5s)
+  ✓    8 [chromium] › tests/chai3d.spec.ts:138:3 › 3D Chai: fallbacks keep the procedural Chai › 3D off: the static drawing, no engine, no model request (13.7s)
+  ✓    9 [chromium] › tests/chai3d.spec.ts:147:3 › 3D Chai: fallbacks keep the procedural Chai › low tier: the procedural Chai, no model request (21.2s)
+  ✓    6 [chromium] › tests/a11y.spec.ts:60:3 › axe: no serious/critical violations in any state (dark) (1.6m)
+  ✓   10 [chromium] › tests/chai3d.spec.ts:157:3 › 3D Chai: fallbacks keep the procedural Chai › WebGL context lost and restored: the engine is rebuilt with the model from memory, no second request (53.0s)
+  ✓   12 [chromium] › tests/integrity.spec.ts:217:3 › I01 session time survives reload, suspension and late return › pause → reload → resume: the paused time is kept and the deadline moves by exactly the pause (17.5s)
+  ✓   13 [chromium] › tests/integrity.spec.ts:244:3 › I01 session time survives reload, suspension and late return › +5 → reload: the extension, its deadline and the gauge segment survive; completion records the full 30 min once (10.3s)
+  ✓   11 [chromium] › tests/a11y.spec.ts:72:1 › pointer targets are at least 24×24 px or meet a WCAG 2.5.8 exception (53.8s)
+  ✓   14 [chromium] › tests/integrity.spec.ts:267:3 › I01 session time survives reload, suspension and late return › suspended tab (a real Page Lifecycle freeze) across the end: one completion right after resume, at the real end, "while away" summary (20.2s)
+  ✓   16 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (19.3s)
+  ✓   17 [chromium] › tests/integrity.spec.ts:340:3 › I01 session time survives reload, suspension and late return › late return: an extended brew that ended 2 h ago while the app was closed completes once, at its real end, with the right minutes (7.6s)
+  ✓   18 [chromium] › tests/integrity.spec.ts:373:3 › I01 session time survives reload, suspension and late return › late return to a paused brew: nothing completes; the same time is waiting (5.4s)
+  ✓   15 [chromium] › tests/a11y.spec.ts:109:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll (48.1s)
+  ✓   19 [chromium] › tests/integrity.spec.ts:395:3 › I01 exactly once › repeated finish / tick / end / pause at 0:00 and a double-clicked Tea time: one record, one grant, one break (11.1s)
+  ✓   21 [chromium] › tests/integrity.spec.ts:430:3 › I01 exactly once › reload during the whistle and again on the summary: one record, rewards granted once, the summary still there (11.5s)
+  ✓   22 [chromium] › tests/integrity.spec.ts:459:3 › I01 exactly once › two tabs on one profile: one record and one grant; both show the same summary; Tea time in one moves both (15.5s)
+  ✓   23 [chromium] › tests/integrity.spec.ts:502:3 › I02 End, dismissal and task disposition › dismissing the End sheet (Esc, backdrop, Keep brewing) or leaving the screen never stops the brew (16.3s)
+  ✓   24 [chromium] › tests/integrity.spec.ts:543:3 › I02 End, dismissal and task disposition › End early after 12 active minutes (with a pause): 12 minutes saved as an unfinished brew, 12 leaves, no full-brew bonus, task kept (8.0s)
+  ✓   25 [chromium] › tests/integrity.spec.ts:575:3 › I02 End, dismissal and task disposition › End within the first minute: the sheet says nothing will be saved, and nothing is (8.0s)
+  ✓   26 [chromium] › tests/integrity.spec.ts:586:3 › I02 End, dismissal and task disposition › Done / Carry forward are reversible; the carried task returns on Home; editing it and Mark done → Undo never add a focus record (14.9s)
+  ✓   27 [chromium] › tests/integrity.spec.ts:637:3 › I02 End, dismissal and task disposition › Skip break, Next brew and That’s all for now do what they say, and never record a skipped break (25.3s)
+  ✓   28 [chromium] › tests/integrity.spec.ts:768:3 › I03 data safety › export → reset (explicit confirmation) → import restores brews, settings and every reward exactly (20.0s)
+  ✓   29 [chromium] › tests/integrity.spec.ts:827:3 › I03 data safety › invalid files change nothing and say why (not JSON, another app, truncated, newer version, huge, empty, damaged) (16.7s)
+  ✓   30 [chromium] › tests/integrity.spec.ts:867:3 › I03 data safety › storage full: a brew that completes still reaches its summary, once; saved data stays intact; a backup carries the brew; making room saves it (18.6s)
+  ✓   31 [chromium] › tests/integrity.spec.ts:903:3 › I03 data safety › storage full: a restore that cannot be saved is refused with a plain reason and changes nothing (10.9s)
+  ✓   32 [chromium] › tests/integrity.spec.ts:929:3 › I03 data safety › “Everything lives on this device”: a brew, an export and an import send nothing anywhere (11.9s)
+  ✓   33 [chromium] › tests/integrity.spec.ts:1004:5 › I03 storage-full warning is a banner in the page (phone 390×844) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room (30.4s)
+  ✓   34 [chromium] › tests/integrity.spec.ts:1090:5 › I03 storage-full warning is a banner in the page (phone 390×844) › a banner that appears while Today is open moves nothing under the finger (Mark done with storage full) (5.4s)
+  ✓   35 [chromium] › tests/integrity.spec.ts:1004:5 › I03 storage-full warning is a banner in the page (phone 375×667) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room (27.3s)
+  ✓   20 [chromium] › tests/a11y.spec.ts:173:1 › keyboard-only critical journey with focus restoration (4.2m)
+  ✓   36 [chromium] › tests/integrity.spec.ts:1090:5 › I03 storage-full warning is a banner in the page (phone 375×667) › a banner that appears while Today is open moves nothing under the finger (Mark done with storage full) (4.2s)
+  ✓   37 [chromium] › tests/a11y.spec.ts:288:1 › welcome: first brew from the keyboard alone (4.6s)
+  ✓   39 [chromium] › tests/a11y.spec.ts:299:1 › live regions stay quiet while a brew runs (no spoken countdown) (19.8s)
+  ✓   38 [chromium] › tests/integrity.spec.ts:1004:5 › I03 storage-full warning is a banner in the page (desktop 1440×900) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room (32.5s)
+  ✓   41 [chromium] › tests/integrity.spec.ts:1090:5 › I03 storage-full warning is a banner in the page (desktop 1440×900) › a banner that appears while Today is open moves nothing under the finger (Mark done with storage full) (4.5s)
+  ✓   40 [chromium] › tests/a11y.spec.ts:328:3 › a toast never covers the session controls or the summary footer (390×844) (18.4s)
+  ✓   42 [chromium] › tests/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (390×844, 100 % text) (5.8s)
+  ✓   44 [chromium] › tests/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (390×844, 200 % text) (4.4s)
+  ✓   45 [chromium] › tests/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (375×667, 100 % text) (5.0s)
+  ✓   46 [chromium] › tests/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (375×667, 200 % text) (4.4s)
+  ✓   47 [chromium] › tests/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (844×390, 100 % text) (4.5s)
+  ✓   43 [chromium] › tests/a11y.spec.ts:328:3 › a toast never covers the session controls or the summary footer (375×667) (20.7s)
+  ✓   48 [chromium] › tests/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (844×390, 200 % text) (5.1s)
+  ✓   50 [chromium] › tests/w2-room.spec.ts:109:3 › Focus backdrop: earned items without the live 3D room › 3D off: the window still shows every earned window-visible item (25.6s)
+  ✓   49 [chromium] › tests/a11y.spec.ts:364:3 › toasts never cover the break-over controls, carried task included (390×844) (37.1s)
+  ✓   52 [chromium] › tests/a11y.spec.ts:364:3 › toasts never cover the break-over controls, carried task included (375×667) (22.0s)
+  ✓   51 [chromium] › tests/w2-room.spec.ts:119:3 › Focus backdrop: earned items without the live 3D room › 3D loading: the still shown before the engine is ready carries the same items (28.9s)
+  ✓   53 [chromium] › tests/w2-summary.spec.ts:174:5 › 375×667 @100 %, routine day: no line starts under the footer on arrival; the final line clears it; nothing covers anything (16.6s)
+  ✓   54 [chromium] › tests/w2-room.spec.ts:137:3 › Focus backdrop: earned items without the live 3D room › items never stand on the bare sky: no layer is drawn before the base room still has decoded (34.6s)
+  ✓   55 [chromium] › tests/w2-summary.spec.ts:174:5 › 375×667 @100 %, big day: no line starts under the footer on arrival; the final line clears it; nothing covers anything (24.1s)
+  ✓   57 [chromium] › tests/w2-summary.spec.ts:174:5 › 375×667 @200 %, routine day: no line starts under the footer on arrival; the final line clears it; nothing covers anything (14.1s)
+  ✓   58 [chromium] › tests/w2-summary.spec.ts:174:5 › 375×667 @200 %, big day: no line starts under the footer on arrival; the final line clears it; nothing covers anything (23.8s)
+  ✓   59 [chromium] › tests/w2-summary.spec.ts:202:3 › 375×667 @100 %, a brew with a task (the K02 layout, Wave-1 #1 exactly): the third pill row does not start under the footer (15.1s)
+  ✘   56 [chromium] › tests/w2-room.spec.ts:167:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items (1.0m)
+  ✓   61 [chromium] › tests/w2-room.spec.ts:194:3 › Nook hint tells the truth › 3D off: no drag-and-tap promise over the drawing (4.3s)
+  ✓   60 [chromium] › tests/w2-summary.spec.ts:202:3 › 375×667 @100 %, a brew with a task (the K02 layout, Wave-1 #1 exactly), reduced motion: the third pill row does not start under the footer (11.4s)
+  ✓   62 [chromium] › tests/w2-room.spec.ts:207:3 › Nook hint tells the truth › no WebGL: the same truthful hint (6.8s)
+  ✓   64 [chromium] › tests/w2-room.spec.ts:226:3 › Nook hint tells the truth › 3D on: the hint is unchanged (6.7s)
+  ✓   65 [chromium] › tests/whistle.spec.ts:45:1 › no audio context before the first gesture; the first tap unlocks it (4.0s)
+  ✓   63 [chromium] › tests/w2-summary.spec.ts:216:1 › big day: the unlock is the one highlight, whole on arrival; all seven rewards stay on the summary (22.2s)
+  ✓   66 [chromium] › tests/whistle.spec.ts:53:1 › the whistle sounds once at completion, and not again after a reload of the summary (13.8s)
+  ✓   67 [chromium] › tests/w2-summary.spec.ts:230:1 › a milestone day without an unlock: the biggest milestone leads, highlighted and whole on arrival; the rest stay compact (12.4s)
+  ✓   68 [chromium] › tests/whistle.spec.ts:76:1 › late return: one whistle, the while-away summary, nothing more on later visibility changes (9.2s)
+  ✓   70 [chromium] › tests/whistle.spec.ts:100:1 › another tab in front (page hidden): the whistle is still scheduled once (9.6s)
+  ✘   69 [chromium] › tests/break-reach.spec.ts:179:3 › 200 % text, 375×667 light: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (16.7s)
+  ✓   71 [chromium] › tests/whistle.spec.ts:120:1 › muted: no sound at all, the visual whistle and summary remain (8.6s)
+  ✓   73 [chromium] › tests/whistle.spec.ts:165:1 › notification permission is asked only from the Nudges switch: not on load, not before or after the first brew (14.7s)
+  ✘   72 [chromium] › tests/break-reach.spec.ts:179:3 › 200 % text, 390×844 dark: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (16.1s)
+  ✓   74 [chromium] › tests/whistle.spec.ts:183:1 › denied: Settings says so, shows the browser path, and turning it on later works (5.2s)
+  ✓   76 [chromium] › tests/whistle.spec.ts:208:1 › unsupported: the switch is off and disabled, and says what happens instead (3.3s)
+  ✓   75 [chromium] › tests/break-reach.spec.ts:179:3 › 200 % text, 844×390 light: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (21.8s)
+  ✓   77 [chromium] › tests/statusbar.spec.ts:65:3 › resize or rotation to 375×667 re-fits the row: one tight row, no sideways scroll (light) (26.2s)
+  ✓   78 [chromium] › tests/break-reach.spec.ts:192:3 › 200 % text, 375×667 dark: the paused tea break — Skip break, Resume break and Start next brew reachable by wheel, touch and Tab (16.4s)
+  ✓   80 [chromium] › tests/break-reach.spec.ts:192:3 › 200 % text, 844×390 dark: the paused tea break — Skip break, Resume break and Start next brew reachable by wheel, touch and Tab (16.2s)
+  ✓   81 [chromium] › tests/break-reach.spec.ts:203:1 › 200 % text, 375×667: tapping Pause break leaves Resume break under the finger, and back (14.8s)
+  ✓   79 [chromium] › tests/statusbar.spec.ts:106:3 › large text with large leaf totals never pushes "Level NN" past the screen (light) (55.2s)
+  ✓   82 [chromium] › tests/break-reach.spec.ts:223:1 › 100 % text, 375×667 and 390×844: the break and Break’s over fit without scrolling — every control wholly on screen (31.2s)
+  ✓   83 [chromium] › tests/statusbar.spec.ts:65:3 › resize or rotation to 375×667 re-fits the row: one tight row, no sideways scroll (dark) (26.5s)
+  ✓   84 [chromium] › tests/toast-room.spec.ts:175:5 › the storage-full banner stays in the page, whole and steady, while the toasts in the room are read by wheel (375×667, 200 % text) (16.8s)
+  ✓   86 [chromium] › tests/toast-room.spec.ts:175:5 › the storage-full banner stays in the page, whole and steady, while the toasts in the room are read by touch (375×667, 200 % text) (21.7s)
+  ✓   87 [chromium] › tests/toast-room.spec.ts:175:5 › the storage-full banner stays in the page, whole and steady, while the toasts in the room are read by wheel (844×390, 200 % text) (14.5s)
+  ✓   88 [chromium] › tests/toast-room.spec.ts:175:5 › the storage-full banner stays in the page, whole and steady, while the toasts in the room are read by touch (844×390, 200 % text) (14.7s)
+  ✓   85 [chromium] › tests/statusbar.spec.ts:106:3 › large text with large leaf totals never pushes "Level NN" past the screen (dark) (52.7s)
+  ✓   89 [chromium] › tests/toast-room.spec.ts:175:5 › the storage-full banner stays in the page, whole and steady, while every toast in the room is read by wheel (667×375, 200 % text) (15.3s)
+  ✓   90 [chromium] › tests/statusbar.spec.ts:135:3 › narrowing that leaves the bar's own box unchanged still re-fits: from 384 px, and 1 px at a time (light) (32.3s)
+  ✓   91 [chromium] › tests/toast-room.spec.ts:175:5 › the storage-full banner stays in the page, whole and steady, while every toast in the room is read by touch (667×375, 200 % text) (18.7s)
+  ✓   93 [chromium] › tests/toast-room.spec.ts:246:3 › toasts timing out, and an endless action toast, never move the banner (375×667, 200 % text, wheel, light) (17.5s)
+  ✓   92 [chromium] › tests/statusbar.spec.ts:135:3 › narrowing that leaves the bar's own box unchanged still re-fits: from 384 px, and 1 px at a time (dark) (28.4s)
+  ✓   94 [chromium] › tests/toast-room.spec.ts:246:3 › toasts timing out, and an endless action toast, never move the banner (375×667, 200 % text, wheel, dark) (17.0s)
+  ✓   96 [chromium] › tests/toast-room.spec.ts:281:3 › the last toast fades out where it was, never over the docked start (375×667, 200 % text) (5.7s)
+  ✓   97 [chromium] › tests/toast-room.spec.ts:281:3 › the last toast fades out where it was, never over the docked start (844×390, 200 % text) (5.0s)
+  ✓   95 [chromium] › tests/statusbar.spec.ts:195:3 › rapid live resizes at large text leave the page unzoomed (light) (26.7s)
+  ✓   98 [chromium] › tests/toast-room.spec.ts:327:3 › three toasts never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, light) (16.3s)
+  ✘   99 [chromium] › tests/statusbar.spec.ts:195:3 › rapid live resizes at large text leave the page unzoomed (dark) (20.2s)
+  ✓  100 [chromium] › tests/toast-room.spec.ts:327:3 › three toasts never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, dark) (16.4s)
+  ✓  101 [chromium] › tests/statusbar.spec.ts:232:1 › normal text: one row at 390 (designed padding) and at 375 (tight) on a fresh load (7.0s)
+  ✓  102 [chromium] › tests/toast-room.spec.ts:427:3 › the update prompt and every toast stay whole and tappable, never over a control, on Break's over scrolled to its end (667×375, 200 % text, wheel, light) (18.1s)
+  ✓  103 [chromium] › tests/toast-room.spec.ts:427:3 › the update prompt and every toast stay whole and tappable, never over a control, on Break's over scrolled to its end (844×390, 200 % text, touch, dark) (20.4s)
+
+
+  1) [chromium] › tests/break-reach.spec.ts:179:3 › 200 % text, 375×667 light: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab 
+
+    Error: wheel: /^Put the kettle on/ brought wholly into view (centre y 730, visible 313–667)
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32mtrue[39m
+    Received: [31mfalse[39m
+
+      152 |       const s = await reach(page, cdp, how, re);
+      153 |       expect(s, `${re} is on the screen`).not.toBeNull();
+    > 154 |       expect(s!.ok, `${how}: ${re} brought wholly into view (centre y ${Math.round(s!.cy)}, visible ${s!.vis.map(Math.round).join('–')})`).toBe(true);
+          |                                                                                                                                            ^
+      155 |     }
+      156 |   for (const key of ['Tab', 'Shift+Tab'] as const) {
+      157 |     const left = [...controls];
+        at everyControlReached (/home/user/wt/w3c/kettle/tests/break-reach.spec.ts:154:140)
+        at /home/user/wt/w3c/kettle/tests/break-reach.spec.ts:184:5
+
+    Error Context: test-results/break-reach-200-text-375×6-d0de1-able-by-wheel-touch-and-Tab-chromium/error-context.md
+
+  2) [chromium] › tests/break-reach.spec.ts:179:3 › 200 % text, 390×844 dark: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab 
+
+    Error: wheel: /^Put the kettle on/ brought wholly into view (centre y 838, visible 422–844)
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32mtrue[39m
+    Received: [31mfalse[39m
+
+      152 |       const s = await reach(page, cdp, how, re);
+      153 |       expect(s, `${re} is on the screen`).not.toBeNull();
+    > 154 |       expect(s!.ok, `${how}: ${re} brought wholly into view (centre y ${Math.round(s!.cy)}, visible ${s!.vis.map(Math.round).join('–')})`).toBe(true);
+          |                                                                                                                                            ^
+      155 |     }
+      156 |   for (const key of ['Tab', 'Shift+Tab'] as const) {
+      157 |     const left = [...controls];
+        at everyControlReached (/home/user/wt/w3c/kettle/tests/break-reach.spec.ts:154:140)
+        at /home/user/wt/w3c/kettle/tests/break-reach.spec.ts:184:5
+
+    Error Context: test-results/break-reach-200-text-390×8-e8d22-able-by-wheel-touch-and-Tab-chromium/error-context.md
+
+  3) [chromium] › tests/statusbar.spec.ts:195:3 › rapid live resizes at large text leave the page unzoomed (dark) 
+
+    Error: 150 % text, zero-wait bounce: page left zoomed in
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m1[39m
+    Received: [31m1.0399999618530273[39m
+
+      221 |         const vv = await page.evaluate(() => ({ scale: visualViewport!.scale, width: Math.round(visualViewport!.width), innerWidth }));
+      222 |         const where = `${pct} % text, ${name}`;
+    > 223 |         expect(vv.scale, `${where}: page left zoomed in`).toBe(1);
+          |                                                           ^
+      224 |         expect(vv.width, where).toBe(vv.innerWidth);
+      225 |         noSidewaysScroll(await row(page), 375);
+      226 |       }
+        at /home/user/wt/w3c/kettle/tests/statusbar.spec.ts:223:59
+
+    Error Context: test-results/statusbar-rapid-live-resiz-810c7-ave-the-page-unzoomed-dark--chromium/error-context.md
+
+  4) [chromium] › tests/w2-room.spec.ts:167:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error: locator.evaluate: Test timeout of 60000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('[data-scene-mode="window"]').first().locator('svg[data-window-items]')[22m
+    [2m    - locator resolved to hidden <svg focusable="false" aria-hidden="true" viewBox="0 0 1250 1000" preserveAspectRatio="xMidYMid slice" data-window-items="pothos books fairyLights shelf recordPlayer">…</svg>[22m
+
+
+      79 |     await host.locator('svg[data-window-items]').evaluate((s) => ((s as SVGElement).style.visibility = 'hidden'));
+      80 |     const off = await page.screenshot({ clip, animations: 'disabled' });
+    > 81 |     await host.locator('svg[data-window-items]').evaluate((s) => ((s as SVGElement).style.visibility = ''));
+         |                                                  ^
+      82 |     expect(on.equals(off), `layer ${id} changes the backdrop`).toBe(false);
+      83 |   }
+      84 | }
+        at assertLayersDrawn (/home/user/wt/w3c/kettle/tests/w2-room.spec.ts:81:50)
+        at /home/user/wt/w3c/kettle/tests/w2-room.spec.ts:159:5
+
+    Error Context: test-results/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  Slow test file: [chromium] › tests/a11y.spec.ts (11.1m)
+  Slow test file: [chromium] › tests/integrity.spec.ts (6.2m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  4 failed
+    [chromium] › tests/break-reach.spec.ts:179:3 › 200 % text, 375×667 light: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab 
+    [chromium] › tests/break-reach.spec.ts:179:3 › 200 % text, 390×844 dark: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab 
+    [chromium] › tests/statusbar.spec.ts:195:3 › rapid live resizes at large text leave the page unzoomed (dark) 
+    [chromium] › tests/w2-room.spec.ts:167:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items 
+  99 passed (19.5m)
+[slots] C freed 2 at 20:03:37

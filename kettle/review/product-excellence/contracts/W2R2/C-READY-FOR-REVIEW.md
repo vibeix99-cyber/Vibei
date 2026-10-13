@@ -9,9 +9,9 @@ below and `C/art/ART-REVIEW-SHEET.png`.
 | Base | `assets/chai3d-r1@68caa31` = integration `15e8abe` (app `b377c62`, kettle/src `e0aebbf`) + "Add 3D Chai r1 (Blender)" |
 | **Code commit** | **`c698d74`** (`c698d740850f8fef163c0cb445b3deebb9a75f9e`) |
 | **`git rev-parse c698d74:kettle/src`** | **`42b2c1c2615f4c95013cd6cdf931729543d2dae8`** |
-| Packet commit | the branch head: `@@PACKET@@` (tests/spec fix + this packet and `W2R2/C/`; kettle/src unchanged from `c698d74`) |
+| Packet commit | the branch head: `14e758e` (spec fix) → `563bd28` (evidence) → the head commit that records the full chromium result. kettle/src is `42b2c1c` throughout (unchanged since `c698d74`) |
 | Branch / worktree | `pe/w2r2-chai3d`, `/home/user/wt/w3c` (not pushed) |
-| Trial merge | `git merge-tree --write-tree pe/w2r2-chai3d claude/wizardly-galileo-uy89d9` (integration at `a9171ee`, kettle/src still `e0aebbf`): **clean**, exit 0, tree `a63b9d47` (at `c698d74`; re-run at the packet head: @@MERGE2@@) |
+| Trial merge | `git merge-tree --write-tree pe/w2r2-chai3d claude/wizardly-galileo-uy89d9` (integration at `a9171ee`, kettle/src still `e0aebbf`): **clean**, exit 0, tree `a63b9d47` (at `c698d74`; re-run at the evidence commit `563bd28`: clean, exit 0, tree `9575db92`) |
 
 ## Hash check
 `sha256sum kettle/art-src/chai/chai.glb` = `b401bc6c0fa9dd7a2abe27c135821634e7d1a4d9f9ba5263f50a436ceb463d7e` ✔ (matches;
