@@ -21,6 +21,6 @@ for f in sorted(glob.glob(f'{CAP2}/trial/*/*.png')):
     if os.path.exists(c1) and os.path.exists(t1): r['trial1_vs_ctrl1'] = cmp(t1, c1)
     rows.append(r)
 json.dump(rows, open(sys.argv[1], 'w'), indent=1)
-print('| config | state | trial1 vs ctrl1 (strict / tol16 %) | trial1 vs trial2 | ctrl1 vs ctrl2 | trial2 vs ctrl2 |'); print('|---|---|---|---|---|---|')
-g = lambda r, k: (f"{r[k]['strict']} / {r[k]['tol']}" + (f" ({r[k]['size']})" if ' vs ' in r[k]['size'] else '')) if k in r else 'n/a'
+print('| config | state | trial1 vs ctrl1 (% over tol 16 / % strict) | trial1 vs trial2 | ctrl1 vs ctrl2 | trial2 vs ctrl2 |'); print('|---|---|---|---|---|---|')
+g = lambda r, k: (f"{r[k]['tol']} / {r[k]['strict']}" + (f" ({r[k]['size']})" if ' vs ' in r[k]['size'] else '')) if k in r else 'n/a'
 for r in rows: print(f"| {r['tag']} | {r['state']} | {g(r,'trial1_vs_ctrl1')} | {g(r,'trial1_vs_trial2')} | {g(r,'ctrl1_vs_ctrl2')} | {g(r,'trial2_vs_ctrl2')} |")
