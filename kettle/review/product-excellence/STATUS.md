@@ -10,7 +10,76 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
-## ▶ WAVE 2 ROUND 2: resumed 2026-10-13 09:40 UTC after a usage limit (read this first)
+## ■ WAVE 2 ROUND 2 CLOSED · 2026-10-13 ~15:50 UTC (read this first)
+
+Integration `claude/wizardly-galileo-uy89d9` contains **P only**. App code `2f67fc1` = `b377c62` + P. Nothing is running and the slot gate is reset.
+
+**Verdicts:**
+
+| Maker | Verdict | Revision | Merge |
+|---|---|---|---|
+| **P** (summary polish, I07) | **APPROVE** | `pe/w2r2-summary@dc7a28d` (code `a4f1773`, src `f255e9f`) | **Merged** as `2f67fc1` |
+| **C** (3D Chai, I06) | **APPROVE** | `pe/w2r2-chai3d@2843fb0` (code `c698d74`, src `42b2c1c`) | **Not merged; it waits for Vibei's art sign-off** |
+| **T** (toast architecture, I10) | **REJECT**, then **final REJECT** after its one fix round | `pe/w2r2-toast@4620796`, then `@6f9756c` (code `887696e`) | Not merged; branch archived |
+
+Verdict files: `contracts/W2R2/CHECKER-W2R2-{P,C,T}.md`.
+
+**Models used:**
+- **Lead:** LEAD-1 ran on Fable 5.1. It ran the design gate and was stopped by a usage limit, then replaced per Vibei's model change. LEAD-2 ran on Opus 5.5.
+- **Makers:** T, P and C all ran on Opus 5.5, high effort.
+- **Lanes:**
+  - Lane P ran on Opus 5.5 first (stopped) and was rerun on Sonnet 5.5.
+  - Lane C and Lane R ran on Sonnet 5.5.
+  - Lane T ran on Opus 5.5.
+
+**TOAST-ARCHITECTURE.md:** `contracts/W2R2/T/TOAST-ARCHITECTURE.md`, also on `pe/w2r2-toast@dabc8f3`.
+- **Decision:** APPROVED with rulings by LEAD-1 (`DESIGN-GATE-T.md`), then AMENDED A–E by LEAD-2 (`DESIGN-GATE-T-RECONFIRM.md`):
+  - A: the stage stack is top-aligned;
+  - B: an Undo is drawn where the person tapped;
+  - C: the composer zone is allowed;
+  - D: a light-DOM announcer;
+  - E: a loop-guard proof, with the summary proofs run on T+P.
+- **Implementation:** rejected. Invariant 1 still fails intermittently: in `notice-zone.spec.ts:150` End→Today, "Saved…" covers the tag chips, Brew length or Mark done in 15 of 20 samples at 390×844 @200 and 375×667 @100. The proof set is also incomplete.
+- **What the fix round got right, kept on the branch for the next toast round:**
+  - Undo is drawn where it was raised;
+  - the R-3 fallback (Undo at the base position on screens with no zone);
+  - an 8 px + safe-area edge inset;
+  - the light-DOM announcer;
+  - `integrity :1090` 9/9.
+
+**Regression on the final merged tree `2f67fc1`** (`review/LR/final-merged-2f67fc1/`):
+- chromium **104/105**, 0 skipped. The 1 failure is `integrity.spec.ts:768` (export → reset → import, load timing). Rerun alone, it passed 3/3 on both the final tree and the base.
+- timer-harness, timer-app and pwa **29 passed + 2 skipped** by design (`timer.spec.ts:295`, `:439`, harness-only).
+- tsc 0; vitest **278/278**.
+- The P+C combined trial `032d7a5` (Lane R, Sonnet): chromium 113/113, vitest 288/288, timer/pwa 29 + 2, smoke clean. LEAD-2's regression review: of 60 capture pairs over 0.5 %, 20 are P's intended change and 40 are noise; no defect (`REGRESSION-REVIEW.md`).
+
+**Follow-ups closed this round:** only P's summary items.
+- Round 1's opening lift left Chai and the kettle covered by the sheet on arrival (stacked phones covered in 20 of 24 runs; now 24/24 whole).
+- The milestone card was louder than the minutes and Tea time.
+- The summary used "streak" wording; it now uses "warm days".
+
+**Toast follow-ups stay open** (T not merged): Wave-1 #2 (Brew length under the dock), #3 (Ambience), #4 (folded toasts), #5, #6, #7 (statusbar), #9 (`:1090`), End sheet lingering (b), Next-brew badge (e) and `break-reach:179` (f).
+
+**`break-reach.spec.ts:179`, the real cause** (T's seven-weekday sweep, confirmed by Lane T):
+- On recipe-completion days (Monday and Thursday), a "Recipe done: Take a full tea break" notice lands on Break's over over the panel.
+- It takes the wheel and touch gesture, so "Put the kettle on" can't be scrolled into view at 200 % text.
+- This is a real user-facing cover (the D4 pattern), not a test artefact.
+- It is fixed only on T's rejected branch.
+
+**BEFORE/AFTER pairs for Vibei:**
+- **P (merged):** `contracts/W2R2/P/captures/{BEFORE,AFTER}/375x667-light-t100/04-summary-task-settled.png`.
+- **C (pending sign-off):** `contracts/W2R2/VIBEI-SIGNOFF-C/390x844-light-day-10-nook-3d-{BEFORE,AFTER}.png` and `ART-REVIEW-SHEET.png`. The 1440 pair and the model renders are in the same folder.
+
+**Waiting on Vibei:**
+1. **C's art sign-off.** Under the warm room light the fur reads darker and warmer than on the sheet. At scale 1.12 the new Chai is the same height and about 70 % as wide. If you approve, merge `pe/w2r2-chai3d@2843fb0`; the P+C tree has already passed Lane R.
+2. **Owner decision:** `MODEL_ON_LOW=false`. Low-tier phones, including many iOS and 4-core devices, keep the old 3D Chai until a real low-end phone is measured.
+3. **Confirm ruling R-3** for the next toast round: Undo falls back to the base position above the tab bar on Stats and Settings, a narrow exception to "no toast covers a control".
+4. **Note P's accepted trade-offs:**
+   - at 375×667, on the task/unlock days and at 200 %, the highlight starts one scroll away;
+   - on the first brew at 390×844, "Make Kettle yours" is one scroll away.
+5. **Next round:** the toast architecture (T's branch as the starting point), and the "Warm Streak" → "Warm Days" rename (display name only).
+
+## (resume log) ▶ WAVE 2 ROUND 2: resumed 2026-10-13 09:40 UTC after a usage limit (read this first)
 
 **Model change from Vibei:** Fable is no longer used for any role.
 - **Lead:** a new Opus lead (LEAD-2). It re-confirms or amends LEAD-1's design ruling on `dabc8f3` before any verdict.
