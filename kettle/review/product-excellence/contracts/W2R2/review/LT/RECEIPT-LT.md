@@ -158,6 +158,22 @@ The controls hit are three tag chips (Read, Create, Life) and the Brew length gr
 | 375x667@2:light:200 inset {'t': 47, 'r': 0, 'bo': 34, 'l': 0} | end / up | [36, 70, 151, 44], 1252, 1954, 0 / 2 | 203 (198) | [30, 57, 314, 110] | 92×39, 9/9 | Chapter 3 notes  | 0/44 | 55 | 11 | D.jsonl |
 | 667x375@2:light:100 inset {'t': 0, 'r': 47, 'bo': 21, 'l': 47} | end / gone | [399, 39, 79, 44], 280, 38153, 0 / 2 | 206 (123) | [392, 18, 204, 99] | 57×36, 9/9 | Chapter 3 notes  | 0/288 | 18 | 3 | D.jsonl |
 
+**Notices at tap time.**
+- In the "up" rows **at scroll 0**, End's 2 notices were **drawn** at the tap (column "drawn / waiting" = 2 / 0, or 1 / 1).
+- In most "up" rows **at the end position**, they were **waiting** (0 / 2): Today's Hero band was off screen after the wheel.
+- 844×390 @100 end/up had them drawn (2 / 0).
+
+**Slowest first draws: the two rows where End's notices were drawn at the tap and Mark done was tapped at scroll 0** (samples from `raw/today-fix-{390x844,844x390}_2_light_100-pos_0_when_up.json`):
+- **390×844 @100:**
+  - "Saved 3 minutes of focus" stays drawn at 0, 112 and 223 ms after the tap.
+  - At 336 ms it is gone (1 waiting). In the same sample the composer zone changes (rank-2 box h 279 → 454, plus a new rank-2 zone at y 494, h 67).
+  - "Crossed off · Undo" is first drawn at 455 ms.
+- **844×390 @100:**
+  - "Saved" stays drawn through 559 ms.
+  - Yield and zone change at 672 ms.
+  - "Crossed off" is first drawn at 784 ms (sampler 826 ms, poll 848 ms).
+- **Every other tapped row:** first drawn 75–227 ms after the tap.
+
 **N/A rows.** Mark done was not wholly on top at scroll 0, so it was not tapped:
 - 375×667 @100: covered by "Put the kettle on · 25 min", the docked start.
 - 375×667 @200 and 390×844 @200: Mark done at y 1322 and y 1229, below the viewport.
@@ -180,44 +196,32 @@ These agree with the maker's own N/A statement for 390×844 @200 and 375×667 @1
 - **How placement is classified:** "R-3 fallback" when the notice region's bottom equals the tab bar's top − 14 px (±3), which is the fallback's formula in `Toast.tsx` l.368–384; otherwise "band". This is inferred from boxes. The DOM carries no marker for it.
 - **"Δ first − gone"** is the first drawn sample minus the first sample with no dialog and no `#root[inert]`. Both are in ~100 ms samples.
 
-| Side | Config | Flow | Scroll / rows (index) | Dialog gone (ms after confirm tap) | First sample drawn with Undo (ms) | Δ first − gone | Notice box / region | Nav top; zones | Placement (inferred) | Undo w×h, 9-pt | Real Undo → state | Hit samples | Edit taps |
+| Side | Config | Flow | Scroll / rows | Dialog gone (ms after confirm tap) | First sample drawn with Undo (ms) | Δ first − gone | Notice box / region | Nav top; zones | Placement (inferred) | Undo w×h, 9-pt | Real Undo → state | Hit samples | Edit taps |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| fix | 390x844@2:light:100 | history last | 3120 / 10 (None) | 1547 | 1662 | 115 | [79, 708, 231, 51] / [16, 702, 358, 58] | 774; 0 | R-3 fallback (region bottom = nav top − 14) | 57×36, 9/9 | rows 10→9→10 tapped  | 3/37 {'after-Delete': 2, 'after-Undo': 1} ['Poetry, slowly, 14:32, 25 minutes, Full ', 'Show earlier days'] | 1 |
-| fix | 390x844@2:light:100 | history mid | 2720 / 10 (None) | 1187 | 1306 | 119 | [79, 153, 231, 51] / [8, 66, 374, 139] | 774; 0 | band (region bottom 205, nav top 774) | 57×36, 9/9 | rows 10→9→10 tapped  | 0/33 | 1 |
+| fix | 390x844@2:light:100 | history last | 3120 / 10 | 1547 | 1662 | 115 | [79, 708, 231, 51] / [16, 702, 358, 58] | 774; 0 | R-3 fallback (region bottom = nav top − 14) | 57×36, 9/9 | rows 10→9→10 tapped  | 3/37 {'after-Delete': 2, 'after-Undo': 1} ['Poetry, slowly, 14:32, 25 minutes, Full ', 'Show earlier days'] | 1 |
+| fix | 390x844@2:light:100 | history mid | 2720 / 10 | 1187 | 1306 | 119 | [79, 153, 231, 51] / [8, 66, 374, 139] | 774; 0 | band (region bottom 205, nav top 774) | 57×36, 9/9 | rows 10→9→10 tapped  | 0/33 | 1 |
 | fix | 390x844@2:light:100 | import | 2080 / — | 672 | 672 | 0 | [13, 611, 364, 55] / [8, 603, 374, 64] | 774; 0 | band (region bottom 667, nav top 774) | 56×35, 9/9 | brews 83→86→83 tapped  | 0/24 | None |
-| control | 390x844@2:light:100 | history last | 3120 / 10 (None) | 1598 | 1346 | -252 | [85, 730, 220, 49] / [16, 710, 358, 52] | 774; 0 | R-3 fallback (region bottom = nav top − 14) | 55×34, 9/9 | rows 10→9→10 tapped  | 9/36 {'after-Delete': 4, 'after-Undo': 5} ['A quiet brew, 13:45, 25 minutes, Full br', 'Nook', 'Poetry, slowly, 14:32, 25 minutes, Full ', 'Settings', 'Show earlier days', 'Stats', 'Today'] | 1 |
-| control | 390x844@2:light:100 | history mid | 2720 / 10 (None) | 1909 | 1696 | -213 | [85, 730, 220, 49] / [16, 710, 358, 52] | 774; 0 | R-3 fallback (region bottom = nav top − 14) | 55×34, 9/9 | rows 10→9→10 tapped  | 12/43 {'after-Delete': 3, 'after-Undo': 9} ['Nook', 'Quarterly report, 8:00, 25 minutes, Full', 'Settings', 'Stats', 'Thesis chapter 3, 15:00, 25 minutes, Ful', 'Today'] | 1 |
+| control | 390x844@2:light:100 | history last | 3120 / 10 | 1598 | 1346 | -252 | [85, 730, 220, 49] / [16, 710, 358, 52] | 774; 0 | R-3 fallback (region bottom = nav top − 14) | 55×34, 9/9 | rows 10→9→10 tapped  | 9/36 {'after-Delete': 4, 'after-Undo': 5} ['A quiet brew, 13:45, 25 minutes, Full br', 'Nook', 'Poetry, slowly, 14:32, 25 minutes, Full ', 'Settings', 'Show earlier days', 'Stats', 'Today'] | 1 |
+| control | 390x844@2:light:100 | history mid | 2720 / 10 | 1909 | 1696 | -213 | [85, 730, 220, 49] / [16, 710, 358, 52] | 774; 0 | R-3 fallback (region bottom = nav top − 14) | 55×34, 9/9 | rows 10→9→10 tapped  | 12/43 {'after-Delete': 3, 'after-Undo': 9} ['Nook', 'Quarterly report, 8:00, 25 minutes, Full', 'Settings', 'Stats', 'Thesis chapter 3, 15:00, 25 minutes, Ful', 'Today'] | 1 |
 | control | 390x844@2:light:100 | import | 2080 / — | 436 | 211 | -225 | [26, 723, 339, 53] / [16, 706, 358, 57] | 774; 0 | R-3 fallback (region bottom = nav top − 14) | 55×34, 9/9 | brews 83→86→83 tapped  | 20/22 {'after-Import': 3, 'after-Undo': 17} ['Export a backupSave everything as a .jso', 'Import a backupAdd or restore from a Ket', 'Nook', 'Settings', 'Stats', 'Today'] | None |
-| fix | 390x844@2:light:200 | history last | 4760 / 10 (None) | 547 | 547 | 0 | [22, 654, 346, 94] / [16, 646, 358, 103] | 763; 0 | R-3 fallback (region bottom = nav top − 14) | 93×39, 9/9 | rows 10→9→10 tapped  | 18/42 {'after-Delete': 2, 'after-Undo': 16} ['Poetry, slowly, 14:32, 25 minutes, Full ', 'Show earlier days'] | 2 |
-| fix | 390x844@2:light:200 | history mid | 4760 / 10 (None) | 985 | 985 | 0 | [21, 653, 348, 94] / [16, 646, 358, 103] | 763; 0 | R-3 fallback (region bottom = nav top − 14) | 93×39, 9/9 | rows 10→9→10 tapped  | 4/32 {'after-Delete': 2, 'after-Undo': 2} ['Quarterly report, 8:00, 25 minutes, Full', 'Roadmap draft, 16:10, 50 minutes, Full b'] | 2 |
-| control | 390x844@2:light:200 | history last | 4760 / 10 (None) | None | 571 | — | [16, 644, 358, 105] / [16, 644, 358, 107] | 763; 0 | R-3 fallback (region bottom = nav top − 14) | 96×41, 9/9 | rows 10→9→10 tapped  | 11/32 {'after-Delete': 4, 'after-Undo': 7} ['A quiet brew, 13:45, 25 minutes, Full br', 'Poetry, slowly, 14:32, 25 minutes, Full ', 'Show earlier days'] | 2 |
-| control | 390x844@2:light:200 | history mid | 4760 / 10 (None) | 580 | 363 | -217 | [16, 644, 358, 105] / [16, 644, 358, 107] | 763; 0 | R-3 fallback (region bottom = nav top − 14) | 96×41, 9/9 | rows 10→9→10 tapped  | 8/28 {'after-Delete': 5, 'after-Undo': 3} ['Quarterly report, 8:00, 25 minutes, Full', 'Roadmap draft, 16:10, 50 minutes, Full b', 'Thesis chapter 3, 15:00, 25 minutes, Ful'] | 2 |
-| fix | 375x667@2:light:100 | history last | 3360 / 10 (None) | 1374 | 1374 | 0 | [75, 532, 225, 50] / [16, 525, 343, 58] | 597; 0 | R-3 fallback (region bottom = nav top − 14) | 56×35, 9/9 | rows 10→9→10 tapped  | 4/34 {'after-Delete': 3, 'after-Undo': 1} ['Show earlier days'] | 1 |
-| fix | 375x667@2:light:100 | history mid | 2880 / 10 (None) | 1149 | 1149 | 0 | [74, 13, 228, 51] / [8, 8, 359, 56] | 597; 0 | band (region bottom 64, nav top 597) | 56×35, 9/9 | rows 10→9→10 tapped  | 0/33 | 1 |
+| fix | 390x844@2:light:200 | history last | 4760 / 10 | 547 | 547 | 0 | [22, 654, 346, 94] / [16, 646, 358, 103] | 763; 0 | R-3 fallback (region bottom = nav top − 14) | 93×39, 9/9 | rows 10→9→10 tapped  | 18/42 {'after-Delete': 2, 'after-Undo': 16} ['Poetry, slowly, 14:32, 25 minutes, Full ', 'Show earlier days'] | 2 |
+| fix | 390x844@2:light:200 | history mid | 4760 / 10 | 985 | 985 | 0 | [21, 653, 348, 94] / [16, 646, 358, 103] | 763; 0 | R-3 fallback (region bottom = nav top − 14) | 93×39, 9/9 | rows 10→9→10 tapped  | 4/32 {'after-Delete': 2, 'after-Undo': 2} ['Quarterly report, 8:00, 25 minutes, Full', 'Roadmap draft, 16:10, 50 minutes, Full b'] | 2 |
+| control | 390x844@2:light:200 | history last | 4760 / 10 | None | 571 | — | [16, 644, 358, 105] / [16, 644, 358, 107] | 763; 0 | R-3 fallback (region bottom = nav top − 14) | 96×41, 9/9 | rows 10→9→10 tapped  | 11/32 {'after-Delete': 4, 'after-Undo': 7} ['A quiet brew, 13:45, 25 minutes, Full br', 'Poetry, slowly, 14:32, 25 minutes, Full ', 'Show earlier days'] | 2 |
+| control | 390x844@2:light:200 | history mid | 4760 / 10 | 580 | 363 | -217 | [16, 644, 358, 105] / [16, 644, 358, 107] | 763; 0 | R-3 fallback (region bottom = nav top − 14) | 96×41, 9/9 | rows 10→9→10 tapped  | 8/28 {'after-Delete': 5, 'after-Undo': 3} ['Quarterly report, 8:00, 25 minutes, Full', 'Roadmap draft, 16:10, 50 minutes, Full b', 'Thesis chapter 3, 15:00, 25 minutes, Ful'] | 2 |
+| fix | 375x667@2:light:100 | history last | 3360 / 10 | 1374 | 1374 | 0 | [75, 532, 225, 50] / [16, 525, 343, 58] | 597; 0 | R-3 fallback (region bottom = nav top − 14) | 56×35, 9/9 | rows 10→9→10 tapped  | 4/34 {'after-Delete': 3, 'after-Undo': 1} ['Show earlier days'] | 1 |
+| fix | 375x667@2:light:100 | history mid | 2880 / 10 | 1149 | 1149 | 0 | [74, 13, 228, 51] / [8, 8, 359, 56] | 597; 0 | band (region bottom 64, nav top 597) | 56×35, 9/9 | rows 10→9→10 tapped  | 0/33 | 1 |
 | fix | 375x667@2:light:100 | import | 2320 / — | 371 | 486 | 115 | [10, 398, 355, 56] / [8, 390, 359, 64] | 597; 0 | band (region bottom 454, nav top 597) | 57×36, 9/9 | brews 83→86→83 [confirm retries None; sheet buttons ['', 'Addkeep what’s here', 'Replaceswap it all', 'Cancel', 'Add']] tapped  | 0/20 | None |
-| control | 375x667@2:light:100 | history last | 3360 / 10 (None) | 1063 | 852 | -211 | [77, 552, 221, 49] / [16, 533, 343, 52] | 597; 0 | R-3 fallback (region bottom = nav top − 14) | 55×34, 9/9 | rows 10→9→10 tapped  | 7/32 {'after-Delete': 3, 'after-Undo': 4} ['A quiet brew, 13:45, 25 minutes, Full br', 'Nook', 'Settings', 'Show earlier days', 'Stats', 'Today'] | 1 |
-| control | 375x667@2:light:100 | history mid | 2880 / 10 (None) | 1413 | 1188 | -225 | [78, 553, 220, 49] / [16, 533, 343, 52] | 597; 0 | R-3 fallback (region bottom = nav top − 14) | 55×34, 9/9 | rows 10→9→10 tapped  | 9/35 {'after-Delete': 4, 'after-Undo': 5} ['Nook', 'Roadmap draft, 16:10, 50 minutes, Full b', 'Settings', 'Stats', 'Thesis chapter 3, 15:00, 25 minutes, Ful', 'Today'] | 1 |
+| control | 375x667@2:light:100 | history last | 3360 / 10 | 1063 | 852 | -211 | [77, 552, 221, 49] / [16, 533, 343, 52] | 597; 0 | R-3 fallback (region bottom = nav top − 14) | 55×34, 9/9 | rows 10→9→10 tapped  | 7/32 {'after-Delete': 3, 'after-Undo': 4} ['A quiet brew, 13:45, 25 minutes, Full br', 'Nook', 'Settings', 'Show earlier days', 'Stats', 'Today'] | 1 |
+| control | 375x667@2:light:100 | history mid | 2880 / 10 | 1413 | 1188 | -225 | [78, 553, 220, 49] / [16, 533, 343, 52] | 597; 0 | R-3 fallback (region bottom = nav top − 14) | 55×34, 9/9 | rows 10→9→10 tapped  | 9/35 {'after-Delete': 4, 'after-Undo': 5} ['Nook', 'Roadmap draft, 16:10, 50 minutes, Full b', 'Settings', 'Stats', 'Thesis chapter 3, 15:00, 25 minutes, Ful', 'Today'] | 1 |
 | control | 375x667@2:light:100 | import | 2320 / — | 393 | 170 | -223 | [22, 540, 331, 54] / [16, 529, 343, 57] | 597; 0 | R-3 fallback (region bottom = nav top − 14) | 56×35, 9/9 | brews 83→86→83 [confirm retries None; sheet buttons ['', 'Addkeep what’s here', 'Replaceswap it all', 'Cancel', 'Add']] tapped  | 17/19 {'after-Import': 3, 'after-Undo': 14} ['Import a backupAdd or restore from a Ket', 'Nook', 'Settings', 'Stats', 'Today'] | None |
-| fix | 375x667@2:light:200 | history last | 4769 / 10 (None) | None | None | — | None / None | 586; 0 | — | None×None, None/9 | rows 10→10→10 no Undo drawn within 6 s  | 0/63 | 2 |
-| fix | 375x667@2:light:200 | history mid | 4769 / 10 (None) | None | None | — | None / None | 586; 0 | — | None×None, None/9 | rows 10→10→10 no Undo drawn within 6 s  | 0/65 | 2 |
-| fix | 375x667@2:light:200 | import | 4800 / — | None | None | — | None / None | None; None | — | None×None, None/9 | brews 83→None→None  page.waitForEvent: Timeout 8000ms exceeded while waiting for event "filechooser"
-=========================== logs ===========================
-waiting for event "filechooser"
-============================================================ | 0/0 | None |
-| control | 375x667@2:light:200 | history last | 4769 / 10 (None) | None | None | — | None / None | 586; 0 | — | None×None, None/9 | rows 10→10→10 no Undo drawn within 6 s  | 0/64 | 2 |
-| control | 375x667@2:light:200 | history mid | 4769 / 10 (None) | None | None | — | None / None | 586; 0 | — | None×None, None/9 | rows 10→10→10 no Undo drawn within 6 s  | 0/63 | 2 |
-| control | 375x667@2:light:200 | import | 4800 / — | None | None | — | None / None | None; None | — | None×None, None/9 | brews 83→None→None  page.waitForEvent: Timeout 8000ms exceeded while waiting for event "filechooser"
-=========================== logs ===========================
-waiting for event "filechooser"
-============================================================ | 0/0 | None |
-| fix | 390x844@2:light:200 | import | 4800 / — | None | None | — | None / None | None; None | — | None×None, None/9 | brews 83→None→None [confirm retries 4; sheet buttons []]  locator.textContent: Timeout 30000ms exceeded.
-Call log:
-[2m  - waiting for getByRole('button', { name: /^(Add|Restore|Replace)$/ }).last()[22m
- | 0/0 | None |
-| control | 390x844@2:light:200 | import | 4800 / — | None | None | — | None / None | None; None | — | None×None, None/9 | brews 83→None→None [confirm retries 4; sheet buttons []]  locator.textContent: Timeout 30000ms exceeded.
-Call log:
-[2m  - waiting for getByRole('button', { name: /^(Add|Restore|Replace)$/ }).last()[22m
- | 0/0 | None |
+| fix | 375x667@2:light:200 | history last | 4769 / 10 | None | None | — | None / None | 586; 0 | — | None×None, None/9 | rows 10→10→10 no Undo drawn within 6 s  | 0/63 | 2 |
+| fix | 375x667@2:light:200 | history mid | 4769 / 10 | None | None | — | None / None | 586; 0 | — | None×None, None/9 | rows 10→10→10 no Undo drawn within 6 s  | 0/65 | 2 |
+| fix | 375x667@2:light:200 | import | 4800 / — | None | None | — | None / None | None; None | — | None×None, None/9 | brews 83→None→None  page.waitForEvent: Timeout 8000ms exceeded while waiting for event "filechooser" =========================== logs =========================== waiting for event "filechooser" ============================================================ | 0/0 | None |
+| control | 375x667@2:light:200 | history last | 4769 / 10 | None | None | — | None / None | 586; 0 | — | None×None, None/9 | rows 10→10→10 no Undo drawn within 6 s  | 0/64 | 2 |
+| control | 375x667@2:light:200 | history mid | 4769 / 10 | None | None | — | None / None | 586; 0 | — | None×None, None/9 | rows 10→10→10 no Undo drawn within 6 s  | 0/63 | 2 |
+| control | 375x667@2:light:200 | import | 4800 / — | None | None | — | None / None | None; None | — | None×None, None/9 | brews 83→None→None  page.waitForEvent: Timeout 8000ms exceeded while waiting for event "filechooser" =========================== logs =========================== waiting for event "filechooser" ============================================================ | 0/0 | None |
+| fix | 390x844@2:light:200 | import | 4800 / — | None | None | — | None / None | None; None | — | None×None, None/9 | brews 83→None→None [confirm retries 4; sheet buttons []]  locator.textContent: Timeout 30000ms exceeded. Call log:   - waiting for getByRole('button', { name: /^(Add/Restore/Replace)$/ }).last()  | 0/0 | None |
+| control | 390x844@2:light:200 | import | 4800 / — | None | None | — | None / None | None; None | — | None×None, None/9 | brews 83→None→None [confirm retries 4; sheet buttons []]  locator.textContent: Timeout 30000ms exceeded. Call log:   - waiting for getByRole('button', { name: /^(Add/Restore/Replace)$/ }).last()  | 0/0 | None |
 
 **Harness gaps (both sides, not product results):**
 - **375×667 @200 History, last and mid, fix and control:**
