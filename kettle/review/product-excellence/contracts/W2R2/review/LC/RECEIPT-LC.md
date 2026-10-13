@@ -9,6 +9,16 @@ Reviewer: Lane C (check runner; raw numbers only, no verdicts and no visual judg
 - **How the high tier was forced (as the packet does):** Settings `3D = high` set through `__kettle.settings` then a reload (the spec's method), plus `?nookq=high` for the PRESERVE 8 and perf runs (the packet's capture method). Default path = no forcing at all. `?debug&seed=veteran&theme=...&nooktime=...&nookweather=clear` for setup only.
 - **Engine reads:** `window.__nook` (the engine, debug only) and `window.__chai3d.status()`. Chai facts are read from `__nook.chai.root` and the scene graph (visible meshes, `morphTargetInfluences` / `morphTargetDictionary`, `userData`), not from the maker's own spec helpers.
 
+## Facts at a glance (each is backed by a table below; no verdict)
+
+1. Hashes: source, runtime copy, bundled `chai-B-OZIeNI.glb` and the bytes served by :5453 all equal `b401bc6c...463d7e`. No change under `art-src/` or `src/art/` since `68caa31`.
+2. Default path (no forcing, SwiftShader machine): tier `low`, procedural Chai, 0 page-level `.glb` requests at 390x844, 1440x900 and 390x844 with mobile emulation; the service worker's precache nevertheless holds `chai-B-OZIeNI.glb` (119 entries).
+3. Forced high tier: model ready (status.ms) in 22 to 39 ms (45,572 B), 1 `.glb` request, awake = `eyes_open` / nap = `eyes_sleep` + `nap` key 1 on both body primitives + yuzu at rest + `nap_offset` / sip = `eyes_sip` + `paws_mug`; root scale 1.12 and position (-0.95, 0.255, 1.15) in all poses; loaf scale never near (1.1, 0.84, 1.06); nap key and that scale never together; placement gap p05 about -0.016 (awake, sip) / -0.021 (nap), nap with 0 to 2 underside vertices beyond the rim by at most 0.0011.
+4. Fallbacks (404, abort, 12 s delay, corrupt, HTML 200, 3D off, low tier): final Chai procedural / static as expected, 0 pageerrors, 0 bad 100 ms samples. Context loss: 4.4 s unusable engine with the static drawing mounted, rebuilt with the model and no second request.
+5. Offline: model served from the service worker (`fromServiceWorker: true`); uncached-offline not isolated by this harness (as in the packet).
+6. PRESERVE 8: the unlock card's engine is `procedural` in both builds at default and forced-high tiers, same camera (zoom 0.125, fitTarget identical), Chai out of frame (NDC x -10.26 at 390, -7.69 at 1440); pixel differences control vs C are listed with bounding boxes (1440x900 default and high settled frames: inside x 942..1367, y 145..384, which is the close-up canvas area of the card in the screenshot; 390x844: boxes listed, not checked against the layout); frames are not time-synchronised.
+7. Perf (high tier, 2 runs each, load 14 to 16): sync frame ms medians 530 (control) / 569 (C procedural) / 562 (C model); draw calls 161 / 161 / 155, triangles 128,792 / 128,792 / 125,500, programs 19 / 19 / 25, textures 10 / 10 / 12, geometries 114 / 114 / 111; JS heap 10.25 / 10.39 / 10.81 MB; process-tree RSS 671 / 675 / 685 MB.
+
 ## Times (UTC, 2026-10-13) and commands
 
 | Job | Start to end | Command |
@@ -166,8 +176,17 @@ Sampler: in-page, every 100 ms from page start, reads the engine scene: Chai roo
 - Both offline variants returned the model from the service worker (`fromServiceWorker: true`, 200). In variant B (the `chai-*.glb` entry deleted from the precache before going offline) the worker made its own network request for the glb at 10:45:14 and it **succeeded**: there is no failed request in the worker log, so `setOffline(true)` (with `PW_EXPERIMENTAL_SERVICE_WORKER_NETWORK_EVENTS=1` as well) did not cut the worker's own fetch here. As in the packet, a real offline cache miss is **not isolated** by this harness; the 404 / abort cases above are the same code path (`fetch` rejects or returns non-ok -> procedural stays).
 - The precache install fetched the glb on a visit that never used the model: Check 2 (default path, low tier on this machine) shows `chai-B-OZIeNI.glb` in `workbox-precache-v2` (119 entries) and no page-level glb request.
 
+### Check 4 notes
 
-### Check 6: PRESERVE 8, summary unlock close-up (celebrate seed, "Put the kettle on", `finish()`), control :5430 vs C :5453; 1 s of DPR 1; light/day, frozen start clock
+- **Sampling.** The in-page sampler asks for 100 ms but the main thread is busy with the CPU rasterizer: the largest gap between consecutive samples in the first 3 s after the engine appeared was 174 to 461 ms (column "first 3 s", max gap). In every case the samples that exist show the Chai root in the scene, shown, with visible meshes, and the engine usable (0 bad), except the context-loss window (engine `usable` false, 42 samples). Whole-run gaps up to 6 s (404 / abort cases) are the Home -> Nook re-entry step, where `__nook` does not exist.
+- **No swap observed.** On this machine the model (35 ms load) is parsed before the first compile finishes, so with a healthy network the first sampled engine already carries the model (`kindTransitions` has a single `model` entry); a procedural -> model swap on a running engine was therefore not sampled. The failure cases show a single `procedural` entry from the first sample to the end.
+- **Slow network (12 s hold, 8 s timeout):** status `loading` then `failed: timeout (8000 ms)`; the held request later completes (`net::ERR_ABORTED` is recorded for it); the Chai stays procedural for the rest of the run (32 s observation); 1 glb request.
+- **Re-requests.** After a 404 / abort the page re-requests the file on later mounts: `.glb` request count 2 after the initial load, 5 after one Home -> Nook round trip (404 case: responses 404 x5; abort case: `net::ERR_FAILED` x5). `chaiLoad.ts` documents this ("a network failure or a timeout is not cached, so the next mount tries again"). Corrupt (junk bytes, 200) and HTML-200 bodies: 2 requests in the page's life (initial load and the page reload of the harness), status `failed: SyntaxError ... is not valid JSON`, procedural stays; re-entry after those two was not run. By the code in `chaiLoad.ts`, only a `ChaiModelError` (validation failure) sets `rejected` for the page's life; a parse `SyntaxError` does not.
+- **3D off (`08-3d-off`):** the room host has `data-scene-static="true"`, 0 canvases, 0 `.glb` requests, no engine (`__nook` absent), no pageerrors. The harness waited 200 s for `data-scene-ready="true"` (which the static host does not set) before reading it, hence its long wall time.
+- **Low tier (`09-low-tier`):** engine `quality` low, `chaiKind` procedural, status `idle` (the load never starts), 0 `.glb` requests.
+
+
+### Check 6: PRESERVE 8, summary unlock close-up (celebrate seed, "Put the kettle on", `finish()`), control :5430 vs C :5453; DPR 1, light/day, frozen start clock
 
 Frames are page screenshots; "started/done" are ms after `finish()` (a screenshot under this CPU renderer takes seconds, so the frame is taken somewhere between started and done). Engine facts are read at the moment the screenshot starts (`window.__nook` = the last mounted engine).
 
@@ -302,10 +321,11 @@ Run 1 test lines:
 
 ### Capture and evidence list (all under `contracts/W2R2/review/LC/`)
 
-Total 26.8 MB in 117 files.
+Total 26.9 MB in 119 files.
 
 | File | KB |
 |---|---|
+| `RECEIPT-LC.md` | 56 |
 | `c1-precache-manifest.json` | 1 |
 | `c1-validate-glb.json` | 2 |
 | `c8-vitest-chaiModel.txt` | 0 |
@@ -421,5 +441,6 @@ Total 26.8 MB in 117 files.
 | `c6/unlock-runs.json` | 53 |
 | `c7/perf-high-run1-FAKECLOCK-invalid-live.json` | 1 |
 | `c7/perf-high.json` | 9 |
-| `c8/spec-run1.txt` | 2 |
+| `c8/spec-run1.txt` | 5 |
+| `c8/spec-run2.txt` | 0 |
 | `c8/spec-times.txt` | 0 |
