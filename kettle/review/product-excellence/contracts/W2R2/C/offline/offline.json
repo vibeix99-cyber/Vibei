@@ -1,0 +1,119 @@
+{
+ "base": "http://127.0.0.1:5433",
+ "runs": [
+  {
+   "variant": "precached",
+   "precache": {
+    "entries": 129,
+    "glb": [
+     "/assets/chai-B-OZIeNI.glb"
+    ]
+   },
+   "offlineNook": {
+    "chaiKind": "model",
+    "status": {
+     "state": "ready",
+     "ms": 12,
+     "bytes": 45572
+    },
+    "online": false
+   },
+   "glbRequests": [
+    {
+     "url": "/assets/chai-B-OZIeNI.glb",
+     "fromSWContext": false
+    },
+    {
+     "response": 200,
+     "fromServiceWorker": false
+    },
+    {
+     "url": "/assets/chai-B-OZIeNI.glb",
+     "fromSWContext": false
+    },
+    {
+     "response": 200,
+     "fromServiceWorker": true
+    }
+   ],
+   "errors": []
+  },
+  {
+   "variant": "glb-evicted-from-cache",
+   "precache": {
+    "entries": 129,
+    "glb": [
+     "/assets/chai-B-OZIeNI.glb"
+    ]
+   },
+   "evicted": 1,
+   "offlineNook": {
+    "chaiKind": "model",
+    "status": {
+     "state": "ready",
+     "ms": 198,
+     "bytes": 45572
+    },
+    "online": false
+   },
+   "glbRequests": [
+    {
+     "url": "/assets/chai-B-OZIeNI.glb",
+     "fromSWContext": false
+    },
+    {
+     "response": 200,
+     "fromServiceWorker": false
+    },
+    {
+     "url": "/assets/chai-B-OZIeNI.glb",
+     "fromSWContext": false
+    },
+    {
+     "response": 200,
+     "fromServiceWorker": true
+    }
+   ],
+   "errors": []
+  },
+  {
+   "variant": "glb-evicted-no-http-cache",
+   "precache": {
+    "entries": 129,
+    "glb": [
+     "/assets/chai-B-OZIeNI.glb"
+    ]
+   },
+   "evicted": 1,
+   "httpCache": "cleared + disabled",
+   "offlineNook": {
+    "chaiKind": "model",
+    "status": {
+     "state": "ready",
+     "ms": 31,
+     "bytes": 45572
+    },
+    "online": false
+   },
+   "glbRequests": [
+    {
+     "url": "/assets/chai-B-OZIeNI.glb",
+     "fromSWContext": false
+    },
+    {
+     "response": 200,
+     "fromServiceWorker": false
+    },
+    {
+     "url": "/assets/chai-B-OZIeNI.glb",
+     "fromSWContext": false
+    },
+    {
+     "response": 200,
+     "fromServiceWorker": true
+    }
+   ],
+   "errors": []
+  }
+ ]
+}

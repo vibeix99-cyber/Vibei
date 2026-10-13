@@ -1,0 +1,135 @@
+
+Running 14 tests using 1 worker
+
+  ✘   1 [chromium] › tests/chai3d.spec.ts:68:3 › 3D Chai: the model replaces the procedural Chai › high tier: loads, validates and swaps in place, awake = eyes_open, on the cushion (21.9s)
+  ✘   2 [chromium] › tests/chai3d.spec.ts:81:3 › 3D Chai: fallbacks keep the procedural Chai › 404: procedural Chai, no error, the room is live (41.2s)
+  ✓   3 [chromium] › tests/chai3d.spec.ts:94:3 › 3D Chai: fallbacks keep the procedural Chai › slow network: the first frame is the procedural Chai; after 8 s the load gives up and it stays (33.1s)
+  ✘   4 [chromium] › tests/chai3d.spec.ts:110:3 › 3D Chai: fallbacks keep the procedural Chai › a file that fails validation (the r0 model: no eyes_sip) keeps the procedural Chai (46.4s)
+  ✓   5 [chromium] › tests/chai3d.spec.ts:123:3 › 3D Chai: fallbacks keep the procedural Chai › 3D off: the static drawing, no engine, no model request (7.0s)
+  ✓   6 [chromium] › tests/chai3d.spec.ts:132:3 › 3D Chai: fallbacks keep the procedural Chai › low tier: the procedural Chai, no model request (22.6s)
+  ✘   7 [chromium] › tests/chai3d.spec.ts:142:3 › 3D Chai: fallbacks keep the procedural Chai › WebGL context lost and restored: the engine is rebuilt with the model from memory, no second request (52.0s)
+  ✓   8 [chromium] › tests/w2-room.spec.ts:87:3 › Focus backdrop: earned items without the live 3D room › 3D off: the window still shows every earned window-visible item (29.8s)
+  ✓   9 [chromium] › tests/w2-room.spec.ts:96:3 › Focus backdrop: earned items without the live 3D room › 3D loading: the still shown before the engine is ready carries the same items (26.2s)
+  ✓  10 [chromium] › tests/w2-room.spec.ts:111:3 › Focus backdrop: earned items without the live 3D room › items never stand on the bare sky: no layer is drawn before the base room still has decoded (33.5s)
+  ✓  11 [chromium] › tests/w2-room.spec.ts:144:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items (57.8s)
+  ✓  12 [chromium] › tests/w2-room.spec.ts:166:3 › Nook hint tells the truth › 3D off: no drag-and-tap promise over the drawing (6.8s)
+  ✓  13 [chromium] › tests/w2-room.spec.ts:176:3 › Nook hint tells the truth › no WebGL: the same truthful hint (5.9s)
+  ✓  14 [chromium] › tests/w2-room.spec.ts:192:3 › Nook hint tells the truth › 3D on: the hint is unchanged (7.3s)
+
+
+  1) [chromium] › tests/chai3d.spec.ts:68:3 › 3D Chai: the model replaces the procedural Chai › high tier: loads, validates and swaps in place, awake = eyes_open, on the cushion 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m1[39m
+    Received: [31m2[39m
+
+      74 |     const f = await chaiFacts(page);
+      75 |     expect(f).toMatchObject({ model: true, parts: ['eyes_open'], nap: [0, 0], inScene: true, proxyOnChai: true, baseY: 0.255, scale: 1.12 });
+    > 76 |     expect(reqs.length).toBe(1);
+         |                         ^
+      77 |   });
+      78 | });
+      79 |
+        at /home/user/wt/w3c/kettle/tests/chai3d.spec.ts:76:25
+
+    Error Context: test-results/chai3d-3D-Chai-the-model-r-49800-ke-eyes-open-on-the-cushion-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/chai3d-3D-Chai-the-model-r-49800-ke-eyes-open-on-the-cushion-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/chai3d-3D-Chai-the-model-r-49800-ke-eyes-open-on-the-cushion-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/chai3d.spec.ts:81:3 › 3D Chai: fallbacks keep the procedural Chai › 404: procedural Chai, no error, the room is live 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m"[7mfa[27mile[7md[27m"[39m
+    Received: [31m"i[7md[27mle"[39m
+
+    Call Log:
+    - Timeout 20000ms exceeded while waiting on the predicate
+
+      85 |     await nook(page, 'high');
+      86 |     await expect(host(page)).toHaveAttribute('data-scene-ready', 'true', { timeout: 60_000 });
+    > 87 |     await expect.poll(() => status(page).then((s) => s?.state), { timeout: 20_000 }).toBe('failed');
+         |     ^
+      88 |     expect((await status(page)).reason).toMatch(/404/);
+      89 |     expect(await chaiKind(page)).toBe('procedural');
+      90 |     expect((await chaiFacts(page)).model).toBe(false);
+        at /home/user/wt/w3c/kettle/tests/chai3d.spec.ts:87:5
+
+    Error Context: test-results/chai3d-3D-Chai-fallbacks-k-09119-i-no-error-the-room-is-live-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/chai3d-3D-Chai-fallbacks-k-09119-i-no-error-the-room-is-live-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/chai3d-3D-Chai-fallbacks-k-09119-i-no-error-the-room-is-live-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/chai3d.spec.ts:110:3 › 3D Chai: fallbacks keep the procedural Chai › a file that fails validation (the r0 model: no eyes_sip) keeps the procedural Chai 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m"[7mfa[27mile[7md[27m"[39m
+    Received: [31m"i[7md[27mle"[39m
+
+    Call Log:
+    - Timeout 20000ms exceeded while waiting on the predicate
+
+      116 |     await nook(page, 'high');
+      117 |     await expect(host(page)).toHaveAttribute('data-scene-ready', 'true', { timeout: 60_000 });
+    > 118 |     await expect.poll(() => status(page).then((s) => s?.state), { timeout: 20_000 }).toBe('failed');
+          |     ^
+      119 |     expect((await status(page)).reason).toMatch(/invalid: missing node "eyes_sip"|SyntaxError|Unexpected|glTF|magic/i);
+      120 |     expect(await chaiKind(page)).toBe('procedural');
+      121 |   });
+        at /home/user/wt/w3c/kettle/tests/chai3d.spec.ts:118:5
+
+    Error Context: test-results/chai3d-3D-Chai-fallbacks-k-bae96-p-keeps-the-procedural-Chai-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/chai3d-3D-Chai-fallbacks-k-bae96-p-keeps-the-procedural-Chai-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/chai3d-3D-Chai-fallbacks-k-bae96-p-keeps-the-procedural-Chai-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests/chai3d.spec.ts:142:3 › 3D Chai: fallbacks keep the procedural Chai › WebGL context lost and restored: the engine is rebuilt with the model from memory, no second request 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m1[39m
+    Received: [31m2[39m
+
+      157 |     expect(await chaiKind(page)).toBe('model');
+      158 |     expect((await chaiFacts(page)).parts).toEqual(['eyes_open']);
+    > 159 |     expect(reqs.length).toBe(1);
+          |                         ^
+      160 |   });
+      161 | });
+      162 |
+        at /home/user/wt/w3c/kettle/tests/chai3d.spec.ts:159:25
+
+    Error Context: test-results/chai3d-3D-Chai-fallbacks-k-b833c-om-memory-no-second-request-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/chai3d-3D-Chai-fallbacks-k-b833c-om-memory-no-second-request-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/chai3d-3D-Chai-fallbacks-k-b833c-om-memory-no-second-request-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [chromium] › tests/chai3d.spec.ts:68:3 › 3D Chai: the model replaces the procedural Chai › high tier: loads, validates and swaps in place, awake = eyes_open, on the cushion 
+    [chromium] › tests/chai3d.spec.ts:81:3 › 3D Chai: fallbacks keep the procedural Chai › 404: procedural Chai, no error, the room is live 
+    [chromium] › tests/chai3d.spec.ts:110:3 › 3D Chai: fallbacks keep the procedural Chai › a file that fails validation (the r0 model: no eyes_sip) keeps the procedural Chai 
+    [chromium] › tests/chai3d.spec.ts:142:3 › 3D Chai: fallbacks keep the procedural Chai › WebGL context lost and restored: the engine is rebuilt with the model from memory, no second request 
+  10 passed (7.2m)

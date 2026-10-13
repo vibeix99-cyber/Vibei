@@ -7,6 +7,7 @@
  * chunk; `scene/index.tsx` reaches it through a dynamic import.
  */
 import { NookEngine, nextTask, type EngineState, type Quality } from './engine/Engine';
+import { chaiModelWanted, readyChai, startChaiLoad } from './chaiHost';
 
 export interface EngineSpec {
   quality: Quality;
@@ -42,6 +43,7 @@ export function prewarm(spec: EngineSpec, state: Partial<EngineState>): void {
     engine.setState(state);
     // New items may bring new materials: compile those too (the rest are cache hits).
     slot.ready = slot.ready.then((ok) => ok && engine.warm(nextTask));
+    upgradeWhileWarm(engine, spec);
     return;
   }
   slot?.engine.dispose();
@@ -55,7 +57,15 @@ export function prewarm(spec: EngineSpec, state: Partial<EngineState>): void {
   const { items, ...rest } = state;
   // Items get a task of their own; then shaders compile a few per task; then one
   // tiny frame builds the shadow map (+ its depth programs).
-  const compiled = engine.warm(nextTask, () => items && engine.setState({ items }));
+  // The warm engine goes on to the summary and the Nook (stash → adopt), so it carries the 3D Chai when wanted:
+  // built in the same sliced compile when the model is already parsed (usually: `preloadChai` started it before
+  // the page settled), otherwise swapped in while it is still parked here.
+  const wantChai = chaiModelWanted(spec.quality);
+  const compiled = engine.warm(nextTask, () => {
+    if (items) engine.setState({ items });
+    const tpl = wantChai ? readyChai() : null;
+    if (tpl) engine.useChaiModel(tpl);
+  });
   engine.setState(rest);
   engine.setSize(64, 64, 1); // tiny drawing buffer until a host sizes it
   const ready = compiled.then(async (ok) => {
@@ -65,6 +75,22 @@ export function prewarm(spec: EngineSpec, state: Partial<EngineState>): void {
     return true;
   });
   slot = { engine, key, ready };
+  upgradeWhileWarm(engine, spec);
+}
+
+/** Start the model load early (Home idle), so a prewarm usually finds it parsed. */
+export function preloadChai(spec: Pick<EngineSpec, 'quality'>): void {
+  if (chaiModelWanted(spec.quality)) void startChaiLoad();
+}
+
+/** Swap the model into a parked engine once it loads; only while it is still parked (an adopter owns it after). */
+function upgradeWhileWarm(engine: NookEngine, spec: EngineSpec) {
+  if (!chaiModelWanted(spec.quality) || engine.chaiKind === 'model') return;
+  void startChaiLoad().then((tpl) => {
+    const s = slot;
+    if (!tpl || !s || s.engine !== engine || engine.chaiKind === 'model') return;
+    s.ready = s.ready.then((ok) => ok && engine.upgradeChai(tpl).then(() => true));
+  });
 }
 
 /**

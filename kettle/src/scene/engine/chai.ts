@@ -5,6 +5,9 @@
  * apart, tiny ears on the top corners, rosy blush, and a yuzu on top.
  * Poses: 'nap' (focus: melted loaf, eyes closed, zZ), 'sip' (break: happy eyes,
  * holding a mug), 'awake' (idle / showcase: blinks, yuzu wobbles).
+ *
+ * Since I06 this is the first frame and the fallback: the Blender Chai (chaiModel.ts, the same `Chai` interface)
+ * replaces it in place once loaded and validated (Engine.useChaiModel; when, see chaiHost.ts).
  */
 import { Color, Group, Sprite, SpriteMaterial, Vector3 } from 'three';
 import { Kit, group } from './kit';

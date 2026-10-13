@@ -40,7 +40,8 @@ export default defineConfig({
       },
       injectManifest: {
         // App shell + self-hosted fonts + icons + the lazy three.js chunk → fully offline.
-        globPatterns: ['**/*.{js,css,html,svg,png,webp,ico,woff2}'],
+        // `glb`: the 3D Chai (45.6 KB, content-hashed), so the offline Nook shows the same Chai as online.
+        globPatterns: ['**/*.{js,css,html,svg,png,webp,ico,woff2,glb}'],
         maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
       },
       devOptions: { enabled: false }, // never a service worker in dev
@@ -61,6 +62,9 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
+          // The glTF loader + meshopt decoder are only for the 3D Chai (scene/engine/chaiLoad.ts, a dynamic
+          // import): their own chunk, so the room's first frame never parses them.
+          if (/node_modules\/three\/examples\/jsm\/(loaders\/GLTFLoader|libs\/meshopt_decoder)/.test(id)) return 'three-gltf';
           if (id.includes('node_modules/three')) return 'three';
           return undefined;
         },

@@ -7,6 +7,7 @@ import type { NookSceneProps } from './types';
 import { nextTask, type EngineState, type NookEngine } from './engine/Engine';
 import { DARK_DIM, backdropCss, debugOn, isMobileDevice, softwareGL, useDarkTheme, useDebugItems, useReducedMotion, useSceneTier, useSceneTime, useSceneWeather } from './resolve';
 import { SETTLE_MS, createEngine, settled, stash, takeWarm, type EngineSpec } from './warm';
+import { chaiModelWanted, chaiStatus, readyChai, startChaiLoad } from './chaiHost';
 import { NookStatic } from './Fallback';
 
 /** Canvas fade-in over the static nook. */
@@ -28,6 +29,13 @@ export default function NookScene(props: NookSceneProps) {
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
   const [generation, setGeneration] = useState(0);
+  // The 3D Chai (chaiHost.ts): wanted where Chai can be seen, never in the window view. A summary unlock close-up
+  // (not interactive, an item highlighted) never adds it itself: no extra compile before or during the close-up
+  // (PRESERVE 8); it shows the model only if the engine it adopts already carries it.
+  const closeUp = !interactive && !!highlightItem;
+  const chaiOn = chaiModelWanted(tier) && mode !== 'window';
+  const chaiRef = useRef({ chaiOn, closeUp });
+  chaiRef.current = { chaiOn, closeUp };
   const gate = useRef({ visible: true, onscreen: true });
   const latest = useRef({ paused, reduced });
   latest.current = { paused, reduced };
@@ -62,6 +70,9 @@ export default function NookScene(props: NookSceneProps) {
     const undo: (() => void)[] = [];
     const warm = takeWarm(spec);
 
+    // Fetch + parse the model while the static nook covers the entry animation (no GPU work).
+    if (chaiRef.current.chaiOn) void startChaiLoad();
+
     void (async () => {
       // The static nook covers the entry animation; GPU work (context, resize, first
       // frame) waits until it has settled so it never stalls the screen change.
@@ -80,8 +91,14 @@ export default function NookScene(props: NookSceneProps) {
           return;
         }
         const e = engine;
-        // Items in a task of their own, then shaders a few per task (no frame until done).
-        compiled = e.warm(nextTask, () => e.setState(latestState.current));
+        // Items in a task of their own, then shaders a few per task (no frame until done). A model already in
+        // memory (an earlier nook, or a context restore: no new request) joins this same pass; otherwise the
+        // procedural Chai is the first frame and the model follows once loaded (effect below).
+        compiled = e.warm(nextTask, () => {
+          e.setState(latestState.current);
+          const tpl = chaiRef.current.chaiOn && !chaiRef.current.closeUp ? readyChai() : null;
+          if (tpl) e.useChaiModel(tpl);
+        });
         e.setState({ ...latestState.current, items: [] });
       }
       const e = engine;
@@ -119,7 +136,10 @@ export default function NookScene(props: NookSceneProps) {
         setGeneration((g) => g + 1);
       };
       canvas.addEventListener('webglcontextrestored', onRestore);
-      if (debugOn()) (window as unknown as { __nook?: unknown }).__nook = e;
+      if (debugOn()) {
+        (window as unknown as { __nook?: unknown }).__nook = e;
+        (window as unknown as { __chai3d?: unknown }).__chai3d = { status: chaiStatus };
+      }
       undo.push(() => {
         ro.disconnect();
         io.disconnect();
@@ -156,6 +176,19 @@ export default function NookScene(props: NookSceneProps) {
     applyRun();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paused, reduced, ready]);
+
+  // ---- 3D Chai: after the first frame, swap the model in once it has loaded (the procedural Chai stays otherwise)
+  useEffect(() => {
+    const e = engineRef.current;
+    if (!ready || !chaiOn || closeUp || !e || e.chaiKind === 'model') return;
+    let alive = true;
+    void startChaiLoad().then((tpl) => {
+      if (alive && tpl && engineRef.current === e && e.usable) void e.upgradeChai(tpl);
+    });
+    return () => {
+      alive = false;
+    };
+  }, [ready, chaiOn, closeUp]);
 
   // Cross-fade: the static nook stays mounted under the canvas until the canvas has
   // fully faded in. Unmounting it the moment the first frame landed left only the
@@ -217,4 +250,4 @@ export default function NookScene(props: NookSceneProps) {
   );
 }
 
-export { prewarm, settled } from './warm';
+export { prewarm, preloadChai, settled } from './warm';

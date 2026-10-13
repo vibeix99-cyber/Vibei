@@ -64,6 +64,15 @@ export function useSceneWeather(prop?: SceneWeather): SceneWeather {
   return prop ?? weatherFromAmbient(ambient);
 }
 
+/**
+ * Debug override for the 3D Chai (`?debug&chai3d=model|procedural`): measure or capture either Chai on any tier.
+ * Null without `?debug` or when not given.
+ */
+export function chaiModelOverride(): 'model' | 'procedural' | null {
+  const v = debugParam('chai3d');
+  return v === 'model' || v === 'procedural' ? v : null;
+}
+
 /** Screenshot override for the unlocked set: ?nookitems=all|none|pothos,books */
 export function useDebugItems(items: string[]): string[] {
   const forced = debugParam('nookitems');

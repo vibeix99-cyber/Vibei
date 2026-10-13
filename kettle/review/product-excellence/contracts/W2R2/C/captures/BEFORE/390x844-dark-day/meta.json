@@ -1,0 +1,116 @@
+{
+ "label": "BEFORE",
+ "base": "http://127.0.0.1:5430",
+ "viewport": {
+  "w": 390,
+  "h": 844
+ },
+ "dpr": 3,
+ "theme": "dark",
+ "clock": "2026-10-11T07:40:00Z",
+ "query": "nookq=high",
+ "startedAt": "2026-10-12T18:08:01.886Z",
+ "states": {
+  "10-nook-3d": {
+   "desc": "Nook, 3D (high tier), 4 s after ready",
+   "hash": "#/nook",
+   "chaiKind": "procedural (no field: control)",
+   "chai3d": null,
+   "stats": {
+    "calls": 163,
+    "triangles": 129137,
+    "geometries": 117,
+    "textures": 11,
+    "frameMs": 90.32142857142857,
+    "fps": 0
+   },
+   "hosts": [
+    {
+     "mode": "showcase",
+     "ready": "true",
+     "static": null
+    }
+   ]
+  },
+  "11-nook-chai-close": {
+   "desc": "Nook, the same camera direction moved in on Chai (debug camera; art review)",
+   "hash": "#/nook",
+   "chaiKind": "procedural (no field: control)",
+   "chai3d": null,
+   "stats": {
+    "calls": 117,
+    "triangles": 108584,
+    "geometries": 117,
+    "textures": 11,
+    "frameMs": 106.06896551724138,
+    "fps": 0
+   },
+   "hosts": [
+    {
+     "mode": "showcase",
+     "ready": "true",
+     "static": null
+    }
+   ]
+  },
+  "07-unlock-early": {
+   "desc": "Summary unlock, ~0.9 s after Done (drawing or hand-off)",
+   "hash": "#/done",
+   "chaiKind": "procedural (no field: control)",
+   "chai3d": null,
+   "stats": {
+    "calls": 0,
+    "triangles": 0,
+    "geometries": 0,
+    "textures": 0,
+    "frameMs": 0,
+    "fps": 0
+   },
+   "hosts": [
+    {
+     "mode": "window",
+     "ready": "true",
+     "static": null
+    },
+    {
+     "mode": "showcase",
+     "ready": "false",
+     "static": null
+    }
+   ]
+  },
+  "07-unlock": {
+   "desc": "Summary unlock close-up, 3.5 s after the scene was ready",
+   "hash": "#/done",
+   "chaiKind": "procedural (no field: control)",
+   "chai3d": null,
+   "stats": {
+    "calls": 94,
+    "triangles": 80601,
+    "geometries": 75,
+    "textures": 9,
+    "frameMs": 1.8,
+    "fps": 0
+   },
+   "hosts": [
+    {
+     "mode": "window",
+     "ready": "true",
+     "static": null
+    },
+    {
+     "mode": "showcase",
+     "ready": "true",
+     "static": null
+    }
+   ]
+  }
+ },
+ "errors": [],
+ "unlockTiming": {
+  "doneMs": 2233,
+  "mountedAfterDoneMs": 0,
+  "readyAfterDoneMs": 9280
+ },
+ "endedAt": "2026-10-12T18:09:42.315Z"
+}
