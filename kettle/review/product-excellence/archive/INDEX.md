@@ -32,3 +32,4 @@ Restore a chain in order with `git fetch <bundle> 'refs/heads/*:refs/heads/*'` (
 | `pe-w2r2-chai3d-2843fb0.incremental.bundle.part-NN` (+ `.sha256`) | pe/w2r2-chai3d@2843fb0 (W2R2 Maker C READY FOR REVIEW; code c698d74; includes assets/chai3d-r1@68caa31) | 15e8abe | okay 2026-10-13 |
 | `pe-w2r2-toast-4620796.incremental.bundle` | pe/w2r2-toast@4620796 (W2R2 Maker T, WIP at its deadline; code 8d0d8a6) | b377c62 | okay 2026-10-13 |
 | `pe-w2r2-toast-fix-6f9756c.incremental.bundle` | pe/w2r2-toast@6f9756c (W2R2 Maker T fix round, WIP; code 887696e) | 4620796 | okay 2026-10-13 |
+| `pe-w2r2-chai3d-low-6fb2136.incremental.bundle.part-00..01` (+ `.sha256`) | pe/w2r2-chai3d@6fb2136 (C with MODEL_ON_LOW=true per Vibei; code effe8c0) | 2843fb0 | okay 2026-10-13 |

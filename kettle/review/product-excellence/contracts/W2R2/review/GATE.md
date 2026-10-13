@@ -69,3 +69,14 @@
 **The orchestrator's handling:** targeted re-review now. Lane T (Opus) checks the §6 items on `a8fb34a` against the control, then the lead gives the final T verdict. There is no second fix round.
 
 **Final merged-tree regression** (integration `2f67fc1` = `b377c62` + P; C waits for Vibei; T pending): worktree `/home/user/wt/w3-final`, dev **:5447** (verified). Chromium, timer/pwa, tsc and vitest are running; logs go to `review/LR/final-merged-2f67fc1/`.
+
+## Vibei's sign-off on C, and the change before merge (2026-10-13 ~18:50 UTC)
+- **Decision:** Vibei signs off on C. Before the merge, `MODEL_ON_LOW` is set to true: the model has fewer triangles and draw calls than the procedural Chai.
+- **The change:** Maker C made it in **`effe8c0`** (kettle/src `276ad0e`), with an addendum at `6fb2136` (`C-LOW-ADDENDUM.md`, evidence in `C/low/`). Files: `src/scene/chaiHost.ts` (the flag, plus a comment), `src/scene/chaiHost.test.ts` (new), `src/scene/engine/chai.ts` (a comment) and `tests/chai3d.spec.ts` (the low-tier case now expects the model, and a new default-tier swap case counts 0 frames without Chai).
+- **The maker's results on the low tier:**
+  - tsc 0; vitest 286/286; chai3d 9/9; w2-room 7/7.
+  - The Nook now shows the model in all 6 configurations (light, dark and night at 390×844 and 1440×900). The unlock close-up is procedural on both builds (PRESERVE 8).
+  - Performance (390×844@3), model against procedural: ms/frame 159 vs 179, draw calls 108 vs 111, triangles 74,910 vs 76,752, +2 textures, +4 programs, +0.45 MB heap.
+- **Trial:** **`0f01c47`** = integration (app `2f67fc1`) + `6fb2136`, worktree `/home/user/wt/w4tr-c`, src `4556926`. Dev **:5460** (verified; the served `chaiHost.ts` matches the commit), preview **:5461**.
+- **Archive:** `archive/pe-w2r2-chai3d-low-6fb2136.incremental.bundle.part-00..01` (+ `.sha256`).
+- **Next:** Lane R (Sonnet) runs the targeted regression on `0f01c47`: fallback and room specs, default-tier behaviour, Nook and unlock captures, low-tier performance and memory, and timer/pwa. If it comes back clean, C merges.
