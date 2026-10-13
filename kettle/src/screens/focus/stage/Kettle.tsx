@@ -166,6 +166,7 @@ export function Kettle({ progress, state, addedFrom = 1, night = false, width, r
       data-state={state}
       data-reduced={reduced || undefined}
       data-night={night || undefined}
+      data-stage-figure="kettle"
       role="img"
       aria-label={label}
     >

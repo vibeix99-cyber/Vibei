@@ -13,6 +13,7 @@
  * Sizing: everything is laid out in `--u` units (min(container width, height) / 400, capped so the painted
  * Chai is never enlarged much beyond its source pixels on a 2× screen). The stage never changes position
  * between Focus, the whistle, the summary and the tea break, so nothing jumps or cross-fades.
+ * The kettle and Chai carry `data-stage-figure`: the summary's sheet measures their boxes and never opens over them.
  */
 import { useMemo, type CSSProperties } from 'react';
 import { PaintedChai, PAINTED, SHEET_MARGIN, SHEET_REF_H, type PaintedPose } from '@/art';
@@ -101,7 +102,7 @@ export function Stage({ state, progress, addedFrom = 1, chai, items, weather, re
         <span className={`${s.shadow} ${s.kShadow}`} />
         <span className={`${s.shadow} ${s.cShadow}`} />
         <Kettle className={s.kettle} progress={progress} state={state} addedFrom={addedFrom} night={night} reduced={reduced} width={KETTLE_W} />
-        <div className={s.chai} data-pose={chai}>
+        <div className={s.chai} data-pose={chai} data-stage-figure="chai">
           <PaintedChai pose={chai} size={CHAI_SIZE} faceBelow={0} />
         </div>
       </div>

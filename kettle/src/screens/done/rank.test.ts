@@ -4,7 +4,7 @@ import { clock } from '@/lib/clock';
 import { applyRecord, emptyData, type EngineContext } from '@/progress/engine';
 import { brew, setNow } from '@/progress/testkit';
 import type { CompletionReport, ProgressData, QuestSpec } from '@/progress/types';
-import { buildSummary, MILESTONES, rankRewards, type RewardPill } from './summary';
+import { buildSummary, COZY_MEANS, MILESTONES, rankRewards, WARM_RULE, warmNote, type RewardPill } from './summary';
 
 const TODAY = '2026-09-28';
 const ctx = (): EngineContext => ({ now: clock.now(), goalMin: 30, weekStartsOn: 1 });
@@ -91,7 +91,7 @@ describe('rankRewards — the order of milestones (biggest first; shaped from a 
     expect(k.secondary.filter((p) => p.kind === 'badge').map((p) => p.text)).toEqual(['Badge: Weekend Warmth', 'Badge: Warm Streak II']);
   });
 
-  it('a badge beats a Tea Cozy; its note is the badge’s own description', () => {
+  it('a badge beats a Tea Cozy; the warm-days badge says what was reached, in warm days (same tier threshold)', () => {
     const r = shape((r) => ({
       ...r,
       level: { ...r.level, before: 2, after: 2, unlocked: [] },
@@ -101,9 +101,22 @@ describe('rankRewards — the order of milestones (biggest first; shaped from a 
     const { k } = holdsEverything(r);
     expect(k.highlight?.kind).toBe('badge');
     expect(k.highlight?.pill?.text).toBe('Badge: Warm Streak II');
-    expect(k.highlight?.note).toBe('about warm-streak 2');
-    // A warm streak that is not a best is routine: it stays in the compact group.
+    // tier II of "Keep a {n}-day warm streak" is 7 days (progress/badges.ts)
+    expect(k.highlight?.note).toBe('7 warm days in a row');
+    // Warm days that are not a best are routine: they stay in the compact group.
     expect(k.secondary.some((p) => p.kind === 'streak' && p.text === '10 days warm')).toBe(true);
+  });
+
+  it('any other badge keeps its own description as its note', () => {
+    const r = shape((r) => ({
+      ...r,
+      level: { ...r.level, before: 2, after: 2, unlocked: [] },
+      streak: { ...r.streak, before: 9, after: 10, extended: true, newBest: false, best: 30, cozyEarned: false },
+      badges: [badge('weekend-warmth', 1)],
+    }));
+    const { k } = holdsEverything(r);
+    expect(k.highlight?.kind).toBe('badge');
+    expect(k.highlight?.note).toBe('about weekend-warmth 1');
   });
 
   it('a Tea Cozy alone is highlighted with what it does', () => {
@@ -115,7 +128,19 @@ describe('rankRewards — the order of milestones (biggest first; shaped from a 
     }));
     const { k } = holdsEverything(r);
     expect(k.highlight?.kind).toBe('cozy');
-    expect(k.highlight?.note).toBe('Keeps your streak warm for one missed day.');
+    expect(k.highlight?.note).toBe(COZY_MEANS);
+  });
+
+  it('the best warm days are highlighted with what keeps them going', () => {
+    const r = shape((r) => ({
+      ...r,
+      level: { ...r.level, before: 2, after: 2, unlocked: [] },
+      streak: { ...r.streak, before: 5, after: 6, extended: true, newBest: true, best: 6, cozyEarned: false },
+      badges: [],
+    }));
+    const { k } = holdsEverything(r);
+    expect(k.highlight?.kind).toBe('best');
+    expect(k.highlight?.note).toBe(WARM_RULE);
   });
 
   it('goal met, recipes and leaves are never the highlight', () => {
@@ -129,5 +154,34 @@ describe('rankRewards — the order of milestones (biggest first; shaped from a 
     const { m, k } = holdsEverything(r);
     expect(k.highlight).toBeNull();
     expect(k.secondary).toEqual(m.pills);
+  });
+});
+
+describe('words — Kettle’s own “warm days”, never “streak” (W2R2)', () => {
+  const base = () => applyRecord(start(), brew(TODAY, 15, 0), ctx()).report!;
+  it('in every pill, screen-reader line, note, the arithmetic’s closing line and the announcement', () => {
+    // Every streak-related reward at once: the most warm days yet, a Tea Cozy, a badge (catalogue names are data).
+    const r: CompletionReport = {
+      ...structuredClone(base()),
+      streak: { ...base().streak, before: 6, after: 7, extended: true, newBest: true, best: 7, cozyEarned: true },
+      badges: [{ id: 'weekend-warmth', tier: 1, title: 'Weekend Warmth', description: 'Focus on 2 weekend days' }],
+    };
+    const m = buildSummary(r);
+    const k = rankRewards(m, r);
+    const words = [
+      ...m.pills.flatMap((p) => [p.text, p.sr ?? '']),
+      m.announce,
+      k.highlight?.note ?? '',
+      COZY_MEANS,
+      WARM_RULE,
+      warmNote(0),
+      warmNote(r.streak.after),
+    ];
+    for (const w of words) expect(w, w).not.toMatch(/streak/i);
+    expect(m.pills.find((p) => p.kind === 'streak')?.text).toBe('7 days warm, your best yet');
+    expect(m.announce).toContain('7 days warm.');
+    expect(warmNote(23)).toBe('23 days warm. One full brew a day keeps the kettle warm.');
+    expect(warmNote(1)).toBe('1 day warm. One full brew a day keeps the kettle warm.');
+    expect(m.pills.find((p) => p.kind === 'cozy')?.sr).toBe('You earned a Tea Cozy: it covers one missed day, so your warm days keep going');
   });
 });
