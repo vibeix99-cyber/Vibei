@@ -1,0 +1,233 @@
+{
+ "tag": "trial-to-trial-390x844",
+ "exporter": "http://127.0.0.1:5485",
+ "importer": "http://127.0.0.1:5485",
+ "viewport": {
+  "W": 390,
+  "H": 844
+ },
+ "startedAt": "2026-10-13T20:32:06.480Z",
+ "errors": [],
+ "export1": {
+  "file": "/home/user/Vibei/kettle/review/product-excellence/contracts/W2R3/review/LB/backup-trial-to-trial-390x844-1-exported.json",
+  "suggested": "kettle-backup-2026-10-11.json",
+  "keys": [
+   "app",
+   "kind",
+   "schema",
+   "exportedAt",
+   "progress",
+   "settings"
+  ],
+  "schema": 2,
+  "progressKeys": [
+   "sessions",
+   "ledger",
+   "leaves",
+   "cozies",
+   "dayGoals",
+   "quests",
+   "badges",
+   "tombstones",
+   "lastReport",
+   "rev",
+   "epoch"
+  ],
+  "lastReport": null,
+  "badges": {
+   "first-brew": {
+    "tier": 1,
+    "unlockedAt": [
+     1790793031000
+    ]
+   },
+   "nook-builder": {
+    "tier": 3,
+    "unlockedAt": [
+     1790793031000,
+     1791210631000,
+     1791626431000
+    ]
+   },
+   "leaf-collector": {
+    "tier": 2,
+    "unlockedAt": [
+     1791210631000,
+     1791626431000
+    ]
+   },
+   "goal-getter": {
+    "tier": 1,
+    "unlockedAt": [
+     1791210631000
+    ]
+   },
+   "intentional": {
+    "tier": 1,
+    "unlockedAt": [
+     1791280831000
+    ]
+   },
+   "warm-streak": {
+    "tier": 2,
+    "unlockedAt": [
+     1791367231000,
+     1791734101801
+    ]
+   },
+   "tea-time": {
+    "tier": 1,
+    "unlockedAt": [
+     1791367231000
+    ]
+   },
+   "weekend-warmth": {
+    "tier": 1,
+    "unlockedAt": [
+     1791734101801
+    ]
+   }
+  },
+  "hasTitleStringInFile": false
+ },
+ "export1_vs_storedState": {
+  "badgesEqual": true,
+  "diffs": []
+ },
+ "importSheet": "Restore this backup? IN THIS BACKUP · saved 11 Oct 2026 12 brews over 9 days Cozy level 8 · 723 leaves 30 Sept 2026 to 11 Oct 2026 Restores your brews, leaves and settings from the backup. Cancel Restore",
+ "afterImport": {
+  "badges": {
+   "first-brew": {
+    "tier": 1,
+    "unlockedAt": [
+     1790793031000
+    ]
+   },
+   "nook-builder": {
+    "tier": 3,
+    "unlockedAt": [
+     1790793031000,
+     1791210631000,
+     1791626431000
+    ]
+   },
+   "leaf-collector": {
+    "tier": 2,
+    "unlockedAt": [
+     1791210631000,
+     1791626431000
+    ]
+   },
+   "goal-getter": {
+    "tier": 1,
+    "unlockedAt": [
+     1791210631000
+    ]
+   },
+   "intentional": {
+    "tier": 1,
+    "unlockedAt": [
+     1791280831000
+    ]
+   },
+   "warm-streak": {
+    "tier": 2,
+    "unlockedAt": [
+     1791367231000,
+     1791734101801
+    ]
+   },
+   "tea-time": {
+    "tier": 1,
+    "unlockedAt": [
+     1791367231000
+    ]
+   },
+   "weekend-warmth": {
+    "tier": 1,
+    "unlockedAt": [
+     1791734101801
+    ]
+   }
+  },
+  "badgesEqualExported": true,
+  "diffsVsExported": [],
+  "lastReport": null,
+  "hasTitleStringInStorage": null
+ },
+ "statsAfterImport": {
+  "aria": "Warm Days, tier 2 of 5. 7 of 14 toward the next tier.",
+  "text": "7 II Warm Days Tier II 7 of 14"
+ },
+ "export2": {
+  "file": "/home/user/Vibei/kettle/review/product-excellence/contracts/W2R3/review/LB/backup-trial-to-trial-390x844-2-reexported.json",
+  "badges": {
+   "first-brew": {
+    "tier": 1,
+    "unlockedAt": [
+     1790793031000
+    ]
+   },
+   "nook-builder": {
+    "tier": 3,
+    "unlockedAt": [
+     1790793031000,
+     1791210631000,
+     1791626431000
+    ]
+   },
+   "leaf-collector": {
+    "tier": 2,
+    "unlockedAt": [
+     1791210631000,
+     1791626431000
+    ]
+   },
+   "goal-getter": {
+    "tier": 1,
+    "unlockedAt": [
+     1791210631000
+    ]
+   },
+   "intentional": {
+    "tier": 1,
+    "unlockedAt": [
+     1791280831000
+    ]
+   },
+   "warm-streak": {
+    "tier": 2,
+    "unlockedAt": [
+     1791367231000,
+     1791734101801
+    ]
+   },
+   "tea-time": {
+    "tier": 1,
+    "unlockedAt": [
+     1791367231000
+    ]
+   },
+   "weekend-warmth": {
+    "tier": 1,
+    "unlockedAt": [
+     1791734101801
+    ]
+   }
+  },
+  "badgesEqualExport1": true,
+  "wholeFileDiffVsExport1": [
+   {
+    "path": "/progress/rev",
+    "a": "22",
+    "b": "23"
+   },
+   {
+    "path": "/progress/epoch",
+    "a": "\"e_mv3ijf2q1746f94c\"",
+    "b": "\"e_mv3jywxsec59d485\""
+   }
+  ]
+ },
+ "finishedAt": "2026-10-13T20:32:16.009Z"
+}
