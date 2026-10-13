@@ -54,3 +54,18 @@
 
 ## Combined trial for Lane R (P merged + C)
 **`032d7a5`** = integration `2f67fc1` + `pe/w2r2-chai3d@2843fb0`, worktree `/home/user/wt/w3tr-pc`, src `c9876ef`. Dev **:5445**, preview **:5455**, both verified. T joins only if it is approved.
+
+## Maker T fix round (after REJECT T-D1…T-D6): submitted WIP, 2026-10-13 ~13:30 UTC
+
+| Item | Result |
+|---|---|
+| Fix packet | `/home/user/wt/w3t/kettle/review/product-excellence/contracts/W2R2/T-FIX-READY-FOR-REVIEW.md` (WIP). Evidence is in `…/W2R2/T/fix/` |
+| Revision | `pe/w2r2-toast@6f9756c` (code `887696e`, kettle/src `ed027d6`), on top of `4620796` |
+| Changed in the fix | `src/ui/Toast.tsx`, `src/screens/home/{Composer.tsx, Home.module.css}`. Ownership OK |
+| **Trial** | **`a8fb34a`** = integration `2f67fc1` (with P) + `6f9756c`, worktree `/home/user/wt/w3tr-t2`, src `958ce86` (equals the maker's own T+P tree). Dev **:5446** (verified), preview **:5456** |
+| Maker's results | **T-D1:** Undo drawn 101–454 ms after the tap with 9/9 hit points, and a real Undo restores at every portrait configuration, 844×390 and 667×375 @100. 667×375 @200 was not drawn within 3 s. **T-D2:** History end-of-page in a band, mid-list via the R-3 fallback, real Undo restores; Settings rows missing. **T-D3 still fails:** in the final full suite, notice-zone End→Today at 375×667 @100 puts "Saved…" over the field, its clear button and Mark done in 15/20 samples. **T-D4:** minimum top 8 px on Today, 11 px on the summary; inset emulation not attempted. **T-D5:** summary on T+P with 0 hits at 390/375 @100/@200; the triples are missing. **Suites:** chromium 128/132 (`:637` also fails 4/5 on the control; `:1004` @1440; C's `w2-room:144` timeout; notice-zone 375 @100), tsc 0, vitest 275/275, timer/pwa 29 + 2 |
+| Archive | `archive/pe-w2r2-toast-fix-6f9756c.incremental.bundle` |
+
+**The orchestrator's handling:** targeted re-review now. Lane T (Opus) checks the §6 items on `a8fb34a` against the control, then the lead gives the final T verdict. There is no second fix round.
+
+**Final merged-tree regression** (integration `2f67fc1` = `b377c62` + P; C waits for Vibei; T pending): worktree `/home/user/wt/w3-final`, dev **:5447** (verified). Chromium, timer/pwa, tsc and vitest are running; logs go to `review/LR/final-merged-2f67fc1/`.
