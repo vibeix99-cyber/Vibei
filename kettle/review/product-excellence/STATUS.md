@@ -10,6 +10,37 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
+## ▶ VIBEI'S DECISIONS AFTER W2R2, AND WAVE 2 ROUND 3 · 2026-10-13 18:30 UTC (read this first)
+
+**Decisions:**
+1. **C** (`pe/w2r2-chai3d@2843fb0`): Vibei signs off. Before merging, set `MODEL_ON_LOW` to true, because the model has fewer triangles and draw calls than the procedural Chai. Then run a targeted regression for C:
+   - the fallback tests;
+   - `w2-room`;
+   - Nook and unlock captures;
+   - frame time and memory against the procedural Chai on the low tier.
+
+   Then merge.
+   - **Follow-up for a later polish round:** in evening and night light, make the fur easier to read (a lighter base or a stronger self-fill) so the eyes and nose separate from the body as clearly as in the day renders.
+2. **Ruling R-3 is rejected.** No toast may cover a control or a list row anywhere.
+3. **The toast architecture is replaced.** No floating toasts.
+   - **Undo:** inline in the row or control the person acted on, at their scroll position, for its normal duration, and announced once.
+   - **Every other notice:** goes in one in-flow notice strip per screen. The strip takes layout space and pushes content down. One notice at a time, the rest queued; the update prompt never blocks others.
+   - **The storage banner:** unchanged.
+
+**Round 3** (base: the integration branch after C merges). Lead: a new Opus lead. Makers: Opus, high effort. Lane T: Opus. Lanes R and B: Sonnet.
+- **Maker T2, notices without overlays** (I10; 4 h). It reuses the announcer, timer pausing and queue from `pe/w2r2-toast@6f9756c`, and closes:
+  - W2H-D1 (Brew length from `acf1c6a`);
+  - Mark done covered by toasts or the End sheet header;
+  - toasts over the Ambience sheet;
+  - folded toasts;
+  - the Next-brew badge over the status line;
+  - `break-reach:179`.
+
+  Invariant: zero overlap between any notice and any control, text or list row. R5-D1, LEAD-D1, R7-D1 and D4 stay passing.
+- **Maker B, badge rename** (45 min): "Warm Streak" → "Warm Days" (display name only, migration-safe).
+
+**Progress:** Maker C was resumed at 18:32 to flip `MODEL_ON_LOW` (budget 45 min). The control `b377c62` is back on :5410 / :5430. The round-2 trial worktrees are removed.
+
 ## ■ WAVE 2 ROUND 2 CLOSED · 2026-10-13 ~15:50 UTC (read this first)
 
 Integration `claude/wizardly-galileo-uy89d9` contains **P only**. App code `2f67fc1` = `b377c62` + P. Nothing is running and the slot gate is reset.
