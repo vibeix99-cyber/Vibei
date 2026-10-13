@@ -10,7 +10,25 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
-## ▶ WAVE 2 ROUND 2 IN PROGRESS · 2026-10-12 (read this first)
+## ▶ WAVE 2 ROUND 2: resumed 2026-10-13 09:40 UTC after a usage limit (read this first)
+
+**Model change from Vibei:** Fable is no longer used for any role.
+- **Lead:** a new Opus lead (LEAD-2). It re-confirms or amends LEAD-1's design ruling on `dabc8f3` before any verdict.
+- **Makers T and C:** Opus, high effort.
+- **Lane T:** Opus.
+- **Lanes P, C and R:** Sonnet. They record raw evidence only; the lead verifies every diagnosis and every visual judgement.
+
+**State at resume:**
+- **P:** READY and gated. Trial `d07bd2d` serves on :5442 / :5452; it was rebuilt this session and verified. Its first Lane P run left only probe scripts, so Lane P is rerunning on Sonnet (75 minutes).
+- **T:** 8 commits up to `127526e`, plus WIP `a599ee1` saved by the orchestrator (packet draft and runs). Resumed with 2 hours, to about 11:46 UTC.
+- **C:** code `c698d74` (src `42b2c1c`), plus evidence and WIP `d59e015`. Resumed with 90 minutes, to about 11:16 UTC.
+  - Everything is done except one open diagnosis: the `w2-room` context-loss test fails on C and passes on the control.
+  - The model loads only on the high tier (`MODEL_ON_LOW=false`), so the default stays procedural on the low tier.
+- **Servers:** all were down after a container restart. The control `b377c62` (:5410 / :5430) and the P trial are rebuilt and verified.
+
+**Follow-up recorded for next round:** rename the badge "Warm Streak" to "Warm Days". Vibei has approved it as a display-name-only change: no ids, stored data or arithmetic change.
+
+## (round 2 start) ▶ WAVE 2 ROUND 2 IN PROGRESS · 2026-10-12 (read this first)
 
 - **Scope:** I10 toast architecture (Maker T), I07 summary polish (Maker P) and I06 3D Chai integration (Maker C).
 - **Base:** `b377c62` (src `e0aebbf`).
