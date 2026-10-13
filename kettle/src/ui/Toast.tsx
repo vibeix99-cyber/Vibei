@@ -9,7 +9,7 @@
  *  - **One notice at a time**, the rest queued: by kind (a timed notice with an action, then timed ones, then the
  *    persistent update prompt), then in arrival order. The persistent update prompt never blocks the others: while a
  *    timed notice waits it steps aside, and comes back after.
- *  - **A timed notice's clock runs only while it is shown**: in the active strip, wholly in view and on top, the page
+ *  - **A timed notice's clock runs only while it is shown**: in the active strip, mostly in view (60 %) and on top, the page
  *    visible, no sheet open, and not under the person's pointer or keyboard focus. Waiting never spends it.
  *  - **The strip changes only at a safe moment** (src/ui/moment.ts), so nothing is moved out from under a finger:
  *    a screen's first frame (or its first `ENTRY_MS`: nothing on it has been aimed at yet); the answer to the person's
@@ -255,7 +255,7 @@ function decide(): void {
 
 /* ---------------- the clock: runs only while the notice is shown ---------------- */
 
-/** The shown notice is in view, whole and on top, the page is visible and no sheet is open. */
+/** The shown notice is in view (at least 60 % of it) and on top, the page is visible and no sheet is open. */
 function seenNow(id: string): boolean {
   if (document.visibilityState !== 'visible') return false;
   if (document.querySelector('[role="dialog"]') || document.getElementById('root')?.hasAttribute('inert')) return false;
@@ -264,9 +264,12 @@ function seenNow(id: string): boolean {
   if (!li) return false;
   const r = li.getBoundingClientRect();
   if (r.height <= 0) return false;
+  // Most of it in view (a page scrolled by a few px still shows it), and on top at the middle of what is in view.
   const v = viewOf(scrollerOf(li));
-  if (r.top < Math.max(0, v.top) - 0.5 || r.bottom > Math.min(innerHeight, v.bottom) + 0.5) return false;
-  const hit = document.elementFromPoint((r.left + r.right) / 2, (r.top + r.bottom) / 2);
+  const top = Math.max(r.top, v.top, 0);
+  const bottom = Math.min(r.bottom, v.bottom, innerHeight);
+  if (bottom - top < r.height * 0.6) return false;
+  const hit = document.elementFromPoint((r.left + r.right) / 2, (top + bottom) / 2);
   return !!hit && li.contains(hit);
 }
 
