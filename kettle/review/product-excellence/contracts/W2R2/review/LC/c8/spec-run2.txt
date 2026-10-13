@@ -10,3 +10,4 @@ Running 15 tests using 1 worker
   ✓   7 [chromium] › tests/chai3d.spec.ts:147:3 › 3D Chai: fallbacks keep the procedural Chai › low tier: the procedural Chai, no model request (23.4s)
   ✓   8 [chromium] › tests/chai3d.spec.ts:157:3 › 3D Chai: fallbacks keep the procedural Chai › WebGL context lost and restored: the engine is rebuilt with the model from memory, no second request (46.4s)
   ✓   9 [chromium] › tests/w2-room.spec.ts:87:3 › Focus backdrop: earned items without the live 3D room › 3D off: the window still shows every earned window-visible item (37.3s)
+  ✓  10 [chromium] › tests/w2-room.spec.ts:96:3 › Focus backdrop: earned items without the live 3D room › 3D loading: the still shown before the engine is ready carries the same items (31.2s)
