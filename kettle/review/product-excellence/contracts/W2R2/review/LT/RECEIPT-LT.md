@@ -308,6 +308,8 @@ These agree with the maker's own N/A statement for 390×844 @200 and 375×667 @1
 | today end/up | fix | 375x667@2:light:200 | {'t': 47, 'r': 0, 'bo': 34, 'l': 0} ok / {'top': 47, 'left': 0, 'right': 0, 'bottom': 34} | 55 | 0 | 44 |
 | today end/gone | fix | 667x375@2:light:100 | {'t': 0, 'r': 47, 'bo': 21, 'l': 47} ok / {'top': 0, 'left': 47, 'right': 62, 'bottom': 21} | 18 | 0 | 288 |
 
+The probe-read `right: 15` at 844×390 and 667×375 is the page's 15 px classic scrollbar, not a safe-area inset. The probe reads `innerWidth − box.right`, and those two contexts are not `isMobile`, so they have a classic scrollbar.
+
 Minimum notice top over all **fix** runs without an inset: **8 (runs: [('end-scrolled', '375x667@2:light:200', None, None), ('today', '390x844@2:dark:200', 'end', 'up')]) px**. Notice boxes outside the viewport, over all fix runs: **0**.
 
 With the inset emulated:
