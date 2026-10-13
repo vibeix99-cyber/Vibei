@@ -32,3 +32,25 @@
 | Decisions flagged | (1) Low tier keeps the procedural Chai (most iOS and 4-core phones) until someone measures a real low-end phone. (2) The summary close-up shows the old Chai unless the reused engine already carries the model. (3) Art: under the room's warm lamp and stove light the fur reads darker and warmer than the flat sheet; lighting is unchanged |
 | **Merge** | Needs **Vibei's art sign-off** in addition to the lead's verdict |
 | Archive | `archive/pe-w2r2-chai3d-2843fb0.incremental.bundle.part-00..01` (+ `.sha256`), covering `15e8abe..2843fb0` and so including the asset commit |
+
+## Verdicts so far (LEAD-2, Opus)
+- **P: APPROVE.** `pe/w2r2-summary@dc7a28d` (`CHECKER-W2R2-P.md`). **Merged** as `2f67fc1`. The merged kettle/src `f255e9f` and tests `90bf6f5` equal trial `d07bd2d`.
+- **C: APPROVE.** `pe/w2r2-chai3d@2843fb0` (`CHECKER-W2R2-C.md`). **Not merged: it waits for Vibei's art sign-off** (§5).
+
+## Maker T: toast architecture (I10). Submitted as WIP at its deadline, 2026-10-13 11:45 UTC
+
+| Item | Result |
+|---|---|
+| Packet | `/home/user/wt/w3t/kettle/review/product-excellence/contracts/W2R2/T-READY-FOR-REVIEW.md` (status WIP; §9 lists what is missing). Evidence is in `…/W2R2/T/` (59 MB) |
+| Revision | `pe/w2r2-toast@4620796`, code `8d0d8a6`, kettle/src `efc44574…` |
+| Files (ownership OK) | `src/ui/Toast.{tsx,module.css}`, `src/app/{App.tsx,debug.ts}`, `src/screens/focus/FocusScreen.*`, `src/screens/home/*` (Hero, Composer, HomeScreen, Home.module.css), and tests: `notice-zone.spec.ts` (new), `w2-home.spec.ts` (H's, restored), `toast-room.spec.ts`, `a11y.spec.ts`, `integrity.spec.ts` (4 notice-text locators scoped to the notices group; no assertion changed), `break-reach.spec.ts` (Monday frozen) |
+| **Trial merge** | **`acfe851`**: integration `2f67fc1` (which **includes P**) + `4620796`, worktree `/home/user/wt/w3tr-t`, src `7b9634c`. Dev **:5444** (verified), preview **:5454** |
+| Maker's results | **a:** `integrity :1090` 9/9 on the fix. **b:** the dialog and inert root no longer persist on Today (control: up to 562 ms). **c:** Ambience tests 2/2. **e:** the status line is covered 0/32 (control 32/32). **f:** a **real user-facing cover**: on the control it fails Monday and Thursday (the recipe days) because the notice over the panel takes the scroll gesture; on the fix all 7 days pass. **A:** 0 intersections. **D:** light-DOM announcer. **E1:** the guard raised to 40; at most 18 notices from one event. Suites: chromium 130/132 on `c43e30b` (not rerun on `8d0d8a6`); timer and pwa 29 passed + 2 skipped; tsc 0; vitest 275/275 |
+| **Maker-declared gaps** | (1) **Ruling B not met.** Undo waits about 3 s at 375×667 when scrolled, and never draws at 200 % when scrolled; History and Settings Undo have no zone and no proof rows. (2) **E2 fails:** on T+P the summary has no stage zone, so notices fall back to the viewport and cover P's card. (3) A: at 375×667 @100 a two-line notice touches the kettle by about 2 px. (4) No dump from the D accessibility tree. (5) At 375×667 @200, three-line notices scroll inside a 112 px band. (6) The session rows of the waits-at-rest table are unverified. (7) The full suite was not rerun on `8d0d8a6`. (8) Captures cover 11 configurations; reduced motion and K01–K03 triples are missing. (9) The R5-D1 / LEAD-D1 / R7-D1 controls were not rerun. (10) **Invariant 1 fails** at 390×844 @200: "Saved…" overlaps the tag chips and Brew length in 24 of 62 samples; `integrity :637` failed 1 of 3. (11) R8-F1 was argued, not measured |
+| Process note | The maker reports one `pkill -f` and a broad kill of "playwright test" processes around 09:55 UTC. Another lane may have lost a run then |
+| Archive | `archive/pe-w2r2-toast-4620796.incremental.bundle*` |
+
+**The orchestrator's handling:** T's work in progress goes to the lead for a verdict now. On REJECT, T gets its single 90-minute fix round, followed by a targeted re-review: Lane T (Opus) and the lead, on a new trial that includes P.
+
+## Combined trial for Lane R (P merged + C)
+**`032d7a5`** = integration `2f67fc1` + `pe/w2r2-chai3d@2843fb0`, worktree `/home/user/wt/w3tr-pc`, src `c9876ef`. Dev **:5445**, preview **:5455**, both verified. T joins only if it is approved.

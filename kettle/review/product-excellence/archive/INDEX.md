@@ -30,3 +30,4 @@ Restore a chain in order with `git fetch <bundle> 'refs/heads/*:refs/heads/*'` (
 | `w2r1-final-probes-2026-10-12.tar.gz` | W2R1 economy-resume probes (worktree .tmp: LS finish, FV, LEAD2, suites) before worktree cleanup | — | tar ok 2026-10-12 |
 | `pe-w2r2-summary-dc7a28d.incremental.bundle.part-00..01` (+ `.sha256`) | pe/w2r2-summary@dc7a28d (W2R2 Maker P READY FOR REVIEW; code a4f1773) | b377c62 | okay 2026-10-12 |
 | `pe-w2r2-chai3d-2843fb0.incremental.bundle.part-NN` (+ `.sha256`) | pe/w2r2-chai3d@2843fb0 (W2R2 Maker C READY FOR REVIEW; code c698d74; includes assets/chai3d-r1@68caa31) | 15e8abe | okay 2026-10-13 |
+| `pe-w2r2-toast-4620796.incremental.bundle` | pe/w2r2-toast@4620796 (W2R2 Maker T, WIP at its deadline; code 8d0d8a6) | b377c62 | okay 2026-10-13 |
