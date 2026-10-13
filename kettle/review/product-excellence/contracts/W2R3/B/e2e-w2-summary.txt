@@ -1,0 +1,28 @@
+[slots] B took 1/3 at 20:09:58: npx playwright test --project=chromium tests/w2-summary.spec.ts
+
+Running 18 tests using 1 worker
+
+  ✓   1 [chromium] › tests/w2-summary.spec.ts:239:5 › 375×667 @100 %, routine day: no line starts under the footer on arrival; the final line clears it; nothing covers anything (16.1s)
+  ✓   2 [chromium] › tests/w2-summary.spec.ts:239:5 › 375×667 @100 %, big day: no line starts under the footer on arrival; the final line clears it; nothing covers anything (20.9s)
+  ✓   3 [chromium] › tests/w2-summary.spec.ts:239:5 › 375×667 @200 %, routine day: no line starts under the footer on arrival; the final line clears it; nothing covers anything (15.5s)
+  ✓   4 [chromium] › tests/w2-summary.spec.ts:239:5 › 375×667 @200 %, big day: no line starts under the footer on arrival; the final line clears it; nothing covers anything (24.3s)
+  ✓   5 [chromium] › tests/w2-summary.spec.ts:283:3 › 375×667 @100 %, a brew with a task (the K02 layout, Wave-1 #1 exactly): the third pill row does not start under the footer (17.8s)
+  ✓   6 [chromium] › tests/w2-summary.spec.ts:283:3 › 375×667 @100 %, a brew with a task (the K02 layout, Wave-1 #1 exactly), reduced motion: the third pill row does not start under the footer (11.8s)
+  ✓   7 [chromium] › tests/w2-summary.spec.ts:311:1 › big day: the unlock is the one highlight, whole on arrival; all seven rewards stay on the summary (19.2s)
+  ✓   8 [chromium] › tests/w2-summary.spec.ts:333:1 › a milestone day without an unlock: the biggest milestone leads, highlighted and whole on arrival; the rest stay compact (12.1s)
+  ✓   9 [chromium] › tests/w2-summary.spec.ts:362:3 › 390×844 @100 %, routine day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (10.9s)
+  ✓  10 [chromium] › tests/w2-summary.spec.ts:362:3 › 390×844 @100 %, big day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (19.4s)
+  ✓  11 [chromium] › tests/w2-summary.spec.ts:362:3 › 390×844 @100 %, task day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (26.6s)
+  ✓  12 [chromium] › tests/w2-summary.spec.ts:362:3 › 390×844 @200 %, routine day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (18.3s)
+  ✓  13 [chromium] › tests/w2-summary.spec.ts:362:3 › 390×844 @200 %, big day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (21.5s)
+  ✓  14 [chromium] › tests/w2-summary.spec.ts:362:3 › 390×844 @200 %, task day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (19.5s)
+  ✓  15 [chromium] › tests/w2-summary.spec.ts:362:3 › 375×667 @100 %, task day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (17.8s)
+  ✓  16 [chromium] › tests/w2-summary.spec.ts:362:3 › 375×667 @200 %, task day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (19.6s)
+  ✓  17 [chromium] › tests/w2-summary.spec.ts:392:1 › the highlight is quieter than the minutes and Tea time (milestone day, 375×667) (11.6s)
+  ✓  18 [chromium] › tests/w2-summary.spec.ts:436:1 › warm days, never "streak": what the big day summary shows and what a screen reader hears (25.8s)
+
+  Slow test file: [chromium] › tests/w2-summary.spec.ts (5.5m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  18 passed (5.5m)
+[slots] B freed 1 at 20:15:31
+exit=0
