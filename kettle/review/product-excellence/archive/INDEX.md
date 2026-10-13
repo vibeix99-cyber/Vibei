@@ -34,3 +34,4 @@ Restore a chain in order with `git fetch <bundle> 'refs/heads/*:refs/heads/*'` (
 | `pe-w2r2-toast-fix-6f9756c.incremental.bundle` | pe/w2r2-toast@6f9756c (W2R2 Maker T fix round, WIP; code 887696e) | 4620796 | okay 2026-10-13 |
 | `pe-w2r2-chai3d-low-6fb2136.incremental.bundle.part-00..01` (+ `.sha256`) | pe/w2r2-chai3d@6fb2136 (C with MODEL_ON_LOW=true per Vibei; code effe8c0) | 2843fb0 | okay 2026-10-13 |
 | `pe-w2r3-badge-2994005.incremental.bundle` | pe/w2r3-badge@2994005 (W2R3 Maker B READY: Warm Days; code 0a95fbc) | 61aba17 | okay 2026-10-13 |
+| `pe-w2r3-notices-6a64fbf.incremental.bundle.part-NN` (+ `.sha256`) | pe/w2r3-notices@6a64fbf (W2R3 Maker T2 READY; code 61b463c) | 61aba17 | okay 2026-10-13 |
