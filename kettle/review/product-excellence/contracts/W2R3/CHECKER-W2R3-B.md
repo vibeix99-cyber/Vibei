@@ -1,6 +1,6 @@
 # CHECKER W2R3 · Maker B: "Warm Streak" → "Warm Days" (display name only)
 
-**Status: DRAFT. Waiting for Lane B's receipt (`review/LB/RECEIPT-LB.md`). My own verification is complete; the verdict line is filled in when the receipt has been read.**
+**Verdict: APPROVE** `pe/w2r3-badge@2994005` (code `0a95fbc`, kettle/src `f40b306`), as merged in trial `e1ddf9d`. Any change to the branch after this invalidates it.
 
 | | |
 |---|---|
@@ -129,8 +129,47 @@ All three configurations gave identical results.
 | B-F3 | Non-badge "warm streak" wording: `StreakCard` sr "7 days warm streak" and caption "Warm streak calendar…", `Rail` "Start a warm streak" and title "Warm streak", `SettingsScreen`, `DataSection`, `ui/Gallery` overline | **FOLLOW-UP** | Wording pass (Vibei). The files belong to the stats, settings and ui areas |
 | B-F4 | `docs/areas/progress.md:69` "Warm Streak II" is a dated history entry | **ACCEPTED** (history) | — |
 | B-F5 | Stats tiles break mid-word at 375×667 @200 ("Week/end Warm/th", "Collec/tor") | **FOLLOW-UP** (pre-existing, unchanged) | Stats area |
-| B-U1 | Real devices, WebKit, Firefox, real AT | **UNKNOWN** (environment) | — |
+| B-A1 | An ordinary later write (the next day, cross-tab adoption) stores the resolved title "Warm Days" in `lastReport` (Lane B 3c/3d) | **ACCEPTED** (intended; no id, badge state or arithmetic changes) | — |
+| B-F6 | Base toast placement: the badge toast and "Saved …" sit over the tag chips and Brew length (Lane B's toast frames). Identical on the base | **FOLLOW-UP** (pre-existing, not worse) | T2 (I10, this round) |
+| B-U1 | Real devices, WebKit, Firefox, real AT; mixed-build tabs at one origin; the service-worker update path | **UNKNOWN** (environment) | — |
 
 ## 4. Lane B receipt
 
-_Pending._
+Read in full: `review/LB/RECEIPT-LB.md`, written about 20:45 UTC. Its evidence is in `review/LB/`. Its facts agree with mine, and it adds the following.
+
+**The toast path.** A brew ended early after a setup that removes the warm-streak state.
+- Base: `New badge: Warm Streak`. Trial: `New badge: Warm Days`.
+- I opened `toast-base-390x844.png` and `toast-trial-390x844.png`. The text changed and nothing else did.
+- In both, the floating toasts sit over the tag chips and Brew length. That is the base toast defect (W2H-D1), which T2 owns this round, and B does not make it worse.
+
+**Export and import.** The backup file holds `lastReport: null` and no badge name. After a restore, badges, sessions, ledger and leaves equal the file, on base → trial and on trial → trial.
+
+**The next-day visit and cross-tab adoption** both write the resolved title back (3c: the new day's quests + rev 22 → 23 + title; 3d: same rev, title). I checked the raw files (`migration-390x844-nextday.json`, `crosstab-trial-390x844.json`) and the code:
+- Zustand persist writes on every `setState`. Adoption via `syncFromStorage` writes back on the base too; only the title string differs.
+- `reconcile` decides on epoch, rev and ids, never on titles, so the differing title cannot start a write loop between tabs.
+- **ACCEPTED** as intended behaviour: a normal app write stores the current report, and no id, badge state, session or arithmetic changes.
+
+**Accessible name.** The pill's `aria-label="Warm Days II"` is on the art svg, under an `aria-hidden` ancestor. What a screen reader reaches is the pill text and the `role=status` announcement, both "Warm Days". The spec's reachable-text check asserts this and passed.
+
+**Lane B's own runs:** `w2-summary` 18/18 (20:32–20:37), tsc 0, vitest 290/290.
+
+**Lane B's §6 gaps:**
+- Dark and 200 % are covered by my runs.
+- The PWA update path is equivalent to my migration case: a reload of the new bundle on old storage.
+- Mixed-build concurrency (an old and a new tab open at once) remains **UNKNOWN**. Each build simply shows what it resolves, and nothing can loop (see above).
+
+## 5. BEFORE / AFTER pairs that best show each visible change
+
+All are in `contracts/W2R3/review/LEAD/B/shots/`. Each pair is the same stored profile reloaded on both builds, unless a row says otherwise.
+
+| Visible change | BEFORE (`61aba17`) | AFTER (`e1ddf9d`) |
+|---|---|---|
+| Summary badge pill, phone (pixel-matched except the name) | `reload-before-summary-pill-390x844-light.png` | `reload-after-summary-pill-390x844-light.png` |
+| Summary badge pill, desktop dark | `reload-before-summary-pill-1440x900-dark.png` | `reload-after-summary-pill-1440x900-dark.png` |
+| Summary badge pill, 375×667 @200 (the wrap, B-F1) | `reload-before-summary-pill-375x667-light-200.png` | `reload-after-summary-pill-375x667-light-200.png` |
+| Stats › Badges tile | `before-stats-badges-card-390x844-light.png` | `migration-after-stats-badges-card-390x844-light.png` |
+| Stats › Badges tile @200 | `reload-before-stats-badges-375x667-light-200.png` | `reload-after-stats-badges-375x667-light-200.png` |
+| Badge sheet title | `before-stats-badge-sheet-1440x900-dark.png` | `migration-after-stats-badge-sheet-1440x900-dark.png` |
+| Badge-earned toast (Lane B's capture) | `review/LB/toast-base-390x844.png` | `review/LB/toast-trial-390x844.png` |
+
+Screen-reader text (announcement, Stats aria, sheet `aria-labelledby`) is in `review/LEAD/B/results.json` and `results-reload.json`.
