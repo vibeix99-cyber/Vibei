@@ -1,0 +1,9 @@
+
+## Hierarchy: minutes heading, Tea time, highlight card, unlock card (computed style and element area px²), settled
+
+| cfg | day | build | minutes: size/weight/colour/area | Tea time label: size/weight/colour | Tea time: button area / face area / fill | highlight card: title size/weight/colour | highlight: card area / box h / art | highlight note (size/weight) | unlock card: title size/weight | unlock: area / h | highlighted cards | highlight/unlock in view on arrival (visible px of h; whole?) | covered controls | text overlaps between different text nodes |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 375x667-light-t100 | milestone | C | 28px/600/rgb(59, 42, 32)/10317 | 21px/700/rgb(255, 255, 255) | 20100 / 18760 / rgb(52, 148, 209) | 17px/700/rgb(59, 42, 32) | 24711 / 73.8 / [42, 42] | 14px/600 “One full brew a day keeps your streak warm.” | – | – | 1+0 | hl 73.8/73.8 whole; unlock – | 0 | 0 |
+| 375x667-light-t100 | milestone | P | 28px/600/rgb(59, 42, 32)/10317 | 21px/700/rgb(255, 255, 255) | 20100 / 18760 / rgb(52, 148, 209) | 16px/600/rgb(59, 42, 32) | 16750 / 50 / [34, 34] | 13px/600 “One full brew a day keeps the kettle warm.” | – | – | 1+0 | hl 50/50 whole; unlock – | 0 | 0 |
+| 375x667-light-t200 | milestone | C | 56px/600/rgb(59, 42, 32)/41268 | 42px/700/rgb(255, 255, 255) | 36306 / 34974 / rgb(52, 148, 209) | 34px/700/rgb(59, 42, 32) | 69601 / 207.8 / [42, 42] | 28px/600 “One full brew a day keeps your streak warm.” | – | – | 1+0 | hl 0/207.8 none; unlock – | 0 | 0 |
+| 375x667-light-t200 | milestone | P | 56px/600/rgb(59, 42, 32)/41268 | 42px/700/rgb(255, 255, 255) | 36306 / 34974 / rgb(52, 148, 209) | 32px/600/rgb(59, 42, 32) | 52721 / 157.4 / [34, 34] | 26px/600 “One full brew a day keeps the kettle warm.” | – | – | 1+0 | hl 0/157.4 none; unlock – | 0 | 0 |
