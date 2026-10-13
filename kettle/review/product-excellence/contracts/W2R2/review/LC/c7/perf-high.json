@@ -3,28 +3,28 @@
   "name": "ctl-high",
   "port": 5430,
   "q": "&nookq=high",
-  "t0": "10:54:21",
-  "readyMs": 7803,
-  "finalMs": 7803,
+  "t0": "10:58:07",
+  "readyMs": 9602,
+  "finalMs": 9602,
   "live": {
-   "rafFrames": 626,
+   "rafFrames": 33,
    "intervalMs": {
-    "mean": 16,
-    "p50": 16,
-    "p90": 16,
-    "max": 16
+    "mean": 330.7,
+    "p50": 416.5,
+    "p90": 633.3,
+    "max": 1250
    },
-   "renderCalls": 209,
+   "renderCalls": 23,
    "renderJsMs": {
-    "mean": 518.48,
-    "p50": 441
+    "mean": 4.4,
+    "p50": 2.4
    },
    "engineStats": {
     "calls": 161,
     "triangles": 128792,
     "geometries": 114,
     "textures": 10,
-    "frameMs": 614.6666666666666,
+    "frameMs": 10.80588235292474,
     "fps": 0
    },
    "statsStart": {
@@ -32,17 +32,17 @@
     "triangles": 128792,
     "geometries": 114,
     "textures": 10,
-    "frameMs": 47.90196078431372,
+    "frameMs": 24.136363636532966,
     "fps": 0
    }
   },
   "sync": {
    "n": 40,
-   "median": 511,
-   "mean": 527.5,
-   "p90": 704,
-   "min": 340,
-   "max": 801,
+   "median": 476.6,
+   "mean": 495.5,
+   "p90": 680.5,
+   "min": 347,
+   "max": 720.7,
    "info": {
     "calls": 161,
     "triangles": 128792,
@@ -59,23 +59,28 @@
    "chai3d": null
   },
   "memory": {
-   "heapUsedMB_afterGC": 11.1,
-   "heapTotalMB": 12.07,
-   "performanceMemoryUsedMB": null,
-   "jsHeapUsedMB_metrics": 11.11,
+   "heapUsedMB_afterGC": 10.26,
+   "heapTotalMB": 10.82,
+   "performanceMemoryUsedMB": 21.33,
+   "jsHeapUsedMB_metrics": 10.28,
    "documents": 1,
-   "nodes": 987,
+   "nodes": 986,
    "listeners": 418
   },
-  "error": "b.process is not a function"
- },
- {
-  "name": "C-procedural-high",
-  "port": 5453,
-  "q": "&nookq=high&chai3d=procedural",
-  "t0": "10:57:20",
-  "readyMs": 7783,
-  "finalMs": 7783,
-  "error": "page.evaluate: Target page, context or browser has been closed"
+  "processRssMB": {
+   "browser": 177,
+   "zygote": 71.1,
+   "gpu": 199.7,
+   "utility": 63.6,
+   "renderer": 160.1,
+   "total": 671.5
+  },
+  "longTasks": {
+   "count": 7,
+   "maxMs": 31579,
+   "over50Total": 32872
+  },
+  "loadAvg": "13.68 14.22 13.69",
+  "wallMs": 56775
  }
 ]
