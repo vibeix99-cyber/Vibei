@@ -117,6 +117,9 @@ test('short screen (375×667): every control can be scrolled clear of sticky chr
     if (r.hScroll > 0) out.push(`${id}: horizontal scroll ${r.hScroll}px`);
   };
   const check = async (id: string, p: Page) => {
+    // Real state, not a pause: the previous screen has finished leaving (under load its route layer, with its controls,
+    // can still be in the page when a hash-only navigation lands here: N's a11y.spec.ts:109 failure).
+    await p.waitForFunction(() => !document.querySelector('[data-route-leaving]'), null, { timeout: 15_000 });
     await reach(id, p);
     // Break's over with toasts up, on every date: a recipe or badge toast raised as the break ends (the seeded
     // profile only earns one on some dates) must leave every break-over control clear, the carried task's

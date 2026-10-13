@@ -304,11 +304,22 @@ for (const c of CFGS) {
     const mark = page.getByRole('button', { name: /^Mark “Chapter 3 notes” done/ });
     // Mark done's line, relative to the button (the same wherever the page is scrolled).
     const offset = await mark.evaluate((b) => b.getBoundingClientRect().top - b.closest('p')!.getBoundingClientRect().top);
+    // (Diagnostics: every pointerdown / click target from here, to say where a tap went if it did not reach Mark done.)
+    await page.evaluate(() => {
+      const w = window as any;
+      w.__taps = [];
+      for (const t of ['pointerdown', 'click'])
+        addEventListener(t, (e) => w.__taps.push(`${t}@${Math.round((e as MouseEvent).clientX)},${Math.round((e as MouseEvent).clientY)}→${(e.target as Element).tagName}.${String((e.target as Element).className).slice(0, 30)}`), { capture: true });
+    });
     const tapAt = await press(page, touch, mark, undefined, true);
     const line = tapAt.top - offset;
     facts.markDoneTapMs = Date.now() - t0;
     const undoRow = page.locator('[data-undo-for="mark-done"]');
-    await expect(undoRow).toBeVisible();
+    try {
+      await expect(undoRow).toBeVisible();
+    } catch (e) {
+      throw new Error(`Mark done's Undo not drawn after the tap at ${JSON.stringify(tapAt)}: ${JSON.stringify(await page.evaluate(() => ({ taps: (window as any).__taps, mark: document.querySelector('button[aria-label^="Mark"]')?.getBoundingClientRect().toJSON(), sy: scrollY, notices: (window as any).__kettle.notices() })))}`);
+    }
     const rowTop = await undoRow.evaluate((r) => r.getBoundingClientRect().top);
     expect(Math.abs(rowTop - line), 'the Undo is drawn where Mark done was, on screen').toBeLessThanOrEqual(2);
     const undo = undoRow.getByRole('button', { name: /^Undo/ });
