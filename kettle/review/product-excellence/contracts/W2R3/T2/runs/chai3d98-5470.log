@@ -1,0 +1,9 @@
+[slots] T2 took 1/3 at 23:18:29: npx playwright test tests/chai3d.spec.ts --project=chromium --workers=1 --reporter=list --repeat-each 2 -g slow network
+
+Running 2 tests using 1 worker
+
+  ✓  1 [chromium] › tests/chai3d.spec.ts:98:3 › 3D Chai: fallbacks keep the procedural Chai › slow network: the first frame is the procedural Chai; after 8 s the load gives up and it stays (13.5s)
+  ✓  2 [chromium] › tests/chai3d.spec.ts:98:3 › 3D Chai: fallbacks keep the procedural Chai › slow network: the first frame is the procedural Chai; after 8 s the load gives up and it stays (12.6s)
+
+  2 passed (33.7s)
+[slots] T2 freed 1 at 23:19:04

@@ -1,0 +1,72 @@
+{
+ "base": "http://127.0.0.1:5480",
+ "cfg": "844x390@2:light:200",
+ "fixed": "2026-10-12T07:40:00.000Z",
+ "states": {
+  "11-mark-done-undo": {
+   "desc": "Today: Mark done tapped, its Undo (base: a toast; fix: in the line)",
+   "scroll": 125,
+   "notices": [
+    {
+     "text": "Crossed off. Nice work. Undo",
+     "box": [
+      195,
+      65,
+      440,
+      105
+     ]
+    }
+   ],
+   "undo": []
+  },
+  "14-stats-brew-updated": {
+   "desc": "Stats: Edit › Save, \"Brew updated\" (base: toast; fix: the strip, above the view here)",
+   "scroll": 2515,
+   "notices": [
+    {
+     "text": "Brew updated",
+     "box": [
+      281,
+      314,
+      268,
+      57
+     ]
+    }
+   ],
+   "undo": []
+  },
+  "12-history-delete-undo": {
+   "desc": "Stats › History: a brew deleted, its Undo (base: a toast; fix: the row, in place)",
+   "scroll": 2515,
+   "notices": [
+    {
+     "text": "Brew deleted Undo",
+     "box": [
+      231,
+      263,
+      367,
+      105
+     ]
+    }
+   ],
+   "undo": []
+  },
+  "13-import-undo": {
+   "desc": "Settings › Your data: a backup imported, its Undo (base: a toast; fix: the Import row)",
+   "scroll": 3666,
+   "notices": [
+    {
+     "text": "Backup restored: 52 brews. Welcome back. Undo",
+     "box": [
+      195,
+      223,
+      440,
+      146
+     ]
+    }
+   ],
+   "undo": []
+  }
+ },
+ "errors": []
+}

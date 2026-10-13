@@ -1,0 +1,74 @@
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium] › tests/zz-ctl-61aba17.spec.ts:427:3 › the update prompt and every toast stay whole and tappable, never over a control, on Break's over scrolled to its end (667×375, 200 % text, wheel, light) (13.5s)
+  ✘  2 [chromium] › tests/zz-ctl-61aba17.spec.ts:427:3 › the update prompt and every toast stay whole and tappable, never over a control, on Break's over scrolled to its end (844×390, 200 % text, touch, dark) (16.1s)
+
+
+  1) [chromium] › tests/zz-ctl-61aba17.spec.ts:427:3 › the update prompt and every toast stay whole and tappable, never over a control, on Break's over scrolled to its end (667×375, 200 % text, wheel, light) 
+
+    Error: the update prompt whole, Update on top, no top-bar words under it
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
+
+    [32m- Expected  -  1[39m
+    [31m+ Received  + 10[39m
+
+    [32m- Array [][39m
+    [31m+ Array [[39m
+    [31m+   Object {[39m
+    [31m+     "actionOnTop": false,[39m
+    [31m+     "box": 52,[39m
+    [31m+     "overBar": true,[39m
+    [31m+     "own": 97,[39m
+    [31m+     "text": "A fresh brew of Kett",[39m
+    [31m+     "visible": 11,[39m
+    [31m+   },[39m
+    [31m+ ][39m
+
+      524 |     const one = await atRest();
+      525 |     expect(one).toHaveLength(1);
+    > 526 |     expect(whole(one), 'the update prompt whole, Update on top, no top-bar words under it').toEqual([]);
+          |                                                                                             ^
+      527 |     // Two more toasts on their own timers (one with an action): all three whole (or folded), every action on top.
+      528 |     await page.evaluate(async () => {
+      529 |       const { toast } = await import('/src/ui/Toast.tsx' as string);
+        at /home/user/wt/w4t2-cb39202f/kettle/tests/zz-ctl-61aba17.spec.ts:526:93
+
+    Error Context: test-results/zz-ctl-61aba17-the-update--8a09a-7×375-200-text-wheel-light--chromium/error-context.md
+
+  2) [chromium] › tests/zz-ctl-61aba17.spec.ts:427:3 › the update prompt and every toast stay whole and tappable, never over a control, on Break's over scrolled to its end (844×390, 200 % text, touch, dark) 
+
+    Error: the update prompt whole, Update on top, no top-bar words under it
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
+
+    [32m- Expected  -  1[39m
+    [31m+ Received  + 10[39m
+
+    [32m- Array [][39m
+    [31m+ Array [[39m
+    [31m+   Object {[39m
+    [31m+     "actionOnTop": false,[39m
+    [31m+     "box": 52,[39m
+    [31m+     "overBar": true,[39m
+    [31m+     "own": 97,[39m
+    [31m+     "text": "A fresh brew of Kett",[39m
+    [31m+     "visible": 26,[39m
+    [31m+   },[39m
+    [31m+ ][39m
+
+      524 |     const one = await atRest();
+      525 |     expect(one).toHaveLength(1);
+    > 526 |     expect(whole(one), 'the update prompt whole, Update on top, no top-bar words under it').toEqual([]);
+          |                                                                                             ^
+      527 |     // Two more toasts on their own timers (one with an action): all three whole (or folded), every action on top.
+      528 |     await page.evaluate(async () => {
+      529 |       const { toast } = await import('/src/ui/Toast.tsx' as string);
+        at /home/user/wt/w4t2-cb39202f/kettle/tests/zz-ctl-61aba17.spec.ts:526:93
+
+    Error Context: test-results/zz-ctl-61aba17-the-update--c6dd7-44×390-200-text-touch-dark--chromium/error-context.md
+
+  2 failed
+    [chromium] › tests/zz-ctl-61aba17.spec.ts:427:3 › the update prompt and every toast stay whole and tappable, never over a control, on Break's over scrolled to its end (667×375, 200 % text, wheel, light) 
+    [chromium] › tests/zz-ctl-61aba17.spec.ts:427:3 › the update prompt and every toast stay whole and tappable, never over a control, on Break's over scrolled to its end (844×390, 200 % text, touch, dark) 

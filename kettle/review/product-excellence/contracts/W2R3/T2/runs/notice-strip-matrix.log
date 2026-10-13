@@ -1,0 +1,643 @@
+[slots] T2 took 2/3 at 21:19:12: npx playwright test tests/notice-strip.spec.ts --project=chromium --workers=2 --reporter=list,json
+
+Running 25 tests using 2 workers
+
+  ✘   2 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 100 %) (58.3s)
+  ✘   1 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 %) (1.1m)
+  ✓   3 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 % reduced motion) (59.8s)
+  ✘   4 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 100 %) (56.8s)
+  ✘   5 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 200 %) (1.1m)
+  ✘   6 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 100 %) (59.9s)
+  ✘   8 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 % reduced motion) (1.1m)
+  ✓   7 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 %) (1.4m)
+  ✓   9 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 100 %) (56.5s)
+  ✓  10 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 200 %) (1.5m)
+  ✓  11 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 100 %) (52.2s)
+  ✘  12 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 %) (30.2s)
+  ✘  13 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion) (27.2s)
+  ✘  15 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (31.7s)
+  ✓  14 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 100 %) (52.5s)
+  ✓  16 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 100 %) (56.2s)
+  ✓  17 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 %) (59.7s)
+  ✓  18 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 % reduced motion) (52.6s)
+  ✓  19 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 100 %) (54.4s)
+  ✓  20 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 200 %) (59.2s)
+  ✓  21 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 100 %) (54.2s)
+  ✓  22 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 %) (57.1s)
+  ✓  23 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (55.9s)
+  ✓  24 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 100 %) (57.0s)
+  ✓  25 [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 200 %) (57.5s)
+
+
+  1) [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 100 %) 
+
+    Error: notice overlaps in the app (4 in 1707 notice frames, 26 under a sheet)
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
+
+    [32m- Expected  -  1[39m
+    [31m+ Received  + 74[39m
+
+    [32m- Array [][39m
+    [31m+ Array [[39m
+    [31m+   Object {[39m
+    [31m+     "at": 14160,[39m
+    [31m+     "box": Array [[39m
+    [31m+       20,[39m
+    [31m+       402,[39m
+    [31m+       350,[39m
+    [31m+       32,[39m
+    [31m+     ],[39m
+    [31m+     "hash": "#/focus",[39m
+    [31m+     "nbox": Array [[39m
+    [31m+       20,[39m
+    [31m+       433,[39m
+    [31m+       351,[39m
+    [31m+       55,[39m
+    [31m+     ],[39m
+    [31m+     "notice": "li#notice-t2 \"Couldn’t save just now. Your summary is \"",[39m
+    [31m+     "what": "h1#_r_20_ \"25 minutes brewed\"",[39m
+    [31m+   },[39m
+    [31m+   Object {[39m
+    [31m+     "at": 14161,[39m
+    [31m+     "box": Array [[39m
+    [31m+       20,[39m
+    [31m+       438,[39m
+    [31m+       350,[39m
+    [31m+       23,[39m
+    [31m+     ],[39m
+    [31m+     "hash": "#/focus",[39m
+    [31m+     "nbox": Array [[39m
+    [31m+       20,[39m
+    [31m+       433,[39m
+    [31m+       351,[39m
+    [31m+       55,[39m
+    [31m+     ],[39m
+    [31m+     "notice": "li#notice-t2 \"Couldn’t save just now. Your summary is \"",[39m
+    [31m+     "what": "p \"Tea’s ready. Take five before the next o\"",[39m
+    [31m+   },[39m
+    [31m+   Object {[39m
+    [31m+     "at": 14161,[39m
+    [31m+     "box": Array [[39m
+    [31m+       44,[39m
+    [31m+       475,[39m
+    [31m+       124,[39m
+    [31m+       26,[39m
+    [31m+     ],[39m
+    [31m+     "hash": "#/focus",[39m
+    [31m+     "nbox": Array [[39m
+    [31m+       20,[39m
+    [31m+       433,[39m
+    [31m+       351,[39m
+    [31m+       55,[39m
+    [31m+     ],[39m
+    [31m+     "notice": "li#notice-t2 \"Couldn’t save just now. Your summary is \"",[39m
+    [31m+     "what": "span \"Chapter 3 notes\"",[39m
+    [31m+   },[39m
+    [31m+   Object {[39m
+    [31m+     "at": 14161,[39m
+    [31m+     "box": Array [[39m
+    [31m+       176,[39m
+    [31m+       476,[39m
+    [31m+       66,[39m
+    [31m+       22,[39m
+    [31m+     ],[39m
+    [31m+     "hash": "#/focus",[39m
+    [31m+     "nbox": Array [[39m
+    [31m+       20,[39m
+    [31m+       433,[39m
+    [31m+       351,[39m
+    [31m+       55,[39m
+    [31m+     ],[39m
+    [31m+     "notice": "li#notice-t2 \"Couldn’t save just now. Your summary is \"",[39m
+    [31m+     "what": "span \"Study\"",[39m
+    [31m+   },[39m
+    [31m+ ][39m
+
+      412 |     const seen = Object.keys(app.seen);
+      413 |     test.info().annotations.push({ type: 'facts', description: JSON.stringify({ ...facts, keyboardFallbacks, app: { ...app, seen: app.seen }, welcome: { ...welcome, seen: welcome.seen } }) });
+    > 414 |     expect(app.hits, `notice overlaps in the app (${app.hitCount} in ${app.noticeFrames} notice frames, ${app.modalFrames} under a sheet)`).toEqual([]);
+          |                                                                                                                                             ^
+      415 |     expect(welcome.hits, `notice overlaps on the welcome (${welcome.hitCount} in ${welcome.noticeFrames} notice frames)`).toEqual([]);
+      416 |     expect(app.cut + welcome.cut, 'frames with a notice cut short').toBe(0);
+      417 |     // Not vacuous: every state was drawn and checked.
+        at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:414:141
+
+    Error Context: test-results/notice-strip-no-notice-ove-e7c32-al-input-390×844-light-100--chromium/error-context.md
+
+  2) [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 %) 
+
+    Error: notice overlaps in the app (2 in 1834 notice frames, 30 under a sheet)
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
+
+    [32m- Expected  -  1[39m
+    [31m+ Received  + 38[39m
+
+    [32m- Array [][39m
+    [31m+ Array [[39m
+    [31m+   Object {[39m
+    [31m+     "at": 17377,[39m
+    [31m+     "box": Array [[39m
+    [31m+       20,[39m
+    [31m+       413,[39m
+    [31m+       350,[39m
+    [31m+       123,[39m
+    [31m+     ],[39m
+    [31m+     "hash": "#/focus",[39m
+    [31m+     "nbox": Array [[39m
+    [31m+       20,[39m
+    [31m+       433,[39m
+    [31m+       351,[39m
+    [31m+       135,[39m
+    [31m+     ],[39m
+    [31m+     "notice": "li#notice-t2 \"Couldn’t save just now. Your summary is \"",[39m
+    [31m+     "what": "h1#_r_20_ \"25 minutes brewed\"",[39m
+    [31m+   },[39m
+    [31m+   Object {[39m
+    [31m+     "at": 17377,[39m
+    [31m+     "box": Array [[39m
+    [31m+       20,[39m
+    [31m+       540,[39m
+    [31m+       350,[39m
+    [31m+       92,[39m
+    [31m+     ],[39m
+    [31m+     "hash": "#/focus",[39m
+    [31m+     "nbox": Array [[39m
+    [31m+       20,[39m
+    [31m+       433,[39m
+    [31m+       351,[39m
+    [31m+       135,[39m
+    [31m+     ],[39m
+    [31m+     "notice": "li#notice-t2 \"Couldn’t save just now. Your summary is \"",[39m
+    [31m+     "what": "p \"Tea’s ready. Take five before the next o\"",[39m
+    [31m+   },[39m
+    [31m+ ][39m
+
+      412 |     const seen = Object.keys(app.seen);
+      413 |     test.info().annotations.push({ type: 'facts', description: JSON.stringify({ ...facts, keyboardFallbacks, app: { ...app, seen: app.seen }, welcome: { ...welcome, seen: welcome.seen } }) });
+    > 414 |     expect(app.hits, `notice overlaps in the app (${app.hitCount} in ${app.noticeFrames} notice frames, ${app.modalFrames} under a sheet)`).toEqual([]);
+          |                                                                                                                                             ^
+      415 |     expect(welcome.hits, `notice overlaps on the welcome (${welcome.hitCount} in ${welcome.noticeFrames} notice frames)`).toEqual([]);
+      416 |     expect(app.cut + welcome.cut, 'frames with a notice cut short').toBe(0);
+      417 |     // Not vacuous: every state was drawn and checked.
+        at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:414:141
+
+    Error Context: test-results/notice-strip-no-notice-ove-080f0-al-input-390×844-light-200--chromium/error-context.md
+
+  3) [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 100 %) 
+
+    Error: notice overlaps in the app (8 in 1638 notice frames, 31 under a sheet)
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
+
+    [32m- Expected  -   1[39m
+    [31m+ Received  + 146[39m
+
+    [32m- Array [][39m
+    [31m+ Array [[39m
+    [31m+   Object {[39m
+    [31m+     "at": 14113,[39m
+    [31m+     "box": Array [[39m
+    [31m+       20,[39m
+    [31m+       402,[39m
+    [31m+       350,[39m
+    [31m+       32,[39m
+    [31m+     ],[39m
+    [31m+     "hash": "#/focus",[39m
+    [31m+     "nbox": Array [[39m
+    [31m+       20,[39m
+    [31m+       433,[39m
+    [31m+       351,[39m
+    [31m+       55,[39m
+    [31m+     ],[39m
+    [31m+     "notice": "li#notice-t2 \"Couldn’t save just now. Your summary is \"",[39m
+    [31m+     "what": "h1#_r_20_ \"25 minutes brewed\"",[39m
+    [31m+   },[39m
+    [31m+   Object {[39m
+    [31m+     "at": 14113,[39m
+    [31m+     "box": Array [[39m
+    [31m+       20,[39m
+    [31m+       438,[39m
+    [31m+       350,[39m
+    [31m+       23,[39m
+    [31m+     ],[39m
+    [31m+     "hash": "#/focus",[39m
+    [31m+     "nbox": Array [[39m
+    [31m+       20,[39m
+    [31m+       433,[39m
+    [31m+       351,[39m
+    [31m+       55,[39m
+    [31m+     ],[39m
+    [31m+     "notice": "li#notice-t2 \"Couldn’t save just now. Your summary is \"",[39m
+    [31m+     "what": "p \"Tea’s ready. Take five before the next o\"",[39m
+    [31m+   },[39m
+    [31m+   Object {[39m
+    [31m+     "at": 14114,[39m
+    [31m+     "box": Array [[39m
+    [31m+       44,[39m
+    [31m+       475,[39m
+    [31m+       124,[39m
+    [31m+       26,[39m
+    [31m+     ],[39m
+    [31m+     "hash": "#/focus",[39m
+    [31m+     "nbox": Array [[39m
+    [31m+       20,[39m
+    [31m+       433,[39m
+    [31m+       351,[39m
+    [31m+       55,[39m
+    [31m+     ],[39m
+    [31m+     "notice": "li#notice-t2 \"Couldn’t save just now. Your summary is \"",[39m
+    [31m+     "what": "span \"Chapter 3 notes\"",[39m
+    [31m+   },[39m
+    [31m+   Object {[39m
+    [31m+     "at": 14114,[39m
+    [31m+     "box": Array [[39m
+    [31m+       176,[39m
+    [31m+       476,[39m
+    [31m+       66,[39m
+    [31m+       22,[39m
+    [31m+     ],[39m
+    [31m+     "hash": "#/focus",[39m
+    [31m+     "nbox": Array [[39m
+    [31m+       20,[39m
+    [31m+       433,[39m
+    [31m+       351,[39m
+    [31m+       55,[39m
+    [31m+     ],[39m
+    [31m+     "notice": "li#notice-t2 \"Couldn’t save just now. Your summary is \"",[39m
+    [31m+     "what": "span \"Study\"",[39m
+    [31m+   },[39m
+    [31m+   Object {[39m
+    [31m+     "at": 14129,[39m
+    [31m+     "box": Array [[39m
+    [31m+       20,[39m
+    [31m+       402,[39m
+    [31m+       350,[39m
+    [31m+       32,[39m
+    [31m+     ],[39m
+    [31m+     "hash": "#/focus",[39m
+    [31m+     "nbox": Array [[39m
+    [31m+       17,[39m
+    [31m+       432,[39m
+    [31m+       355,[39m
+    [31m+       56,[39m
+    [31m+     ],[39m
+    [31m+     "notice": "li#notice-t2 \"Couldn’t save just now. Your summary is \"",[39m
+    [31m+     "what": "h1#_r_20_ \"25 minutes brewed\"",[39m
+    [31m+   },[39m
+    [31m+   Object {[39m
+    [31m+     "at": 14129,[39m
+    [31m+     "box": Array [[39m
+    [31m+       20,[39m
+    [31m+       438,[39m
+    [31m+       350,[39m
+    [31m+       23,[39m
+    [31m+     ],[39m
+    [31m+     "hash": "#/focus",[39m
+    [31m+     "nbox": Array [[39m
+    [31m+       17,[39m
+    [31m+       432,[39m
+    [31m+       355,[39m
+    [31m+       56,[39m
+    [31m+     ],[39m
+    [31m+     "notice": "li#notice-t2 \"Couldn’t save just now. Your summary is \"",[39m
+    [31m+     "what": "p \"Tea’s ready. Take five before the next o\"",[39m
+    [31m+   },[39m
+    [31m+   Object {[39m
+    [31m+     "at": 14129,[39m
+    [31m+     "box": Array [[39m
+    [31m+       44,[39m
+    [31m+       475,[39m
+    [31m+       124,[39m
+    [31m+       26,[39m
+    [31m+     ],[39m
+    [31m+     "hash": "#/focus",[39m
+    [31m+     "nbox": Array [[39m
+    [31m+       17,[39m
+    [31m+       432,[39m
+    [31m+       355,[39m
+    [31m+       56,[39m
+    [31m+     ],[39m
+    [31m+     "notice": "li#notice-t2 \"Couldn’t save just now. Your summary is \"",[39m
+    [31m+     "what": "span \"Chapter 3 notes\"",[39m
+    [31m+   },[39m
+    [31m+   Object {[39m
+    [31m+     "at": 14129,[39m
+    [31m+     "box": Array [[39m
+    [31m+       176,[39m
+    [31m+       476,[39m
+    [31m+       66,[39m
+    [31m+       22,[39m
+    [31m+     ],[39m
+    [31m+     "hash": "#/focus",[39m
+    [31m+     "nbox": Array [[39m
+    [31m+       17,[39m
+    [31m+       432,[39m
+    [31m+       355,[39m
+    [31m+       56,[39m
+    [31m+     ],[39m
+    [31m+     "notice": "li#notice-t2 \"Couldn’t save just now. Your summary is \"",[39m
+    [31m+     "what": "span \"Study\"",[39m
+    [31m+   },[39m
+    [31m+ ][39m
+
+      412 |     const seen = Object.keys(app.seen);
+      413 |     test.info().annotations.push({ type: 'facts', description: JSON.stringify({ ...facts, keyboardFallbacks, app: { ...app, seen: app.seen }, welcome: { ...welcome, seen: welcome.seen } }) });
+    > 414 |     expect(app.hits, `notice overlaps in the app (${app.hitCount} in ${app.noticeFrames} notice frames, ${app.modalFrames} under a sheet)`).toEqual([]);
+          |                                                                                                                                             ^
+      415 |     expect(welcome.hits, `notice overlaps on the welcome (${welcome.hitCount} in ${welcome.noticeFrames} notice frames)`).toEqual([]);
+      416 |     expect(app.cut + welcome.cut, 'frames with a notice cut short').toBe(0);
+      417 |     // Not vacuous: every state was drawn and checked.
+        at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:414:141
+
+    Error Context: test-results/notice-strip-no-notice-ove-d25f2-eal-input-390×844-dark-100--chromium/error-context.md
+
+  4) [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 200 %) 
+
+    Error: notice overlaps in the app (2 in 1825 notice frames, 24 under a sheet)
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
+
+    [32m- Expected  -  1[39m
+    [31m+ Received  + 38[39m
+
+    [32m- Array [][39m
+    [31m+ Array [[39m
+    [31m+   Object {[39m
+    [31m+     "at": 17115,[39m
+    [31m+     "box": Array [[39m
+    [31m+       20,[39m
+    [31m+       413,[39m
+    [31m+       350,[39m
+    [31m+       123,[39m
+    [31m+     ],[39m
+    [31m+     "hash": "#/focus",[39m
+    [31m+     "nbox": Array [[39m
+    [31m+       20,[39m
+    [31m+       433,[39m
+    [31m+       351,[39m
+    [31m+       135,[39m
+    [31m+     ],[39m
+    [31m+     "notice": "li#notice-t2 \"Couldn’t save just now. Your summary is \"",[39m
+    [31m+     "what": "h1#_r_20_ \"25 minutes brewed\"",[39m
+    [31m+   },[39m
+    [31m+   Object {[39m
+    [31m+     "at": 17115,[39m
+    [31m+     "box": Array [[39m
+    [31m+       20,[39m
+    [31m+       540,[39m
+    [31m+       350,[39m
+    [31m+       92,[39m
+    [31m+     ],[39m
+    [31m+     "hash": "#/focus",[39m
+    [31m+     "nbox": Array [[39m
+    [31m+       20,[39m
+    [31m+       433,[39m
+    [31m+       351,[39m
+    [31m+       135,[39m
+    [31m+     ],[39m
+    [31m+     "notice": "li#notice-t2 \"Couldn’t save just now. Your summary is \"",[39m
+    [31m+     "what": "p \"Tea’s ready. Take five before the next o\"",[39m
+    [31m+   },[39m
+    [31m+ ][39m
+
+      412 |     const seen = Object.keys(app.seen);
+      413 |     test.info().annotations.push({ type: 'facts', description: JSON.stringify({ ...facts, keyboardFallbacks, app: { ...app, seen: app.seen }, welcome: { ...welcome, seen: welcome.seen } }) });
+    > 414 |     expect(app.hits, `notice overlaps in the app (${app.hitCount} in ${app.noticeFrames} notice frames, ${app.modalFrames} under a sheet)`).toEqual([]);
+          |                                                                                                                                             ^
+      415 |     expect(welcome.hits, `notice overlaps on the welcome (${welcome.hitCount} in ${welcome.noticeFrames} notice frames)`).toEqual([]);
+      416 |     expect(app.cut + welcome.cut, 'frames with a notice cut short').toBe(0);
+      417 |     // Not vacuous: every state was drawn and checked.
+        at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:414:141
+
+    Error Context: test-results/notice-strip-no-notice-ove-e8a30-eal-input-390×844-dark-200--chromium/error-context.md
+
+  5) [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 100 %) 
+
+    Error: notice overlaps in the app (2 in 1746 notice frames, 22 under a sheet)
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
+
+    [32m- Expected  -  1[39m
+    [31m+ Received  + 38[39m
+
+    [32m- Array [][39m
+    [31m+ Array [[39m
+    [31m+   Object {[39m
+    [31m+     "at": 15938,[39m
+    [31m+     "box": Array [[39m
+    [31m+       20,[39m
+    [31m+       319,[39m
+    [31m+       335,[39m
+    [31m+       31,[39m
+    [31m+     ],[39m
+    [31m+     "hash": "#/focus",[39m
+    [31m+     "nbox": Array [[39m
+    [31m+       19,[39m
+    [31m+       324,[39m
+    [31m+       336,[39m
+    [31m+       55,[39m
+    [31m+     ],[39m
+    [31m+     "notice": "li#notice-t2 \"Couldn’t save just now. Your summary is \"",[39m
+    [31m+     "what": "h1#_r_20_ \"25 minutes brewed\"",[39m
+    [31m+   },[39m
+    [31m+   Object {[39m
+    [31m+     "at": 15938,[39m
+    [31m+     "box": Array [[39m
+    [31m+       20,[39m
+    [31m+       354,[39m
+    [31m+       335,[39m
+    [31m+       23,[39m
+    [31m+     ],[39m
+    [31m+     "hash": "#/focus",[39m
+    [31m+     "nbox": Array [[39m
+    [31m+       19,[39m
+    [31m+       324,[39m
+    [31m+       336,[39m
+    [31m+       55,[39m
+    [31m+     ],[39m
+    [31m+     "notice": "li#notice-t2 \"Couldn’t save just now. Your summary is \"",[39m
+    [31m+     "what": "p \"Tea’s ready. Take five before the next o\"",[39m
+    [31m+   },[39m
+    [31m+ ][39m
+
+      412 |     const seen = Object.keys(app.seen);
+      413 |     test.info().annotations.push({ type: 'facts', description: JSON.stringify({ ...facts, keyboardFallbacks, app: { ...app, seen: app.seen }, welcome: { ...welcome, seen: welcome.seen } }) });
+    > 414 |     expect(app.hits, `notice overlaps in the app (${app.hitCount} in ${app.noticeFrames} notice frames, ${app.modalFrames} under a sheet)`).toEqual([]);
+          |                                                                                                                                             ^
+      415 |     expect(welcome.hits, `notice overlaps on the welcome (${welcome.hitCount} in ${welcome.noticeFrames} notice frames)`).toEqual([]);
+      416 |     expect(app.cut + welcome.cut, 'frames with a notice cut short').toBe(0);
+      417 |     // Not vacuous: every state was drawn and checked.
+        at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:414:141
+
+    Error Context: test-results/notice-strip-no-notice-ove-3e405-al-input-375×667-light-100--chromium/error-context.md
+
+  6) [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 % reduced motion) 
+
+    Error: notice overlaps in the app (4 in 1829 notice frames, 9 under a sheet)
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
+
+    [32m- Expected  -  1[39m
+    [31m+ Received  + 74[39m
+
+    [32m- Array [][39m
+    [31m+ Array [[39m
+    [31m+   Object {[39m
+    [31m+     "at": 14593,[39m
+    [31m+     "box": Array [[39m
+    [31m+       20,[39m
+    [31m+       339,[39m
+    [31m+       335,[39m
+    [31m+       123,[39m
+    [31m+     ],[39m
+    [31m+     "hash": "#/focus",[39m
+    [31m+     "nbox": Array [[39m
+    [31m+       16,[39m
+    [31m+       323,[39m
+    [31m+       343,[39m
+    [31m+       178,[39m
+    [31m+     ],[39m
+    [31m+     "notice": "li#notice-t2 \"Couldn’t save just now. Your summary is \"",[39m
+    [31m+     "what": "h1#_r_20_ \"25 minutes brewed\"",[39m
+    [31m+   },[39m
+    [31m+   Object {[39m
+    [31m+     "at": 14595,[39m
+    [31m+     "box": Array [[39m
+    [31m+       20,[39m
+    [31m+       467,[39m
+    [31m+       335,[39m
+    [31m+       8,[39m
+    [31m+     ],[39m
+    [31m+     "hash": "#/focus",[39m
+    [31m+     "nbox": Array [[39m
+    [31m+       16,[39m
+    [31m+       323,[39m
+    [31m+       343,[39m
+    [31m+       178,[39m
+    [31m+     ],[39m
+    [31m+     "notice": "li#notice-t2 \"Couldn’t save just now. Your summary is \"",[39m
+    [31m+     "what": "p \"Tea’s ready. Take five before the next o\"",[39m
+    [31m+   },[39m
+    [31m+   Object {[39m
+    [31m+     "at": 14596,[39m
+    [31m+     "box": Array [[39m
+    [31m+       20,[39m
+    [31m+       489,[39m
+    [31m+       335,[39m
+    [31m+       108,[39m
+    [31m+     ],[39m
+    [31m+     "hash": "#/focus",[39m
+    [31m+     "nbox": Array [[39m
+    [31m+       16,[39m
+    [31m+       323,[39m
+    [31m+       343,[39m
+    [31m+       178,[39m
+    [31m+     ],[39m
+    [31m+     "notice": "li#notice-t2 \"Couldn’t save just now. Your summary is \"",[39m
+    [31m+     "what": "button \"Tea time · 5 min\"",[39m
+    [31m+   },[39m
+    [31m+   Object {[39m
+    [31m+     "at": 14596,[39m
+    [31m+     "box": Array [[39m
+    [31m+       80,[39m
+    [31m+       495,[39m
+    [31m+       243,[39m
+    [31m+       92,[39m
+    [31m+     ],[39m
+    [31m+     "hash": "#/focus",[39m
+    [31m+     "nbox": Array [[39m
+    [31m+       16,[39m
+    [31m+       323,[39m
+    [31m+       343,[39m
+    [31m+       178,[39m
+    [31m+     ],[39m
+    [31m+     "notice": "li#notice-t2 \"Couldn’t save just now. Your summary is \"",[39m
+    [31m+     "what": "span \"Tea time · 5 min\"",[39m
+    [31m+   },[39m
+    [31m+ ][39m
+
+      412 |     const seen = Object.keys(app.seen);
+      413 |     test.info().annotations.push({ type: 'facts', description: JSON.stringify({ ...facts, keyboardFallbacks, app: { ...app, seen: app.seen }, welcome: { ...welcome, seen: welcome.seen } }) });
+    > 414 |     expect(app.hits, `notice overlaps in the app (${app.hitCount} in ${app.noticeFrames} notice frames, ${app.modalFrames} under a sheet)`).toEqual([]);
+          |                                                                                                                                             ^
+      415 |     expect(welcome.hits, `notice overlaps on the welcome (${welcome.hitCount} in ${welcome.noticeFrames} notice frames)`).toEqual([]);
+      416 |     expect(app.cut + welcome.cut, 'frames with a notice cut short').toBe(0);
+      417 |     // Not vacuous: every state was drawn and checked.
+        at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:414:141
+
+    Error Context: test-results/notice-strip-no-notice-ove-e78c4-7-light-200-reduced-motion--chromium/error-context.md
+
+  7) [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 %) 
+
+    Error: getByRole('button', { name: /^Put the kettle on/ }) can be brought on top by real scrolling ({"x":524,"y":682,"width":288,"height":108.375}, scrollY 0)
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+      227 |     return { x: -1, y: -1, w: 0, h: 0, top: -1 };
+      228 |   }
+    > 229 |   expect(at, `${el} can be brought on top by real scrolling (${JSON.stringify(await el.boundingBox())}, scrollY ${await page.evaluate(() => scrollY)})`).not.toBeNull();
+          |                                                                                                                                                              ^
+      230 |   if (touch) await page.touchscreen.tap(at!.x, at!.y);
+      231 |   else await page.mouse.click(at!.x, at!.y);
+      232 |   return at!;
+        at press (/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:229:158)
+        at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:339:5
+
+    Error Context: test-results/notice-strip-no-notice-ove-e4f0e-al-input-844×390-light-200--chromium/error-context.md
+
+  8) [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion) 
+
+    Error: getByRole('button', { name: /^Put the kettle on/ }) can be brought on top by real scrolling ({"x":524,"y":682,"width":288,"height":108.375}, scrollY 0)
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+      227 |     return { x: -1, y: -1, w: 0, h: 0, top: -1 };
+      228 |   }
+    > 229 |   expect(at, `${el} can be brought on top by real scrolling (${JSON.stringify(await el.boundingBox())}, scrollY ${await page.evaluate(() => scrollY)})`).not.toBeNull();
+          |                                                                                                                                                              ^
+      230 |   if (touch) await page.touchscreen.tap(at!.x, at!.y);
+      231 |   else await page.mouse.click(at!.x, at!.y);
+      232 |   return at!;
+        at press (/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:229:158)
+        at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:339:5
+
+    Error Context: test-results/notice-strip-no-notice-ove-cf924-0-light-200-reduced-motion--chromium/error-context.md
+
+  9) [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+
+    Error: getByRole('button', { name: /^Put the kettle on/ }) can be brought on top by real scrolling ({"x":524,"y":682,"width":288,"height":108.375}, scrollY 0)
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+      227 |     return { x: -1, y: -1, w: 0, h: 0, top: -1 };
+      228 |   }
+    > 229 |   expect(at, `${el} can be brought on top by real scrolling (${JSON.stringify(await el.boundingBox())}, scrollY ${await page.evaluate(() => scrollY)})`).not.toBeNull();
+          |                                                                                                                                                              ^
+      230 |   if (touch) await page.touchscreen.tap(at!.x, at!.y);
+      231 |   else await page.mouse.click(at!.x, at!.y);
+      232 |   return at!;
+        at press (/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:229:158)
+        at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:339:5
+
+    Error Context: test-results/notice-strip-no-notice-ove-011b9-eal-input-844×390-dark-200--chromium/error-context.md
+
+  9 failed
+    [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 100 %) 
+    [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 %) 
+    [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 100 %) 
+    [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 200 %) 
+    [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 100 %) 
+    [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 % reduced motion) 
+    [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 %) 
+    [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion) 
+    [chromium] › tests/notice-strip.spec.ts:264:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+  16 passed (12.1m)
+[slots] T2 freed 2 at 21:31:18

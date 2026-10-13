@@ -1,0 +1,50 @@
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium] › tests/zz-ctl-e866118.spec.ts:263:3 › an older toast timing out after the list was scrolled never moves the warning out of its room (375×667, 200 % text, wheel, light) (17.6s)
+  ✘  2 [chromium] › tests/zz-ctl-e866118.spec.ts:263:3 › an older toast timing out after the list was scrolled never moves the warning out of its room (375×667, 200 % text, wheel, dark) (17.4s)
+
+
+  1) [chromium] › tests/zz-ctl-e866118.spec.ts:263:3 › an older toast timing out after the list was scrolled never moves the warning out of its room (375×667, 200 % text, wheel, light) 
+
+    Error: times the warning left the page since End
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m0[39m
+    Received: [31m1[39m
+
+      331 |     expect(r.msAfter, 'recorded past the last input').toBeGreaterThanOrEqual(2000);
+      332 |     // Not taken away at any point since End, its entry included (the docked start settles as Today rises into place).
+    > 333 |     expect(await page.evaluate(() => (window as any).__warningGone.length), 'times the warning left the page since End').toBe(0);
+          |                                                                                                                          ^
+      334 |     expect(r.outOfRoom, `frames with the warning's box below its room or over the docked start (of ${r.frames})`).toBe(0);
+      335 |     expect(r.gone, `frames without the warning at full opacity (of ${r.frames})`).toBe(0);
+      336 |     await ctx.close();
+        at /home/user/wt/w4t2-c20671eb/kettle/tests/zz-ctl-e866118.spec.ts:333:122
+
+    Error Context: test-results/zz-ctl-e866118-an-older-to-4e6ce-5×667-200-text-wheel-light--chromium/error-context.md
+
+  2) [chromium] › tests/zz-ctl-e866118.spec.ts:263:3 › an older toast timing out after the list was scrolled never moves the warning out of its room (375×667, 200 % text, wheel, dark) 
+
+    Error: times the warning left the page since End
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m0[39m
+    Received: [31m1[39m
+
+      331 |     expect(r.msAfter, 'recorded past the last input').toBeGreaterThanOrEqual(2000);
+      332 |     // Not taken away at any point since End, its entry included (the docked start settles as Today rises into place).
+    > 333 |     expect(await page.evaluate(() => (window as any).__warningGone.length), 'times the warning left the page since End').toBe(0);
+          |                                                                                                                          ^
+      334 |     expect(r.outOfRoom, `frames with the warning's box below its room or over the docked start (of ${r.frames})`).toBe(0);
+      335 |     expect(r.gone, `frames without the warning at full opacity (of ${r.frames})`).toBe(0);
+      336 |     await ctx.close();
+        at /home/user/wt/w4t2-c20671eb/kettle/tests/zz-ctl-e866118.spec.ts:333:122
+
+    Error Context: test-results/zz-ctl-e866118-an-older-to-aa653-75×667-200-text-wheel-dark--chromium/error-context.md
+
+  2 failed
+    [chromium] › tests/zz-ctl-e866118.spec.ts:263:3 › an older toast timing out after the list was scrolled never moves the warning out of its room (375×667, 200 % text, wheel, light) 
+    [chromium] › tests/zz-ctl-e866118.spec.ts:263:3 › an older toast timing out after the list was scrolled never moves the warning out of its room (375×667, 200 % text, wheel, dark) 

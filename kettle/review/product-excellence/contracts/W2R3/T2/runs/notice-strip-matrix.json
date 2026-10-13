@@ -1,0 +1,1469 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w4t2/kettle/playwright.config.ts",
+    "rootDir": "/home/user/wt/w4t2/kettle/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w4t2/kettle/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "timer-harness",
+        "name": "timer-harness",
+        "testDir": "/home/user/wt/w4t2/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w4t2/kettle/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "timer-app",
+        "name": "timer-app",
+        "testDir": "/home/user/wt/w4t2/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w4t2/kettle/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pwa",
+        "name": "pwa",
+        "testDir": "/home/user/wt/w4t2/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/pwa\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/home/user/wt/w4t2/kettle/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w4t2/kettle/tests",
+        "testIgnore": [
+          "/(timer|pwa)\\.spec\\.ts/"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 2,
+    "webServer": {
+      "command": "npx vite --config tests/e2e.vite.config.ts --port 5471 --strictPort",
+      "url": "http://127.0.0.1:5471/",
+      "reuseExistingServer": true,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "notice-strip.spec.ts",
+      "file": "notice-strip.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (390×844 light 100 %)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":1973,\"markDone\":{\"tapAt\":{\"x\":282.5,\"y\":578,\"w\":79,\"h\":44,\"top\":556},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":723,\"undoY\":723},\"keyboardFallbacks\":[],\"app\":{\"hits\":[{\"at\":14160,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"h1#_r_20_ \\\"25 minutes brewed\\\"\",\"box\":[20,402,350,32],\"nbox\":[20,433,351,55]},{\"at\":14161,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"p \\\"Tea’s ready. Take five before the next o\\\"\",\"box\":[20,438,350,23],\"nbox\":[20,433,351,55]},{\"at\":14161,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"span \\\"Chapter 3 notes\\\"\",\"box\":[44,475,124,26],\"nbox\":[20,433,351,55]},{\"at\":14161,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"span \\\"Study\\\"\",\"box\":[176,476,66,22],\"nbox\":[20,433,351,55]}],\"hitCount\":4,\"underChrome\":200,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":200},\"noticeFrames\":1707,\"modalFrames\":26,\"frames\":2853,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":194,\"Crossed off. Nice work. Undo\":9,\"Couldn’t save just now. Your summary is still he\":243,\"Recipe done: Take a full tea break · +10 leaves\":222,\"Recipe done: Take 2 full tea breaks · +15 leaves\":246,\"Kettle’s off. See you soon.\":199,\"Brew updated\":251,\"Brew deleted Undo\":25,\"A notice on Settings, here to be read.\":244,\"A notice on Nook, here to be read.\":83}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":65,\"modalFrames\":0,\"frames\":187,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":65}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 58279,
+                  "error": {
+                    "message": "Error: notice overlaps in the app (4 in 1707 notice frames, 26 under a sheet)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 74\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14160,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       402,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       32,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"h1#_r_20_ \\\"25 minutes brewed\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14161,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       438,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       23,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"p \\\"Tea’s ready. Take five before the next o\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14161,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       44,\u001b[39m\n\u001b[31m+       475,\u001b[39m\n\u001b[31m+       124,\u001b[39m\n\u001b[31m+       26,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"span \\\"Chapter 3 notes\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14161,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       176,\u001b[39m\n\u001b[31m+       476,\u001b[39m\n\u001b[31m+       66,\u001b[39m\n\u001b[31m+       22,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"span \\\"Study\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: notice overlaps in the app (4 in 1707 notice frames, 26 under a sheet)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 74\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14160,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       402,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       32,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"h1#_r_20_ \\\"25 minutes brewed\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14161,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       438,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       23,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"p \\\"Tea’s ready. Take five before the next o\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14161,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       44,\u001b[39m\n\u001b[31m+       475,\u001b[39m\n\u001b[31m+       124,\u001b[39m\n\u001b[31m+       26,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"span \\\"Chapter 3 notes\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14161,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       176,\u001b[39m\n\u001b[31m+       476,\u001b[39m\n\u001b[31m+       66,\u001b[39m\n\u001b[31m+       22,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"span \\\"Study\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:414:141",
+                    "location": {
+                      "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                      "column": 141,
+                      "line": 414
+                    },
+                    "snippet": "  412 |     const seen = Object.keys(app.seen);\n  413 |     test.info().annotations.push({ type: 'facts', description: JSON.stringify({ ...facts, keyboardFallbacks, app: { ...app, seen: app.seen }, welcome: { ...welcome, seen: welcome.seen } }) });\n> 414 |     expect(app.hits, `notice overlaps in the app (${app.hitCount} in ${app.noticeFrames} notice frames, ${app.modalFrames} under a sheet)`).toEqual([]);\n      |                                                                                                                                             ^\n  415 |     expect(welcome.hits, `notice overlaps on the welcome (${welcome.hitCount} in ${welcome.noticeFrames} notice frames)`).toEqual([]);\n  416 |     expect(app.cut + welcome.cut, 'frames with a notice cut short').toBe(0);\n  417 |     // Not vacuous: every state was drawn and checked."
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                        "column": 141,
+                        "line": 414
+                      },
+                      "message": "Error: notice overlaps in the app (4 in 1707 notice frames, 26 under a sheet)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 74\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14160,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       402,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       32,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"h1#_r_20_ \\\"25 minutes brewed\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14161,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       438,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       23,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"p \\\"Tea’s ready. Take five before the next o\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14161,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       44,\u001b[39m\n\u001b[31m+       475,\u001b[39m\n\u001b[31m+       124,\u001b[39m\n\u001b[31m+       26,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"span \\\"Chapter 3 notes\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14161,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       176,\u001b[39m\n\u001b[31m+       476,\u001b[39m\n\u001b[31m+       66,\u001b[39m\n\u001b[31m+       22,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"span \\\"Study\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  412 |     const seen = Object.keys(app.seen);\n  413 |     test.info().annotations.push({ type: 'facts', description: JSON.stringify({ ...facts, keyboardFallbacks, app: { ...app, seen: app.seen }, welcome: { ...welcome, seen: welcome.seen } }) });\n> 414 |     expect(app.hits, `notice overlaps in the app (${app.hitCount} in ${app.noticeFrames} notice frames, ${app.modalFrames} under a sheet)`).toEqual([]);\n      |                                                                                                                                             ^\n  415 |     expect(welcome.hits, `notice overlaps on the welcome (${welcome.hitCount} in ${welcome.noticeFrames} notice frames)`).toEqual([]);\n  416 |     expect(app.cut + welcome.cut, 'frames with a notice cut short').toBe(0);\n  417 |     // Not vacuous: every state was drawn and checked.\n    at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:414:141"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:19:15.482Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":1973,\"markDone\":{\"tapAt\":{\"x\":282.5,\"y\":578,\"w\":79,\"h\":44,\"top\":556},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":723,\"undoY\":723},\"keyboardFallbacks\":[],\"app\":{\"hits\":[{\"at\":14160,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"h1#_r_20_ \\\"25 minutes brewed\\\"\",\"box\":[20,402,350,32],\"nbox\":[20,433,351,55]},{\"at\":14161,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"p \\\"Tea’s ready. Take five before the next o\\\"\",\"box\":[20,438,350,23],\"nbox\":[20,433,351,55]},{\"at\":14161,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"span \\\"Chapter 3 notes\\\"\",\"box\":[44,475,124,26],\"nbox\":[20,433,351,55]},{\"at\":14161,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"span \\\"Study\\\"\",\"box\":[176,476,66,22],\"nbox\":[20,433,351,55]}],\"hitCount\":4,\"underChrome\":200,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":200},\"noticeFrames\":1707,\"modalFrames\":26,\"frames\":2853,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":194,\"Crossed off. Nice work. Undo\":9,\"Couldn’t save just now. Your summary is still he\":243,\"Recipe done: Take a full tea break · +10 leaves\":222,\"Recipe done: Take 2 full tea breaks · +15 leaves\":246,\"Kettle’s off. See you soon.\":199,\"Brew updated\":251,\"Brew deleted Undo\":25,\"A notice on Settings, here to be read.\":244,\"A notice on Nook, here to be read.\":83}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":65,\"modalFrames\":0,\"frames\":187,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":65}}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w4t2/kettle/test-results/notice-strip-no-notice-ove-e7c32-al-input-390×844-light-100--chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                    "column": 141,
+                    "line": 414
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-41deed2571370f68d806",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 %)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":3335,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":343.5625,\"w\":151,\"h\":44,\"top\":321.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":653.828125,\"undoY\":654.234375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[{\"at\":17377,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"h1#_r_20_ \\\"25 minutes brewed\\\"\",\"box\":[20,413,350,123],\"nbox\":[20,433,351,135]},{\"at\":17377,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"p \\\"Tea’s ready. Take five before the next o\\\"\",\"box\":[20,540,350,92],\"nbox\":[20,433,351,135]}],\"hitCount\":2,\"underChrome\":208,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":208},\"noticeFrames\":1834,\"modalFrames\":30,\"frames\":3411,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":201,\"Crossed off. Nice work. Undo\":9,\"Couldn’t save just now. Your summary is still he\":261,\"Recipe done: Take a full tea break · +10 leaves\":221,\"Recipe done: Take 2 full tea breaks · +15 leaves\":250,\"Kettle’s off. See you soon.\":199,\"Brew updated\":249,\"Brew deleted Undo\":26,\"A notice on Settings, here to be read.\":270,\"A notice on Nook, here to be read.\":83}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":70,\"modalFrames\":0,\"frames\":201,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":70}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 68780,
+                  "error": {
+                    "message": "Error: notice overlaps in the app (2 in 1834 notice frames, 30 under a sheet)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 38\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 17377,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       413,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       123,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       135,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"h1#_r_20_ \\\"25 minutes brewed\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 17377,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       540,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       92,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       135,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"p \\\"Tea’s ready. Take five before the next o\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: notice overlaps in the app (2 in 1834 notice frames, 30 under a sheet)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 38\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 17377,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       413,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       123,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       135,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"h1#_r_20_ \\\"25 minutes brewed\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 17377,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       540,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       92,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       135,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"p \\\"Tea’s ready. Take five before the next o\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:414:141",
+                    "location": {
+                      "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                      "column": 141,
+                      "line": 414
+                    },
+                    "snippet": "  412 |     const seen = Object.keys(app.seen);\n  413 |     test.info().annotations.push({ type: 'facts', description: JSON.stringify({ ...facts, keyboardFallbacks, app: { ...app, seen: app.seen }, welcome: { ...welcome, seen: welcome.seen } }) });\n> 414 |     expect(app.hits, `notice overlaps in the app (${app.hitCount} in ${app.noticeFrames} notice frames, ${app.modalFrames} under a sheet)`).toEqual([]);\n      |                                                                                                                                             ^\n  415 |     expect(welcome.hits, `notice overlaps on the welcome (${welcome.hitCount} in ${welcome.noticeFrames} notice frames)`).toEqual([]);\n  416 |     expect(app.cut + welcome.cut, 'frames with a notice cut short').toBe(0);\n  417 |     // Not vacuous: every state was drawn and checked."
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                        "column": 141,
+                        "line": 414
+                      },
+                      "message": "Error: notice overlaps in the app (2 in 1834 notice frames, 30 under a sheet)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 38\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 17377,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       413,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       123,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       135,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"h1#_r_20_ \\\"25 minutes brewed\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 17377,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       540,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       92,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       135,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"p \\\"Tea’s ready. Take five before the next o\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  412 |     const seen = Object.keys(app.seen);\n  413 |     test.info().annotations.push({ type: 'facts', description: JSON.stringify({ ...facts, keyboardFallbacks, app: { ...app, seen: app.seen }, welcome: { ...welcome, seen: welcome.seen } }) });\n> 414 |     expect(app.hits, `notice overlaps in the app (${app.hitCount} in ${app.noticeFrames} notice frames, ${app.modalFrames} under a sheet)`).toEqual([]);\n      |                                                                                                                                             ^\n  415 |     expect(welcome.hits, `notice overlaps on the welcome (${welcome.hitCount} in ${welcome.noticeFrames} notice frames)`).toEqual([]);\n  416 |     expect(app.cut + welcome.cut, 'frames with a notice cut short').toBe(0);\n  417 |     // Not vacuous: every state was drawn and checked.\n    at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:414:141"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:19:15.475Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":3335,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":343.5625,\"w\":151,\"h\":44,\"top\":321.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":653.828125,\"undoY\":654.234375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[{\"at\":17377,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"h1#_r_20_ \\\"25 minutes brewed\\\"\",\"box\":[20,413,350,123],\"nbox\":[20,433,351,135]},{\"at\":17377,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"p \\\"Tea’s ready. Take five before the next o\\\"\",\"box\":[20,540,350,92],\"nbox\":[20,433,351,135]}],\"hitCount\":2,\"underChrome\":208,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":208},\"noticeFrames\":1834,\"modalFrames\":30,\"frames\":3411,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":201,\"Crossed off. Nice work. Undo\":9,\"Couldn’t save just now. Your summary is still he\":261,\"Recipe done: Take a full tea break · +10 leaves\":221,\"Recipe done: Take 2 full tea breaks · +15 leaves\":250,\"Kettle’s off. See you soon.\":199,\"Brew updated\":249,\"Brew deleted Undo\":26,\"A notice on Settings, here to be read.\":270,\"A notice on Nook, here to be read.\":83}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":70,\"modalFrames\":0,\"frames\":201,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":70}}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w4t2/kettle/test-results/notice-strip-no-notice-ove-080f0-al-input-390×844-light-200--chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                    "column": 141,
+                    "line": 414
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-70eef10ea93ab8b38962",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 % reduced motion)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":2990,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":343.5625,\"w\":151,\"h\":44,\"top\":321.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":653.828125,\"undoY\":654.234375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":208,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":208},\"noticeFrames\":1806,\"modalFrames\":18,\"frames\":3224,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":194,\"Crossed off. Nice work. Undo\":11,\"Couldn’t save just now. Your summary is still he\":245,\"Recipe done: Take a full tea break · +10 leaves\":238,\"Recipe done: Take 2 full tea breaks · +15 leaves\":245,\"Kettle’s off. See you soon.\":205,\"Brew updated\":252,\"Brew deleted Undo\":26,\"A notice on Settings, here to be read.\":269,\"A notice on Nook, here to be read.\":60}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":64,\"modalFrames\":0,\"frames\":181,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":64}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 59799,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:20:14.750Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":2990,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":343.5625,\"w\":151,\"h\":44,\"top\":321.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":653.828125,\"undoY\":654.234375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":208,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":208},\"noticeFrames\":1806,\"modalFrames\":18,\"frames\":3224,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":194,\"Crossed off. Nice work. Undo\":11,\"Couldn’t save just now. Your summary is still he\":245,\"Recipe done: Take a full tea break · +10 leaves\":238,\"Recipe done: Take 2 full tea breaks · +15 leaves\":245,\"Kettle’s off. See you soon.\":205,\"Brew updated\":252,\"Brew deleted Undo\":26,\"A notice on Settings, here to be read.\":269,\"A notice on Nook, here to be read.\":60}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":64,\"modalFrames\":0,\"frames\":181,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":64}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-4e7ebe1b44f61a9f0aea",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 100 %)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":1516,\"markDone\":{\"tapAt\":{\"x\":282.5,\"y\":578,\"w\":79,\"h\":44,\"top\":556},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":723,\"undoY\":723},\"keyboardFallbacks\":[],\"app\":{\"hits\":[{\"at\":14113,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"h1#_r_20_ \\\"25 minutes brewed\\\"\",\"box\":[20,402,350,32],\"nbox\":[20,433,351,55]},{\"at\":14113,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"p \\\"Tea’s ready. Take five before the next o\\\"\",\"box\":[20,438,350,23],\"nbox\":[20,433,351,55]},{\"at\":14114,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"span \\\"Chapter 3 notes\\\"\",\"box\":[44,475,124,26],\"nbox\":[20,433,351,55]},{\"at\":14114,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"span \\\"Study\\\"\",\"box\":[176,476,66,22],\"nbox\":[20,433,351,55]},{\"at\":14129,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"h1#_r_20_ \\\"25 minutes brewed\\\"\",\"box\":[20,402,350,32],\"nbox\":[17,432,355,56]},{\"at\":14129,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"p \\\"Tea’s ready. Take five before the next o\\\"\",\"box\":[20,438,350,23],\"nbox\":[17,432,355,56]},{\"at\":14129,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"span \\\"Chapter 3 notes\\\"\",\"box\":[44,475,124,26],\"nbox\":[17,432,355,56]},{\"at\":14129,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"span \\\"Study\\\"\",\"box\":[176,476,66,22],\"nbox\":[17,432,355,56]}],\"hitCount\":8,\"underChrome\":152,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":152},\"noticeFrames\":1638,\"modalFrames\":31,\"frames\":2799,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":193,\"Crossed off. Nice work. Undo\":20,\"Couldn’t save just now. Your summary is still he\":244,\"Recipe done: Take a full tea break · +10 leaves\":198,\"Recipe done: Take 2 full tea breaks · +15 leaves\":248,\"Kettle’s off. See you soon.\":193,\"Brew updated\":246,\"Brew deleted Undo\":19,\"A notice on Settings, here to be read.\":251,\"A notice on Nook, here to be read.\":46}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":66,\"modalFrames\":0,\"frames\":198,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":66}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 56759,
+                  "error": {
+                    "message": "Error: notice overlaps in the app (8 in 1638 notice frames, 31 under a sheet)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -   1\u001b[39m\n\u001b[31m+ Received  + 146\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14113,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       402,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       32,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"h1#_r_20_ \\\"25 minutes brewed\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14113,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       438,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       23,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"p \\\"Tea’s ready. Take five before the next o\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14114,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       44,\u001b[39m\n\u001b[31m+       475,\u001b[39m\n\u001b[31m+       124,\u001b[39m\n\u001b[31m+       26,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"span \\\"Chapter 3 notes\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14114,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       176,\u001b[39m\n\u001b[31m+       476,\u001b[39m\n\u001b[31m+       66,\u001b[39m\n\u001b[31m+       22,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"span \\\"Study\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14129,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       402,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       32,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       17,\u001b[39m\n\u001b[31m+       432,\u001b[39m\n\u001b[31m+       355,\u001b[39m\n\u001b[31m+       56,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"h1#_r_20_ \\\"25 minutes brewed\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14129,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       438,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       23,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       17,\u001b[39m\n\u001b[31m+       432,\u001b[39m\n\u001b[31m+       355,\u001b[39m\n\u001b[31m+       56,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"p \\\"Tea’s ready. Take five before the next o\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14129,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       44,\u001b[39m\n\u001b[31m+       475,\u001b[39m\n\u001b[31m+       124,\u001b[39m\n\u001b[31m+       26,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       17,\u001b[39m\n\u001b[31m+       432,\u001b[39m\n\u001b[31m+       355,\u001b[39m\n\u001b[31m+       56,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"span \\\"Chapter 3 notes\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14129,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       176,\u001b[39m\n\u001b[31m+       476,\u001b[39m\n\u001b[31m+       66,\u001b[39m\n\u001b[31m+       22,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       17,\u001b[39m\n\u001b[31m+       432,\u001b[39m\n\u001b[31m+       355,\u001b[39m\n\u001b[31m+       56,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"span \\\"Study\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: notice overlaps in the app (8 in 1638 notice frames, 31 under a sheet)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -   1\u001b[39m\n\u001b[31m+ Received  + 146\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14113,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       402,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       32,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"h1#_r_20_ \\\"25 minutes brewed\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14113,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       438,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       23,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"p \\\"Tea’s ready. Take five before the next o\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14114,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       44,\u001b[39m\n\u001b[31m+       475,\u001b[39m\n\u001b[31m+       124,\u001b[39m\n\u001b[31m+       26,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"span \\\"Chapter 3 notes\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14114,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       176,\u001b[39m\n\u001b[31m+       476,\u001b[39m\n\u001b[31m+       66,\u001b[39m\n\u001b[31m+       22,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"span \\\"Study\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14129,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       402,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       32,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       17,\u001b[39m\n\u001b[31m+       432,\u001b[39m\n\u001b[31m+       355,\u001b[39m\n\u001b[31m+       56,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"h1#_r_20_ \\\"25 minutes brewed\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14129,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       438,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       23,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       17,\u001b[39m\n\u001b[31m+       432,\u001b[39m\n\u001b[31m+       355,\u001b[39m\n\u001b[31m+       56,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"p \\\"Tea’s ready. Take five before the next o\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14129,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       44,\u001b[39m\n\u001b[31m+       475,\u001b[39m\n\u001b[31m+       124,\u001b[39m\n\u001b[31m+       26,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       17,\u001b[39m\n\u001b[31m+       432,\u001b[39m\n\u001b[31m+       355,\u001b[39m\n\u001b[31m+       56,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"span \\\"Chapter 3 notes\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14129,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       176,\u001b[39m\n\u001b[31m+       476,\u001b[39m\n\u001b[31m+       66,\u001b[39m\n\u001b[31m+       22,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       17,\u001b[39m\n\u001b[31m+       432,\u001b[39m\n\u001b[31m+       355,\u001b[39m\n\u001b[31m+       56,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"span \\\"Study\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:414:141",
+                    "location": {
+                      "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                      "column": 141,
+                      "line": 414
+                    },
+                    "snippet": "  412 |     const seen = Object.keys(app.seen);\n  413 |     test.info().annotations.push({ type: 'facts', description: JSON.stringify({ ...facts, keyboardFallbacks, app: { ...app, seen: app.seen }, welcome: { ...welcome, seen: welcome.seen } }) });\n> 414 |     expect(app.hits, `notice overlaps in the app (${app.hitCount} in ${app.noticeFrames} notice frames, ${app.modalFrames} under a sheet)`).toEqual([]);\n      |                                                                                                                                             ^\n  415 |     expect(welcome.hits, `notice overlaps on the welcome (${welcome.hitCount} in ${welcome.noticeFrames} notice frames)`).toEqual([]);\n  416 |     expect(app.cut + welcome.cut, 'frames with a notice cut short').toBe(0);\n  417 |     // Not vacuous: every state was drawn and checked."
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                        "column": 141,
+                        "line": 414
+                      },
+                      "message": "Error: notice overlaps in the app (8 in 1638 notice frames, 31 under a sheet)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -   1\u001b[39m\n\u001b[31m+ Received  + 146\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14113,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       402,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       32,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"h1#_r_20_ \\\"25 minutes brewed\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14113,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       438,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       23,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"p \\\"Tea’s ready. Take five before the next o\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14114,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       44,\u001b[39m\n\u001b[31m+       475,\u001b[39m\n\u001b[31m+       124,\u001b[39m\n\u001b[31m+       26,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"span \\\"Chapter 3 notes\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14114,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       176,\u001b[39m\n\u001b[31m+       476,\u001b[39m\n\u001b[31m+       66,\u001b[39m\n\u001b[31m+       22,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"span \\\"Study\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14129,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       402,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       32,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       17,\u001b[39m\n\u001b[31m+       432,\u001b[39m\n\u001b[31m+       355,\u001b[39m\n\u001b[31m+       56,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"h1#_r_20_ \\\"25 minutes brewed\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14129,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       438,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       23,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       17,\u001b[39m\n\u001b[31m+       432,\u001b[39m\n\u001b[31m+       355,\u001b[39m\n\u001b[31m+       56,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"p \\\"Tea’s ready. Take five before the next o\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14129,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       44,\u001b[39m\n\u001b[31m+       475,\u001b[39m\n\u001b[31m+       124,\u001b[39m\n\u001b[31m+       26,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       17,\u001b[39m\n\u001b[31m+       432,\u001b[39m\n\u001b[31m+       355,\u001b[39m\n\u001b[31m+       56,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"span \\\"Chapter 3 notes\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14129,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       176,\u001b[39m\n\u001b[31m+       476,\u001b[39m\n\u001b[31m+       66,\u001b[39m\n\u001b[31m+       22,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       17,\u001b[39m\n\u001b[31m+       432,\u001b[39m\n\u001b[31m+       355,\u001b[39m\n\u001b[31m+       56,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"span \\\"Study\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  412 |     const seen = Object.keys(app.seen);\n  413 |     test.info().annotations.push({ type: 'facts', description: JSON.stringify({ ...facts, keyboardFallbacks, app: { ...app, seen: app.seen }, welcome: { ...welcome, seen: welcome.seen } }) });\n> 414 |     expect(app.hits, `notice overlaps in the app (${app.hitCount} in ${app.noticeFrames} notice frames, ${app.modalFrames} under a sheet)`).toEqual([]);\n      |                                                                                                                                             ^\n  415 |     expect(welcome.hits, `notice overlaps on the welcome (${welcome.hitCount} in ${welcome.noticeFrames} notice frames)`).toEqual([]);\n  416 |     expect(app.cut + welcome.cut, 'frames with a notice cut short').toBe(0);\n  417 |     // Not vacuous: every state was drawn and checked.\n    at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:414:141"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:20:25.798Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":1516,\"markDone\":{\"tapAt\":{\"x\":282.5,\"y\":578,\"w\":79,\"h\":44,\"top\":556},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":723,\"undoY\":723},\"keyboardFallbacks\":[],\"app\":{\"hits\":[{\"at\":14113,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"h1#_r_20_ \\\"25 minutes brewed\\\"\",\"box\":[20,402,350,32],\"nbox\":[20,433,351,55]},{\"at\":14113,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"p \\\"Tea’s ready. Take five before the next o\\\"\",\"box\":[20,438,350,23],\"nbox\":[20,433,351,55]},{\"at\":14114,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"span \\\"Chapter 3 notes\\\"\",\"box\":[44,475,124,26],\"nbox\":[20,433,351,55]},{\"at\":14114,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"span \\\"Study\\\"\",\"box\":[176,476,66,22],\"nbox\":[20,433,351,55]},{\"at\":14129,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"h1#_r_20_ \\\"25 minutes brewed\\\"\",\"box\":[20,402,350,32],\"nbox\":[17,432,355,56]},{\"at\":14129,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"p \\\"Tea’s ready. Take five before the next o\\\"\",\"box\":[20,438,350,23],\"nbox\":[17,432,355,56]},{\"at\":14129,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"span \\\"Chapter 3 notes\\\"\",\"box\":[44,475,124,26],\"nbox\":[17,432,355,56]},{\"at\":14129,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"span \\\"Study\\\"\",\"box\":[176,476,66,22],\"nbox\":[17,432,355,56]}],\"hitCount\":8,\"underChrome\":152,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":152},\"noticeFrames\":1638,\"modalFrames\":31,\"frames\":2799,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":193,\"Crossed off. Nice work. Undo\":20,\"Couldn’t save just now. Your summary is still he\":244,\"Recipe done: Take a full tea break · +10 leaves\":198,\"Recipe done: Take 2 full tea breaks · +15 leaves\":248,\"Kettle’s off. See you soon.\":193,\"Brew updated\":246,\"Brew deleted Undo\":19,\"A notice on Settings, here to be read.\":251,\"A notice on Nook, here to be read.\":46}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":66,\"modalFrames\":0,\"frames\":198,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":66}}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w4t2/kettle/test-results/notice-strip-no-notice-ove-d25f2-eal-input-390×844-dark-100--chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                    "column": 141,
+                    "line": 414
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-b3d8ec2f5c2c50c69155",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 200 %)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":3726,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":343.5625,\"w\":151,\"h\":44,\"top\":321.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":653.828125,\"undoY\":654.234375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[{\"at\":17115,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"h1#_r_20_ \\\"25 minutes brewed\\\"\",\"box\":[20,413,350,123],\"nbox\":[20,433,351,135]},{\"at\":17115,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"p \\\"Tea’s ready. Take five before the next o\\\"\",\"box\":[20,540,350,92],\"nbox\":[20,433,351,135]}],\"hitCount\":2,\"underChrome\":192,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":192},\"noticeFrames\":1825,\"modalFrames\":24,\"frames\":3285,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":199,\"Crossed off. Nice work. Undo\":21,\"Couldn’t save just now. Your summary is still he\":248,\"Recipe done: Take a full tea break · +10 leaves\":220,\"Recipe done: Take 2 full tea breaks · +15 leaves\":245,\"Kettle’s off. See you soon.\":199,\"Brew updated\":247,\"Brew deleted Undo\":24,\"A notice on Settings, here to be read.\":266,\"A notice on Nook, here to be read.\":90}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":63,\"modalFrames\":0,\"frames\":188,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":63}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 65995,
+                  "error": {
+                    "message": "Error: notice overlaps in the app (2 in 1825 notice frames, 24 under a sheet)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 38\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 17115,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       413,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       123,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       135,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"h1#_r_20_ \\\"25 minutes brewed\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 17115,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       540,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       92,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       135,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"p \\\"Tea’s ready. Take five before the next o\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: notice overlaps in the app (2 in 1825 notice frames, 24 under a sheet)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 38\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 17115,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       413,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       123,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       135,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"h1#_r_20_ \\\"25 minutes brewed\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 17115,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       540,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       92,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       135,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"p \\\"Tea’s ready. Take five before the next o\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:414:141",
+                    "location": {
+                      "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                      "column": 141,
+                      "line": 414
+                    },
+                    "snippet": "  412 |     const seen = Object.keys(app.seen);\n  413 |     test.info().annotations.push({ type: 'facts', description: JSON.stringify({ ...facts, keyboardFallbacks, app: { ...app, seen: app.seen }, welcome: { ...welcome, seen: welcome.seen } }) });\n> 414 |     expect(app.hits, `notice overlaps in the app (${app.hitCount} in ${app.noticeFrames} notice frames, ${app.modalFrames} under a sheet)`).toEqual([]);\n      |                                                                                                                                             ^\n  415 |     expect(welcome.hits, `notice overlaps on the welcome (${welcome.hitCount} in ${welcome.noticeFrames} notice frames)`).toEqual([]);\n  416 |     expect(app.cut + welcome.cut, 'frames with a notice cut short').toBe(0);\n  417 |     // Not vacuous: every state was drawn and checked."
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                        "column": 141,
+                        "line": 414
+                      },
+                      "message": "Error: notice overlaps in the app (2 in 1825 notice frames, 24 under a sheet)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 38\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 17115,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       413,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       123,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       135,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"h1#_r_20_ \\\"25 minutes brewed\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 17115,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       540,\u001b[39m\n\u001b[31m+       350,\u001b[39m\n\u001b[31m+       92,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       433,\u001b[39m\n\u001b[31m+       351,\u001b[39m\n\u001b[31m+       135,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"p \\\"Tea’s ready. Take five before the next o\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  412 |     const seen = Object.keys(app.seen);\n  413 |     test.info().annotations.push({ type: 'facts', description: JSON.stringify({ ...facts, keyboardFallbacks, app: { ...app, seen: app.seen }, welcome: { ...welcome, seen: welcome.seen } }) });\n> 414 |     expect(app.hits, `notice overlaps in the app (${app.hitCount} in ${app.noticeFrames} notice frames, ${app.modalFrames} under a sheet)`).toEqual([]);\n      |                                                                                                                                             ^\n  415 |     expect(welcome.hits, `notice overlaps on the welcome (${welcome.hitCount} in ${welcome.noticeFrames} notice frames)`).toEqual([]);\n  416 |     expect(app.cut + welcome.cut, 'frames with a notice cut short').toBe(0);\n  417 |     // Not vacuous: every state was drawn and checked.\n    at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:414:141"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:21:14.641Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":3726,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":343.5625,\"w\":151,\"h\":44,\"top\":321.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":653.828125,\"undoY\":654.234375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[{\"at\":17115,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"h1#_r_20_ \\\"25 minutes brewed\\\"\",\"box\":[20,413,350,123],\"nbox\":[20,433,351,135]},{\"at\":17115,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"p \\\"Tea’s ready. Take five before the next o\\\"\",\"box\":[20,540,350,92],\"nbox\":[20,433,351,135]}],\"hitCount\":2,\"underChrome\":192,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":192},\"noticeFrames\":1825,\"modalFrames\":24,\"frames\":3285,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":199,\"Crossed off. Nice work. Undo\":21,\"Couldn’t save just now. Your summary is still he\":248,\"Recipe done: Take a full tea break · +10 leaves\":220,\"Recipe done: Take 2 full tea breaks · +15 leaves\":245,\"Kettle’s off. See you soon.\":199,\"Brew updated\":247,\"Brew deleted Undo\":24,\"A notice on Settings, here to be read.\":266,\"A notice on Nook, here to be read.\":90}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":63,\"modalFrames\":0,\"frames\":188,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":63}}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w4t2/kettle/test-results/notice-strip-no-notice-ove-e8a30-eal-input-390×844-dark-200--chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                    "column": 141,
+                    "line": 414
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-95a9869917f1c2625e74",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (375×667 light 100 %)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":2211,\"markDone\":{\"tapAt\":{\"x\":282.5,\"y\":398,\"w\":79,\"h\":44,\"top\":376},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":543,\"undoY\":543},\"keyboardFallbacks\":[],\"app\":{\"hits\":[{\"at\":15938,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"h1#_r_20_ \\\"25 minutes brewed\\\"\",\"box\":[20,319,335,31],\"nbox\":[19,324,336,55]},{\"at\":15938,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"p \\\"Tea’s ready. Take five before the next o\\\"\",\"box\":[20,354,335,23],\"nbox\":[19,324,336,55]}],\"hitCount\":2,\"underChrome\":176,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":176},\"noticeFrames\":1746,\"modalFrames\":22,\"frames\":2968,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":202,\"Crossed off. Nice work. Undo\":14,\"Couldn’t save just now. Your summary is still he\":246,\"Recipe done: Take a full tea break · +10 leaves\":236,\"Recipe done: Take 2 full tea breaks · +15 leaves\":242,\"Kettle’s off. See you soon.\":199,\"Brew updated\":259,\"Brew deleted Undo\":22,\"A notice on Settings, here to be read.\":253,\"A notice on Nook, here to be read.\":73}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":64,\"modalFrames\":0,\"frames\":181,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":64}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 59944,
+                  "error": {
+                    "message": "Error: notice overlaps in the app (2 in 1746 notice frames, 22 under a sheet)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 38\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 15938,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       319,\u001b[39m\n\u001b[31m+       335,\u001b[39m\n\u001b[31m+       31,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       19,\u001b[39m\n\u001b[31m+       324,\u001b[39m\n\u001b[31m+       336,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"h1#_r_20_ \\\"25 minutes brewed\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 15938,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       354,\u001b[39m\n\u001b[31m+       335,\u001b[39m\n\u001b[31m+       23,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       19,\u001b[39m\n\u001b[31m+       324,\u001b[39m\n\u001b[31m+       336,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"p \\\"Tea’s ready. Take five before the next o\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: notice overlaps in the app (2 in 1746 notice frames, 22 under a sheet)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 38\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 15938,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       319,\u001b[39m\n\u001b[31m+       335,\u001b[39m\n\u001b[31m+       31,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       19,\u001b[39m\n\u001b[31m+       324,\u001b[39m\n\u001b[31m+       336,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"h1#_r_20_ \\\"25 minutes brewed\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 15938,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       354,\u001b[39m\n\u001b[31m+       335,\u001b[39m\n\u001b[31m+       23,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       19,\u001b[39m\n\u001b[31m+       324,\u001b[39m\n\u001b[31m+       336,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"p \\\"Tea’s ready. Take five before the next o\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:414:141",
+                    "location": {
+                      "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                      "column": 141,
+                      "line": 414
+                    },
+                    "snippet": "  412 |     const seen = Object.keys(app.seen);\n  413 |     test.info().annotations.push({ type: 'facts', description: JSON.stringify({ ...facts, keyboardFallbacks, app: { ...app, seen: app.seen }, welcome: { ...welcome, seen: welcome.seen } }) });\n> 414 |     expect(app.hits, `notice overlaps in the app (${app.hitCount} in ${app.noticeFrames} notice frames, ${app.modalFrames} under a sheet)`).toEqual([]);\n      |                                                                                                                                             ^\n  415 |     expect(welcome.hits, `notice overlaps on the welcome (${welcome.hitCount} in ${welcome.noticeFrames} notice frames)`).toEqual([]);\n  416 |     expect(app.cut + welcome.cut, 'frames with a notice cut short').toBe(0);\n  417 |     // Not vacuous: every state was drawn and checked."
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                        "column": 141,
+                        "line": 414
+                      },
+                      "message": "Error: notice overlaps in the app (2 in 1746 notice frames, 22 under a sheet)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 38\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 15938,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       319,\u001b[39m\n\u001b[31m+       335,\u001b[39m\n\u001b[31m+       31,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       19,\u001b[39m\n\u001b[31m+       324,\u001b[39m\n\u001b[31m+       336,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"h1#_r_20_ \\\"25 minutes brewed\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 15938,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       354,\u001b[39m\n\u001b[31m+       335,\u001b[39m\n\u001b[31m+       23,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       19,\u001b[39m\n\u001b[31m+       324,\u001b[39m\n\u001b[31m+       336,\u001b[39m\n\u001b[31m+       55,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"p \\\"Tea’s ready. Take five before the next o\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  412 |     const seen = Object.keys(app.seen);\n  413 |     test.info().annotations.push({ type: 'facts', description: JSON.stringify({ ...facts, keyboardFallbacks, app: { ...app, seen: app.seen }, welcome: { ...welcome, seen: welcome.seen } }) });\n> 414 |     expect(app.hits, `notice overlaps in the app (${app.hitCount} in ${app.noticeFrames} notice frames, ${app.modalFrames} under a sheet)`).toEqual([]);\n      |                                                                                                                                             ^\n  415 |     expect(welcome.hits, `notice overlaps on the welcome (${welcome.hitCount} in ${welcome.noticeFrames} notice frames)`).toEqual([]);\n  416 |     expect(app.cut + welcome.cut, 'frames with a notice cut short').toBe(0);\n  417 |     // Not vacuous: every state was drawn and checked.\n    at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:414:141"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:21:24.066Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":2211,\"markDone\":{\"tapAt\":{\"x\":282.5,\"y\":398,\"w\":79,\"h\":44,\"top\":376},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":543,\"undoY\":543},\"keyboardFallbacks\":[],\"app\":{\"hits\":[{\"at\":15938,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"h1#_r_20_ \\\"25 minutes brewed\\\"\",\"box\":[20,319,335,31],\"nbox\":[19,324,336,55]},{\"at\":15938,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"p \\\"Tea’s ready. Take five before the next o\\\"\",\"box\":[20,354,335,23],\"nbox\":[19,324,336,55]}],\"hitCount\":2,\"underChrome\":176,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":176},\"noticeFrames\":1746,\"modalFrames\":22,\"frames\":2968,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":202,\"Crossed off. Nice work. Undo\":14,\"Couldn’t save just now. Your summary is still he\":246,\"Recipe done: Take a full tea break · +10 leaves\":236,\"Recipe done: Take 2 full tea breaks · +15 leaves\":242,\"Kettle’s off. See you soon.\":199,\"Brew updated\":259,\"Brew deleted Undo\":22,\"A notice on Settings, here to be read.\":253,\"A notice on Nook, here to be read.\":73}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":64,\"modalFrames\":0,\"frames\":181,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":64}}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w4t2/kettle/test-results/notice-strip-no-notice-ove-3e405-al-input-375×667-light-100--chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                    "column": 141,
+                    "line": 414
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-cce3df3150ab0ada28e0",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":3337,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":149.5625,\"w\":151,\"h\":44,\"top\":127.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":489,\"undoY\":489.40625},\"keyboardFallbacks\":[\"getByRole('dialog', { name: 'Delete this brew?' }).getByRole('button', { name: 'Delete', exact: true }): UNREACHABLE by pointer and Tab (pre-existing), synthetic click\"],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":720,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":720},\"noticeFrames\":1933,\"modalFrames\":26,\"frames\":4429,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":191,\"Crossed off. Nice work. Undo\":10,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":241,\"Recipe done: Take 2 full tea breaks · +15 leaves\":264,\"Kettle’s off. See you soon.\":194,\"Brew updated\":245,\"Brew deleted Undo\":101,\"A notice on Settings, here to be read.\":271,\"A notice on Nook, here to be read.\":103}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":65,\"modalFrames\":0,\"frames\":182,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":65}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 83020,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:22:21.877Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":3337,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":149.5625,\"w\":151,\"h\":44,\"top\":127.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":489,\"undoY\":489.40625},\"keyboardFallbacks\":[\"getByRole('dialog', { name: 'Delete this brew?' }).getByRole('button', { name: 'Delete', exact: true }): UNREACHABLE by pointer and Tab (pre-existing), synthetic click\"],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":720,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":720},\"noticeFrames\":1933,\"modalFrames\":26,\"frames\":4429,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":191,\"Crossed off. Nice work. Undo\":10,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":241,\"Recipe done: Take 2 full tea breaks · +15 leaves\":264,\"Kettle’s off. See you soon.\":194,\"Brew updated\":245,\"Brew deleted Undo\":101,\"A notice on Settings, here to be read.\":271,\"A notice on Nook, here to be read.\":103}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":65,\"modalFrames\":0,\"frames\":182,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":65}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-eb474d57bd4cca515668",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 % reduced motion)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":2902,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":149.5625,\"w\":151,\"h\":44,\"top\":127.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":489,\"undoY\":489.40625},\"keyboardFallbacks\":[\"getByRole('dialog', { name: 'Delete this brew?' }).getByRole('button', { name: 'Delete', exact: true }): UNREACHABLE by pointer and Tab (pre-existing), synthetic click\"],\"app\":{\"hits\":[{\"at\":14593,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"h1#_r_20_ \\\"25 minutes brewed\\\"\",\"box\":[20,339,335,123],\"nbox\":[16,323,343,178]},{\"at\":14595,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"p \\\"Tea’s ready. Take five before the next o\\\"\",\"box\":[20,467,335,8],\"nbox\":[16,323,343,178]},{\"at\":14596,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"button \\\"Tea time · 5 min\\\"\",\"box\":[20,489,335,108],\"nbox\":[16,323,343,178]},{\"at\":14596,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"span \\\"Tea time · 5 min\\\"\",\"box\":[80,495,243,92],\"nbox\":[16,323,343,178]}],\"hitCount\":4,\"underChrome\":80,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":80},\"noticeFrames\":1829,\"modalFrames\":9,\"frames\":3688,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":195,\"Crossed off. Nice work. Undo\":7,\"Couldn’t save just now. Your summary is still he\":252,\"Recipe done: Take a full tea break · +10 leaves\":242,\"Recipe done: Take 2 full tea breaks · +15 leaves\":264,\"Kettle’s off. See you soon.\":194,\"Brew updated\":249,\"Brew deleted Undo\":21,\"A notice on Settings, here to be read.\":263,\"A notice on Nook, here to be read.\":79}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":62,\"modalFrames\":0,\"frames\":179,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":62}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 66204,
+                  "error": {
+                    "message": "Error: notice overlaps in the app (4 in 1829 notice frames, 9 under a sheet)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 74\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14593,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       339,\u001b[39m\n\u001b[31m+       335,\u001b[39m\n\u001b[31m+       123,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       16,\u001b[39m\n\u001b[31m+       323,\u001b[39m\n\u001b[31m+       343,\u001b[39m\n\u001b[31m+       178,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"h1#_r_20_ \\\"25 minutes brewed\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14595,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       467,\u001b[39m\n\u001b[31m+       335,\u001b[39m\n\u001b[31m+       8,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       16,\u001b[39m\n\u001b[31m+       323,\u001b[39m\n\u001b[31m+       343,\u001b[39m\n\u001b[31m+       178,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"p \\\"Tea’s ready. Take five before the next o\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14596,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       489,\u001b[39m\n\u001b[31m+       335,\u001b[39m\n\u001b[31m+       108,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       16,\u001b[39m\n\u001b[31m+       323,\u001b[39m\n\u001b[31m+       343,\u001b[39m\n\u001b[31m+       178,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"button \\\"Tea time · 5 min\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14596,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       80,\u001b[39m\n\u001b[31m+       495,\u001b[39m\n\u001b[31m+       243,\u001b[39m\n\u001b[31m+       92,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       16,\u001b[39m\n\u001b[31m+       323,\u001b[39m\n\u001b[31m+       343,\u001b[39m\n\u001b[31m+       178,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"span \\\"Tea time · 5 min\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: notice overlaps in the app (4 in 1829 notice frames, 9 under a sheet)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 74\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14593,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       339,\u001b[39m\n\u001b[31m+       335,\u001b[39m\n\u001b[31m+       123,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       16,\u001b[39m\n\u001b[31m+       323,\u001b[39m\n\u001b[31m+       343,\u001b[39m\n\u001b[31m+       178,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"h1#_r_20_ \\\"25 minutes brewed\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14595,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       467,\u001b[39m\n\u001b[31m+       335,\u001b[39m\n\u001b[31m+       8,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       16,\u001b[39m\n\u001b[31m+       323,\u001b[39m\n\u001b[31m+       343,\u001b[39m\n\u001b[31m+       178,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"p \\\"Tea’s ready. Take five before the next o\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14596,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       489,\u001b[39m\n\u001b[31m+       335,\u001b[39m\n\u001b[31m+       108,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       16,\u001b[39m\n\u001b[31m+       323,\u001b[39m\n\u001b[31m+       343,\u001b[39m\n\u001b[31m+       178,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"button \\\"Tea time · 5 min\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14596,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       80,\u001b[39m\n\u001b[31m+       495,\u001b[39m\n\u001b[31m+       243,\u001b[39m\n\u001b[31m+       92,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       16,\u001b[39m\n\u001b[31m+       323,\u001b[39m\n\u001b[31m+       343,\u001b[39m\n\u001b[31m+       178,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"span \\\"Tea time · 5 min\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:414:141",
+                    "location": {
+                      "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                      "column": 141,
+                      "line": 414
+                    },
+                    "snippet": "  412 |     const seen = Object.keys(app.seen);\n  413 |     test.info().annotations.push({ type: 'facts', description: JSON.stringify({ ...facts, keyboardFallbacks, app: { ...app, seen: app.seen }, welcome: { ...welcome, seen: welcome.seen } }) });\n> 414 |     expect(app.hits, `notice overlaps in the app (${app.hitCount} in ${app.noticeFrames} notice frames, ${app.modalFrames} under a sheet)`).toEqual([]);\n      |                                                                                                                                             ^\n  415 |     expect(welcome.hits, `notice overlaps on the welcome (${welcome.hitCount} in ${welcome.noticeFrames} notice frames)`).toEqual([]);\n  416 |     expect(app.cut + welcome.cut, 'frames with a notice cut short').toBe(0);\n  417 |     // Not vacuous: every state was drawn and checked."
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                        "column": 141,
+                        "line": 414
+                      },
+                      "message": "Error: notice overlaps in the app (4 in 1829 notice frames, 9 under a sheet)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 74\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14593,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       339,\u001b[39m\n\u001b[31m+       335,\u001b[39m\n\u001b[31m+       123,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       16,\u001b[39m\n\u001b[31m+       323,\u001b[39m\n\u001b[31m+       343,\u001b[39m\n\u001b[31m+       178,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"h1#_r_20_ \\\"25 minutes brewed\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14595,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       467,\u001b[39m\n\u001b[31m+       335,\u001b[39m\n\u001b[31m+       8,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       16,\u001b[39m\n\u001b[31m+       323,\u001b[39m\n\u001b[31m+       343,\u001b[39m\n\u001b[31m+       178,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"p \\\"Tea’s ready. Take five before the next o\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14596,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       20,\u001b[39m\n\u001b[31m+       489,\u001b[39m\n\u001b[31m+       335,\u001b[39m\n\u001b[31m+       108,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       16,\u001b[39m\n\u001b[31m+       323,\u001b[39m\n\u001b[31m+       343,\u001b[39m\n\u001b[31m+       178,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"button \\\"Tea time · 5 min\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 14596,\u001b[39m\n\u001b[31m+     \"box\": Array [\u001b[39m\n\u001b[31m+       80,\u001b[39m\n\u001b[31m+       495,\u001b[39m\n\u001b[31m+       243,\u001b[39m\n\u001b[31m+       92,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"hash\": \"#/focus\",\u001b[39m\n\u001b[31m+     \"nbox\": Array [\u001b[39m\n\u001b[31m+       16,\u001b[39m\n\u001b[31m+       323,\u001b[39m\n\u001b[31m+       343,\u001b[39m\n\u001b[31m+       178,\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"notice\": \"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\u001b[39m\n\u001b[31m+     \"what\": \"span \\\"Tea time · 5 min\\\"\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  412 |     const seen = Object.keys(app.seen);\n  413 |     test.info().annotations.push({ type: 'facts', description: JSON.stringify({ ...facts, keyboardFallbacks, app: { ...app, seen: app.seen }, welcome: { ...welcome, seen: welcome.seen } }) });\n> 414 |     expect(app.hits, `notice overlaps in the app (${app.hitCount} in ${app.noticeFrames} notice frames, ${app.modalFrames} under a sheet)`).toEqual([]);\n      |                                                                                                                                             ^\n  415 |     expect(welcome.hits, `notice overlaps on the welcome (${welcome.hitCount} in ${welcome.noticeFrames} notice frames)`).toEqual([]);\n  416 |     expect(app.cut + welcome.cut, 'frames with a notice cut short').toBe(0);\n  417 |     // Not vacuous: every state was drawn and checked.\n    at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:414:141"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:22:25.103Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":2902,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":149.5625,\"w\":151,\"h\":44,\"top\":127.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":489,\"undoY\":489.40625},\"keyboardFallbacks\":[\"getByRole('dialog', { name: 'Delete this brew?' }).getByRole('button', { name: 'Delete', exact: true }): UNREACHABLE by pointer and Tab (pre-existing), synthetic click\"],\"app\":{\"hits\":[{\"at\":14593,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"h1#_r_20_ \\\"25 minutes brewed\\\"\",\"box\":[20,339,335,123],\"nbox\":[16,323,343,178]},{\"at\":14595,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"p \\\"Tea’s ready. Take five before the next o\\\"\",\"box\":[20,467,335,8],\"nbox\":[16,323,343,178]},{\"at\":14596,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"button \\\"Tea time · 5 min\\\"\",\"box\":[20,489,335,108],\"nbox\":[16,323,343,178]},{\"at\":14596,\"hash\":\"#/focus\",\"notice\":\"li#notice-t2 \\\"Couldn’t save just now. Your summary is \\\"\",\"what\":\"span \\\"Tea time · 5 min\\\"\",\"box\":[80,495,243,92],\"nbox\":[16,323,343,178]}],\"hitCount\":4,\"underChrome\":80,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":80},\"noticeFrames\":1829,\"modalFrames\":9,\"frames\":3688,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":195,\"Crossed off. Nice work. Undo\":7,\"Couldn’t save just now. Your summary is still he\":252,\"Recipe done: Take a full tea break · +10 leaves\":242,\"Recipe done: Take 2 full tea breaks · +15 leaves\":264,\"Kettle’s off. See you soon.\":194,\"Brew updated\":249,\"Brew deleted Undo\":21,\"A notice on Settings, here to be read.\":263,\"A notice on Nook, here to be read.\":79}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":62,\"modalFrames\":0,\"frames\":179,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":62}}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w4t2/kettle/test-results/notice-strip-no-notice-ove-e78c4-7-light-200-reduced-motion--chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                    "column": 141,
+                    "line": 414
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-8474ccb7dd7da4616c83",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":1749,\"markDone\":{\"tapAt\":{\"x\":282.5,\"y\":398,\"w\":79,\"h\":44,\"top\":376},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":543,\"undoY\":543},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":344,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":344},\"noticeFrames\":1780,\"modalFrames\":23,\"frames\":2805,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":207,\"Crossed off. Nice work. Undo\":10,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":242,\"Recipe done: Take 2 full tea breaks · +15 leaves\":243,\"Kettle’s off. See you soon.\":205,\"Brew updated\":251,\"Brew deleted Undo\":43,\"A notice on Settings, here to be read.\":249,\"A notice on Nook, here to be read.\":81}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":63,\"modalFrames\":0,\"frames\":178,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":63}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 56501,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:23:32.279Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":1749,\"markDone\":{\"tapAt\":{\"x\":282.5,\"y\":398,\"w\":79,\"h\":44,\"top\":376},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":543,\"undoY\":543},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":344,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":344},\"noticeFrames\":1780,\"modalFrames\":23,\"frames\":2805,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":207,\"Crossed off. Nice work. Undo\":10,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":242,\"Recipe done: Take 2 full tea breaks · +15 leaves\":243,\"Kettle’s off. See you soon.\":205,\"Brew updated\":251,\"Brew deleted Undo\":43,\"A notice on Settings, here to be read.\":249,\"A notice on Nook, here to be read.\":81}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":63,\"modalFrames\":0,\"frames\":178,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":63}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-9e4def12cc6b1079b2b7",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":3199,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":149.5625,\"w\":151,\"h\":44,\"top\":127.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":489,\"undoY\":489.40625},\"keyboardFallbacks\":[\"getByRole('dialog', { name: 'Delete this brew?' }).getByRole('button', { name: 'Delete', exact: true }): UNREACHABLE by pointer and Tab (pre-existing), synthetic click\"],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":296,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":296},\"noticeFrames\":1833,\"modalFrames\":28,\"frames\":4733,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":201,\"Crossed off. Nice work. Undo\":11,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":238,\"Recipe done: Take 2 full tea breaks · +15 leaves\":254,\"Kettle’s off. See you soon.\":195,\"Brew updated\":246,\"Brew deleted Undo\":45,\"A notice on Settings, here to be read.\":266,\"A notice on Nook, here to be read.\":61}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":62,\"modalFrames\":0,\"frames\":176,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":62}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 87947,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:23:44.993Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":3199,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":149.5625,\"w\":151,\"h\":44,\"top\":127.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":489,\"undoY\":489.40625},\"keyboardFallbacks\":[\"getByRole('dialog', { name: 'Delete this brew?' }).getByRole('button', { name: 'Delete', exact: true }): UNREACHABLE by pointer and Tab (pre-existing), synthetic click\"],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":296,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":296},\"noticeFrames\":1833,\"modalFrames\":28,\"frames\":4733,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":201,\"Crossed off. Nice work. Undo\":11,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":238,\"Recipe done: Take 2 full tea breaks · +15 leaves\":254,\"Kettle’s off. See you soon.\":195,\"Brew updated\":246,\"Brew deleted Undo\":45,\"A notice on Settings, here to be read.\":266,\"A notice on Nook, here to be read.\":61}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":62,\"modalFrames\":0,\"frames\":176,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":62}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-8462af184b1e2584ce30",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 light 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":1217,\"markDone\":{\"tapAt\":{\"x\":705.03125,\"y\":206.25,\"w\":79,\"h\":44,\"top\":184.25},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":267.421875,\"undoY\":267.421875},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1721,\"modalFrames\":21,\"frames\":2539,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":200,\"Crossed off. Nice work. Undo\":19,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":243,\"Recipe done: Take 2 full tea breaks · +15 leaves\":241,\"Kettle’s off. See you soon.\":196,\"Brew updated\":248,\"Brew deleted Undo\":40,\"A notice on Settings, here to be read.\":249,\"A notice on Nook, here to be read.\":55}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":62,\"modalFrames\":0,\"frames\":178,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":62}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 52159,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:24:28.875Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":1217,\"markDone\":{\"tapAt\":{\"x\":705.03125,\"y\":206.25,\"w\":79,\"h\":44,\"top\":184.25},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":267.421875,\"undoY\":267.421875},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1721,\"modalFrames\":21,\"frames\":2539,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":200,\"Crossed off. Nice work. Undo\":19,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":243,\"Recipe done: Take 2 full tea breaks · +15 leaves\":241,\"Kettle’s off. See you soon.\":196,\"Brew updated\":248,\"Brew deleted Undo\":40,\"A notice on Settings, here to be read.\":249,\"A notice on Nook, here to be read.\":55}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":62,\"modalFrames\":0,\"frames\":178,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":62}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-5308e49c11b2ee57e9e0",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 %)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 30240,
+                  "error": {
+                    "message": "Error: getByRole('button', { name: /^Put the kettle on/ }) can be brought on top by real scrolling ({\"x\":524,\"y\":682,\"width\":288,\"height\":108.375}, scrollY 0)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m",
+                    "stack": "Error: getByRole('button', { name: /^Put the kettle on/ }) can be brought on top by real scrolling ({\"x\":524,\"y\":682,\"width\":288,\"height\":108.375}, scrollY 0)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n    at press (/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:229:158)\n    at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:339:5",
+                    "location": {
+                      "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                      "column": 158,
+                      "line": 229
+                    },
+                    "snippet": "  227 |     return { x: -1, y: -1, w: 0, h: 0, top: -1 };\n  228 |   }\n> 229 |   expect(at, `${el} can be brought on top by real scrolling (${JSON.stringify(await el.boundingBox())}, scrollY ${await page.evaluate(() => scrollY)})`).not.toBeNull();\n      |                                                                                                                                                              ^\n  230 |   if (touch) await page.touchscreen.tap(at!.x, at!.y);\n  231 |   else await page.mouse.click(at!.x, at!.y);\n  232 |   return at!;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                        "column": 158,
+                        "line": 229
+                      },
+                      "message": "Error: getByRole('button', { name: /^Put the kettle on/ }) can be brought on top by real scrolling ({\"x\":524,\"y\":682,\"width\":288,\"height\":108.375}, scrollY 0)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\n  227 |     return { x: -1, y: -1, w: 0, h: 0, top: -1 };\n  228 |   }\n> 229 |   expect(at, `${el} can be brought on top by real scrolling (${JSON.stringify(await el.boundingBox())}, scrollY ${await page.evaluate(() => scrollY)})`).not.toBeNull();\n      |                                                                                                                                                              ^\n  230 |   if (touch) await page.touchscreen.tap(at!.x, at!.y);\n  231 |   else await page.mouse.click(at!.x, at!.y);\n  232 |   return at!;\n    at press (/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:229:158)\n    at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:339:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:25:12.965Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w4t2/kettle/test-results/notice-strip-no-notice-ove-e4f0e-al-input-844×390-light-200--chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                    "column": 158,
+                    "line": 229
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-1b665e06c69eaba4d2ce",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 27180,
+                  "error": {
+                    "message": "Error: getByRole('button', { name: /^Put the kettle on/ }) can be brought on top by real scrolling ({\"x\":524,\"y\":682,\"width\":288,\"height\":108.375}, scrollY 0)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m",
+                    "stack": "Error: getByRole('button', { name: /^Put the kettle on/ }) can be brought on top by real scrolling ({\"x\":524,\"y\":682,\"width\":288,\"height\":108.375}, scrollY 0)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n    at press (/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:229:158)\n    at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:339:5",
+                    "location": {
+                      "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                      "column": 158,
+                      "line": 229
+                    },
+                    "snippet": "  227 |     return { x: -1, y: -1, w: 0, h: 0, top: -1 };\n  228 |   }\n> 229 |   expect(at, `${el} can be brought on top by real scrolling (${JSON.stringify(await el.boundingBox())}, scrollY ${await page.evaluate(() => scrollY)})`).not.toBeNull();\n      |                                                                                                                                                              ^\n  230 |   if (touch) await page.touchscreen.tap(at!.x, at!.y);\n  231 |   else await page.mouse.click(at!.x, at!.y);\n  232 |   return at!;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                        "column": 158,
+                        "line": 229
+                      },
+                      "message": "Error: getByRole('button', { name: /^Put the kettle on/ }) can be brought on top by real scrolling ({\"x\":524,\"y\":682,\"width\":288,\"height\":108.375}, scrollY 0)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\n  227 |     return { x: -1, y: -1, w: 0, h: 0, top: -1 };\n  228 |   }\n> 229 |   expect(at, `${el} can be brought on top by real scrolling (${JSON.stringify(await el.boundingBox())}, scrollY ${await page.evaluate(() => scrollY)})`).not.toBeNull();\n      |                                                                                                                                                              ^\n  230 |   if (touch) await page.touchscreen.tap(at!.x, at!.y);\n  231 |   else await page.mouse.click(at!.x, at!.y);\n  232 |   return at!;\n    at press (/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:229:158)\n    at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:339:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:25:21.079Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w4t2/kettle/test-results/notice-strip-no-notice-ove-cf924-0-light-200-reduced-motion--chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                    "column": 158,
+                    "line": 229
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-d1bf87c34eb1f5e16fc2",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":1417,\"markDone\":{\"tapAt\":{\"x\":705.03125,\"y\":206.25,\"w\":79,\"h\":44,\"top\":184.25},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":267.421875,\"undoY\":267.421875},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1723,\"modalFrames\":17,\"frames\":2571,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":201,\"Crossed off. Nice work. Undo\":12,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":236,\"Recipe done: Take 2 full tea breaks · +15 leaves\":236,\"Kettle’s off. See you soon.\":198,\"Brew updated\":249,\"Brew deleted Undo\":18,\"A notice on Settings, here to be read.\":251,\"A notice on Nook, here to be read.\":85}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":64,\"modalFrames\":0,\"frames\":179,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":64}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 52511,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:25:44.100Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":1417,\"markDone\":{\"tapAt\":{\"x\":705.03125,\"y\":206.25,\"w\":79,\"h\":44,\"top\":184.25},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":267.421875,\"undoY\":267.421875},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1723,\"modalFrames\":17,\"frames\":2571,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":201,\"Crossed off. Nice work. Undo\":12,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":236,\"Recipe done: Take 2 full tea breaks · +15 leaves\":236,\"Kettle’s off. See you soon.\":198,\"Brew updated\":249,\"Brew deleted Undo\":18,\"A notice on Settings, here to be read.\":251,\"A notice on Nook, here to be read.\":85}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":64,\"modalFrames\":0,\"frames\":179,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":64}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-534f3443fdda9ebe0ea4",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 31673,
+                  "error": {
+                    "message": "Error: getByRole('button', { name: /^Put the kettle on/ }) can be brought on top by real scrolling ({\"x\":524,\"y\":682,\"width\":288,\"height\":108.375}, scrollY 0)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m",
+                    "stack": "Error: getByRole('button', { name: /^Put the kettle on/ }) can be brought on top by real scrolling ({\"x\":524,\"y\":682,\"width\":288,\"height\":108.375}, scrollY 0)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n    at press (/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:229:158)\n    at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:339:5",
+                    "location": {
+                      "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                      "column": 158,
+                      "line": 229
+                    },
+                    "snippet": "  227 |     return { x: -1, y: -1, w: 0, h: 0, top: -1 };\n  228 |   }\n> 229 |   expect(at, `${el} can be brought on top by real scrolling (${JSON.stringify(await el.boundingBox())}, scrollY ${await page.evaluate(() => scrollY)})`).not.toBeNull();\n      |                                                                                                                                                              ^\n  230 |   if (touch) await page.touchscreen.tap(at!.x, at!.y);\n  231 |   else await page.mouse.click(at!.x, at!.y);\n  232 |   return at!;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                        "column": 158,
+                        "line": 229
+                      },
+                      "message": "Error: getByRole('button', { name: /^Put the kettle on/ }) can be brought on top by real scrolling ({\"x\":524,\"y\":682,\"width\":288,\"height\":108.375}, scrollY 0)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\n  227 |     return { x: -1, y: -1, w: 0, h: 0, top: -1 };\n  228 |   }\n> 229 |   expect(at, `${el} can be brought on top by real scrolling (${JSON.stringify(await el.boundingBox())}, scrollY ${await page.evaluate(() => scrollY)})`).not.toBeNull();\n      |                                                                                                                                                              ^\n  230 |   if (touch) await page.touchscreen.tap(at!.x, at!.y);\n  231 |   else await page.mouse.click(at!.x, at!.y);\n  232 |   return at!;\n    at press (/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:229:158)\n    at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:339:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:25:49.259Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w4t2/kettle/test-results/notice-strip-no-notice-ove-011b9-eal-input-844×390-dark-200--chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts",
+                    "column": 158,
+                    "line": 229
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-752f263f0d8de218589b",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (667×375 light 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":1253,\"markDone\":{\"tapAt\":{\"x\":417.578125,\"y\":195.75,\"w\":79,\"h\":44,\"top\":173.75},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":272.328125,\"undoY\":272.328125},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1727,\"modalFrames\":24,\"frames\":2799,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":197,\"Crossed off. Nice work. Undo\":10,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":236,\"Recipe done: Take 2 full tea breaks · +15 leaves\":246,\"Kettle’s off. See you soon.\":199,\"Brew updated\":251,\"Brew deleted Undo\":21,\"A notice on Settings, here to be read.\":246,\"A notice on Nook, here to be read.\":82}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":63,\"modalFrames\":0,\"frames\":176,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":63}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 56223,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:26:22.064Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":1253,\"markDone\":{\"tapAt\":{\"x\":417.578125,\"y\":195.75,\"w\":79,\"h\":44,\"top\":173.75},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":272.328125,\"undoY\":272.328125},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1727,\"modalFrames\":24,\"frames\":2799,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":197,\"Crossed off. Nice work. Undo\":10,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":236,\"Recipe done: Take 2 full tea breaks · +15 leaves\":246,\"Kettle’s off. See you soon.\":199,\"Brew updated\":251,\"Brew deleted Undo\":21,\"A notice on Settings, here to be read.\":246,\"A notice on Nook, here to be read.\":82}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":63,\"modalFrames\":0,\"frames\":176,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":63}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-2f285d9bd1dd1a7dfb86",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":2073,\"markDone\":{\"tapAt\":{\"x\":453.578125,\"y\":36.6875,\"w\":151,\"h\":44,\"top\":14.6875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":219.421875,\"undoY\":219.421875},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1776,\"modalFrames\":23,\"frames\":3021,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":201,\"Crossed off. Nice work. Undo\":8,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":241,\"Recipe done: Take 2 full tea breaks · +15 leaves\":267,\"Kettle’s off. See you soon.\":194,\"Brew updated\":245,\"Brew deleted Undo\":21,\"A notice on Settings, here to be read.\":262,\"A notice on Nook, here to be read.\":86}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":57,\"modalFrames\":0,\"frames\":187,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":57}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 59739,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:26:36.701Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":2073,\"markDone\":{\"tapAt\":{\"x\":453.578125,\"y\":36.6875,\"w\":151,\"h\":44,\"top\":14.6875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":219.421875,\"undoY\":219.421875},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1776,\"modalFrames\":23,\"frames\":3021,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":201,\"Crossed off. Nice work. Undo\":8,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":241,\"Recipe done: Take 2 full tea breaks · +15 leaves\":267,\"Kettle’s off. See you soon.\":194,\"Brew updated\":245,\"Brew deleted Undo\":21,\"A notice on Settings, here to be read.\":262,\"A notice on Nook, here to be read.\":86}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":57,\"modalFrames\":0,\"frames\":187,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":57}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-e857f26d8c039ffc5b37",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 % reduced motion)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":1805,\"markDone\":{\"tapAt\":{\"x\":453.578125,\"y\":36.6875,\"w\":151,\"h\":44,\"top\":14.6875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":219.421875,\"undoY\":219.421875},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1788,\"modalFrames\":8,\"frames\":2875,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":205,\"Crossed off. Nice work. Undo\":7,\"Couldn’t save just now. Your summary is still he\":245,\"Recipe done: Take a full tea break · +10 leaves\":236,\"Recipe done: Take 2 full tea breaks · +15 leaves\":272,\"Kettle’s off. See you soon.\":205,\"Brew updated\":246,\"Brew deleted Undo\":13,\"A notice on Settings, here to be read.\":263,\"A notice on Nook, here to be read.\":94}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":55,\"modalFrames\":0,\"frames\":178,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":55}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 52584,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:27:18.403Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":1805,\"markDone\":{\"tapAt\":{\"x\":453.578125,\"y\":36.6875,\"w\":151,\"h\":44,\"top\":14.6875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":219.421875,\"undoY\":219.421875},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1788,\"modalFrames\":8,\"frames\":2875,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":205,\"Crossed off. Nice work. Undo\":7,\"Couldn’t save just now. Your summary is still he\":245,\"Recipe done: Take a full tea break · +10 leaves\":236,\"Recipe done: Take 2 full tea breaks · +15 leaves\":272,\"Kettle’s off. See you soon.\":205,\"Brew updated\":246,\"Brew deleted Undo\":13,\"A notice on Settings, here to be read.\":263,\"A notice on Nook, here to be read.\":94}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":55,\"modalFrames\":0,\"frames\":178,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":55}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-2811ce49d2da5f805c13",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":975,\"markDone\":{\"tapAt\":{\"x\":417.578125,\"y\":195.75,\"w\":79,\"h\":44,\"top\":173.75},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":272.328125,\"undoY\":272.328125},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1723,\"modalFrames\":24,\"frames\":2718,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":203,\"Crossed off. Nice work. Undo\":7,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":243,\"Recipe done: Take 2 full tea breaks · +15 leaves\":239,\"Kettle’s off. See you soon.\":199,\"Brew updated\":248,\"Brew deleted Undo\":22,\"A notice on Settings, here to be read.\":249,\"A notice on Nook, here to be read.\":71}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":63,\"modalFrames\":0,\"frames\":177,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":63}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 54431,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:27:36.453Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":975,\"markDone\":{\"tapAt\":{\"x\":417.578125,\"y\":195.75,\"w\":79,\"h\":44,\"top\":173.75},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":272.328125,\"undoY\":272.328125},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1723,\"modalFrames\":24,\"frames\":2718,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":203,\"Crossed off. Nice work. Undo\":7,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":243,\"Recipe done: Take 2 full tea breaks · +15 leaves\":239,\"Kettle’s off. See you soon.\":199,\"Brew updated\":248,\"Brew deleted Undo\":22,\"A notice on Settings, here to be read.\":249,\"A notice on Nook, here to be read.\":71}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":63,\"modalFrames\":0,\"frames\":177,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":63}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-845634207b4974f5bbcb",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":2254,\"markDone\":{\"tapAt\":{\"x\":453.578125,\"y\":36.6875,\"w\":151,\"h\":44,\"top\":14.6875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":219.421875,\"undoY\":219.421875},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1774,\"modalFrames\":23,\"frames\":3001,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":211,\"Crossed off. Nice work. Undo\":6,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":240,\"Recipe done: Take 2 full tea breaks · +15 leaves\":271,\"Kettle’s off. See you soon.\":197,\"Brew updated\":251,\"Brew deleted Undo\":27,\"A notice on Settings, here to be read.\":262,\"A notice on Nook, here to be read.\":56}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":53,\"modalFrames\":0,\"frames\":179,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":53}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 59165,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:28:10.999Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":2254,\"markDone\":{\"tapAt\":{\"x\":453.578125,\"y\":36.6875,\"w\":151,\"h\":44,\"top\":14.6875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":219.421875,\"undoY\":219.421875},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1774,\"modalFrames\":23,\"frames\":3001,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":211,\"Crossed off. Nice work. Undo\":6,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":240,\"Recipe done: Take 2 full tea breaks · +15 leaves\":271,\"Kettle’s off. See you soon.\":197,\"Brew updated\":251,\"Brew deleted Undo\":27,\"A notice on Settings, here to be read.\":262,\"A notice on Nook, here to be read.\":56}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":53,\"modalFrames\":0,\"frames\":179,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":53}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-23d9db0d174438859871",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":1573,\"markDone\":{\"tapAt\":{\"x\":554.5,\"y\":521.390625,\"w\":79,\"h\":44,\"top\":499.390625},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":826.34375,\"undoY\":826.34375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1722,\"modalFrames\":36,\"frames\":2600,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":194,\"Crossed off. Nice work. Undo\":30,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":205,\"Recipe done: Take 2 full tea breaks · +15 leaves\":245,\"Kettle’s off. See you soon.\":199,\"Brew updated\":252,\"Brew deleted Undo\":28,\"A notice on Settings, here to be read.\":249,\"A notice on Nook, here to be read.\":101}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":66,\"modalFrames\":0,\"frames\":192,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":66}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 54155,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:28:30.900Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":1573,\"markDone\":{\"tapAt\":{\"x\":554.5,\"y\":521.390625,\"w\":79,\"h\":44,\"top\":499.390625},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":826.34375,\"undoY\":826.34375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1722,\"modalFrames\":36,\"frames\":2600,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":194,\"Crossed off. Nice work. Undo\":30,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":205,\"Recipe done: Take 2 full tea breaks · +15 leaves\":245,\"Kettle’s off. See you soon.\":199,\"Brew updated\":252,\"Brew deleted Undo\":28,\"A notice on Settings, here to be read.\":249,\"A notice on Nook, here to be read.\":101}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":66,\"modalFrames\":0,\"frames\":192,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":66}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-4d779135bdbab53e7659",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":2260,\"markDone\":{\"tapAt\":{\"x\":773.5,\"y\":707.1875,\"w\":151,\"h\":44,\"top\":685.1875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":730.359375,\"undoY\":730.359375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1824,\"modalFrames\":50,\"frames\":2789,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":239,\"Crossed off. Nice work. Undo\":8,\"Couldn’t save just now. Your summary is still he\":248,\"Recipe done: Take a full tea break · +10 leaves\":211,\"Recipe done: Take 2 full tea breaks · +15 leaves\":246,\"Kettle’s off. See you soon.\":199,\"Brew updated\":242,\"Brew deleted Undo\":104,\"A notice on Settings, here to be read.\":262,\"A notice on Nook, here to be read.\":73}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":73,\"modalFrames\":0,\"frames\":215,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":73}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 57054,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:29:10.176Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":2260,\"markDone\":{\"tapAt\":{\"x\":773.5,\"y\":707.1875,\"w\":151,\"h\":44,\"top\":685.1875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":730.359375,\"undoY\":730.359375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1824,\"modalFrames\":50,\"frames\":2789,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":239,\"Crossed off. Nice work. Undo\":8,\"Couldn’t save just now. Your summary is still he\":248,\"Recipe done: Take a full tea break · +10 leaves\":211,\"Recipe done: Take 2 full tea breaks · +15 leaves\":246,\"Kettle’s off. See you soon.\":199,\"Brew updated\":242,\"Brew deleted Undo\":104,\"A notice on Settings, here to be read.\":262,\"A notice on Nook, here to be read.\":73}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":73,\"modalFrames\":0,\"frames\":215,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":73}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-c23cc5f5e64fae14edb4",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":3519,\"markDone\":{\"tapAt\":{\"x\":773.5,\"y\":647.1875,\"w\":151,\"h\":44,\"top\":625.1875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":610.359375,\"undoY\":610.359375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1827,\"modalFrames\":32,\"frames\":3005,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":191,\"Crossed off. Nice work. Undo\":53,\"Couldn’t save just now. Your summary is still he\":245,\"Recipe done: Take a full tea break · +10 leaves\":226,\"Recipe done: Take 2 full tea breaks · +15 leaves\":242,\"Kettle’s off. See you soon.\":205,\"Brew updated\":248,\"Brew deleted Undo\":71,\"A notice on Settings, here to be read.\":268,\"A notice on Nook, here to be read.\":78}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":49,\"modalFrames\":0,\"frames\":181,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":49}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 55908,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:29:25.068Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":3519,\"markDone\":{\"tapAt\":{\"x\":773.5,\"y\":647.1875,\"w\":151,\"h\":44,\"top\":625.1875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":610.359375,\"undoY\":610.359375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1827,\"modalFrames\":32,\"frames\":3005,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":191,\"Crossed off. Nice work. Undo\":53,\"Couldn’t save just now. Your summary is still he\":245,\"Recipe done: Take a full tea break · +10 leaves\":226,\"Recipe done: Take 2 full tea breaks · +15 leaves\":242,\"Kettle’s off. See you soon.\":205,\"Brew updated\":248,\"Brew deleted Undo\":71,\"A notice on Settings, here to be read.\":268,\"A notice on Nook, here to be read.\":78}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":49,\"modalFrames\":0,\"frames\":181,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":49}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-a2916a12dcacd3db0592",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":1004,\"markDone\":{\"tapAt\":{\"x\":554.5,\"y\":521.390625,\"w\":79,\"h\":44,\"top\":499.390625},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":826.34375,\"undoY\":826.34375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1759,\"modalFrames\":65,\"frames\":2706,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":193,\"Crossed off. Nice work. Undo\":38,\"Couldn’t save just now. Your summary is still he\":248,\"Recipe done: Take a full tea break · +10 leaves\":233,\"Recipe done: Take 2 full tea breaks · +15 leaves\":247,\"Kettle’s off. See you soon.\":193,\"Brew updated\":258,\"Brew deleted Undo\":60,\"A notice on Settings, here to be read.\":248,\"A notice on Nook, here to be read.\":79}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":82,\"modalFrames\":0,\"frames\":211,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":82}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 57043,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:30:07.253Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":1004,\"markDone\":{\"tapAt\":{\"x\":554.5,\"y\":521.390625,\"w\":79,\"h\":44,\"top\":499.390625},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":826.34375,\"undoY\":826.34375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1759,\"modalFrames\":65,\"frames\":2706,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":193,\"Crossed off. Nice work. Undo\":38,\"Couldn’t save just now. Your summary is still he\":248,\"Recipe done: Take a full tea break · +10 leaves\":233,\"Recipe done: Take 2 full tea breaks · +15 leaves\":247,\"Kettle’s off. See you soon.\":193,\"Brew updated\":258,\"Brew deleted Undo\":60,\"A notice on Settings, here to be read.\":248,\"A notice on Nook, here to be read.\":79}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":82,\"modalFrames\":0,\"frames\":211,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":82}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-4f8a5fb4be7b6420a4e3",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":2589,\"markDone\":{\"tapAt\":{\"x\":773.5,\"y\":647.1875,\"w\":151,\"h\":44,\"top\":625.1875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":730.359375,\"undoY\":730.359375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1742,\"modalFrames\":26,\"frames\":2749,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":206,\"Crossed off. Nice work. Undo\":7,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":222,\"Recipe done: Take 2 full tea breaks · +15 leaves\":246,\"Kettle’s off. See you soon.\":193,\"Brew updated\":255,\"Brew deleted Undo\":50,\"A notice on Settings, here to be read.\":269,\"A notice on Nook, here to be read.\":45}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":47,\"modalFrames\":0,\"frames\":176,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":47}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 57479,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T21:30:20.985Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":2589,\"markDone\":{\"tapAt\":{\"x\":773.5,\"y\":647.1875,\"w\":151,\"h\":44,\"top\":625.1875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":730.359375,\"undoY\":730.359375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1742,\"modalFrames\":26,\"frames\":2749,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":206,\"Crossed off. Nice work. Undo\":7,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":222,\"Recipe done: Take 2 full tea breaks · +15 leaves\":246,\"Kettle’s off. See you soon.\":193,\"Brew updated\":255,\"Brew deleted Undo\":50,\"A notice on Settings, here to be read.\":269,\"A notice on Nook, here to be read.\":45}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":47,\"modalFrames\":0,\"frames\":176,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":47}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-ab74110eac3ee3adf5a7",
+          "file": "notice-strip.spec.ts",
+          "line": 264,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-13T21:19:14.124Z",
+    "duration": 724615.2779999999,
+    "expected": 16,
+    "skipped": 0,
+    "unexpected": 9,
+    "flaky": 0
+  }
+}

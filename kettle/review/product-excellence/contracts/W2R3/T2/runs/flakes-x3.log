@@ -1,0 +1,16 @@
+[slots] T2 took 2/3 at 22:13:06: npx playwright test tests/integrity.spec.ts tests/statusbar.spec.ts --project=chromium --workers=2 --reporter=list --repeat-each 3 -g desktop 1440×900|large text with large leaf totals.*\(dark\)
+
+Running 9 tests using 2 workers
+
+  ✓  1 [chromium] › tests/integrity.spec.ts:1004:5 › I03 storage-full warning is a banner in the page (desktop 1440×900) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room (32.8s)
+  ✓  2 [chromium] › tests/integrity.spec.ts:1004:5 › I03 storage-full warning is a banner in the page (desktop 1440×900) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room (36.4s)
+  ✓  3 [chromium] › tests/integrity.spec.ts:1090:5 › I03 storage-full warning is a banner in the page (desktop 1440×900) › a banner that appears while Today is open moves nothing under the finger (Mark done with storage full) (8.3s)
+  ✓  4 [chromium] › tests/integrity.spec.ts:1090:5 › I03 storage-full warning is a banner in the page (desktop 1440×900) › a banner that appears while Today is open moves nothing under the finger (Mark done with storage full) (8.2s)
+  ✓  5 [chromium] › tests/integrity.spec.ts:1004:5 › I03 storage-full warning is a banner in the page (desktop 1440×900) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room (32.4s)
+  ✓  7 [chromium] › tests/integrity.spec.ts:1090:5 › I03 storage-full warning is a banner in the page (desktop 1440×900) › a banner that appears while Today is open moves nothing under the finger (Mark done with storage full) (8.8s)
+  ✓  6 [chromium] › tests/statusbar.spec.ts:106:3 › large text with large leaf totals never pushes "Level NN" past the screen (dark) (50.0s)
+  ✓  8 [chromium] › tests/statusbar.spec.ts:106:3 › large text with large leaf totals never pushes "Level NN" past the screen (dark) (51.0s)
+  ✓  9 [chromium] › tests/statusbar.spec.ts:106:3 › large text with large leaf totals never pushes "Level NN" past the screen (dark) (50.4s)
+
+  9 passed (2.5m)
+[slots] T2 freed 2 at 22:15:37
