@@ -163,3 +163,67 @@ All corrections are in **T's files only** (`src/ui/**`, `src/app/**`, `src/scree
 6. **T-D5:** E2 triples and PRESERVE 8 on the new trial, frames opened and listed.
 7. **T-D6:** items 1–6 produced.
 8. **Not worse anywhere:** `integrity :1090` 9/9 and `:1004` ×3 at 1440; `toast-room` 14/14; `w2-home` 18/18; `break-reach:179` 7 weekdays ×3 configurations; `a11y`; `statusbar :106` ×3 dark; tsc 0; vitest green; timer/pwa 29 + 2 by design; no `screens/done/**`, `scene/**`, art or `SaveWarning*` change.
+
+---
+
+## Fix-round re-review (final; no second fix round)
+
+**Final verdict: REJECT** `pe/w2r2-toast@6f9756c` (code `887696e`, kettle/src `ed027d6`). Trial `a8fb34a` = integration `2f67fc1` (with P) + `6f9756c`; kettle/src `958ce86`; dev :5446.
+
+**T is not merged this round.** The branch and its evidence are kept for the next toast round. The base keeps its toast behaviour, so the toast residuals stay open as follow-ups: W2H-D1, (b), (d), (e) and `break-reach:179`.
+
+**Sources:**
+- Lane T's receipt `review/LT/RECEIPT-LT.md`, read; its spec logs and failure context `review/LT/logs/` checked for the facts I rely on.
+- My own runs on `a8fb34a` (`review/LEAD2/T/fix/*.json`, `chainT3.log`).
+- The maker's fix packet `/home/user/wt/w3t/kettle/review/product-excellence/contracts/W2R2/T-FIX-READY-FOR-REVIEW.md` (status WIP).
+
+### Decisive: invariant 1 still fails (T-D3 not fixed)
+
+The brief's first invariant is that no notice ever covers a protected control. It still fails, intermittently, in two independent runs on the final code:
+
+| Run | Who | Config | Result |
+|---|---|---|---|
+| `notice-zone.spec.ts` ×3 | Lane T | 390×844 @200 (`:150`, End → Today, repeat 2) | **1 of 57 failed.** "Saved 3 minutes of focus" ∩ Read, Create, Life and Brew length; 15 of 20 samples had a notice (`review/LT/logs/notice-zone-x3.log`, `logs/nz-fail/error-context.md`) |
+| Full chromium on `887696e` | Maker | 375×667 @100 | "Saved 3 minutes of focus" over the task field, its clear button and Mark done; 15 of 20 samples had a notice (fix packet §7.1) |
+
+- The maker reports the cause **not found**.
+- My `end-scrolled` probe (4 runs on `a8fb34a`) and Lane T's (4 runs) show 0 hit samples. The control shows 32 / 19 / 33 / 125.
+- So the violation is intermittent, in the spec's End → Today path, where Mark done is tapped while End's notices are up. An intermittent cover of the task field and Mark done is exactly the defect class this round exists to remove: W2H-D1, D4 and F2.
+- A REJECT under the protocol, with no fix round left.
+
+### Also not met (packet proofs required by §6)
+
+- **T-D5:** the K02/K03/PRESERVE 8 REFERENCE → BEFORE → AFTER triples are missing. Also missing: @200, dark, 1440, the record-player big day and the whistle → summary arrival with notices. Lane T and I confirmed only 390×844 and 375×667 @100 light: 0 hits, the stack over the window, and Chai's face and the gauge clear.
+- **T-D6:**
+  - item 2: the R5-D1, LEAD-D1 and R7-D1 controls were not rerun on their own revisions;
+  - item 4: the session rows of the waits-at-rest table are missing;
+  - item 5: the full capture set and reduced motion are missing;
+  - item 6: R8-F1 was not measured.
+- **T-D1 row 667×375 @200:** none was produced. Mark done was never on top: below the viewport at scroll 0, under the docked start when scrolled. Whether the Undo is reachable there is unproven.
+
+### What the fix round achieved (verified; kept on the branch for the next round)
+
+| Item | Evidence | Result |
+|---|---|---|
+| T-D1, Undo on Today | Lane T: every tappable row, at portrait and landscape @100/@200 except 667×375 @200. Mine: 375×667 @100 ×2, 375×667 @200, 390×844 @200 | Undo drawn 75–227 ms after the tap (455 / 784 ms when End's notices held the band at scroll 0; the yield is slow but works); 9/9; a real Undo restores the task; 0 hits. Mine: 128–187 ms, Undo 57–94 × 35–40 px, 9/9 |
+| T-D2, History and import (R-3) | Lane T: 390×844 @100/@200 and 375×667 @100, History end of page and mid-list, plus import. Mine: History mid-list 390×844 @100 | Drawn 0–119 ms after the dialog left (mine: at 1,122 ms, the moment the dialog left); placed by band or the R-3 fallback; 9/9; a real Undo restores. The fallback's cover of rows is the declared exception (F-T1) |
+| T-D4, edge inset | Lane T, with CDP `Emulation.setSafeAreaInsetsOverride` 47 px top. Mine | Minimum top 8 px with no inset (mine: 8–19 px on Today, 11 px on the summary). With the 47 px inset: 58 px on the summary, 55 px on Today. Nothing outside the viewport |
+| D, announcer | Maker's CDP AX dump | Role `status`, `polite`, `additions`, one child and one mutation per notice. `aria-atomic="false"` was added afterwards; the dump was not repeated |
+| `integrity :637` | Lane T, 3/3 on both fix and control; maker, 3/5 fix vs 4/5 control | Pre-existing (whistle → summary timing under load); not T's |
+| Not worse | Lane T | `:1090` 9/9; `:1004` @1440 3/3; `toast-room` + `w2-home` 32/32; `statusbar` dark 3/3; `break-reach` Monday and Thursday 3/3 each |
+
+Not run in the re-review: `a11y`, tsc, vitest and a full suite on the trial. The maker reports tsc 0, vitest 275/275, timer/pwa 29 + 2 by design, and full chromium 128/132 on `887696e` (including the T-D3 failure).
+
+### For the next toast round (owner: I10 / toasts)
+
+1. **Find the cause of the intermittent cover in `notice-zone.spec.ts:150`** (End → Today, Mark done tapped while End's notices are up; 390×844 @200 and 375×667 @100) and make the spec green ×5 at all 10 configurations. This is the one item that blocks merging T.
+2. Produce the missing proofs: T-D5 (triples, @200, dark, 1440, the record-player day, the arrival) and T-D6 items 2, 4, 5 and 6.
+3. Produce the 667×375 @200 Undo row, or show that Mark done can be reached there.
+4. Keep the rulings: R-1, R-2, R-3 (with F-T1), and amendments A–E.
+
+**The control still has these defects, now measured, while T stays unmerged (FOLLOW-UP, owner I10):**
+- End's notices over Today's field, Mark done, tags and Brew length: 32–134 hit samples per run in my probes on `b377c62`;
+- the frozen End sheet (b);
+- the fold (d);
+- the recipe notice over the running status line (e);
+- `break-reach:179` on recipe days (f).
