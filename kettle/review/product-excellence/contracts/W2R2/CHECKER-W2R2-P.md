@@ -6,7 +6,7 @@
 |---|---|
 | Lead checker | LEAD-2 (new lead, replacing LEAD-1, who was stopped by a usage limit). I implemented none of this work |
 | Revision | `dc7a28d` = code `a4f1773` + packet. `git rev-parse` of `dc7a28d`, `a4f1773`, `23e7494` and trial `d07bd2d` at `:kettle/src` all give `f255e9f…` (equal). Tests at `dc7a28d` = `a4f1773` = `d07bd2d` (`90bf6f5`) |
-| Trial merge | `d07bd2d` (integration + `dc7a28d`), worktree `/home/user/wt/w3tr-p`, dev :5442, preview :5452. Outside `kettle/review/**`, it differs from `dc7a28d` only by integration files that P does not touch |
+| Trial merge | `d07bd2d` (integration + `dc7a28d`), worktree `/home/user/wt/w3tr-p`, dev :5442, preview :5452. Outside `kettle/review/**` it is identical to `dc7a28d` (`git diff --stat dc7a28d d07bd2d -- kettle ':!kettle/review'` is empty) |
 | Base / control | `b377c62` (src `e0aebbf`), dev :5410, preview :5430 |
 | Packet | `/home/user/wt/w3p/kettle/review/product-excellence/contracts/W2R2/P-READY-FOR-REVIEW.md`; evidence `…/W2R2/P/` |
 | My evidence | `contracts/W2R2/review/LEAD2/P/` (`tsc.log`, `vitest.log`, `specs-trial-5442.log`, `probe.log` + `probe/*.png`, `probe-b/`). Probe script `/home/user/wt/w3-base/kettle/.tmp/LEAD2/p2-lead.mjs` |
@@ -50,7 +50,7 @@ Re-read but not re-run:
 - a real click to start and a real touch tap on Tea time; `__kettle.finish()` used for setup only;
 - arrival measured at 1.5 s and settled at 4.5 s, then one 200 px wheel on the sheet.
 
-Raw rows are in `review/LEAD2/P/probe.log`, frames in `probe/`. The first run was stopped by the session's background time limit after 23 runs. The missing rows ran in `probe-b/` (`p2-lead.json` there): 390×844 light @200 big and task day, 844×390 dark @200 and 1440×900 dark @100, task and big day. On the side-by-side rows every number is identical on both builds except the "streak" count
+Raw rows are in `review/LEAD2/P/probe.log`, frames in `probe/`. The first run was stopped by the session's background time limit after 23 runs. The missing rows ran in `probe-b/` (`p2-lead.json` there): 390×844 light @200 big and task day, 844×390 dark @200 and 1440×900 dark @100, task and big day. On the side-by-side rows every number is identical on both builds except the "streak" count.
 
 ## 2. What I opened (full size; REFERENCE → BEFORE → AFTER)
 
