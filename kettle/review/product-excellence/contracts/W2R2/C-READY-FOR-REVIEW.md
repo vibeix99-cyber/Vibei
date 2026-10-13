@@ -1,5 +1,22 @@
 # Maker C · Wave 2 round 2 · I06 3D Chai integration · READY FOR REVIEW
 
+> **Status after the resume (09:46 UTC), checklist against the brief:**
+> - [x] Hash check
+> - [x] Integration: Nook, the pre-warm chain and fresh engines; REPORT pose mapping
+> - [x] Validator on the real bounds
+> - [x] Placement (nap overhang fixed, numbers below)
+> - [x] Fallback matrix (`chai3d.spec` 8/8 plus the offline probe)
+> - [x] PRESERVE 8
+> - [x] Perf and memory
+> - [x] BEFORE/AFTER captures
+> - [x] Art-review sheet
+> - [x] Suites. Full chromium 99/103: the 4 failures reproduce on control or are load flakes (proof below).
+>
+> **What ships by default:** the model is wired in and loads on the **high tier only** (`MODEL_ON_LOW = false` in
+> `src/scene/chaiHost.ts`). The low tier (every CPU rasterizer, weak phones, save-data), 3D off and no-WebGL keep the
+> procedural Chai or the drawing, exactly as before. Any load, timeout or validation failure also keeps the procedural
+> Chai.
+
 **Item:** I06, wire the Blender Chai (`art-src/chai/chai.glb`, r1) into the 3D room, with the procedural Chai as the
 first frame and the fallback (CHAI-3D-SPEC §6). The merge also needs **Vibei's art sign-off**: see "Art review"
 below and `C/art/ART-REVIEW-SHEET.png`.
@@ -9,7 +26,7 @@ below and `C/art/ART-REVIEW-SHEET.png`.
 | Base | `assets/chai3d-r1@68caa31` = integration `15e8abe` (app `b377c62`, kettle/src `e0aebbf`) + "Add 3D Chai r1 (Blender)" |
 | **Code commit** | **`c698d74`** (`c698d740850f8fef163c0cb445b3deebb9a75f9e`) |
 | **`git rev-parse c698d74:kettle/src`** | **`42b2c1c2615f4c95013cd6cdf931729543d2dae8`** |
-| Packet commit | the branch head: `14e758e` (spec fix) → `563bd28` (evidence) → the head commit that records the full chromium result. kettle/src is `42b2c1c` throughout (unchanged since `c698d74`) |
+| Packet commit | the branch head: `14e758e` (spec fix) → `563bd28` (evidence) → `d59e015` (the orchestrator's WIP save) → the head commit that records the full-run diagnosis. kettle/src is `42b2c1c` throughout (unchanged since `c698d74`) |
 | Branch / worktree | `pe/w2r2-chai3d`, `/home/user/wt/w3c` (not pushed) |
 | Trial merge | `git merge-tree --write-tree pe/w2r2-chai3d claude/wizardly-galileo-uy89d9` (integration at `a9171ee`, kettle/src still `e0aebbf`): **clean**, exit 0, tree `a63b9d47` (at `c698d74`; re-run at the evidence commit `563bd28`: clean, exit 0, tree `9575db92`) |
 
@@ -196,10 +213,33 @@ vertex with no cushion below it overhangs. Units are scene units (about 0.5 m).
 | `npx vitest run` | **285/285** (29 files; +10 in `chaiModel.test.ts`) | — |
 | chromium `tests/chai3d.spec.ts` | **8/8** (after the spec fix, `14e758e`) | `C/runs/chromium-chai3d.txt` |
 | chromium `tests/w2-room.spec.ts` | **7/7** | `C/runs/chromium-chai3d-w2room.txt` |
-| chromium full, `--workers=2` | @@FULL@@ | `C/runs/chromium-full-workers2.txt` |
+| chromium full, `--workers=2` | **99/103** (19.5 min, 2 workers, machine load 12–15). The 4 failures either reproduce on control or are load flakes that hit control equally (below). | `C/runs/chromium-full-workers2.txt` |
 | timer-harness | **14/14** | `C/runs/timer-harness.txt` |
 | timer-app | **12/14**, 2 skipped by design (`timer.spec.ts:295` "infra is exercised in the harness; screens bind their own keys", `:439` "render counter lives in the harness") | `C/runs/timer-app.txt` |
 | pwa | **3/3** (its own production build of this tree, so the `glb` glob included: installable, precache + offline brew, update prompt) | `C/runs/pwa.txt` |
+
+**The 4 full-run failures, checked against control `b377c62` (dev `:5410`) on the same machine:**
+| Test | Branch | Control | Verdict |
+|---|---|---|---|
+| `break-reach.spec.ts` "200 % text, 375×667 light: Break's over…" | fails (wheel: "Put the kettle on" not wholly in view) | **fails the same way** (`C/runs/rerun4-5410.txt`) | pre-existing, not mine (Maker T / P area) |
+| `break-reach.spec.ts` "200 % text, 390×844 dark: Break's over…" | fails | **fails the same way** | pre-existing, not mine |
+| `statusbar.spec.ts` "rapid live resizes at large text… (dark)" (visualViewport.scale 1.04) | **passes** on rerun (`rerun4-5423.txt`) | passes | load flake |
+| `w2-room.spec.ts` "3D failure (WebGL context lost)…" (`page.screenshot` 60 s timeout, "waiting for fonts to load") | 1/3 | **1/3** | load flake in the test; not mine |
+
+How the last one was settled:
+- It failed on the branch 3/3 sequentially at load ~14 (`w2room-contextloss-x3-5423.txt`). Control passed its single
+  sequential rerun.
+- So I ran **both builds at the same time**, 3 repeats each, to give them identical CPU contention
+  (`C/probes/ctxloss-parallel.sh`, `C/runs/ctxloss-parallel-{5423,5410}.txt`, load 8 → 15). Branch: 1 pass, 2 fail.
+  Control: 1 pass, 2 fail. Same error each time.
+- Sequentially at lower load both pass: `ctxloss-r2-5423.txt` and `ctxloss-r2-5410.txt`, plus `ctxloss-r1-5410.txt`.
+  `ctxloss-r1-5423.txt` was killed during the cold dev-server start, before any test ran.
+- It passed 7/7 in the targeted w2-room run on this branch (`chromium-chai3d-w2room.txt`).
+- Nothing of mine runs on that path:
+  - the `auto` tier resolves to `low` on SwiftShader, so no model is wanted (`chai3d.spec` "low tier" asserts no
+    request);
+  - the Focus view is `window` mode, which never asks for the model;
+  - after the context loss, the only new effect returns early (`chaiOn` false).
 
 First `chai3d.spec` run (`C/runs/chromium-chai3d-w2room.txt`): 3 of 7 passed. All four failures were in the spec,
 not the app:
@@ -245,6 +285,6 @@ not the app:
    first frame.
 3. The five-viewer "same character" check (§7.4) and a real-phone frame time are not things I can run here.
 
-Servers and browsers: dev `:5423` and preview `:5433` started by me are stopped; no browser of mine is running.
+Servers and browsers: my dev `:5423` (restarted after the container restart, for the reruns) and preview `:5433` are stopped; no browser of mine is running. The shared control (`:5410`/`:5430`) was only read.
 
 READY FOR REVIEW

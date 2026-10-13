@@ -1,0 +1,58 @@
+
+Running 3 tests using 1 worker
+
+  ✓  1 [chromium] › tests/w2-room.spec.ts:167:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items (57.3s)
+  ✘  2 [chromium] › tests/w2-room.spec.ts:167:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items (1.0m)
+  ✘  3 [chromium] › tests/w2-room.spec.ts:167:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items (1.0m)
+
+
+  1) [chromium] › tests/w2-room.spec.ts:167:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error Context: test-results/ctx-5410/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium-repeat1/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ctx-5410/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ctx-5410/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/w2-room.spec.ts:167:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error: page.screenshot: Test timeout of 60000ms exceeded.
+    Call log:
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+
+
+      78 |     const on = await page.screenshot({ clip, animations: 'disabled' });
+      79 |     await host.locator('svg[data-window-items]').evaluate((s) => ((s as SVGElement).style.visibility = 'hidden'));
+    > 80 |     const off = await page.screenshot({ clip, animations: 'disabled' });
+         |                            ^
+      81 |     await host.locator('svg[data-window-items]').evaluate((s) => ((s as SVGElement).style.visibility = ''));
+      82 |     expect(on.equals(off), `layer ${id} changes the backdrop`).toBe(false);
+      83 |   }
+        at assertLayersDrawn (/home/user/wt/w3c/kettle/tests/w2-room.spec.ts:80:28)
+        at /home/user/wt/w3c/kettle/tests/w2-room.spec.ts:159:5
+
+    Error Context: test-results/ctx-5410/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium-repeat2/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ctx-5410/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ctx-5410/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/w2-room.spec.ts:167:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items 
+    [chromium] › tests/w2-room.spec.ts:167:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items 
+  1 passed (3.1m)
