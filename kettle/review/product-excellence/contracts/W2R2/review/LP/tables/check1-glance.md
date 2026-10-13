@@ -1,0 +1,6 @@
+| build | phase | runs | stacked runs | Chai img box wholly above the sheet top edge (clear ≥ 0) | kettle svg box wholly above | Chai ink wholly above | kettle ink wholly above (incl. faint glow ellipse) | min Chai img clear | min kettle svg clear | text lines cut by the fold (line box / glyph ink) | heading wholly in view (line box / glyph ink) | max highlighted cards on one screen (hl+unlock) | runs whose highlighted card is wholly in view on arrival / has ≥1 px in view / is wholly under the fold | min last line → footer (end) | covered controls (elementFromPoint) | overlapping text lines | errors |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| control | arrival | 24 | 24 | 4/24 | 4/24 | 4/24 | 0/24 | -90.2 | -98.6 | 2 / 0 | 24/24 / 24/24 | 1 | 8/16 · 12/16 · 4/16 | 48.6 | 0 | 0 | 0 |
+| control | settled | 24 | 24 | 4/24 | 4/24 | 4/24 | 0/24 | -90.2 | -98.6 | 2 / 0 | 24/24 / 24/24 | 1 | 8/16 · 12/16 · 4/16 | 48.6 | 0 | 0 | 0 |
+| P | arrival | 24 | 24 | 24/24 | 24/24 | 24/24 | 0/24 | 8.8 | 0.4 | 6 / 0 | 18/24 / 24/24 | 1 | 4/16 · 10/16 · 6/16 | 48.6 | 0 | 0 | 0 |
+| P | settled | 24 | 24 | 24/24 | 24/24 | 24/24 | 0/24 | 8.8 | 0.4 | 6 / 0 | 18/24 / 24/24 | 1 | 4/16 · 10/16 · 6/16 | 48.6 | 0 | 0 | 0 |

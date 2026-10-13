@@ -1,0 +1,168 @@
+{
+ "file": "/home/user/wt/w3tr-c/kettle/art-src/chai/chai.glb",
+ "sha256": "b401bc6c0fa9dd7a2abe27c135821634e7d1a4d9f9ba5263f50a436ceb463d7e",
+ "bytes": 45572,
+ "awake": {
+  "size": [
+   0.5854,
+   0.9929,
+   0.567
+  ],
+  "minY": 0,
+  "min": [
+   -0.293,
+   0,
+   -0.283
+  ],
+  "max": [
+   0.293,
+   0.993,
+   0.284
+  ]
+ },
+ "nap": {
+  "size": [
+   0.6816,
+   0.6115,
+   1.0319
+  ],
+  "minY": 0,
+  "min": [
+   -0.334,
+   0,
+   -0.568
+  ],
+  "max": [
+   0.347,
+   0.612,
+   0.464
+  ]
+ },
+ "sip": {
+  "size": [
+   0.5854,
+   0.9929,
+   0.714
+  ],
+  "minY": 0,
+  "min": [
+   -0.293,
+   0,
+   -0.283
+  ],
+  "max": [
+   0.293,
+   0.993,
+   0.431
+  ]
+ },
+ "nodeNames": [
+  "chai",
+  "body",
+  "mesh_0[mesh 1878v]",
+  "mesh_0_1[mesh 142v]",
+  "eyes_happy[mesh 74v]",
+  "eyes_open[mesh 144v]",
+  "eyes_sip[mesh 94v]",
+  "eyes_sleep[mesh 94v]",
+  "paws_mug",
+  "mesh_5[mesh 104v]",
+  "mesh_5_1[mesh 187v]",
+  "yuzu[mesh 176v]"
+ ],
+ "napKeyNames": [
+  [
+   "nap"
+  ],
+  [
+   "nap"
+  ]
+ ],
+ "nap_offset": [
+  -0.09,
+  -0.3814,
+  0.154
+ ],
+ "expectedAwake": [
+  0.59,
+  0.99,
+  0.57
+ ],
+ "expectedNap": [
+  0.68,
+  0.61,
+  1.03
+ ],
+ "deviationPct": {
+  "awake": [
+   -0.78,
+   0.29,
+   -0.53
+  ],
+  "nap": [
+   0.24,
+   0.25,
+   0.18
+  ]
+ },
+ "shippedValidator": {
+  "result": {
+   "awake": {
+    "size": [
+     0.585,
+     0.993,
+     0.567
+    ],
+    "minY": 0,
+    "tris": 4342,
+    "calls": 4
+   },
+   "nap": {
+    "size": [
+     0.682,
+     0.612,
+     1.032
+    ],
+    "minY": 0,
+    "tris": 4250,
+    "calls": 4,
+    "center": [
+     0.006,
+     -0.052
+    ]
+   },
+   "sip": {
+    "tris": 4780,
+    "calls": 6
+   },
+   "fileTris": 5372
+  },
+  "spec": {
+   "awake": [
+    0.59,
+    0.99,
+    0.57
+   ],
+   "nap": [
+    0.68,
+    0.61,
+    1.03
+   ],
+   "tol": 0.1,
+   "floorTol": 0.01,
+   "trisVisible": 5000,
+   "trisFile": 8000,
+   "callsVisible": 6,
+   "nodes": [
+    "body",
+    "eyes_open",
+    "eyes_sleep",
+    "eyes_sip",
+    "paws_mug",
+    "yuzu"
+   ]
+  },
+  "missingEyesSip": "rejected: missing node \"eyes_sip\"",
+  "body_x1p3": "rejected: awake x extent 0.761 is not within ±10 % of 0.59"
+ }
+}
