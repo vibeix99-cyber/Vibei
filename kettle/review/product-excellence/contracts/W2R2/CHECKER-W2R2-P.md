@@ -36,7 +36,7 @@ What the code does:
 |---|---|---|
 | `npx tsc --noEmit` | exit 0 | `review/LEAD2/P/tsc.log` |
 | `npx vitest run` | 28 files, **278/278** | `review/LEAD2/P/vitest.log` |
-| chromium `w2-summary` + `whistle` + `a11y` vs dev :5442 | SUITE_RESULT | `review/LEAD2/P/specs-trial-5442.log` |
+| chromium `w2-summary` + `whistle` + `a11y` vs dev :5442 | **37/37** (w2-summary 18, whistle 8, a11y 11), 20.6 min | `review/LEAD2/P/specs-trial-5442.log` |
 
 Re-read but not re-run:
 - the maker's full chromium (103/105; the 2 are `break-reach:179`, identical on `b377c62`, which is T's item f);
