@@ -537,5 +537,119 @@
    }
   ],
   "responses": []
+ },
+ "03-slow-12s-then-continue": {
+  "name": "03-slow-12s-then-continue",
+  "scene": "high",
+  "t0": "10:37:33",
+  "glbRequests": 1,
+  "sceneReadyAt": "10:37:39",
+  "statusTimeline": [
+   {
+    "ms": 0,
+    "kind": "procedural",
+    "s": {
+     "state": "loading",
+     "since": 1359.1000000000931
+    }
+   },
+   {
+    "ms": 4025,
+    "kind": "procedural",
+    "s": {
+     "state": "failed",
+     "reason": "timeout (8000 ms)",
+     "ms": 8000
+    }
+   }
+  ],
+  "finalKind": "procedural",
+  "finalStatus": {
+   "state": "failed",
+   "reason": "timeout (8000 ms)",
+   "ms": 8000
+  },
+  "hosts": [
+   {
+    "mode": "showcase",
+    "ready": "true",
+    "static": null,
+    "canvas": 1
+   }
+  ],
+  "facts": {
+   "kind": "procedural",
+   "model": false,
+   "shownParts": [],
+   "activeMorphs": [],
+   "rootScale": [
+    1.12,
+    1.12,
+    1.12
+   ],
+   "quality": "high"
+  },
+  "samples": {
+   "engSamples": 334,
+   "firstEngineAtMs": 4766,
+   "kindTransitions": [
+    {
+     "t": 4766,
+     "k": "procedural"
+    }
+   ],
+   "first3s": {
+    "n": 30,
+    "bad": 0,
+    "spanMs": 2936,
+    "maxGapMs": 254
+   },
+   "aroundSwap1_5s": null,
+   "whole": {
+    "n": 334,
+    "bad": 0,
+    "spanMs": 33334,
+    "maxGapMs": 254
+   },
+   "badSamplesTotal": 0,
+   "staticSamples": 3,
+   "noCanvasSamples": 20
+  },
+  "console": [
+   {
+    "t": "10:37:33",
+    "type": "warning",
+    "text": "Service Worker registration blocked by Playwright"
+   },
+   {
+    "t": "10:37:33",
+    "type": "warning",
+    "text": "[pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')\n    at http://127.0.0.1:5453/assets/workbox-window.prod.es5-Bd17z0YL.js:2:2838"
+   },
+   {
+    "t": "10:37:34",
+    "type": "warning",
+    "text": "Service Worker registration blocked by Playwright"
+   },
+   {
+    "t": "10:37:34",
+    "type": "warning",
+    "text": "[pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')\n    at http://127.0.0.1:5453/assets/workbox-window.prod.es5-Bd17z0YL.js:2:2838"
+   },
+   {
+    "t": "10:37:43",
+    "type": "info",
+    "text": "[chai3d] keeping the procedural Chai: timeout (8000 ms)"
+   }
+  ],
+  "pageerrors": [],
+  "failedRequests": [
+   {
+    "t": "10:37:43",
+    "failed": "net::ERR_ABORTED",
+    "url": "http://127.0.0.1:5453/assets/chai-B-OZIeNI.glb"
+   }
+  ],
+  "responses": []
  }
 }
