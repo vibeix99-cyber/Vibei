@@ -37,6 +37,8 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Ruling R-3 needs Vibei's confirmation.** For Undo notices on screens with no zone (Stats, Settings), the lead ruled that the notice falls back to the base's position above the tab bar. That narrowly relaxes the brief's "no toast ever covers a control". The rows it can cover are follow-up F-T1.
 - **Lane R (Sonnet)** is running on the P+C combined trial `032d7a5` (:5445/:5455).
 
+**Resume 2026-10-13 ~14:58 UTC:** a usage limit (reset 14:30) stopped Lane T and the lead, and the container restarted. Servers were restarted and verified, and the slot gate was reset. Lane T (Opus) and LEAD-2 (Opus) were each resumed once. The final merged-tree suite on `2f67fc1` was restarted (attempt 1 died at test 45). Before the stop, Lane T's notice-zone ×3 run on T's fix trial `a8fb34a` gave 56 passed, 1 failed (`notice-zone.spec.ts:150`, End → Today).
+
 **Follow-up recorded for next round:** rename the badge "Warm Streak" to "Warm Days". Vibei has approved it as a display-name-only change: no ids, stored data or arithmetic change.
 
 ## (round 2 start) ▶ WAVE 2 ROUND 2 IN PROGRESS · 2026-10-12 (read this first)
