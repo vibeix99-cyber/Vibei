@@ -29,6 +29,9 @@ export default function HomeScreen() {
   // Landscape phones lay Today out in two columns too (greeting + goal pinned | composer + CTA scrolling).
   const landscape = useMediaQuery('(max-width: 899px) and (orientation: landscape) and (max-height: 520px)');
   const sideBySide = tablet || landscape;
+  // Where the brew length sits (see Composer): in the docked start on portrait phones, heading the column in landscape.
+  const phone = useMediaQuery('(max-width: 719px)');
+  const lengthAt = landscape ? 'top' : phone ? 'dock' : 'card';
   // Build the 3D nook off-screen while Home idles, so "Put the kettle on" doesn't stall on it.
   usePrewarmNook(useUnlockedItems());
   if (desk) {
@@ -63,7 +66,7 @@ export default function HomeScreen() {
       </div>
       <div className={s.colB}>
         {sideBySide && <SaveWarningBanner home="/" />}
-        {!active && <Composer recent={data.recentIntentions} />}
+        {!active && <Composer recent={data.recentIntentions} lengthAt={lengthAt} />}
         {!tablet && <RecipesCard quests={data.quests} />}
         <TodayBrews sessions={data.todays} />
       </div>

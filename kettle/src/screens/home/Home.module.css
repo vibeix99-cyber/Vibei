@@ -395,6 +395,42 @@
 .rhythmSeg > * {
   min-height: 56px;
 }
+/* Phones: the brew length rides in the docked start (portrait) or heads the composer column (landscape), so the chosen
+   length and the others are on screen from the first frame. No divider there; 44 px options (one line, no rhythm name)
+   keep the row low enough for the dock at 200 % text. */
+.rhythm[data-at='dock'],
+.rhythm[data-at='top'] {
+  padding-top: 0;
+  border-top: 0;
+}
+.rhythm[data-at='dock'] .rhythmSeg > *,
+.rhythm[data-at='top'] .rhythmSeg > * {
+  min-height: 44px;
+}
+/* The selected option's sliding highlight never takes a tap meant for the option it is passing over (a quick second tap
+   used to land on the previous choice while the highlight was still moving). */
+.rhythmSeg [role='radio'] > [aria-hidden='true'] {
+  pointer-events: none;
+}
+.rhythm[data-at='dock'] .customNote {
+  margin-bottom: -4px;
+}
+/* Landscape: the label and the options share one row while they fit (the column's head stays low enough for the composer
+   card to clear the dock at rest); with large text the options take their own line. */
+.rhythm[data-at='top'] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+}
+.rhythm[data-at='top'] .rhythmSeg {
+  flex: 1 1 15rem;
+  min-width: 0;
+}
+.rhythm[data-at='top'] .customNote {
+  flex-basis: 100%;
+  margin-bottom: 0;
+}
 .colA,
 .colB {
   display: contents;
@@ -410,10 +446,17 @@
   display: grid;
   gap: 8px;
 }
-/* Phones: anything that takes focus (Tab, a skip link, the keyboard opening) is scrolled clear of the dock. */
+/* Phones: anything that takes focus (Tab, a skip link, the keyboard opening) is scrolled clear of the dock. Its height
+   (--home-dock-h, measured by the composer) grows with the text size and, on portrait phones, holds the brew length. */
 @media (max-width: 899px) {
   :global(html):has(.ctaDock) {
-    scroll-padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 120px);
+    scroll-padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + max(120px, var(--home-dock-h, 0px) + 12px));
+  }
+}
+/* Landscape phones: the dock sits on the screen's bottom edge (the tabs are a side rail). */
+@media (max-width: 899px) and (orientation: landscape) and (max-height: 520px) {
+  :global(html):has(.ctaDock) {
+    scroll-padding-bottom: calc(env(safe-area-inset-bottom) + max(120px, var(--home-dock-h, 0px) + 12px));
   }
 }
 /* A paper fade behind the dock: invisible at rest (page is paper), hides content it floats over. */

@@ -115,8 +115,15 @@ for (const theme of ['light', 'dark'] as const) {
         await bigText(ctx, pct);
         const page = await ctx.newPage();
         await open(page, base(baseURL), { theme });
+        // Real state, not a fixed pause: Today's status bar is drawn (under load the first frame can come late).
+        await page.locator('nav[aria-label="Your progress"]').waitFor({ state: 'visible', timeout: 30_000 });
         for (const leaves of [2296, 10_000, 123_456, 470_000]) {
           await page.evaluate((n) => (window as any).__kettle.progress.setState({ leaves: n }), leaves);
+          // The new total is on the bar, and the bar has been laid out and fitted for it (StatusBar measures in a
+          // ResizeObserver / animation frame: under load that lands later than any fixed pause).
+          await expect
+            .poll(() => page.evaluate((n) => (document.querySelector('nav[aria-label="Your progress"]')?.textContent ?? '').replace(/[^0-9kKmM.]/g, '').length > 0 && (window as any).__kettle.progress.getState().leaves === n, leaves))
+            .toBe(true);
           await settle(page);
           const r = await row(page);
           const where = `${w}×${h} ${pct}% text, ${leaves} leaves → ${r.mode}`;

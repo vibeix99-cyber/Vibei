@@ -27,7 +27,7 @@ import { useReducedMotion } from '@/lib/useReducedMotion';
 import { ease } from '@/lib/motion';
 import { audio } from '@/audio';
 import { Icon } from '@/art';
-import { Button, Digits, IconButton, Kbd } from '@/ui';
+import { Button, Digits, IconButton, Kbd, NoticeStrip } from '@/ui';
 import { useProgress, useUnlockedItems } from '@/progress';
 import { useSettings } from '@/state/settings';
 import { getRoute, navigate, useRoute } from '@/app/router';
@@ -216,6 +216,26 @@ export default function FocusScreen() {
   // Focused time so far (for the end sheet copy).
   const focusedMs = useMemo(() => (endOpen ? elapsedActiveMs(useTimer.getState(), clock.now()) : 0), [endOpen]);
 
+  // The sheets are not part of the frozen frame below: they are portalled over the whole app, and the frame "End
+  // session" leaves behind was rendered with the End sheet open (setEndOpen(false) and the session's end come in one
+  // render), which kept a dialog over Today, and #root inert, for the outgoing layer's whole life (W2-H F2/F3; ported
+  // from W2R2 Maker T). Once the session has ended they are not rendered at all: gone in the same frame.
+  const sheets =
+    view === 'none' ? null : (
+      <>
+        <EndSheet
+          open={endOpen && view === 'focus'}
+          focusedMs={focusedMs}
+          onKeep={() => setEndOpen(false)}
+          onEnd={() => {
+            setEndOpen(false);
+            endFocusEarly();
+          }}
+        />
+        <AmbienceSheet open={ambOpen} onClose={() => setAmbOpen(false)} />
+      </>
+    );
+
   // While this screen is the *outgoing* layer of a route change the session has already ended (view 'none'):
   // keep showing the last frame instead of an empty page.
   if (view === 'none') return frozen.current ?? <div className={s.screen} data-view="none" data-focus-view="none" />;
@@ -253,9 +273,7 @@ export default function FocusScreen() {
       {view !== 'summary' && <h1 className="sr-only">{heading}</h1>}
 
       {/* ---------- the stage: never moves ---------- */}
-      {/* Side by side with the panel it is a column of its own with no control in it: toasts that have no room above
-          the panel's controls float over it (data-toast-dock, see src/ui/Toast.tsx; the stylesheet opts it in). */}
-      <div className={s.stageBox} data-toast-dock="">
+      <div className={s.stageBox}>
         <Stage
           className={s.stage}
           state={kettle}
@@ -327,6 +345,10 @@ export default function FocusScreen() {
 
       {/* ---------- panel ---------- */}
       <main className={s.panel} ref={panelRef}>
+        {/* The session screen's notice strip (src/ui/Toast.tsx): the head of the panel, above the countdown or Break's
+            over, in the panel's flow (it scrolls with it at 200 % text). Never on the stage, never over a control. A
+            new view is a new screen: what it shows is laid out with it. The summary has its own (below). */}
+        <NoticeStrip prio={1} screen={`session:${view}`} off={view === 'summary'} className={s.notices} />
         {/* A new view in the panel starts at its top (the panel scrolls when its content is taller, e.g. at 200 % text). */}
         <AnimatePresence
           mode="wait"
@@ -344,7 +366,12 @@ export default function FocusScreen() {
               exit={{ opacity: 0, transition: { duration: 0.12 } }}
               transition={reduced ? { duration: 0.2 } : { duration: 0.42, ease: ease.out }}
             >
-              <Summary reduced={reduced} />
+              {/* The summary's strip heads its layer (over the window at the top of the stage when stacked; the card's
+                  head side by side), and pushes the sheet down: never over the card or its footer. */}
+              <NoticeStrip prio={1} screen="session:summary" className={s.summaryNotices} />
+              <div className={s.summaryFill}>
+                <Summary reduced={reduced} />
+              </div>
             </motion.div>
           ) : view === 'over' ? (
             <motion.div
@@ -366,9 +393,7 @@ export default function FocusScreen() {
                   'Ready for another brew?'
                 )}
               </p>
-              {/* Every break-over control, the carried task's "Mark it done" included, is one toast-above group:
-                  a toast (a recipe or badge earned as the break ends) floats above all of them, never over one. */}
-              <div className={s.overDock} data-toast-above="">
+              <div className={s.overDock} data-session-controls="">
                 {carriedRec && (
                   <button type="button" className={s.overMark} onClick={() => setIntentionOutcome(carriedRec, 'done')}>
                     <Icon name="check" size={18} /> Mark it done, start fresh
@@ -408,7 +433,7 @@ export default function FocusScreen() {
 
               {view === 'break' ? (
                 <>
-                  <div className={s.controls} data-toast-above="">
+                  <div className={s.controls} data-session-controls="">
                     <RoundButton size={60} sfx="cancel" label="Skip break" icon={<Icon name="close" size={24} />} onClick={skipBreak} />
                     <RoundButton
                       ref={mainRef}
@@ -428,7 +453,7 @@ export default function FocusScreen() {
                   </div>
                 </>
               ) : (
-                <div className={`${s.controls} ${view === 'whistle' ? s.controlsGone : ''}`} aria-hidden={view === 'whistle' || undefined} data-toast-above="">
+                <div className={`${s.controls} ${view === 'whistle' ? s.controlsGone : ''}`} aria-hidden={view === 'whistle' || undefined} data-session-controls="">
                   <RoundButton
                     size={60}
                     sfx="addTime"
@@ -477,21 +502,15 @@ export default function FocusScreen() {
       </main>
 
       {active && <TimerAnnouncer />}
-
-      <EndSheet
-        open={endOpen}
-        focusedMs={focusedMs}
-        onKeep={() => setEndOpen(false)}
-        onEnd={() => {
-          setEndOpen(false);
-          endFocusEarly();
-        }}
-      />
-      <AmbienceSheet open={ambOpen} onClose={() => setAmbOpen(false)} />
     </div>
   );
   frozen.current = out;
-  return out;
+  return (
+    <>
+      {out}
+      {sheets}
+    </>
+  );
 }
 
 /** The control's top on screen while any of it shows in the panel, else null (it is scrolled out of sight). */

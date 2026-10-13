@@ -158,7 +158,9 @@ function SheetPanel({
       // synchronous focus() here would be undone. Skip if we were re-registered (StrictMode).
       queueMicrotask(() => {
         if (stack.some((e) => e.id === id)) return;
-        if (back && document.contains(back) && !back.closest('[inert]')) {
+        // Not into a screen on its way out (a route layer leaving, e.g. the session screen after "End session"): focus
+        // there is lost the moment that layer goes; the arriving screen's main is the sensible place (below).
+        if (back && document.contains(back) && !back.closest('[inert], [data-route-leaving]')) {
           back.focus({ preventScroll: true });
           if (document.activeElement === back) return;
         }

@@ -1098,6 +1098,20 @@ for (const vp of [
       const markDone = page.getByRole('button', { name: /^Mark “Chapter 3 notes” done/ });
       await expect(markDone).toBeVisible();
       await markDone.scrollIntoViewIfNeeded();
+      // End's own notice ("Saved 3 minutes of focus", in Today's strip) has been shown and has gone, or it waits in a
+      // strip scrolled above the view (its clock runs only while it is seen; a change there moves nothing in view).
+      // Real state, not a timeout: this test is about the banner, and the strip closing at rest is a move of its own.
+      await expect
+        .poll(
+          () =>
+            page.evaluate(() => {
+              const n = (window as any).__kettle.notices();
+              const li = document.querySelector('[data-notice-strip] li');
+              return li ? (li.getBoundingClientRect().bottom <= 0 ? 'waits above the view' : 'shown') : n.queue.length ? 'queued' : 'gone';
+            }),
+          { timeout: 20_000 },
+        )
+        .toMatch(/^(gone|waits above the view)$/);
       await newbieWithFullStorage(page, { seeded: true });
       await countSaid(page);
       // The controls round the finger, where they are drawn, frame by frame from the tap on: the task field and its
@@ -1124,7 +1138,8 @@ for (const vp of [
       const box = (await markDone.boundingBox())!;
       if (vp.touch) await page.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2);
       else await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
-      await expect(page.getByText('Crossed off. Nice work.')).toBeVisible();
+      // (The words are drawn in the row Mark done was in; the announcer's copy of them is visually hidden.)
+      await expect(page.locator('main').getByText('Crossed off. Nice work.')).toBeVisible();
       await expect(banner(page)).toHaveCount(1);
       await page.waitForTimeout(800);
       // What may move is only what sits above the banner (the greeting scrolls up to make room for it); nothing at

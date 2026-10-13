@@ -17,6 +17,8 @@ import { useProgress } from '@/progress';
 import { useSettings } from '@/state/settings';
 import { navigate, getRoute } from './router';
 import { seedProfile, type SeedName } from '@/progress/seed';
+import { toast } from '@/ui/Toast';
+import { momentState } from '@/ui/moment';
 
 export function debugEnabled(): boolean {
   return import.meta.env.DEV || new URLSearchParams(location.search).has('debug');
@@ -48,6 +50,11 @@ export function applyDebugParams(): void {
     timerView: getTimerView,
     /** Service worker / update state (production builds). */
     pwa: { state: getPwaState, update: applyPwaUpdate },
+    /** Notices: raise one (as the app does), the queue and the strip showing it, the announcer, the moment rules. */
+    toast,
+    notices: () => toast.state(),
+    noticesSaid: () => toast.said(),
+    moment: momentState,
     /** Fast-forward the clock by ms. */
     ff: (ms: number) => clock.advance(ms),
     /** Jump to 1s before the current phase ends. */

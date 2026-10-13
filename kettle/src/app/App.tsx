@@ -12,17 +12,19 @@
  *    rises over that: never a gap and never text over text.
  */
 import { lazy, Suspense, useEffect, type ComponentType, type ReactNode, type Ref } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useIsPresent } from 'motion/react';
 import { useSettings } from '@/state/settings';
 import { useTimer } from '@/timer';
 import { useReducedMotion } from '@/lib/useReducedMotion';
 import { ease } from '@/lib/motion';
+import { NoticeLayer, NoticeStrip } from '@/ui/Toast';
 import { ErrorBoundary } from './ErrorBoundary';
 import { Shell } from './Shell';
 import { ShellOverlays } from './ShellOverlays';
 import { Rail } from './Rail';
 import { navigate, useRoute, TAB_ROUTES, type Route } from './router';
 import { useApplyTheme } from './theme';
+import a from './App.module.css';
 
 type Loader = () => Promise<{ default: ComponentType }>;
 
@@ -107,11 +109,13 @@ const contentStyle = { position: 'relative', minHeight: '100%' } as const;
 /** One route layer: its paper and its content fade separately (see `layerTransition`). */
 function Dissolve({ t, children, ref }: { t: ReturnType<typeof layerTransition>; children: ReactNode; ref?: Ref<HTMLDivElement> }) {
   // `ref` is forwarded so AnimatePresence's popLayout can measure and pop the exiting layer.
+  // A leaving layer draws no notice (src/ui/Toast.tsx): only the arriving screen's strip does, from its first frame.
+  const present = useIsPresent();
   return (
-    <motion.div ref={ref} {...t.layer} style={layerStyle}>
+    <motion.div ref={ref} {...t.layer} style={layerStyle} data-route-leaving={present ? undefined : ''}>
       <motion.div aria-hidden="true" {...t.paper} style={paperStyle} />
       <motion.div {...t.content} style={contentStyle}>
-        {children}
+        <NoticeLayer leaving={!present}>{children}</NoticeLayer>
       </motion.div>
     </motion.div>
   );
@@ -187,7 +191,13 @@ export function App() {
       </Shell>
     );
   } else {
-    layer = <RouteView route={route} />;
+    // The welcome (and the kit): their notice strip heads the page.
+    layer = (
+      <>
+        <NoticeStrip screen={route} className={a.pageStrip} />
+        <RouteView route={route} />
+      </>
+    );
   }
 
   return (

@@ -5,7 +5,7 @@ import { audio } from '@/audio';
 import { plural } from '@/lib/format';
 import { parseDayKey } from '@/lib/dates';
 import { importData, previewImport, resetAllData, undoLastImport, type ImportSummary } from '@/progress';
-import { Button, ListGroup, ListRow, SegmentedControl, Sheet, toast } from '@/ui';
+import { Button, InlineUndo, ListGroup, ListRow, SegmentedControl, Sheet, toast } from '@/ui';
 import { downloadBackup } from '@/screens/home/shims/data';
 import { SaveWarningBanner } from '@/app/SaveWarning';
 import s from './Settings.module.css';
@@ -20,6 +20,9 @@ export function DataSection() {
   const [msg, setMsg] = useState<Msg>(null);
   const [pending, setPending] = useState<{ text: string; summary: ImportSummary; hasProgress: boolean } | null>(null);
   const [resetOpen, setResetOpen] = useState(false);
+  // I10: the import's Undo is inline, in the "Import a backup" row the person used (10 s); then what Undo did, there too.
+  const [imported, setImported] = useState<{ text: string; key: boolean } | null>(null);
+  const [undone, setUndone] = useState<{ text: string; tone: 'ok' | 'warn' } | null>(null);
 
   /** Successes are a toast; problems stay inline next to the control (and are announced). */
   const say = (m: Msg) => {
@@ -65,7 +68,6 @@ export function DataSection() {
     const res = hasProgress ? first : previewImport(text, { mode: 'replace' });
     if (!res.ok) return;
     setMsg(null);
-    toast.dismiss(); // nothing may cover what the sheet says is about to happen
     setPending({ text, summary: res.summary, hasProgress });
   };
 
@@ -77,6 +79,7 @@ export function DataSection() {
 
   const confirmImport = () => {
     if (!pending) return;
+    importKey.current = !!document.activeElement?.matches(':focus-visible');
     const { mode } = pending.summary;
     const res = importData(pending.text, { mode });
     setPending(null);
@@ -88,17 +91,16 @@ export function DataSection() {
     audio.play('pop');
     setMsg(null);
     const addedText = res.summary.updated ? `Added ${plural(res.summary.added, 'brew')} and updated ${res.summary.updated} from your backup.` : `Added ${plural(res.summary.added, 'brew')} from your backup.`;
-    toast.success(mode === 'merge' ? addedText : `Backup restored: ${plural(res.summary.sessions, 'brew')}. Welcome back.`, {
-      duration: 10_000,
-      action: {
-        label: 'Undo',
-        onClick: () => {
-          const r = undoLastImport();
-          if (r === 'undone') toast('Import undone. Everything is as it was.', { tone: 'neutral' });
-          else if (r === 'changed') toast('Can’t undo any more: brews or settings changed since the import.', { tone: 'warning' });
-        },
-      },
-    });
+    setUndone(null);
+    setImported({ text: mode === 'merge' ? addedText : `Backup restored: ${plural(res.summary.sessions, 'brew')}. Welcome back.`, key: importKey.current });
+  };
+  /** Was the import started from the keyboard? Then focus goes to its Undo once the sheet has gone. */
+  const importKey = useRef(false);
+  const undoImport = () => {
+    const r = undoLastImport();
+    setImported(null);
+    if (r === 'undone') setUndone({ text: 'Import undone. Everything is as it was.', tone: 'ok' });
+    else if (r === 'changed') setUndone({ text: 'Can’t undo any more: brews or settings changed since the import.', tone: 'warn' });
   };
 
   const sum = pending?.summary;
@@ -108,7 +110,24 @@ export function DataSection() {
     <>
       <ListGroup title="Your data" footer="Everything lives on this device. Export a backup to move Kettle to another browser.">
         <ListRow icon="download" iconTone="sky" label="Export a backup" description="Save everything as a .json file." onClick={onExport} />
-        <ListRow icon="upload" iconTone="matcha" label="Import a backup" description="Add or restore from a Kettle .json file." onClick={() => fileRef.current?.click()} />
+        {imported ? (
+          <InlineUndo
+            className={s.undoRow}
+            message={imported.text}
+            icon="check"
+            tone="matcha"
+            duration={10_000}
+            focus={imported.key}
+            undoLabel="Undo the import"
+            onUndo={undoImport}
+            onExpire={() => setImported(null)}
+            data-undo-for="import"
+          />
+        ) : undone ? (
+          <UndoneRow text={undone.text} tone={undone.tone} onDone={() => setUndone(null)} />
+        ) : (
+          <ListRow icon="upload" iconTone="matcha" label="Import a backup" description="Add or restore from a Kettle .json file." onClick={() => fileRef.current?.click()} />
+        )}
         <ListRow icon="trash" label="Reset everything" description="Start fresh on this device." danger onClick={() => setResetOpen(true)} />
       </ListGroup>
       {/* Storage full: the same warning as on Today, beside the backup tools. */}
@@ -262,4 +281,9 @@ function importNote(sum: ImportSummary, hasProgress: boolean): { text: string; w
   const left = [sum.duplicates ? `${sum.duplicates} already here` : null, sum.deletedHere ? `${sum.deletedHere} you deleted here` : null].filter(Boolean).join(', ');
   const after = `You’ll have ${plural(sum.after.sessions, 'brew')}, cozy level ${sum.after.level}.`;
   return { text: `${parts[0].toUpperCase()}${parts.slice(1)}${left ? ` (${left} stay as they are)` : ''}. ${after} Your settings stay as they are.` };
+}
+
+/** What the inline Undo did, in the same row, for a moment (said once); then the row is "Import a backup" again. */
+function UndoneRow({ text, tone, onDone }: { text: string; tone: 'ok' | 'warn'; onDone: () => void }) {
+  return <InlineUndo className={s.undoRow} message={text} icon={tone === 'ok' ? 'check' : 'info'} tone={tone === 'ok' ? 'matcha' : 'berry'} duration={3200} onExpire={onDone} data-undo-for="import-result" />;
 }

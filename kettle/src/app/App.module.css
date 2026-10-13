@@ -1,0 +1,6 @@
+/* The welcome's (and the kit's) notice strip: it heads the page, inside the safe area, one phone column wide. */
+.pageStrip[data-has] {
+  max-width: calc(560px + 2 * var(--gutter));
+  margin: 0 auto;
+  padding: max(12px, env(safe-area-inset-top)) max(var(--gutter), env(safe-area-inset-right)) 0 max(var(--gutter), env(safe-area-inset-left));
+}

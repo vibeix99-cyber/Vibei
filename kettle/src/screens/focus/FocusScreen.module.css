@@ -141,6 +141,20 @@
   min-height: 0;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
+  /* The notice strip (row 1: no height while empty) heads the view (row 2), which fills the rest as before. */
+  grid-template-rows: auto 1fr;
+}
+.panel > .timer,
+.panel > .over {
+  grid-row: 2;
+}
+/* The session screen's notice strip: in the panel's flow, as wide as its content. */
+.notices[data-has] {
+  grid-row: 1;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 10px 16px 0;
 }
 /* With large text (200 %) the countdown and its controls, or Break's over and its actions, can be taller than the
    panel. The panel then scrolls (wheel, touch, and the keyboard bringing a focused control into view) instead of
@@ -315,6 +329,22 @@
   inset: calc(-1 * var(--stage-h)) 0 0;
   min-height: 0;
   overflow: hidden;
+  /* The summary's notice strip (empty: no height), then the summary, which takes the rest. */
+  display: flex;
+  flex-direction: column;
+}
+.summaryFill {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.summaryFill > * {
+  flex: 1 1 auto;
+}
+.summaryNotices[data-has] {
+  flex: none;
+  padding: max(10px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) 8px max(12px, env(safe-area-inset-left));
 }
 
 /* ---------- break's over ---------- */
@@ -356,8 +386,8 @@
   font-weight: 800;
   cursor: pointer;
 }
-/* The carried task's "Mark it done" and the two actions: one block for toasts to float above (data-toast-above),
-   laid out exactly as when they were direct items of .over (same 8 px gap, centred mark, full-width actions). */
+/* The carried task's "Mark it done" and the two actions: one block, laid out exactly as when they were direct items
+   of .over (same 8 px gap, centred mark, full-width actions). */
 .overDock {
   display: grid;
   justify-items: center;
@@ -449,10 +479,6 @@
     --pad-b: 8px;
   }
   .stageBox {
-    /* A column of its own here, beside the top bar and the panel, with no control in it: the toasts' dock when there
-       is no room for them above the panel's controls (src/ui/Toast.tsx, I04 R7-D1). Stacked, the top bar sits over the
-       stage, so it is never a dock. */
-    --toast-dock: on;
     border-radius: var(--r-xl);
     overflow: hidden;
     box-shadow:

@@ -1,5 +1,5 @@
 /** "What are you brewing?" + tags + rhythm + the big start button (or a resume banner). */
-import { useEffect, useRef, useState, type FocusEvent, type KeyboardEvent } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type FocusEvent, type KeyboardEvent } from 'react';
 import { Icon } from '@/art';
 import { navigate } from '@/app/router';
 import { useSettings, type TagId, type RhythmId } from '@/state/settings';
@@ -7,14 +7,22 @@ import { useTimer, useRemaining, nextBreakKind } from '@/timer';
 import { formatClock } from '@/lib/format';
 import { useShortcut } from '@/lib/shortcuts';
 import { useReducedMotion } from '@/lib/useReducedMotion';
-import { Button, Card, Chip, ChipGroup, Ring, SegmentedControl, Sheet, NumberStepper, TextField, toast } from '@/ui';
+import { Button, Card, Chip, ChipGroup, InlineUndo, Ring, SegmentedControl, Sheet, NumberStepper, TextField } from '@/ui';
 import { useDayKey, useProgress } from '@/progress';
 import { carriedFrom, setIntentionOutcome } from '@/app/intention';
+import type { SessionRecord } from '@/progress';
 import { RHYTHM_OPTIONS, matchPreset } from './content';
 import { TAGS } from '@/state/tags';
 import s from './Home.module.css';
 
-export function Composer({ recent }: { recent: string[] }) {
+/**
+ * Where the brew length sits. `dock`: portrait phones, inside the docked start, so the chosen length and the others are in
+ * view from the first frame, never under the dock (Wave-1 follow-up #2). `top`: landscape phones, heading the composer
+ * column (the dock there has no height to spare at 200 % text). `card`: tablets and desktop, in the composer card as before.
+ */
+export type LengthAt = 'card' | 'dock' | 'top';
+
+export function Composer({ recent, lengthAt = 'card' }: { recent: string[]; lengthAt?: LengthAt }) {
   const intention = useTimer((t) => t.intention);
   const timerTag = useTimer((t) => t.tag);
   const setIntention = useTimer((t) => t.setIntention);
@@ -41,21 +49,23 @@ export function Composer({ recent }: { recent: string[] }) {
   const sessions = useProgress((st) => st.sessions);
   const carried = carriedFrom(sessions, text);
   const inputRef = useRef<HTMLInputElement>(null);
-  const markDone = () => {
+  // Crossed off: the "Mark done" line turns into its Undo, in place (I10: Undo is inline, where the person acted).
+  const [crossed, setCrossed] = useState<{ rec: SessionRecord; key: boolean } | null>(null);
+  const markDone = (e: { currentTarget: HTMLElement }) => {
     if (!carried) return;
+    // From the keyboard, focus moves to the Undo that takes the button's place; a tap leaves focus alone (a focused
+    // field would open the phone's keyboard and its Recent list under the finger).
+    const key = e.currentTarget.matches(':focus-visible');
     setIntentionOutcome(carried, 'done');
     setText('');
-    inputRef.current?.focus(); // the link unmounts; keep keyboard focus in the composer
-    toast.success('Crossed off. Nice work.', {
-      action: {
-        label: 'Undo',
-        onClick: () => {
-          setIntentionOutcome(carried, 'carried');
-          setText(carried.intention);
-          inputRef.current?.focus();
-        },
-      },
-    });
+    setCrossed({ rec: carried, key });
+  };
+  const undoCrossed = () => {
+    if (!crossed) return;
+    setIntentionOutcome(crossed.rec, 'carried');
+    setText(crossed.rec.intention);
+    setCrossed(null);
+    if (crossed.key) inputRef.current?.focus();
   };
 
   // Skipping is effortless across days too: yesterday's words only come back prefilled if you chose
@@ -100,15 +110,35 @@ export function Composer({ recent }: { recent: string[] }) {
   };
 
   const reduced = useReducedMotion();
-  /** Bring the brew length into view (clear of the dock) and put focus on the chosen length. */
+  /** Put focus on the chosen length; outside the dock, bring the brew length into view (clear of the dock) first. */
   const showLength = () => {
     const box = document.getElementById('home-brew-length');
     if (!box) return;
-    box.scrollIntoView({ block: 'center', behavior: reduced ? 'auto' : 'smooth' });
+    if (lengthAt !== 'dock') box.scrollIntoView({ block: 'center', behavior: reduced ? 'auto' : 'smooth' });
     (box.querySelector<HTMLElement>('[role=radio][aria-checked=true]') ?? box.querySelector<HTMLElement>('[role=radio]'))?.focus({ preventScroll: true });
   };
+
+  // The page scrolls a focused control clear of the dock (scroll-padding in Home.module.css): tell it the dock's height,
+  // which grows with the text size (and, on phones, carries the brew length).
+  const dockRef = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    const el = dockRef.current;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    const root = document.documentElement;
+    const put = () => root.style.setProperty('--home-dock-h', `${Math.ceil(el.getBoundingClientRect().height)}px`);
+    put();
+    const ro = new ResizeObserver(put);
+    ro.observe(el);
+    return () => {
+      ro.disconnect();
+      root.style.removeProperty('--home-dock-h');
+    };
+  }, []);
+
+  const length = <RhythmPicker at={lengthAt} />;
   return (
     <>
+    {lengthAt === 'top' && length}
     <section className={s.composer} aria-labelledby="home-brew">
       <Card className={s.composerCard}>
         <div className={s.composerHead}>
@@ -116,7 +146,14 @@ export function Composer({ recent }: { recent: string[] }) {
             What are you brewing? <span className={s.optional}>(optional)</span>
           </h2>
         </div>
-        <div ref={fieldRef} className={s.field} onFocus={() => setInputFocus(true)} onBlur={onFieldBlur}>
+        <div
+          ref={fieldRef}
+          className={s.field}
+          // The field itself taking focus opens Recent (not "Mark done" or its Undo taking it: that would slide Recent
+          // in above the Undo, under the finger).
+          onFocus={(e) => e.target === inputRef.current && setInputFocus(true)}
+          onBlur={onFieldBlur}
+        >
           <TextField
             ref={inputRef}
             label="What are you brewing? (optional)"
@@ -152,7 +189,22 @@ export function Composer({ recent }: { recent: string[] }) {
               ))}
             </div>
           )}
-          {carried && !showRecent && (
+          {crossed ? (
+            <InlineUndo
+              as="p"
+              className={s.carried}
+              message="Crossed off. Nice work."
+              icon="check"
+              tone="matcha"
+              focus={crossed.key}
+              undoLabel={`Undo: put “${crossed.rec.intention}” back`}
+              compact
+              buttonClassName={s.linkBtn}
+              onUndo={undoCrossed}
+              onExpire={() => setCrossed(null)}
+              data-undo-for="mark-done"
+            />
+          ) : carried && !showRecent && (
             <p className={s.carried}>
               <Icon name="refresh" size={16} />
               <span>Carried from your last brew</span>
@@ -170,17 +222,19 @@ export function Composer({ recent }: { recent: string[] }) {
           className={s.tagGroup}
           options={TAGS.map((o) => ({ value: o.id, label: o.label, icon: o.icon, tone: o.tone }))}
         />
-        <RhythmPicker />
+        {lengthAt === 'card' && length}
       </Card>
     </section>
-    {/* Docked: on short or landscape screens it sticks above the tab bar so the main action is never below the fold. */}
-    <div className={s.ctaDock} data-toast-above="">
+    {/* Docked: on short or landscape screens it sticks above the tab bar so the main action is never below the fold.
+        On portrait phones the brew length rides in it, right above the start it sets. */}
+    <div ref={dockRef} className={s.ctaDock} data-length={lengthAt === 'dock' ? '' : undefined}>
+      {lengthAt === 'dock' && length}
       <Button size="lg" block sfx="start" className={s.cta} onClick={start} icon={<Icon name="play" size={22} />}>
         Put the kettle on · {focusMin} min
       </Button>
       <p className={s.ctaNote}>
         {longNext ? `Then a long tea break, ${longBreakMin} min. You’ve earned it.` : `Then a ${shortBreakMin} min tea break.`}{' '}
-        {/* Phones: the brew length sits below the fold or under this dock at first; this takes you to it. */}
+        {/* Phones: moves focus to the chosen length (in this dock on portrait phones; at the column's head in landscape). */}
         <button type="button" className={`${s.linkBtn} ${s.lengthLink}`} onClick={showLength}>
           Change brew length
         </button>
@@ -190,23 +244,28 @@ export function Composer({ recent }: { recent: string[] }) {
   );
 }
 
-function RhythmPicker() {
+function RhythmPicker({ at = 'card' }: { at?: LengthAt }) {
   const rhythm = useSettings((st) => st.rhythm);
   const focusMin = useSettings((st) => st.focusMin);
   const shortBreakMin = useSettings((st) => st.shortBreakMin);
   const applyRhythm = useSettings((st) => st.applyRhythm);
   const [customOpen, setCustomOpen] = useState(false);
   const customMin = rhythm === 'custom' ? focusMin : null;
-  // Minutes first: this row chooses how long the brew is (the rhythm's name is the small print).
+  // Minutes first: this row chooses how long the brew is (the rhythm's name is the small print, left out on phones: there
+  // the options are 44 px tall, so the row fits the dock, or the column's head, at 200 % text too).
+  const named = at === 'card';
   const options = [
-    ...[...RHYTHM_OPTIONS].sort((a, b) => a.focusMin - b.focusMin).map((r) => ({ value: r.id as RhythmId, label: `${r.focusMin} min`, sublabel: r.label })),
-    { value: 'custom' as RhythmId, label: customMin ? `${customMin} min` : 'Custom', sublabel: customMin ? 'Custom' : 'Set it' },
+    ...[...RHYTHM_OPTIONS].sort((a, b) => a.focusMin - b.focusMin).map((r) => ({ value: r.id as RhythmId, label: `${r.focusMin} min`, sublabel: named ? r.label : undefined })),
+    { value: 'custom' as RhythmId, label: customMin ? `${customMin} min` : 'Custom', sublabel: customMin ? 'Custom' : named ? 'Set it' : undefined },
   ];
   return (
-    <div className={s.rhythm} id="home-brew-length">
-      <p className={s.rhythmLabel} aria-hidden="true">
-        Brew length
-      </p>
+    <div className={s.rhythm} id="home-brew-length" data-at={at}>
+      {/* In the dock the options sit on the start they set ("Put the kettle on · 25 min"); the group keeps its name. */}
+      {at !== 'dock' && (
+        <p className={s.rhythmLabel} aria-hidden="true">
+          Brew length
+        </p>
+      )}
       <SegmentedControl<RhythmId>
         label="Brew length"
         options={options}

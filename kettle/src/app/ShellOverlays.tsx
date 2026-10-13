@@ -1,6 +1,7 @@
 /**
  * App-wide overlays, mounted once at the root (on every route). OWNER: design-system area.
- *  - <Toaster/>                 toasts + `ui:toast` events
+ *  - <Toaster/>                 notices: the queue, its clock, the announcer and `ui:toast` events (each screen draws
+ *                               them in its own in-flow strip, src/ui/Toast.tsx)
  *  - keyboard-shortcuts sheet   rendered from SHORTCUTS; `?` toggles it (useShortcutHelp)
  *  - PWA update prompt          "A fresh brew of Kettle is ready — Update", never during a brew
  */

@@ -49,7 +49,8 @@ async function serious(page: Page, where: string, out: string[]) {
     const nodes: string[] = [];
     for (const n of v.nodes) {
       const sel = n.target.join(' ');
-      if (v.id === 'target-size' && /partially obscured/.test(n.failureSummary ?? '') && (await scrolledClearPasses(page, sel))) continue;
+      // Not on Today at rest: its Brew length is on screen and clear of the docked start from the first frame (W2 #2).
+      if (where !== 'home' && v.id === 'target-size' && /partially obscured/.test(n.failureSummary ?? '') && (await scrolledClearPasses(page, sel))) continue;
       nodes.push(sel);
     }
     if (nodes.length) out.push(`${where}: ${v.id} (${v.impact}) ${nodes.slice(0, 3).join(', ')}`);
@@ -343,7 +344,7 @@ for (const [w, h] of [
     await page.waitForTimeout(2500);
     await say('Couldn’t save just now. Your brew is still running.');
     await page.waitForTimeout(1200);
-    expect(await overlap('[data-toast-above]')).toBe('clear');
+    expect(await overlap('[data-session-controls]')).toBe('clear');
     await expect(page.getByRole('button', { name: /^Pause$/ })).toBeVisible();
     await page.getByRole('button', { name: /^Pause$/ }).click(); // still operable with the toast up
     await expect.poll(() => page.evaluate(() => (window as any).__kettle.timer.getState().status)).toBe('paused');
@@ -353,7 +354,7 @@ for (const [w, h] of [
     await page.waitForTimeout(2500);
     await say('Couldn’t save just now. Your summary is still here.');
     await page.waitForTimeout(1200);
-    expect(await overlap('footer[data-toast-above]')).toBe('clear');
+    expect(await overlap('[data-focus-view] footer')).toBe('clear');
   });
 }
 

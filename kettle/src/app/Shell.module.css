@@ -132,6 +132,11 @@
 .rail {
   display: none;
 }
+/* The notice strip heads the page: the width of a phone column at most, its own gap under it (none while empty). */
+.notices[data-has] {
+  max-width: 560px;
+  padding-bottom: var(--space-4);
+}
 
 /* ---------------- Landscape phones: compact left rail ---------------- */
 @media (max-width: 899px) and (orientation: landscape) and (max-height: 520px) {

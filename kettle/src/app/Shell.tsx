@@ -15,6 +15,7 @@ import { useReducedMotion } from '@/lib/useReducedMotion';
 import { navigate, useRoute, type Route } from './router';
 import { SidebarStatus } from './Rail';
 import { ErrorBoundary } from './ErrorBoundary';
+import { NoticeStrip } from '@/ui/Toast';
 import s from './Shell.module.css';
 
 const TABS: { to: Route; label: string; icon: IconName }[] = [
@@ -115,6 +116,9 @@ export function Shell({ children, rail }: { children: ReactNode; rail?: ReactNod
       </nav>
       <div className={s.stage}>
         <main id="main" ref={mainRef} className={s.main} tabIndex={-1}>
+          {/* The tab screens' notice strip (src/ui/Toast.tsx): the top of the page, above its first line (Today's
+              stats, the other tabs' titles). In view whenever a tab opens; in the page flow, so it covers nothing. */}
+          <NoticeStrip screen={route} className={s.notices} />
           {children}
         </main>
         {rail && (
