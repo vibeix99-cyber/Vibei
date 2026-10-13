@@ -11,7 +11,7 @@
  *   4. every other reward, compact — leaves, today's goal, warm days, recipes, level, badges;
  *   5. the arithmetic, on request.
  * Words: Kettle's own "warm days" language ("23 days warm", "kept the kettle warm"), never "streak", in what is
- * shown and in what a screen reader hears. (A badge keeps its catalogue name, e.g. "Warm Streak", as in Stats.)
+ * shown and in what a screen reader hears. (A badge keeps its catalogue name, e.g. "Warm Days", as in Stats.)
  */
 import { BADGES, type CompletionReport } from '@/progress';
 import { plural } from '@/lib/format';

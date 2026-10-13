@@ -8,6 +8,7 @@ import { leavesForLevel } from './levels';
 import { useProgress } from './store';
 import { brew, setNow, teaBreak } from './testkit';
 import type { ProgressData, QuestSpec } from './types';
+import { coerceData } from './validate';
 
 const TODAY = '2026-09-28';
 const ctx = (over: Partial<EngineContext> = {}): EngineContext => ({ now: clock.now(), goalMin: 30, weekStartsOn: 1, ...over });
@@ -91,13 +92,36 @@ describe('applyRecord — first brew ever', () => {
     expect(res.report!.leaves.bonuses.find((b) => b.kind === 'deepSteep')?.amount).toBe(5);
   });
 
-  it('streak milestone at 7 days earns a Tea Cozy and the Warm Streak II badge', () => {
+  it('streak milestone at 7 days earns a Tea Cozy and the Warm Days II badge', () => {
     const history = Array.from({ length: 6 }, (_, i) => brew(addDays(TODAY, -6 + i), 9, 0));
     const data = replay(history, { goalMin: 30 });
     const res = applyRecord(data, brew(TODAY, 9, 0), ctx());
     const r = res.report!;
     expect(r.streak).toMatchObject({ before: 6, after: 7, extended: true, cozyEarned: true, cozies: 1, milestone: 7, newBest: true });
-    expect(r.badges.find((b) => b.id === 'warm-streak')).toMatchObject({ tier: 2 });
+    expect(r.badges.find((b) => b.id === 'warm-streak')).toMatchObject({ tier: 2, title: 'Warm Days' });
+  });
+
+  it('a profile stored before the rename (report says "Warm Streak") reads back as Warm Days; ids and data unchanged', () => {
+    const history = Array.from({ length: 6 }, (_, i) => brew(addDays(TODAY, -6 + i), 9, 0));
+    const res = applyRecord(replay(history, { goalMin: 30 }), brew(TODAY, 9, 0), ctx());
+    const report = res.report!;
+    // What a pre-rename build persisted: the same report, with the old name copied into it.
+    const stored = JSON.parse(
+      JSON.stringify({ ...res.data, lastReport: { ...report, badges: report.badges.map((b) => (b.id === 'warm-streak' ? { ...b, title: 'Warm Streak' } : b)) } }),
+    ) as ProgressData;
+    const before = JSON.stringify(stored);
+    const { data } = coerceData(stored, clock.now());
+    expect(JSON.stringify(stored)).toBe(before); // read only: the stored object is not rewritten
+    expect(data.lastReport!.badges).toEqual([{ id: 'warm-streak', tier: 2, title: 'Warm Days', description: 'Keep a 7-day warm streak' }]);
+    // Everything else in the report, and the earned-badge state (by id), is exactly what was stored.
+    expect({ ...data.lastReport!, badges: [] }).toEqual({ ...stored.lastReport!, badges: [] });
+    expect(data.badges).toEqual(stored.badges);
+    expect(data.badges['warm-streak'].tier).toBe(2);
+    expect(data.sessions).toEqual(stored.sessions);
+    expect(data.leaves).toBe(stored.leaves);
+    // A badge id the catalogue doesn't know keeps the name it was stored with.
+    const unknown = { ...stored, lastReport: { ...stored.lastReport!, badges: [{ id: 'retired', tier: 1, title: 'Old Name', description: 'x' }] } };
+    expect(coerceData(unknown, clock.now()).data.lastReport!.badges[0].title).toBe('Old Name');
   });
 });
 

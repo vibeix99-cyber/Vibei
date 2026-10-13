@@ -56,7 +56,7 @@ describe('rankRewards — from the engine’s own reports', () => {
 describe('rankRewards — the order of milestones (biggest first; shaped from a real report)', () => {
   const base = () => applyRecord(start(), brew(TODAY, 15, 0), ctx()).report!;
   const shape = (patch: (r: CompletionReport) => CompletionReport) => patch(structuredClone(base()));
-  const badge = (id: string, tier: number) => ({ id, tier, title: id === 'warm-streak' ? 'Warm Streak' : 'Weekend Warmth', description: `about ${id} ${tier}` });
+  const badge = (id: string, tier: number) => ({ id, tier, title: id === 'warm-streak' ? 'Warm Days' : 'Weekend Warmth', description: `about ${id} ${tier}` });
 
   it('lists the milestones it knows, biggest first', () => {
     expect(MILESTONES).toEqual(['unlock', 'level', 'best', 'badge', 'cozy']);
@@ -88,7 +88,7 @@ describe('rankRewards — the order of milestones (biggest first; shaped from a 
     const { k } = holdsEverything(r);
     expect(k.highlight?.kind).toBe('best');
     expect(k.highlight?.pill?.text).toBe('7 days warm, your best yet');
-    expect(k.secondary.filter((p) => p.kind === 'badge').map((p) => p.text)).toEqual(['Badge: Weekend Warmth', 'Badge: Warm Streak II']);
+    expect(k.secondary.filter((p) => p.kind === 'badge').map((p) => p.text)).toEqual(['Badge: Weekend Warmth', 'Badge: Warm Days II']);
   });
 
   it('a badge beats a Tea Cozy; the warm-days badge says what was reached, in warm days (same tier threshold)', () => {
@@ -100,7 +100,7 @@ describe('rankRewards — the order of milestones (biggest first; shaped from a 
     }));
     const { k } = holdsEverything(r);
     expect(k.highlight?.kind).toBe('badge');
-    expect(k.highlight?.pill?.text).toBe('Badge: Warm Streak II');
+    expect(k.highlight?.pill?.text).toBe('Badge: Warm Days II');
     // tier II of "Keep a {n}-day warm streak" is 7 days (progress/badges.ts)
     expect(k.highlight?.note).toBe('7 warm days in a row');
     // Warm days that are not a best are routine: they stay in the compact group.

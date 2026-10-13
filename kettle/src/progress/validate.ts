@@ -4,6 +4,7 @@
  */
 import { dayKey, type DayKey } from '@/lib/dates';
 import type { TagId } from '@/state/settings';
+import { badgeTitle } from './badges';
 import { emptyData } from './engine';
 import type { BadgeState, LeafEntry, LeafKind, ProgressData, QuestDayState, QuestDifficulty, QuestIcon, QuestKind, QuestSpec, SessionRecord } from './types';
 
@@ -157,7 +158,20 @@ export function coerceData(v: unknown, now = Date.now()): { data: ProgressData; 
   if (typeof v.epoch === 'string' && v.epoch.length <= 64) data.epoch = v.epoch;
   // lastReport is transient UI state; keep it only if it looks like a report for a known session.
   if (isObj(v.lastReport) && isObj(v.lastReport.record) && data.sessions.some((s) => s.id === (v.lastReport as Obj).id)) {
-    data.lastReport = v.lastReport as unknown as ProgressData['lastReport'];
+    data.lastReport = withCatalogTitles(v.lastReport as unknown as NonNullable<ProgressData['lastReport']>);
   }
   return { data, stats };
+}
+
+/**
+ * The report keeps a copy of each new badge's name (for the summary). A report stored before a badge was
+ * renamed (Warm Streak → Warm Days) shows the catalogue's current name: resolved from the id on read, on a
+ * copy, so nothing else in the report changes.
+ */
+function withCatalogTitles(report: NonNullable<ProgressData['lastReport']>): NonNullable<ProgressData['lastReport']> {
+  if (!Array.isArray(report.badges)) return report;
+  return {
+    ...report,
+    badges: report.badges.map((b) => (isObj(b) && typeof b.id === 'string' && typeof b.title === 'string' ? { ...b, title: badgeTitle(b.id, b.title) } : b)),
+  };
 }
