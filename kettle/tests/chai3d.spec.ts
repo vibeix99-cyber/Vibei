@@ -4,7 +4,7 @@
  *
  *  - loads, validates and replaces the procedural Chai in place on the Nook, with REPORT.md's pose mapping;
  *  - 404, a slow network (8 s timeout) and an invalid file keep the procedural Chai; the room never waits for it;
- *  - 3D off and the low tier never request the model;
+ *  - 3D off never requests the model; the low tier (this machine's default: SwiftShader) shows it, liteified;
  *  - a WebGL context loss and restore rebuild the engine with the model from memory (no second request).
  *
  * The 3D preference is set as a user would (Settings → reload); `window.__nook` (debug) is read, never driven, except
@@ -60,8 +60,10 @@ const chaiFacts = (page: Page) =>
     return { model: !!root.userData.model, parts: parts.sort(), nap, inScene, proxyOnChai: e.chaiProxy.parent === root, baseY: root.userData.baseY, y: root.position.y, scale: root.scale.x };
   });
 
+/** The model's data requests since the page last loaded (the module cache lives per page load). */
 function countGlb(page: Page) {
   const seen: string[] = [];
+  page.on('load', () => (seen.length = 0));
   page.on('request', (r: Request) => isModelFetch(new URL(r.url())) && seen.push(r.url()));
   return seen;
 }
@@ -144,14 +146,55 @@ test.describe('3D Chai: fallbacks keep the procedural Chai', () => {
     expect(reqs).toEqual([]);
   });
 
-  test('low tier: the procedural Chai, no model request', async ({ page }) => {
+  test('low tier: the model too (liteified), one request; the room is live first', async ({ page }) => {
     const reqs = countGlb(page);
     await nook(page, 'low');
     await expect(host(page)).toHaveAttribute('data-scene-ready', 'true', { timeout: 60_000 });
-    await page.waitForTimeout(3000);
     expect(await page.evaluate(() => (window as any).__nook.quality)).toBe('low');
+    await expect.poll(() => chaiKind(page), { timeout: 30_000 }).toBe('model');
+    const f = await chaiFacts(page);
+    expect(f).toMatchObject({ model: true, parts: ['eyes_open'], nap: [0, 0], inScene: true, proxyOnChai: true, baseY: 0.255, scale: 1.12 });
+    // Low-tier materials: the fur stays PBR (unique, like the procedural fur); gloss, mug and yuzu become Lambert.
+    const mats = await page.evaluate(() => {
+      const out: Record<string, string> = {};
+      (window as any).__nook.chai.root.traverse((o: any) => {
+        if (o.isMesh && o.geometry.getAttribute('color')) out[o.material.name || o.material.type] = o.material.type;
+      });
+      return out;
+    });
+    expect(mats.chai_fur).toBe('MeshStandardMaterial');
+    expect(Object.entries(mats).filter(([k]) => k !== 'chai_fur').every(([, t]) => t === 'MeshLambertMaterial')).toBe(true);
+    expect(reqs.length).toBe(1);
+  });
+
+  test('default tier on this machine (auto → low on SwiftShader): the model, with no frame without Chai', async ({ page }) => {
+    // Hold the model back so the first frames are certainly the procedural Chai, then release it.
+    let release!: () => void;
+    const held = new Promise<void>((r) => (release = r));
+    await page.route(isModelFetch, async (r) => {
+      await held;
+      await r.continue().catch(() => {});
+    });
+    await nook(page, 'auto');
+    await expect(host(page)).toHaveAttribute('data-scene-ready', 'true', { timeout: 60_000 });
+    expect(await page.evaluate(() => (window as any).__nook.quality)).toBe('low');
+    // Every frame from now until the swap: a Chai is in the scene (procedural, then the model).
+    await page.evaluate(() => {
+      const e = (window as any).__nook;
+      (window as any).__noChai = 0;
+      const tick = () => {
+        let has = false;
+        e.scene.traverse((o: any) => (has ||= o.name === 'chai' && o.visible));
+        if (!has) (window as any).__noChai++;
+        if (e.chaiKind !== 'model' || ((window as any).__after = ((window as any).__after ?? 0) + 1) < 30) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
     expect(await chaiKind(page)).toBe('procedural');
-    expect(reqs).toEqual([]);
+    release();
+    await expect.poll(() => chaiKind(page), { timeout: 30_000 }).toBe('model');
+    await page.waitForTimeout(1500);
+    expect(await page.evaluate(() => (window as any).__noChai)).toBe(0);
   });
 
   test('WebGL context lost and restored: the engine is rebuilt with the model from memory, no second request', async ({ page }) => {

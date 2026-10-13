@@ -7,7 +7,7 @@
  * holding a mug), 'awake' (idle / showcase: blinks, yuzu wobbles).
  *
  * Since I06 this is the first frame and the fallback: the Blender Chai (chaiModel.ts, the same `Chai` interface)
- * replaces it in place once loaded and validated (Engine.useChaiModel), and the low tier keeps it (chaiHost.ts).
+ * replaces it in place once loaded and validated (Engine.useChaiModel; when, see chaiHost.ts).
  */
 import { Color, Group, Sprite, SpriteMaterial, Vector3 } from 'three';
 import { Kit, group } from './kit';

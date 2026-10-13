@@ -14,11 +14,12 @@ import type { Quality } from './engine/Engine';
 import { chaiModelOverride, debugOn } from './resolve';
 
 /**
- * The low tier (CPU rasterizers, weak phones, save-data) keeps the procedural Chai, as CHAI-3D-SPEC §6.2
- * recommends until the model is measured on a real low-end phone (packet: W2R2/C, "Low tier"). An engine that
- * steps down to low after the model loaded keeps the model (its materials are liteified).
+ * The low tier (CPU rasterizers, weak phones, save-data) shows the model too (Vibei, W2R2 sign-off): it draws fewer
+ * triangles and draw calls than the procedural Chai, and measured no slower on SwiftShader, the slowest renderer
+ * (packet W2R2/C and C/low). On the low tier its materials are liteified like every other prop (the fur keeps PBR, as
+ * the procedural fur does). The procedural Chai stays the first frame and the fallback on every tier.
  */
-export const MODEL_ON_LOW = false;
+export const MODEL_ON_LOW = true;
 
 export function chaiModelWanted(quality: Quality | 'off'): boolean {
   const o = chaiModelOverride();
