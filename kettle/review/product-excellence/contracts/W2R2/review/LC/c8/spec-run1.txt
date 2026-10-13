@@ -16,3 +16,40 @@ Running 15 tests using 1 worker
   ✓  13 [chromium] › tests/w2-room.spec.ts:166:3 › Nook hint tells the truth › 3D off: no drag-and-tap promise over the drawing (7.2s)
   ✓  14 [chromium] › tests/w2-room.spec.ts:176:3 › Nook hint tells the truth › no WebGL: the same truthful hint (7.5s)
   ✓  15 [chromium] › tests/w2-room.spec.ts:192:3 › Nook hint tells the truth › 3D on: the hint is unchanged (9.2s)
+
+
+  1) [chromium] › tests/w2-room.spec.ts:144:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error: page.screenshot: Test timeout of 60000ms exceeded.
+    Call log:
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+
+
+      78 |     const on = await page.screenshot({ clip, animations: 'disabled' });
+      79 |     await host.locator('svg[data-window-items]').evaluate((s) => ((s as SVGElement).style.visibility = 'hidden'));
+    > 80 |     const off = await page.screenshot({ clip, animations: 'disabled' });
+         |                            ^
+      81 |     await host.locator('svg[data-window-items]').evaluate((s) => ((s as SVGElement).style.visibility = ''));
+      82 |     expect(on.equals(off), `layer ${id} changes the backdrop`).toBe(false);
+      83 |   }
+        at assertLayersDrawn (/home/user/wt/w3tr-c/kettle/tests/w2-room.spec.ts:80:28)
+        at /home/user/wt/w3tr-c/kettle/tests/w2-room.spec.ts:159:5
+
+    Error Context: ../../../../../tmp/claude-0/lc-scratch/pw-results-1/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/claude-0/lc-scratch/pw-results-1/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/claude-0/lc-scratch/pw-results-1/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/w2-room.spec.ts:144:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items 
+  14 passed (7.8m)
