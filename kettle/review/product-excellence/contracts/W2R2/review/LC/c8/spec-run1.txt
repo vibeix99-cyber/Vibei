@@ -12,3 +12,6 @@ Running 15 tests using 1 worker
   ✓   9 [chromium] › tests/w2-room.spec.ts:87:3 › Focus backdrop: earned items without the live 3D room › 3D off: the window still shows every earned window-visible item (43.3s)
   ✓  10 [chromium] › tests/w2-room.spec.ts:96:3 › Focus backdrop: earned items without the live 3D room › 3D loading: the still shown before the engine is ready carries the same items (35.9s)
   ✓  11 [chromium] › tests/w2-room.spec.ts:111:3 › Focus backdrop: earned items without the live 3D room › items never stand on the bare sky: no layer is drawn before the base room still has decoded (36.1s)
+  ✘  12 [chromium] › tests/w2-room.spec.ts:144:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items (1.0m)
+  ✓  13 [chromium] › tests/w2-room.spec.ts:166:3 › Nook hint tells the truth › 3D off: no drag-and-tap promise over the drawing (7.2s)
+  ✓  14 [chromium] › tests/w2-room.spec.ts:176:3 › Nook hint tells the truth › no WebGL: the same truthful hint (7.5s)
