@@ -911,5 +911,58 @@
     "len": "28"
    }
   ]
+ },
+ "08-3d-off": {
+  "name": "08-3d-off",
+  "scene": "off",
+  "t0": "10:39:39",
+  "glbRequests": 0,
+  "notReady": true,
+  "statusTimeline": [
+   {
+    "ms": 0,
+    "kind": null,
+    "s": null
+   }
+  ],
+  "finalKind": null,
+  "finalStatus": null,
+  "hosts": [
+   {
+    "mode": "showcase",
+    "ready": null,
+    "static": "true",
+    "canvas": 0
+   }
+  ],
+  "facts": null,
+  "samples": {
+   "engSamples": 0
+  },
+  "console": [
+   {
+    "t": "10:39:39",
+    "type": "warning",
+    "text": "Service Worker registration blocked by Playwright"
+   },
+   {
+    "t": "10:39:39",
+    "type": "warning",
+    "text": "[pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')\n    at http://127.0.0.1:5453/assets/workbox-window.prod.es5-Bd17z0YL.js:2:2838"
+   },
+   {
+    "t": "10:39:40",
+    "type": "warning",
+    "text": "Service Worker registration blocked by Playwright"
+   },
+   {
+    "t": "10:39:40",
+    "type": "warning",
+    "text": "[pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')\n    at http://127.0.0.1:5453/assets/workbox-window.prod.es5-Bd17z0YL.js:2:2838"
+   }
+  ],
+  "pageerrors": [],
+  "failedRequests": [],
+  "responses": []
  }
 }
