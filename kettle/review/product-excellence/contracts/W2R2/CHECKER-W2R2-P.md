@@ -136,3 +136,14 @@ No BLOCKS.
 - **At 200 % (the trade-off), on arrival:**
   - BEFORE `contracts/W2R2/review/LEAD2/P/probe/375x667-light-t200-task-control-arrival.png`
   - AFTER `contracts/W2R2/review/LEAD2/P/probe/375x667-light-t200-task-trial-arrival.png`
+
+## Addendum (LEAD-2): combined-trial regression (`032d7a5`, P + C) — verdict unchanged, APPROVE
+
+Source: `REGRESSION-REVIEW.md` (Lane R's 60 pairs over 0.5 %, classified; crops in `review/LEAD2/R/crops/`). The regression found no defect.
+
+1. **§4 scope correction.** The ruled trade-off also covers the **record-player day with a task at 375×667 @100**. There, the record-player close-up card starts a scroll away on arrival, with its honey edge peeking (`review/LEAD2/R/crops/375l-11-summary-unlock.png`). The control showed it by covering the kettle's gauge and Chai to the chest.
+   - The same reasoning applies: the close-up itself is unchanged (PRESERVE 8), and at 390×844 it is whole on arrival, matching K03.
+   - The §4 sentence "the trade-off falls only on the Fairy-lights task day at @100 and on @200" should read "on any task-plus-unlock day at 375×667 @100, and on @200". ACCEPTED.
+2. **First brew at 390×844 @100.** The optional "Make Kettle yours · Set up" card starts a scroll away on arrival, edge at the fold; it was whole on the control (`390l-14-summary-first.png`).
+   - It is covered by the same ruling: an optional prompt, never a gate (PRESERVE 5), one scroll away, also in Settings. ACCEPTED.
+   - Flagged for Vibei's awareness.

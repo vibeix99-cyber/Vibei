@@ -158,3 +158,10 @@ No BLOCKS.
 - **Nook, 1440×900 light day:** `…/C/captures/{BEFORE,AFTER}/1440x900-light-day/10-nook-3d.png`
 - **The character close (art):** `C/art/procedural-awake-day.png` → `C/art/model-awake-day.png`
 - **PRESERVE 8 unchanged:** `…/C/captures/{BEFORE,AFTER}/390x844-light-day/07-unlock.png`
+
+## Addendum (LEAD-2): combined-trial regression (`032d7a5`, P + C) — verdict unchanged, APPROVE (merge still waits for Vibei's art sign-off)
+
+Source: `REGRESSION-REVIEW.md`.
+- Lane R's suites on the combined trial: chromium 113/113, vitest 288/288, timer/pwa 29 + 2 by design, smoke 0 errors.
+- The standard capture set shows **no C change** at the default tier, which is low on this CPU-only machine, consistent with `MODEL_ON_LOW = false`. The Nook pairs differ only by load timing: the room is drawn on one side and not yet on the other, and the sides flip between takes.
+- One pre-existing observation is recorded as a FOLLOW-UP for the scene owner. Under load, the Nook host was captured with only the backdrop gradient, neither the static drawing nor the room. It was seen on both builds.
