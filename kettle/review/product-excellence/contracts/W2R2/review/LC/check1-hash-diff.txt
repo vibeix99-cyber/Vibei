@@ -1,0 +1,146 @@
+## check1 09:56:19
+-- source hash
+b401bc6c0fa9dd7a2abe27c135821634e7d1a4d9f9ba5263f50a436ceb463d7e  kettle/art-src/chai/chai.glb
+-- runtime copy
+b401bc6c0fa9dd7a2abe27c135821634e7d1a4d9f9ba5263f50a436ceb463d7e  kettle/src/scene/engine/models/chai.glb
+-- dist
+-- also in control worktree?
+-- diff stat 68caa31 HEAD art-src, src/art
+exit/empty above means none
+-- diff stat b377c62 HEAD src tests vite
+ kettle/src/scene/NookScene.tsx            |  41 +++-
+ kettle/src/scene/chaiHost.ts              |  51 +++++
+ kettle/src/scene/engine/Engine.ts         |  61 +++++-
+ kettle/src/scene/engine/chai.ts           |   3 +
+ kettle/src/scene/engine/chaiLoad.ts       |  85 ++++++++
+ kettle/src/scene/engine/chaiModel.test.ts | 213 +++++++++++++++++++
+ kettle/src/scene/engine/chaiModel.ts      | 330 ++++++++++++++++++++++++++++++
+ kettle/src/scene/engine/kit.ts            |  10 +
+ kettle/src/scene/engine/models/chai.glb   | Bin 0 -> 45572 bytes
+ kettle/src/scene/index.tsx                |   1 +
+ kettle/src/scene/resolve.ts               |   9 +
+ kettle/src/scene/warm.ts                  |  28 ++-
+ kettle/tests/chai3d.spec.ts               | 176 ++++++++++++++++
+ kettle/vite.config.ts                     |   6 +-
+ 14 files changed, 1004 insertions(+), 10 deletions(-)
+-- git rev-parse
+d23bc04adf50d3c13f5ef0d2e27747d111d3f449
+42b2c1c2615f4c95013cd6cdf931729543d2dae8
+42b2c1c2615f4c95013cd6cdf931729543d2dae8
+42b2c1c2615f4c95013cd6cdf931729543d2dae8
+-- HEAD art-src/chai diff vs 68caa31 (names)
+-- HEAD vs 2843fb0
+ .../check1/captures/375x667-light-t200-task-P.png  |  Bin 0 -> 310547 bytes
+ .../captures/375x667-light-t200-task-control.png   |  Bin 0 -> 286946 bytes
+ 994 files changed, 75893 insertions(+), 1 deletion(-)
+-- preview dist /tmp/rv7-servers/dist-w3tr-c
+-rw-r--r-- 1 root root   45572 Oct 13 09:54 chai-B-OZIeNI.glb
+-rw-r--r-- 1 root root   20626 Oct 13 09:54 chai-cheering-CK8xIJCH.webp
+-rw-r--r-- 1 root root   19190 Oct 13 09:54 chai-concerned-owi0mQpG.webp
+-rw-r--r-- 1 root root   19212 Oct 13 09:54 chai-happy-BAALIhDR.webp
+-rw-r--r-- 1 root root   11708 Oct 13 09:54 chai-happy-face-BjtAdoSq.webp
+-rw-r--r-- 1 root root   16582 Oct 13 09:54 chai-look-DqB_Gsfd.webp
+-rw-r--r-- 1 root root   20900 Oct 13 09:54 chai-reading-BrtgDZfI.webp
+-rw-r--r-- 1 root root   19950 Oct 13 09:54 chai-sipping-DTyMuyps.webp
+-rw-r--r-- 1 root root   14590 Oct 13 09:54 chai-sleep-CGUxQw--.webp
+-rw-r--r-- 1 root root   20274 Oct 13 09:54 chai-stretch-C0-cRH4_.webp
+-rw-r--r-- 1 root root    1506 Oct 13 09:54 chaiLoad-Cf4zRQAm.js
+-rw-r--r-- 1 root root    6086 Oct 13 09:54 chaiLoad-Cf4zRQAm.js.map
+-rw-r--r-- 1 root root   70339 Oct 13 09:54 three-gltf-DPXo6Yfo.js
+-rw-r--r-- 1 root root  224992 Oct 13 09:54 three-gltf-DPXo6Yfo.js.map
+b401bc6c0fa9dd7a2abe27c135821634e7d1a4d9f9ba5263f50a436ceb463d7e  /tmp/rv7-servers/dist-w3tr-c/assets/chai-B-OZIeNI.glb
+-- http fetch via preview 5453
+assets/index-Bt_rBvWp.js
+assets/jsx-runtime-D3jfb0Ew.js
+assets/settings-CGVPK1V7.js
+assets/clock-BotvvpDk.js
+assets/items-CXJEPrFP.js
+assets/preload-helper-uBIymjUX.js
+assets/timer-KS3J3BZf.js
+assets/NookFallback-Dn8xhd7L.js
+assets/art-CGGEsFhw.js
+assets/ui-DrqWipl-.js
+served http 200 45572B
+b401bc6c0fa9dd7a2abe27c135821634e7d1a4d9f9ba5263f50a436ceb463d7e  /tmp/claude-0/lc-scratch/served.glb
+-- dev 5443 raw "chai.glb?url" via curl (no import header): returns raw glb bytes (binary omitted from this file)
+-- precache manifest has glb
+assets/chai-B-OZIeNI.glb"
+-- dist build commit?
+total 520
+drwxr-xr-x   7 root root  4096 Oct 13 09:54 .
+drwxrwxrwt 429 root root 69632 Oct 13 09:56 ..
+-rw-r--r--   1 root root  1736 Oct 11 22:59 agents.txt
+-rwxr-xr-x   1 root root   424 Oct 11 20:44 before-done.sh
+-rwxr-xr-x   1 root root   778 Oct 11 20:42 before-run.sh
+-rw-r--r--   1 root root  4261 Oct 11 21:08 before.log
+-rw-r--r--   1 root root 10211 Oct 11 03:22 build-int.log
+-rw-r--r--   1 root root 10810 Oct 11 03:22 build-r7.log
+-rw-r--r--   1 root root 10810 Oct 11 18:05 build-r8.log
+-rw-r--r--   1 root root 11113 Oct 11 20:40 build-w2base.log
+-rw-r--r--   1 root root 10961 Oct 12 01:06 build-w2fv.log
+-rw-r--r--   1 root root 15595 Oct 11 23:06 build-w2t-c.log
+-rw-r--r--   1 root root 11037 Oct 11 23:01 build-w2t-h.log
+-rw-r--r--   1 root root 14891 Oct 11 22:57 build-w2t-n.log
+-rw-r--r--   1 root root 15002 Oct 12 01:17 build-w2t-n2.log
+-rw-r--r--   1 root root 11037 Oct 11 23:06 build-w2t-s.log
+-rw-r--r--   1 root root 15002 Oct 13 09:42 build-w3base.log
+-rw-r--r--   1 root root 16131 Oct 13 09:54 build-w3tr-c.log
+-rw-r--r--   1 root root 15002 Oct 13 09:43 build-w3tr-p.log
+-rw-r--r--   1 root root  6377 Oct 11 18:37 dev-r8.log
+-rw-r--r--   1 root root   411 Oct 11 16:30 dev-rv7-e866.log
+-rw-r--r--   1 root root     5 Oct 11 09:38 dev-rv7-e866.pid
+-rw-r--r--   1 root root   564 Oct 11 18:37 dev-rv7-int.log
+-rw-r--r--   1 root root     5 Oct 11 09:38 dev-rv7-int.pid
+-rw-r--r--   1 root root   411 Oct 11 16:30 dev-rv7-r5.log
+-rw-r--r--   1 root root     5 Oct 11 09:38 dev-rv7-r5.pid
+-rw-r--r--   1 root root   564 Oct 11 19:15 dev-rv7-r7.log
+-rw-r--r--   1 root root     4 Oct 11 09:38 dev-rv7-r7.pid
+-rw-r--r--   1 root root   411 Oct 11 16:30 dev-rv7-unfixed.log
+-rw-r--r--   1 root root     5 Oct 11 09:38 dev-rv7-unfixed.pid
+-rw-r--r--   1 root root   410 Oct 12 01:02 dev-w2base.log
+-rw-r--r--   1 root root   409 Oct 12 01:06 dev-w2fv.log
+-rw-r--r--   1 root root  5183 Oct 11 23:29 dev-w2t-c.log
+-rw-r--r--   1 root root  6287 Oct 12 01:59 dev-w2t-f.log
+-rw-r--r--   1 root root   409 Oct 11 23:01 dev-w2t-h.log
+-rw-r--r--   1 root root   409 Oct 12 01:17 dev-w2t-n.log
+-rw-r--r--   1 root root   409 Oct 12 01:17 dev-w2t-n2.log
+-rw-r--r--   1 root root   410 Oct 12 01:02 dev-w2t-s.log
+-rw-r--r--   1 root root   410 Oct 13 09:42 dev-w3base.log
+-rw-r--r--   1 root root   409 Oct 13 09:54 dev-w3tr-c.log
+-rw-r--r--   1 root root   409 Oct 13 09:43 dev-w3tr-p.log
+drwxr-xr-x   4 root root  4096 Oct 13 09:42 dist-w3base
+drwxr-xr-x   4 root root  4096 Oct 12 17:42 dist-w3c
+drwxr-xr-x   4 root root  4096 Oct 12 17:34 dist-w3p
+drwxr-xr-x   4 root root  4096 Oct 13 09:54 dist-w3tr-c
+drwxr-xr-x   4 root root  4096 Oct 13 09:43 dist-w3tr-p
+-rw-r--r--   1 root root   377 Oct 11 16:30 prev-int.log
+-rw-r--r--   1 root root     5 Oct 11 09:38 prev-int.pid
+-rw-r--r--   1 root root   377 Oct 11 16:30 prev-r7.log
+-rw-r--r--   1 root root     5 Oct 11 09:38 prev-r7.pid
+-rw-r--r--   1 root root   377 Oct 11 18:05 prev-r8.log
+-rw-r--r--   1 root root   376 Oct 12 01:02 prev-w2base.log
+-rw-r--r--   1 root root   376 Oct 12 01:06 prev-w2fv.log
+-rw-r--r--   1 root root   376 Oct 11 23:06 prev-w2t-c.log
+-rw-r--r--   1 root root   376 Oct 11 23:01 prev-w2t-h.log
+-rw-r--r--   1 root root   376 Oct 12 01:17 prev-w2t-n.log
+-rw-r--r--   1 root root   376 Oct 12 01:17 prev-w2t-n2.log
+-rw-r--r--   1 root root   376 Oct 12 01:02 prev-w2t-s.log
+-rw-r--r--   1 root root   376 Oct 13 09:42 prev-w3base.log
+-rw-r--r--   1 root root   376 Oct 13 09:54 prev-w3tr-c.log
+-rw-r--r--   1 root root   376 Oct 13 09:43 prev-w3tr-p.log
+-rwxr-xr-x   1 root root  1295 Oct 12 16:57 r2before-run.sh
+-rw-r--r--   1 root root     0 Oct 12 19:32 r2before.jobs
+-rw-r--r--   1 root root     0 Oct 12 16:57 r2before.jobs.lock
+-rw-r--r--   1 root root 12964 Oct 12 19:32 r2before.log
+-rw-r--r--   1 root root  3606 Oct 11 03:57 slots.py.v1
+-rwxr-xr-x   1 root root   555 Oct 12 01:02 start.sh
+-rw-r--r--   1 root root 11100 Oct 11 09:39 vbuild-int.log
+-rw-r--r--   1 root root 10886 Oct 11 09:39 vbuild-r7.log
+-rwxr-xr-x   1 root root   853 Oct 11 00:05 verify.sh
+-rw-r--r--   1 root root  7101 Oct 11 16:30 wt-r8.log
+#!/bin/bash
+# start.sh <name> <worktree> <devport> <prevport> : dev (debug API) + preview (from /tmp/rv7-servers/dist-<name>)
+N=$1; W=$2/kettle; D=$3; P=$4
+cd $W
+[ -n "$D" ] && [ "$D" != - ] && setsid nohup npx vite --config .tmp/w2.vite.config.ts --port $D --strictPort --host 127.0.0.1 > /tmp/rv7-servers/dev-$N.log 2>&1 < /dev/null &
+[ -n "$P" ] && [ "$P" != - ] && setsid nohup npx vite preview --config .tmp/w2.vite.config.ts --outDir /tmp/rv7-servers/dist-$N --port $P --strictPort --host 127.0.0.1 > /tmp/rv7-servers/prev-$N.log 2>&1 < /dev/null &

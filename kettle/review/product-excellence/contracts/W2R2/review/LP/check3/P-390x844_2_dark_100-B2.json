@@ -1,0 +1,92 @@
+{
+ "session": "tea-click",
+ "cfg": "390x844@2:dark:100",
+ "tag": "P",
+ "errors": [],
+ "before": {
+  "hash": "#/done",
+  "scrollTop": 2,
+  "scrollMax": 275,
+  "sheetTop": 392,
+  "foldTop": 692,
+  "footerTop": 706,
+  "chaiBottom": 371.2,
+  "kettleBottom": 379.6,
+  "chaiClear": 18.8,
+  "kettleClear": 10.4,
+  "heading": {
+   "t": 419,
+   "b": 450.7,
+   "l": 20,
+   "r": 370,
+   "h": 31.7
+  },
+  "toggle": {
+   "expanded": "false",
+   "box": {
+    "t": 896.5,
+    "b": 944.5,
+    "l": 20,
+    "r": 370,
+    "h": 48
+   },
+   "text": "How your leaves added up"
+  },
+  "panel": {
+   "box": {
+    "t": 0,
+    "b": 0,
+    "l": 0,
+    "r": 0,
+    "h": 0
+   },
+   "text": "25 focused minutes+25Full brew+5First brew today+3Daily goal met+10Recipe: Finish a full brew+10Recipe: Brew for 30 minutes+15This brew +68Cozy level 8 → 9207 leaves to go7 days warm. One full brew a day keeps the kettle warm.",
+   "visible": false
+  },
+  "teaTime": {
+   "box": {
+    "t": 720,
+    "b": 780,
+    "l": 20,
+    "r": 370,
+    "h": 60
+   },
+   "text": "Tea time · 5 min"
+  },
+  "lastLine": {
+   "text": "How your leaves added up",
+   "b": 944.5,
+   "toFooter": -238.5
+  },
+  "timer": {
+   "status": "idle",
+   "phase": "focus"
+  }
+ },
+ "target": {
+  "name": "/Tea time|Long tea break/",
+  "box": {
+   "x": 20,
+   "y": 720,
+   "width": 350,
+   "height": 60
+  }
+ },
+ "hitOk": {
+  "tag": "span",
+  "text": "Tea time · 5 min"
+ },
+ "job": "break running",
+ "ms": 249,
+ "after": {
+  "hash": "#/focus",
+  "timer": {
+   "status": "running",
+   "phase": "shortBreak"
+  },
+  "h1": [
+   "Tea break"
+  ],
+  "summaryOpen": false
+ }
+}
