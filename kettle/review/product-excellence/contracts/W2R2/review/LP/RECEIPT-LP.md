@@ -20,7 +20,11 @@ Scripts (all in `/home/user/wt/w3tr-p/kettle/.tmp/LP/`; copies of the final vers
 | 09:48–09:54 | first matrix launch; stopped by me (SIGINT/SIGTERM to my own node PIDs) after finding two measurement problems in my own probe (a hit test that could not discriminate; glyph-ink on SVG art text); outputs deleted and the run restarted | – |
 | 09:52:45–09:59:19 | `lp-input.mjs` on :5452, sessions A/B1/B2/B3/C × 2 configs (check 3, first version). **Session A of this run is superseded**: its touch swipes did nothing (method issue) and its "close details" click used stale coordinates; B and C sessions are valid | `check3/` |
 | 09:54:07–10:13:11 | **check 1**: `lp-probe2.mjs --days routine,task,big`, 8 configs {375×667, 390×844} × {light, dark} × {100, 200 %} at DPR 2, control :5430 and P :5452 side by side → 48 pairs, 0 page errors | `check1/` |
-| 10:25:42 → | one gated job (`combo.sh`), sequential: check 3b (session A, fixed) → check 1m (milestone day) → check 4 light → spec → kettle anatomy → check 4 dark → check 3b control | `check3b/`, `check1m/`, `check4/`, `spec/`, `kettle/` |
+| 10:00:55 → 10:25:42 | my gated job (`combo.sh`) waited in the gate queue (T lane held 2 slots; LEAD, LC, T jobs ahead); load average 12–14 | – |
+| 10:25:42–10:45:01 | check 3b: `lp-input.mjs --sessions A` on :5452 — 375×667 @200 light finished 10:29:31; the 390×844 @100 dark session made no progress for ~15 min and was killed by me at 10:45 | `check3b/` |
+| 10:45:01–10:46:20 | **check 1m**: milestone day (`atRisk`), 375×667 light @100 and @200, control + P | `check1m/` |
+| 10:46:20–10:54:14 | **check 4**: big day, light, 844×390 / 667×375 / 1440×900 at @100 and @200, control + P (1440×900 @200: P `NO DATA`, timeout) | `check4/` |
+| 10:54:14–10:55:04 | spec skipped for time; kettle anatomy (`lp-kettle.mjs`, 375×667 and 390×844 light @100, control + P); dark check 4 and the control touch re-run dropped | `kettle/` |
 
 ## 1. Geometry (check 1)
 
@@ -42,8 +46,15 @@ Definitions used in every table (all px, CSS px, from the live DOM; nothing from
 | P | arrival | 24 | 24 | 24/24 | 24/24 | 24/24 | 0/24 | 8.8 | 0.4 | 6 / 0 | 18/24 / 24/24 | 1 | 4/16 · 10/16 · 6/16 | 48.6 | 0 | 0 | 0 |
 | P | settled | 24 | 24 | 24/24 | 24/24 | 24/24 | 0/24 | 8.8 | 0.4 | 6 / 0 | 18/24 / 24/24 | 1 | 4/16 · 10/16 · 6/16 | 48.6 | 0 | 0 | 0 |
 
-Columns, in order: Chai/kettle boxes wholly above the sheet edge (clear ≥ 0); the same by ink; minimum clear over the 24 runs; text lines cut by the fold (sum over 24 runs; line box / glyph ink); heading wholly in view (24 runs; line box / glyph ink); most highlighted blocks on one screen; highlighted block wholly in view / ≥ 1 px in view / entirely under the fold on arrival (counted over the 16 task+big runs that have an unlock card); smallest gap between the last line and the footer's top at the end state; controls whose centre `elementFromPoint` returns another element (excluding the footer's fade overlap of non-footer controls under the fold); overlapping text between different text nodes; page errors.
+Columns, in order: Chai/kettle boxes wholly above the sheet edge (clear ≥ 0); the same by ink; minimum clear over the 24 runs; text lines cut by the fold (sum over 24 runs; line box / glyph ink); heading wholly in view (24 runs; line box / glyph ink); most highlighted blocks on one screen; highlighted block wholly in view / ≥ 1 px in view / entirely under the fold on arrival (counted over the 16 task+big runs that have an unlock card); smallest gap between the last line and the footer's top at the end state; controls (buttons / radios in the summary, footer included; non-footer ones only if above the fold) whose centre `elementFromPoint` returns a different element; overlapping text between different text nodes; page errors.
 
+
+Which runs sit behind the fold counts (settled = arrival):
+- control, text-box cuts (2): "Tea's ready. Take five before the next o[ne]" 2nd line, 375×667 @200 light and dark, routine day. Control glyph-ink cuts: 0.
+- P, text-box cuts (6): the 2nd line ("brewed") of the heading "25 minutes brewed", 375×667 @200, light and dark × routine / task / big. Its line box bottom is 462.7 vs fold 460.8 (1.9 px into the fade); its lowest glyph ink is 454.1, i.e. 6.7 px above the fold; air is 34 px, lift 0. P glyph-ink cuts: 0.
+- P, lines whose ink starts inside the 14 px fade (not cut): "Tea's ready. Take five…" 0.1 px (6 runs, 375×667 @200) and "Fairy lights is in your nook" 0.2 px (375×667 @100 task day, light and dark).
+- P Chai/kettle clearances (24 runs): Chai img box 8.8–20.8 px above the sheet edge (control: −90.2 to 20.8); kettle svg box 0.4 px in four runs (390×844 task @100 light/dark, big @200 light/dark; lift 12), 9.8 px in two (375×667 task @100), 10.4–12.4 px in the other 18. Kettle drawn ink (glow ellipse included) lies under the sheet edge by 1.3–13.3 px in all 24 P runs; in control it lies under it by 1.3–112.3 px in all 24 runs.
+- Sheet-over-figure hit samples (27 points on the bottom 12 px of each figure's drawn ink; "under the sheet" = `elementFromPoint` returns an element inside the sheet box, which excludes the 2 px top line): P Chai ink 0/27 in all 24 runs; P kettle ink 0/27 in 16 runs, 9/27 in 4 runs (375×667 task @100; 390×844 big @100) and 27/27 in 4 runs (390×844 task @100, big @200) — those points lie on the glow ellipse's lowest rim (opacity 0.08 at settled). Control: Chai ink 27/27 in 16 runs, 9/27 in 4, 0/27 in 4; kettle ink 27/27 in 22 runs and 0/27 in 2.
 
 ### 1b. Control vs P, every pair (settled; arrival is identical)
 
@@ -140,6 +151,19 @@ Element areas are `getBoundingClientRect` width × height in CSS px² (minutes =
 
 Contrast and fill, 375×667 light @100, milestone day (same on both builds): minutes `h1` colour `rgb(59,42,32)` on sheet `rgb(255,253,250)` = 13.45:1; Tea time fill `rgb(52,148,209)` vs sheet 3.28:1, label white on fill 3.33:1; highlight card fill `rgb(255,241,204)` vs sheet 1.11:1, inset edge `rgb(245,218,146) 0 0 0 2px`; highlight note colour `rgb(107,84,68)`.
 Milestone card, control → P: 375×667 @100 box 335×73.8 → 335×50 (area 24711 → 16750; Tea time button 20100, minutes box 10317); title 17px/700 → 16px/600; note 14px/600 → 13px/600; art 42 → 34 px. @200: box 335×207.8 → 335×157.4 (area 69601 → 52721; Tea time button 36306, minutes box 41268); title 34px/700 → 32px/600; note 28px → 26px; Tea time label 42px/700 and minutes 56px/600 on both. The unlock card (task and big days): title 17px/600 @100 and 34px/600 @200, area 43100 (375 @100) / 124343–150671 (375 @200), identical on both builds.
+
+### 1d. Kettle anatomy (routine day, settled; `kettle/kettle-anatomy.json`, stills `kettle/*-kettle.png`; 375×667 and 390×844, light @100, control and P)
+
+The stage kettle `<svg role=img data-state="rest">` (98 painted elements, `overflow: visible`). Elements with effective opacity (own × ancestors') > 0.3: the lowest is the `_plate_` path (fill `rgb(74,61,78)`) whose bottom is **13.2 px (375 wide) / 13.8 px (390 wide) above the svg box bottom**; then `_plateHi_` rect 23.5 px above, `_trivet_` path 26.4 px above. The only elements reaching below the svg box are two `ellipse._fade_…` glow ellipses (fill `url(#…-glow)`): the lower one has effective opacity **0.08** and its bottom is 13.2 / 13.7 px below the svg box; the other has opacity 0.
+
+| config | build | sheet edge | svg box bottom | svg box clear | lowest element with opacity > 0.3 (bottom) | clear of that element | glow ellipse bottom (opacity 0.08) |
+|---|---|---|---|---|---|---|---|
+| 375×667 | control | 239.5 | 272.7 | −33.2 | plate path 259.5 | −20.0 | 285.9 |
+| 375×667 | P | 283.5 | 272.7 | 10.8 | plate path 259.5 | 24.0 | 285.9 |
+| 390×844 | control | 392.0 | 379.6 | 12.4 | plate path 365.8 | 26.2 | 393.3 |
+| 390×844 | P | 392.0 | 379.6 | 12.4 | plate path 365.8 | 26.2 | 393.3 |
+
+(The stage kettle does not move with the sheet, so the same offsets (13.2 px at 375 wide, 13.8 px at 390 wide) apply in every check-1 run at that width; adding them to a run's svg-box clear gives that run's clear of the plate — derived, not separately measured: P's 390-wide stacked runs (svg-box clears 0.4, 10.4, 11.4, 12.4) → 14.2, 24.2, 25.2, 26.2 px; P's 375-wide runs (clears 9.8, 10.8) → 23.0, 24.0 px. Control's 390-wide routine runs → 26.2 px; its other 22 runs have negative svg-box clears.)
 ## 2. Facts and copy (check 2)
 
 Source: the same 48 control/P pairs of check 1 (routine, task, big × 8 configs) — copy was captured at arrival, settled and end (after a real click on "How your leaves added up"). Full per-day lists: `tables/copy-facts-streak.md`. Terms: *innerText* includes visually-hidden `.sr-only` text (clip-hidden text is still in innerText); *textContent* additionally includes the closed arithmetic panel and anything hidden.
@@ -313,7 +337,7 @@ Evidence size: about 28 MB under `…/W2R2/review/LP/` (limit 150 MB).
 2. **Check 3, session A (wheel / touch / toggle / Tea time):** complete for 375×667 @200 light (fixed script, `check3b/`). For 390×844 @100 dark only the first script version ran: wheel, toggle open and close, Tea time tap are valid; **touch drags were not run in that config** (the re-run with the fixed script hung without progress for ~15 min and was killed at 10:45; its leftover is `check3b/P-390x844_2_dark_100-A.KILLED-no-steps.json.txt`). `Input.synthesizeScrollGesture` moved nothing in this headless setup (tooling fact). Touch/wheel were not run on the control, and the Tab walk was not run on the control or on a task day.
 3. **Check 4 (wider configs):** run (big day, **light theme only**): 844×390 @100 and @200, 667×375 @100 and @200, 1440×900 @100 — control and P each; 1440×900 @200 — **control only** (the P context timed out after 30 s waiting for `#/done`: `NO DATA`, `check4/1440x900-light-t200/P-big.json` holds the error; machine load). **Not run:** the six dark-theme configs. Captures for 1440×900 light @100 exist for both builds.
 4. **Milestone day (extra to the brief's three days):** 2 of 8 configs (375×667 light @100 and @200); the 390×844 and dark configs were not run.
-5. **Kettle anatomy (`lp-kettle.mjs`) not run**; the 13.2 / 13.7 px glow-ellipse overhang below the kettle's svg box comes from the `lowest` field of check 1's probe (same element in all 48 pairs).
+5. **Kettle anatomy** was run for 375×667 and 390×844 light @100 only (routine day), not for 200 % or the other days; the per-run offsets in §1d for other widths/days are derived, not measured.
 6. **Captures:** all five requested captures that belong to check 1 exist (list below); the 1440×900 light @100 big-day capture belongs to check 4 (listed below only if it was produced).
 7. Not measured: reduced-motion, DPR 1 phones, the BEFORE capture set's other tags (`-mon`, `-night`), the break screens, Home after Skip break beyond the hash/heading, autoplay/auto-start "Wait" countdown.
 8. First-attempt runs (09:48–09:54, 09:52–09:59 check 3 session A) and their problems are listed in the commands table; nothing from the discarded runs is in the evidence folder.
