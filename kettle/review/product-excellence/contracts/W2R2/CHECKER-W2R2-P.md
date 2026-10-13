@@ -11,7 +11,7 @@
 | Packet | `/home/user/wt/w3p/kettle/review/product-excellence/contracts/W2R2/P-READY-FOR-REVIEW.md`; evidence `…/W2R2/P/` |
 | My evidence | `contracts/W2R2/review/LEAD2/P/` (`tsc.log`, `vitest.log`, `specs-trial-5442.log`, `probe.log` + `probe/*.png`, `probe-b/`). Probe script `/home/user/wt/w3-base/kettle/.tmp/LEAD2/p2-lead.mjs` |
 | LEAD-1's P probes (re-read, frames opened) | `contracts/W2R2/review/LEAD/P/` (`probe.log`, `probe/*.png`, `rotate.log`, `w2-summary-trial-5442.log`) |
-| Lane P receipt | `contracts/W2R2/review/LP/RECEIPT-LP.md`: not received when this verdict was written. If it reports a defect I did not see, I re-open this verdict |
+| Lane P receipt | `contracts/W2R2/review/LP/RECEIPT-LP.md` (Sonnet; raw numbers only), read in full. Lane P's facts that I rely on are checked in §3 (see "From Lane P, verified") |
 
 ## 1. What I did
 
@@ -85,6 +85,12 @@ Raw rows are in `review/LEAD2/P/probe.log`, frames in `probe/`. The first run wa
 | Preserve: record-player unlock close-up (PRESERVE 8) | **PASS** | The drawing-then-3D card code is untouched. The big day at 375×667 @100 and 390×844 @100 shows the card whole on arrival on both builds. 375 @200 had it a scroll away on control too (447 px) |
 | Side by side (844×390, 667×375, 1440×900) unchanged | **PASS** | `rest = 0` path untouched; P's 30 side-by-side rows identical lift (0), cut lines and end gap; LEAD-1 1440 light @100 and my `probe-b` (844×390 dark @200, 1440×900 dark @100) |
 | Reduced motion | **PASS** | LEAD-1 375 @100 `-rm` rows are identical to motion rows on both builds; spec's reduced-motion fold test |
+
+From Lane P, verified:
+- **The kettle box clears by 0.4 px in four runs** (390×844 task @100, big @200; lift 12). That is ≥ 0, so it is whole. Lane P measures from the sheet box's edge; P's 2.4 px includes the sheet's 2 px top line, so the two agree.
+- **The only drawn part under the sheet edge is the kettle's radial-gradient glow ellipse** (effective opacity 0.08 at settled). It is under the edge on *both* builds in every run. The opaque plate clears by ≥ 14.2 px. It is not the kettle's body, gauge, flame or stand: my arrival frames at 390×844 show the whole kettle, flame included.
+- **"Heading in view" is 18/24 by line box but 24/24 by glyph ink, with 0 ink cuts.** This matches my own box-vs-ink observation and the frames. What a person sees is the ink.
+- **Side by side at 200 %, P's end-state scroll height is 42 px taller.** Lane P did not isolate the cause. It is exactly one line of the arithmetic's closing note (0.875 rem × 200 % = 28 px × 1.5 line-height = 42 px): "7 days warm. One full brew a day keeps the kettle warm." wraps once more in the narrow card than the old sentence. The last line's gap to the footer is the same 34.4 px on both builds. Benign.
 
 Not worse, observed: on rotation the control carries its 85 px lift into landscape, where the heading ends up 59 px above the card's top. The trial's lift is 0–12 px, so after rotation its heading is at 25 px, in view (LEAD-1 `rotate.log`). Its `--air` persists after rotation; side by side its CSS overrides padding and gap (14 / 12 px), and back in portrait the spacing is the same even air. Harmless.
 
