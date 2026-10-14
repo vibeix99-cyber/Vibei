@@ -1884,5 +1884,161 @@
    },
    "maxTargetMoveInWindow": 73.70000000000005
   }
+ },
+ {
+  "cfg": "1440x900-dark-t200-rm",
+  "server": "base",
+  "band": {
+   "target": "3 days warm streak. Show details",
+   "tgTopBefore": 44,
+   "tgTopWithNotice": 157,
+   "enterPush": 113,
+   "arriveWhy": "rest",
+   "withNotice": {
+    "stripTop": 32,
+    "stripH": 113
+   },
+   "tgTopAfterGone": 44,
+   "leaveMove": -113,
+   "leaveWhy": "rest",
+   "after": {
+    "stripTop": 32,
+    "stripH": 0,
+    "stripW": 1105,
+    "dataRoom": false,
+    "bg": "rgba(0, 0, 0, 0)",
+    "border": "0px none",
+    "over": [],
+    "hits": [
+     "DIV._screen_ahnin_2",
+     "DIV._screen_ahnin_2",
+     "DIV._screen_ahnin_2"
+    ]
+   },
+   "afterScrollBack": {
+    "sy": 0
+   }
+  },
+  "L1": {
+   "target": "3 days warm streak. Show details",
+   "intentTop": 157,
+   "pointerdown": {
+    "dtFromChange": 6,
+    "tgTop": 44,
+    "moved": -113,
+    "landed": "h1._greeting_ahnin_96 \"Good afternoon, Sam\"",
+    "onTarget": false
+   },
+   "click": {
+    "tgTop": 44,
+    "moved": -113,
+    "landed": "h1._greeting_ahnin_96 \"Good afternoon, Sam\"",
+    "onTarget": false
+   },
+   "change": {
+    "why": "rest"
+   },
+   "maxTargetMoveInWindow": 113,
+   "note": "mouse resting over the target since ≥1.2 s before the time-up; click = down/up without moving"
+  },
+  "L2": {
+   "target": "3 days warm streak. Show details",
+   "intentTop": 157,
+   "pointerdown": {
+    "dtFromChange": 27,
+    "tgTop": 44,
+    "moved": -113,
+    "landed": "h1._greeting_ahnin_96 \"Good afternoon, Sam\"",
+    "onTarget": false
+   },
+   "click": {
+    "tgTop": 44,
+    "moved": -113,
+    "landed": "h1._greeting_ahnin_96 \"Good afternoon, Sam\"",
+    "onTarget": false
+   },
+   "change": {
+    "why": "rest"
+   },
+   "maxTargetMoveInWindow": 113
+  },
+  "E": {
+   "target": "3 days warm streak. Show details",
+   "intentTop": 44,
+   "pointerdown": {
+    "dtFromChange": 144,
+    "tgTop": 116.5,
+    "moved": 72.5,
+    "landed": "span._message_1dob8_49 \"Break’s over · LI2 probe arriv\"",
+    "onTarget": false
+   },
+   "click": {
+    "tgTop": 116.5,
+    "moved": 72.5,
+    "landed": "span._message_1dob8_49 \"Break’s over · LI2 probe arriv\"",
+    "onTarget": false
+   },
+   "change": {
+    "why": "rest"
+   },
+   "maxTargetMoveInWindow": 72.5
+  },
+  "S": {
+   "panel": {
+    "stripH": 147.5,
+    "panelScrollH": 749,
+    "panelClientH": 749,
+    "outOfReach": false,
+    "ctrls": [
+     {
+      "l": "Ambience: Rain. Change",
+      "top": 42.9,
+      "bottom": 92.1,
+      "onTop": true
+     },
+     {
+      "l": "Turn sound on",
+      "top": 45.5,
+      "bottom": 89.5,
+      "onTop": true
+     },
+     {
+      "l": "Add 5 minutes",
+      "top": 640.1,
+      "bottom": 704.1,
+      "onTop": true
+     },
+     {
+      "l": "Pause",
+      "top": 640.1,
+      "bottom": 720.1,
+      "onTop": true
+     },
+     {
+      "l": "End session",
+      "top": 640.1,
+      "bottom": 704.1,
+      "onTop": true
+     }
+    ]
+   },
+   "target": "Add 5 minutes",
+   "intentTop": 566.4,
+   "pointerdown": {
+    "dtFromChange": null,
+    "tgTop": 566.4,
+    "moved": 0,
+    "landed": "path.[object SVGAnimatedString] \"\"",
+    "onTarget": true
+   },
+   "click": {
+    "tgTop": 566.4,
+    "moved": 0,
+    "landed": "path.[object SVGAnimatedString] \"\"",
+    "onTarget": true
+   },
+   "change": null,
+   "maxTargetMoveInWindow": 7
+  }
  }
 ]
