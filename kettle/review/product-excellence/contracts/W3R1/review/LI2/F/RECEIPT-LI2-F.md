@@ -13,7 +13,7 @@ Raw evidence only. No verdict. LEAD-5 decides. Lane I2 implemented none of this 
 
 ### 1a. Probe (prior, `probes/{base,trial}/probe-*.json`, logs `probes/probe-{base,trial}.log`, frames `probes/{base,trial}/*.png`)
 
-Seed `newbie`/`veteran`, Today. 13 configurations per build: every size × 100/200 %, light with full motion and dark with reduced motion, plus 1440 light 200 % reduced. The target is the first control wholly below the strip and on top at 9/9 points.
+Seed `newbie`/`veteran`, Today. 17 configurations per build: every size × 100/200 % (16), light with full motion and dark with reduced motion, plus 1440 light 200 % reduced. The target is the first control wholly below the strip and on top at 9/9 points.
 - **L1:** intent read ~200 ms before the notice's time is up, nobody touching; the tap lands just after the notice goes.
 - **L2:** the tap is fired at the time-up itself.
 - **E:** a notice arrives at rest and a tap aimed beforehand lands just after.
@@ -39,7 +39,7 @@ Seed `newbie`/`veteran`, Today. 13 configurations per build: every size × 100/2
 | 1440 dark 200 rm | −113 / −113; greeting, not target | 0 / 0; on target |
 | 1440 light 200 rm | −113 / −113; greeting, not target | 0 / 0; on target (rest / 113) |
 
-**Base:** 20 of 26 L1/L2 taps landed off target, 68–151.5 px. **Trial:** 0 of 25 off target; target movement 0 px in every one.
+**Base:** 26 of 34 L1/L2 taps landed off target, moved 68–151.5 px (the 8 on target are all 375×667, where the target sat above the strip's reach). **Trial:** 0 of 33 off target (one L2 skipped, no target in view); target movement 0 px in every one. In 5 trial L2 runs the notice had not yet left when the tap landed (no change in the window).
 
 **E, a notice arriving at rest** (same probe; also §2c). The arrival still pushes on both builds, by the same amounts:
 - 68 px (390×844 @100, 1440 @100);
@@ -49,7 +49,7 @@ Seed `newbie`/`veteran`, Today. 13 configurations per build: every size × 100/2
 - −16 px at 844×390 @100 (the pinned column);
 - 0 at 375×667 @100.
 
-A tap aimed beforehand lands on the arriving notice (`li._toast…`) or the card on both builds wherever the push is non-zero: base 11/13, trial 11/12 (one trial config had no target in view).
+A tap aimed beforehand lands on the arriving notice (`li._toast…`) or the card on both builds wherever the push is non-zero: base 13 of 17 off target, trial 12 of 16 off target (one trial config had no target in view). The 4 on target on both builds are 375×667 @100 and 844×390 @100, where the push is 0 or −16 px.
 
 ### 1b. The "above" path and wheel taps (prior `wheel/wheel-{base,trial}.{log,json}`)
 
