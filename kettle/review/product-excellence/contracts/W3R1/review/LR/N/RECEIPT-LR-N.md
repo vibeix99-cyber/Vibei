@@ -153,7 +153,7 @@ Facts about the timing: in the two sets the trial reads slower in set A (second 
 | `npx tsc --noEmit` (trial worktree) | exit 0, no output | `runs/tsc.txt` |
 | `npx vitest run` (all) | 30 files, **293/293** passed | `runs/vitest-all.txt` |
 | `npx vitest run src/scene` | 3 files, **17/17** passed: `palette.test.ts` (incl. "Chai fur self-fill by hour"), `chaiModel.test.ts` (incl. "setFill scales the fur self-fill only…" and "procedural Chai: setFill…"), `chaiHost.test.ts` | `runs/vitest-scene.txt` |
-| `KETTLE_PORT=5524 npx playwright test tests/chai3d.spec.ts tests/w2-room.spec.ts --project=chromium --workers=1`, run 1 | SPECS-RUN1 | `runs/spec-run1.log` |
+| `KETTLE_PORT=5524 npx playwright test tests/chai3d.spec.ts tests/w2-room.spec.ts --project=chromium --workers=1`, run 1 | **16 passed / 17** (8.6 min, 12:55 to 13:04, load about 12 to 18), 1 failed, exit non-zero. Passed: all 10 `chai3d.spec.ts` cases, including the new "the fur self-fill follows the hour (day unchanged, stronger at dusk and night); eyes and nose untouched" (1.3 min), and 6 of 7 `w2-room.spec.ts` cases. **Failed:** `w2-room.spec.ts:144` "Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items": `page.screenshot: Test timeout of 60000ms exceeded` at `w2-room.spec.ts:80` (the second screenshot of `assertLayersDrawn`). This is the same test and the same step the maker's run 1 reported as failing (its C-7); I did not run this test on the base, so I have nothing on the base | `runs/spec-run1.log` |
 | the same, run 2 | SPECS-RUN2 | `runs/spec-run2.log` |
 
 ## 8. Notes on the maker's packet (claims checked)
