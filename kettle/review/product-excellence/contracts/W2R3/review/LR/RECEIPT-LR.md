@@ -509,3 +509,14 @@ Each cell: strict % / tolerance-16 % of (trial vs base). "490" = first trial (de
 
 - No source edits, commits or pushes. Files written outside the evidence folder: `kettle/.tmp/LR/std-freeze.mjs` in both worktrees (gitignored), `kettle/test-results/pwa-dist` in the fix worktree (by the pwa spec, gitignored), scratch and Playwright outputs under `/tmp/claude-0/lr3-*`, `/tmp/claude-0/lr4-*`.
 - Nothing of mine left running at the end (checked by PID).
+
+---
+
+## B.9 Orchestrator note, appended after the second container restart (not Lane R's text)
+
+A container restart at about 04:40 UTC stopped Lane R before it updated B.3. The orchestrator read the logs it left. Nothing above was changed.
+
+- **B3-breakreach** (`logs-fix/B3-breakreach.log`) did finish before the restart: **17 passed** (5.2 min), slot freed at 04:36:44. B.3's "started, not finished" predates that.
+- **C2-toast-room** (`logs-fix/C2-toast-room.log`) was running when the restart came: **6 passed, 0 failed** of 14 when it was cut.
+- **C1 and C3** did not run.
+- **Orchestrator follow-up runs** on the fix trial `99d9368` (:5477, re-verified after the restart), slot-gated (`--lane ORCH`), with logs in `review/ORCH/`: `w2-home.spec.ts` and `toast-room.spec.ts`, `--workers=1`. Results are in `review/ORCH/README.md`.
