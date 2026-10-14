@@ -86,3 +86,62 @@ Under `src/progress` only the badge description line and its two assertions chan
 | **F-T2-2, N-2, N-3 triage** | The reasoning holds. F-T2-2 / N-3 need a design ruling (Vibei's I10 rulings: "head of its panel", "never clamped"). N-2 is S's `History.tsx` focus scroll.<br>The session strip's `reach` exception gives its room back at rest exactly as base did. Lane I2 §3e: the same px and the same landing on both builds (Add 5's caption or the countdown, 45–107 px, at 375×667 @100 and 390×844 @200). Where the panel fits, the trial keeps the room (0 px; base 31–33 px) | Lane I2 §3c–§3e |
 | **REFERENCE → BEFORE → AFTER** | All 16 configurations paired for Today's states and the 1440 rail. The 1440 AFTER is Lane I2's (the maker's 1440 AFTER was not captured). K01's layout is kept; only Chai's line and the rail's words differ | Lane I2 §6 |
 | **Suites** | tsc 0; vitest 297/297; notice-strip 25/25 (src `2d5719e`) and inside `final-specs` (src `3027de2`); w3-notices 7/7 | Packet §5 |
+
+## 3. Defects
+
+### F-D1 · The empty band a gone notice leaves never collapses on the same screen; it stays until a new screen, a reload or the page hidden (BLOCKS, ruled by Vibei §3)
+
+**Vibei's rule (`VB-DECISIONS-RESUME.md` §3, binding):** the band is "acceptable only if [it] collapses once touch/scroll goes idle, with no jump under an active pointer. If it stays until a reload (or until a new screen), it goes into F's fix round."
+
+**Measured** (Lane I2 §2a, §2e, §2f; trial :5521; seed `veteran`; a 3 s notice raised at rest; a per-frame tracker of the target's top, the strip, `room`, `why`, `scrollY` and every commit with ms since the last input). Configs: 390×844 light @100 (touch), 390×844 dark @200 reduced (touch), 1440 light @100 (mouse), 1440 dark @200 reduced (mouse).
+
+| Step | Room (band) on the trial |
+|---|---|
+| The notice leaves at rest | kept: 68 / 153.5 / 68 / 113 px; content moved 0 |
+| Idle, sampled at 1, 5, 10 … **45 s** | **kept at every sample** |
+| Scroll down and back (1440 wheel; phones a real finger drag to `scrollY` ≈ 300), then 0.3 / 1.3 / 2.5 / **6 s** idle | **kept at every sample**, 0 commits |
+| Pointer held 3 s, released, 3 s idle | kept while down and after |
+| Page hidden (emulated), then shown | → 0 (`why: hidden`); on return the content sits **68–153.5 px higher** than when the person left |
+| A new screen (Stats and back) or a reload | → 0 |
+
+The code agrees (§1): the room has no idle path. Two consequences:
+- **The band hides content.** At 390×844 @100 the Create/Life chips stay hidden behind the docked start for as long as the person stays on Today (frame in §1).
+- **The band can be taller than the notice that just left.** The room is the tallest notice that has left (`Math.max(ctl.room, …)`). Lane I2 §4d measured a **194 px** empty band at the phone sizes @200 on the combined trial, after a 3-line warning.
+
+**What is right and must be kept:** the band itself (0 of 64 aimed taps off target, §2). Only its lifetime is the defect.
+
+### F-D2 · The F-T2-8 wrap moves the session controls 17 px further below the fold at 200 % landscape (BLOCKS, worsened by this change)
+
+**Where.** `src/screens/focus/FocusScreen.module.css`. Side by side, when the task and Rain + sound cannot share a line, Rain + sound take their own line.
+
+**Measured** (Lane I2 §3a; `topbar2/topbar2-{base,trial}.json`, which I checked; running brew "Chapter 3 notes · Study", no notice):
+
+| Config | Base: Add 5 / Pause / End top, visible px, panel overflow | Trial |
+|---|---|---|
+| 844×390 @100, 667×375 @100 | 248 / 239, wholly in view | **identical** |
+| 844×390 @200, light and dark | 352, **38.5 px** visible, 41 | **369, 20.8 px** visible, 59 |
+| 667×375 @200, light and dark | 352, **23.5 px** visible, 56 | **369, 5.8 px** visible, 74 |
+
+**What I saw** (frames in §1):
+- **Base:** the tops of the three control circles and their icons show at the bottom edge, so you can see the controls are there and tap their visible part.
+- **Trial:** only slivers at 844×390, and only the circles' shadow at 667×375.
+
+**Why it blocks.** The task label becoming readable is the right fix for F-T2-8 ("C / h / a.." on base). But the session controls (preserve list 6) are pushed further out of reach in the same state. They were already partly out of view on base (F-T2-2's class, a FOLLOW-UP "not worse than base"). This change makes that worse, and under the residual rule a worsening blocks. A trade between label and controls is Vibei's to rule, not mine.
+
+### F-D3 · The Today status button's accessible name has a stray space before its punctuation (BLOCKS, introduced)
+
+**Where.** `src/screens/home/StatusBar.tsx:35`:
+
+> `<span className="sr-only">{mugState === 'atRisk' ? ', today not brewed yet' : ''}. Show details</span>`
+
+The visible "N" and "days warm" are separate elements, so the name is computed with a space before the sr text.
+
+**Measured** (Lane I2 §5a, the facts files' `status` field): the button reads **"3 days warm . Show details"** (newbie) and **"5 days warm , today not brewed yet. Show details"** (atRisk). The base read "3 days warm streak. Show details": removing "streak" left the separator behind a space.
+
+**Required:** "N days warm. Show details", "1 day warm. Show details", "N days warm, today not brewed yet. Show details", with no space before "." or ",".
+
+### C-1 · `tests/whistle.spec.ts:203` (F's) asserts G's old sentence (cross-owner; in F's fix round)
+
+- **The cause.** G's approved fix (`7f95c18`, merged as `25b5e26`) replaced "A locked phone may hold the nudge until you’re back." with "…If Kettle is closed or your phone has paused it by then, no nudge comes."
+- **The current state.** `whistle.spec.ts:203` (F's file) is red on the integration branch (`review/GATE.md`).
+- **Required change:** the regex at `:203` becomes `/If Kettle is closed or your phone has paused it by then, no nudge comes\./`. Nothing else in the test changes.
