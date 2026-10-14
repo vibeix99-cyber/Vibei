@@ -37,3 +37,6 @@ Running 243 tests using 2 workers
   ✓   33 [chromium] › tests/a11y.spec.ts:332:3 › a toast never covers the session controls or the summary footer (390×844) (18.5s)
   ✓   34 [chromium] › tests/integrity.spec.ts:840:3 › I03 data safety › invalid files change nothing and say why (not JSON, another app, truncated, newer version, huge, empty, damaged) (16.0s)
   ✓   35 [chromium] › tests/a11y.spec.ts:332:3 › a toast never covers the session controls or the summary footer (375×667) (17.8s)
+  ✓   36 [chromium] › tests/integrity.spec.ts:880:3 › I03 data safety › storage full: a brew that completes still reaches its summary, once; saved data stays intact; a backup carries the brew; making room saves it (29.3s)
+  ✓   38 [chromium] › tests/integrity.spec.ts:916:3 › I03 data safety › storage full: a restore that cannot be saved is refused with a plain reason and changes nothing (19.1s)
+  ✓   37 [chromium] › tests/a11y.spec.ts:371:3 › toasts never cover the break-over controls, carried task included (390×844) (36.6s)
