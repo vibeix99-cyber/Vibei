@@ -1528,5 +1528,104 @@
     "version": 35
    }
   }
+ },
+ {
+  "cfg": "1440x900-light-t100",
+  "server": "base",
+  "band": {
+   "target": "3 days warm streak. Show details",
+   "tgTopBefore": 44,
+   "tgTopWithNotice": 112,
+   "enterPush": 68,
+   "arriveWhy": "rest",
+   "withNotice": {
+    "stripTop": 32,
+    "stripH": 68
+   },
+   "tgTopAfterGone": 44,
+   "leaveMove": -68,
+   "leaveWhy": "rest",
+   "after": {
+    "stripTop": 32,
+    "stripH": 0,
+    "stripW": 1105,
+    "dataRoom": false,
+    "bg": "rgba(0, 0, 0, 0)",
+    "border": "0px none",
+    "over": [],
+    "hits": [
+     "DIV._screen_ahnin_2",
+     "DIV._screen_ahnin_2",
+     "DIV._screen_ahnin_2"
+    ]
+   },
+   "afterScrollBack": {
+    "sy": 0
+   }
+  },
+  "L1": {
+   "target": "3 days warm streak. Show details",
+   "intentTop": 112,
+   "pointerdown": {
+    "dtFromChange": 9,
+    "tgTop": 44,
+    "moved": -68,
+    "landed": "h1._greeting_ahnin_96 \"Good afternoon, Sam\"",
+    "onTarget": false
+   },
+   "click": {
+    "tgTop": 44,
+    "moved": -68,
+    "landed": "h1._greeting_ahnin_96 \"Good afternoon, Sam\"",
+    "onTarget": false
+   },
+   "change": {
+    "why": "rest"
+   },
+   "maxTargetMoveInWindow": 68,
+   "note": "mouse resting over the target since ≥1.2 s before the time-up; click = down/up without moving"
+  },
+  "L2": {
+   "target": "3 days warm streak. Show details",
+   "intentTop": 112,
+   "pointerdown": {
+    "dtFromChange": 4,
+    "tgTop": 44,
+    "moved": -68,
+    "landed": "h1._greeting_ahnin_96 \"Good afternoon, Sam\"",
+    "onTarget": false
+   },
+   "click": {
+    "tgTop": 44,
+    "moved": -68,
+    "landed": "h1._greeting_ahnin_96 \"Good afternoon, Sam\"",
+    "onTarget": false
+   },
+   "change": {
+    "why": "rest"
+   },
+   "maxTargetMoveInWindow": 68
+  },
+  "E": {
+   "target": "3 days warm streak. Show details",
+   "intentTop": 44,
+   "pointerdown": {
+    "dtFromChange": 29,
+    "tgTop": 112,
+    "moved": 68,
+    "landed": "li._toast_1dob8_22 \"Break’s over · LI2 probe arriv\"",
+    "onTarget": false
+   },
+   "click": {
+    "tgTop": 112,
+    "moved": 68,
+    "landed": "li._toast_1dob8_22 \"Break’s over · LI2 probe arriv\"",
+    "onTarget": false
+   },
+   "change": {
+    "why": "rest"
+   },
+   "maxTargetMoveInWindow": 68
+  }
  }
 ]
