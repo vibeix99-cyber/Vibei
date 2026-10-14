@@ -85,7 +85,7 @@ Lane I2's aimed-tap probe `LI2-probe2.mjs fix http://127.0.0.1:5501 … '' L1,L2
 | `notice-strip` 25 (workers 1) | **25/25** (incl. 1440 light 200 % reduced and 1440 dark 200 % once each) | `8b42b9b` | `fix/final/notice-strip-full.log` |
 | `toast-room` 14, `a11y` 11, `summary-notice` 14, `break-reach` 17, `w2-home` 18, `whistle` 8 | **81/82**: the one failure is `whistle.spec.ts:183` at **line 203** (C-1: G's sentence is not on this branch, as expected) | `8b42b9b` | `fix/final/owned-specs.log` |
 | `w3-notices` (9) + `w3-notices-idle` (12) | **21/21** | `8b42b9b` | `fix/final/w3-notices-and-idle.log` |
-| `w3-notices` + `w3-notices-idle` on the final src | run 1: 18/21 — 3 × "no other strip commit": the extra was **the leave's own commit recorded a frame late** (`why rest`, same room, `topBefore = topAfter`), a tracker artifact; the filter was fixed (test only). Run 2: **21/21** | `27d83ac` | `fix/final2/w3-notices-and-idle{,-run2}.log` |
+| `w3-notices` + `w3-notices-idle` on the final src (band frames per config and case: `fix/final2/w3b/**/<cfg>-<case>-{1-band,2-after-collapse}.png`; before-the-notice frames: Lane I2 probe `fix/idle/<cfg>-0-no-notice.png`) | run 1: 18/21 — 3 × "no other strip commit": the extra was **the leave's own commit recorded a frame late** (`why rest`, same room, `topBefore = topAfter`), a tracker artifact; the filter was fixed (test only). Run 2: **21/21** | `27d83ac` | `fix/final2/w3-notices-and-idle{,-run2}.log` |
 | tsc / vitest | exit 0 / **297/297** | `27d83ac` | `fix/final2/{tsc,vitest}.log` |
 
 `whistle.spec.ts:203` is expected to fail on :5501 (G's sentence is not on this branch; C-1).
