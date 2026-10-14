@@ -13,7 +13,7 @@ Target: the first in-flow control below the (empty) strip with its centre in vie
 | 1440×900 (mouse) | 349 / 349 / 349 / 417; the target | 349 → 417; group `div` | strip already occupied (417): target | same: target | same: target |
 
 - (a): 0 px of movement between pointer-down and pointer-up in 4 of 4; the strip appeared after release (+68 to +72 px).
-- (b): in every trial where the strip went from empty to showing (9 trials), the target had moved down 68 px before the tap arrived (δ 0–400 ms) and the click landed on a different element. In the 7 other trials the strip already showed something when the page loaded (what it was is not recorded) and nothing moved. This is the case the maker states as the residual ("a finger already in the air when the page has been at rest for 1.2 s"); Lane T raised the notice through `__kettle.toast` with no input for ≥ 1.6 s.
+- (b): in every trial where the strip went from empty to showing (9 trials), the target had moved down 68 px before the tap arrived (δ 0–400 ms) and the click landed on a different element. In the 7 other trials the strip already showed a notice before Lane T raised the trial's notice (what it was is not recorded; between those trials the probe navigated to the identical URL `/?debug&theme=…#/settings`, so the page may not have reloaded and the previous trial's notice may still have been up), and nothing moved. This is the case the maker states as the residual ("a finger already in the air when the page has been at rest for 1.2 s"); Lane T raised the notice through `__kettle.toast` with no input for ≥ 1.6 s.
 
 ### 4.2 The queue across a route change (fix, all 22; `groups.queue`)
 
