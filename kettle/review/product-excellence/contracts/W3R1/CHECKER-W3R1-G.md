@@ -419,3 +419,6 @@ No item is introduced or worsened by this change in a way that is a defect, so n
 - iOS Safari tab: `{BASE,BEFORE,FIX}-390x844-light-100-phone-safari-{sounds,nudgesUnsupported,hapticsUnsupported}.png`.
 
 The maker's full set is `/home/user/wt/w5g/kettle/review/product-excellence/contracts/W3R1/G/fix/rows/`.
+
+
+*Run logs:* `kettle/.gitignore:6` ignores `*.log`, so every `.log` cited here is committed as a `.log.txt` copy beside it (same name plus `.txt`).
