@@ -375,12 +375,11 @@ export default function FocusScreen() {
               exit={{ opacity: 0, transition: { duration: 0.12 } }}
               transition={reduced ? { duration: 0.2 } : { duration: 0.42, ease: ease.out }}
             >
-              {/* The summary's strip heads its layer (over the window at the top of the stage when stacked; the card's
-                  head side by side), and pushes the sheet down: never over the card or its footer. */}
-              <NoticeStrip prio={1} screen="session:summary" className={s.summaryNotices} />
-              <div className={s.summaryFill}>
-                <Summary reduced={reduced} />
-              </div>
+              {/* No notice strip on the summary (W2R3 fix, T2-D1): a notice here would push P's sheet off where P puts it
+                  (a gap under the counter, rows under the footer) or lie over Chai and the kettle. A notice raised while
+                  the summary is up waits, its clock stopped (it is announced at once), and is drawn whole in the first
+                  frame of the screen the person goes to next: the tea break's panel, or Today. */}
+              <Summary reduced={reduced} />
             </motion.div>
           ) : view === 'over' ? (
             <motion.div

@@ -348,10 +348,14 @@ for (const c of CFGS) {
     await tea.waitFor({ state: 'visible', timeout: 60_000 });
     await page.waitForTimeout(1500);
     await raise(page, 'Couldn’t save just now. Your summary is still here.', 'warning');
-    await drawn(page, /^Couldn’t save just now/);
+    // The summary has no strip (T2-D1): the notice waits, with its time, and nothing on the summary moves.
     await page.waitForTimeout(900);
+    expect(await page.locator('[data-notice-strip] li').count(), 'no notice drawn on the summary').toBe(0);
+    expect(await page.evaluate(() => (window as any).__kettle.notices().queue.map((q: any) => q.left)), 'waiting with all its time').toEqual([4000]);
     await press(page, touch, tea);
     await page.getByRole('button', { name: /Pause break/ }).waitFor({ state: 'attached', timeout: 20_000 });
+    // ... and is drawn in the tea break's first frames, whole.
+    await drawn(page, /^Couldn’t save just now/);
     await page.waitForTimeout(1200);
     await k(page, 'finish');
     await page.getByRole('button', { name: /^Put the kettle on/ }).waitFor({ state: 'attached', timeout: 20_000 });
