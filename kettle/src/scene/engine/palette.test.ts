@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { autoTime, timeFromClock } from './palette';
+import { MOODS, autoTime, timeFromClock } from './palette';
 
 describe('autoTime', () => {
   it('follows the clock in the light theme', () => {
@@ -17,5 +17,14 @@ describe('autoTime', () => {
     const d = new Date(2026, 8, 28, 15, 30);
     expect(timeFromClock(d)).toBe('day');
     expect(autoTime(timeFromClock(d), true)).toBe('night');
+  });
+});
+
+describe('Chai fur self-fill by hour (W3R1 · N)', () => {
+  it('is the day value in morning and day light, and stronger by evening and night', () => {
+    expect(MOODS.morning.chaiFill).toBe(1);
+    expect(MOODS.day.chaiFill).toBe(1);
+    expect(MOODS.dusk.chaiFill).toBeGreaterThan(1);
+    expect(MOODS.night.chaiFill).toBeGreaterThanOrEqual(MOODS.dusk.chaiFill);
   });
 });

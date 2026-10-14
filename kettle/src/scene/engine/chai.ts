@@ -23,6 +23,8 @@ export interface Chai {
   update(t: number, dt: number): void;
   /** A happy hop (tapped). */
   poke(): void;
+  /** The fur's self-fill for the hour, × its day value (palette.ts `Mood.chaiFill`; 1 = day). A uniform only. */
+  setFill(k: number): void;
   steam: SteamFX;
   sprites: Sprite[];
   focus: Vector3;
@@ -41,6 +43,7 @@ export function buildChai(kit: Kit): Chai {
   const fur = kit.uniqueMat(C.fur, { rough: 0.9, emissive: C.fur, emissiveIntensity: 0.16 });
   const furShade = kit.mat(C.furShade, { rough: 0.9 });
   const cream = kit.uniqueMat(C.muzzle, { rough: 0.9, emissive: C.muzzle, emissiveIntensity: 0.14 });
+  const fills: [typeof fur, number][] = [[fur, 0.16], [cream, 0.14]];
   const nose = kit.mat(C.nose, { rough: 0.32 });
   const eyeMat = kit.mat(C.eye, { rough: 0.32 });
   const white = kit.mat('#FFFFFF', { rough: 0.32 });
@@ -197,6 +200,9 @@ export function buildChai(kit: Kit): Chai {
     update,
     poke: () => {
       hop = 1;
+    },
+    setFill: (k: number) => {
+      for (const [m, day] of fills) m.emissiveIntensity = day * k;
     },
     steam,
     sprites: zees,

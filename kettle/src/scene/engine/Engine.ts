@@ -86,6 +86,7 @@ interface MoodN {
   lamp: number;
   win: number;
   houseLight: number;
+  chaiFill: number;
 }
 
 function toN(m: Mood): MoodN {
@@ -106,6 +107,7 @@ function toN(m: Mood): MoodN {
     lamp: m.lamp,
     win: m.win,
     houseLight: m.houseLight,
+    chaiFill: m.chaiFill,
   };
 }
 
@@ -126,6 +128,7 @@ function lerpMood(out: MoodN, a: MoodN, b: MoodN, t: number) {
   out.lamp = MathUtils.lerp(a.lamp, b.lamp, t);
   out.win = MathUtils.lerp(a.win, b.win, t);
   out.houseLight = MathUtils.lerp(a.houseLight, b.houseLight, t);
+  out.chaiFill = MathUtils.lerp(a.chaiFill, b.chaiFill, t);
 }
 
 /** A pleasant frozen moment for reduced motion: puffs mid-flight, eyes open. */
@@ -823,6 +826,7 @@ export class NookEngine {
     this.ket.steam.u.uColor.value.copy(m.steam);
     r.mugSteam.u.uColor.value.copy(m.steam);
     this.chai.steam.u.uColor.value.copy(m.steam);
+    this.chai.setFill(m.chaiFill);
     this.items.forEach((b) => {
       const s = (b as ItemBuild & { steam?: { u: { uColor: { value: Color } } } }).steam;
       s?.u.uColor.value.copy(m.steam);
@@ -1162,6 +1166,7 @@ function cloneMood(m: MoodN): MoodN {
     lamp: m.lamp,
     win: m.win,
     houseLight: m.houseLight,
+    chaiFill: m.chaiFill,
   };
 }
 

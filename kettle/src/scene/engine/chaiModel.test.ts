@@ -195,6 +195,48 @@ describe('model-backed Chai: pose mapping (REPORT.md)', () => {
     expect([...mats.entries()].filter(([k]) => !k.endsWith('/chai_fur')).every(([, t]) => t === 'MeshLambertMaterial')).toBe(true);
   });
 
+  it('setFill scales the fur self-fill only (eyes, nose, mug, yuzu untouched), on both tiers; 1 = the day value', () => {
+    for (const low of [false, true]) {
+      const { kit, chai } = build(!low);
+      if (low) kit.liteify(chai.root);
+      const read = () => {
+        const fur = new Set<number>();
+        const rest = new Set<number>();
+        chai.root.traverse((o) => {
+          const m = o as Mesh;
+          if (!m.isMesh || !m.geometry.getAttribute('color')) return;
+          const mat = m.material as MeshStandardMaterial;
+          (mat.name === 'chai_fur' ? fur : rest).add(mat.emissive.getHex() === 0 ? 0 : mat.emissiveIntensity);
+        });
+        return { fur: [...fur], rest: [...rest] };
+      };
+      expect(read()).toEqual({ fur: [0.16], rest: [0] });
+      chai.setFill(2);
+      expect(read().fur[0]).toBeCloseTo(0.32, 6);
+      expect(read().rest).toEqual([0]);
+      chai.setFill(1);
+      expect(read()).toEqual({ fur: [0.16], rest: [0] });
+    }
+  });
+
+  it('procedural Chai: setFill scales the fur and snout self-fill, 1 = the day value', () => {
+    const proc = buildChai(new Kit(true));
+    const fills = () => {
+      const s = new Set<string>();
+      proc.root.traverse((o) => {
+        const m = o as Mesh;
+        const mat = m.isMesh ? (m.material as MeshStandardMaterial) : null;
+        if (mat?.emissive && mat.emissive.getHex() !== 0 && mat.emissiveIntensity > 0) s.add(mat.emissiveIntensity.toFixed(4));
+      });
+      return [...s].sort();
+    };
+    expect(fills()).toEqual(['0.1400', '0.1600']);
+    proc.setFill(2.5);
+    expect(fills()).toEqual(['0.3500', '0.4000']);
+    proc.setFill(1);
+    expect(fills()).toEqual(['0.1400', '0.1600']);
+  });
+
   it('sits at the root origin with the engine’s scale 1.12 (awake 0.655 wide, 1.112 tall)', () => {
     const { chai } = build();
     chai.setPose('awake');
