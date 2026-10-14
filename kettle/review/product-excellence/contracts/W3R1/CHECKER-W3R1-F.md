@@ -369,3 +369,34 @@ The base's top bar is restored (code check above). The maker's `LI2-topbar2.mjs`
 - the controls' tops are 502.7 css px on both.
 
 Lane R's 4 px (703–721 → 711–730) does not reproduce, so it was a capture-timing artifact. **ACCEPTED (not a defect); closed.**
+
+### ◆4 · `notice-strip:292` (formerly `:275`) at 1440 @200, on the final code, and my ruling on the 2/3
+
+**My runs on :5528** (`--repeat-each=3 --workers=1`, through the gate, load average about 1–4):
+- **1440×900 dark 200 %: 3/3** (`fix/ns292-1440-dark-200-x3.log`).
+- **1440×900 light 200 % reduced motion: 2/3** (`fix/ns292-1440-light-200-rm-x3.log`). Run 1 failed at **Mark done** after 17.5 s; the error context is copied to `fix/failure-context/ns292-1440-light-200-rm-x3-run1-error-context.md`. The state at the failure:
+  - the tap was aimed at Mark done's top 685.2 and landed on the tag group; Mark done was at **625.2 (−60.0 px)**;
+  - `scrollY` was **120**: two 60 px wheel steps where one had brought Mark done on top;
+  - **the strip had not changed since the screen arrived**: `why: screen`, version 12, room 0, "Saved 3 minutes of focus" still shown with 2,000 ms left. Nothing in the app moved anything.
+
+**The maker's runs** (`F/fix/ns275-1440-light-200-reduced-x3{,-run2}.log`, `F/fix/failure-context/`, read):
+- **Run A, 2/3:** #1 lost its brew ("Kettle’s off", "Saved…" never drawn), which fits the reported restart of :5501. I could not verify the restart time from the server log, which `start.sh` overwrites on start. Not counted either way.
+- **Run B, 2/3:** #1 failed later, at the History step: "the Undo is the deleted row … on screen where the person saw the row", 111 px. **This is N-2:** S's `History.tsx` focus scroll when the tapped row takes focus, pre-existing since T2 (W2R3 §7). Mark done had passed.
+- **Inside the full 25:** passed (src `8b42b9b`).
+
+**Mechanism of the Mark done failure.** It is the one Lane I2 described in round 1 (§2, F-R4).
+- `press()` wheels, waits 120 ms, now waits until the element and `scrollY` are still across two frames, then checks on-top.
+- A wheel event the browser has received but not yet handed to the page leaves both still, so that wait cannot see it.
+- Under load, the first wheel therefore lands only after the second has been sent, and the second lands before the click.
+
+The hardening narrowed this (the dark config went from 2/3 to 3/3, and Mark done failed once in my 6 and once in the maker's 9), but it did not remove it.
+
+**Ruling: not an F defect; F-R4 stays a FOLLOW-UP, with a test-only action before the final regression.**
+- **What F-D1 must keep, and does.** No tap moves because a notice leaves. Proven on the final code by 64 aimed events with 0 off target, and by this failure's own state (the strip unchanged).
+- **Neither failure cause is introduced or worsened by F.** `press()`'s wheel race is the base spec's own; N-2 is in S's file and pre-existing. Under the residual rule neither blocks.
+- **What §6 asked.** It asked for the ×3 runs with the error context of any failure, and allowed `press()` hardening "nothing loosened". The maker did both; the 3/3 is not met only for these two causes.
+- **The test-only action (X-11).** The flaky step stays in the suite that will merge, so before the final regression the orchestrator assigns a test-only change in `tests/notice-strip.spec.ts` (F's file; F's fix round is spent), nothing loosened:
+  - in `press()`, after each wheel, wait until `scrollY` (or the scroller's `scrollTop`) has actually changed from its value before the wheel, or the end of the scroll is reached, before the stillness and on-top checks;
+  - in the History step, read "where the person saw the row" once the Edit sheet is open and its focus scroll has settled (N-2).
+
+  I check it with `:292` at 1440 light @200 reduced `--repeat-each=6`: **6/6**. Until then the final regression records `:292` at that config as **known flaky (X-11)**, with the error context of any failure checked against these two signatures.
