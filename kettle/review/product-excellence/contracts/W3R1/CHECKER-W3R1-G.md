@@ -182,3 +182,46 @@ So "in a tab" is true on a computer and untrue on the iPhone, the one platform w
 **Required:** exactly `Vibration isn’t available in this browser.` (U+2019 apostrophe, as the file writes every other one). The supported line, `Little buzzes for key moments, on devices that can vibrate.`, stays.
 
 **No other defect.** I found nothing else introduced or worsened by G. The near misses are in §4.
+
+## 4. Residuals (rule: BLOCKS = introduced or worsened by this change; FOLLOW-UP = present on the base and not worse, or ruled so by Vibei; ACCEPTED = not a defect)
+
+| # | Item | My check | Class | Owner |
+|---|---|---|---|---|
+| G-D1 | Sounds "in a tab" vs Nudges "while it’s on screen" (iOS Safari) | §3 | **BLOCKS** | G (fix round) |
+| G-D2 | Sounds description 12 → 17 lines at 375×667 @200 % | §3 | **BLOCKS** | G (fix round) |
+| G-D3 | "A locked phone may hold the nudge until you’re back." is untrue | §3 | **BLOCKS** (Vibei) | G (fix round) |
+| G-D4 | "This device can’t vibrate." → "Vibration isn’t available in this browser." | §3 | **BLOCKS** (Vibei) | G (fix round) |
+| G-R1 | **Keep awake:** "Stops your screen dimming while a brew is on screen." The lock is held while the timer is `running` and the page is visible (`wakeLock.ts:19–20`). So it is released while a brew is paused on screen, and held during a running tea break | The base line ("…during a brew.") had the same pause gap; G's line adds the true visibility condition and is not worse | **FOLLOW-UP** (pre-existing). Optional in the fix round, not required: "…while a brew runs on screen." | G / I11 |
+| G-R2 | **Segment ring vs its inner gap:** 3.04–3.07 light (base 3.83), dark 5.76–5.81 | Still ≥ 3:1. The 1px offset keeps the ring inside the track instead of over the neighbouring option, as the maker intends | **ACCEPTED** | — |
+| G-R3 | **The selected segment's thumb sometimes sticks 48 px below its option** (framer-motion `layoutId`, `translate(0,48)`), covering the bottom of its focus ring | Lane I: base 1/4 and trial 1/4 configs in the rerun, on both builds (`segment-thumb-rerun/`). Not in G's diff (CSS only; `SegmentedControl.tsx` unchanged) | **FOLLOW-UP** (pre-existing) | G's file, next round |
+| G-R4 | **Nudges Off / default lines** promise a nudge "while Kettle is (open but) out of sight" without the frozen-page limit | The limit is stated once, on the On line the person sees after turning it on (`whistle.spec.ts:202`: "stated once at the switch"). G-D3 makes that statement true | **ACCEPTED** (design) | — |
+| G-R5 | **Focus flags in other owners' files, identical on base:**<br>• session "Ambience" / "Turn sound on" rings 2.53–2.94 over the scene (light);<br>• the active nav item's inset ring painted over by `.indicator` at 1440;<br>• the skip link's bottom edge;<br>• a 1.11 edge where a ring meets an orange surface ("Change brew length", "Delete this brew", Welcome) | Lane I §1 | **FOLLOW-UP** (pre-existing) | F (`Shell.module.css`, focus files) / S (History) |
+| G-R6 | **ListRow button rows:** the divider overpaints the top 2 of 3 px of the −3px inset ring | Same at 1440 on both builds; at 390 a sub-pixel position. G kept the value (now the token) | **FOLLOW-UP** (pre-existing) | G / I11 |
+| G-R7 | **Forced colours, both builds:** unselected chips, segments and Pause have no boundary; the muted volume track is not drawn | Lane I §1 | **FOLLOW-UP** (pre-existing; G improved the selected states) | G / I11 |
+| G-R8 | **`ui/Toast.module.css:75` uses the non-token `var(--focus, var(--sky))`** | Maker's cross-owner note | **FOLLOW-UP** | F |
+| G-R9 | `docs/REAL_DEVICE_CHECKLIST.md` rows 2.3 and 8.5 repeat the locked-phone claim ("it may only show up once you unlock"; "Settings → Nudges says a locked phone may hold it") | Will be stale once G-D3 lands. `docs/` is not G's | **FOLLOW-UP** | Orchestrator at merge |
+| E-1 | **Evidence gaps,** not defects:<br>• the Nudges On / Off / default lines never rendered (headless keeps `denied`; the fix round must render the new On line, §6);<br>• forced colours only at 390 light;<br>• keyboard on a touch context;<br>• the kit's inert section not exercised by Tab;<br>• real devices;<br>• the full chromium suite on G's trial (the combined trial's Lane R run covers it, §5) | — | Noted | Fix round / final regression |
+
+## 5. Lane I receipt (`review/LI/G/RECEIPT-LI-G.md`), and my checks of it
+
+**Read in full.** I checked each fact I rely on:
+- **Revision and servers.**
+  - The receipt names src `6b14238`, which equals my `git rev-parse 3d91793:kettle/src`.
+  - It audited the previews :5533 / :5488 and ran the notice-strip tests on the dev servers :5523 / :5478, as instructed.
+- **Copy (§3).** I re-read each quoted code line against the trial:
+  - `notify.ts:26, 165–167, 174–179`;
+  - `engine.ts` (the suspend and resume paths);
+  - `flow.ts:195`.
+
+  Its two contradictions are the code's: the iOS "in a tab" vs "on screen" (G-D1), and the locked-phone hold (G-D3). The receipt also found the "can’t vibrate" line wrong on iPhones (G-D4). I agree with each.
+- **Line counts (§5).** I opened `settings-375x667-light-200-part02.png` at full size and counted 12 lines (base) and 17 (trial) in the Sounds description. The 1440 slice shows 2 → 3.
+- **Warm days (§4).** My diff read agrees: the 11 base strings are gone from G's files, and the remaining `title="Warm streak"` is F's `Rail.tsx:233`.
+- **States (§1).** I confirmed the pressed-fill and blocked-row claims on the maker's sheets myself (§1, `rowfill.json`), which closes the receipt's "fill unproven".
+- **notice-strip (§6).** The logs are present (`notice-strip/LI-ns-{trial,base}.log`). The run times match the table.
+
+**What it leaves open:** see §4 E-1. None of it bears on a defect except the unrendered Nudges lines. The fix round must close that for the new On line.
+
+**Combined trial (Lane R):** `review/LR/ALL/RECEIPT-LR-ALL.md` has not landed. The cross-effects attributable to G, if any, will be ruled in my cross-effects note when it does. Of the combined failures seen so far, none touches a G file:
+- `integrity:1017` (the storage-full banner);
+- `w3-stats:98` ("Delete this brew?");
+- `w3-notices:252`.
