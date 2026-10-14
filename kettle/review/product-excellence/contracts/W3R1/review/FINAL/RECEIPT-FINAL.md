@@ -89,3 +89,9 @@ None was a base failure. None reproduced alone or in repeats on this tree.
 `runs/notice-strip.log.txt`, `runs/notice-strip.json`. Started 22:31:30, freed 22:56:28 (25.0 min), `--project=chromium --workers=1`, one gate slot; a second gate job (the failure reruns, then timer/pwa and the `W3_LOAD` run) was on the machine meanwhile.
 
 **25 passed, 0 failed, 0 flaky, 0 skipped.** All 25 cases are the one test at line 292 "no notice overlaps a control, text or a row: every notice state, real input" in its 25 configurations (the listing's line number; durations 51.7 to 70.1 s). The known flaky case **1440×900 light 200 % reduced motion passed** (55.3 s). Nothing needed classifying against the three X-11 signatures.
+
+## 5. Timer-harness, timer-app and pwa projects
+
+`runs/timer-pwa.log.txt`, `runs/timer-pwa.json`. Started 22:38:34, freed 22:41:30 (2.9 min), `KETTLE_PORT=5540 KETTLE_PWA_PORT=5499 npx playwright test --project=timer-harness --project=timer-app --project=pwa --workers=1`, one gate slot (a second job, the notice-strip run, was on the machine).
+
+**29 passed, 2 skipped, 0 failed, 0 flaky** (31 tests): `timer-harness` 14 passed; `timer-app` 12 passed, 2 skipped; `pwa` 3 passed. The 2 skips are by design in `tests/timer.spec.ts`: line 295 ("infra is exercised in the harness; screens bind their own keys") and line 439 ("render counter lives in the harness"), both `test.skip(!kettlePage.includes('harness'))`, so they run in `timer-harness` and skip in `timer-app`. Same result as on the combined trial `e478604` (29 passed, 2 skipped).
