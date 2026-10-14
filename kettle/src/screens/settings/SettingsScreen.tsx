@@ -131,7 +131,7 @@ function SoundGroup() {
   const current = AMBIENT_OPTIONS.find((a) => a.id === st.ambient);
   return (
     <ListGroup title="Sound">
-      <ListRow icon={st.muted ? 'mute' : 'sound'} iconTone="honey" label="Sounds" description={st.muted ? 'Everything’s quiet. The kettle still shows when it whistles.' : 'Effects, the whistle and ambience play while Kettle is open, in a tab or as the app, once you’ve tapped anything in it. Closed, Kettle can’t make a sound; a phone’s silent switch or lock screen can keep it quiet too.'} toggle={{ checked: !st.muted, onChange: (v) => st.set({ muted: !v }) }} />
+      <ListRow icon={st.muted ? 'mute' : 'sound'} iconTone="honey" label="Sounds" description={st.muted ? 'Everything’s quiet. The kettle still shows when it whistles.' : 'The whistle, effects and ambience play while Kettle is open, in a tab or as the app, after your first tap. Closed, Kettle is silent. A phone’s silent switch or lock screen can quiet it too.'} toggle={{ checked: !st.muted, onChange: (v) => st.set({ muted: !v }) }} />
       <VolumeRow title="Master volume" value={st.masterVolume} onChange={(v) => st.set({ masterVolume: v })} disabled={st.muted} />
       <VolumeRow title="Effects" value={st.sfxVolume} onChange={(v) => st.set({ sfxVolume: v })} disabled={st.muted} tone="honey" />
       <VolumeRow title="Ambience" value={st.ambientVolume} onChange={(v) => st.set({ ambientVolume: v })} disabled={st.muted} tone="sky" />

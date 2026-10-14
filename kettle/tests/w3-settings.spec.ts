@@ -300,7 +300,7 @@ test('Settings never says "streak", and sound and nudges say what they cannot do
   });
   expect(words).not.toMatch(/streak/i);
   await expect(page.getByText('One finished brew makes a warm day. The goal is just for you.')).toBeVisible();
-  await expect(page.getByText(/play while Kettle is open, in a tab or as the app, once you’ve tapped anything in it\. Closed, Kettle can’t make a sound/)).toBeVisible();
+  await expect(page.getByText(/play while Kettle is open, in a tab or as the app, after your first tap\. Closed, Kettle is silent\./)).toBeVisible();
   await expect(page.getByText(/while Kettle is open but out of sight, I’ll nudge you\. With Kettle closed, no nudge can come\./)).toBeVisible();
   // Muted: the quiet line.
   await page.getByRole('switch', { name: 'Sounds' }).click();
