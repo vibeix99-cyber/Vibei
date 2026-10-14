@@ -1,0 +1,4526 @@
+{
+ "cfg": {
+  "w": 390,
+  "h": 844,
+  "theme": "light",
+  "pct": 100,
+  "reduced": false,
+  "groups": [
+   "break",
+   "nextbrew",
+   "queue",
+   "storage"
+  ],
+  "base": "http://127.0.0.1:5470",
+  "fix": false,
+  "name": "390x844-light-t100-BASE-break+nextbrew+queue+storage"
+ },
+ "base": "http://127.0.0.1:5470",
+ "startedAt": "2026-10-14T00:08:48.526Z",
+ "groups": {
+  "break": {
+   "breakoverNotices": [
+    "Recipe done: Take a full tea break · +10 leaves"
+   ],
+   "breakoverPut": {
+    "ok": true,
+    "wheels": 0,
+    "nine": 9
+   },
+   "error": "page.evaluate: TypeError: window.__kettle.toast is not a function",
+   "shots": [
+    {
+     "file": "shot-390x844-light-t100-BASE-break+nextbrew+queue+storage-break-0.png",
+     "kind": "ctl",
+     "top": "notice",
+     "what": "button \"Skip break\"",
+     "state": "breakover"
+    },
+    {
+     "file": "shot-390x844-light-t100-BASE-break+nextbrew+queue+storage-break-1.png",
+     "kind": "ctl",
+     "top": "notice",
+     "what": "button \"Mark it done, start fresh\"",
+     "state": "breakover"
+    },
+    {
+     "file": "shot-390x844-light-t100-BASE-break+nextbrew+queue+storage-break-2.png",
+     "kind": "text",
+     "top": "notice",
+     "what": "text \"Ready for another brew of\" in p",
+     "state": "breakover"
+    }
+   ],
+   "sampler": {
+    "samples": 194,
+    "nSamples": 34,
+    "modalSamples": 0,
+    "geo": {
+     "ctl": 7,
+     "text": 131,
+     "row": 0
+    },
+    "geoTop": {
+     "ctl|notice": 7,
+     "text|notice": 131,
+     "efp9": 4
+    },
+    "efp": 30,
+    "efpCtl": 4,
+    "efpUnderSheet": 0,
+    "cut": 0,
+    "cutSeen": {},
+    "hits": [
+     {
+      "dlg": null,
+      "t": 12831,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       24,
+       602,
+       343,
+       54
+      ],
+      "what": "button \"Skip break\"",
+      "box": [
+       57,
+       655,
+       62,
+       64
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12831,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       24,
+       602,
+       343,
+       54
+      ],
+      "what": "button \"Pause break\"",
+      "box": [
+       156,
+       655,
+       78,
+       80
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12831,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       24,
+       602,
+       343,
+       54
+      ],
+      "what": "button \"Start next brew\"",
+      "box": [
+       271,
+       655,
+       62,
+       64
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12832,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       24,
+       602,
+       343,
+       54
+      ],
+      "what": "text \"Tea time. Sip slowly.\" in span",
+      "box": [
+       105,
+       584,
+       180,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12832,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       24,
+       602,
+       343,
+       54
+      ],
+      "what": "text \"Next brew whenever you’re ready\" in span",
+      "box": [
+       86,
+       615,
+       218,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12927,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       357,
+       56
+      ],
+      "what": "button \"Mark it done, start fresh\"",
+      "box": [
+       82,
+       600,
+       227,
+       44
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12928,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       357,
+       56
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       117,
+       568,
+       20,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12928,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       357,
+       56
+      ],
+      "what": "text \"Chapter 3 notes\" in strong",
+      "box": [
+       137,
+       568,
+       128,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12928,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       357,
+       56
+      ],
+      "what": "text \"?\" in p",
+      "box": [
+       265,
+       568,
+       8,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12928,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       357,
+       56
+      ],
+      "what": "text \"Mark it done, start fresh\" in button",
+      "box": [
+       116,
+       611,
+       183,
+       22
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12928,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "efp9",
+      "points": 9,
+      "what": "button \"Mark it done, start fresh\"",
+      "box": [
+       82,
+       600,
+       227,
+       44
+      ],
+      "notice": "li \"Recipe done: Take a full tea break · +10\""
+     },
+     {
+      "dlg": null,
+      "t": 13027,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       588,
+       359,
+       57
+      ],
+      "what": "button \"Mark it done, start fresh\"",
+      "box": [
+       82,
+       595,
+       227,
+       44
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13027,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       588,
+       359,
+       57
+      ],
+      "what": "text \"Mark it done, start fresh\" in button",
+      "box": [
+       116,
+       606,
+       183,
+       22
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13027,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "efp9",
+      "points": 9,
+      "what": "button \"Mark it done, start fresh\"",
+      "box": [
+       82,
+       595,
+       227,
+       44
+      ],
+      "notice": "li \"Recipe done: Take a full tea break · +10\""
+     },
+     {
+      "dlg": null,
+      "t": 13127,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       577,
+       358,
+       57
+      ],
+      "what": "button \"Mark it done, start fresh\"",
+      "box": [
+       82,
+       594,
+       227,
+       44
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13127,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       577,
+       358,
+       57
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       117,
+       561,
+       20,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13127,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       577,
+       358,
+       57
+      ],
+      "what": "text \"Chapter 3 notes\" in strong",
+      "box": [
+       137,
+       561,
+       128,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13128,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       577,
+       358,
+       57
+      ],
+      "what": "text \"?\" in p",
+      "box": [
+       265,
+       561,
+       8,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13128,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       577,
+       358,
+       57
+      ],
+      "what": "text \"Mark it done, start fresh\" in button",
+      "box": [
+       116,
+       605,
+       183,
+       22
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13128,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "efp9",
+      "points": 9,
+      "what": "button \"Mark it done, start fresh\"",
+      "box": [
+       82,
+       594,
+       227,
+       44
+      ],
+      "notice": "li \"Recipe done: Take a full tea break · +10\""
+     },
+     {
+      "dlg": null,
+      "t": 13227,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       544,
+       358,
+       57
+      ],
+      "what": "button \"Mark it done, start fresh\"",
+      "box": [
+       82,
+       594,
+       227,
+       44
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13227,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       544,
+       358,
+       57
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       105,
+       536,
+       181,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13227,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       544,
+       358,
+       57
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       117,
+       561,
+       20,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13227,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       544,
+       358,
+       57
+      ],
+      "what": "text \"Chapter 3 notes\" in strong",
+      "box": [
+       137,
+       561,
+       128,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13228,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       544,
+       358,
+       57
+      ],
+      "what": "text \"?\" in p",
+      "box": [
+       265,
+       561,
+       8,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13228,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "efp9",
+      "points": 3,
+      "what": "button \"Mark it done, start fresh\"",
+      "box": [
+       82,
+       594,
+       227,
+       44
+      ],
+      "notice": "li \"Recipe done: Take a full tea break · +10\""
+     },
+     {
+      "dlg": null,
+      "t": 13327,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       537,
+       358,
+       57
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       105,
+       536,
+       181,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13327,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       537,
+       358,
+       57
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       117,
+       561,
+       20,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13327,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       537,
+       358,
+       57
+      ],
+      "what": "text \"Chapter 3 notes\" in strong",
+      "box": [
+       137,
+       561,
+       128,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13327,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       537,
+       358,
+       57
+      ],
+      "what": "text \"?\" in p",
+      "box": [
+       265,
+       561,
+       8,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13426,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       532,
+       358,
+       57
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       105,
+       536,
+       181,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13426,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       532,
+       358,
+       57
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       117,
+       561,
+       20,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13427,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       532,
+       358,
+       57
+      ],
+      "what": "text \"Chapter 3 notes\" in strong",
+      "box": [
+       137,
+       561,
+       128,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13427,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       532,
+       358,
+       57
+      ],
+      "what": "text \"?\" in p",
+      "box": [
+       265,
+       561,
+       8,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13533,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       529,
+       358,
+       57
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       105,
+       536,
+       181,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13533,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       529,
+       358,
+       57
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       117,
+       561,
+       20,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13533,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       529,
+       358,
+       57
+      ],
+      "what": "text \"Chapter 3 notes\" in strong",
+      "box": [
+       137,
+       561,
+       128,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13533,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       529,
+       358,
+       57
+      ],
+      "what": "text \"?\" in p",
+      "box": [
+       265,
+       561,
+       8,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13627,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       528,
+       358,
+       57
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       105,
+       536,
+       181,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13627,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       528,
+       358,
+       57
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       117,
+       561,
+       20,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13627,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       528,
+       358,
+       57
+      ],
+      "what": "text \"Chapter 3 notes\" in strong",
+      "box": [
+       137,
+       561,
+       128,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13627,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       528,
+       358,
+       57
+      ],
+      "what": "text \"?\" in p",
+      "box": [
+       265,
+       561,
+       8,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13727,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       528,
+       358,
+       57
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       105,
+       536,
+       181,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13727,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       528,
+       358,
+       57
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       117,
+       561,
+       20,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13727,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       528,
+       358,
+       57
+      ],
+      "what": "text \"Chapter 3 notes\" in strong",
+      "box": [
+       137,
+       561,
+       128,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13728,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       528,
+       358,
+       57
+      ],
+      "what": "text \"?\" in p",
+      "box": [
+       265,
+       561,
+       8,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13830,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       528,
+       358,
+       57
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       105,
+       536,
+       181,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13830,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       528,
+       358,
+       57
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       117,
+       561,
+       20,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13830,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       528,
+       358,
+       57
+      ],
+      "what": "text \"Chapter 3 notes\" in strong",
+      "box": [
+       137,
+       561,
+       128,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13830,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       528,
+       358,
+       57
+      ],
+      "what": "text \"?\" in p",
+      "box": [
+       265,
+       561,
+       8,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13927,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       528,
+       358,
+       57
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       105,
+       536,
+       181,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13927,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       528,
+       358,
+       57
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       117,
+       561,
+       20,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13927,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       528,
+       358,
+       57
+      ],
+      "what": "text \"Chapter 3 notes\" in strong",
+      "box": [
+       137,
+       561,
+       128,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 13927,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       528,
+       358,
+       57
+      ],
+      "what": "text \"?\" in p",
+      "box": [
+       265,
+       561,
+       8,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 14031,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       528,
+       358,
+       57
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       105,
+       536,
+       181,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 14031,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       528,
+       358,
+       57
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       117,
+       561,
+       20,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 14031,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       528,
+       358,
+       57
+      ],
+      "what": "text \"Chapter 3 notes\" in strong",
+      "box": [
+       137,
+       561,
+       128,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 14031,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       528,
+       358,
+       57
+      ],
+      "what": "text \"?\" in p",
+      "box": [
+       265,
+       561,
+       8,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 14127,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       528,
+       358,
+       57
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       105,
+       536,
+       181,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 14127,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       528,
+       358,
+       57
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       117,
+       561,
+       20,
+       23
+      ],
+      "modal": false,
+      "sy": 0
+     }
+    ],
+    "seen": {
+     "Recipe done: Take a full tea break · +10 lea": 34
+    },
+    "floatPos": [],
+    "live": [
+     {
+      "t": 3447,
+      "state": "",
+      "text": "Kettle’s on. Focus session started, 25 minutes.",
+      "region": "status"
+     },
+     {
+      "t": 5055,
+      "state": "summary",
+      "text": "The kettle’s whistling! Focus session complete. Time for tea.",
+      "region": "status"
+     },
+     {
+      "t": 7849,
+      "state": "summary",
+      "text": "25 minutes brewed. 40 leaves earned. Daily goal met. Cozy level 5: something new in your n",
+      "region": "status"
+     },
+     {
+      "t": 9936,
+      "state": "break",
+      "text": "Tea break started, 5 minutes. Stretch, sip, look out the window.",
+      "region": "status"
+     },
+     {
+      "t": 12781,
+      "state": "breakover",
+      "text": "Tea’s done. Ready for another brew?",
+      "region": "status"
+     },
+     {
+      "t": 12781,
+      "state": "breakover",
+      "text": "Recipe done: Take a full tea break · +10 leaves",
+      "region": "Notifications"
+     },
+     {
+      "t": 19261,
+      "state": "breakover-put",
+      "text": "Kettle’s on. Focus session started, 25 minutes.",
+      "region": "status"
+     }
+    ],
+    "sampleMsAvg": 0.4
+   },
+   "ms": 22007,
+   "pageErrors": []
+  },
+  "nextbrew": {
+   "breakState": "shortBreak/running #/focus",
+   "nextbrewSeen": {
+    "Recipe done: Take a full tea break · +10 lea": 35
+   },
+   "shots": [
+    {
+     "file": "shot-390x844-light-t100-BASE-break+nextbrew+queue+storage-nextbrew-0.png",
+     "kind": "text",
+     "top": "notice",
+     "what": "text \"Kettle’s on. Nice start.\" in span",
+     "state": "nextbrew"
+    },
+    {
+     "file": "shot-390x844-light-t100-BASE-break+nextbrew+queue+storage-nextbrew-1.png",
+     "kind": "text",
+     "top": "notice",
+     "what": "text \"Kettle’s on. Nice start.\" in span",
+     "state": "nextbrew"
+    }
+   ],
+   "sampler": {
+    "samples": 243,
+    "nSamples": 35,
+    "modalSamples": 0,
+    "geo": {
+     "ctl": 0,
+     "text": 70,
+     "row": 0
+    },
+    "geoTop": {
+     "text|notice": 70
+    },
+    "efp": 0,
+    "efpCtl": 0,
+    "efpUnderSheet": 0,
+    "cut": 0,
+    "cutSeen": {},
+    "hits": [
+     {
+      "dlg": null,
+      "t": 18677,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       24,
+       602,
+       343,
+       54
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       596,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 18677,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       24,
+       602,
+       343,
+       54
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       627,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 18763,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       357,
+       56
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       588,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 18764,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       357,
+       56
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       618,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 18860,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       588,
+       359,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       585,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 18860,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       588,
+       359,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 18964,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       588,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 18964,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       588,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 19059,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 19060,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 19159,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 19160,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 19259,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 19259,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 19359,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 19359,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 19459,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 19459,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 19559,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 19559,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 19666,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 19666,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 19759,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 19759,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 19859,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 19859,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 19960,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 19960,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 20059,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 20059,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 20160,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 20160,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 20259,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 20259,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 20360,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 20360,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 20459,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 20459,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 20559,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 20559,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 20667,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 20667,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 20763,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 20763,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 20860,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 20860,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 20959,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 20959,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 21059,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 21059,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 21159,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 21159,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 21258,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 21259,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 21359,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 21359,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 21459,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 21459,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 21559,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       97,
+       584,
+       196,
+       25
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 21559,
+      "state": "nextbrew",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       589,
+       358,
+       57
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     }
+    ],
+    "seen": {
+     "Recipe done: Take a full tea break · +10 lea": 35
+    },
+    "floatPos": [],
+    "live": [
+     {
+      "t": 2675,
+      "state": "",
+      "text": "Kettle’s on. Focus session started, 25 minutes.",
+      "region": "status"
+     },
+     {
+      "t": 4554,
+      "state": "nextbrew-break",
+      "text": "The kettle’s whistling! Focus session complete. Time for tea.",
+      "region": "status"
+     },
+     {
+      "t": 7542,
+      "state": "nextbrew-break",
+      "text": "25 minutes brewed. 40 leaves earned. Daily goal met. Cozy level 5: something new in your n",
+      "region": "status"
+     },
+     {
+      "t": 17030,
+      "state": "nextbrew-break",
+      "text": "Tea break started, 5 minutes. Stretch, sip, look out the window.",
+      "region": "status"
+     },
+     {
+      "t": 18647,
+      "state": "nextbrew",
+      "text": "Kettle’s on. Focus session started, 25 minutes.",
+      "region": "status"
+     },
+     {
+      "t": 18647,
+      "state": "nextbrew",
+      "text": "Tea’s done. Ready for another brew?",
+      "region": "status"
+     },
+     {
+      "t": 18647,
+      "state": "nextbrew",
+      "text": "Recipe done: Take a full tea break · +10 leaves",
+      "region": "Notifications"
+     }
+    ],
+    "sampleMsAvg": 0.4
+   },
+   "ms": 27557,
+   "pageErrors": []
+  },
+  "queue": {
+   "error": "page.evaluate: TypeError: window.__kettle.toast is not a function",
+   "shots": [],
+   "sampler": {
+    "samples": 18,
+    "nSamples": 0,
+    "modalSamples": 0,
+    "geo": {
+     "ctl": 0,
+     "text": 0,
+     "row": 0
+    },
+    "geoTop": {},
+    "efp": 0,
+    "efpCtl": 0,
+    "efpUnderSheet": 0,
+    "cut": 0,
+    "cutSeen": {},
+    "hits": [],
+    "seen": {},
+    "floatPos": [],
+    "live": [],
+    "sampleMsAvg": 0
+   },
+   "ms": 2872,
+   "pageErrors": []
+  },
+  "storage": {
+   "fill": "QuotaExceededError",
+   "banner": {
+    "tag": "SECTION",
+    "attrs": "aria-labelledby,data-save-warning",
+    "text": "This browser’s storage is full. Kettle couldn’t save your latest changes. Save a backup to keep them. Save backup",
+    "box": [
+     16,
+     234,
+     358,
+     143
+    ],
+    "position": "static",
+    "zIndex": "auto",
+    "shape": "<section data-save-warning=\"\"><span aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" aria-hidden=\"true\" focusable=\"false\" data-icon=\"info\" style=\"flex: 0 0 auto; disp\"><circle cx=\"12\" cy=\"12\" r=\"9.6\" fill=\"currentColor\" opacity=\"0.34\"><circle cx=\"12\" cy=\"7.7\" r=\"1.7\" fill=\"currentColor\"><rect x=\"10.7\" y=\"10.6\" width=\"2.6\" height=\"7.4\" rx=\"1.3\" fill=\"currentColor\"><p><strong><button type=\"button\"><span><span>",
+    "prev": "3 days warm streak. Show details 188 lea",
+    "next": "Today’s goal 25 min brewed 5 min to go T",
+    "inMain": true,
+    "notices": [
+     "Kettle’s off. See you soon."
+    ]
+   },
+   "bannerLater": [
+    16,
+    234,
+    358,
+    143
+   ],
+   "shots": [
+    {
+     "file": "shot-390x844-light-t100-BASE-break+nextbrew+queue+storage-storage-0.png",
+     "kind": "ctl",
+     "top": "notice",
+     "what": "button \"Add 5 minutes\"",
+     "state": "storage"
+    },
+    {
+     "file": "shot-390x844-light-t100-BASE-break+nextbrew+queue+storage-storage-1.png",
+     "kind": "ctl",
+     "top": "notice",
+     "what": "input \"\"",
+     "state": "storage"
+    },
+    {
+     "file": "shot-390x844-light-t100-BASE-break+nextbrew+queue+storage-storage-2.png",
+     "kind": "ctl",
+     "top": "notice",
+     "what": "input \"\"",
+     "state": "storage"
+    }
+   ],
+   "sampler": {
+    "samples": 102,
+    "nSamples": 35,
+    "modalSamples": 0,
+    "geo": {
+     "ctl": 163,
+     "text": 36,
+     "row": 0
+    },
+    "geoTop": {
+     "ctl|notice": 163,
+     "text|notice": 2,
+     "text|otherClippedAway": 34,
+     "efp9": 73
+    },
+    "efp": 296,
+    "efpCtl": 73,
+    "efpUnderSheet": 0,
+    "cut": 0,
+    "cutSeen": {},
+    "hits": [
+     {
+      "dlg": null,
+      "t": 4300,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       77,
+       613,
+       237,
+       49
+      ],
+      "what": "button \"Add 5 minutes\"",
+      "box": [
+       59,
+       655,
+       62,
+       64
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4300,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       77,
+       613,
+       237,
+       49
+      ],
+      "what": "button \"Pause\"",
+      "box": [
+       156,
+       655,
+       78,
+       80
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4301,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       77,
+       613,
+       237,
+       49
+      ],
+      "what": "button \"End session\"",
+      "box": [
+       269,
+       655,
+       62,
+       64
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4301,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       77,
+       613,
+       237,
+       49
+      ],
+      "what": "input \"\"",
+      "box": [
+       36,
+       605,
+       270,
+       52
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4301,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       77,
+       613,
+       237,
+       49
+      ],
+      "what": "button \"Clear what are you brewing? (optional)\"",
+      "box": [
+       306,
+       609,
+       44,
+       44
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4302,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       77,
+       613,
+       237,
+       49
+      ],
+      "what": "text \"Whistles at 15:55\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4302,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "text",
+      "top": "otherClippedAway",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       77,
+       613,
+       237,
+       49
+      ],
+      "what": "text \"What are you brewing? (optional)\" in label",
+      "box": [
+       35,
+       605,
+       246,
+       22
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4311,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "efp9",
+      "points": 7,
+      "what": "input \"\"",
+      "box": [
+       36,
+       605,
+       270,
+       52
+      ],
+      "notice": "li \"Kettle’s off. See you soon.\""
+     },
+     {
+      "dlg": null,
+      "t": 4312,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "efp9",
+      "points": 2,
+      "what": "button \"Clear what are you brewing? (optional)\"",
+      "box": [
+       306,
+       609,
+       44,
+       44
+      ],
+      "notice": "li \"Kettle’s off. See you soon.\""
+     },
+     {
+      "dlg": null,
+      "t": 4400,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       75,
+       610,
+       239,
+       49
+      ],
+      "what": "button \"Add 5 minutes\"",
+      "box": [
+       59,
+       655,
+       62,
+       64
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4401,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       75,
+       610,
+       239,
+       49
+      ],
+      "what": "button \"Pause\"",
+      "box": [
+       156,
+       655,
+       78,
+       80
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4401,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       75,
+       610,
+       239,
+       49
+      ],
+      "what": "button \"End session\"",
+      "box": [
+       269,
+       655,
+       62,
+       64
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4401,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       75,
+       610,
+       239,
+       49
+      ],
+      "what": "input \"\"",
+      "box": [
+       36,
+       605,
+       270,
+       52
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4402,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       75,
+       610,
+       239,
+       49
+      ],
+      "what": "button \"Clear what are you brewing? (optional)\"",
+      "box": [
+       306,
+       609,
+       44,
+       44
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4402,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       75,
+       610,
+       239,
+       49
+      ],
+      "what": "text \"Whistles at 15:55\" in span",
+      "box": [
+       138,
+       615,
+       114,
+       19
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4402,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "text",
+      "top": "otherClippedAway",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       75,
+       610,
+       239,
+       49
+      ],
+      "what": "text \"What are you brewing? (optional)\" in label",
+      "box": [
+       35,
+       605,
+       246,
+       22
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4406,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "efp9",
+      "points": 7,
+      "what": "input \"\"",
+      "box": [
+       36,
+       605,
+       270,
+       52
+      ],
+      "notice": "li \"Kettle’s off. See you soon.\""
+     },
+     {
+      "dlg": null,
+      "t": 4406,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "efp9",
+      "points": 2,
+      "what": "button \"Clear what are you brewing? (optional)\"",
+      "box": [
+       306,
+       609,
+       44,
+       44
+      ],
+      "notice": "li \"Kettle’s off. See you soon.\""
+     },
+     {
+      "dlg": null,
+      "t": 4498,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       594,
+       251,
+       52
+      ],
+      "what": "input \"\"",
+      "box": [
+       36,
+       596,
+       270,
+       52
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4498,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       594,
+       251,
+       52
+      ],
+      "what": "button \"Clear what are you brewing? (optional)\"",
+      "box": [
+       306,
+       600,
+       44,
+       44
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4499,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "text",
+      "top": "otherClippedAway",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       594,
+       251,
+       52
+      ],
+      "what": "text \"What are you brewing? (optional)\" in label",
+      "box": [
+       35,
+       596,
+       246,
+       22
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4501,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "efp9",
+      "points": 9,
+      "what": "input \"\"",
+      "box": [
+       36,
+       596,
+       270,
+       52
+      ],
+      "notice": "li \"Kettle’s off. See you soon.\""
+     },
+     {
+      "dlg": null,
+      "t": 4501,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "efp9",
+      "points": 3,
+      "what": "button \"Clear what are you brewing? (optional)\"",
+      "box": [
+       306,
+       600,
+       44,
+       44
+      ],
+      "notice": "li \"Kettle’s off. See you soon.\""
+     },
+     {
+      "dlg": null,
+      "t": 4599,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       592,
+       253,
+       52
+      ],
+      "what": "input \"\"",
+      "box": [
+       36,
+       595,
+       270,
+       52
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4599,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       592,
+       253,
+       52
+      ],
+      "what": "button \"Clear what are you brewing? (optional)\"",
+      "box": [
+       306,
+       599,
+       44,
+       44
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4600,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "text",
+      "top": "otherClippedAway",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       592,
+       253,
+       52
+      ],
+      "what": "text \"What are you brewing? (optional)\" in label",
+      "box": [
+       35,
+       595,
+       246,
+       22
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4602,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "efp9",
+      "points": 9,
+      "what": "input \"\"",
+      "box": [
+       36,
+       595,
+       270,
+       52
+      ],
+      "notice": "li \"Kettle’s off. See you soon.\""
+     },
+     {
+      "dlg": null,
+      "t": 4602,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "efp9",
+      "points": 3,
+      "what": "button \"Clear what are you brewing? (optional)\"",
+      "box": [
+       306,
+       599,
+       44,
+       44
+      ],
+      "notice": "li \"Kettle’s off. See you soon.\""
+     },
+     {
+      "dlg": null,
+      "t": 4700,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       594,
+       252,
+       52
+      ],
+      "what": "input \"\"",
+      "box": [
+       36,
+       595,
+       270,
+       52
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4700,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       594,
+       252,
+       52
+      ],
+      "what": "button \"Clear what are you brewing? (optional)\"",
+      "box": [
+       306,
+       599,
+       44,
+       44
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4702,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "text",
+      "top": "otherClippedAway",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       594,
+       252,
+       52
+      ],
+      "what": "text \"What are you brewing? (optional)\" in label",
+      "box": [
+       35,
+       595,
+       246,
+       22
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4705,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "efp9",
+      "points": 9,
+      "what": "input \"\"",
+      "box": [
+       36,
+       595,
+       270,
+       52
+      ],
+      "notice": "li \"Kettle’s off. See you soon.\""
+     },
+     {
+      "dlg": null,
+      "t": 4705,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "efp9",
+      "points": 3,
+      "what": "button \"Clear what are you brewing? (optional)\"",
+      "box": [
+       306,
+       599,
+       44,
+       44
+      ],
+      "notice": "li \"Kettle’s off. See you soon.\""
+     },
+     {
+      "dlg": null,
+      "t": 4800,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       604,
+       252,
+       52
+      ],
+      "what": "input \"\"",
+      "box": [
+       36,
+       595,
+       270,
+       52
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4800,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       604,
+       252,
+       52
+      ],
+      "what": "button \"Clear what are you brewing? (optional)\"",
+      "box": [
+       306,
+       599,
+       44,
+       44
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4800,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "text",
+      "top": "otherClippedAway",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       604,
+       252,
+       52
+      ],
+      "what": "text \"What are you brewing? (optional)\" in label",
+      "box": [
+       35,
+       595,
+       246,
+       22
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4802,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "efp9",
+      "points": 6,
+      "what": "input \"\"",
+      "box": [
+       36,
+       595,
+       270,
+       52
+      ],
+      "notice": "li \"Kettle’s off. See you soon.\""
+     },
+     {
+      "dlg": null,
+      "t": 4802,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "efp9",
+      "points": 2,
+      "what": "button \"Clear what are you brewing? (optional)\"",
+      "box": [
+       306,
+       599,
+       44,
+       44
+      ],
+      "notice": "li \"Kettle’s off. See you soon.\""
+     },
+     {
+      "dlg": null,
+      "t": 4899,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       612,
+       252,
+       52
+      ],
+      "what": "input \"\"",
+      "box": [
+       36,
+       595,
+       270,
+       52
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4899,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       612,
+       252,
+       52
+      ],
+      "what": "button \"Clear what are you brewing? (optional)\"",
+      "box": [
+       306,
+       599,
+       44,
+       44
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4899,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       612,
+       252,
+       52
+      ],
+      "what": "button \"Work\"",
+      "box": [
+       36,
+       661,
+       90,
+       44
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4899,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       612,
+       252,
+       52
+      ],
+      "what": "button \"Study\"",
+      "box": [
+       134,
+       661,
+       113,
+       44
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4899,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       612,
+       252,
+       52
+      ],
+      "what": "button \"Read\"",
+      "box": [
+       255,
+       661,
+       86,
+       44
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4900,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "text",
+      "top": "otherClippedAway",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       612,
+       252,
+       52
+      ],
+      "what": "text \"What are you brewing? (optional)\" in label",
+      "box": [
+       35,
+       595,
+       246,
+       22
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 4901,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "efp9",
+      "points": 6,
+      "what": "input \"\"",
+      "box": [
+       36,
+       595,
+       270,
+       52
+      ],
+      "notice": "li \"Kettle’s off. See you soon.\""
+     },
+     {
+      "dlg": null,
+      "t": 4902,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "efp9",
+      "points": 2,
+      "what": "button \"Clear what are you brewing? (optional)\"",
+      "box": [
+       306,
+       599,
+       44,
+       44
+      ],
+      "notice": "li \"Kettle’s off. See you soon.\""
+     },
+     {
+      "dlg": null,
+      "t": 5014,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       614,
+       252,
+       52
+      ],
+      "what": "input \"\"",
+      "box": [
+       36,
+       595,
+       270,
+       52
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 5014,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       614,
+       252,
+       52
+      ],
+      "what": "button \"Clear what are you brewing? (optional)\"",
+      "box": [
+       306,
+       599,
+       44,
+       44
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 5015,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       614,
+       252,
+       52
+      ],
+      "what": "button \"Work\"",
+      "box": [
+       36,
+       661,
+       90,
+       44
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 5015,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       614,
+       252,
+       52
+      ],
+      "what": "button \"Study\"",
+      "box": [
+       134,
+       661,
+       113,
+       44
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 5015,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       614,
+       252,
+       52
+      ],
+      "what": "button \"Read\"",
+      "box": [
+       255,
+       661,
+       86,
+       44
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 5015,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "text",
+      "top": "otherClippedAway",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       614,
+       252,
+       52
+      ],
+      "what": "text \"What are you brewing? (optional)\" in label",
+      "box": [
+       35,
+       595,
+       246,
+       22
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 5017,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "efp9",
+      "points": 6,
+      "what": "input \"\"",
+      "box": [
+       36,
+       595,
+       270,
+       52
+      ],
+      "notice": "li \"Kettle’s off. See you soon.\""
+     },
+     {
+      "dlg": null,
+      "t": 5099,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       614,
+       252,
+       52
+      ],
+      "what": "input \"\"",
+      "box": [
+       36,
+       595,
+       270,
+       52
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 5100,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       614,
+       252,
+       52
+      ],
+      "what": "button \"Clear what are you brewing? (optional)\"",
+      "box": [
+       306,
+       599,
+       44,
+       44
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 5100,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       614,
+       252,
+       52
+      ],
+      "what": "button \"Work\"",
+      "box": [
+       36,
+       661,
+       90,
+       44
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 5104,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       614,
+       252,
+       52
+      ],
+      "what": "button \"Study\"",
+      "box": [
+       134,
+       661,
+       113,
+       44
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 5104,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       614,
+       252,
+       52
+      ],
+      "what": "button \"Read\"",
+      "box": [
+       255,
+       661,
+       86,
+       44
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 5105,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "text",
+      "top": "otherClippedAway",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       614,
+       252,
+       52
+      ],
+      "what": "text \"What are you brewing? (optional)\" in label",
+      "box": [
+       35,
+       595,
+       246,
+       22
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 5199,
+      "state": "storage",
+      "hash": "#/",
+      "kind": "ctl",
+      "top": "notice",
+      "notice": "li \"Kettle’s off. See you soon.\"",
+      "nbox": [
+       69,
+       614,
+       252,
+       52
+      ],
+      "what": "input \"\"",
+      "box": [
+       36,
+       595,
+       270,
+       52
+      ],
+      "modal": false,
+      "sy": 0
+     }
+    ],
+    "seen": {
+     "Kettle’s off. See you soon.": 35
+    },
+    "floatPos": [],
+    "live": [
+     {
+      "t": 2906,
+      "state": "storage",
+      "text": "Kettle’s on. Focus session started, 25 minutes.",
+      "region": "status"
+     },
+     {
+      "t": 4390,
+      "state": "storage",
+      "text": "Kettle’s off.",
+      "region": "status"
+     },
+     {
+      "t": 4390,
+      "state": "storage",
+      "text": "Kettle’s off. See you soon.",
+      "region": "Notifications"
+     },
+     {
+      "t": 4527,
+      "state": "storage",
+      "text": "This browser’s storage is full. Kettle couldn’t save your latest changes. Save a backup to",
+      "region": "live"
+     }
+    ],
+    "sampleMsAvg": 2.3
+   },
+   "ms": 11942,
+   "pageErrors": []
+  }
+ },
+ "endedAt": "2026-10-14T00:09:56.243Z"
+}
