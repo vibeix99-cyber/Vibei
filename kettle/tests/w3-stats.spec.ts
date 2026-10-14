@@ -89,13 +89,18 @@ const SIZES = [
   { w: 844, h: 390, big: true },
   { w: 1440, h: 900, big: true },
   { w: 375, h: 667, big: false },
-];
+  // A cold load: the web fonts not there (yet). The fallback face is wider (S-D1: it once widened the page to 408px).
+  { w: 390, h: 844, big: true, nofonts: true },
+  { w: 375, h: 667, big: true, nofonts: true },
+] as { w: number; h: number; big: boolean; nofonts?: boolean }[];
+const blockFonts = (page: Page) => page.route(/\.(woff2?|ttf|otf)(\?.*)?$/, (r) => r.abort());
 for (const sz of SIZES) {
   const touch = sz.w < 900;
-  test.describe(`Delete this brew? at ${sz.w}×${sz.h}${sz.big ? ' with 200 % text' : ''}`, () => {
+  test.describe(`Delete this brew? at ${sz.w}×${sz.h}${sz.big ? ' with 200 % text' : ''}${sz.nofonts ? ', fonts blocked' : ''}`, () => {
     test.use({ viewport: { width: sz.w, height: sz.h }, hasTouch: touch, isMobile: touch && sz.w < sz.h });
 
     test('both choices can be tapped, and Tab reaches them in a loop', async ({ page }) => {
+      if (sz.nofonts) await blockFonts(page);
       await boot(page, { seed: 'veteran', big: sz.big });
       const n0 = await sessionsCount(page);
       const dialog = await openDelete(page, touch);
@@ -144,6 +149,7 @@ for (const sz of SIZES) {
     });
 
     test('a tap on Delete deletes', async ({ page }) => {
+      if (sz.nofonts) await blockFonts(page);
       await boot(page, { seed: 'veteran', big: sz.big });
       const n0 = await sessionsCount(page);
       await openDelete(page, touch);
@@ -307,3 +313,71 @@ test('the History delete dialog speaks of warm days, and the at-risk card invite
   const dialog = await openDelete(page, false);
   await expect(dialog).toContainText('It leaves your history, stats and warm days. The leaves you earned stay yours.');
 });
+
+// ---------------------------------------------------------------------------------------------------------------
+// S-D1: the Overview tiles fit at 200 % text, with the web fonts and before them
+// ---------------------------------------------------------------------------------------------------------------
+
+/** Every text in the Overview tiles: not clipped, and its glyphs inside its tile. */
+const tileOverflow = (page: Page) =>
+  page.evaluate(() => {
+    const grid = document.querySelector('section[aria-label="Overview"] > div')!;
+    const bad: string[] = [];
+    for (const tile of grid.children) {
+      const tr = tile.getBoundingClientRect();
+      for (const e of tile.querySelectorAll('div, span')) {
+        if (!(e.textContent ?? '').trim()) continue;
+        const range = document.createRange();
+        range.selectNodeContents(e);
+        const right = range.getBoundingClientRect().right;
+        if (e.scrollWidth > e.clientWidth + 0.5 && e.clientWidth > 0) bad.push(`${e.textContent!.trim()}: ${e.scrollWidth} > ${e.clientWidth}`);
+        else if (right > tr.right - 1) bad.push(`${e.textContent!.trim()}: ends at ${Math.round(right)}, tile at ${Math.round(tr.right)}`);
+      }
+    }
+    return bad;
+  });
+
+for (const sz of [
+  { w: 390, h: 844 },
+  { w: 375, h: 667 },
+  { w: 844, h: 390 },
+]) {
+  test.describe(`Overview tiles at ${sz.w}×${sz.h} with 200 % text`, () => {
+    test.use({ viewport: { width: sz.w, height: sz.h }, isMobile: sz.w < sz.h, hasTouch: true });
+
+    test('every tile text fits once the fonts are in', async ({ page }) => {
+      await boot(page, { seed: 'veteran', big: true });
+      await toStats(page);
+      await page.evaluate(() => document.fonts.ready);
+      await expect(page.getByRole('region', { name: 'Overview' })).toContainText(/Warmest run/);
+      expect(await tileOverflow(page)).toEqual([]);
+    });
+  });
+}
+
+for (const sz of [
+  { w: 390, h: 844 },
+  { w: 375, h: 667 },
+]) {
+  test.describe(`Stats before the web fonts arrive, ${sz.w}×${sz.h}, 200 % text`, () => {
+    test.use({ viewport: { width: sz.w, height: sz.h }, isMobile: true, hasTouch: true });
+
+    test('the page stays the width of the screen and the tiles fit (fonts blocked)', async ({ page }) => {
+      await blockFonts(page);
+      await boot(page, { seed: 'veteran', big: true });
+      await toStats(page);
+      await expect(page.getByRole('region', { name: 'Overview' })).toContainText(/Warmest run/);
+      const widths: { sw: number; iw: number }[] = [];
+      for (let i = 0; i < 20; i++) {
+        widths.push(await page.evaluate(() => ({ sw: document.documentElement.scrollWidth, iw: innerWidth })));
+        await page.waitForTimeout(100);
+      }
+      expect(await page.evaluate(() => [...document.fonts].filter((f) => f.status === 'loaded').length)).toBe(0);
+      for (const x of widths) {
+        expect(x.iw).toBe(sz.w);
+        expect(x.sw).toBeLessThanOrEqual(x.iw);
+      }
+      expect(await tileOverflow(page)).toEqual([]);
+    });
+  });
+}
