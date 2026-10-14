@@ -300,13 +300,40 @@ test('Settings never says "streak", and sound and nudges say what they cannot do
   });
   expect(words).not.toMatch(/streak/i);
   await expect(page.getByText('One finished brew makes a warm day. The goal is just for you.')).toBeVisible();
-  await expect(page.getByText(/play while Kettle is open, in a tab or as the app, after your first tap\. Closed, Kettle is silent\./)).toBeVisible();
-  await expect(page.getByText(/while Kettle is open but out of sight, I’ll nudge you\. With Kettle closed, no nudge can come\./)).toBeVisible();
+  await expect(page.getByText('The whistle, effects and ambience play after your first tap. A phone can quiet them when locked, on silent or out of sight.', { exact: true })).toBeVisible();
+  // Nudges On (permission granted, switch on): no nudge is held or delivered later (G-D3).
+  await expect(
+    page.getByText('On. When a brew or tea break ends while Kettle is open but out of sight, I’ll nudge you. If Kettle is closed or your phone has paused it by then, no nudge comes.', { exact: true }),
+  ).toBeVisible();
+  expect(words).not.toMatch(/may hold|until you’re back|later/i);
   // Muted: the quiet line.
   await page.getByRole('switch', { name: 'Sounds' }).click();
   await expect(page.getByText('Everything’s quiet. The kettle still shows when it whistles.')).toBeVisible();
   // The reset sheet uses the same words.
   await page.getByRole('button', { name: /Reset everything/ }).click();
   await expect(page.getByRole('dialog', { name: 'Start fresh?' })).not.toContainText(/streak/i);
+  await ctx.close();
+});
+
+test('an iPhone-like Safari tab (no notifications, no vibration API): Sounds agrees with the Nudges line, Haptics names the browser', async ({ browser, baseURL }) => {
+  const { ctx, page } = await device(browser, 390, 844);
+  await ctx.addInitScript(() => {
+    delete (window as any).Notification;
+    delete (Navigator.prototype as any).vibrate;
+  });
+  await page.goto(`${base(baseURL)}/?debug&seed=veteran&theme=light#/settings`);
+  await ready(page);
+  await page.evaluate(() => (window as any).__kettle.settings.getState().set({ muted: false }));
+  await page.waitForTimeout(300);
+  const nudges = page.getByText('This browser can’t show notifications. With sound on, Kettle chimes while it’s on screen.', { exact: true });
+  const sounds = page.getByText('The whistle, effects and ambience play after your first tap. A phone can quiet them when locked, on silent or out of sight.', { exact: true });
+  await expect(nudges).toBeVisible();
+  await expect(sounds).toBeVisible();
+  // No promise that sound plays in a background tab or out of sight (it doesn't on a frozen iOS page).
+  expect(await sounds.innerText()).not.toMatch(/in a tab|in the background|as the app|while Kettle is open/i);
+  await expect(page.getByRole('switch', { name: 'Nudges' })).toBeDisabled();
+  // Haptics: the browser lacks the API; the device may well vibrate (G-D4).
+  await expect(page.getByText('Vibration isn’t available in this browser.', { exact: true })).toBeVisible();
+  await expect(page.getByRole('switch', { name: 'Haptics' })).toBeDisabled();
   await ctx.close();
 });

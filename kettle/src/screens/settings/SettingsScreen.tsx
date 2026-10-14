@@ -131,7 +131,7 @@ function SoundGroup() {
   const current = AMBIENT_OPTIONS.find((a) => a.id === st.ambient);
   return (
     <ListGroup title="Sound">
-      <ListRow icon={st.muted ? 'mute' : 'sound'} iconTone="honey" label="Sounds" description={st.muted ? 'Everything’s quiet. The kettle still shows when it whistles.' : 'The whistle, effects and ambience play while Kettle is open, in a tab or as the app, after your first tap. Closed, Kettle is silent. A phone’s silent switch or lock screen can quiet it too.'} toggle={{ checked: !st.muted, onChange: (v) => st.set({ muted: !v }) }} />
+      <ListRow icon={st.muted ? 'mute' : 'sound'} iconTone="honey" label="Sounds" description={st.muted ? 'Everything’s quiet. The kettle still shows when it whistles.' : 'The whistle, effects and ambience play after your first tap. A phone can quiet them when locked, on silent or out of sight.'} toggle={{ checked: !st.muted, onChange: (v) => st.set({ muted: !v }) }} />
       <VolumeRow title="Master volume" value={st.masterVolume} onChange={(v) => st.set({ masterVolume: v })} disabled={st.muted} />
       <VolumeRow title="Effects" value={st.sfxVolume} onChange={(v) => st.set({ sfxVolume: v })} disabled={st.muted} tone="honey" />
       <VolumeRow title="Ambience" value={st.ambientVolume} onChange={(v) => st.set({ ambientVolume: v })} disabled={st.muted} tone="sky" />
@@ -184,7 +184,7 @@ function DeviceGroup() {
         ? 'Blocked in your browser settings.'
         : status === 'granted'
           ? notifOn
-            ? 'On. When a brew or tea break ends while Kettle is open but out of sight, I’ll nudge you. With Kettle closed, no nudge can come. A locked phone may hold the nudge until you’re back.'
+            ? 'On. When a brew or tea break ends while Kettle is open but out of sight, I’ll nudge you. If Kettle is closed or your phone has paused it by then, no nudge comes.'
             : 'Off. Turn on for a nudge when the kettle whistles while Kettle is out of sight.'
           : 'A nudge when the kettle whistles while Kettle is open but out of sight. Your browser will ask first.';
   return (
@@ -230,14 +230,14 @@ function DeviceGroup() {
         icon="eye"
         iconTone="honey"
         label="Keep screen awake"
-        description={wakeSupported ? 'Stops your screen dimming while a brew is on screen.' : 'Not supported in this browser.'}
+        description={wakeSupported ? 'Stops your screen dimming while a brew runs on screen.' : 'Not supported in this browser.'}
         toggle={{ checked: st.keepAwake && wakeSupported, disabled: !wakeSupported, onChange: (v) => st.set({ keepAwake: v }) }}
       />
       <ListRow
         icon="lightning"
         iconTone="berry"
         label="Haptics"
-        description={vibrateSupported ? 'Little buzzes for key moments, on devices that can vibrate.' : 'This device can’t vibrate.'}
+        description={vibrateSupported ? 'Little buzzes for key moments, on devices that can vibrate.' : 'Vibration isn’t available in this browser.'}
         toggle={{ checked: st.haptics && vibrateSupported, disabled: !vibrateSupported, onChange: (v) => st.set({ haptics: v }) }}
       />
     </ListGroup>
