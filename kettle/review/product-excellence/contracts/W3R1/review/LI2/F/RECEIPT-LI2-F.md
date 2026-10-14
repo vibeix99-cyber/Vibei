@@ -514,3 +514,16 @@ A tap aimed beforehand lands on the arriving notice or the card in **10 of 15** 
 Opened: `reach2/trial-390x844-light-t200-24-1-notice.png` (notice under the scene; 24:56; the tops of the three control circles at the bottom edge) and `…-2-after-tap.png` (strip gone, countdown and Add 5 / Pause / End moved up 107 px, fully in view).
 
 **Answer, raw:** yes. Where the notice pushes the session controls past the panel's edge (375×667 @100, 390×844 @200), the trial's `reach` close at rest moves a partly visible control 45–107 px up. A tap aimed at it just after lands on its caption or on the countdown, not the button. **The base does exactly the same** (same px, same landing). Where the panel fits (844×390 / 667×375 @100), the trial keeps the room (0 px) and the base moved 31–33 px; there the tap still hit the button on both builds.
+
+### 2g. The fling "above" leave, every frame (resolves §2e's caveat)
+
+`LI2-idle3.mjs` = idle2's "above" with every frame from 6 before to 8 after the leave saved. 390×844 light @200, finger drag 600 px released into momentum, 17:48–17:49 UTC. Data `idle3/{trial,base}/idle3-*.json`; frames `idle3/*/…-above-r*-after.png`.
+
+| Build, rep | Frames before the leave (16 ms apart): target top / sy | The leave's frame | Frames after |
+|---|---|---|---|
+| TRIAL r0 (leave 632 ms after `pointercancel`) | 47.6 / 189 → 35.6 / 201 (scroll 12 px per frame or none) | **top −129.9, sy 213** (strip 153.5 → 0, `why: above`) | −129.9 / 213, −141.9 / 225, −153.9 / 237 … sy keeps climbing 12 px per frame; **no frame with sy −153.5** |
+| TRIAL r1 (500 ms) | 59.6 / 177 → 47.6 / 189 | **top −105.9, sy 189** (scroll 0 in that frame) | −117.9 / 201 … no compensation frame |
+| BASE r0 (473 ms) | 78.6 / 158 → 66.6 / 170 | **top −98.9, sy 182** | sy 194, 206, 218 … no compensation |
+| BASE r1 (463 ms) | 71.6 / 165 → 59.6 / 177 | **top −93.9, sy 177** | sy 189, 201 … no compensation |
+
+**Result.** During a touch fling, the notice whose time ran out leaves on the "above" path. On both builds, everything below the strip jumps up **153.5 px** on screen in one frame: the target, a status-bar control, went from **35.6 / 47.6 px (in view)** to −129.9 / −105.9. The page's scroll is not compensated in that frame or any of the next 8. **The trial and the base behave the same.** It happens 460–630 ms after the finger lifts, while the page is still moving.
