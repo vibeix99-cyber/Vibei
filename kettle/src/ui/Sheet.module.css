@@ -263,8 +263,6 @@
   border-top: var(--border) solid var(--line);
   padding-top: var(--space-3);
 }
-/* A sheet's panel runs 40px past the bottom edge (see .sheet .panel): pin the footer above that. */
-.sheet .panel[data-tight] > .footer {
-  bottom: 40px;
-}
+/* (A sheet's panel runs 40px past the bottom edge, inside its bottom padding; a sticky box already stops at the
+ * scroll container's padding edge, so `bottom: 0` lands the footer on the screen's edge in both modes.) */
 
