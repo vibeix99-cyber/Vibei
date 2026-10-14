@@ -63,6 +63,7 @@ A tap aimed beforehand lands on the arriving notice (`li._toast…`) or the card
 | TRIAL :5521 | 1440 light 200 % reduced | 2 passed, 1 failed (`--repeat-each=3`) | prior `runs/A-trial-1440-200-reduced-x3.log` |
 | TRIAL :5521 | 1440 light 200 % reduced | **2/2 passed** (`--repeat-each=2`, 16:56–16:58) | `runs2/E1-trial-ns275-1440-light-200-reduced-x2.log` |
 | TRIAL :5521 | 1440 light 200 % reduced, **all 5** | **4 passed, 1 failed**. The two runs right before the failure passed, and the two after it passed | — |
+| TRIAL :5521 | 1440 light 200 % reduced, inside the D run (13:42–14:15) | 1/1 passed, so **5 of 6** counting it | prior `runs/D-trial-specs.log` test 69 |
 | TRIAL :5521 | 1440 dark 200 % (full motion) | 0/1, inside the 99-test D run | prior `runs/D-trial-specs.log` |
 | TRIAL :5521 | 1440 dark 200 % | **2/2 passed** (16:58–17:00) | `runs2/E2-trial-ns275-1440-dark-200-x2.log` |
 | TRIAL :5521 | 1440 dark 200 %, **all 3** | **2 passed, 1 failed** | — |
