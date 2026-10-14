@@ -162,10 +162,11 @@ const faceClip = (scale) => {
   return { x, y, width: Math.min(s, innerWidth - x), height: Math.min(s, innerHeight - y), chaiPx: Math.abs(fy - ty) };
 };
 for (const cfg of args.cfgs.split(',')) {
-  const [vp, theme, tier, time, close] = cfg.split(':');
+  const [vp, theme, tier, time, close, kk] = cfg.split(':');
+  const k = kk ? +kk.slice(1) : null; // optional fill override (k<n>): a what-if frame for Vibei, not the shipped value
   const [, w, h, dpr] = vp.match(/^(\d+)x(\d+)@(\d+)$/).map(Number);
   const mobile = w < 900;
-  const name = `${w}x${h}-${theme}-${tier}-${time}`;
+  const name = `${w}x${h}-${theme}-${tier}-${time}` + (k != null ? `-k${k}` : '');
   const rec = { name, cfg, errors: [] };
   const ctx = await b.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: dpr, isMobile: mobile && w < h, hasTouch: mobile, colorScheme: theme, timezoneId: 'UTC', locale: 'en-GB', serviceWorkers: 'block' });
   const p = await ctx.newPage();
@@ -179,11 +180,11 @@ for (const cfg of args.cfgs.split(',')) {
     await p.waitForSelector('section[aria-label="The room"] [data-scene-ready="true"]', { timeout: 150_000 });
     await p.waitForFunction(() => window.__nook?.chaiKind === 'model', null, { timeout: 60_000 });
     await sleep(2500);
-    rec.fill = await p.evaluate(() => { const s = new Set(); window.__nook.chai.root.traverse((o) => { if (o.isMesh && o.material?.name === 'chai_fur') s.add(+o.material.emissiveIntensity.toFixed(4)); }); return [...s]; });
+    rec.fillLoaded = await p.evaluate(() => { const s = new Set(); window.__nook.chai.root.traverse((o) => { if (o.isMesh && o.material?.name === 'chai_fur') s.add(+o.material.emissiveIntensity.toFixed(4)); }); return [...s]; });
     rec.exposure = await p.evaluate(() => window.__nook.renderer.toneMappingExposure);
     const canvasFilter = await p.evaluate(() => { const c = window.__nook.canvas; return getComputedStyle(c).filter + ' | ' + getComputedStyle(c.parentElement).filter; });
     rec.canvasFilter = canvasFilter;
-    const nook = await p.evaluate(MEASURE, { close: false });
+    const nook = await p.evaluate(MEASURE, { close: false, k });
     delete nook.b64; delete nook.dbg;
     await p.screenshot({ path: `${args.out}/${name}-nook.png`, timeout: 240_000 });
     const clip = await p.evaluate(faceClip, 0.75);
@@ -191,7 +192,7 @@ for (const cfg of args.cfgs.split(',')) {
     await p.screenshot({ path: `${args.out}/${name}-face.png`, clip, timeout: 240_000 });
     let closeM = null;
     if (close) {
-      closeM = await p.evaluate(MEASURE, { close: true });
+      closeM = await p.evaluate(MEASURE, { close: true, k });
       delete closeM.b64; delete closeM.dbg;
       const c2 = await p.evaluate(() => {
         const e = window.__nook; const r = e.canvas.getBoundingClientRect();
@@ -204,7 +205,8 @@ for (const cfg of args.cfgs.split(',')) {
     }
     Object.assign(rec, { nook, close: closeM, ms: Date.now() - t0 });
     const s = (m) => (m ? `eyes ${m.eyes.contrast}/${m.eyes.dL} nose ${m.nose.contrast}/${m.nose.dL} ringL ${m.eyes.ring.L} ${m.eyes.ring.meanHex} ${m.quality} ${m.chaiKind}` : '-');
-    console.log(new Date().toISOString(), args.label, name, 'fill', rec.fill, 'exp', rec.exposure, 'nook:', s(nook), 'close:', s(closeM), rec.errors.join('|'));
+    rec.fill = await p.evaluate(() => { const s = new Set(); window.__nook.chai.root.traverse((o) => { if (o.isMesh && o.material?.name === 'chai_fur') s.add(+o.material.emissiveIntensity.toFixed(4)); }); return [...s]; });
+    console.log(new Date().toISOString(), args.label, name, 'fill', rec.fillLoaded, '->', rec.fill, 'exp', rec.exposure, 'nook:', s(nook), 'close:', s(closeM), rec.errors.join('|'));
   } catch (er) {
     rec.errors.push('SCRIPT: ' + er.message.slice(0, 300));
     console.log(name, 'FAILED', er.message.slice(0, 200));
