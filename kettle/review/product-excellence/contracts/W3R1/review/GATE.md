@@ -119,3 +119,7 @@
 | X-2 G's pressed-segment test | G | Flaky 4/8. Test-only change assigned to Maker G at 18:58 UTC on `pe/w3r1-x2-segment-test` (worktree `w5g-x2`, from `4223062`; stop 19:30). LEAD-5 checks 8/8 on the merged tree; until then it is known-flaky |
 | X-1 integrity I03 | test file S; surface: the unowned save-warning | Run ×10 with trace in the final regression |
 | X-3 `w3-notices` room | F | Changes in F's fix round |
+
+## S: APPROVE (final, LEAD-5 `1c241d3`) → merged as `0efca36` (2026-10-14 ~18:55 UTC)
+
+`pe/w3-stats@697c1eb`. The merged kettle/src `db28295` and kettle/tests `0da133e` equal fix trial `f63286e`'s exactly. The integration branch now holds N, G (+ docs) and S.
