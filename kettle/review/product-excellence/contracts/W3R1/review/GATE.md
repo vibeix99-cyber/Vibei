@@ -108,3 +108,14 @@
 | Scope (checked) | `git diff 344069c 697c1eb -- kettle/src kettle/tests` touches only `stats.module.css` (one `@container (max-width: 21rem)` block: tiles one a row at large text) and `tests/w3-stats.spec.ts` |
 | **Fix trial** | **`f63286e`** = integration `283ae93` (N + G + docs) + `697c1eb`, worktree `/home/user/wt/w5tr-s2`, src `db28295`. tsc 0, vitest **295/295**, build OK. Dev **:5526** (verified), preview **:5536** |
 | Archive | `archive/pe-w3-stats-fix-697c1eb.incremental.bundle`, `archive/w3r1-trial-f63286e.incremental.bundle` |
+
+## Cross-effects (LEAD-5, `CHECKER-W3R1-CROSS.md`, `4223062`)
+
+**Result:** no proven combined-only effect.
+
+| Item | Owner | Status / action |
+|---|---|---|
+| X-4 `w3-stats` Delete | S | Proven cause S-D1; closed in S's fix |
+| X-2 G's pressed-segment test | G | Flaky 4/8. Test-only change assigned to Maker G at 18:58 UTC on `pe/w3r1-x2-segment-test` (worktree `w5g-x2`, from `4223062`; stop 19:30). LEAD-5 checks 8/8 on the merged tree; until then it is known-flaky |
+| X-1 integrity I03 | test file S; surface: the unowned save-warning | Run ×10 with trace in the final regression |
+| X-3 `w3-notices` room | F | Changes in F's fix round |
