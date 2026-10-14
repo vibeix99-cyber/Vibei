@@ -418,3 +418,112 @@ Runs (UTC):
   - Focus goes to that Undo in 14 of 16 configs. At **390×844 light @200 and 1440 light @200 it was on `<main>`** 1 s after Enter. Timing or a real difference: unproven.
 - **TRIAL, Delete by tap or click:** the brew goes (→ 81); focus is on `<main>`. **BASE does the same** (focus `<main>`, 82). The row that opened the sheets no longer exists.
 
+## 2b. Every sheet: reach, focus trap and return, Escape, click outside, scroll, pinned footer
+
+**Tool:** `tools/LI-sheets.mjs … all`, veteran, real taps on phones and clicks at 1440. Runs: BASE :5478 17:21–17:33 (`sheets/LI-all-base.log`), TRIAL :5522 17:4x–18:0x (`sheets/LI-all-trial.log`). For each sheet the probe checks:
+- **Reach:** every button, link and input in the top sheet is on screen, on top and not clipped. A control inside a scroller counts as reachable if scrolling it into view makes it so.
+- **Scroll:** every scroller in the sheet scrolled to its end; the last content element is then visible above the footer.
+- **Footer:** where the footer sits, and whether the sheet is `data-tight`.
+- **Trap:** Tab and Shift+Tab, (number of controls + 2) presses each, all stops inside the top sheet.
+- **Escape:** open sheets after, and where focus went.
+- **Reopen, then a tap or click on the backdrop:** open sheets after, and where focus went.
+
+Screenshots: `sheets/<build>/<cfg>-<sheet>.png` (the sheet as opened).
+- Probe errors are in the table, shown as "probe error". They are failures of my openers: a stale "Custom" option, two "Reset everything" matches after an import's Undo row, one screenshot timeout under load. They are not app results.
+- Configs: 375×667 @200 light and dark, 1440×900 light @100 and dark @200.
+
+
+**375x667-light-200**
+
+| Sheet | BASE | TRIAL |
+|---|---|---|
+| today-warm | all reachable; footer 567-667; last content visible after scroll: True; trap ✓; Esc 1→0:23 days warm streak. Show details; outside 0:23 days warm streak. Show details | all reachable; footer 571-667 tight; last content visible after scroll: True; trap ✓; Esc 1→0:23 days warm streak. Show details; outside 0:23 days warm streak. Show details |
+| today-leaves | all reachable; footer 567-667; last content visible after scroll: True; trap ✓; Esc 1→0:2,266 leaves Show details; outside 0:2,266 leaves Show details | all reachable; footer 571-667 tight; last content visible after scroll: True; trap ✓; Esc 1→0:2,266 leaves Show details; outside 0:2,266 leaves Show details |
+| today-level | all reachable; footer 525-667; last content visible after scroll: True; trap ✓; Esc 1→0:12 Level 12 Cozy level 12, 179 lea; outside 0:12 Level 12 Cozy level 12, 179 lea | all reachable; footer 525-667; last content visible after scroll: True; trap ✓; Esc 1→0:12 Level 12 Cozy level 12, 179 lea; outside 0:12 Level 12 Cozy level 12, 179 lea |
+| today-rhythm | all reachable; footer 484-667; last content visible after scroll: True; trap ✓; Esc 1→0:Custom; outside 0:Custom | all reachable; footer 484-667; last content visible after scroll: True; trap ✓; Esc 1→0:Custom; outside 0:Custom |
+| shortcuts | all reachable; footer no footer; last content visible after scroll: True; trap ✓ (Tab stays on 1 stop); Esc 1→0:Custom; outside 0:Custom | all reachable; footer no footer; last content visible after scroll: True; trap ✓ (Tab stays on 1 stop); Esc 1→0:Custom; outside 0:Custom |
+| settings-reset | NOT reachable: Export a backup first:off 632–728/667/scroll→off 632–728/667; Keep my data:off 674–737/667; Reset everything:off 747–846; footer 656-870 OFF; last content visible after scroll: True; trap ✓; Esc 1→0:Reset everything Start fresh on th; outside 0:Reset everything Start fresh on th | all reachable; footer 457-667 tight; last content visible after scroll: True; trap ✓; Esc 1→0:Reset everything Start fresh on th; outside 0:Reset everything Start fresh on th |
+| settings-import | all reachable; footer 377-667; last content visible after scroll: True; trap ✓; Esc 1→0:Export a backup Save everything as; outside 0:Export a backup Save everything as | all reachable; footer 377-667; last content visible after scroll: True; trap ✓; Esc 1→0:Export a backup Save everything as; outside 0:Export a backup Save everything as |
+| stats-badge | all reachable; footer 569-667; last content visible after scroll: True; trap ✓; Esc 1→0:Morning Dew, tier 3 of 5. 15 of 40; outside 0:Morning Dew, tier 3 of 5. 15 of 40 | all reachable; footer 569-667; last content visible after scroll: True; trap ✓; Esc 1→0:Morning Dew, tier 3 of 5. 15 of 40; outside 0:Morning Dew, tier 3 of 5. 15 of 40 |
+| stats-edit | all reachable; footer no footer; last content visible after scroll: True; trap ✓; Esc 1→0:Read brew, 13:20, 25 minutes, Full; outside 0:Read brew, 13:20, 25 minutes, Full | all reachable; footer no footer; last content visible after scroll: True; trap ✓; Esc 1→0:Read brew, 13:20, 25 minutes, Full; outside 0:Read brew, 13:20, 25 minutes, Full |
+| stats-delete-over-edit | NOT reachable: Delete:off 641–698/667; footer 571-714 OFF; last content visible after scroll: True; trap ✓ (Tab stays on 1 stop); Esc 2→1:Delete this brew; outside 1:Delete this brew | all reachable; footer 487-637 tight; last content visible after scroll: True; trap ✓; Esc 2→1:Delete this brew; outside 1:Delete this brew |
+| focus-ambience | all reachable; footer 563-667; last content visible after scroll: True; trap ✓; Esc 1→0:Ambience: Rain. Change; outside 0:Ambience: Rain. Change | all reachable; footer 563-667; last content visible after scroll: True; trap ✓; Esc 1→0:Ambience: Rain. Change; outside 0:Ambience: Rain. Change |
+| focus-end | NOT reachable: Keep brewing:off 629–691/667; End session:off 699–755/667; footer 611-779 OFF; last content visible after scroll: True; trap ✓; Esc 1→0:End session; outside 0:End session | all reachable; footer 503-667 tight; last content visible after scroll: True; trap ✓; Esc 1→0:End session; outside 0:End session |
+
+**375x667-dark-200**
+
+| Sheet | BASE | TRIAL |
+|---|---|---|
+| today-warm | all reachable; footer 567-667; last content visible after scroll: True; trap ✓; Esc 1→0:23 days warm streak. Show details; outside 0:23 days warm streak. Show details | all reachable; footer 571-667 tight; last content visible after scroll: True; trap ✓; Esc 1→0:23 days warm streak. Show details; outside 0:23 days warm streak. Show details |
+| today-leaves | all reachable; footer 567-667; last content visible after scroll: True; trap ✓; Esc 1→0:2,266 leaves Show details; outside 0:2,266 leaves Show details | all reachable; footer 571-667 tight; last content visible after scroll: True; trap ✓; Esc 1→0:2,266 leaves Show details; outside 0:2,266 leaves Show details |
+| today-level | all reachable; footer 525-667; last content visible after scroll: True; trap ✓; Esc 1→0:12 Level 12 Cozy level 12, 179 lea; outside 0:12 Level 12 Cozy level 12, 179 lea | all reachable; footer 525-667; last content visible after scroll: True; trap ✓; Esc 1→0:12 Level 12 Cozy level 12, 179 lea; outside 0:12 Level 12 Cozy level 12, 179 lea |
+| today-rhythm | all reachable; footer 484-667; last content visible after scroll: True; trap ✓; Esc 1→0:Custom; outside 0:Custom | all reachable; footer 484-667; last content visible after scroll: True; trap ✓; Esc 1→0:Custom; outside 0:Custom |
+| shortcuts | all reachable; footer no footer; last content visible after scroll: True; trap ✓ (Tab stays on 1 stop); Esc 1→0:Custom; outside 0:Custom | all reachable; footer no footer; last content visible after scroll: True; trap ✓ (Tab stays on 1 stop); Esc 1→0:Custom; outside 0:Custom |
+| settings-reset | probe error: locator.scrollIntoViewIfNeeded: Error: strict mode violation | all reachable; footer 457-667 tight; last content visible after scroll: True; trap ✓; Esc 1→0:Reset everything Start fresh on th; outside 0:Reset everything Start fresh on th |
+| settings-import | all reachable; footer 377-667; last content visible after scroll: True; trap ✓; Esc 1→0:Reset everything Start fresh on th; outside 0:Reset everything Start fresh on th | all reachable; footer 377-667; last content visible after scroll: True; trap ✓; Esc 1→0:Reset everything Start fresh on th; outside 0:Reset everything Start fresh on th |
+| stats-badge | all reachable; footer 569-667; last content visible after scroll: True; trap ✓; Esc 1→0:Morning Dew, tier 3 of 5. 15 of 40; outside 0:Morning Dew, tier 3 of 5. 15 of 40 | all reachable; footer 569-667; last content visible after scroll: True; trap ✓; Esc 1→0:Morning Dew, tier 3 of 5. 15 of 40; outside 0:Morning Dew, tier 3 of 5. 15 of 40 |
+| stats-edit | all reachable; footer no footer; last content visible after scroll: True; trap ✓; Esc 1→0:Read brew, 13:20, 25 minutes, Full; outside 0:Read brew, 13:20, 25 minutes, Full | all reachable; footer no footer; last content visible after scroll: True; trap ✓; Esc 1→0:Read brew, 13:20, 25 minutes, Full; outside 0:Read brew, 13:20, 25 minutes, Full |
+| stats-delete-over-edit | NOT reachable: Delete:off 641–698/667; footer 571-714 OFF; last content visible after scroll: True; trap ✓ (Tab stays on 1 stop); Esc 2→1:Delete this brew; outside 1:Delete this brew | all reachable; footer 487-637 tight; last content visible after scroll: True; trap ✓; Esc 2→1:Delete this brew; outside 1:Delete this brew |
+| focus-ambience | all reachable; footer 563-667; last content visible after scroll: True; trap ✓; Esc 1→0:Ambience: Rain. Change; outside 0:Ambience: Rain. Change | all reachable; footer 563-667; last content visible after scroll: True; trap ✓; Esc 1→0:Ambience: Rain. Change; outside 0:Ambience: Rain. Change |
+| focus-end | NOT reachable: Keep brewing:off 629–691/667; End session:off 699–755/667; footer 611-779 OFF; last content visible after scroll: True; trap ✓; Esc 1→0:End session; outside 0:End session | all reachable; footer 503-667 tight; last content visible after scroll: True; trap ✓; Esc 1→0:End session; outside 0:End session |
+
+**1440x900-light-100**
+
+| Sheet | BASE | TRIAL |
+|---|---|---|
+| today-warm | all reachable; footer 676-762; last content visible after scroll: True; trap ✓; Esc 1→0:23 days warm streak. Show details; outside 0:23 days warm streak. Show details | all reachable; footer 676-762; last content visible after scroll: True; trap ✓; Esc 1→0:23 days warm streak. Show details; outside 0:23 days warm streak. Show details |
+| today-leaves | all reachable; footer 617-703; last content visible after scroll: True; trap ✓; Esc 1→0:2,266 leaves Show details; outside 0:2,266 leaves Show details | all reachable; footer 617-703; last content visible after scroll: True; trap ✓; Esc 1→0:2,266 leaves Show details; outside 0:2,266 leaves Show details |
+| today-level | all reachable; footer 578-664; last content visible after scroll: True; trap ✓; Esc 1→0:12 Level 12 Cozy level 12, 179 lea; outside 0:12 Level 12 Cozy level 12, 179 lea | all reachable; footer 578-664; last content visible after scroll: True; trap ✓; Esc 1→0:12 Level 12 Cozy level 12, 179 lea; outside 0:12 Level 12 Cozy level 12, 179 lea |
+| today-rhythm | all reachable; footer 531-617; last content visible after scroll: True; trap ✓; Esc 1→0:Custom Set it; outside 0:Custom Set it | probe error: locator.scrollIntoViewIfNeeded: Element is not attached to t |
+| shortcuts | all reachable; footer no footer; last content visible after scroll: True; trap ✓ (Tab stays on 1 stop); Esc 1→0:Custom Set it; outside 0:Custom Set it | all reachable; footer no footer; last content visible after scroll: True; trap ✓ (Tab stays on 1 stop); Esc 1→0:Custom Set it; outside 0:Custom Set it |
+| settings-reset | all reachable; footer 528-684; last content visible after scroll: True; trap ✓; Esc 1→0:Reset everything Start fresh on th; outside 0:Reset everything Start fresh on th | all reachable; footer 528-684; last content visible after scroll: True; trap ✓; Esc 1→0:Reset everything Start fresh on th; outside 0:Reset everything Start fresh on th |
+| settings-import | all reachable; footer 556-675; last content visible after scroll: True; trap ✓; Esc 1→0:Reset everything Start fresh on th; outside 0:Reset everything Start fresh on th | all reachable; footer 556-675; last content visible after scroll: True; trap ✓; Esc 1→0:Reset everything Start fresh on th; outside 0:Reset everything Start fresh on th |
+| stats-badge | all reachable; footer 706-792; last content visible after scroll: True; trap ✓; Esc 1→0:Morning Dew, tier 3 of 5. 15 of 40; outside 0:Morning Dew, tier 3 of 5. 15 of 40 | all reachable; footer 706-792; last content visible after scroll: True; trap ✓; Esc 1→0:Morning Dew, tier 3 of 5. 15 of 40; outside 0:Morning Dew, tier 3 of 5. 15 of 40 |
+| stats-edit | all reachable; footer no footer; last content visible after scroll: True; trap ✓; Esc 1→0:Read brew, 13:20, 25 minutes, Full; outside 0:Read brew, 13:20, 25 minutes, Full | all reachable; footer no footer; last content visible after scroll: True; trap ✓; Esc 1→0:Read brew, 13:20, 25 minutes, Full; outside 0:Read brew, 13:20, 25 minutes, Full |
+| stats-delete-over-edit | all reachable; footer 498-630; last content visible after scroll: True; trap ✓ (Tab stays on 1 stop); Esc 2→1:Delete this brew; outside 1:Delete this brew | all reachable; footer 498-630; last content visible after scroll: True; trap ✓; Esc 2→1:Delete this brew; outside 1:Delete this brew |
+| focus-ambience | all reachable; footer 642-736; last content visible after scroll: True; trap ✓; Esc 1→0:Ambience: Rain. Change; outside 0:Ambience: Rain. Change | all reachable; footer 642-736; last content visible after scroll: True; trap ✓; Esc 1→0:Ambience: Rain. Change; outside 0:Ambience: Rain. Change |
+| focus-end | all reachable; footer 507-661; last content visible after scroll: True; trap ✓; Esc 1→0:End session; outside 0:End session | all reachable; footer 507-661; last content visible after scroll: True; trap ✓; Esc 1→0:End session; outside 0:End session |
+
+**1440x900-dark-200**
+
+| Sheet | BASE | TRIAL |
+|---|---|---|
+| today-warm | all reachable; footer 732-824; last content visible after scroll: True; trap ✓; Esc 1→0:23 days warm streak. Show details; outside 0:23 days warm streak. Show details | all reachable; footer 732-824; last content visible after scroll: True; trap ✓; Esc 1→0:23 days warm streak. Show details; outside 0:23 days warm streak. Show details |
+| today-leaves | all reachable; footer 732-824; last content visible after scroll: True; trap ✓; Esc 1→0:2,266 leaves Show details; outside 0:2,266 leaves Show details | all reachable; footer 732-824; last content visible after scroll: True; trap ✓; Esc 1→0:2,266 leaves Show details; outside 0:2,266 leaves Show details |
+| today-level | all reachable; footer 641-733; last content visible after scroll: True; trap ✓; Esc 1→0:12 Level 12 Cozy level 12, 179 lea; outside 0:12 Level 12 Cozy level 12, 179 lea | probe error: page.screenshot: Timeout 30000ms exceeded. / Call log: |
+| today-rhythm | probe error: locator.scrollIntoViewIfNeeded: Element is not attached to t | probe error: locator.scrollIntoViewIfNeeded: Element is not attached to t |
+| shortcuts | all reachable; footer no footer; last content visible after scroll: True; trap ✓ (Tab stays on 1 stop); Esc 1→0:Custom Set it; outside 0:Custom Set it | all reachable; footer no footer; last content visible after scroll: True; trap ✓ (Tab stays on 1 stop); Esc 1→0:Custom Set it; outside 0:Custom Set it |
+| settings-reset | probe error: locator.scrollIntoViewIfNeeded: Error: strict mode violation | all reachable; footer 637-801; last content visible after scroll: True; trap ✓; Esc 1→0:Reset everything Start fresh on th; outside 0:Reset everything Start fresh on th |
+| settings-import | all reachable; footer 587-824; last content visible after scroll: True; trap ✓; Esc 1→0:Reset everything Start fresh on th; outside 0:Reset everything Start fresh on th | all reachable; footer 587-824; last content visible after scroll: True; trap ✓; Esc 1→0:Reset everything Start fresh on th; outside 0:Reset everything Start fresh on th |
+| stats-badge | all reachable; footer 734-824; last content visible after scroll: True; trap ✓; Esc 1→0:Morning Dew, tier 3 of 5. 15 of 40; outside 0:Morning Dew, tier 3 of 5. 15 of 40 | all reachable; footer 734-824; last content visible after scroll: True; trap ✓; Esc 1→0:Morning Dew, tier 3 of 5. 15 of 40; outside 0:Morning Dew, tier 3 of 5. 15 of 40 |
+| stats-edit | all reachable; footer no footer; last content visible after scroll: True; trap ✓; Esc 1→0:Read brew, 13:20, 25 minutes, Full; outside 0:Read brew, 13:20, 25 minutes, Full | all reachable; footer no footer; last content visible after scroll: True; trap ✓; Esc 1→0:Read brew, 13:20, 25 minutes, Full; outside 0:Read brew, 13:20, 25 minutes, Full |
+| stats-delete-over-edit | all reachable; footer 579-723; last content visible after scroll: True; trap ✓ (Tab stays on 1 stop); Esc 2→1:Delete this brew; outside 1:Delete this brew | not run |
+| focus-ambience | all reachable; footer 728-824; last content visible after scroll: True; trap ✓; Esc 1→0:Ambience: Rain. Change; outside 0:Ambience: Rain. Change | not run |
+| focus-end | all reachable; footer 620-780; last content visible after scroll: True; trap ✓; Esc 1→0:End session; outside 0:End session | not run |
+
+**Facts:**
+- **Controls reproduced on BASE at 375×667 @200 (light and dark):**
+  - "Start fresh?": Export a backup first at 632–728, Keep my data at 674–737, Reset everything at 747–846, all of 667 and off screen, footer off screen.
+  - "Delete this brew?": Delete at 641–698, Tab stuck on one stop.
+  - End (< 1 min): Keep brewing at 629–691, End session at 699–755.
+  - Frames: `sheets/base-all/375x667-light-200-{settings-reset,stats-delete-over-edit,focus-end}.png`.
+- **TRIAL, the same three at 375×667 @200:** all reachable. Each is `data-tight`, with the footer pinned on screen ("Start fresh?" 457–667, Delete 487–637, End 503–667). The last content is visible after scrolling. Tab moves and is trapped.
+- **Sheets that became `data-tight` on TRIAL although BASE already reached everything:** Today's warm-days and leaves sheets at 375×667 @200. Footer 567–667 on BASE, 571–667 tight on TRIAL. At rest the two frames look alike (I looked at `today-warm` side by side). The difference is that on TRIAL the whole panel, header included, scrolls under the pinned footer; on BASE the header stayed and only the body scrolled. The maker's packet says tight is "never set when everything fits"; here it is set while everything was reachable on BASE.
+- **Unchanged on both builds:** "Your own rhythm", the level sheet, the import sheet ("Add this backup?"), the badge sheet, Edit brew and Ambience at 375 @200. Every sheet at 1440 @100 has the same footer position on both builds.
+- **Escape and backdrop**, on every sheet and on both builds: exactly one sheet closes. Focus returns to the control that opened it ("23 days warm streak. Show details", "Custom", "Reset everything…", "Morning Dew, tier 3…", "Read brew, 13:20…", "Ambience: Rain. Change", "End session").
+  - Sheet over a sheet: Escape or a backdrop tap on "Delete this brew?" leaves "Edit brew" open, with focus on "Delete this brew".
+  - The import sheet returns focus to "Export a backup…" (375) or "Reset everything…" (1440), not to the hidden file input. Same on both builds.
+- **The "Keyboard shortcuts" sheet** (opened with `?`) has one focusable control, so Tab stays on it. Same on both builds.
+- **Not covered:** 844×390 and 390×844 for the other sheets. The "× scrolls away in a tight sheet" note in the maker's packet: in tight sheets on TRIAL the close button is inside the scrolling column; I did not measure it after scrolling.
+
+## 5b. The Tea Cozy line, re-run with an unpinned seed (18:04 UTC, `words/LI-words-custom.log`, `words/trial-c-*.png`, `words/base-c-*.png`)
+
+| History (recorded with `recordSession` on seed `fresh`, which pins nothing), today Mon 12 Oct | Clock | TRIAL warm-days card (verbatim) | TRIAL tile hint |
+|---|---|---|---|
+| warm 3–11 Oct (9 days; 1 Cozy held), nothing today | **19:10** (at risk) | "9 days warm · One brew today makes it 10 warm days in a row. **If today stays quiet, a Tea Cozy keeps the kettle warm.** · 1 Tea Cozy ready · Next in 5 warm days · each covers one missed day" | "One brew warms today" |
+| same | 07:40 | "9 days warm · One brew today makes it 10 warm days in a row. · 1 Tea Cozy ready · …" (**no** Tea Cozy sentence) | none |
+| warm 1–9 Oct, Cozy used 10 Oct, 11 Oct missed (run over) | 19:10 | "Ready for a warm day · One brew today warms the kettle again. Your warmest run: 9 days. · No Tea Cozies yet · Earn one in 7 warm days · each covers one missed day" | none |
+
+- In all three cases "streak" appears **0 times** in `main`, Edit brew or Delete on trial. The badge sheet still says "Keep a 14-day warm streak" (`badges.ts`, F's file).
+- The engine's values in those cases: current 9, Cozies 1, at risk true / false; then current 0, best 9, Cozy day 10 Oct, missed 11 Oct.
+
