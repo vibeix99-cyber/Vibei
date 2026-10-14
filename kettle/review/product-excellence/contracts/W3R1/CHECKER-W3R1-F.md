@@ -442,3 +442,5 @@ No item is introduced or worsened by this change in a way that is a defect, so n
 - **The fling:** `contracts/W3R1/review/LEAD/F/fix/idle3/390x844-light-t200-above-r{0,1}-after.png`.
 - **The top bar:** `F/fix/topbar2/{fix,base}-*-session-running.png` (identical).
 - **X-8:** `contracts/W3R1/review/LEAD/F/fix/x8/{BASE,FIX}-375x667-light-paused-r{1,2,3}.png`.
+
+*Run logs:* `kettle/.gitignore:6` ignores `*.log`, so every `.log` cited here is committed as a `.log.txt` copy beside it (same name plus `.txt`).
