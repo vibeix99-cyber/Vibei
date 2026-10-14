@@ -1,0 +1,31 @@
+[slots] F took 1/3 at 18:44:14: env KETTLE_PORT=5501 npx playwright test tests/w3-notices-idle.spec.ts --project=chromium --workers=1 --output review/product-excellence/contracts/W3R1/F/fix/idle-own
+
+Running 12 tests using 1 worker
+
+FACT 390x844-light-t100 a-no-input {"leftAt":5721,"room":68,"commits":[{"t":6992,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":5764,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":1271,"collapseAfterLastBusyMs":1271,"visibleMove":68}
+  ✓   1 [chromium] › tests/w3-notices-idle.spec.ts:140:5 › band lifetime a-no-input (390x844-light-t100) (8.1s)
+FACT 390x844-light-t100 b-scroll-then-idle {"leftAt":5420,"room":68,"maxSy":497,"scrollMs":3588,"roomAfterScroll":68,"commits":[{"t":10336,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":1328,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":4916,"collapseAfterLastBusyMs":1328,"visibleMove":68}
+  ✓   2 [chromium] › tests/w3-notices-idle.spec.ts:140:5 › band lifetime b-scroll-then-idle (390x844-light-t100) (12.0s)
+FACT 390x844-light-t100 c-pointer-held {"leftAt":5495,"room":68,"roomWhileDown":68,"downWhileHeld":1,"commits":[{"t":10096,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":1274,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":4601,"collapseAfterLastBusyMs":1274,"visibleMove":68}
+  ✓   3 [chromium] › tests/w3-notices-idle.spec.ts:140:5 › band lifetime c-pointer-held (390x844-light-t100) (11.1s)
+FACT 390x844-dark-t200-rm a-no-input {"leftAt":5680,"room":113,"commits":[{"t":6960,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":5850,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":1280,"collapseAfterLastBusyMs":1280,"visibleMove":113}
+  ✓   4 [chromium] › tests/w3-notices-idle.spec.ts:140:5 › band lifetime a-no-input (390x844-dark-t200-rm) (7.9s)
+FACT 390x844-dark-t200-rm b-scroll-then-idle {"leftAt":5409,"room":113,"maxSy":444,"scrollMs":3023,"roomAfterScroll":113,"commits":[{"t":9697,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":1265,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":4288,"collapseAfterLastBusyMs":1265,"visibleMove":113}
+  ✓   5 [chromium] › tests/w3-notices-idle.spec.ts:140:5 › band lifetime b-scroll-then-idle (390x844-dark-t200-rm) (11.0s)
+FACT 390x844-dark-t200-rm c-pointer-held {"leftAt":5423,"room":113,"roomWhileDown":113,"downWhileHeld":1,"commits":[{"t":9808,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":1293,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":4385,"collapseAfterLastBusyMs":1293,"visibleMove":113}
+  ✓   6 [chromium] › tests/w3-notices-idle.spec.ts:140:5 › band lifetime c-pointer-held (390x844-dark-t200-rm) (10.9s)
+FACT 1440x900-light-t100 a-no-input {"leftAt":6135,"room":68,"commits":[{"t":7424,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":5823,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":1289,"collapseAfterLastBusyMs":1289,"visibleMove":68}
+  ✓   7 [chromium] › tests/w3-notices-idle.spec.ts:140:5 › band lifetime a-no-input (1440x900-light-t100) (8.7s)
+FACT 1440x900-light-t100 b-scroll-then-idle {"leftAt":5439,"room":68,"maxSy":11,"scrollMs":2924,"roomAfterScroll":68,"commits":[{"t":9609,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":1246,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":4170,"collapseAfterLastBusyMs":1246,"visibleMove":68}
+  ✓   8 [chromium] › tests/w3-notices-idle.spec.ts:140:5 › band lifetime b-scroll-then-idle (1440x900-light-t100) (11.1s)
+FACT 1440x900-light-t100 c-pointer-held {"leftAt":5484,"room":68,"roomWhileDown":68,"downWhileHeld":1,"commits":[{"t":10289,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":1261,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":4805,"collapseAfterLastBusyMs":1261,"visibleMove":68}
+  ✓   9 [chromium] › tests/w3-notices-idle.spec.ts:140:5 › band lifetime c-pointer-held (1440x900-light-t100) (11.9s)
+FACT 1440x900-dark-t200-rm a-no-input {"leftAt":5452,"room":113,"commits":[{"t":6752,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":5817,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":1300,"collapseAfterLastBusyMs":1300,"visibleMove":113}
+  ✓  10 [chromium] › tests/w3-notices-idle.spec.ts:140:5 › band lifetime a-no-input (1440x900-dark-t200-rm) (8.0s)
+FACT 1440x900-dark-t200-rm b-scroll-then-idle {"leftAt":5665,"room":113,"maxSy":300,"scrollMs":2490,"roomAfterScroll":113,"commits":[{"t":9440,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":1285,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":3775,"collapseAfterLastBusyMs":1285,"visibleMove":113}
+  ✓  11 [chromium] › tests/w3-notices-idle.spec.ts:140:5 › band lifetime b-scroll-then-idle (1440x900-dark-t200-rm) (10.8s)
+FACT 1440x900-dark-t200-rm c-pointer-held {"leftAt":5425,"room":113,"roomWhileDown":113,"downWhileHeld":1,"commits":[{"t":10112,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":1259,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":4687,"collapseAfterLastBusyMs":1259,"visibleMove":113}
+  ✓  12 [chromium] › tests/w3-notices-idle.spec.ts:140:5 › band lifetime c-pointer-held (1440x900-dark-t200-rm) (11.6s)
+
+  12 passed (2.1m)
+[slots] F freed 1 at 18:46:22

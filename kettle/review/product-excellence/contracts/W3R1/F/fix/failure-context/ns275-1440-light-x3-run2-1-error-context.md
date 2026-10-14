@@ -1,0 +1,698 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e6]:
+      - link "Skip to content" [ref=e7] [cursor=pointer]:
+        - /url: "#main"
+      - navigation "Main" [ref=e8]:
+        - link "Kettle, today" [ref=e9] [cursor=pointer]:
+          - /url: "#/"
+          - img [ref=e11]:
+            - generic [ref=e27]: Kettle
+        - list [ref=e28]:
+          - listitem [ref=e29]:
+            - link "Today" [ref=e30] [cursor=pointer]:
+              - /url: "#/"
+              - img [ref=e33]
+              - generic [ref=e37]: Today
+          - listitem [ref=e38]:
+            - link "Stats" [ref=e39] [cursor=pointer]:
+              - /url: "#/stats"
+              - img [ref=e43]
+              - generic [ref=e47]: Stats
+          - listitem [ref=e48]:
+            - link "Nook" [ref=e49] [cursor=pointer]:
+              - /url: "#/nook"
+              - img [ref=e52]
+              - generic [ref=e57]: Nook
+          - listitem [ref=e58]:
+            - link "Settings" [ref=e59] [cursor=pointer]:
+              - /url: "#/settings"
+              - img [ref=e62]
+              - generic [ref=e74]: Settings
+      - main [active] [ref=e76]:
+        - group "Notifications" [ref=e77]:
+          - list [ref=e78]:
+            - listitem [ref=e79]:
+              - img [ref=e81]
+              - generic [ref=e85]: Brew updated
+        - generic [ref=e89]:
+          - generic:
+            - generic: Stats
+            - generic:
+              - img
+              - text: "3"
+          - generic [ref=e92]:
+            - heading "Stats" [level=1] [ref=e93]
+            - paragraph [ref=e94]: Sam · brewing since Oct 10
+          - generic [ref=e98]:
+            - generic [ref=e99]:
+              - region "Overview" [ref=e100]:
+                - generic [ref=e101]:
+                  - generic [ref=e102]:
+                    - img [ref=e104]
+                    - generic [ref=e120]:
+                      - generic [ref=e121]: "3"
+                      - generic [ref=e122]: Day streak
+                  - generic [ref=e123]:
+                    - img [ref=e125]
+                    - generic [ref=e130]:
+                      - generic [ref=e131]: "3"
+                      - generic [ref=e132]: Best streak
+                  - generic [ref=e133]:
+                    - img [ref=e135]
+                    - generic [ref=e139]:
+                      - generic [ref=e140]: 1h 54m
+                      - generic [ref=e141]: Total focus
+                  - generic [ref=e142]:
+                    - img [ref=e144]
+                    - generic [ref=e149]:
+                      - generic [ref=e150]: "4"
+                      - generic [ref=e151]: Full brews
+              - region "Cozy level 5" [ref=e152]:
+                - generic [ref=e153]:
+                  - img [ref=e154]:
+                    - generic [ref=e173]: "5"
+                  - generic [ref=e174]:
+                    - heading "Cozy level 5" [level=2] [ref=e175]
+                    - paragraph [ref=e176]:
+                      - img [ref=e177]
+                      - text: 241 leaves earned
+                - generic [ref=e183]:
+                  - progressbar "Progress to level 6" [ref=e184]
+                  - generic [ref=e187]:
+                    - generic [ref=e188]:
+                      - strong [ref=e189]: "84"
+                      - text: leaves to level 6
+                    - generic [ref=e190]: 36 / 120
+                - paragraph [ref=e191]:
+                  - img [ref=e193]
+                  - generic [ref=e198]:
+                    - text: "Next for your nook:"
+                    - strong [ref=e199]: a surprise
+                    - text: at level 6
+                    - generic [ref=e200]: 4 of 14 nook items unlocked
+              - region "Last 7 days" [ref=e201]:
+                - generic [ref=e202]:
+                  - generic [ref=e203]:
+                    - heading "Last 7 days" [level=2] [ref=e204]
+                    - paragraph [ref=e205]: Oct 6–12
+                  - generic [ref=e206]:
+                    - button "Earlier 7 days" [disabled] [ref=e208]:
+                      - img [ref=e212]
+                    - button "Later 7 days" [disabled] [ref=e215]:
+                      - img [ref=e219]
+                - generic [ref=e221]:
+                  - generic [ref=e222]:
+                    - paragraph [ref=e223]: 1h 54m
+                    - paragraph [ref=e224]: focused
+                  - generic [ref=e225]:
+                    - paragraph [ref=e226]: 2 of 7 days at goal
+                    - paragraph [ref=e227]: 16 min a day on average
+                - figure [ref=e228]:
+                  - group "Focused minutes per day — Last 7 days, Oct 6–12. Use arrow keys to move between days." [ref=e230]:
+                    - generic [ref=e232]: "0"
+                    - generic [ref=e234]: "15"
+                    - generic [ref=e236]: "45"
+                    - generic [ref=e238]: "60"
+                    - 'img "Tuesday, October 6: 0 min, 0 full brews, no brews" [ref=e239]':
+                      - generic [ref=e242]: Tue
+                      - generic [ref=e243]: "6"
+                    - 'img "Wednesday, October 7: 0 min, 0 full brews, no brews" [ref=e244]':
+                      - generic [ref=e247]: Wed
+                      - generic [ref=e248]: "7"
+                    - 'img "Thursday, October 8: 0 min, 0 full brews, no brews" [ref=e249]':
+                      - generic [ref=e252]: Thu
+                      - generic [ref=e253]: "8"
+                    - 'img "Friday, October 9: 0 min, 0 full brews, no brews" [ref=e254]':
+                      - generic [ref=e257]: Fri
+                      - generic [ref=e258]: "9"
+                    - 'img "Saturday, October 10: 25 min, 1 full brew, 5 min short of goal" [ref=e259]':
+                      - generic [ref=e262]: Sat
+                      - generic [ref=e263]: "10"
+                    - 'img "Sunday, October 11: 39 min, 1 full brew, goal met" [ref=e264]':
+                      - generic [ref=e270]: Sun
+                      - generic [ref=e271]: "11"
+                    - 'img "Monday, October 12 (today): 50 min, 2 full brews, goal met" [ref=e272]':
+                      - generic [ref=e278]: "50"
+                      - generic [ref=e279]: Today
+                      - generic [ref=e280]: "12"
+                    - generic [ref=e282]: "30"
+                  - table "Focused minutes per day, Last 7 days, Oct 6–12. Daily goal 30 minutes." [ref=e284]:
+                    - caption [ref=e285]: Focused minutes per day, Last 7 days, Oct 6–12. Daily goal 30 minutes.
+                    - rowgroup [ref=e286]:
+                      - row "Day Minutes Full brews Goal" [ref=e287]:
+                        - columnheader "Day" [ref=e288]
+                        - columnheader "Minutes" [ref=e289]
+                        - columnheader "Full brews" [ref=e290]
+                        - columnheader "Goal" [ref=e291]
+                    - rowgroup [ref=e292]:
+                      - row "Tuesday, October 6 0 0 not met" [ref=e293]:
+                        - rowheader "Tuesday, October 6" [ref=e294]
+                        - cell "0" [ref=e295]
+                        - cell "0" [ref=e296]
+                        - cell "not met" [ref=e297]
+                      - row "Wednesday, October 7 0 0 not met" [ref=e298]:
+                        - rowheader "Wednesday, October 7" [ref=e299]
+                        - cell "0" [ref=e300]
+                        - cell "0" [ref=e301]
+                        - cell "not met" [ref=e302]
+                      - row "Thursday, October 8 0 0 not met" [ref=e303]:
+                        - rowheader "Thursday, October 8" [ref=e304]
+                        - cell "0" [ref=e305]
+                        - cell "0" [ref=e306]
+                        - cell "not met" [ref=e307]
+                      - row "Friday, October 9 0 0 not met" [ref=e308]:
+                        - rowheader "Friday, October 9" [ref=e309]
+                        - cell "0" [ref=e310]
+                        - cell "0" [ref=e311]
+                        - cell "not met" [ref=e312]
+                      - row "Saturday, October 10 25 1 not met" [ref=e313]:
+                        - rowheader "Saturday, October 10" [ref=e314]
+                        - cell "25" [ref=e315]
+                        - cell "1" [ref=e316]
+                        - cell "not met" [ref=e317]
+                      - row "Sunday, October 11 39 1 met" [ref=e318]:
+                        - rowheader "Sunday, October 11" [ref=e319]
+                        - cell "39" [ref=e320]
+                        - cell "1" [ref=e321]
+                        - cell "met" [ref=e322]
+                      - row "Monday, October 12 50 2 met" [ref=e323]:
+                        - rowheader "Monday, October 12" [ref=e324]
+                        - cell "50" [ref=e325]
+                        - cell "2" [ref=e326]
+                        - cell "met" [ref=e327]
+                - list "Legend" [ref=e328]:
+                  - listitem [ref=e329]: Goal met
+                  - listitem [ref=e331]: Under goal
+                  - listitem [ref=e333]: Daily goal · 30 min
+              - region "3 days warm" [ref=e335]:
+                - generic [ref=e336]:
+                  - img [ref=e337]
+                  - generic [ref=e353]:
+                    - heading "3 days warm" [level=2] [ref=e354]
+                    - paragraph [ref=e355]: You kept the kettle warm 3 days in a row.
+                - generic [ref=e356]:
+                  - generic [ref=e357]:
+                    - img [ref=e359]
+                    - img [ref=e384]
+                  - generic [ref=e408]:
+                    - paragraph [ref=e409]: No Tea Cozies yet
+                    - paragraph [ref=e410]: Earn one in 4 warm days · each covers one missed day
+                - generic [ref=e411]:
+                  - heading "October 2026" [level=3] [ref=e412]
+                  - generic [ref=e413]:
+                    - button "Previous month" [disabled] [ref=e415]:
+                      - img [ref=e419]
+                    - button "Next month" [disabled] [ref=e422]:
+                      - img [ref=e426]
+                - table "Warm streak calendar for October 2026" [ref=e428]:
+                  - caption [ref=e429]: Warm streak calendar for October 2026
+                  - rowgroup [ref=e430]:
+                    - row "Sunday Monday Tuesday Wednesday Thursday Friday Saturday" [ref=e431]:
+                      - columnheader "Sunday" [ref=e432]:
+                        - text: S
+                        - generic [ref=e433]: Sunday
+                      - columnheader "Monday" [ref=e434]:
+                        - text: M
+                        - generic [ref=e435]: Monday
+                      - columnheader "Tuesday" [ref=e436]:
+                        - text: T
+                        - generic [ref=e437]: Tuesday
+                      - columnheader "Wednesday" [ref=e438]:
+                        - text: W
+                        - generic [ref=e439]: Wednesday
+                      - columnheader "Thursday" [ref=e440]:
+                        - text: T
+                        - generic [ref=e441]: Thursday
+                      - columnheader "Friday" [ref=e442]:
+                        - text: F
+                        - generic [ref=e443]: Friday
+                      - columnheader "Saturday" [ref=e444]:
+                        - text: S
+                        - generic [ref=e445]: Saturday
+                  - rowgroup [ref=e446]:
+                    - row "Thursday, October 1, no brews Friday, October 2, no brews Saturday, October 3, no brews" [ref=e447]:
+                      - cell [ref=e448]
+                      - cell [ref=e449]
+                      - cell [ref=e450]
+                      - cell [ref=e451]
+                      - cell "Thursday, October 1, no brews" [ref=e452]:
+                        - img "Thursday, October 1, no brews" [ref=e453]:
+                          - generic [ref=e454]: "1"
+                      - cell "Friday, October 2, no brews" [ref=e455]:
+                        - img "Friday, October 2, no brews" [ref=e456]:
+                          - generic [ref=e457]: "2"
+                      - cell "Saturday, October 3, no brews" [ref=e458]:
+                        - img "Saturday, October 3, no brews" [ref=e459]:
+                          - generic [ref=e460]: "3"
+                    - row "Sunday, October 4, no brews Monday, October 5, no brews Tuesday, October 6, no brews Wednesday, October 7, no brews Thursday, October 8, no brews Friday, October 9, no brews Saturday, October 10, warm day, 25 min focused" [ref=e461]:
+                      - cell "Sunday, October 4, no brews" [ref=e462]:
+                        - img "Sunday, October 4, no brews" [ref=e463]:
+                          - generic [ref=e464]: "4"
+                      - cell "Monday, October 5, no brews" [ref=e465]:
+                        - img "Monday, October 5, no brews" [ref=e466]:
+                          - generic [ref=e467]: "5"
+                      - cell "Tuesday, October 6, no brews" [ref=e468]:
+                        - img "Tuesday, October 6, no brews" [ref=e469]:
+                          - generic [ref=e470]: "6"
+                      - cell "Wednesday, October 7, no brews" [ref=e471]:
+                        - img "Wednesday, October 7, no brews" [ref=e472]:
+                          - generic [ref=e473]: "7"
+                      - cell "Thursday, October 8, no brews" [ref=e474]:
+                        - img "Thursday, October 8, no brews" [ref=e475]:
+                          - generic [ref=e476]: "8"
+                      - cell "Friday, October 9, no brews" [ref=e477]:
+                        - img "Friday, October 9, no brews" [ref=e478]:
+                          - generic [ref=e479]: "9"
+                      - cell "Saturday, October 10, warm day, 25 min focused" [ref=e480]:
+                        - img "Saturday, October 10, warm day, 25 min focused" [ref=e481]:
+                          - generic [ref=e482]: "10"
+                    - row "Sunday, October 11, warm day, 39 min focused Monday, October 12, today, warm day, 50 min focused Tuesday, October 13 Wednesday, October 14 Thursday, October 15 Friday, October 16 Saturday, October 17" [ref=e483]:
+                      - cell "Sunday, October 11, warm day, 39 min focused" [ref=e484]:
+                        - img "Sunday, October 11, warm day, 39 min focused" [ref=e485]:
+                          - generic [ref=e486]: "11"
+                      - cell "Monday, October 12, today, warm day, 50 min focused" [ref=e487]:
+                        - img "Monday, October 12, today, warm day, 50 min focused" [ref=e488]:
+                          - generic [ref=e489]: "12"
+                      - cell "Tuesday, October 13" [ref=e490]:
+                        - img "Tuesday, October 13" [ref=e491]:
+                          - generic [ref=e492]: "13"
+                      - cell "Wednesday, October 14" [ref=e493]:
+                        - img "Wednesday, October 14" [ref=e494]:
+                          - generic [ref=e495]: "14"
+                      - cell "Thursday, October 15" [ref=e496]:
+                        - img "Thursday, October 15" [ref=e497]:
+                          - generic [ref=e498]: "15"
+                      - cell "Friday, October 16" [ref=e499]:
+                        - img "Friday, October 16" [ref=e500]:
+                          - generic [ref=e501]: "16"
+                      - cell "Saturday, October 17" [ref=e502]:
+                        - img "Saturday, October 17" [ref=e503]:
+                          - generic [ref=e504]: "17"
+                    - row "Sunday, October 18 Monday, October 19 Tuesday, October 20 Wednesday, October 21 Thursday, October 22 Friday, October 23 Saturday, October 24" [ref=e505]:
+                      - cell "Sunday, October 18" [ref=e506]:
+                        - img "Sunday, October 18" [ref=e507]:
+                          - generic [ref=e508]: "18"
+                      - cell "Monday, October 19" [ref=e509]:
+                        - img "Monday, October 19" [ref=e510]:
+                          - generic [ref=e511]: "19"
+                      - cell "Tuesday, October 20" [ref=e512]:
+                        - img "Tuesday, October 20" [ref=e513]:
+                          - generic [ref=e514]: "20"
+                      - cell "Wednesday, October 21" [ref=e515]:
+                        - img "Wednesday, October 21" [ref=e516]:
+                          - generic [ref=e517]: "21"
+                      - cell "Thursday, October 22" [ref=e518]:
+                        - img "Thursday, October 22" [ref=e519]:
+                          - generic [ref=e520]: "22"
+                      - cell "Friday, October 23" [ref=e521]:
+                        - img "Friday, October 23" [ref=e522]:
+                          - generic [ref=e523]: "23"
+                      - cell "Saturday, October 24" [ref=e524]:
+                        - img "Saturday, October 24" [ref=e525]:
+                          - generic [ref=e526]: "24"
+                    - row "Sunday, October 25 Monday, October 26 Tuesday, October 27 Wednesday, October 28 Thursday, October 29 Friday, October 30 Saturday, October 31" [ref=e527]:
+                      - cell "Sunday, October 25" [ref=e528]:
+                        - img "Sunday, October 25" [ref=e529]:
+                          - generic [ref=e530]: "25"
+                      - cell "Monday, October 26" [ref=e531]:
+                        - img "Monday, October 26" [ref=e532]:
+                          - generic [ref=e533]: "26"
+                      - cell "Tuesday, October 27" [ref=e534]:
+                        - img "Tuesday, October 27" [ref=e535]:
+                          - generic [ref=e536]: "27"
+                      - cell "Wednesday, October 28" [ref=e537]:
+                        - img "Wednesday, October 28" [ref=e538]:
+                          - generic [ref=e539]: "28"
+                      - cell "Thursday, October 29" [ref=e540]:
+                        - img "Thursday, October 29" [ref=e541]:
+                          - generic [ref=e542]: "29"
+                      - cell "Friday, October 30" [ref=e543]:
+                        - img "Friday, October 30" [ref=e544]:
+                          - generic [ref=e545]: "30"
+                      - cell "Saturday, October 31" [ref=e546]:
+                        - img "Saturday, October 31" [ref=e547]:
+                          - generic [ref=e548]: "31"
+                - generic [ref=e549]:
+                  - list "Calendar legend" [ref=e550]:
+                    - listitem [ref=e551]: Warm day
+                    - listitem [ref=e553]: Tea Cozy
+                    - listitem [ref=e555]: Today
+                  - paragraph [ref=e557]: "October so far: 3 warm days"
+              - region "Personal bests" [ref=e558]:
+                - heading "Personal bests" [level=2] [ref=e559]
+                - list [ref=e560]:
+                  - listitem [ref=e561]:
+                    - img [ref=e563]
+                    - generic [ref=e570]:
+                      - generic [ref=e571]: 50 min
+                      - generic [ref=e572]: Best day
+                      - generic [ref=e573]: Oct 12
+                  - listitem [ref=e574]:
+                    - img [ref=e576]
+                    - generic [ref=e581]:
+                      - generic [ref=e582]: 1h 29m
+                      - generic [ref=e583]: Best week
+                      - generic [ref=e584]: Oct 11–17
+                  - listitem [ref=e585]:
+                    - img [ref=e587]
+                    - generic [ref=e592]:
+                      - generic [ref=e593]: 25 min
+                      - generic [ref=e594]: Longest brew
+                      - generic [ref=e595]: Oct 10
+                  - listitem [ref=e596]:
+                    - img [ref=e598]
+                    - generic [ref=e603]:
+                      - generic [ref=e604]: "2"
+                      - generic [ref=e605]: Brews in a day
+                      - generic [ref=e606]: Oct 12
+            - generic [ref=e607]:
+              - region "Badges" [ref=e608]:
+                - generic [ref=e610]:
+                  - heading "Badges" [level=2] [ref=e611]
+                  - paragraph [ref=e612]: 8 of 12 badges earned · 9 of 56 tiers
+                - list [ref=e613]:
+                  - listitem [ref=e614]:
+                    - button "Intentional, tier 1 of 5. 4 of 25 toward the next tier." [ref=e615] [cursor=pointer]:
+                      - img [ref=e616]:
+                        - generic [ref=e649]: I
+                      - generic [ref=e650]: Intentional
+                      - generic [ref=e651]: Tier I
+                      - generic [ref=e655]: 4 of 25
+                  - listitem [ref=e656]:
+                    - button "Warm Days, tier 1 of 5. 3 of 7 toward the next tier." [ref=e657] [cursor=pointer]:
+                      - img [ref=e658]:
+                        - generic [ref=e683]: "3"
+                        - generic [ref=e687]: I
+                      - generic [ref=e688]: Warm Days
+                      - generic [ref=e689]: Tier I
+                      - generic [ref=e693]: 3 of 7
+                  - listitem [ref=e694]:
+                    - button "Leaf Collector, tier 1 of 5. 241 of 500 toward the next tier." [ref=e695] [cursor=pointer]:
+                      - img [ref=e696]:
+                        - generic [ref=e745]: I
+                      - generic [ref=e746]: Leaf Collector
+                      - generic [ref=e747]: Tier I
+                      - generic [ref=e751]: 241 of 500
+                  - listitem [ref=e752]:
+                    - button "Morning Dew, tier 1 of 5. 1 of 5 toward the next tier." [ref=e753] [cursor=pointer]:
+                      - img [ref=e754]:
+                        - generic [ref=e795]: I
+                      - generic [ref=e796]: Morning Dew
+                      - generic [ref=e797]: Tier I
+                      - generic [ref=e801]: 1 of 5
+                  - listitem [ref=e802]:
+                    - button "Goal Getter, tier 1 of 5. 2 of 7 toward the next tier." [ref=e803] [cursor=pointer]:
+                      - img [ref=e804]:
+                        - generic [ref=e834]: I
+                      - generic [ref=e835]: Goal Getter
+                      - generic [ref=e836]: Tier I
+                      - generic [ref=e840]: 2 of 7
+                  - listitem [ref=e841]:
+                    - button "Weekend Warmth, tier 1 of 5. 2 of 8 toward the next tier." [ref=e842] [cursor=pointer]:
+                      - img [ref=e843]:
+                        - generic [ref=e896]: I
+                      - generic [ref=e897]: Weekend Warmth
+                      - generic [ref=e898]: Tier I
+                      - generic [ref=e902]: 2 of 8
+                - button "Show 6 more badges" [ref=e903] [cursor=pointer]:
+                  - generic [ref=e905]:
+                    - generic [ref=e906]: Show 6 more badges
+                    - img [ref=e908]
+              - region "Your rhythm" [ref=e910]:
+                - generic [ref=e911]:
+                  - generic [ref=e912]:
+                    - heading "Your rhythm" [level=2] [ref=e913]
+                    - paragraph [ref=e914]: Last 30 days
+                  - radiogroup "Time range" [ref=e915]:
+                    - radio "30 days" [checked] [ref=e916] [cursor=pointer]:
+                      - generic [ref=e920]: 30 days
+                    - radio "All time" [ref=e921] [cursor=pointer]:
+                      - generic [ref=e924]: All time
+                - generic [ref=e925]:
+                  - img [ref=e927]
+                  - generic [ref=e934]:
+                    - paragraph [ref=e935]: You’re a morning brewer
+                    - paragraph [ref=e936]: Sweet spot 8 am–10 am · mostly study (66%) · based on 5 brews
+                - generic [ref=e937]:
+                  - generic [ref=e938]:
+                    - paragraph [ref=e939]: When you brew
+                    - figure [ref=e940]:
+                      - group "Focused minutes by hour of day, last 30 days. Use arrow keys to move between hours." [ref=e942]:
+                        - 'img "12 am to 1 am: 0 min focused" [ref=e943]'
+                        - 'img "1 am to 2 am: 0 min focused" [ref=e946]'
+                        - 'img "2 am to 3 am: 0 min focused" [ref=e949]'
+                        - 'img "3 am to 4 am: 0 min focused" [ref=e952]'
+                        - 'img "4 am to 5 am: 0 min focused" [ref=e955]'
+                        - 'img "5 am to 6 am: 0 min focused" [ref=e958]'
+                        - 'img "6 am to 7 am: 0 min focused" [ref=e961]'
+                        - 'img "7 am to 8 am: 0 min focused" [ref=e964]'
+                        - 'img "8 am to 9 am: 25 min focused (your sweet spot)" [ref=e967]'
+                        - 'img "9 am to 10 am: 0 min focused (your sweet spot)" [ref=e970]'
+                        - 'img "10 am to 11 am: 25 min focused" [ref=e973]'
+                        - 'img "11 am to 12 pm: 0 min focused" [ref=e976]'
+                        - 'img "12 pm to 1 pm: 0 min focused" [ref=e979]'
+                        - 'img "1 pm to 2 pm: 0 min focused" [ref=e982]'
+                        - 'img "2 pm to 3 pm: 0 min focused" [ref=e985]'
+                        - 'img "3 pm to 4 pm: 25 min focused" [ref=e988]'
+                        - 'img "4 pm to 5 pm: 0 min focused" [ref=e991]'
+                        - 'img "5 pm to 6 pm: 0 min focused" [ref=e994]'
+                        - 'img "6 pm to 7 pm: 0 min focused" [ref=e997]'
+                        - 'img "7 pm to 8 pm: 25 min focused" [ref=e1000]'
+                        - 'img "8 pm to 9 pm: 14 min focused" [ref=e1003]'
+                        - 'img "9 pm to 10 pm: 0 min focused" [ref=e1006]'
+                        - 'img "10 pm to 11 pm: 0 min focused" [ref=e1009]'
+                        - 'img "11 pm to 12 am: 0 min focused" [ref=e1012]'
+                        - generic [ref=e1016]: 12a
+                        - generic [ref=e1018]: 6a
+                        - generic [ref=e1020]: 12p
+                        - generic [ref=e1022]: 6p
+                      - table "Focused minutes by hour of day, last 30 days" [ref=e1024]:
+                        - caption [ref=e1025]: Focused minutes by hour of day, last 30 days
+                        - rowgroup [ref=e1026]:
+                          - row "Hour Minutes" [ref=e1027]:
+                            - columnheader "Hour" [ref=e1028]
+                            - columnheader "Minutes" [ref=e1029]
+                        - rowgroup [ref=e1030]:
+                          - row "12 am 0" [ref=e1031]:
+                            - rowheader "12 am" [ref=e1032]
+                            - cell "0" [ref=e1033]
+                          - row "1 am 0" [ref=e1034]:
+                            - rowheader "1 am" [ref=e1035]
+                            - cell "0" [ref=e1036]
+                          - row "2 am 0" [ref=e1037]:
+                            - rowheader "2 am" [ref=e1038]
+                            - cell "0" [ref=e1039]
+                          - row "3 am 0" [ref=e1040]:
+                            - rowheader "3 am" [ref=e1041]
+                            - cell "0" [ref=e1042]
+                          - row "4 am 0" [ref=e1043]:
+                            - rowheader "4 am" [ref=e1044]
+                            - cell "0" [ref=e1045]
+                          - row "5 am 0" [ref=e1046]:
+                            - rowheader "5 am" [ref=e1047]
+                            - cell "0" [ref=e1048]
+                          - row "6 am 0" [ref=e1049]:
+                            - rowheader "6 am" [ref=e1050]
+                            - cell "0" [ref=e1051]
+                          - row "7 am 0" [ref=e1052]:
+                            - rowheader "7 am" [ref=e1053]
+                            - cell "0" [ref=e1054]
+                          - row "8 am 25" [ref=e1055]:
+                            - rowheader "8 am" [ref=e1056]
+                            - cell "25" [ref=e1057]
+                          - row "9 am 0" [ref=e1058]:
+                            - rowheader "9 am" [ref=e1059]
+                            - cell "0" [ref=e1060]
+                          - row "10 am 25" [ref=e1061]:
+                            - rowheader "10 am" [ref=e1062]
+                            - cell "25" [ref=e1063]
+                          - row "11 am 0" [ref=e1064]:
+                            - rowheader "11 am" [ref=e1065]
+                            - cell "0" [ref=e1066]
+                          - row "12 pm 0" [ref=e1067]:
+                            - rowheader "12 pm" [ref=e1068]
+                            - cell "0" [ref=e1069]
+                          - row "1 pm 0" [ref=e1070]:
+                            - rowheader "1 pm" [ref=e1071]
+                            - cell "0" [ref=e1072]
+                          - row "2 pm 0" [ref=e1073]:
+                            - rowheader "2 pm" [ref=e1074]
+                            - cell "0" [ref=e1075]
+                          - row "3 pm 25" [ref=e1076]:
+                            - rowheader "3 pm" [ref=e1077]
+                            - cell "25" [ref=e1078]
+                          - row "4 pm 0" [ref=e1079]:
+                            - rowheader "4 pm" [ref=e1080]
+                            - cell "0" [ref=e1081]
+                          - row "5 pm 0" [ref=e1082]:
+                            - rowheader "5 pm" [ref=e1083]
+                            - cell "0" [ref=e1084]
+                          - row "6 pm 0" [ref=e1085]:
+                            - rowheader "6 pm" [ref=e1086]
+                            - cell "0" [ref=e1087]
+                          - row "7 pm 25" [ref=e1088]:
+                            - rowheader "7 pm" [ref=e1089]
+                            - cell "25" [ref=e1090]
+                          - row "8 pm 14" [ref=e1091]:
+                            - rowheader "8 pm" [ref=e1092]
+                            - cell "14" [ref=e1093]
+                          - row "9 pm 0" [ref=e1094]:
+                            - rowheader "9 pm" [ref=e1095]
+                            - cell "0" [ref=e1096]
+                          - row "10 pm 0" [ref=e1097]:
+                            - rowheader "10 pm" [ref=e1098]
+                            - cell "0" [ref=e1099]
+                          - row "11 pm 0" [ref=e1100]:
+                            - rowheader "11 pm" [ref=e1101]
+                            - cell "0" [ref=e1102]
+                    - list "Share of focus by part of day" [ref=e1103]:
+                      - listitem [ref=e1104]:
+                        - generic [ref=e1105]: 44%
+                        - generic [ref=e1106]: Morning
+                      - listitem [ref=e1107]:
+                        - generic [ref=e1108]: 22%
+                        - generic [ref=e1109]: Afternoon
+                      - listitem [ref=e1110]:
+                        - generic [ref=e1111]: 34%
+                        - generic [ref=e1112]: Evening
+                      - listitem [ref=e1113]:
+                        - generic [ref=e1114]: 0%
+                        - generic [ref=e1115]: Night
+                  - generic [ref=e1116]:
+                    - paragraph [ref=e1117]: What you brew
+                    - list [ref=e1118]:
+                      - 'listitem "Study: 1 hour 15 minutes, 66% of focus, 3 sessions" [ref=e1119]':
+                        - img [ref=e1121]
+                        - generic [ref=e1125]:
+                          - generic [ref=e1126]: Study
+                          - generic [ref=e1127]:
+                            - text: 1h 15m
+                            - generic [ref=e1128]: · 66%
+                      - 'listitem "Work: 25 minutes, 22% of focus, 1 sessions" [ref=e1131]':
+                        - img [ref=e1133]
+                        - generic [ref=e1139]:
+                          - generic [ref=e1140]: Work
+                          - generic [ref=e1141]:
+                            - text: 25 min
+                            - generic [ref=e1142]: · 22%
+                      - 'listitem "Read: 14 minutes, 12% of focus, 1 sessions" [ref=e1145]':
+                        - img [ref=e1147]
+                        - generic [ref=e1152]:
+                          - generic [ref=e1153]: Read
+                          - generic [ref=e1154]:
+                            - text: 14 min
+                            - generic [ref=e1155]: · 12%
+                - button "Show less" [expanded] [ref=e1158] [cursor=pointer]:
+                  - generic [ref=e1160]:
+                    - generic [ref=e1161]: Show less
+                    - img [ref=e1163]
+              - region "History" [ref=e1165]:
+                - generic [ref=e1167]:
+                  - heading "History" [level=2] [ref=e1168]
+                  - paragraph [ref=e1169]: Tap a brew to rename, retag or delete it.
+                - generic [ref=e1170]:
+                  - region "Today, 50 minutes focused" [ref=e1171]:
+                    - generic [ref=e1172]:
+                      - heading "Today" [level=3] [ref=e1173]
+                      - generic [ref=e1174]:
+                        - text: 50 min
+                        - generic "Daily goal met" [ref=e1175]:
+                          - img [ref=e1176]
+                          - generic [ref=e1178]: ", daily goal met"
+                    - list [ref=e1179]:
+                      - listitem [ref=e1180]:
+                        - button "Chapter 3 notes, 3:33 PM, 25 minutes, Full brew, tagged Study, 40 leaves. Edit" [ref=e1181] [cursor=pointer]:
+                          - img [ref=e1183]
+                          - generic [ref=e1188]:
+                            - generic [ref=e1189]: Chapter 3 notes
+                            - generic [ref=e1190]: 3:33 PM · 25 min
+                          - generic [ref=e1191]:
+                            - generic [ref=e1193]:
+                              - img [ref=e1195]
+                              - text: Study
+                            - generic [ref=e1198]:
+                              - text: "+40"
+                              - img [ref=e1199]
+                      - listitem [ref=e1205]:
+                        - img [ref=e1207]
+                        - generic [ref=e1212]: Brew deleted
+                        - 'button "Undo: bring back Chapter 3 notes" [ref=e1213] [cursor=pointer]': Undo
+                      - listitem [ref=e1214]:
+                        - button "Work brew, 10:15 AM, 25 minutes, Full brew, tagged Work, 33 leaves. Edit" [ref=e1215] [cursor=pointer]:
+                          - img [ref=e1217]
+                          - generic [ref=e1222]:
+                            - generic [ref=e1223]: Work brew
+                            - generic [ref=e1224]: 10:15 AM · 25 min
+                          - generic [ref=e1225]:
+                            - generic [ref=e1227]:
+                              - img [ref=e1229]
+                              - text: Work
+                            - generic [ref=e1234]:
+                              - text: "+33"
+                              - img [ref=e1235]
+                  - region "Yesterday, 39 minutes focused" [ref=e1241]:
+                    - generic [ref=e1242]:
+                      - heading "Yesterday" [level=3] [ref=e1243]
+                      - generic [ref=e1244]:
+                        - text: 39 min
+                        - generic "Daily goal met" [ref=e1245]:
+                          - img [ref=e1246]
+                          - generic [ref=e1248]: ", daily goal met"
+                    - list [ref=e1249]:
+                      - listitem [ref=e1250]:
+                        - 'button "Read: The Hobbit, 8:10 PM, 14 minutes, Ended early, tagged Read, 24 leaves. Edit" [ref=e1251] [cursor=pointer]':
+                          - img [ref=e1253]
+                          - generic [ref=e1257]:
+                            - generic [ref=e1258]: "Read: The Hobbit"
+                            - generic [ref=e1259]: 8:10 PM · 14 min · ended early
+                          - generic [ref=e1260]:
+                            - generic [ref=e1262]:
+                              - img [ref=e1264]
+                              - text: Read
+                            - generic [ref=e1268]:
+                              - text: "+24"
+                              - img [ref=e1269]
+                      - listitem [ref=e1275]:
+                        - button "Spanish practice, 8:30 AM, 25 minutes, Full brew, tagged Study, 33 leaves. Edit" [ref=e1276] [cursor=pointer]:
+                          - img [ref=e1278]
+                          - generic [ref=e1283]:
+                            - generic [ref=e1284]: Spanish practice
+                            - generic [ref=e1285]: 8:30 AM · 25 min
+                          - generic [ref=e1286]:
+                            - generic [ref=e1288]:
+                              - img [ref=e1290]
+                              - text: Study
+                            - generic [ref=e1293]:
+                              - text: "+33"
+                              - img [ref=e1294]
+                  - region "Sat, Oct 10, 25 minutes focused" [ref=e1300]:
+                    - generic [ref=e1301]:
+                      - heading "Sat, Oct 10" [level=3] [ref=e1302]
+                      - generic [ref=e1303]: 25 min
+                    - list [ref=e1304]:
+                      - listitem [ref=e1305]:
+                        - button "Spanish practice, 7:05 PM, 25 minutes, Full brew, tagged Study, 33 leaves. Edit" [ref=e1306] [cursor=pointer]:
+                          - img [ref=e1308]
+                          - generic [ref=e1313]:
+                            - generic [ref=e1314]: Spanish practice
+                            - generic [ref=e1315]: 7:05 PM · 25 min
+                          - generic [ref=e1316]:
+                            - generic [ref=e1318]:
+                              - img [ref=e1320]
+                              - text: Study
+                            - generic [ref=e1323]:
+                              - text: "+33"
+                              - img [ref=e1324]
+    - status [ref=e1330]:
+      - paragraph [ref=e1331]: Couldn’t save just now. Your summary is still here.
+      - paragraph [ref=e1332]: "Recipe done: Take a full tea break · +10 leaves"
+      - paragraph [ref=e1333]: "Recipe done: Take 2 full tea breaks · +15 leaves"
+      - paragraph [ref=e1334]: Kettle’s off. See you soon.
+      - paragraph [ref=e1335]: Brew updated
+      - paragraph [ref=e1336]: Brew deleted. Undo
+  - status [ref=e1338]: Kettle’s off.
+```

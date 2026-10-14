@@ -44,3 +44,29 @@ Result: **passed twice** (`fix/w3-notices-x2.log`, 18/18).
 
 ## Check 8 — preserve list and wording
 No visible, sr, `title` or `aria-*` "streak" in F's files (the new `aria-label` says "days warm"); no other copy changed in this round.
+
+## 5. Check 2 — F-D1, the band's lifetime ◆
+
+**Own probe** `tests/w3-notices-idle.spec.ts` (an in-page tracker that records every strip commit with its time, `why`, room, pointer state, ms since the last input of any kind — pointer, touch, touchmove, wheel, key, **scroll** — and the greeting's visible top before/after), fix :5501 src `f075a7a`, 18:44 UTC: **12/12 passed** (`fix/idle-own.log`; frames `fix/idle-own/**/<cfg>-<case>-{1-band,2-after-collapse}.png`). A 3 s notice raised with `__kettle.toast` leaves at rest; then:
+
+| Config | (a) no input: collapse after leave | (b) scroll down & back (phones: CDP finger drag, 12 steps × 16 ms; 1440: wheel), then idle: room during scroll → collapse after last input | (c) pointer held 3 s: room while down → collapse after release | (d) commits between leave and collapse | visible move at collapse |
+|---|---|---|---|---|---|
+| 390×844 light @100 | **1271 ms** | room 68 kept (scrolled to sy 497 and back, 3.6 s) → **1328 ms** | 68 kept (down = 1) → **1274 ms** | exactly 1 (the collapse), pointer up, since-input 5764 / 1328 / 1274 ms | 68 = band (once) |
+| 390×844 dark @200 reduced | **1280** | 113 kept (sy 444, 3.0 s) → **1265** | 113 kept → **1293** | 1 each; up; 5850 / 1265 / 1293 | 113 = band |
+| 1440 light @100 | **1289** | 68 kept (wheel; page scrolls only 11 px) → **1246** | 68 kept → **1261** | 1 each; up; 5823 / 1246 / 1261 | 68 = band |
+| 1440 dark @200 reduced | **1300** | 113 kept (sy 300, 2.5 s) → **1285** | 113 kept → **1259** | 1 each; up; 5817 / 1285 / 1259 | 113 = band |
+
+Every collapse: `why: idle`, pointer up, ≥ 1200 ms since any input, ≥ 1200 ms after the leave, ≤ 1.33 s after the later of the leave and the last input (limit 4 s), on the same screen (`#/`).
+
+**Lane I2's probes on the fix** (`/home/user/wt/w5tr-f/kettle/.tmp/LI2/`, run read-only against :5501):
+- `LI2-idle.mjs fix … idle` → `fix/idle/idle-fix.{json,log}` + frames `fix/idle/<cfg>-{0-no-notice,1-notice,2-band-at-leave,3-band-after-45s-idle,4-…}.png`: at every config the band is present at the leave (`leave.move 0`) and **room 0 by the first 1 s sample after the 1.2 s window** (`why: idle`); frame 3 shows the page closed up. (Its later scroll/pointer steps then run without a band; (b)/(c) are measured by the own probe above.) Note: the server was restarted by someone else at 18:22:10 during its first config (390 light @100), whose samples show `why: screen`.
+- `LI2-idle2.mjs fix … idle` (real finger drag) → `fix/idle2/`.
+- **(e) fling** `LI2-idle3.mjs fix … above 390x844-light-t200` → `fix/idle3-above/` (PENDING-FLING).
+
+## 6. Check 3 — F-T2-1 kept ◆
+
+Lane I2's aimed-tap probe `LI2-probe2.mjs fix http://127.0.0.1:5501 … '' L1,L2` → `fix/probes2/probe2-fix.{json,log}`: **16 configurations** (390×844, 375×667, 844×390, 1440×900 × @100/@200 × light/dark), L1 and L2, pointerdown + click: **64 events, 0 off target, 0 px moved** (max |moved| 0).
+
+## 7. Check 5 numbers — F-D2
+
+`LI2-topbar2.mjs` on fix :5501 and base :5478 (`fix/topbar2/topbar2-{fix,base}.log`, frames `fix/topbar2/{fix,base}-*-session-running.png`): **identical**. 844×390 @200 light/dark: Add 5 / Pause / End top **352**, visible **38.5** px; 667×375 @200: top **352**, visible **23.5** px; @100: one line, controls at **248** (844×390) / **239** (667×375).
