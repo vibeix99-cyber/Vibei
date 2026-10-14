@@ -1,0 +1,2928 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w5tr-all/kettle/playwright.config.ts",
+    "rootDir": "/home/user/wt/w5tr-all/kettle/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/full-C",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-harness",
+        "name": "timer-harness",
+        "testDir": "/home/user/wt/w5tr-all/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/full-C",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-app",
+        "name": "timer-app",
+        "testDir": "/home/user/wt/w5tr-all/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/full-C",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pwa",
+        "name": "pwa",
+        "testDir": "/home/user/wt/w5tr-all/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/pwa\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/full-C",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w5tr-all/kettle/tests",
+        "testIgnore": [
+          "/(timer|pwa)\\.spec\\.ts/"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite --config tests/e2e.vite.config.ts --port 5520 --strictPort",
+      "url": "http://127.0.0.1:5520/",
+      "reuseExistingServer": true,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "w3-notices-load.spec.ts",
+      "file": "w3-notices-load.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (390×844 light 100 %) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.625Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-7ece7d6e1f46bb6c5fba",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 %) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.626Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-be3a3240bb7a92048593",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 % reduced motion) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.626Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-29dfa9d0c58a85d360a4",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 100 %) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.627Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-0d361c4d9b4d34306cb8",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 200 %) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.627Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-d85d8f4f8393e261bf4d",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (375×667 light 100 %) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.627Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-b04a175a30cadcdf3816",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 %) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.627Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-394f56de7d5cb4fa355d",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 % reduced motion) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.627Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-20206e5d6033ccfadffa",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 100 %) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.628Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-edce38140546808e3e8f",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 200 %) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.628Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-2e4481f42496cc8d0b7f",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 light 100 %) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.628Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-b727413d9b7dc2a5ae0b",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 %) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.628Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-3d25c6246879a46a8301",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.628Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-f9ae86c502933398ff41",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 100 %) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.628Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-0c83d640368764a89006",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.628Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-339200f725358c4db49b",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (667×375 light 100 %) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.628Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-7908bedeb9f83caa4e9c",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 %) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.628Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-16ad1d72dc69ce7d3820",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 % reduced motion) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.629Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-ac6bd0b1dca849dc437d",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 100 %) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.629Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-57309c4f688c57bb14bc",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 200 %) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.629Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-0ae3bf445cf74f6efce7",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 100 %) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.629Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-c08c1b06e1edb2debede",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 %) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.629Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-36199ebe3dff2d341229",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.629Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-3e355a53dd74b203fbe2",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 100 %) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.629Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-0d475398191ac1860f7a",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 200 %) #0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the load control: run with W3_LOAD=1",
+                  "location": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices-load.spec.ts",
+                    "line": 42,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:27.629Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "84d179f57e506fe4d5fc-0aa0dc3bd4e20d80f265",
+          "file": "w3-notices-load.spec.ts",
+          "line": 447,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "w3-notices.spec.ts",
+      "file": "w3-notices.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 light 200 % reduced motion)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"aimed\":{\"x\":773.5,\"y\":767.1875,\"top\":745.1875,\"at\":7638},\"why\":\"rest\",\"frames\":266,\"framesWithNotice\":161,\"moved\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12629,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:28.572Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"aimed\":{\"x\":773.5,\"y\":767.1875,\"top\":745.1875,\"at\":7638},\"why\":\"rest\",\"frames\":266,\"framesWithNotice\":161,\"moved\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-fea3b8e26f891dc6aacb",
+          "file": "w3-notices.spec.ts",
+          "line": 110,
+          "column": 3
+        },
+        {
+          "title": "End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 light 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"aimed\":{\"x\":282.5,\"y\":578,\"top\":556,\"at\":5208},\"why\":\"rest\",\"frames\":312,\"framesWithNotice\":181,\"moved\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11397,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:41.357Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"aimed\":{\"x\":282.5,\"y\":578,\"top\":556,\"at\":5208},\"why\":\"rest\",\"frames\":312,\"framesWithNotice\":181,\"moved\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-d13ab2ba7f8176c5afb1",
+          "file": "w3-notices.spec.ts",
+          "line": 110,
+          "column": 3
+        },
+        {
+          "title": "End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 dark 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"aimed\":{\"x\":282.5,\"y\":578,\"top\":556,\"at\":6134},\"why\":\"rest\",\"frames\":317,\"framesWithNotice\":183,\"moved\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12333,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:25:52.770Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"aimed\":{\"x\":282.5,\"y\":578,\"top\":556,\"at\":6134},\"why\":\"rest\",\"frames\":317,\"framesWithNotice\":183,\"moved\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-1570ac95d2b05fa8c872",
+          "file": "w3-notices.spec.ts",
+          "line": 110,
+          "column": 3
+        },
+        {
+          "title": "End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 dark 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"aimed\":{\"x\":554.5,\"y\":521.390625,\"top\":499.390625,\"at\":6619},\"why\":\"rest\",\"frames\":258,\"framesWithNotice\":149,\"moved\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11910,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:26:05.119Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"aimed\":{\"x\":554.5,\"y\":521.390625,\"top\":499.390625,\"at\":6619},\"why\":\"rest\",\"frames\":258,\"framesWithNotice\":149,\"moved\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-738af81993b363550427",
+          "file": "w3-notices.spec.ts",
+          "line": 110,
+          "column": 3
+        },
+        {
+          "title": "End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (844×390 dark 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"aimed\":{\"x\":705.03125,\"y\":206.25,\"top\":184.25,\"at\":4681},\"why\":\"rest\",\"frames\":317,\"framesWithNotice\":184,\"moved\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11000,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:26:17.039Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"aimed\":{\"x\":705.03125,\"y\":206.25,\"top\":184.25,\"at\":4681},\"why\":\"rest\",\"frames\":317,\"framesWithNotice\":184,\"moved\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-54f3a7e107eefd74a7d1",
+          "file": "w3-notices.spec.ts",
+          "line": 110,
+          "column": 3
+        },
+        {
+          "title": "the room a gone notice keeps stays while the page is scrolled over it and back: nothing in view moves (390×844, 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"room\":113,\"moved\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14153,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:26:28.050Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"room\":113,\"moved\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-3eab3d6da45d76ded143",
+          "file": "w3-notices.spec.ts",
+          "line": 152,
+          "column": 1
+        },
+        {
+          "title": "a new screen starts with no room: Today after End, then Stats and back (375×667, 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12879,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:26:42.213Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-ea7346334b1019a35f6e",
+          "file": "w3-notices.spec.ts",
+          "line": 200,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "w3-settings.spec.ts",
+      "file": "w3-settings.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "preferences persist across a reload; Reset everything returns each to its default",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 24357,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:26:56.741Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0dfbb9de29dd4ee152e0-319b8ed434440df1cf02",
+          "file": "w3-settings.spec.ts",
+          "line": 59,
+          "column": 1
+        },
+        {
+          "title": "keyboard focus is always visible on Settings (390×844, light); inert controls are not Tab stops",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3682,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:27:21.207Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0dfbb9de29dd4ee152e0-1afb028af1c046887150",
+          "file": "w3-settings.spec.ts",
+          "line": 271,
+          "column": 88
+        },
+        {
+          "title": "keyboard focus is always visible on Settings (390×844, dark); inert controls are not Tab stops",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4843,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:27:24.902Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0dfbb9de29dd4ee152e0-1135c26da9a47c8394bc",
+          "file": "w3-settings.spec.ts",
+          "line": 271,
+          "column": 88
+        },
+        {
+          "title": "keyboard focus is always visible on Settings (1440×900, light); inert controls are not Tab stops",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5533,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:27:29.757Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0dfbb9de29dd4ee152e0-4dca0b29c9d3f17bde98",
+          "file": "w3-settings.spec.ts",
+          "line": 271,
+          "column": 88
+        },
+        {
+          "title": "keyboard focus is always visible on Settings (1440×900, dark); inert controls are not Tab stops",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5966,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:27:35.307Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0dfbb9de29dd4ee152e0-cd564c81c6081b8a10ab",
+          "file": "w3-settings.spec.ts",
+          "line": 271,
+          "column": 88
+        },
+        {
+          "title": "a row whose switch cannot change does not react to hover or press; a live row does",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6140,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:27:41.351Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0dfbb9de29dd4ee152e0-6a866a97349a0a0ad07c",
+          "file": "w3-settings.spec.ts",
+          "line": 321,
+          "column": 1
+        },
+        {
+          "title": "a pressed segment reads as pressed: unlike hover and unlike the selected one",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5719,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"oklab(0.959197 0.00389533 0.0175539)\"\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"oklab(0.959197 0.00389533 0.0175539)\"\u001b[39m\n    at /home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts:249:23",
+                    "location": {
+                      "file": "/home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts",
+                      "column": 23,
+                      "line": 249
+                    },
+                    "snippet": "  247 |   await page.mouse.move(2, 890);\n  248 |   await page.mouse.up();\n> 249 |   expect(pressed).not.toBe(hover);\n      |                       ^\n  250 |   expect(pressed).not.toBe(selectedThumb);\n  251 |   await expect(group.getByRole('radio', { name: 'System', exact: true })).toBeChecked(); // released away: no change\n  252 |   await ctx.close();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts",
+                        "column": 23,
+                        "line": 249
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"oklab(0.959197 0.00389533 0.0175539)\"\u001b[39m\n\n  247 |   await page.mouse.move(2, 890);\n  248 |   await page.mouse.up();\n> 249 |   expect(pressed).not.toBe(hover);\n      |                       ^\n  250 |   expect(pressed).not.toBe(selectedThumb);\n  251 |   await expect(group.getByRole('radio', { name: 'System', exact: true })).toBeChecked(); // released away: no change\n  252 |   await ctx.close();\n    at /home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts:249:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:27:47.501Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/full-C/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/full-C/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts",
+                    "column": 23,
+                    "line": 249
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "0dfbb9de29dd4ee152e0-49e3be67aba1c58902c5",
+          "file": "w3-settings.spec.ts",
+          "line": 378,
+          "column": 1
+        },
+        {
+          "title": "forced colours: the focused field keeps its ring and the selected segment stays visible",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4273,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:27:56.019Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0dfbb9de29dd4ee152e0-ca8b12dbde1b802219fe",
+          "file": "w3-settings.spec.ts",
+          "line": 415,
+          "column": 1
+        },
+        {
+          "title": "Settings never says \"streak\", and sound and nudges say what they cannot do",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6114,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:28:00.549Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0dfbb9de29dd4ee152e0-6051f7ef720d909c4655",
+          "file": "w3-settings.spec.ts",
+          "line": 459,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "w3-stats.spec.ts",
+      "file": "w3-stats.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Stats (veteran): the summary and tiles match the history recomputed from its records",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5103,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:29:58.879Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6aec72dd07b50b5df25d-e04bb35482a2878f1d0f",
+          "file": "w3-stats.spec.ts",
+          "line": 201,
+          "column": 3
+        },
+        {
+          "title": "Stats (celebrate): the summary and tiles match the history recomputed from its records",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4975,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:30:03.993Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6aec72dd07b50b5df25d-a1f970d4fc2105e925c4",
+          "file": "w3-stats.spec.ts",
+          "line": 201,
+          "column": 3
+        },
+        {
+          "title": "Stats (newbie): the summary and tiles match the history recomputed from its records",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5646,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:30:08.979Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6aec72dd07b50b5df25d-13dfc04982cf4996b4ea",
+          "file": "w3-stats.spec.ts",
+          "line": 201,
+          "column": 3
+        },
+        {
+          "title": "a brew that ends after midnight belongs to the day it ended on, everywhere on Stats",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6632,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:30:14.639Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6aec72dd07b50b5df25d-7c5cfefffa9301d24eb9",
+          "file": "w3-stats.spec.ts",
+          "line": 223,
+          "column": 1
+        },
+        {
+          "title": "a brew ended early at 12:40 counts 12 minutes in History, as in its leaves and the End sheet",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7623,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:30:21.295Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6aec72dd07b50b5df25d-7f604072b4a00659eec4",
+          "file": "w3-stats.spec.ts",
+          "line": 249,
+          "column": 1
+        },
+        {
+          "title": "Stats (empty) never says \"streak\"",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3382,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:30:28.938Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6aec72dd07b50b5df25d-9105ecc5cba14c95abf6",
+          "file": "w3-stats.spec.ts",
+          "line": 293,
+          "column": 3
+        },
+        {
+          "title": "Stats (newbie) never says \"streak\"",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4341,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:30:32.331Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6aec72dd07b50b5df25d-963b23c4f236cc6d70ec",
+          "file": "w3-stats.spec.ts",
+          "line": 293,
+          "column": 3
+        },
+        {
+          "title": "Stats (veteran) never says \"streak\"",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6465,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:30:36.686Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6aec72dd07b50b5df25d-92053f9d9b5085daf243",
+          "file": "w3-stats.spec.ts",
+          "line": 293,
+          "column": 3
+        },
+        {
+          "title": "Stats (celebrate) never says \"streak\"",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4461,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:30:43.161Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6aec72dd07b50b5df25d-5ae887240d49305b5f93",
+          "file": "w3-stats.spec.ts",
+          "line": 293,
+          "column": 3
+        },
+        {
+          "title": "Stats (atRisk) never says \"streak\"",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6157,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:30:47.634Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6aec72dd07b50b5df25d-ad582468042139fb4972",
+          "file": "w3-stats.spec.ts",
+          "line": 293,
+          "column": 3
+        },
+        {
+          "title": "the History delete dialog speaks of warm days, and the at-risk card invites without a countdown",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8263,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:30:53.801Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6aec72dd07b50b5df25d-00dfb92c9e0713b7a224",
+          "file": "w3-stats.spec.ts",
+          "line": 301,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "Delete this brew? at 375×667 with 200 % text",
+          "file": "w3-stats.spec.ts",
+          "line": 95,
+          "column": 8,
+          "specs": [
+            {
+              "title": "both choices can be tapped, and Tab reaches them in a loop",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 10198,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T17:28:06.721Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6aec72dd07b50b5df25d-d3427298d96390f75a34",
+              "file": "w3-stats.spec.ts",
+              "line": 98,
+              "column": 5
+            },
+            {
+              "title": "a tap on Delete deletes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8263,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T17:28:16.934Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6aec72dd07b50b5df25d-ca9d42517a1910bb3dc3",
+              "file": "w3-stats.spec.ts",
+              "line": 146,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "Delete this brew? at 390×844 with 200 % text",
+          "file": "w3-stats.spec.ts",
+          "line": 95,
+          "column": 8,
+          "specs": [
+            {
+              "title": "both choices can be tapped, and Tab reaches them in a loop",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 11932,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T17:28:25.206Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6aec72dd07b50b5df25d-3ce1485e100f86d3e56e",
+              "file": "w3-stats.spec.ts",
+              "line": 98,
+              "column": 5
+            },
+            {
+              "title": "a tap on Delete deletes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8143,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T17:28:37.152Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6aec72dd07b50b5df25d-fce2f58b5a214bca0609",
+              "file": "w3-stats.spec.ts",
+              "line": 146,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "Delete this brew? at 844×390 with 200 % text",
+          "file": "w3-stats.spec.ts",
+          "line": 95,
+          "column": 8,
+          "specs": [
+            {
+              "title": "both choices can be tapped, and Tab reaches them in a loop",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 11610,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T17:28:45.305Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6aec72dd07b50b5df25d-6f153c999747c4713130",
+              "file": "w3-stats.spec.ts",
+              "line": 98,
+              "column": 5
+            },
+            {
+              "title": "a tap on Delete deletes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9831,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T17:28:56.934Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6aec72dd07b50b5df25d-35225c523a1bf3a0ca8f",
+              "file": "w3-stats.spec.ts",
+              "line": 146,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "Delete this brew? at 1440×900 with 200 % text",
+          "file": "w3-stats.spec.ts",
+          "line": 95,
+          "column": 8,
+          "specs": [
+            {
+              "title": "both choices can be tapped, and Tab reaches them in a loop",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 14216,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T17:29:06.782Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6aec72dd07b50b5df25d-0a454c4c12334404dd8c",
+              "file": "w3-stats.spec.ts",
+              "line": 98,
+              "column": 5
+            },
+            {
+              "title": "a tap on Delete deletes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 12411,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T17:29:21.009Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6aec72dd07b50b5df25d-92cc9a38218fd40fd0f4",
+              "file": "w3-stats.spec.ts",
+              "line": 146,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "Delete this brew? at 375×667",
+          "file": "w3-stats.spec.ts",
+          "line": 95,
+          "column": 8,
+          "specs": [
+            {
+              "title": "both choices can be tapped, and Tab reaches them in a loop",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 16413,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T17:29:33.430Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6aec72dd07b50b5df25d-be53ed141ed5602480ec",
+              "file": "w3-stats.spec.ts",
+              "line": 98,
+              "column": 5
+            },
+            {
+              "title": "a tap on Delete deletes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8986,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T17:29:49.879Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6aec72dd07b50b5df25d-2ec1e77754edfa938475",
+              "file": "w3-stats.spec.ts",
+              "line": 146,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "whistle.spec.ts",
+      "file": "whistle.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "no audio context before the first gesture; the first tap unlocks it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7357,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:31:02.137Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881ca1145c8d3703542c-26e5a84f9353b581014f",
+          "file": "whistle.spec.ts",
+          "line": 45,
+          "column": 1
+        },
+        {
+          "title": "the whistle sounds once at completion, and not again after a reload of the summary",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12771,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:31:09.514Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881ca1145c8d3703542c-67b1e81014f0640aaa09",
+          "file": "whistle.spec.ts",
+          "line": 53,
+          "column": 1
+        },
+        {
+          "title": "late return: one whistle, the while-away summary, nothing more on later visibility changes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7539,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:31:22.299Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881ca1145c8d3703542c-401d44b0f6ad2d261269",
+          "file": "whistle.spec.ts",
+          "line": 76,
+          "column": 1
+        },
+        {
+          "title": "another tab in front (page hidden): the whistle is still scheduled once",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8640,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:31:29.849Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881ca1145c8d3703542c-6df5c7bc2ee25b900b08",
+          "file": "whistle.spec.ts",
+          "line": 100,
+          "column": 1
+        },
+        {
+          "title": "muted: no sound at all, the visual whistle and summary remain",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7637,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:31:38.500Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881ca1145c8d3703542c-bc5dfaa2abac6759d515",
+          "file": "whistle.spec.ts",
+          "line": 120,
+          "column": 1
+        },
+        {
+          "title": "notification permission is asked only from the Nudges switch: not on load, not before or after the first brew",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11450,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:31:46.148Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881ca1145c8d3703542c-d666228e8a68ab1fbaaa",
+          "file": "whistle.spec.ts",
+          "line": 165,
+          "column": 1
+        },
+        {
+          "title": "denied: Settings says so, shows the browser path, and turning it on later works",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5966,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:31:57.610Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881ca1145c8d3703542c-53e86410af31b610324d",
+          "file": "whistle.spec.ts",
+          "line": 183,
+          "column": 1
+        },
+        {
+          "title": "unsupported: the switch is off and disabled, and says what happens instead",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2864,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:32:03.588Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881ca1145c8d3703542c-f725b26f1da1960b991a",
+          "file": "whistle.spec.ts",
+          "line": 208,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-14T17:25:27.435Z",
+    "duration": 400136.954,
+    "expected": 44,
+    "skipped": 25,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}
