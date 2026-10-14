@@ -38,3 +38,36 @@ That is **217 passed, 2 failed, 25 skipped** in the union. Timer, harness and PW
 - **What stays.** Both assertions (`pressed ≠ hover`, `pressed ≠ selected`) stay as they are. A pressed state that never appears still fails, so nothing is loosened.
 - **Owner.** G's file, but G's fix round is spent and this is a test-only follow-up, not a product fix. The orchestrator assigns it (to G, or makes it itself) as its own small commit. I check it on the merged tree with `--repeat-each=8 --workers=1` under the usual load: **8/8**.
 - **Until it lands,** the final regression records this test as **known flaky (X-2)**, not as a pass, and a failure of it alone does not block the merge.
+
+## 3. Captures (preview :5530 against base :5488; 4 configs × 21 states)
+
+Lane R's pairs over 0.5 % fall into four groups:
+- live clocks;
+- 3D idle motion and unlock-card timing;
+- capture-sequence artifacts (a leaving screen in the frame; the base `19` frame at 390 light is the Nook, and the base `16` at 1440 is Today);
+- the makers' intended changes.
+
+**Today and the summary are pixel-identical (strict 0.0) at all four configs**, except a 64×94 px box in 1440 `09-break` (0.255 %, not opened).
+
+| # | What changed | Owner by file | Class | Note |
+|---|---|---|---|---|
+| X-5 | Stats: the Today / Last 7 days card at the top (+191 / +209 / +178 css px at 390 / 375 / 1440); tiles "Days warm" / "Warmest run · N days"; empty-state wording | **S** (`Glance.tsx`, `StatsScreen.tsx`, `stats.module.css`) | **ACCEPTED** (intended, I12) | Captured at S@344069c. S's fix adds one tile a row at 200 % only; 100 % is unchanged (`CHECKER-W3R1-S.md` §8) |
+| X-6 | Settings: the Daily goal footer, Keep awake and Haptics wording; Haptics +17 css px | **G** (`SettingsScreen.tsx`) | **ACCEPTED** (intended, I11) | Captured at G@808421d. The merged G (`7f95c18`) has shorter Sounds and Nudges On lines and the new Haptics line (`CHECKER-W3R1-G.md` §8) |
+| X-7 | Settings, dark, 390: the first screen's content looked about 2 css px lower | G area | **UNKNOWN** (not measured; judged from a downscaled view) | Lane I measured the top 1000 px identical at 390×844 dark @200 on G's trial. **Final regression:** measure the first screen at 390×844 dark @100, base against the merged tree |
+| X-8 | 375×667 light `04 focus-paused`: the "Paused" pill's text rows 4 css px lower on the trial (703–721 → 711–730); the controls and the line below are at the same rows; equal at 390 | F area (`FocusScreen.*`). F's CSS change applies only side by side (landscape), so the cause is not established; it may be a transition caught at a different moment | **UNKNOWN** (not isolated, one capture) | **Carried to F's fix verdict:** measure the "Paused" pill at 375×667 light, base against the fix trial, three captures each |
+| X-9 | 390 / 375 light `03 focus-mid`: the session chrome caught mid-fade on the trial | F area | **ACCEPTED** (artifact): Lane R's three solo repeats at 390 gave 0.000 / 0.189 (digits) / 0.000 | The 375 pair was not repeated alone. Folded into X-8's captures |
+| X-10 | The dark Nook at night: differences around Chai and the room's edges | **N** (`scene/**`) | **ACCEPTED**: N's change. It is not separable from scene motion here; N's still-frame receipts and my N verdict cover it | — |
+
+## 4. Summary for the orchestrator
+
+- **No combined-only cross-effect is proven.** Nothing that fails only when the makers' work is combined was found. X-1 (I03) is the one case where that is not excluded.
+- **Before the final regression:**
+  - **X-2:** a test-only change to G's `w3-settings.spec.ts:244–246` (wait on the real pressed state while held), checked 8/8 under load. G's APPROVE stands.
+- **In the final regression on the merged tree:**
+  - **X-1:** I03 ×10 with trace;
+  - **X-7:** the Settings first screen at 390 dark @100;
+  - one full chromium pass;
+  - `whistle.spec.ts` 8/8 once F's C-1 lands.
+- **In F's fix verdict:**
+  - **X-3:** `w3-notices` ×2;
+  - **X-8:** the "Paused" pill at 375×667.
