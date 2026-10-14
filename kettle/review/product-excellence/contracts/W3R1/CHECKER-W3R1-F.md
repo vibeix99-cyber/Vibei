@@ -1,20 +1,17 @@
 # CHECKER W3R1 · Maker F: notices polish (F-T2-1), triage, warm-days wording, I13
 
-**Verdict: REJECT** `pe/w3-notices-polish@5ee3e7c` (code `9f30a9b`, kettle/src `0acce1a`), as gated in trial `e3b9eac`. There is one 90-minute fix round. After it, the verdict is final.
+**Final verdict: APPROVE** `pe/w3-notices-polish@11a7ac6` (final code `58d1b88` + spec `cbc88ac`; kettle/src `27d83ac`), as gated in fix trial `1358e00` (integration `8af9fcb` with N + G + S + X-2, plus `11a7ac6`). Final: the one fix round is spent. Any change to the branch after this invalidates it.
 
-**Defects** (§3; the fix-round packet is §6):
-- **F-D1 (Vibei §3):** the empty band a gone notice leaves **never collapses while the screen stays open**. It stays until a new screen, a reload or the page hidden. Vibei ruled this into F's fix round.
-- **F-D2:** the F-T2-8 wrap pushes the session controls **17 px further below the fold** at 200 % landscape:
-  - 844×390: visible part 38.5 → 20.8 px;
-  - 667×375: 23.5 → 5.8 px.
-- **F-D3:** the Today status button's accessible name gained a stray space before its punctuation: "3 days warm . Show details", "5 days warm , today not brewed yet. Show details".
-- **C-1** (cross-owner, now in F's file): `tests/whistle.spec.ts:203` must assert G's new key sentence.
-
-**The rest verifies (§2):**
-- **F-T2-1's tap safety:** base 50 of 66 aimed taps landed off target, trial 0 of 64.
-- **The rest of the triage:** N-1, plus the F-T2-2 / N-2 / N-3 reasoning.
-- **Wording and I13:** the warm-days glossary in F's files; I13's return copy; End's honest line; badge wording only in `progress/`.
-- **The T2 invariant specs.**
+**History.**
+- **First review:** REJECT `5ee3e7c` (§1–§7) with F-D1 (the band never collapsed; Vibei §3), F-D2 (the top bar wrap pushed the session controls down), F-D3 (a stray space in a name) and C-1.
+- **Fix round (§8):** all closed, rerun by me on the final code at :5528:
+  - the band goes on the same screen 1.2–1.4 s after touch and scroll are idle, never under a pointer or mid-fling;
+  - 64 aimed taps, 0 off target;
+  - the wrap is reverted (F-T2-8 is a FOLLOW-UP again);
+  - the names are exact;
+  - `whistle` 8/8;
+  - `notice-strip` 25/25 and the owned specs 74/74.
+- **One test stays flaky:** `notice-strip:292` at 1440 light 200 % reduced. Its causes are the spec's own wheel race and N-2 (S's file), not the strip. It gets a test-only action before the final regression (X-11, §8).
 
 | | |
 |---|---|
@@ -400,3 +397,48 @@ The hardening narrowed this (the dark config went from 2/3 to 3/3, and Mark done
   - in the History step, read "where the person saw the row" once the Edit sheet is open and its focus scroll has settled (N-2).
 
   I check it with `:292` at 1440 light @200 reduced `--repeat-each=6`: **6/6**. Until then the final regression records `:292` at that config as **known flaky (X-11)**, with the error context of any failure checked against these two signatures.
+
+### ◆4 · The suites, on the final code (my runs, :5528, `--workers=1`, through the gate)
+
+| Suite | Result | Log |
+|---|---|---|
+| `notice-strip.spec.ts`, all 25 configurations (including 1440 light 200 % reduced and 1440 dark 200 %, once each) | **25/25** (25.5 min) | `fix/notice-strip-all.log` |
+| `toast-room` 14, `a11y` 11, `summary-notice` 14, `break-reach` 17, `w2-home` 18 (R5-D1, LEAD-D1, R7-D1, D4, W2H-D1, T2-D1) | **74/74** (27.9 min) | `fix/owned-specs.log` |
+| `w3-notices` + `w3-notices-idle` ×2 | **42/42** | `fix/w3-notices-idle-x2.log` |
+| `whistle` | **8/8** | `fix/whistle.log` |
+| `notice-strip:292` 1440 dark 200 % ×3 / light 200 % reduced ×3 | 3/3 / 2/3 (ruled above) | `fix/ns292-*.log` |
+
+The maker's own: tsc 0; vitest 297/297 on the branch (302/302 on the trial, the orchestrator's gate).
+
+**Why I ran the full suites myself.** The maker's 25/25 and 81/82 ran one code commit before the final one (`58d1b88` changes the above-view give-back, which `notice-strip` and `toast-room` exercise; `toast-room:192` caught the round-1 above-view problem). On the final code both are clean.
+
+### One more finding while reading the server logs (F-R14)
+The dev servers log React's **"change in the order of Hooks called by NoticeStrip"**:
+- base `dev-w4final.log` 57 times, round-1 trial 54, combined 101, fix trial 2.
+
+The cause is `ui/Toast.tsx` `NoticeStrip`: `const leaving = useContext(Leaving) || !useIsPresent() || off;`. That short-circuits a hook (`useIsPresent` is skipped once `Leaving` is true), and the line is **identical on base** (`4d36939` `Toast.tsx:349`). Pre-existing and not worsened; it has caused no failure seen this round. **FOLLOW-UP** (F's file): call both hooks unconditionally.
+
+### Final residuals (rule: BLOCKS = introduced or worsened by this change; FOLLOW-UP = present on the base and not worse, or ruled so by Vibei; ACCEPTED = not a defect)
+
+| # | Item | Class |
+|---|---|---|
+| F-D1 | The band never collapsed on the same screen | **Closed:** it goes 1.2–1.4 s after the later of the leave and the last input, never under a pointer or mid-scroll (◆2) |
+| F-D2 | The F-T2-8 wrap pushed the session controls down | **Closed:** reverted, byte-identical to base (◆5) |
+| F-D3 | Stray space in the status button's name | **Closed** (◆6) |
+| C-1 | `whistle.spec.ts:203` | **Closed:** 8/8 on the trial with G (◆7) |
+| F-R2 | The "above" leave mid-fling jumped content 153.5 px (pre-existing) | **Closed** by the fix: −0.5 px |
+| F-R4 / X-11 | `notice-strip:292` at 1440 light 200 % reduced: the spec's own wheel race (1 in 6 mine, 1 in 9 the maker's), plus N-2 (S's `History.tsx` focus scroll) | **FOLLOW-UP:** test-only action before the final regression (ruling above) |
+| F-T2-8 | Landscape session top bar squeezes the task label at 200 % | **FOLLOW-UP** again (the base's bar restored) |
+| F-R1 | A notice arriving at rest still pushes content (F3) | **FOLLOW-UP** (pre-existing, not worse) |
+| F-R3 | The session `reach` close moves a partly visible control (same as base) | **FOLLOW-UP** (F-T2-2 class) |
+| F-R14 | Conditional hook in `NoticeStrip` (React hooks-order error in the dev logs, base too) | **FOLLOW-UP** (pre-existing) |
+| F-R5…F-R13, N-2, F-T2-2, N-3, E-1 | As in §4 (F-R7: `w2-home` 18/18 here; F-R8 = X-3: closed) | Unchanged |
+| X-3, X-8 (cross-effects) | `w3-notices` room test; the "Paused" pill | **Closed** (42/42; 0 px against base) |
+
+No item is introduced or worsened by this change in a way that is a defect, so nothing BLOCKS. The narrow transient-artifact exception is not used: the 2/3 is ruled by cause above, not as a transient.
+
+**BEFORE / AFTER for the fix** (full size):
+- **The band:** the maker's `/home/user/wt/w5f/kettle/review/product-excellence/contracts/W3R1/F/fix/final2/w3b/**/<cfg>-<case>-{1-band,2-after-collapse}.png` and `F/fix/idle/<cfg>-{0-no-notice,2-band-at-leave,3-band-after-45s-idle}.png`. Frame 3 now shows the page closed up.
+- **The fling:** `contracts/W3R1/review/LEAD/F/fix/idle3/390x844-light-t200-above-r{0,1}-after.png`.
+- **The top bar:** `F/fix/topbar2/{fix,base}-*-session-running.png` (identical).
+- **X-8:** `contracts/W3R1/review/LEAD/F/fix/x8/{BASE,FIX}-375x667-light-paused-r{1,2,3}.png`.
