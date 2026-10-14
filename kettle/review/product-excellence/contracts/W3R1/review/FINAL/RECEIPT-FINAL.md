@@ -83,3 +83,9 @@ All nine runs passed; none failed on base. Classification on this evidence (6 ru
 | F3 | **Flaky**: the same test and the same step (`assertLayersDrawn`, `page.screenshot`) timed out in Lane R-N's first run on the N trial (passed on its second run); 1 failure here, 0 in 5 later runs, 0 on base | test file and feature: **N** (`tests/w2-room.spec.ts`; `src/scene/**`) | `Test timeout of 60000ms exceeded` at a `page.screenshot` under 2 workers (SwiftShader, WebGL context lost then restored) |
 
 None was a base failure. None reproduced alone or in repeats on this tree.
+
+## 4. `notice-strip.spec.ts`, the whole file once on :5540 (X-11 withdrawn, so the final tree is `2be3de1`)
+
+`runs/notice-strip.log.txt`, `runs/notice-strip.json`. Started 22:31:30, freed 22:56:28 (25.0 min), `--project=chromium --workers=1`, one gate slot; a second gate job (the failure reruns, then timer/pwa and the `W3_LOAD` run) was on the machine meanwhile.
+
+**25 passed, 0 failed, 0 flaky, 0 skipped.** All 25 cases are the one test at line 292 "no notice overlaps a control, text or a row: every notice state, real input" in its 25 configurations (the listing's line number; durations 51.7 to 70.1 s). The known flaky case **1440×900 light 200 % reduced motion passed** (55.3 s). Nothing needed classifying against the three X-11 signatures.
