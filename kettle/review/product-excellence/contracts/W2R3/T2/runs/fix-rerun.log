@@ -1,0 +1,10 @@
+[slots] T2 took 1/3 at 03:22:18: npx playwright test tests/a11y.spec.ts tests/integrity.spec.ts --project=chromium --workers=1 --reporter=list --output=/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw
+
+Running 3 tests using 1 worker
+
+  ✓  1 [chromium] › tests/a11y.spec.ts:332:3 › a toast never covers the session controls or the summary footer (390×844) (18.6s)
+  ✓  2 [chromium] › tests/a11y.spec.ts:332:3 › a toast never covers the session controls or the summary footer (375×667) (13.4s)
+  ✓  3 [chromium] › tests/integrity.spec.ts:1004:5 › I03 storage-full warning is a banner in the page (desktop 1440×900) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room (31.7s)
+
+  3 passed (1.1m)
+[slots] T2 freed 1 at 03:23:25

@@ -62,7 +62,7 @@ async function day(seed, kinds) {
         const hl = region?.querySelector('[data-highlight], [class*="unlock"]');
         const hr = hl?.getBoundingClientRect();
         const art = [...document.querySelectorAll('[data-focus-view] img, [data-focus-view] canvas')].map((e) => { const r = e.getBoundingClientRect(); return { el: e.tagName.toLowerCase(), box: [r.left, r.top, r.width, r.height].map(Math.round) }; }).filter((a) => a.box[2] > 0);
-        return { F: Math.round(F), sheetTop: sheet ? Math.round(sheet.top) : null, cutRows: rows.filter((r) => r.cut), highlight: hr ? { top: Math.round(hr.top), bottom: Math.round(hr.bottom), whole: hr.bottom <= F + 1 && hr.top >= 0 } : null, notices: lis, art, said: document.querySelector('[data-notices-said]')?.lastElementChild?.textContent ?? null, queue: window.__kettle.notices?.()?.queue?.map((q) => q.message.slice(0, 30)) ?? null };
+        return { F: Math.round(F), sheetTop: sheet ? Math.round(sheet.top) : null, sheetBottom: sheet ? Math.round(sheet.bottom) : null, cutRows: rows.filter((r) => r.cut), highlight: hr ? { top: Math.round(hr.top), bottom: Math.round(hr.bottom), whole: hr.bottom <= F + 1 && hr.top >= 0 } : null, notices: lis, art, said: document.querySelector('[data-notices-said]')?.lastElementChild?.textContent ?? null, queue: window.__kettle.notices?.()?.queue?.map((q) => q.message.slice(0, 30)) ?? null };
       });
       await p.screenshot({ path: `${dir}/${key}.png`, animations: 'disabled' });
       const run = { ...geom };
