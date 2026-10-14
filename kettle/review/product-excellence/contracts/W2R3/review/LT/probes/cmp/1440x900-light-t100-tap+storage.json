@@ -1,0 +1,212 @@
+{
+ "cfg": {
+  "w": 1440,
+  "h": 900,
+  "theme": "light",
+  "pct": 100,
+  "reduced": false,
+  "groups": [
+   "tap",
+   "storage"
+  ],
+  "base": "http://127.0.0.1:5476",
+  "fix": true,
+  "name": "1440x900-light-t100-tap+storage"
+ },
+ "base": "http://127.0.0.1:5476",
+ "startedAt": "2026-10-14T00:10:54.036Z",
+ "groups": {
+  "tap": {
+   "tapRuns": [
+    {
+     "kind": "held 500 ms",
+     "target": "Classic",
+     "top0": 349,
+     "topDuringHold": 349,
+     "topAtUp": 349,
+     "topLater": 417,
+     "clicked": [
+      "TARGET SPAN Classic"
+     ]
+    },
+    {
+     "kind": "air +0 ms",
+     "target": "Classic",
+     "top0": 349,
+     "topAtTap": 417,
+     "clicked": [
+      "other DIV PresetClassicDeepGentleCustom"
+     ]
+    },
+    {
+     "kind": "air +60 ms",
+     "target": "Classic",
+     "top0": 417,
+     "topAtTap": 417,
+     "clicked": [
+      "TARGET SPAN Classic",
+      "TARGET SPAN Classic"
+     ]
+    },
+    {
+     "kind": "air +150 ms",
+     "target": "Classic",
+     "top0": 417,
+     "topAtTap": 417,
+     "clicked": [
+      "TARGET SPAN Classic",
+      "TARGET SPAN Classic",
+      "TARGET SPAN Classic"
+     ]
+    },
+    {
+     "kind": "air +400 ms",
+     "target": "Classic",
+     "top0": 417,
+     "topAtTap": 417,
+     "clicked": [
+      "TARGET SPAN Classic",
+      "TARGET SPAN Classic",
+      "TARGET SPAN Classic",
+      "TARGET SPAN Classic"
+     ]
+    }
+   ],
+   "shots": [],
+   "sampler": {
+    "samples": 169,
+    "nSamples": 122,
+    "modalSamples": 0,
+    "geo": {
+     "ctl": 0,
+     "text": 0,
+     "row": 0
+    },
+    "geoTop": {},
+    "efp": 0,
+    "efpCtl": 0,
+    "efpUnderSheet": 0,
+    "cut": 0,
+    "cutSeen": {},
+    "hits": [],
+    "seen": {
+     "Air notice 0": 47,
+     "Air notice 60": 35,
+     "Air notice 150": 37,
+     "Air notice 400": 3
+    },
+    "floatPos": [],
+    "live": [
+     {
+      "t": 18377,
+      "state": "",
+      "text": "Air notice 0",
+      "region": "said"
+     },
+     {
+      "t": 21630,
+      "state": "",
+      "text": "Air notice 60",
+      "region": "said"
+     },
+     {
+      "t": 25017,
+      "state": "",
+      "text": "Air notice 150",
+      "region": "said"
+     },
+     {
+      "t": 28510,
+      "state": "",
+      "text": "Air notice 400",
+      "region": "said"
+     }
+    ],
+    "sampleMsAvg": 13.3
+   },
+   "ms": 34316,
+   "pageErrors": []
+  },
+  "storage": {
+   "fill": "QuotaExceededError",
+   "banner": {
+    "tag": "SECTION",
+    "attrs": "aria-labelledby,data-save-warning",
+    "text": "This browser’s storage is full. Kettle couldn’t save your latest changes. Save a backup to keep them. Save backup",
+    "box": [
+     929,
+     112,
+     464,
+     109
+    ],
+    "position": "static",
+    "zIndex": "auto",
+    "shape": "<section data-save-warning=\"\"><span aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" aria-hidden=\"true\" focusable=\"false\" data-icon=\"info\" style=\"flex: 0 0 auto; disp\"><circle cx=\"12\" cy=\"12\" r=\"9.6\" fill=\"currentColor\" opacity=\"0.34\"><circle cx=\"12\" cy=\"7.7\" r=\"1.7\" fill=\"currentColor\"><rect x=\"10.7\" y=\"10.6\" width=\"2.6\" height=\"7.4\" rx=\"1.3\" fill=\"currentColor\"><p><strong><button type=\"button\"><span><span>",
+    "prev": null,
+    "next": "Today’s goal 25 min brewed 5 min to go T",
+    "inMain": true,
+    "notices": [
+     "Kettle’s off. See you soon."
+    ]
+   },
+   "bannerLater": [
+    929,
+    44,
+    464,
+    109
+   ],
+   "shots": [],
+   "sampler": {
+    "samples": 107,
+    "nSamples": 33,
+    "modalSamples": 0,
+    "geo": {
+     "ctl": 0,
+     "text": 0,
+     "row": 0
+    },
+    "geoTop": {},
+    "efp": 0,
+    "efpCtl": 0,
+    "efpUnderSheet": 0,
+    "cut": 0,
+    "cutSeen": {},
+    "hits": [],
+    "seen": {
+     "Kettle’s off. See you soon.": 33
+    },
+    "floatPos": [],
+    "live": [
+     {
+      "t": 3125,
+      "state": "storage",
+      "text": "Kettle’s on. Focus session started, 25 minutes.",
+      "region": "status"
+     },
+     {
+      "t": 4588,
+      "state": "storage",
+      "text": "Kettle’s off. See you soon.",
+      "region": "said"
+     },
+     {
+      "t": 4588,
+      "state": "storage",
+      "text": "Kettle’s off.",
+      "region": "status"
+     },
+     {
+      "t": 4718,
+      "state": "storage",
+      "text": "This browser’s storage is full. Kettle couldn’t save your latest changes. Save a backup to",
+      "region": "live"
+     }
+    ],
+    "sampleMsAvg": 7.4
+   },
+   "ms": 12923,
+   "pageErrors": []
+  }
+ },
+ "endedAt": "2026-10-14T00:11:44.671Z"
+}
