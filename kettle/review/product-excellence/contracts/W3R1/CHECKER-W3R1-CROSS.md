@@ -98,3 +98,20 @@ The maker's results: 8/8 at `--workers=2`, 8/8 at `--workers=1`, the whole `w3-s
 
 
 *Run logs:* `kettle/.gitignore:6` ignores `*.log`, so every `.log` cited here is committed as a `.log.txt` copy beside it (same name plus `.txt`).
+
+## 6. After F's fix round (`CHECKER-W3R1-F.md` §8, final APPROVE `11a7ac6` on fix trial `1358e00`, integration with N + G + S + X-2)
+
+| # | Item | Status |
+|---|---|---|
+| X-3 | `w3-notices` room test | **Closed:** `w3-notices` + `w3-notices-idle` ×2, 42/42 on :5528 |
+| X-8 | The 375×667 "Paused" pill 4 px lower | **Closed, not reproduced:** text rows 702–721 device px on base and fix in 3 + 3 runs; 0 differing pixels in the pill box. A capture-timing artifact |
+| X-11 (new) | `notice-strip:292` at 1440 light 200 % reduced: 1 failure in 6 (mine) and 1 in 9 (the maker's) on the fix. The causes are the spec's own `press()` wheel race (a wheel queued in the browser lands before the click; the strip unchanged) and N-2 (S's `History.tsx` focus scroll) | **FOLLOW-UP, needed before the final regression:** a test-only change in `tests/notice-strip.spec.ts` (F's file; F's round is spent; the orchestrator assigns it). `press()` waits for the wheel's scroll to actually land; the History read waits for the focus scroll to settle; nothing loosened. I check it with `:292` at that config `--repeat-each=6`: **6/6**. Until then it is recorded as known flaky, and any failure's error context is checked against the two signatures |
+| F-R14 | React "change in the order of Hooks called by NoticeStrip" in every dev log, base included (`Toast.tsx` `useContext(Leaving) \|\| !useIsPresent() \|\| off`) | **FOLLOW-UP** (pre-existing; F's file) |
+
+**On the tree with N + G + S + X-2 + F's fix** (fix trial `1358e00`), my runs passed:
+- `notice-strip` 25/25;
+- `toast-room` / `a11y` / `summary-notice` / `break-reach` / `w2-home` 74/74;
+- `w3-notices` (+ idle) 42/42;
+- `whistle` 8/8.
+
+No combined-only effect appeared. The final regression still owes: X-1 (I03 ×10), X-7 (Settings dark 390) and X-11, plus one clean full chromium pass.
