@@ -1,0 +1,140 @@
+{
+ "cfg": {
+  "w": 844,
+  "h": 390,
+  "theme": "light",
+  "pct": 200,
+  "reduced": false,
+  "groups": [
+   "sheetexit"
+  ],
+  "base": "http://127.0.0.1:5476",
+  "fix": true,
+  "name": "844x390-light-t200-sheetexit"
+ },
+ "base": "http://127.0.0.1:5476",
+ "startedAt": "2026-10-14T00:11:38.671Z",
+ "groups": {
+  "sheetexit": {
+   "ambienceSeq": [
+    {
+     "ms": "open+300",
+     "dialog": true,
+     "chain": [
+      "div o=1 pe=auto tf=matrix(1.00434, 0, 0, 1.00434, 0, -0.694",
+      "div o=1 pe=none tf=none"
+     ],
+     "pts": [
+      "Close@27->sheet",
+      "Turn on@235->sheet",
+      "Rain@330->sheet",
+      "Fireside@330->sheet",
+      "Forest@330->sheet",
+      "Brown noise@410->none"
+     ],
+     "notices": [
+      "Notice one, waiting its @153-290"
+     ]
+    },
+    {
+     "ms": "open+1000",
+     "dialog": true,
+     "chain": [
+      "div o=1 pe=none tf=none"
+     ],
+     "pts": [
+      "Close@28->sheet",
+      "Turn on@236->sheet",
+      "Rain@330->sheet",
+      "Fireside@330->sheet",
+      "Forest@330->sheet",
+      "Brown noise@410->none"
+     ],
+     "notices": [
+      "Notice one, waiting its @153-290"
+     ]
+    },
+    {
+     "ms": "esc+0",
+     "dialog": true,
+     "chain": [
+      "div o=1 pe=none tf=none"
+     ],
+     "pts": [
+      "Close@28->div",
+      "Turn on@236->NOTICE",
+      "Rain@330->div",
+      "Fireside@330->div",
+      "Forest@330->span",
+      "Brown noise@410->none"
+     ],
+     "notices": [
+      "Notice one, waiting its @153-290"
+     ]
+    },
+    {
+     "ms": "esc+5660",
+     "dialog": false
+    },
+    {
+     "ms": "esc+8111",
+     "dialog": false
+    },
+    {
+     "ms": "esc+10717",
+     "dialog": false
+    },
+    {
+     "ms": "esc+10758",
+     "dialog": false
+    },
+    {
+     "ms": "esc+10801",
+     "dialog": false
+    },
+    {
+     "ms": "esc+10853",
+     "dialog": false
+    },
+    {
+     "ms": "esc+10894",
+     "dialog": false
+    }
+   ],
+   "error": "locator.waitFor: Timeout 10000ms exceeded.",
+   "shots": [
+    {
+     "file": "shot-844x390-light-t200-sheetexit-sheetexit-0.png",
+     "kind": "text",
+     "top": "other",
+     "what": "text \":\" in span",
+     "state": ""
+    }
+   ],
+   "sampler": {
+    "samples": 256,
+    "nSamples": 0,
+    "modalSamples": 0,
+    "geo": {
+     "ctl": 0,
+     "text": 0,
+     "row": 0
+    },
+    "geoTop": {},
+    "efp": 0,
+    "efpCtl": 0,
+    "efpUnderSheet": 0,
+    "cut": 0,
+    "cutSeen": {},
+    "hits": [],
+    "seen": {},
+    "floatPos": [],
+    "live": [],
+    "sampleMsAvg": 0
+   },
+   "ms": 58992,
+   "pageErrors": []
+  }
+ },
+ "endedAt": "2026-10-14T00:12:41.143Z"
+}
