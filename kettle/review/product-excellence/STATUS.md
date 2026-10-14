@@ -12,6 +12,19 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 
 ## ▶ WAVE 3 ROUND 1 · started 2026-10-14 10:00 UTC (read this first)
 
+**Resume after the usage-limit cutoff (2026-10-14 ~16:45 UTC):**
+- **What was cut:** at about 14:40 UTC a usage limit stopped LEAD-4, Lane I, Lane I2 and Lane R. The container then restarted.
+- **Inventory:** `contracts/W3R1/review/INVENTORY-RESUME.md`.
+  - COMPLETE: N's verdict (**APPROVE** by LEAD-4, with the eye contrast as Vibei's call), Lane R's N receipt, Lane I's G receipt.
+  - MISSING: the S, F and combined receipts, and the G, S and F verdicts.
+- **Infrastructure:** all trial servers are back and verified (base :5478/:5488, F :5521, S :5522, G :5523, N :5524, combined :5520). The slot gate is reset (nproc−1 = 3). Autocommit is restarted. The four single-maker trial merges are now bundled.
+- **Vibei's decisions:** `contracts/W3R1/VB-DECISIONS-RESUME.md`.
+  - N's eyes: vb's call.
+  - S: "Last 7 days" accepted, with the calendar logic unchanged.
+  - F: the band must collapse when idle, or F goes to a fix round.
+  - G: a fix round with four text fixes.
+- **Fresh agents:** LEAD-5 (Opus; G now, then S and F); Lane I (Opus; S, with every `ui/Sheet.*` user and a calendar-week test); Lane I2 (Opus; F, reusing the partial evidence); Lane R (Sonnet; the combined regression, reusing parts A and timer/pwa). Every receipt and verdict is written and committed section by section.
+
 **Brief:** polish, Settings, Stats/History and supportive return. Base: the integration branch at app code `4d36939`. The plan, ownership map, glossary and briefs are in `contracts/W3R1/` (`PLAN.md`, `BRIEF-{F,S,G,N}.md`).
 
 **Vibei's decisions:**
