@@ -1,0 +1,163 @@
+{
+ "fix-1 vs base-1": [
+  {
+   "name": "07-summary.png",
+   "status": "OK",
+   "trial_size": "780x1688",
+   "ctrl_size": "780x1688",
+   "pct_strict": 0.0,
+   "pct_tol": 0.0,
+   "tol": 16
+  },
+  {
+   "name": "12-welcome.png",
+   "status": "OK",
+   "trial_size": "780x1688",
+   "ctrl_size": "780x1688",
+   "pct_strict": 0.0,
+   "pct_tol": 0.0,
+   "tol": 16
+  },
+  {
+   "name": "13-first-brew.png",
+   "status": "OK",
+   "trial_size": "780x1688",
+   "ctrl_size": "780x1688",
+   "pct_strict": 2.991,
+   "pct_tol": 0.091,
+   "tol": 16,
+   "bbox": [
+    105,
+    415,
+    412,
+    732
+   ]
+  },
+  {
+   "name": "14-summary-first.png",
+   "status": "OK",
+   "trial_size": "780x1688",
+   "ctrl_size": "780x1688",
+   "pct_strict": 0.0,
+   "pct_tol": 0.0,
+   "tol": 16
+  }
+ ],
+ "fix-2 vs base-2": [
+  {
+   "name": "12-welcome.png",
+   "status": "OK",
+   "trial_size": "780x1688",
+   "ctrl_size": "780x1688",
+   "pct_strict": 0.0,
+   "pct_tol": 0.0,
+   "tol": 16
+  },
+  {
+   "name": "13-first-brew.png",
+   "status": "OK",
+   "trial_size": "780x1688",
+   "ctrl_size": "780x1688",
+   "pct_strict": 0.209,
+   "pct_tol": 0.131,
+   "tol": 16,
+   "bbox": [
+    256,
+    608,
+    595,
+    1134
+   ]
+  },
+  {
+   "name": "14-summary-first.png",
+   "status": "OK",
+   "trial_size": "780x1688",
+   "ctrl_size": "780x1688",
+   "pct_strict": 0.0,
+   "pct_tol": 0.0,
+   "tol": 16
+  }
+ ],
+ "fix-1 vs fix-2": [
+  {
+   "name": "07-summary.png",
+   "status": "MISSING",
+   "trial": true,
+   "ctrl": false
+  },
+  {
+   "name": "12-welcome.png",
+   "status": "OK",
+   "trial_size": "780x1688",
+   "ctrl_size": "780x1688",
+   "pct_strict": 0.0,
+   "pct_tol": 0.0,
+   "tol": 16
+  },
+  {
+   "name": "13-first-brew.png",
+   "status": "OK",
+   "trial_size": "780x1688",
+   "ctrl_size": "780x1688",
+   "pct_strict": 3.187,
+   "pct_tol": 0.277,
+   "tol": 16,
+   "bbox": [
+    105,
+    415,
+    593,
+    1134
+   ]
+  },
+  {
+   "name": "14-summary-first.png",
+   "status": "OK",
+   "trial_size": "780x1688",
+   "ctrl_size": "780x1688",
+   "pct_strict": 0.0,
+   "pct_tol": 0.0,
+   "tol": 16
+  }
+ ],
+ "base-1 vs base-2": [
+  {
+   "name": "07-summary.png",
+   "status": "MISSING",
+   "trial": true,
+   "ctrl": false
+  },
+  {
+   "name": "12-welcome.png",
+   "status": "OK",
+   "trial_size": "780x1688",
+   "ctrl_size": "780x1688",
+   "pct_strict": 0.0,
+   "pct_tol": 0.0,
+   "tol": 16
+  },
+  {
+   "name": "13-first-brew.png",
+   "status": "OK",
+   "trial_size": "780x1688",
+   "ctrl_size": "780x1688",
+   "pct_strict": 0.3,
+   "pct_tol": 0.22,
+   "tol": 16,
+   "bbox": [
+    256,
+    608,
+    595,
+    1134
+   ]
+  },
+  {
+   "name": "14-summary-first.png",
+   "status": "OK",
+   "trial_size": "780x1688",
+   "ctrl_size": "780x1688",
+   "pct_strict": 0.0,
+   "pct_tol": 0.0,
+   "tol": 16
+  }
+ ]
+}

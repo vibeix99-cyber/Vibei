@@ -1,0 +1,186 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e6]:
+      - link "Skip to content" [ref=e7] [cursor=pointer]:
+        - /url: "#main"
+      - navigation "Main" [ref=e8]:
+        - list [ref=e9]:
+          - listitem [ref=e10]:
+            - link "Today" [ref=e11] [cursor=pointer]:
+              - /url: "#/"
+              - img [ref=e15]
+              - generic [ref=e19]: Today
+          - listitem [ref=e20]:
+            - link "Stats" [ref=e21] [cursor=pointer]:
+              - /url: "#/stats"
+              - img [ref=e24]
+              - generic [ref=e28]: Stats
+          - listitem [ref=e29]:
+            - link "Nook" [ref=e30] [cursor=pointer]:
+              - /url: "#/nook"
+              - img [ref=e33]
+              - generic [ref=e38]: Nook
+          - listitem [ref=e39]:
+            - link "Settings" [ref=e40] [cursor=pointer]:
+              - /url: "#/settings"
+              - img [ref=e43]
+              - generic [ref=e55]: Settings
+      - main [active] [ref=e57]:
+        - generic [ref=e61]:
+          - generic [ref=e62]:
+            - region "Good afternoon, Sam" [ref=e63]:
+              - generic [ref=e64]:
+                - navigation "Your progress" [ref=e65]:
+                  - button "3 days warm streak. Show details" [ref=e66] [cursor=pointer]:
+                    - img [ref=e67]
+                    - generic [ref=e83]:
+                      - generic [ref=e84]: "3"
+                      - generic [ref=e85]: days warm
+                    - generic [ref=e86]: streak. Show details
+                  - button "191 leaves Show details" [ref=e87] [cursor=pointer]:
+                    - img [ref=e88]
+                    - generic [ref=e94]:
+                      - generic [ref=e95]: "191"
+                      - generic [ref=e96]: leaves
+                    - generic [ref=e97]: Show details
+                  - button "Cozy level 4, 14 leaves to the next. Show details" [ref=e98] [cursor=pointer]:
+                    - img [ref=e99]:
+                      - generic [ref=e118]: "4"
+                    - generic [ref=e119]: Cozy level 4, 14 leaves to the next. Show details
+                - heading "Good afternoon, Sam" [level=1] [ref=e120]
+              - paragraph [ref=e127]: Nice going. One more brew and today’s cup is full.
+            - region "Today’s goal" [ref=e128]:
+              - heading "Today’s goal" [level=2] [ref=e129]
+              - generic [ref=e130]:
+                - paragraph [ref=e131]:
+                  - strong [ref=e132]: 28 min
+                  - text: brewed
+                - paragraph [ref=e133]:
+                  - strong [ref=e134]: 2 min
+                  - text: to go
+              - progressbar "Today’s goal" [ref=e135]
+              - paragraph [ref=e138]: Today’s goal · 30 min (a cup)
+          - generic [ref=e139]:
+            - generic [ref=e140]:
+              - paragraph [ref=e141]: Brew length
+              - radiogroup "Brew length" [ref=e142]:
+                - radio "15 min" [ref=e143] [cursor=pointer]:
+                  - generic [ref=e146]: 15 min
+                - radio "25 min" [checked] [ref=e147] [cursor=pointer]:
+                  - generic [ref=e150]: 25 min
+                - radio "50 min" [ref=e151] [cursor=pointer]:
+                  - generic [ref=e154]: 50 min
+                - radio "Custom" [ref=e155] [cursor=pointer]:
+                  - generic [ref=e158]: Custom
+            - region "What are you brewing? (optional)" [ref=e159]:
+              - generic [ref=e160]:
+                - heading "What are you brewing? (optional)" [level=2] [ref=e162]
+                - generic [ref=e164]:
+                  - generic [ref=e165]: What are you brewing? (optional)
+                  - textbox "What are you brewing? (optional)" [ref=e167]:
+                    - /placeholder: e.g. Chapter 3 notes, or leave it blank
+                - group "Tag" [ref=e168]:
+                  - button "Work" [ref=e169] [cursor=pointer]:
+                    - generic [ref=e170]:
+                      - img [ref=e172]
+                      - generic [ref=e177]: Work
+                  - button "Study" [pressed] [ref=e179] [cursor=pointer]:
+                    - generic [ref=e180]:
+                      - img [ref=e182]
+                      - generic [ref=e185]: Study
+                      - img [ref=e186]
+                  - button "Read" [ref=e188] [cursor=pointer]:
+                    - generic [ref=e189]:
+                      - img [ref=e191]
+                      - generic [ref=e195]: Read
+                  - button "Create" [ref=e197] [cursor=pointer]:
+                    - generic [ref=e198]:
+                      - img [ref=e200]
+                      - generic [ref=e203]: Create
+                  - button "Life" [ref=e205] [cursor=pointer]:
+                    - generic [ref=e206]:
+                      - img [ref=e208]
+                      - generic [ref=e210]: Life
+            - generic [ref=e212]:
+              - button "Put the kettle on · 25 min" [ref=e213] [cursor=pointer]:
+                - generic [ref=e215]:
+                  - img [ref=e217]
+                  - generic [ref=e219]: Put the kettle on · 25 min
+              - paragraph [ref=e220]:
+                - text: Then a 5 min tea break.
+                - button "Change brew length" [ref=e221] [cursor=pointer]
+            - region "Today’s recipes" [ref=e222]:
+              - generic [ref=e223]:
+                - img [ref=e225]
+                - heading "Today’s recipes" [level=2] [ref=e229]
+                - generic [ref=e230]: 1 of 3
+              - list [ref=e231]:
+                - listitem [ref=e232]:
+                  - img [ref=e234]
+                  - generic [ref=e239]:
+                    - generic [ref=e240]:
+                      - paragraph [ref=e241]: Take a full tea break
+                      - generic [ref=e242]:
+                        - img [ref=e243]
+                        - text: "+10"
+                        - generic [ref=e249]: leaves
+                    - generic [ref=e250]:
+                      - 'progressbar "Take a full tea break: 0 of 1" [ref=e251]'
+                      - generic [ref=e252]: 0/1
+                - listitem [ref=e253]:
+                  - generic [ref=e254]:
+                    - img [ref=e255]
+                    - img [ref=e259]
+                  - generic [ref=e263]:
+                    - generic [ref=e264]:
+                      - paragraph [ref=e265]: Finish a brew without pausing
+                      - generic [ref=e266]:
+                        - img [ref=e267]
+                        - text: "+15"
+                        - generic [ref=e273]: leaves, earned
+                    - generic [ref=e274]:
+                      - 'progressbar "Finish a brew without pausing: 1 of 1" [ref=e275]'
+                      - generic [ref=e278]: 1/1
+                - listitem [ref=e279]:
+                  - img [ref=e281]
+                  - generic [ref=e286]:
+                    - generic [ref=e287]:
+                      - paragraph [ref=e288]: Finish 3 full brews
+                      - generic [ref=e289]:
+                        - img [ref=e290]
+                        - text: "+20"
+                        - generic [ref=e296]: leaves
+                    - generic [ref=e297]:
+                      - 'progressbar "Finish 3 full brews: 1 of 3" [ref=e298]'
+                      - generic [ref=e301]: 1/3
+            - region "Today’s brews" [ref=e302]:
+              - generic [ref=e303]:
+                - heading "Today’s brews" [level=2] [ref=e304]
+                - generic [ref=e305]: 2 · 28 min
+              - list [ref=e306]:
+                - listitem [ref=e307]:
+                  - time [ref=e308]: 10:15 AM
+                  - img [ref=e310]
+                  - generic [ref=e312]:
+                    - paragraph [ref=e313]: Work brew
+                    - paragraph [ref=e314]:
+                      - generic [ref=e315]:
+                        - img [ref=e317]
+                        - text: Work
+                      - generic [ref=e322]: 25 min
+                - listitem [ref=e323]:
+                  - time [ref=e324]: 3:30 PM
+                  - generic [ref=e326]:
+                    - paragraph [ref=e327]: Study brew
+                    - paragraph [ref=e328]:
+                      - generic [ref=e329]:
+                        - img [ref=e331]
+                        - text: Study
+                      - generic [ref=e334]: 3 min · ended early
+    - status [ref=e335]:
+      - paragraph [ref=e336]: Saved 3 minutes of focus
+  - status [ref=e338]: Kettle’s off. 3 minutes of focus saved.
+```
