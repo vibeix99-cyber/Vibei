@@ -92,3 +92,45 @@ A tap aimed beforehand lands on the arriving notice (`li._toast…`) or the card
 - then `await expect(field).toHaveValue('Chapter 3 notes')`.
 
 No assertion, timeout, tolerance, configuration or step is removed or loosened. One retry is added for the setup typing: a typing miss is now repaired rather than failing ~1 min later at Mark done. The assertion after it is new.
+
+## 4. The invariant and the T2 controls on the trial
+
+(Written before §2 and §3, which wait on a probe job; the numbering follows the brief.)
+
+### 4a. The prior D run
+
+`runs/D-trial-specs.log`, trial :5521, 13:42–14:15 UTC, `--workers=2` (2 slots), 99 tests:
+
+| Spec | Result on trial `e3b9eac` (src `0acce1a`) |
+|---|---|
+| `toast-room.spec.ts` (R5-D1 / LEAD-D1 / R7-D1 class: banner, docked start, session top bar, Break's over) | **14/14** |
+| `a11y.spec.ts` (D4 included: "a toast never covers the session controls or the summary footer", "toasts never cover the break-over controls") | **11/11** |
+| `summary-notice.spec.ts` (T2-D1: queued notices never move the summary) | **14/14** |
+| `break-reach.spec.ts` (all, including `:251` "100 % text, 375×667 and 390×844: the break and Break's over fit without scrolling", the test the maker could not re-run on `0acce1a`) | **17/17** |
+| `w2-home.spec.ts` (W2H-D1) | **17/18**: `:203` failed at 375×667 @100 |
+| `notice-strip.spec.ts` | 24/25 (the 1440 dark @200 failure is classified in §1c) |
+
+### 4b. `w2-home:203`, alone
+
+| Build | Result | Log |
+|---|---|---|
+| TRIAL :5521 | **1/1 passed** (4.1 s) | `runs2/E3-trial-w2home203-375x667-100.log` |
+| BASE :5478 (base spec) | **1/1 passed** (3.4 s) | `runs2/E4-base-w2home203-375x667-100.log` |
+
+**The D-run failure:**
+- "fits without scrolling": `scrollHeight − innerHeight` = **13** (expected ≤ 0) on Welcome (`seed=fresh&onboarded=0#/welcome`) at 375×667 @100.
+- Its snapshot (`.tmp/LI2/LI2-pw-D/w2-home-first-visit-…-375×667-100-text--chromium/error-context.md`) shows Welcome with no notice drawn (two empty `status` regions, no strip content).
+- F changed no file under `src/screens/welcome/` (`git diff 4d36939 e3b9eac --stat -- kettle/src`). On Welcome the strip has no room (a new screen starts with `room: 0`).
+- The trace's frames are blank (1.5 kB JPEGs), so its cause is not established.
+- It did not reproduce alone on either build. It came while the D run held two workers and two other lanes' browsers were running.
+
+### 4c. `w3-notices` "the room a gone notice keeps stays while the page is scrolled over it and back" (390×844, 200 %)
+
+Lane R's `w3-notices.spec.ts:252`. In these worktrees Playwright lists it as `:152` in the combined checkout and `:252` in the trial's. Same file: `diff` of the two specs is empty.
+
+| Server | Result | Log |
+|---|---|---|
+| Combined `e478604` :5520 (spec from `/home/user/wt/w5tr-all`) | **1/1 passed** (17.0 s), alone | `runs2/E5-comb5520-w3notices-room-scrolled.log` |
+| F trial `e3b9eac` :5521 | **1/1 passed** (14.8 s), alone | `runs2/E6-trial5521-w3notices-room-scrolled.log` |
+
+Lane R's failure (`review/LR/ALL/runs/full-C-cut.log`, test 31) came inside a cut full run. It did not reproduce alone on either server.
