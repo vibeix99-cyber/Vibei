@@ -123,3 +123,13 @@
 ## S: APPROVE (final, LEAD-5 `1c241d3`) → merged as `0efca36` (2026-10-14 ~18:55 UTC)
 
 `pe/w3-stats@697c1eb`. The merged kettle/src `db28295` and kettle/tests `0da133e` equal fix trial `f63286e`'s exactly. The integration branch now holds N, G (+ docs) and S.
+
+## X-2 (G's pressed-segment test, test-only). GATE PASSED, 2026-10-14 19:00 UTC
+
+| Item | Result |
+|---|---|
+| Revision | `pe/w3r1-x2-segment-test@7bb8540` (test change `9fb1aca`), from integration `4223062`. kettle/src unchanged |
+| Scope | `tests/w3-settings.spec.ts` only (+6 / −2), plus `G-X2-READY.md` and logs `G/x2/` |
+| **Trial** | **`7145f49`** = integration `8251a74` (N + G + S) + `7bb8540`, worktree `/home/user/wt/w5tr-x2`, src `db28295`. Dev **:5527** (verified) |
+| Maker's result | That test 8/8 at `--workers=2` and 8/8 at `--workers=1` under load; fails on base by design; the whole `w3-settings` 10/10 |
+| Archive | `archive/pe-w3r1-x2-segment-test-7bb8540.incremental.bundle` |
