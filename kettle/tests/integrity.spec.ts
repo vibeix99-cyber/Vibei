@@ -703,13 +703,26 @@ const snapshot = (page: Page) =>
     };
   });
 const rawData = (page: Page) => page.evaluate(() => ({ progress: localStorage.getItem('kettle:progress'), settings: localStorage.getItem('kettle:settings') }));
-/** The profile card in Settings: level, leaves, warm days, as a person reads them. */
+/**
+ * The profile card in Settings: level, leaves, warm days, as a person reads them.
+ *
+ * Read from Settings' own Profile card once the route has settled, never from the whole page: right after a navigation
+ * the screen being left is still in the DOM for a moment (its layer fades out underneath), and its text (Today's
+ * animated leaves counter, mid-count) once read "194 leaves" here under load (W2R3 final regression). So: wait until
+ * no route layer is leaving, then until the card's leaves pill shows the stored total (the real state a person sees
+ * once it has settled), and read the three pills from that card only.
+ */
 const profilePills = async (page: Page) => {
   await page.evaluate(() => (window as any).__kettle.navigate('/settings'));
+  await expect.poll(() => hash(page)).toBe('#/settings');
   await expect(page.getByRole('heading', { name: 'Settings', level: 1 })).toBeVisible();
-  return page.evaluate(() => {
-    const text = document.body.innerText;
-    // (Not "32 leaves to level 5" from a side card that may or may not have rendered yet.)
+  await expect(page.locator('[data-route-leaving]')).toHaveCount(0);
+  const card = page.locator('main').getByRole('region', { name: 'Profile' });
+  await expect(card).toHaveCount(1);
+  const stored = await page.evaluate(() => new Intl.NumberFormat().format((window as any).__kettle.progress.getState().leaves as number)); // as the card formats it
+  await expect(card).toContainText(`${stored} leaves`);
+  return card.evaluate((el) => {
+    const text = (el as HTMLElement).innerText;
     return ['Level \\d+', '[\\d,]+ leaves(?! to level)', '\\d+ days? warm'].map((re) => text.match(new RegExp(re))?.[0] ?? null);
   });
 };
