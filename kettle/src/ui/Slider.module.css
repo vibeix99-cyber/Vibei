@@ -100,7 +100,7 @@
   opacity: 0.9;
 }
 .thumb:focus-visible {
-  outline: 3px solid var(--focus-ring);
+  outline: var(--focus-w) solid var(--focus-ring);
   outline-offset: -4px;
 }
 @media (hover: hover) {
@@ -119,7 +119,7 @@
 /* Off (e.g. volumes while muted): the track and thumb fade, the words stay readable (ink-3 is ≥ 4.5:1 on cards),
    so you can still see what you'll get when sound comes back. */
 .disabled .row {
-  opacity: 0.5;
+  opacity: var(--disabled-opacity);
 }
 .disabled .label,
 .disabled .value {

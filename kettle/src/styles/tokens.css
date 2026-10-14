@@ -62,6 +62,12 @@
   --border: 2px;
   --tap: 44px; /* minimum touch target */
 
+  /* ---------- Control states (one recipe for every shared control; colours stay in the themes below) ---------- */
+  --focus-w: 3px; /* keyboard focus ring: var(--focus-w) solid var(--focus-ring) */
+  --focus-gap: 3px; /* ring outside the control */
+  --focus-gap-inset: -3px; /* ring inside a control that fills a clipped card (list rows) */
+  --disabled-opacity: 0.5; /* inert controls: chips, segments, switches, rows, steppers, fields, sliders */
+
   /* ---------- Layers ---------- */
   --z-raised: 1;
   --z-sticky: 10;

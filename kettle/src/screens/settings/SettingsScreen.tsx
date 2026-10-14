@@ -102,7 +102,7 @@ function GoalGroup() {
   const set = useSettings((st) => st.set);
   const known = GOAL_OPTIONS.some((g) => g.min === goal);
   return (
-    <ListGroup title="Daily goal" footer={known ? 'Your warm streak only needs one brew a day. The goal is just for you.' : `Custom goal: ${goal} min a day.`}>
+    <ListGroup title="Daily goal" footer={known ? 'One finished brew makes a warm day. The goal is just for you.' : `Custom goal: ${goal} min a day.`}>
       <PadRow>
         <ChipGroup<string>
           label="Daily goal"
@@ -131,7 +131,7 @@ function SoundGroup() {
   const current = AMBIENT_OPTIONS.find((a) => a.id === st.ambient);
   return (
     <ListGroup title="Sound">
-      <ListRow icon={st.muted ? 'mute' : 'sound'} iconTone="honey" label="Sounds" description={st.muted ? 'Everything’s quiet. The kettle still shows when it whistles.' : 'Effects, the kettle’s whistle and ambience, while Kettle is open. A phone’s silent switch or lock screen can keep them quiet.'} toggle={{ checked: !st.muted, onChange: (v) => st.set({ muted: !v }) }} />
+      <ListRow icon={st.muted ? 'mute' : 'sound'} iconTone="honey" label="Sounds" description={st.muted ? 'Everything’s quiet. The kettle still shows when it whistles.' : 'The whistle, effects and ambience play after your first tap. A phone can quiet them when locked, on silent or out of sight.'} toggle={{ checked: !st.muted, onChange: (v) => st.set({ muted: !v }) }} />
       <VolumeRow title="Master volume" value={st.masterVolume} onChange={(v) => st.set({ masterVolume: v })} disabled={st.muted} />
       <VolumeRow title="Effects" value={st.sfxVolume} onChange={(v) => st.set({ sfxVolume: v })} disabled={st.muted} tone="honey" />
       <VolumeRow title="Ambience" value={st.ambientVolume} onChange={(v) => st.set({ ambientVolume: v })} disabled={st.muted} tone="sky" />
@@ -184,9 +184,9 @@ function DeviceGroup() {
         ? 'Blocked in your browser settings.'
         : status === 'granted'
           ? notifOn
-            ? 'On. I’ll nudge you when a brew or tea break ends. A locked phone may hold the nudge until you’re back.'
-            : 'Off. Turn on for a nudge when the kettle whistles.'
-          : 'A nudge when the kettle whistles. Your browser will ask first.';
+            ? 'On. When a brew or tea break ends while Kettle is open but out of sight, I’ll nudge you. If Kettle is closed or your phone has paused it by then, no nudge comes.'
+            : 'Off. Turn on for a nudge when the kettle whistles while Kettle is out of sight.'
+          : 'A nudge when the kettle whistles while Kettle is open but out of sight. Your browser will ask first.';
   return (
     <ListGroup title="Notifications & device">
       <ListRow
@@ -230,14 +230,14 @@ function DeviceGroup() {
         icon="eye"
         iconTone="honey"
         label="Keep screen awake"
-        description={wakeSupported ? 'Stops your screen dimming during a brew.' : 'Not supported in this browser.'}
+        description={wakeSupported ? 'Stops your screen dimming while a brew runs on screen.' : 'Not supported in this browser.'}
         toggle={{ checked: st.keepAwake && wakeSupported, disabled: !wakeSupported, onChange: (v) => st.set({ keepAwake: v }) }}
       />
       <ListRow
         icon="lightning"
         iconTone="berry"
         label="Haptics"
-        description={vibrateSupported ? 'Little buzzes for key moments.' : 'This device can’t vibrate.'}
+        description={vibrateSupported ? 'Little buzzes for key moments, on devices that can vibrate.' : 'Vibration isn’t available in this browser.'}
         toggle={{ checked: st.haptics && vibrateSupported, disabled: !vibrateSupported, onChange: (v) => st.set({ haptics: v }) }}
       />
     </ListGroup>

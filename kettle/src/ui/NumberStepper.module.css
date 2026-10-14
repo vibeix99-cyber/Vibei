@@ -24,8 +24,8 @@
   color: var(--ink);
 }
 .value:focus-visible {
-  outline: 3px solid var(--focus-ring);
-  outline-offset: 0;
+  outline: var(--focus-w) solid var(--focus-ring);
+  outline-offset: 0; /* the − and + buttons sit 8px away: an outer gap would crowd them */
   background: var(--surface-2);
 }
 .num {
@@ -42,6 +42,15 @@
   color: var(--ink-2);
   font-size: var(--text-body-s);
 }
-.disabled {
-  opacity: 0.55;
+.disabled,
+.disabled .value {
+  opacity: var(--disabled-opacity);
+  cursor: not-allowed;
+}
+.disabled .value {
+  opacity: 1;
+}
+/* The whole stepper is already faded: its − / + keep their own inert look without fading twice. */
+.disabled :disabled {
+  opacity: 1;
 }

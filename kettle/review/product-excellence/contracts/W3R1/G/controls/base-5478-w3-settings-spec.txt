@@ -1,0 +1,480 @@
+
+Running 9 tests using 1 worker
+
+  ✘  1 [chromium] › tests/w3-settings.spec.ts:39:1 › preferences persist across a reload; Reset everything returns each to its default (21.5s)
+  ✘  2 [chromium] › tests/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (390×844, light); inert controls are not Tab stops (4.5s)
+  ✘  3 [chromium] › tests/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (390×844, dark); inert controls are not Tab stops (4.2s)
+  ✘  4 [chromium] › tests/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (1440×900, light); inert controls are not Tab stops (5.2s)
+  ✘  5 [chromium] › tests/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (1440×900, dark); inert controls are not Tab stops (5.7s)
+  ✘  6 [chromium] › tests/w3-settings.spec.ts:194:1 › a row whose switch cannot change does not react to hover or press; a live row does (5.0s)
+  ✘  7 [chromium] › tests/w3-settings.spec.ts:233:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one (3.3s)
+  ✘  8 [chromium] › tests/w3-settings.spec.ts:255:1 › forced colours: the focused field keeps its ring and the selected segment stays visible (3.0s)
+  ✘  9 [chromium] › tests/w3-settings.spec.ts:282:1 › Settings never says "streak", and sound and nudges say what they cannot do (2.9s)
+
+
+  1) [chromium] › tests/w3-settings.spec.ts:39:1 › preferences persist across a reload; Reset everything returns each to its default 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('dialog', { name: 'Start fresh?' })
+    Expected substring: "This clears your brews, warm days, leaves, recipes and settings on this device."
+    Received string:    "Start fresh?This clears your brews, warm streak, leaves, recipes and settings on this device. It can’t be undone. Export a backup firstKeep my dataReset everything"
+    Timeout: 10000ms
+
+    Call log:
+      - Expect "toContainText" with timeout 10000ms
+      - waiting for getByRole('dialog', { name: 'Start fresh?' })
+        13 × locator resolved to <div role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="_r_1v_-title" aria-describedby="_r_1v_-desc" class="_panel_4dq2b_25 _md_4dq2b_56">…</div>
+           - unexpected value "Start fresh?This clears your brews, warm streak, leaves, recipes and settings on this device. It can’t be undone. Export a backup firstKeep my dataReset everything"
+
+
+      79 |   const sheet = page.getByRole('dialog', { name: 'Start fresh?' });
+      80 |   await expect(sheet).toBeVisible();
+    > 81 |   await expect(sheet).toContainText('This clears your brews, warm days, leaves, recipes and settings on this device.');
+         |                       ^
+      82 |   await sheet.getByRole('button', { name: 'Reset everything' }).click();
+      83 |   await expect(sheet).toBeHidden();
+      84 |   expect(await stored(page)).toMatchObject({ onboarded: false, theme: 'auto', rhythm: 'classic', focusMin: 25, shortBreakMin: 5, longBreakMin: 15, longBreakEvery: 4, motion: 'system', scene: 'auto', muted: false, ambient: 'rain', dailyGoalMin: 30 });
+        at /home/user/wt/w5g/kettle/tests/w3-settings.spec.ts:81:23
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-preferences-pe-4fd17-returns-each-to-its-default-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-preferences-pe-4fd17-returns-each-to-its-default-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-preferences-pe-4fd17-returns-each-to-its-default-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (390×844, light); inert controls are not Tab stops 
+
+    Error: [
+     {
+      "name": "input[] ",
+      "ring": false,
+      "visible": true
+     }
+    ]
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 7
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "name": "input[] ",
+    +     "ring": false,
+    +     "visible": true,
+    +   },
+    + ]
+
+      183 |       }
+      184 |       expect(seen.length, seen.join('\n')).toBeGreaterThan(15);
+    > 185 |       expect(bad, JSON.stringify(bad, null, 1)).toEqual([]);
+          |                                                 ^
+      186 |       // Inert controls are not Tab stops.
+      187 |       expect(seen.some((n) => n.startsWith('div[slider]'))).toBe(false);
+      188 |       expect(seen.some((n) => n.startsWith('button[switch]') && /Nudges/.test(n))).toBe(false);
+        at /home/user/wt/w5g/kettle/tests/w3-settings.spec.ts:185:49
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-keyboard-focus-b19ce--controls-are-not-Tab-stops-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-keyboard-focus-b19ce--controls-are-not-Tab-stops-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-keyboard-focus-b19ce--controls-are-not-Tab-stops-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (390×844, dark); inert controls are not Tab stops 
+
+    Error: [
+     {
+      "name": "input[] ",
+      "ring": false,
+      "visible": true
+     }
+    ]
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 7
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "name": "input[] ",
+    +     "ring": false,
+    +     "visible": true,
+    +   },
+    + ]
+
+      183 |       }
+      184 |       expect(seen.length, seen.join('\n')).toBeGreaterThan(15);
+    > 185 |       expect(bad, JSON.stringify(bad, null, 1)).toEqual([]);
+          |                                                 ^
+      186 |       // Inert controls are not Tab stops.
+      187 |       expect(seen.some((n) => n.startsWith('div[slider]'))).toBe(false);
+      188 |       expect(seen.some((n) => n.startsWith('button[switch]') && /Nudges/.test(n))).toBe(false);
+        at /home/user/wt/w5g/kettle/tests/w3-settings.spec.ts:185:49
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-keyboard-focus-9a070--controls-are-not-Tab-stops-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-keyboard-focus-9a070--controls-are-not-Tab-stops-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-keyboard-focus-9a070--controls-are-not-Tab-stops-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (1440×900, light); inert controls are not Tab stops 
+
+    Error: [
+     {
+      "name": "input[] ",
+      "ring": false,
+      "visible": true
+     }
+    ]
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 7
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "name": "input[] ",
+    +     "ring": false,
+    +     "visible": true,
+    +   },
+    + ]
+
+      183 |       }
+      184 |       expect(seen.length, seen.join('\n')).toBeGreaterThan(15);
+    > 185 |       expect(bad, JSON.stringify(bad, null, 1)).toEqual([]);
+          |                                                 ^
+      186 |       // Inert controls are not Tab stops.
+      187 |       expect(seen.some((n) => n.startsWith('div[slider]'))).toBe(false);
+      188 |       expect(seen.some((n) => n.startsWith('button[switch]') && /Nudges/.test(n))).toBe(false);
+        at /home/user/wt/w5g/kettle/tests/w3-settings.spec.ts:185:49
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-keyboard-focus-6cefa--controls-are-not-Tab-stops-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-keyboard-focus-6cefa--controls-are-not-Tab-stops-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-keyboard-focus-6cefa--controls-are-not-Tab-stops-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › tests/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (1440×900, dark); inert controls are not Tab stops 
+
+    Error: [
+     {
+      "name": "input[] ",
+      "ring": false,
+      "visible": true
+     }
+    ]
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 7
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "name": "input[] ",
+    +     "ring": false,
+    +     "visible": true,
+    +   },
+    + ]
+
+      183 |       }
+      184 |       expect(seen.length, seen.join('\n')).toBeGreaterThan(15);
+    > 185 |       expect(bad, JSON.stringify(bad, null, 1)).toEqual([]);
+          |                                                 ^
+      186 |       // Inert controls are not Tab stops.
+      187 |       expect(seen.some((n) => n.startsWith('div[slider]'))).toBe(false);
+      188 |       expect(seen.some((n) => n.startsWith('button[switch]') && /Nudges/.test(n))).toBe(false);
+        at /home/user/wt/w5g/kettle/tests/w3-settings.spec.ts:185:49
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-keyboard-focus-5e1c3--controls-are-not-Tab-stops-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-keyboard-focus-5e1c3--controls-are-not-Tab-stops-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-keyboard-focus-5e1c3--controls-are-not-Tab-stops-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [chromium] › tests/w3-settings.spec.ts:194:1 › a row whose switch cannot change does not react to hover or press; a live row does 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "rgba(0, 0, 0, 0)"
+    Received: "rgb(252, 244, 233)"
+
+      221 |   };
+      222 |   const inert = await look('Nudges');
+    > 223 |   expect(inert.hover).toBe(inert.rest);
+          |                       ^
+      224 |   expect(inert.pressed).toBe(inert.rest);
+      225 |   expect(inert.cursor).not.toBe('pointer');
+      226 |   const live = await look('Tea breaks');
+        at /home/user/wt/w5g/kettle/tests/w3-settings.spec.ts:223:23
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-a-row-whose-sw-80daf-er-or-press-a-live-row-does-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-a-row-whose-sw-80daf-er-or-press-a-live-row-does-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-a-row-whose-sw-80daf-er-or-press-a-live-row-does-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [chromium] › tests/w3-settings.spec.ts:233:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one 
+
+    Error: expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "oklab(0.959197 0.00389533 0.0175539)"
+
+      247 |   await page.mouse.move(2, 890);
+      248 |   await page.mouse.up();
+    > 249 |   expect(pressed).not.toBe(hover);
+          |                       ^
+      250 |   expect(pressed).not.toBe(selectedThumb);
+      251 |   await expect(group.getByRole('radio', { name: 'System', exact: true })).toBeChecked(); // released away: no change
+      252 |   await ctx.close();
+        at /home/user/wt/w5g/kettle/tests/w3-settings.spec.ts:249:23
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [chromium] › tests/w3-settings.spec.ts:255:1 › forced colours: the focused field keeps its ring and the selected segment stays visible 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "solid"
+    Received: "none"
+
+      266 |     return { style: cs.outlineStyle, width: parseFloat(cs.outlineWidth) };
+      267 |   });
+    > 268 |   expect(field.style).toBe('solid');
+          |                       ^
+      269 |   expect(field.width).toBeGreaterThanOrEqual(2);
+      270 |   const thumb = await page
+      271 |     .getByRole('radiogroup', { name: 'Theme' })
+        at /home/user/wt/w5g/kettle/tests/w3-settings.spec.ts:268:23
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-forced-colours-bbb8b-ected-segment-stays-visible-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-forced-colours-bbb8b-ected-segment-stays-visible-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-forced-colours-bbb8b-ected-segment-stays-visible-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9) [chromium] › tests/w3-settings.spec.ts:282:1 › Settings never says "streak", and sound and nudges say what they cannot do 
+
+    Error: expect(received).not.toMatch(expected)
+
+    Expected pattern: not /streak/i
+    Received string:      "Settings
+    Your name
+    Level 12
+    2,266 leaves
+    23 days warm
+    RHYTHM
+    Preset
+    Classic
+    Deep
+    Gentle
+    Custom
+    Brew
+    Brew length
+    2
+    5
+    min
+    Tea break
+    Tea break length
+    5
+    min
+    Long tea break
+    Long tea break length
+    1
+    5
+    min
+    Long break after
+    Brews before a long break
+    4
+    brews
+    
+    Pick a preset, or tweak any number to make it your own.
+    
+    AUTO-START
+    Tea breaks
+    When the kettle whistles, tea time begins on its own.
+    Next brew
+    After tea, the next brew starts without a tap.
+    DAILY GOAL
+    A sip
+    15 min
+    A cup
+    30 min
+    A pot
+    60 min
+    A whole kettle
+    120 min
+    
+    Your warm streak only needs one brew a day. The goal is just for you.
+    
+    SOUND
+    Sounds
+    Effects, the kettle’s whistle and ambience, while Kettle is open. A phone’s silent switch or lock screen can keep them quiet.
+    Master volume
+    80%
+    Effects
+    70%
+    Ambience
+    60%
+    Brewing ambience
+    Tap one to hear a preview.
+    Rain
+    Fireside
+    Forest
+    Brown noise
+    Lo-fi keys
+    Quiet
+    
+    Soft rain on the window, drips on the sill.
+    
+    NOTIFICATIONS & DEVICE
+    Nudges
+    On. I’ll nudge you when a brew or tea break ends. A locked phone may hold the nudge until you’re back.
+    Send a test nudge
+    Keep screen awake
+    Stops your screen dimming during a brew.
+    Haptics
+    Little buzzes for key moments.
+    APPEARANCE
+    Theme
+    Auto
+    Light
+    Night
+    Motion
+    Reduced swaps bounces and slides for gentle fades.
+    System
+    Reduced
+    Full
+    3D nook
+    Lower it if your device runs warm.
+    Auto
+    High
+    Low
+    Off
+    YOUR DATA
+    Export a backup
+    Save everything as a .json file.
+    Import a backup
+    Add or restore from a Kettle .json file.
+    Reset everything
+    Start fresh on this device.
+    
+    Everything lives on this device. Export a backup to move Kettle to another browser.
+    
+    KEYBOARD SHORTCUTS
+    DURING A BREW
+    Pause or resume
+    Space
+    End the brew early
+    Esc
+    Add 5 minutes
+    +
+    Mute or unmute sounds
+    M
+    TODAY
+    Put the kettle on
+    Enter
+    ANYWHERE
+    Show keyboard shortcuts
+    ?
+    ABOUT
+    Chai’s story
+    
+    Chai is a small, round, thoroughly unbothered capybara who lives in a cozy nook with a kettle that’s always just about to boil. Chai believes big things get done one warm cup at a time, never rushes you, and has never once guilt-tripped anyone. The yuzu? Nobody knows how it stays up there.
+    
+    Version
+    Kettle 0.1.0
+    Privacy
+    No accounts, no tracking. Your data never leaves this device unless you export it.
+    Credits
+    Type set in Fredoka and Nunito (SIL Open Font License). Every sound is synthesized live in your browser. The nook is built with three.js.
+    Profile   
+       
+    Rhythm preset   
+    Decrease brew length   
+    Increase brew length   
+    Decrease tea break length   
+    Increase tea break length   
+    Decrease long tea break length   
+    Increase long tea break length   
+    Decrease brews before a long break   
+    Increase brews before a long break   
+    Daily goal   
+    Brewing ambience   
+    Theme   
+    Motion   
+    3D nook quality   
+       "
+
+      299 |     return `${main.innerText}\n${attrs.join('\n')}`;
+      300 |   });
+    > 301 |   expect(words).not.toMatch(/streak/i);
+          |                     ^
+      302 |   await expect(page.getByText('One finished brew makes a warm day. The goal is just for you.')).toBeVisible();
+      303 |   await expect(page.getByText(/play while Kettle is open, in a tab or as the app, after your first tap\. Closed, Kettle is silent\./)).toBeVisible();
+      304 |   await expect(page.getByText(/while Kettle is open but out of sight, I’ll nudge you\. With Kettle closed, no nudge can come\./)).toBeVisible();
+        at /home/user/wt/w5g/kettle/tests/w3-settings.spec.ts:301:21
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-Settings-never-5ac79-ges-say-what-they-cannot-do-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-Settings-never-5ac79-ges-say-what-they-cannot-do-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-base/w3-settings-Settings-never-5ac79-ges-say-what-they-cannot-do-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9 failed
+    [chromium] › tests/w3-settings.spec.ts:39:1 › preferences persist across a reload; Reset everything returns each to its default 
+    [chromium] › tests/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (390×844, light); inert controls are not Tab stops 
+    [chromium] › tests/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (390×844, dark); inert controls are not Tab stops 
+    [chromium] › tests/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (1440×900, light); inert controls are not Tab stops 
+    [chromium] › tests/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (1440×900, dark); inert controls are not Tab stops 
+    [chromium] › tests/w3-settings.spec.ts:194:1 › a row whose switch cannot change does not react to hover or press; a live row does 
+    [chromium] › tests/w3-settings.spec.ts:233:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one 
+    [chromium] › tests/w3-settings.spec.ts:255:1 › forced colours: the focused field keeps its ring and the selected segment stays visible 
+    [chromium] › tests/w3-settings.spec.ts:282:1 › Settings never says "streak", and sound and nudges say what they cannot do 

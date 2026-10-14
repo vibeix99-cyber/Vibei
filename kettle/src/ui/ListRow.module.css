@@ -70,7 +70,7 @@
   background: var(--surface-3);
 }
 button.row:focus-visible {
-  outline-offset: -3px;
+  outline-offset: var(--focus-gap-inset);
   border-radius: var(--r-lg);
 }
 .icon {
@@ -134,7 +134,7 @@ button.row:focus-visible {
   padding-left: 68px;
 }
 .disabled {
-  opacity: 0.55;
+  opacity: var(--disabled-opacity);
   cursor: not-allowed;
 }
 .danger .label {

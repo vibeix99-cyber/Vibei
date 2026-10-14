@@ -44,7 +44,12 @@
 }
 .option:disabled {
   cursor: not-allowed;
-  opacity: 0.5;
+  opacity: var(--disabled-opacity);
+}
+/* Keyboard focus: the shared ring, drawn 1px out so it stays inside the 4px track and its gaps instead of
+   running over the neighbouring option and the track's edge. */
+.option:focus-visible {
+  outline-offset: 1px;
 }
 .selected {
   color: var(--ink);
@@ -125,4 +130,15 @@
 }
 .option:active:not(:disabled) .inner {
   transform: translateY(1px);
+}
+/* Pressed reads as pressed (sunk, darker than the track) on every device, so it is never mistaken for hover (lighter)
+   or for the selected option (the raised cream thumb). */
+.option:active:not(:disabled):not(.selected) .inner {
+  background: color-mix(in oklab, var(--surface-3), var(--line-strong) 70%);
+}
+/* Forced colours drop the thumb's fill and shadow: draw it with a system colour so the choice stays visible. */
+@media (forced-colors: active) {
+  .thumb {
+    border: 2px solid Highlight;
+  }
 }
