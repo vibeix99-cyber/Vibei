@@ -12,7 +12,7 @@ Everything else verifies (§2):
 - the shared-control states and tokens;
 - persistence and reset;
 - the warm-days wording;
-- the Nudges Off/default, Keep awake and Haptics (supported) lines.
+- the Nudges Off/default and Haptics (supported) lines. Keep awake carries a gap the base already had (G-R1, FOLLOW-UP).
 
 Nothing else blocks.
 
