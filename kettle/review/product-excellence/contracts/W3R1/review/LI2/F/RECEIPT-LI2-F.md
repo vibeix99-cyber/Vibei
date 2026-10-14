@@ -419,4 +419,4 @@ Prior: `combined/comb-comb.json`, `combined/comb.log`, 12 frames `combined/<cfg>
 | Kept band after End's notice went (px) | **194** | **194** | **194** | 113 |
 | Mark done → inline Undo: on top 9/9; overlaps with notices; Undo restores the task | 9/9; none; yes | 9/9; none; yes | 9/9; none; yes | 9/9; none; yes |
 
-The 194 px band at the phone sizes @200 comes from a longer notice in that probe. On the trial, the real "Saved 3 minutes of focus" leaves 113 px (§1a).
+The phone sizes @200 kept a 194 px band. On the trial, "Saved 3 minutes of focus" alone leaves 113 px at these sizes (§1a), so this is not that notice's height. The probe's 3-line composer warning was raised on Today before the brew. Notices queued at a route change move to the next screen, and the room keeps the tallest notice that left. That the warning came back to Today and set the room is my inference; the probe did not record which notice set it.
