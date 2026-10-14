@@ -1,0 +1,169 @@
+{
+ "base": "http://127.0.0.1:5476",
+ "cfg": "844x390:light:200",
+ "flow": "running",
+ "kind": null,
+ "scene": "off",
+ "steps": [
+  {
+   "t": 2576,
+   "k": "tap",
+   "label": "field",
+   "at": [
+    631,
+    102
+   ],
+   "size": [
+    345,
+    52
+   ]
+  },
+  {
+   "t": 3372,
+   "k": "tap",
+   "label": "start",
+   "at": [
+    631,
+    236
+   ],
+   "size": [
+    377,
+    108
+   ]
+  }
+ ],
+ "controls": [
+  {
+   "n": "Pause",
+   "top": 540,
+   "bottom": 608,
+   "inView": false,
+   "onTop": false
+  },
+  {
+   "n": "End session",
+   "top": 540,
+   "bottom": 594,
+   "inView": false,
+   "onTop": false
+  },
+  {
+   "n": "Add 5 minutes",
+   "top": 540,
+   "bottom": 594,
+   "inView": false,
+   "onTop": false
+  }
+ ],
+ "readout": -1,
+ "rec": {
+  "frames": 416,
+  "noticeFrames": 66,
+  "modalFrames": 0,
+  "covered": 0,
+  "coveredEx": [],
+  "geo": 0,
+  "geoEx": [],
+  "noticeHidden": 0,
+  "noticeHiddenEx": [],
+  "chromeOver": 0,
+  "shifts": [
+   {
+    "at": 3056,
+    "hash": "#/focus",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": 5,
+    "sinceTap": 5,
+    "why": "screen"
+   },
+   {
+    "at": 3056,
+    "hash": "#/focus",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": 5,
+    "sinceTap": 5,
+    "why": "screen"
+   },
+   {
+    "at": 6048,
+    "hash": "#/focus",
+    "sinceRoute": 2992,
+    "kind": "strip",
+    "from": 0,
+    "to": 188,
+    "top": 143,
+    "down": 0,
+    "sinceInput": 2997,
+    "sinceTap": 2997,
+    "why": "rest",
+    "app": {
+     "down": 0,
+     "sinceInput": 2893,
+     "sinceTap": 2990,
+     "atRest": true
+    }
+   }
+  ],
+  "seen": {
+   "Recipe done: Take a full tea break · +10 leaves": 66
+  }
+ },
+ "errors": [],
+ "shiftAudit": [
+  {
+   "at": 3056,
+   "hash": "#/focus",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": 5,
+   "sinceTap": 5,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 3056,
+   "hash": "#/focus",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": 5,
+   "sinceTap": 5,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 6048,
+   "hash": "#/focus",
+   "sinceRoute": 2992,
+   "kind": "strip",
+   "from": 0,
+   "to": 188,
+   "top": 143,
+   "down": 0,
+   "sinceInput": 2997,
+   "sinceTap": 2997,
+   "why": "rest",
+   "app": {
+    "down": 0,
+    "sinceInput": 2893,
+    "sinceTap": 2990,
+    "atRest": true
+   },
+   "ok": true
+  }
+ ],
+ "shiftViolations": []
+}

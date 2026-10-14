@@ -1,0 +1,98 @@
+{
+ "base": "http://127.0.0.1:5486",
+ "variant": "ff 3 min before End",
+ "viewport": "390x844@2 light, touch",
+ "startedAt": "2026-10-14T00:25:49.103Z",
+ "steps": [
+  {
+   "name": "load",
+   "ok": true,
+   "ms": 5311,
+   "notes": [],
+   "hash": "#/"
+  },
+  {
+   "name": "1 home: type a task, Put the kettle on",
+   "ok": true,
+   "ms": 4903,
+   "notes": [
+    "field=Smoke test task"
+   ],
+   "hash": "#/focus"
+  },
+  {
+   "name": "2 wait, End -> End session -> Today",
+   "ok": true,
+   "ms": 17816,
+   "notes": [
+    "ff 3 min before End (spec-style)",
+    "strip=[\"Recipe done: Name what you’re brewing twice · +15 leaves\"]",
+    "dialogs=0 rootInert=false"
+   ],
+   "hash": "#/"
+  },
+  {
+   "name": "3 Mark done, then Undo",
+   "ok": true,
+   "ms": 2229,
+   "notes": [
+    "markCount=1",
+    "markLabel=Mark “Smoke test task” done",
+    "undoRow=Crossed off. Nice work. Undo",
+    "fieldAfterUndo=Smoke test task",
+    "undoRowCountAfter=0"
+   ],
+   "hash": "#/"
+  },
+  {
+   "name": "4 start again, finish(), summary, Skip break",
+   "ok": true,
+   "ms": 12987,
+   "notes": [
+    "summaryCta=Tea time · 5 min",
+    "pills=[\"+40 leaves\",\"Goal met · 78/60 min Daily goal met: 78 of 60 minutes today\",\"23 23 days warm\",\"Recipes 2/3\",\"12 136 leaves to level 13 136 leaves to cozy level 13\"]"
+   ],
+   "hash": "#/"
+  },
+  {
+   "name": "5 Nook",
+   "ok": true,
+   "ms": 4320,
+   "notes": [],
+   "hash": "#/nook"
+  },
+  {
+   "name": "6 Stats: delete a brew, then Undo",
+   "ok": true,
+   "ms": 18285,
+   "notes": [
+    "rowsBefore=12",
+    "undoRow=Brew deleted Undo",
+    "rowsAfterUndo=12",
+    "firstLabelSame=true"
+   ],
+   "hash": "#/stats"
+  },
+  {
+   "name": "7 Settings",
+   "ok": true,
+   "ms": 4759,
+   "notes": [
+    "scrollY=1800"
+   ],
+   "hash": "#/settings"
+  }
+ ],
+ "pageErrors": [],
+ "consoleErrors": [],
+ "consoleWarnings": [],
+ "requestFailed": [],
+ "facts": {},
+ "finishedAt": "2026-10-14T00:27:00.013Z",
+ "counts": {
+  "pageErrors": 0,
+  "consoleErrors": 0,
+  "consoleWarnings": 0,
+  "requestFailed": 0
+ }
+}

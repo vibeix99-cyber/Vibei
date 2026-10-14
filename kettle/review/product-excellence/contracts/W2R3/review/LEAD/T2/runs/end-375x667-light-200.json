@@ -2,20 +2,27 @@
  "base": "http://127.0.0.1:5476",
  "cfg": "375x667:light:200",
  "flow": "end",
+ "kind": null,
  "scene": "off",
  "steps": [
   {
-   "t": 7463,
+   "t": 7640,
+   "k": "fallback-scroll",
+   "label": "field",
+   "onTop": false
+  },
+  {
+   "t": 7640,
    "k": "not-on-top",
    "label": "field"
   },
   {
-   "t": 8342,
+   "t": 8279,
    "k": "tap",
    "label": "start",
    "at": [
     188,
-    335
+    98
    ],
    "size": [
     343,
@@ -23,14 +30,20 @@
    ]
   },
   {
-   "t": 15978,
+   "t": 16235,
+   "k": "fallback-scroll",
+   "label": "End",
+   "onTop": false
+  },
+  {
+   "t": 16235,
    "k": "not-on-top",
    "label": "End"
   }
  ],
  "error": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Leave the kettle early?' }) to be visible\u001b[22m\n",
  "rec": {
-  "frames": 1489,
+  "frames": 1565,
   "noticeFrames": 0,
   "modalFrames": 0,
   "covered": 0,
@@ -42,27 +55,27 @@
   "chromeOver": 0,
   "shifts": [
    {
-    "at": 7616,
+    "at": 7920,
     "hash": "#/focus",
     "sinceRoute": 0,
     "kind": "removed",
     "from": 0,
     "to": 0,
     "down": 0,
-    "sinceInput": 3,
-    "sinceTap": 3,
+    "sinceInput": 13,
+    "sinceTap": 14,
     "why": "screen"
    },
    {
-    "at": 7616,
+    "at": 7920,
     "hash": "#/focus",
     "sinceRoute": 0,
     "kind": "removed",
     "from": 0,
     "to": 0,
     "down": 0,
-    "sinceInput": 3,
-    "sinceTap": 3,
+    "sinceInput": 13,
+    "sinceTap": 14,
     "why": "screen"
    }
   ],
@@ -71,28 +84,28 @@
  "errors": [],
  "shiftAudit": [
   {
-   "at": 7616,
+   "at": 7920,
    "hash": "#/focus",
    "sinceRoute": 0,
    "kind": "removed",
    "from": 0,
    "to": 0,
    "down": 0,
-   "sinceInput": 3,
-   "sinceTap": 3,
+   "sinceInput": 13,
+   "sinceTap": 14,
    "why": "screen",
    "ok": true
   },
   {
-   "at": 7616,
+   "at": 7920,
    "hash": "#/focus",
    "sinceRoute": 0,
    "kind": "removed",
    "from": 0,
    "to": 0,
    "down": 0,
-   "sinceInput": 3,
-   "sinceTap": 3,
+   "sinceInput": 13,
+   "sinceTap": 14,
    "why": "screen",
    "ok": true
   }
