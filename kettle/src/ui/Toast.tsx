@@ -265,6 +265,13 @@ function holdsOutOfReach(el: HTMLElement): boolean {
   const panel = el.parentElement;
   return !!panel && panel.scrollHeight > panel.clientHeight + 0.5;
 }
+/** The strip wholly above the view: what follows it moves by exactly its change in height, so keep that still (the
+ *  element at the view's middle can be pinned chrome, whose top never moves: the page would then not be kept still). */
+function holdBelow(el: HTMLElement): Still | null {
+  const next = el.nextElementSibling;
+  if (!next) return holdView(el);
+  return { scroller: scrollerOf(el), ref: next, top: next.getBoundingClientRect().top };
+}
 /** When the notice whose room the strip keeps left (its room is given back no sooner than QUIET_MS after). */
 let roomLeftAt = -Infinity;
 /** The strip's height now (what it keeps as its room when its notice goes). */
@@ -304,7 +311,7 @@ function decide(): void {
           return;
         }
         const above = aboveView(el);
-        commit({ room: 0, hold: above ? holdView(el) : holdTop(el), why: above ? 'above' : 'idle' });
+        commit({ room: 0, hold: above ? holdBelow(el) : holdTop(el), why: above ? 'above' : 'idle' });
       }
     }
     return;
