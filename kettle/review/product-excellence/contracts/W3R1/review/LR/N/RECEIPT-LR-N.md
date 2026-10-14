@@ -124,7 +124,8 @@ Everything is full size and native. Names: `<viewport>-<theme>-<tier>-<hour>-<vi
 | 1440×900@2 light, high tier, day / dusk / night, close view, BASE and TRIAL | `sep/BASE/` (face crops only; the base high job ran without screenshots), `sep/TRIAL/` (close frame and face crop) | yes, close view only |
 | Base-left / trial-right montages of the face crops, low tier: close view native, Nook view enlarged 4× (nearest neighbour, `_x4`) | `captures/montage-face/` | yes (low tier only) |
 | 390×844@2 light and dark, low tier, day / dusk / night: Nook frames (full-viewport), close-view face crops, Nook face crops | `sep/BASE/390x844-*`, `sep/TRIAL/390x844-*`; montages `captures/montage-face/390x844-*` (close-view face crops, all 6 states; night Nook frames light and dark) | yes |
-| 375×667, 844×390; dark theme at 1440; high tier at 390; 200 % text | | see section 9 |
+| 375×667, 844×390 (light, low): trial only | numbers in `sep/TRIAL/lr-TRIAL-small.json`; the frames were deleted (no base to compare, size budget) | trial only, see section 9 |
+| dark theme at 1440; high tier at 390; 200 % text | | see section 9 |
 
 ## 5. The unlock card
 
@@ -190,11 +191,11 @@ Facts about the two runs: both ran the same 17 tests in the same order (10 in `c
 
 | Item | Status |
 |---|---|
-| 375×667 and 844×390 base-vs-trial grids (queued as `lr-small`, not run before the box ended) | **not captured, not measured** |
-| Dark theme at 1440×900 (queued, not run) | **not captured, not measured** (the dark theme at 390×844, low tier, is in section 2) |
+| 375×667 and 844×390 base-vs-trial grids | **trial-only**: the trial's numbers for light, low tier are in `sep/TRIAL/lr-TRIAL-small.json` (its frames deleted). The base half was killed by me (own PID) when I cancelled the queue at 13:14; its orphaned child had started, and I stopped it. No base-vs-trial comparison exists for these two viewports |
+| Dark theme at 1440×900 (queued, not run: I removed it from the queue to fit the box) | **not captured, not measured** (the dark theme at 390×844, low tier, is in section 2) |
 | High tier at 390×844, light and dark; the high tier at 1440 in the dark theme | **not captured, not measured** |
 | The high-tier Nook view at 1440, trial and base (the high tier was run close-view only) | **not captured** |
-| 200 % text spot check (queued as `lr-text200`, not run) | **not captured** |
+| 200 % text spot check (queued, cancelled) | **not captured** |
 | Separation measured on the real unlock card | n/a: Chai is out of frame (section 5) |
 | The procedural Chai's separation numbers (first frame and fallback) | **not measured** |
 | Same-build repeatability across contexts (base vs base) for the day frames, the 1-level night noise (section 3) and the 390 screenshot differences | **not run** |
