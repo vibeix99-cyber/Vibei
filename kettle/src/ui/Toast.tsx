@@ -15,7 +15,13 @@
  *    a screen's first frame (or its first `ENTRY_MS`: nothing on it has been aimed at yet); the answer to the person's
  *    own tap (a notice their tap raised, or one they tapped away); the strip wholly above the view (it changes and the
  *    page is scrolled by as much in the same frame: nothing in view moves); or the page at rest (no pointer down, no
- *    input for `QUIET_MS`). A notice whose time is up while the person is busy stays until then.
+ *    input for `QUIET_MS`, none waiting to be handled, confirmed in a fresh frame). A notice whose time is up while the
+ *    person is busy stays until then.
+ *  - **A notice leaving never moves the page** (W3R1, F-T2-1): when a notice goes at rest, or as the answer to a tap,
+ *    its face goes but the strip **keeps its room** (an empty band of the same height, `Ctl.room`), so nothing under a
+ *    finger that is about to land, or has just landed, moves. The next notice is drawn in that room. The room is given
+ *    back only when that moves nothing the person could be aiming at: a new screen (or its first `ENTRY_MS`), the strip
+ *    wholly above the view (the page kept still in the same frame), or the page hidden.
  *  - **A route change drops nothing**: the shown notice and the queue move to the next screen's strip (its first
  *    frame), with the time each has left.
  *  - **Announced once**, on arrival, by a light-DOM polite announcer (`[data-notices-said]`); showing, waiting and
@@ -184,12 +190,15 @@ interface Ctl {
   at: number;
   /** What to keep still when this version is laid out (src/ui/moment.ts). */
   hold: Still | null;
-  /** Why it last changed (tests and probes): a new screen, its first moments, above the view, the answer to a tap, at rest. */
-  why: 'screen' | 'entry' | 'above' | 'answer' | 'rest' | 'update' | 'none';
+  /** Why it last changed (tests and probes): a new screen, its first moments, above the view, the answer to a tap, at rest,
+   *  the page hidden. */
+  why: 'screen' | 'entry' | 'above' | 'answer' | 'rest' | 'update' | 'hidden' | 'none';
+  /** The room the strip keeps on this screen after a notice has gone (px; 0: none), so its going moves nothing. */
+  room: number;
   /** When (performance.now()). */
   changed: number;
 }
-let ctl: Ctl = { version: 0, strip: null, screen: null, item: null, at: -Infinity, hold: null, why: 'none', changed: -Infinity };
+let ctl: Ctl = { version: 0, strip: null, screen: null, item: null, at: -Infinity, hold: null, why: 'none', changed: -Infinity, room: 0 };
 const ctlListeners = new Set<() => void>();
 function commit(patch: Partial<Ctl>) {
   ctl = { ...ctl, hold: null, ...patch, version: ctl.version + 1, changed: performance.now() };
@@ -215,42 +224,93 @@ function wanted(): ToastItem | null {
 }
 
 let retry = 0;
+/** Input the browser has received but not handed to the page yet (a tap or wheel on its way): not at rest. */
+function inputPending(): boolean {
+  try {
+    const sched = (navigator as unknown as { scheduling?: { isInputPending?: (o?: { includeContinuous?: boolean }) => boolean } }).scheduling;
+    return !!sched?.isInputPending?.({ includeContinuous: true });
+  } catch {
+    return false;
+  }
+}
+/** A change at rest is made only in a fresh frame, after the input that reached the browser before it has been handed
+ *  to the page (pointer moves, wheel and scroll are delivered with the frame): `atRest` is then checked again. */
+let restFrame = 0;
+let inRestFrame = false;
+function confirmRestInFrame(): void {
+  if (restFrame) return;
+  restFrame = requestAnimationFrame(() => {
+    restFrame = 0;
+    inRestFrame = true;
+    try {
+      decide();
+    } finally {
+      inRestFrame = false;
+    }
+  });
+}
+function waitForRest(now: number): void {
+  window.clearTimeout(retry);
+  const wait = untilRest(now);
+  retry = window.setTimeout(decide, Number.isFinite(wait) ? wait + 20 : 200);
+}
+/** The strip's height now (what it keeps as its room when its notice goes). */
+const heightOf = (el: HTMLElement) => el.getBoundingClientRect().height;
+
 /** Decide what the active strip shows, and change it only at a safe moment (see the file's head). */
 function decide(): void {
   if (typeof document === 'undefined') return;
   const strip = activeStrip();
   if (!strip) {
     // No strip on screen (between two views): nothing is shown, the notice waits with its time.
-    if (ctl.strip !== null) commit({ strip: null, screen: null, why: 'screen' });
+    if (ctl.strip !== null) commit({ strip: null, screen: null, why: 'screen', room: 0 });
     return;
   }
   const next = wanted();
   const now = performance.now();
   if (strip.id !== ctl.strip || strip.screen !== ctl.screen) {
-    // A screen's first frame: what it shows is part of its arrival.
-    commit({ strip: strip.id, screen: strip.screen, item: next, at: now, why: 'screen' });
-    return;
-  }
-  if ((next?.id ?? null) === (ctl.item?.id ?? null)) {
-    if (next && next !== ctl.item) commit({ item: next, why: 'update' }); // the same notice, updated (same id)
+    // A screen's first frame: what it shows is part of its arrival (and it starts with no room kept).
+    commit({ strip: strip.id, screen: strip.screen, item: next, at: now, why: 'screen', room: 0 });
     return;
   }
   const el = strip.el!;
-  let hold: Still | null;
-  let why: Ctl['why'];
-  if (now - ctl.at < ENTRY_MS) [hold, why] = [holdTop(el), 'entry'];
-  else if (aboveView(el)) [hold, why] = [holdView(el), 'above'];
-  else if (answeringInput(now) && ((next?.answer && now - lastTapAt() < RESPONSE_MS) || (ctl.item && ctl.item.id === tappedAway))) [hold, why] = [holdTop(el), 'answer'];
-  else if (atRest(now)) [hold, why] = [holdTop(el), 'rest'];
-  else {
-    // The person is busy: the strip stays as it is (a notice whose time is up stays drawn) until they are not.
-    window.clearTimeout(retry);
-    const wait = untilRest(now);
-    retry = window.setTimeout(decide, Number.isFinite(wait) ? wait + 20 : 200);
+  const hidden = document.visibilityState === 'hidden';
+  if ((next?.id ?? null) === (ctl.item?.id ?? null)) {
+    if (next && next !== ctl.item) commit({ item: next, why: 'update' }); // the same notice, updated (same id)
+    else if (ctl.room > 0 && !ctl.item) {
+      // The room a gone notice left: given back only when that moves nothing in view.
+      if (now - ctl.at < ENTRY_MS) commit({ room: 0, hold: holdTop(el), why: 'entry' });
+      else if (hidden) commit({ room: 0, hold: null, why: 'hidden' });
+      else if (aboveView(el)) commit({ room: 0, hold: holdView(el), why: 'above' });
+    }
     return;
   }
+  let hold: Still | null;
+  let why: Ctl['why'];
+  // Moments when the strip may change height (nothing in view moves, or nothing on it has been aimed at yet)...
+  let free = true;
+  if (now - ctl.at < ENTRY_MS) [hold, why] = [holdTop(el), 'entry'];
+  else if (hidden) [hold, why] = [null, 'hidden'];
+  else if (aboveView(el)) [hold, why] = [holdView(el), 'above'];
+  else {
+    // ... and moments when it changes in view: a notice going keeps its room (F-T2-1), so its going moves nothing.
+    free = false;
+    if (answeringInput(now) && ((next?.answer && now - lastTapAt() < RESPONSE_MS) || (ctl.item && ctl.item.id === tappedAway))) [hold, why] = [holdTop(el), 'answer'];
+    else if (atRest(now) && !inputPending()) {
+      if (!inRestFrame) {
+        confirmRestInFrame();
+        return;
+      }
+      [hold, why] = [holdTop(el), 'rest'];
+    } else {
+      // The person is busy: the strip stays as it is (a notice whose time is up stays drawn) until they are not.
+      waitForRest(now);
+      return;
+    }
+  }
   if (ctl.item?.id === tappedAway) tappedAway = null;
-  commit({ item: next, hold, why });
+  const room = free ? 0 : Math.max(ctl.room, ctl.item ? heightOf(el) : 0);
+  commit({ item: next, hold, why, room });
 }
 
 /* ---------------- the clock: runs only while the notice is shown ---------------- */
@@ -293,7 +353,8 @@ function tick() {
     }
   }
   decide();
-  if (!items.length && !ctl.item) stopClock();
+  // (While the strip keeps a room, the clock keeps looking for the moment to give it back.)
+  if (!items.length && !ctl.item && !ctl.room) stopClock();
 }
 function startClock() {
   if (clock || typeof window === 'undefined') return;
@@ -314,9 +375,16 @@ export function Toaster() {
   const saidRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     watchInput();
-    return on('ui:toast', ({ message, tone }) => {
+    // The page hidden: a kept room can be given back (nobody is aiming at it).
+    const vis = () => decide();
+    document.addEventListener('visibilitychange', vis);
+    const off = on('ui:toast', ({ message, tone }) => {
       toast(message, { tone });
     });
+    return () => {
+      document.removeEventListener('visibilitychange', vis);
+      off();
+    };
   }, []);
   // The announcer; notices raised before it was mounted (at boot) are said now, once.
   useLayoutEffect(() => {
@@ -327,8 +395,8 @@ export function Toaster() {
     unsaid = [];
   }, []);
   useEffect(() => {
-    if (list.length || c.item) startClock();
-  }, [list, c.item]);
+    if (list.length || c.item || c.room) startClock();
+  }, [list, c.item, c.room]);
   return <div ref={saidRef} className="sr-only" role="status" aria-live="polite" aria-atomic="false" aria-relevant="additions" data-notices-said="" />;
 }
 
@@ -366,6 +434,9 @@ export function NoticeStrip({ prio = 0, screen = '', off = false, className }: {
   );
   const c = useCtl();
   const item = c.strip === id && !leaving ? c.item : null;
+  // The room a gone notice left (F-T2-1): the strip keeps at least that height (empty, or with the next notice in it)
+  // until giving it back moves nothing in view.
+  const room = c.strip === id && !leaving ? c.room : 0;
   // Laid out: keep still what the change must not move (moment.ts), before this frame is painted.
   useLayoutEffect(() => {
     if (c.strip !== id || !c.hold) return;
@@ -378,7 +449,9 @@ export function NoticeStrip({ prio = 0, screen = '', off = false, className }: {
       ref={ref}
       className={cx(s.strip, className)}
       data-notice-strip=""
-      data-has={item ? '' : undefined}
+      data-has={item || room ? '' : undefined}
+      data-room={room && !item ? '' : undefined}
+      style={room ? { minHeight: room } : undefined}
       role={item ? 'group' : undefined}
       aria-label={item ? 'Notifications' : undefined}
     >
