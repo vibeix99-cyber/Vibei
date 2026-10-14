@@ -443,4 +443,6 @@ Frames: `idle2/trial/390x844-{light-t100,dark-t200-rm}-{2-band-at-leave,3-band-a
 
 The target was above the view at that moment (top −118). The 153.5 px jump is of the content in view below the strip. At 1440 with stepped wheel and reduced motion, the same path was compensated (§2d).
 
+**Caveat on the fling rows:** the tracker saved only frames whose layout shifted (`|visible + scroll| > 2 px`). A compensation applied one frame late would show as visible +153.5 with scroll −153.5. That frame would not be saved, so whether the jump was undone a frame later is **not recorded**. In the leave's own frame the content had moved 153.5 px with no matching scroll (both builds).
+
 **Interpretation, raw:** the "above" leave is not part of the band question (it keeps no room). It is the one change the trial makes while a scroll is still running. On a touch fling the compensation did not hold, on both builds.
