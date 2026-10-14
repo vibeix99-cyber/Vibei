@@ -12,7 +12,7 @@ Notes on the columns:
 - **Import at 844×390 @200 (light and dark)**: the Undo row's top was 30 px below where "Import a backup" was when tapped (282 → 312), scrollY unchanged (3600). All other configurations: 0 px.
 - **Mark done at 844×390 dark @200**: the Undo row was drawn at y −54 (row box [459, −54, 345, 88]) after the wheel-and-tap; Undo button [458, −10, 80, 44], 6 of 9 points in the viewport. (844×390 light @200: row at y 16, 9/9.)
 - **375×667 @200 (light, dark, dark reduced)**: "Delete this brew?" → Delete not brought on screen by 15 wheel steps and not reached by 12 Tabs; Lane T clicked it synthetically to continue (recorded `how: synthetic`). Same as the maker's §7.1.
-- **1440 (all four)**: after the Undo was clicked with the mouse and the mouse left resting there, "Import undone. Everything is as it was." stayed for the rest of the run (about 22 s, 223 samples); the Import row did not come back while the pointer rested on it, so the second (run-out) import was not run at 1440.
+- **1440 (all four)**: after the Undo was clicked with the mouse and the mouse left resting there, "Import undone. Everything is as it was." stayed for the rest of the run (208–224 samples, 21–22 s); the Import row did not come back while the pointer rested on it, so the second (run-out) import was not run at 1440.
 - Restored: Mark done → "Chapter 3 notes" back in the field and the Mark done line back (22/22); History mid → same row count and same first label (22/22); Import → 89 brews after Add, 6 after Undo (22/22).
 
 ## 3. W2H-D1: Brew length at rest, and Mark done right after End (fix vs base)
