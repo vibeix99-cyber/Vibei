@@ -92,7 +92,8 @@ export function warmSheetLine(w: WarmState): string {
     case 'warmToday':
       return `${warmDaysInARow(w.n)}, today included.`;
     case 'cozyKept':
-      return `A Tea Cozy kept the kettle warm ${cozyWhen(w)}, so your ${warmDaysInARow(w.n)} carry on. One brew today adds another.`;
+      // (What happened is Chai's line on Today; here the sheet's Tea Cozy note explains it, once.)
+      return `${warmDaysInARow(w.n)}. One brew today adds another.`;
     case 'pending':
       return `${warmDaysInARow(w.n)}. One brew today adds another.`;
   }
@@ -104,8 +105,9 @@ export function warmSheetLine(w: WarmState): string {
  */
 export function cozyNote(w: WarmState, toNextCozy: number): string {
   const what = 'A Tea Cozy keeps the kettle warm through one missed day. It’s used for you, so there’s nothing to remember.';
+  const held = w.cozies > 1 ? ` You have ${w.cozies} more.` : w.cozies === 1 ? ' You have one more.' : '';
+  if (w.kind === 'cozyKept') return `${what} One did ${cozyWhen(w)}.${held || (toNextCozy > 0 ? ` You’ll earn the next after ${moreWarmDays(toNextCozy)} in a row.` : '')}`;
   if (w.cozies > 0) return `${what}${w.cozies > 1 ? ` You have ${w.cozies}.` : ' You have one.'}`;
-  if (w.kind === 'cozyKept') return `${what} Yours was used ${cozyWhen(w)}.${toNextCozy > 0 ? ` You’ll earn the next after ${moreWarmDays(toNextCozy)} in a row.` : ''}`;
   if (w.n > 0 && toNextCozy > 0) return `No Tea Cozy yet. You’ll earn one after ${moreWarmDays(toNextCozy)} in a row: it keeps the kettle warm through one missed day.`;
   return `Every ${COZY_EVERY} warm days in a row earn a Tea Cozy: it keeps the kettle warm through one missed day.`;
 }

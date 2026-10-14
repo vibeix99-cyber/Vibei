@@ -30,6 +30,9 @@ describe('warm days, in Kettle’s words (W3R1 glossary, I13)', () => {
     expect(cozyNote(none, 2)).toBe('No Tea Cozy yet. You’ll earn one after 2 more warm days in a row: it keeps the kettle warm through one missed day.');
     expect(cozyNote(warmState(st({}), TODAY), 7)).toBe('Every 7 warm days in a row earn a Tea Cozy: it keeps the kettle warm through one missed day.');
     expect(warmSheetLine(none)).toBe('5 warm days in a row. One brew today adds another.');
+    const kept = warmState(st({ current: 8, best: 20, cozies: 1, days: { '2026-10-13': 'cozy' } }), TODAY);
+    expect(warmSheetLine(kept), 'Chai says what happened; the sheet does not repeat it').toBe('8 warm days in a row. One brew today adds another.');
+    expect(cozyNote(kept, 6)).toBe('A Tea Cozy keeps the kettle warm through one missed day. It’s used for you, so there’s nothing to remember. One did yesterday. You have one more.');
     expect(warmSheetLine(warmState(st({ current: 5, best: 5, todayDone: true }), TODAY))).toBe('5 warm days in a row, today included.');
   });
   it('never says "streak", and never threatens', () => {
