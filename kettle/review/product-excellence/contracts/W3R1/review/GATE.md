@@ -74,3 +74,11 @@
 | **Trial** | **`c8b849e`** = integration + `7f95c18`, worktree `/home/user/wt/w5tr-g2`, src `a53263f`. tsc 0, build OK. Dev **:5525** (verified), preview **:5535** |
 | C-1 key sentence | `If Kettle is closed or your phone has paused it by then, no nudge comes.` (for F's `whistle.spec.ts:203`) |
 | Archive | `archive/pe-w3-settings-fix-7f95c18.incremental.bundle`, `archive/w3r1-trial-c8b849e.incremental.bundle` |
+
+## Merges (2026-10-14 ~18:00 UTC)
+
+- **N: APPROVE → merged as `3faaf94`** (`pe/w3-chai-night@4168428`). The merged kettle/src `9699774` equals trial `46f33e2`'s. Eye contrast: vb's call, open (two numbers in `palette.ts` if Vibei wants it changed).
+- **G: APPROVE (final, after the fix round) → merged as `25b5e26`** (`pe/w3-settings@7f95c18`). Every file G touched is byte-identical to `7f95c18`'s, and the merged change set is exactly N ∪ G. kettle/src is `c264faf`.
+- **C-2:** `docs/REAL_DEVICE_CHECKLIST.md` rows 2.3 and 8.5 were reworded to match G's nudge line (`a859d86`, orchestrator, as the verdict assigned).
+- **Check on `a859d86`:** tsc 0; vitest **293/293** (290 + N's 3).
+- **Known red until F's fix lands:** `tests/whistle.spec.ts:203` (F's file) still asserts the old "may hold" sentence (C-1). It goes in F's fix packet; if F does not merge, the orchestrator changes that one line, as CHECKER-W3R1-G.md allows.
