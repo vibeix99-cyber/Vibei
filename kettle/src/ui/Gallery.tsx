@@ -112,7 +112,7 @@ export default function UiGallery() {
   useEffect(() => {
     if (openParam === 'toast') {
       toast.success('Saved. Your kettle remembers.');
-      toast('Tea Cozy used — your streak stayed warm.', { icon: 'cozy' });
+      toast('Tea Cozy used. The kettle stayed warm.', { icon: 'cozy' });
       toast.warning('Notifications are blocked in this browser.', { action: { label: 'How to fix', onClick: () => {} } });
     }
     const section = params.get('section');
@@ -188,9 +188,9 @@ export default function UiGallery() {
             <p className="t-title">Today’s recipes</p>
             <p className="t-headline">Focus for 25 minutes</p>
             <p className="t-body">Tea time. Stretch, sip, look out the window. Your minutes still count.</p>
-            <p className="t-body-s t-ink-2">Keeps your streak warm for one missed day.</p>
+            <p className="t-body-s t-ink-2">A Tea Cozy keeps the kettle warm through one missed day.</p>
             <p className="t-caption">Last brewed 2 hours ago</p>
-            <p className="t-overline">Warm streak</p>
+            <p className="t-overline">Warm days</p>
           </div>
         </Section>
 
@@ -494,10 +494,10 @@ export default function UiGallery() {
         {/* ---------------- Data display ---------------- */}
         <Section id="stats" title="Stat tiles">
           <div className={s.twoCol}>
-            <Stat icon={<Icon name="mug" tone="color" size={26} />} tone="persimmon" value={<Counter value={12} />} label="Day streak" />
+            <Stat icon={<Icon name="mug" tone="color" size={26} />} tone="persimmon" value={<Counter value={12} />} label="Days warm" />
             <Stat icon={<Icon name="leaf" tone="color" size={26} />} tone="matcha" value={<Counter value={4921} />} label="Leaves" />
             <Stat icon={<Icon name="clock" tone="color" size={26} />} tone="honey" value="41h 20m" label="Total focus" />
-            <Stat icon={<Icon name="trophy" tone="color" size={26} />} tone="sky" value={37} label="Best streak" hint="Set in March" />
+            <Stat icon={<Icon name="trophy" tone="color" size={26} />} tone="sky" value={37} label="Warmest run" hint="Set in March" />
           </div>
           <Card>
             <div className={s.twoCol}>
@@ -524,7 +524,7 @@ export default function UiGallery() {
             size="lg"
             celebrate
             delay={0.5}
-            label="Streak extended"
+            label="Another warm day"
             days={[
               { day: '2026-09-22', label: 'M', state: 'done' },
               { day: '2026-09-23', label: 'T', state: 'done' },
@@ -587,7 +587,7 @@ export default function UiGallery() {
               <Kbd>Space</Kbd> pause · <Kbd>Esc</Kbd> end · <Kbd>+</Kbd> 5 min
             </span>
             <Spinner />
-            <Tooltip content="Streak freeze for one missed day">
+            <Tooltip content="Keeps the kettle warm through one missed day">
               <Button variant="secondary" size="sm" icon="info">
                 Hover me
               </Button>
@@ -634,7 +634,7 @@ export default function UiGallery() {
             <Button size="sm" variant="soft" tone="matcha" onClick={() => toast.success('Saved. Your kettle remembers.')}>
               Success toast
             </Button>
-            <Button size="sm" variant="soft" onClick={() => toast('Tea Cozy used — your streak stayed warm.', { icon: 'cozy' })}>
+            <Button size="sm" variant="soft" onClick={() => toast('Tea Cozy used. The kettle stayed warm.', { icon: 'cozy' })}>
               Neutral toast
             </Button>
             <Button size="sm" variant="soft" tone="berry" onClick={() => toast.warning('Notifications are blocked.', { action: { label: 'Fix', onClick: () => {} } })}>
@@ -688,7 +688,7 @@ export default function UiGallery() {
         open={dialog}
         onClose={() => setDialog(false)}
         title="Reset everything?"
-        description="This clears your brews, streak and nook. Export first if you’d like a copy."
+        description="This clears your brews, warm days and nook. Export first if you’d like a copy."
         size="sm"
         footer={
           <>

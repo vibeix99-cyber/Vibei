@@ -232,7 +232,7 @@ function ResetSheet({ open, onClose, onExport }: { open: boolean; onClose: () =>
       hero={<Mascot pose="concerned" size={112} />}
       description={
         <>
-          This clears your brews, warm streak, leaves, recipes and settings on this device. <strong>It can’t be undone.</strong>
+          This clears your brews, warm days, leaves, recipes and settings on this device. <strong>It can’t be undone.</strong>
         </>
       }
       footer={
