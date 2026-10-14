@@ -1,0 +1,37 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › tests/w3-settings.spec.ts:233:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one (7.3s)
+
+
+  1) [chromium] › tests/w3-settings.spec.ts:233:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      247 |   await page.mouse.down();
+      248 |   // Still held: wait for the pressed fill to finish fading in (on base it never differs from hover, so this fails there).
+    > 249 |   await expect.poll(async () => (await settled(opt)) && (await inner(opt)) !== hover, { timeout: 5_000 }).toBe(true);
+          |   ^
+      250 |   const pressed = await inner(opt);
+      251 |   await page.mouse.move(2, 890);
+      252 |   await page.mouse.up();
+        at /home/user/wt/w5g-x2/kettle/tests/w3-settings.spec.ts:249:3
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/G/x2b/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/G/x2b/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/G/x2b/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/w3-settings.spec.ts:233:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one 

@@ -1,0 +1,15 @@
+
+Running 10 tests using 1 worker
+
+  ✓   1 [chromium] › tests/w3-settings.spec.ts:39:1 › preferences persist across a reload; Reset everything returns each to its default (24.6s)
+  ✓   2 [chromium] › tests/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (390×844, light); inert controls are not Tab stops (4.9s)
+  ✓   3 [chromium] › tests/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (390×844, dark); inert controls are not Tab stops (4.4s)
+  ✓   4 [chromium] › tests/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (1440×900, light); inert controls are not Tab stops (6.4s)
+  ✓   5 [chromium] › tests/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (1440×900, dark); inert controls are not Tab stops (5.5s)
+  ✓   6 [chromium] › tests/w3-settings.spec.ts:194:1 › a row whose switch cannot change does not react to hover or press; a live row does (5.9s)
+  ✓   7 [chromium] › tests/w3-settings.spec.ts:233:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one (5.1s)
+  ✓   8 [chromium] › tests/w3-settings.spec.ts:259:1 › forced colours: the focused field keeps its ring and the selected segment stays visible (3.9s)
+  ✓   9 [chromium] › tests/w3-settings.spec.ts:286:1 › Settings never says "streak", and sound and nudges say what they cannot do (3.9s)
+  ✓  10 [chromium] › tests/w3-settings.spec.ts:322:1 › an iPhone-like Safari tab (no notifications, no vibration API): Sounds agrees with the Nudges line, Haptics names the browser (3.9s)
+
+  10 passed (1.2m)
