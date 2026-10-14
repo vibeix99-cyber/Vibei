@@ -293,3 +293,52 @@ Both were fixed and both builds re-run. **Final run: every TRIAL row matches** (
 - **The always-visible Cozy row** ("N Tea Cozies ready · Fully stocked / Next in N warm days · each covers one missed day", or "No Tea Cozies yet · Earn one in N warm days…") is unchanged from base (`StreakCard.tsx` l.81-88, not in S's diff). It shows in every populated state, not only when a Cozy is relevant.
 - My first trial run read the wrong card for the line; that log is kept as `words/LI-words-trial-run1-wrongcard.log`. The "streak" scan in it was valid.
 
+## 7. REFERENCE (K07) → BEFORE → AFTER, full size
+
+- **REFERENCE:** `reference/K07-live-stats-empty.jpg`. Empty Stats: Chai, "Nothing brewed yet.", the explanation, "Put the kettle on", then the four tiles and Badges.
+- **Stats pages** (`tools/LI-cap.mjs`, BEFORE base :5478 17:20–17:22 UTC, AFTER trial :5522 17:4x–17:52):
+  - Each is a full-page PNG at DPR 1, not `isMobile` (no stitching): `captures/BEFORE-base-4d36939/<w>x<h>-<theme>-<100|200>-<empty|veteran>.png` and the same names under `captures/AFTER-trial-c7a6b8f/`.
+  - That is 16 configurations × 2 states × 2 builds = 64 PNGs. "veteran" is the populated page: the top summary, every card and History.
+  - Frozen Mon 12 Oct 07:40 then real time, en-GB, UTC, `reducedMotion: reduce`. `meta.json` in each folder lists `scrollWidth`, page height and the elements past the right edge.
+- **Side by side** (BEFORE left, AFTER right, magenta = no content): `tools/LI-pair.mjs <before> <after> <prefix> [slice]` builds them from the two folders. I did not commit the pairs, to stay under the size cap.
+- **Artefact:** the bottom tab bar of phones is `position: fixed`, so full-page shots paint it once, about one viewport down, over the content (same on both builds).
+
+| Config | Empty: page height B → A | Empty: scrollWidth B / A | Veteran: page height B → A | Veteran: scrollWidth B / A (viewport) |
+|---|---|---|---|---|
+| 390x844-light-100 | 1752 → 1770 | 375 / 375 | 4177 → 4386 (+209) | 375 / 375 (390) |
+| 390x844-light-200 | 3068 → 3068 | 375 / 375 | 7922 → 8455 (+533) | 405 / 405 (390) |
+| 390x844-dark-100 | 1752 → 1770 | 375 / 375 | 4177 → 4386 (+209) | 375 / 375 (390) |
+| 390x844-dark-200 | 3068 → 3068 | 375 / 375 | 7922 → 8455 (+533) | 405 / 405 (390) |
+| 375x667-light-100 | 1867 → 1867 | 360 / 360 | 4604 → 4920 (+316) | 360 / 360 (375) |
+| 375x667-light-200 | 3300 → 3300 | 360 / 360 | 8491 → 9108 (+617) | 390 / 390 (375) |
+| 375x667-dark-100 | 1867 → 1867 | 360 / 360 | 4604 → 4920 (+316) | 360 / 360 (375) |
+| 375x667-dark-200 | 3300 → 3300 | 360 / 360 | 8491 → 9108 (+617) | 390 / 390 (375) |
+| 844x390-light-100 | 1235 → 1235 | 829 / 829 | 2481 → 2659 (+178) | 829 / 829 (844) |
+| 844x390-light-200 | 1892 → 1892 | 829 / 829 | 4678 → 4964 (+286) | 829 / 829 (844) |
+| 844x390-dark-100 | 1235 → 1235 | 829 / 829 | 2481 → 2659 (+178) | 829 / 829 (844) |
+| 844x390-dark-200 | 1892 → 1892 | 829 / 829 | 4678 → 4964 (+286) | 829 / 829 (844) |
+| 1440x900-light-100 | 1242 → 1242 | 1425 / 1425 | 2913 → 3091 (+178) | 1425 / 1425 (1440) |
+| 1440x900-light-200 | 1743 → 1743 | 1425 / 1425 | 4518 → 4804 (+286) | 1425 / 1425 (1440) |
+| 1440x900-dark-100 | 1242 → 1242 | 1425 / 1425 | 2913 → 3091 (+178) | 1425 / 1425 (1440) |
+| 1440x900-dark-200 | 1743 → 1743 | 1425 / 1425 | 4518 → 4804 (+286) | 1425 / 1425 (1440) |
+
+**What I opened and looked at** (pairs at full size, in my scratch folder; reproducible with `LI-pair.mjs`):
+- **Empty, 390×844 dark @100 and 1440×900 light @100 vs K07:**
+  - Same structure as K07 and as base: Chai, "Nothing brewed yet.", explanation, "Put the kettle on", tiles, Cozy level, Badges. **No summary in the empty state** (`StatsScreen.tsx:64`).
+  - The only changes are words: "Your warm days, charts and badges…", "Days warm", "0 days · Warmest run".
+  - At 390 the "0 days / Warmest run" tile wraps to two lines, so the tile row grows by about 18 px.
+- **Veteran, 375×667 light @200:** the summary card ("Today · Mon, 12 Oct · 50 min focused · 2 full brews · 50 min of your 1h goal", then "Last 7 days · 6 Oct–12 · 4h 35m focused · Brewed on 7 of 7 days · 1 day at goal") comes first. It pushes the tiles about 600 px down; the page is 533–616 px longer at @200 on phones (table above). The tiles wrap ("Days / warm", "Warmest / run").
+- **Veteran, 1440×900 dark @100 and light @200:** the summary spans both columns above the tiles and Badges. Its two halves leave a wide empty area to the right of each column at 1440. Tiles and cards are otherwise unchanged.
+- **Veteran, 844×390 light @200 (new clipping on AFTER):**
+  - The "Warmest run" tile reads **"Warm… / run"**: "Warmest" is cut with an ellipsis. Its value "23 days" reaches the tile's right border.
+  - Crop: open `captures/AFTER-trial-c7a6b8f/844x390-light-200-veteran.png` around x 100–480, y 450–790.
+  - On BEFORE the same tile reads "23 / Best streak" without truncation.
+  - The "Total focus" tile shows "23h 9ı / Total foc", cut at the right on **both** builds (pre-existing).
+- **Veteran, 390×844 light @100, History:** the same day groups, totals, rows and order as BEFORE, only shifted down (the summary is about 210 px tall).
+- **Horizontal fit:** `scrollWidth` is identical on BEFORE and AFTER in all 32 pairs. At 390×844 @200 and 375×667 @200 veteran it is 405/390 on both builds, from the chart tooltip `SPAN._tip`. In 844×390 and 1440 no visible element passes the edge, only the sr-only table.
+
+**The delete dialog** (viewport shots from the probes, `isMobile` on phones): see §1 for the paths. I looked at:
+- AFTER 375×667 light @200: tight. Chai, title and the start of the text, then a divider, with **Keep it** and **Delete** pinned at the bottom; the text scrolls under the divider.
+- BEFORE 375×667 light @200: Delete is cut off below the panel; only Keep it shows.
+- AFTER 390×844 light @200: everything fits, not tight.
+
