@@ -46,3 +46,5 @@ Restore a chain in order with `git fetch <bundle> 'refs/heads/*:refs/heads/*'` (
 | `w3r1-trial-c7a6b8f.incremental.bundle` | trial c7a6b8f = integration 1d961af + 344069c (merge commit only) | 1d961af, 344069c | okay 2026-10-14 |
 | `w3r1-trial-3d91793.incremental.bundle` | trial 3d91793 = integration 0c32046 + 808421d (merge commit only) | 0c32046, 808421d | okay 2026-10-14 |
 | `w3r1-trial-46f33e2.incremental.bundle` | trial 46f33e2 = integration 1af69d7 + 4168428 (merge commit only) | 1af69d7, 4168428 | okay 2026-10-14 |
+| `pe-w3-settings-fix-7f95c18.incremental.bundle` | pe/w3-settings@7f95c18 (W3R1 Maker G fix round; code 0320211) | 808421d | okay 2026-10-14 |
+| `w3r1-trial-c8b849e.incremental.bundle` | trial c8b849e = integration a8edec2 + 7f95c18 (merge only) | a8edec2, 7f95c18 | okay 2026-10-14 |

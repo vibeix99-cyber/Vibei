@@ -63,3 +63,14 @@
 - **G: REJECT** (LEAD-5, `7848a9e`). G-D1…G-D4 are text-only and match Vibei's §4. The fix round runs **17:05–18:35 UTC** on `pe/w3-settings` from `808421d`; the packet is `CHECKER-W3R1-G.md` §6.
   - **C-1:** F's `tests/whistle.spec.ts:203` asserts the old locked-phone sentence. It changes in F's fix round, or at merge by the orchestrator (one line of test text).
   - **C-2:** `docs/REAL_DEVICE_CHECKLIST.md` rows 2.3 and 8.5 are reworded at merge.
+
+## Maker G fix round. GATE PASSED, 2026-10-14 17:52 UTC
+
+| Item | Result |
+|---|---|
+| Hand-back | 17:49 UTC (window 17:05–18:35). Packet `/home/user/wt/w5g/kettle/review/product-excellence/contracts/W3R1/G-FIX-READY.md`; evidence `…/W3R1/G/fix/` (4.7 MB) |
+| Revision | `pe/w3-settings@7f95c18`; code `0320211`; kettle/src `a53263f` |
+| Scope (checked) | `git diff 808421d 7f95c18 -- kettle/src kettle/tests` touches only `SettingsScreen.tsx` (4 string literals: `:134` Sounds, `:187` Nudges On, `:233` Keep awake (optional, allowed), `:240` Haptics) and `tests/w3-settings.spec.ts`. No CSS. `:182` unchanged |
+| **Trial** | **`c8b849e`** = integration + `7f95c18`, worktree `/home/user/wt/w5tr-g2`, src `a53263f`. tsc 0, build OK. Dev **:5525** (verified), preview **:5535** |
+| C-1 key sentence | `If Kettle is closed or your phone has paused it by then, no nudge comes.` (for F's `whistle.spec.ts:203`) |
+| Archive | `archive/pe-w3-settings-fix-7f95c18.incremental.bundle`, `archive/w3r1-trial-c8b849e.incremental.bundle` |
