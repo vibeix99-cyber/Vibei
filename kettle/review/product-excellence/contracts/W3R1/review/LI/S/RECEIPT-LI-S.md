@@ -527,3 +527,25 @@ Screenshots: `sheets/<build>/<cfg>-<sheet>.png` (the sheet as opened).
 - In all three cases "streak" appears **0 times** in `main`, Edit brew or Delete on trial. The badge sheet still says "Keep a 14-day warm streak" (`badges.ts`, F's file).
 - The engine's values in those cases: current 9, Cozies 1, at risk true / false; then current 0, best 9, Cozy day 10 Oct, missed 11 Oct.
 
+## 2c. The transient width, follow-up
+
+`tools/LI-overflow2.mjs` loaded Stats at 390×844 @200 (`isMobile`) with the CPU throttled ×4 and sampled `scrollWidth` against 390 every 50 ms for 6 s, to find which element widens the page. Runs: trial ×2, base ×2, 18:06 UTC (`overflow/LI-overflow2.log`). **No sample was wider than 390 on either build.** (An earlier run compared with `clientWidth`, which grows with the page under `isMobile`; it is inconclusive and kept as `LI-overflow2-run1-clientWidth.log`.)
+
+So the 408 px layout viewport appeared only on the first, cold load of the 17:36 probe, on trial and on combined. With a warm dev server I could not reproduce it. **Which element causes it is unproven.**
+
+## Unproven / not done
+
+- **Origin of the transient 408 px width** (§2a, §2c). It was seen on trial and combined, on the first cold load only. Base was clean in 5 loads, but a cold base load was not tried after its server had warmed, so "trial-only" is not established.
+- **F-T2-4 on BASE**: 9 of 16 configs. Not run: 390×844 dark @100, 375×667 dark @100, 844×390 light @100, 844×390 dark @200, 1440 dark @100. BASE 1440 light @200 timed out. TRIAL covers all 16.
+- **Focus after Delete by keyboard**: Undo in 14 of 16 trial configs, `<main>` in 2 (390×844 light @200, 1440 light @200). Not re-run.
+- **§2b sheets** at 375×667 @200 and 1440 only, as the brief asked. 390×844 and 844×390 are not covered for the non-Stats sheets.
+  - Probe errors: TRIAL 1440 light @100 `today-rhythm`, 1440 dark @200 `today-level`/`today-rhythm`; BASE 375 dark @200 and 1440 dark @200 `settings-reset`, 1440 dark @200 `today-rhythm`.
+  - TRIAL 1440 dark @200 was still running its last 3 sheets (`stats-delete-over-edit`, `focus-ambience`, `focus-end`) when I wrote this; see `sheets/LI-all-trial.log` for whatever it recorded.
+  - The × position after scrolling a tight sheet was not measured.
+- **Late completions in a browser**: only the after-midnight brew (§3 case A). "Ended late" (app closed past the end) and DST were not run by me; they are cited from code, docs and unit tests.
+- **A non-whole-minute brew** was not run by me. The maker's spec "12:40" passed in Lane R's 17:25 rerun.
+- **Captures** are the Stats page (empty, veteran) at all 16 configs, both builds. Not captured: the at-risk top, newbie and celebrate at every config. The `truth/` and `words/` shots cover those states at 1440 only.
+- **Pairs** (BEFORE | AFTER images) were not committed (size cap). `tools/LI-pair.mjs` rebuilds them from `captures/`.
+- **The combined build** (`e478604`): only `w3-stats.spec.ts:98` and the overflow probe. No sheet or Stats audit on it, so the badge sheet wording there was not checked.
+- **Device behaviour** (real iOS/Android touch, VoiceOver/TalkBack reading the tight sheets): not tested.
+- **Time:** 16:53–18:07 UTC (74 min), about 25 min of it waiting for slots.

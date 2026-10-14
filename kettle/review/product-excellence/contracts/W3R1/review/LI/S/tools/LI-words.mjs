@@ -26,13 +26,15 @@ const MIN = 60_000;
 const recs = (from, to) => { const o = []; for (let t = Date.parse(`${from}T09:00:00Z`); t <= Date.parse(`${to}T09:00:00Z`); t += 86_400_000) { const d = new Date(t).toISOString().slice(0, 10); o.push({ id: `w-${d}`, phase: 'focus', startedAt: t, endedAt: t + 25 * MIN, plannedMs: 25 * MIN, focusedMs: 25 * MIN, completed: true, intention: '', tag: null, day: d }); } return o; };
 // cozy: warm 3–11 Oct (9 days, a Cozy earned on day 7), nothing yet on Mon 12. broken: warm 1–9 Oct, then 10 and 11 missed.
 CASES.push(['custom-cozy', '2026-10-12T19:10:00Z', recs('2026-10-03', '2026-10-11')], ['custom-cozy', '2026-10-12T07:40:00Z', recs('2026-10-03', '2026-10-11')], ['custom-broken', '2026-10-12T19:10:00Z', recs('2026-10-01', '2026-10-09')]);
-for (const [seed, at, custom] of CASES) {
+// Run 1 used seed=blank for the custom cases; blank pins the app clock to 15:30 (seed.ts:279), so 19:10 was never
+// reached. 'fresh' pins nothing. ONLY=custom runs just those cases.
+for (const [seed, at, custom] of CASES.filter((c) => process.env.ONLY !== 'custom' || c[2])) {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1, timezoneId: 'UTC', locale: 'en-GB', serviceWorkers: 'block' });
   await ctx.addInitScript(() => { try { if (!localStorage.getItem('kettle:settings')) localStorage.setItem('kettle:settings', JSON.stringify({ state: { onboarded: true, scene: 'off', autoStartBreaks: false, autoStartFocus: false, muted: true }, version: 1 })); } catch {} });
   const page = await ctx.newPage();
   await page.clock.install({ time: Date.parse(at) });
   await page.clock.resume();
-  await page.goto(`${url}/?debug&seed=${custom ? 'blank' : seed}&onboarded=1#/stats`);
+  await page.goto(`${url}/?debug&seed=${custom ? 'fresh' : seed}&onboarded=1#/stats`);
   await page.waitForFunction(() => !!window.__kettle?.timerInfo, null, { timeout: 60000 });
   if (custom) { await page.evaluate((rs) => { for (const r of rs) window.__kettle.progress.getState().recordSession(r); }, custom); await page.evaluate(() => window.__kettle.navigate('/')); await sleep(600); await page.evaluate(() => window.__kettle.navigate('/stats')); }
   await page.getByRole('heading', { name: 'Stats', level: 1 }).waitFor();
@@ -69,5 +71,5 @@ for (const [seed, at, custom] of CASES) {
   console.log(JSON.stringify({ seed, at: at.slice(11, 16), engine: r.engine, main: r.main, badge: r.badgeSheet, edit: r.edit, del: r.del, cozyLine: r.cozyLine, card: r.card?.slice(0, 160), overview: r.overview }));
   await ctx.close();
 }
-fs.writeFileSync(`${outRoot}/${label}-words.json`, JSON.stringify(out, null, 1));
+fs.writeFileSync(`${outRoot}/${label}-words${process.env.ONLY ? '-' + process.env.ONLY : ''}.json`, JSON.stringify(out, null, 1));
 await browser.close();

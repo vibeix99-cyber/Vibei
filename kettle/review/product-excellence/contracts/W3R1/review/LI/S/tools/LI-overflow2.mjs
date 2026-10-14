@@ -21,7 +21,7 @@ for (const run of [1, 2]) {
   const t0 = Date.now();
   while (Date.now() - t0 < 6000) {
     const s = await page.evaluate(() => {
-      const iw = document.documentElement.clientWidth;
+      const iw = 390; // run 1 compared with clientWidth, which grows with the page under isMobile (inconclusive)
       const sw = document.documentElement.scrollWidth;
       if (sw <= iw) return { sw, iw, src: [] };
       const src = [...document.querySelectorAll('body *')].filter((e) => { const r = e.getBoundingClientRect(); const p = e.parentElement?.getBoundingClientRect(); return r.width > 0 && r.right > iw + 0.5 && (!p || p.right <= iw + 0.5); }).slice(0, 6).map((e) => `${e.tagName}.${String(e.className).replace(/_[a-z0-9]{5}_\d+/g, '').slice(0, 30)} "${(e.innerText || '').replace(/\s+/g, ' ').slice(0, 24)}" r=${Math.round(e.getBoundingClientRect().right)} pos=${getComputedStyle(e).position}`);
