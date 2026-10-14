@@ -335,3 +335,39 @@ Where the notice leaves at rest after input, the base moves content:
 - **390×844 light 200:** at 1,280–1,311 ms after the last `touchend`, **−153.5 px**.
 
 The trial in the same steps: 0 px, room kept.
+
+## 3. The session-panel exception (`reach`), F-T2-8 and N-1
+
+### 3a. F-T2-8: the landscape top bar at 200 %
+
+Probe `LI2-topbar2.mjs` (new), base :5478 then trial :5521, 17:01–17:02 UTC. Seed `veteran`, a running brew "Chapter 3 notes · Study", no notice, reduced motion. Data `topbar2/topbar2-{base,trial}.json`; frames `topbar2/{base,trial}-<cfg>-session-running.png`. Prior trial-only frames are in `topbar/`.
+
+| Config | BASE: task label / Rain & sound / Add 5 · Pause · End | TRIAL |
+|---|---|---|
+| 844×390 @100 | one line; Rain, sound at y 24; controls at y 248, wholly in view | **identical** (y 24; y 248, wholly in view) |
+| 667×375 @100 | same; controls y 239 in view | **identical** |
+| 844×390 @200 light/dark | task squeezed to one letter per line ("C / h / a.."); Rain, sound at y 50 beside it; controls at y 352, **38.5 px of 54 visible**; panel overflows by 41 px | task on two readable lines ("Chapter 3 / notes · Study"); Rain, sound on their own line at **y 105**; controls at **y 369, 20.8 px visible**; panel overflows by **59 px** |
+| 667×375 @200 light/dark | same squeeze; controls y 352, **23.5 px visible**; overflow 56 px | readable two-line task; Rain, sound y 105; controls y 369, **5.8 px visible**; overflow **74 px** |
+
+Opened: `topbar2/base-667x375-light-t200-session-running.png` (the "C h a.." stack beside Rain; the tops of the three control circles at the bottom edge) and `topbar2/trial-667x375-light-t200-session-running.png` (task readable; the controls are below the fold, only a sliver of shadow at the bottom edge). Also `topbar/844x390-light-t200-session-running.png` (trial) and the maker's `…/F/shots/before/844x390-light-t200/session-running.png` (base).
+
+**Measured cost:** at 200 % landscape the wrap moves the session controls down **17 px** further (y 352 → 369). Visible control height drops from 38.5 to 20.8 px at 844×390 and from 23.5 to 5.8 px at 667×375. The panel scrolls to them on both builds (panel overflow +18 px). This is F-T2-2's class: controls below the fold at 200 % on short screens.
+
+### 3b. N-1: the spec change
+
+§1d. The new `toHaveValue('Chapter 3 notes')` held in every trial run of `notice-strip:275`: D run 25 configurations, plus 7 runs at 1440 @200. No failure message mentions the field: both failures are at Mark done, §1c.
+
+### 3c. The session panel's `reach` close: can it move a control under a tap?
+
+**Code** (`Toast.tsx` `decide()`): on a strip with `reach` (only the session panel, `FocusScreen.tsx:359`), a notice going in view keeps **no** room when `holdsOutOfReach(el)`: the panel's `scrollHeight > clientHeight`, whatever its scroll position. The panel then closes up at rest:
+- `atRest` = no pointer down and no input for 1.2 s;
+- `!inputPending()`, confirmed in a fresh frame;
+- `holdTop(el)`: the strip's top is kept still, so everything below it moves up by the notice's height.
+
+A room kept there and later holding the controls out of reach is given back the same way.
+
+**First attempt** (`LI2-idle.mjs` "reach", trial 17:09–17:10, base 17:18–17:19, `idle/{trial,base}/*-reach-*.png`):
+- A brew running; a 6 s notice in the panel's strip at 375×667, 844×390 and 390×844 @200.
+- The notice (228 px tall at 375×667 @200) puts Add 5 / Pause / End below the fold on both builds. No control was on top in view below the strip.
+- The CDP `synthesizeScrollGesture` touch scroll did not move the panel, so no tap was aimed.
+- Redone with a real finger drag in §3d.
