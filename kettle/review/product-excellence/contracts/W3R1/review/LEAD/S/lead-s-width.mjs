@@ -60,24 +60,40 @@ for (const cfg of CFGS) {
     run.iw = run.samples.at(-1)?.iw;
     run.wideSamples = run.samples.filter((s) => s.sw > s.iw + 0.5).length;
     run.wideAt = await page.evaluate(() => window.__wOff ?? null);
+    run.cols = await page.evaluate(() => window.__cols ?? null);
     run.fontsLoaded = await page.evaluate(() => [...document.fonts].filter((f) => f.status === 'loaded').map((f) => f.family).join(','));
     // Overview tiles: any text cut (ellipsis or overflow) in a tile?
     run.tiles = await page.evaluate(() => {
       const ov = document.querySelector('[aria-label="Overview"]');
       if (!ov) return null;
-      return [...ov.querySelectorAll('*')].filter((e) => e.children.length === 0 && (e.textContent || '').trim()).map((e) => {
-        const cs = getComputedStyle(e);
-        const cut = e.scrollWidth > e.clientWidth + 0.5 && cs.overflow !== 'visible';
-        const r = e.getBoundingClientRect();
-        return { text: e.textContent.trim(), cut, sw: e.scrollWidth, cw: e.clientWidth, ellipsis: cs.textOverflow, right: Math.round(r.right) };
-      }).filter((x) => x.cut);
+      // A tile = a direct child of the tiles grid. Cut = scrollWidth > clientWidth with overflow not visible;
+      // past = the text's own line boxes (a Range) end beyond the tile's right edge (a nowrap value overflowing visibly).
+      const grid = ov.querySelector('[class*="tiles"]');
+      const tiles = grid ? [...grid.children] : [];
+      window.__cols = grid ? getComputedStyle(grid).gridTemplateColumns.split(' ').length : null;
+      window.__ovH = Math.round(ov.getBoundingClientRect().height);
+      const out = [];
+      for (const t of tiles) {
+        const tr = t.getBoundingClientRect();
+        for (const e of t.querySelectorAll('*')) {
+          if (!(e.children.length === 0 && (e.textContent || '').trim())) continue;
+          const cs = getComputedStyle(e);
+          const cut = e.scrollWidth > e.clientWidth + 0.5 && cs.overflow !== 'visible';
+          const rg = document.createRange(); rg.selectNodeContents(e);
+          const right = Math.max(...[...rg.getClientRects()].map((q) => q.right));
+          const past = right > tr.right + 0.5;
+          if (cut || past) out.push({ text: e.textContent.trim(), cut, past, sw: e.scrollWidth, cw: e.clientWidth, right: Math.round(right), tileRight: Math.round(tr.right) });
+        }
+      }
+      return out;
     });
+    run.ovH = await page.evaluate(() => window.__ovH ?? null);
     await page.locator('[aria-label="Overview"]').first().screenshot({ path: `${args.out}/${args.label}-${cfg.replaceAll(':', '-')}-overview.png` }).catch(() => {});
   } catch (e) {
     run.error = String(e).slice(0, 300);
   }
   out.runs.push(run);
-  console.log(cfg, `maxSw ${run.maxSw}/${run.iw} wideSamples ${run.wideSamples}/${run.samples?.length}`, 'wideAt', JSON.stringify(run.wideAt), 'cutTiles', JSON.stringify(run.tiles?.map((t) => `${t.text}:${t.sw}>${t.cw}`)), 'fonts', run.fontsLoaded || '-', run.error ?? '');
+  console.log(cfg, `maxSw ${run.maxSw}/${run.iw} wideSamples ${run.wideSamples}/${run.samples?.length}`, 'wideAt', JSON.stringify(run.wideAt), 'cutTiles', JSON.stringify(run.tiles?.map((t) => `${t.text}:${t.cut ? 'cut' : ''}${t.past ? 'past' : ''}`)), 'cols', run.cols, 'ovH', run.ovH, 'fonts', run.fontsLoaded || '-', run.error ?? '');
   await ctx.close();
 }
 await b.close();
