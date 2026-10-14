@@ -251,3 +251,7 @@ FACT 1440x900-dark-t200-rm c-pointer-held {"leftAt":5225,"room":113,"roomWhileDo
   ✓  235 [chromium] › tests/toast-room.spec.ts:398:3 › the last notice leaves where it was, never over the docked start (375×667, 200 % text) (4.7s)
   ✓  237 [chromium] › tests/toast-room.spec.ts:398:3 › the last notice leaves where it was, never over the docked start (844×390, 200 % text) (5.1s)
   ✓  236 [chromium] › tests/w3-notices.spec.ts:368:1 › the room is not given back while a pointer is held; it goes 1.2–4 s after release (1440×900, 100 %) (14.4s)
+  ✓  238 [chromium] › tests/toast-room.spec.ts:610:3 › three notices never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, light) (13.8s)
+  ✓  239 [chromium] › tests/w3-notices.spec.ts:424:1 › a new screen starts with no room: Today after End, then Stats and back (375×667, 100 %) (10.5s)
+  ✓  241 [chromium] › tests/w3-notices.spec.ts:469:1 › the status bar warm-days button is named "N days warm. Show details" (and ", today not brewed yet") (4.8s)
+  ✓  240 [chromium] › tests/toast-room.spec.ts:610:3 › three notices never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, dark) (13.9s)
