@@ -120,3 +120,54 @@ I read `LI/S/weekboundary/{A-mon-enGB,B-sun-enUS,C-sun-enGB}.json`:
 - The tile keeps the glossary form: "Warmest run" with "N days", or "Warmest run · N days".
 - It fits at every size and text size, with the fonts loaded and without them.
 - The approach is the maker's: for example, the unit wraps under the number, or the value and label are allowed to wrap rather than overflow.
+
+## 4. Residuals (rule: BLOCKS = introduced or worsened by this change; FOLLOW-UP = present on the base and not worse, or ruled so by Vibei; ACCEPTED = not a defect)
+
+| # | Item | My check | Class | Owner |
+|---|---|---|---|---|
+| S-D1 | The "Warmest run" tile overflows at 200 % (cut text; 408 px page before the fonts load) | §1, §3 | **BLOCKS** | S (fix round) |
+| S-R1 | **"Total focus" tile cut** at 844×390 @200 ("23h 9…" / "Total foc…"); with no web fonts, "Full brews" also cut | Same on base (Lane I §7; my fallback-font run) | **FOLLOW-UP** (pre-existing). May be fixed with S-D1 if the same change does it | S / I12 |
+| S-R2 | **Today's warm-days and leaves sheets become `data-tight` at 375×667 @200**, although base reached everything there. The whole panel, header included, scrolls under the pinned footer | Lane I §2b: all reachable, trap ✓, focus returns. The packet says tight is "never set when everything fits"; these two still needed a scroll on base | **ACCEPTED** (not a defect; the packet's claim is slightly too broad) | — |
+| S-R3 | **In a tight sheet the × scrolls away** with the content (Escape, the backdrop and the pinned actions stay) | Maker's note | **FOLLOW-UP** | S / Sheet |
+| S-R4 | **Focus after deleting by keyboard:** the inline Undo in 14 of 16 configs, `<main>` in 2 (390×844 light @200, 1440 light @200). A tap-delete puts focus on `<main>` on both builds | Lane I §1; base could not delete by keyboard at all | **FOLLOW-UP** (unproven timing; not worse) | S |
+| S-R5 | **The summary makes the populated page longer:** +178–316 px at @100, +286–617 px at @200; at 1440 its two halves leave empty space at the right of each column | It is the brief's item 2 (a summary at the top); nothing is covered | **ACCEPTED** (design) | — |
+| S-R6 | **Empty state at 390:** "0 days / Warmest run" wraps, so the tile row grows ~18 px | Fits; no cut | **ACCEPTED** | — |
+| S-R7 | **`done/summary.ts` rounds minutes to nearest, while Stats now rounds down** | A completed brew is whole minutes and the engine already floors `afterMin`, so no visible difference is possible (CHECKER-W3R1-F §4 F-R11) | **ACCEPTED** | — |
+| S-R8 | **The badge sheet says "Keep a N-day warm streak"** | F's `badges.ts`, changed on F's branch ("Brew {n} warm days in a row") | **Not S's**; resolved by F | F |
+| N-2 | The History Undo read races the focus scroll when the tapped row takes focus (~110 px), `History.tsx` | Cross-owner from F; S did not change it | **FOLLOW-UP** | S |
+| E-1 | **Evidence gaps,** not defects:<br>• base delete dialog at 7 of 16 configs (trial at all 16);<br>• the non-Stats sheets at 390×844 and 844×390;<br>• "ended late" and DST in a browser (cited from code, docs and unit tests);<br>• a non-whole-minute brew in a browser (the maker's "12:40" spec passed in Lane R's rerun);<br>• the full chromium suite on S's trial (Lane R's combined run covers it) | — | Noted | Final regression |
+
+## 5. Lane I receipt (`review/LI/S/RECEIPT-LI-S.md`), and my checks of it
+
+**Read in full.** I checked:
+- **Vibei §2:** the three `weekboundary/*.json` files myself (§1); `LI-week.log` shows 3 passed.
+- **Engine unchanged:** `git diff --stat 4d36939 c7a6b8f -- kettle/src/progress` (`dst.test.ts` only).
+- **The label:** `Glance.tsx:75`.
+- **The tile:** the `StatsScreen.tsx` diff.
+- **The transient width (its §2a, §2c, "unproven" origin):** I closed it. Blocking the web fonts reproduces 408 px every time on the trial and never on base, and names the "Warmest run" tile (§1). Lane I's warm-server runs did not see it because the fonts were cached by then.
+
+**The receipt's other limits** are carried in §4 E-1.
+
+## 6. Fix round (90 minutes, one round; S's files only)
+
+**Where.** Work on `pe/w3-stats` in `/home/user/wt/w5s`, from `344069c`. Commit locally and never push.
+
+**Hand back** `contracts/W3R1/S-FIX-READY.md`, with evidence in `contracts/W3R1/S/fix/` (full-size PNGs, logs, JSON), giving:
+- the new hash and the `kettle/src` tree hash;
+- each check below with its result and paths.
+
+**Files you may change:** `src/screens/stats/StatsScreen.tsx`, `src/screens/stats/stats.module.css`, `src/ui/Stat.tsx`, and `tests/w3-stats.spec.ts`. Nothing else: no `Sheet.*` change, no wording change beyond the tile's own form.
+
+### Acceptance checks (all must hold; I rerun the ones marked ◆)
+1. **◆ Scope.** `git diff --stat 344069c <fix> -- kettle/` lists only the files above (plus packet and evidence).
+2. **◆ Fits with the fonts loaded.** On Stats with seed `veteran`, and with the empty state, at all 16 configs (390×844, 375×667, 844×390, 1440×900 × light/dark × 100/200 %):
+   - no text in the "Days warm" or "Warmest run" tile is cut: for every text element in the Overview tiles, `scrollWidth ≤ clientWidth`, and no ellipsis;
+   - no tile's content passes the tile's right edge.
+
+   Give the table (base / trial / fix) and full-size crops of the Overview at 390×844 @200 and 844×390 @200, light and dark.
+3. **◆ Fits before the fonts arrive.** With the web fonts blocked (`*.woff2` requests aborted), at 390×844 and 375×667 @200 with `isMobile`, the layout width stays 390 / 375 throughout the first 6 s, with nothing past the right edge. Base and trial go beside it.
+   - My probes do exactly this and can be reused: `contracts/W3R1/review/LEAD/S/lead-s-width.mjs` and `lead-s-wide-el.mjs`.
+   - A spec test asserts it (fonts blocked, `isMobile`, 390×844 @200: `scrollWidth ≤ innerWidth === 390`).
+4. **◆ The glossary form stays.** "Warmest run" with "N days" (or "Warmest run · N days"), "Days warm" / "Day warm"; no "streak"; the at-risk hint unchanged.
+5. **◆ `w3-stats:98` on a cold load.** Run `w3-stats.spec.ts` ×2, 21/21 plus the new test. The `:98` cases must also pass with the fonts blocked.
+6. **No regression.** The `w3-stats` totals and wording tests pass; `integrity.spec.ts` 25/25; tsc; vitest. The Overview's height at 375×667 @200 is reported against the trial.
