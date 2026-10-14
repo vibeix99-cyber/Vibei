@@ -40,11 +40,15 @@ describe('chaiLine', () => {
     expect(l.pose).toBe('proud');
     expect(chaiLine({ ...base, todayMin: 30, part: 'evening', streak: 4 }).mood).toBe('met');
   });
-  it('suggests a gentle brew late at night, mentioning a streak at risk', () => {
+  it('suggests a gentle brew late at night, inviting (warm days, never "streak"), with rest as welcome', () => {
     const l = chaiLine({ ...base, part: 'night', streak: 5 });
     expect(l.mood).toBe('night');
     expect(l.suggestGentle).toBe(true);
-    expect(l.text).toContain('5\u2011day');
+    expect(l.text).toContain('makes it 6 warm days in a row');
+    expect(l.text).toContain('Or rest');
+    // No Tea Cozy held: none promised.
+    expect(l.text).not.toMatch(/Tea Cozy/);
+    expect(chaiLine({ ...base, part: 'night', streak: 5, cozies: 1 }).text).toContain('your Tea Cozy will keep the kettle warm');
   });
   it('names the brew length that is selected, and only offers Gentle when it is shorter', () => {
     expect(chaiLine({ ...base, part: 'night', streak: 5 }).text).toContain('25\u2011minute brew');
@@ -69,11 +73,38 @@ describe('chaiLine', () => {
     expect(l.mood).toBe('back');
     expect(l.text).not.toMatch(/miss|lost|broke/i);
   });
-  it('invites (never warns) when a streak is at risk in the evening', () => {
+  it('invites (never warns) when today is not warm yet in the evening', () => {
     const l = chaiLine({ ...base, part: 'evening', streak: 3, cozies: 1, firstVisitToday: false });
     expect(l.mood).toBe('risk');
+    expect(l.text).toContain('3 warm days in a row');
     expect(l.text).toContain('Tea Cozy');
     expect(l.pose).not.toBe('concerned');
+    // Without a Tea Cozy held, none is mentioned.
+    expect(chaiLine({ ...base, part: 'evening', streak: 3, cozies: 0, firstVisitToday: false }).text).not.toMatch(/Tea Cozy/);
+  });
+  it('back after a missed day a Tea Cozy covered: says what it did, once, in plain words', () => {
+    const l = chaiLine({ ...base, streak: 9, cozies: 0, cozyDays: 1, daysSinceLast: 2 });
+    expect(l.mood).toBe('back');
+    expect(l.text).toBe('Welcome back. A Tea Cozy kept the kettle warm yesterday, so your 9 warm days in a row carry on.');
+    expect(chaiLine({ ...base, streak: 9, cozyDays: 2, daysSinceLast: 3 }).text).toContain('while you were away');
+  });
+  it('back after a day that went by unwarmed (no Tea Cozy): an invitation, no tally of what was missed', () => {
+    const l = chaiLine({ ...base, streak: 0, best: 12, daysSinceLast: 2 });
+    expect(l.mood).toBe('back');
+    expect(l.text).not.toMatch(/miss|lost|lose|broke|break|streak|Tea Cozy/i);
+    // Said on the first visit of the day only; later visits get the ordinary line.
+    expect(chaiLine({ ...base, streak: 0, best: 12, daysSinceLast: 2, firstVisitToday: false }).mood).not.toBe('back');
+  });
+  it('never says "streak", and never threatens', () => {
+    const parts = ['morning', 'afternoon', 'evening', 'night'] as const;
+    for (const part of parts)
+      for (const streak of [0, 1, 5])
+        for (const cozies of [0, 1, 2])
+          for (const best of [0, 5, 30])
+            for (const cozyDays of [0, 1]) {
+              const t = chaiLine({ ...base, part, streak, cozies, best, cozyDays, firstVisitToday: true }).text;
+              expect(t, t).not.toMatch(/streak|lose|lost|don.t miss|hurry|before it.s too late/i);
+            }
   });
   it('reports progress toward the goal', () => {
     const l = chaiLine({ ...base, todayMin: 10, part: 'afternoon' });

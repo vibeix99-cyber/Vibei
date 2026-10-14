@@ -356,7 +356,7 @@ export default function FocusScreen() {
         {/* The session screen's notice strip (src/ui/Toast.tsx): the head of the panel, above the countdown or Break's
             over, in the panel's flow (it scrolls with it at 200 % text). Never on the stage, never over a control. A
             new view is a new screen: what it shows is laid out with it. The summary has its own (below). */}
-        <NoticeStrip prio={1} screen={`session:${view}`} off={view === 'summary' || liveKey !== panelKey} className={s.notices} />
+        <NoticeStrip prio={1} screen={`session:${view}`} off={view === 'summary' || liveKey !== panelKey} reach className={s.notices} />
         {/* A new view in the panel starts at its top (the panel scrolls when its content is taller, e.g. at 200 % text). */}
         <AnimatePresence
           mode="wait"

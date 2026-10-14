@@ -1,0 +1,209 @@
+[slots] F took 2/3 at 11:01:28: env KETTLE_PORT=5501 npx playwright test tests/toast-room.spec.ts tests/a11y.spec.ts tests/w2-home.spec.ts tests/summary-notice.spec.ts tests/statusbar.spec.ts tests/break-reach.spec.ts tests/w2-first
+
+Running 115 tests using 2 workers
+
+  ✓    1 [chromium] › tests/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (390×844, 100 % text) (6.9s)
+  ✓    3 [chromium] › tests/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (390×844, 200 % text) (5.9s)
+  ✓    4 [chromium] › tests/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (375×667, 100 % text) (4.9s)
+  ✓    5 [chromium] › tests/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (375×667, 200 % text) (4.7s)
+  ✓    6 [chromium] › tests/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (844×390, 100 % text) (4.7s)
+  ✓    7 [chromium] › tests/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (844×390, 200 % text) (4.3s)
+  ✓    8 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (390×844, 100 % text, light) (23.5s)
+  ✓    9 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (390×844, 100 % text, dark) (20.5s)
+  ✓   10 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (390×844, 200 % text, light) (19.7s)
+  ✓    2 [chromium] › tests/a11y.spec.ts:61:3 › axe: no serious/critical violations in any state (light) (1.7m)
+  ✓   11 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (390×844, 200 % text, dark) (21.8s)
+  ✓   13 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (375×667, 100 % text, light) (19.8s)
+  ✓   14 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (375×667, 100 % text, dark) (21.5s)
+  ✓   15 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (375×667, 200 % text, light) (23.3s)
+  ✓   12 [chromium] › tests/a11y.spec.ts:61:3 › axe: no serious/critical violations in any state (dark) (1.6m)
+  ✓   16 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (375×667, 200 % text, dark) (20.5s)
+  ✓   18 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (844×390, 100 % text, light) (21.4s)
+  ✓   19 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (844×390, 100 % text, dark) (19.5s)
+  ✓   17 [chromium] › tests/a11y.spec.ts:73:1 › pointer targets are at least 24×24 px or meet a WCAG 2.5.8 exception (57.9s)
+  ✓   20 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (844×390, 200 % text, light) (21.6s)
+  ✓   22 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (844×390, 200 % text, dark) (20.1s)
+  ✓   23 [chromium] › tests/w2-home.spec.ts:203:5 › first visit: one plain line, one primary action, the 15-minute brew (390×844, 100 % text) (5.4s)
+  ✓   24 [chromium] › tests/w2-home.spec.ts:203:5 › first visit: one plain line, one primary action, the 15-minute brew (390×844, 200 % text) (4.4s)
+  ✓   25 [chromium] › tests/w2-home.spec.ts:203:5 › first visit: one plain line, one primary action, the 15-minute brew (375×667, 100 % text) (4.7s)
+  ✓   26 [chromium] › tests/w2-home.spec.ts:203:5 › first visit: one plain line, one primary action, the 15-minute brew (375×667, 200 % text) (5.3s)
+  ✓   27 [chromium] › tests/w2-home.spec.ts:203:5 › first visit: one plain line, one primary action, the 15-minute brew (844×390, 100 % text) (5.2s)
+  ✓   21 [chromium] › tests/a11y.spec.ts:110:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll (56.1s)
+  ✓   28 [chromium] › tests/w2-home.spec.ts:203:5 › first visit: one plain line, one primary action, the 15-minute brew (844×390, 200 % text) (4.8s)
+  ✓   30 [chromium] › tests/w2-summary.spec.ts:192:5 › 375×667 @100 %, routine day: no line starts under the footer on arrival; the final line clears it; nothing covers anything (15.0s)
+  ✓   31 [chromium] › tests/w2-summary.spec.ts:192:5 › 375×667 @100 %, big day: no line starts under the footer on arrival; the final line clears it; nothing covers anything (22.0s)
+  ✓   32 [chromium] › tests/w2-summary.spec.ts:192:5 › 375×667 @200 %, routine day: no line starts under the footer on arrival; the final line clears it; nothing covers anything (14.7s)
+  ✓   33 [chromium] › tests/w2-summary.spec.ts:192:5 › 375×667 @200 %, big day: no line starts under the footer on arrival; the final line clears it; nothing covers anything (28.4s)
+  ✓   34 [chromium] › tests/w2-summary.spec.ts:222:3 › 375×667 @100 %, a brew with a task (the K02 layout, Wave-1 #1 exactly): the third pill row does not start under the footer (14.0s)
+  ✓   35 [chromium] › tests/w2-summary.spec.ts:222:3 › 375×667 @100 %, a brew with a task (the K02 layout, Wave-1 #1 exactly), reduced motion: the third pill row does not start under the footer (11.3s)
+  ✓   36 [chromium] › tests/w2-summary.spec.ts:237:1 › big day: the unlock is the one highlight, whole on arrival; all seven rewards stay on the summary (29.6s)
+  ✓   37 [chromium] › tests/w2-summary.spec.ts:251:1 › a milestone day without an unlock: the biggest milestone leads, highlighted and whole on arrival; the rest stay compact (12.0s)
+  ✓   38 [chromium] › tests/w2-summary.spec.ts:279:7 › 390×844 @100 %, routine day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (16.2s)
+  ✓   39 [chromium] › tests/w2-summary.spec.ts:279:7 › 390×844 @100 %, big day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (29.0s)
+  ✓   40 [chromium] › tests/w2-summary.spec.ts:279:7 › 390×844 @100 %, task day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (26.8s)
+  ✓   41 [chromium] › tests/w2-summary.spec.ts:279:7 › 390×844 @200 %, routine day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (14.3s)
+  ✓   42 [chromium] › tests/w2-summary.spec.ts:279:7 › 390×844 @200 %, big day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (17.6s)
+  ✓   29 [chromium] › tests/a11y.spec.ts:177:1 › keyboard-only critical journey with focus restoration (4.5m)
+  ✓   43 [chromium] › tests/w2-summary.spec.ts:279:7 › 390×844 @200 %, task day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (25.1s)
+  ✓   44 [chromium] › tests/a11y.spec.ts:292:1 › welcome: first brew from the keyboard alone (5.7s)
+  ✓   45 [chromium] › tests/w2-summary.spec.ts:279:7 › 375×667 @100 %, task day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (18.5s)
+  ✓   46 [chromium] › tests/a11y.spec.ts:303:1 › live regions stay quiet while a brew runs (no spoken countdown) (20.3s)
+  ✓   47 [chromium] › tests/w2-summary.spec.ts:279:7 › 375×667 @200 %, task day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (19.5s)
+  ✓   48 [chromium] › tests/a11y.spec.ts:332:3 › a toast never covers the session controls or the summary footer (390×844) (19.5s)
+  ✓   49 [chromium] › tests/w2-summary.spec.ts:295:1 › the highlight is quieter than the minutes and Tea time (milestone day, 375×667) (13.5s)
+  ✓   50 [chromium] › tests/a11y.spec.ts:332:3 › a toast never covers the session controls or the summary footer (375×667) (20.2s)
+  ✓   51 [chromium] › tests/w2-summary.spec.ts:323:1 › warm days, never "streak": what the big day summary shows and what a screen reader hears (26.7s)
+  ✓   53 [chromium] › tests/whistle.spec.ts:45:1 › no audio context before the first gesture; the first tap unlocks it (3.6s)
+  ✓   52 [chromium] › tests/a11y.spec.ts:371:3 › toasts never cover the break-over controls, carried task included (390×844) (25.4s)
+  ✓   54 [chromium] › tests/whistle.spec.ts:53:1 › the whistle sounds once at completion, and not again after a reload of the summary (14.0s)
+  ✓   56 [chromium] › tests/whistle.spec.ts:76:1 › late return: one whistle, the while-away summary, nothing more on later visibility changes (10.0s)
+  ✓   55 [chromium] › tests/a11y.spec.ts:371:3 › toasts never cover the break-over controls, carried task included (375×667) (22.8s)
+  ✓   57 [chromium] › tests/whistle.spec.ts:100:1 › another tab in front (page hidden): the whistle is still scheduled once (9.2s)
+  ✓   59 [chromium] › tests/whistle.spec.ts:120:1 › muted: no sound at all, the visual whistle and summary remain (10.5s)
+  ✓   58 [chromium] › tests/break-reach.spec.ts:201:5 › 200 % text, 375×667 light, Mon: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (19.1s)
+  ✓   60 [chromium] › tests/whistle.spec.ts:165:1 › notification permission is asked only from the Nudges switch: not on load, not before or after the first brew (14.2s)
+  ✓   62 [chromium] › tests/whistle.spec.ts:183:1 › denied: Settings says so, shows the browser path, and turning it on later works (4.7s)
+  ✓   63 [chromium] › tests/whistle.spec.ts:208:1 › unsupported: the switch is off and disabled, and says what happens instead (3.0s)
+  ✓   61 [chromium] › tests/break-reach.spec.ts:201:5 › 200 % text, 375×667 light, Tue: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (18.0s)
+  ✓   64 [chromium] › tests/break-reach.spec.ts:201:5 › 200 % text, 375×667 light, Wed: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (17.7s)
+  ✓   65 [chromium] › tests/statusbar.spec.ts:65:3 › resize or rotation to 375×667 re-fits the row: one tight row, no sideways scroll (light) (26.8s)
+  ✓   66 [chromium] › tests/break-reach.spec.ts:201:5 › 200 % text, 375×667 light, Thu: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (18.1s)
+  ✓   68 [chromium] › tests/break-reach.spec.ts:201:5 › 200 % text, 375×667 light, Fri: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (17.6s)
+  ✓   69 [chromium] › tests/break-reach.spec.ts:201:5 › 200 % text, 375×667 light, Sat: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (17.9s)
+  ✓   67 [chromium] › tests/statusbar.spec.ts:106:3 › large text with large leaf totals never pushes "Level NN" past the screen (light) (53.7s)
+  ✓   70 [chromium] › tests/break-reach.spec.ts:201:5 › 200 % text, 375×667 light, Sun: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (17.9s)
+  ✓   71 [chromium] › tests/statusbar.spec.ts:65:3 › resize or rotation to 375×667 re-fits the row: one tight row, no sideways scroll (dark) (25.0s)
+  ✓   72 [chromium] › tests/break-reach.spec.ts:201:5 › 200 % text, 390×844 dark, Mon: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (17.8s)
+  ✓   74 [chromium] › tests/break-reach.spec.ts:201:5 › 200 % text, 390×844 dark, Thu: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (18.4s)
+  ✓   75 [chromium] › tests/break-reach.spec.ts:201:5 › 200 % text, 390×844 dark, Sun: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (18.5s)
+  ✓   73 [chromium] › tests/statusbar.spec.ts:106:3 › large text with large leaf totals never pushes "Level NN" past the screen (dark) (52.4s)
+  ✓   76 [chromium] › tests/break-reach.spec.ts:201:5 › 200 % text, 844×390 light, Mon: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (22.0s)
+  ✓   77 [chromium] › tests/statusbar.spec.ts:142:3 › narrowing that leaves the bar's own box unchanged still re-fits: from 384 px, and 1 px at a time (light) (28.6s)
+  ✓   78 [chromium] › tests/break-reach.spec.ts:201:5 › 200 % text, 844×390 light, Thu: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (22.4s)
+  ✓   80 [chromium] › tests/break-reach.spec.ts:201:5 › 200 % text, 844×390 light, Sun: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (22.6s)
+  ✓   79 [chromium] › tests/statusbar.spec.ts:142:3 › narrowing that leaves the bar's own box unchanged still re-fits: from 384 px, and 1 px at a time (dark) (30.1s)
+  ✓   81 [chromium] › tests/break-reach.spec.ts:220:3 › 200 % text, 375×667 dark: the paused tea break — Skip break, Resume break and Start next brew reachable by wheel, touch and Tab (16.5s)
+  ✓   83 [chromium] › tests/break-reach.spec.ts:220:3 › 200 % text, 844×390 dark: the paused tea break — Skip break, Resume break and Start next brew reachable by wheel, touch and Tab (15.9s)
+  ✓   82 [chromium] › tests/statusbar.spec.ts:202:3 › rapid live resizes at large text leave the page unzoomed (light) (29.1s)
+  ✓   84 [chromium] › tests/break-reach.spec.ts:231:1 › 200 % text, 375×667: tapping Pause break leaves Resume break under the finger, and back (14.3s)
+  ✓   85 [chromium] › tests/statusbar.spec.ts:202:3 › rapid live resizes at large text leave the page unzoomed (dark) (27.4s)
+  ✘   86 [chromium] › tests/break-reach.spec.ts:251:1 › 100 % text, 375×667 and 390×844: the break and Break’s over fit without scrolling — every control wholly on screen (19.6s)
+  ✓   87 [chromium] › tests/statusbar.spec.ts:239:1 › normal text: one row at 390 (designed padding) and at 375 (tight) on a fresh load (8.2s)
+  ✓   88 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (375×667 light 100 %, task day) (31.1s)
+  ✓   89 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (375×667 light 100 %, big day) (29.9s)
+  ✓   90 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (375×667 dark 200 %, task day) (29.1s)
+  ✓   91 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (375×667 dark 200 %, big day) (29.1s)
+  ✓   92 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (390×844 dark 100 %, task day) (29.4s)
+  ✓   93 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (390×844 dark 100 %, big day) (29.0s)
+  ✓   94 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (390×844 light 200 %, task day) (29.3s)
+  ✓   95 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (390×844 light 200 %, big day) (29.6s)
+  ✓   96 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (844×390 light 100 %, task day) (29.7s)
+  ✓   97 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (844×390 light 100 %, big day) (29.7s)
+  ✓   98 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (667×375 dark 100 %, task day) (28.9s)
+  ✓   99 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (667×375 dark 100 %, big day) (28.8s)
+  ✓  100 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (1440×900 light 100 %, task day) (31.7s)
+  ✓  101 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (1440×900 light 100 %, big day) (29.5s)
+  ✘  102 [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by wheel (375×667, 200 % text) (23.7s)
+  ✘  103 [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by touch (375×667, 200 % text) (32.9s)
+  ✓  104 [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by wheel (844×390, 200 % text) (20.5s)
+  ✓  105 [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by touch (844×390, 200 % text) (25.6s)
+  ✓  106 [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while every notice in the strip is read by wheel (667×375, 200 % text) (20.4s)
+  ✓  107 [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while every notice in the strip is read by touch (667×375, 200 % text) (26.7s)
+  ✓  108 [chromium] › tests/toast-room.spec.ts:262:3 › notices timing out, and the endless update prompt, never move the banner under the person (375×667, 200 % text, wheel, light) (22.0s)
+  ✓  109 [chromium] › tests/toast-room.spec.ts:262:3 › notices timing out, and the endless update prompt, never move the banner under the person (375×667, 200 % text, wheel, dark) (22.1s)
+  ✓  110 [chromium] › tests/toast-room.spec.ts:297:3 › the last notice leaves where it was, never over the docked start (375×667, 200 % text) (5.0s)
+  ✓  111 [chromium] › tests/toast-room.spec.ts:297:3 › the last notice leaves where it was, never over the docked start (844×390, 200 % text) (5.1s)
+  ✓  112 [chromium] › tests/toast-room.spec.ts:431:3 › three notices never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, light) (12.7s)
+  ✓  113 [chromium] › tests/toast-room.spec.ts:431:3 › three notices never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, dark) (12.2s)
+  ✓  114 [chromium] › tests/toast-room.spec.ts:466:3 › the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (667×375, 200 % text, wheel, light) (18.4s)
+  ✓  115 [chromium] › tests/toast-room.spec.ts:466:3 › the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (844×390, 200 % text, touch, dark) (24.1s)
+
+
+  1) [chromium] › tests/break-reach.spec.ts:251:1 › 100 % text, 375×667 and 390×844: the break and Break’s over fit without scrolling — every control wholly on screen 
+
+    Error: 375×667 Break's over: /^That's all for now$/
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32mtrue[39m
+    Received: [31mfalse[39m
+
+      264 |     await toBreakOver(page);
+      265 |     await noNotice();
+    > 266 |     for (const re of [MARK, PUT, LEAVE]) expect((await spot(page, re))?.ok, `${w}×${h} Break's over: ${re}`).toBe(true);
+          |                                                                                                              ^
+      267 |     expect(await scrolls(), `${w}×${h} Break's over: nothing to scroll`).toBeLessThanOrEqual(0);
+      268 |     await ctx.close();
+      269 |   }
+        at /home/user/wt/w5f/kettle/tests/break-reach.spec.ts:266:110
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-owned/break-reach-100-text-375×6-6e713-ry-control-wholly-on-screen-chromium/error-context.md
+
+  2) [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by wheel (375×667, 200 % text) 
+
+    Error: the banner moved on screen by layout within 1.15 s of input
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
+
+    [32m- Expected  - 1[39m
+    [31m+ Received  + 7[39m
+
+    [32m- Array [][39m
+    [31m+ Array [[39m
+    [31m+   Object {[39m
+    [31m+     "at": 16829,[39m
+    [31m+     "by": -153,[39m
+    [31m+     "sinceInput": 101,[39m
+    [31m+   },[39m
+    [31m+ ][39m
+
+      231 |       expect(r.gone, 'times the banner left the page').toBe(0);
+      232 |       expect(r.faded, `frames without the banner at full opacity (of ${r.frames})`).toBe(0);
+    > 233 |       expect(r.movedNearInput, 'the banner moved on screen by layout within 1.15 s of input').toEqual([]);
+          |                                                                                               ^
+      234 |       expect(r.clipped, 'frames with Save backup outside the banner').toBe(0);
+      235 |       expect(r.toasts, 'notices shown').toBeGreaterThanOrEqual(levelUp ? 2 : 1);
+      236 |       expect(r.notWhole, 'notices never wholly on screen').toEqual([]);
+        at /home/user/wt/w5f/kettle/tests/toast-room.spec.ts:233:95
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-owned/toast-room-the-storage-ful-c3fd9--by-wheel-375×667-200-text--chromium/error-context.md
+
+  3) [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by touch (375×667, 200 % text) 
+
+    Error: the banner moved on screen by layout within 1.15 s of input
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
+
+    [32m- Expected  - 1[39m
+    [31m+ Received  + 7[39m
+
+    [32m- Array [][39m
+    [31m+ Array [[39m
+    [31m+   Object {[39m
+    [31m+     "at": 22210,[39m
+    [31m+     "by": -153,[39m
+    [31m+     "sinceInput": 23,[39m
+    [31m+   },[39m
+    [31m+ ][39m
+
+      231 |       expect(r.gone, 'times the banner left the page').toBe(0);
+      232 |       expect(r.faded, `frames without the banner at full opacity (of ${r.frames})`).toBe(0);
+    > 233 |       expect(r.movedNearInput, 'the banner moved on screen by layout within 1.15 s of input').toEqual([]);
+          |                                                                                               ^
+      234 |       expect(r.clipped, 'frames with Save backup outside the banner').toBe(0);
+      235 |       expect(r.toasts, 'notices shown').toBeGreaterThanOrEqual(levelUp ? 2 : 1);
+      236 |       expect(r.notWhole, 'notices never wholly on screen').toEqual([]);
+        at /home/user/wt/w5f/kettle/tests/toast-room.spec.ts:233:95
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-owned/toast-room-the-storage-ful-88b26--by-touch-375×667-200-text--chromium/error-context.md
+
+  Slow test file: [chromium] › tests/a11y.spec.ts (11.7m)
+  Slow test file: [chromium] › tests/w2-summary.spec.ts (5.9m)
+  Slow test file: [chromium] › tests/break-reach.spec.ts (5.2m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  3 failed
+    [chromium] › tests/break-reach.spec.ts:251:1 › 100 % text, 375×667 and 390×844: the break and Break’s over fit without scrolling — every control wholly on screen 
+    [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by wheel (375×667, 200 % text) 
+    [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by touch (375×667, 200 % text) 
+  112 passed (25.1m)
+[slots] F freed 2 at 11:26:35

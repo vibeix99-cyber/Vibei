@@ -1,0 +1,32 @@
+[slots] F took 1/3 at 11:55:23: env KETTLE_PORT=5501 npx playwright test tests/notice-strip.spec.ts --project=chromium --workers=1 -g 1440×900 light 200 % reduced motion --repeat-each=2 --output /tmp/claude-0/-home-user-Vibei/af9014
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (51.5s)
+  ✓  2 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (1.2m)
+
+
+  1) [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) 
+
+    Error: the Undo is the deleted row, in place, on screen where the person saw the row
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBeLessThanOrEqual[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: <= [32m2[39m
+    Received:    [31m111[39m
+
+      410 |     const undoY = await hUndo.evaluate((r) => r.getBoundingClientRect().top);
+      411 |     facts.historyUndo = { rowY, undoY };
+    > 412 |     expect(Math.abs(undoY - rowY), 'the Undo is the deleted row, in place, on screen where the person saw the row').toBeLessThanOrEqual(2);
+          |                                                                                                                     ^
+      413 |     await press(page, touch, hUndo.getByRole('button', { name: /^Undo/ }));
+      414 |     await expect(rows).toHaveCount(before);
+      415 |     expect(await rows.first().getAttribute('aria-label')).toBe(rowLabel);
+        at /home/user/wt/w5f/kettle/tests/notice-strip.spec.ts:412:117
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/w5f/pw-ns1440d/notice-strip-no-notice-ove-d82ec-0-light-200-reduced-motion--chromium/error-context.md
+
+  1 failed
+    [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) 
+  1 passed (2.2m)
+[slots] F freed 1 at 11:57:40

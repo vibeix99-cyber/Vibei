@@ -1,0 +1,47 @@
+[slots] F took 1/3 at 10:05:05: env KETTLE_PORT=5478 CPU=6 FIRST_ONLY=1 REP=4 ONLY=1440x900-light-200-r npx playwright test tests/w3-notices-probe2.spec.ts --project=chromium --workers=1 --output /tmp/claude-0/-home-user-Vibei/af901
+
+Running 4 tests using 1 worker
+
+{"markDoneTapMs":4480,"markDone":{"tapAt":{"x":773.5,"y":647.1875,"w":151,"h":44,"top":625.1875},"undo":{"n":9,"w":80,"h":44}}}
+  ✓  1 [chromium] › tests/w3-notices-probe2.spec.ts:276:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #0 (22.1s)
+  ✘  2 [chromium] › tests/w3-notices-probe2.spec.ts:276:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #1 (35.8s)
+{"markDoneTapMs":3129,"markDone":{"tapAt":{"x":773.5,"y":707.1875,"w":151,"h":44,"top":685.1875},"undo":{"n":9,"w":80,"h":44}}}
+  ✓  3 [chromium] › tests/w3-notices-probe2.spec.ts:276:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #2 (19.0s)
+  ✘  4 [chromium] › tests/w3-notices-probe2.spec.ts:276:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #3 (30.9s)
+
+
+  1) [chromium] › tests/w3-notices-probe2.spec.ts:276:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #1 
+
+    Error: Mark done's Undo not drawn after the tap at {"x":773.5,"y":694.6875,"w":151,"h":44,"top":672.6875}: {"taps":["pointerdown@774,695→DIV._group_kjzqi_114 _tagGroup_ahn","click@773,694→DIV._group_kjzqi_114 _tagGroup_ahn"],"mark":{"x":698,"y":612.6875,"width":151,"height":44,"top":612.6875,"right":849,"bottom":656.6875,"left":698},"sy":60,"notices":{"queue":[],"shown":null,"strip":3,"screen":"/","why":"rest","changed":14303,"version":13}}
+
+      320 |       await expect(undoRow).toBeVisible();
+      321 |     } catch (e) {
+    > 322 |       throw new Error(`Mark done's Undo not drawn after the tap at ${JSON.stringify(tapAt)}: ${JSON.stringify(await page.evaluate(() => ({ taps: (window as any).__taps, mark: document.querySelector('button[aria-label^="Mark"]')?.getBoundingClientRect().toJSON(), sy: scrollY, notices: (window as any).__kettle.notices() })))}`);
+          |             ^
+      323 |     }
+      324 |     const rowTop = await undoRow.evaluate((r) => r.getBoundingClientRect().top);
+      325 |     expect(Math.abs(rowTop - line), 'the Undo is drawn where Mark done was, on screen').toBeLessThanOrEqual(2);
+        at /home/user/wt/w5f/kettle/tests/w3-notices-probe2.spec.ts:322:13
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-probe2/w3-notices-probe2-no-notic-8e5e7--light-200-reduced-motion-1-chromium/error-context.md
+
+  2) [chromium] › tests/w3-notices-probe2.spec.ts:276:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #3 
+
+    Error: Mark done's Undo not drawn after the tap at {"x":773.5,"y":694.6875,"w":151,"h":44,"top":672.6875}: {"taps":["pointerdown@774,695→DIV._group_kjzqi_114 _tagGroup_ahn","click@773,694→DIV._group_kjzqi_114 _tagGroup_ahn"],"mark":{"x":698,"y":612.6875,"width":151,"height":44,"top":612.6875,"right":849,"bottom":656.6875,"left":698},"sy":60,"notices":{"queue":[],"shown":null,"strip":3,"screen":"/","why":"rest","changed":12016,"version":13}}
+
+      320 |       await expect(undoRow).toBeVisible();
+      321 |     } catch (e) {
+    > 322 |       throw new Error(`Mark done's Undo not drawn after the tap at ${JSON.stringify(tapAt)}: ${JSON.stringify(await page.evaluate(() => ({ taps: (window as any).__taps, mark: document.querySelector('button[aria-label^="Mark"]')?.getBoundingClientRect().toJSON(), sy: scrollY, notices: (window as any).__kettle.notices() })))}`);
+          |             ^
+      323 |     }
+      324 |     const rowTop = await undoRow.evaluate((r) => r.getBoundingClientRect().top);
+      325 |     expect(Math.abs(rowTop - line), 'the Undo is drawn where Mark done was, on screen').toBeLessThanOrEqual(2);
+        at /home/user/wt/w5f/kettle/tests/w3-notices-probe2.spec.ts:322:13
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-probe2/w3-notices-probe2-no-notic-9b1d5--light-200-reduced-motion-3-chromium/error-context.md
+
+  2 failed
+    [chromium] › tests/w3-notices-probe2.spec.ts:276:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #1 
+    [chromium] › tests/w3-notices-probe2.spec.ts:276:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #3 
+  2 passed (1.9m)
+[slots] F freed 1 at 10:07:00

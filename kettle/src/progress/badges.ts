@@ -15,7 +15,7 @@ export interface BadgeDef {
 
 export const BADGES: BadgeDef[] = [
   { id: 'first-brew', title: 'First Brew', description: 'Finish your first full brew', tiers: [1] },
-  { id: 'warm-streak', title: 'Warm Days', description: 'Keep a {n}-day warm streak', tiers: [3, 7, 14, 30, 100] },
+  { id: 'warm-streak', title: 'Warm Days', description: 'Brew {n} warm days in a row', tiers: [3, 7, 14, 30, 100] },
   { id: 'leaf-collector', title: 'Leaf Collector', description: 'Collect {n} leaves', tiers: [100, 500, 1500, 5000, 15000] },
   { id: 'deep-steep', title: 'Deep Steep', description: 'Finish {n} deep steeps (brews of 50+ minutes)', tiers: [1, 5, 20, 50, 100] },
   { id: 'morning-dew', title: 'Morning Dew', description: 'Finish {n} brews started before 9 am', tiers: [1, 5, 15, 40, 100] },

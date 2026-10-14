@@ -1,0 +1,103 @@
+
+Running 21 tests using 1 worker
+
+FACT 390x844-light-t100 a-no-input {"leftAt":5660,"room":68,"commits":[{"t":6960,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":5839,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":1300,"collapseAfterLastBusyMs":1300,"visibleMove":68}
+  ✓   1 [chromium] › tests/w3-notices-idle.spec.ts:77:5 › band lifetime a-no-input (390x844-light-t100) (7.8s)
+FACT 390x844-light-t100 b-scroll-then-idle {"leftAt":5243,"room":68,"maxSy":496,"scrollMs":3403,"roomAfterScroll":68,"commits":[{"t":9952,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":1306,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":4709,"collapseAfterLastBusyMs":1306,"visibleMove":68}
+  ✓   2 [chromium] › tests/w3-notices-idle.spec.ts:77:5 › band lifetime b-scroll-then-idle (390x844-light-t100) (11.1s)
+FACT 390x844-light-t100 c-pointer-held {"leftAt":5258,"room":68,"roomWhileDown":68,"downWhileHeld":1,"commits":[{"t":5264,"why":"rest","room":68,"shown":null,"down":0,"sinceInput":4511,"topBefore":132,"topAfter":132,"sy":0},{"t":9568,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":1225,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":4310,"collapseAfterLastBusyMs":1225,"visibleMove":68}
+  ✘   3 [chromium] › tests/w3-notices-idle.spec.ts:77:5 › band lifetime c-pointer-held (390x844-light-t100) (10.5s)
+FACT 390x844-dark-t200-rm a-no-input {"leftAt":5440,"room":113,"commits":[{"t":6736,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":5824,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":1296,"collapseAfterLastBusyMs":1296,"visibleMove":113}
+  ✓   4 [chromium] › tests/w3-notices-idle.spec.ts:77:5 › band lifetime a-no-input (390x844-dark-t200-rm) (7.5s)
+FACT 390x844-dark-t200-rm b-scroll-then-idle {"leftAt":5234,"room":113,"maxSy":494,"scrollMs":3384,"roomAfterScroll":113,"commits":[{"t":9936,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":1318,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":4702,"collapseAfterLastBusyMs":1318,"visibleMove":113}
+  ✓   5 [chromium] › tests/w3-notices-idle.spec.ts:77:5 › band lifetime b-scroll-then-idle (390x844-dark-t200-rm) (10.8s)
+FACT 390x844-dark-t200-rm c-pointer-held {"leftAt":5271,"room":113,"roomWhileDown":113,"downWhileHeld":1,"commits":[{"t":9664,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":1304,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":4393,"collapseAfterLastBusyMs":1304,"visibleMove":113}
+  ✓   6 [chromium] › tests/w3-notices-idle.spec.ts:77:5 › band lifetime c-pointer-held (390x844-dark-t200-rm) (10.4s)
+FACT 1440x900-light-t100 a-no-input {"leftAt":5194,"room":68,"commits":[{"t":5200,"why":"rest","room":68,"shown":null,"down":0,"sinceInput":4431,"topBefore":168,"topAfter":168,"sy":0},{"t":6496,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":5727,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":1302,"collapseAfterLastBusyMs":1302,"visibleMove":68}
+  ✘   7 [chromium] › tests/w3-notices-idle.spec.ts:77:5 › band lifetime a-no-input (1440x900-light-t100) (7.5s)
+FACT 1440x900-light-t100 b-scroll-then-idle {"leftAt":5556,"room":68,"maxSy":11,"scrollMs":2392,"roomAfterScroll":68,"commits":[{"t":5568,"why":"rest","room":68,"shown":null,"down":0,"sinceInput":4527,"topBefore":168,"topAfter":168,"sy":0},{"t":9264,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":1316,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":3708,"collapseAfterLastBusyMs":1316,"visibleMove":68}
+  ✘   8 [chromium] › tests/w3-notices-idle.spec.ts:77:5 › band lifetime b-scroll-then-idle (1440x900-light-t100) (10.2s)
+FACT 1440x900-light-t100 c-pointer-held {"leftAt":5562,"room":68,"roomWhileDown":68,"downWhileHeld":1,"commits":[{"t":10160,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":1320,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":4598,"collapseAfterLastBusyMs":1320,"visibleMove":68}
+  ✓   9 [chromium] › tests/w3-notices-idle.spec.ts:77:5 › band lifetime c-pointer-held (1440x900-light-t100) (11.1s)
+FACT 1440x900-dark-t200-rm a-no-input {"leftAt":5260,"room":113,"commits":[{"t":6560,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":5804,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":1300,"collapseAfterLastBusyMs":1300,"visibleMove":113}
+  ✓  10 [chromium] › tests/w3-notices-idle.spec.ts:77:5 › band lifetime a-no-input (1440x900-dark-t200-rm) (7.4s)
+FACT 1440x900-dark-t200-rm b-scroll-then-idle {"leftAt":5264,"room":113,"maxSy":300,"scrollMs":2154,"roomAfterScroll":113,"commits":[{"t":8672,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":1254,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":3408,"collapseAfterLastBusyMs":1254,"visibleMove":113}
+  ✓  11 [chromium] › tests/w3-notices-idle.spec.ts:77:5 › band lifetime b-scroll-then-idle (1440x900-dark-t200-rm) (9.6s)
+FACT 1440x900-dark-t200-rm c-pointer-held {"leftAt":5300,"room":113,"roomWhileDown":113,"downWhileHeld":1,"commits":[{"t":9696,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":1263,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":4396,"collapseAfterLastBusyMs":1263,"visibleMove":113}
+  ✓  12 [chromium] › tests/w3-notices-idle.spec.ts:77:5 › band lifetime c-pointer-held (1440x900-dark-t200-rm) (10.7s)
+  ✓  13 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 light 200 % reduced motion) (12.0s)
+  ✓  14 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 light 100 %) (11.1s)
+  ✓  15 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 dark 100 %) (10.8s)
+  ✓  16 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 dark 100 %) (11.1s)
+  ✓  17 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (844×390 dark 100 %) (11.1s)
+  ✓  18 [chromium] › tests/w3-notices.spec.ts:158:1 › the room a gone notice keeps stays while the page is scrolled, and goes on the same screen once idle (390×844, 200 %) (11.0s)
+  ✓  19 [chromium] › tests/w3-notices.spec.ts:210:1 › the room is not given back while a pointer is held; it goes 1.2–4 s after release (1440×900, 100 %) (13.7s)
+  ✓  20 [chromium] › tests/w3-notices.spec.ts:239:1 › a new screen starts with no room: Today after End, then Stats and back (375×667, 100 %) (10.1s)
+  ✓  21 [chromium] › tests/w3-notices.spec.ts:265:1 › the status bar warm-days button is named "N days warm. Show details" (and ", today not brewed yet") (4.1s)
+
+
+  1) [chromium] › tests/w3-notices-idle.spec.ts:77:5 › band lifetime c-pointer-held (390x844-light-t100) 
+
+    Error: no other strip commit between the leave and the collapse
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m1[39m
+    Received: [31m2[39m
+
+      146 |       // One band commit only (the collapse), at rest: no pointer down, ≥ 1.2 s since any input, ≥ 1.2 s after the leave.
+      147 |       expect(commits.filter((x: any) => x.room === 0).length, 'one collapse').toBe(1);
+    > 148 |       expect(commits.length, 'no other strip commit between the leave and the collapse').toBe(1);
+          |                                                                                          ^
+      149 |       expect(collapse.down, 'pointer up at the collapse').toBe(0);
+      150 |       expect(collapse.sinceInput, 'ms since the last input of any kind').toBeGreaterThanOrEqual(1200);
+      151 |       expect(fact.collapseAfterLeaveMs).toBeGreaterThanOrEqual(1200);
+        at /home/user/wt/w5f/kettle/tests/w3-notices-idle.spec.ts:148:90
+
+    Error Context: review/product-excellence/contracts/W3R1/F/fix/final2/w3/w3-notices-idle-band-lifet-4de1e-er-held-390x844-light-t100--chromium/error-context.md
+
+  2) [chromium] › tests/w3-notices-idle.spec.ts:77:5 › band lifetime a-no-input (1440x900-light-t100) 
+
+    Error: no other strip commit between the leave and the collapse
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m1[39m
+    Received: [31m2[39m
+
+      146 |       // One band commit only (the collapse), at rest: no pointer down, ≥ 1.2 s since any input, ≥ 1.2 s after the leave.
+      147 |       expect(commits.filter((x: any) => x.room === 0).length, 'one collapse').toBe(1);
+    > 148 |       expect(commits.length, 'no other strip commit between the leave and the collapse').toBe(1);
+          |                                                                                          ^
+      149 |       expect(collapse.down, 'pointer up at the collapse').toBe(0);
+      150 |       expect(collapse.sinceInput, 'ms since the last input of any kind').toBeGreaterThanOrEqual(1200);
+      151 |       expect(fact.collapseAfterLeaveMs).toBeGreaterThanOrEqual(1200);
+        at /home/user/wt/w5f/kettle/tests/w3-notices-idle.spec.ts:148:90
+
+    Error Context: review/product-excellence/contracts/W3R1/F/fix/final2/w3/w3-notices-idle-band-lifet-15799--input-1440x900-light-t100--chromium/error-context.md
+
+  3) [chromium] › tests/w3-notices-idle.spec.ts:77:5 › band lifetime b-scroll-then-idle (1440x900-light-t100) 
+
+    Error: no other strip commit between the leave and the collapse
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m1[39m
+    Received: [31m2[39m
+
+      146 |       // One band commit only (the collapse), at rest: no pointer down, ≥ 1.2 s since any input, ≥ 1.2 s after the leave.
+      147 |       expect(commits.filter((x: any) => x.room === 0).length, 'one collapse').toBe(1);
+    > 148 |       expect(commits.length, 'no other strip commit between the leave and the collapse').toBe(1);
+          |                                                                                          ^
+      149 |       expect(collapse.down, 'pointer up at the collapse').toBe(0);
+      150 |       expect(collapse.sinceInput, 'ms since the last input of any kind').toBeGreaterThanOrEqual(1200);
+      151 |       expect(fact.collapseAfterLeaveMs).toBeGreaterThanOrEqual(1200);
+        at /home/user/wt/w5f/kettle/tests/w3-notices-idle.spec.ts:148:90
+
+    Error Context: review/product-excellence/contracts/W3R1/F/fix/final2/w3/w3-notices-idle-band-lifet-a188c-n-idle-1440x900-light-t100--chromium/error-context.md
+
+  3 failed
+    [chromium] › tests/w3-notices-idle.spec.ts:77:5 › band lifetime c-pointer-held (390x844-light-t100) 
+    [chromium] › tests/w3-notices-idle.spec.ts:77:5 › band lifetime a-no-input (1440x900-light-t100) 
+    [chromium] › tests/w3-notices-idle.spec.ts:77:5 › band lifetime b-scroll-then-idle (1440x900-light-t100) 
+  18 passed (3.6m)

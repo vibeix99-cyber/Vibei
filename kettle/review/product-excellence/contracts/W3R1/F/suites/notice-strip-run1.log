@@ -1,0 +1,103 @@
+[slots] F took 2/3 at 10:16:39: env KETTLE_PORT=5501 npx playwright test tests/notice-strip.spec.ts --project=chromium --workers=2 --output /tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-ns1
+
+Running 25 tests using 2 workers
+
+  ✓   1 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 100 %) (1.1m)
+  ✓   2 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 %) (1.3m)
+  ✘   3 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 % reduced motion) (30.4s)
+  ✘   4 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 100 %) (38.2s)
+  ✓   5 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 200 %) (1.2m)
+  ✓   6 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 100 %) (1.1m)
+  ✓   8 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 % reduced motion) (1.2m)
+  ✓   7 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 %) (1.7m)
+  ✓   9 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 100 %) (1.0m)
+  ✓  10 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 200 %) (1.7m)
+  ✓  11 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 100 %) (59.6s)
+  ✓  13 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion) (53.4s)
+  ✓  12 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 %) (1.0m)
+  ✓  14 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 100 %) (57.9s)
+  ✓  15 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (1.1m)
+  ✓  16 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 100 %) (1.0m)
+  ✓  17 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 %) (1.1m)
+  ✓  18 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 % reduced motion) (57.3s)
+  ✓  19 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 100 %) (1.0m)
+  ✓  20 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 200 %) (1.1m)
+  ✓  21 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 100 %) (1.0m)
+  ✘  22 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 %) (56.8s)
+  ✓  24 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 100 %) (1.0m)
+  ✓  25 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 200 %) (1.0m)
+  ✘  23 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (4.0m)
+
+
+  1) [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 % reduced motion) 
+
+    Error: page.evaluate: TypeError: Cannot read properties of undefined (reading 'toast')
+        at eval (eval at evaluate (:290:30), <anonymous>:1:29)
+        at UtilityScript.evaluate (<anonymous>:292:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at eval (eval at evaluate (:290:30), <anonymous>:1:29)
+        at UtilityScript.evaluate (<anonymous>:292:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at raise (/home/user/wt/w5f/kettle/tests/notice-strip.spec.ts:258:68)
+        at /home/user/wt/w5f/kettle/tests/notice-strip.spec.ts:379:11
+
+  2) [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 100 %) 
+
+    Error: /^Couldn’t save just now/ not drawn; notices: {"queue":[],"shown":null,"strip":1,"screen":"session:break","why":"screen","changed":17836,"version":3}; said: ; drawn: []
+
+      252 |     await expect(page.locator('[data-notice-strip] li', { hasText: re })).toHaveCount(1, { timeout: 20_000 });
+      253 |   } catch (e) {
+    > 254 |     throw new Error(`${re} not drawn; notices: ${JSON.stringify(await page.evaluate(() => (window as any).__kettle.notices()))}; said: ${await page.evaluate(() => (window as any).__kettle.noticesSaid()?.textContent)}; drawn: ${await page.evaluate(() => [...document.querySelectorAll('[data-notice-strip] li')].map((li) => { const r = li.getBoundingClientRect(); const h = document.elementFromPoint((r.left + r.right) / 2, (r.top + r.bottom) / 2); return { r: [r.top, r.bottom], hit: h?.className, leaving: !!li.closest('[data-route-leaving]'), sy: scrollY, dlg: !!document.querySelector('[role=dialog]') }; })).then(JSON.stringify)}`);
+          |           ^
+      255 |   }
+      256 | };
+      257 | /** Raise a notice the way the app does (the app has no button that raises one on these screens on demand). */
+        at drawn (/home/user/wt/w5f/kettle/tests/notice-strip.spec.ts:254:11)
+        at /home/user/wt/w5f/kettle/tests/notice-strip.spec.ts:358:5
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-ns1/notice-strip-no-notice-ove-d25f2-eal-input-390×844-dark-100--chromium/error-context.md
+
+  3) [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 %) 
+
+    Error: /^Brew updated/ not drawn; notices: {"queue":[],"shown":null,"strip":1,"screen":"/stats","why":"screen","changed":44127,"version":3,"room":0}; said: ; drawn: []
+
+      252 |     await expect(page.locator('[data-notice-strip] li', { hasText: re })).toHaveCount(1, { timeout: 20_000 });
+      253 |   } catch (e) {
+    > 254 |     throw new Error(`${re} not drawn; notices: ${JSON.stringify(await page.evaluate(() => (window as any).__kettle.notices()))}; said: ${await page.evaluate(() => (window as any).__kettle.noticesSaid()?.textContent)}; drawn: ${await page.evaluate(() => [...document.querySelectorAll('[data-notice-strip] li')].map((li) => { const r = li.getBoundingClientRect(); const h = document.elementFromPoint((r.left + r.right) / 2, (r.top + r.bottom) / 2); return { r: [r.top, r.bottom], hit: h?.className, leaving: !!li.closest('[data-route-leaving]'), sy: scrollY, dlg: !!document.querySelector('[role=dialog]') }; })).then(JSON.stringify)}`);
+          |           ^
+      255 |   }
+      256 | };
+      257 | /** Raise a notice the way the app does (the app has no button that raises one on these screens on demand). */
+        at drawn (/home/user/wt/w5f/kettle/tests/notice-strip.spec.ts:254:11)
+        at /home/user/wt/w5f/kettle/tests/notice-strip.spec.ts:380:5
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-ns1/notice-strip-no-notice-ove-eec87-l-input-1440×900-light-200--chromium/error-context.md
+
+  4) [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) 
+
+    [31mTest timeout of 240000ms exceeded.[39m
+
+    Error: locator.boundingBox: Test ended.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: /Tea time|Long tea break/ })[22m
+
+
+      238 |     return { x: -1, y: -1, w: 0, h: 0, top: -1 };
+      239 |   }
+    > 240 |   expect(at, `${el} can be brought on top by real scrolling (${JSON.stringify(await el.boundingBox())}, scrollY ${await page.evaluate(() => scrollY)})`).not.toBeNull();
+          |                                                                                        ^
+      241 |   if (touch) await page.touchscreen.tap(at!.x, at!.y);
+      242 |   else await page.mouse.click(at!.x, at!.y);
+      243 |   return at!;
+        at press (/home/user/wt/w5f/kettle/tests/notice-strip.spec.ts:240:88)
+        at /home/user/wt/w5f/kettle/tests/notice-strip.spec.ts:355:5
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-ns1/notice-strip-no-notice-ove-d82ec-0-light-200-reduced-motion--chromium/error-context.md
+
+  4 failed
+    [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 % reduced motion) 
+    [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 100 %) 
+    [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 %) 
+    [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) 
+  21 passed (15.5m)
+[slots] F freed 2 at 10:32:11

@@ -1,5 +1,5 @@
 /**
- * Desktop right rail (≥ 1200px): warm streak, daily goal, cozy level, today's recipes.
+ * Desktop right rail (≥ 1200px): warm days, daily goal, cozy level, today's recipes.
  * Plus `SidebarStatus`, the compact version shown in the sidebar at 900–1199px.
  * OWNER: design-system area.
  */
@@ -8,6 +8,7 @@ import { addDays } from '@/lib/dates';
 import { useDayKey, useLevel, useQuests, useStreak, useToday, type Quest } from '@/progress';
 import { DAILY_GOALS, useSettings } from '@/state/settings';
 import { Card, Counter, Pill, ProgressBar, Ring, WeekStrip, cx } from '@/ui';
+import { warmCaption, warmState, warmTitle } from '@/screens/home/warm';
 import s from './Rail.module.css';
 
 
@@ -50,6 +51,8 @@ function StreakCard() {
   const streak = useStreak();
   const week = useWeek();
   const n = streak.current;
+  const today = useDayKey();
+  const warm = warmState(streak, today);
   return (
     <Card className={s.card} as="section" aria-labelledby="rail-streak">
       <div className={s.streakHead}>
@@ -63,24 +66,16 @@ function StreakCard() {
                 <Counter value={n} className={s.streakNum} /> {word(n, 'day')} warm
               </>
             ) : (
-              'Start a warm streak'
+              warmTitle(warm)
             )}
           </h2>
-          <p className={s.caption}>
-            {n === 0
-              ? 'One brew today warms the mug.'
-              : streak.todayDone
-                ? 'Kept warm today. Lovely.'
-                : streak.atRisk
-                  ? 'One brew tonight keeps it warm.'
-                  : 'Brew today to keep it warm.'}
-          </p>
+          <p className={s.caption}>{warmCaption(warm, streak.atRisk)}</p>
         </div>
       </div>
       <WeekStrip days={week} label="Last 7 days" />
       <div className={s.streakFoot}>
         <span>
-          Best <strong>{streak.best}</strong>
+          Warmest run <strong>{streak.best}</strong>
         </span>
         <span className={s.sep} aria-hidden="true" />
         <span className={s.cozies}>
@@ -230,10 +225,10 @@ export function SidebarStatus() {
   return (
     <div className={s.mini}>
       <div className={s.miniRow}>
-        <span className={s.miniStat} title="Warm streak">
+        <span className={s.miniStat} title="Days warm">
           <StreakMug state={streak.current === 0 ? 'cold' : streak.todayDone ? 'warm' : 'atRisk'} size={26} animate={false} />
           <strong aria-hidden="true">{streak.current}</strong>
-          <span className="sr-only">{streak.current} {word(streak.current, 'day')} warm streak</span>
+          <span className="sr-only">{streak.current} {word(streak.current, 'day')} warm</span>
         </span>
         <span className={s.miniStat} title="Leaves">
           <Leaf size={22} />

@@ -1,6 +1,7 @@
 /**
  * What Chai says on Home — pure, deterministic, unit-tested.
- * Chai never guilt-trips (BRIEF §2): risk lines are invitations, not warnings.
+ * Chai never guilt-trips (BRIEF §2): risk lines are invitations, not warnings. Warm days in Kettle's own words (W3R1
+ * glossary: "N warm days in a row", never "streak"); a Tea Cozy is named only when it is true for this person (I13).
  */
 import type { MascotPose } from '@/art';
 import type { DayPart } from '@/lib/dates';
@@ -13,9 +14,14 @@ export interface ChaiContext {
   goalMin: number;
   /** Completed brews today. */
   sessionsToday: number;
+  /** Warm days in a row now (today pending until a brew finishes). */
   streak: number;
   todayDone: boolean;
   cozies: number;
+  /** The warmest run so far (0: never a warm day). */
+  best?: number;
+  /** Days a Tea Cozy just covered, in a row, ending yesterday (0: none). */
+  cozyDays?: number;
   /** Focus sessions ever recorded. */
   totalSessions: number;
   /** Whole days since the last focus session's day (0 = today), null if never. */
@@ -106,18 +112,28 @@ export function chaiLine(c: ChaiContext): ChaiLine {
     // Names the selected length; the Gentle chip (shown when it's longer than 15) offers the shorter brew.
     const gentle = c.focusMin > 15;
     if (c.streak > 0 && !c.todayDone) {
-      return { mood: 'night', pose: 'sleep', text: nb(`It’s late. One ${brew} keeps your ${c.streak}-day streak warm.`), suggestGentle: gentle };
+      // An invitation, and rest is as welcome: what a Tea Cozy would do is said only when one is held.
+      const rest = c.cozies > 0 ? 'Or rest: your Tea Cozy will keep the kettle warm.' : 'Or rest. The kettle will be here tomorrow.';
+      return { mood: 'night', pose: 'sleep', text: nb(`It’s late. One ${brew} makes it ${c.streak + 1} warm days in a row. ${rest}`), suggestGentle: gentle };
     }
     return { mood: 'night', pose: 'sleep', text: pick(c.seed, ['It’s getting late. A gentle one, then rest?', 'Late-night brew? Let’s keep it short and sweet.']), suggestGentle: gentle };
   }
 
-  if (c.daysSinceLast != null && c.daysSinceLast >= 3 && c.sessionsToday === 0 && c.todayMin === 0) {
-    return { mood: 'back', pose: 'wave', text: pick(c.seed, ['Welcome back. No catching up needed. One cup is plenty.', 'Oh, hello again. I kept the kettle warm for you.']) };
+  // Back after a missed day that a Tea Cozy covered: what it did, once, in plain words.
+  if ((c.cozyDays ?? 0) > 0 && c.streak > 0 && !c.todayDone && c.todayMin === 0) {
+    const when = c.cozyDays === 1 ? 'yesterday' : 'while you were away';
+    return { mood: 'back', pose: 'wave', text: `Welcome back. A Tea Cozy kept the kettle warm ${when}, so your ${c.streak} warm ${c.streak === 1 ? 'day' : 'days'} in a row carry on.` };
+  }
+
+  // Back after a few days, or after a day that went by unwarmed: an invitation, never a tally of what was missed.
+  const runEnded = c.streak === 0 && (c.best ?? 0) > 0 && !c.todayDone && c.firstVisitToday;
+  if (((c.daysSinceLast != null && c.daysSinceLast >= 3) || runEnded) && c.sessionsToday === 0 && c.todayMin === 0) {
+    return { mood: 'back', pose: 'wave', text: pick(c.seed, ['Welcome back. No catching up needed. One cup is plenty.', 'Oh, hello again. The kettle’s ready when you are.']) };
   }
 
   if (c.part === 'evening' && c.streak > 0 && !c.todayDone) {
-    const cozy = c.cozies > 0 ? ' Your Tea Cozy is on standby, too.' : '';
-    return { mood: 'risk', pose: 'think', text: nb(`Your ${c.streak}-day streak is still warm. One ${brew} keeps it going.${cozy}`) };
+    const cozy = c.cozies > 0 ? ' And if today slips by, your Tea Cozy keeps the kettle warm.' : '';
+    return { mood: 'risk', pose: 'think', text: nb(`${c.streak} warm ${c.streak === 1 ? 'day' : 'days'} in a row. One ${brew} warms today too.${cozy}`) };
   }
 
   if (c.todayMin > 0) {

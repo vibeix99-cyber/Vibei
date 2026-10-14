@@ -1,0 +1,56 @@
+[slots] F took 1/3 at 10:12:44: env KETTLE_PORT=5501 CPU=6 FIRST_ONLY=1 REP=4 ONLY=1440x900-light-200-r npx playwright test tests/w3-notices-probe2.spec.ts tests/w3-notices-probe.spec.ts --project=chromium --workers=1 --output /tmp/
+
+Running 5 tests using 1 worker
+
+[{"t":78,"e":"frame","key":"0||undefined|undefined|-1|undefined"},
+{"t":1045,"e":"frame","key":"0|0|screen|1|-1|null","ms":{"down":0,"sinceInput":null,"sinceTap":null,"atRest":true}},
+{"t":1059,"e":"frame","key":"0|0|screen|3|-1|null","ms":{"down":0,"sinceInput":null,"sinceTap":null,"atRest":true}},
+{"t":3458,"e":"pointermove","x":583.280029296875,"y":642.6799926757812,"sy":0},
+{"t":3459,"e":"pointerdown","x":583.280029296875,"y":642.6799926757812,"sy":0},
+{"t":3855,"e":"pointerup","x":583.280029296875,"y":642.6799926757812,"sy":0},
+{"t":3855,"e":"click","x":583,"y":642,"sy":0},
+{"t":3602,"e":"keydown","sy":0},
+{"t":3620,"e":"keydown","sy":0},
+{"t":3662,"e":"keydown","sy":0},
+{"t":3683,"e":"keydown","sy":0},
+{"t":3671,"e":"keydown","sy":0},
+{"t":3687,"e":"keydown","sy":0},
+{"t":3682,"e":"keydown","sy":0},
+{"t":3699,"e":"keydown","sy":0},
+{"t":3714,"e":"keydown","sy":0},
+{"t":3769,"e":"keydown","sy":0},
+{"t":3777,"e":"keydown","sy":0},
+{"t":3793,"e":"keydown","sy":0},
+{"t":3827,"e":"keydown","sy":0},
+{"t":3862,"e":"keydown","sy":0},
+{"t":3862,"e":"keydown","sy":0},
+{"t":3910,"e":"pointermove","x":583.280029296875,"y":804.9000244140625,"sy":0},
+{"t":3911,"e":"pointerdown","x":583.280029296875,"y":804.9000244140625,"sy":0},
+{"t":3921,"e":"pointerup","x":583.280029296875,"y":804.9000244140625,"sy":0},
+{"t":3922,"e":"click","x":583,"y":804,"sy":0},
+{"t":3920,"e":"frame","key":"0|0,0|screen|7|-1|null","ms":{"down":0,"sinceInput":-2,"sinceTap":-2,"atRest":false}},
+{"t":4053,"e":"frame","key":"0|0|screen|7|-1|null","ms":{"down":0,"sinceInput":131,"sinceTap":131,"atRest":false}},
+{"t":6429,"e":"pointermove","x":1274.199951171875,"y":598.3900146484375,"sy":0},
+{"t":6439,"e":"pointerdown","x":1274.199951171875,"y":598.3900146484375,"sy":0},
+{"t":6444,"e":"pointerup","x":1274.199951171875,"y":598.3900146484375,"sy":0},
+{"t":6444,"e":"click","x":1274,"y":598,"sy":0},
+{"t":8931,"e":"pointermove","x":1,"y":899,"sy":0},
+{"t":9004,"e":"pointerdown","x":720,"y":705.6796875,"sy":0},
+{"t":9005,"e":"pointerup","x":720,"y":705.6796875,"sy":0},
+{"t":9006,"e":"click","x":720,"y":705,"sy":0},
+{"t":9008,"e":"frame","key":"0|0,73|screen|12|745|t1","ms":{"down":0,"sinceInput":2,"sinceTap":2,"atRest":false}},
+{"t":11663,"e":"pointermove","x":1,"y":899,"sy":0},
+{"t":11680,"e":"frame","key":"0|73|screen|12|745|t1","ms":{"down":0,"sinceInput":17,"sinceTap":2674,"atRest":false}},
+{"t":12913,"e":"frame","key":"0|73|rest|13|745|null","ms":{"down":0,"sinceInput":1250,"sinceTap":3907,"atRest":true}}]
+  ✓  1 [chromium] › tests/w3-notices-probe.spec.ts:10:3 › probe 0 (19.6s)
+{"markDoneTapMs":7499,"markDone":{"tapAt":{"x":773.5,"y":707.1875,"w":151,"h":44,"top":685.1875},"undo":{"n":9,"w":80,"h":44}}}
+  ✓  2 [chromium] › tests/w3-notices-probe2.spec.ts:438:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #0 (22.9s)
+{"markDoneTapMs":4340,"markDone":{"tapAt":{"x":773.5,"y":647.1875,"w":151,"h":44,"top":625.1875},"undo":{"n":9,"w":80,"h":44}}}
+  ✓  3 [chromium] › tests/w3-notices-probe2.spec.ts:438:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #1 (20.4s)
+{"markDoneTapMs":8361,"markDone":{"tapAt":{"x":773.5,"y":646.6875,"w":151,"h":44,"top":624.6875},"undo":{"n":9,"w":80,"h":44}}}
+  ✓  4 [chromium] › tests/w3-notices-probe2.spec.ts:438:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #2 (23.6s)
+{"markDoneTapMs":5066,"markDone":{"tapAt":{"x":773.5,"y":647.1875,"w":151,"h":44,"top":625.1875},"undo":{"n":9,"w":80,"h":44}}}
+  ✓  5 [chromium] › tests/w3-notices-probe2.spec.ts:438:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #3 (17.6s)
+
+  5 passed (1.8m)
+[slots] F freed 1 at 10:14:34

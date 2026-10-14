@@ -217,6 +217,23 @@ async function press(page: Page, touch: boolean, el: ReturnType<Page['locator']>
     // Above the view: bring it down; anywhere else (below it, or under the docked start / tab bar): bring it up.
     await page.mouse.wheel(0, r.y < 4 ? -60 : r.y > vh ? 120 : 60);
     await page.waitForTimeout(120);
+    // (W3R1 F-R4) Wait until the wheel's scroll has landed: the element still across two frames (up to 1.5 s).
+    await el.evaluate(
+      (e) =>
+        new Promise<void>((done) => {
+          const t0 = performance.now();
+          let last = e.getBoundingClientRect().top + ':' + scrollY;
+          let still = 0;
+          const f = () => {
+            const now = e.getBoundingClientRect().top + ':' + scrollY;
+            still = now === last ? still + 1 : 0;
+            last = now;
+            if (still >= 2 || performance.now() - t0 > 1500) done();
+            else requestAnimationFrame(f);
+          };
+          requestAnimationFrame(f);
+        }),
+    );
     at = await onTop(page, el, strict);
   }
   await park(page);
@@ -287,6 +304,15 @@ for (const c of CFGS) {
     await press(page, touch, field);
     await page.keyboard.type('Chapter 3 notes');
     await page.keyboard.press('Escape').catch(() => {});
+    // (W3R1 N-1) The task is in the field before the brew starts. Under heavy load the typing once missed the field
+    // (the brew was saved as "Study brew", so no carried line, and Mark done timed out much later): typed again, for
+    // real, if it is not there, then asserted.
+    if ((await field.inputValue()) !== 'Chapter 3 notes') {
+      await press(page, touch, field);
+      await page.keyboard.press('ControlOrMeta+A');
+      await page.keyboard.type('Chapter 3 notes');
+    }
+    await expect(field).toHaveValue('Chapter 3 notes');
     await press(page, touch, page.getByRole('button', { name: /^Put the kettle on · / }));
     await page.waitForFunction(() => location.hash === '#/focus', null, { timeout: 15_000 });
     await page.waitForTimeout(1500);
