@@ -39,6 +39,12 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
   Invariant: zero overlap between any notice and any control, text or list row. R5-D1, LEAD-D1, R7-D1 and D4 stay passing.
 - **Maker B, badge rename** (45 min): "Warm Streak" → "Warm Days" (display name only, migration-safe).
 
+**Round 3 status (2026-10-14 00:30 UTC):**
+- **C:** merged as `61aba17` (`MODEL_ON_LOW=true`). It is identical to the trial that passed Lane R's targeted regression.
+- **B:** APPROVE, merged as `8df3076`.
+- **T2:** gated as trial `490ca97`. The lead's draft verdict is **REJECT** with one blocker, T2-D1: a notice on the summary, typically the update prompt in its first frame, pushes P's sheet down, so a gap opens, rows sit under the footer and at 200 % the content leaves the screen. T2's single 90-minute fix round started at 00:28 UTC (hard stop 01:58).
+- **Lanes:** Lane T (Opus) and Lane R (Sonnet) are running on `490ca97`.
+
 **Progress:** Maker C was resumed at 18:32 to flip `MODEL_ON_LOW` (budget 45 min). The control `b377c62` is back on :5410 / :5430. The round-2 trial worktrees are removed.
 
 ## ■ WAVE 2 ROUND 2 CLOSED · 2026-10-13 ~15:50 UTC (read this first)
