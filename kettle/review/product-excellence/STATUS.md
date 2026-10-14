@@ -12,6 +12,21 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 
 ## ▶ WAVE 3 ROUND 1 · started 2026-10-14 10:00 UTC (read this first)
 
+**W3R1 state (2026-10-14 22:30 UTC):** all four makers are APPROVE and merged. Only the final regression is still running.
+
+| Maker | Verdict | Merge |
+|---|---|---|
+| N | APPROVE (eye contrast: vb's call) | `3faaf94` |
+| G | APPROVE after its fix round (G-D1…D4) | `25b5e26`, plus docs `a859d86` |
+| S | APPROVE after its fix round (S-D1) | `0efca36` |
+| X-2 (G's pressed-segment test, test only) | APPROVE | `60fdb7e` |
+| F | APPROVE after its fix round (F-D1…D3, C-1) | `2be3de1` = the final tree |
+
+- **X-11** (`notice-strip:292` at 1440 light @200 reduced, test only): not achieved, nothing merged. It stays known flaky, with three signatures (`CHECKER-W3R1-CROSS.md` §7).
+- **Final regression:** on `2be3de1` (worktree `w5-final`, :5540/:5550), Lane R (Sonnet), receipt `contracts/W3R1/review/FINAL/RECEIPT-FINAL.md`.
+  - Done so far: tsc 0; vitest 302/302; build OK; full chromium (without `notice-strip`) 215 passed, 3 failed (`integrity:309`, `integrity:1017` (X-1), `w2-room:167`), being classified.
+  - Interrupted at ~21:00 by a usage limit and a container restart; resumed at 22:30.
+
 **Resume after the usage-limit cutoff (2026-10-14 ~16:45 UTC):**
 - **What was cut:** at about 14:40 UTC a usage limit stopped LEAD-4, Lane I, Lane I2 and Lane R. The container then restarted.
 - **Inventory:** `contracts/W3R1/review/INVENTORY-RESUME.md`.
