@@ -108,3 +108,77 @@ The blocked row no longer reacts; a live row keeps both fills. This closes Lane 
 | **The maker's two `notice-strip` failures at 200 %** | Lane I ran exactly those two tests once on each build: trial ✓ 1.9 m / 1.1 m, base ✓ 2.0 m / 1.1 m. The maker's failures were slot contention (one hit the 240 s timeout while F held 2 slots). G changes nothing on Today's layout (outlines and opacity take no space) | Lane I §6 |
 | **Suites** | tsc clean; vitest 290/290; `w3-settings` 9/9; the specs touching G's controls 52/52 (whistle 8, w2-home 18, a11y 11, w2-firstvisit 6, w3-settings 9); break-reach 17/17 | Packet |
 | **Preserve list** | No palette, font, chrome, setting, dependency or behaviour change. Destructive tests ran in disposable contexts only | Diff; packet |
+
+## 3. Defects
+
+All four are text in `kettle/src/screens/settings/SettingsScreen.tsx`, G's file. Line numbers are at `808421d` (= trial `3d91793`). Strings are quoted exactly; the file writes apostrophes as U+2019 (’).
+
+### G-D1 · The Sounds line says sound plays "in a tab", while on an iOS Safari tab the Nudges line on the same screen says Kettle chimes only "while it’s on screen" (BLOCKS, introduced; Vibei §4)
+
+**Where.** `SettingsScreen.tsx:134`, the unmuted Sounds description:
+
+> `The whistle, effects and ambience play while Kettle is open, in a tab or as the app, after your first tap. Closed, Kettle is silent. A phone’s silent switch or lock screen can quiet it too.`
+
+**The contradiction.**
+- On an iOS Safari tab, `'Notification' in window` is false (`notify.ts:26`), so the Nudges row shows `SettingsScreen.tsx:182`, unchanged from base:
+  > `This browser can’t show notifications. With sound on, Kettle chimes while it’s on screen.`
+- F's Welcome says the same (`welcome/steps.tsx:236, 241`).
+- Two rows apart, the Sounds line promises play "in a tab".
+
+**What the code does.** Sound plays only while the page's JavaScript runs:
+- `engine.ts` suspends an idle context when hidden;
+- `play` resumes it, and `flow.ts:195` plays the whistle on every focus completion.
+
+On iOS/iPadOS a backgrounded tab or home-screen app is frozen, so a brew ending with another app in front is not heard then. On desktop Chromium a hidden tab does play (`whistle.spec.ts:100`).
+
+So "in a tab" is true on a computer and untrue on the iPhone, the one platform where the screen also shows the "on screen" line. The base line ("…while Kettle is open. A phone’s silent switch or lock screen can keep them quiet.") made no background claim, so this contradiction is new.
+
+**Required.**
+- The Sounds line must not claim, as a general rule, that sound plays while Kettle is in a background tab or out of sight.
+- It must agree with `:182` and with F's Welcome lines. For example, it can say a phone can quiet sounds when it is locked, on silent or Kettle is out of sight.
+- Leave `:182` as it is: F's `whistle.spec.ts:213` asserts it word for word, and F's Welcome echoes it.
+
+### G-D2 · At 375×667 @200 % the Sounds description runs to 17 lines, from 12 on base (BLOCKS, introduced; Vibei §4)
+
+**Where.** The same string as G-D1: 189 characters, against the base's 125.
+
+**Measured.**
+- **375×667 @200 %** (`review/LI/G/before-after/settings-375x667-light-200-part02.png`, opened at full size): base 12 lines, trial 17, in a column about 130 px wide. The switch sits mid-row, about 330 px below the "Sounds" label.
+- **Other configs:** 1440 @100 from 2 to 3 lines (`…-1440x900-light-100-part01.png`). Page height +59 / +78 px at 100 % and +235 / +274 px at 200 % on the phones (Lane I §5).
+
+**Required.**
+- At 375×667 @200 %, light and dark, the Sounds description takes **no more lines than on base (12)**.
+- In every one of the 16 configs it is no taller than the trial's current line.
+- One rewrite fixes G-D1 and G-D2 together.
+
+### G-D3 · The Nudges On line says "A locked phone may hold the nudge until you’re back.", which is untrue: no nudge comes if the brew ends while the page is frozen (BLOCKS, ruled by Vibei §4; the sentence predates G)
+
+**Where.** `SettingsScreen.tsx:187`, the On line (the status is granted and Nudges is on):
+
+> `On. When a brew or tea break ends while Kettle is open but out of sight, I’ll nudge you. With Kettle closed, no nudge can come. A locked phone may hold the nudge until you’re back.`
+
+**What the code does.** Nothing holds a nudge:
+- A nudge is raised only from `timer:complete`, only while no Kettle tab is visible (`notify.ts:165–167, 175, 183–189`).
+- If the phone has frozen the page (locked, or Kettle in the background long enough), the ticker completes the phase on wake (`ticker.ts:144–150, 287–293`), when the page is visible again. `shouldNotify` is then false, and **no nudge is ever shown**.
+- A nudge that was shown is closed when the person comes back (`notify.ts:178–179`).
+- A phone that has not yet frozen the page (Android Chrome, soon after locking) can still show the nudge at the end. So the honest condition is "your phone has paused Kettle", not "your phone is locked".
+
+**Required.**
+- Remove the "may hold the nudge" sentence.
+- Say what happens: if the phone has paused Kettle (for example, locked) when the brew or tea break ends, no nudge comes. Optionally add that Kettle shows it when you’re back.
+- Keep the two true parts ("open but out of sight", "closed: no nudge").
+- The new On line is **no longer than now** (180 characters) and no taller in rendered lines at 375×667 @200 %. Nobody has rendered it yet: headless Chromium keeps the permission denied, so it needs the permission fake that `whistle.spec.ts` uses.
+
+**A cross-owner effect the maker must not fix in F's file:** `tests/whistle.spec.ts:203` (F's) asserts `/A locked phone may hold the nudge until you’re back/` (see §6, C-1).
+
+### G-D4 · "This device can’t vibrate." must say "Vibration isn’t available in this browser." (BLOCKS, ruled by Vibei §4; the line predates G)
+
+**Where.** `SettingsScreen.tsx:240`, the Haptics description when `'vibrate' in navigator` is false:
+
+> `This device can’t vibrate.`
+
+**Why it is wrong.** It shows on every iPhone (WebKit has no `navigator.vibrate`), whose hardware does vibrate. What is missing is the browser API, not the device.
+
+**Required:** exactly `Vibration isn’t available in this browser.` (U+2019 apostrophe, as the file writes every other one). The supported line, `Little buzzes for key moments, on devices that can vibrate.`, stays.
+
+**No other defect.** I found nothing else introduced or worsened by G. The near misses are in §4.
