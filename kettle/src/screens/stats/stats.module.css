@@ -143,7 +143,79 @@
   gap: var(--space-3);
 }
 .riskHint {
-  color: var(--berry-ink);
+  /* An invitation, not an alarm (I13): the warm persimmon of the mug, not the berry of a warning. */
+  color: var(--persimmon-ink);
+}
+
+/* ---------- At a glance (today · last 7 days) ---------- */
+.glance {
+  gap: 0;
+}
+.glanceGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+.glanceCol {
+  display: grid;
+  align-content: start;
+  gap: 2px;
+  min-width: 0;
+}
+.glanceCol + .glanceCol {
+  border-left: var(--border) solid var(--line);
+  padding-left: var(--space-4);
+}
+.glanceKicker {
+  font-weight: 800;
+  font-size: var(--text-body-s);
+  color: var(--ink-2);
+  margin-bottom: 2px;
+}
+.glanceRange {
+  font-weight: 700;
+}
+.glanceNumber {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-title);
+  line-height: 1.15;
+  color: var(--ink);
+}
+.glanceUnit {
+  font-family: var(--font-body);
+  font-size: var(--text-body-s);
+  font-weight: 700;
+  color: var(--ink-2);
+}
+.glanceFact {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--text-body-s);
+  font-weight: 700;
+  color: var(--ink-2);
+}
+.glanceFact[data-met] {
+  color: var(--matcha-ink);
+}
+/* Narrow columns (phones with large text): one above the other. */
+@container (max-width: 400px) {
+  .glanceGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .glanceCol + .glanceCol {
+    border-left: 0;
+    padding-left: 0;
+    border-top: var(--border) solid var(--line);
+    padding-top: var(--space-3);
+  }
+}
+
+/* A tile's value with its unit ("41 days"). */
+.tileUnit {
+  font-size: 0.6em;
+  font-weight: 700;
 }
 
 /* ---------- Empty ---------- */
@@ -514,7 +586,7 @@
   font-size: var(--text-body-s);
 }
 .streakLine[data-risk] {
-  color: var(--berry-ink);
+  color: var(--persimmon-ink);
 }
 .cozyRow {
   display: flex;

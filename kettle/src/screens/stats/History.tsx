@@ -223,7 +223,7 @@ function EditForm({ session, onDone, onDeleted }: { session: SessionRecord; onDo
         onClose={() => setConfirm(false)}
         title="Delete this brew?"
         hero={<Mascot pose="concerned" size={96} />}
-        description="It leaves your history, stats and streak. The leaves you earned stay yours."
+        description="It leaves your history, stats and warm days. The leaves you earned stay yours."
         footer={
           <div className={s.confirmActions}>
             <Button block onClick={() => setConfirm(false)} variant="primary">
