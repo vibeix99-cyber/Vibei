@@ -145,3 +145,38 @@ The visible "N" and "days warm" are separate elements, so the name is computed w
 - **The cause.** G's approved fix (`7f95c18`, merged as `25b5e26`) replaced "A locked phone may hold the nudge until you’re back." with "…If Kettle is closed or your phone has paused it by then, no nudge comes."
 - **The current state.** `whistle.spec.ts:203` (F's file) is red on the integration branch (`review/GATE.md`).
 - **Required change:** the regex at `:203` becomes `/If Kettle is closed or your phone has paused it by then, no nudge comes\./`. Nothing else in the test changes.
+
+## 4. Residuals (rule: BLOCKS = introduced or worsened by this change; FOLLOW-UP = present on the base and not worse, or ruled so by Vibei; ACCEPTED = not a defect)
+
+| # | Item | My check | Class | Owner |
+|---|---|---|---|---|
+| F-D1 | The band never collapses on the same screen | §3 | **BLOCKS** (Vibei §3) | F (fix round) |
+| F-D2 | Session controls 17 px further below the fold at 200 % landscape | §3 | **BLOCKS** (worsened) | F (fix round) |
+| F-D3 | Status button name "3 days warm . Show details" | §3 | **BLOCKS** (introduced) | F (fix round) |
+| C-1 | `whistle.spec.ts:203` asserts G's old sentence | §3 | **Cross-owner, in F's round** | F |
+| F-R1 | **A notice arriving at rest still pushes content** 68–113 px (−16 / 0 where the strip is outside the content column), 22–31 ms after it is raised. A tap aimed just before lands on the notice: base 13/17, trial 12/16 | Lane I2 §1a E, §2b; the packet's F3 | **FOLLOW-UP** (pre-existing, not worse) | I10 design |
+| F-R2 | **The "above" leave during a touch fling:** everything below the strip jumps up 153.5 px in one frame, with no compensation in that frame or the next 8, 460–630 ms after the finger lifts | Lane I2 §2g, every frame: **base identical** | **FOLLOW-UP** (pre-existing, not worse) | I10 |
+| F-R3 | **The session `reach` close at rest** moves a partly visible control 45–107 px under a tap aimed just before (375×667 @100, 390×844 @200) | Lane I2 §3e: same px and landing on base | **FOLLOW-UP** (F-T2-2 class, not worse) | I10 / session area |
+| F-R4 | **`notice-strip:275` at 1440 @200: 2 failures in 9 trial runs,** both the spec's own `press()` double-wheel race (Mark done −60.5 / −60.0 = one wheel step) | Lane I2 §1c. `press()` is the base's | **FOLLOW-UP** (test robustness). F may harden `press()` in the round (wait on real state; nothing loosened) | F tests |
+| F-R5 | **The page hidden and shown again:** the band gives its room back while hidden, so the person returns to content 68–153.5 px higher | Nobody is aiming while the page is hidden. Lane I2 §2a (emulated hide) | **ACCEPTED** (not under a pointer; the fix round's idle rule will make it rare) | — |
+| F-R6 | **Night line with no Tea Cozy:** "…Or rest. The kettle will be here tomorrow." does not say the run ends tonight | The glossary forbids loss framing; the status sheet states the rule once. True as far as it goes | **ACCEPTED** (design) | — |
+| F-R7 | `w2-home:203` (Welcome fits at 375×667 @100) failed once in a 2-worker batch, 13 px over | Passes alone on trial and base (Lane I2 §4b); F changed nothing under `welcome/` | **FOLLOW-UP / UNKNOWN** (load) | Final regression |
+| F-R8 | `w3-notices:252` ("the room … stays while the page is scrolled over it and back") failed once in Lane R's cut `full-C` on the combined trial | Passes alone on :5520 and :5521 (Lane I2 §4c). This test changes in the fix round anyway (F-D1) | **UNKNOWN** (load); rerun on the fix | F / final regression |
+| F-R9 | **1440 rail for someone who never brewed:** "Warmest run 0" and "Tea Cozy in 7 days" | Base: "Best 0" and the same Cozy line | **FOLLOW-UP** (polish, not worse) | F / I13 |
+| F-R10 | **The Tea Cozy cap of 2 is not stated** in "Every 7 warm days in a row earn a Tea Cozy…" | Shown only when 0 are held; true | **ACCEPTED** | — |
+| F-R11 | **`done/summary.ts:65, 72` round minutes to nearest, while Stats now rounds down** (S) | A completed brew's `focusedMs` is its whole phase length, and the engine already floors `afterMin`, so the summary and Stats cannot differ for a completed brew. The summary is not shown after End | **ACCEPTED** (no visible difference); note for the final regression | — |
+| F-R12 | `ui/Toast.module.css:75` uses the non-token `var(--focus, var(--sky))` | G's cross-owner note | **FOLLOW-UP** | F |
+| F-R13 | `isInputPending` is Chromium-only | The fresh-frame check is the guard elsewhere (packet F4) | **ACCEPTED** | — |
+| N-2 | The History Undo read races S's focus scroll when the tapped row takes focus (~110 px) | Cross-owner, `History.tsx` (S) | **FOLLOW-UP** | S |
+| F-T2-2, N-3 | Session readout or controls pushed below the fold by a notice at 200 % on short screens; a long persistent notice on the tea break at landscape @200 | Unchanged; need a design ruling | **FOLLOW-UP** | Vibei / I10 |
+| E-1 | **Evidence gaps,** not defects:<br>• real devices, WebKit, Firefox;<br>• the hidden page only emulated;<br>• smooth full-motion scrolling on the "above" path at 1440;<br>• the full chromium suite on F's trial (the combined run is Lane R's);<br>• the 194 px band's source notice inferred | — | Noted | Fix round / final regression |
+
+## 5. Lane I2 receipt (`review/LI2/F/RECEIPT-LI2-F.md`), and my checks of it
+
+**Read in full.** I checked each fact I rely on:
+- **The band.** The receipt's account of when the room is given back (§2a) matches `decide()` line for line (§1). I opened the band frames at full size.
+- **F-T2-8.** The top-bar numbers equal the raw JSON (`topbar2/*.json`), and I opened the four frames at 200 %.
+- **The spec diff.** `git diff --stat 4d36939 e3b9eac` gives `notice-strip.spec.ts` +9 lines (§1d: +9 / −0).
+- **Ownership.** My diff stat shows 19 files, all F's.
+
+**The receipt's own limits** (its §7) are carried in §4 E-1. None of them bears on F-D1…F-D3.
