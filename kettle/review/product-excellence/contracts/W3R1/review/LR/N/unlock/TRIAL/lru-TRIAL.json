@@ -1,0 +1,120 @@
+{
+ "label": "TRIAL",
+ "base": "http://127.0.0.1:5534",
+ "clock": "2026-10-12T07:40:00Z",
+ "rm": true,
+ "tier": "default",
+ "startedAt": "2026-10-14T12:53:30.755Z",
+ "runs": [
+  {
+   "cfg": "390x844@2:light",
+   "name": "390x844-light",
+   "errors": [
+    "console warning: [.WebGL-0x1e2c0244c400]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "console warning: [.WebGL-0x1e2c0244c400]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+   ],
+   "states": {
+    "night": {
+     "time": "night",
+     "mode": "showcase",
+     "quality": "low",
+     "chaiKind": "procedural",
+     "highlight": "recordPlayer",
+     "buffer": [
+      189,
+      142
+     ],
+     "canvasRect": [
+      30,
+      509,
+      152,
+      114
+     ],
+     "fnv": "a4b1cf73",
+     "chaiPixelsInFrame": 0,
+     "chaiBox": null,
+     "chaiHeadNdc": [
+      -12.461,
+      -1.692
+     ],
+     "chaiRootVisible": true,
+     "furFill": null,
+     "camera": {
+      "pos": [
+       3.204,
+       1.609,
+       -0.578
+      ],
+      "zoom": 0.125
+     },
+     "host": [
+      [
+       "showcase",
+       "true"
+      ]
+     ]
+    },
+    "day": {
+     "time": "day",
+     "mode": "showcase",
+     "quality": "low",
+     "chaiKind": "procedural",
+     "highlight": "recordPlayer",
+     "buffer": [
+      189,
+      142
+     ],
+     "canvasRect": [
+      30,
+      509,
+      152,
+      114
+     ],
+     "fnv": "c954648b",
+     "chaiPixelsInFrame": 0,
+     "chaiBox": null,
+     "chaiHeadNdc": [
+      -12.461,
+      -1.692
+     ],
+     "chaiRootVisible": true,
+     "furFill": null,
+     "camera": {
+      "pos": [
+       3.204,
+       1.609,
+       -0.578
+      ],
+      "zoom": 0.125
+     },
+     "host": [
+      [
+       "showcase",
+       "true"
+      ]
+     ]
+    }
+   },
+   "early": {
+    "hash": "#/done",
+    "hosts": [
+     [
+      "window",
+      "true",
+      null
+     ],
+     [
+      "showcase",
+      "false",
+      null
+     ]
+    ]
+   },
+   "timing": {
+    "doneMs": 1254,
+    "mountedAfterDoneMs": 0,
+    "readyAfterDoneMs": 3936
+   }
+  }
+ ]
+}
