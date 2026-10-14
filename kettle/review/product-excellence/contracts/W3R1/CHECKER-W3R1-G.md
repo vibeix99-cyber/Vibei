@@ -1,20 +1,13 @@
 # CHECKER W3R1 · Maker G: Settings and shared controls (I11)
 
-**Verdict: REJECT** `pe/w3-settings@808421d` (app and spec `876bf18`; kettle/src `6b14238`), as gated in trial `3d91793`. There is one 90-minute fix round, text only and in G's files only (Vibei, `VB-DECISIONS-RESUME.md` §4). After it, the verdict is final.
+**Final verdict: APPROVE** `pe/w3-settings@7f95c18` (code `0320211`, kettle/src `a53263f`), as gated in fix trial `c8b849e` (integration + `7f95c18`). Final: the one fix round is spent. Any change to the branch after this invalidates it.
 
-**Defects** (§3; the fix-round packet is §6):
-- **G-D1:** the new Sounds line contradicts the Nudges line on an iOS Safari tab.
-- **G-D2:** the Sounds line is too long at 375×667 @200 % (12 → 17 lines).
-- **G-D3:** "A locked phone may hold the nudge until you’re back." is untrue. It predates G; Vibei ruled it into this round.
-- **G-D4:** "This device can’t vibrate." must read "Vibration isn’t available in this browser." It predates G; Vibei ruled it into this round.
+**History.**
+- **First review:** REJECT `808421d` (§1–§7), with four text defects G-D1…G-D4 (Vibei §4).
+- **Fix round (§8):** all four are closed. My own probe and spec runs on :5525 agree with the maker's packet.
+- **The optional Keep awake line is kept**, which closes G-R1.
 
-Everything else verifies (§2):
-- the shared-control states and tokens;
-- persistence and reset;
-- the warm-days wording;
-- the Nudges Off/default and Haptics (supported) lines. Keep awake carries a gap the base already had (G-R1, FOLLOW-UP).
-
-Nothing else blocks.
+**One cross-owner item stays open, and it is not G's:** C-1. F's `tests/whistle.spec.ts:203` must change to G's key sentence: `If Kettle is closed or your phone has paused it by then, no nudge comes.`
 
 | | |
 |---|---|
@@ -376,3 +369,53 @@ Method: a fresh context per config; frozen clock `2026-10-12T07:40Z`, then `resu
 - **The cost is small.** One extra line, at 375×667 @200 only (5 → 6; at every other config I ran it is the same). That is about 39 px in a page the fix makes about 117 px shorter at that size (packet check 9, the maker's DOM diff).
 - **Nothing else moves.** No control moves within its row, and nothing overlaps.
 - **It closes G-R1.**
+
+### ◆7 · The spec, rerun by me
+**Run 1:** `KETTLE_PORT=5525 npx playwright test tests/w3-settings.spec.ts tests/whistle.spec.ts --project=chromium --workers=1`, from the fix trial's worktree, through the slot gate (`runs/fix-5525-w3settings-whistle.log`):
+- **`w3-settings` 10/10 passed**, including the new iOS Safari tab test (`:318`).
+- **`whistle` 7/8.** The one failure is `whistle.spec.ts:203`, on the old sentence `/A locked phone may hold the nudge until you’re back/` (C-1, F's file, unmodified), exactly as expected. Every other whistle test passed, including `:208`, which asserts `:182` word for word.
+
+**Run 2, controls first:** the fix's spec against base :5478 (`runs/base-5478-w3settings.log`): **10/10 failed**.
+
+**Spec diff** (`git diff 808421d 7f95c18 -- kettle/tests`, read in full):
+- **Removed:** the two old copy regexes only.
+- **Added:**
+  - exact-text assertions for the new Sounds and On lines;
+  - a sweep of the whole Settings text for `/may hold|until you’re back|later/i`;
+  - the iOS Safari tab test (`:182` and Sounds visible together, no "in a tab", Nudges and Haptics switches disabled, the exact Haptics line).
+- **Unchanged:** every other assertion.
+
+It is stricter, not weaker. **PASS.**
+
+### Checks 6, 8, 9 (the maker's, read)
+- **6.** The packet's code citations match my reading (above).
+- **8.**
+  - tsc clean; vitest 290/290; `a11y` 11/11 and `w2-firstvisit` 6/6 on :5503 (`G/fix/suites-whistle-a11y-firstvisit.txt`).
+  - The packet's `w3-settings` ×2, 10/10 each, is consistent with my run.
+- **9.** The maker's DOM diff of Settings at 375×667 light @200 (`G/fix/layout-diff-375x667-light-200.json`) finds two changed elements:
+  - Sounds: −156 px;
+  - Keep awake: +1 line.
+
+  Everything else is identical in text and height. That agrees with my line counts.
+
+### Final residuals (rule: BLOCKS = introduced or worsened by this change; FOLLOW-UP = present on the base and not worse, or ruled so by Vibei; ACCEPTED = not a defect)
+
+| # | Item | Class |
+|---|---|---|
+| G-D1 | Sounds vs Nudges on an iOS Safari tab | **Closed** (◆2) |
+| G-D2 | Sounds length at 375×667 @200 | **Closed:** 10 lines, base 12 (◆3) |
+| G-D3 | The locked-phone sentence | **Closed:** the true condition is stated; the line is shorter (◆4) |
+| G-D4 | Haptics unsupported line | **Closed:** exact (◆5) |
+| G-R1 | Keep awake and a paused brew | **Closed** by the optional change (kept, ruling above) |
+| C-1 | F's `whistle.spec.ts:203` still asserts the old sentence. The key sentence for it: `If Kettle is closed or your phone has paused it by then, no nudge comes.` | **Cross-owner, open:** F's fix round, or the orchestrator at merge. I check it on the merged tree. It is not a G defect: G may not edit F's file |
+| C-2 | `docs/REAL_DEVICE_CHECKLIST.md` rows 2.3 and 8.5 | **FOLLOW-UP:** orchestrator at merge |
+| G-R2…G-R9, E-1 | As in §4 | Unchanged |
+
+No item is introduced or worsened by this change in a way that is a defect, so nothing BLOCKS. The narrow transient-artifact exception is not needed.
+
+**BEFORE / AFTER for the fix** (full size, `contracts/W3R1/review/LEAD/G/fix/shots/`):
+- Sounds at 375×667 @200: `{BASE,BEFORE,FIX}-375x667-{light,dark}-200-desk-granted-sounds.png`;
+- Nudges On: `{BASE,BEFORE,FIX}-375x667-{light,dark}-200-desk-granted-nudgesOn.png`;
+- iOS Safari tab: `{BASE,BEFORE,FIX}-390x844-light-100-phone-safari-{sounds,nudgesUnsupported,hapticsUnsupported}.png`.
+
+The maker's full set is `/home/user/wt/w5g/kettle/review/product-excellence/contracts/W3R1/G/fix/rows/`.
