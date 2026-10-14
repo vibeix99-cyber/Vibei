@@ -305,3 +305,74 @@ G's changes are copy plus CSS that takes no space and does not touch the save pa
 **Focus, forced colours** (Lane I): `BEFORE-base-4d36939/states-390x844-light-forced.png` → `AFTER-trial-3d91793/states-390x844-light-forced.png`.
 
 The fix round adds its own BEFORE / AFTER for the three changed lines (§6, checks 2–5).
+
+## 8. Fix round: `pe/w3-settings@7f95c18` (code `0320211`, kettle/src `a53263f`)
+
+| | |
+|---|---|
+| Fix trial | `c8b849e` = integration + `7f95c18`; worktree `/home/user/wt/w5tr-g2`; dev :5525 (all my fix runs), preview :5535 |
+| Revision check | `git rev-parse 7f95c18:kettle/src` = `0320211:kettle/src` = `c8b849e:kettle/src` = `a53263f6ebe2…` (checked) |
+| Timing | Handed back 17:49 UTC, inside the 17:05–18:35 window (`GATE.md`) |
+| Packet | `/home/user/wt/w5g/kettle/review/product-excellence/contracts/W3R1/G-FIX-READY.md`; evidence `…/W3R1/G/fix/` |
+| BEFORE | G trial `3d91793` on :5523. Base `4d36939` on :5478 |
+| My evidence | `contracts/W3R1/review/LEAD/G/fix/`:<br>• `lead-gfix.mjs` (my probe; it does not use the maker's tool);<br>• `shots/lead-gfix-{FIX,BEFORE,BASE}.json` and the row frames `shots/<BUILD>-<cfg>-<line>.png`;<br>• `runs/*.log` (specs) |
+
+### ◆1 · Scope (rerun)
+`git diff 808421d 7f95c18 -- kettle/src` changes only `SettingsScreen.tsx`: four string literals at `:134`, `:187`, `:233`, `:240` (read in full). `:182` is unchanged.
+
+`git diff 808421d c8b849e --stat -- kettle/` lists those two code files plus review evidence only. The tests diff changes only `tests/w3-settings.spec.ts`. There is no CSS change and nothing outside G's files. **PASS.**
+
+**The four lines now:**
+
+| # | Line | Now |
+|---|---|---|
+| G-D1 + G-D2 | `:134` Sounds | "The whistle, effects and ambience play after your first tap. A phone can quiet them when locked, on silent or out of sight." (123 characters; base 125, trial 189) |
+| G-D3 | `:187` Nudges On | "On. When a brew or tea break ends while Kettle is open but out of sight, I’ll nudge you. If Kettle is closed or your phone has paused it by then, no nudge comes." (161; trial 180) |
+| G-R1 (optional) | `:233` Keep awake | "Stops your screen dimming while a brew runs on screen." |
+| G-D4 | `:240` Haptics, unsupported | "Vibration isn’t available in this browser." (U+2019, exact) |
+
+**The copy is true to the code** (my reading, §3):
+- **Sounds.** No context exists before activation, hence "after your first tap". A frozen phone page runs nothing, so "a phone can quiet them when locked, on silent or out of sight". No background-play promise is made, and the line agrees with `:182` and F's Welcome.
+- **Nudges On.** A frozen page completes on wake, when it is visible again, so no nudge comes. There is no push, so a closed Kettle sends none either. Nothing is promised later.
+- **Haptics.** The line names the API, not the device.
+- **Keep awake.** `wakeLock.ts:19–20` holds the lock only while the timer is `running` and the page is visible, so "runs" is now true for a paused brew.
+
+### ◆2–◆5 · My probe on three builds
+Method: a fresh context per config; frozen clock `2026-10-12T07:40Z`, then `resume()`; seed `veteran`; sound on.
+- **"granted"** = `Notification.permission` faked as `whistle.spec`'s `fakePermission` does, with Nudges on.
+- **"Safari"** = `window.Notification` and `Navigator.prototype.vibrate` removed.
+- **Lines** = distinct line boxes of the text node; height ÷ line-height agrees in every cell.
+- **desk** = `isMobile: false` (the context Lane I's 12/17 came from). **phone** = `isMobile` + touch.
+
+| Config | Sounds: base / BEFORE / **fix** | Nudges On: base / BEFORE / **fix** | Keep awake: base / BEFORE / **fix** |
+|---|---|---|---|
+| 375×667 light @200, desk | 12 / 17 / **10** | 9 / 16 / **14** | 5 / 5 / **6** |
+| 375×667 dark @200, desk | 12 / 17 / **10** | 9 / 16 / **14** | 5 / 5 / **6** |
+| 375×667 light @200, phone | 11 / 14 / **10** | 8 / 15 / **13** | 4 / 5 / **6** |
+| 375×667 dark @200, phone | 11 / 14 / **10** | 8 / 15 / **13** | 4 / 5 / **6** |
+| 390×844 light @100, phone | 5 / 7 / **5** | 4 / 7 / **6** | 2 / 2 / **2** |
+| 1440×900 light @100, desk | 2 / 3 / **2** | 2 / 3 / **3** | 1 / 1 / **1** |
+
+**◆2 · iOS Safari tab, 390×844 light @100 (fix)**, frames `shots/FIX-390x844-light-100-phone-safari-*.png`:
+- The Nudges row shows `:182` ("…chimes while it’s on screen."), with its switch disabled.
+- The Sounds line shows beside it, with no "in a tab" anywhere on Settings.
+- **BEFORE:** the same state shows "in a tab". **PASS.**
+
+**◆3 · Length.**
+- **375×667 @200, light and dark: 10 lines** in both contexts. That is ≤ 12, and below base (12 desk / 11 phone).
+- Every config I ran is ≤ BEFORE and ≤ base.
+- My numbers equal the maker's table in every cell I ran.
+- Frames: `shots/{BASE,BEFORE,FIX}-375x667-{light,dark}-200-desk-granted-sounds.png`; I opened them at full size. **PASS.**
+
+**◆4 · Nudges On.**
+- On screen in every granted config: 14 lines vs 16 (desk) and 13 vs 15 (phone) at 375×667 @200.
+- "may hold" and "until you’re back" appear nowhere on Settings; my sweep is of `main.innerText`. BEFORE and base have both phrases.
+- Frame: `shots/FIX-375x667-dark-200-desk-granted-nudgesOn.png` (opened). **PASS.**
+
+**◆5 · Haptics.** With `vibrate` removed, the line reads exactly "Vibration isn’t available in this browser." and the switch is disabled. BEFORE and base read "This device can’t vibrate." Frame: `shots/FIX-390x844-light-100-phone-safari-hapticsUnsupported.png`. **PASS.**
+
+### The optional Keep awake change (G-R1): my ruling, **keep it**
+- **It makes the line true.** A paused brew releases the lock, and "runs" now says so.
+- **The cost is small.** One extra line, at 375×667 @200 only (5 → 6; at every other config I ran it is the same). That is about 39 px in a page the fix makes about 117 px shorter at that size (packet check 9, the maker's DOM diff).
+- **Nothing else moves.** No control moves within its row, and nothing overlaps.
+- **It closes G-R1.**
