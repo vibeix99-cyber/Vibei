@@ -315,3 +315,23 @@ Busy at time-up: mouse moves every 150 ms. Then 1440: 12 wheel steps of 60 px; p
 **Not covered:** full-motion smooth scrolling while the strip leaves above the view. At 1440 @100 the page cannot scroll far enough. This is the case the maker reports as undoing the compensation (60 px).
 
 **§2e** (a real CDP finger drag on phones: band after a touch scroll; the above path on phones) follows when the job finishes.
+
+### 2f. Control: the same probe on BASE :5478
+
+17:11–17:19 UTC; `idle/base/idle-base.json`, `idle/idle-base.log`, frames `idle/base/*`.
+
+| Step | 390×844 light 100 | 390×844 dark 200 rm | 1440 light 100 | 1440 dark 200 rm |
+|---|---|---|---|---|
+| Arrival at rest: push | +68 | +153.5 | +68 | +113 |
+| Leave at rest: content moved | **−68** (the strip closes) | **−153.5** | **−68** | **−113** |
+| After 45 s idle / after scroll | no band (strip 0), target back at its pre-notice top | same | same | same |
+
+On the "above" path (§2d) the base behaves like the trial at 1440 light 200 reduced:
+- `why: above`, 39 / 61 ms after a wheel event;
+- visible move 0 in that frame, scroll −113.
+
+Where the notice leaves at rest after input, the base moves content:
+- **1440 dark 100:** at 1,343–1,346 ms after the last wheel, the target moves −57 px visible (−68 layout, −11 scroll clamp);
+- **390×844 light 200:** at 1,280–1,311 ms after the last `touchend`, **−153.5 px**.
+
+The trial in the same steps: 0 px, room kept.
