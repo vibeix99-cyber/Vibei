@@ -71,3 +71,27 @@ Lane R's pairs over 0.5 % fall into four groups:
 - **In F's fix verdict:**
   - **X-3:** `w3-notices` ×2;
   - **X-8:** the "Paused" pill at 375×667.
+
+## 5. X-2 verdict: **APPROVE** `pe/w3r1-x2-segment-test@7bb8540` (test change `9fb1aca`)
+
+| | |
+|---|---|
+| Trial | `7145f49` = integration `8251a74` (N + G + S) + `7bb8540`; worktree `/home/user/wt/w5tr-x2`; dev :5527 |
+| Note | `/home/user/wt/w5g-x2/kettle/review/product-excellence/contracts/W3R1/G-X2-READY.md`; logs in `…/W3R1/G/x2/` |
+| My run | `contracts/W3R1/review/LEAD/X2/x2-repeat8-5527.log` |
+
+**Scope.** `git diff --stat 4223062 7bb8540 -- kettle/src kettle/tests` lists `tests/w3-settings.spec.ts` only (+6 / −2), in the one test "a pressed segment reads as pressed…". No source change.
+
+**Not weakened** (diff read in full):
+- **The two fixed waits become polls on real state.**
+  - Before reading hover, it now waits until `.inner` has no running animation (`getAnimations().length === 0`, 5 s) instead of 250 ms.
+  - While the button is still held, it now waits until `.inner` has settled **and** its colour differs from hover (5 s) instead of 120 ms.
+- **Every assertion stays.** `expect(pressed).not.toBe(hover)`, `expect(pressed).not.toBe(selectedThumb)` and the release-away check (`System` still checked) are unchanged.
+- **A missing state still fails.** A pressed state that never appears makes the poll fail (the maker's base control fails exactly so), and so does a state that never settles.
+- **The wait matches the mechanism.** It removes the mechanism found in §2 (a read 120 ms into a 150 ms transition on a loaded main thread) without changing what is tested.
+
+**My run.** `KETTLE_PORT=5527 npx playwright test tests/w3-settings.spec.ts -g 'a pressed segment reads as pressed' --repeat-each=8 --workers=1`, through the slot gate, with F's two jobs holding the other slots (load average 5.5 / 7.3 / 8.3): **8/8 passed** (54.5 s). Before the change: 4/8 on combined and 4/8 on G's trial (Lane R).
+
+The maker's results: 8/8 at `--workers=2`, 8/8 at `--workers=1`, the whole `w3-settings` 10/10, and base failing by design.
+
+**X-2 is closed.** The final regression counts this test normally.
