@@ -6,5 +6,1548 @@
  "text": 100,
  "init": "day",
  "startedAt": "2026-10-14T13:05:01.832Z",
- "runs": []
+ "runs": [
+  {
+   "cfg": "390x844@2:light:low",
+   "name": "390x844-light-low",
+   "theme": "light",
+   "tier": "low",
+   "dpr": 2,
+   "init": "day",
+   "errors": [
+    "console warning: [.WebGL-0x3eac0010ba00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "console warning: [.WebGL-0x3eac0010ba00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "console warning: [.WebGL-0x3eac0010ba00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "console warning: [.WebGL-0x3eac0010ba00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+   ],
+   "notes": [],
+   "frames": {
+    "nook-day": {
+     "buffer": [
+      442,
+      395
+     ],
+     "fnv": "559f00b3",
+     "restoreDiffBytes": 0,
+     "fillNow": 0.16,
+     "eyeMeshCount": 1,
+     "noseMeshCount": 1,
+     "nonFurCount": 10,
+     "masks": {
+      "eyePx": 15,
+      "nosePx": 33,
+      "nonFurPx": 110,
+      "chaiPx": 1226,
+      "furPx": 818
+     },
+     "featBox": {
+      "x0": 155,
+      "x1": 170,
+      "y0": 215,
+      "y1": 224
+     },
+     "chaiBox": {
+      "x0": 144,
+      "x1": 182,
+      "y0": 198,
+      "y1": 253
+     },
+     "headNdc": [
+      -0.264,
+      -0.125
+     ],
+     "eyes": {
+      "areaPx": 15,
+      "diamPx": 3.1,
+      "components": [
+       8,
+       7
+      ],
+      "feature": {
+       "n": 0
+      },
+      "ringHalf": {
+       "rad": 2,
+       "n": 0,
+       "CR": null,
+       "CRmean": null,
+       "dL": null
+      },
+      "ringFull": {
+       "rad": 3,
+       "n": 37,
+       "Ymed": 0.19188,
+       "Ymean": 0.20057,
+       "Lmed": 50.91,
+       "Lp25": 49.13,
+       "Lp75": 53.69,
+       "meanHex": "#ad6c32",
+       "CR": null,
+       "CRmean": null,
+       "dL": null
+      }
+     },
+     "nose": {
+      "areaPx": 33,
+      "diamPx": 6.5,
+      "components": [
+       33
+      ],
+      "feature": {
+       "n": 13,
+       "Ymed": 0.00824,
+       "Ymean": 0.01978,
+       "Lmed": 7.44,
+       "Lp25": 7,
+       "Lp75": 8.55,
+       "meanHex": "#321b0c"
+      },
+      "ringHalf": {
+       "rad": 3,
+       "n": 32,
+       "Ymed": 0.14218,
+       "Ymean": 0.15633,
+       "Lmed": 44.54,
+       "Lp25": 44.16,
+       "Lp75": 50.28,
+       "meanHex": "#a05e24",
+       "CR": 3.3,
+       "CRmean": 2.957,
+       "dL": 37.1
+      },
+      "ringFull": {
+       "rad": 6,
+       "n": 130,
+       "Ymed": 0.14119,
+       "Ymean": 0.15527,
+       "Lmed": 44.4,
+       "Lp25": 44.16,
+       "Lp75": 50.28,
+       "meanHex": "#9f5e24",
+       "CR": 3.283,
+       "CRmean": 2.942,
+       "dL": 36.96
+      }
+     },
+     "cropBox": {
+      "x": 115,
+      "y": 172,
+      "w": 96,
+      "h": 96,
+      "half": 48
+     },
+     "timeApplied": "day"
+    },
+    "nook-dusk": {
+     "buffer": [
+      442,
+      395
+     ],
+     "fnv": "73204900",
+     "restoreDiffBytes": 0,
+     "fillNow": 0.16,
+     "eyeMeshCount": 1,
+     "noseMeshCount": 1,
+     "nonFurCount": 10,
+     "masks": {
+      "eyePx": 12,
+      "nosePx": 28,
+      "nonFurPx": 108,
+      "chaiPx": 1230,
+      "furPx": 842
+     },
+     "featBox": {
+      "x0": 155,
+      "x1": 170,
+      "y0": 216,
+      "y1": 224
+     },
+     "chaiBox": {
+      "x0": 144,
+      "x1": 182,
+      "y0": 198,
+      "y1": 253
+     },
+     "headNdc": [
+      -0.264,
+      -0.125
+     ],
+     "eyes": {
+      "areaPx": 12,
+      "diamPx": 2.8,
+      "components": [
+       6,
+       6
+      ],
+      "feature": {
+       "n": 0
+      },
+      "ringHalf": {
+       "rad": 2,
+       "n": 0,
+       "CR": null,
+       "CRmean": null,
+       "dL": null
+      },
+      "ringFull": {
+       "rad": 3,
+       "n": 36,
+       "Ymed": 0.06372,
+       "Ymean": 0.06483,
+       "Lmed": 30.33,
+       "Lp25": 29.35,
+       "Lp75": 31.49,
+       "meanHex": "#713817",
+       "CR": null,
+       "CRmean": null,
+       "dL": null
+      }
+     },
+     "nose": {
+      "areaPx": 28,
+      "diamPx": 6,
+      "components": [
+       28
+      ],
+      "feature": {
+       "n": 11,
+       "Ymed": 0.00124,
+       "Ymean": 0.00441,
+       "Lmed": 1.12,
+       "Lp25": 0.86,
+       "Lp75": 1.14,
+       "meanHex": "#160507"
+      },
+      "ringHalf": {
+       "rad": 3,
+       "n": 29,
+       "Ymed": 0.04855,
+       "Ymean": 0.05296,
+       "Lmed": 26.32,
+       "Lp25": 26.31,
+       "Lp75": 29.92,
+       "meanHex": "#673310",
+       "CR": 1.923,
+       "CRmean": 1.892,
+       "dL": 25.2
+      },
+      "ringFull": {
+       "rad": 6,
+       "n": 122,
+       "Ymed": 0.04855,
+       "Ymean": 0.05287,
+       "Lmed": 26.32,
+       "Lp25": 26.31,
+       "Lp75": 29.92,
+       "meanHex": "#673210",
+       "CR": 1.923,
+       "CRmean": 1.891,
+       "dL": 25.2
+      }
+     },
+     "cropBox": {
+      "x": 115,
+      "y": 173,
+      "w": 96,
+      "h": 96,
+      "half": 48
+     },
+     "timeApplied": "dusk"
+    },
+    "nook-night": {
+     "buffer": [
+      442,
+      395
+     ],
+     "fnv": "570fd0b4",
+     "restoreDiffBytes": 0,
+     "fillNow": 0.16,
+     "eyeMeshCount": 1,
+     "noseMeshCount": 1,
+     "nonFurCount": 10,
+     "masks": {
+      "eyePx": 10,
+      "nosePx": 28,
+      "nonFurPx": 106,
+      "chaiPx": 1224,
+      "furPx": 849
+     },
+     "featBox": {
+      "x0": 155,
+      "x1": 170,
+      "y0": 216,
+      "y1": 224
+     },
+     "chaiBox": {
+      "x0": 144,
+      "x1": 182,
+      "y0": 198,
+      "y1": 252
+     },
+     "headNdc": [
+      -0.264,
+      -0.125
+     ],
+     "eyes": {
+      "areaPx": 10,
+      "diamPx": 2.5,
+      "components": [
+       5,
+       5
+      ],
+      "feature": {
+       "n": 0
+      },
+      "ringHalf": {
+       "rad": 2,
+       "n": 0,
+       "CR": null,
+       "CRmean": null,
+       "dL": null
+      },
+      "ringFull": {
+       "rad": 3,
+       "n": 34,
+       "Ymed": 0.05131,
+       "Ymean": 0.05131,
+       "Lmed": 27.11,
+       "Lp25": 26.93,
+       "Lp75": 27.71,
+       "meanHex": "#643315",
+       "CR": null,
+       "CRmean": null,
+       "dL": null
+      }
+     },
+     "nose": {
+      "areaPx": 28,
+      "diamPx": 6,
+      "components": [
+       28
+      ],
+      "feature": {
+       "n": 11,
+       "Ymed": 0.00078,
+       "Ymean": 0.00345,
+       "Lmed": 0.7,
+       "Lp25": 0.56,
+       "Lp75": 0.7,
+       "meanHex": "#100408"
+      },
+      "ringHalf": {
+       "rad": 3,
+       "n": 29,
+       "Ymed": 0.04052,
+       "Ymean": 0.04355,
+       "Lmed": 23.84,
+       "Lp25": 23.67,
+       "Lp75": 26.93,
+       "meanHex": "#5d2e0e",
+       "CR": 1.783,
+       "CRmean": 1.75,
+       "dL": 23.14
+      },
+      "ringFull": {
+       "rad": 6,
+       "n": 126,
+       "Ymed": 0.0405,
+       "Ymean": 0.04339,
+       "Lmed": 23.83,
+       "Lp25": 23.67,
+       "Lp75": 26.93,
+       "meanHex": "#5d2e0e",
+       "CR": 1.782,
+       "CRmean": 1.747,
+       "dL": 23.13
+      }
+     },
+     "cropBox": {
+      "x": 115,
+      "y": 173,
+      "w": 96,
+      "h": 96,
+      "half": 48
+     },
+     "timeApplied": "night"
+    },
+    "close-day": {
+     "buffer": [
+      442,
+      395
+     ],
+     "fnv": "ed09b85c",
+     "restoreDiffBytes": 0,
+     "fillNow": 0.16,
+     "eyeMeshCount": 1,
+     "noseMeshCount": 1,
+     "nonFurCount": 10,
+     "masks": {
+      "eyePx": 294,
+      "nosePx": 729,
+      "nonFurPx": 2502,
+      "chaiPx": 26969,
+      "furPx": 22868
+     },
+     "featBox": {
+      "x0": 185,
+      "x1": 267,
+      "y0": 165,
+      "y1": 212
+     },
+     "chaiBox": {
+      "x0": 132,
+      "x1": 310,
+      "y0": 82,
+      "y1": 354
+     },
+     "headNdc": [
+      0,
+      -0.015
+     ],
+     "eyes": {
+      "areaPx": 294,
+      "diamPx": 13.7,
+      "components": [
+       149,
+       145
+      ],
+      "feature": {
+       "n": 219,
+       "Ymed": 0.00393,
+       "Ymean": 0.04253,
+       "Lmed": 3.55,
+       "Lp25": 3.44,
+       "Lp75": 3.57,
+       "meanHex": "#2a1811"
+      },
+      "ringHalf": {
+       "rad": 7,
+       "n": 564,
+       "Ymed": 0.19516,
+       "Ymean": 0.20358,
+       "Lmed": 51.29,
+       "Lp25": 50.66,
+       "Lp75": 52.68,
+       "meanHex": "#af6d34",
+       "CR": 4.546,
+       "CRmean": 2.741,
+       "dL": 47.74
+      },
+      "ringFull": {
+       "rad": 14,
+       "n": 1675,
+       "Ymed": 0.19516,
+       "Ymean": 0.20423,
+       "Lmed": 51.29,
+       "Lp25": 50.52,
+       "Lp75": 53.07,
+       "meanHex": "#af6d34",
+       "CR": 4.546,
+       "CRmean": 2.748,
+       "dL": 47.74
+      }
+     },
+     "nose": {
+      "areaPx": 729,
+      "diamPx": 30.5,
+      "components": [
+       729
+      ],
+      "feature": {
+       "n": 628,
+       "Ymed": 0.00775,
+       "Ymean": 0.03315,
+       "Lmed": 7,
+       "Lp25": 6.56,
+       "Lp75": 8.39,
+       "meanHex": "#31190a"
+      },
+      "ringHalf": {
+       "rad": 15,
+       "n": 1781,
+       "Ymed": 0.14218,
+       "Ymean": 0.14752,
+       "Lmed": 44.54,
+       "Lp25": 44.4,
+       "Lp75": 44.79,
+       "meanHex": "#9b5a22",
+       "CR": 3.328,
+       "CRmean": 2.375,
+       "dL": 37.54
+      },
+      "ringFull": {
+       "rad": 30,
+       "n": 4643,
+       "Ymed": 0.14218,
+       "Ymean": 0.15464,
+       "Lmed": 44.54,
+       "Lp25": 44.16,
+       "Lp75": 50.27,
+       "meanHex": "#9e5d24",
+       "CR": 3.328,
+       "CRmean": 2.461,
+       "dL": 37.54
+      }
+     },
+     "cropBox": {
+      "x": 70,
+      "y": 33,
+      "w": 312,
+      "h": 312,
+      "half": 156
+     },
+     "timeApplied": "day"
+    },
+    "close-dusk": {
+     "buffer": [
+      442,
+      395
+     ],
+     "fnv": "36d67a10",
+     "restoreDiffBytes": 0,
+     "fillNow": 0.16,
+     "eyeMeshCount": 1,
+     "noseMeshCount": 1,
+     "nonFurCount": 10,
+     "masks": {
+      "eyePx": 286,
+      "nosePx": 705,
+      "nonFurPx": 2175,
+      "chaiPx": 26918,
+      "furPx": 22954
+     },
+     "featBox": {
+      "x0": 185,
+      "x1": 267,
+      "y0": 165,
+      "y1": 212
+     },
+     "chaiBox": {
+      "x0": 132,
+      "x1": 310,
+      "y0": 83,
+      "y1": 354
+     },
+     "headNdc": [
+      0,
+      -0.015
+     ],
+     "eyes": {
+      "areaPx": 286,
+      "diamPx": 13.5,
+      "components": [
+       145,
+       141
+      ],
+      "feature": {
+       "n": 213,
+       "Ymed": 0.00054,
+       "Ymean": 0.00801,
+       "Lmed": 0.49,
+       "Lp25": 0.43,
+       "Lp75": 0.56,
+       "meanHex": "#11070c"
+      },
+      "ringHalf": {
+       "rad": 7,
+       "n": 565,
+       "Ymed": 0.06441,
+       "Ymean": 0.06673,
+       "Lmed": 30.5,
+       "Lp25": 30.08,
+       "Lp75": 31.08,
+       "meanHex": "#723a19",
+       "CR": 2.264,
+       "CRmean": 2.012,
+       "dL": 30.01
+      },
+      "ringFull": {
+       "rad": 13,
+       "n": 1504,
+       "Ymed": 0.06441,
+       "Ymean": 0.06702,
+       "Lmed": 30.5,
+       "Lp25": 30.08,
+       "Lp75": 31.49,
+       "meanHex": "#733a18",
+       "CR": 2.264,
+       "CRmean": 2.017,
+       "dL": 30.01
+      }
+     },
+     "nose": {
+      "areaPx": 705,
+      "diamPx": 30,
+      "components": [
+       705
+      ],
+      "feature": {
+       "n": 605,
+       "Ymed": 0.00106,
+       "Ymean": 0.00695,
+       "Lmed": 0.96,
+       "Lp25": 0.79,
+       "Lp75": 1.29,
+       "meanHex": "#160507"
+      },
+      "ringHalf": {
+       "rad": 15,
+       "n": 1768,
+       "Ymed": 0.04855,
+       "Ymean": 0.05017,
+       "Lmed": 26.32,
+       "Lp25": 26.31,
+       "Lp75": 26.32,
+       "meanHex": "#64310f",
+       "CR": 1.93,
+       "CRmean": 1.759,
+       "dL": 25.36
+      },
+      "ringFull": {
+       "rad": 30,
+       "n": 4624,
+       "Ymed": 0.04855,
+       "Ymean": 0.05239,
+       "Lmed": 26.32,
+       "Lp25": 26.31,
+       "Lp75": 29.91,
+       "meanHex": "#673210",
+       "CR": 1.93,
+       "CRmean": 1.798,
+       "dL": 25.36
+      }
+     },
+     "cropBox": {
+      "x": 70,
+      "y": 33,
+      "w": 312,
+      "h": 312,
+      "half": 156
+     },
+     "timeApplied": "dusk"
+    },
+    "close-night": {
+     "buffer": [
+      442,
+      395
+     ],
+     "fnv": "6f8bfc43",
+     "restoreDiffBytes": 0,
+     "fillNow": 0.16,
+     "eyeMeshCount": 1,
+     "noseMeshCount": 1,
+     "nonFurCount": 10,
+     "masks": {
+      "eyePx": 272,
+      "nosePx": 705,
+      "nonFurPx": 1946,
+      "chaiPx": 26818,
+      "furPx": 22988
+     },
+     "featBox": {
+      "x0": 185,
+      "x1": 266,
+      "y0": 165,
+      "y1": 212
+     },
+     "chaiBox": {
+      "x0": 132,
+      "x1": 310,
+      "y0": 83,
+      "y1": 353
+     },
+     "headNdc": [
+      0,
+      -0.015
+     ],
+     "eyes": {
+      "areaPx": 272,
+      "diamPx": 13.2,
+      "components": [
+       140,
+       132
+      ],
+      "feature": {
+       "n": 201,
+       "Ymed": 0.00037,
+       "Ymean": 0.0053,
+       "Lmed": 0.33,
+       "Lp25": 0.31,
+       "Lp75": 0.39,
+       "meanHex": "#0d060c"
+      },
+      "ringHalf": {
+       "rad": 7,
+       "n": 555,
+       "Ymed": 0.05131,
+       "Ymean": 0.05248,
+       "Lmed": 27.11,
+       "Lp25": 27.09,
+       "Lp75": 27.53,
+       "meanHex": "#653416",
+       "CR": 2.011,
+       "CRmean": 1.853,
+       "dL": 26.78
+      },
+      "ringFull": {
+       "rad": 13,
+       "n": 1483,
+       "Ymed": 0.05131,
+       "Ymean": 0.05228,
+       "Lmed": 27.11,
+       "Lp25": 26.94,
+       "Lp75": 27.7,
+       "meanHex": "#643416",
+       "CR": 2.011,
+       "CRmean": 1.85,
+       "dL": 26.78
+      }
+     },
+     "nose": {
+      "areaPx": 705,
+      "diamPx": 30,
+      "components": [
+       705
+      ],
+      "feature": {
+       "n": 605,
+       "Ymed": 0.00069,
+       "Ymean": 0.00461,
+       "Lmed": 0.62,
+       "Lp25": 0.54,
+       "Lp75": 0.77,
+       "meanHex": "#0f0408"
+      },
+      "ringHalf": {
+       "rad": 15,
+       "n": 1768,
+       "Ymed": 0.0405,
+       "Ymean": 0.04146,
+       "Lmed": 23.83,
+       "Lp25": 23.67,
+       "Lp75": 23.84,
+       "meanHex": "#5b2c0d",
+       "CR": 1.785,
+       "CRmean": 1.675,
+       "dL": 23.21
+      },
+      "ringFull": {
+       "rad": 30,
+       "n": 4629,
+       "Ymed": 0.0405,
+       "Ymean": 0.04305,
+       "Lmed": 23.83,
+       "Lp25": 23.67,
+       "Lp75": 26.93,
+       "meanHex": "#5c2e0e",
+       "CR": 1.785,
+       "CRmean": 1.704,
+       "dL": 23.21
+      }
+     },
+     "cropBox": {
+      "x": 72,
+      "y": 35,
+      "w": 308,
+      "h": 308,
+      "half": 154
+     },
+     "timeApplied": "night"
+    }
+   },
+   "url": "http://127.0.0.1:5488/?debug&seed=veteran&theme=light&nookq=low&nooktime=day&nookweather=clear#/nook",
+   "readyMs": 4563,
+   "prep": {
+    "quality": "low",
+    "chaiKind": "model",
+    "exposure": 1,
+    "time": "night",
+    "dim": 1
+   },
+   "chaiMeshes": [
+    "body/mesh_0:chai_fur:MeshStandardMaterial:v",
+    "body/mesh_0_1::MeshLambertMaterial:v",
+    "chai/eyes_happy::MeshLambertMaterial:-",
+    "chai/eyes_open::MeshLambertMaterial:v:eye",
+    "chai/eyes_sip::MeshLambertMaterial:-",
+    "chai/eyes_sleep::MeshLambertMaterial:-",
+    "paws_mug/mesh_5:chai_fur:MeshStandardMaterial:v",
+    "paws_mug/mesh_5_1::MeshLambertMaterial:v",
+    "chai/yuzu::MeshLambertMaterial:v",
+    "chai/::MeshBasicMaterial:v",
+    "chai/::ShaderMaterial:-",
+    "chai/::MeshBasicMaterial:v"
+   ],
+   "elapsedMs": 29762
+  },
+  {
+   "cfg": "390x844@2:dark:low",
+   "name": "390x844-dark-low",
+   "theme": "dark",
+   "tier": "low",
+   "dpr": 2,
+   "init": "day",
+   "errors": [],
+   "notes": [],
+   "frames": {
+    "nook-day": {
+     "buffer": [
+      442,
+      395
+     ],
+     "fnv": "a4fcf9e",
+     "restoreDiffBytes": 0,
+     "fillNow": 0.16,
+     "eyeMeshCount": 1,
+     "noseMeshCount": 1,
+     "nonFurCount": 10,
+     "masks": {
+      "eyePx": 15,
+      "nosePx": 33,
+      "nonFurPx": 111,
+      "chaiPx": 1228,
+      "furPx": 818
+     },
+     "featBox": {
+      "x0": 155,
+      "x1": 170,
+      "y0": 215,
+      "y1": 224
+     },
+     "chaiBox": {
+      "x0": 144,
+      "x1": 182,
+      "y0": 198,
+      "y1": 253
+     },
+     "headNdc": [
+      -0.264,
+      -0.125
+     ],
+     "eyes": {
+      "areaPx": 15,
+      "diamPx": 3.1,
+      "components": [
+       8,
+       7
+      ],
+      "feature": {
+       "n": 0
+      },
+      "ringHalf": {
+       "rad": 2,
+       "n": 0,
+       "CR": null,
+       "CRmean": null,
+       "dL": null
+      },
+      "ringFull": {
+       "rad": 3,
+       "n": 37,
+       "Ymed": 0.16087,
+       "Ymean": 0.16874,
+       "Lmed": 47.09,
+       "Lp25": 45.54,
+       "Lp75": 49.65,
+       "meanHex": "#a1632a",
+       "CR": null,
+       "CRmean": null,
+       "dL": null
+      }
+     },
+     "nose": {
+      "areaPx": 33,
+      "diamPx": 6.5,
+      "components": [
+       33
+      ],
+      "feature": {
+       "n": 13,
+       "Ymed": 0.0071,
+       "Ymean": 0.01775,
+       "Lmed": 6.41,
+       "Lp25": 5.85,
+       "Lp75": 7.26,
+       "meanHex": "#2f180c"
+      },
+      "ringHalf": {
+       "rad": 3,
+       "n": 32,
+       "Ymed": 0.12043,
+       "Ymean": 0.13203,
+       "Lmed": 41.28,
+       "Lp25": 40.89,
+       "Lp75": 46.7,
+       "meanHex": "#94561f",
+       "CR": 2.985,
+       "CRmean": 2.687,
+       "dL": 34.87
+      },
+      "ringFull": {
+       "rad": 6,
+       "n": 130,
+       "Ymed": 0.12038,
+       "Ymean": 0.13106,
+       "Lmed": 41.28,
+       "Lp25": 40.89,
+       "Lp75": 46.7,
+       "meanHex": "#94561e",
+       "CR": 2.984,
+       "CRmean": 2.672,
+       "dL": 34.87
+      }
+     },
+     "cropBox": {
+      "x": 115,
+      "y": 172,
+      "w": 96,
+      "h": 96,
+      "half": 48
+     },
+     "timeApplied": "day"
+    },
+    "nook-dusk": {
+     "buffer": [
+      442,
+      395
+     ],
+     "fnv": "f0f296cc",
+     "restoreDiffBytes": 0,
+     "fillNow": 0.16,
+     "eyeMeshCount": 1,
+     "noseMeshCount": 1,
+     "nonFurCount": 10,
+     "masks": {
+      "eyePx": 10,
+      "nosePx": 27,
+      "nonFurPx": 105,
+      "chaiPx": 1224,
+      "furPx": 849
+     },
+     "featBox": {
+      "x0": 155,
+      "x1": 170,
+      "y0": 216,
+      "y1": 224
+     },
+     "chaiBox": {
+      "x0": 144,
+      "x1": 182,
+      "y0": 198,
+      "y1": 253
+     },
+     "headNdc": [
+      -0.264,
+      -0.125
+     ],
+     "eyes": {
+      "areaPx": 10,
+      "diamPx": 2.5,
+      "components": [
+       5,
+       5
+      ],
+      "feature": {
+       "n": 0
+      },
+      "ringHalf": {
+       "rad": 2,
+       "n": 0,
+       "CR": null,
+       "CRmean": null,
+       "dL": null
+      },
+      "ringFull": {
+       "rad": 3,
+       "n": 34,
+       "Ymed": 0.0545,
+       "Ymean": 0.0555,
+       "Lmed": 27.98,
+       "Lp25": 27.4,
+       "Lp75": 28.74,
+       "meanHex": "#6a3413",
+       "CR": null,
+       "CRmean": null,
+       "dL": null
+      }
+     },
+     "nose": {
+      "areaPx": 27,
+      "diamPx": 5.9,
+      "components": [
+       27
+      ],
+      "feature": {
+       "n": 10,
+       "Ymed": 0.00106,
+       "Ymean": 0.00413,
+       "Lmed": 0.96,
+       "Lp25": 0.79,
+       "Lp75": 0.96,
+       "meanHex": "#140507"
+      },
+      "ringHalf": {
+       "rad": 3,
+       "n": 29,
+       "Ymed": 0.04153,
+       "Ymean": 0.04493,
+       "Lmed": 24.17,
+       "Lp25": 24.16,
+       "Lp75": 27.4,
+       "meanHex": "#602e0d",
+       "CR": 1.793,
+       "CRmean": 1.754,
+       "dL": 23.21
+      },
+      "ringFull": {
+       "rad": 6,
+       "n": 126,
+       "Ymed": 0.0415,
+       "Ymean": 0.04489,
+       "Lmed": 24.16,
+       "Lp25": 24.16,
+       "Lp75": 27.4,
+       "meanHex": "#602e0d",
+       "CR": 1.792,
+       "CRmean": 1.753,
+       "dL": 23.2
+      }
+     },
+     "cropBox": {
+      "x": 115,
+      "y": 173,
+      "w": 96,
+      "h": 96,
+      "half": 48
+     },
+     "timeApplied": "dusk"
+    },
+    "nook-night": {
+     "buffer": [
+      442,
+      395
+     ],
+     "fnv": "eba4af76",
+     "restoreDiffBytes": 0,
+     "fillNow": 0.16,
+     "eyeMeshCount": 1,
+     "noseMeshCount": 1,
+     "nonFurCount": 10,
+     "masks": {
+      "eyePx": 10,
+      "nosePx": 26,
+      "nonFurPx": 105,
+      "chaiPx": 1219,
+      "furPx": 850
+     },
+     "featBox": {
+      "x0": 155,
+      "x1": 170,
+      "y0": 216,
+      "y1": 224
+     },
+     "chaiBox": {
+      "x0": 144,
+      "x1": 182,
+      "y0": 198,
+      "y1": 252
+     },
+     "headNdc": [
+      -0.264,
+      -0.125
+     ],
+     "eyes": {
+      "areaPx": 10,
+      "diamPx": 2.5,
+      "components": [
+       5,
+       5
+      ],
+      "feature": {
+       "n": 0
+      },
+      "ringHalf": {
+       "rad": 2,
+       "n": 0,
+       "CR": null,
+       "CRmean": null,
+       "dL": null
+      },
+      "ringFull": {
+       "rad": 3,
+       "n": 34,
+       "Ymed": 0.04401,
+       "Ymean": 0.04313,
+       "Lmed": 24.95,
+       "Lp25": 24.53,
+       "Lp75": 25.31,
+       "meanHex": "#5c2e11",
+       "CR": null,
+       "CRmean": null,
+       "dL": null
+      }
+     },
+     "nose": {
+      "areaPx": 26,
+      "diamPx": 5.8,
+      "components": [
+       26
+      ],
+      "feature": {
+       "n": 9,
+       "Ymed": 0.00056,
+       "Ymean": 0.0035,
+       "Lmed": 0.51,
+       "Lp25": 0.51,
+       "Lp75": 0.58,
+       "meanHex": "#0f0508"
+      },
+      "ringHalf": {
+       "rad": 3,
+       "n": 29,
+       "Ymed": 0.03422,
+       "Ymean": 0.03691,
+       "Lmed": 21.66,
+       "Lp25": 21.65,
+       "Lp75": 24.53,
+       "meanHex": "#572a0b",
+       "CR": 1.666,
+       "CRmean": 1.624,
+       "dL": 21.15
+      },
+      "ringFull": {
+       "rad": 6,
+       "n": 126,
+       "Ymed": 0.0342,
+       "Ymean": 0.0368,
+       "Lmed": 21.65,
+       "Lp25": 21.65,
+       "Lp75": 24.53,
+       "meanHex": "#562a0b",
+       "CR": 1.665,
+       "CRmean": 1.622,
+       "dL": 21.14
+      }
+     },
+     "cropBox": {
+      "x": 115,
+      "y": 173,
+      "w": 96,
+      "h": 96,
+      "half": 48
+     },
+     "timeApplied": "night"
+    },
+    "close-day": {
+     "buffer": [
+      442,
+      395
+     ],
+     "fnv": "bae31d88",
+     "restoreDiffBytes": 0,
+     "fillNow": 0.16,
+     "eyeMeshCount": 1,
+     "noseMeshCount": 1,
+     "nonFurCount": 10,
+     "masks": {
+      "eyePx": 294,
+      "nosePx": 728,
+      "nonFurPx": 2492,
+      "chaiPx": 26913,
+      "furPx": 22815
+     },
+     "featBox": {
+      "x0": 185,
+      "x1": 267,
+      "y0": 165,
+      "y1": 212
+     },
+     "chaiBox": {
+      "x0": 132,
+      "x1": 310,
+      "y0": 82,
+      "y1": 354
+     },
+     "headNdc": [
+      0,
+      -0.015
+     ],
+     "eyes": {
+      "areaPx": 294,
+      "diamPx": 13.7,
+      "components": [
+       149,
+       145
+      ],
+      "feature": {
+       "n": 219,
+       "Ymed": 0.00334,
+       "Ymean": 0.03642,
+       "Lmed": 3.02,
+       "Lp25": 2.82,
+       "Lp75": 3.13,
+       "meanHex": "#27160f"
+      },
+      "ringHalf": {
+       "rad": 7,
+       "n": 563,
+       "Ymed": 0.16383,
+       "Ymean": 0.17087,
+       "Lmed": 47.47,
+       "Lp25": 47.08,
+       "Lp75": 48.88,
+       "meanHex": "#a2642c",
+       "CR": 4.009,
+       "CRmean": 2.556,
+       "dL": 44.45
+      },
+      "ringFull": {
+       "rad": 14,
+       "n": 1675,
+       "Ymed": 0.16383,
+       "Ymean": 0.17161,
+       "Lmed": 47.47,
+       "Lp25": 46.7,
+       "Lp75": 49.25,
+       "meanHex": "#a2642c",
+       "CR": 4.009,
+       "CRmean": 2.564,
+       "dL": 44.45
+      }
+     },
+     "nose": {
+      "areaPx": 728,
+      "diamPx": 30.4,
+      "components": [
+       728
+      ],
+      "feature": {
+       "n": 627,
+       "Ymed": 0.00665,
+       "Ymean": 0.02861,
+       "Lmed": 6.01,
+       "Lp25": 5.6,
+       "Lp75": 7.26,
+       "meanHex": "#2d160a"
+      },
+      "ringHalf": {
+       "rad": 15,
+       "n": 1781,
+       "Ymed": 0.12043,
+       "Ymean": 0.12445,
+       "Lmed": 41.28,
+       "Lp25": 41.13,
+       "Lp75": 41.52,
+       "meanHex": "#90531d",
+       "CR": 3.008,
+       "CRmean": 2.219,
+       "dL": 35.27
+      },
+      "ringFull": {
+       "rad": 30,
+       "n": 4643,
+       "Ymed": 0.12043,
+       "Ymean": 0.13049,
+       "Lmed": 41.28,
+       "Lp25": 40.89,
+       "Lp75": 46.45,
+       "meanHex": "#93561e",
+       "CR": 3.008,
+       "CRmean": 2.296,
+       "dL": 35.27
+      }
+     },
+     "cropBox": {
+      "x": 70,
+      "y": 33,
+      "w": 312,
+      "h": 312,
+      "half": 156
+     },
+     "timeApplied": "day"
+    },
+    "close-dusk": {
+     "buffer": [
+      442,
+      395
+     ],
+     "fnv": "fb16c4c7",
+     "restoreDiffBytes": 0,
+     "fillNow": 0.16,
+     "eyeMeshCount": 1,
+     "noseMeshCount": 1,
+     "nonFurCount": 10,
+     "masks": {
+      "eyePx": 273,
+      "nosePx": 704,
+      "nonFurPx": 2002,
+      "chaiPx": 26848,
+      "furPx": 23038
+     },
+     "featBox": {
+      "x0": 185,
+      "x1": 266,
+      "y0": 165,
+      "y1": 212
+     },
+     "chaiBox": {
+      "x0": 132,
+      "x1": 310,
+      "y0": 83,
+      "y1": 353
+     },
+     "headNdc": [
+      0,
+      -0.015
+     ],
+     "eyes": {
+      "areaPx": 273,
+      "diamPx": 13.2,
+      "components": [
+       140,
+       133
+      ],
+      "feature": {
+       "n": 201,
+       "Ymed": 0.00047,
+       "Ymean": 0.00692,
+       "Lmed": 0.43,
+       "Lp25": 0.37,
+       "Lp75": 0.51,
+       "meanHex": "#10070b"
+      },
+      "ringHalf": {
+       "rad": 7,
+       "n": 560,
+       "Ymed": 0.0545,
+       "Ymean": 0.05623,
+       "Lmed": 27.98,
+       "Lp25": 27.57,
+       "Lp75": 28.57,
+       "meanHex": "#6a3414",
+       "CR": 2.071,
+       "CRmean": 1.866,
+       "dL": 27.55
+      },
+      "ringFull": {
+       "rad": 13,
+       "n": 1494,
+       "Ymed": 0.0545,
+       "Ymean": 0.05655,
+       "Lmed": 27.98,
+       "Lp25": 27.57,
+       "Lp75": 28.74,
+       "meanHex": "#6a3414",
+       "CR": 2.071,
+       "CRmean": 1.872,
+       "dL": 27.55
+      }
+     },
+     "nose": {
+      "areaPx": 704,
+      "diamPx": 29.9,
+      "components": [
+       704
+      ],
+      "feature": {
+       "n": 605,
+       "Ymed": 0.00088,
+       "Ymean": 0.00585,
+       "Lmed": 0.79,
+       "Lp25": 0.73,
+       "Lp75": 1.12,
+       "meanHex": "#130407"
+      },
+      "ringHalf": {
+       "rad": 15,
+       "n": 1755,
+       "Ymed": 0.04153,
+       "Ymean": 0.04268,
+       "Lmed": 24.17,
+       "Lp25": 24.16,
+       "Lp75": 24.17,
+       "meanHex": "#5d2c0c",
+       "CR": 1.799,
+       "CRmean": 1.659,
+       "dL": 23.38
+      },
+      "ringFull": {
+       "rad": 30,
+       "n": 4608,
+       "Ymed": 0.04153,
+       "Ymean": 0.04445,
+       "Lmed": 24.17,
+       "Lp25": 24.16,
+       "Lp75": 27.4,
+       "meanHex": "#5f2e0d",
+       "CR": 1.799,
+       "CRmean": 1.691,
+       "dL": 23.38
+      }
+     },
+     "cropBox": {
+      "x": 72,
+      "y": 35,
+      "w": 308,
+      "h": 308,
+      "half": 154
+     },
+     "timeApplied": "dusk"
+    },
+    "close-night": {
+     "buffer": [
+      442,
+      395
+     ],
+     "fnv": "8ffc3589",
+     "restoreDiffBytes": 0,
+     "fillNow": 0.16,
+     "eyeMeshCount": 1,
+     "noseMeshCount": 1,
+     "nonFurCount": 10,
+     "masks": {
+      "eyePx": 272,
+      "nosePx": 704,
+      "nonFurPx": 1885,
+      "chaiPx": 26689,
+      "furPx": 22945
+     },
+     "featBox": {
+      "x0": 185,
+      "x1": 266,
+      "y0": 165,
+      "y1": 212
+     },
+     "chaiBox": {
+      "x0": 133,
+      "x1": 309,
+      "y0": 83,
+      "y1": 352
+     },
+     "headNdc": [
+      0,
+      -0.015
+     ],
+     "eyes": {
+      "areaPx": 272,
+      "diamPx": 13.2,
+      "components": [
+       140,
+       132
+      ],
+      "feature": {
+       "n": 201,
+       "Ymed": 0.00028,
+       "Ymean": 0.00432,
+       "Lmed": 0.25,
+       "Lp25": 0.25,
+       "Lp75": 0.33,
+       "meanHex": "#0b050b"
+      },
+      "ringHalf": {
+       "rad": 7,
+       "n": 555,
+       "Ymed": 0.04401,
+       "Ymean": 0.04412,
+       "Lmed": 24.95,
+       "Lp25": 24.53,
+       "Lp75": 25.14,
+       "meanHex": "#5d2f12",
+       "CR": 1.87,
+       "CRmean": 1.733,
+       "dL": 24.7
+      },
+      "ringFull": {
+       "rad": 13,
+       "n": 1483,
+       "Ymed": 0.04401,
+       "Ymean": 0.04391,
+       "Lmed": 24.95,
+       "Lp25": 24.53,
+       "Lp75": 25.14,
+       "meanHex": "#5d2f12",
+       "CR": 1.87,
+       "CRmean": 1.729,
+       "dL": 24.7
+      }
+     },
+     "nose": {
+      "areaPx": 704,
+      "diamPx": 29.9,
+      "components": [
+       704
+      ],
+      "feature": {
+       "n": 605,
+       "Ymed": 0.00056,
+       "Ymean": 0.00382,
+       "Lmed": 0.51,
+       "Lp25": 0.43,
+       "Lp75": 0.64,
+       "meanHex": "#0d0307"
+      },
+      "ringHalf": {
+       "rad": 15,
+       "n": 1755,
+       "Ymed": 0.03422,
+       "Ymean": 0.03513,
+       "Lmed": 21.66,
+       "Lp25": 21.65,
+       "Lp75": 21.66,
+       "meanHex": "#54280a",
+       "CR": 1.666,
+       "CRmean": 1.582,
+       "dL": 21.15
+      },
+      "ringFull": {
+       "rad": 30,
+       "n": 4608,
+       "Ymed": 0.03422,
+       "Ymean": 0.03647,
+       "Lmed": 21.66,
+       "Lp25": 21.65,
+       "Lp75": 24.53,
+       "meanHex": "#56290b",
+       "CR": 1.666,
+       "CRmean": 1.607,
+       "dL": 21.15
+      }
+     },
+     "cropBox": {
+      "x": 72,
+      "y": 35,
+      "w": 308,
+      "h": 308,
+      "half": 154
+     },
+     "timeApplied": "night"
+    }
+   },
+   "url": "http://127.0.0.1:5488/?debug&seed=veteran&theme=dark&nookq=low&nooktime=day&nookweather=clear#/nook",
+   "readyMs": 3122,
+   "prep": {
+    "quality": "low",
+    "chaiKind": "model",
+    "exposure": 0.86,
+    "time": "night",
+    "dim": 0.86
+   },
+   "chaiMeshes": [
+    "body/mesh_0:chai_fur:MeshStandardMaterial:v",
+    "body/mesh_0_1::MeshLambertMaterial:v",
+    "chai/eyes_happy::MeshLambertMaterial:-",
+    "chai/eyes_open::MeshLambertMaterial:v:eye",
+    "chai/eyes_sip::MeshLambertMaterial:-",
+    "chai/eyes_sleep::MeshLambertMaterial:-",
+    "paws_mug/mesh_5:chai_fur:MeshStandardMaterial:v",
+    "paws_mug/mesh_5_1::MeshLambertMaterial:v",
+    "chai/yuzu::MeshLambertMaterial:v",
+    "chai/::MeshBasicMaterial:v",
+    "chai/::ShaderMaterial:-",
+    "chai/::MeshBasicMaterial:v"
+   ],
+   "elapsedMs": 28133
+  }
+ ],
+ "endedAt": "2026-10-14T13:05:59.762Z"
 }
