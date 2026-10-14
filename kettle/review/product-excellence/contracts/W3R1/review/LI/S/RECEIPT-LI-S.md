@@ -265,3 +265,31 @@ Both were fixed and both builds re-run. **Final run: every TRIAL row matches** (
 - The summary's only new count is "Brewed on N of 7 days" = days in the window with any focus record (`Glance.tsx:37`, `byDay.has`). That includes days with only ended-early brews; I recomputed it the same way and it matches.
 - No text claims quality, skill or wellbeing (texts in `truth/*-truth.json` › `raw`).
 
+## 5. Warm-days wording and I13 in S's files; when the Tea Cozy line shows
+
+**Code (trial):** `grep -in streak` over `src/screens/stats/*.tsx`, `ui/Sheet.tsx` and `ui/Stat.tsx` finds only identifiers, prop names and class names: `useStreak`, `StreakMug`, `StreakCard`, `streak.current`, `s.compactStreak`, the badge id `'warm-streak'`. No visible string, sr text, `title` or `aria-*` value contains it.
+
+**Rendered (`tools/LI-words.mjs`, 1440×900, en-GB, UTC; trial 17:46–17:49, base 17:4x).** For each case the probe scanned `main`'s `textContent`, which includes sr-only text and the calendar caption, plus every `aria-label`, `title`, `aria-description`, `alt`, `aria-valuetext` and `placeholder`. It did the same for "Edit brew", "Delete this brew?" and the Warm Days badge sheet. Raw: `words/LI-words-{trial,base}.log`, `words/*-words.json`, full pages `words/<build>-<case>-<time>.png`.
+
+| Case (seed, clock) | BASE: "streak" hits in Stats `main` | TRIAL: in `main` | TRIAL: Edit brew / Delete dialog | Warm Days badge sheet (both builds) |
+|---|---|---|---|---|
+| fresh 07:40 | 2 ("Your streak, charts and badges…", "Day streak", "Best streak") | **0** | — / — | "Keep a 3-day warm streak" |
+| newbie, veteran, celebrate 07:40 | 2 each ("Day streak", "Best streak", sr "Warm streak calendar for October 2026") | **0** | **0 / 0** (base: "…history, stats and streak") | "Keep a 7- / 30- / 7-day warm streak" |
+| atRisk (seed pins 19:40) | 2 ("Day streak", "Brew tonight", "Best streak", sr caption) | **0** | 0 / 0 | "Keep a 7-day warm streak" |
+| veteran at 19:10 | 2 | **0** | 0 / 0 | as above |
+| run broken (custom: warm 1–9 Oct, Cozy used 10 Oct, 11 Oct missed) | 3 (adds "Start a new streak") | **0** | 0 / 0 | "Keep a 14-day warm streak" |
+
+- **The badge sheet's description "Keep a N-day warm streak"** comes from `src/progress/badges.ts`, F's file. S did not change it, and it is listed as a cross-owner item in S's packet. It is still on screen at S's trial; I did not check what the combined build shows.
+- **Warm-days card lines on trial** (read from the page):
+  - newbie / veteran (today brewed): "N days warm · You kept the kettle warm N days in a row."
+  - celebrate / atRisk (today not yet brewed): "N days warm · One brew today makes it N+1 warm days in a row."
+  - run broken: "Ready for a warm day · One brew today warms the kettle again. Your warmest run: 9 days."
+  - Tile hint at risk: "One brew warms today".
+  - None has a threat, countdown, "lose", "break" or "don't miss".
+- **The Tea Cozy sentence** ("If today stays quiet, a Tea Cozy keeps the kettle warm.") is shown by `StreakCard.tsx:52-54` only when the run is alive, today is not yet warm, `streak.atRisk` holds (`store.ts`: `current > 0 && !todayDone && hour >= 18`) and `cozies > 0`.
+  - That claim is true by `streak.ts`: a missed day while a run is alive and a Cozy is held consumes the Cozy and keeps the run.
+  - In every seeded case above the sentence is **absent**. Each case misses one condition: atRisk has 0 Cozies; veteran 19:10 has brewed today.
+  - My custom "Cozy held, nothing today, 19:10" case was **invalid in this run**: seed `blank` pins the app clock to 15:30 (`progress/seed.ts:279`), so the app never reached 19:10 (no at-risk hint either). It was re-run with seed `fresh`, which pins nothing: see **§5b**.
+- **The always-visible Cozy row** ("N Tea Cozies ready · Fully stocked / Next in N warm days · each covers one missed day", or "No Tea Cozies yet · Earn one in N warm days…") is unchanged from base (`StreakCard.tsx` l.81-88, not in S's diff). It shows in every populated state, not only when a Cozy is relevant.
+- My first trial run read the wrong card for the line; that log is kept as `words/LI-words-trial-run1-wrongcard.log`. The "streak" scan in it was valid.
+
