@@ -39,6 +39,21 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
   Invariant: zero overlap between any notice and any control, text or list row. R5-D1, LEAD-D1, R7-D1 and D4 stay passing.
 - **Maker B, badge rename** (45 min): "Warm Streak" → "Warm Days" (display name only, migration-safe).
 
+**Container restart and Vibei's decisions (2026-10-14 02:23 UTC):**
+- **Restart (~00:40 UTC):** it killed every server and agent. Maker T2's uncommitted fix-round work was saved unreviewed as WIP `3462b93` on `pe/w2r3-notices`. That push also created the remote branch `pe/w2r3-notices` by mistake.
+- **Vibei's decisions:**
+  1. Keep `pe/w2r3-notices` on the remote as the off-container backup of T2's WIP; Vibei deletes it after the round closes. No other pushes outside `claude/wizardly-galileo-uy89d9`.
+  2. Commands are allowed again.
+  3. **T2 gets a fresh 90-minute fix window from 02:23 UTC (hard stop 03:53 UTC)**, continuing from WIP `3462b93`. It is still T2's one fix round.
+  4. **Approved direction for T2-D1:**
+     - no notice strip on the summary (`/done`), and no update prompt during a brew (`/focus`) or on the summary;
+     - queued notices are never dropped: they appear in order once the person reaches a screen with a strip (for example Today), and are announced once;
+     - **acceptance:** the summary sheet never moves when a notice is queued, at every size, text size and theme, including 375×667 at 200 %.
+  5. **Follow-ups, not blockers this round:**
+     - "Delete this brew?" is unreachable at 375×667 @200. It is pre-existing and goes to the Stats/History round (F-T2-4).
+     - Notices shift content as a finger lands. This needs a rule that strips only appear between interactions; it goes to the next polish round (F-T2-1).
+- **Plan from here:** restart servers and the slot gate → Maker T2 fix → gate → Lane T (Opus) plus the targeted part of Lane R (Sonnet) → the lead's verdict → merge only on APPROVE → final regression → STATUS → final message.
+
 **Round 3 status (2026-10-14 00:30 UTC):**
 - **C:** merged as `61aba17` (`MODEL_ON_LOW=true`). It is identical to the trial that passed Lane R's targeted regression.
 - **B:** APPROVE, merged as `8df3076`.
