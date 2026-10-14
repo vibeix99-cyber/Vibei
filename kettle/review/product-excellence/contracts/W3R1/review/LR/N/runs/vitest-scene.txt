@@ -1,0 +1,31 @@
+
+ RUN  v5.0.2 /home/user/wt/w5tr-n/kettle
+
+ ✓ src/scene/engine/palette.test.ts > autoTime > follows the clock in the light theme 10ms
+ ✓ src/scene/engine/palette.test.ts > autoTime > is always an evening room in the dark theme 0ms
+ ✓ src/scene/engine/palette.test.ts > autoTime > maps a mid-afternoon clock to night under the dark theme 0ms
+ ✓ src/scene/engine/palette.test.ts > Chai fur self-fill by hour (W3R1 · N) > is the day value in morning and day light, and stronger by evening and night 0ms
+ ✓ src/scene/chaiHost.test.ts > chaiModelWanted > asks for the model on the high and the low tier, never with 3D off 2ms
+ ✓ src/scene/engine/chaiModel.test.ts > chai.glb runtime copy > is byte-identical to the approved source (art-src/chai/chai.glb) 12ms
+ ✓ src/scene/engine/chaiModel.test.ts > validateChai > accepts the model with its real extents, budget and floor origin 13ms
+ ✓ src/scene/engine/chaiModel.test.ts > validateChai > rejects the spec’s old square-loaf box: a model scaled to 0.8 × 1.04 × 0.74 fails 9ms
+ ✓ src/scene/engine/chaiModel.test.ts > validateChai > rejects a missing node, a missing nap key or nap offset, and a floating origin 4ms
+ ✓ src/scene/engine/chaiModel.test.ts > validateChai > targets are the measured model ±10 % 2ms
+ ✓ src/scene/engine/chaiModel.test.ts > model-backed Chai: pose mapping (REPORT.md) > awake: eyes_open; nap key 0; yuzu at rest 94ms
+ ✓ src/scene/engine/chaiModel.test.ts > model-backed Chai: pose mapping (REPORT.md) > nap: eyes_sleep + shape key nap = 1 + yuzu moved by nap_offset; never the procedural scale fallback 113ms
+ ✓ src/scene/engine/chaiModel.test.ts > model-backed Chai: pose mapping (REPORT.md) > sip: eyes_sip + paws_mug, steam on 74ms
+ ✓ src/scene/engine/chaiModel.test.ts > model-backed Chai: pose mapping (REPORT.md) > keeps the night self-fill on the fur only, as a unique material that survives the low tier 27ms
+ ✓ src/scene/engine/chaiModel.test.ts > model-backed Chai: pose mapping (REPORT.md) > setFill scales the fur self-fill only (eyes, nose, mug, yuzu untouched), on both tiers; 1 = the day value 73ms
+ ✓ src/scene/engine/chaiModel.test.ts > model-backed Chai: pose mapping (REPORT.md) > procedural Chai: setFill scales the fur and snout self-fill, 1 = the day value 21ms
+ ✓ src/scene/engine/chaiModel.test.ts > model-backed Chai: pose mapping (REPORT.md) > sits at the root origin with the engine’s scale 1.12 (awake 0.655 wide, 1.112 tall) 57ms
+
+ Test Files  3 passed (3)
+      Tests  17 passed (17)
+   Start at  11:57:54
+   Duration  2.05s (transform 70%, tests 18%, import 11%, worker 1%)
+
+  Transform  transforming modules took 2.15s · 70% of tracked time, re-done on every run
+             persist transforms across runs with fsModuleCache: true
+             learn more: https://vitest.dev/guide/improving-performance#caching-between-reruns
+
+exit 0
