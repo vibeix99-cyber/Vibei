@@ -1,8 +1,8 @@
 # W3R1 · Maker F · fix round (CHECKER-W3R1-F §6) — FIX READY
 
 - **Branch:** `pe/w3-notices-polish` (`/home/user/wt/w5f`), from `5ee3e7c`. Local commits only.
-- **Code commits:** `1130a13` (the fix) + `14703f3` (above the view, the same idle rule; found by the fling probe, §5 (e)) · **final kettle/src tree `8b42b9b`**. Dev :5501 `verify.sh`: `PORT 5501 serves 14703f3 (src 8b42b9b): VERIFIED`. Later commits add only tests/evidence/this packet.
-- **Which src each result is on:** `f075a7a` (= `1130a13`) for `fix/*` at the folder's top level; `8b42b9b` (final) for everything under `fix/final/`.
+- **Code commits:** `1130a13` (the fix) + `14703f3` (above the view, the same idle rule; found by the fling probe, §5 (e)) + `58d1b88` (a band given back above the view keeps still what follows the strip) · **final kettle/src tree `27d83ac`**. Dev :5501 `verify.sh`: `PORT 5501 serves 58d1b88 (src 27d83ac): VERIFIED`. Later commits add only a test-filter fix, evidence and this packet.
+- **Which src each result is on:** `f075a7a` (= `1130a13`) for `fix/*` at the folder's top level; `8b42b9b` for `fix/final/`; **`27d83ac` (final)** for `fix/final2/`.
 - **Evidence:** `contracts/W3R1/F/fix/`.
 
 ## 1. Check 1 — ownership and scope ◆
@@ -62,7 +62,7 @@ Every collapse: `why: idle`, pointer up, ≥ 1200 ms since any input, ≥ 1200 m
 **Lane I2's probes on the fix** (`/home/user/wt/w5tr-f/kettle/.tmp/LI2/`, run read-only against :5501):
 - `LI2-idle.mjs fix … idle` → `fix/idle/idle-fix.{json,log}` + frames `fix/idle/<cfg>-{0-no-notice,1-notice,2-band-at-leave,3-band-after-45s-idle,4-…}.png`: at every config the band is present at the leave (`leave.move 0`) and **room 0 by the first 1 s sample after the 1.2 s window** (`why: idle`); frame 3 shows the page closed up. (Its later scroll/pointer steps then run without a band; (b)/(c) are measured by the own probe above.) Note: the server was restarted by someone else at 18:22:10 during its first config (390 light @100), whose samples show `why: screen`.
 - `LI2-idle2.mjs fix … idle` (real finger drag) → `fix/idle2/`.
-- **(e) fling** `LI2-idle3.mjs fix … above 390x844-light-t200` (finger drag 600 px released into momentum) — **on `f075a7a` it failed**: `fix/idle3-above/idle3-above-fix.log`, both reps: a commit `why: above, room 0` **463 / 528 ms after the last input**, visible move **−153.5 px** — not the kept band but the notice itself leaving above the view mid-fling through the pre-existing "above" path (free collapse with `holdView`, whose compensation the momentum scroll undid). Fixed in `14703f3` (a leave above the view keeps its room; other above-view changes wait for rest). Re-run on the final src: `fix/final/idle3-above/` (PENDING-FLING2).
+- **(e) fling** `LI2-idle3.mjs fix … above 390x844-light-t200` (finger drag 600 px released into momentum) — **on `f075a7a` it failed**: `fix/idle3-above/idle3-above-fix.log`, both reps: a commit `why: above, room 0` **463 / 528 ms after the last input**, visible move **−153.5 px** — not the kept band but the notice itself leaving above the view mid-fling through the pre-existing "above" path (free collapse with `holdView`, whose compensation the momentum scroll undid). Fixed in `14703f3` (a leave above the view keeps its room; other above-view changes wait for rest). On `8b42b9b` (`fix/final/idle3-above/`): the leave mid-fling now keeps its room (commit `above, room 153.5`, 555 / 455 ms after input, no move), and the band went at rest (1365 / 1407 ms after the last input) — **but what was in view moved −153.5 px** (holdView's reference did not move with the content). Fixed in `58d1b88` (keep still the strip's next sibling). **On the final `27d83ac` (`fix/final2/idle3-above/idle3-above-fix.log`), both reps: leave mid-fling keeps the room (529 / 546 ms after input, room 153.5, no height change); the band goes 1396 / 1422 ms after the last input (touchend) with the page scrolled −153 in the same frame: visible move −0.5 px (rounding).** 0 band commits while the page was still scrolling.
 
 ## 6. Check 3 — F-T2-1 kept ◆
 
@@ -85,5 +85,16 @@ Lane I2's aimed-tap probe `LI2-probe2.mjs fix http://127.0.0.1:5501 … '' L1,L2
 | `notice-strip` 25 (workers 1) | **25/25** (incl. 1440 light 200 % reduced and 1440 dark 200 % once each) | `8b42b9b` | `fix/final/notice-strip-full.log` |
 | `toast-room` 14, `a11y` 11, `summary-notice` 14, `break-reach` 17, `w2-home` 18, `whistle` 8 | **81/82**: the one failure is `whistle.spec.ts:183` at **line 203** (C-1: G's sentence is not on this branch, as expected) | `8b42b9b` | `fix/final/owned-specs.log` |
 | `w3-notices` (9) + `w3-notices-idle` (12) | **21/21** | `8b42b9b` | `fix/final/w3-notices-and-idle.log` |
+| `w3-notices` + `w3-notices-idle` on the final src | run 1: 18/21 — 3 × "no other strip commit": the extra was **the leave's own commit recorded a frame late** (`why rest`, same room, `topBefore = topAfter`), a tracker artifact; the filter was fixed (test only). Run 2: **21/21** | `27d83ac` | `fix/final2/w3-notices-and-idle{,-run2}.log` |
+| tsc / vitest | exit 0 / **297/297** | `27d83ac` | `fix/final2/{tsc,vitest}.log` |
 
 `whistle.spec.ts:203` is expected to fail on :5501 (G's sentence is not on this branch; C-1).
+
+
+## 9. Open items and honest limits
+
+- **Not rerun on the final src `27d83ac`:** `notice-strip` 25/25 and the owned specs 81/82 ran on `8b42b9b`; `58d1b88` changes only which element is kept still when a band above the view is given back (`holdBelow`). The aimed-tap probe (0/64 off target) ran on `f075a7a`; the later commits change only the above-view paths, which the aimed taps (in view) do not use.
+- **`notice-strip:275` 1440 light 200 % reduced ×3 is not 3/3:** 2/3 twice on `f075a7a` (one invalid: my :5501 was restarted by someone else at 18:22:10; one **N-2**, History Undo 111 px, S's `History.tsx` focus scroll). On `8b42b9b` it passed inside the 25/25 run. 1440 dark 200 % ×3: 3/3.
+- **F-T2-8** is FOLLOW-UP again (wrap reverted).
+- **C-1:** `whistle:203` fails on this branch by design; the lead proves it on the fix trial.
+- **Cross-owner:** N-2 (S, `History.tsx`).
