@@ -1,0 +1,3146 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w5tr-all/kettle/playwright.config.ts",
+    "rootDir": "/home/user/wt/w5tr-all/kettle/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/full-B",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-harness",
+        "name": "timer-harness",
+        "testDir": "/home/user/wt/w5tr-all/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/full-B",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-app",
+        "name": "timer-app",
+        "testDir": "/home/user/wt/w5tr-all/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/full-B",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pwa",
+        "name": "pwa",
+        "testDir": "/home/user/wt/w5tr-all/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/pwa\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/full-B",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w5tr-all/kettle/tests",
+        "testIgnore": [
+          "/(timer|pwa)\\.spec\\.ts/"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite --config tests/e2e.vite.config.ts --port 5520 --strictPort",
+      "url": "http://127.0.0.1:5520/",
+      "reuseExistingServer": true,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "statusbar.spec.ts",
+      "file": "statusbar.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "resize or rotation to 375×667 re-fits the row: one tight row, no sideways scroll (light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 25934,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T16:54:55.094Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f951212ac42b773ef478-c4fad8c0e8af7b6c65e2",
+          "file": "statusbar.spec.ts",
+          "line": 65,
+          "column": 3
+        },
+        {
+          "title": "large text with large leaf totals never pushes \"Level NN\" past the screen (light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 48152,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T16:55:21.241Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f951212ac42b773ef478-9c61957ce08b3ddc39db",
+          "file": "statusbar.spec.ts",
+          "line": 106,
+          "column": 3
+        },
+        {
+          "title": "resize or rotation to 375×667 re-fits the row: one tight row, no sideways scroll (dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 25870,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T16:56:09.401Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f951212ac42b773ef478-4db8b9dd9289e42094f5",
+          "file": "statusbar.spec.ts",
+          "line": 65,
+          "column": 3
+        },
+        {
+          "title": "large text with large leaf totals never pushes \"Level NN\" past the screen (dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 65550,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T16:56:35.280Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f951212ac42b773ef478-0a967b7e002afcb93ae7",
+          "file": "statusbar.spec.ts",
+          "line": 106,
+          "column": 3
+        },
+        {
+          "title": "narrowing that leaves the bar's own box unchanged still re-fits: from 384 px, and 1 px at a time (light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28226,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T16:57:40.838Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f951212ac42b773ef478-2563a7e04cc0a157110c",
+          "file": "statusbar.spec.ts",
+          "line": 142,
+          "column": 3
+        },
+        {
+          "title": "narrowing that leaves the bar's own box unchanged still re-fits: from 384 px, and 1 px at a time (dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 27536,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T16:58:09.094Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f951212ac42b773ef478-adca6d2e40106dbe6db0",
+          "file": "statusbar.spec.ts",
+          "line": 142,
+          "column": 3
+        },
+        {
+          "title": "rapid live resizes at large text leave the page unzoomed (light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 25773,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T16:58:36.637Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f951212ac42b773ef478-443bf7cc46d5e9c0e9eb",
+          "file": "statusbar.spec.ts",
+          "line": 202,
+          "column": 3
+        },
+        {
+          "title": "rapid live resizes at large text leave the page unzoomed (dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 26832,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T16:59:02.419Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f951212ac42b773ef478-38e07ab381e2cb09453c",
+          "file": "statusbar.spec.ts",
+          "line": 202,
+          "column": 3
+        },
+        {
+          "title": "normal text: one row at 390 (designed padding) and at 375 (tight) on a fresh load",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7604,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T16:59:29.273Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f951212ac42b773ef478-5bae21e9a4dba535bb18",
+          "file": "statusbar.spec.ts",
+          "line": 239,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "summary-notice.spec.ts",
+      "file": "summary-notice.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (375×667 light 100 %, task day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 29699,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T16:59:36.913Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-b196d57f599557bd0769",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (375×667 light 100 %, big day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 29180,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:00:06.624Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-578111fa20e44b93b81e",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (375×667 dark 200 %, task day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28858,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:00:35.815Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-43ed0427f16e2b48ca69",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (375×667 dark 200 %, big day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28921,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:01:04.693Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-209e38d4edc035328a96",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (390×844 dark 100 %, task day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28366,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:01:33.626Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-d49a8d0a1002f34bf24b",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (390×844 dark 100 %, big day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28712,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:02:02.012Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-853b32b3779580fb84a6",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (390×844 light 200 %, task day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28761,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:02:30.745Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-5931d12df3836115ae74",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (390×844 light 200 %, big day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28217,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:02:59.521Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-9fd30054307f59f36fcd",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (844×390 light 100 %, task day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28574,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:03:27.752Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-96587176746646a51304",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (844×390 light 100 %, big day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28801,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:03:56.339Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-7d66ab87c047fd1fac3b",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (667×375 dark 100 %, task day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28544,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:04:25.154Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-8043d5f6770471434f4a",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (667×375 dark 100 %, big day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28210,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:04:53.709Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-a2ab3542b5902d505c12",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (1440×900 light 100 %, task day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28940,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:05:21.930Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-5a929bd757d8e39be832",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (1440×900 light 100 %, big day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 29094,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:05:50.880Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-83f3fde88bd3ddaa9e22",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "toast-room.spec.ts",
+      "file": "toast-room.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by wheel (375×667, 200 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 24799,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:06:20.023Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-eb34e94778a8ab4b6074",
+          "file": "toast-room.spec.ts",
+          "line": 192,
+          "column": 5
+        },
+        {
+          "title": "the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by touch (375×667, 200 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 34676,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:06:44.866Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-f93a962c800303e0b822",
+          "file": "toast-room.spec.ts",
+          "line": 192,
+          "column": 5
+        },
+        {
+          "title": "the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by wheel (844×390, 200 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 19654,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:07:19.551Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-b1873a0d487987e1ebdf",
+          "file": "toast-room.spec.ts",
+          "line": 192,
+          "column": 5
+        },
+        {
+          "title": "the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by touch (844×390, 200 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 24897,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:07:39.216Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-6574a136f1e1d63bae6e",
+          "file": "toast-room.spec.ts",
+          "line": 192,
+          "column": 5
+        },
+        {
+          "title": "the storage-full banner stays in the page, whole and steady, while every notice in the strip is read by wheel (667×375, 200 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 20777,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:08:04.121Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-4a2ee5149f0edb96c770",
+          "file": "toast-room.spec.ts",
+          "line": 192,
+          "column": 5
+        },
+        {
+          "title": "the storage-full banner stays in the page, whole and steady, while every notice in the strip is read by touch (667×375, 200 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 26546,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:08:24.918Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-09682fa8763678d8d687",
+          "file": "toast-room.spec.ts",
+          "line": 192,
+          "column": 5
+        },
+        {
+          "title": "notices timing out, and the endless update prompt, never move the banner under the person (375×667, 200 % text, wheel, light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 22272,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:08:51.479Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-920d17743e51b1d7d32f",
+          "file": "toast-room.spec.ts",
+          "line": 262,
+          "column": 3
+        },
+        {
+          "title": "notices timing out, and the endless update prompt, never move the banner under the person (375×667, 200 % text, wheel, dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 22221,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:09:13.760Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-8e405dbd8456fee6d1d7",
+          "file": "toast-room.spec.ts",
+          "line": 262,
+          "column": 3
+        },
+        {
+          "title": "the last notice leaves where it was, never over the docked start (375×667, 200 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5091,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:09:35.992Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-af664ab410e4960abacf",
+          "file": "toast-room.spec.ts",
+          "line": 297,
+          "column": 3
+        },
+        {
+          "title": "the last notice leaves where it was, never over the docked start (844×390, 200 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4834,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:09:41.092Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-37f0777a71ad476793cf",
+          "file": "toast-room.spec.ts",
+          "line": 297,
+          "column": 3
+        },
+        {
+          "title": "three notices never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12389,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:09:45.939Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-ac03c871ae5178f52159",
+          "file": "toast-room.spec.ts",
+          "line": 431,
+          "column": 3
+        },
+        {
+          "title": "three notices never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12488,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:09:58.347Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-317ac783a5030a98f614",
+          "file": "toast-room.spec.ts",
+          "line": 431,
+          "column": 3
+        },
+        {
+          "title": "the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (667×375, 200 % text, wheel, light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 18911,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:10:10.844Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-2d786135ad7a5489a843",
+          "file": "toast-room.spec.ts",
+          "line": 466,
+          "column": 3
+        },
+        {
+          "title": "the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (844×390, 200 % text, touch, dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 24696,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:10:29.763Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-fc99f0bcafd61d9ab589",
+          "file": "toast-room.spec.ts",
+          "line": 466,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "w2-firstvisit.spec.ts",
+      "file": "w2-firstvisit.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "first visit: one plain line, one primary action, the 15-minute brew (390×844, 100 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3739,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:10:55.662Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "807cc023d5dd8e2f7adc-27b7d7dc7f1e3f60ca24",
+          "file": "w2-firstvisit.spec.ts",
+          "line": 49,
+          "column": 3
+        },
+        {
+          "title": "first visit: one plain line, one primary action, the 15-minute brew (390×844, 200 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4917,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:10:59.518Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "807cc023d5dd8e2f7adc-a9591811049c7a1f8e45",
+          "file": "w2-firstvisit.spec.ts",
+          "line": 49,
+          "column": 3
+        },
+        {
+          "title": "first visit: one plain line, one primary action, the 15-minute brew (375×667, 100 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4590,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:11:04.447Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "807cc023d5dd8e2f7adc-eae6d774533d3b07cb6a",
+          "file": "w2-firstvisit.spec.ts",
+          "line": 49,
+          "column": 3
+        },
+        {
+          "title": "first visit: one plain line, one primary action, the 15-minute brew (375×667, 200 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4196,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:11:09.047Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "807cc023d5dd8e2f7adc-fd7f75474df50660c2b7",
+          "file": "w2-firstvisit.spec.ts",
+          "line": 49,
+          "column": 3
+        },
+        {
+          "title": "first visit: one plain line, one primary action, the 15-minute brew (844×390, 100 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4123,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:11:13.252Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "807cc023d5dd8e2f7adc-1dae9e4cfdd4835de4b4",
+          "file": "w2-firstvisit.spec.ts",
+          "line": 49,
+          "column": 3
+        },
+        {
+          "title": "first visit: one plain line, one primary action, the 15-minute brew (844×390, 200 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3723,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:11:17.391Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "807cc023d5dd8e2f7adc-df825a58452abe55a95a",
+          "file": "w2-firstvisit.spec.ts",
+          "line": 49,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "w2-home.spec.ts",
+      "file": "w2-home.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (390×844, 100 % text, light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17160,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:11:21.363Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8aeb5ee19d37b001c21-3f8d71ff4eab6925ee96",
+          "file": "w2-home.spec.ts",
+          "line": 115,
+          "column": 7
+        },
+        {
+          "title": "Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (390×844, 100 % text, dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17405,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:11:38.544Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8aeb5ee19d37b001c21-eebbfe1055db91ce7aed",
+          "file": "w2-home.spec.ts",
+          "line": 115,
+          "column": 7
+        },
+        {
+          "title": "Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (390×844, 200 % text, light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 24477,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:11:55.968Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8aeb5ee19d37b001c21-6d817dd94199c3709e04",
+          "file": "w2-home.spec.ts",
+          "line": 115,
+          "column": 7
+        },
+        {
+          "title": "Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (390×844, 200 % text, dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15697,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:12:20.496Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8aeb5ee19d37b001c21-277ebcb187fbd9388ec6",
+          "file": "w2-home.spec.ts",
+          "line": 115,
+          "column": 7
+        },
+        {
+          "title": "Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (375×667, 100 % text, light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14235,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:12:36.249Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8aeb5ee19d37b001c21-6308b055f439477b5c11",
+          "file": "w2-home.spec.ts",
+          "line": 115,
+          "column": 7
+        },
+        {
+          "title": "Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (375×667, 100 % text, dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 18203,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:12:50.501Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8aeb5ee19d37b001c21-d7bc6324b1fd740721ec",
+          "file": "w2-home.spec.ts",
+          "line": 115,
+          "column": 7
+        },
+        {
+          "title": "Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (375×667, 200 % text, light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 18308,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:13:08.739Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8aeb5ee19d37b001c21-03a60325359373d6b69b",
+          "file": "w2-home.spec.ts",
+          "line": 115,
+          "column": 7
+        },
+        {
+          "title": "Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (375×667, 200 % text, dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 18404,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:13:27.071Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8aeb5ee19d37b001c21-e437e534b0edba1470d3",
+          "file": "w2-home.spec.ts",
+          "line": 115,
+          "column": 7
+        },
+        {
+          "title": "Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (844×390, 100 % text, light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17938,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:13:45.502Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8aeb5ee19d37b001c21-18c4b944208d3425a643",
+          "file": "w2-home.spec.ts",
+          "line": 115,
+          "column": 7
+        },
+        {
+          "title": "Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (844×390, 100 % text, dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16443,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:14:03.464Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8aeb5ee19d37b001c21-b8d6d85f562160cd7171",
+          "file": "w2-home.spec.ts",
+          "line": 115,
+          "column": 7
+        },
+        {
+          "title": "Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (844×390, 200 % text, light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 19748,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:14:19.920Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8aeb5ee19d37b001c21-fe3d56ff4e3a7fbf6ebd",
+          "file": "w2-home.spec.ts",
+          "line": 115,
+          "column": 7
+        },
+        {
+          "title": "Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (844×390, 200 % text, dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 19837,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:14:39.681Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8aeb5ee19d37b001c21-b51217a5f54d614212ce",
+          "file": "w2-home.spec.ts",
+          "line": 115,
+          "column": 7
+        },
+        {
+          "title": "first visit: one plain line, one primary action, the 15-minute brew (390×844, 100 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5287,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:14:59.545Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8aeb5ee19d37b001c21-cc1fa698c66372a16de9",
+          "file": "w2-home.spec.ts",
+          "line": 203,
+          "column": 5
+        },
+        {
+          "title": "first visit: one plain line, one primary action, the 15-minute brew (390×844, 200 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3847,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:15:04.852Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8aeb5ee19d37b001c21-d3906118d78c72c21d8c",
+          "file": "w2-home.spec.ts",
+          "line": 203,
+          "column": 5
+        },
+        {
+          "title": "first visit: one plain line, one primary action, the 15-minute brew (375×667, 100 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4111,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:15:08.712Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8aeb5ee19d37b001c21-4fa47d620e2e3864469c",
+          "file": "w2-home.spec.ts",
+          "line": 203,
+          "column": 5
+        },
+        {
+          "title": "first visit: one plain line, one primary action, the 15-minute brew (375×667, 200 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4148,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:15:12.842Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8aeb5ee19d37b001c21-6cadeee14c6550c45e66",
+          "file": "w2-home.spec.ts",
+          "line": 203,
+          "column": 5
+        },
+        {
+          "title": "first visit: one plain line, one primary action, the 15-minute brew (844×390, 100 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3943,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:15:17.035Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8aeb5ee19d37b001c21-2ea7120434a55a824d15",
+          "file": "w2-home.spec.ts",
+          "line": 203,
+          "column": 5
+        },
+        {
+          "title": "first visit: one plain line, one primary action, the 15-minute brew (844×390, 200 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3480,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:15:20.991Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8aeb5ee19d37b001c21-34f65cb04620b920d137",
+          "file": "w2-home.spec.ts",
+          "line": 203,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "w2-room.spec.ts",
+      "file": "w2-room.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Focus backdrop: earned items without the live 3D room",
+          "file": "w2-room.spec.ts",
+          "line": 86,
+          "column": 6,
+          "specs": [
+            {
+              "title": "3D off: the window still shows every earned window-visible item",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 24033,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T17:15:24.491Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0b6ff45299426c0d2d82-555292e436e642b01898",
+              "file": "w2-room.spec.ts",
+              "line": 87,
+              "column": 3
+            },
+            {
+              "title": "3D loading: the still shown before the engine is ready carries the same items",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 22625,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T17:15:48.536Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0b6ff45299426c0d2d82-d733ab1ba2ebe5fd0ade",
+              "file": "w2-room.spec.ts",
+              "line": 96,
+              "column": 3
+            },
+            {
+              "title": "items never stand on the bare sky: no layer is drawn before the base room still has decoded",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 25836,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T17:16:11.171Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0b6ff45299426c0d2d82-647add6f703c9e09b2ab",
+              "file": "w2-room.spec.ts",
+              "line": 111,
+              "column": 3
+            },
+            {
+              "title": "3D failure (WebGL context lost): the still that takes over carries the same items",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 51347,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T17:16:37.017Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0b6ff45299426c0d2d82-dcbf98bf223acb05f494",
+              "file": "w2-room.spec.ts",
+              "line": 144,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Nook hint tells the truth",
+          "file": "w2-room.spec.ts",
+          "line": 163,
+          "column": 6,
+          "specs": [
+            {
+              "title": "3D off: no drag-and-tap promise over the drawing",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6802,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T17:17:28.387Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0b6ff45299426c0d2d82-c59b5249652f33b0b890",
+              "file": "w2-room.spec.ts",
+              "line": 166,
+              "column": 3
+            },
+            {
+              "title": "no WebGL: the same truthful hint",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6914,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T17:17:35.201Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0b6ff45299426c0d2d82-ddf4bffb130a1805c7f2",
+              "file": "w2-room.spec.ts",
+              "line": 176,
+              "column": 3
+            },
+            {
+              "title": "3D on: the hint is unchanged",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6576,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T17:17:42.124Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0b6ff45299426c0d2d82-4751683d2bd144ff66f7",
+              "file": "w2-room.spec.ts",
+              "line": 192,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "w2-summary.spec.ts",
+      "file": "w2-summary.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "375×667 @100 %, routine day: no line starts under the footer on arrival; the final line clears it; nothing covers anything",
+          "ok": true,
+          "tags": [
+            "100"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16225,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:17:48.746Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "113628ac8c08763e5f1f-3f071057838005f63aac",
+          "file": "w2-summary.spec.ts",
+          "line": 239,
+          "column": 5
+        },
+        {
+          "title": "375×667 @100 %, big day: no line starts under the footer on arrival; the final line clears it; nothing covers anything",
+          "ok": true,
+          "tags": [
+            "100"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21756,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:18:04.987Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "113628ac8c08763e5f1f-5b4a873c8935759aa03c",
+          "file": "w2-summary.spec.ts",
+          "line": 239,
+          "column": 5
+        },
+        {
+          "title": "375×667 @200 %, routine day: no line starts under the footer on arrival; the final line clears it; nothing covers anything",
+          "ok": true,
+          "tags": [
+            "200"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17639,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:18:26.754Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "113628ac8c08763e5f1f-9aa76bb103bae1aaf402",
+          "file": "w2-summary.spec.ts",
+          "line": 239,
+          "column": 5
+        },
+        {
+          "title": "375×667 @200 %, big day: no line starts under the footer on arrival; the final line clears it; nothing covers anything",
+          "ok": true,
+          "tags": [
+            "200"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 27063,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:18:44.402Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "113628ac8c08763e5f1f-fca8dff59d652804512b",
+          "file": "w2-summary.spec.ts",
+          "line": 239,
+          "column": 5
+        },
+        {
+          "title": "375×667 @100 %, a brew with a task (the K02 layout, Wave-1 #1 exactly): the third pill row does not start under the footer",
+          "ok": true,
+          "tags": [
+            "100"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 18343,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:19:11.479Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "113628ac8c08763e5f1f-fd667eb5834d9d2ca22b",
+          "file": "w2-summary.spec.ts",
+          "line": 283,
+          "column": 3
+        },
+        {
+          "title": "375×667 @100 %, a brew with a task (the K02 layout, Wave-1 #1 exactly), reduced motion: the third pill row does not start under the footer",
+          "ok": true,
+          "tags": [
+            "100"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11495,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:19:29.881Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "113628ac8c08763e5f1f-a6600c31b405ef4794e5",
+          "file": "w2-summary.spec.ts",
+          "line": 283,
+          "column": 3
+        },
+        {
+          "title": "big day: the unlock is the one highlight, whole on arrival; all seven rewards stay on the summary",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 27711,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:19:41.441Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "113628ac8c08763e5f1f-945ac1b50413f2221c9f",
+          "file": "w2-summary.spec.ts",
+          "line": 311,
+          "column": 1
+        },
+        {
+          "title": "a milestone day without an unlock: the biggest milestone leads, highlighted and whole on arrival; the rest stay compact",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12467,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:20:09.187Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "113628ac8c08763e5f1f-30838a4ae96c9bd025d7",
+          "file": "w2-summary.spec.ts",
+          "line": 333,
+          "column": 1
+        },
+        {
+          "title": "390×844 @100 %, routine day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut",
+          "ok": true,
+          "tags": [
+            "100"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17887,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:20:21.673Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "113628ac8c08763e5f1f-fc23c3ea24416980ba71",
+          "file": "w2-summary.spec.ts",
+          "line": 362,
+          "column": 3
+        },
+        {
+          "title": "390×844 @100 %, big day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut",
+          "ok": true,
+          "tags": [
+            "100"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 30607,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:20:39.584Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "113628ac8c08763e5f1f-214b2e105b73b29ea794",
+          "file": "w2-summary.spec.ts",
+          "line": 362,
+          "column": 3
+        },
+        {
+          "title": "390×844 @100 %, task day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut",
+          "ok": true,
+          "tags": [
+            "100"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 26764,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:21:10.211Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "113628ac8c08763e5f1f-39f5172a96555ab007c8",
+          "file": "w2-summary.spec.ts",
+          "line": 362,
+          "column": 3
+        },
+        {
+          "title": "390×844 @200 %, routine day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut",
+          "ok": true,
+          "tags": [
+            "200"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 19261,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:21:37.003Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "113628ac8c08763e5f1f-75c150a917b975691601",
+          "file": "w2-summary.spec.ts",
+          "line": 362,
+          "column": 3
+        },
+        {
+          "title": "390×844 @200 %, big day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut",
+          "ok": true,
+          "tags": [
+            "200"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28495,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:21:56.283Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "113628ac8c08763e5f1f-f9063a496ba3f83854bb",
+          "file": "w2-summary.spec.ts",
+          "line": 362,
+          "column": 3
+        },
+        {
+          "title": "390×844 @200 %, task day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut",
+          "ok": true,
+          "tags": [
+            "200"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 34766,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:22:24.803Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "113628ac8c08763e5f1f-2fbea817784903e2498c",
+          "file": "w2-summary.spec.ts",
+          "line": 362,
+          "column": 3
+        },
+        {
+          "title": "375×667 @100 %, task day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut",
+          "ok": true,
+          "tags": [
+            "100"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 20743,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:22:59.583Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "113628ac8c08763e5f1f-c29a4648b37be6f5f2d5",
+          "file": "w2-summary.spec.ts",
+          "line": 362,
+          "column": 3
+        },
+        {
+          "title": "375×667 @200 %, task day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut",
+          "ok": true,
+          "tags": [
+            "200"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 25188,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:23:20.349Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "113628ac8c08763e5f1f-aa8a4b01bb58a72382fb",
+          "file": "w2-summary.spec.ts",
+          "line": 362,
+          "column": 3
+        },
+        {
+          "title": "the highlight is quieter than the minutes and Tea time (milestone day, 375×667)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16679,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:23:45.552Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "113628ac8c08763e5f1f-8202dddc1e203cdd7faa",
+          "file": "w2-summary.spec.ts",
+          "line": 392,
+          "column": 1
+        },
+        {
+          "title": "warm days, never \"streak\": what the big day summary shows and what a screen reader hears",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 32063,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:24:02.246Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "113628ac8c08763e5f1f-a00322fa66308713bd70",
+          "file": "w2-summary.spec.ts",
+          "line": 436,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-14T16:54:53.805Z",
+    "duration": 1782997.3069999998,
+    "expected": 86,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

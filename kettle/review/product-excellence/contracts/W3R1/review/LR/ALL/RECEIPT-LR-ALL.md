@@ -56,3 +56,21 @@ The 2 skips are in the spec itself: `timer.spec.ts:295` ("infra is exercised in 
 ### 1c. Cut parts, kept as evidence of the cut
 
 `runs/full-B-cut.log` (86 tests announced, cut at the restart, no failure line in it) and `runs/full-C-cut.log` (70 announced; cut; failures seen: `w3-notices.spec.ts:252` at 390×844 200 %, `w3-stats.spec.ts:98` "Delete this brew?" at 390×844 200 %). These two are not counted anywhere; section 2 reruns B and C completely.
+
+## 2. Full chromium parts B and C on dev :5520, `--workers=1`
+
+### 2a. Part B, complete: `runs/full-B.log`, `runs/full-B.json`
+
+Started 16:54:52, freed 17:24:37 (29.7 min of test time), dev :5520, `--workers=1`, load average 6 to 15 during the run (Lanes I, I2, G and the lead were all on the machine). **86 passed, 0 failed, 0 flaky, 0 skipped** (86 of the 86 announced).
+
+| Spec file | Passed | Failed |
+|---|---|---|
+| `statusbar.spec.ts` | 9 | 0 |
+| `summary-notice.spec.ts` | 14 | 0 |
+| `toast-room.spec.ts` | 14 | 0 |
+| `w2-firstvisit.spec.ts` | 6 | 0 |
+| `w2-home.spec.ts` | 18 | 0 |
+| `w2-room.spec.ts` | 7 | 0 |
+| `w2-summary.spec.ts` | 18 | 0 |
+
+Facts to read these numbers by: the pre-cut run of B (`runs/full-B-cut.log`, 85 of 86 done) also had no failure. `w2-home.spec.ts` (Lane I2 saw `w2-home:203` fail at 375×667 @100 on the F trial `e3b9eac`) passed 18 of 18 here, on the combined tree. Playwright prints line numbers that do not match the files (for example `w3-notices.spec.ts:252` for a test that is on line 152 of the file; `--list` prints the same shifted numbers). Tests are therefore identified by title in this receipt.
