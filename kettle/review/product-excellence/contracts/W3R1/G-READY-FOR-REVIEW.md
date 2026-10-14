@@ -1,7 +1,7 @@
 # W3R1 · Maker G · Settings and shared controls (I11): READY FOR REVIEW
 
 - **Branch / worktree:** `pe/w3-settings` · `/home/user/wt/w5g` (local commits only, nothing pushed)
-- **Hash:** see the final line of this packet (`HEAD` at hand-off) · `kettle/src` tree hash alongside it
+- **Hash:** app/spec `876bf18` · `kettle/src` tree `6b14238` · branch head = the commit carrying this packet
 - **Base:** `4d36939` (src `5cd9a44`) on :5478 (dev) / :5488 (preview). **Mine:** dev :5503 (verified with
   `/tmp/rv7-servers/verify.sh` after every restart).
 - **Evidence:** `kettle/review/product-excellence/contracts/W3R1/G/` (full-size PNGs, tools, logs).
@@ -113,7 +113,17 @@ and the spec). Tools: `G/tools/capture-settings.mjs`, `G/tools/state-sheet.mjs`,
 
 ## Suites
 
-RESULTS_PLACEHOLDER
+- `tsc --noEmit`: clean.
+- `vitest run`: **30 files, 290 tests passed**.
+- `tests/w3-settings.spec.ts` (new, mine) on :5503: **9 / 9 passed**; on base :5478: **9 / 9 failed** (controls first, above).
+- Specs touching my controls, on :5503 (`G/own-suites.txt`): **52 passed, 0 failed**: w3-settings 9, whistle 8,
+  w2-home 18, a11y 11, w2-firstvisit 6.
+- Rest of the chromium suite, on :5503, **stopped at the 12:18 UTC hard-stop margin** (`G/rest-suites-partial.txt`):
+  break-reach 17 / 17 passed; notice-strip 17 passed, **2 failed** ("no notice overlaps…" at 375×667 dark 200 % (1.6 min)
+  and 844×390 light 200 % (4.0 min, = its 240 s timeout)), run while F's notice-strip jobs held the other slots.
+  **UNPROVEN:** whether these two are contention timeouts or real; their error text was not printed before the stop.
+  My changes don't touch Today's layout (outlines and opacity take no space; copy changes are on Settings only), but
+  this is not proven. Not run: integrity, summary-notice, toast-room, statusbar, w2-summary, w2-room, chai3d, timer/pwa projects.
 
 ## Preserve list
 
@@ -138,4 +148,4 @@ rewrites, no dependency change, no new settings, no new chrome.
 - **F/S, process:** the shared scratchpad is common to all makers; my logs collided with S's (`pw2.log`, `pw3.log`)
   around 10:53–11:00. I moved to `scratchpad/G/`. Use a lane prefix for log names.
 
-HASH_PLACEHOLDER
+**Hand-off:** app code and spec last changed in `876bf18`; `kettle/src` tree `6b14238` (unchanged by the packet commit that follows). Final branch hash: the commit carrying this file (`git log -1 pe/w3-settings`).
