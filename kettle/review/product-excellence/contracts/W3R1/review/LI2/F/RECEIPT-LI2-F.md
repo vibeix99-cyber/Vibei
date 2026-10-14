@@ -134,3 +134,110 @@ Lane R's `w3-notices.spec.ts:252`. In these worktrees Playwright lists it as `:1
 | F trial `e3b9eac` :5521 | **1/1 passed** (14.8 s), alone | `runs2/E6-trial5521-w3notices-room-scrolled.log` |
 
 Lane R's failure (`review/LR/ALL/runs/full-C-cut.log`, test 31) came inside a cut full run. It did not reproduce alone on either server.
+
+## 5. Warm-days wording and I13 (supportive return)
+
+(Written before §2 and §3; numbering follows the brief.)
+
+### 5a. "streak" in the trial's `src`
+
+`grep -rnoE` over string literals and JSX text in `kettle/src`, test files excluded, on the trial `/home/user/wt/w5tr-f`.
+
+**In F's files, only comments, ids and identifiers remain:**
+- `summary.ts:13`, `warm.ts:9`, `chai.ts:4`: comments;
+- `StatusBar.tsx:29`: `data-kind="streak"` and `setOpen('streak')`;
+- `Rail.tsx`: `id="rail-streak"`, `useStreak`, class names;
+- `badges.ts`: id `warm-streak`.
+
+No visible, sr, `title` or `aria-*` "streak" remains in F's files.
+
+**Other owners' files still say it on the trial** (F-only tree; their owners change them per PLAN.md):
+- S: `StreakCard.tsx` "Start a new streak", "Finish a brew to start your warm streak.", sr caption "Warm streak calendar…"; `StatsScreen.tsx` "Day streak"; `History.tsx` "…stats and streak";
+- G: `SettingsScreen.tsx` "Your warm streak only needs one brew a day…"; `ui/Gallery.tsx` (kit).
+
+**On the combined `e478604`** (`/home/user/wt/w5tr-all`) the same grep finds none outside `ui/Gallery.tsx` and `art/Gallery.tsx` (kit galleries). The only other hits are F's comment and id lines above.
+
+**Rendered pages** (prior capture facts: `shots/{after,before}/facts-*.json`, visible text, sr-only text, `title`/`aria-*`, and the polite announcer):
+
+| Build | Parts captured (Today, status sheet, End sheet, summary, rail) | Parts containing "streak" |
+|---|---|---|
+| TRIAL flows (390×844 light @100 and 375×667 dark @200 × 7 states × 4 parts) | 56 | **0** |
+| TRIAL phones (Today, 4 configs × 4 states) | 16 | **0** |
+| TRIAL 1440 (Today + rail, 4 configs × 6 states) | 48 | 24. All are the **Settings page's** "Your warm streak only needs one brew a day" (G's file): the rail was captured on Settings, where it shows. Today parts: 0 |
+| BASE flows | 56 | 28 ("streak. Show details", "Best streak", "Tea Cozy. Keeps your streak warm…", Chai "Your 5-day streak is still warm…") |
+| BASE 1440 | 48 | 48 |
+
+**Raw observation, accessible names:**
+- The Today status-bar button's name is now **"3 days warm . Show details"** (newbie), and "5 days warm , today not brewed yet. Show details" (atRisk), with a space before the "." / ",".
+- Base: "3 days warm streak. Show details". Removing "streak" left the separator after a space.
+- Visible text is unchanged ("3 / days warm"). Source: the facts files' `status` field.
+
+### 5b. F's strings against the glossary (packet §3, checked in the trial source and the rendered facts)
+
+| Glossary rule | F's string (trial) | Matches |
+|---|---|---|
+| Current run, pill: "N days warm" | Today pill "23 days warm"; rail heading "23 days warm"; sidebar mini sr "N days warm", `title="Days warm"` | yes |
+| In sentences: "N warm days in a row" | Sheet "23 warm days in a row, today included." / "…in a row. One brew today adds another."; Chai "5 warm days in a row. One 25-minute brew warms today too."; Chai night "…makes it N+1 warm days in a row."; badge "Brew {n} warm days in a row" | yes |
+| Best run: "Warmest run · N days" or "N days" under "Warmest run" | Rail foot "Warmest run 23"; sheet fact "23 / Warmest run"; returning sheet "Your warmest run so far: 3 days." | yes (the rail foot shows the bare number, as the base's "Best 23" did) |
+| Starting | "One brew warms the kettle today." (sheet, fresh/returning; rail caption, returning); rail caption, fresh: "One brew today makes it a warm day."; rail heading "Warm the kettle" / "Welcome back" | yes |
+| Tea Cozy: "A Tea Cozy keeps the kettle warm through one missed day." | Sheet note (verbatim); summary note "Keeps the kettle warm through one missed day."; summary pill sr "You earned a Tea Cozy: it keeps the kettle warm through one missed day" | yes |
+| Badge title "Warm Days" stays | `badges.ts` title unchanged | yes |
+| No "lose", "break", "don't miss", urgency | `git diff 4d36939 e3b9eac -- src` added lines: no such word in any user string. The hits are test assertions forbidding them, plus "missed day" inside the Tea Cozy sentence (glossary wording) | yes |
+
+### 5c. Truth against `progress/streak.ts` and `warm.ts`
+
+**Engine rules** (`streak.ts:6–14`, constants `COZY_EVERY = 7`, `MAX_COZIES = 2`):
+- warm day = ≥1 **completed** focus session that local day;
+- today is pending until a brew;
+- +1 Tea Cozy each time the run reaches a multiple of 7, max 2 held;
+- a missed day while the run is alive and a cozy is held consumes it and the run survives (the cozy day adds no count).
+
+**What the copy says, state by state:**
+- **Held** (sheet note): "…keeps the kettle warm through one missed day. It's used for you… You have one / N." True: used automatically, the count is held.
+- **Just used** (`cozyKept`, missed-cozy = veteran + 2 days):
+  - Chai: "Welcome back. A Tea Cozy kept the kettle warm yesterday, so your 23 warm days in a row carry on."
+  - rail: "A Tea Cozy kept it warm yesterday."
+  - sheet note: "…One did yesterday. You have one more."
+  - The week strip shows Tuesday "kept warm by a Tea Cozy"; the count stays 23 (the cozy day adds none). True.
+- **None held, run going:** "No Tea Cozy yet. You'll earn one after N more warm days in a row: …". N is the engine's `toNextCozy`.
+- **No run** (fresh, returning): "Every 7 warm days in a row earn a Tea Cozy: it keeps the kettle warm through one missed day."
+  - The max-2 cap is not stated. This line shows only when 0 are held.
+  - It appears to everyone without a cozy, as how one is earned, e.g. missed-nocozy `shots/after/390x844-light-t100/sheet-missed-nocozy.png`.
+- **Evening** (Chai, `cozies > 0` only): "…And if today slips by, your Tea Cozy keeps the kettle warm." Not shown without a cozy (atRisk seed: "5 warm days in a row. One 25-minute brew warms today too.", `shots/after/390x844-light-t100/today-atRisk.png`).
+- **Night, no cozy:** "It's late. One {brew} makes it N+1 warm days in a row. Or rest. The kettle will be here tomorrow." It does not say what resting does to the run (with no cozy the run ends tonight). Raw, for the lead.
+- **End** (`EndSheet.tsx`): "That's okay — your minutes still count. Today turns warm when a brew runs to the whistle."
+  - Shown when today is not warm yet: atRisk, missed-cozy, missed-nocozy, cozy-earn, blank.
+  - Absent when today is already warm: newbie, veteran (facts `end.dialog`).
+  - Matches the engine (warm = completed focus). "3 minutes of focus will be saved" is unchanged.
+- **Skip break and "That's all for now":** F changed none of these strings or controls. Unchanged in the summary captures (`shots/after/*/summary-*.png` show "Skip break").
+
+**Rule change:** `git diff 4d36939 e3b9eac --stat -- kettle/src/progress` touches 3 files, 3 lines:
+- the `badges.ts` description string;
+- the matching `badges.test.ts` / `engine.test.ts` assertions.
+
+No rule, threshold, id, tier or stored-data change.
+
+**Other differences seen while looking:**
+- **Rail level card** at 1440: leaves pill 2,216 (base) vs 2,222 (trial) while the header says 2,266 on both. That pill is an animating `Counter` (`Rail.tsx:150`), caught mid-count; not a data change.
+- **Base vs trial Chai** on missed-cozy: base "Afternoon slump? A warm brew of focus helps." (`shots/before/390x844-light-t100/today-missed-cozy.png`) → trial, the Tea Cozy line above.
+
+### 5d. Captures looked at, full size (prior `shots/`; states: fresh/Welcome, blank, newbie, veteran, atRisk, missed-cozy, missed-nocozy, cozy-earn)
+
+**AFTER (trial):**
+- `shots/after/390x844-light-t100/{today,sheet,end,summary}-{blank,newbie,veteran,atRisk,missed-cozy,missed-nocozy,cozy-earn}.png`, plus `today-fresh.png`;
+- `shots/after/375x667-dark-t200/` (same set);
+- `shots/after/1440x900-{light,dark}-t{100,200}/{today,rail}-{blank,newbie,veteran,atRisk,missed-cozy,missed-nocozy}.png`;
+- `shots/after/{390x844-dark-t200,375x667-light-t200,844x390-dark-t200}/today-{atRisk,missed-cozy,missed-nocozy,fresh}.png`.
+
+**BEFORE (base):** the same names under `shots/before/` for 390×844 light @100, 375×667 dark @200, and 1440 ×4.
+
+**Opened** (17:03–17:06):
+- `after/390x844-light-t100/{today-atRisk, today-missed-cozy, sheet-missed-cozy, sheet-missed-nocozy, end-blank, summary-cozy-earn}`;
+- `before/390x844-light-t100/today-missed-cozy`;
+- `after` + `before` `1440x900-light-t100/rail-missed-cozy`;
+- `after/375x667-dark-t200/{today-missed-nocozy, sheet-atRisk}`.
+
+**What the frames show:**
+- No text clipped or overlapping in the sheets or End at 390×844 @100.
+- **375×667 dark @200 Today, missed-nocozy:** the greeting shows only "Good". The Chai bubble, goal and composer are scrolled out by the docked start/segmented control (the capture's scroll position). Not a wording issue, and not compared with the base frame.
+- **`summary-cozy-earn` at 390×844:** the Tea Cozy note lies below the sheet's fold. The text is confirmed in facts ("Tea Cozy earned", sr "You earned a Tea Cozy: it keeps the kettle warm through one missed day").
