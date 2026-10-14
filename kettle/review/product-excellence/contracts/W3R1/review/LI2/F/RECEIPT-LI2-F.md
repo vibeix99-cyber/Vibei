@@ -407,3 +407,16 @@ Missing: none of the brief's 16 configurations lacks a BEFORE/AFTER pair for Tod
   - foot "**Warmest run 0**" and "Tea Cozy in 7 days". Base: "Best 0" and the same "Tea Cozy in 7 days".
   - Raw: a warmest run of 0 and a Tea Cozy countdown shown to someone who has never brewed.
 - **No overlap or clipping** of F's new copy in the frames opened. The longest new line, the Tea Cozy note in the sheet, wraps inside its card at 390×844 @100.
+
+### 4d. Combined `e478604` :5520, F's surfaces with S/G/N merged
+
+Prior: `combined/comb-comb.json`, `combined/comb.log`, 12 frames `combined/<cfg>-{composer-notice,end-sheet,markdone-undo}.png`, script `LI2-comb.mjs`. Configurations: 375×667 light and dark @200, 390×844 light @200, 1440 dark @200.
+
+| Check | 375×667 L 200 | 375×667 D 200 | 390×844 L 200 | 1440 D 200 |
+|---|---|---|---|---|
+| A notice over the composer: elements hit under the notice / task field in view | none / yes (`why: above`) | none / yes | none / yes | none / yes (`why: answer`) |
+| End sheet (S's `Sheet.*` + F's text): Keep brewing / End session on top 9/9 and in view | yes / yes | yes / yes | yes / yes | yes / yes |
+| Kept band after End's notice went (px) | **194** | **194** | **194** | 113 |
+| Mark done → inline Undo: on top 9/9; overlaps with notices; Undo restores the task | 9/9; none; yes | 9/9; none; yes | 9/9; none; yes | 9/9; none; yes |
+
+The 194 px band at the phone sizes @200 comes from a longer notice in that probe. On the trial, the real "Saved 3 minutes of focus" leaves 113 px (§1a).
