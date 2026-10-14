@@ -479,4 +479,6 @@ In 6 L2 runs the notice had not yet left in the tap's window (no change seen).
 - 107 px at 844×390 @200;
 - 72.5 px at 1440 @200.
 
-A tap aimed beforehand lands on the arriving notice or the card in **10 of 15** (one skipped). The 5 on target are where the push is 0 or −16 px, or the target sat above the strip's reach.
+A tap aimed beforehand lands on the arriving notice or the card in **10 of 15** (one skipped). The 5 on target:
+- 375×667 @100 ×2 and 844×390 @100 ×2, where the push is 0 / −16 px;
+- 390×844 dark @200, where the tap came 2,043 ms before the change the probe saw.
