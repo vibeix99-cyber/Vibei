@@ -133,3 +133,7 @@
 | **Trial** | **`7145f49`** = integration `8251a74` (N + G + S) + `7bb8540`, worktree `/home/user/wt/w5tr-x2`, src `db28295`. Dev **:5527** (verified) |
 | Maker's result | That test 8/8 at `--workers=2` and 8/8 at `--workers=1` under load; fails on base by design; the whole `w3-settings` 10/10 |
 | Archive | `archive/pe-w3r1-x2-segment-test-7bb8540.incremental.bundle` |
+
+## X-2: APPROVE (LEAD-5 `8350fb3`; 8/8 under load) → merged as `60fdb7e` (2026-10-14 ~19:20 UTC)
+
+The merged kettle/src `db28295` and kettle/tests `f071f53` equal trial `7145f49`'s. Lane run logs: `kettle/.gitignore` ignores `*.log`, so 149 lane logs under `W3R1/review/` are now kept as `.log.txt` copies (`c0d942b`).
