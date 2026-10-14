@@ -272,3 +272,50 @@ Nothing else.
 **The band (F-D1):** `contracts/W3R1/review/LI2/F/idle/trial/<cfg>-{0-no-notice,1-notice,2-band-at-leave,3-band-after-45s-idle,4-band-after-scroll-and-6s-idle}.png`.
 
 **The session top bar at 200 % landscape (F-T2-8 / F-D2):** `contracts/W3R1/review/LI2/F/topbar2/{base,trial}-{844x390,667x375}-{light,dark}-t200-session-running.png`.
+
+## 8. Fix round: `pe/w3-notices-polish@11a7ac6` (final code `58d1b88` + spec `cbc88ac`; kettle/src `27d83ac`)
+
+| | |
+|---|---|
+| Fix trial | `1358e00` = integration `8af9fcb` (N + G + S + X-2 merged) + `11a7ac6`; worktree `/home/user/wt/w5tr-f2`; dev :5528 (all my fix runs), preview :5538. Its src tree is `d533342` (it includes N, G and S); F's own src is `27d83ac` (`git rev-parse 11a7ac6:kettle/src` = `58d1b88:kettle/src`, checked) |
+| Timing | Handed back ≈19:31 UTC, inside the 18:16–19:46 window |
+| Packet | `/home/user/wt/w5f/kettle/review/product-excellence/contracts/W3R1/F-FIX-READY.md`; evidence `…/W3R1/F/fix/` |
+| BEFORE | F trial `e3b9eac` :5521. Base :5478 |
+| My evidence | `contracts/W3R1/review/LEAD/F/fix/`:<br>• `chainA.sh` (Lane I2's aimed-tap and fling probes, read-only from `/home/user/wt/w5tr-f/kettle/.tmp/LI2/`, against :5528; then X-8);<br>• `chainB.sh` (specs on :5528);<br>• `lead-x8.mjs`;<br>• outputs `probes2/`, `idle3/`, `x8/`, `*.log` (committed as `.log.txt`) |
+
+### ◆1 · Scope
+`git diff --stat 5ee3e7c 11a7ac6 -- kettle/src kettle/tests` lists exactly §6's files:
+- `ui/Toast.tsx` (+60 / −15);
+- `focus/FocusScreen.module.css` (−10);
+- `home/StatusBar.tsx`;
+- `tests/whistle.spec.ts` (line 203 only);
+- `tests/notice-strip.spec.ts` (`press()` only, +17);
+- `tests/w3-notices.spec.ts`;
+- the new `tests/w3-notices-idle.spec.ts`.
+
+`moment.ts` is unchanged. **PASS.**
+
+### The code (read in full)
+**F-D1 (`Toast.tsx`, `decide()`).** A kept room is given back on the same screen when all of these hold:
+- `now − roomLeftAt ≥ QUIET_MS`;
+- `atRest(now)`: no pointer down, and no input of any kind for `QUIET_MS`. `moment.ts` stamps pointer, click, wheel, touch, key and `scroll` (capture), so momentum counts;
+- `!inputPending()`;
+- confirmation in a fresh frame.
+
+Then it commits `room: 0`:
+- **in view**, with `holdTop` (the band closes once);
+- **above the view**, with `holdBelow`, a new helper: the strip's next sibling is kept still, so nothing in view moves.
+
+Two further changes:
+- **A notice leaving above the view** now keeps its room (`keepAbove`), so a mid-fling leave changes no height. Any other above-view change waits for rest, confirmed in a fresh frame.
+- **`roomLeftAt`** is stamped when a room is kept with no next notice.
+
+What stays as before: the band itself, the next notice drawn in the room, `ENTRY_MS`, the hidden page, and `reach` (no room where the notice holds the panel's controls past its edge). The old `reach` give-back at rest is now the general idle rule, which is stricter: it adds `QUIET_MS` since the leave.
+
+**F-D2.** `git diff 4d36939 11a7ac6 -- kettle/src/screens/focus/FocusScreen.module.css` is **empty**. The base's top bar is restored (the first alternative in §6), so the controls are where base puts them, and **F-T2-8 returns to FOLLOW-UP**.
+
+**F-D3 (`StatusBar.tsx`).** The button carries `aria-label={`${n} ${n === 1 ? 'day' : 'days'} warm${atRisk ? ', today not brewed yet' : ''}. Show details`}`, and the sr span is removed. The visible pill is unchanged, and the name contains the visible text (label-in-name).
+
+**C-1.** `whistle.spec.ts:203` now reads `/If Kettle is closed or your phone has paused it by then, no nudge comes\./`. No other line changed.
+
+**`press()` (F-R4).** After each wheel it waits until the element's top and `scrollY` are unchanged across two frames (at most 1.5 s), before the existing on-top check. Nothing is removed or loosened.
