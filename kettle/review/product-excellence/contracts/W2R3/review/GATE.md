@@ -61,3 +61,21 @@
 | Suites (maker) | tsc 0; vitest 289/289; chromium 166/167 (`chai3d:98`, scene, passes 2/2 alone on fix and base); timer/pwa 29 + 2 skipped. Flakes now wait on real state: `:1090`, `:1004`, `statusbar:106` and `a11y:109` |
 | Open findings (maker §7) | At 375×667 @200 "Delete this brew?" can't be reached by tap or Tab (base too). `:1004` cause not established. At 1440 @200 a Mark done click sometimes didn't register under heavy load (later 25/25). Residual: a finger in the air can meet a change made at rest |
 | Archive | `archive/pe-w2r3-notices-6a64fbf.incremental.bundle.part-00..01` (+ `.sha256`) |
+
+## Maker T2 fix round (T2-D1). GATE PASSED, 2026-10-14 03:33 UTC
+
+| Item | Result |
+|---|---|
+| Window | 02:23–03:53 UTC: a fresh window per Vibei after the first container restart, continuing from the orchestrator's WIP save `3462b93`. Handed back at 03:31 |
+| Revision | `pe/w2r3-notices@64f29cd` (packet `T2-FIX-READY.md`), code `40f92b6`, kettle/src `aa88587` (= `3462b93`) |
+| Src delta vs `6a64fbf` | `screens/focus/FocusScreen.tsx` and `.module.css` (no strip on the summary); `app/ShellOverlays.tsx` (the update prompt waits on `/focus` and `/done`). No P files |
+| Tests | `summary-notice.spec.ts` (new). The summary steps of `notice-strip.spec.ts` and `a11y.spec.ts:332` now expect the notice queued, not drawn: consistent with Vibei's direction, nothing weakened |
+| Checks | No secrets. No model identifiers outside the standard trailers. No file > 47 MB (evidence total 216 MB). tsc 0 and build OK on the trial |
+| **Trial** | **`99d9368`** = integration `8af5430` + `64f29cd`, worktree `/home/user/wt/w4tr-t2f`, src `5cd9a44`, tests `d641e59`. Dev **:5477** (verified), preview **:5487** |
+| Archive | `archive/pe-w2r3-notices-fix-64f29cd.incremental.bundle.part-00..01` (+ `.sha256`), `archive/w2r3-trial-t2f-99d9368.incremental.bundle` |
+
+## Verdict T2: APPROVE (final), merged as `4d36939`, 2026-10-14 04:59 UTC
+
+- **Verdict:** LEAD-3 (`CHECKER-W2R3-T2.md` §7–§8), from the receipts `review/LT/RECEIPT-LT-FIX.md`, `review/LR/RECEIPT-LR.md` and `review/ORCH/README.md`.
+- **Merge:** `4d36939` = integration + `pe/w2r3-notices@64f29cd` (`--no-ff`). Its kettle/src `5cd9a44` and kettle/tests `d641e59` equal trial `99d9368`'s, as do `vite.config.ts`, `package.json`, `package-lock.json`, `public/` and `scripts/`.
+- **Final regression:** on the merged tree, worktree `/home/user/wt/w4-final`, dev :5478 (verified `4d36939`), preview :5488. Results in `review/FINAL/`.
