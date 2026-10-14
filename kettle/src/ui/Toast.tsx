@@ -20,10 +20,11 @@
  *  - **A notice leaving never moves the page** (W3R1, F-T2-1): when a notice goes at rest, or as the answer to a tap,
  *    its face goes but the strip **keeps its room** (an empty band of the same height, `Ctl.room`), so nothing under a
  *    finger that is about to land, or has just landed, moves. The next notice is drawn in that room. The room is given
- *    back only when that moves nothing the person could be aiming at: a new screen (or its first `ENTRY_MS`) or the page
- *    hidden. (Not when scrolled above the view: a scroll still on its way would undo the compensation.) One exception: the
- *    session panel (`reach`), where a kept room would hold the countdown's or Break's over's controls below the panel's
- *    edge (F-T2-2), gives it back at rest, as every strip did before this round.
+ *    back (Vibei, W3R1 §3) on a new screen (or its first `ENTRY_MS`), with the page hidden, or on the same screen once
+ *    touch and scroll are idle: no pointer down, no input of any kind for `QUIET_MS` (scroll events included: a fling
+ *    or smooth scroll still running is activity), at least `QUIET_MS` since the notice left, none pending, confirmed in
+ *    a fresh frame (above the view, the page kept still). The session panel (`reach`) keeps no room at all where the
+ *    notice itself holds its controls past the panel's edge (F-T2-2).
  *  - **A route change drops nothing**: the shown notice and the queue move to the next screen's strip (its first
  *    frame), with the time each has left.
  *  - **Announced once**, on arrival, by a light-DOM polite announcer (`[data-notices-said]`); showing, waiting and
@@ -36,7 +37,7 @@ import { on } from '@/lib/events';
 import { audio } from '@/audio';
 import { useReducedMotion } from '@/lib/useReducedMotion';
 import { cx, renderIcon, type IconSlot } from './util';
-import { aboveView, answeringInput, atRest, holdTop, holdView, keepStill, lastTapAt, RESPONSE_MS, scrollerOf, untilRest, viewOf, watchInput, type Still } from './moment';
+import { aboveView, answeringInput, atRest, holdTop, holdView, keepStill, lastTapAt, QUIET_MS, RESPONSE_MS, scrollerOf, untilRest, viewOf, watchInput, type Still } from './moment';
 import s from './Toast.module.css';
 
 export type ToastTone = 'neutral' | 'success' | 'warning' | 'info';
@@ -197,7 +198,7 @@ interface Ctl {
   hold: Still | null;
   /** Why it last changed (tests and probes): a new screen, its first moments, above the view, the answer to a tap, at rest,
    *  the page hidden. */
-  why: 'screen' | 'entry' | 'above' | 'answer' | 'rest' | 'update' | 'hidden' | 'none';
+  why: 'screen' | 'entry' | 'above' | 'answer' | 'rest' | 'update' | 'hidden' | 'idle' | 'none';
   /** The room the strip keeps on this screen after a notice has gone (px; 0: none), so its going moves nothing. */
   room: number;
   /** When (performance.now()). */
@@ -264,6 +265,8 @@ function holdsOutOfReach(el: HTMLElement): boolean {
   const panel = el.parentElement;
   return !!panel && panel.scrollHeight > panel.clientHeight + 0.5;
 }
+/** When the notice whose room the strip keeps left (its room is given back no sooner than QUIET_MS after). */
+let roomLeftAt = -Infinity;
 /** The strip's height now (what it keeps as its room when its notice goes). */
 const heightOf = (el: HTMLElement) => el.getBoundingClientRect().height;
 
@@ -288,18 +291,20 @@ function decide(): void {
   if ((next?.id ?? null) === (ctl.item?.id ?? null)) {
     if (next && next !== ctl.item) commit({ item: next, why: 'update' }); // the same notice, updated (same id)
     else if (ctl.room > 0 && !ctl.item) {
-      // The room a gone notice left: given back only when that moves nothing the person could be aiming at. Not when
-      // it is scrolled above the view: a scroll still on its way (a wheel or fling the page has not been handed yet)
-      // would undo the page being kept still, and what is in view would move (W3R1: 60 px at 1440 @200).
+      // The room a gone notice left (Vibei, W3R1 §3): given back on the same screen once touch and scroll are idle —
+      // no pointer down, no input of any kind (pointer, touch, wheel, key, and scroll events, so a fling or a smooth
+      // scroll still running counts) for QUIET_MS, at least QUIET_MS since the notice left, none pending — confirmed in
+      // a fresh frame. Above the view the page is kept still (nothing in view moves). Never under a finger, never
+      // mid-scroll.
       if (now - ctl.at < ENTRY_MS) commit({ room: 0, hold: holdTop(el), why: 'entry' });
       else if (hidden) commit({ room: 0, hold: null, why: 'hidden' });
-      else if (strip.reach && atRest(now) && !inputPending() && !aboveView(el) && holdsOutOfReach(el)) {
-        // A panel whose controls the room holds out of reach (the session panel, F-T2-2) gives it back at rest.
+      else if (now - roomLeftAt >= QUIET_MS && atRest(now) && !inputPending()) {
         if (!inRestFrame) {
           confirmRestInFrame();
           return;
         }
-        commit({ room: 0, hold: holdTop(el), why: 'rest' });
+        const above = aboveView(el);
+        commit({ room: 0, hold: above ? holdView(el) : holdTop(el), why: above ? 'above' : 'idle' });
       }
     }
     return;
@@ -331,6 +336,7 @@ function decide(): void {
   // A panel that must keep its controls in reach (the session panel) keeps no room when the notice's own height holds
   // them past its edge: it closes up with the notice going, at the same moment, as before this round (F-T2-2).
   const room = free || (strip.reach && holdsOutOfReach(el)) ? 0 : Math.max(ctl.room, ctl.item ? heightOf(el) : 0);
+  if (room > 0 && !next) roomLeftAt = now;
   commit({ item: next, hold, why, room });
 }
 

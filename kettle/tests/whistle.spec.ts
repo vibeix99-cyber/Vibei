@@ -200,7 +200,7 @@ test('denied: Settings says so, shows the browser path, and turning it on later 
   await nudges.click();
   await expect(nudges).toBeChecked();
   // The one platform limit, stated once at the switch: no promise of lock-screen delivery.
-  await expect(page.getByText(/A locked phone may hold the nudge until you’re back/)).toBeVisible();
+  await expect(page.getByText(/If Kettle is closed or your phone has paused it by then, no nudge comes\./)).toBeVisible();
   await page.getByRole('button', { name: 'Send a test nudge' }).click();
   await expect(page.getByRole('button', { name: /Sent/ })).toBeVisible();
 });

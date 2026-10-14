@@ -26,13 +26,18 @@ export function StatusBar({ data }: { data: HomeData }) {
   return (
     <>
       <nav ref={barRef} className={s.statusBar} aria-label="Your progress">
-        <button type="button" className={s.stat} data-kind="streak" onClick={() => setOpen('streak')}>
+        <button
+          type="button"
+          className={s.stat}
+          data-kind="streak"
+          aria-label={`${n} ${n === 1 ? 'day' : 'days'} warm${mugState === 'atRisk' ? ', today not brewed yet' : ''}. Show details`}
+          onClick={() => setOpen('streak')}
+        >
           <StreakMug size={34} state={mugState} animate={false} title="" />
           <span className={s.statText}>
             <span className={s.statNum}>{n}</span>
             <span className={s.statLabel}>{n === 1 ? 'day warm' : 'days warm'}</span>
           </span>
-          <span className="sr-only">{mugState === 'atRisk' ? ', today not brewed yet' : ''}. Show details</span>
         </button>
         <button type="button" className={s.stat} data-kind="leaves" onClick={() => setOpen('leaves')}>
           <Leaf size={28} title="" />

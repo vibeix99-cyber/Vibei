@@ -217,6 +217,23 @@ async function press(page: Page, touch: boolean, el: ReturnType<Page['locator']>
     // Above the view: bring it down; anywhere else (below it, or under the docked start / tab bar): bring it up.
     await page.mouse.wheel(0, r.y < 4 ? -60 : r.y > vh ? 120 : 60);
     await page.waitForTimeout(120);
+    // (W3R1 F-R4) Wait until the wheel's scroll has landed: the element still across two frames (up to 1.5 s).
+    await el.evaluate(
+      (e) =>
+        new Promise<void>((done) => {
+          const t0 = performance.now();
+          let last = e.getBoundingClientRect().top + ':' + scrollY;
+          let still = 0;
+          const f = () => {
+            const now = e.getBoundingClientRect().top + ':' + scrollY;
+            still = now === last ? still + 1 : 0;
+            last = now;
+            if (still >= 2 || performance.now() - t0 > 1500) done();
+            else requestAnimationFrame(f);
+          };
+          requestAnimationFrame(f);
+        }),
+    );
     at = await onTop(page, el, strict);
   }
   await park(page);

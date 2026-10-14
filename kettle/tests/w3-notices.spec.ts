@@ -9,8 +9,9 @@
  *  1. Mark done is measured every frame from Today's first moments until well after the notice has gone: it never
  *     moves. A real tap at the place Mark done was seen before the notice went then lands on Mark done (its inline
  *     Undo is drawn in its place).
- *  2. The room stays while the page is scrolled over it and back (nothing moves by layout); the next screen starts
- *     with no room at all.
+ *  2. The room stays while the page is scrolled over it and back (nothing moves by layout) and while a pointer is
+ *     held; it goes on the same screen once touch and scroll have been idle for 1.2 s (Vibei, W3R1 §3), by 4 s; the
+ *     next screen starts with no room at all.
  *
  *   KETTLE_PORT=5501 npx playwright test tests/w3-notices.spec.ts --project=chromium
  */
@@ -133,23 +134,28 @@ for (const c of CFGS) {
     // The notice's time runs out with nobody touching the page: it goes at rest.
     await expect(page.locator('[data-notice-strip] li')).toHaveCount(0, { timeout: 20_000 });
     const gone = await page.evaluate(() => ({ ...(window as any).__kettle.notices(), now: performance.now() }));
-    await page.waitForTimeout(1500);
+    // The tap the person aimed before the notice went lands now, just after it went (the band is still there: it is
+    // given back only once touch and scroll have been idle for 1.2 s).
+    if (touch) await page.touchscreen.tap(aimed.x, aimed.y);
+    else await page.mouse.click(aimed.x, aimed.y);
+    const tapAt = await page.evaluate(() => performance.now());
     const tops = await page.evaluate(() => (window as any).__mark.tops as { t: number; top: number; sy: number; li: number }[]);
     const after = tops.filter((f) => f.t >= aimed.at);
     const moved = after.filter((f) => Math.abs(f.top - aimed.top) > 0.5);
-    test.info().annotations.push({ type: 'facts', description: JSON.stringify({ aimed, why: gone.why, frames: after.length, framesWithNotice: after.filter((f) => f.li).length, moved: moved.slice(0, 5) }) });
+    test.info().annotations.push({ type: 'facts', description: JSON.stringify({ aimed, why: gone.why, leftToTapMs: Math.round(tapAt - gone.now), frames: after.length, framesWithNotice: after.filter((f) => f.li).length, moved: moved.slice(0, 5) }) });
     expect(gone.why, 'the notice went at rest').toBe('rest');
     expect(after.some((f) => f.li) && after.some((f) => !f.li), 'frames before and after the notice went were measured').toBe(true);
     expect(moved, `Mark done moved on screen when the notice went (aimed at top ${aimed.top})`).toEqual([]);
-    // The tap the person aimed before the notice went: it lands on Mark done.
-    if (touch) await page.touchscreen.tap(aimed.x, aimed.y);
-    else await page.mouse.click(aimed.x, aimed.y);
     await expect(page.locator('[data-undo-for="mark-done"]'), 'the tap reached Mark done: its Undo is drawn').toBeVisible({ timeout: 5_000 });
+    // Then, with nobody touching, the band goes on the same screen (Vibei W3R1 §3: idle ≥ 1.2 s, by 4 s).
+    await page.mouse.move(1, c.h - 1).catch(() => {});
+    await expect.poll(() => page.evaluate(() => (window as any).__kettle.notices().room), { timeout: 6_000 }).toBe(0);
+    expect(await page.evaluate(() => location.hash), 'on the same screen').toBe('#/');
     await ctx.close();
   });
 }
 
-test('the room a gone notice keeps stays while the page is scrolled over it and back: nothing in view moves (390×844, 200 %)', async ({ browser, baseURL }) => {
+test('the room a gone notice keeps stays while the page is scrolled, and goes on the same screen once idle (390×844, 200 %)', async ({ browser, baseURL }) => {
   test.setTimeout(120_000);
   const c: Cfg = { w: 390, h: 844, pct: 200, reduced: false, theme: 'light' };
   const { ctx, page, touch } = await open(browser, c);
@@ -161,7 +167,7 @@ test('the room a gone notice keeps stays while the page is scrolled over it and 
   const room = await strip.evaluate((e) => e.getBoundingClientRect().height);
   expect(room).toBeGreaterThan(40);
   expect(await strip.evaluate((e) => e.textContent), 'nothing in the room').toBe('');
-  // Watch: anything in the page moving by layout (its page position changing), from here to the end.
+  // Watch: anything in the page moving by layout (its page position changing) while the page is scrolled.
   await page.evaluate(() => {
     const W = window as any;
     const el = document.querySelector('button[aria-label^="Mark “Chapter 3 notes” done"]')!;
@@ -174,26 +180,59 @@ test('the room a gone notice keeps stays while the page is scrolled over it and 
     };
     requestAnimationFrame(f);
   });
-  // Real touch drags: down until the room is wholly above the view, rest there, then back to the top.
+  // Real touch drags, one after another (never 1.2 s apart): down until the room is wholly above the view, then back.
   const cdp = await ctx.newCDPSession(page);
   const drag = async (dy: number) => {
     await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: 200, y: 420 }] });
     for (let k = 1; k <= 6; k++) await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: 200, y: 420 - (k * dy) / 6 }] });
     await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
-    await page.waitForTimeout(250);
+    await page.waitForTimeout(200);
   };
   for (let i = 0; i < 12; i++) {
     const b = await page.evaluate(() => document.querySelector('[data-notice-strip]')!.getBoundingClientRect().bottom);
     if (b < -20) break;
     await drag(150);
   }
-  await page.waitForTimeout(3000);
-  expect(await page.evaluate(() => (window as any).__kettle.notices().room), 'still kept, scrolled above the view at rest').toBeGreaterThan(40);
   for (let i = 0; i < 12 && (await page.evaluate(() => scrollY)) > 0; i++) await drag(-200);
-  await page.waitForTimeout(800);
-  const moved = await page.evaluate(() => { const W = window as any; W.__lay.stop = true; return W.__lay.moved as number[]; });
-  test.info().annotations.push({ type: 'facts', description: JSON.stringify({ room, moved: moved.slice(0, 5) }) });
-  expect(moved, 'nothing moved by layout while the page was scrolled over the room and back').toEqual([]);
+  const during = await page.evaluate(() => { const W = window as any; W.__lay.stop = true; return { moved: W.__lay.moved as number[], room: W.__kettle.notices().room as number }; });
+  expect(during.moved, 'nothing moved by layout while the page was scrolled over the room and back').toEqual([]);
+  expect(during.room, 'the room kept during the scroll').toBeGreaterThan(40);
+  // Then idle: the room goes on this screen, 1.2–4 s after the last scroll event.
+  await expect.poll(() => page.evaluate(() => (window as any).__kettle.notices().room), { timeout: 8_000 }).toBe(0);
+  const end = await page.evaluate(() => ({ n: (window as any).__kettle.notices(), m: (window as any).__kettle.moment(), hash: location.hash }));
+  const sinceInput = end.m.sinceInput - (performance.now() - end.n.changed);
+  test.info().annotations.push({ type: 'facts', description: JSON.stringify({ room, during, why: end.n.why, sinceInputAtCollapse: Math.round(sinceInput) }) });
+  expect(end.hash, 'on the same screen').toBe('#/');
+  expect(end.n.why).toBe('idle');
+  await ctx.close();
+});
+
+test('the room is not given back while a pointer is held; it goes 1.2–4 s after release (1440×900, 100 %)', async ({ browser, baseURL }) => {
+  test.setTimeout(120_000);
+  const c: Cfg = { w: 1440, h: 900, pct: 100, reduced: false, theme: 'light' };
+  const { ctx, page, touch } = await open(browser, c);
+  await todayAfterEnd(page, base(baseURL), c.theme, touch);
+  await page.mouse.move(1, c.h - 1);
+  await expect(page.locator('[data-notice-strip] li')).toHaveCount(0, { timeout: 20_000 });
+  expect(await page.evaluate(() => (window as any).__kettle.notices().room)).toBeGreaterThan(40);
+  // Hold the pointer down on the greeting (no control) for 3 s.
+  const h1 = (await page.locator('main h1').first().boundingBox())!;
+  await page.mouse.move(h1.x + 20, h1.y + h1.height / 2);
+  await page.mouse.down();
+  await page.waitForTimeout(3000);
+  const held = await page.evaluate(() => ({ room: (window as any).__kettle.notices().room, down: (window as any).__kettle.moment().down }));
+  expect(held.down, 'the pointer is down').toBeGreaterThan(0);
+  expect(held.room, 'kept while the pointer is down').toBeGreaterThan(40);
+  await page.mouse.up();
+  const upAt = await page.evaluate(() => performance.now());
+  await page.mouse.move(1, c.h - 1);
+  const moveAt = await page.evaluate(() => performance.now());
+  await expect.poll(() => page.evaluate(() => (window as any).__kettle.notices().room), { timeout: 8_000 }).toBe(0);
+  const n = await page.evaluate(() => (window as any).__kettle.notices());
+  test.info().annotations.push({ type: 'facts', description: JSON.stringify({ held, afterUpMs: Math.round(n.changed - upAt), afterLastInputMs: Math.round(n.changed - moveAt), why: n.why }) });
+  expect(n.changed - moveAt, 'given back no sooner than 1.2 s after the last input').toBeGreaterThanOrEqual(1200);
+  expect(n.changed - upAt, 'given back by 4 s after release').toBeLessThanOrEqual(4000);
+  expect(await page.evaluate(() => location.hash)).toBe('#/');
   await ctx.close();
 });
 
@@ -219,5 +258,34 @@ test('a new screen starts with no room: Today after End, then Stats and back (37
   await page.waitForTimeout(600);
   const hs = await page.evaluate(() => [...document.querySelectorAll('[data-notice-strip]')].map((e) => e.getBoundingClientRect().height));
   expect(hs.every((x) => x === 0), `Today's strip takes no room again (${hs})`).toBe(true);
+  await ctx.close();
+});
+
+// W3R1 F-D3: the warm-days status button's accessible name reads as one sentence (the visible pill is unchanged).
+test('the status bar warm-days button is named "N days warm. Show details" (and ", today not brewed yet")', async ({ browser, baseURL }) => {
+  test.setTimeout(120_000);
+  const c: Cfg = { w: 390, h: 844, pct: 100, reduced: false, theme: 'light' };
+  const { ctx, page } = await open(browser, c);
+  const btn = page.locator('[data-kind="streak"]').first();
+  const load = async (seed: string) => {
+    await page.goto(`${base(baseURL)}/?debug&seed=${seed}&theme=light#/`);
+    await page.waitForFunction(() => !!(window as any).__kettle?.timerInfo?.()?.leader, null, { timeout: 60_000 });
+  };
+  await load('veteran');
+  await expect(btn).toHaveAccessibleName('23 days warm. Show details');
+  await expect(btn).toContainText('23');
+  await expect(btn).toContainText('days warm');
+  await load('atRisk');
+  await expect(btn).toHaveAccessibleName('5 days warm, today not brewed yet. Show details');
+  // A first full brew: one warm day.
+  await load('blank');
+  await page.evaluate(() => (window as any).__kettle.timer.getState().startFocus({ intention: '', tag: null }));
+  await page.waitForFunction(() => location.hash === '#/focus');
+  await page.waitForTimeout(800);
+  await page.evaluate(() => (window as any).__kettle.finish());
+  await page.waitForTimeout(800);
+  await page.evaluate(() => (window as any).__kettle.navigate('/'));
+  await expect(btn).toHaveAccessibleName('1 day warm. Show details', { timeout: 15_000 });
+  await expect(btn).toContainText('day warm');
   await ctx.close();
 });
