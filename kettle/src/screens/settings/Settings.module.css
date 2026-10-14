@@ -152,6 +152,16 @@
 }
 
 /* Data */
+/* Your data: the import's inline Undo (and what Undo did) in the "Import a backup" row's place (src/ui/InlineUndo.tsx). */
+.undoRow {
+  min-height: 60px;
+  padding: 10px 16px;
+  box-shadow: inset 0 2px 0 var(--line), inset 0 -2px 0 var(--line);
+  background: var(--surface-2);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 0.9375rem;
+}
 .msgSlot {
   margin-top: -18px;
 }

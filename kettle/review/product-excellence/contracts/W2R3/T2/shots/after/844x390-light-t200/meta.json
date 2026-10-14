@@ -1,0 +1,95 @@
+{
+ "base": "http://127.0.0.1:5481",
+ "cfg": "844x390@2:light:200",
+ "fixed": "2026-10-12T07:40:00.000Z",
+ "states": {
+  "11-mark-done-undo": {
+   "desc": "Today: Mark done tapped, its Undo (base: a toast; fix: in the line)",
+   "scroll": 393,
+   "notices": [],
+   "undo": [
+    {
+     "for": "mark-done",
+     "text": "Crossed off. Nice work. Undo",
+     "box": [
+      452,
+      -41,
+      337,
+      88
+     ]
+    }
+   ]
+  },
+  "14-stats-brew-updated": {
+   "desc": "Stats: Edit › Save, \"Brew updated\" (base: toast; fix: the strip, above the view here)",
+   "scroll": 2515,
+   "notices": [
+    {
+     "text": "Brew updated",
+     "box": [
+      108,
+      -2499,
+      560,
+      57
+     ]
+    }
+   ],
+   "undo": []
+  },
+  "12-history-delete-undo": {
+   "desc": "Stats › History: a brew deleted, its Undo (base: a toast; fix: the row, in place)",
+   "scroll": 2515,
+   "notices": [
+    {
+     "text": "Brew updated",
+     "box": [
+      108,
+      -2499,
+      560,
+      57
+     ]
+    }
+   ],
+   "undo": [
+    {
+     "for": "history-delete",
+     "text": "Brew deleted Undo",
+     "box": [
+      505,
+      205,
+      276,
+      143
+     ]
+    }
+   ]
+  },
+  "13-import-undo": {
+   "desc": "Settings › Your data: a backup imported, its Undo (base: a toast; fix: the Import row)",
+   "scroll": 3779,
+   "notices": [
+    {
+     "text": "Saved kettle-backup-2026-10-12.json. Keep it somewhere safe.",
+     "box": [
+      141,
+      -3763,
+      560,
+      97
+     ]
+    }
+   ],
+   "undo": [
+    {
+     "for": "import",
+     "text": "Backup restored: 52 brews. Welcome back. Undo",
+     "box": [
+      143,
+      246,
+      628,
+      110
+     ]
+    }
+   ]
+  }
+ },
+ "errors": []
+}

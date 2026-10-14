@@ -1,0 +1,300 @@
+{
+ "base": "http://127.0.0.1:5470",
+ "cfg": "375x667@2:dark:200",
+ "runs": {
+  "newbie-none": {
+   "F": 475,
+   "sheetTop": 285,
+   "sheetBottom": 1712,
+   "cutRows": [
+    {
+     "t": "Tea’s ready. Take five before ",
+     "top": 467,
+     "bottom": 558,
+     "cut": true
+    }
+   ],
+   "highlight": {
+    "top": 860,
+    "bottom": 1232,
+    "whole": false
+   },
+   "notices": [],
+   "art": [
+    {
+     "el": "img",
+     "box": [
+      -2,
+      -2,
+      375,
+      223
+     ]
+    },
+    {
+     "el": "img",
+     "box": [
+      227,
+      115,
+      109,
+      149
+     ]
+    }
+   ],
+   "said": null,
+   "queue": null
+  },
+  "newbie-after": {
+   "F": 475,
+   "sheetTop": 285,
+   "sheetBottom": 1712,
+   "cutRows": [
+    {
+     "t": "Tea’s ready. Take five before ",
+     "top": 467,
+     "bottom": 558,
+     "cut": true
+    }
+   ],
+   "highlight": {
+    "top": 860,
+    "bottom": 1232,
+    "whole": false
+   },
+   "notices": [
+    {
+     "text": "A fresh brew of Kettle is ready.Update",
+     "box": [
+      16,
+      318,
+      343,
+      146
+     ],
+     "op": 1
+    }
+   ],
+   "art": [
+    {
+     "el": "img",
+     "box": [
+      -2,
+      -2,
+      375,
+      223
+     ]
+    },
+    {
+     "el": "img",
+     "box": [
+      227,
+      115,
+      109,
+      149
+     ]
+    }
+   ],
+   "said": null,
+   "queue": null
+  },
+  "newbie-timed": {
+   "F": 475,
+   "sheetTop": 285,
+   "sheetBottom": 1712,
+   "cutRows": [
+    {
+     "t": "Tea’s ready. Take five before ",
+     "top": 467,
+     "bottom": 558,
+     "cut": true
+    }
+   ],
+   "highlight": {
+    "top": 860,
+    "bottom": 1232,
+    "whole": false
+   },
+   "notices": [
+    {
+     "text": "Couldn’t save just now. Your summary is ",
+     "box": [
+      16,
+      287,
+      343,
+      178
+     ],
+     "op": 1
+    }
+   ],
+   "art": [
+    {
+     "el": "img",
+     "box": [
+      -2,
+      -2,
+      375,
+      223
+     ]
+    },
+    {
+     "el": "img",
+     "box": [
+      227,
+      115,
+      109,
+      149
+     ]
+    }
+   ],
+   "said": null,
+   "queue": null
+  },
+  "celebrate-none": {
+   "F": 475,
+   "sheetTop": 285,
+   "sheetBottom": 1982,
+   "cutRows": [
+    {
+     "t": "Tea’s ready. Take five before ",
+     "top": 467,
+     "bottom": 558,
+     "cut": true
+    }
+   ],
+   "highlight": {
+    "top": 860,
+    "bottom": 1310,
+    "whole": false
+   },
+   "notices": [],
+   "art": [
+    {
+     "el": "img",
+     "box": [
+      -2,
+      -2,
+      375,
+      223
+     ]
+    },
+    {
+     "el": "img",
+     "box": [
+      227,
+      115,
+      109,
+      149
+     ]
+    }
+   ],
+   "said": null,
+   "queue": null
+  },
+  "celebrate-after": {
+   "F": 475,
+   "sheetTop": 285,
+   "sheetBottom": 1982,
+   "cutRows": [
+    {
+     "t": "Tea’s ready. Take five before ",
+     "top": 467,
+     "bottom": 558,
+     "cut": true
+    }
+   ],
+   "highlight": {
+    "top": 860,
+    "bottom": 1310,
+    "whole": false
+   },
+   "notices": [
+    {
+     "text": "A fresh brew of Kettle is ready.Update",
+     "box": [
+      16,
+      318,
+      343,
+      146
+     ],
+     "op": 1
+    }
+   ],
+   "art": [
+    {
+     "el": "img",
+     "box": [
+      -2,
+      -2,
+      375,
+      223
+     ]
+    },
+    {
+     "el": "img",
+     "box": [
+      227,
+      115,
+      109,
+      149
+     ]
+    }
+   ],
+   "said": null,
+   "queue": null
+  },
+  "celebrate-timed": {
+   "F": 475,
+   "sheetTop": 285,
+   "sheetBottom": 1982,
+   "cutRows": [
+    {
+     "t": "Tea’s ready. Take five before ",
+     "top": 467,
+     "bottom": 558,
+     "cut": true
+    }
+   ],
+   "highlight": {
+    "top": 860,
+    "bottom": 1310,
+    "whole": false
+   },
+   "notices": [
+    {
+     "text": "Couldn’t save just now. Your summary is ",
+     "box": [
+      16,
+      287,
+      343,
+      178
+     ],
+     "op": 1
+    }
+   ],
+   "art": [
+    {
+     "el": "img",
+     "box": [
+      -2,
+      -2,
+      375,
+      223
+     ]
+    },
+    {
+     "el": "img",
+     "box": [
+      227,
+      115,
+      109,
+      149
+     ]
+    }
+   ],
+   "said": null,
+   "queue": null
+  }
+ },
+ "errors": [
+  "newbie-first: page.evaluate: Execution context was destroyed, most likely because of a navigation.",
+  "celebrate-first: page.evaluate: Execution context was destroyed, most likely because of a navigation."
+ ]
+}

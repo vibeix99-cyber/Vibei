@@ -1,0 +1,11 @@
+[slots] T2 took 2/3 at 22:23:48: npx playwright test tests/notice-strip.spec.ts --project=chromium --workers=2 --reporter=list -g 1440×900 light 200 % reduced --repeat-each 4
+
+Running 4 tests using 2 workers
+
+  ✓  2 [chromium] › tests/notice-strip.spec.ts:275:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (55.2s)
+  ✓  1 [chromium] › tests/notice-strip.spec.ts:275:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (58.2s)
+  ✓  3 [chromium] › tests/notice-strip.spec.ts:275:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (53.6s)
+  ✓  4 [chromium] › tests/notice-strip.spec.ts:275:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (57.0s)
+
+  4 passed (2.0m)
+[slots] T2 freed 2 at 22:25:48

@@ -49,7 +49,8 @@ async function serious(page: Page, where: string, out: string[]) {
     const nodes: string[] = [];
     for (const n of v.nodes) {
       const sel = n.target.join(' ');
-      if (v.id === 'target-size' && /partially obscured/.test(n.failureSummary ?? '') && (await scrolledClearPasses(page, sel))) continue;
+      // Not on Today at rest: its Brew length is on screen and clear of the docked start from the first frame (W2 #2).
+      if (where !== 'home' && v.id === 'target-size' && /partially obscured/.test(n.failureSummary ?? '') && (await scrolledClearPasses(page, sel))) continue;
       nodes.push(sel);
     }
     if (nodes.length) out.push(`${where}: ${v.id} (${v.impact}) ${nodes.slice(0, 3).join(', ')}`);
@@ -116,6 +117,9 @@ test('short screen (375×667): every control can be scrolled clear of sticky chr
     if (r.hScroll > 0) out.push(`${id}: horizontal scroll ${r.hScroll}px`);
   };
   const check = async (id: string, p: Page) => {
+    // Real state, not a pause: the previous screen has finished leaving (under load its route layer, with its controls,
+    // can still be in the page when a hash-only navigation lands here: N's a11y.spec.ts:109 failure).
+    await p.waitForFunction(() => !document.querySelector('[data-route-leaving]'), null, { timeout: 15_000 });
     await reach(id, p);
     // Break's over with toasts up, on every date: a recipe or badge toast raised as the break ends (the seeded
     // profile only earns one on some dates) must leave every break-over control clear, the carried task's
@@ -343,7 +347,7 @@ for (const [w, h] of [
     await page.waitForTimeout(2500);
     await say('Couldn’t save just now. Your brew is still running.');
     await page.waitForTimeout(1200);
-    expect(await overlap('[data-toast-above]')).toBe('clear');
+    expect(await overlap('[data-session-controls]')).toBe('clear');
     await expect(page.getByRole('button', { name: /^Pause$/ })).toBeVisible();
     await page.getByRole('button', { name: /^Pause$/ }).click(); // still operable with the toast up
     await expect.poll(() => page.evaluate(() => (window as any).__kettle.timer.getState().status)).toBe('paused');
@@ -353,7 +357,10 @@ for (const [w, h] of [
     await page.waitForTimeout(2500);
     await say('Couldn’t save just now. Your summary is still here.');
     await page.waitForTimeout(1200);
-    expect(await overlap('footer[data-toast-above]')).toBe('clear');
+    // The summary has no notice strip (W2R3 T2-D1): the notice is not drawn there at all (it waits for the next screen),
+    // so it can cover nothing; it is queued, not dropped.
+    expect(await overlap('[data-focus-view] footer')).toBe('missing toast');
+    expect(await page.evaluate(() => (window as any).__kettle.notices().queue.map((q: any) => q.message))).toContain('Couldn’t save just now. Your summary is still here.');
   });
 }
 

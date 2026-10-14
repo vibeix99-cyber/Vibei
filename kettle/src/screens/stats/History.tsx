@@ -1,11 +1,12 @@
 /** Session history grouped by day — tap a brew to rename, retag or delete it (with undo). */
-import { useId, useMemo, useState } from 'react';
+import { useId, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Icon, Leaf, Mascot } from '@/art';
 import type { DayKey } from '@/lib/dates';
 import { historyByDay, leavesBySession } from '@/progress/insights';
 import { useProgress, type SessionRecord } from '@/progress';
 import type { TagId } from '@/state/settings';
-import { Button, Card, Chip, ChipGroup, Dialog, Pill, Sheet, TextField, cx, toast } from '@/ui';
+import { Button, Card, Chip, ChipGroup, Dialog, InlineUndo, Pill, Sheet, TextField, cx, toast } from '@/ui';
+import { holdTop, keepStill, type Still } from '@/ui/moment';
 import { TAG_BY_ID, TAGS, brewTitle } from '@/state/tags';
 import { hm, hmLong, relDay, timeOf } from './format';
 import s from './stats.module.css';
@@ -14,7 +15,27 @@ const PAGE_DAYS = 7;
 
 export function HistorySection({ sessions, metDays, today }: { sessions: SessionRecord[]; metDays: Set<DayKey>; today: DayKey }) {
   const ledger = useProgress((st) => st.ledger);
-  const days = useMemo(() => historyByDay(sessions), [sessions]);
+  // A brew just deleted keeps its place in the list as its Undo (I10: Undo is inline, in the row the person acted on),
+  // for its 5 s; the day's total is the real one (without it).
+  const [removed, setRemoved] = useState<{ rec: SessionRecord; key: boolean } | null>(null);
+  const real = useMemo(() => historyByDay(sessions), [sessions]);
+  const days = useMemo(() => (removed && !sessions.some((x) => x.id === removed.rec.id) ? historyByDay([...sessions, removed.rec]) : real), [sessions, removed, real]);
+  const totals = useMemo(() => new Map(real.map((d) => [d.day, d.focusMs])), [real]);
+  // The delete changes what is above the row too (this week's totals, the charts): the Undo stays where the person saw
+  // the row (on screen), whatever moved above it.
+  const hold = useRef<Still | null>(null);
+  const onDeleted = (rec: SessionRecord, key: boolean) => {
+    const li = document.querySelector(`[data-session-row="${CSS.escape(rec.id)}"]`);
+    hold.current = li ? holdTop(li) : null;
+    setRemoved({ rec, key });
+  };
+  useLayoutEffect(() => {
+    const h = hold.current;
+    hold.current = null;
+    const row = removed && document.querySelector(`[data-undo-for="history-delete"]`);
+    if (!h || !row) return;
+    keepStill({ ...h, ref: row });
+  }, [removed]);
   const leaves = useMemo(() => leavesBySession(ledger), [ledger]);
   const [shown, setShown] = useState(PAGE_DAYS);
   const [editing, setEditing] = useState<SessionRecord | null>(null);
@@ -33,11 +54,11 @@ export function HistorySection({ sessions, metDays, today }: { sessions: Session
       </div>
       <div className={s.historyDays}>
         {visible.map((d) => (
-          <section key={d.day} className={s.historyDay} aria-label={`${relDay(d.day, today)}, ${hmLong(d.focusMs)} focused`}>
+          <section key={d.day} className={s.historyDay} aria-label={`${relDay(d.day, today)}, ${hmLong(totals.get(d.day) ?? 0)} focused`}>
             <header className={s.historyHead}>
               <h3 className={s.historyTitle}>{relDay(d.day, today)}</h3>
               <span className={s.historyTotal}>
-                {hm(d.focusMs)}
+                {hm(totals.get(d.day) ?? 0)}
                 {metDays.has(d.day) && (
                   <span className={s.goalBadge} title="Daily goal met">
                     <Icon name="check" size={14} />
@@ -47,11 +68,30 @@ export function HistorySection({ sessions, metDays, today }: { sessions: Session
               </span>
             </header>
             <ul className={s.historyList}>
-              {d.sessions.map((x) => (
-                <li key={x.id}>
-                  <SessionRow session={x} leaves={leaves.get(x.id) ?? 0} onOpen={() => setEditing(x)} />
-                </li>
-              ))}
+              {d.sessions.map((x) =>
+                removed?.rec.id === x.id ? (
+                  <InlineUndo
+                    key={x.id}
+                    as="li"
+                    className={s.undoRow}
+                    message="Brew deleted"
+                    icon="trash"
+                    tone="berry"
+                    focus={removed.key}
+                    undoLabel={`Undo: bring back ${brewTitle(x)}`}
+                    onUndo={() => {
+                      useProgress.getState().restoreSession(removed.rec);
+                      setRemoved(null);
+                    }}
+                    onExpire={() => setRemoved(null)}
+                    data-undo-for="history-delete"
+                  />
+                ) : (
+                  <li key={x.id} data-session-row={x.id}>
+                    <SessionRow session={x} leaves={leaves.get(x.id) ?? 0} onOpen={() => setEditing(x)} />
+                  </li>
+                ),
+              )}
             </ul>
           </section>
         ))}
@@ -61,7 +101,7 @@ export function HistorySection({ sessions, metDays, today }: { sessions: Session
           Show earlier days
         </Button>
       )}
-      <EditSheet session={editing} onClose={() => setEditing(null)} />
+      <EditSheet session={editing} onClose={() => setEditing(null)} onDeleted={onDeleted} />
     </Card>
   );
 }
@@ -115,16 +155,16 @@ function SessionRow({ session: x, leaves, onOpen }: { session: SessionRecord; le
   );
 }
 
-function EditSheet({ session, onClose }: { session: SessionRecord | null; onClose: () => void }) {
+function EditSheet({ session, onClose, onDeleted }: { session: SessionRecord | null; onClose: () => void; onDeleted: (rec: SessionRecord, key: boolean) => void }) {
   // Keyed so the form resets for each session.
   return (
     <Sheet open={!!session} onClose={onClose} title="Edit brew" description={session ? `${timeOf(session.startedAt)} · ${hm(session.focusedMs)}${session.completed ? ' · full brew' : ' · ended early'}` : undefined}>
-      {session && <EditForm key={session.id} session={session} onDone={onClose} />}
+      {session && <EditForm key={session.id} session={session} onDone={onClose} onDeleted={onDeleted} />}
     </Sheet>
   );
 }
 
-function EditForm({ session, onDone }: { session: SessionRecord; onDone: () => void }) {
+function EditForm({ session, onDone, onDeleted }: { session: SessionRecord; onDone: () => void; onDeleted: (rec: SessionRecord, key: boolean) => void }) {
   const [intention, setIntention] = useState(session.intention);
   const [tag, setTag] = useState<TagId | null>(session.tag);
   const [done, setDone] = useState(session.outcome === 'done');
@@ -135,15 +175,14 @@ function EditForm({ session, onDone }: { session: SessionRecord; onDone: () => v
     toast('Brew updated', { tone: 'success', icon: 'check' });
     onDone();
   };
-  const remove = () => {
+  const remove = (e: { currentTarget: HTMLElement }) => {
     const record = session;
+    // From the keyboard, focus lands on the Undo that takes the row's place (once the sheet has gone).
+    const key = e.currentTarget.matches(':focus-visible');
     useProgress.getState().deleteSession(record.id);
     setConfirm(false);
     onDone();
-    toast('Brew deleted', {
-      icon: 'trash',
-      action: { label: 'Undo', onClick: () => useProgress.getState().restoreSession(record) },
-    });
+    onDeleted(record, key);
   };
   return (
     <form

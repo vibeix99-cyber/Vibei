@@ -1,11 +1,11 @@
 /**
- * Toasts in a short room with storage full (I04 R4-D1, R5-D1, LEAD-D1 → round 7): the storage-full warning is no
- * longer a toast but a banner in Today's page (src/app/SaveWarning.tsx), so no toast can move it, cover its action
- * for good or take it away. With REAL input (mouse wheel, touch drag) over the toasts and the page, and the toasts'
- * REAL timers (none held), the banner must stay in the page the whole time: never removed, at full opacity, at the
- * same place in the page (it scrolls with the page, nothing else moves it), its "Save backup" inside its own box;
- * and every toast in the room can still be brought wholly into view (the round-6 room behaviour). Recorded every
- * frame, for 2 s past the last input.
+ * Notices and the storage-full banner (I04 R4-D1, R5-D1, LEAD-D1, round 7 R7-D1, round 8), carried to I10 (W2R3:
+ * notices without overlays). The banner is in Today's page (src/app/SaveWarning.tsx); notices are in each screen's
+ * in-flow strip (src/ui/Toast.tsx), one at a time. With REAL input (mouse wheel, touch drag) and the notices' REAL
+ * clocks (none held), every frame: the banner is never removed, never below full opacity, its "Save backup" inside its
+ * own box, and it never moves on screen under the person (no layout move of it within 1.15 s of their input or while
+ * they touch; a strip that changes while it is above the view is compensated in the same frame); every notice is drawn
+ * whole when it is shown. Recorded every frame, for 2 s past the last input.
  *
  *   KETTLE_PORT=5222 npx playwright test tests/toast-room.spec.ts --project=chromium
  */
@@ -82,29 +82,51 @@ async function bannerAfterEnd(page: Page, url: string, { levelUp = false, theme 
   // Today has finished cross-fading in from the session screen (the whole page fades in; the banner with it).
   await page.waitForTimeout(1200);
   // From here on: every time the banner leaves the page, and every frame.
+  await record(page);
+}
+
+/** The frame recorder: the banner (gone, faded, clipped, moved on screen by layout near input) and every notice drawn. */
+async function record(page: Page) {
   await page.evaluate((B) => {
-    const R: any = ((window as any).__rec = { frames: [], gone: 0, toasts: new Set<string>(), whole: new Set<string>() });
+    const R: any = ((window as any).__rec = { frames: [], gone: 0, toasts: new Set<string>(), whole: new Set<string>(), notWholeFrames: 0, movedNearInput: [], lastInput: -1e9, down: 0 });
+    for (const t of ['pointerdown', 'pointerup', 'pointercancel', 'wheel', 'touchstart', 'touchmove', 'touchend', 'keydown'])
+      addEventListener(
+        t,
+        (e) => {
+          R.lastInput = performance.now();
+          if (e.type === 'pointerdown') R.down++;
+          if (e.type === 'pointerup' || e.type === 'pointercancel') R.down = Math.max(0, R.down - 1);
+        },
+        { capture: true, passive: true },
+      );
     new MutationObserver((ms) => {
       for (const m of ms) for (const n of m.removedNodes) if (n instanceof Element && (n.matches(B) || n.querySelector(B))) R.gone++;
     }).observe(document.body, { childList: true, subtree: true });
+    let prev: { top: number; page: number } | null = null;
     const tick = () => {
       if (R.stop) return;
+      const now = performance.now();
       const b = document.querySelector(B) as HTMLElement | null;
       let op = 0;
       for (let e: HTMLElement | null = b, o = 1; e && e !== document.documentElement; e = e.parentElement) op = o *= +getComputedStyle(e).opacity;
       const r = b?.getBoundingClientRect();
       const a = b?.querySelector('button')?.getBoundingClientRect();
       const inside = !!(r && a && a.top >= r.top - 0.5 && a.bottom <= r.bottom + 0.5 && a.left >= r.left - 0.5 && a.right <= r.right + 0.5);
-      R.frames.push([performance.now(), b ? op : 0, r ? r.top + scrollY : null, inside ? 1 : 0]);
-      // Every toast in the room, and whether it is wholly on screen and on top (hit-tested at its middle).
-      const list = document.querySelector('[aria-label="Notifications"] ol') as HTMLElement | null;
-      const lr = list?.getBoundingClientRect();
-      const dockTop = document.querySelector('[data-toast-above]')?.getBoundingClientRect().top ?? innerHeight;
-      for (const li of list ? ([...list.querySelectorAll(':scope > li')] as HTMLElement[]) : []) {
+      R.frames.push([now, b ? op : 0, r ? r.top + scrollY : null, inside ? 1 : 0]);
+      if (r) {
+        const cur = { top: r.top, page: r.top + scrollY };
+        // Moved within the page (layout, not scrolling) AND on screen, within 1.15 s of input or while touching.
+        if (prev && Math.abs(cur.page - prev.page) > 0.5 && Math.abs(cur.top - prev.top) > 0.5 && (now - R.lastInput < 1150 || R.down > 0))
+          R.movedNearInput.push({ at: Math.round(now), by: Math.round(cur.page - prev.page), sinceInput: Math.round(now - R.lastInput) });
+        prev = cur;
+      }
+      // Every notice drawn: whole (its own height laid out, wholly on screen, on top at its middle) or not yet in view.
+      for (const li of document.querySelectorAll('[data-notice-strip] li') as NodeListOf<HTMLElement>) {
         R.toasts.add(li.id);
         const q = li.getBoundingClientRect();
         const hit = document.elementFromPoint((q.left + q.right) / 2, (q.top + q.bottom) / 2);
-        if (lr && q.top >= Math.max(0, lr.top) - 1 && q.bottom <= Math.min(innerHeight, lr.bottom, dockTop) + 1 && hit && li.contains(hit)) R.whole.add(li.id);
+        if (li.scrollHeight > li.clientHeight + 1) R.notWholeFrames++;
+        if (q.top >= -0.5 && q.bottom <= innerHeight + 0.5 && hit && li.contains(hit)) R.whole.add(li.id);
       }
       requestAnimationFrame(tick);
     };
@@ -129,20 +151,13 @@ async function scroll(page: Page, cdp: CDPSession | null, x: number, y: number, 
   await page.waitForTimeout(140);
 }
 
-const toastState = (page: Page) =>
+/** Where the person reads the notice now (its middle), or null when none is drawn. */
+const noticeAt = (page: Page) =>
   page.evaluate(() => {
-    const list = document.querySelector('[aria-label="Notifications"] ol') as HTMLElement | null;
-    if (!list || !list.children.length) return null;
-    const lr = list.getBoundingClientRect();
-    // Where a finger or pointer can rest on the stack: the toast with the most of it in view.
-    let best: { h: number; x: number; y: number } | null = null;
-    for (const li of list.children) {
-      const q = li.getBoundingClientRect();
-      const t = Math.max(q.top, lr.top, 0);
-      const b = Math.min(q.bottom, lr.bottom, innerHeight);
-      if (b - t > 8 && (!best || b - t > best.h)) best = { h: b - t, x: (q.left + q.right) / 2, y: (t + b) / 2 };
-    }
-    return best ? { ...best, st: list.scrollTop, max: list.scrollHeight - list.clientHeight, n: list.children.length } : null;
+    const li = document.querySelector('[data-notice-strip] li');
+    if (!li) return null;
+    const q = li.getBoundingClientRect();
+    return { x: (q.left + q.right) / 2, y: Math.min(innerHeight - 10, Math.max(10, (q.top + q.bottom) / 2)), id: li.id };
   });
 
 async function finish(page: Page) {
@@ -151,28 +166,30 @@ async function finish(page: Page) {
   return page.evaluate((t) => {
     const R = (window as any).__rec;
     R.stop = true;
-    const tops = R.frames.filter((f: (number | null)[]) => f[2] !== null).map((f: number[]) => f[2]);
     return {
       frames: R.frames.length,
       msAfter: R.frames.length ? R.frames[R.frames.length - 1][0] - t : 0,
       gone: R.gone,
       faded: R.frames.filter((f: number[]) => f[1] < 0.98).length,
-      drift: tops.length ? Math.max(...tops) - Math.min(...tops) : Infinity,
       clipped: R.frames.filter((f: number[]) => !f[3]).length,
+      movedNearInput: R.movedNearInput,
+      notWholeFrames: R.notWholeFrames,
       notWhole: [...R.toasts].filter((id: string) => !R.whole.has(id)),
       toasts: R.toasts.size,
     };
   }, lastInput);
 }
 
+const queueLength = (page: Page) => page.evaluate(() => (window as any).__kettle.notices().queue.length as number);
+
 for (const [w, h, pct, levelUp] of [
   [375, 667, 200, false],
   [844, 390, 200, false],
-  // A 60 px room: End after 12 minutes with a level-up stacks two toasts nearly as tall as the room.
+  // End after 12 minutes with a level-up: two notices, one after the other.
   [667, 375, 200, true],
 ] as const) {
   for (const how of ['wheel', 'touch'] as const) {
-    test(`the storage-full banner stays in the page, whole and steady, while ${levelUp ? 'every toast' : 'the toasts'} in the room ${levelUp ? 'is' : 'are'} read by ${how} (${w}×${h}, ${pct} % text)`, async ({
+    test(`the storage-full banner stays in the page, whole and steady, while ${levelUp ? 'every notice' : 'the notices'} in the strip ${levelUp ? 'is' : 'are'} read by ${how} (${w}×${h}, ${pct} % text)`, async ({
       browser,
       baseURL,
     }) => {
@@ -182,24 +199,25 @@ for (const [w, h, pct, levelUp] of [
       const page = await ctx.newPage();
       await bannerAfterEnd(page, base(baseURL), { levelUp });
       const cdp: CDPSession | null = how === 'touch' ? await ctx.newCDPSession(page) : null;
-      // The toasts: down as far as the stack goes, then back up (each toast on its real timer, nothing held).
+      // The page, scrolled over the notice and back (each notice on its real clock, nothing held): down until the strip
+      // has left the view, then back up to the top.
       for (const dir of [1, -1]) {
-        for (let i = 0, still = 0; i < 40 && still < 2; i++) {
-          const s = await toastState(page);
-          if (!s) break;
-          await scroll(page, cdp, s.x, s.y, dir * 20);
-          const n = await toastState(page);
-          still = n && n.st === s.st && n.n === s.n ? still + 1 : 0;
+        // Down 12 steps; then back up until the page is at its top again (a touch drag can fling further than it went).
+        for (let i = 0; i < (dir > 0 ? 12 : 60); i++) {
+          const at = (await noticeAt(page)) ?? { x: Math.round(w / 2), y: Math.round(h / 3) };
+          await scroll(page, cdp, at.x, at.y, dir * 40);
+          const top = await page.evaluate(() => scrollY);
+          if (dir < 0 && top <= 0) break;
         }
       }
-      // The page: the banner scrolls with it; bring its "Save backup" into view by real input and use it.
-      // (Above the docked start: at 200 % text in landscape that leaves a strip of about 75 px, as for everything in
-      // that column.)
-      // (The toasts leave on their own timers first: a drag that starts on a toast scrolls the toasts.)
+      expect(await page.evaluate(() => scrollY), 'back at the top, where the strip is').toBe(0);
+      // Until every notice has been shown and has gone (the clock runs only while the strip is in view).
       if (!cdp) await page.mouse.move(2, 2);
-      await expect(page.locator('[aria-label="Notifications"] li')).toHaveCount(0, { timeout: 20_000 });
+      await expect.poll(() => queueLength(page), { timeout: 30_000 }).toBe(0);
+      await expect(page.locator('[data-notice-strip] li')).toHaveCount(0, { timeout: 10_000 });
+      // The page: the banner scrolls with it; bring its "Save backup" into view by real input and use it.
       const pageAt = async () => page.locator(BANNER).getByRole('button', { name: 'Save backup' }).boundingBox();
-      const dockTop = () => page.evaluate(() => document.querySelector('[data-toast-above]')?.getBoundingClientRect().top ?? innerHeight);
+      const dockTop = () => page.evaluate(() => document.querySelector('[data-length], [class*="ctaDock"]')?.getBoundingClientRect().top ?? innerHeight);
       for (let i = 0; i < 40; i++) {
         const a = (await pageAt())!;
         const d = Math.min(await dockTop(), h * 0.55);
@@ -207,18 +225,16 @@ for (const [w, h, pct, levelUp] of [
         const x = Math.round(a.x + a.width / 2);
         await scroll(page, cdp, x, Math.round(Math.max(10, Math.min(a.y + a.height / 2, d - 10))), a.y < 0 ? -40 : 40);
       }
-      // The pointer leaves the stack (a resting pointer holds a toast's timer, as it should).
       if (!cdp) await page.mouse.move(2, 2);
       const r = await finish(page);
       expect(r.msAfter, 'recorded past the last input').toBeGreaterThanOrEqual(2000);
       expect(r.gone, 'times the banner left the page').toBe(0);
       expect(r.faded, `frames without the banner at full opacity (of ${r.frames})`).toBe(0);
-      expect(r.drift, 'how far the banner moved within the page').toBeLessThanOrEqual(0.5);
+      expect(r.movedNearInput, 'the banner moved on screen by layout within 1.15 s of input').toEqual([]);
       expect(r.clipped, 'frames with Save backup outside the banner').toBe(0);
-      expect(r.toasts, 'toasts in the room').toBeGreaterThanOrEqual(levelUp ? 2 : 1);
-      test.info().annotations.push({ type: 'toasts never wholly on screen (real timers, none held)', description: JSON.stringify(r.notWhole) });
-      // Toasts float over the page (round-6 behaviour, unchanged) and leave on their own timers: once none is over it,
-      // "Save backup" takes a real tap / click and saves a file.
+      expect(r.toasts, 'notices shown').toBeGreaterThanOrEqual(levelUp ? 2 : 1);
+      expect(r.notWhole, 'notices never wholly on screen').toEqual([]);
+      expect(r.notWholeFrames, 'frames with a notice cut short').toBe(0);
       await expect
         .poll(() =>
           page.locator(BANNER).getByRole('button', { name: 'Save backup' }).evaluate((el) => {
@@ -240,45 +256,45 @@ for (const [w, h, pct, levelUp] of [
   }
 }
 
-// R5-D1 / LEAD-D1 shapes: the toasts time out on their real timers while the person scrolls; an action toast with
-// no end (the update prompt's shape) sits in the room the whole time. The banner must not move, fade or go.
+// R5-D1 / LEAD-D1 shapes: notices time out on their real clocks while the person scrolls; the update prompt (no end)
+// waits its turn behind them and then stays. The banner must not move under the person, fade or go.
 for (const theme of ['light', 'dark'] as const) {
-  test(`toasts timing out, and an endless action toast, never move the banner (375×667, 200 % text, wheel, ${theme})`, async ({ browser, baseURL }) => {
+  test(`notices timing out, and the endless update prompt, never move the banner under the person (375×667, 200 % text, wheel, ${theme})`, async ({ browser, baseURL }) => {
     test.setTimeout(150_000);
     const ctx = await browser.newContext({ viewport: { width: 375, height: 667 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, colorScheme: theme });
     await setUp(ctx, 200);
     const page = await ctx.newPage();
     await bannerAfterEnd(page, base(baseURL), { levelUp: true, theme });
-    // (Setup) the PwaUpdatePrompt's toast, through the app's own toast(): no service-worker update on a dev server.
-    await page.evaluate(async () => {
-      const { toast } = await import('/src/ui/Toast.tsx' as string);
-      toast('A fresh brew of Kettle is ready.', { id: 'pwa-update', icon: 'sparkle', duration: Infinity, action: { label: 'Update', onClick: () => {} } });
-    });
+    // (Setup) the PwaUpdatePrompt's notice, through the app's own toast(): no service-worker update on a dev server.
+    await page.evaluate(() => (window as any).__kettle.toast('A fresh brew of Kettle is ready.', { id: 'pwa-update', icon: 'sparkle', duration: Infinity, action: { label: 'Update', onClick: () => {} } }));
     for (let k = 0; k < 6; k++) {
       for (const dir of [1, -1]) {
-        const s = await toastState(page);
-        if (s) await scroll(page, null, s.x, s.y, dir * 20);
+        const at = (await noticeAt(page)) ?? { x: 187, y: 200 };
+        await scroll(page, null, at.x, at.y, dir * 20);
         await page.waitForTimeout(400);
       }
     }
-    // Every toast but the endless one has timed out by now.
-    await expect(page.locator('[aria-label="Notifications"] li')).toHaveCount(1, { timeout: 10_000 });
+    await page.mouse.move(2, 2);
+    // Every timed notice has been shown and gone by now; the prompt is the one left, shown.
+    await expect.poll(() => page.evaluate(() => (window as any).__kettle.notices()), { timeout: 30_000 }).toMatchObject({ queue: [{ id: 'pwa-update' }], shown: 'pwa-update' });
+    await expect(page.locator('[data-notice-strip] li')).toHaveCount(1);
     const r = await finish(page);
     expect(r.gone, 'times the banner left the page').toBe(0);
     expect(r.faded, `frames without the banner at full opacity (of ${r.frames})`).toBe(0);
-    expect(r.drift, 'how far the banner moved within the page').toBeLessThanOrEqual(0.5);
+    expect(r.movedNearInput, 'the banner moved on screen by layout within 1.15 s of input').toEqual([]);
     expect(r.clipped, 'frames with Save backup outside the banner').toBe(0);
+    expect(r.notWholeFrames, 'frames with a notice cut short').toBe(0);
     await ctx.close();
   });
 }
 
-// The last toast leaving on its own timer: the list empties the moment it times out, but it is drawn (fading out) until
-// its exit ends; the toasts' region must stay lifted until then, or it is drawn over the docked start meanwhile.
+// The last notice leaving on its own clock: never over the docked start (it is in the page flow, above it), and gone
+// only at a safe moment (src/ui/moment.ts): here, with the person not touching, at rest.
 for (const [w, h] of [
   [375, 667],
   [844, 390],
 ] as const) {
-  test(`the last toast fades out where it was, never over the docked start (${w}×${h}, 200 % text)`, async ({ browser, baseURL }) => {
+  test(`the last notice leaves where it was, never over the docked start (${w}×${h}, 200 % text)`, async ({ browser, baseURL }) => {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
     await setUp(ctx, 200);
     const page = await ctx.newPage();
@@ -286,193 +302,90 @@ for (const [w, h] of [
     await page.waitForFunction(() => !!(window as any).__kettle);
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(1500);
-    await page.evaluate(async () => (await import('/src/ui/Toast.tsx' as string)).toast.dismiss());
+    await page.evaluate(() => (window as any).__kettle.toast.dismiss());
     await page.waitForTimeout(600);
     await page.evaluate(() => {
       const R: any = ((window as any).__exit = { frames: 0, over: 0, seen: false });
       const tick = () => {
         if (R.stop) return;
-        const list = document.querySelector('[aria-label="Notifications"] ol') as HTMLElement;
-        const lr = list.getBoundingClientRect();
-        const ctrls = [...document.querySelectorAll('[data-toast-above] :is(button, a[href], [role="button"])')].map((c) => c.getBoundingClientRect()).filter((r) => r.width && r.height);
-        for (const li of list.querySelectorAll(':scope > li')) {
+        const ctrls = [...document.querySelectorAll('[data-length] :is(button, a[href], [role="button"], [role="radio"]), main button')]
+          .filter((c) => !c.closest('[data-notice-strip]'))
+          .map((c) => c.getBoundingClientRect())
+          .filter((r) => r.width && r.height);
+        for (const li of document.querySelectorAll('[data-notice-strip] li')) {
           R.seen = true;
-          const r = li.getBoundingClientRect();
-          const d = { l: Math.max(r.left, lr.left), t: Math.max(r.top, lr.top), r: Math.min(r.right, lr.right), b: Math.min(r.bottom, lr.bottom) };
-          const drawn = +getComputedStyle(li).opacity > 0.02 && d.r > d.l && d.b > d.t;
-          if (drawn && ctrls.some((c) => d.r > c.left + 0.5 && d.l < c.right - 0.5 && d.b > c.top + 0.5 && d.t < c.bottom - 0.5)) R.over++;
+          const d = li.getBoundingClientRect();
+          if (+getComputedStyle(li).opacity > 0.02 && ctrls.some((c) => d.right > c.left + 0.5 && d.left < c.right - 0.5 && d.bottom > c.top + 0.5 && d.top < c.bottom - 0.5)) R.over++;
         }
         R.frames++;
         requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);
     });
-    await page.evaluate(async () => {
-      const { toast } = await import('/src/ui/Toast.tsx' as string);
-      toast('Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to keep them.', { tone: 'warning', duration: 1500, action: { label: 'Save backup', onClick() {} } });
-    });
-    await page.waitForFunction(() => (window as any).__exit.seen && document.querySelectorAll('[aria-label="Notifications"] li').length === 0, null, { timeout: 10_000, polling: 'raf' });
+    await page.evaluate(() =>
+      (window as any).__kettle.toast('Kettle couldn’t save your latest changes: this browser’s storage is full. Save a backup to keep them.', { tone: 'warning', duration: 1500, action: { label: 'Save backup', onClick() {} } }),
+    );
+    await page.waitForFunction(() => (window as any).__exit.seen && document.querySelectorAll('[data-notice-strip] li').length === 0, null, { timeout: 10_000, polling: 'raf' });
     await page.waitForTimeout(500);
-    const r = await page.evaluate(() => { const R = (window as any).__exit; R.stop = true; return { frames: R.frames, over: R.over }; });
-    expect(r.over, `frames with the leaving toast drawn over the docked start (of ${r.frames})`).toBe(0);
-    await ctx.close();
-  });
-}
-
-// Round 7: with the session panel scrollable at 200 % text (break reach), Break's over scrolled to its end leaves a
-// room from the top bar down to the action group; three toasts used to fill it up over the top bar's Close. The room
-// now starts below the screen's top bar. Real wheel to the end, three toasts on their own timers, every frame checked
-// for Close and every Break's over control, then a real click on Close while the three toasts are up.
-for (const theme of ['light', 'dark'] as const) {
-  test(`three toasts never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, ${theme})`, async ({ browser, baseURL }) => {
-    test.setTimeout(120_000);
-    const ctx = await browser.newContext({ viewport: { width: 375, height: 667 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, colorScheme: theme });
-    await setUp(ctx, 200);
-    const page = await ctx.newPage();
-    await page.goto(`${base(baseURL)}/?debug&seed=newbie&theme=${theme}#/`);
-    await page.waitForFunction(() => !!(window as any).__kettle, null, { timeout: 60_000 });
-    await page.waitForTimeout(1200);
-    await page.evaluate(() => (window as any).__kettle.timer.getState().startFocus({ intention: 'Chapter 3 notes', tag: 'study' }));
-    await page.waitForTimeout(1500);
-    await page.evaluate(() => (window as any).__kettle.finish());
-    const tea = page.getByRole('button', { name: /Tea time|Long tea break/ });
-    await tea.waitFor({ state: 'visible', timeout: 60_000 });
-    await page.waitForTimeout(2000);
-    await tea.tap();
-    await page.getByRole('button', { name: 'Pause break' }).waitFor({ state: 'attached', timeout: 20_000 });
-    await page.waitForTimeout(1000);
-    await page.evaluate(() => (window as any).__kettle.finish());
-    await page.getByRole('button', { name: /Put the kettle on/ }).waitFor({ state: 'attached' });
-    await expect(page.locator('[aria-label="Notifications"] li')).toHaveCount(0, { timeout: 15_000 });
-    // Scroll the panel to its end with the wheel.
-    for (let i = 0; i < 30; i++) {
-      const p = await page.evaluate(() => {
-        const m = document.querySelector('[data-focus-view] main') as HTMLElement;
-        const r = m.getBoundingClientRect();
-        return { st: m.scrollTop, max: m.scrollHeight - m.clientHeight, x: Math.round((r.left + r.right) / 2), y: Math.round((Math.max(0, r.top) + Math.min(innerHeight, r.bottom)) / 2) };
-      });
-      if (p.st >= p.max - 1) break;
-      await page.mouse.move(p.x, p.y);
-      await page.mouse.wheel(0, 120);
-      await page.waitForTimeout(200);
-    }
-    await page.mouse.move(2, 2);
-    const names = ['^Close$', '^Mark it done', '^Put the kettle on', "^That's all for now$"];
-    await page.evaluate((N) => {
-      const w = window as any;
-      const R = (w.__cc = { frames: 0, with3: 0, covered: {} as Record<string, number>, stop: false, clicks: [] as string[] });
-      addEventListener('click', (e) => R.clicks.push(((e.target as Element).closest('button')?.getAttribute('aria-label') || '').trim()), { capture: true });
-      const norm = (s: string) => s.replace(/[’‘]/g, "'").replace(/\s+/g, ' ').trim();
-      const f = () => {
-        if (R.stop) return;
-        const ol = document.querySelector('[aria-label="Notifications"] ol') as HTMLElement | null;
-        const lis = [...document.querySelectorAll('[aria-label="Notifications"] li')];
-        const clip = ol && getComputedStyle(ol).overflowY !== 'visible' ? ol.getBoundingClientRect() : null;
-        const toasts = lis
-          .map((li) => {
-            const q = li.getBoundingClientRect();
-            const r = clip ? { l: Math.max(q.left, clip.left), t: Math.max(q.top, clip.top), r: Math.min(q.right, clip.right), b: Math.min(q.bottom, clip.bottom) } : { l: q.left, t: q.top, r: q.right, b: q.bottom };
-            return +getComputedStyle(li).opacity > 0.02 && r.r > r.l && r.b > r.t ? r : null;
-          })
-          .filter(Boolean) as { l: number; t: number; r: number; b: number }[];
-        if (lis.length === 3) R.with3++;
-        for (const n of N) {
-          const el = [...document.querySelectorAll('[data-focus-view] button')].find((b) => new RegExp(n).test(norm(b.getAttribute('aria-label') || b.textContent || '')));
-          if (!el) continue;
-          const q = el.getBoundingClientRect();
-          const t = Math.max(q.top, 0), b = Math.min(q.bottom, innerHeight);
-          if (b - t < 8) continue;
-          const hit = document.elementFromPoint(q.left + q.width / 2, (t + b) / 2);
-          const under = toasts.some((o) => o.b > t + 1 && o.t < b - 1 && o.r > q.left + 1 && o.l < q.right - 1);
-          if (!(hit && el.contains(hit)) || under) R.covered[n] = (R.covered[n] || 0) + 1;
-        }
-        R.frames++;
-        requestAnimationFrame(f);
-      };
-      requestAnimationFrame(f);
-    }, names);
-    await page.evaluate(async () => {
-      const { toast } = await import('/src/ui/Toast.tsx' as string);
-      for (const [m, tone] of [['Recipe done: Take 2 full tea breaks · +15 leaves', 'success'], ['Saved 12 minutes of focus', 'info'], ['Cozy level 5!', 'success']]) toast(m, { tone });
-    });
-    await page.waitForTimeout(1200);
     const r = await page.evaluate(() => {
-      const w = window as any;
-      w.__cc.stop = true;
-      return { frames: w.__cc.frames, with3: w.__cc.with3, covered: w.__cc.covered };
+      const R = (window as any).__exit;
+      R.stop = true;
+      return { frames: R.frames, over: R.over, why: (window as any).__kettle.notices().why };
     });
-    expect(r.with3, 'frames with three toasts up').toBeGreaterThan(20);
-    expect(r.covered, `controls covered (frames, of ${r.frames})`).toEqual({});
-    // A real click on Close while the three toasts are still up reaches Close.
-    await expect(page.locator('[aria-label="Notifications"] li')).toHaveCount(3);
-    const close = (await page.getByRole('button', { name: 'Close' }).boundingBox())!;
-    await page.mouse.click(close.x + close.width / 2, close.y + close.height / 2);
-    expect(await page.evaluate(() => (window as any).__cc.clicks)).toContain('Close');
+    expect(r.over, `frames with the notice over a control (of ${r.frames})`).toBe(0);
+    expect(r.why, 'it went at rest').toBe('rest');
     await ctx.close();
   });
 }
 
-// Round 8 (I04 R7-D1): on a landscape phone at 200 % text, Break's over scrolled to its end (the only way to reach
-// "Put the kettle on" there) brings its whole action group to the top of the screen. The room above it was a 27–42 px
-// strip: the update prompt showed 11–26 of its px over the top bar's "Next: brew 2 of" line and Update could not be
-// hit. With no room above the controls the stack now floats over the stage (a column with no control in it), every toast
-// whole (or folded to its first line when three do not fit), every action hit-testable. REAL wheel or touch to the end;
-// the update prompt is PwaUpdatePrompt's shape; the other toasts run on their own timers. Every frame: no Break's over
-// control and no Close under a toast; at rest: every toast wholly in view, its action on top at its centre, no top-bar
-// words under a toast; then a real click (wheel run) or CDP tap (touch run) on Update reaches it.
-for (const [w, h, how, theme] of [
-  [667, 375, 'wheel', 'light'],
-  [844, 390, 'touch', 'dark'],
-] as const) {
-  test(`the update prompt and every toast stay whole and tappable, never over a control, on Break's over scrolled to its end (${w}×${h}, 200 % text, ${how}, ${theme})`, async ({ browser, baseURL }) => {
-    test.setTimeout(120_000);
-    const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, colorScheme: theme });
-    await setUp(ctx, 200);
-    const page = await ctx.newPage();
-    const cdp = how === 'touch' ? await ctx.newCDPSession(page) : null;
-    await page.goto(`${base(baseURL)}/?debug&seed=newbie&theme=${theme}#/`);
-    await page.waitForFunction(() => !!(window as any).__kettle, null, { timeout: 60_000 });
-    await page.waitForTimeout(1200);
-    await page.evaluate(() => (window as any).__kettle.timer.getState().startFocus({ intention: 'Chapter 3 notes', tag: 'study' }));
-    await page.waitForTimeout(1500);
-    await page.evaluate(() => (window as any).__kettle.finish());
-    const tea = page.getByRole('button', { name: /Tea time|Long tea break/ });
-    await tea.waitFor({ state: 'visible', timeout: 60_000 });
-    await page.waitForTimeout(2000);
-    await tea.tap();
-    await page.getByRole('button', { name: 'Pause break' }).waitFor({ state: 'attached', timeout: 20_000 });
-    await page.waitForTimeout(1000);
-    await page.evaluate(() => (window as any).__kettle.finish());
-    await page.getByRole('button', { name: /Put the kettle on/ }).waitFor({ state: 'attached' });
-    await expect(page.locator('[aria-label="Notifications"] li')).toHaveCount(0, { timeout: 15_000 });
-    // The update prompt, as PwaUpdatePrompt raises it, with the panel at its top.
-    await page.evaluate(async () => {
-      const { toast } = await import('/src/ui/Toast.tsx' as string);
+/** A Break's over at 200 % text: brew, finish, Tea time (a real tap), finish. */
+async function breakOver(page: Page, url: string, theme: string) {
+  await page.goto(`${url}/?debug&seed=newbie&theme=${theme}#/`);
+  await page.waitForFunction(() => !!(window as any).__kettle, null, { timeout: 60_000 });
+  await page.waitForTimeout(1200);
+  await page.evaluate(() => (window as any).__kettle.timer.getState().startFocus({ intention: 'Chapter 3 notes', tag: 'study' }));
+  await page.waitForTimeout(1500);
+  await page.evaluate(() => (window as any).__kettle.finish());
+  const tea = page.getByRole('button', { name: /Tea time|Long tea break/ });
+  await tea.waitFor({ state: 'visible', timeout: 60_000 });
+  await page.waitForTimeout(2000);
+  await tea.tap();
+  await page.getByRole('button', { name: 'Pause break' }).waitFor({ state: 'attached', timeout: 20_000 });
+  await page.waitForTimeout(1000);
+  await page.evaluate(() => (window as any).__kettle.finish());
+  await page.getByRole('button', { name: /Put the kettle on/ }).waitFor({ state: 'attached' });
+  // Whatever the break's end brought (a recipe on some days) has been shown and gone.
+  await expect.poll(() => queueLength(page), { timeout: 30_000 }).toBe(0);
+  await expect(page.locator('[data-notice-strip] li')).toHaveCount(0, { timeout: 15_000 });
+}
+
+/** Every frame: these session controls on top at their middle and under no notice (counted per control). */
+async function watchControls(page: Page, key: string, names: string[]) {
+  await page.evaluate(
+    ([K, N]) => {
       const w = window as any;
-      w.__upd = 0;
-      toast('A fresh brew of Kettle is ready.', { id: 'pwa-update', icon: 'sparkle', duration: Infinity, action: { label: 'Update', onClick: () => w.__upd++ } });
-    });
-    await page.waitForTimeout(800);
-    // Every frame from here: no Break's over control and no Close under a toast.
-    const names = ['^Close$', '^Mark it done', '^Put the kettle on', "^That's all for now$"];
-    await page.evaluate((N) => {
-      const w = window as any;
-      const R = (w.__dc = { frames: 0, covered: {} as Record<string, number>, stop: false });
+      const R = (w[K] = { frames: 0, drawn: 0, covered: {} as Record<string, number>, stop: false, clicks: [] as string[] });
+      addEventListener('click', (e) => R.clicks.push(((e.target as Element).closest('button')?.getAttribute('aria-label') || (e.target as Element).closest('button')?.textContent || '').trim()), { capture: true });
       const norm = (s: string) => s.replace(/[’‘]/g, "'").replace(/\s+/g, ' ').trim();
       const f = () => {
         if (R.stop) return;
-        const ol = document.querySelector('[aria-label="Notifications"] ol') as HTMLElement | null;
-        const clip = ol && getComputedStyle(ol).overflowY !== 'visible' ? ol.getBoundingClientRect() : null;
-        const boxes = [...document.querySelectorAll('[aria-label="Notifications"] li')]
-          .map((li) => {
-            const q = li.getBoundingClientRect();
-            const r = clip ? { l: Math.max(q.left, clip.left), t: Math.max(q.top, clip.top), r: Math.min(q.right, clip.right), b: Math.min(q.bottom, clip.bottom) } : { l: q.left, t: q.top, r: q.right, b: q.bottom };
-            return +getComputedStyle(li).opacity > 0.02 && r.r > r.l && r.b > r.t ? r : null;
-          })
-          .filter(Boolean) as { l: number; t: number; r: number; b: number }[];
+        // Each notice as drawn: clipped by every ancestor that clips (a strip scrolled up out of the panel is not drawn).
+        const drawnBox = (li: Element) => {
+          const q = li.getBoundingClientRect();
+          let t = q.top, b = q.bottom, l = q.left, r = q.right;
+          for (let e = li.parentElement; e && e !== document.documentElement; e = e.parentElement) {
+            const cs = getComputedStyle(e);
+            if (cs.overflowX === 'visible' && cs.overflowY === 'visible') continue;
+            const c = e.getBoundingClientRect();
+            t = Math.max(t, c.top); b = Math.min(b, c.bottom); l = Math.max(l, c.left); r = Math.min(r, c.right);
+          }
+          return { top: t, bottom: b, left: l, right: r, height: b - t, width: r - l };
+        };
+        const boxes = [...document.querySelectorAll('[data-notice-strip] li')].map(drawnBox).filter((q) => q.height > 0 && q.width > 0);
+        if (boxes.length) R.drawn++;
         const main = document.querySelector('[data-focus-view] main') as HTMLElement;
         const mr = main.getBoundingClientRect();
-        for (const n of N) {
+        for (const n of N as string[]) {
           const el = [...document.querySelectorAll('[data-focus-view] button')].find((b) => new RegExp(n).test(norm(b.getAttribute('aria-label') || b.textContent || '')));
           if (!el) continue;
           const q = el.getBoundingClientRect();
@@ -480,77 +393,142 @@ for (const [w, h, how, theme] of [
           const t = Math.max(q.top, 0, inPanel ? mr.top : 0), b = Math.min(q.bottom, innerHeight, inPanel ? mr.bottom : innerHeight);
           if (b - t < 8) continue;
           const hit = document.elementFromPoint(q.left + q.width / 2, (t + b) / 2);
-          const under = boxes.some((o) => o.b > t + 1 && o.t < b - 1 && o.r > q.left + 1 && o.l < q.right - 1);
+          const under = boxes.some((o) => o.bottom > t + 0.5 && o.top < b - 0.5 && o.right > q.left + 0.5 && o.left < q.right - 0.5);
           if (!(hit && el.contains(hit)) || under) R.covered[n] = (R.covered[n] || 0) + 1;
         }
         R.frames++;
         requestAnimationFrame(f);
       };
       requestAnimationFrame(f);
-    }, names);
-    // The panel to its end by REAL wheel / touch, aimed at its lower right corner (not at a toast).
-    for (let i = 0; i < 40; i++) {
-      const p = await page.evaluate(() => {
-        const m = document.querySelector('[data-focus-view] main') as HTMLElement;
-        const r = m.getBoundingClientRect();
-        return { st: m.scrollTop, max: m.scrollHeight - m.clientHeight, x: Math.round(r.right - 24), y: Math.round(Math.min(innerHeight, r.bottom) - 40) };
-      });
-      expect(p.max, 'Break’s over scrolls at this size').toBeGreaterThan(100);
-      if (p.st >= p.max - 1) break;
-      await scroll(page, cdp, p.x, p.y, 80);
-    }
+    },
+    [key, names] as const,
+  );
+}
+const stopWatch = (page: Page, key: string) =>
+  page.evaluate((K) => {
+    const w = window as any;
+    w[K].stop = true;
+    return { frames: w[K].frames, drawn: w[K].drawn, covered: w[K].covered, clicks: w[K].clicks };
+  }, key);
+
+/** Scroll the session panel by real wheel / touch until `end` (its end, or its top). */
+async function panelTo(page: Page, cdp: CDPSession | null, end: 'end' | 'top') {
+  for (let i = 0; i < 40; i++) {
+    const p = await page.evaluate(() => {
+      const m = document.querySelector('[data-focus-view] main') as HTMLElement;
+      const r = m.getBoundingClientRect();
+      return { st: m.scrollTop, max: m.scrollHeight - m.clientHeight, x: Math.round(r.right - 24), y: Math.round(Math.min(innerHeight, r.bottom) - 40) };
+    });
+    if (end === 'end' ? p.st >= p.max - 1 : p.st <= 0) break;
+    await scroll(page, cdp, p.x, p.y, end === 'end' ? 80 : -80);
+  }
+}
+
+// Round 7 (R7-D1): Break's over scrolled to its end at 200 % text; three notices raised (one shown at a time, in the
+// panel's strip, which has scrolled up with the panel): Close and every Break's over control stay on top and under no
+// notice in every frame; a real click on Close while they wait reaches Close.
+for (const theme of ['light', 'dark'] as const) {
+  test(`three notices never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, ${theme})`, async ({ browser, baseURL }) => {
+    test.setTimeout(120_000);
+    const ctx = await browser.newContext({ viewport: { width: 375, height: 667 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, colorScheme: theme });
+    await setUp(ctx, 200);
+    const page = await ctx.newPage();
+    await breakOver(page, base(baseURL), theme);
+    await panelTo(page, null, 'end');
+    await page.mouse.move(2, 2);
+    const names = ['^Close$', '^Mark it done', '^Put the kettle on', "^That's all for now$"];
+    await watchControls(page, '__cc', names);
+    await page.evaluate(() => {
+      const k = (window as any).__kettle;
+      for (const [m, tone] of [['Recipe done: Take 2 full tea breaks · +15 leaves', 'success'], ['Saved 12 minutes of focus', 'info'], ['Cozy level 5!', 'success']]) k.toast(m, { tone });
+    });
+    // The strip is above the view (scrolled with the panel): the first notice is laid out there at once, the page kept
+    // still; it is drawn, waiting for the person to scroll up to it.
+    await expect.poll(() => page.evaluate(() => (window as any).__kettle.notices().shown)).not.toBeNull();
+    await page.waitForTimeout(1200);
+    const r = await stopWatch(page, '__cc');
+    expect(r.covered, `controls covered (frames, of ${r.frames})`).toEqual({});
+    expect(await queueLength(page), 'all three waiting, none spent out of view').toBe(3);
+    const close = (await page.getByRole('button', { name: 'Close' }).boundingBox())!;
+    await page.mouse.click(close.x + close.width / 2, close.y + close.height / 2);
+    expect(r.clicks.concat(await page.evaluate(() => (window as any).__cc.clicks))).toContain('Close');
+    await ctx.close();
+  });
+}
+
+// Round 8 (I04 R7-D1, landscape): Break's over at 200 % text, scrolled to its end by real wheel / touch and back; the
+// update prompt, then two timed notices (one with an action). Every frame: no Break's over control and no Close under
+// a notice. Each notice in turn whole, its action on top; a real click / tap on Undo and on Update reaches them.
+for (const [w, h, how, theme] of [
+  [667, 375, 'wheel', 'light'],
+  [844, 390, 'touch', 'dark'],
+] as const) {
+  test(`the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (${w}×${h}, 200 % text, ${how}, ${theme})`, async ({ browser, baseURL }) => {
+    test.setTimeout(150_000);
+    const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, colorScheme: theme });
+    await setUp(ctx, 200);
+    const page = await ctx.newPage();
+    const cdp = how === 'touch' ? await ctx.newCDPSession(page) : null;
+    await breakOver(page, base(baseURL), theme);
+    await page.evaluate(() => {
+      const w = window as any;
+      w.__upd = 0;
+      w.__kettle.toast('A fresh brew of Kettle is ready.', { id: 'pwa-update', icon: 'sparkle', duration: Infinity, action: { label: 'Update', onClick: () => w.__upd++ } });
+    });
     await page.waitForTimeout(800);
+    const names = ['^Close$', '^Mark it done', '^Put the kettle on', "^That's all for now$"];
+    await watchControls(page, '__dc', names);
+    const max = await page.evaluate(() => {
+      const m = document.querySelector('[data-focus-view] main') as HTMLElement;
+      return m.scrollHeight - m.clientHeight;
+    });
+    expect(max, 'Break’s over scrolls at this size').toBeGreaterThan(100);
+    await panelTo(page, cdp, 'end');
+    await page.waitForTimeout(400);
+    await panelTo(page, cdp, 'top');
     const atRest = () =>
       page.evaluate(() => {
-        const ol = document.querySelector('[aria-label="Notifications"] ol') as HTMLElement;
-        const clip = getComputedStyle(ol).overflowY !== 'visible' ? ol.getBoundingClientRect() : null;
-        const hdr = document.querySelector('[data-focus-view] header') as HTMLElement;
-        const words = [...hdr.querySelectorAll('*')].filter((e) => e.children.length === 0 && (e.textContent || '').trim()).map((e) => e.getBoundingClientRect()).filter((q) => q.width > 0);
-        return [...ol.querySelectorAll(':scope > li')].map((li) => {
-          const q = li.getBoundingClientRect();
-          const t = Math.max(q.top, 0, clip ? clip.top : 0), b = Math.min(q.bottom, innerHeight, clip ? clip.bottom : innerHeight);
-          const act = li.querySelector('button');
-          let actionOnTop: boolean | null = null;
-          if (act) {
-            const a = act.getBoundingClientRect();
-            const hit = document.elementFromPoint(a.left + a.width / 2, a.top + a.height / 2);
-            actionOnTop = !!hit && act.contains(hit);
-          }
-          const overBar = words.some((x) => q.right > x.left + 1 && q.left < x.right - 1 && t < x.bottom - 1 && b > x.top + 1);
-          return { text: (li.textContent || '').slice(0, 20), box: Math.round(q.height), own: (li as HTMLElement).scrollHeight, visible: Math.round(b - t), actionOnTop, overBar };
-        });
+        const li = document.querySelector('[data-notice-strip] li') as HTMLElement | null;
+        if (!li) return null;
+        const q = li.getBoundingClientRect();
+        const act = li.querySelector('button');
+        let actionOnTop: boolean | null = null;
+        if (act) {
+          const a = act.getBoundingClientRect();
+          const hit = document.elementFromPoint(a.left + a.width / 2, a.top + a.height / 2);
+          actionOnTop = !!hit && act.contains(hit) && a.width >= 24 && a.height >= 24;
+        }
+        return { text: (li.textContent || '').slice(0, 24), inView: q.top >= -0.5 && q.bottom <= innerHeight + 0.5, own: li.scrollHeight <= li.clientHeight + 1, actionOnTop };
       });
-    const whole = (rows: Awaited<ReturnType<typeof atRest>>) => rows.filter((r) => r.visible < r.box - 1 || r.own > r.box + 1 || r.actionOnTop === false || r.overBar);
-    const one = await atRest();
-    expect(one).toHaveLength(1);
-    expect(whole(one), 'the update prompt whole, Update on top, no top-bar words under it').toEqual([]);
-    // Two more toasts on their own timers (one with an action): all three whole (or folded), every action on top.
-    await page.evaluate(async () => {
-      const { toast } = await import('/src/ui/Toast.tsx' as string);
+    expect(await atRest(), 'the update prompt whole, Update on top').toMatchObject({ text: expect.stringContaining('A fresh brew'), inView: true, own: true, actionOnTop: true });
+    // Two timed notices: the prompt steps aside for them (at the next safe moment) and comes back after.
+    await page.evaluate(() => {
       const w = window as any;
       w.__undo = 0;
-      toast('Cozy level 5!', { tone: 'success' });
-      toast('Marked “Chapter 3 notes” done', { tone: 'success', action: { label: 'Undo', onClick: () => w.__undo++ } });
+      w.__kettle.toast('Cozy level 5!', { tone: 'success', duration: 60_000 });
+      w.__kettle.toast('Marked “Chapter 3 notes” done', { tone: 'success', duration: 60_000, action: { label: 'Undo', onClick: () => w.__undo++ } });
     });
-    await page.waitForTimeout(900);
-    const three = await atRest();
-    expect(three).toHaveLength(3);
-    expect(whole(three), 'three toasts: each whole, each action on top').toEqual([]);
-    // A real click or tap on Undo and on Update reaches them.
-    for (const [label, key] of [['Undo', '__undo'], ['Update', '__upd']] as const) {
-      const box = (await page.locator('[aria-label="Notifications"] li button', { hasText: label }).boundingBox())!;
+    if (!cdp) await page.mouse.move(2, 2);
+    await expect.poll(async () => (await atRest())?.text ?? '', { timeout: 10_000 }).toContain('Marked');
+    expect(await atRest(), 'the action notice whole, Undo on top').toMatchObject({ inView: true, own: true, actionOnTop: true });
+    const tapOn = async (label: string) => {
+      const box = (await page.locator('[data-notice-strip] li button', { hasText: label }).boundingBox())!;
       if (cdp) {
         await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: Math.round(box.x + box.width / 2), y: Math.round(box.y + box.height / 2) }] });
         await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
       } else await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
       await page.waitForTimeout(300);
-      expect(await page.evaluate((k) => (window as any)[k], key), `${label} reached`).toBe(1);
-    }
-    const r = await page.evaluate(() => {
-      const w = window as any;
-      w.__dc.stop = true;
-      return { frames: w.__dc.frames, covered: w.__dc.covered };
-    });
+    };
+    await tapOn('Undo');
+    expect(await page.evaluate(() => (window as any).__undo), 'Undo reached').toBe(1);
+    // Its going was the tap's answer: the next one ("Cozy level 5!") at once, whole.
+    await expect.poll(async () => (await atRest())?.text ?? '', { timeout: 5_000 }).toContain('Cozy level');
+    expect(await atRest()).toMatchObject({ inView: true, own: true });
+    await page.evaluate(() => (window as any).__kettle.toast.dismiss(Object.values((window as any).__kettle.notices().queue).find((q: any) => /Cozy/.test(q.message)).id));
+    await expect.poll(async () => (await atRest())?.text ?? '', { timeout: 10_000 }).toContain('A fresh brew');
+    await tapOn('Update');
+    expect(await page.evaluate(() => (window as any).__upd), 'Update reached').toBe(1);
+    const r = await stopWatch(page, '__dc');
     expect(r.frames).toBeGreaterThan(60);
     expect(r.covered, `controls covered (frames, of ${r.frames})`).toEqual({});
     await ctx.close();

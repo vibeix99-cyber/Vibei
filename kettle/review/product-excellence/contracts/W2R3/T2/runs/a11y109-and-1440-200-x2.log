@@ -1,0 +1,43 @@
+[slots] T2 took 2/3 at 22:19:15: npx playwright test tests/a11y.spec.ts tests/notice-strip.spec.ts --project=chromium --workers=2 --reporter=list -g short screen|1440×900 (light|dark) 200 % --repeat-each 2
+
+Running 8 tests using 2 workers
+
+  ✓  1 [chromium] › tests/a11y.spec.ts:110:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll (49.3s)
+  ✓  2 [chromium] › tests/a11y.spec.ts:110:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll (54.3s)
+  ✘  4 [chromium] › tests/notice-strip.spec.ts:275:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (22.2s)
+  ✓  3 [chromium] › tests/notice-strip.spec.ts:275:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 %) (1.1m)
+  ✓  5 [chromium] › tests/notice-strip.spec.ts:275:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 200 %) (1.1m)
+  ✓  6 [chromium] › tests/notice-strip.spec.ts:275:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 %) (1.0m)
+  ✓  7 [chromium] › tests/notice-strip.spec.ts:275:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (56.8s)
+  ✓  8 [chromium] › tests/notice-strip.spec.ts:275:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 200 %) (55.8s)
+
+
+  1) [chromium] › tests/notice-strip.spec.ts:275:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('[data-undo-for="mark-done"]')
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for locator('[data-undo-for="mark-done"]')[22m
+
+
+      309 |     facts.markDoneTapMs = Date.now() - t0;
+      310 |     const undoRow = page.locator('[data-undo-for="mark-done"]');
+    > 311 |     await expect(undoRow).toBeVisible();
+          |                           ^
+      312 |     const rowTop = await undoRow.evaluate((r) => r.getBoundingClientRect().top);
+      313 |     expect(Math.abs(rowTop - line), 'the Undo is drawn where Mark done was, on screen').toBeLessThanOrEqual(2);
+      314 |     const undo = undoRow.getByRole('button', { name: /^Undo/ });
+        at /home/user/wt/w4t2/kettle/tests/notice-strip.spec.ts:311:27
+
+    Error Context: test-results/notice-strip-no-notice-ove-d82ec-0-light-200-reduced-motion--chromium/error-context.md
+
+  1 failed
+    [chromium] › tests/notice-strip.spec.ts:275:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) 
+  7 passed (4.0m)
+[slots] T2 freed 2 at 22:23:16

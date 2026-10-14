@@ -1112,6 +1112,14 @@
 .historyList li + li {
   border-top: var(--border) solid var(--line);
 }
+/* A brew just deleted: its row turns into its Undo, in place and about as tall, for 5 s (src/ui/InlineUndo.tsx). */
+.undoRow {
+  min-height: 60px;
+  padding: 10px var(--space-3);
+  background: var(--surface-2);
+  color: var(--ink);
+  font-weight: 700;
+}
 .sessionRow {
   appearance: none;
   border: 0;

@@ -31,7 +31,23 @@ const MARK = /^Mark it done/;
 const PUT = /^Put the kettle on/;
 const LEAVE = /^That's all for now$/;
 
-async function phone(browser: Browser, w: number, h: number, theme: Theme, pct: number) {
+/**
+ * The seven weekdays, frozen (page.clock.install + resume: the date is fixed, time then runs). The day's recipes depend
+ * on it: on recipe-completion days (Monday, Thursday) the break's end raises "Recipe done", which is now in the panel's
+ * notice strip (src/ui/Toast.tsx), in the page flow, so it can never take the scroll gesture (I10, W2R3).
+ */
+const DAYS = {
+  Mon: '2026-10-12T07:40:00.000Z',
+  Tue: '2026-10-13T07:40:00.000Z',
+  Wed: '2026-10-14T07:40:00.000Z',
+  Thu: '2026-10-15T07:40:00.000Z',
+  Fri: '2026-10-16T07:40:00.000Z',
+  Sat: '2026-10-17T07:40:00.000Z',
+  Sun: '2026-10-18T07:40:00.000Z',
+} as const;
+type Day = keyof typeof DAYS;
+
+async function phone(browser: Browser, w: number, h: number, theme: Theme, pct: number, day: Day = 'Sun') {
   const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, colorScheme: theme });
   await ctx.addInitScript((pct) => {
     try {
@@ -48,6 +64,8 @@ async function phone(browser: Browser, w: number, h: number, theme: Theme, pct: 
       });
   }, pct);
   const page = await ctx.newPage();
+  await page.clock.install({ time: Date.parse(DAYS[day]) });
+  await page.clock.resume();
   return { ctx, page, cdp: await ctx.newCDPSession(page) };
 }
 
@@ -175,15 +193,25 @@ const SIZES = [
   [844, 390, 'light'],
 ] as const;
 
+// Every weekday at the smallest size; the recipe days (Monday, Thursday) and a day without one (Sunday) at the others.
+// BREAK_REACH_ALL_DAYS=1: all seven at every size.
+const ALL_DAYS = Object.keys(DAYS) as Day[];
 for (const [w, h, theme] of SIZES)
-  test(`200 % text, ${w}×${h} ${theme}: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab`, async ({ browser, baseURL }) => {
-    test.setTimeout(180_000);
-    const { ctx, page, cdp } = await phone(browser, w, h, theme, 200);
-    await toBreak(page, baseURL, theme, true);
-    await toBreakOver(page);
-    await everyControlReached(page, cdp, [MARK, PUT, LEAVE]);
-    await ctx.close();
-  });
+  for (const day of process.env.BREAK_REACH_ALL_DAYS || w === 375 ? ALL_DAYS : (['Mon', 'Thu', 'Sun'] as Day[]))
+    test(`200 % text, ${w}×${h} ${theme}, ${day}: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab`, async ({ browser, baseURL }) => {
+      test.setTimeout(180_000);
+      const { ctx, page, cdp } = await phone(browser, w, h, theme, 200, day);
+      await toBreak(page, baseURL, theme, true);
+      await toBreakOver(page);
+      // What the break's end raised (this build's announcer, or an older build's toast list): for the record.
+      const said = await page.evaluate(() => {
+        const el = (window as any).__kettle.noticesSaid?.() ?? document.querySelector('[aria-label="Notifications"]');
+        return el ? [...el.querySelectorAll('p, li')].map((p: Element) => p.textContent) : [];
+      });
+      test.info().annotations.push({ type: `notices on ${day}`, description: JSON.stringify(said) });
+      await everyControlReached(page, cdp, [MARK, PUT, LEAVE]);
+      await ctx.close();
+    });
 
 for (const [w, h, theme] of [
   [375, 667, 'dark'],
@@ -229,9 +257,12 @@ test('100 % text, 375×667 and 390×844: the break and Break’s over fit withou
     const { ctx, page } = await phone(browser, w, h, 'light', 100);
     await toBreak(page, baseURL, 'light', true);
     const scrolls = () => page.evaluate(() => { const m = document.querySelector('[data-focus-view] main')!; return m.scrollHeight - m.clientHeight; });
+    // At rest: no notice in the panel's strip (on a recipe day the break's end shows one first, in the panel's flow).
+    const noNotice = () => expect(page.locator('[data-focus-view] [data-notice-strip] li')).toHaveCount(0, { timeout: 15_000 });
     for (const re of [SKIP, PAUSE, NEXT]) expect((await spot(page, re))?.ok, `${w}×${h} break: ${re}`).toBe(true);
     expect(await scrolls(), `${w}×${h} break: nothing to scroll`).toBeLessThanOrEqual(0);
     await toBreakOver(page);
+    await noNotice();
     for (const re of [MARK, PUT, LEAVE]) expect((await spot(page, re))?.ok, `${w}×${h} Break's over: ${re}`).toBe(true);
     expect(await scrolls(), `${w}×${h} Break's over: nothing to scroll`).toBeLessThanOrEqual(0);
     await ctx.close();

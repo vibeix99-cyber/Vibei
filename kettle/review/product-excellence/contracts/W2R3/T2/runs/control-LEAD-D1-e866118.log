@@ -1,0 +1,48 @@
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium] › tests/zz-ctl-b39202f.spec.ts:246:3 › toasts timing out, and an endless action toast, never move the banner (375×667, 200 % text, wheel, light) (16.1s)
+  ✘  2 [chromium] › tests/zz-ctl-b39202f.spec.ts:246:3 › toasts timing out, and an endless action toast, never move the banner (375×667, 200 % text, wheel, dark) (15.6s)
+
+
+  1) [chromium] › tests/zz-ctl-b39202f.spec.ts:246:3 › toasts timing out, and an endless action toast, never move the banner (375×667, 200 % text, wheel, light) 
+
+    TimeoutError: page.waitForSelector: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('section[data-save-warning]') to be visible[22m
+
+
+      79 |   await page.evaluate(() => (window as any).__kettle.timer.getState().end('user'));
+      80 |   await page.waitForFunction(() => location.hash === '#/' || location.hash === '');
+    > 81 |   await page.waitForSelector(BANNER, { timeout: 10_000 });
+         |              ^
+      82 |   // Today has finished cross-fading in from the session screen (the whole page fades in; the banner with it).
+      83 |   await page.waitForTimeout(1200);
+      84 |   // From here on: every time the banner leaves the page, and every frame.
+        at bannerAfterEnd (/home/user/wt/w4t2-ce866118/kettle/tests/zz-ctl-b39202f.spec.ts:81:14)
+        at /home/user/wt/w4t2-ce866118/kettle/tests/zz-ctl-b39202f.spec.ts:251:5
+
+    Error Context: test-results/zz-ctl-b39202f-toasts-timi-a3665-5×667-200-text-wheel-light--chromium/error-context.md
+
+  2) [chromium] › tests/zz-ctl-b39202f.spec.ts:246:3 › toasts timing out, and an endless action toast, never move the banner (375×667, 200 % text, wheel, dark) 
+
+    TimeoutError: page.waitForSelector: Timeout 10000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('section[data-save-warning]') to be visible[22m
+
+
+      79 |   await page.evaluate(() => (window as any).__kettle.timer.getState().end('user'));
+      80 |   await page.waitForFunction(() => location.hash === '#/' || location.hash === '');
+    > 81 |   await page.waitForSelector(BANNER, { timeout: 10_000 });
+         |              ^
+      82 |   // Today has finished cross-fading in from the session screen (the whole page fades in; the banner with it).
+      83 |   await page.waitForTimeout(1200);
+      84 |   // From here on: every time the banner leaves the page, and every frame.
+        at bannerAfterEnd (/home/user/wt/w4t2-ce866118/kettle/tests/zz-ctl-b39202f.spec.ts:81:14)
+        at /home/user/wt/w4t2-ce866118/kettle/tests/zz-ctl-b39202f.spec.ts:251:5
+
+    Error Context: test-results/zz-ctl-b39202f-toasts-timi-d2abf-75×667-200-text-wheel-dark--chromium/error-context.md
+
+  2 failed
+    [chromium] › tests/zz-ctl-b39202f.spec.ts:246:3 › toasts timing out, and an endless action toast, never move the banner (375×667, 200 % text, wheel, light) 
+    [chromium] › tests/zz-ctl-b39202f.spec.ts:246:3 › toasts timing out, and an endless action toast, never move the banner (375×667, 200 % text, wheel, dark) 

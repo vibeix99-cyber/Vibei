@@ -555,7 +555,7 @@ test.describe('I02 End, dismissal and task disposition', () => {
     await expect(endDialog(page)).toContainText('12 minutes of focus will be saved');
     await endDialog(page).getByRole('button', { name: 'End session' }).click();
     await expect.poll(() => hash(page)).toBe('#/');
-    await expect(page.getByText('Saved 12 minutes of focus')).toBeVisible();
+    await expect(page.locator('main').getByText('Saved 12 minutes of focus')).toBeVisible();
 
     const st = await stored(page);
     const rec = recordsFor(st, sessionId!);
@@ -579,7 +579,7 @@ test.describe('I02 End, dismissal and task disposition', () => {
     await expect(endDialog(page)).toContainText('under a minute, so there’s nothing to save yet');
     await endDialog(page).getByRole('button', { name: 'End session' }).click();
     await expect.poll(() => hash(page)).toBe('#/');
-    await expect(page.getByText('Kettle’s off. See you soon.')).toBeVisible();
+    await expect(page.locator('main').getByText('Kettle’s off. See you soon.')).toBeVisible();
     expect((await stored(page))?.sessions ?? []).toHaveLength(0);
   });
 
@@ -809,7 +809,7 @@ test.describe('I03 data safety', () => {
     const [chooser] = await Promise.all([page.waitForEvent('filechooser'), page.getByRole('button', { name: 'I have a backup' }).click()]);
     await chooser.setFiles(file!);
     await expect.poll(() => hash(page)).toBe('#/');
-    await expect(page.getByText(`Welcome back. ${before.sessions.filter((r) => JSON.parse(r).phase === 'focus').length} brews restored.`)).toBeVisible();
+    await expect(page.locator('main').getByText(`Welcome back. ${before.sessions.filter((r) => JSON.parse(r).phase === 'focus').length} brews restored.`)).toBeVisible();
     const after = await snapshot(page);
     expect(after.sessions).toEqual(before.sessions);
     expect(after.ledger).toEqual(before.ledger);
@@ -1098,6 +1098,20 @@ for (const vp of [
       const markDone = page.getByRole('button', { name: /^Mark “Chapter 3 notes” done/ });
       await expect(markDone).toBeVisible();
       await markDone.scrollIntoViewIfNeeded();
+      // End's own notice ("Saved 3 minutes of focus", in Today's strip) has been shown and has gone, or it waits in a
+      // strip scrolled above the view (its clock runs only while it is seen; a change there moves nothing in view).
+      // Real state, not a timeout: this test is about the banner, and the strip closing at rest is a move of its own.
+      await expect
+        .poll(
+          () =>
+            page.evaluate(() => {
+              const n = (window as any).__kettle.notices();
+              const li = document.querySelector('[data-notice-strip] li');
+              return li ? (li.getBoundingClientRect().bottom <= 0 ? 'waits above the view' : 'shown') : n.queue.length ? 'queued' : 'gone';
+            }),
+          { timeout: 20_000 },
+        )
+        .toMatch(/^(gone|waits above the view)$/);
       await newbieWithFullStorage(page, { seeded: true });
       await countSaid(page);
       // The controls round the finger, where they are drawn, frame by frame from the tap on: the task field and its
@@ -1124,7 +1138,8 @@ for (const vp of [
       const box = (await markDone.boundingBox())!;
       if (vp.touch) await page.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2);
       else await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
-      await expect(page.getByText('Crossed off. Nice work.')).toBeVisible();
+      // (The words are drawn in the row Mark done was in; the announcer's copy of them is visually hidden.)
+      await expect(page.locator('main').getByText('Crossed off. Nice work.')).toBeVisible();
       await expect(banner(page)).toHaveCount(1);
       await page.waitForTimeout(800);
       // What may move is only what sits above the banner (the greeting scrolls up to make room for it); nothing at

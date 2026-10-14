@@ -1,6 +1,7 @@
 /**
  * App-wide overlays, mounted once at the root (on every route). OWNER: design-system area.
- *  - <Toaster/>                 toasts + `ui:toast` events
+ *  - <Toaster/>                 notices: the queue, its clock, the announcer and `ui:toast` events (each screen draws
+ *                               them in its own in-flow strip, src/ui/Toast.tsx)
  *  - keyboard-shortcuts sheet   rendered from SHORTCUTS; `?` toggles it (useShortcutHelp)
  *  - PWA update prompt          "A fresh brew of Kettle is ready — Update", never during a brew
  */
@@ -8,6 +9,7 @@ import { useEffect } from 'react';
 import { SHORTCUTS, useShortcutHelp, type ShortcutInfo } from '@/lib/shortcuts';
 import { usePwaUpdate } from '@/pwa';
 import { useTimer } from '@/timer';
+import { useRoute } from './router';
 import { Kbd, ListGroup, ListRow, Sheet, Toaster, toast } from '@/ui';
 import s from './ShellOverlays.module.css';
 
@@ -73,7 +75,11 @@ const PWA_TOAST_ID = 'pwa-update';
 function PwaUpdatePrompt() {
   const { needRefresh, update, dismiss } = usePwaUpdate();
   const status = useTimer((t) => t.status);
-  const busy = status !== 'idle';
+  // Never during a brew or break, and not anywhere on the session screen either (the summary, Break's over): the
+  // timer is idle there, but the prompt would arrive with the summary's first frame (W2R3 T2-D1). It is raised where
+  // the person lands next (Today, a tab), in that screen's first frame.
+  const route = useRoute();
+  const busy = status !== 'idle' || route === '/focus' || route === '/done';
   useEffect(() => {
     if (!needRefresh || busy) {
       toast.dismiss(PWA_TOAST_ID);
