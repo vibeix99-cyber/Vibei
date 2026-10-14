@@ -85,7 +85,7 @@ Per animation frame, while a notice (strip item or inline Undo row) is drawn and
 |---|---|---|
 | 375×667 light @100 | Sheet top 284; the prompt floats over Done / Carry forward (the cover this round removes) | Sheet top **359** (+75); a blank band between the counter and the sheet; **Done / Carry forward at 514–558 straddle the footer (529)** |
 | 390×844 light @100 | Sheet top 382; the prompt over the lower part of the unlock card | Sheet top **457** (+75); blank band; **the unlock card ("Fairy lights is in your nook") cut by the footer** on arrival: P's single highlight is not whole |
-| 375×667 light @200 (prompt raised just after arrival) | (base run queued) | The prompt is 150 px tall. **The sheet is pushed under the footer: "25 minutes brewed" is not on screen**, a ~140 px empty band, and the prompt lies over Chai's head and the kettle's lid |
+| 375×667 light @200 | Sheet top 285; the prompt (≈150 px) floats over the sheet's heading and first rows | Sheet top **453** with the footer at 475: **the sheet is pushed under the footer, so "25 minutes brewed" is not on screen**. A ~140 px empty band; the prompt (10–160) **lies over Chai's head and the kettle's lid** |
 | 390×844 dark @100, 667×375 @100 | — | Same: the band and the cut unlock card (390 dark); in landscape the summary card's content below the heading is pushed under the footer |
 
 **Frames:**
@@ -100,7 +100,9 @@ Per animation frame, while a notice (strip item or inline Undo row) is drawn and
 - Chai's and the kettle's boxes stay clear.
 - The sheet rises over the counter with no gap (K02/K03).
 
-It also leaves the summary without its content at 200 %. The base's cover was the defect to remove; T2 replaces it with a different defect in the same state, which is worse at 200 %. The invariant spec does not see it: nothing overlaps, everything is pushed.
+At 200 % both builds leave none of the summary readable (the base covers it, T2 pushes it off). T2 adds the gap and a prompt over Chai and the kettle, which the base drew over the sheet instead.
+
+The base's cover was the defect to remove. T2 replaces it with different defects in the same state: the gap, the highlight or task row cut at the fold, and Chai and the kettle covered. These are introduced, not the base's defect carried over. The invariant spec does not see them: nothing overlaps, everything is pushed.
 
 **Required correction** (T2's files only: `src/app/**`, `src/screens/focus/**` except `stage/**`, `src/ui/**`; P's `Summary.tsx` untouched). The approach is the maker's. One natural part: `PwaUpdatePrompt` treats the whole session screen as busy (summary and Break's over included), so the prompt is raised where the person lands next (Today). The outcome must hold for any notice on the summary:
 1. P's sheet is where P puts it on arrival, with or without a notice (the sheet's top within 1 px of the no-notice run): no gap between the counter and the sheet.
