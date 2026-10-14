@@ -21,7 +21,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const out = { base: args.base, cfg: args.cfg, runs: {}, errors: [] };
 const b = await chromium.launch({ args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] });
 const toastFn = `(window.__kettle.toast ? Promise.resolve(window.__kettle.toast) : import('/src/ui/Toast.tsx').then((m) => m.toast))`;
-async function day(seed) {
+async function day(seed, kinds) {
   const ctx = await b.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: DPR, isMobile: W < H && W < 900, hasTouch: W < 900, colorScheme: theme, serviceWorkers: 'block' });
   await ctx.addInitScript((pct) => {
     try { localStorage.setItem('kettle:settings', JSON.stringify({ state: { onboarded: true, scene: 'off', autoStartBreaks: false, autoStartFocus: false, muted: true }, version: 1 })); } catch {}
@@ -34,7 +34,7 @@ async function day(seed) {
   await p.waitForFunction(() => { const t = window.__kettle?.timerInfo?.(); return !!(t && t.leader && t.leaderForMs > 400 && !t.settling); }, null, { timeout: 60_000 });
   await p.evaluate(() => document.fonts.ready);
   await sleep(800);
-  for (const kind of ['none', 'first', 'after', 'timed']) {
+  for (const kind of kinds) {
     const key = `${seed}-${kind}`;
     try {
       await p.evaluate(`${toastFn}.then((t) => t.dismiss())`);
@@ -43,7 +43,7 @@ async function day(seed) {
       await p.evaluate(() => window.__kettle.timer.getState().startFocus({ intention: 'Chapter 3 notes', tag: 'study' }));
       await p.waitForFunction(() => location.hash === '#/focus');
       await sleep(1500);
-      const upd = `t('A fresh brew of Kettle is ready.', { id: 'pwa-update', icon: 'sparkle', duration: Infinity, action: { label: 'Update', onClick: () => (window.__upd = (window.__upd || 0) + 1) } })`;
+      const upd = `t('A fresh brew of Kettle is ready.', { id: 'queued-update', icon: 'sparkle', duration: Infinity, action: { label: 'Update', onClick: () => (window.__upd = (window.__upd || 0) + 1) } })`;
       if (kind === 'first') await p.evaluate(`${toastFn}.then((t) => { ${upd}; window.__kettle.finish(); })`);
       else await p.evaluate(() => window.__kettle.finish());
       await p.waitForFunction(() => location.hash.includes('done'), null, { timeout: 30_000 });
@@ -102,8 +102,8 @@ async function day(seed) {
   await ctx.close();
 }
 try {
-  await day('newbie');
-  await day('celebrate');
+  // A fresh profile for every case: the summary's content (and so P's fold) is the same in each, run to run.
+  for (const seed of ['newbie', 'celebrate']) for (const kind of ['none', 'first', 'after', 'timed']) await day(seed, [kind]);
 } finally {
   writeFileSync(`${dir}/summary.json`, JSON.stringify(out, null, 1));
   await b.close();
