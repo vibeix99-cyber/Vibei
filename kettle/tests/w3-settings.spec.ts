@@ -18,9 +18,9 @@ import { test, expect, type Browser, type Page } from '@playwright/test';
 const base = (u: string | undefined) => (u ?? 'http://127.0.0.1:5183').replace(/\/$/, '');
 const FIXED = Date.parse('2026-10-12T07:40:00.000Z');
 
-async function device(browser: Browser, w: number, h: number, theme: 'light' | 'dark' = 'light') {
+async function device(browser: Browser, w: number, h: number, theme: 'light' | 'dark' = 'light', reducedMotion: 'reduce' | 'no-preference' = 'reduce') {
   const touch = w < h;
-  const ctx = await browser.newContext({ viewport: { width: w, height: h }, isMobile: touch, hasTouch: touch, colorScheme: theme, timezoneId: 'UTC', locale: 'en-GB', reducedMotion: 'reduce' });
+  const ctx = await browser.newContext({ viewport: { width: w, height: h }, isMobile: touch, hasTouch: touch, colorScheme: theme, timezoneId: 'UTC', locale: 'en-GB', reducedMotion });
   const page = await ctx.newPage();
   await page.clock.install({ time: FIXED });
   await page.clock.resume();
@@ -37,7 +37,8 @@ async function ready(page: Page) {
 const stored = (page: Page) => page.evaluate(() => JSON.parse(localStorage.getItem('kettle:settings') || '{}').state ?? {});
 
 test('preferences persist across a reload; Reset everything returns each to its default', async ({ browser, baseURL }) => {
-  const { ctx, page } = await device(browser, 390, 844);
+  // The device asks for no reduced motion, so "Reduced" in Settings is what turns it on (and Reset turns it off).
+  const { ctx, page } = await device(browser, 390, 844, 'light', 'no-preference');
   // A fresh profile (this context), past the welcome. No seed and no theme param: nothing re-applied on reload.
   await page.goto(`${base(baseURL)}/?debug&onboarded=1#/settings`);
   await ready(page);
@@ -50,7 +51,7 @@ test('preferences persist across a reload; Reset everything returns each to its 
   await page.getByRole('switch', { name: 'Sounds' }).click();
   await page.getByRole('radiogroup', { name: 'Brewing ambience' }).getByRole('radio', { name: /Fireside/ }).click();
   await page.getByRole('radiogroup', { name: 'Daily goal' }).getByRole('radio', { name: /A pot/ }).click();
-  const tea = page.getByRole('spinbutton', { name: 'Tea break length' });
+  const tea = page.getByRole('spinbutton', { name: 'Tea break length', exact: true });
   await tea.focus();
   await page.keyboard.press('ArrowUp'); // Deep's 10 → 11: the preset becomes Custom
 
@@ -83,8 +84,10 @@ test('preferences persist across a reload; Reset everything returns each to its 
   expect(await stored(page)).toMatchObject({ onboarded: false, theme: 'auto', rhythm: 'classic', focusMin: 25, shortBreakMin: 5, longBreakMin: 15, longBreakEvery: 4, motion: 'system', scene: 'auto', muted: false, ambient: 'rain', dailyGoalMin: 30 });
 
   // The defaults hold after a reload too, and Settings shows them (onboarded=1 only skips the welcome again).
-  await page.goto(`${base(baseURL)}/?debug&onboarded=1#/settings`);
+  await page.waitForTimeout(800);
   await page.reload();
+  await page.waitForFunction(() => !!(window as any).__kettle, null, { timeout: 60_000 });
+  await page.getByRole('link', { name: 'Settings' }).first().click();
   await ready(page);
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light'); // auto, device is light
   await expect(page.locator('html')).not.toHaveAttribute('data-motion', 'reduce');
@@ -103,12 +106,16 @@ const ringNow = (page: Page) =>
   page.evaluate(() => {
     const el = document.activeElement as HTMLElement | null;
     if (!el || el === document.body) return null;
+    if (el.dataset.w3seen) return { repeat: true } as const;
+    el.dataset.w3seen = '1';
     const lum = (c: string) => {
       const m = c.match(/[\d.]+/g)!.map(Number);
       const f = (v: number) => ((v /= 255) <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
       return { L: 0.2126 * f(m[0]) + 0.7152 * f(m[1]) + 0.0722 * f(m[2]), a: m[3] ?? 1 };
     };
-    const name = `${el.tagName.toLowerCase()}[${el.getAttribute('role') ?? ''}] ${(el.getAttribute('aria-label') || el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 40)}`;
+    const lb = el.getAttribute('aria-labelledby');
+    const label = el.getAttribute('aria-label') || (lb && document.getElementById(lb)?.textContent) || el.textContent || '';
+    const name = `${el.tagName.toLowerCase()}[${el.getAttribute('role') ?? ''}] ${label.replace(/\s+/g, ' ').trim().slice(0, 40)}`;
     const ring = [el, ...el.querySelectorAll<HTMLElement>('*'), el.parentElement, el.parentElement?.parentElement].find((e) => {
       if (!e) return false;
       const cs = getComputedStyle(e);
@@ -170,7 +177,7 @@ for (const [w, h] of [
         await page.keyboard.press('Tab');
         const r = await ringNow(page);
         if (!r) continue;
-        if (seen.includes(r.name)) break;
+        if ('repeat' in r) break;
         seen.push(r.name);
         if (!r.ring || (r.width ?? 0) < 2 || (r.contrast ?? 0) < 3 || (r.clipped ?? 0) > 1) bad.push(r);
       }
@@ -287,7 +294,7 @@ test('Settings never says "streak", and sound and nudges say what they cannot do
   await page.evaluate(() => (window as any).__kettle.settings.getState().set({ muted: false, notifications: true }));
   await page.waitForTimeout(300);
   const words = await page.evaluate(() => {
-    const main = document.body;
+    const main = document.querySelector('h1')!.parentElement!; // the Settings screen
     const attrs = [...main.querySelectorAll('[aria-label],[title],[aria-description],[alt]')].map((e) => ['aria-label', 'title', 'aria-description', 'alt'].map((a) => e.getAttribute(a) ?? '').join(' '));
     return `${main.innerText}\n${attrs.join('\n')}`;
   });
