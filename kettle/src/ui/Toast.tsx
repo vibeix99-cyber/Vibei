@@ -21,7 +21,9 @@
  *    its face goes but the strip **keeps its room** (an empty band of the same height, `Ctl.room`), so nothing under a
  *    finger that is about to land, or has just landed, moves. The next notice is drawn in that room. The room is given
  *    back only when that moves nothing the person could be aiming at: a new screen (or its first `ENTRY_MS`), the strip
- *    wholly above the view (the page kept still in the same frame), or the page hidden.
+ *    wholly above the view at rest (the page kept still in the same frame), or the page hidden. One exception: the
+ *    session panel (`reach`), where a kept room would hold the countdown's or Break's over's controls below the panel's
+ *    edge (F-T2-2), gives it back at rest, as every strip did before this round.
  *  - **A route change drops nothing**: the shown notice and the queue move to the next screen's strip (its first
  *    frame), with the time each has left.
  *  - **Announced once**, on arrival, by a light-DOM polite announcer (`[data-notices-said]`); showing, waiting and
@@ -164,6 +166,8 @@ interface Strip {
   leaving: boolean;
   screen: string;
   el: HTMLElement | null;
+  /** Give the room back at rest when it holds the panel's controls out of reach (the session panel). */
+  reach: boolean;
 }
 const strips = new Map<number, Strip>();
 let stripSeq = 0;
@@ -255,6 +259,11 @@ function waitForRest(now: number): void {
   const wait = untilRest(now);
   retry = window.setTimeout(decide, Number.isFinite(wait) ? wait + 20 : 200);
 }
+/** The strip's panel runs past its visible bottom: what the room pushes down is out of reach without scrolling. */
+function holdsOutOfReach(el: HTMLElement): boolean {
+  const panel = el.parentElement;
+  return !!panel && panel.scrollHeight > panel.clientHeight + 0.5;
+}
 /** The strip's height now (what it keeps as its room when its notice goes). */
 const heightOf = (el: HTMLElement) => el.getBoundingClientRect().height;
 
@@ -279,10 +288,22 @@ function decide(): void {
   if ((next?.id ?? null) === (ctl.item?.id ?? null)) {
     if (next && next !== ctl.item) commit({ item: next, why: 'update' }); // the same notice, updated (same id)
     else if (ctl.room > 0 && !ctl.item) {
-      // The room a gone notice left: given back only when that moves nothing in view.
+      // The room a gone notice left: given back only when that moves nothing in view, and never mid-scroll (a scroll
+      // still animating would undo the page being kept still).
       if (now - ctl.at < ENTRY_MS) commit({ room: 0, hold: holdTop(el), why: 'entry' });
       else if (hidden) commit({ room: 0, hold: null, why: 'hidden' });
-      else if (aboveView(el)) commit({ room: 0, hold: holdView(el), why: 'above' });
+      else if (atRest(now) && !inputPending()) {
+        const above = aboveView(el);
+        // A screen whose controls the room holds out of reach (the session panel, F-T2-2) gives it back at rest.
+        const reach = !above && strip.reach && holdsOutOfReach(el);
+        if (above || reach) {
+          if (!inRestFrame) {
+            confirmRestInFrame();
+            return;
+          }
+          commit({ room: 0, hold: above ? holdView(el) : holdTop(el), why: above ? 'above' : 'rest' });
+        }
+      }
     }
     return;
   }
@@ -414,7 +435,21 @@ export function NoticeLayer({ leaving, children }: { leaving: boolean; children:
  * mounted. `screen`: a new value is a new screen (its first frame). `off`: not in use now (e.g. covered by another
  * part of its screen). Empty, it takes no room.
  */
-export function NoticeStrip({ prio = 0, screen = '', off = false, className }: { prio?: number; screen?: string; off?: boolean; className?: string }) {
+export function NoticeStrip({
+  prio = 0,
+  screen = '',
+  off = false,
+  reach = false,
+  className,
+}: {
+  prio?: number;
+  screen?: string;
+  off?: boolean;
+  /** The strip heads a panel whose controls must stay in reach (the session panel): a kept room that pushes them past
+   *  the panel's bottom is given back at rest (F-T2-2), as before this round. Elsewhere the room waits for a safe moment. */
+  reach?: boolean;
+  className?: string;
+}) {
   const leaving = useContext(Leaving) || !useIsPresent() || off;
   const idRef = useRef(0);
   if (!idRef.current) idRef.current = ++stripSeq;
@@ -423,9 +458,9 @@ export function NoticeStrip({ prio = 0, screen = '', off = false, className }: {
   const reduced = useReducedMotion();
   useLayoutEffect(() => {
     const prev = strips.get(id);
-    strips.set(id, { id, prio, order: prev?.order ?? ++stripOrder, leaving, screen, el: ref.current });
+    strips.set(id, { id, prio, order: prev?.order ?? ++stripOrder, leaving, screen, el: ref.current, reach });
     decide();
-  }, [id, prio, leaving, screen]);
+  }, [id, prio, leaving, screen, reach]);
   useLayoutEffect(
     () => () => {
       strips.delete(id);
