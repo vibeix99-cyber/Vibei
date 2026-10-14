@@ -148,3 +148,10 @@ The merged kettle/src `db28295` and kettle/tests `f071f53` equal trial `7145f49`
 | **Fix trial** | **`1358e00`** = integration `8af9fcb` (N + G + S + X-2) + `11a7ac6`, worktree `/home/user/wt/w5tr-f2`, src `d533342`. tsc 0, vitest **302/302**, build OK. Dev **:5528** (verified), preview **:5538** |
 | Maker's gaps | 1440 light @200 reduced ×3 gave 2/3 twice (one failure is N-2, S's History focus scroll; one is a server restart by someone else). `notice-strip` 25/25 and the owned specs ran on `14703f3`, one code commit before final. C-1 not provable on F's branch |
 | Archive | `archive/pe-w3-notices-polish-fix-11a7ac6.incremental.bundle`, `archive/w3r1-trial-1358e00.incremental.bundle` |
+
+## F: APPROVE (final, LEAD-5 `d73a3dc`) → merged as `2be3de1` (2026-10-14 20:18 UTC)
+
+- `pe/w3-notices-polish@11a7ac6`. The merged kettle/src `d533342` and kettle/tests `f2fec9a` equal fix trial `1358e00`'s exactly.
+- **All four makers are now merged:** N `3faaf94`, G `25b5e26` (+ docs `a859d86`), S `0efca36`, X-2 `60fdb7e`, F `2be3de1`.
+- **X-11 (test-only, F's `notice-strip.spec.ts:292`):** assigned to Maker F at 20:20 UTC on `pe/w3r1-x11-strip-test` (worktree `w5f-x11`, from `2be3de1`; stop 21:00). LEAD-5 checks it 6/6.
+- **Final regression:** started on `2be3de1` (worktree `/home/user/wt/w5-final`, dev :5540, preview :5550) by Lane R. `notice-strip.spec.ts` is held back until X-11 merges, then run on the final tree.
