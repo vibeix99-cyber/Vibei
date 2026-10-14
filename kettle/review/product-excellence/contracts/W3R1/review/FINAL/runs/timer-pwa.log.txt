@@ -31,3 +31,9 @@ Running 31 tests using 1 worker
   ✓  27 [timer-app] › tests/timer.spec.ts:416:3 › multiple tabs › frozen leader: the other tab takes over at the end; the leader waking up later does not double-count (9.2s)
   -  28 [timer-app] › tests/timer.spec.ts:438:3 › rendering budget › useRemaining re-renders about once per displayed second
   ✓  29 [pwa] › tests/pwa.spec.ts:48:1 › manifest is installable: name, colors, standalone, icons that exist (78ms)
+  ✓  30 [pwa] › tests/pwa.spec.ts:59:1 › precaches the shell, fonts, 3D chunk and tick worker; boots and times a brew offline (5.8s)
+  ✓  31 [pwa] › tests/pwa.spec.ts:85:1 › update: new version waits for the user (no reload mid-brew), then applies and the brew carries on (5.2s)
+
+  2 skipped
+  29 passed (2.9m)
+[slots] LR freed 1 at 22:41:30
