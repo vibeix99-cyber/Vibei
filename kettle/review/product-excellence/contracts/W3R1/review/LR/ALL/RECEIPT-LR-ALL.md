@@ -132,3 +132,66 @@ Mechanism candidates, from reading the test code (not proven by a run): T2 reads
 None of the four failed on a maker trial alone; none failed alone on the combined tree. One run each cannot tell flaky from rare, so batch 2 repeats them (section 3b).
 
 Script `scripts/LR-batch1.sh` is the exact list of eight-plus invocations (13 processes).
+
+## 4. The standard capture matrix, preview :5530 (trial `e478604`) against preview :5488 (base `4d36939`)
+
+Tool: `review/product-excellence/tools/capture.mjs` (21 states, debug seeds), run by `scripts/LR-cap.sh` through the gate, trial first, then base, one browser at a time. Both sides get the same frozen start clock `2026-10-12T07:40:00Z` (`clock.install` + `resume`, from the preload `LR/std-freeze.mjs` copied from Lane D; every screenshot is taken with `animations: 'disabled'`). `capture-meta.json` per side (in `cap/<config>/{trial,ctrl}-capture-meta.json`): revision `e478604` on the trial and `4d36939` on the base, 0 page errors on all 8 runs. Pair diff: `pdiff.py` (strict = any channel differs; tol = a channel differs by more than 16; a size mismatch counts the unmatched area as differing; "over 0.5 %" = strict or tol above 0.5). Per-config tables: `cap/matrix-main.md`, `cap/pdiff-all-main.json`, `cap/<config>/pdiff.json`. Over-threshold pairs are kept as `trial-*.png`, `ctrl-*.png` (base) and `*-diff.png`; for pairs that are only live clocks or animation I deleted the two raw frames and kept the diff image (size budget).
+
+| Config | Trial run (UTC) | Base run (UTC) | Pairs over 0.5 % |
+|---|---|---|---|
+| 390×844@2 light | 17:53:09, 264 s | 17:57:33, 391 s | 10 of 21 |
+| 390×844@2 dark | 18:04:04, 253 s | 18:08:17, 167 s | 10 of 21 |
+| 375×667@2 light | 18:11:09, 152 s | 18:13:42, 137 s | 8 of 21 |
+| 1440×900@1 light | 18:18:55, 501 s | 18:27:16, 461 s | 8 of 21 |
+
+The trial side of each config was always captured 2 to 9 minutes before the base side, under different machine load, so live clocks, the 3D scene's idle motion and route cross-fades differ between sides for that reason alone. Every capture was run under the gate, one at a time. The Nook in light is forced to `nooktime=day` by the tool; in dark it follows the clock (the dark Nook frames show night lighting).
+
+**Two defects of the capture sequence, found when opening frames (not product differences).** The tool takes 15 → 17 and 16 → 18 → 19 in one page, so a full-page frame can still contain the screen being left. (a) In the 390×844 light and dark and 375×667 runs the base `19-settings` frame shows the **Nook**, not Settings (`ctrl-19-settings.png`, route says `#/settings`), and in the 1440 run the base `16-stats-populated` frame shows **Today**. (b) Page heights of 16/18 differ by the leaving Stats layer (for example 8504 vs 8122 px). I re-captured 16, 17, 18 and 19 each alone in its own page at 390×844 light (`scripts/LR-capsolo.sh`, tag `390x844@2-light-solo`, `cap/390x844@2-light-solo/`): 17 and 18 then have equal sizes on both sides; 16 and 19 differ in size for real reasons (below). The solo re-capture was done for 390×844 light only.
+
+### 4a. Pairs over 0.5 %, with what is in them and the owning maker's area
+
+Cells: strict % / tol %. "Opened" = I looked at the frames. "Box only" = I judged from the diff box and its place on the screen, without opening the frames.
+
+| Config | State | Strict / tol | What is in the difference | Area (maker) |
+|---|---|---|---|---|
+| 390 L | 03 focus-mid | 11.56 / 5.47 | Opened: the trial frame has the top chips, the three control labels and the brew dots faded (mid-fade of the session chrome) where the base shows them solid; clocks read 12:22 vs 12:24. Not isolated: same signature at 375 L (11.82 / 7.71); absent in dark (0.26) and at 1440 (0.00). A repeat run is in section 4c if it finished | Focus screen (F), unproven that it is F's change |
+| 390 L | 05 focus-added | 0.73 / 0.71 | Opened: only the countdown digits (17:21 vs 17:18) | live clock; Focus (F) unchanged otherwise |
+| 390 L | 11, 11b summary-unlock | 4.43 / 0.37, 4.66 / 0.30 | Opened (11): the unlock card's picture (sparkles and 3D render) only; text, buttons and layout identical | no maker (Done/Summary untouched); not N (no Chai in the card, as Lane R-N found) |
+| 390 L | 13 first-brew | 30.01 / 1.04 | Opened: countdown digit (14:59 vs 14:58) and idle motion of the scene (window, curtains) | live clock / scene idle motion |
+| 390 L | 15 stats-empty | 0.57 / 0.52 | Opened: wording. "Your streak, charts and badges…" becomes "Your warm days, charts and badges…"; tiles "Day streak / Best streak" become "Days warm / Warmest run" with a small "days" unit on the second | **S** |
+| 390 L | 16 stats-populated | 41.3 / 34.5 (size 8736 vs 8354) | Opened. New **Today / Last 7 days** card above the tiles ("Today Mon, Oct 12, 50 min focused, 2 full brews, 50 min of your 1h goal" and "Last 7 days Oct 6–12, 4h 35m focused, Brewed on 7 of 7 days, 1 day at goal"); tiles "Day streak/Best streak" → "Days warm" / "23 days Warmest run"; the page is 191 css px taller. The solo re-capture gives the same numbers | **S** |
+| 390 L | 17 nook-early | 1.61 / 0.21 | Box only: inside the Nook canvas. Solo re-capture 1.64 / 0.21, equal size | scene (N area); at `nooktime=day`. Not isolated (N's own day check found 0 px on a still frame, this capture is animated) |
+| 390 L | 18 nook-earned | 5.37 / 4.61 (size 8504 vs 8122) | Opened: same content on both sides; the size is the leaving Stats layer. Solo re-capture: equal size, 1.84 / 0.30 | none (artifact) / scene idle motion |
+| 390 L | 19 settings | 73.4 / 31.8 | Base frame is the **Nook** (artifact). Solo re-capture (both sides Settings): 13.2 / 10.3, size +34 px (+17 css px). Opened: Daily goal footer "Your warm streak only needs one brew a day." → "One finished brew makes a warm day."; "Keep screen awake" line "during a brew" → "while a brew is on screen"; Haptics line "Little buzzes for key moments." → "…, on devices that can vibrate." (one extra line, +17 css px); the rest of the page sits lower by that amount | **G** |
+| 390 D | 05 focus-added | 6.18 / 0.26 | Box only (central timer box); tol 0.26 says tint-level | live clock |
+| 390 D | 06 whistle | 1.29 / 0.02 | Box only: a glow area of about 330×200 px; almost all below the tol 16 | scene / not isolated |
+| 390 D | 11, 11b summary-unlock | 19.76 / 6.62, 5.20 / 0.34 | Box only (11: wide box over the hero and card; 11b: the card) | unlock card art / scene timing |
+| 390 D | 13 first-brew | 29.91 / 8.87 | Box only: whole screen, scene area | live clock / scene idle motion |
+| 390 D | 15 stats-empty | 0.75 / 0.53 | Same wording change as 390 L (tile and empty-state text) | **S** |
+| 390 D | 16 stats-populated | 41.3 / 32.7 (size 8736 vs 8354) | Same new Today / Last 7 days card and tile labels as 390 L (the same size difference); not opened in dark | **S** |
+| 390 D | 17 nook-early | 7.11 / 1.31 | Opened: night lighting; differences along the room's edges (a small camera or animation offset), the steam and around the kettle and Chai; Chai is small in this view | scene (N area, night): Chai fur is N's change; not separable from animation in this pair |
+| 390 D | 18 nook-earned | 65.99 / 64.77 (trial 8504 vs base 3016 tall) | Not opened; the trial frame carries the leaving Stats layer (artifact) | none (artifact) |
+| 390 D | 19 settings | 19.59 / 14.89 (size +34 px) | Opened (both sides are Settings here): same wording change in the Daily goal footer ("Your warm streak only needs one brew a day" → "One finished brew makes a warm day"); the trial's content sits about 2 css px lower in the first screen (judged from the downscaled view, not measured); the same +34 px height as in light | **G** |
+| 375 L | 03 focus-mid | 11.82 / 7.71 | Not opened; same box and size of difference as 390 L 03 | Focus (F), see 390 L |
+| 375 L | 04 focus-paused | 1.00 / 0.83 | Opened: digits differ (12:23 vs 12:21), and the **"Paused" pill sits lower in the trial: its text rows are 703–721 px (base) and 711–730 px (trial), about 4 css px**; the controls and the line below are at the same rows. At 390×844 the same rows are equal | Focus (F) area (`FocusScreen.module.css` +10 lines); not isolated, could be a transition caught at a different moment |
+| 375 L | 05 focus-added | 0.65 / 0.57 | Box only (timer box): digits | live clock |
+| 375 L | 15 stats-empty | 22.2 / 16.8 (size 3540 vs 3504) | Opened: wording as at 390; the stat tiles are 18 css px taller in the trial (the label text sits on two lines), and the tile row pushes the rest down | **S** |
+| 375 L | 16 stats-populated | 42.3 / 35.4 (size 8772 vs 8354) | Box only: as 390 L (Glance card, tiles); the page is 209 css px taller | **S** |
+| 375 L | 17, 18 | 2.52 / 1.32, 5.77 / 4.99 | Box only: Nook canvas; sizes differ by the leaving screen (artifact, not re-captured at 375) | scene / artifact |
+| 375 L | 19 settings | 13.5 / 10.4 (size 8474 vs 8434) | Box only (starts at y 2297, below the first screen); the base frame is a valid Settings here (not the Nook); +40 px of height | **G** |
+| 1440 L | 02, 04, 05 focus | 0.93 / 0.25, 0.51 / 0.49, 0.22 / 0.21 | Box only (central timer box of the wide layout): digits | live clock |
+| 1440 L | 11, 11b summary-unlock | 7.88 / 7.85, 7.05 / 0.56 | Opened (11): the base card shows the 3D nook render (a record player on a table, green plants), the trial card shows the flat picture (a record player on blue) at that moment; text and layout identical. 11b settled: 0.56 tol | timing of the card's 3D (no maker's change shown) |
+| 1440 L | 13 first-brew | 3.77 / 0.51 | Box only: central box (timer and scene) | live clock / scene |
+| 1440 L | 16 stats-populated | 55.8 / 20.2 (size 3091 vs 2913) | Opened: **the base frame is Today**, not Stats (artifact); the trial frame is Stats with the new Today / Last 7 days card, tiles "Days warm / Warmest run" | **S** (trial side valid) |
+| 1440 L | 17, 18 nook | 1.91 / 0.27, 7.63 / 5.07 | Box only: Nook canvas; 18 differs in height (leaving layer) | scene / artifact |
+
+Pairs at or under 0.5 % include Today (01, 01b), the summary and break (07, 08, 10; 09 and 14), the welcome (12), the first summary (14) and, at 1440, Settings (19: 0.17 / 0.13) and Stats-empty (15: 0.26 / 0.23, box [435,365,1018,593]); these were not opened except Today and the summary (below).
+
+### 4b. Today, summary, Stats and Settings frames: what changed
+
+Opened: trial `01-home`, `07-summary`, `08-summary-end`, `14-summary-first` (390×844 light); base-versus-trial pairs for Stats-empty, Stats-populated and Settings at 390×844 light and dark, Stats-empty at 375, Stats-populated at 1440.
+- **Today (`01-home`, `01b-home-scrolled`):** 0 differing pixels (strict 0.0) at all four configs. The veteran seed at the frozen date already reads "23 days warm" on the base, so F's Today copy does not show in this state.
+- **Summary (`07-summary`, `08-summary-end`, `09`, `10`, `14`):** 0.0 at all four configs, except 1440 `09-break` (0.255 %, a 64×94 px box at [1221,246,1285,340], not opened). The unlock summary (11, 11b) differs only in the unlock card's picture and 3D timing.
+- **Stats:** S's changes are visible in every Stats frame that is valid: the empty state and tiles speak of warm days ("Days warm", "Warmest run"); the populated page gains the Today / Last 7 days card at the top and is 191 css px taller at 390, 209 at 375 and 178 at 1440 (device px 382, 418, 178). Nothing else on the page was seen to change in the opened part.
+- **Settings:** G's changes are copy only in what I saw: the Daily goal footer, the Keep screen awake line and the Haptics line (one more line). The rest of the page keeps its form; in dark the content sits about 2 css px lower in the first screen (not measured).
+- **Chai at evening and night (N):** in light the tool forces day; in the dark Nook (night lighting) the pair differs around Chai and along the room's edges together; I cannot separate N's fur change from scene animation in these captures. N's own receipts (Lane R-N) cover that with still frames.
