@@ -15,6 +15,7 @@ import {
   useId,
   useLayoutEffect,
   useRef,
+  useState,
   type KeyboardEvent as ReactKeyboardEvent,
   type ReactNode,
   type RefObject,
@@ -122,6 +123,9 @@ function SheetPanel({
   const panelRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const footerRef = useRef<HTMLDivElement>(null);
+  const tight = useTight(panelRef, headerRef, bodyRef, footerRef);
   const opener = useRef<HTMLElement | null>(null);
   const dragControls = useDragControls();
   const onCloseRef = useRef(onClose);
@@ -201,6 +205,10 @@ function SheetPanel({
 
   const onKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>) => {
     if (e.key !== 'Tab' || !panelRef.current) return;
+    // React events bubble through portals: a sheet opened from inside another sheet (History's "Delete this brew?"
+    // inside "Edit brew") sends its Tab here too. That key is the inner sheet's to handle; this panel is inert
+    // underneath (no focusables), and swallowing it froze focus on the inner sheet's first control.
+    if (!(e.target instanceof Node) || !panelRef.current.contains(e.target)) return;
     const list = focusables(panelRef.current);
     if (list.length === 0) {
       e.preventDefault();
@@ -259,6 +267,7 @@ function SheetPanel({
         ref={panelRef}
         className={cx(s.panel, s[size], className)}
         role="dialog"
+        data-tight={tight || undefined}
         aria-modal={isPresent ? 'true' : undefined}
         aria-labelledby={titleId}
         aria-describedby={description ? descId : undefined}
@@ -283,6 +292,7 @@ function SheetPanel({
           </div>
         )}
         <div
+          ref={headerRef}
           className={cx(s.header, headerAlign === 'center' && s.center, closable && s.hasClose, hideTitle && !hero && !description && s.headerHidden)}
           onPointerDown={(e) => mode === 'sheet' && dismissible && e.pointerType !== 'mouse' && dragControls.start(e)}
         >
@@ -301,8 +311,77 @@ function SheetPanel({
             {children}
           </div>
         )}
-        {footer && <div className={s.footer}>{footer}</div>}
+        {footer && (
+          <div ref={footerRef} className={s.footer}>
+            {footer}
+          </div>
+        )}
       </motion.div>
     </div>
   );
 }
+
+/**
+ * True when the panel cannot show its header, a useful slice of its body and its footer at once (large text on a
+ * short screen): the actions would be pushed out of the panel, out of reach. The panel then scrolls as one column
+ * with the footer pinned (`[data-tight]` in Sheet.module.css). Header and footer keep their natural height in both
+ * layouts, so the measure doesn't flip-flop.
+ */
+const BODY_SLICE = 96;
+const COMPACT_LANDSCAPE = '(orientation: landscape) and (max-height: 520px)';
+function useTight(
+  panelRef: RefObject<HTMLDivElement | null>,
+  headerRef: RefObject<HTMLDivElement | null>,
+  bodyRef: RefObject<HTMLDivElement | null>,
+  footerRef: RefObject<HTMLDivElement | null>,
+): boolean {
+  const [tight, setTight] = useState(false);
+  useLayoutEffect(() => {
+    const panel = panelRef.current;
+    const footer = footerRef.current;
+    if (!panel || !footer || typeof ResizeObserver === 'undefined') return;
+    // Landscape phones have their own answer (Sheet.module.css: the header scrolls, the footer stays): leave it be.
+    const compact = window.matchMedia(COMPACT_LANDSCAPE);
+    const measure = () => {
+      if (compact.matches) return setTight(false);
+      const header = headerRef.current;
+      const body = bodyRef.current;
+      const cs = getComputedStyle(panel);
+      // The visible room: a sheet's panel runs past the bottom edge by its bottom padding.
+      const room = panel.clientHeight - parseFloat(cs.paddingBottom || '0') - parseFloat(cs.paddingTop || '0');
+      let used = footer.offsetHeight + (header?.offsetHeight ?? 0);
+      for (const el of Array.from(panel.children) as HTMLElement[]) {
+        if (el !== header && el !== footer && el !== body && getComputedStyle(el).position !== 'absolute') used += el.offsetHeight; // the grab handle
+      }
+      if (body) used += Math.min(body.scrollHeight, BODY_SLICE);
+      const isTight = used > room + 1;
+      // Focus moving down the column (Tab, or the browser's scroll-into-view) stops above the pinned footer.
+      panel.style.scrollPaddingBottom = isTight ? `${footer.offsetHeight + parseFloat(cs.paddingBottom || '0') + 8}px` : '';
+      setTight(isTight);
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    for (const el of [panel, footer, headerRef.current, bodyRef.current]) if (el) ro.observe(el);
+    // The body's own size is fixed by the flex layout; its content changes size.
+    if (bodyRef.current?.firstElementChild) ro.observe(bodyRef.current.firstElementChild);
+    compact.addEventListener('change', measure);
+    return () => {
+      ro.disconnect();
+      compact.removeEventListener('change', measure);
+    };
+  }, [panelRef, headerRef, bodyRef, footerRef]);
+  // Going tight as it opens from the keyboard: the control that took the initial focus (e.g. a body link) may sit
+  // under the pinned footer. Bring it into view inside the panel only (never scroll the page behind the modal).
+  // Opened by touch or mouse, the panel stays at its top (the art and the title first).
+  useLayoutEffect(() => {
+    const panel = panelRef.current;
+    const footer = footerRef.current;
+    const el = document.activeElement;
+    if (!tight || !panel || !footer || !(el instanceof HTMLElement) || !panel.contains(el) || footer.contains(el) || el === panel) return;
+    if (!el.matches(':focus-visible')) return;
+    const over = el.getBoundingClientRect().bottom - footer.getBoundingClientRect().top + 8;
+    if (over > 0) panel.scrollTop += over;
+  }, [tight, panelRef, footerRef]);
+  return tight;
+}
+
