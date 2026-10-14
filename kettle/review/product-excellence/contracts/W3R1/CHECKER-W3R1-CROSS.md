@@ -115,3 +115,49 @@ The maker's results: 8/8 at `--workers=2`, 8/8 at `--workers=1`, the whole `w3-s
 - `whistle` 8/8.
 
 No combined-only effect appeared. The final regression still owes: X-1 (I03 ×10), X-7 (Settings dark 390) and X-11, plus one clean full chromium pass.
+
+## 7. X-11 outcome: not achieved; nothing to merge
+
+**What F tried** (`/home/user/wt/w5f-x11/kettle/review/product-excellence/contracts/W3R1/F-X11-READY.md`; logs `…/F/x11/*.log.txt`, read). `pe/w3r1-x11-strip-test@f0c84a5` equals `2be3de1` in `tests/`.
+- **Attempt 1** (`a4be67b`: `press()` waits for this wheel's scroll; the History row is read once the Edit sheet is open and the row is still): **3/6**.
+  - All three failures are at Mark done, with the same state: `why: "idle"`, room 0, version 14.
+  - The tap was aimed at top 672.7 with Mark done then at 612.7, at `scrollY` 60.
+  - The History step did not fail.
+- **Attempts 2 and 3** (a pointer move and re-read before the tap; a 700 ms wheel cap) hit the 4-minute test timeout, undiagnosed.
+
+**A third signature.** The kept band (F-D1: given back once there has been no input for 1.2 s) went during the ≥ 1.2 s the spec spent without input between its on-top check and its tap. The extra waits made that gap likelier. It is the band's collapse, not a leave, and not the wheel race or N-2.
+
+### 1. Does it change a verdict? **No.** It is within Vibei's §3, and I list it as a finding for Vibei.
+- **Within §3's words.** §3 accepts a band that "collapses once touch/scroll goes idle, with no jump under an active pointer". An active pointer is one that is down. F's rule never collapses with a pointer down, within 1.2 s of any input (scroll included), or mid-fling (§8, ◆2). A spec that holds still for ≥ 1.2 s and then taps is exactly "idle".
+- **Not worse than base.**
+  - **On base,** the strip closed at the same kind of moment (≥ 1.2 s without input, when the notice's time was up) and moved content by the notice's height under a tap aimed just then.
+  - **On F,** the leave itself moves nothing (0 of 64 aimed taps off target), and one move of the same height comes later, at the band's idle collapse.
+
+  One move, the same size, the same idle condition; it now no longer coincides with the notice vanishing. F's APPROVE stands, and so do all other verdicts.
+- **For Vibei (finding, FOLLOW-UP design).**
+  - **On a mouse,** a hand moving to the target sends pointer moves, which count as input, so the band waits.
+  - **On touch,** a finger in the air sends nothing. A person who stops scrolling, reads for ≥ 1.2 s and then taps a control below the band can see it move just before the finger lands. That is 57–153.5 px, the band's height, once per notice.
+
+  Vibei's options:
+  - (a) accept, as §3 reads now;
+  - (b) a longer idle for the band, up to the 4 s §6 allowed (one constant in `Toast.tsx`), which makes the window rarer, not gone;
+  - (c) the variant LEAD-3 offered in W2R3 §4: give the room back only at a safe moment (a new screen, out of view, or as the answer to the person's next tap).
+
+  (c) removes the residual, and it is the variant §3 chose against.
+
+### 2. How the final regression treats `:292` at 1440 light 200 % reduced
+**Known flaky (X-11)**, as you told Lane R. Each failure's error context is checked against the three signatures. Any one of these is X-11:
+- **(a) The wheel race:** the strip unchanged since the screen arrived (`why: "screen"`, the notice still shown or queued); Mark done moved by exactly one wheel step (60 px); `scrollY` one step more than needed.
+- **(b) N-2:** the History step's "the Undo is the deleted row … where the person saw the row", about 110 px, with Mark done already passed.
+- **(c) The idle band:** `why: "idle"`, room 0, the collapse ≥ 1.2 s after the last input, Mark done moved by no more than the band's height (60–73 px at 1440 @200).
+
+**Anything else is a real failure.** That includes a move with `why: "rest"` at the leave, a move with a pointer down, a strip over a control, or a failure at another configuration or in another test.
+
+### 3. Follow-up: owners and actions (not blocking the merge)
+- **F, `tests/notice-strip.spec.ts`, next polish round.**
+  - Make `press()` check and tap inside one input window: a pointer move onto the target, then the on-top re-check, then the tap, with no wait between the last input and the tap that could reach 1.2 s.
+  - Keep a per-wheel confirmation that the wheel landed, bounded so the History row's long wheel walk cannot hit the 4-minute timeout. Diagnose attempts 2–3 with a trace first.
+  - Read the History row once its focus scroll has settled.
+  - Done when `:292` at 1440 light 200 % reduced passes `--repeat-each=6` 6/6, and the whole file 25/25.
+- **S, `src/screens/stats/History.tsx`:** the focus scroll when the tapped row takes focus (N-2, the product side), the same round.
+- **Vibei:** the touch residual of the idle band (§7.1). If (b) or (c) is chosen, the change is F's, in `src/ui/Toast.tsx`.
