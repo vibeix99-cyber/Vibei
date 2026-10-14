@@ -1,24 +1,18 @@
 # CHECKER W3R1 · Maker S: Stats and History (I12), F-T2-4, the backup test
 
-**Verdict: REJECT** `pe/w3-stats@344069c` (code `8158134`, kettle/src `20a4698`), as gated in trial `c7a6b8f`. There is one 90-minute fix round, for one defect. After it, the verdict is final.
+**Final verdict: APPROVE** `pe/w3-stats@697c1eb` (code `0d240b6` CSS + `1d899b3` spec; kettle/src `6a020d9`), as gated in fix trial `f63286e` (integration `283ae93` with N + G + docs, plus `697c1eb`). Final: the one fix round is spent. Any change to the branch after this invalidates it.
 
-**Defect (§3; the fix-round packet is §6):**
-- **S-D1:** the new "Warmest run" tile does not fit at 200 %.
-  - **With the fonts loaded:** its label is cut to "Warm… run", and its new value "23 days" is cut at the tile's edge (390×844 and 844×390 @200).
-  - **Before the web fonts arrive** (a first, cold load), the same tile runs past the screen. The phone page is laid out **408 px wide** at 390×844 (401 at 375×667), so Chrome zooms it out.
-  - **That is the proven cause of the combined trial's `w3-stats:98` failure:** the tap on a History row landed on page coordinates the row no longer had.
+**History.**
+- **First review:** REJECT `344069c` (§1–§7), with one defect, S-D1: the "Warmest run" tile overflowed at 200 %. Its label and value were cut, and before the web fonts arrived the phone page was laid out 408 / 401 px wide, which caused the combined trial's `w3-stats:98` failure.
+- **Fix round (§8):** one `@container` block in `stats.module.css` puts the tiles one a row at 200 %. My probe on :5526 shows:
+  - no tile text cut or past its tile;
+  - the page at 390 / 375 with the fonts blocked;
+  - two tiles a row at 100 %, as before;
+  - `w3-stats` 30/30.
 
-**Vibei's §2 holds:**
-- the summary's label is exactly **"Last 7 days"** (rolling, the same series as the chart below);
-- warm days, Tea Cozy and badges keep their calendar logic;
-- Lane I's test across a calendar-week boundary passed 3/3, with engine values, calendar labels and badge tiers identical to base;
-- the engine files are byte-identical to base.
+  The base's own "23h 9m" overflow is fixed by the same block.
 
-**Everything else verifies (§2):**
-- **F-T2-4:** fixed at all 16 configurations, by tap and Tab, and it also fixes "Start fresh?" and the End sheet at 375×667 @200. No sheet regressed.
-- **Stats truth:** totals match an independent recompute.
-- **The backup test:** hardened, not weakened.
-- **Warm-days wording:** in the glossary.
+**Vibei's §2 holds** (§1): the label is exactly "Last 7 days" (rolling), and the calendar logic of warm days, Tea Cozy and badges is unchanged.
 
 | | |
 |---|---|
@@ -236,3 +230,46 @@ There is no wording, value, `Stat.*` or `Sheet.*` change. **PASS.**
 - No "streak": the maker's 5 "never says streak" tests pass, in both of its runs and in mine.
 
 **PASS.**
+
+### ◆5 · `w3-stats` on the fix trial, rerun by me
+I ran `KETTLE_PORT=5526 npx playwright test tests/w3-stats.spec.ts --project=chromium --workers=1` from the fix trial's worktree, through the slot gate, under the usual load (`fix/w3-stats-5526.log`): **30/30 passed** (4.4 min). That is:
+- the 21 tests from round 1, including the 5 "never says streak" tests, the totals and the after-midnight and 12:40 cases;
+- the delete-dialog cases (old `:98`, now `:101`) at all seven configurations, **including 390×844 and 375×667 @200 with the fonts blocked**;
+- the 3 new tile-fit tests;
+- the 2 blocked-font width tests.
+
+The maker's two runs: 30/30 and 30/30.
+
+**Spec diff** (`git diff 344069c 697c1eb -- kettle/tests`, read in full):
+- **Removed:** two lines, the configuration array's closing `];` and the describe title, both replaced by the extended versions.
+- **Added:** the fonts-blocked sizes, `blockFonts`, `tileOverflow` (clipped text, or text ending past its tile) and the 5 new tests.
+- **Nothing loosened.**
+
+**PASS.**
+
+### Check 6 · No regression (the maker's, read)
+- `integrity.spec.ts` 25/25 (`S/fix/suites/integrity-full.log`);
+- tsc 0; vitest 292/292 on the branch; the orchestrator's gate on the trial: tsc 0, vitest 295/295, build OK.
+- The Overview's height at 375×667 @200: 504 px against the trial's 319.
+
+### The height cost: my ruling, **ACCEPTED**
+At 200 % the Overview is one tile a row: +185 px on phones, and at 1440 @200 504 px against the trial's 282 (base 246, where two a row already fitted).
+- **It is the cost of fitting.** Every word is whole, nothing is covered, and 100 % is unchanged.
+- **At 1440 @200 the change is not needed**, since two a row fitted there on base. Keeping two a row where they fit (a threshold in px of the column rather than rem) is a polish **FOLLOW-UP**, not a defect.
+
+### Final residuals (rule: BLOCKS = introduced or worsened by this change; FOLLOW-UP = present on the base and not worse, or ruled so by Vibei; ACCEPTED = not a defect)
+
+| # | Item | Class |
+|---|---|---|
+| S-D1 | The "Warmest run" tile overflowing at 200 % (cut text; a 408 / 401 px page before the fonts arrive) | **Closed** (◆2, ◆3, ◆5) |
+| S-R1 | "Total focus" / "23h 9m" past its tile at 200 % (base) | **Closed** by the same block |
+| S-R9 | One tile a row at 1440 @200, where two already fitted on base | **FOLLOW-UP** (polish) |
+| S-R2…S-R8, N-2, E-1 | As in §4 | Unchanged |
+| X-4 (cross-effects) | The combined trial's `w3-stats` Delete failure: its cause was S-D1 | **Closed** (`CHECKER-W3R1-CROSS.md`) |
+
+No item is introduced or worsened by this change in a way that is a defect, so nothing BLOCKS. The narrow transient-artifact exception is not needed.
+
+**BEFORE / AFTER for the fix** (full size):
+- **The Overview at 200 %:** the maker's `/home/user/wt/w5s/kettle/review/product-excellence/contracts/W3R1/S/fix/fit/{BASE,TRIAL,FIX}-{390x844,844x390}-{light,dark}-200-overview.png` (I opened the 844×390 dark pair).
+- **Mine:** `contracts/W3R1/review/LEAD/S/fix/FIX-{390x844,1440x900}-200-*-overview.png` and `FIX-390x844-100-mobile-fonts-overview.png`.
+- **The page before the fonts arrive:** `S/fix/fit/{TRIAL,FIX}-{390x844,375x667}-200-mobile-nofonts-viewport.png`.
