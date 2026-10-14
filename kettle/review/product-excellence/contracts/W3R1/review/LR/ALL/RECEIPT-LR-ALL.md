@@ -222,3 +222,34 @@ No failure was a base failure (T1 passes on base; T2 to T4 fail on base only bec
 ### 4c. Focus-mid (state 03) alone, 3 repeats per side (`scripts/LR-cap03.sh`, 18:41 to 18:43, 390×844@2 light)
 
 The 390×844 light pair of 03 (11.56 / 5.47, chrome faded on the trial side) was captured again alone, three times per side, trial then base each time, in separate pages (`cap/390x844@2-light-03r{1,2,3}/pdiff.json`, `runs/cap-03-repeat.log`). Strict / tol: **r1 0.000 / 0.000, r2 0.189 / 0.175 (box [329,571,593,1134], the digits), r3 0.000 / 0.000**. The faded chrome did not appear in any of the 6 frames' diffs. So that large pair came from the full capture sequence (the page had run `01` to `02` before, and the clocks of the two sides differed by 2 s), not from a repeatable difference between the builds at this size; I did not open the six frames (the diff numbers show no region). The 375×667 `03` pair (11.82 / 7.71) and the 375×667 "Paused" pill offset in `04` were not repeated alone.
+
+## 5. Unproven
+
+Servers: at the end (18:44) `verify.sh /home/user/wt/w5tr-all 5520` again printed "PORT 5520 serves e478604 (src 07c26ff): VERIFIED", and the worktree was still at `e478604` with a clean `git status`. The dev server was shared with Lane I's runs (its jobs on :5520 were in the slot queue), and the machine load was 2 to 18 across my runs.
+
+| Item | Status |
+|---|---|
+| One clean pass of the whole chromium project | **not run**: the project was run as A (13:21), B (16:54) and C (17:25) on the same commit, at load 10 to 18, 6 to 15 and 12. 217 passed, 2 failed, 25 skipped over the union |
+| `w3-notices-load.spec.ts` (25 tests) | **not run**: skipped by the spec unless `W3_LOAD=1`; I did not set it |
+| Cause of the T1 failure (`integrity` I03 "gone when there is room") | **not isolated**: I did not open its trace; 1 failure in 6 combined-tree runs, none on base, S or F trials in 3 runs. A rare combined-only effect cannot be excluded on this sample |
+| Cause of the T2 flake (pressed segment) | **not proven**: the 120 ms wait against a colour transition is a candidate read from the code; I did not vary the wait or run it with CPU stress. What is shown: 4 of 8 fail on both the combined dev server and G's trial |
+| T3, T4 (cut-run failures) | seen once each, in the run the restart cut; not reproduced in 1 complete run, 2 alone runs and 4 repeats each (combined), so "flaky" rests on one sighting |
+| Other failures other lanes saw (`notice-strip` 1440 @200 reduced and dark, `w2-home` 375×667 first visit, on the F trial) | passed in my single runs on the combined tree (A: `notice-strip` 25 of 25; B: `w2-home` 18 of 18); not repeated |
+| Base runs of T1 to T4 used the combined tree's test files (the `w3-*` specs only exist on the maker branches), and the maker-trial runs used that trial's files | so "fails on base" for T2 to T4 means the new test against base code |
+| Timer, harness and PWA | one run (29 passed, 2 skipped by design); no repeat |
+| Captures: one run per side per config; the trial side was taken 2 to 9 minutes before the base side at different load; **no base-versus-base control**, so the noise floor of live frames (countdown digits, 3D idle motion, cross-fades) is not measured | the 0.5 % list therefore holds animation noise; cause per pair is in 4a |
+| Capture-sequence artifacts: base `19-settings` shows the Nook at 390 light and dark and 375 is fine; the 390 dark `18` trial and the 375/1440 `16`, `17`, `18` frames carry a leaving layer or the wrong screen (1440 base `16` is Today) | the solo re-capture exists for 390×844 light only (`16 17 18 19`); the dark, 375 and 1440 Stats and Nook frames were not re-captured |
+| Frames not opened (diff box only), see "Box only" in 4a: 390 dark 05, 06, 11, 11b, 13, 16, 18; 375 03, 05, 16 to 19; 1440 02, 04, 05, 13, 17, 18; the 0.0 to 0.5 % pairs except Today and the summary | not judged |
+| The dark Settings first screen sitting about 2 css px lower in the trial | judged from a downscaled view, **not measured**; its cause not found |
+| The 375×667 "Paused" pill 4 css px lower in the trial (`04`) and the 375 `03` fade | **not isolated**; neither was repeated alone (the 390 `03` fade did not repeat) |
+| N's change at evening and night in these captures | not separable from scene animation (light is forced to day; the dark Nook pair differs around Chai and along the edges); see Lane R-N's still-frame receipt |
+| Other areas not captured by the standard matrix | 844×390, 200 % text, the dark theme at 375 and 1440, and the high tier |
+| Raw frames deleted for size (the diff images and numbers are kept): 390 L `02, 05, 11, 11b, 13`; 390 D `05, 06, 11, 11b, 13` | only the diffs remain for those pairs |
+| "Looks right", "reads as one voice", any visual or product judgement | not mine |
+
+## 6. Evidence layout (`/home/user/Vibei/kettle/review/product-excellence/contracts/W3R1/review/LR/ALL/`)
+
+- `runs/`: `full-A/B/C.{log,json}` (B and C are the complete reruns), `full-B-cut.log`, `full-C-cut.log`, `timer-pwa.log`, `list-chromium.json` (the 244-test list), `server-verify.txt`, `cap-390.log`, `cap-375-1440.log`, `cap-03-repeat.log`.
+- `rerun/`: `T*` (batch 1) and `R*` (batch 2) logs and JSON, `batch1.log`, `batch2.log`.
+- `cap/<config>/`: pair frames, `*-diff.png`, `pdiff.json`, capture meta per side; `cap/matrix-main.md`, `cap/pdiff-all-main.json` (the four standard configs), `cap/390x844@2-light-solo/`, `cap/390x844@2-light-03r{1,2,3}/`.
+- `scripts/`: `LR-batch1.sh`, `LR-batch2.sh`, `LR-cap.sh`, `LR-capsolo.sh`, `LR-cap03.sh`, `LR-capchain*.sh`, `LR-enq.sh`, `LR-pdiff_all.py`, `LR-sumpw.py`.
