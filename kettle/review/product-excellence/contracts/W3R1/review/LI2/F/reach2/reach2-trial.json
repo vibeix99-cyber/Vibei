@@ -382,5 +382,155 @@
    "version": 9,
    "room": 0
   }
+ },
+ {
+  "cfg": "667x375-light-t100",
+  "msg": "Saved 3 minutes of focus",
+  "server": "trial",
+  "geo": {
+   "stripH": 62,
+   "panelScrollH": 277,
+   "panelClientH": 277,
+   "outOfReach": false,
+   "ctl": [
+    {
+     "l": "Add 5 minutes",
+     "top": 270.4,
+     "visible": 54,
+     "onTop": true
+    },
+    {
+     "l": "Pause",
+     "top": 270.4,
+     "visible": 68,
+     "onTop": true
+    },
+    {
+     "l": "End session",
+     "top": 270.4,
+     "visible": 54,
+     "onTop": true
+    }
+   ],
+   "target": {
+    "l": "Add 5 minutes",
+    "x": 388,
+    "y": 297.375,
+    "top": 270.4,
+    "visible": 54
+   }
+  },
+  "leave": {
+   "why": "rest",
+   "room": 62,
+   "msAfterIntent": 206
+  },
+  "tap": {
+   "intentTop": 270.4,
+   "tgTopAtDown": 270.4,
+   "moved": 0,
+   "downOnTarget": true,
+   "downLanded": "path.[object SVGAnimatedStrin \"\"",
+   "clickOnTarget": true,
+   "clickLanded": "path.[object SVGAnimatedStrin \"\"",
+   "msAfterLeave": 28
+  },
+  "paused": false
+ },
+ {
+  "cfg": "667x375-light-t100",
+  "msg": "Couldn’t save just now. Your summary is still here.",
+  "server": "trial",
+  "geo": {
+   "stripH": 66.5,
+   "panelScrollH": 277,
+   "panelClientH": 277,
+   "outOfReach": false,
+   "ctl": [
+    {
+     "l": "Add 5 minutes",
+     "top": 272.6,
+     "visible": 54,
+     "onTop": true
+    },
+    {
+     "l": "Pause",
+     "top": 272.6,
+     "visible": 68,
+     "onTop": true
+    },
+    {
+     "l": "End session",
+     "top": 272.6,
+     "visible": 54,
+     "onTop": true
+    }
+   ],
+   "target": {
+    "l": "Add 5 minutes",
+    "x": 388,
+    "y": 299.625,
+    "top": 272.6,
+    "visible": 54
+   }
+  },
+  "leave": {
+   "why": "rest",
+   "room": 66.5,
+   "msAfterIntent": 201
+  },
+  "tap": {
+   "intentTop": 272.6,
+   "tgTopAtDown": 272.6,
+   "moved": 0,
+   "downOnTarget": true,
+   "downLanded": "path.[object SVGAnimatedStrin \"\"",
+   "clickOnTarget": true,
+   "clickLanded": "path.[object SVGAnimatedStrin \"\"",
+   "msAfterLeave": 30
+  },
+  "paused": false
+ },
+ {
+  "cfg": "667x375-light-t200",
+  "msg": "Saved 3 minutes of focus",
+  "server": "trial",
+  "geo": {
+   "stripH": 147.5,
+   "panelScrollH": 425,
+   "panelClientH": 203,
+   "outOfReach": true,
+   "ctl": [
+    {
+     "l": "Add 5 minutes",
+     "top": 516.7,
+     "visible": 0,
+     "onTop": false
+    },
+    {
+     "l": "Pause",
+     "top": 516.7,
+     "visible": 0,
+     "onTop": false
+    },
+    {
+     "l": "End session",
+     "top": 516.7,
+     "visible": 0,
+     "onTop": false
+    }
+   ],
+   "target": null
+  },
+  "noTarget": {
+   "queue": [],
+   "shown": null,
+   "strip": 5,
+   "screen": "session:focus",
+   "why": "rest",
+   "changed": 8256,
+   "version": 12,
+   "room": 0
+  }
  }
 ]
