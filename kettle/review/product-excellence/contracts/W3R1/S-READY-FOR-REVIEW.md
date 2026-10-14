@@ -3,8 +3,8 @@
 Stats and History (I12), F-T2-4 ("Delete this brew?"), the backup round-trip test, and warm-days wording in S's files.
 
 - **Branch:** `pe/w3-stats` (worktree `/home/user/wt/w5s`), local commits only.
-- **Hash:** `@@HASH@@`. **kettle/src tree:** `@@SRC@@`. Base: `4d36939` (src `5cd9a44`).
-- **Servers:** candidate dev **:5502** (`verify.sh`: `@@VERIFY@@`); base dev :5478, base preview :5488.
+- **Hash:** last code commit `8158134` (the packet/evidence commit follows it; `git log` shows the final hash). **kettle/src tree:** `20a4698` (same at the final hash). Base: `4d36939` (src `5cd9a44`).
+- **Servers:** candidate dev **:5502** (`verify.sh`: `PORT 5502 serves 506259e (src 20a4698): VERIFIED`); base dev :5478, base preview :5488.
 - **Evidence:** `contracts/W3R1/S/` (tools in `S/tools/`, all browser runs through `slots.py run --lane S`).
 
 ## Files changed (all S's per PLAN.md)
@@ -76,7 +76,55 @@ Settings' "Start fresh?" (G's screen) and the End sheet (F's) were the same defe
 - **Fix:** wait for the hash, the h1, no leaving layer, and the card showing the stored total (formatted as the card formats it); read the pills from `main` › region "Profile" only. Not weakened: the before/after equality stands and the pills must now also equal the stored leaves.
 - **Proof under load:** `--repeat-each=5 --workers=2 --fully-parallel` on :5502: **5/5 passed** (`S/suites/integrity-781-repeat5-w2.log`).
 
-@@BEFOREAFTER@@
+## REFERENCE → BEFORE → AFTER
+
+REFERENCE: K07 `S/reference/K07-live-stats-empty.jpg` (useful empty Stats: the explanation and the start action, kept as is) and B06 `S/reference/B06-granola-output.jpg` (useful output after effort: the summary). Tool `S/tools/statscap.mjs` (frozen 2026-10-12 07:40 UTC Monday then real time; at-risk at 19:10; locale en-GB, UTC; DPR 1, full-size PNGs; `meta.json` per configuration records the summary text, tiles, any "streak" words and horizontal overflow).
+
+The delete dialog and every other sheet also have BEFORE/AFTER pairs from the probes: `S/control-ft24/{base,after}-<size>-<theme>-t<text>-dialog*.png` and `S/sheets/{base,after}-<size>-<theme>-t<text>-<sheet>.png` (375×667 light/dark @200, 390×844 dark @100, 844×390 @200, 1440×900 @200).
+
+Preliminary AFTER shots (same Stats code as the final hash, taken at 10:32 before the slot queue filled): `S/shots-prelim/` (390×844 light @100, 375×667 dark @200, 1440×900 light @100: summary and warm-days card).
+
+| State | REFERENCE | Size | Variant | BEFORE (:5478) | AFTER (:5502) |
+|---|---|---|---|---|---|
+| Empty Stats (K07 state) | `S/reference/K07-live-stats-empty.jpg` | 375x667 | light 100 % | `S/shots/before/375x667-light-t100/S01-empty.png` | `S/shots/after/375x667-light-t100/S01-empty.png` |
+| Empty Stats (K07 state) | `S/reference/K07-live-stats-empty.jpg` | 375x667 | dark 100 % | `S/shots/before/375x667-dark-t100/S01-empty.png` | `S/shots/after/375x667-dark-t100/S01-empty.png` |
+| Empty Stats (K07 state) | `S/reference/K07-live-stats-empty.jpg` | 375x667 | light 200 % | `S/shots/before/375x667-light-t200/S01-empty.png` | `S/shots/after/375x667-light-t200/S01-empty.png` |
+| Empty Stats (K07 state) | `S/reference/K07-live-stats-empty.jpg` | 375x667 | dark 200 % | `S/shots/before/375x667-dark-t200/S01-empty.png` | `S/shots/after/375x667-dark-t200/S01-empty.png` |
+| Populated top: the summary (veteran) | – | 375x667 | light 100 % | `S/shots/before/375x667-light-t100/S02-veteran-top.png` | `S/shots/after/375x667-light-t100/S02-veteran-top.png` |
+| Populated top: the summary (veteran) | – | 375x667 | dark 100 % | `S/shots/before/375x667-dark-t100/S02-veteran-top.png` | `S/shots/after/375x667-dark-t100/S02-veteran-top.png` |
+| Populated top: the summary (veteran) | – | 375x667 | light 200 % | `S/shots/before/375x667-light-t200/S02-veteran-top.png` | `S/shots/after/375x667-light-t200/S02-veteran-top.png` |
+| Populated top: the summary (veteran) | – | 375x667 | dark 200 % | `S/shots/before/375x667-dark-t200/S02-veteran-top.png` | `S/shots/after/375x667-dark-t200/S02-veteran-top.png` |
+| Warm-days card (veteran) | – | 375x667 | light 100 % | `S/shots/before/375x667-light-t100/S03-veteran-calendar.png` | `S/shots/after/375x667-light-t100/S03-veteran-calendar.png` |
+| Warm-days card (veteran) | – | 375x667 | dark 100 % | `S/shots/before/375x667-dark-t100/S03-veteran-calendar.png` | `S/shots/after/375x667-dark-t100/S03-veteran-calendar.png` |
+| Warm-days card (veteran) | – | 375x667 | light 200 % | `S/shots/before/375x667-light-t200/S03-veteran-calendar.png` | `S/shots/after/375x667-light-t200/S03-veteran-calendar.png` |
+| Warm-days card (veteran) | – | 375x667 | dark 200 % | `S/shots/before/375x667-dark-t200/S03-veteran-calendar.png` | `S/shots/after/375x667-dark-t200/S03-veteran-calendar.png` |
+| Populated top (newbie) | – | 375x667 | light 100 % | `S/shots/before/375x667-light-t100/S04-newbie-top.png` | `S/shots/after/375x667-light-t100/S04-newbie-top.png` |
+| Populated top (newbie) | – | 375x667 | dark 100 % | `S/shots/before/375x667-dark-t100/S04-newbie-top.png` | `S/shots/after/375x667-dark-t100/S04-newbie-top.png` |
+| Populated top (celebrate) | – | 375x667 | light 100 % | `S/shots/before/375x667-light-t100/S05-celebrate-top.png` | `S/shots/after/375x667-light-t100/S05-celebrate-top.png` |
+| Populated top (celebrate) | – | 375x667 | dark 100 % | `S/shots/before/375x667-dark-t100/S05-celebrate-top.png` | `S/shots/after/375x667-dark-t100/S05-celebrate-top.png` |
+| Top, at risk 19:10 | – | 375x667 | light 100 % | `S/shots/before/375x667-light-t100/S06-atrisk-top.png` | `S/shots/after/375x667-light-t100/S06-atrisk-top.png` |
+| Top, at risk 19:10 | – | 375x667 | dark 100 % | `S/shots/before/375x667-dark-t100/S06-atrisk-top.png` | `S/shots/after/375x667-dark-t100/S06-atrisk-top.png` |
+| Top, at risk 19:10 | – | 375x667 | light 200 % | `S/shots/before/375x667-light-t200/S06-atrisk-top.png` | `S/shots/after/375x667-light-t200/S06-atrisk-top.png` |
+| Top, at risk 19:10 | – | 375x667 | dark 200 % | `S/shots/before/375x667-dark-t200/S06-atrisk-top.png` | `S/shots/after/375x667-dark-t200/S06-atrisk-top.png` |
+| Warm-days card, at risk | – | 375x667 | light 100 % | `S/shots/before/375x667-light-t100/S07-atrisk-calendar.png` | `S/shots/after/375x667-light-t100/S07-atrisk-calendar.png` |
+| Warm-days card, at risk | – | 375x667 | dark 100 % | `S/shots/before/375x667-dark-t100/S07-atrisk-calendar.png` | `S/shots/after/375x667-dark-t100/S07-atrisk-calendar.png` |
+| Warm-days card, at risk | – | 375x667 | light 200 % | `S/shots/before/375x667-light-t200/S07-atrisk-calendar.png` | `S/shots/after/375x667-light-t200/S07-atrisk-calendar.png` |
+| Warm-days card, at risk | – | 375x667 | dark 200 % | `S/shots/before/375x667-dark-t200/S07-atrisk-calendar.png` | `S/shots/after/375x667-dark-t200/S07-atrisk-calendar.png` |
+| History | – | 375x667 | light 100 % | `S/shots/before/375x667-light-t100/S08-history.png` | `S/shots/after/375x667-light-t100/S08-history.png` |
+| History | – | 375x667 | dark 100 % | `S/shots/before/375x667-dark-t100/S08-history.png` | `S/shots/after/375x667-dark-t100/S08-history.png` |
+| History | – | 375x667 | light 200 % | `S/shots/before/375x667-light-t200/S08-history.png` | `S/shots/after/375x667-light-t200/S08-history.png` |
+| History | – | 375x667 | dark 200 % | `S/shots/before/375x667-dark-t200/S08-history.png` | `S/shots/after/375x667-dark-t200/S08-history.png` |
+| Edit brew sheet | – | 375x667 | light 100 % | `S/shots/before/375x667-light-t100/S09-edit-sheet.png` | `S/shots/after/375x667-light-t100/S09-edit-sheet.png` |
+| Edit brew sheet | – | 375x667 | dark 100 % | `S/shots/before/375x667-dark-t100/S09-edit-sheet.png` | `S/shots/after/375x667-dark-t100/S09-edit-sheet.png` |
+| Edit brew sheet | – | 375x667 | light 200 % | `S/shots/before/375x667-light-t200/S09-edit-sheet.png` | `S/shots/after/375x667-light-t200/S09-edit-sheet.png` |
+| Edit brew sheet | – | 375x667 | dark 200 % | `S/shots/before/375x667-dark-t200/S09-edit-sheet.png` | `S/shots/after/375x667-dark-t200/S09-edit-sheet.png` |
+| Delete this brew? | – | 375x667 | light 100 % | `S/shots/before/375x667-light-t100/S10-delete-dialog.png` | `S/shots/after/375x667-light-t100/S10-delete-dialog.png` |
+| Delete this brew? | – | 375x667 | dark 100 % | `S/shots/before/375x667-dark-t100/S10-delete-dialog.png` | `S/shots/after/375x667-dark-t100/S10-delete-dialog.png` |
+| Delete this brew? | – | 375x667 | light 200 % | `S/shots/before/375x667-light-t200/S10-delete-dialog.png` | `S/shots/after/375x667-light-t200/S10-delete-dialog.png` |
+| Delete this brew? | – | 375x667 | dark 200 % | `S/shots/before/375x667-dark-t200/S10-delete-dialog.png` | `S/shots/after/375x667-dark-t200/S10-delete-dialog.png` |
+
+36 state × configuration rows. Not captured (time): before 390x844 light-t100, after 390x844 light-t100, before 390x844 dark-t100, after 390x844 dark-t100, before 390x844 light-t200, after 390x844 light-t200, before 390x844 dark-t200, after 390x844 dark-t200, before 844x390 light-t100, after 844x390 light-t100, before 844x390 dark-t100, after 844x390 dark-t100, before 844x390 light-t200, after 844x390 light-t200, before 844x390 dark-t200, after 844x390 dark-t200, before 1440x900 light-t100, after 1440x900 light-t100, before 1440x900 dark-t100, after 1440x900 dark-t100, before 1440x900 light-t200, after 1440x900 light-t200, before 1440x900 dark-t200, after 1440x900 dark-t200.
+
 
 ## Totals: shown vs recomputed from the seeded records
 
@@ -150,7 +198,7 @@ Inspected and left alone (no evidence of a misleading number): the tiles, Cozy l
 | Unit | `npx vitest run` | 31 files, **292/292** (290 before + 2 new) | `S/suites/vitest.log` |
 | `integrity.spec.ts`, whole file | `KETTLE_PORT=5502 … --workers=1` on `8158134` | **25/25 passed** (6.3 min) | `S/suites/integrity-full.log` |
 | `integrity.spec.ts:781` (was :768) | `--repeat-each=5 --workers=2 --fully-parallel`, slot n 2, while other lanes ran | **5/5 passed** (1.4 min) | `S/suites/integrity-781-repeat5-w2.log` |
-| `w3-stats.spec.ts` (new, 21 tests) | :5502 | @@W3STATS@@ | `S/suites/w3-stats.log` |
+| `w3-stats.spec.ts` (new, 21 tests) | :5502 | **21/21 passed** (3.2 min) on the final app code | `S/suites/w3-stats.log` |
 | `w3-stats.spec.ts` on base (control) | :5478 | 4 passed, **17 failed** as expected (F-T2-4 ×6, no summary ×4, 12:40 ×1, "streak" ×5, wording ×1) | `S/suites/w3-stats-on-base-CONTROL.log` |
 | Sheet regression probe | every Sheet/Dialog, 6 configs | all reachable, Tab moves in all (AFTER) | `S/sheets/after-*` |
 | Full chromium suite | — | **not run** (slot contention; out of time) | — |
@@ -184,7 +232,7 @@ The Tea Cozy sentence appears only when a Cozy is ready and today is still open 
 
 ## Open findings
 
-- **BEFORE/AFTER captures are incomplete** (see the table: what is not listed was not captured before the stop, because of slot contention). Missing configurations are unproven visually; the probes and specs above cover the behaviour at 375×667, 390×844, 844×390 and 1440×900.
+- **BEFORE/AFTER captures are incomplete:** only 375×667 (light/dark, 100/200 %) has the full Stats set; 390×844, 844×390 and 1440×900 were not captured before the stop (slot contention: the queue held S for most of 11:00–12:45). Those sizes are unproven visually for Stats, except the delete dialog and the other sheets (probe shots at 390×844, 844×390, 1440×900) and the preliminary AFTER shots in `S/shots-prelim/`. The probes and specs cover the behaviour at all four sizes.
 - **Full chromium suite not run.**
 - In a tight sheet the × scrolls away with the content (Esc and the pinned actions stay). FOLLOW-UP at most.
 - Compact landscape: the dialog's scrolling header is a Tab stop (Chrome's focusable scrollers). Same on base; harmless (it lets the keyboard scroll the text). ACCEPTED.
