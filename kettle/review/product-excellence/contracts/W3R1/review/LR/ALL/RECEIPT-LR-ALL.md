@@ -74,3 +74,33 @@ Started 16:54:52, freed 17:24:37 (29.7 min of test time), dev :5520, `--workers=
 | `w2-summary.spec.ts` | 18 | 0 |
 
 Facts to read these numbers by: the pre-cut run of B (`runs/full-B-cut.log`, 85 of 86 done) also had no failure. `w2-home.spec.ts` (Lane I2 saw `w2-home:203` fail at 375×667 @100 on the F trial `e3b9eac`) passed 18 of 18 here, on the combined tree. Playwright prints line numbers that do not match the files (for example `w3-notices.spec.ts:252` for a test that is on line 152 of the file; `--list` prints the same shifted numbers). Tests are therefore identified by title in this receipt.
+
+### 2b. Part C, complete: `runs/full-C.log`, `runs/full-C.json`
+
+Started 17:25:26, freed 17:32:07 (6.7 min), dev :5520, `--workers=1`, load average 12 to 13. **44 passed, 1 failed, 25 skipped, 0 flaky** (70 tests).
+
+| Spec file | Passed | Failed | Skipped |
+|---|---|---|---|
+| `w3-notices-load.spec.ts` | 0 | 0 | **25** |
+| `w3-notices.spec.ts` | 7 | 0 | 0 |
+| `w3-settings.spec.ts` | 8 | **1** | 0 |
+| `w3-stats.spec.ts` | 21 | 0 | 0 |
+| `whistle.spec.ts` | 8 | 0 | 0 |
+
+- The 25 skips are by design: `w3-notices-load.spec.ts:40` is `test.skip(!process.env.W3_LOAD, 'the load control: run with W3_LOAD=1')` (F's control copy of the notice-overlap test with three switches). I did not set `W3_LOAD`; those 25 did not run.
+- Failure: `tests/w3-settings.spec.ts` "a pressed segment reads as pressed: unlike hover and unlike the selected one" (5.7 s). Assertion `w3-settings.spec.ts:249`: `expect(pressed).not.toBe(hover)`, received `"oklab(0.959197 0.00389533 0.0175539)"` for both (the segment's background while the mouse button is down equals its hover background). Trace: `kettle/.tmp/LR-pw/full-C/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium/` (not copied). Classification in section 3.
+- The two tests that failed in the cut run of C (`w3-notices` "the room a gone notice keeps stays while the page is scrolled over it and back…" at 390×844 @200, and `w3-stats` "Delete this brew?" at 390×844 @200 "both choices can be tapped, and Tab reaches them in a loop") **passed** in this complete run. The pressed-segment test passed in the cut run and failed in this one. Both go to section 3 as "seen failing in some run".
+
+### 2c. Union of A, B and C against the whole chromium project
+
+`npx playwright test --project=chromium --list --reporter=json` (saved as `runs/list-chromium.json`): **244 tests in 17 spec files**. I compared the (file, title, project) multiset of the three JSON reports with it: **244 of 244 match, none missing, none extra**, and the set of 17 spec files is the same. So no spec file was missing from A+B+C and none had to be run separately.
+
+| | Passed | Failed | Skipped | Total |
+|---|---|---|---|---|
+| A | 87 | 1 | 0 | 88 |
+| B | 86 | 0 | 0 | 86 |
+| C | 44 | 1 | 25 | 70 |
+| **Union (chromium)** | **217** | **2** | **25** | **244** |
+| timer-harness, timer-app, pwa (1b) | 29 | 0 | 2 | 31 |
+
+Failures in the union: `integrity.spec.ts` "I03 storage-full warning is a banner in the page (phone 390×844) › nothing over the brew; …" (A) and `w3-settings.spec.ts` "a pressed segment reads as pressed…" (C). The 25 skips are one spec file (`w3-notices-load`, `W3_LOAD` unset); nothing else in the chromium project was skipped. The four runs were made at different times and under different load (A at load 10 to 18, B 6 to 15, C 12), not as one pass.
