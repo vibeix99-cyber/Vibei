@@ -357,7 +357,10 @@ for (const [w, h] of [
     await page.waitForTimeout(2500);
     await say('Couldn’t save just now. Your summary is still here.');
     await page.waitForTimeout(1200);
-    expect(await overlap('[data-focus-view] footer')).toBe('clear');
+    // The summary has no notice strip (W2R3 T2-D1): the notice is not drawn there at all (it waits for the next screen),
+    // so it can cover nothing; it is queued, not dropped.
+    expect(await overlap('[data-focus-view] footer')).toBe('missing toast');
+    expect(await page.evaluate(() => (window as any).__kettle.notices().queue.map((q: any) => q.message))).toContain('Couldn’t save just now. Your summary is still here.');
   });
 }
 
