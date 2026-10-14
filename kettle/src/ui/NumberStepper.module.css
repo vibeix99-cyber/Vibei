@@ -42,9 +42,13 @@
   color: var(--ink-2);
   font-size: var(--text-body-s);
 }
-.disabled {
+.disabled,
+.disabled .value {
   opacity: var(--disabled-opacity);
   cursor: not-allowed;
+}
+.disabled .value {
+  opacity: 1;
 }
 /* The whole stepper is already faded: its − / + keep their own inert look without fading twice. */
 .disabled :disabled {
