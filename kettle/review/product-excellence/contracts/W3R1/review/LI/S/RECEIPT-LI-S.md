@@ -108,3 +108,160 @@ Raw evidence only. No verdict. LEAD-5 decides. Lane I implemented none of this w
 - **Which element widens the page during load is unproven** at this point. A throttled probe was queued (`tools/LI-overflow2.mjs`); see §2b.
 - The non-`isMobile` captures (§7) show base already wider than the screen at 390×844 @200 veteran (`scrollWidth` 405, a chart tooltip `SPAN._tip`). That width is pre-existing.
 
+## 4. Stats truth: shown vs recomputed (seeds veteran, celebrate, newbie)
+
+**Tool:** `tools/LI-truth.mjs`, 17:3x UTC, trial :5522 and base :5478; 1440×900, en-GB (weeks start Monday), UTC; frozen Mon 12 Oct 07:40 then real time. The page's numbers are read from the DOM: the summary region, Overview, the "Last 7 days" card and each bar's `aria-label`, Personal bests, and every visible History day group (its `aria-label`, header and total, and each row's `aria-label`).
+
+The script recomputes every number itself from `__kettle.progress.getState().sessions`, using none of the app's functions:
+- A brew counts on its `day`. Separately, every `day` is checked against the local day of `endedAt`.
+- Minutes are whole minutes, rounded down per day.
+- "Goal met" comes from the ledger's `goal` entries (the engine's own record), with the goal from settings.
+- Warm runs are replayed from the rules written in `streak.ts`'s header comment.
+- The best week uses weeks that start on Monday.
+
+Raw output: `truth/LI-truth-{trial,base}.log`, `truth/{trial,base}-truth.json`, full pages `truth/<build>-<seed>-1440.png`.
+
+My first trial run had two bugs in my own recompute, not in the app; that run is kept as `truth/LI-truth-trial-run1-recompute-bugs.log`:
+- I compared "Sat 10 Oct" with the header "Sat, 10 Oct" (punctuation only).
+- I took the card's "a day on average" divisor as days since the first brew. The app divides by the window's non-future days (`WeekCard.tsx:29`, `elapsed = bars.filter((b) => !b.future).length`), so newbie shows "13 min a day on average" = 89/7.
+
+Both were fixed and both builds re-run. **Final run: every TRIAL row matches** (`grep -c ^XX LI-truth-trial.log` = 0). The BASE rows differ only where the summary does not exist, or where a tile has the same number under its old words.
+
+**veteran**
+
+| Number | Recomputed from `sessions` (+ ledger for goal days) | TRIAL shows | BASE shows |
+|---|---|---|---|
+| Today: focused | 50 min focused | = 50 min focused | (no summary) |
+| Today: full brews | 2 full brews | = 2 full brews | (no summary) |
+| Today: goal line | 50 min of your 1h goal | = 50 min of your 1h goal | (no summary) |
+| Last 7 days (summary): focused | 4h 35m focused | = 4h 35m focused | (no summary) |
+| Last 7 days (summary): days brewed | Brewed on 7 of 7 days | = Brewed on 7 of 7 days | (no summary) |
+| Last 7 days (summary): days at goal | 1 day at goal | = 1 day at goal | (no summary) |
+| Last 7 days (chart card): focused | 4h 35m | = 4h 35m | = 4h 35m |
+| Last 7 days (chart card): at goal | 1 of 7 days at goal | = 1 of 7 days at goal | = 1 of 7 days at goal |
+| Last 7 days (chart card): a day on average | 39 min a day on average | = 39 min a day on average | = 39 min a day on average |
+| Chart bar 2026-10-06 | 50 min, 2 full brews | = 50 min, 2 full brews | = 50 min, 2 full brews |
+| Chart bar 2026-10-07 | 25 min, 1 full brew | = 25 min, 1 full brew | = 25 min, 1 full brew |
+| Chart bar 2026-10-08 | 25 min, 1 full brew | = 25 min, 1 full brew | = 25 min, 1 full brew |
+| Chart bar 2026-10-09 | 1h 15m, 2 full brews | = 1h 15m, 2 full brews | = 1h 15m, 2 full brews |
+| Chart bar 2026-10-10 | 25 min, 1 full brew | = 25 min, 1 full brew | = 25 min, 1 full brew |
+| Chart bar 2026-10-11 | 25 min, 1 full brew | = 25 min, 1 full brew | = 25 min, 1 full brew |
+| Chart bar 2026-10-12 | 50 min, 2 full brews | = 50 min, 2 full brews | = 50 min, 2 full brews |
+| Tile: Days warm | 23 Days warm | = 23 Days warm | same number, old words (23 Day streak 23 Best streak 23h 9m Total focus 50 Full b…) |
+| Tile: Warmest run | 23 days | = 23 days | same number, old words (23 Day streak 23 Best streak 23h 9m Total focus 50 Full b…) |
+| Tile: Total focus | 23h 9m Total focus | = 23h 9m Total focus | = 23h 9m Total focus |
+| Tile: Full brews | 50 Full brews | = 50 Full brews | = 50 Full brews |
+| Best day | 2h 55m | = 2h 55m | = 2h 55m |
+| Best week | 6h 16m | = 6h 16m | = 6h 16m |
+| Longest brew | 50 min | = 50 min | = 50 min |
+| Brews in a day | 6 Brews in a day | = 6 Brews in a day | = 6 Brews in a day |
+| History "Today" total | 50 min | = 50 min | = 50 min |
+| History "Yesterday" total | 25 min | = 25 min | = 25 min |
+| History "Sat, 10 Oct" total | 25 min | = 25 min | = 25 min |
+| History "Fri, 9 Oct" total | 1h 15m | = 1h 15m | = 1h 15m |
+| History "Thu, 8 Oct" total | 25 min | = 25 min | = 25 min |
+| History "Wed, 7 Oct" total | 25 min | = 25 min | = 25 min |
+| History "Tue, 6 Oct" total | 50 min | = 50 min | = 50 min |
+| History rows: in the group of their own day, with whole minutes | 10 rows | = 10 rows | = 10 rows |
+| Brews whose day ≠ local day of their end | 0 | = 0 | = 0 |
+
+(Σ of per-day whole minutes vs whole minutes of the Σ over the last 7 days: 275 vs 275.)
+
+**celebrate**
+
+| Number | Recomputed from `sessions` (+ ledger for goal days) | TRIAL shows | BASE shows |
+|---|---|---|---|
+| Today: focused | 12 min focused | = 12 min focused | (no summary) |
+| Today: full brews | 0 full brews | = 0 full brews | (no summary) |
+| Today: goal line | 12 min of your 30 min goal | = 12 min of your 30 min goal | (no summary) |
+| Last 7 days (summary): focused | 3h 32m focused | = 3h 32m focused | (no summary) |
+| Last 7 days (summary): days brewed | Brewed on 7 of 7 days | = Brewed on 7 of 7 days | (no summary) |
+| Last 7 days (summary): days at goal | 2 days at goal | = 2 days at goal | (no summary) |
+| Last 7 days (chart card): focused | 3h 32m | = 3h 32m | = 3h 32m |
+| Last 7 days (chart card): at goal | 2 of 7 days at goal | = 2 of 7 days at goal | = 2 of 7 days at goal |
+| Last 7 days (chart card): a day on average | 30 min a day on average | = 30 min a day on average | = 30 min a day on average |
+| Chart bar 2026-10-06 | 50 min, 2 full brews | = 50 min, 2 full brews | = 50 min, 2 full brews |
+| Chart bar 2026-10-07 | 25 min, 1 full brew | = 25 min, 1 full brew | = 25 min, 1 full brew |
+| Chart bar 2026-10-08 | 25 min, 1 full brew | = 25 min, 1 full brew | = 25 min, 1 full brew |
+| Chart bar 2026-10-09 | 50 min, 2 full brews | = 50 min, 2 full brews | = 50 min, 2 full brews |
+| Chart bar 2026-10-10 | 25 min, 1 full brew | = 25 min, 1 full brew | = 25 min, 1 full brew |
+| Chart bar 2026-10-11 | 25 min, 1 full brew | = 25 min, 1 full brew | = 25 min, 1 full brew |
+| Chart bar 2026-10-12 | 12 min, 0 full brews | = 12 min, 0 full brews | = 12 min, 0 full brews |
+| Tile: Days warm | 6 Days warm | = 6 Days warm | same number, old words (6 Day streak 6 Best streak 4h 22m Total focus 10 Full bre…) |
+| Tile: Warmest run | 6 days | = 6 days | same number, old words (6 Day streak 6 Best streak 4h 22m Total focus 10 Full bre…) |
+| Tile: Total focus | 4h 22m Total focus | = 4h 22m Total focus | = 4h 22m Total focus |
+| Tile: Full brews | 10 Full brews | = 10 Full brews | = 10 Full brews |
+| Best day | 50 min | = 50 min | = 50 min |
+| Best week | 3h 20m | = 3h 20m | = 3h 20m |
+| Longest brew | 25 min | = 25 min | = 25 min |
+| Brews in a day | 2 Brews in a day | = 2 Brews in a day | = 2 Brews in a day |
+| History "Today" total | 12 min | = 12 min | = 12 min |
+| History "Yesterday" total | 25 min | = 25 min | = 25 min |
+| History "Sat, 10 Oct" total | 25 min | = 25 min | = 25 min |
+| History "Fri, 9 Oct" total | 50 min | = 50 min | = 50 min |
+| History "Thu, 8 Oct" total | 25 min | = 25 min | = 25 min |
+| History "Wed, 7 Oct" total | 25 min | = 25 min | = 25 min |
+| History "Tue, 6 Oct" total | 50 min | = 50 min | = 50 min |
+| History rows: in the group of their own day, with whole minutes | 9 rows | = 9 rows | = 9 rows |
+| Brews whose day ≠ local day of their end | 0 | = 0 | = 0 |
+
+(Σ of per-day whole minutes vs whole minutes of the Σ over the last 7 days: 212 vs 212.)
+
+**newbie**
+
+| Number | Recomputed from `sessions` (+ ledger for goal days) | TRIAL shows | BASE shows |
+|---|---|---|---|
+| Today: focused | 25 min focused | = 25 min focused | (no summary) |
+| Today: full brews | 1 full brew | = 1 full brew | (no summary) |
+| Today: goal line | 25 min of your 30 min goal | = 25 min of your 30 min goal | (no summary) |
+| Last 7 days (summary): focused | 1h 29m focused | = 1h 29m focused | (no summary) |
+| Last 7 days (summary): days brewed | Brewed on 3 of 7 days | = Brewed on 3 of 7 days | (no summary) |
+| Last 7 days (summary): days at goal | 1 day at goal | = 1 day at goal | (no summary) |
+| Last 7 days (chart card): focused | 1h 29m | = 1h 29m | = 1h 29m |
+| Last 7 days (chart card): at goal | 1 of 7 days at goal | = 1 of 7 days at goal | = 1 of 7 days at goal |
+| Last 7 days (chart card): a day on average | 13 min a day on average | = 13 min a day on average | = 13 min a day on average |
+| Chart bar 2026-10-06 | 0 min, 0 full brews | = 0 min, 0 full brews | = 0 min, 0 full brews |
+| Chart bar 2026-10-07 | 0 min, 0 full brews | = 0 min, 0 full brews | = 0 min, 0 full brews |
+| Chart bar 2026-10-08 | 0 min, 0 full brews | = 0 min, 0 full brews | = 0 min, 0 full brews |
+| Chart bar 2026-10-09 | 0 min, 0 full brews | = 0 min, 0 full brews | = 0 min, 0 full brews |
+| Chart bar 2026-10-10 | 25 min, 1 full brew | = 25 min, 1 full brew | = 25 min, 1 full brew |
+| Chart bar 2026-10-11 | 39 min, 1 full brew | = 39 min, 1 full brew | = 39 min, 1 full brew |
+| Chart bar 2026-10-12 | 25 min, 1 full brew | = 25 min, 1 full brew | = 25 min, 1 full brew |
+| Tile: Days warm | 3 Days warm | = 3 Days warm | same number, old words (3 Day streak 3 Best streak 1h 29m Total focus 3 Full brew…) |
+| Tile: Warmest run | 3 days | = 3 days | same number, old words (3 Day streak 3 Best streak 1h 29m Total focus 3 Full brew…) |
+| Tile: Total focus | 1h 29m Total focus | = 1h 29m Total focus | = 1h 29m Total focus |
+| Tile: Full brews | 3 Full brews | = 3 Full brews | = 3 Full brews |
+| Best day | 39 min | = 39 min | = 39 min |
+| Best week | 1h 4m | = 1h 4m | = 1h 4m |
+| Longest brew | 25 min | = 25 min | = 25 min |
+| Brews in a day | 1 Brews in a day | = 1 Brews in a day | = 1 Brews in a day |
+| History "Today" total | 25 min | = 25 min | = 25 min |
+| History "Yesterday" total | 39 min | = 39 min | = 39 min |
+| History "Sat, 10 Oct" total | 25 min | = 25 min | = 25 min |
+| History rows: in the group of their own day, with whole minutes | 4 rows | = 4 rows | = 4 rows |
+| Brews whose day ≠ local day of their end | 0 | = 0 | = 0 |
+
+(Σ of per-day whole minutes vs whole minutes of the Σ over the last 7 days: 89 vs 89.)
+
+**Late completions and day attribution (where documented):**
+- `src/progress/types.ts:18-19`: `SessionRecord.day` is the "Local day the session ended on."
+- `docs/areas/timer.md:13`: "A phase that ended while closed completes at its **real** end (`record.endedAt = endsAt`, `day` = local day it ended)". `:28`: a frozen tab "completes once, at its **real** end".
+- `src/progress/dst.test.ts:53`: "A brew starting 11:50 pm ends after midnight → next day". `:71` (S's new case): "the last 7 days across fall-back are 7 calendar days, and a brew past midnight counts on the day it ended".
+- `docs/areas/progress.md:16`: "DST-safe (calendar stepping, never +24h)". `:56`: "Calendar week on a Monday was an empty chart → rolling 'Last 7 days'".
+- **Shown live by me:** in §3 case A, the brew from Sun 23:50 to Mon 00:15 is under History "Today" (Monday) with the row label **"23:50 · 25 min"**, and in the summary's "Today 42 min" (`weekboundary/A-mon-enGB-trial.png`). So a Monday row reads 23:50, the start time of a brew that ended Monday. This follows the policy and is the same on base.
+- In all three seeds, 0 brews have a `day` different from the local day of their end. The seeds have no after-midnight, ended-late or DST brews, so for those cases I rely on the §3 case-A brew plus the cited unit tests. **"Ended late" (app closed past the end) and DST were not exercised in a browser by me.**
+
+**Minutes round down:**
+- Engine: `src/progress/engine.ts:150-151` (`beforeMin`/`afterMin = Math.floor(...)`, the daily goal) and `:155` (`add('focus', Math.floor(r.focusedMs / MIN), …)`, leaves). `insights.ts:95` `weekSeries` uses `Math.floor(t.focusMs / MIN)`.
+- Stats on trial: `format.ts` `hm`/`hmLong` use `Math.floor` (base: **`Math.round`**, `git show 4d36939:kettle/src/screens/stats/format.ts` l.8 and l.18). The summary (`Glance.tsx:33`) and the calendar cells (`StreakCard.tsx:131`) also floor.
+- Two places still round, both outside S's change:
+  - `WeekCard.tsx:60` "a day on average": `Math.round(total / elapsed)`. An average, unchanged from base.
+  - **The session summary** `src/screens/done/summary.ts:65`: `Math.max(1, Math.round(r.record.focusedMs / 60_000))`, and `:72` `Math.round(g.afterMin)`. That file is F's, outside S's ownership.
+- The seeds use whole minutes, so the seeded numbers are the same either way. I did not run a non-whole-minute brew in a browser. The maker's spec `w3-stats.spec.ts` "12:40" covers that case and passed in Lane R's 17:25 rerun (`full-C.json`: "a brew ended early at 12:40 counts 12 minutes in History…" passed).
+- On the seeds, the sum of per-day floors equals the floor of the sum over 7 days (275/275, 212/212, 89/89). With non-whole minutes they could differ by up to 6 min between the summary/chart (per-day floors) and a single floor of the sum. No Stats number shows a single floor over 7 days; Total focus floors the all-time sum.
+
+**Nothing invented:**
+- Every number in the summary is also either computed from the records above or present elsewhere on base: the chart card's total and goal days, and History's day totals.
+- The summary's only new count is "Brewed on N of 7 days" = days in the window with any focus record (`Glance.tsx:37`, `byDay.has`). That includes days with only ended-early brews; I recomputed it the same way and it matches.
+- No text claims quality, skill or wellbeing (texts in `truth/*-truth.json` › `raw`).
+
