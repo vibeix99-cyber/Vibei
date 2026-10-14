@@ -298,9 +298,9 @@ Probe `LI2-idle.mjs` (new), trial :5521, 17:03–17:08 UTC. Data: `idle/trial/id
   - lands on the notice itself in 12 of 16 trial configurations (§1a E);
   - base 13 of 17.
 
-### 2c. The kept band in the next notice
+### 2c. The kept band and the next notice
 
-The probe's second and third notices on the same screen were drawn in the kept room: the room is the max of the old room and the new strip height (`Toast.tsx` `room = Math.max(ctl.room, …)`). Room before the new screen was 72.5 px after a 68 px band and a 72.5 px notice: **the band grew to the larger height and stayed.**
+By the code (`Toast.tsx`, `room = … Math.max(ctl.room, ctl.item ? heightOf(el) : 0)`), a later notice on the same screen is drawn in the kept room, and the room after it goes is the larger of the two heights. My probe did not measure two bands in a row: its second notice came after the emulated hide had already given the room back (room 0). That notice ("…LI2 idle probe 2", one line longer at 390×844 @100) left a 72.5 px room.
 
 ### 2d. The "above" path: a notice whose time is up leaves while the person scrolls on
 
