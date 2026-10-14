@@ -51,3 +51,5 @@ Restore a chain in order with `git fetch <bundle> 'refs/heads/*:refs/heads/*'` (
 | `pe-w3-stats-fix-697c1eb.incremental.bundle` | pe/w3-stats@697c1eb (W3R1 Maker S fix round; code 0d240b6+1d899b3) | 344069c | okay 2026-10-14 |
 | `w3r1-trial-f63286e.incremental.bundle` | trial f63286e = integration 283ae93 (N+G) + 697c1eb (merge only) | 283ae93, 697c1eb | okay 2026-10-14 |
 | `pe-w3r1-x2-segment-test-7bb8540.incremental.bundle` | pe/w3r1-x2-segment-test@7bb8540 (X-2 test-only; code 9fb1aca) | 4223062 | okay 2026-10-14 |
+| `pe-w3-notices-polish-fix-11a7ac6.incremental.bundle` | pe/w3-notices-polish@11a7ac6 (W3R1 Maker F fix round; code 58d1b88) | 5ee3e7c | okay 2026-10-14 |
+| `w3r1-trial-1358e00.incremental.bundle` | trial 1358e00 = integration 8af9fcb (N+G+S+X-2) + 11a7ac6 (merge only) | 8af9fcb, 11a7ac6 | okay 2026-10-14 |

@@ -137,3 +137,14 @@
 ## X-2: APPROVE (LEAD-5 `8350fb3`; 8/8 under load) → merged as `60fdb7e` (2026-10-14 ~19:20 UTC)
 
 The merged kettle/src `db28295` and kettle/tests `f071f53` equal trial `7145f49`'s. Lane run logs: `kettle/.gitignore` ignores `*.log`, so 149 lane logs under `W3R1/review/` are now kept as `.log.txt` copies (`c0d942b`).
+
+## Maker F fix round. GATE PASSED, 2026-10-14 19:36 UTC
+
+| Item | Result |
+|---|---|
+| Hand-back | ≈19:31 UTC (window 18:16–19:46). Packet `/home/user/wt/w5f/kettle/review/product-excellence/contracts/W3R1/F-FIX-READY.md`; evidence `…/W3R1/F/fix/` (the F folder is 59 MB) |
+| Revision | `pe/w3-notices-polish@11a7ac6`; final code `58d1b88` (+ spec `cbc88ac`); kettle/src `27d83ac` |
+| Scope (checked against §6) | `ui/Toast.tsx` (F-D1), `focus/FocusScreen.module.css` (F-D2: the wrap reverted), `home/StatusBar.tsx` (F-D3), `tests/whistle.spec.ts` (line 203 only, C-1), `tests/w3-notices.spec.ts`, new `tests/w3-notices-idle.spec.ts`, `tests/notice-strip.spec.ts` (`press()` hardening). All allowed |
+| **Fix trial** | **`1358e00`** = integration `8af9fcb` (N + G + S + X-2) + `11a7ac6`, worktree `/home/user/wt/w5tr-f2`, src `d533342`. tsc 0, vitest **302/302**, build OK. Dev **:5528** (verified), preview **:5538** |
+| Maker's gaps | 1440 light @200 reduced ×3 gave 2/3 twice (one failure is N-2, S's History focus scroll; one is a server restart by someone else). `notice-strip` 25/25 and the owned specs ran on `14703f3`, one code commit before final. C-1 not provable on F's branch |
+| Archive | `archive/pe-w3-notices-polish-fix-11a7ac6.incremental.bundle`, `archive/w3r1-trial-1358e00.incremental.bundle` |
