@@ -75,3 +75,48 @@ I read `LI/S/weekboundary/{A-mon-enGB,B-sun-enUS,C-sun-enGB}.json`:
 - `width/TRIAL-844x390-200-desk-fonts-overview.png`: the second tile reads "23 day…" over "Warm… run". The third tile's "23h 9…" / "Total foc…" is cut too, but that is the base's own (Lane I §7; FOLLOW-UP).
 - `width/TRIAL-390x844-200-mobile-nofonts-viewport.png`: the page drawn zoomed out (408 px into 390).
 - Lane I's K07 and delete-dialog frames as listed in its §7. I did not re-open its 64 full-page captures; their numbers are in its table.
+
+## 2. What verifies (kept for the fix round)
+
+| Item | Result | Source |
+|---|---|---|
+| **F-T2-4, controls first** | **Base, every config tried (9 of 16):** Tab and Shift+Tab frozen on "Keep it", so Delete cannot be reached by keyboard; at 375×667 @200 light and dark, Delete is off screen (641–698 of 667).<br>**Trial, all 16 (4 sizes × light/dark × @100/@200):** Keep it and Delete tappable; Tab cycles Delete → Close → Keep it, and Shift+Tab back, every stop inside the top dialog; `data-tight` at 375×667 @200.<br>**Escape and backdrop** close only the dialog and return focus to "Delete this brew"; **Keep it** keeps the brew (83).<br>**Delete** (Tab+Enter) removes it (83 → 82) and leaves the inline Undo.<br>**The cause the maker gives** (portal-bubbled Tab handled by the inert Edit sheet underneath; the panel clipping its footer) is consistent with the change in `Sheet.tsx` | Lane I §1; packet |
+| **Every other `ui/Sheet.*` use** (12 uses; probe at 375×667 @200 light/dark and 1440 light @100 / dark @200) | **Base at 375×667 @200:** "Start fresh?", "Delete this brew?" and the End sheet (< 1 min) have controls off screen. **Trial:** all reachable with the footer pinned.<br>**Every sheet:** trap ✓; Escape and backdrop close exactly one sheet and return focus to its opener; no sheet regressed. The last three 1440 dark @200 rows are in Lane I's log | Lane I §2b |
+| **`w3-stats:98`** | 5/5 on trial :5522 and 5/5 on combined :5520, warm server. Lane R's one failure is S-D1's cold-load width (§3) | Lane I §2a; my runs |
+| **Stats truth** | veteran, celebrate and newbie: **every shown number equals Lane I's own recompute** from the records (Today, the summary's Last 7 days, the chart card and bars, tiles, personal bests, every History day group and row). 0 brews on a day other than the local day they ended. The after-midnight brew (Sun 23:50 → Mon 00:15) counts on Monday, its row reading "23:50" (the policy, same on base). Minutes round down, as the engine counts them (`engine.ts:150–155`, `insights.ts:95`) | Lane I §4, §3 case A |
+| **Nothing invented** | Every summary number is computed from the records or already on base. The only new count is "Brewed on N of 7 days", recomputed and matching. No claim about quality, skill or wellbeing | Lane I §4 |
+| **The backup test** | One hunk in `profilePills` (+21 / −4). It waits for the hash, no leaving route, and the Profile card showing the stored total, then reads that card only. **No `expect` removed;** the before/after equality stands. Whole file 25/25; the test `--repeat-each=5 --workers=2` 5/5 | Lane I §6 |
+| **Warm-days wording and I13 in S's files** | "streak" hits in Stats `main`, Edit brew and the delete dialog: base 2–3 per case, trial **0** in every case (sr text, labels and titles included).<br>**Tea Cozy sentence:** shown only when the run is alive, today is not yet warm, it is ≥ 18:00 and a Cozy is held; Lane I §5b showed it there and absent otherwise. It is true by `streak.ts`.<br>**Missed-day and return lines:** they invite ("Ready for a warm day · One brew today warms the kettle again.") with no threat or loss words. The badge sheet's "Keep a N-day warm streak" is F's `badges.ts`, fixed on F's branch | Lane I §5, §5b |
+| **REFERENCE (K07) → BEFORE → AFTER** | 64 full-page captures (16 configs × empty / veteran × 2 builds). The empty state keeps K07's structure and the "Put the kettle on" action, with words changed only. History: the same groups and rows, shifted down by the summary. `scrollWidth` identical B/A in all 32 pairs with fonts loaded | Lane I §7 |
+| **Suites** | tsc 0; vitest 292/292; integrity 25/25; `w3-stats` 21/21 (17 fail on base, controls first) | Packet; Lane I §6 |
+
+## 3. Defect
+
+### S-D1 · The "Warmest run" tile does not fit at 200 %: its label and value are cut once the fonts load, and before they load it pushes the phone page to 408 px wide (BLOCKS, introduced)
+
+**Where.**
+- `src/screens/stats/StatsScreen.tsx` (the second Overview tile): `value` = `{streak.best}<span className={s.tileUnit}> days</span>`, `label="Warmest run"`.
+- Its styles: `stats.module.css` `.tileUnit` and `ui/Stat.tsx`.
+- The base tile was `value="23"`, `label="Best streak"`.
+
+**Measured** (§1, my runs; Lane I §7):
+- **Fonts loaded:**
+  - the label "Warmest run" is cut (scrollWidth 120 > 111 px; on screen "Warm… run") at 390×844 @200 and 844×390 @200;
+  - the value "23 days" is cut at the tile's edge ("23 day…").
+  - Base: no tile text cut in the same configs.
+- **Fonts not yet loaded** (a first, cold load, or fonts failing; emulated by blocking `*.woff2`):
+  - the tile's value and label run to x = 408;
+  - under `isMobile` Chrome lays the page out **408 px wide at 390×844 @200, 401 px at 375×667 @200**, and draws it zoomed out;
+  - base stays at 390 / 375, with nothing past the edge.
+
+**What it broke.** Lane R's combined run failed `w3-stats:98` because of this:
+- The run is in `review/LR/ALL/runs/full-C-cut.log`. Lane I read its trace (`LI/S/spec98/`) and found the layout viewport **408×883 at the tap**, with the tile "23 da…" cut at the right in the frame just before.
+- The tap on the first History row landed where the row no longer was, so "Edit brew" never opened.
+- Lane I saw 408 px on the first cold load of the trial and the combined builds only, never on base. My blocked-font run reproduces it every time and names the element.
+
+**Why it blocks.** It is introduced by S's tile change. A person who opens Stats on a slow first load sees a zoomed-out page whose taps can miss. With the fonts loaded, the tile S reworded shows a cut label and a cut value at two of the brief's sizes.
+
+**Required** (S's files: `StatsScreen.tsx`, `stats.module.css`, `ui/Stat.tsx`):
+- The tile keeps the glossary form: "Warmest run" with "N days", or "Warmest run · N days".
+- It fits at every size and text size, with the fonts loaded and without them.
+- The approach is the maker's: for example, the unit wraps under the number, or the value and label are allowed to wrap rather than overflow.
