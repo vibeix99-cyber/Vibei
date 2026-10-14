@@ -185,3 +185,10 @@ Running 243 tests using 2 workers
   ✓  181 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (667×375 dark 100 %, big day) (28.0s)
   ✓  182 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (1440×900 light 100 %, task day) (28.0s)
   ✓  183 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (1440×900 light 100 %, big day) (28.3s)
+FACT 390x844-light-t100 a-no-input {"leftAt":5250,"room":68,"commits":[{"t":6544,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":5785,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":1294,"collapseAfterLastBusyMs":1294,"visibleMove":68}
+  ✓  185 [chromium] › tests/w3-notices-idle.spec.ts:77:5 › band lifetime a-no-input (390x844-light-t100) (7.5s)
+  ✓  184 [chromium] › tests/toast-room.spec.ts:242:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by wheel (375×667, 200 % text) (24.3s)
+FACT 390x844-light-t100 b-scroll-then-idle {"leftAt":5282,"room":68,"maxSy":486,"scrollMs":3390,"roomAfterScroll":68,"commits":[{"t":9984,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":1312,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":4702,"collapseAfterLastBusyMs":1312,"visibleMove":68}
+  ✓  186 [chromium] › tests/w3-notices-idle.spec.ts:77:5 › band lifetime b-scroll-then-idle (390x844-light-t100) (11.2s)
+FACT 390x844-light-t100 c-pointer-held {"leftAt":5261,"room":68,"roomWhileDown":68,"downWhileHeld":1,"commits":[{"t":9664,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":1311,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":4403,"collapseAfterLastBusyMs":1311,"visibleMove":68}
+  ✓  188 [chromium] › tests/w3-notices-idle.spec.ts:77:5 › band lifetime c-pointer-held (390x844-light-t100) (10.5s)
