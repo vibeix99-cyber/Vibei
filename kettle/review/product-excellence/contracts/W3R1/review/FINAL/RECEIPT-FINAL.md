@@ -145,3 +145,53 @@ What the code does at that step (read, not run): the test frees the filler keys 
 - **Cause:** G's copy in `src/screens/settings/SettingsScreen.tsx` (a diff against base): the Haptics description goes from "Little buzzes for key moments." to "Little buzzes for key moments, on devices that can vibrate." and now wraps to a second line. The same diff changes the Daily goal footer, the Sounds and Nudges lines and the Keep-awake line, but none of those changes a block height here. G's tokens in `src/styles/{tokens,global}.css` and the `src/ui/*.module.css` files change outlines, opacities and an outline offset only (diff read), and no block above the Haptics row moved.
 - **F's strip is not involved:** the notice strip is at y 16 with height 0 on both sides in all cells (no room kept).
 - **The "about 2 px lower in dark at 390" of the combined matrix:** it is not a layout difference of the tree. I measured the old frames (`LR/ALL/cap/390x844@2-dark/{ctrl,trial}-19-settings.png`, combined trial `e478604`, full-page frames) by sliding the trial frame over the base frame in 200 px bands of the first 1700 device px: in dark the best match is a rigid shift of **3 device px (1.5 css px)** in every band, with an error of 0.01 to 0.06 (grey levels) after the shift, against 3 to 9 without it; so the two frames hold the same pixels, one moved down by 3 device px as a whole. In the light solo pair (`LR/ALL/cap/390x844@2-light-solo`) the best shift is 0 in every band with error 0.0. A uniform shift of the whole page in one capture of a sequence is what a screen caught mid-transition looks like (that frame was taken without waiting for the route change); it is consistent with, but I did not prove, that cause. `scripts/LR-shift.py` is the script. On the final tree, with the route settled, the first screen has no shift in dark or light.
+
+## 9. Capture matrix, preview :5550 (final `2be3de1`) against preview :5488 (base `4d36939`), with a base-vs-base control
+
+Tool `review/product-excellence/tools/capture.mjs` (21 states), `scripts/LR-capF.sh`: per config, **trial, base, base again** (`ctrl2`), one browser at a time through the gate (two jobs side by side, one slot each, machine load 4 to 9). Same frozen start clock `2026-10-12T07:40:00Z` on all three, from the preload `scripts/LR-freeze2.mjs`, which is last time's freeze preload plus two waits before every screenshot: no `[data-route-leaving]` element in the page (up to 25 s) and `document.fonts.ready`. `capture-meta.json`: revision `2be3de1` for the trial, `4d36939` for both base runs, 0 page errors (per side in `cap/<config>/*-capture-meta.json`; start times, wall times and loads in `*-freeze.json`).
+
+Pair diff (`pdiff.py`, `scripts/LR-pdiffF.py`): strict = any channel differs, tol = a channel differs by more than 16. **Over 0.5 %** = strict or tol above 0.5 for trial against base. **Over noise** (my rule, stated here): over 0.5 % and (tol above the base-vs-base tol + 0.25, or strict above the base-vs-base strict + 0.5, or a size difference that the base pair does not have). Tables: `cap/matrix-<config>.md`, `cap/<config>/pairs.json`; the numbers in the cells below are strict / tol, trial against base, then base against base.
+
+| Config | Trial run (UTC) | Pairs over 0.5 % | Over noise |
+|---|---|---|---|
+| 390×844@2 light | 23:20, 366 s | 7 of 21 | 6 |
+| 390×844@2 dark | 23:38, 362 s | 10 of 21 | 8 |
+| 375×667@2 light | 23:03, 338 s | 7 of 21 | 5 |
+| 1440×900@1 light | 23:24, 573 s | 9 of 21 | 3 |
+
+**What the control shows (noise floor, base against base):** most states are exactly 0.0 (Today, summary, break, welcome, first summary, and most focus states). Noise appears as: the unlock card art (11, 11b: up to 7.5 % strict at 1440 and 5 % at 390 dark), the focus session's chrome caught mid-fade (`03` at 390 light: **8.56 / 5.38 base against base**, while the trial against base was 0.0 there, and 8.57 / 4.24 trial against base in dark with 0.0 base against base: it appears in any one of three captures), the first-brew scene (`13`: 30.0 / 1.04 base against base at 390 light), a whistle glow (`06`), the Nook scene's idle motion (`17`, `18`: 1.3 to 2.9 % strict, tol 0.1 to 0.4), and, in the sequence run, the page height of `18` and `17`, where the base frames kept a leaving layer's height (8122 and 3238/3272 px against the trial's 3016 and 2912/2844 px, in both base captures). So the earlier combined-trial list had a floor now measured.
+
+### 9a. Pairs over noise, with the owner
+
+| Config | State | Strict / tol (trial vs base; base vs base) | What it is | Owner |
+|---|---|---|---|---|
+| 390 L | 15 stats-empty | 0.57 / 0.52; 0.0 / 0.0 | wording: "Your warm days, charts and badges…", tiles "Days warm" / "Warmest run" (opened in the earlier matrix, same numbers: 0.573 / 0.521) | **S** |
+| 390 L | 16 stats-populated | 41.3 / 34.5; 0.0 / 0.0 (size 8736 vs 8354) | the Today / Last 7 days card above the tiles; +191 css px | **S** |
+| 390 L | 19 settings | 13.2 / 10.4; 0.0 / 0.0 (size 8290 vs 8256) | the copy changes and the Haptics line (+17 css px), no shift above it (section 8) | **G** |
+| 390 L | 11 summary-unlock | 4.84 / 0.11; 2.85 / 0.04 | the unlock card's picture; text and layout 0 | none (noise-sized, no maker) |
+| 390 L | 17 nook-early | 2.38 / 0.27; 1.41 / 0.22 | scene idle motion (light: forced day) | none shown |
+| 390 L | 18 nook-earned | 64.3 / 63.0 (sizes 3016 vs 8122); 1.3 / 0.14 | page height only: the base frames keep a leaving layer (twice). The solo re-capture (below) has equal sizes and 3.75 / 0.37 vs 2.23 / 0.43 | artifact |
+| 390 D | 03 focus-mid | 8.57 / 4.24; 0.0 / 0.0 | the session chrome caught mid-fade; the same pattern fell on the base-vs-base pair at 390 light | artifact (capture timing) |
+| 390 D | 05 focus-added | 0.74 / 0.67; 1.07 / 0.36 | timer box | noise |
+| 390 D | **13 first-brew** | **29.9 / 8.87; 0.0 / 0.0** | **the same numbers as in the earlier combined matrix (29.906 / 8.869) and 0.0 base against base: a repeatable difference** in the backdrop room image (window, curtains, wall; opened: the red area of the diff is the room behind the kettle and Chai, not Chai). N's code change is Chai's fur emissive only (diff read), so the cause is **not isolated**. The same state in light is 0.0 | scene area (N), **unproven** |
+| 390 D | 15, 16, 19 | 0.58 / 0.52; 41.3 / 32.7; 13.2 / 10.3 | as at 390 light (S, S, G) | **S, S, G** |
+| 390 D | 17, 18 | 13.3 / 10.5 (sizes 2912 vs 3238); 2.9 / 0.33 and 64.8 / 63.1 (3016 vs 8122) | Nook at night; sizes are the sequence artifact; not opened | scene (N) area, not separable |
+| 375 L | 13 first-brew | 22.5 / 0.66; 0.0 / 0.0 | tint-level (tol 0.66); not opened | scene, not isolated |
+| 375 L | 15 stats-empty | 22.2 / 16.8 (size 3540 vs 3504); 0.0 / 0.0 | wording and 18 css px taller tiles (as in the earlier matrix) | **S** |
+| 375 L | 16 stats-populated | 42.3 / 35.4 (8772 vs 8354); 0.0 / 0.0 | Today / Last 7 days card, +209 css px | **S** |
+| 375 L | 17 nook-early | 15.4 / 13.3 (2844 vs 3272); 1.7 / 0.25 | content opened and identical; the base frames have blank page height at the bottom (both captures) | artifact |
+| 375 L | 19 settings | 13.5 / 10.4 (8474 vs 8434); 0.0 / 0.0 | copy and Haptics line, +40 px | **G** |
+| 1440 L | 02 focus-start | 3.31 / 0.07; 0.0 / 0.0 | tint-level (tol 0.07), whole of the timer/scene box; not opened | not isolated |
+| 1440 L | 11b | 7.07 / 0.66; 7.20 / 0.33 | unlock card picture | noise |
+| 1440 L | 16 stats-populated | 28.8 / 24.3 (3091 vs 2913); 0.02 / 0.0 | the Today / Last 7 days card (base frame is Stats this time) | **S** |
+
+Not over noise but over 0.5 % at 1440: `13` (0.575 / 0.463, base against base 0.557 / 0.475), `14 summary-first` (68.3 / 10.4 in all three: one base capture is the odd one), `17`, `18`, and **`19 settings` 1.05 / 0.84 against base-vs-base 0.85 / 0.71**: the copy changes of Settings are of the size of the noise at 1440 and my rule does not separate them.
+
+**Solo re-capture at 390×844 light** (`scripts/LR-capsoloF.sh`: 16 to 19 each alone in its own page, trial and base twice): 16: 41.3 / 34.5 (size 8736 vs 8354, base twice the same); 17: 0.95 / 0.15 against 1.85 / 0.10 (noise); 18: 3.75 / 0.37 against 2.23 / 0.43 (equal sizes, noise); 19: 13.2 / 10.35 (8334 vs 8300, base twice the same).
+
+### 9b. Today, summary, Stats, Settings (as in the earlier matrix)
+
+- **Today** (`01`, `01b`): 0.0 at all four configs, trial against base. **Summary** (`07`, `08`, `09`, `10`, `14`): 0.0 at all four configs, except 1440 `14` (68.3 in all three captures, noise) and the unlock card (noise).
+- **Focus** (`02`, `04`, `05`): 0.0 trial against base at 390 light and 375 light (at 390 dark and 1440 small differences at noise level, `02` at 1440 tint-level); the 375 "Paused" pill (X-8) was 0.0 at `04`.
+- **Stats:** S's Today / Last 7 days card and warm-days wording, at all four configs. **Settings:** G's copy and the Haptics line, a +17 px page height and no shift above the Haptics row.
+- **Chai at night (N):** the dark first-brew frame differs in the backdrop (above); the dark Nook frames differ at a size mixed with the sequence artifact. N's still-frame receipts remain the measure of Chai itself.
