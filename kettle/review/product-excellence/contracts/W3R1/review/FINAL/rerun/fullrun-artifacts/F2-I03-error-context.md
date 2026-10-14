@@ -1,0 +1,204 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e6]:
+      - link "Skip to content" [ref=e7] [cursor=pointer]:
+        - /url: "#main"
+      - navigation "Main" [ref=e8]:
+        - list [ref=e9]:
+          - listitem [ref=e10]:
+            - link "Today" [ref=e11] [cursor=pointer]:
+              - /url: "#/"
+              - img [ref=e15]
+              - generic [ref=e19]: Today
+          - listitem [ref=e20]:
+            - link "Stats" [ref=e21] [cursor=pointer]:
+              - /url: "#/stats"
+              - img [ref=e24]
+              - generic [ref=e28]: Stats
+          - listitem [ref=e29]:
+            - link "Nook" [ref=e30] [cursor=pointer]:
+              - /url: "#/nook"
+              - img [ref=e33]
+              - generic [ref=e38]: Nook
+          - listitem [ref=e39]:
+            - link "Settings" [ref=e40] [cursor=pointer]:
+              - /url: "#/settings"
+              - img [ref=e43]
+              - generic [ref=e55]: Settings
+      - main [ref=e57]:
+        - generic [ref=e61]:
+          - generic [ref=e62]:
+            - region "Good evening, Sam" [ref=e63]:
+              - generic [ref=e64]:
+                - navigation "Your progress" [ref=e65]:
+                  - button "3 days warm. Show details" [ref=e66] [cursor=pointer]:
+                    - img [ref=e67]
+                    - generic [ref=e83]:
+                      - generic [ref=e84]: "3"
+                      - generic [ref=e85]: days warm
+                  - button "223 leaves Show details" [ref=e86] [cursor=pointer]:
+                    - img [ref=e87]
+                    - generic [ref=e93]:
+                      - generic [ref=e94]: "223"
+                      - generic [ref=e95]: leaves
+                    - generic [ref=e96]: Show details
+                  - button "Cozy level 5, 102 leaves to the next. Show details" [ref=e97] [cursor=pointer]:
+                    - img [ref=e98]:
+                      - generic [ref=e117]: "5"
+                    - generic [ref=e118]:
+                      - generic [ref=e119]: Level 5
+                      - progressbar [ref=e120]
+                    - generic [ref=e123]: Cozy level 5, 102 leaves to the next. Show details
+                - heading "Good evening, Sam" [level=1] [ref=e124]
+              - paragraph [ref=e131]: Goal met. Lamps low, feet up. You earned a slow evening.
+            - region "This browser’s storage is full." [ref=e132]:
+              - img [ref=e134]
+              - paragraph [ref=e138]:
+                - strong [ref=e139]: This browser’s storage is full.
+                - text: Kettle couldn’t save your latest changes. Save a backup to keep them.
+              - button "Save backup" [active] [ref=e140] [cursor=pointer]:
+                - generic [ref=e142]:
+                  - img [ref=e144]
+                  - generic [ref=e147]: Save backup
+            - region "Today’s goal" [ref=e148]:
+              - heading "Today’s goal" [level=2] [ref=e149]
+              - generic [ref=e150]:
+                - paragraph [ref=e151]:
+                  - strong [ref=e152]: 50 min
+                  - text: brewed
+                - paragraph [ref=e153]:
+                  - img [ref=e154]
+                  - text: Goal met
+              - progressbar "Today’s goal" [ref=e156]
+              - paragraph [ref=e159]: Today’s goal · 30 min (a cup) · anything more is a bonus
+          - generic [ref=e160]:
+            - region "What are you brewing? (optional)" [ref=e161]:
+              - generic [ref=e162]:
+                - heading "What are you brewing? (optional)" [level=2] [ref=e164]
+                - generic [ref=e165]:
+                  - generic [ref=e166]:
+                    - generic [ref=e167]: What are you brewing? (optional)
+                    - generic [ref=e168]:
+                      - textbox "What are you brewing? (optional)" [ref=e169]:
+                        - /placeholder: e.g. Chapter 3 notes, or leave it blank
+                        - text: Storage full
+                      - button "Clear what are you brewing? (optional)" [ref=e170] [cursor=pointer]:
+                        - img [ref=e172]
+                  - paragraph [ref=e174]:
+                    - img [ref=e175]
+                    - generic [ref=e178]: Carried from your last brew
+                    - button "Mark “Storage full” done" [ref=e179] [cursor=pointer]: Mark done
+                - group "Tag" [ref=e180]:
+                  - button "Work" [ref=e181] [cursor=pointer]:
+                    - generic [ref=e182]:
+                      - img [ref=e184]
+                      - generic [ref=e189]: Work
+                  - button "Study" [pressed] [ref=e191] [cursor=pointer]:
+                    - generic [ref=e192]:
+                      - img [ref=e194]
+                      - generic [ref=e197]: Study
+                      - img [ref=e198]
+                  - button "Read" [ref=e200] [cursor=pointer]:
+                    - generic [ref=e201]:
+                      - img [ref=e203]
+                      - generic [ref=e207]: Read
+                  - button "Create" [ref=e209] [cursor=pointer]:
+                    - generic [ref=e210]:
+                      - img [ref=e212]
+                      - generic [ref=e215]: Create
+                  - button "Life" [ref=e217] [cursor=pointer]:
+                    - generic [ref=e218]:
+                      - img [ref=e220]
+                      - generic [ref=e222]: Life
+            - generic [ref=e224]:
+              - radiogroup "Brew length" [ref=e226]:
+                - radio "15 min" [ref=e227] [cursor=pointer]:
+                  - generic [ref=e230]: 15 min
+                - radio "25 min" [checked] [ref=e231] [cursor=pointer]:
+                  - generic [ref=e234]: 25 min
+                - radio "50 min" [ref=e235] [cursor=pointer]:
+                  - generic [ref=e238]: 50 min
+                - radio "Custom" [ref=e239] [cursor=pointer]:
+                  - generic [ref=e242]: Custom
+              - button "Put the kettle on · 25 min" [ref=e243] [cursor=pointer]:
+                - generic [ref=e245]:
+                  - img [ref=e247]
+                  - generic [ref=e249]: Put the kettle on · 25 min
+              - paragraph [ref=e250]:
+                - text: Then a 5 min tea break.
+                - button "Change brew length" [ref=e251] [cursor=pointer]
+            - region "Today’s recipes" [ref=e252]:
+              - generic [ref=e253]:
+                - img [ref=e255]
+                - heading "Today’s recipes" [level=2] [ref=e259]
+                - generic [ref=e260]: 1 of 3
+              - list [ref=e261]:
+                - listitem [ref=e262]:
+                  - generic [ref=e263]:
+                    - img [ref=e264]
+                    - img [ref=e268]
+                  - generic [ref=e272]:
+                    - generic [ref=e273]:
+                      - paragraph [ref=e274]: Brew for 15 minutes
+                      - generic [ref=e275]:
+                        - img [ref=e276]
+                        - text: "+10"
+                        - generic [ref=e282]: leaves, earned
+                    - generic [ref=e283]:
+                      - 'progressbar "Brew for 15 minutes: 15 of 15" [ref=e284]'
+                      - generic [ref=e287]: 15/15
+                - listitem [ref=e288]:
+                  - img [ref=e290]
+                  - generic [ref=e293]:
+                    - generic [ref=e294]:
+                      - paragraph [ref=e295]: Name what you’re brewing twice
+                      - generic [ref=e296]:
+                        - img [ref=e297]
+                        - text: "+15"
+                        - generic [ref=e303]: leaves
+                    - generic [ref=e304]:
+                      - 'progressbar "Name what you’re brewing twice: 1 of 2" [ref=e305]'
+                      - generic [ref=e308]: 1/2
+                - listitem [ref=e309]:
+                  - img [ref=e311]
+                  - generic [ref=e315]:
+                    - generic [ref=e316]:
+                      - paragraph [ref=e317]: Earn 85 leaves
+                      - generic [ref=e318]:
+                        - img [ref=e319]
+                        - text: "+20"
+                        - generic [ref=e325]: leaves
+                    - generic [ref=e326]:
+                      - 'progressbar "Earn 85 leaves: 73 of 85" [ref=e327]'
+                      - generic [ref=e330]: 73/85
+            - region "Today’s brews" [ref=e331]:
+              - generic [ref=e332]:
+                - heading "Today’s brews" [level=2] [ref=e333]
+                - generic [ref=e334]: 2 · 50 min
+              - list [ref=e335]:
+                - listitem [ref=e336]:
+                  - time [ref=e337]: 10:15 AM
+                  - img [ref=e339]
+                  - generic [ref=e341]:
+                    - paragraph [ref=e342]: Work brew
+                    - paragraph [ref=e343]:
+                      - generic [ref=e344]:
+                        - img [ref=e346]
+                        - text: Work
+                      - generic [ref=e351]: 25 min
+                - listitem [ref=e352]:
+                  - time [ref=e353]: 8:31 PM
+                  - img [ref=e355]
+                  - generic [ref=e357]:
+                    - paragraph [ref=e358]: Storage full
+                    - paragraph [ref=e359]:
+                      - generic [ref=e360]: 25 min
+    - status [ref=e361]:
+      - paragraph [ref=e362]: Saved kettle-backup-2026-10-14.json. Keep it somewhere safe.
+      - paragraph [ref=e363]: Saved kettle-backup-2026-10-14.json. Keep it somewhere safe.
+  - generic [ref=e364]: This browser’s storage is full. Kettle couldn’t save your latest changes. Save a backup to keep them. Save backup is on Today and in Settings, Your data.
+  - status [ref=e365]: The kettle’s whistling! Focus session complete. Time for tea.
+```
