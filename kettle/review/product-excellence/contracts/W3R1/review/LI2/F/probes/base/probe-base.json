@@ -1018,5 +1018,107 @@
     "version": 23
    }
   }
+ },
+ {
+  "cfg": "844x390-light-t100",
+  "server": "base",
+  "band": {
+   "target": "15 min",
+   "tgTopBefore": 20,
+   "tgTopWithNotice": 4,
+   "enterPush": -16,
+   "arriveWhy": "rest",
+   "withNotice": {
+    "stripTop": 0,
+    "stripH": 0
+   },
+   "tgTopAfterGone": 16,
+   "leaveMove": 12,
+   "leaveWhy": "rest",
+   "after": {
+    "stripTop": 12,
+    "stripH": 0,
+    "stripW": 712,
+    "dataRoom": false,
+    "bg": "rgba(0, 0, 0, 0)",
+    "border": "0px none",
+    "over": [
+     "BUTTON._stat_ahnin_10 \"3\ndays warm\nstreak. Show\" [100,8,118,44] pos=static",
+     "BUTTON._stat_ahnin_10 \"188\nleaves\nShow details\" [222,8,88,44] pos=static",
+     "BUTTON._stat_ahnin_10 \"4\nCozy level 4, 17 leave\" [314,8,56,44] pos=static"
+    ],
+    "hits": [
+     "BUTTON._stat_ahnin_10",
+     "DIV._rhythm_ahnin_363",
+     "DIV._control_chqjy_1 _md_chq"
+    ]
+   },
+   "afterScrollBack": {
+    "sy": 4
+   }
+  },
+  "L1": {
+   "target": "3 days warm streak. Show details",
+   "intentTop": 78.5,
+   "pointerdown": {
+    "dtFromChange": 18,
+    "tgTop": 8,
+    "moved": -70.5,
+    "landed": "img._img_1lrg4_9 \"\"",
+    "onTarget": false
+   },
+   "click": {
+    "tgTop": 8,
+    "moved": -70.5,
+    "landed": "img._img_1lrg4_9 \"\"",
+    "onTarget": false
+   },
+   "change": {
+    "why": "rest"
+   },
+   "maxTargetMoveInWindow": 70.5
+  },
+  "L2": {
+   "target": "3 days warm streak. Show details",
+   "intentTop": 78.5,
+   "pointerdown": {
+    "dtFromChange": 3,
+    "tgTop": 8,
+    "moved": -70.5,
+    "landed": "img._img_1lrg4_9 \"\"",
+    "onTarget": false
+   },
+   "click": {
+    "tgTop": 8,
+    "moved": -70.5,
+    "landed": "img._img_1lrg4_9 \"\"",
+    "onTarget": false
+   },
+   "change": {
+    "why": "rest"
+   },
+   "maxTargetMoveInWindow": 70.5
+  },
+  "E": {
+   "target": "15 min",
+   "intentTop": 20,
+   "pointerdown": {
+    "dtFromChange": 22,
+    "tgTop": 4,
+    "moved": -16,
+    "landed": "span._inner_chqjy_41 \"15 min\"",
+    "onTarget": true
+   },
+   "click": {
+    "tgTop": 4,
+    "moved": -16,
+    "landed": "span._inner_chqjy_41 \"15 min\"",
+    "onTarget": true
+   },
+   "change": {
+    "why": "rest"
+   },
+   "maxTargetMoveInWindow": 16
+  }
  }
 ]
