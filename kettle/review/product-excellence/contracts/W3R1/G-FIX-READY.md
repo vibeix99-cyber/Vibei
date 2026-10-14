@@ -97,5 +97,50 @@ With `navigator.vibrate` removed, Haptics reads exactly `Vibration isn’t avail
 - **Haptics.** The row is disabled when `'vibrate' in navigator` is false (`SettingsScreen.tsx`, `vibrateSupported`); that tests the browser API, not the device's motor, hence "Vibration isn’t available in this browser."
 - **Keep awake (G-R1).** The lock is wanted only while the timer is `running` and the page is visible (`wakeLock.ts:19–20`), hence "while a brew runs on screen."
 
-CHECKS_PLACEHOLDER
+### 7 · The spec is not weakened
+
+- The copy test (`w3-settings.spec.ts`, "Settings never says \"streak\"…") now asserts the new Sounds line and the full new On line (`exact: true`) in place of the two old regexes, and adds a sweep of all Settings text for `/may hold|until you’re back|later/i`. A new 10th test covers the iPhone-like Safari tab (G-D1, G-D4).
+- Every other assertion is unchanged, including the "streak" sweep, the reset-sheet words, persistence/reset, focus, inert/pressed and forced-colours tests (`git diff 808421d 0320211 -- kettle/tests`: 2 lines removed, both the old copy regexes).
+- **Fix :5503: 10 / 10 passed, twice** (`G/fix/w3-settings-fix-run1.txt`, `…-run2.txt`).
+- **Base :5478: 10 / 10 failed** (`G/fix/w3-settings-base-5478.txt`); the new Safari-tab test fails there on the Sounds line. **PASS.**
+
+### 8 · Suites
+
+- `tsc --noEmit`: clean. `vitest run`: 30 files, 290 tests passed.
+- `w3-settings` ×2 on :5503: 10 / 10 both times.
+- `whistle.spec.ts` (**unmodified**, `git diff 808421d HEAD -- kettle/tests/whistle.spec.ts` is empty), `a11y.spec.ts`, `w2-firstvisit.spec.ts` on :5503: **24 passed, 1 failed** (`G/fix/suites-whistle-a11y-firstvisit.txt`): a11y 11 / 11, w2-firstvisit 6 / 6, whistle 7 / 8.
+- **The one failure is the expected C-1**, `whistle.spec.ts:203`, on the old sentence:
+
+```
+  1) [chromium] › tests/whistle.spec.ts:183:1 › denied: Settings says so, shows the browser path, and turning it on later works
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText(/A locked phone may hold the nudge until you’re back/)
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+    > 203 |   await expect(page.getByText(/A locked phone may hold the nudge until you’re back/)).toBeVisible();
+        at /home/user/wt/w5g/kettle/tests/whistle.spec.ts:203:87
+```
+
+  Its replacement key sentence (for F or the orchestrator): `If Kettle is closed or your phone has paused it by then, no nudge comes.` No other failure. **PASS.**
+
+### 9 · No layout change but the copy
+
+Settings top to bottom, 375×667 light @200, full page: BEFORE `G/fix/page-BEFORE-trial-3d91793/settings-375x667-light-200.png` (9250 px) → AFTER `G/fix/page-AFTER-fix/settings-375x667-light-200.png` (9133 px).
+A DOM diff of every heading, label, description and footer (`G/tools/fix-layout-diff.mjs` → `G/fix/layout-diff-375x667-light-200.json`) finds exactly two changed elements:
+- the Sounds description: same top, 549 → 392 px (−156: 14 → 10 lines);
+- the Keep awake description (optional G-R1): 196 → 235 px (+1 line at this size only; 54 vs 52 characters).
+Everything else is identical in text and height and only moves by the sum of those (−156, then −117/−118 px, ±1 px rounding). Nudges shows "Blocked" in this capture (headless Chromium denies notifications), so the On line is checked in 4, not here. The phone full-page repeat of the page top at the bottom is the same capture artefact as in round 1, in both. **PASS.**
+
+## Cross-owner requests
+
+- **C-1 · F's `tests/whistle.spec.ts:203`:** change the regex to `/If Kettle is closed or your phone has paused it by then, no nudge comes\./` (G did not edit it).
+- **C-2 · `docs/REAL_DEVICE_CHECKLIST.md` rows 2.3 and 8.5:** reword to the new Sounds / Nudges On / Haptics lines (orchestrator, at merge).
+
+## Open
+
+- Keep awake (G-R1) grows by one line at 375×667 @200 only. To avoid that, drop the optional change: it is one string literal, so it can be reverted alone.
+
 
