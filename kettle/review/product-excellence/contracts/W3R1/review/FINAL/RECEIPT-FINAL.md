@@ -96,6 +96,21 @@ None was a base failure. None reproduced alone or in repeats on this tree.
 
 **29 passed, 2 skipped, 0 failed, 0 flaky** (31 tests): `timer-harness` 14 passed; `timer-app` 12 passed, 2 skipped; `pwa` 3 passed. The 2 skips are by design in `tests/timer.spec.ts`: line 295 ("infra is exercised in the harness; screens bind their own keys") and line 439 ("render counter lives in the harness"), both `test.skip(!kettlePage.includes('harness'))`, so they run in `timer-harness` and skip in `timer-app`. Same result as on the combined trial `e478604` (29 passed, 2 skipped).
 
+## 6. `w3-notices-load.spec.ts` with `W3_LOAD=1`, once on :5540 (the load control, normally skipped)
+
+`runs/w3-notices-load.log.txt`, `runs/w3-notices-load.json`. `W3_LOAD=1 KETTLE_PORT=5540 npx playwright test tests/w3-notices-load.spec.ts --project=chromium --workers=1`, 22:41:31 to 23:06:56 (25.4 min), one gate slot, load 5 to 8. The spec is F's copy of the notice-strip spec "with three switches" (its header), CPU throttle off by default (`CPU` and `REP` unset).
+
+**25 tests: 23 passed, 2 failed.** The two failures are the same case at two sizes: "no notice overlaps a control, text or a row: every notice state, real input (**390×844 light 200 % reduced motion**) #0" (15.3 s) and "(**375×667 light 200 % reduced motion**) #0" (16.1 s). Both: `Error: waiting with all its time`, `expect(received).toEqual(expected)` at `tests/w3-notices-load.spec.ts` (the listing says line 374), expected `[4000]`, received `[300, 4000]`: on the summary, where the strip is not drawn, `__kettle.notices().queue.map(q => q.left)` holds a second notice with 300 ms left besides the one with its full 4000 ms.
+
+Rerun alone (`scripts/LR-lg.sh`, 23:11 to 23:14, `rerun/L*.{log.txt,json}`; the `playwright-exit` field printed in `rerun/lg.log.txt` is not reliable, the JSON is):
+
+| Case | Alone :5540 | Alone base :5478 | 3× :5540 |
+|---|---|---|---|
+| 390×844 light 200 % reduced motion | **fail** (16.0 s), same assertion and value | **fail** (14.7 s), same | **3 of 3 fail** (16.0, 16.4, 16.1 s), same |
+| 375×667 light 200 % reduced motion | **fail** (16.4 s), same | **fail** (17.2 s), same | not repeated |
+
+Classification: **deterministic, and a base failure**: the two cases fail identically on base 4d36939 (2 of 2) and on this tree (5 of 5 runs). It is not a regression of the tree and not flaky. Owner by PLAN.md: **F** (`tests/w3-notices-load.spec.ts`, F's control copy). The same assertion exists in the maintained `tests/notice-strip.spec.ts` (line 380), where both configurations pass (section 4: 25 of 25), so the two files' flows differ at the step before it; I did not find out how (the load copy was last changed in `53775c0`, the maintained spec in `1130a13`).
+
 ## 7. X-1: `integrity.spec.ts` I03 (storage-full banner, phone 390×844), `--repeat-each=10 --trace=on`, :5540
 
 `x1/x1-i03-x10.log.txt`, `x1/x1-i03-x10.json`; command `KETTLE_PORT=5540 npx playwright test tests/integrity.spec.ts --project=chromium --workers=1 --repeat-each=10 --trace=on -g 'I03 storage-full warning is a banner in the page \(phone 390×844\) nothing over the brew'`, one gate slot, 23:06:55 to 23:11:55 (5.0 min; 26.8 to 30.0 s per run), load average 5 to 6 (a capture job and the load-control reruns were on the machine).
