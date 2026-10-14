@@ -81,6 +81,33 @@ test.describe('3D Chai: the model replaces the procedural Chai', () => {
   });
 });
 
+test.describe('3D Chai: the face reads at evening and night (W3R1 · N)', () => {
+  test('the fur self-fill follows the hour (day unchanged, stronger at dusk and night); eyes and nose untouched', async ({ page }) => {
+    test.setTimeout(180_000);
+    const errors: string[] = [];
+    page.on('pageerror', (e) => errors.push(e.message));
+    const got: Record<string, unknown> = {};
+    for (const time of ['day', 'dusk', 'night']) {
+      await page.goto(`/?debug&seed=veteran&theme=light&nookq=low&nooktime=${time}&nookweather=clear#/nook`);
+      await expect(host(page)).toHaveAttribute('data-scene-ready', 'true', { timeout: 60_000 });
+      await expect.poll(() => chaiKind(page), { timeout: 30_000 }).toBe('model');
+      got[time] = await page.evaluate(() => {
+        const out: Record<string, number[]> = {};
+        (window as any).__nook.chai.root.traverse((o: any) => {
+          if (!o.isMesh || !o.geometry.getAttribute('color')) return;
+          const k = o.material.name === 'chai_fur' ? 'fur' : 'other';
+          const v = o.material.emissive.getHex() === 0 ? 0 : +o.material.emissiveIntensity.toFixed(4);
+          if (!(out[k] ??= []).includes(v)) out[k].push(v);
+        });
+        return out;
+      });
+    }
+    // 0.16 is the model's day self-fill (chaiModel.ts); dusk ×2.8, night ×3.2 (palette.ts MOODS.*.chaiFill)
+    expect(got).toEqual({ day: { fur: [0.16], other: [0] }, dusk: { fur: [0.448], other: [0] }, night: { fur: [0.512], other: [0] } });
+    expect(errors).toEqual([]);
+  });
+});
+
 test.describe('3D Chai: fallbacks keep the procedural Chai', () => {
   test('404: procedural Chai, no error, the room is live', async ({ page }) => {
     const errors: string[] = [];

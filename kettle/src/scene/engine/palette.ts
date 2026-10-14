@@ -93,6 +93,15 @@ export interface Mood {
   steam: string;
   /** Outside lit-window glow of the neighbour house. */
   houseLight: number;
+  /**
+   * Chai's fur self-fill at this hour, × its day value (chai.ts, chaiModel.ts). 1 in daylight. Under the warm lamp
+   * and the dim plum fill of evening and night the fur sinks toward the eyes and nose; a stronger self-fill (the fur's
+   * own colour, so the hue stays Chai's) keeps the face reading as it does by day. A uniform: no recompile.
+   * Tuned on the model (W3R1 · N, contracts/W3R1/N): eye / nose contrast against the fur around them (WCAG ratio) was
+   * dusk 2.3 / 1.9 and night 2.0 / 1.8 against the day's 4.6 / 3.3; with dusk ×2.8 and night ×3.2 it is 3.9 / 3.1 and
+   * 4.0 / 3.3, while the fur keeps the lamp's modelling (a full day ratio would light Chai like a cut-out).
+   */
+  chaiFill: number;
 }
 
 export const MOODS: Record<ResolvedTime, Mood> = {
@@ -116,6 +125,7 @@ export const MOODS: Record<ResolvedTime, Mood> = {
     exposure: 1.0,
     steam: '#FFFFFF',
     houseLight: 0,
+    chaiFill: 1,
   },
   day: {
     skyTop: '#6FBDEB',
@@ -137,6 +147,7 @@ export const MOODS: Record<ResolvedTime, Mood> = {
     exposure: 1.0,
     steam: '#FFFFFF',
     houseLight: 0,
+    chaiFill: 1,
   },
   dusk: {
     skyTop: '#4E3F7E',
@@ -158,6 +169,7 @@ export const MOODS: Record<ResolvedTime, Mood> = {
     exposure: 1.0,
     steam: '#FFF2EA',
     houseLight: 0.7,
+    chaiFill: 2.8,
   },
   night: {
     skyTop: '#16122B',
@@ -179,6 +191,7 @@ export const MOODS: Record<ResolvedTime, Mood> = {
     exposure: 1.0,
     steam: '#F6ECF2',
     houseLight: 1,
+    chaiFill: 3.2,
   },
 };
 

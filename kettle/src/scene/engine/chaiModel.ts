@@ -159,6 +159,8 @@ export function validateChai(node: Object3D): ChaiCheck {
  * The fur keeps the procedural Chai's night self-fill (chai.ts: emissive = own colour × 0.16, docs/areas/scene.md
  * iteration 4). The model's colour is per vertex, so the emissive is multiplied by the vertex colour in the shader:
  * the face plate, paws and blush are lifted in proportion, the eyes and nose (another material) stay dark.
+ * By evening and night the room's mood raises it (palette.ts `Mood.chaiFill`, through `setFill`), so the eyes and nose
+ * separate from the fur as clearly as by day; the day value is unchanged.
  */
 const SELF_FILL = 0.16;
 function selfFill(m: MeshStandardMaterial) {
@@ -202,12 +204,16 @@ export function buildModelChai(kit: Kit, tpl: ChaiTemplate, extras: ChaiExtras):
   const loaf = new Group(); // breathes / squashes / rolls from the floor origin
   const model = tpl.node.clone(true);
   const mats = new Map<Material, Material>();
+  const furs: MeshStandardMaterial[] = [];
   const own = (m: Material): Material => {
     let c = mats.get(m);
     if (!c) {
       c = m.clone();
       const fur = c.name === 'chai_fur';
-      if (fur && (c as MeshStandardMaterial).isMeshStandardMaterial) selfFill(c as MeshStandardMaterial);
+      if (fur && (c as MeshStandardMaterial).isMeshStandardMaterial) {
+        selfFill(c as MeshStandardMaterial);
+        furs.push(c as MeshStandardMaterial);
+      }
       kit.own(c, fur); // the fur is "unique" like the procedural fur: it keeps its PBR material on the low tier
       mats.set(m, c);
     }
@@ -322,6 +328,9 @@ export function buildModelChai(kit: Kit, tpl: ChaiTemplate, extras: ChaiExtras):
     update,
     poke: () => {
       hop = 1;
+    },
+    setFill: (k: number) => {
+      for (const m of furs) m.emissiveIntensity = SELF_FILL * k;
     },
     steam,
     sprites: zees,
