@@ -1,0 +1,132 @@
+{
+ "cfg": {
+  "w": 375,
+  "h": 667,
+  "theme": "dark",
+  "pct": 200,
+  "reduced": false,
+  "groups": [
+   "sheetexit"
+  ],
+  "base": "http://127.0.0.1:5476",
+  "fix": true,
+  "name": "375x667-dark-t200-sheetexit"
+ },
+ "base": "http://127.0.0.1:5476",
+ "startedAt": "2026-10-14T00:11:40.770Z",
+ "groups": {
+  "sheetexit": {
+   "ambienceSeq": [
+    {
+     "ms": "open+300",
+     "dialog": true,
+     "chain": [
+      "div o=1 pe=auto tf=matrix(1, 0, 0, 1, 0, 20.3569)",
+      "div o=1 pe=none tf=none"
+     ],
+     "pts": [
+      "Close@107->sheet",
+      "Turn on@466->sheet",
+      "Rain@609->sheet",
+      "Fireside@609->sheet",
+      "Forest@689->none",
+      "Brown noise@689->none"
+     ],
+     "notices": [
+      "Notice one, waiting its @323-420"
+     ]
+    },
+    {
+     "ms": "open+1000",
+     "dialog": true,
+     "chain": [
+      "div o=1 pe=none tf=none"
+     ],
+     "pts": [
+      "Close@86->sheet",
+      "Turn on@446->sheet",
+      "Rain@588->sheet",
+      "Fireside@588->sheet",
+      "Forest@668->none",
+      "Brown noise@668->none"
+     ],
+     "notices": [
+      "Notice one, waiting its @323-420"
+     ]
+    },
+    {
+     "ms": "esc+0",
+     "dialog": true,
+     "chain": [
+      "div o=1 pe=none tf=none"
+     ],
+     "pts": [
+      "Close@86->img",
+      "Turn on@446->span",
+      "Rain@588->span",
+      "Fireside@588->span",
+      "Forest@668->none",
+      "Brown noise@668->none"
+     ],
+     "notices": [
+      "Notice one, waiting its @323-420"
+     ]
+    },
+    {
+     "ms": "esc+6245",
+     "dialog": false
+    },
+    {
+     "ms": "esc+9812",
+     "dialog": false
+    },
+    {
+     "ms": "esc+14948",
+     "dialog": false
+    },
+    {
+     "ms": "esc+14991",
+     "dialog": false
+    },
+    {
+     "ms": "esc+15033",
+     "dialog": false
+    },
+    {
+     "ms": "esc+15074",
+     "dialog": false
+    },
+    {
+     "ms": "esc+15115",
+     "dialog": false
+    }
+   ],
+   "error": "locator.evaluate: Timeout 30000ms exceeded.",
+   "shots": [],
+   "sampler": {
+    "samples": 920,
+    "nSamples": 0,
+    "modalSamples": 0,
+    "geo": {
+     "ctl": 0,
+     "text": 0,
+     "row": 0
+    },
+    "geoTop": {},
+    "efp": 0,
+    "efpCtl": 0,
+    "efpUnderSheet": 0,
+    "cut": 0,
+    "cutSeen": {},
+    "hits": [],
+    "seen": {},
+    "floatPos": [],
+    "live": [],
+    "sampleMsAvg": 0
+   },
+   "ms": 133431,
+   "pageErrors": []
+  }
+ },
+ "endedAt": "2026-10-14T00:13:55.632Z"
+}
