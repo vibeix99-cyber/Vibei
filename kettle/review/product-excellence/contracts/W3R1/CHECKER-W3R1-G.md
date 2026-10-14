@@ -227,3 +227,81 @@ So "in a tab" is true on a computer and untrue on the iPhone, the one platform w
 - `w3-notices:252` (F's band).
 
 G's changes are copy plus CSS that takes no space and does not touch the save path. Their attribution waits for that receipt and is not a G defect now.
+
+## 6. Fix round (90 minutes, one round; text only, G's files only)
+
+**Where.** Work on `pe/w3-settings` in `/home/user/wt/w5g`, from `808421d`. Commit locally and never push.
+
+**Hand back** `contracts/W3R1/G-FIX-READY.md`, with evidence in `contracts/W3R1/G/fix/` (full-size PNGs), giving:
+- the new hash and the `kettle/src` tree hash;
+- each acceptance check below with its result and paths.
+
+**Files you may change:**
+- `kettle/src/screens/settings/SettingsScreen.tsx`, the strings at `:134` (unmuted Sounds), `:187` (Nudges On) and `:240` (Haptics unsupported). Optionally `:233` too (G-R1, Keep awake: "…while a brew runs on screen.").
+- `kettle/tests/w3-settings.spec.ts`.
+
+**Do not change** anything else: no CSS, no other line of copy, and in particular not `:182`, which F's `whistle.spec.ts:213` asserts. Nothing outside G's files.
+
+### What each line must say
+
+| # | Line | Must | Must not | Example (not binding; the maker words it) |
+|---|---|---|---|---|
+| G-D1 + G-D2 | `:134`, Sounds, unmuted | Say only what the code does on every platform. Agree with `:182` and F's Welcome ("chimes while it’s on screen"), e.g. a phone can quiet sounds when it is locked, on silent or Kettle is out of sight | Claim play "in a tab", in the background or out of sight as a rule. Run longer than base: **≤ 12 lines at 375×667 @200 %** | "The whistle, effects and ambience play after your first tap. A phone can quiet them when locked, on silent or out of sight." (123 characters; base 125) |
+| G-D3 | `:187`, Nudges On | Say: if Kettle is closed, or the phone has paused it (e.g. locked) when the brew or break ends, no nudge comes. Keep "open but out of sight" | Say or imply that a nudge is held, delayed or delivered later. Be longer than now (180 characters) | "On. When a brew or tea break ends while Kettle is open but out of sight, I’ll nudge you. If Kettle is closed, or your phone has paused it, no nudge comes." (154) |
+| G-D4 | `:240`, Haptics, unsupported | Read exactly `Vibration isn’t available in this browser.` (U+2019) | Any other wording | — |
+
+### Acceptance checks (all must hold; I rerun the ones marked ◆)
+
+1. **◆ Ownership and scope.** `git diff --stat 808421d <fix> -- kettle/` lists only `src/screens/settings/SettingsScreen.tsx` and `tests/w3-settings.spec.ts`, plus the packet and evidence. In `SettingsScreen.tsx`, only the string literals at `:134`, `:187`, `:240` (and optionally `:233`) differ.
+2. **◆ G-D1, the iOS Safari tab state.** Open Settings with `window.Notification` removed by an init script, Sounds on.
+   - Both `:182` ("…chimes while it’s on screen.") and the new Sounds line are visible.
+   - The Sounds line does not contain "in a tab", "in the background" or any claim that sound plays while Kettle is out of sight.
+   - A spec test asserts this (new or extended in `w3-settings.spec.ts`).
+   - Frame: 390×844 light @100, the Sound and Notifications groups.
+3. **◆ G-D2, length.** Measure the Sounds description's rendered line count (height ÷ computed line-height) at all 16 configs (390×844, 375×667, 844×390, 1440×900 × light/dark × 100/200 %) on the trial `3d91793` (BEFORE) and on the fix (AFTER). Give the table, with the base's count beside them.
+   - **375×667 @200 %, light and dark: ≤ 12.**
+   - Every config: no more lines than BEFORE.
+   - Frames: BEFORE / AFTER of the Sounds row at full size, at 375×667 @200 light and dark, 390×844 @100 light, 1440×900 @100 light.
+4. **◆ G-D3, the On line on screen.** Render it with a faked granted permission, as `whistle.spec.ts`'s `fakePermission('granted')` does, plus `notifications: true`. Do this at 375×667 @200 light and dark and at 390×844 @100 light.
+   - The new line is visible.
+   - "may hold" appears nowhere.
+   - Its line count at 375×667 @200 is ≤ the current line's, rendered the same way on the trial (BEFORE).
+   - A spec test asserts the new On line's text.
+   - Frames: BEFORE / AFTER at full size.
+5. **◆ G-D4.** With `navigator.vibrate` removed by an init script, Haptics shows exactly `Vibration isn’t available in this browser.` and its switch is disabled. A spec test asserts it. Frame at 390×844 light @100.
+6. **The copy tells the truth.** One sentence per changed line in the packet, citing the code it rests on:
+   - Sounds: `engine.ts` (activation, suspend) and the frozen-page behaviour;
+   - On: `notify.ts:165–189` and `ticker.ts` (completion on wake);
+   - Haptics: `'vibrate' in navigator`.
+7. **◆ The spec is not weakened.**
+   - `w3-settings.spec.ts:303–304` now assert the new strings.
+   - Every other assertion stays, including the "streak" sweep and the controls tests.
+   - On base :5478 it still fails (controls first); on the fix it passes, twice in a row.
+8. **Suites.** tsc clean; vitest; `w3-settings` ×2; `whistle.spec.ts` unmodified. **Exactly one** failure is expected in the whistle spec, at `:203`, on the old sentence (C-1). Name it and paste the error; any other failure there is a defect. Also `a11y` and `w2-firstvisit`.
+9. **No layout change but the copy.** Settings top to bottom at 375×667 @200 light, full page, BEFORE (trial) vs AFTER. The only visible differences are the changed lines and the page height that follows from them.
+
+### Cross-owner requests (G must not edit these)
+
+- **C-1 · `tests/whistle.spec.ts:203` (F's).** It asserts `/A locked phone may hold the nudge until you’re back/`. Its regex must change to the key sentence of the new On line, which G names verbatim in `G-FIX-READY.md`. The change goes in F's fix round if F has one; otherwise the orchestrator makes this one-line test-text change at merge. I verify it on the merged tree.
+- **C-2 · `docs/REAL_DEVICE_CHECKLIST.md` rows 2.3 and 8.5.** Reword to match (orchestrator, at merge).
+
+## 7. BEFORE / AFTER for Vibei (full size)
+
+**REFERENCE:** K09 `contracts/W3R1/review/LI/G/reference/K09-live-settings.jpg`.
+
+**Settings top to bottom** (Lane I, 16 configs per build, `contracts/W3R1/review/LI/G/`):
+- BEFORE: `BEFORE-base-4d36939/settings/settings-<size>-<theme>-<100|200>.png`;
+- AFTER: `AFTER-trial-3d91793/settings/…` (same names);
+- side by side: `before-after/settings-<size>-<theme>-<text>-partNN.png`, BEFORE left.
+
+**The rows this round changes:**
+- Sounds at 375×667 @200 (G-D2): `before-after/settings-375x667-light-200-part02.png` (Sounds) and `-part03.png` (Nudges, Blocked);
+- 1440 @100: `before-after/settings-1440x900-light-100-part01.png` (Daily goal footer and Sounds).
+
+**Control states,** 1440×900@2, rest / hover / focus / pressed / disabled (the maker's, `/home/user/wt/w5g/kettle/review/product-excellence/contracts/W3R1/G/controls/`):
+- `base-states-{light,dark}.png` → `after-states-{light,dark}.png`;
+- native tiles in `contracts/W3R1/review/LEAD/G/tiles/`.
+
+**Focus, forced colours** (Lane I): `BEFORE-base-4d36939/states-390x844-light-forced.png` → `AFTER-trial-3d91793/states-390x844-light-forced.png`.
+
+The fix round adds its own BEFORE / AFTER for the three changed lines (§6, checks 2–5).
