@@ -1,15 +1,15 @@
 # W3R1 · Maker F: notices polish (F-T2-1), triage, warm-days wording, I13 supportive return — READY FOR REVIEW
 
 - **Branch:** `pe/w3-notices-polish` (worktree `/home/user/wt/w5f`); local commits only, never pushed.
-- **Code:** `e1f50dc` · **kettle/src tree `2d5719e`** (base `4d36939`, src `5cd9a44`). The packet commit on top changes no source.
-- **Dev :5501:** `verify.sh` → `PORT 5501 serves e1f50dc (src 2d5719e): VERIFIED`. Base: dev :5478 (`4d36939`).
+- **Code:** `9f30a9b` · **kettle/src tree `0acce1a`** (base `4d36939`, src `5cd9a44`). The packet commit on top changes no source.
+- **Dev :5501:** `verify.sh` → `PORT 5501 serves 9f30a9b (src 0acce1a): VERIFIED`. Base: dev :5478 (`4d36939`).
 - **Evidence:** `contracts/W3R1/F/` — `controls/` (base and fix control logs), `suites/` (every suite log), `shots/{before,after}/<w>x<h>-<theme>-t<pct>/<state>.png` (full size, DPR 1), `REFERENCE-K01-01-home.png`.
 
 ## 1. Files changed (all within F's ownership)
 
 | File | What |
 |---|---|
-| `src/ui/Toast.tsx` | **F-T2-1.** A notice that goes at rest or as a tap's answer leaves its face but the strip **keeps its room** (`Ctl.room`, an empty band of the same height); the next notice is drawn in it. The room is given back only at a safe moment: a new screen (or its first `ENTRY_MS`), the page hidden, or the strip wholly above the view **at rest** (page kept still in the same frame). Every at-rest change is now confirmed in a fresh animation frame and skipped while `navigator.scheduling.isInputPending()` reports input on its way. One exception, `NoticeStrip reach` (the session panel only): a room that pushes the panel's controls past its edge is given back at rest, as before this round (see §4, F-T2-2). `toast.state()` reports `room`. |
+| `src/ui/Toast.tsx` | **F-T2-1.** A notice that goes at rest or as a tap's answer leaves its face but the strip **keeps its room** (`Ctl.room`, an empty band of the same height); the next notice is drawn in it. The room is given back only at a safe moment: a new screen (or its first `ENTRY_MS`) or the page hidden. Not when scrolled above the view: a wheel or fling the page has not been handed yet undoes any compensation (measured: 60 px at 1440 @200, 153 px in toast-room), so the band stays until the screen changes. Every at-rest change is now confirmed in a fresh animation frame and skipped while `navigator.scheduling.isInputPending()` reports input on its way. One exception, `NoticeStrip reach` (the session panel only): when the notice itself holds the panel's controls past its edge, the panel keeps no room and closes up as the notice goes, at rest, as before this round; a room that later holds them out of reach is given back at rest (see §4, F-T2-2). `toast.state()` reports `room`. |
 | `src/screens/focus/FocusScreen.tsx` | Passes `reach` to the session panel's strip (one prop). |
 | `src/screens/focus/FocusScreen.module.css` | **F-T2-8.** Side by side (landscape phones and up) the top bar wraps: when the task (`flex: 1 1 8rem`) and Rain + sound can't share the column's line (200 % text), the buttons take their own line, right-aligned; at 100 % they share one line as before. |
 | `src/screens/focus/parts/EndSheet.tsx` | **I13, End honest:** when today is not warm yet, "That's okay — your minutes still count. Today turns warm when a brew runs to the whistle." (the engine's rule: an ended-early brew earns its minutes, not the warm day). Unchanged when today is already warm. |
@@ -33,14 +33,14 @@ No new dependency, no palette/font change, no rule, economy, stored-data or id c
 
 | Control | Base `4d36939` | Fix |
 |---|---|---|
-| `notice-strip` 1440×900 light 200 % reduced, normal load (`controls/base-notice-strip-1440-200-reduced-run1.log`) | passed 1/1 this time (load-dependent; final regression: 2/2 failed) | PENDING-1440 |
+| `notice-strip` 1440×900 light 200 % reduced, normal load (`controls/base-notice-strip-1440-200-reduced-run1.log`) | passed 1/1 this time (load-dependent; final regression: 2/2 failed) | Mark done part passed in **every** run since the fix (6 runs: run2, x2-final ×2, final-specs, and the earlier x2's valid run). Whole test: passed in `notice-strip-final.log` (25/25, src `2d5719e`) and `final-specs.log` (src `3027de2`); in `notice-strip-1440-200-reduced-x2-final.log` (src `3027de2`) run 1 failed at the **History Undo, 111 px = N-2** (S's focus scroll; Mark done had passed), run 2 passed. **Two consecutive full passes on the final src are not proven** (the next x2 run was dropped for time). |
 | Same, CPU ×6, ×4 (`w3-notices-load.spec.ts`) | **2/4 failed, then 2/4 failed again** (`base-cpu6-…-x4.log`, `…-timeline.log`), same symptom | **4/4 passed** (`fix-cpu6-1440-200-reduced-x4.log`, on `96d3187`) |
 | No input at all after End (`w3-notices-probe`, log in `fix-cpu6-…-x4.log` test 1 and the first base probe): Mark done's top when the notice goes | 745 → 673 (moves 72 px, `why: rest`) | 745 → 745 (room 73 px kept) |
-| `w3-notices.spec.ts` "End's notice goes at rest and nothing moves; a tap aimed at Mark done before it went lands on Mark done" (`controls/base-w3-notices-control-run2.log`, `suites/w3-notices-final.log`) | **4/5 failed**, all "Mark done moved on screen": 1440 @200 reduced (745), 390×844 light and dark (556), 1440 dark @100 (499). 844×390 passes on the base too (Today's strip is in the pinned left column there, so nothing below it moves) | PENDING-W3 |
-| Room given back above the view at rest, nothing in view moves (`why: above`); a new screen starts with no room | n/a (no room on the base) | PENDING-W3 |
+| `w3-notices.spec.ts` "End's notice goes at rest and nothing moves; a tap aimed at Mark done before it went lands on Mark done" (`controls/base-w3-notices-control-run2.log`, `suites/w3-notices-final.log`) | **4/5 failed**, all "Mark done moved on screen": 1440 @200 reduced (745), 390×844 light and dark (556), 1440 dark @100 (499). 844×390 passes on the base too (Today's strip is in the pinned left column there, so nothing below it moves) | **7/7** in `final-specs.log` (src `3027de2`): every config passes, incl. the 4 the base fails |
+| The room stays while the page is scrolled over it and back (nothing moves by layout); a new screen starts with no room | n/a (no room on the base) | passed (`final-specs.log`) |
 
 ### N-1 — notice-strip setup miss under load
-Not reproducible on demand (it was a one-off under three-browser load: the brew saved as "Study brew"). The spec now asserts the field holds "Chapter 3 notes" before Start and types it again for real if not; the assertion has held in every run since (PENDING-NS full runs).
+Not reproducible on demand (it was a one-off under three-browser load: the brew saved as "Study brew"). The spec now asserts the field holds "Chapter 3 notes" before Start and types it again for real if not; the assertion has held in every run since (`notice-strip-final.log` 25/25, `final-specs.log`).
 
 ### F-T2-8 — landscape top bar squeezing the task label at 200 %
 BEFORE/AFTER `shots/{before,after}/844x390-{light,dark}-t200/session-running.png` (and `end-sheet.png`): base task label one letter per line beside Rain and sound; fix: the task on its own line, Rain and sound on the next. 100 % unchanged (`…-t100/session-running.png`).
@@ -78,16 +78,16 @@ Principles kept: no visible, sr, `title` or `aria-*` "streak" left in F's files 
 | N-3 | **FOLLOW-UP** (with F-T2-2) | Same class: a long persistent notice on the tea break at landscape @200 runs below the fold; the app raises no persistent notice on `/focus`. |
 | N-2 | **Cross-owner (S)** | The History Undo read races the base's focus scroll when the tapped row takes focus (≈110 px). That scroll is in S's `src/screens/stats/History.tsx`. Not changed by F. |
 
-## 5. Suites (dev :5501, src `2d5719e` unless stated)
+## 5. Suites (dev :5501, src `3027de2` unless stated)
 
 | Suite | Result | Log |
 |---|---|---|
 | `tsc --noEmit` | exit 0 | `suites/tsc.log` |
 | `vitest run` | **31 files, 297/297** (base 290; +7: `warm.test.ts` 4, `chai.test.ts` 3 new) | `suites/vitest.log` |
-| `notice-strip` (25 configurations, workers 2) | PENDING-NS | `suites/notice-strip-final.log` |
-| `notice-strip` 1440×900 light 200 % reduced, `--repeat-each=2` | PENDING-1440 | `suites/notice-strip-1440-200-reduced-x2-final.log` |
-| `w3-notices` | PENDING-W3 | `suites/w3-notices-final.log` |
-| `toast-room`, `break-reach`, `a11y`, `w2-home`, `summary-notice`, `statusbar`, `w2-firstvisit`, `w2-summary`, `whistle` | PENDING-OWNED | `suites/owned-specs-final.log` |
+| `notice-strip` (25 configurations, workers 2) | **25/25** on src `2d5719e` (`notice-strip-final.log`); **25/25** again inside `final-specs.log` on `3027de2` | `suites/notice-strip-final.log`, `suites/final-specs.log` |
+| `notice-strip` 1440×900 light 200 % reduced, `--repeat-each=2` | 1/2 on `3027de2`: run 1 failed on N-2 (History Undo 111 px, S's focus scroll), not on Mark done; run 2 passed | `suites/notice-strip-1440-200-reduced-x2-final.log` |
+| `w3-notices` | **7/7** (inside `final-specs.log`, src `3027de2`) | `suites/final-specs.log` |
+| `notice-strip` + `w3-notices` + `toast-room`, `break-reach`, `a11y`, `w2-home`, `summary-notice`, `statusbar`, `w2-firstvisit`, `w2-summary`, `whistle` (one run, workers 2) | **146/147** on src `3027de2`; the one failure `break-reach:251/340` "100 % text … fit without scrolling" (Break's over at 375×667 @100: the room closed a frame after the notice went) led to the final commit `9f30a9b` (src `0acce1a`: the session panel keeps no room when the notice itself holds its controls past the edge). Re-run of that test on `0acce1a`: **unproven** — queued at 12:48, still waiting for a slot at the 13:00 stop (`suites/break-reach-fit-final.log`). A first attempt against a patched copy on :5511 timed out loading (`break-reach-fit-reachfix-5511.log`, environment, not a verdict) | `suites/final-specs.log` |
 
 Earlier runs, kept for the record (not on the final src):
 - `notice-strip-run1.log`: invalid — I edited source while it ran against :5501 (mixed module versions: `__kettle` undefined, notices raised into a second module instance).
@@ -96,7 +96,7 @@ Earlier runs, kept for the record (not on the final src):
 - `notice-strip-1440-200-reduced-x2.log`: test 1 invalid (I restarted :5501 mid-run; "Kettle's off" = the brew lost), test 2 passed.
 - `owned-specs.log` (src `98812ce`): 112/115. The 3 failures led to `e1f50dc`: `break-reach:251` (Break's over at 375×667 @100 no longer fit while a kept room held "That's all for now" below the edge → the session `reach` exception) and `toast-room:192` ×2 (a room given back above the view mid-scroll; the wheel's/fling's scroll animation undid the compensation and the banner moved 153 px → the room above the view is now given back only at rest).
 
-Full chromium suite: PENDING-FULL.
+Full chromium suite: **not run** (time; slot contention). Not run on `0acce1a`: anything but the break-reach fit test; the last change touches only the session panel's room (`reach` strips).
 
 ## 6. BEFORE / AFTER (full size; REFERENCE K01 `F/REFERENCE-K01-01-home.png`)
 
@@ -115,7 +115,7 @@ Paths: `contracts/W3R1/F/shots/before/<cfg>/<state>.png` (base :5478) → `contr
 
 Per-capture facts (Chai's line, dialog text, rail text, strip heights, whether "streak" appears anywhere on the page): `shots/{before,after}/facts-*.json`.
 
-PENDING-SHOTS
+**Coverage:** BEFORE is complete (132 phone shots + 64 at 1440, `shots/before/`). AFTER on the final src `0acce1a`: the phones are complete (132 shots, `shots/after/{390x844,375x667,844x390}-*`); the 1440 set (incl. the rail states) was still queued at the hard stop and is **unproven** (the capture script `capture.cjs` is in the scratch area; re-run: `node capture.cjs 5501 <out> 390x844,375x667,844x390 <states>` then `1440x900`). Earlier AFTER captures on src `c4451ae` (`today-missed-cozy`, `today-missed-nocozy`, `sheet-warm-missed-cozy`, `today-after-end-gone` at 1440 ×4) are kept in `shots/after-early-c4451ae/` and were looked at: the room band above the greeting at 1440 @200 (73 px), Chai's Tea Cozy line, the sheet.
 
 ## 7. Preserve list
 
@@ -127,7 +127,7 @@ PENDING-SHOTS
 
 ## 8. Open findings
 
-- **F1 (trade-off, for the checker and Vibei):** the kept room is an empty band (57–97 px) at the head of a tab screen after its notice goes, until the person leaves the screen, scrolls it above the view, or hides the page. It is never drawn over anything and holds no text.
+- **F1 (trade-off, for the checker and Vibei):** the kept room is an empty band (57–97 px) at the head of a tab screen after its notice goes, until the person leaves the screen or hides the page (scrolling past it does not give it back). It is never drawn over anything and holds no text; the next notice on that screen is drawn in it.
 - **F2 (residual, session only):** on the session panel, where the room would push the controls past the panel's edge, it is given back at rest (base behaviour, now confirmed in a fresh frame and never with input pending). The F-T2-1 hazard remains in that narrow case; it is the F-T2-2 trade-off.
 - **F3:** a notice *entering* at rest still pushes content in view (needed: notices raised with nobody touching, e.g. Break's over on Today or the update prompt, and the specs' raised notices). Hardened the same way (fresh frame, no pending input); not eliminated.
 - **F4:** `isInputPending` is Chromium-only; elsewhere the fresh-frame check is the guard.
