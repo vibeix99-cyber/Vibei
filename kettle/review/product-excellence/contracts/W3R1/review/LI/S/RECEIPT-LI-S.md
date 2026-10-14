@@ -541,7 +541,7 @@ So the 408 px layout viewport appeared only on the first, cold load of the 17:36
 - **§2b sheets** at 375×667 @200 and 1440 only, as the brief asked. 390×844 and 844×390 are not covered for the non-Stats sheets.
   - Probe errors: TRIAL 1440 light @100 `today-rhythm`, 1440 dark @200 `today-level`/`today-rhythm`; BASE 375 dark @200 and 1440 dark @200 `settings-reset`, 1440 dark @200 `today-rhythm`.
   - TRIAL 1440 dark @200 finished after §2b's table was written (18:06). Its last three rows are in `sheets/LI-all-trial.log`, not in the table:
-    - `stats-delete-over-edit`: see the log line;
+    - `stats-delete-over-edit`: all reachable, footer 579–723, trap ✓ and Tab moves, Esc/outside → 2→1 with focus on "Delete this brew";
     - `focus-ambience`: all reachable, footer 728–824, trap ✓, Esc/outside → focus "Ambience: Rain. Change";
     - `focus-end`: all reachable, footer 620–780, trap ✓, Esc/outside → focus "End session".
   - The × position after scrolling a tight sheet was not measured.
