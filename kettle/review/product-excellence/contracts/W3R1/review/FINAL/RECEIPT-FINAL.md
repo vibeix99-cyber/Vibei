@@ -74,11 +74,11 @@ Each test: once alone on :5540 (this tree), once alone on base :5478 (this tree'
 | F2 | `integrity` I03 storage-full banner at 390×844 (X-1) | **pass** 26.7 s | **pass** 27.2 s | **3 of 3 pass** (26.5, 28.9, 26.5 s) |
 | F3 | `w2-room` "3D failure (WebGL context lost): the still that takes over carries the same items" | **pass** 29.5 s | **pass** 34.8 s | **3 of 3 pass** (30.4, 33.6, 26.9 s) |
 
-All nine runs passed; none failed on base. Classification on this evidence (13 runs per test across the full run and these nine; the failures were seen once each, in the 2-worker full run at load 7 to 14):
+All nine runs passed; none failed on base. Classification on this evidence (6 runs per test: the full run and the five reruns; each failure was seen once, in the 2-worker full run at load 7 to 14):
 
 | # | Class | Owner (PLAN.md) | Signature |
 |---|---|---|---|
-| F1 | **Flaky** (load): 1 failure in the full run, 0 in 5 later runs, 0 on base. Not a base failure, not shown to be a product failure. The test passed in all of the combined-trial runs (A: 24 of 25 integrity passes, B/C untouched) | test file: **S** (`tests/integrity.spec.ts`); feature: the multi-tab timer, `src/timer/**` (nobody edits it this round) | the other tab did not take the finished brew to `#/done` within the wait; `leader false, leaderMode "locks", wakes 8` |
+| F1 | **Flaky** (load): 1 failure in the full run, 0 in 5 later runs, 0 on base. Not a base failure, not shown to be a product failure. The same test passed in the combined-trial part A (its one integrity failure there was I03) | test file: **S** (`tests/integrity.spec.ts`); feature: the multi-tab timer, `src/timer/**` (nobody edits it this round) | the other tab did not take the finished brew to `#/done` within the wait; `leader false, leaderMode "locks", wakes 8` |
 | F2 | **Flaky**, the X-1 sighting again: 1 failure in the full run, 1 in the combined-trial part A, 0 in all reruns on this tree and base. Section 6 repeats it 10 times with a trace | test file **S** (`tests/integrity.spec.ts`, I03 unchanged by S); surface: save-warning (unowned) in F's Shell/Toast | `region /storage is full/` count 1, expected 0, 6000 ms, "gone when there is room" step |
 | F3 | **Flaky**: the same test and the same step (`assertLayersDrawn`, `page.screenshot`) timed out in Lane R-N's first run on the N trial (passed on its second run); 1 failure here, 0 in 5 later runs, 0 on base | test file and feature: **N** (`tests/w2-room.spec.ts`; `src/scene/**`) | `Test timeout of 60000ms exceeded` at a `page.screenshot` under 2 workers (SwiftShader, WebGL context lost then restored) |
 
