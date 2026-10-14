@@ -186,7 +186,7 @@ I read `LI/S/weekboundary/{A-mon-enGB,B-sun-enUS,C-sun-enGB}.json`:
 - BEFORE: `…/S/control-ft24/base-375x667-light-t200-dialog.png` (Delete cut off);
 - AFTER: `…/S/control-ft24/after-375x667-light-t200-dialog.png` (tight, both actions pinned).
 
-**The other sheets fixed at 375×667 @200:** `contracts/W3R1/review/LI/S/sheets/base-all/375x667-light-200-{settings-reset,focus-end}.png` and the trial's beside them.
+**The other sheets fixed at 375×667 @200:** `contracts/W3R1/review/LI/S/sheets/base-all/375x667-light-200-{settings-reset,focus-end}.png` (BEFORE) → `sheets/trial-all/` (same names, AFTER).
 
 **S-D1:**
 - `contracts/W3R1/review/LEAD/S/width/TRIAL-844x390-200-desk-fonts-overview.png` ("Warm… run", "23 day…") against `BASE-844x390-200-desk-fonts-overview.png`;
