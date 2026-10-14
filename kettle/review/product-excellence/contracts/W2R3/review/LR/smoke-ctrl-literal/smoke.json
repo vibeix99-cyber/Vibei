@@ -1,0 +1,92 @@
+{
+ "base": "http://127.0.0.1:5480",
+ "variant": "literal (a few seconds, no ff)",
+ "viewport": "390x844@2 light, touch",
+ "startedAt": "2026-10-14T00:26:33.919Z",
+ "steps": [
+  {
+   "name": "load",
+   "ok": true,
+   "ms": 5696,
+   "notes": [],
+   "hash": "#/"
+  },
+  {
+   "name": "1 home: type a task, Put the kettle on",
+   "ok": true,
+   "ms": 7272,
+   "notes": [
+    "field=Smoke test task"
+   ],
+   "hash": "#/focus"
+  },
+  {
+   "name": "2 wait, End -> End session -> Today",
+   "ok": true,
+   "ms": 21344,
+   "notes": [
+    "strip=[]",
+    "dialogs=0 rootInert=false"
+   ],
+   "hash": "#/"
+  },
+  {
+   "name": "3 Mark done, then Undo",
+   "ok": false,
+   "ms": 30023,
+   "notes": [
+    "markCount=0"
+   ],
+   "error": "locator.getAttribute: Timeout 30000ms exceeded.",
+   "hash": "#/"
+  },
+  {
+   "name": "4 start again, finish(), summary, Skip break",
+   "ok": true,
+   "ms": 14494,
+   "notes": [
+    "summaryCta=Tea time · 5 min",
+    "pills=[\"+55 leaves\",\"Goal met · 75/60 min Daily goal met: 75 of 60 minutes today\",\"23 23 days warm\",\"Recipe done · Name what you’re brewing twice\",\"12 139 leaves to level 13 139 leaves to cozy level 13\"]"
+   ],
+   "hash": "#/"
+  },
+  {
+   "name": "5 Nook",
+   "ok": true,
+   "ms": 4554,
+   "notes": [],
+   "hash": "#/nook"
+  },
+  {
+   "name": "6 Stats: delete a brew, then Undo",
+   "ok": false,
+   "ms": 21518,
+   "notes": [
+    "rowsBefore=11"
+   ],
+   "error": "locator.waitFor: Timeout 10000ms exceeded.",
+   "hash": "#/stats"
+  },
+  {
+   "name": "7 Settings",
+   "ok": true,
+   "ms": 4305,
+   "notes": [
+    "scrollY=1800"
+   ],
+   "hash": "#/settings"
+  }
+ ],
+ "pageErrors": [],
+ "consoleErrors": [],
+ "consoleWarnings": [],
+ "requestFailed": [],
+ "facts": {},
+ "finishedAt": "2026-10-14T00:28:23.579Z",
+ "counts": {
+  "pageErrors": 0,
+  "consoleErrors": 0,
+  "consoleWarnings": 0,
+  "requestFailed": 0
+ }
+}
