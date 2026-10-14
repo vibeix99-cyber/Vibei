@@ -92,7 +92,9 @@ export function ListRow({
     </>
   );
 
-  const cls = cx(s.row, (onClick || toggle) && s.interactive, disabled && s.disabled, danger && s.danger, stacked && s.stacked, className);
+  // A row whose switch can't change (unsupported, blocked, disabled) is not pressable: no pointer, hover or press fill.
+  const toggleLive = !!toggle && !disabled && !toggle.disabled;
+  const cls = cx(s.row, ((onClick && !toggle) || toggleLive) && s.interactive, disabled && s.disabled, danger && s.danger, stacked && s.stacked, className);
 
   if (onClick && !toggle) {
     return (
@@ -114,7 +116,7 @@ export function ListRow({
     <div
       className={cls}
       onClick={
-        toggle && !disabled && !toggle.disabled
+        toggle && toggleLive
           ? (e) => {
               if ((e.target as HTMLElement).closest('button, a, input')) return;
               audio.play('toggle', { pitch: toggle.checked ? -2 : 2 });

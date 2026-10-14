@@ -28,8 +28,8 @@
   outline: none;
 }
 .toggle:focus-visible .track {
-  outline: 3px solid var(--focus-ring);
-  outline-offset: 3px;
+  outline: var(--focus-w) solid var(--focus-ring);
+  outline-offset: var(--focus-gap);
 }
 .track {
   position: relative;
@@ -105,7 +105,7 @@
 }
 .toggle:disabled {
   cursor: not-allowed;
-  opacity: 0.5;
+  opacity: var(--disabled-opacity);
 }
 :global(html[data-motion='reduce']) .thumb,
 :global(html[data-motion='reduce']) .check,

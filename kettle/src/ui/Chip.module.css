@@ -108,7 +108,14 @@
 }
 .chip:disabled {
   cursor: not-allowed;
-  opacity: 0.5;
+  opacity: var(--disabled-opacity);
+}
+/* Forced colours drop fills and shadows: the selected chip keeps a system-coloured ring (the tick stays too). */
+@media (forced-colors: active) {
+  .selected .face {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
 }
 
 .group {

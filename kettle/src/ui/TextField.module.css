@@ -28,11 +28,13 @@
     box-shadow: inset 0 0 0 2px var(--ink-3);
   }
 }
+/* Focus: the same ring as every other control (an outline, so it also survives forced colours, where the old
+   box-shadow ring vanished). */
 .box:focus-within {
   background: var(--surface);
-  box-shadow:
-    inset 0 0 0 2px var(--focus-ring),
-    0 0 0 4px color-mix(in oklab, var(--focus-ring), transparent 78%);
+  box-shadow: inset 0 0 0 2px var(--ink-3);
+  outline: var(--focus-w) solid var(--focus-ring);
+  outline-offset: var(--focus-gap);
 }
 .invalid .box {
   box-shadow: inset 0 0 0 2px var(--berry);
@@ -123,5 +125,8 @@
   color: var(--persimmon-ink);
 }
 .disabled {
-  opacity: 0.55;
+  opacity: var(--disabled-opacity);
+}
+.disabled .input {
+  cursor: not-allowed;
 }
