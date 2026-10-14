@@ -173,6 +173,7 @@
   margin-bottom: 2px;
 }
 .glanceRange {
+  display: block;
   font-weight: 700;
 }
 .glanceNumber {
@@ -199,8 +200,8 @@
 .glanceFact[data-met] {
   color: var(--matcha-ink);
 }
-/* Narrow columns (phones with large text): one above the other. */
-@container (max-width: 400px) {
+/* Narrow (large text on a phone): one above the other. */
+@container (max-width: 21rem) {
   .glanceGrid {
     grid-template-columns: minmax(0, 1fr);
   }

@@ -15,7 +15,7 @@ import { Icon } from '@/art';
 import type { DayKey } from '@/lib/dates';
 import { weekSeries, type DayTotal } from '@/progress/insights';
 import { Card, cx } from '@/ui';
-import { dayRange, minLabel, plural } from './format';
+import { dayRange, minLabel, plural, shortDay } from './format';
 import s from './stats.module.css';
 
 const MIN = 60_000;
@@ -55,7 +55,9 @@ export function GlanceCard({ byDay, metDays, today, goalMin }: Props) {
       </h2>
       <div className={s.glanceGrid}>
         <div className={s.glanceCol}>
-          <p className={s.glanceKicker}>Today</p>
+          <p className={s.glanceKicker}>
+            Today <span className={s.glanceRange}>{shortDay(today)}</span>
+          </p>
           <p className={s.glanceNumber}>
             {minLabel(todayMin)}
             <span className={s.glanceUnit}> focused</span>
@@ -70,13 +72,13 @@ export function GlanceCard({ byDay, metDays, today, goalMin }: Props) {
         </div>
         <div className={s.glanceCol}>
           <p className={s.glanceKicker}>
-            Last 7 days <span className={s.glanceRange}>· {dayRange(week[0].day, week[6].day, today)}</span>
+            Last 7 days <span className={s.glanceRange}>{dayRange(week[0].day, week[6].day, today)}</span>
           </p>
           <p className={s.glanceNumber}>
             {minLabel(weekMin)}
             <span className={s.glanceUnit}> focused</span>
           </p>
-          <p className={s.glanceFact}>Brewed on {plural(weekDays, 'day')} of 7</p>
+          <p className={s.glanceFact}>Brewed on {weekDays} of 7 days</p>
           {goalMin > 0 && <p className={s.glanceFact}>{plural(weekMet, 'day')} at goal</p>}
         </div>
       </div>
