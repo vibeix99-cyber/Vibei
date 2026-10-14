@@ -191,3 +191,48 @@ I read `LI/S/weekboundary/{A-mon-enGB,B-sun-enUS,C-sun-enGB}.json`:
 **S-D1:**
 - `contracts/W3R1/review/LEAD/S/width/TRIAL-844x390-200-desk-fonts-overview.png` ("Warm… run", "23 day…") against `BASE-844x390-200-desk-fonts-overview.png`;
 - `TRIAL-390x844-200-mobile-nofonts-viewport.png` (the zoomed-out page).
+
+## 8. Fix round: `pe/w3-stats@697c1eb` (code `0d240b6` CSS + `1d899b3` spec; kettle/src `6a020d9`)
+
+| | |
+|---|---|
+| Fix trial | `f63286e` = integration `283ae93` (N + G + docs merged) + `697c1eb`; worktree `/home/user/wt/w5tr-s2`; dev :5526 (all my fix runs), preview :5536. The trial's src tree is `db28295` (it includes N and G); S's own src is `6a020d9` (`git rev-parse 697c1eb:kettle/src`, checked) |
+| Timing | Handed back ≈18:43 UTC, inside the 18:19–19:49 window |
+| Packet | `/home/user/wt/w5s/kettle/review/product-excellence/contracts/W3R1/S-FIX-READY.md`; evidence `…/W3R1/S/fix/` |
+| BEFORE | S trial `c7a6b8f` :5522. Base :5478 |
+| My evidence | `contracts/W3R1/review/LEAD/S/fix/`:<br>• `FIX.log`, `BEFORE.log`, `lead-s-width-{FIX,BEFORE}.json`;<br>• `FIX-*-overview.png`;<br>• `w3-stats-5526.log`.<br>The probe is `review/LEAD/S/lead-s-width.mjs`. I extended it this round with the maker's second test: a Range over each tile text must end inside its tile, which catches nowrap values overflowing visibly |
+
+### ◆1 · Scope
+`git diff --stat 344069c 697c1eb -- kettle/src kettle/tests` lists `stats.module.css` (+15) and `w3-stats.spec.ts` (+78 / −2), nothing else. The CSS is one block, read in full:
+- `@container (max-width: 21rem) { .tiles { grid-template-columns: minmax(0, 1fr) } .tiles > * { flex-direction: row; align-items: center; gap: var(--space-3) } }`.
+- 21rem is 336 px at 100 % (phones keep two tiles a row) and 672 px at 200 % (one a row).
+
+There is no wording, value, `Stat.*` or `Sheet.*` change. **PASS.**
+
+### ◆2, ◆3 · My probe on the fix (:5526), with BEFORE as a positive control
+
+| Config | BEFORE `c7a6b8f` (:5522) | **Fix (:5526)**: layout width / tile text cut or past its tile / tiles a row / Overview height |
+|---|---|---|
+| 390×844 @200 `isMobile`, fonts **blocked** | **408** / "days", "Warmest run", "23h 9m", "Total focus" past or cut; "Full brews" cut / 2 a row / 319 | **390** (0 of 120 samples wide) / **none** / 1 / 504 |
+| 375×667 @200 `isMobile`, fonts **blocked** | 401 (round 1) | **375** (0 of 118) / **none** / 1 / 504 |
+| 390×844 @200 `isMobile`, fonts loaded | "Warmest run" cut (round 1) | 390 / **none** / 1 / 504 |
+| 375×667 @200 `isMobile`, fonts loaded | — | 375 / **none** / 1 / 504 |
+| 844×390 @200, fonts loaded | 844 / "days", "Warmest run", "23h 9m", "Total focus" past or cut / 2 / 319 | 844 / **none** / 1 / 504 |
+| 1440×900 @200, fonts loaded | 1440 / none / 2 / 282 | 1440 / **none** / 1 / 504 |
+| 390×844 @100, 1440×900 @100 | — | none / **2** a row / 159 (unchanged) |
+
+- **The maker's table** (16 configs × veteran / empty, base / trial / fix, `S/fix/fit/*-fit.json`) agrees with mine in every config I ran: **32/32 fit on the fix**.
+- **"23h 9m" / "0 min"** no longer runs past its tile at 200 %. That was the base's own S-R1 (FOLLOW-UP), fixed by the same block.
+- **With the fonts blocked** the page stays 390 / 375, against 408 / 401 on BEFORE.
+
+**PASS** for both.
+
+**Frames, opened at full size** (`FIX-390x844-200-mobile-fonts-overview.png`, `FIX-1440x900-200-desk-fonts-overview.png`, `FIX-390x844-100-mobile-fonts-overview.png`):
+- At 200 %, four full-width tiles, icon beside the text: "23 Days warm", "23 days Warmest run", "23h 9m Total focus", "50 Full brews". Every word is whole.
+- At 100 %, the base's two-a-row grid, unchanged.
+
+### ◆4 · The glossary form
+- `StatsScreen.tsx` and `Glance.tsx` are untouched: "Days warm", "Warmest run" with "N days", and "Last 7 days" (Vibei §2) are as approved in round 1.
+- No "streak": the maker's 5 "never says streak" tests pass, in both of its runs and in mine.
+
+**PASS.**
