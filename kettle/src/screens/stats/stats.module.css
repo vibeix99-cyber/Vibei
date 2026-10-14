@@ -1431,3 +1431,18 @@
   }
 }
 
+
+/* ---------- Large text (S-D1) ----------
+ * With 200 % text a two-up tile is too narrow for "Warmest run" / "23 days" (cut, and before the web fonts arrive the
+ * nowrap value pushed a phone page past the screen). Measured in rem, so it follows the text size, not the screen:
+ * 21rem is 336px at 100 % (phones keep two tiles a row) and 672px at 200 % (one tile a row, icon beside the text). */
+@container (max-width: 21rem) {
+  .tiles {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .tiles > * {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-3);
+  }
+}
