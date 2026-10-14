@@ -220,3 +220,6 @@ None of these bears on a defect.
 - **Full phone frames:** `shots/{BASE,TRIAL}/390x844-{light,dark}-default-night-nook.png`.
 - **1440:** `shots/{BASE,TRIAL}/1440x900-light-high-night-nook.png`; dark `shots/{BASE,TRIAL}/1440x900-dark-high-night-close.png`.
 - **Lane R's montages:** `review/LR/N/captures/montage-face/`.
+
+
+*Run logs:* `kettle/.gitignore:6` ignores `*.log`, so every `.log` cited here is committed as a `.log.txt` copy beside it (same name plus `.txt`).
