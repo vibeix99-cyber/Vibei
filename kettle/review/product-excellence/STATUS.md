@@ -10,6 +10,32 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
+## ▶ WAVE 3 ROUND 1 · started 2026-10-14 10:00 UTC (read this first)
+
+**Brief:** polish, Settings, Stats/History and supportive return. Base: the integration branch at app code `4d36939`. The plan, ownership map, glossary and briefs are in `contracts/W3R1/` (`PLAN.md`, `BRIEF-{F,S,G,N}.md`).
+
+**Vibei's decisions:**
+- F-T2-1, Chai's night readability and all "warm streak" wording are fixed this round.
+- Vibei has deleted the backup branch `pe/w2r3-notices`. No pushes outside the integration branch.
+
+**Makers** (Opus, high effort; every agent commits locally only):
+
+| Maker | Scope | Worktree / branch | Dev port | Hard stop (UTC) |
+|---|---|---|---|---|
+| **F** | Notices polish (F-T2-1, triage of F-T2-2/F-T2-8/N-1–N-3), Today copy, warm-days wording, I13 | `w5f` · `pe/w3-notices-polish` | :5501 | 13:00 |
+| **S** | Stats and History (I12), F-T2-4, the backup round-trip test | `w5s` · `pe/w3-stats` | :5502 | 13:00 |
+| **G** | Settings and shared controls (I11) | `w5g` · `pe/w3-settings` | :5503 | 12:30 |
+| **N** | Chai night readability (scene only) | `w5n` · `pe/w3-chai-night` | :5504 | 12:00 |
+
+**Overlaps, split by file:**
+- **The warm-days wording:** F's item. The strings in files S and G own are changed by S and G, using the shared glossary.
+- **I13's lines inside Stats:** worded by S.
+- **`ui/Sheet.*`:** moved to S for F-T2-4.
+
+**Base servers:** `4d36939` in `/home/user/wt/w4-final`, dev :5478 / preview :5488.
+
+**Review plan:** LEAD-4 (Opus, new); Lane I (Opus: interaction and visuals for F, S and G); Lane R (Sonnet: suites, the capture matrix, N's captures and performance) on per-maker trials and a combined trial. Merge only on APPROVE, then the final regression on the merged tree.
+
 ## ■ WAVE 2 ROUND 3 CLOSED · 2026-10-14 ~05:50 UTC (read this first)
 
 Integration `claude/wizardly-galileo-uy89d9` now contains **C, B and T2**. App code is `4d36939` (kettle/src `5cd9a44`, kettle/tests `d641e59`). Nothing is running and the slot gate is reset.
