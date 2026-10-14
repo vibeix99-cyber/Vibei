@@ -460,3 +460,23 @@ The target was above the view at that moment (top −118). The 153.5 px jump is 
 **Raw finding:** at these sizes, with this notice, bringing a control into view by touch hides most of the strip. Its clock stops, so neither build closes the strip while that control is in view. It would leave later, when scrolled back (then "above" or at rest), which these runs did not reach.
 
 The case of a short notice with a control already partly in view at rest is §3e.
+
+### 1e. Gap filled: the other theme/motion pairs (light + reduced motion, dark + full motion)
+
+`LI2-probe2.mjs` = the prior probe with the pairs swapped, scenarios L1, L2, E. Trial :5521, 17:30–17:38 UTC. Data `probes2/trial/probe2-trial.json`; log `probes2/probe2-trial.log`. 16 configurations: 4 sizes × 100/200 % × {light rm, dark full}.
+
+**L1 and L2:** 31 taps (one L2 skipped at 390×844 dark @200, no target in view). **All 31 landed on the target, which moved 0 px.** Every leave was `why: rest` with the room kept:
+- 68 px (phones and 1440 @100);
+- 113 px (390×844 / 375×667 / 1440 @200);
+- 56.5 px (844×390 @100);
+- 137.5 px (844×390 @200).
+
+In 6 L2 runs the notice had not yet left in the tap's window (no change seen).
+
+**E, a notice arriving at rest:** pushes as in §1a:
+- 68 px at 390×844 @100 and 1440 @100;
+- 113 px at 390×844 / 375×667 @200;
+- 107 px at 844×390 @200;
+- 72.5 px at 1440 @200.
+
+A tap aimed beforehand lands on the arriving notice or the card in **10 of 15** (one skipped). The 5 on target are where the push is 0 or −16 px, or the target sat above the strip's reach.
