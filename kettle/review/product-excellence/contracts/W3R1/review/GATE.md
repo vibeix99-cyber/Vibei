@@ -56,3 +56,10 @@
 ## Combined trial (Lane R regression and cross-effects)
 
 **`e478604`** = integration + F (`5ee3e7c`) + S (`344069c`) + G (`808421d`) + N (`4168428`): no conflicts. Worktree `/home/user/wt/w5tr-all`, src `07c26ff`, tests `b0ed48b`. tsc 0. vitest **302/302** (290 + F 7 + S 2 + N 3). Build OK. Dev **:5520** (verified), preview **:5530**. Archive: `archive/w3r1-trials-e478604.incremental.bundle`.
+
+## Verdicts so far (2026-10-14 17:05 UTC)
+
+- **N: APPROVE** (LEAD-4, final; confirmed by LEAD-5 at `6e5441f`). The eye-contrast choice is "vb's call" (§4, row O-2).
+- **G: REJECT** (LEAD-5, `7848a9e`). G-D1…G-D4 are text-only and match Vibei's §4. The fix round runs **17:05–18:35 UTC** on `pe/w3-settings` from `808421d`; the packet is `CHECKER-W3R1-G.md` §6.
+  - **C-1:** F's `tests/whistle.spec.ts:203` asserts the old locked-phone sentence. It changes in F's fix round, or at merge by the orchestrator (one line of test text).
+  - **C-2:** `docs/REAL_DEVICE_CHECKLIST.md` rows 2.3 and 8.5 are reworded at merge.
