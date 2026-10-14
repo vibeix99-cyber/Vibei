@@ -237,12 +237,16 @@ test('a pressed segment reads as pressed: unlike hover and unlike the selected o
   const group = page.getByRole('radiogroup', { name: 'Motion' });
   const opt = group.getByRole('radio', { name: 'Full', exact: true });
   const inner = (l: typeof opt) => l.evaluate((e) => getComputedStyle(e.querySelector('[class*="inner"]')!).backgroundColor);
+  // `.inner` fades its background (--dur-fast, 150 ms; reduced motion doesn't shorten it), so a fixed-delay read can
+  // land mid-fade on a loaded machine. Read each state once its transition has finished.
+  const settled = (l: typeof opt) => l.evaluate((e) => e.querySelector('[class*="inner"]')!.getAnimations().length === 0);
   const selectedThumb = await group.getByRole('radio', { checked: true }).evaluate((e) => getComputedStyle(e.querySelector('[class*="thumb"]')!).backgroundColor);
   await opt.hover();
-  await page.waitForTimeout(250);
+  await expect.poll(() => settled(opt), { timeout: 5_000 }).toBe(true);
   const hover = await inner(opt);
   await page.mouse.down();
-  await page.waitForTimeout(120);
+  // Still held: wait for the pressed fill to finish fading in (on base it never differs from hover, so this fails there).
+  await expect.poll(async () => (await settled(opt)) && (await inner(opt)) !== hover, { timeout: 5_000 }).toBe(true);
   const pressed = await inner(opt);
   await page.mouse.move(2, 890);
   await page.mouse.up();
