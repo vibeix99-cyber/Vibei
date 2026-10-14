@@ -1,0 +1,541 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w5tr-all/kettle/playwright.config.ts",
+    "rootDir": "/home/user/wt/w5tr-all/kettle/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/rr-R2-comb-5520",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-harness",
+        "name": "timer-harness",
+        "testDir": "/home/user/wt/w5tr-all/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/rr-R2-comb-5520",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-app",
+        "name": "timer-app",
+        "testDir": "/home/user/wt/w5tr-all/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/rr-R2-comb-5520",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pwa",
+        "name": "pwa",
+        "testDir": "/home/user/wt/w5tr-all/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/pwa\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/rr-R2-comb-5520",
+        "repeatEach": 8,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w5tr-all/kettle/tests",
+        "testIgnore": [
+          "/(timer|pwa)\\.spec\\.ts/"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite --config tests/e2e.vite.config.ts --port 5520 --strictPort",
+      "url": "http://127.0.0.1:5520/",
+      "reuseExistingServer": true,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "w3-settings.spec.ts",
+      "file": "w3-settings.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "a pressed segment reads as pressed: unlike hover and unlike the selected one",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3381,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T18:34:59.398Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0dfbb9de29dd4ee152e0-49e3be67aba1c58902c5",
+          "file": "w3-settings.spec.ts",
+          "line": 233,
+          "column": 1
+        },
+        {
+          "title": "a pressed segment reads as pressed: unlike hover and unlike the selected one",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3540,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T18:35:05.383Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0dfbb9de29dd4ee152e0-ab02d6c8289dc2951fe7",
+          "file": "w3-settings.spec.ts",
+          "line": 233,
+          "column": 1
+        },
+        {
+          "title": "a pressed segment reads as pressed: unlike hover and unlike the selected one",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3037,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"oklab(0.959197 0.00389533 0.0175539)\"\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"oklab(0.959197 0.00389533 0.0175539)\"\u001b[39m\n    at /home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts:249:23",
+                    "location": {
+                      "file": "/home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts",
+                      "column": 23,
+                      "line": 249
+                    },
+                    "snippet": "  247 |   await page.mouse.move(2, 890);\n  248 |   await page.mouse.up();\n> 249 |   expect(pressed).not.toBe(hover);\n      |                       ^\n  250 |   expect(pressed).not.toBe(selectedThumb);\n  251 |   await expect(group.getByRole('radio', { name: 'System', exact: true })).toBeChecked(); // released away: no change\n  252 |   await ctx.close();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts",
+                        "column": 23,
+                        "line": 249
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"oklab(0.959197 0.00389533 0.0175539)\"\u001b[39m\n\n  247 |   await page.mouse.move(2, 890);\n  248 |   await page.mouse.up();\n> 249 |   expect(pressed).not.toBe(hover);\n      |                       ^\n  250 |   expect(pressed).not.toBe(selectedThumb);\n  251 |   await expect(group.getByRole('radio', { name: 'System', exact: true })).toBeChecked(); // released away: no change\n  252 |   await ctx.close();\n    at /home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts:249:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T18:35:11.459Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/rr-R2-comb-5520/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium-repeat2/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/rr-R2-comb-5520/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium-repeat2/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts",
+                    "column": 23,
+                    "line": 249
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "0dfbb9de29dd4ee152e0-06e4ea7ed204c1bb953b",
+          "file": "w3-settings.spec.ts",
+          "line": 233,
+          "column": 1
+        },
+        {
+          "title": "a pressed segment reads as pressed: unlike hover and unlike the selected one",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3308,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"oklab(0.959197 0.00389533 0.0175539)\"\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"oklab(0.959197 0.00389533 0.0175539)\"\u001b[39m\n    at /home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts:249:23",
+                    "location": {
+                      "file": "/home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts",
+                      "column": 23,
+                      "line": 249
+                    },
+                    "snippet": "  247 |   await page.mouse.move(2, 890);\n  248 |   await page.mouse.up();\n> 249 |   expect(pressed).not.toBe(hover);\n      |                       ^\n  250 |   expect(pressed).not.toBe(selectedThumb);\n  251 |   await expect(group.getByRole('radio', { name: 'System', exact: true })).toBeChecked(); // released away: no change\n  252 |   await ctx.close();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts",
+                        "column": 23,
+                        "line": 249
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"oklab(0.959197 0.00389533 0.0175539)\"\u001b[39m\n\n  247 |   await page.mouse.move(2, 890);\n  248 |   await page.mouse.up();\n> 249 |   expect(pressed).not.toBe(hover);\n      |                       ^\n  250 |   expect(pressed).not.toBe(selectedThumb);\n  251 |   await expect(group.getByRole('radio', { name: 'System', exact: true })).toBeChecked(); // released away: no change\n  252 |   await ctx.close();\n    at /home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts:249:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T18:35:16.732Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/rr-R2-comb-5520/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium-repeat3/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/rr-R2-comb-5520/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium-repeat3/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts",
+                    "column": 23,
+                    "line": 249
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "0dfbb9de29dd4ee152e0-4e79301ba0f9ff899381",
+          "file": "w3-settings.spec.ts",
+          "line": 233,
+          "column": 1
+        },
+        {
+          "title": "a pressed segment reads as pressed: unlike hover and unlike the selected one",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3436,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T18:35:22.589Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0dfbb9de29dd4ee152e0-bf54585277e54a8fd813",
+          "file": "w3-settings.spec.ts",
+          "line": 233,
+          "column": 1
+        },
+        {
+          "title": "a pressed segment reads as pressed: unlike hover and unlike the selected one",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3251,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"oklab(0.959197 0.00389533 0.0175539)\"\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"oklab(0.959197 0.00389533 0.0175539)\"\u001b[39m\n    at /home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts:249:23",
+                    "location": {
+                      "file": "/home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts",
+                      "column": 23,
+                      "line": 249
+                    },
+                    "snippet": "  247 |   await page.mouse.move(2, 890);\n  248 |   await page.mouse.up();\n> 249 |   expect(pressed).not.toBe(hover);\n      |                       ^\n  250 |   expect(pressed).not.toBe(selectedThumb);\n  251 |   await expect(group.getByRole('radio', { name: 'System', exact: true })).toBeChecked(); // released away: no change\n  252 |   await ctx.close();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts",
+                        "column": 23,
+                        "line": 249
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"oklab(0.959197 0.00389533 0.0175539)\"\u001b[39m\n\n  247 |   await page.mouse.move(2, 890);\n  248 |   await page.mouse.up();\n> 249 |   expect(pressed).not.toBe(hover);\n      |                       ^\n  250 |   expect(pressed).not.toBe(selectedThumb);\n  251 |   await expect(group.getByRole('radio', { name: 'System', exact: true })).toBeChecked(); // released away: no change\n  252 |   await ctx.close();\n    at /home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts:249:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T18:35:28.030Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/rr-R2-comb-5520/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium-repeat5/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/rr-R2-comb-5520/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium-repeat5/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts",
+                    "column": 23,
+                    "line": 249
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "0dfbb9de29dd4ee152e0-2f6ac518a971b6e178e7",
+          "file": "w3-settings.spec.ts",
+          "line": 233,
+          "column": 1
+        },
+        {
+          "title": "a pressed segment reads as pressed: unlike hover and unlike the selected one",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4123,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"oklab(0.959197 0.00389533 0.0175539)\"\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"oklab(0.959197 0.00389533 0.0175539)\"\u001b[39m\n    at /home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts:249:23",
+                    "location": {
+                      "file": "/home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts",
+                      "column": 23,
+                      "line": 249
+                    },
+                    "snippet": "  247 |   await page.mouse.move(2, 890);\n  248 |   await page.mouse.up();\n> 249 |   expect(pressed).not.toBe(hover);\n      |                       ^\n  250 |   expect(pressed).not.toBe(selectedThumb);\n  251 |   await expect(group.getByRole('radio', { name: 'System', exact: true })).toBeChecked(); // released away: no change\n  252 |   await ctx.close();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts",
+                        "column": 23,
+                        "line": 249
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"oklab(0.959197 0.00389533 0.0175539)\"\u001b[39m\n\n  247 |   await page.mouse.move(2, 890);\n  248 |   await page.mouse.up();\n> 249 |   expect(pressed).not.toBe(hover);\n      |                       ^\n  250 |   expect(pressed).not.toBe(selectedThumb);\n  251 |   await expect(group.getByRole('radio', { name: 'System', exact: true })).toBeChecked(); // released away: no change\n  252 |   await ctx.close();\n    at /home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts:249:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T18:35:34.546Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/rr-R2-comb-5520/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium-repeat6/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/rr-R2-comb-5520/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium-repeat6/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts",
+                    "column": 23,
+                    "line": 249
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "0dfbb9de29dd4ee152e0-c3bf88822fe595724005",
+          "file": "w3-settings.spec.ts",
+          "line": 233,
+          "column": 1
+        },
+        {
+          "title": "a pressed segment reads as pressed: unlike hover and unlike the selected one",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4376,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T18:35:41.202Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0dfbb9de29dd4ee152e0-a72e155fd5a2080644fa",
+          "file": "w3-settings.spec.ts",
+          "line": 233,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-14T18:34:58.183Z",
+    "duration": 49192.274000000005,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}
