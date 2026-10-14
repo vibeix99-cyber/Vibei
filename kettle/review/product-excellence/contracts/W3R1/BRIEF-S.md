@@ -29,4 +29,4 @@ Read `PLAN.md` first. Its ownership, glossary and rules bind you. References: K0
 - **Totals:** a table of the numbers shown against the numbers recomputed from the seeded history.
 - **Suites:** tsc; vitest; `integrity.spec.ts` (whole file, plus `:768` with `--repeat-each=5 --workers=2`); your new specs; the full chromium suite if time allows.
 
-**Hard stop:** 13:15 UTC. Then write `contracts/W3R1/S-READY-FOR-REVIEW.md` in your worktree.
+**Hard stop:** 13:00 UTC. Then write `contracts/W3R1/S-READY-FOR-REVIEW.md` in your worktree.

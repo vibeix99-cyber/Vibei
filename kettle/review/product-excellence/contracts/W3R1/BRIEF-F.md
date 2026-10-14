@@ -50,4 +50,4 @@ Read `PLAN.md` first. Its ownership, glossary and rules bind you.
 - **Invariant kept:** zero overlap between any notice and any control, text or list row, with real input at every size, text size and theme. R5-D1, LEAD-D1, R7-D1, D4, W2H-D1 and T2-D1 stay passing (`toast-room`, `a11y`, `w2-home`, `summary-notice`).
 - **Suites:** tsc; vitest; `notice-strip` 25/25 (with the 1440 @200 reduced-motion test passing twice in a row); your specs; the full chromium suite if time allows.
 
-**Hard stop:** 13:15 UTC. Then write `contracts/W3R1/F-READY-FOR-REVIEW.md` in your worktree.
+**Hard stop:** 13:00 UTC. Then write `contracts/W3R1/F-READY-FOR-REVIEW.md` in your worktree.

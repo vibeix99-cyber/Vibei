@@ -20,4 +20,4 @@ Read `PLAN.md` first. Its ownership, glossary and rules bind you. References: K0
 - **REFERENCE (K09) → BEFORE → AFTER** at full size: 390×844, 375×667, 844×390 and 1440×900, light and dark, 100 % and 200 %. Show Settings top to bottom, plus a control-state sheet: focus, disabled, pressed and selected for each shared control on the screens that use them (Today's composer, Settings, the session controls).
 - **Suites:** tsc; vitest; a new `tests/w3-settings.spec.ts` (persistence and reset, keyboard focus visibility); the full chromium suite if time allows.
 
-**Hard stop:** 12:45 UTC. Then write `contracts/W3R1/G-READY-FOR-REVIEW.md` in your worktree.
+**Hard stop:** 12:30 UTC. Then write `contracts/W3R1/G-READY-FOR-REVIEW.md` in your worktree.

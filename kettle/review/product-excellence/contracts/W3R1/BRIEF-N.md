@@ -20,4 +20,4 @@ In evening and night light, the 3D Chai's eyes and nose separate from the fur as
 - **Nook and unlock captures** at day, evening and night (`nooktime=day|evening|night`, or as the scene supports), light and dark, high and low tier, against `4d36939` (:5478 / :5488). Full-size crops of Chai's face.
 - **Suites:** tsc; vitest; `chai3d.spec.ts` and `w2-room.spec.ts` (twice); the scene unit tests.
 
-**Hard stop:** 12:15 UTC. Then write `contracts/W3R1/N-READY-FOR-REVIEW.md` in your worktree.
+**Hard stop:** 12:00 UTC. Then write `contracts/W3R1/N-READY-FOR-REVIEW.md` in your worktree.
