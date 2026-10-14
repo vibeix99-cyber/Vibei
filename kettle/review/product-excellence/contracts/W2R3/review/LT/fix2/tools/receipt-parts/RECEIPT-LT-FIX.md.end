@@ -1,0 +1,6 @@
+
+## 8. End state
+
+- Lane T jobs: suites 03:35:38–04:32:49, probe chain 03:42:28–04:21:33, wheel variant 04:21:4x–04:22:06, notice-strip classification 04:33:08–04:35:55 (all through the slot gate, `--n 1`). At 04:37 UTC no Lane T process was running (`ps`: no `sumprobe`, `ltprobe`, `chainfix`, `suites.sh` or Lane T Playwright) and the gate listed no Lane T hold.
+- Evidence: `review/LT/fix2/` 35M; all of `review/LT/` 69M (limit 150 MB).
+- `RECEIPT-LT.md` (round 3, `490ca97`) closed with the restart noted in its §7–§8; nothing in it was re-run.

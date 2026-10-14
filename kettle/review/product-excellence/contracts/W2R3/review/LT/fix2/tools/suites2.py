@@ -14,10 +14,8 @@ for S in ['summary-notice', 'toast-room', 'a11y', 'notice-strip']:
     summ = '; '.join(x.strip() for x in re.findall(r'^\s+(\d+ (?:passed|failed|flaky|skipped|did not run|interrupted)[^\n]*)$', t, re.M)) or f'(running: {len(res)} reported so far)'
     fails = [r for r in res if r[0] == '✘']
     tm = times.get(S, {})
-    out.append(f"| `{S}.spec.ts` | {tm.get('start','?')}–{tm.get('end','running')} | {summ} | {'; '.join(f'`{f[1]}` {f[2][-60:]} ({f[3]})' for f in fails) or '—'} |")
+    out.append(f"| `{S}.spec.ts` | {tm.get('start','?')}–{tm.get('end','running')} | {summ} | {(str(len(fails)) + ': ' + '; '.join(f[2].split('real input ')[-1] for f in fails) + ' (messages below)') if fails else '—'} |")
     blocks = re.split(r'\n\s+\d+\) \[chromium\]', t)
-    for b in blocks[1:]:
-        details.append(f'**`{S}`** failure:\n```\n' + b.strip()[:1800] + '\n```')
     details.append(f'`{S}` per test: ' + ', '.join(f"{r[0]} {r[2].split('(')[-1].rstrip(')') if '(' in r[2] else r[2][:50]}" for r in res))
 open('/tmp/claude-0/lt4-suites.md', 'w').write('\n'.join(out) + '\n\n' + '\n\n'.join(details))
 print('\n'.join(out))

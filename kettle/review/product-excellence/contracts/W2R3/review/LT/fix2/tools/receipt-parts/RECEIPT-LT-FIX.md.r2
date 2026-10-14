@@ -29,4 +29,4 @@ So by run: the real prompt is not drawn and not queued during the brew or on the
 ### 3.2 A notice raised during a brew
 
 - The real update prompt: not drawn during the brew, appears on Today afterwards (§3.1).
-- An ordinary `toast()` raised during a running brew **is drawn during the brew**, in the session panel's strip (invariant re-probe §4, `break` group, state `ambience`: "Notice one, waiting its turn." seen on `#/focus` in every configuration run; the fix did not change this).
+- An ordinary `toast()` raised during a running brew **is drawn during the brew**, in the session panel's strip (invariant re-probe §4, `break` group, state `ambience`: "Notice one, waiting its turn." seen on `#/focus` in all 10 configurations run, as on `490ca97` in round 3).

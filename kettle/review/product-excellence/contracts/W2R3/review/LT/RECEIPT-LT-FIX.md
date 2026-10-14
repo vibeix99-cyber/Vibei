@@ -16,6 +16,16 @@ Raw evidence only, no verdict. Lane T implemented none of this.
 The round-3 receipt for `490ca97` (`RECEIPT-LT.md`) was closed first: the container restart at about 00:40 UTC cut `notice-strip.spec.ts` after 7 of 25 tests (all 7 passed); its §8 now says so. Nothing in it was re-run.
 
 
+## Key raw numbers (details below)
+
+- **Control:** Lane T's summary measurement shows T2-D1 on `490ca97`: P's sheet 74.5 px lower with a notice at 375×667 @100 and 390×844 @100, 155.5–208 px lower at 375×667 @200, the notice over Chai's face and the gauge at 375×667 @200. Same probe, same session, fix: 0.0 px at all three.
+- **Fix, 20 configurations × task/big day × 3 notice cases (+ 4 real-update-prompt runs) = 124 runs, each against its own no-notice run:** max |Δ| of the sheet's top edge, bottom edge and the footer's top edge = **0.0 px** in 124 of 124; **0 frames** with a notice drawn on the summary; footer cut / under rows unchanged; Chai's face and the gauge unchanged. The queued notice sits in the queue with no strip and (timed) all 4,000 ms left.
+- **After the summary:** the notice is drawn on the next screen (tea break or Today) in 120 of 120, one at a time, never clipped, first drawn 310–4,739 ms after the tap; **said exactly once** in 120 of 120. Not wholly in view at 844×390 and 667×375 @200 on the tea break with Lane T's 52-character persistent notice (box bottom 419–424 in a 375/390 px viewport; its action not tappable without scrolling; a 50 px wheel brings it whole and the action works).
+- **Real update prompt** (served-module hook on `patch({ needRefresh: true })`, 4 configurations × 2 runs): not drawn and not queued during the brew or on the summary; drawn whole on Today after "Skip break" (348–746 ms), said once there, Update 9/9 and a real tap reloads the page.
+- **Invariant re-probe (10 configurations):** 0 control / row overlaps and 0 nine-point control hits with no sheet; text overlaps of the same two kinds as on `490ca97` (countdown ":" line box; History Undo row under the sticky Stats header, now also at 390×844 and 844×390 light @200 for the mid row).
+- **Suites on :5477:** `summary-notice` 14/14, `toast-room` 14/14, `a11y` 11/11 (D4 included); `notice-strip` **22/25** (two Mark-done timeouts at 844×390 @200, one History Undo placement 111 px at 1440 @200 reduced), then the same 3 alone **3/3** (classification run).
+
+
 ## How Lane T measured (`sumprobe.mjs`)
 
 - **Per run:** a fresh context; Monday 2026-10-12 07:40 UTC frozen (`clock.install` + `resume`); settings onboarded, scene off, muted, no auto-start; 200 % = `html{font-size:200%!important}`. Task day = `?seed=newbie`, big day = `?seed=celebrate`; the brew is started with `startFocus({ intention: 'Chapter 3 notes', tag: 'study' })` and finished with `__kettle.finish()` (setup). Phones: `hasTouch`, DPR 2, real `touchscreen.tap`; 1440: `mouse.click`.
@@ -145,7 +155,7 @@ So by run: the real prompt is not drawn and not queued during the brew or on the
 ### 3.2 A notice raised during a brew
 
 - The real update prompt: not drawn during the brew, appears on Today afterwards (§3.1).
-- An ordinary `toast()` raised during a running brew **is drawn during the brew**, in the session panel's strip (invariant re-probe §4, `break` group, state `ambience`: "Notice one, waiting its turn." seen on `#/focus` in every configuration run; the fix did not change this).
+- An ordinary `toast()` raised during a running brew **is drawn during the brew**, in the session panel's strip (invariant re-probe §4, `break` group, state `ambience`: "Notice one, waiting its turn." seen on `#/focus` in all 10 configurations run, as on `490ca97` in round 3).
 
 
 ## 4. Invariant re-probe on the fix (the round-3 `ltprobe.mjs`, unchanged method)
@@ -233,3 +243,10 @@ Opened and checked by Lane T: the 375×667 @200 base / `490ca97` / fix summary f
 - Base `adebug` at 375×667 @200 (and once at 390×844 dark @100): the page navigated during the run (Playwright: "Execution context was destroyed"); cause not established.
 - Not run: the other suites (`integrity`, `w2-home`, `statusbar`, `break-reach`).
 - Setup used the debug API (and, for `areal`, the served-module hook); actions under test were real taps / clicks / wheel. No source edited, nothing committed.
+
+
+## 8. End state
+
+- Lane T jobs: suites 03:35:38–04:32:49, probe chain 03:42:28–04:21:33, wheel variant 04:21:4x–04:22:06, notice-strip classification 04:33:08–04:35:55 (all through the slot gate, `--n 1`). At 04:37 UTC no Lane T process was running (`ps`: no `sumprobe`, `ltprobe`, `chainfix`, `suites.sh` or Lane T Playwright) and the gate listed no Lane T hold.
+- Evidence: `review/LT/fix2/` 35M; all of `review/LT/` 69M (limit 150 MB).
+- `RECEIPT-LT.md` (round 3, `490ca97`) closed with the restart noted in its §7–§8; nothing in it was re-run.
