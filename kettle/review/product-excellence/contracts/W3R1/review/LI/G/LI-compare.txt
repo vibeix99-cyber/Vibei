@@ -1,0 +1,445 @@
+# Focus audit, base vs trial (stops, flagged, min ring contrast vs outside, min ring-pixel match)
+- focus-endSheet-1440x900-dark: BASE 6 stops, 0 flagged, crOut min 8.92 / median 8.92 | TRIAL 6 stops, 0 flagged, crOut min 8.92 / median 8.92
+    sizes at rest: 8 controls, 0 changed size; only-trial 0, only-base 0
+- focus-endSheet-1440x900-light: BASE 6 stops, 0 flagged, crOut min 4.69 / median 4.69 | TRIAL 6 stops, 0 flagged, crOut min 4.69 / median 4.69
+    sizes at rest: 8 controls, 0 changed size; only-trial 0, only-base 0
+- focus-endSheet-390x844-dark: BASE 6 stops, 0 flagged, crOut min 8.92 / median 8.92 | TRIAL 6 stops, 0 flagged, crOut min 8.92 / median 8.92
+    sizes at rest: 8 controls, 0 changed size; only-trial 0, only-base 0
+- focus-endSheet-390x844-light-forced: BASE 6 stops, 6 flagged, crOut min 11.31 / median 11.31 | TRIAL 6 stops, 6 flagged, crOut min 11.31 / median 11.31
+    · button[] End session | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] Close | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] Keep brewing | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] End session | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] Close | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] Keep brewing | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    sizes at rest: 8 controls, 0 changed size; only-trial 0, only-base 0
+- focus-endSheet-390x844-light: BASE 6 stops, 0 flagged, crOut min 4.69 / median 4.69 | TRIAL 6 stops, 0 flagged, crOut min 4.69 / median 4.69
+    sizes at rest: 8 controls, 0 changed size; only-trial 0, only-base 0
+- focus-historyEdit-1440x900-dark: BASE 9 stops, 1 flagged, crOut min 3.83 / median 8.92 | TRIAL 9 stops, 0 flagged, crOut min 3.83 / median 8.92
+    · input[] e.g. Chapter 3 notes | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: _box_vv3ei_10 w3 o3 match 1 crOut 8.92 crIn 8.92
+    sizes at rest: 42 controls, 0 changed size; only-trial 0, only-base 0
+- focus-historyEdit-1440x900-light: BASE 9 stops, 2 flagged, crOut min 1.11 / median 4.69 | TRIAL 9 stops, 1 flagged, crOut min 1.11 / median 4.69
+    · button[] Delete this brew | base: self w3 o3 match 1 crOut 1.11 crIn 4.69 | trial: self w3 o3 match 1 crOut 1.11 crIn 4.69
+    · input[] e.g. Chapter 3 notes | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: _box_vv3ei_10 w3 o3 match 1 crOut 4.69 crIn 4.69
+    sizes at rest: 42 controls, 0 changed size; only-trial 0, only-base 0
+- focus-historyEdit-390x844-dark: BASE 9 stops, 1 flagged, crOut min 3.83 / median 8.92 | TRIAL 9 stops, 0 flagged, crOut min 3.83 / median 8.92
+    · input[] e.g. Chapter 3 notes | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: _box_vv3ei_10 w3 o3 match 1 crOut 8.92 crIn 8.92
+    sizes at rest: 38 controls, 0 changed size; only-trial 0, only-base 0
+- focus-historyEdit-390x844-light-forced: BASE 9 stops, 9 flagged, crOut min 11.31 / median 11.31 | TRIAL 9 stops, 8 flagged, crOut min 11.31 / median 11.31
+    · button[] Work | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] Study | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] Read | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] Create | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] Life | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] Save | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] Delete this brew | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] Close | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · input[] e.g. Chapter 3 notes | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: _box_vv3ei_10 w3 o3 match 1 crOut 21 crIn 21
+    sizes at rest: 38 controls, 0 changed size; only-trial 0, only-base 0
+- focus-historyEdit-390x844-light: BASE 9 stops, 2 flagged, crOut min 1.11 / median 4.69 | TRIAL 9 stops, 1 flagged, crOut min 1.11 / median 4.69
+    · button[] Delete this brew | base: self w3 o3 match 1 crOut 1.11 crIn 4.69 | trial: self w3 o3 match 1 crOut 1.11 crIn 4.69
+    · input[] e.g. Chapter 3 notes | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: _box_vv3ei_10 w3 o3 match 1 crOut 4.69 crIn 4.69
+    sizes at rest: 38 controls, 0 changed size; only-trial 0, only-base 0
+- focus-session-1440x900-dark: BASE 5 stops, 1 flagged, crOut min 3.36 / median 9.92 | TRIAL 5 stops, 1 flagged, crOut min 3.36 / median 10.02
+    · button[] Turn sound on | base: self w3 o3 match 0 crOut 3.36 crIn 4.74 | trial: self w3 o3 match 0 crOut 3.36 crIn 4.74
+    sizes at rest: 5 controls, 0 changed size; only-trial 0, only-base 0
+- focus-session-1440x900-light: BASE 5 stops, 1 flagged, crOut min 2.55 / median 4.55 | TRIAL 5 stops, 1 flagged, crOut min 2.55 / median 4.55
+    · button[] Turn sound on | base: self w3 o3 match 1 crOut 2.55 crIn 4.33 | trial: self w3 o3 match 1 crOut 2.55 crIn 4.33
+    sizes at rest: 5 controls, 0 changed size; only-trial 0, only-base 0
+- focus-session-390x844-dark: BASE 5 stops, 1 flagged, crOut min 3.37 / median 8.86 | TRIAL 5 stops, 1 flagged, crOut min 3.37 / median 8.86
+    · button[] Turn sound on | base: self w3 o3 match 0 crOut 3.37 crIn 4.12 | trial: self w3 o3 match 0 crOut 3.37 crIn 4.12
+    sizes at rest: 5 controls, 0 changed size; only-trial 0, only-base 0
+- focus-session-390x844-light-forced: BASE 5 stops, 4 flagged, crOut min 5.06 / median 10.19 | TRIAL 5 stops, 4 flagged, crOut min 5.06 / median 10.19
+    · button[] Add 5 minutes | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] Pause | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] End session | base: self w3 o3 match 0 crOut 10.19 crIn 11.31 | trial: self w3 o3 match 0 crOut 10.19 crIn 11.31
+    · button[] Ambience: Rain. Change | base: self w3 o3 match 0.48 crOut 5.06 crIn 5.83 | trial: self w3 o3 match 0.48 crOut 5.06 crIn 5.83
+    sizes at rest: 5 controls, 0 changed size; only-trial 0, only-base 0
+- focus-session-390x844-light: BASE 5 stops, 2 flagged, crOut min 2.53 / median 4.25 | TRIAL 5 stops, 2 flagged, crOut min 2.53 / median 4.25
+    · button[] Ambience: Rain. Change | base: self w3 o3 match 1 crOut 2.82 crIn 2.84 | trial: self w3 o3 match 1 crOut 2.82 crIn 2.84
+    · button[] Turn sound on | base: self w3 o3 match 1 crOut 2.53 crIn 2.72 | trial: self w3 o3 match 1 crOut 2.53 crIn 2.72
+    sizes at rest: 5 controls, 0 changed size; only-trial 0, only-base 0
+- focus-settings-1440x900-dark: BASE 25 stops, 5 flagged, crOut min 1.02 / median 8.83 | TRIAL 25 stops, 4 flagged, crOut min 1 / median 8.58
+    · a[] Skip to content | base: self w3 o3 match 0 crOut 1.02 crIn 1 | trial: self w3 o3 match 0 crOut 1 crIn 1
+    · a[] Settings | base: self w3 o-2 match 0 crOut 2.75 crIn 2.04 | trial: self w3 o-2 match 0 crOut 2.75 crIn 2.04
+    · input[] Add your name | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: _box_vv3ei_10 w3 o3 match 1 crOut 8.58 crIn 8.58
+    · button[radio] Classic | base: self w3 o3 match 1 crOut 6.98 crIn 6.91 | trial: self w3 o1 match 1 crOut 6.98 crIn 5.81
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 8.83 crIn 8.83 | trial: _track_1xw12_30 w3 o3 match 1 crOut 8.83 crIn 8.83
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 8.83 crIn 8.83 | trial: _track_1xw12_30 w3 o3 match 1 crOut 8.83 crIn 8.83
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 8.83 crIn 8.83 | trial: _track_1xw12_30 w3 o3 match 0.95 crOut 8.83 crIn 8.83
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 8.83 crIn 8.83 | trial: _track_1xw12_30 w3 o3 match 1 crOut 8.92 crIn 8.92
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 8.83 crIn 8.83 | trial: _track_1xw12_30 w3 o3 match 1 crOut 8.92 crIn 8.92
+    · button[radio] Night | base: self w3 o3 match 1 crOut 6.98 crIn 6.91 | trial: self w3 o1 match 1 crOut 6.98 crIn 5.81
+    · button[radio] System | base: self w3 o3 match 1 crOut 6.98 crIn 6.91 | trial: self w3 o1 match 1 crOut 6.98 crIn 5.81
+    · button[radio] Auto | base: self w3 o3 match 1 crOut 6.98 crIn 6.91 | trial: self w3 o1 match 1 crOut 6.78 crIn 5.81
+    · button[] Import a backupAdd or restore from a Kettle  | base: self w3 o-3 match 0 crOut 1.28 crIn 1.28 | trial: self w3 o-3 match 0 crOut 1.28 crIn 1.28
+    · button[] Reset everythingStart fresh on this device. | base: self w3 o-3 match 0 crOut 1.28 crIn 1.28 | trial: self w3 o-3 match 0 crOut 1.28 crIn 1.28
+    sizes at rest: 56 controls, 0 changed size; only-trial 0, only-base 0
+- focus-settings-1440x900-light: BASE 25 stops, 6 flagged, crOut min 1 / median 4.55 | TRIAL 25 stops, 5 flagged, crOut min 1 / median 4.55
+    · a[] Skip to content | base: self w3 o3 match 0 crOut 1 crIn 1 | trial: self w3 o3 match 0 crOut 1 crIn 1
+    · a[] Settings | base: self w3 o-2 match 0 crOut 1.94 crIn 1.72 | trial: self w3 o-2 match 0 crOut 1.94 crIn 1.72
+    · input[] Add your name | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: _box_vv3ei_10 w3 o3 match 1 crOut 4.5 crIn 4.5
+    · button[radio] Classic | base: self w3 o3 match 1 crOut 3.87 crIn 3.83 | trial: self w3 o1 match 1 crOut 3.87 crIn 3.07
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 4.64 crIn 4.64 | trial: _track_1xw12_30 w3 o3 match 1 crOut 4.64 crIn 4.64
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 4.64 crIn 4.64 | trial: _track_1xw12_30 w3 o3 match 1 crOut 4.64 crIn 4.64
+    · button[radio] A pot60 min | base: self w3 o3 match 1 crOut 2.95 crIn 1.4 | trial: self w3 o3 match 1 crOut 2.95 crIn 1.4
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 4.64 crIn 4.64 | trial: _track_1xw12_30 w3 o3 match 0.95 crOut 4.64 crIn 4.64
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 4.64 crIn 4.64 | trial: _track_1xw12_30 w3 o3 match 1 crOut 4.69 crIn 4.69
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 4.64 crIn 4.64 | trial: _track_1xw12_30 w3 o3 match 1 crOut 4.69 crIn 4.69
+    · button[radio] Light | base: self w3 o3 match 1 crOut 3.87 crIn 3.83 | trial: self w3 o1 match 1 crOut 3.87 crIn 3.07
+    · button[radio] System | base: self w3 o3 match 1 crOut 3.87 crIn 3.83 | trial: self w3 o1 match 1 crOut 3.87 crIn 3.07
+    · button[radio] Auto | base: self w3 o3 match 1 crOut 3.87 crIn 3.83 | trial: self w3 o1 match 1 crOut 3.87 crIn 3.07
+    · button[] Import a backupAdd or restore from a Kettle  | base: self w3 o-3 match 0 crOut 1.29 crIn 1.29 | trial: self w3 o-3 match 0 crOut 1.29 crIn 1.29
+    · button[] Reset everythingStart fresh on this device. | base: self w3 o-3 match 0 crOut 1.29 crIn 1.29 | trial: self w3 o-3 match 0 crOut 1.29 crIn 1.29
+    sizes at rest: 56 controls, 0 changed size; only-trial 0, only-base 0
+- focus-settings-390x844-dark: BASE 24 stops, 3 flagged, crOut min 1.27 / median 8.58 | TRIAL 24 stops, 4 flagged, crOut min 1 / median 8.58
+    · a[] Skip to content | base: self w3 o3 match 0 crOut 1.67 crIn 1 | trial: self w3 o3 match 0 crOut 1 crIn 1
+    · a[] Stats | base: self w3 o-2 match 1 crOut 1.27 crIn 8.92 | trial: self w3 o-2 match 1 crOut 1.27 crIn 8.92
+    · input[] Add your name | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: _box_vv3ei_10 w3 o3 match 1 crOut 8.58 crIn 8.58
+    · button[radio] Classic | base: self w3 o3 match 1 crOut 6.98 crIn 6.91 | trial: self w3 o1 match 1 crOut 6.98 crIn 5.76
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 8.58 crIn 8.58 | trial: _track_1xw12_30 w3 o3 match 1 crOut 8.58 crIn 8.58
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 8.58 crIn 8.58 | trial: _track_1xw12_30 w3 o3 match 1 crOut 8.58 crIn 8.58
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 8.58 crIn 8.58 | trial: _track_1xw12_30 w3 o3 match 0.95 crOut 8.83 crIn 8.83
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 8.58 crIn 8.58 | trial: _track_1xw12_30 w3 o3 match 1 crOut 8.58 crIn 8.58
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 8.58 crIn 8.58 | trial: _track_1xw12_30 w3 o3 match 0.95 crOut 8.58 crIn 8.58
+    · button[radio] Night | base: self w3 o3 match 1 crOut 6.98 crIn 6.91 | trial: self w3 o1 match 1 crOut 6.98 crIn 5.81
+    · button[radio] System | base: self w3 o3 match 1 crOut 6.98 crIn 6.91 | trial: self w3 o1 match 1 crOut 6.98 crIn 5.81
+    · button[radio] Auto | base: self w3 o3 match 1 crOut 6.98 crIn 6.91 | trial: self w3 o1 match 1 crOut 6.98 crIn 5.81
+    · button[] Import a backupAdd or restore from a Kettle  | base: self w3 o-3 match 1 crOut 6.71 crIn 8.58 | trial: self w3 o-3 match 0 crOut 1.28 crIn 1.28
+    · button[] Reset everythingStart fresh on this device. | base: self w3 o-3 match 1 crOut 6.71 crIn 8.58 | trial: self w3 o-3 match 0 crOut 1.28 crIn 1.28
+    sizes at rest: 55 controls, 0 changed size; only-trial 0, only-base 0
+- focus-settings-390x844-light-forced: BASE 24 stops, 19 flagged, crOut min 1 / median 11.14 | TRIAL 24 stops, 18 flagged, crOut min 1 / median 11.14
+    · a[] Skip to content | base: self w3 o3 match 0 crOut 1 crIn 1 | trial: self w3 o3 match 0 crOut 1 crIn 1
+    · a[] Today | base: self w3 o-2 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o-2 match 0 crOut 11.31 crIn 11.31
+    · a[] Stats | base: self w3 o-2 match 0 crOut 1.83 crIn 11.31 | trial: self w3 o-2 match 0 crOut 1.83 crIn 11.31
+    · a[] Nook | base: self w3 o-2 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o-2 match 0 crOut 11.31 crIn 11.31
+    · a[] Settings | base: self w3 o-2 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o-2 match 0 crOut 11.31 crIn 11.31
+    · input[] Add your name | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: _box_vv3ei_10 w3 o3 match 1 crOut 20.26 crIn 20.26
+    · button[radio] Classic | base: self w3 o3 match 0 crOut 11.14 crIn 11.14 | trial: self w3 o1 match 0 crOut 11.14 crIn 1
+    · div[spinbutton] 25min | base: self w3 o0 match 0 crOut 11 crIn 11 | trial: self w3 o0 match 0 crOut 11 crIn 11
+    · div[spinbutton] 5min | base: self w3 o0 match 0 crOut 10.52 crIn 10.52 | trial: self w3 o0 match 0 crOut 10.52 crIn 10.52
+    · div[spinbutton] 15min | base: self w3 o0 match 0 crOut 11 crIn 11 | trial: self w3 o0 match 0 crOut 11 crIn 11
+    · div[spinbutton] 4brews | base: self w3 o0 match 0 crOut 11 crIn 11 | trial: self w3 o0 match 0 crOut 11 crIn 11
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 20.26 crIn 20.26 | trial: _track_1xw12_30 w3 o3 match 1 crOut 20.26 crIn 20.26
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 20.26 crIn 20.26 | trial: _track_1xw12_30 w3 o3 match 1 crOut 20.26 crIn 20.26
+    · button[radio] A pot60 min | base: self w3 o3 match 0 crOut 10.52 crIn 10.52 | trial: self w3 o3 match 0 crOut 10.52 crIn 10
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 20.26 crIn 20.26 | trial: _track_1xw12_30 w3 o3 match 0.95 crOut 20.26 crIn 20.26
+    · button[radio] Rain | base: self w3 o3 match 0 crOut 10.52 crIn 10.52 | trial: self w3 o3 match 0 crOut 10.52 crIn 10
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 20.26 crIn 20.26 | trial: _track_1xw12_30 w3 o3 match 1 crOut 20.26 crIn 20.26
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 20.26 crIn 20.26 | trial: _track_1xw12_30 w3 o3 match 0.95 crOut 20.26 crIn 20.26
+    · button[radio] Light | base: self w3 o3 match 0 crOut 11.14 crIn 11.14 | trial: self w3 o1 match 0 crOut 11.14 crIn 1
+    · button[radio] System | base: self w3 o3 match 0 crOut 11.14 crIn 11.14 | trial: self w3 o1 match 0 crOut 11.14 crIn 1
+    · button[radio] Auto | base: self w3 o3 match 0 crOut 11.14 crIn 11.14 | trial: self w3 o1 match 0 crOut 11.14 crIn 1
+    · button[] Export a backupSave everything as a .json fi | base: self w3 o-3 match 0 crOut 1.86 crIn 10.52 | trial: self w3 o-3 match 0 crOut 1.86 crIn 10.52
+    · button[] Import a backupAdd or restore from a Kettle  | base: self w3 o-3 match 0 crOut 1.86 crIn 10.52 | trial: self w3 o-3 match 0 crOut 1 crIn 1
+    · button[] Reset everythingStart fresh on this device. | base: self w3 o-3 match 0 crOut 1.86 crIn 10.52 | trial: self w3 o-3 match 0 crOut 1 crIn 1
+    sizes at rest: 55 controls, 0 changed size; only-trial 0, only-base 0
+- focus-settings-390x844-light: BASE 24 stops, 3 flagged, crOut min 1 / median 4.5 | TRIAL 24 stops, 4 flagged, crOut min 1 / median 4.5
+    · a[] Skip to content | base: self w3 o3 match 0 crOut 1 crIn 1 | trial: self w3 o3 match 0 crOut 1 crIn 1
+    · a[] Stats | base: self w3 o-2 match 1 crOut 1.04 crIn 4.69 | trial: self w3 o-2 match 1 crOut 1.04 crIn 4.69
+    · input[] Add your name | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: _box_vv3ei_10 w3 o3 match 1 crOut 4.5 crIn 4.5
+    · button[radio] Classic | base: self w3 o3 match 1 crOut 3.87 crIn 3.83 | trial: self w3 o1 match 1 crOut 3.87 crIn 3.04
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 4.5 crIn 4.5 | trial: _track_1xw12_30 w3 o3 match 1 crOut 4.5 crIn 4.5
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 4.5 crIn 4.5 | trial: _track_1xw12_30 w3 o3 match 1 crOut 4.5 crIn 4.5
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 4.5 crIn 4.5 | trial: _track_1xw12_30 w3 o3 match 0.95 crOut 4.64 crIn 4.64
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 4.5 crIn 4.5 | trial: _track_1xw12_30 w3 o3 match 1 crOut 4.5 crIn 4.5
+    · button[switch]  | base: _track_1jix7_30 w3 o3 match 1 crOut 4.5 crIn 4.5 | trial: _track_1xw12_30 w3 o3 match 0.95 crOut 4.5 crIn 4.5
+    · button[radio] Light | base: self w3 o3 match 1 crOut 3.87 crIn 3.83 | trial: self w3 o1 match 1 crOut 3.87 crIn 3.07
+    · button[radio] System | base: self w3 o3 match 1 crOut 3.87 crIn 3.83 | trial: self w3 o1 match 1 crOut 3.87 crIn 3.07
+    · button[radio] Auto | base: self w3 o3 match 1 crOut 3.87 crIn 3.83 | trial: self w3 o1 match 1 crOut 3.87 crIn 3.07
+    · button[] Import a backupAdd or restore from a Kettle  | base: self w3 o-3 match 1 crOut 3.49 crIn 4.5 | trial: self w3 o-3 match 0 crOut 1.29 crIn 1.29
+    · button[] Reset everythingStart fresh on this device. | base: self w3 o-3 match 1 crOut 3.49 crIn 4.5 | trial: self w3 o-3 match 0 crOut 1.29 crIn 1.29
+    sizes at rest: 55 controls, 0 changed size; only-trial 0, only-base 0
+- focus-stats-1440x900-dark: BASE 30 stops, 6 flagged, crOut min 1 / median 6.98 | TRIAL 30 stops, 6 flagged, crOut min 1.02 / median 6.98
+    · a[] Skip to content | base: self w3 o3 match 0 crOut 1 crIn 1 | trial: self w3 o3 match 0 crOut 1.02 crIn 1
+    · a[] Stats | base: self w3 o-2 match 0 crOut 2.75 crIn 2.04 | trial: self w3 o-2 match 0 crOut 2.75 crIn 2.04
+    · button[] Earlier 7 days | base: self w3 o3 match 0 crOut 3.54 crIn 4.23 | trial: self w3 o3 match 0 crOut 3.54 crIn 4.23
+    · g[img] Monday 12 October (today): 50 min, 2 full br | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: NONE wundefined oundefined match undefined crOut undefined crIn undefined
+    · button[] Previous month | base: self w3 o3 match 0 crOut 3.37 crIn 4.43 | trial: self w3 o3 match 0 crOut 3.37 crIn 4.43
+    · button[radio] 30 days | base: self w3 o3 match 1 crOut 6.98 crIn 6.98 | trial: self w3 o1 match 1 crOut 6.98 crIn 5.81
+    · g[img] 08 to 09: 3h 26m focused (your sweet spot) | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: NONE wundefined oundefined match undefined crOut undefined crIn undefined
+    sizes at rest: 33 controls, 0 changed size; only-trial 0, only-base 0
+- focus-stats-1440x900-light: BASE 30 stops, 5 flagged, crOut min 1.94 / median 4.55 | TRIAL 30 stops, 6 flagged, crOut min 1 / median 3.87
+    · a[] Skip to content | base: self w3 o3 match 1 crOut 4.55 crIn 1.72 | trial: self w3 o3 match 0 crOut 1 crIn 1
+    · a[] Stats | base: self w3 o-2 match 0 crOut 1.94 crIn 1.72 | trial: self w3 o-2 match 0 crOut 1.94 crIn 1.72
+    · button[] Earlier 7 days | base: self w3 o3 match 1 crOut 2.52 crIn 4.45 | trial: self w3 o3 match 1 crOut 2.52 crIn 4.45
+    · g[img] Monday 12 October (today): 50 min, 2 full br | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: NONE wundefined oundefined match undefined crOut undefined crIn undefined
+    · button[] Previous month | base: self w3 o3 match 1 crOut 1.98 crIn 4.59 | trial: self w3 o3 match 1 crOut 2.49 crIn 4.43
+    · button[radio] 30 days | base: self w3 o3 match 1 crOut 3.87 crIn 3.87 | trial: self w3 o1 match 1 crOut 3.87 crIn 3.07
+    · g[img] 08 to 09: 3h 26m focused (your sweet spot) | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: NONE wundefined oundefined match undefined crOut undefined crIn undefined
+    sizes at rest: 33 controls, 0 changed size; only-trial 0, only-base 0
+- focus-stats-390x844-dark: BASE 27 stops, 4 flagged, crOut min 1 / median 8.92 | TRIAL 27 stops, 4 flagged, crOut min 1 / median 8.92
+    · a[] Skip to content | base: self w3 o3 match 0 crOut 1 crIn 10.02 | trial: self w3 o3 match 0 crOut 1 crIn 1
+    · button[] Earlier 7 days | base: self w3 o3 match 0 crOut 3.54 crIn 4.23 | trial: self w3 o3 match 0 crOut 3.54 crIn 4.23
+    · g[img] Monday 12 October (today): 50 min, 2 full br | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: NONE wundefined oundefined match undefined crOut undefined crIn undefined
+    · button[] Previous month | base: self w3 o3 match 0 crOut 3.37 crIn 4.43 | trial: self w3 o3 match 0 crOut 3.37 crIn 4.43
+    sizes at rest: 29 controls, 0 changed size; only-trial 0, only-base 0
+- focus-stats-390x844-light-forced: BASE 27 stops, 27 flagged, crOut min 1 / median 11.31 | TRIAL 27 stops, 27 flagged, crOut min 1 / median 11.31
+    · a[] Skip to content | base: self w3 o3 match 0 crOut 1 crIn 1 | trial: self w3 o3 match 0 crOut 1 crIn 1
+    · a[] Today | base: self w3 o-2 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o-2 match 0 crOut 11.31 crIn 11.31
+    · a[] Stats | base: self w3 o-2 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o-2 match 0 crOut 11.31 crIn 11.31
+    · a[] Nook | base: self w3 o-2 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o-2 match 0 crOut 11.31 crIn 11.31
+    · a[] Settings | base: self w3 o-2 match 0 crOut 11.23 crIn 11.31 | trial: self w3 o-2 match 0 crOut 11.23 crIn 11.31
+    · button[] Earlier 7 days | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · g[img] Monday 12 October (today): 50 min, 2 full br | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: NONE wundefined oundefined match undefined crOut undefined crIn undefined
+    · button[] Previous month | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] Morning Dew, tier 3 of 5. 15 of 40 toward th | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] Nook Builder, tier 4 of 5. 10 of 14 toward t | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] Deep Steep, tier 2 of 5. 6 of 20 toward the  | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] Warm Days, tier 3 of 5. 23 of 30 toward the  | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] Leaf Collector, tier 3 of 5. 2,266 of 5,000  | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] Marathon, tier 1 of 5. 1 of 3 toward the nex | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] Show 6 more badges | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] See your rhythm | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] Read brew, 13:20, 25 minutes, Full brew, tag | base: self w3 o-3 match 0 crOut 1.86 crIn 11.31 | trial: self w3 o-3 match 0 crOut 1.86 crIn 11.31
+    · button[] Roadmap draft, 9:05, 25 minutes, Full brew,  | base: self w3 o-3 match 0 crOut 1.86 crIn 11.31 | trial: self w3 o-3 match 0 crOut 1.86 crIn 11.31
+    · button[] Read brew, 19:30, 25 minutes, Full brew, tag | base: self w3 o-3 match 0 crOut 1.86 crIn 11.31 | trial: self w3 o-3 match 0 crOut 1.86 crIn 11.31
+    · button[] Budget spreadsheet, 8:15, 25 minutes, Full b | base: self w3 o-3 match 0 crOut 1.86 crIn 11.31 | trial: self w3 o-3 match 0 crOut 1.86 crIn 11.31
+    · button[] Roadmap draft, 16:10, 50 minutes, Full brew, | base: self w3 o-3 match 0 crOut 1.86 crIn 11.31 | trial: self w3 o-3 match 0 crOut 1.86 crIn 11.31
+    · button[] Thesis chapter 3, 15:00, 25 minutes, Full br | base: self w3 o-3 match 0 crOut 1.86 crIn 11.31 | trial: self w3 o-3 match 0 crOut 1.86 crIn 11.31
+    · button[] Quarterly report, 8:00, 25 minutes, Full bre | base: self w3 o-3 match 0 crOut 1.86 crIn 11.31 | trial: self w3 o-3 match 0 crOut 1.86 crIn 11.31
+    · button[] Watercolour study, 8:15, 25 minutes, Full br | base: self w3 o-3 match 0 crOut 1.86 crIn 11.31 | trial: self w3 o-3 match 0 crOut 1.86 crIn 11.31
+    · button[] Poetry, slowly, 14:32, 25 minutes, Full brew | base: self w3 o-3 match 0 crOut 1.86 crIn 11.31 | trial: self w3 o-3 match 0 crOut 1.86 crIn 11.31
+    · button[] A quiet brew, 13:45, 25 minutes, Full brew,  | base: self w3 o-3 match 0 crOut 1.86 crIn 11.31 | trial: self w3 o-3 match 0 crOut 1.86 crIn 11.31
+    · button[] Show earlier days | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    sizes at rest: 29 controls, 0 changed size; only-trial 0, only-base 0
+- focus-stats-390x844-light: BASE 27 stops, 4 flagged, crOut min 1 / median 4.69 | TRIAL 27 stops, 4 flagged, crOut min 1 / median 4.69
+    · a[] Skip to content | base: self w3 o3 match 0 crOut 1 crIn 1 | trial: self w3 o3 match 0 crOut 1 crIn 1
+    · button[] Earlier 7 days | base: self w3 o3 match 1 crOut 2.52 crIn 4.45 | trial: self w3 o3 match 1 crOut 2.52 crIn 4.45
+    · g[img] Monday 12 October (today): 50 min, 2 full br | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: NONE wundefined oundefined match undefined crOut undefined crIn undefined
+    · button[] Previous month | base: self w3 o3 match 1 crOut 2.53 crIn 4.52 | trial: self w3 o3 match 1 crOut 2.53 crIn 4.52
+    sizes at rest: 29 controls, 0 changed size; only-trial 0, only-base 0
+- focus-today-1440x900-dark: BASE 20 stops, 4 flagged, crOut min 1 / median 8.92 | TRIAL 20 stops, 2 flagged, crOut min 1 / median 8.92
+    · a[] Skip to content | base: self w3 o3 match 0 crOut 1 crIn 1 | trial: self w3 o3 match 0 crOut 1 crIn 1
+    · a[] Today | base: self w3 o-2 match 0 crOut 2.75 crIn 2.04 | trial: self w3 o-2 match 0 crOut 2.75 crIn 2.04
+    · input[] e.g. Chapter 3 notes, or leave it blank | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: _box_vv3ei_10 w3 o3 match 1 crOut 8.92 crIn 8.92
+    · button[radio] 25 minClassic | base: self w3 o3 match 0 crOut 1 crIn 1.28 | trial: self w3 o1 match 1 crOut 6.98 crIn 5.81
+    sizes at rest: 20 controls, 0 changed size; only-trial 0, only-base 0
+- focus-today-1440x900-light: BASE 20 stops, 3 flagged, crOut min 1 / median 4.55 | TRIAL 20 stops, 3 flagged, crOut min 1 / median 4.55
+    · a[] Skip to content | base: self w3 o3 match 0 crOut 1 crIn 1 | trial: self w3 o3 match 0 crOut 1 crIn 1
+    · a[] Today | base: self w3 o-2 match 0 crOut 1.94 crIn 1.72 | trial: self w3 o-2 match 0 crOut 1.94 crIn 1.72
+    · input[] e.g. Chapter 3 notes, or leave it blank | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: _box_vv3ei_10 w3 o3 match 1 crOut 4.69 crIn 4.69
+    · button[radio] 25 minClassic | base: self w3 o3 match 1 crOut 3.87 crIn 3.87 | trial: self w3 o1 match 0 crOut 1 crIn 1.21
+    sizes at rest: 20 controls, 0 changed size; only-trial 0, only-base 0
+- focus-today-390x844-dark: BASE 20 stops, 3 flagged, crOut min 1 / median 8.92 | TRIAL 20 stops, 2 flagged, crOut min 1 / median 8.92
+    · a[] Skip to content | base: self w3 o3 match 0 crOut 1 crIn 1 | trial: self w3 o3 match 0 crOut 1 crIn 1
+    · button[] 12Level 12Cozy level 12, 179 leaves to the n | base: self w3 o3 match 0 crOut 1 crIn 1 | trial: self w3 o3 match 0 crOut 1 crIn 1
+    · input[] e.g. Chapter 3 notes, or leave it blank | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: _box_vv3ei_10 w3 o3 match 1 crOut 8.92 crIn 8.92
+    · button[radio] 25 min | base: self w3 o3 match 1 crOut 6.98 crIn 6.98 | trial: self w3 o1 match 1 crOut 6.98 crIn 5.81
+    sizes at rest: 20 controls, 0 changed size; only-trial 0, only-base 0
+- focus-today-390x844-light-forced: BASE 20 stops, 20 flagged, crOut min 1 / median 10.52 | TRIAL 20 stops, 19 flagged, crOut min 1 / median 10.52
+    · a[] Skip to content | base: self w3 o3 match 0 crOut 1 crIn 1 | trial: self w3 o3 match 0 crOut 1 crIn 1
+    · a[] Today | base: self w3 o-2 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o-2 match 0 crOut 11.31 crIn 11.31
+    · a[] Stats | base: self w3 o-2 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o-2 match 0 crOut 11.31 crIn 11.31
+    · a[] Nook | base: self w3 o-2 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o-2 match 0 crOut 11.31 crIn 11.31
+    · a[] Settings | base: self w3 o-2 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o-2 match 0 crOut 11.31 crIn 11.31
+    · button[] 23days warmstreak. Show details | base: self w3 o3 match 0 crOut 10.52 crIn 10.02 | trial: self w3 o3 match 0 crOut 10.52 crIn 10.02
+    · button[] 2,266leavesShow details | base: self w3 o3 match 0 crOut 10.52 crIn 10.02 | trial: self w3 o3 match 0 crOut 10.52 crIn 10.02
+    · button[] 12Level 12Cozy level 12, 179 leaves to the n | base: self w3 o3 match 0 crOut 1 crIn 1 | trial: self w3 o3 match 0 crOut 1 crIn 1
+    · input[] e.g. Chapter 3 notes, or leave it blank | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: _box_vv3ei_10 w3 o3 match 1 crOut 21 crIn 21
+    · button[] Roadmap draft | base: self w3 o3 match 0 crOut 10.52 crIn 10.52 | trial: self w3 o3 match 0 crOut 10.52 crIn 10.52
+    · button[] Budget spreadsheet | base: self w3 o3 match 0 crOut 10.52 crIn 10.52 | trial: self w3 o3 match 0 crOut 10.52 crIn 10.52
+    · button[] Thesis chapter 3 | base: self w3 o3 match 0 crOut 10.52 crIn 10.52 | trial: self w3 o3 match 0 crOut 10.52 crIn 10.52
+    · button[] Work | base: self w3 o3 match 0 crOut 10.52 crIn 10.52 | trial: self w3 o3 match 0 crOut 10.52 crIn 10.17
+    · button[] Study | base: self w3 o3 match 0 crOut 10.52 crIn 10.52 | trial: self w3 o3 match 0 crOut 10.17 crIn 10.52
+    · button[] Read | base: self w3 o3 match 0 crOut 10.52 crIn 10.52 | trial: self w3 o3 match 0 crOut 10.52 crIn 10.52
+    · button[] Create | base: self w3 o3 match 0 crOut 10.52 crIn 10.52 | trial: self w3 o3 match 0 crOut 10.52 crIn 10.52
+    · button[] Life | base: self w3 o3 match 0 crOut 11.14 crIn 11.14 | trial: self w3 o3 match 0 crOut 11.14 crIn 11.14
+    · button[radio] 25 min | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o1 match 0 crOut 11.31 crIn 1
+    · button[] Put the kettle on · 25 min | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] Change brew length | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    sizes at rest: 20 controls, 0 changed size; only-trial 0, only-base 0
+- focus-today-390x844-light: BASE 20 stops, 4 flagged, crOut min 1 / median 4.55 | TRIAL 20 stops, 3 flagged, crOut min 1 / median 4.55
+    · a[] Skip to content | base: self w3 o3 match 0 crOut 2.51 crIn 1 | trial: self w3 o3 match 0 crOut 1 crIn 1
+    · button[] 12Level 12Cozy level 12, 179 leaves to the n | base: self w3 o3 match 0 crOut 1 crIn 1 | trial: self w3 o3 match 0 crOut 1 crIn 1
+    · input[] e.g. Chapter 3 notes, or leave it blank | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: _box_vv3ei_10 w3 o3 match 1 crOut 4.69 crIn 4.69
+    · button[radio] 25 min | base: self w3 o3 match 1 crOut 3.87 crIn 3.87 | trial: self w3 o1 match 1 crOut 3.87 crIn 3.07
+    · button[] Change brew length | base: self w3 o3 match 1 crOut 1.11 crIn 4.55 | trial: self w3 o3 match 1 crOut 1.11 crIn 4.55
+    sizes at rest: 20 controls, 0 changed size; only-trial 0, only-base 0
+- focus-welcome-1440x900-dark: BASE 4 stops, 1 flagged, crOut min 3.83 / median 3.83 | TRIAL 4 stops, 0 flagged, crOut min 3.83 / median 9.49
+    · input[] e.g. Chapter 3 notes | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: _box_vv3ei_10 w3 o3 match 1 crOut 9.49 crIn 9.41
+    sizes at rest: 5 controls, 0 changed size; only-trial 0, only-base 0
+- focus-welcome-1440x900-light: BASE 4 stops, 3 flagged, crOut min 1.11 / median 1.11 | TRIAL 4 stops, 2 flagged, crOut min 1.11 / median 4.47
+    · input[] e.g. Chapter 3 notes | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: _box_vv3ei_10 w3 o3 match 1 crOut 4.48 crIn 4.51
+    · button[] Set things up first | base: self w3 o3 match 1 crOut 1.11 crIn 4.55 | trial: self w3 o3 match 1 crOut 1.11 crIn 4.55
+    · button[] I have a backup | base: self w3 o3 match 1 crOut 1.11 crIn 4.55 | trial: self w3 o3 match 1 crOut 1.11 crIn 4.55
+    sizes at rest: 5 controls, 0 changed size; only-trial 0, only-base 0
+- focus-welcome-390x844-dark: BASE 4 stops, 1 flagged, crOut min 3.83 / median 3.83 | TRIAL 4 stops, 0 flagged, crOut min 3.83 / median 9.42
+    · input[] e.g. Chapter 3 notes | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: _box_vv3ei_10 w3 o3 match 1 crOut 9.42 crIn 9.38
+    sizes at rest: 5 controls, 0 changed size; only-trial 0, only-base 0
+- focus-welcome-390x844-light-forced: BASE 4 stops, 4 flagged, crOut min 11.14 / median 11.31 | TRIAL 4 stops, 3 flagged, crOut min 11.14 / median 11.31
+    · input[] e.g. Chapter 3 notes | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: _box_vv3ei_10 w3 o3 match 1 crOut 21 crIn 21
+    · button[] Start a 15-min brew | base: self w3 o3 match 0 crOut 11.14 crIn 11.14 | trial: self w3 o3 match 0 crOut 11.14 crIn 11.14
+    · button[] Set things up first | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    · button[] I have a backup | base: self w3 o3 match 0 crOut 11.31 crIn 11.31 | trial: self w3 o3 match 0 crOut 11.31 crIn 11.31
+    sizes at rest: 5 controls, 0 changed size; only-trial 0, only-base 0
+- focus-welcome-390x844-light: BASE 4 stops, 3 flagged, crOut min 1.11 / median 1.11 | TRIAL 4 stops, 2 flagged, crOut min 1.11 / median 4.47
+    · input[] e.g. Chapter 3 notes | base: NONE wundefined oundefined match undefined crOut undefined crIn undefined | trial: _box_vv3ei_10 w3 o3 match 1 crOut 4.48 crIn 4.51
+    · button[] Set things up first | base: self w3 o3 match 1 crOut 1.11 crIn 4.55 | trial: self w3 o3 match 1 crOut 1.11 crIn 4.55
+    · button[] I have a backup | base: self w3 o3 match 1 crOut 1.11 crIn 4.55 | trial: self w3 o3 match 1 crOut 1.11 crIn 4.55
+    sizes at rest: 5 controls, 0 changed size; only-trial 0, only-base 0
+
+# States (computed, trial vs base)
+## states-1440x900-dark.json
+  today-seg-unselected 1rest: trial bg rgba(0, 0, 0, 0) op 1 cur pointer 132.6×48.2 | base bg rgba(0, 0, 0, 0) op 1 cur pointer 132.6×48.2
+  today-seg-unselected 2hover: trial bg oklab(0.317299 0.0281228 -0.0375959) op 1 cur pointer 132.6×48.2 | base bg oklab(0.317299 0.0281228 -0.0375959) op 1 cur pointer 132.6×48.2
+  today-seg-unselected 3pressed: trial bg oklab(0.380521 0.0328284 -0.0437879) op 1 cur pointer 132.6×48.2 | base bg oklab(0.317299 0.0281228 -0.0375959) op 1 cur pointer 132.6×48.2
+  today-seg-selected 4selected: trial bg rgba(0, 0, 0, 0) op 1 cur pointer 132.6×48.2 | base bg rgba(0, 0, 0, 0) op 1 cur pointer 132.6×48.2
+  today-chip-unselected 1rest: trial bg rgb(46, 35, 57) op 1 cur pointer 93.0×44.0 | base bg rgb(46, 35, 57) op 1 cur pointer 93.0×44.0
+  today-chip-unselected 2hover: trial bg rgb(55, 42, 68) op 1 cur pointer 93.0×44.0 | base bg rgb(55, 42, 68) op 1 cur pointer 93.0×44.0
+  today-chip-unselected 3pressed: trial bg rgb(55, 42, 68) op 1 cur pointer 93.0×44.0 | base bg rgb(55, 42, 68) op 1 cur pointer 93.0×44.0
+  today-chip-selected 4selected: trial bg rgb(74, 44, 51) op 1 cur pointer 110.0×44.0 | base bg rgb(74, 44, 51) op 1 cur pointer 110.0×44.0
+  today-field 5focus: trial bg rgb(46, 35, 57) op 1 cur auto 550.6×52.0 | base bg rgb(46, 35, 57) op 1 cur auto 550.6×52.0
+  settings-theme-unselected 1rest: trial bg rgba(0, 0, 0, 0) op 1 cur pointer 209.3×44.0 | base bg rgba(0, 0, 0, 0) op 1 cur pointer 209.3×44.0
+  settings-theme-unselected 2hover: trial bg oklab(0.317299 0.0281228 -0.0375959) op 1 cur pointer 209.3×44.0 | base bg oklab(0.317299 0.0281228 -0.0375959) op 1 cur pointer 209.3×44.0
+  settings-theme-unselected 3pressed: trial bg oklab(0.380521 0.0328284 -0.0437879) op 1 cur pointer 209.3×44.0 | base bg oklab(0.317299 0.0281228 -0.0375959) op 1 cur pointer 209.3×44.0
+  settings-theme-selected 4selected: trial bg rgba(0, 0, 0, 0) op 1 cur pointer 209.3×44.0 | base bg rgba(0, 0, 0, 0) op 1 cur pointer 209.3×44.0
+  settings-goal-unselected 1rest: trial bg rgb(46, 35, 57) op 1 cur pointer 318.0×56.0 | base bg rgb(46, 35, 57) op 1 cur pointer 318.0×56.0
+  settings-goal-unselected 2hover: trial bg rgb(55, 42, 68) op 1 cur pointer 318.0×56.0 | base bg rgb(55, 42, 68) op 1 cur pointer 318.0×56.0
+  settings-goal-unselected 3pressed: trial bg rgb(55, 42, 68) op 1 cur pointer 318.0×56.0 | base bg rgb(55, 42, 68) op 1 cur pointer 318.0×56.0
+  settings-goal-selected 4selected: trial bg rgb(74, 44, 51) op 1 cur pointer 318.0×56.0 | base bg rgb(74, 44, 51) op 1 cur pointer 318.0×56.0
+  settings-nudges-row 1rest: trial bg rgb(65, 51, 79) op 1 cur auto 676.0×64.0 | base bg rgb(65, 51, 79) op 1 cur pointer 676.0×64.0
+  settings-nudges-row 2hover: trial bg rgb(65, 51, 79) op 1 cur auto 676.0×64.0 | base bg rgb(65, 51, 79) op 1 cur pointer 676.0×64.0
+  settings-nudges-row 3pressed: trial bg rgb(65, 51, 79) op 1 cur auto 676.0×64.0 | base bg rgb(65, 51, 79) op 1 cur pointer 676.0×64.0
+  settings-switch 1rest: trial bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0 | base bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0
+  settings-switch 2hover: trial bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0 | base bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0
+  settings-switch 3pressed: trial bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0 | base bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0
+  settings-slider-muted 6disabled: trial bg rgb(65, 51, 79) op 1 cur auto 644.0×73.0 | base bg rgb(65, 51, 79) op 1 cur auto 644.0×73.0
+  settings-field 5focus: trial bg rgb(46, 35, 57) op 1 cur auto 550.0×52.0 | base bg rgb(46, 35, 57) op 1 cur auto 550.0×52.0
+  settings-theme-group 5focus: trial bg rgba(0, 0, 0, 0) op 1 cur auto 644.0×52.0 | base bg rgba(0, 0, 0, 0) op 1 cur auto 644.0×52.0
+  session-pause 1rest: trial bg rgb(46, 35, 57) op 1 cur pointer 78.0×80.0 | base bg rgb(46, 35, 57) op 1 cur pointer 78.0×80.0
+  session-pause 2hover: trial bg rgb(55, 42, 68) op 1 cur pointer 78.0×80.0 | base bg rgb(55, 42, 68) op 1 cur pointer 78.0×80.0
+## states-1440x900-light.json
+  today-seg-unselected 1rest: trial bg rgba(0, 0, 0, 0) op 1 cur pointer 132.6×48.2 | base bg rgba(0, 0, 0, 0) op 1 cur pointer 132.6×48.2
+  today-seg-unselected 2hover: trial bg oklab(0.959197 0.00389533 0.0175539) op 1 cur pointer 132.6×48.2 | base bg oklab(0.959197 0.00389533 0.0175539) op 1 cur pointer 132.6×48.2
+  today-seg-unselected 3pressed: trial bg oklab(0.878865 0.00868229 0.0371163) op 1 cur pointer 132.6×48.2 | base bg oklab(0.959197 0.00389533 0.0175539) op 1 cur pointer 132.6×48.2
+  today-seg-selected 4selected: trial bg rgba(0, 0, 0, 0) op 1 cur pointer 132.6×48.2 | base bg rgba(0, 0, 0, 0) op 1 cur pointer 132.6×48.2
+  today-chip-unselected 1rest: trial bg rgb(255, 253, 250) op 1 cur pointer 93.0×44.0 | base bg rgb(255, 253, 250) op 1 cur pointer 93.0×44.0
+  today-chip-unselected 2hover: trial bg rgb(252, 244, 233) op 1 cur pointer 93.0×44.0 | base bg rgb(252, 244, 233) op 1 cur pointer 93.0×44.0
+  today-chip-unselected 3pressed: trial bg rgb(252, 244, 233) op 1 cur pointer 93.0×44.0 | base bg rgb(252, 244, 233) op 1 cur pointer 93.0×44.0
+  today-chip-selected 4selected: trial bg rgb(255, 232, 217) op 1 cur pointer 110.0×44.0 | base bg rgb(255, 232, 217) op 1 cur pointer 110.0×44.0
+  today-field 5focus: trial bg rgb(255, 253, 250) op 1 cur auto 550.6×52.0 | base bg rgb(255, 253, 250) op 1 cur auto 550.6×52.0
+  settings-theme-unselected 1rest: trial bg rgba(0, 0, 0, 0) op 1 cur pointer 209.3×44.0 | base bg rgba(0, 0, 0, 0) op 1 cur pointer 209.3×44.0
+  settings-theme-unselected 2hover: trial bg rgba(0, 0, 0, 0) op 1 cur pointer 209.3×44.0 | base bg rgba(0, 0, 0, 0) op 1 cur pointer 209.3×44.0
+  settings-theme-unselected 3pressed: trial bg rgba(0, 0, 0, 0) op 1 cur pointer 209.3×44.0 | base bg rgba(0, 0, 0, 0) op 1 cur pointer 209.3×44.0
+  settings-theme-selected 4selected: trial bg rgba(0, 0, 0, 0) op 1 cur pointer 209.3×44.0 | base bg rgba(0, 0, 0, 0) op 1 cur pointer 209.3×44.0
+  settings-goal-unselected 1rest: trial bg rgb(255, 253, 250) op 1 cur pointer 318.0×56.0 | base bg rgb(255, 253, 250) op 1 cur pointer 318.0×56.0
+  settings-goal-unselected 2hover: trial bg rgb(252, 244, 233) op 1 cur pointer 318.0×56.0 | base bg rgb(252, 244, 233) op 1 cur pointer 318.0×56.0
+  settings-goal-unselected 3pressed: trial bg rgb(252, 244, 233) op 1 cur pointer 318.0×56.0 | base bg rgb(252, 244, 233) op 1 cur pointer 318.0×56.0
+  settings-goal-selected 4selected: trial bg rgb(255, 232, 217) op 1 cur pointer 318.0×56.0 | base bg rgb(255, 232, 217) op 1 cur pointer 318.0×56.0
+  settings-nudges-row 1rest: trial bg rgb(243, 230, 211) op 1 cur auto 676.0×64.0 | base bg rgb(243, 230, 211) op 1 cur pointer 676.0×64.0
+  settings-nudges-row 2hover: trial bg rgb(243, 230, 211) op 1 cur auto 676.0×64.0 | base bg rgb(243, 230, 211) op 1 cur pointer 676.0×64.0
+  settings-nudges-row 3pressed: trial bg rgb(243, 230, 211) op 1 cur auto 676.0×64.0 | base bg rgb(243, 230, 211) op 1 cur pointer 676.0×64.0
+  settings-switch 1rest: trial bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0 | base bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0
+  settings-switch 2hover: trial bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0 | base bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0
+  settings-switch 3pressed: trial bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0 | base bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0
+  settings-slider-muted 6disabled: trial bg rgb(243, 230, 211) op 1 cur auto 644.0×73.0 | base bg rgb(243, 230, 211) op 1 cur auto 644.0×73.0
+  settings-field 5focus: trial bg rgb(255, 253, 250) op 1 cur auto 550.0×52.0 | base bg rgb(255, 253, 250) op 1 cur auto 550.0×52.0
+  settings-theme-group 5focus: trial bg rgba(0, 0, 0, 0) op 1 cur auto 644.0×52.0 | base bg rgba(0, 0, 0, 0) op 1 cur auto 644.0×52.0
+  session-pause 1rest: trial bg rgb(255, 253, 250) op 1 cur pointer 78.0×80.0 | base bg rgb(255, 253, 250) op 1 cur pointer 78.0×80.0
+  session-pause 2hover: trial bg rgb(252, 244, 233) op 1 cur pointer 78.0×80.0 | base bg rgb(252, 244, 233) op 1 cur pointer 78.0×80.0
+## states-390x844-dark.json
+  today-seg-unselected 1rest: trial bg rgba(0, 0, 0, 0) op 1 cur pointer 80.8×44.0 | base bg rgba(0, 0, 0, 0) op 1 cur pointer 80.8×44.0
+  today-seg-unselected 2hover: trial bg oklab(0.317299 0.0281228 -0.0375959) op 1 cur pointer 80.8×44.0 | base bg oklab(0.317299 0.0281228 -0.0375959) op 1 cur pointer 80.8×44.0
+  today-seg-unselected 3pressed: trial bg oklab(0.380521 0.0328284 -0.0437879) op 1 cur pointer 80.8×44.0 | base bg oklab(0.317299 0.0281228 -0.0375959) op 1 cur pointer 80.8×44.0
+  today-seg-selected 4selected: trial bg rgba(0, 0, 0, 0) op 1 cur pointer 80.8×44.0 | base bg rgba(0, 0, 0, 0) op 1 cur pointer 80.8×44.0
+  today-chip-unselected 1rest: trial bg rgb(46, 35, 57) op 1 cur pointer 93.0×44.0 | base bg rgb(46, 35, 57) op 1 cur pointer 93.0×44.0
+  today-chip-unselected 2hover: trial bg rgb(55, 42, 68) op 1 cur pointer 93.0×44.0 | base bg rgb(55, 42, 68) op 1 cur pointer 93.0×44.0
+  today-chip-unselected 3pressed: trial bg rgb(55, 42, 68) op 1 cur pointer 93.0×44.0 | base bg rgb(55, 42, 68) op 1 cur pointer 93.0×44.0
+  today-chip-selected 4selected: trial bg rgb(74, 44, 51) op 1 cur pointer 110.0×44.0 | base bg rgb(74, 44, 51) op 1 cur pointer 110.0×44.0
+  today-field 5focus: trial bg rgb(46, 35, 57) op 1 cur auto 303.0×52.0 | base bg rgb(46, 35, 57) op 1 cur auto 303.0×52.0
+  settings-theme-unselected 1rest: trial bg rgba(0, 0, 0, 0) op 1 cur pointer 97.0×44.0 | base bg rgba(0, 0, 0, 0) op 1 cur pointer 97.0×44.0
+  settings-theme-unselected 2hover: trial bg oklab(0.317299 0.0281228 -0.0375959) op 1 cur pointer 97.0×44.0 | base bg oklab(0.317299 0.0281228 -0.0375959) op 1 cur pointer 97.0×44.0
+  settings-theme-unselected 3pressed: trial bg oklab(0.380521 0.0328284 -0.0437879) op 1 cur pointer 97.0×44.0 | base bg oklab(0.317299 0.0281228 -0.0375959) op 1 cur pointer 97.0×44.0
+  settings-theme-selected 4selected: trial bg rgba(0, 0, 0, 0) op 1 cur pointer 97.0×44.0 | base bg rgba(0, 0, 0, 0) op 1 cur pointer 97.0×44.0
+  settings-goal-unselected 1rest: trial bg rgb(46, 35, 57) op 1 cur pointer 149.5×56.0 | base bg rgb(46, 35, 57) op 1 cur pointer 149.5×56.0
+  settings-goal-unselected 2hover: trial bg rgb(55, 42, 68) op 1 cur pointer 149.5×56.0 | base bg rgb(55, 42, 68) op 1 cur pointer 149.5×56.0
+  settings-goal-unselected 3pressed: trial bg rgb(55, 42, 68) op 1 cur pointer 149.5×56.0 | base bg rgb(55, 42, 68) op 1 cur pointer 149.5×56.0
+  settings-goal-selected 4selected: trial bg rgb(74, 44, 51) op 1 cur pointer 149.5×66.7 | base bg rgb(74, 44, 51) op 1 cur pointer 149.5×66.7
+  settings-nudges-row 1rest: trial bg rgb(65, 51, 79) op 1 cur auto 339.0×81.0 | base bg rgb(65, 51, 79) op 1 cur pointer 339.0×81.0
+  settings-nudges-row 2hover: trial bg rgb(65, 51, 79) op 1 cur auto 339.0×81.0 | base bg rgb(65, 51, 79) op 1 cur pointer 339.0×81.0
+  settings-nudges-row 3pressed: trial bg rgb(65, 51, 79) op 1 cur auto 339.0×81.0 | base bg rgb(65, 51, 79) op 1 cur pointer 339.0×81.0
+  settings-switch 1rest: trial bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0 | base bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0
+  settings-switch 2hover: trial bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0 | base bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0
+  settings-switch 3pressed: trial bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0 | base bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0
+  settings-slider-muted 6disabled: trial bg rgb(65, 51, 79) op 1 cur auto 307.0×73.0 | base bg rgb(65, 51, 79) op 1 cur auto 307.0×73.0
+  settings-field 5focus: trial bg rgb(46, 35, 57) op 1 cur auto 213.0×52.0 | base bg rgb(46, 35, 57) op 1 cur auto 213.0×52.0
+  settings-theme-group 5focus: trial bg rgba(0, 0, 0, 0) op 1 cur auto 307.0×52.0 | base bg rgba(0, 0, 0, 0) op 1 cur auto 307.0×52.0
+  session-pause 1rest: trial bg rgb(46, 35, 57) op 1 cur pointer 78.0×80.0 | base bg rgb(46, 35, 57) op 1 cur pointer 78.0×80.0
+  session-pause 2hover: trial bg rgb(55, 42, 68) op 1 cur pointer 78.0×80.0 | base bg rgb(55, 42, 68) op 1 cur pointer 78.0×80.0
+## states-390x844-light-forced.json
+  today-seg-unselected 1rest: trial bg rgba(255, 255, 255, 0) op 1 cur pointer 80.8×44.0 | base bg rgba(255, 255, 255, 0) op 1 cur pointer 80.8×44.0
+  today-seg-unselected 2hover: trial bg rgb(255, 255, 255) op 1 cur pointer 80.8×44.0 | base bg rgb(255, 255, 255) op 1 cur pointer 80.8×44.0
+  today-seg-unselected 3pressed: trial bg rgb(255, 255, 255) op 1 cur pointer 80.8×44.0 | base bg rgb(255, 255, 255) op 1 cur pointer 80.8×44.0
+  today-seg-selected 4selected: trial bg rgba(255, 255, 255, 0) op 1 cur pointer 80.8×44.0 | base bg rgba(255, 255, 255, 0) op 1 cur pointer 80.8×44.0
+  today-chip-unselected 1rest: trial bg rgb(255, 255, 255) op 1 cur pointer 93.0×44.0 | base bg rgb(255, 255, 255) op 1 cur pointer 93.0×44.0
+  today-chip-unselected 2hover: trial bg rgb(255, 255, 255) op 1 cur pointer 93.0×44.0 | base bg rgb(255, 255, 255) op 1 cur pointer 93.0×44.0
+  today-chip-unselected 3pressed: trial bg rgb(255, 255, 255) op 1 cur pointer 93.0×44.0 | base bg rgb(255, 255, 255) op 1 cur pointer 93.0×44.0
+  today-chip-selected 4selected: trial bg rgb(255, 255, 255) op 1 cur pointer 110.0×44.0 | base bg rgb(255, 255, 255) op 1 cur pointer 110.0×44.0
+  today-field 5focus: trial bg rgb(255, 255, 255) op 1 cur auto 303.0×52.0 | base bg rgb(255, 255, 255) op 1 cur auto 303.0×52.0
+  settings-theme-unselected 1rest: trial bg rgba(255, 255, 255, 0) op 1 cur pointer 97.0×44.0 | base bg rgba(255, 255, 255, 0) op 1 cur pointer 97.0×44.0
+  settings-theme-unselected 2hover: trial bg rgba(255, 255, 255, 0) op 1 cur pointer 97.0×44.0 | base bg rgba(255, 255, 255, 0) op 1 cur pointer 97.0×44.0
+  settings-theme-unselected 3pressed: trial bg rgba(255, 255, 255, 0) op 1 cur pointer 97.0×44.0 | base bg rgba(255, 255, 255, 0) op 1 cur pointer 97.0×44.0
+  settings-theme-selected 4selected: trial bg rgba(255, 255, 255, 0) op 1 cur pointer 97.0×44.0 | base bg rgba(255, 255, 255, 0) op 1 cur pointer 97.0×44.0
+  settings-goal-unselected 1rest: trial bg rgb(255, 255, 255) op 1 cur pointer 149.5×56.0 | base bg rgb(255, 255, 255) op 1 cur pointer 149.5×56.0
+  settings-goal-unselected 2hover: trial bg rgb(255, 255, 255) op 1 cur pointer 149.5×56.0 | base bg rgb(255, 255, 255) op 1 cur pointer 149.5×56.0
+  settings-goal-unselected 3pressed: trial bg rgb(255, 255, 255) op 1 cur pointer 149.5×56.0 | base bg rgb(255, 255, 255) op 1 cur pointer 149.5×56.0
+  settings-goal-selected 4selected: trial bg rgb(255, 255, 255) op 1 cur pointer 149.5×66.7 | base bg rgb(255, 255, 255) op 1 cur pointer 149.5×66.7
+  settings-nudges-row 1rest: trial bg rgb(255, 255, 255) op 1 cur auto 339.0×81.0 | base bg rgb(255, 255, 255) op 1 cur pointer 339.0×81.0
+  settings-nudges-row 2hover: trial bg rgb(255, 255, 255) op 1 cur auto 339.0×81.0 | base bg rgb(255, 255, 255) op 1 cur pointer 339.0×81.0
+  settings-nudges-row 3pressed: trial bg rgb(255, 255, 255) op 1 cur auto 339.0×81.0 | base bg rgb(255, 255, 255) op 1 cur pointer 339.0×81.0
+  settings-switch 1rest: trial bg rgb(255, 255, 255) op 1 cur pointer 56.0×44.0 | base bg rgb(255, 255, 255) op 1 cur pointer 56.0×44.0
+  settings-switch 2hover: trial bg rgb(255, 255, 255) op 1 cur pointer 56.0×44.0 | base bg rgb(255, 255, 255) op 1 cur pointer 56.0×44.0
+  settings-switch 3pressed: trial bg rgb(255, 255, 255) op 1 cur pointer 56.0×44.0 | base bg rgb(255, 255, 255) op 1 cur pointer 56.0×44.0
+  settings-slider-muted 6disabled: trial bg rgb(255, 255, 255) op 1 cur auto 307.0×73.0 | base bg rgb(255, 255, 255) op 1 cur auto 307.0×73.0
+  settings-field 5focus: trial bg rgb(255, 255, 255) op 1 cur auto 213.0×52.0 | base bg rgb(255, 255, 255) op 1 cur auto 213.0×52.0
+  settings-theme-group 5focus: trial bg rgba(255, 255, 255, 0) op 1 cur auto 307.0×52.0 | base bg rgba(255, 255, 255, 0) op 1 cur auto 307.0×52.0
+  session-pause 1rest: trial bg rgb(255, 255, 255) op 1 cur pointer 78.0×80.0 | base bg rgb(255, 255, 255) op 1 cur pointer 78.0×80.0
+  session-pause 2hover: trial bg rgb(255, 255, 255) op 1 cur pointer 78.0×80.0 | base bg rgb(255, 255, 255) op 1 cur pointer 78.0×80.0
+## states-390x844-light.json
+  today-seg-unselected 1rest: trial bg rgba(0, 0, 0, 0) op 1 cur pointer 80.8×44.0 | base bg rgba(0, 0, 0, 0) op 1 cur pointer 80.8×44.0
+  today-seg-unselected 2hover: trial bg oklab(0.959197 0.00389533 0.0175539) op 1 cur pointer 80.8×44.0 | base bg oklab(0.959197 0.00389533 0.0175539) op 1 cur pointer 80.8×44.0
+  today-seg-unselected 3pressed: trial bg oklab(0.878865 0.00868229 0.0371163) op 1 cur pointer 80.8×44.0 | base bg oklab(0.959197 0.00389533 0.0175539) op 1 cur pointer 80.8×44.0
+  today-seg-selected 4selected: trial bg rgba(0, 0, 0, 0) op 1 cur pointer 80.8×44.0 | base bg rgba(0, 0, 0, 0) op 1 cur pointer 80.8×44.0
+  today-chip-unselected 1rest: trial bg rgb(255, 253, 250) op 1 cur pointer 93.0×44.0 | base bg rgb(255, 253, 250) op 1 cur pointer 93.0×44.0
+  today-chip-unselected 2hover: trial bg rgb(252, 244, 233) op 1 cur pointer 93.0×44.0 | base bg rgb(252, 244, 233) op 1 cur pointer 93.0×44.0
+  today-chip-unselected 3pressed: trial bg rgb(252, 244, 233) op 1 cur pointer 93.0×44.0 | base bg rgb(252, 244, 233) op 1 cur pointer 93.0×44.0
+  today-chip-selected 4selected: trial bg rgb(255, 232, 217) op 1 cur pointer 110.0×44.0 | base bg rgb(255, 232, 217) op 1 cur pointer 110.0×44.0
+  today-field 5focus: trial bg rgb(255, 253, 250) op 1 cur auto 303.0×52.0 | base bg rgb(255, 253, 250) op 1 cur auto 303.0×52.0
+  settings-theme-unselected 1rest: trial bg rgba(0, 0, 0, 0) op 1 cur pointer 97.0×44.0 | base bg rgba(0, 0, 0, 0) op 1 cur pointer 97.0×44.0
+  settings-theme-unselected 2hover: trial bg rgba(0, 0, 0, 0) op 1 cur pointer 97.0×44.0 | base bg rgba(0, 0, 0, 0) op 1 cur pointer 97.0×44.0
+  settings-theme-unselected 3pressed: trial bg rgba(0, 0, 0, 0) op 1 cur pointer 97.0×44.0 | base bg rgba(0, 0, 0, 0) op 1 cur pointer 97.0×44.0
+  settings-theme-selected 4selected: trial bg rgba(0, 0, 0, 0) op 1 cur pointer 97.0×44.0 | base bg rgba(0, 0, 0, 0) op 1 cur pointer 97.0×44.0
+  settings-goal-unselected 1rest: trial bg rgb(255, 253, 250) op 1 cur pointer 149.5×56.0 | base bg rgb(255, 253, 250) op 1 cur pointer 149.5×56.0
+  settings-goal-unselected 2hover: trial bg rgb(252, 244, 233) op 1 cur pointer 149.5×56.0 | base bg rgb(252, 244, 233) op 1 cur pointer 149.5×56.0
+  settings-goal-unselected 3pressed: trial bg rgb(252, 244, 233) op 1 cur pointer 149.5×56.0 | base bg rgb(252, 244, 233) op 1 cur pointer 149.5×56.0
+  settings-goal-selected 4selected: trial bg rgb(255, 232, 217) op 1 cur pointer 149.5×66.7 | base bg rgb(255, 232, 217) op 1 cur pointer 149.5×66.7
+  settings-nudges-row 1rest: trial bg rgb(243, 230, 211) op 1 cur auto 339.0×81.0 | base bg rgb(243, 230, 211) op 1 cur pointer 339.0×81.0
+  settings-nudges-row 2hover: trial bg rgb(243, 230, 211) op 1 cur auto 339.0×81.0 | base bg rgb(243, 230, 211) op 1 cur pointer 339.0×81.0
+  settings-nudges-row 3pressed: trial bg rgb(243, 230, 211) op 1 cur auto 339.0×81.0 | base bg rgb(243, 230, 211) op 1 cur pointer 339.0×81.0
+  settings-switch 1rest: trial bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0 | base bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0
+  settings-switch 2hover: trial bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0 | base bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0
+  settings-switch 3pressed: trial bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0 | base bg rgb(79, 158, 61) op 1 cur pointer 56.0×44.0
+  settings-slider-muted 6disabled: trial bg rgb(243, 230, 211) op 1 cur auto 307.0×73.0 | base bg rgb(243, 230, 211) op 1 cur auto 307.0×73.0
+  settings-field 5focus: trial bg rgb(255, 253, 250) op 1 cur auto 213.0×52.0 | base bg rgb(255, 253, 250) op 1 cur auto 213.0×52.0
+  settings-theme-group 5focus: trial bg rgba(0, 0, 0, 0) op 1 cur auto 307.0×52.0 | base bg rgba(0, 0, 0, 0) op 1 cur auto 307.0×52.0
+  session-pause 1rest: trial bg rgb(255, 253, 250) op 1 cur pointer 78.0×80.0 | base bg rgb(255, 253, 250) op 1 cur pointer 78.0×80.0
+  session-pause 2hover: trial bg rgb(252, 244, 233) op 1 cur pointer 78.0×80.0 | base bg rgb(252, 244, 233) op 1 cur pointer 78.0×80.0
+
+# Settings top to bottom (full page), BEFORE | AFTER
+- settings-1440x900-dark-100: BEFORE 1440×3739 → AFTER 1440×3759 (Δh 20); first differing row 1097; 5 slices of 900px in before-after/
+- settings-1440x900-dark-200: BEFORE 1440×5840 → AFTER 1440×5918 (Δh 78); first differing row 220; 7 slices of 900px in before-after/
+- settings-1440x900-light-100: BEFORE 1440×3739 → AFTER 1440×3759 (Δh 20); first differing row 1097; 5 slices of 900px in before-after/
+- settings-1440x900-light-200: BEFORE 1440×5840 → AFTER 1440×5918 (Δh 78); first differing row 1522; 7 slices of 900px in before-after/
+- settings-375x667-dark-100: BEFORE 375×4358 → AFTER 375×4436 (Δh 78); first differing row 1187; 5 slices of 1100px in before-after/
+- settings-375x667-dark-200: BEFORE 375×9433 → AFTER 375×9707 (Δh 274); first differing row 240; 9 slices of 1100px in before-after/
+- settings-375x667-light-100: BEFORE 375×4358 → AFTER 375×4436 (Δh 78); first differing row 1187; 5 slices of 1100px in before-after/
+- settings-375x667-light-200: BEFORE 375×9433 → AFTER 375×9707 (Δh 274); first differing row 1410; 9 slices of 1100px in before-after/
+- settings-390x844-dark-100: BEFORE 390×4276 → AFTER 390×4335 (Δh 59); first differing row 1148; 4 slices of 1100px in before-after/
+- settings-390x844-dark-200: BEFORE 390×9015 → AFTER 390×9250 (Δh 235); first differing row 186; 9 slices of 1100px in before-after/
+- settings-390x844-light-100: BEFORE 390×4276 → AFTER 390×4335 (Δh 59); first differing row 1148; 4 slices of 1100px in before-after/
+- settings-390x844-light-200: BEFORE 390×9015 → AFTER 390×9250 (Δh 235); first differing row 247; 9 slices of 1100px in before-after/
+- settings-844x390-dark-100: BEFORE 844×3699 → AFTER 844×3718 (Δh 19); first differing row 1073; 5 slices of 780px in before-after/
+- settings-844x390-dark-200: BEFORE 844×5949 → AFTER 844×6066 (Δh 117); first differing row 236; 8 slices of 780px in before-after/
+- settings-844x390-light-100: BEFORE 844×3699 → AFTER 844×3718 (Δh 19); first differing row 77; 5 slices of 780px in before-after/
+- settings-844x390-light-200: BEFORE 844×5949 → AFTER 844×6066 (Δh 117); first differing row 236; 8 slices of 780px in before-after/
