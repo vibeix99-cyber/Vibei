@@ -231,7 +231,7 @@ No rule, threshold, id, tier or stored-data change.
 
 **BEFORE (base):** the same names under `shots/before/` for 390×844 light @100, 375×667 dark @200, and 1440 ×4.
 
-**Opened** (17:03–17:06):
+**Opened** (about 17:00–17:05):
 - `after/390x844-light-t100/{today-atRisk, today-missed-cozy, sheet-missed-cozy, sheet-missed-nocozy, end-blank, summary-cozy-earn}`;
 - `before/390x844-light-t100/today-missed-cozy`;
 - `after` + `before` `1440x900-light-t100/rail-missed-cozy`;
