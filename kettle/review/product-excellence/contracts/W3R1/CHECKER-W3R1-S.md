@@ -171,3 +171,23 @@ I read `LI/S/weekboundary/{A-mon-enGB,B-sun-enUS,C-sun-enGB}.json`:
 4. **◆ The glossary form stays.** "Warmest run" with "N days" (or "Warmest run · N days"), "Days warm" / "Day warm"; no "streak"; the at-risk hint unchanged.
 5. **◆ `w3-stats:98` on a cold load.** Run `w3-stats.spec.ts` ×2, 21/21 plus the new test. The `:98` cases must also pass with the fonts blocked.
 6. **No regression.** The `w3-stats` totals and wording tests pass; `integrity.spec.ts` 25/25; tsc; vitest. The Overview's height at 375×667 @200 is reported against the trial.
+
+## 7. BEFORE / AFTER for Vibei (full size)
+
+**REFERENCE:** K07 `contracts/W3R1/review/LI/S/reference/K07-live-stats-empty.jpg`.
+
+**Stats, full page** (Lane I, 16 configs × empty / veteran; `contracts/W3R1/review/LI/S/captures/`):
+- BEFORE: `BEFORE-base-4d36939/<w>x<h>-<theme>-<100|200>-<empty|veteran>.png`;
+- AFTER: `AFTER-trial-c7a6b8f/…` (same names).
+
+**The summary at the top** (the maker's, 375×667): `/home/user/wt/w5s/kettle/review/product-excellence/contracts/W3R1/S/shots/{before,after}/375x667-{light,dark}-t{100,200}/S02-veteran-top.png`.
+
+**"Delete this brew?" at 375×667 @200** (F-T2-4):
+- BEFORE: `…/S/control-ft24/base-375x667-light-t200-dialog.png` (Delete cut off);
+- AFTER: `…/S/control-ft24/after-375x667-light-t200-dialog.png` (tight, both actions pinned).
+
+**The other sheets fixed at 375×667 @200:** `contracts/W3R1/review/LI/S/sheets/base-all/375x667-light-200-{settings-reset,focus-end}.png` and the trial's beside them.
+
+**S-D1:**
+- `contracts/W3R1/review/LEAD/S/width/TRIAL-844x390-200-desk-fonts-overview.png` ("Warm… run", "23 day…") against `BASE-844x390-200-desk-fonts-overview.png`;
+- `TRIAL-390x844-200-mobile-nofonts-viewport.png` (the zoomed-out page).
