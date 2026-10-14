@@ -182,6 +182,7 @@ async function ctxFor(c, seed = true) {
     if (pct !== 100) addEventListener('DOMContentLoaded', () => { const s = document.createElement('style'); s.textContent = `html{font-size:${pct}%!important}`; document.head.appendChild(s); });
   }, c.pct);
   await ctx.addInitScript(sampler);
+  await ctx.addInitScript(() => { window.__ltToast = async (m, o) => (window.__kettle && window.__kettle.toast ? window.__kettle.toast(m, o) : (await import('/src/ui/Toast.tsx')).toast(m, o)); });
   const page = await ctx.newPage();
   await page.clock.install({ time: MONDAY });
   await page.clock.resume();
@@ -355,7 +356,7 @@ G.break = async (p, touch, c, f) => {
   await p.waitForFunction(() => window.__kettle.timer.getState().status === 'running', null, { timeout: 15_000 }).catch(() => {});
   await sleep(1500);
   await state(p, 'ambience');
-  for (const m of ['Notice one, waiting its turn.', 'Notice two, waiting its turn.', 'Notice three, waiting its turn.']) await p.evaluate((m) => window.__kettle.toast(m, { tone: 'info', duration: 4000 }), m);
+  for (const m of ['Notice one, waiting its turn.', 'Notice two, waiting its turn.', 'Notice three, waiting its turn.']) await p.evaluate((m) => window.__ltToast(m, { tone: 'info', duration: 4000 }), m);
   await sleep(400);
   const amb = p.getByRole('button', { name: /Ambience/ }).first();
   if (await amb.count()) {
@@ -480,11 +481,11 @@ G.import = async (p, touch, c, f) => {
 G.update = async (p, touch, c, f) => {
   await p.goto(`${c.base}/?debug&seed=veteran&theme=${c.theme}#/`); await ready(p); await p.evaluate(() => document.fonts.ready); await sleep(1500);
   await state(p, 'update');
-  const raiseUpd = () => p.evaluate(() => window.__kettle.toast('A fresh brew of Kettle is ready.', { id: 'pwa-update', icon: 'sparkle', duration: Infinity, action: { label: 'Update', onClick: () => { window.__updTapped = (window.__updTapped || 0) + 1; } } }));
+  const raiseUpd = () => p.evaluate(() => window.__ltToast('A fresh brew of Kettle is ready.', { id: 'pwa-update', icon: 'sparkle', duration: Infinity, action: { label: 'Update', onClick: () => { window.__updTapped = (window.__updTapped || 0) + 1; } } }));
   await raiseUpd(); await sleep(1500);
   const shownUpd = () => p.evaluate(() => [...document.querySelectorAll('[data-notice-strip] li, [aria-label="Notifications"] li')].filter((n) => n.getBoundingClientRect().height > 0).map((n) => n.innerText.replace(/\s+/g, ' ').slice(0, 50)));
   f.update = { t1500: await shownUpd() };
-  await p.evaluate(() => window.__kettle.toast('Brew updated', { tone: 'info', duration: 3200 }));
+  await p.evaluate(() => window.__ltToast('Brew updated', { tone: 'info', duration: 3200 }));
   const tl = [];
   for (let i = 0; i < 14; i++) { await sleep(500); tl.push(`${(i + 1) * 500}: ${(await shownUpd()).join(' | ')}`); }
   f.update.timeline = tl;
@@ -499,21 +500,21 @@ G.queue = async (p, touch, c, f) => {
   await p.goto(`${c.base}/?debug&seed=veteran&theme=${c.theme}#/`); await ready(p); await p.evaluate(() => document.fonts.ready); await sleep(1500);
   await state(p, 'queue4');
   const msgs = ['Queue one: Saved 3 minutes of focus.', 'Queue two: Recipe done: Take a full brew · +10 leaves', 'Queue three: Recipe done: Take 2 full tea breaks · +15 leaves', 'Queue four: Badge earned: Steady Hand'];
-  for (const m of msgs) await p.evaluate((m) => window.__kettle.toast(m, { tone: 'success', duration: 3200 }), m);
+  for (const m of msgs) await p.evaluate((m) => window.__ltToast(m, { tone: 'success', duration: 3200 }), m);
   await sleep(1000);
-  f.queueBefore = await p.evaluate(() => window.__kettle.notices());
+  f.queueBefore = await p.evaluate(() => (window.__kettle.notices ? window.__kettle.notices() : null));
   const r = await press(p, touch, p.getByRole('link', { name: 'Stats' }).first(), { strict: false });
   await p.waitForFunction(() => location.hash === '#/stats', null, { timeout: 10_000 }).catch(() => {});
   await state(p, 'queue4-stats');
-  f.queueAfterRoute = await p.evaluate(() => window.__kettle.notices());
+  f.queueAfterRoute = await p.evaluate(() => (window.__kettle.notices ? window.__kettle.notices() : null));
   await park(p);
   const order = [];
   const t0 = Date.now();
   while (Date.now() - t0 < 26_000) {
     const s = await p.evaluate(() => [...document.querySelectorAll('[data-notice-strip] li, [aria-label="Notifications"] li')].filter((n) => n.getBoundingClientRect().height > 0).map((n) => n.innerText.replace(/\s+/g, ' ').slice(0, 30)).join(' | '));
     if (s && order[order.length - 1]?.s !== s) order.push({ ms: Date.now() - t0, s });
-    const q = await p.evaluate(() => window.__kettle.notices());
-    if (!s && (!q.queue || q.queue.length === 0)) break;
+    const q = await p.evaluate(() => (window.__kettle.notices ? window.__kettle.notices() : null));
+    if (!s && (!q || !q.queue || q.queue.length === 0)) break;
     await sleep(150);
   }
   f.queueOrder = order;
@@ -536,7 +537,7 @@ G.tap = async (p, touch, c, f) => {
   });
   const clicks = () => p.evaluate(() => { window.__clk = []; addEventListener('click', (e) => window.__clk.push((e.target.closest('[data-lt-target]') ? 'TARGET ' : 'other ') + e.target.tagName + ' ' + (e.target.getAttribute('aria-label') || e.target.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 30)), { capture: true, once: false }); });
   const topNow = () => p.evaluate(() => document.querySelector('[data-lt-target]')?.getBoundingClientRect().top ?? null);
-  const raise = (m) => p.evaluate((m) => window.__kettle.toast(m, { tone: 'info', duration: 3200 }), m);
+  const raise = (m) => p.evaluate((m) => window.__ltToast(m, { tone: 'info', duration: 3200 }), m);
   const runs = [];
   // (a) held pointer
   {
@@ -606,7 +607,7 @@ G.sheetexit = async (p, touch, c, f) => {
   await p.goto(`${c.base}/?debug&seed=newbie&theme=${c.theme}#/`); await ready(p);
   await p.evaluate(() => window.__kettle.timer.getState().startFocus({ intention: 'Chapter 3 notes', tag: 'study' }));
   await p.waitForFunction(() => location.hash === '#/focus', null, { timeout: 15_000 }); await sleep(1500);
-  for (const m of ['Notice one, waiting its turn.', 'Notice two, waiting its turn.', 'Notice three, waiting its turn.']) await p.evaluate((m) => window.__kettle.toast(m, { tone: 'info', duration: 4000 }), m);
+  for (const m of ['Notice one, waiting its turn.', 'Notice two, waiting its turn.', 'Notice three, waiting its turn.']) await p.evaluate((m) => window.__ltToast(m, { tone: 'info', duration: 4000 }), m);
   await sleep(1500);
   await press(p, touch, p.getByRole('button', { name: /Ambience/ }).first(), { strict: false });
   const seq = [];

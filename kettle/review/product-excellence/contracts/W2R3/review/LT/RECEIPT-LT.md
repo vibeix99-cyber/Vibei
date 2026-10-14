@@ -21,6 +21,7 @@ Raw evidence only, no verdict. Lane T did not build this work.
 - **W2H-D1:** fix Brew length 4/4 in view, ≥ 24×24, 9/9 at all 16 W2H-D1 runs (4 sizes × 100/200 % × 2 themes); base in view at 2 of 8. Mark done tapped and crossed off at all 22 on the fix; on top at about +0.6 s without scrolling only at 390×844 @100, 844×390 @100 and 1440 @100 (base also 667×375 @100).
 - **break-reach "Break's over with a carried task", 7 weekdays × (375×667 light, 390×844 dark) @200:** base 9 passed / 5 failed (Mon, Thu; Mon, Thu, Sun); fix 14 / 14 passed.
 - **"Finger in the air":** a notice arriving at rest moved the target 68 px before a tap 0–400 ms later in 9 of 9 trials where the strip went from empty to shown; that tap landed on another element. With the pointer held down, 0 px of movement (4 of 4).
+- **Suites on the fix:** `toast-room.spec.ts` 14 / 14 passed (the R5-D1, LEAD-D1 and R7-D1 shapes included). `notice-strip.spec.ts` (`--workers=1`): 7 passed, 0 failed of 25 when the container restart (about 00:40 UTC) killed the run; 18 not run. `integrity`, `w2-home`, `statusbar` and `a11y` (D4) not run in the time box (2 `a11y:61` tests passed before Lane T stopped that run).
 
 
 ## Commands and times (UTC)
@@ -107,15 +108,25 @@ Reading the columns: a "sample" is one 100 ms tick; an "intersection" is one (no
 
 ### 1.3 Sheets (counted apart, with what they are)
 
-- **Sheet open, at rest:** in every configuration the Ambience check at +2 s after opening found 5–6 of 5–6 sheet controls on top at their centres (`groups.break.ambience.sheetCtlsCovered.cov = 0`). The open-sheet screenshot `probes/cmp/sheetexit-844x390-light-t200-sheetexit-amb-open.png` shows the sheet and its scrim over the panel; "Notice one…" is under the scrim.
+- **Sheet open, at rest:** in every configuration the Ambience check at +2 s after opening found every visible sheet control (5–10 per configuration) on top at its centre (`groups.break.ambience.sheetCtlsCovered.cov = 0`). The open-sheet screenshot `probes/cmp/sheetexit-844x390-light-t200-sheetexit-amb-open.png` shows the sheet and its scrim over the panel; "Notice one…" is under the scrim.
 - **3,632 of 3,649 9-point hits on sheet controls** lie inside a `[role=dialog]` box; the 17 others are sheet controls of the same leaving sheets (e.g. Edit brew's "Work"/"Study"/"Save") just outside the dialog element's own box. They come only from these states: `history-mid` (173 records), `history-end` (60), `import-undo` (56), `import-expire` (25), `ambience` (67): the moments right after Delete, Add or Escape, i.e. a sheet leaving. Sequence at 844×390 light 200 (`probes/cmp/844x390-light-t200-sheetexit.json`): Ambience open +300 ms and +1000 ms: Close, Turn on, Rain, Fireside, Forest → **sheet** at their centres (Brown noise below the viewport). Escape +0 ms: the dialog still in the DOM, its wrapper `pointer-events: none`; at the same points: Close → `div`, **Turn on → the notice**, Rain → `div`, Fireside → `div`, Forest → `span`. The next screenshot (taken a few seconds later under load) shows the sheet gone. Lane T did not capture a frame of the leaving sheet itself, so whether any notice pixel is drawn above the leaving sheet is not established by this run.
 - 375×667 dark 200 sheet-exit: Escape +0 ms: sheet controls → `img` / `span` (page under it), no notice at those points; the History part of that group timed out (`locator.evaluate` 30 s).
 
-## 1.4 `notice-strip.spec.ts` once on :5476
+### 1.4 `notice-strip.spec.ts` once on :5476
 
 `KETTLE_PORT=5476 npx playwright test tests/notice-strip.spec.ts --project=chromium --workers=1 --output=/tmp/claude-0/lt3-out-ns` (workers=1, not 2: see §7). Log `runs/notice-strip-5476-w1.log`.
 
-Not started.
+**Cut by the container restart at about 00:40 UTC**: the log ends after test 7 (no summary line, no JSON). 18 of 25 configurations not run. Results recorded: 7 passed, 0 failed of 7 reported.
+
+| Result | Configuration | Time |
+|---|---|---|
+| ✓ | (390×844 light 100 %) (1.2m) | None |
+| ✓ | (390×844 light 200 %) (1.4m) | None |
+| ✓ | (390×844 light 200 % reduced motion) (1.2m) | None |
+| ✓ | (390×844 dark 100 %) (1.3m) | None |
+| ✓ | (390×844 dark 200 %) (1.7m) | None |
+| ✓ | (375×667 light 100 %) (1.2m) | None |
+| ✓ | (375×667 light 200 %) (2.3m) | None |
 
 
 ## 2. Inline Undo, per surface (fix :5476, all 22 configurations)
@@ -192,7 +203,7 @@ Target: the first in-flow control below the (empty) strip with its centre in vie
 | 1440×900 (mouse) | 349 / 349 / 349 / 417; the target | 349 → 417; group `div` | strip already occupied (417): target | same: target | same: target |
 
 - (a): 0 px of movement between pointer-down and pointer-up in 4 of 4; the strip appeared after release (+68 to +72 px).
-- (b): in every trial where the strip went from empty to showing (9 trials), the target had moved down 68 px before the tap arrived (δ 0–400 ms) and the click landed on a different element. In the 7 other trials the strip already showed something when the page loaded (what it was is not recorded) and nothing moved. This is the case the maker states as the residual ("a finger already in the air when the page has been at rest for 1.2 s"); Lane T raised the notice through `__kettle.toast` with no input for ≥ 1.6 s.
+- (b): in every trial where the strip went from empty to showing (9 trials), the target had moved down 68 px before the tap arrived (δ 0–400 ms) and the click landed on a different element. In the 7 other trials the strip already showed a notice before Lane T raised the trial's notice (what it was is not recorded; between those trials the probe navigated to the identical URL `/?debug&theme=…#/settings`, so the page may not have reloaded and the previous trial's notice may still have been up), and nothing moved. This is the case the maker states as the residual ("a finger already in the air when the page has been at rest for 1.2 s"); Lane T raised the notice through `__kettle.toast` with no input for ≥ 1.6 s.
 
 ### 4.2 The queue across a route change (fix, all 22; `groups.queue`)
 
@@ -288,11 +299,11 @@ Dropped notices (queue group, four raised at once, then the Stats tab): base 390
 
 | Control (round) | The trial's test that carries its shape (`toast-room.spec.ts` / `a11y.spec.ts`) | Result on the fix :5476 |
 |---|---|---|
-| R5-D1 (banner never moved out of its room by a notice timing out) | "the storage-full banner stays in the page, whole and steady, while … the strip … read by wheel / touch" | 5 passed, 0 failed of 5 run |
-| LEAD-D1 (timed notices and the endless update prompt never move the banner) | "notices timing out, and the endless update prompt, never move the banner under the person" | 0 passed, 0 failed of 0 run |
-| R7-D1 (update prompt and every notice whole and tappable on Break's over scrolled to its end) | "the update prompt and every notice stay whole and tappable, never over a control, on Break's over…" | 0 passed, 0 failed of 0 run |
-| round 8 / Close (three notices never over Close or a Break's over control) | "three notices never cover the session top bar's Close…" | 0 passed, 0 failed of 0 run |
-| last notice / docked start | "the last notice leaves where it was, never over the docked start" | 0 passed, 0 failed of 0 run |
+| R5-D1 (banner never moved out of its room by a notice timing out) | "the storage-full banner stays in the page, whole and steady, while … the strip … read by wheel / touch" | 6 passed, 0 failed of 6 run |
+| LEAD-D1 (timed notices and the endless update prompt never move the banner) | "notices timing out, and the endless update prompt, never move the banner under the person" | 2 passed, 0 failed of 2 run |
+| R7-D1 (update prompt and every notice whole and tappable on Break's over scrolled to its end) | "the update prompt and every notice stay whole and tappable, never over a control, on Break's over…" | 2 passed, 0 failed of 2 run |
+| round 8 / Close (three notices never over Close or a Break's over control) | "three notices never cover the session top bar's Close…" | 2 passed, 0 failed of 2 run |
+| last notice / docked start | "the last notice leaves where it was, never over the docked start" | 2 passed, 0 failed of 2 run |
 | D4 (a toast never covers the break-over controls, carried task included) | `a11y.spec.ts` (375×667 and 390×844) | **not run** (time; see §7). Lane T's probe covers the same state (Break's over on Monday with a carried task, wheeled): 0 control intersections, 0 nine-point hits, all 22 configurations (§1.2) |
 
 Controls were not re-run by Lane T on the control revisions (`20671eb`, `e866118`, `b39202f`); the maker's control-first results are in the packet §3. The base `61aba17` (:5470) has no in-flow strip, so the trial's `toast-room.spec.ts` was not run against it.
@@ -302,7 +313,7 @@ Controls were not re-run by Lane T on the control revisions (`20671eb`, `e866118
 
 ### `toast-room.spec.ts` (log `runs/suite-toast-room.log`)
 
-Summary line(s): (run not finished at receipt time)
+Run 00:23:45–00:28:22 UTC, complete. Summary line: 14 passed (4.6m)
 
 | Result | Test | Time |
 |---|---|---|
@@ -311,17 +322,30 @@ Summary line(s): (run not finished at receipt time)
 | ✓ | `tests/toast-room.spec.ts:242:5` the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by wheel (844×390, 200 % text) | 19.1s |
 | ✓ | `tests/toast-room.spec.ts:242:5` the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by touch (844×390, 200 % text) | 24.8s |
 | ✓ | `tests/toast-room.spec.ts:242:5` the storage-full banner stays in the page, whole and steady, while every notice in the strip is read by wheel (667×375, 200 % text) | 20.0s |
+| ✓ | `tests/toast-room.spec.ts:242:5` the storage-full banner stays in the page, whole and steady, while every notice in the strip is read by touch (667×375, 200 % text) | 28.4s |
+| ✓ | `tests/toast-room.spec.ts:332:3` notices timing out, and the endless update prompt, never move the banner under the person (375×667, 200 % text, wheel, light) | 23.8s |
+| ✓ | `tests/toast-room.spec.ts:332:3` notices timing out, and the endless update prompt, never move the banner under the person (375×667, 200 % text, wheel, dark) | 23.4s |
+| ✓ | `tests/toast-room.spec.ts:398:3` the last notice leaves where it was, never over the docked start (375×667, 200 % text) | 5.1s |
+| ✓ | `tests/toast-room.spec.ts:398:3` the last notice leaves where it was, never over the docked start (844×390, 200 % text) | 5.0s |
+| ✓ | `tests/toast-room.spec.ts:610:3` three notices never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, light) | 12.8s |
+| ✓ | `tests/toast-room.spec.ts:610:3` three notices never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, dark) | 12.7s |
+| ✓ | `tests/toast-room.spec.ts:658:3` the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (667×375, 200 % text, w | 18.5s |
+| ✓ | `tests/toast-room.spec.ts:658:3` the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (844×390, 200 % text, t | 26.8s |
 
 ## 7. Incomplete, deviations, and things to know about this run
 
 - **Slots:** Lane R held 2 of the 3 browser slots and Lead queued jobs for the whole window, so Lane T ran one browser at a time (`--n 1`); the probe ran 3 contexts in that one browser (`--par 3`), which slowed timing-sensitive steps (the "+0.6 s" Mark done taps landed at 687–1,834 ms where no scroll was needed).
-- **`notice-strip.spec.ts`** was run with `--workers=1` under one slot, not `--workers=2` as the brief says (two slots were never free to Lane T); see §1.4.
-- **Not run:** `integrity.spec.ts` (only started, then stopped by Lane T at 2 of 77 tests of the first combined run), `a11y.spec.ts` (2 tests of `:61` passed in that stopped run; D4's tests not reached), and any suite not listed in §6.
+- **`notice-strip.spec.ts`** was run with `--workers=1` under one slot, not `--workers=2` as the brief says (two slots were never free to Lane T); see §1.4. It was cut by the container restart after 7 of 25 tests (all 7 passed).
+- **Not run:** `integrity.spec.ts`, `w2-home.spec.ts`, `statusbar.spec.ts` (the first combined run was stopped by Lane T at 2 of 77 tests to give the slot to check 1), `a11y.spec.ts` (2 tests of `:61`, light and dark, passed in that stopped run; D4's tests not reached).
 - **Probe gaps:** History at 375×667 dark @200 failed in the matrix (dialog wait) and was taken from the A2 re-run; Import "run out" not measured at 1440 (the result row stays while the mouse rests on it, §2); Lane T captured no frame of a leaving sheet, so whether a notice pixel is drawn over a leaving sheet is not established (§1.3); the "finger in the air" trials did not record what already occupied the strip in 7 of 16 trials (§4.1); base groups that raise notices on demand were run only at 4 configurations (C).
 - Every setup used the debug API; under test, only real taps, wheel, keys and the real file chooser. No source was edited; nothing committed or pushed. Scripts live in `/home/user/wt/w4tr-t2/kettle/.tmp/LT/` (untracked) and are copied to `LT/tools/`.
-- All Lane T processes were started under the slot gate and have exited (checked at the end, §8).
+- The run ended with a container restart at about 00:40 UTC (not a Lane T action), during `notice-strip.spec.ts`; see §8.
 
 
 ## 8. End state
 
-ENDSTATE
+- **Closed after the fact (03:35 UTC, 2026-10-14) as the record of trial `490ca97`.** A container restart at about 00:40 UTC killed the last job (`chain.sh` → `notice-strip.spec.ts --workers=1` on :5476) after 7 of 25 tests; no summary line or JSON was written for it. Everything before it had completed: probe matrix (22), comparisons (A2, C), `break-reach` base and fix, `toast-room` 14/14.
+- Not re-run after the restart (as instructed). Cut by the restart: the remaining 18 `notice-strip` configurations. Never started in the time box: `integrity`, `w2-home`, `statusbar`, `a11y` (D4).
+- Processes: at 03:35 UTC no Lane T process existed (`ps`: no `ltprobe`, `chain.sh` or Playwright from Lane T); slot gate `held 0`.
+- Evidence size: about 34 MB under `review/LT/` (limit 150 MB).
+- The later fix revision is reviewed separately in `RECEIPT-LT-FIX.md`.

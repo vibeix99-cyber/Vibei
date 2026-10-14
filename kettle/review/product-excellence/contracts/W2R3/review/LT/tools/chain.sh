@@ -13,3 +13,10 @@ for P in 5470 5476; do
   BREAK_REACH_ALL_DAYS=1 KETTLE_PORT=$P PLAYWRIGHT_JSON_OUTPUT_NAME=$L/runs/break-reach-$P.json npx playwright test tests/break-reach.spec.ts --project=chromium --workers=1 --output=/tmp/claude-0/lt3-out-b$P -g "Break's over with a carried task" --grep-invert "844×390" --reporter=list,json > $L/runs/break-reach-$P.log 2>&1
   echo "B $P end $(date -u +%T) rc=$?"
 done
+echo "C start $(date -u +%T)"
+node .tmp/LT/ltprobe.mjs --base http://127.0.0.1:5476 --base2 http://127.0.0.1:5470 --out $L/probes/cmp2 --par 3 --cfgs "390x844:light:100@B/break+nextbrew+queue,844x390:light:200@B/break+queue+sheetexit,667x375:light:200@B/break+queue,375x667:dark:200@B/break" > $L/runs/probe-cmp2.log 2>&1
+echo "C end $(date -u +%T)"
+KETTLE_PORT=5476 PLAYWRIGHT_JSON_OUTPUT_NAME=$L/runs/suite-toast-room.json npx playwright test tests/toast-room.spec.ts --project=chromium --workers=1 --output=/tmp/claude-0/lt3-out-toast-room --reporter=list,json > $L/runs/suite-toast-room.log 2>&1
+echo "toast-room end $(date -u +%T) rc=$?"
+KETTLE_PORT=5476 PLAYWRIGHT_JSON_OUTPUT_NAME=$L/runs/notice-strip-5476-w1.json npx playwright test tests/notice-strip.spec.ts --project=chromium --workers=1 --output=/tmp/claude-0/lt3-out-ns --reporter=list,json > $L/runs/notice-strip-5476-w1.log 2>&1
+echo "notice-strip end $(date -u +%T) rc=$?"
