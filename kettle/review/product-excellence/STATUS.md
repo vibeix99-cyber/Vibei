@@ -54,6 +54,16 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
      - Notices shift content as a finger lands. This needs a rule that strips only appear between interactions; it goes to the next polish round (F-T2-1).
 - **Plan from here:** restart servers and the slot gate → Maker T2 fix → gate → Lane T (Opus) plus the targeted part of Lane R (Sonnet) → the lead's verdict → merge only on APPROVE → final regression → STATUS → final message.
 
+**T2 fix round (2026-10-14 03:40 UTC):**
+- **Hand-back:** Maker T2 handed back at 03:31 UTC (stop 03:53): `pe/w2r3-notices@64f29cd`, code `40f92b6`, kettle/src `aa88587` (same src as WIP `3462b93`).
+  - **Src changes vs `6a64fbf`:** `FocusScreen.tsx` / `.module.css` (no strip on the summary) and `ShellOverlays.tsx` (the update prompt waits on `/focus` and `/done`).
+  - **Tests:** new `summary-notice.spec.ts`; `notice-strip` and `a11y:332` now expect the notice queued, not drawn, on the summary.
+- **Gate passed.** Trial `99d9368` = `8af5430` + `64f29cd`, worktree `/home/user/wt/w4tr-t2f`, src `5cd9a44`, dev :5477 / preview :5487, verified. The servers for `490ca97` (:5476 / :5486) are back up for the controls. Archived: `pe-w2r3-notices-fix-64f29cd` and `w2r3-trial-t2f-99d9368`.
+- **Running:**
+  - Lane T (Opus): targeted re-review, `RECEIPT-LT-FIX.md`, stop 05:10;
+  - Lane R (Sonnet): targeted regression, `RECEIPT-LR.md`, stop 04:55;
+  - LEAD-3 (Opus): its own T2-D1 re-check, then the final verdict.
+
 **Round 3 status (2026-10-14 00:30 UTC):**
 - **C:** merged as `61aba17` (`MODEL_ON_LOW=true`). It is identical to the trial that passed Lane R's targeted regression.
 - **B:** APPROVE, merged as `8df3076`.
