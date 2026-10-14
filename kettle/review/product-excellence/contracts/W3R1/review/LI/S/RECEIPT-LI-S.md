@@ -58,3 +58,53 @@ Raw evidence only. No verdict. LEAD-5 decides. Lane I implemented none of this w
 - Code check: `git diff 4d36939 c7a6b8f -- kettle/src/progress/` touches only `dst.test.ts`. `streak.ts`, `badgeEngine.ts`, `badges.ts`, `insights.ts` and `engine.ts` are byte-identical to base.
 - Evidence: `weekboundary/<case>.json` (both builds' full readings), `weekboundary/<case>-{base,trial}.png` (full page, 1440).
 
+## 2a. Every `ui/Sheet.*` use, and `w3-stats.spec.ts:98` on trial and combined
+
+**Uses of `Sheet` / `Dialog` in `src/` (trial; `grep -rn "<Sheet\b\|<Dialog\b"`, excluding `ui/Gallery.tsx`, the dev-only `#/kit` gallery):**
+
+| # | File:line | Sheet (title) | Probe id (§2b) |
+|---|---|---|---|
+| 1 | `screens/home/StatusBar.tsx:56` | Today › warm-days pill sheet | `today-warm` |
+| 2 | `screens/home/StatusBar.tsx:107` | Today › leaves pill sheet | `today-leaves` |
+| 3 | `screens/home/StatusBar.tsx:141` | Today › level pill sheet | `today-level` |
+| 4 | `screens/home/Composer.tsx:320` | Today › "Your own rhythm" (Custom brew length) | `today-rhythm` |
+| 5 | `app/ShellOverlays.tsx:40` | "Keyboard shortcuts" (`?`) | `shortcuts` |
+| 6 | `screens/settings/DataSection.tsx:228` | Settings › "Start fresh?" | `settings-reset` |
+| 7 | `screens/settings/DataSection.tsx:145` | Settings › import: "Restore / Replace with / Add this backup?" | `settings-import` |
+| 8 | `screens/stats/Badges.tsx:118` | Stats › badge sheet | `stats-badge` |
+| 9 | `screens/stats/History.tsx:161` | Stats › History › "Edit brew" | `stats-edit` |
+| 10 | `screens/stats/History.tsx:221` (`Dialog`) | "Delete this brew?" **over** "Edit brew" (the sheet over a sheet) | `stats-delete-over-edit` |
+| 11 | `screens/focus/parts/AmbienceSheet.tsx:25` | Session › Ambience | `focus-ambience` |
+| 12 | `screens/focus/parts/EndSheet.tsx:21` | Session › End (< 1 min) | `focus-end` |
+
+- **Welcome's "I have a backup"** (`screens/welcome/WelcomeScreen.tsx:96`) opens the file picker and restores directly with a toast; it uses no Sheet, so there is nothing of S's to check there.
+- `ui/Gallery.tsx:647, 664, 687` render Sheet/Dialog only on the dev `#/kit` route; not probed.
+
+**`tests/w3-stats.spec.ts:98`** ("both choices can be tapped, and Tab reaches them in a loop"; the line covers 5 describe blocks). Each run used its own worktree's spec (byte-identical in both), `--workers=1`, slot `--n 1`:
+
+| Build | When (UTC) | Result | Log |
+|---|---|---|---|
+| Trial :5522 (`/home/user/wt/w5tr-s`) | 16:53–16:54 | **5 passed**; 390×844 @200 in 9.0 s | `spec98/LI-s98-trial.log` |
+| Combined :5520 (`/home/user/wt/w5tr-all`) | 16:54–16:55 | **5 passed**; 390×844 @200 in 8.6 s | `spec98/LI-s98-comb.log` |
+| (Lane R's own rerun of `full-C` on :5520, read from `/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/full-C.json`) | 17:25–17:32 | all five `:98` cases passed (that run had 1 unrelated failure) | — |
+
+**Lane R's failure** (first `full-C` run, kept by Lane R in `LR-pw/full-C-cut/…`; copied: `spec98/LR-full-C-cut-390x844-200-error-context.md`). From its `trace.zip` (I read it; I did not re-run it):
+- It failed at `openDelete` (spec l.71), **before the dialog existed**: the tap on the first History row (`[data-session-row] button`, "Read brew, 1:20 PM, 25 minutes…") reported "tap action done", but "Edit brew" never opened (10 s timeout).
+- The trace's DOM snapshots show the **layout viewport at 408×883 at the tap** (`before@`/`input@call@1144`), and 390×844 just after (`after@call@1144`). The tap point was (195, 409.09).
+- So, under `isMobile`, the page was wider than the screen at that moment: Chrome zoomed it out to 390/408, and the tap landed on page coordinates the row no longer had.
+- The screencast frame just before the input (`spec98/LR-trace-frame-277207ms-just-before-tap.jpeg`) shows the top of Stats, with the tile "23 da…" cut at the right. The frame after (`…277918ms-after.jpeg`) shows History, with the nav label "Setting" cut.
+
+**Transient width, measured** (`tools/LI-overflow.mjs`, 390×844 @200, `isMobile`, veteran, en-US as the spec; `scrollWidth/innerWidth/visualViewport.width/scale` sampled every 100 ms for 4 s; 3 fresh contexts per build, 17:36 UTC; `overflow/*.json`):
+
+| Build | Run 1 (first context, cold) | Runs 2–3 |
+|---|---|---|
+| Combined :5520 | **408/408/390/1** for part of the 4 s, then 390 | 390 throughout |
+| Trial :5522 | **408/408/390/1** for part of the 4 s, then 390 | 390 throughout |
+| Base :5478 | 390 throughout | 390 throughout |
+
+- Run 1 on combined and trial gives the same 408 px width as Lane R's trace. The cause of Lane R's failure is therefore present on S's trial alone; it is not specific to the combined build.
+- I did not see it on base in 3 runs.
+- After the page settles, the elements past the edge are the same on all three builds: a decorative `SPAN._sheen` (r = 450) and the chart's sr-only data table (r = 1055). Neither widens the settled page.
+- **Which element widens the page during load is unproven** at this point. A throttled probe was queued (`tools/LI-overflow2.mjs`); see §2b.
+- The non-`isMobile` captures (§7) show base already wider than the screen at 390×844 @200 veteran (`scrollWidth` 405, a chart tooltip `SPAN._tip`). That width is pre-existing.
+
