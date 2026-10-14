@@ -371,3 +371,39 @@ A room kept there and later holding the controls out of reach is given back the 
 - The notice (228 px tall at 375×667 @200) puts Add 5 / Pause / End below the fold on both builds. No control was on top in view below the strip.
 - The CDP `synthesizeScrollGesture` touch scroll did not move the panel, so no tap was aimed.
 - Redone with a real finger drag in §3d.
+
+## 6. REFERENCE → BEFORE → AFTER (full size)
+
+**REFERENCE:** K01 `kettle/.tmp/pkg/kettle-excellence-integrated/VISUAL_BENCHMARK_LIBRARY/assets/current/01-home.png` (also the maker's copy `…/W3R1/F/REFERENCE-K01-01-home.png`). Opened: Today at 390-class width, "23 days warm" pill, greeting, Chai's bubble, goal card, composer, docked start.
+
+**Coverage.** Paths: maker = `/home/user/wt/w5f/kettle/review/product-excellence/contracts/W3R1/F/shots/{before,after}/<cfg>/`; LI2 = `review/LI2/F/shots/{before,after}/<cfg>/`.
+
+| Config | BEFORE (base) | AFTER (trial src `0acce1a`) |
+|---|---|---|
+| 390×844, 375×667, 844×390 × light/dark × 100/200 % (12) | maker: `today-{blank,newbie,veteran,atRisk,missed-cozy,missed-nocozy}`, `sheet-warm-{atRisk,missed-cozy}`, `end-sheet`, `session-running`, `today-after-end-gone` (11 each) | maker: the same 11 each, on `0acce1a` = the trial's src |
+| 390×844 light @100, 375×667 dark @200 | + LI2 `{today,sheet,end,summary}-{blank,newbie,veteran,atRisk,missed-cozy,missed-nocozy,cozy-earn}` (28 each) | + LI2 the same 28 each, on the trial :5521 |
+| 390×844 dark @200, 375×667 light @200, 844×390 dark @200 | maker only | + LI2 `today-{atRisk,missed-cozy,missed-nocozy,fresh}` |
+| 1440×900 × light/dark × 100/200 % (4) | maker (16 each, incl. `rail-*`) and LI2 `{today,rail}-{blank,newbie,veteran,atRisk,missed-cozy,missed-nocozy}` (12 each) | **LI2 only** (the maker's 1440 AFTER was not captured): `{today,rail}-*` 12 each. The rail is captured on Settings, where it shows at 1440 |
+| The kept band (F-T2-1) | maker `today-after-end-gone` | maker `today-after-end-gone`; LI2 `idle/trial/*-{1-notice,2-band-at-leave,3-band-after-45s-idle,4-band-after-scroll-and-6s-idle,5-after-hidden-emulated,6-after-stats-and-back}.png` (§2) |
+| Session top bar (F-T2-8) | LI2 `topbar2/base-{844x390,667x375}-*-session-running.png` | LI2 `topbar2/trial-*`, prior `topbar/*` (§3) |
+
+Missing: none of the brief's 16 configurations lacks a BEFORE/AFTER pair for Today's states and the 1440 rail. The 1440 AFTER rests on LI2 captures alone; the phone AFTER rests on the maker's captures plus LI2's own in 5 of the 12 phone configurations.
+
+**Opened at full size this session** (besides those in §2, §3 and §5):
+- K01;
+- maker BEFORE/AFTER `844x390-light-t200/today-missed-cozy.png`;
+- maker BEFORE/AFTER `375x667-light-t200/today-blank.png`;
+- LI2 AFTER `1440x900-dark-t200/today-missed-nocozy.png` and `1440x900-light-t200/rail-blank.png`;
+- LI2 BEFORE/AFTER `1440x900-light-t100/rail-missed-cozy.png`.
+
+**What the pairs show:**
+- **Today's layout** is the same as BEFORE in every pair opened: pill row, greeting, Chai and bubble, goal card, composer, docked brew length and start. Only Chai's line and the rail's words differ:
+  - 844×390 @200 missed-cozy: "Afternoon slump? A…" → "Welcome back. A Tea…";
+  - rail: "Brew today to keep it warm." / "Best 23" → "A Tea Cozy kept it warm yesterday." / "Warmest run 23".
+- **K01's layout** (pill row, greeting, bubble, goal card, composer, docked start) is kept.
+- **375×667 @200 Today** (blank, BEFORE and AFTER identical): the greeting shows only "Good" above the docked brew-length control and start. Pre-existing, not F's change.
+- **1440 @200 rail, blank (fresh) person:**
+  - heading "Warm the kettle", "One brew today makes it a warm day.";
+  - foot "**Warmest run 0**" and "Tea Cozy in 7 days". Base: "Best 0" and the same "Tea Cozy in 7 days".
+  - Raw: a warmest run of 0 and a Tea Cozy countdown shown to someone who has never brewed.
+- **No overlap or clipping** of F's new copy in the frames opened. The longest new line, the Tea Cozy note in the sheet, wraps inside its card at 390×844 @100.
