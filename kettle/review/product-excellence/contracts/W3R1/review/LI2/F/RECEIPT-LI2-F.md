@@ -482,3 +482,12 @@ In 6 L2 runs the notice had not yet left in the tap's window (no change seen).
 A tap aimed beforehand lands on the arriving notice or the card in **10 of 15** (one skipped). The 5 on target:
 - 375×667 @100 ×2 and 844×390 @100 ×2, where the push is 0 / −16 px;
 - 390×844 dark @200, where the tap came 2,043 ms before the change the probe saw.
+
+**Base control for 1e** (`probes2/base/probe2-base.json`, 17:38–17:43 UTC, L1/L2, same 16 configurations):
+- **24 of 32 taps landed off target**, at −68 px (390×844 @100, 1440 @100), −70.5 (844×390 @100), −113 (390×844 @200, 1440 @200) and −151.5 (844×390 @200). Every one `why: rest`, the strip closing.
+- They landed on the "Study" chip, the greeting h1 or a status image.
+- The 8 on target are all 375×667, as in §1a.
+
+**Totals with §1a:**
+- **base: 50 of 66 L1/L2 taps off target;**
+- **trial: 0 of 64.**
