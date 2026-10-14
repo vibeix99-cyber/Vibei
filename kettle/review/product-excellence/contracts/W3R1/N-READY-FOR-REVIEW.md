@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | Maker | N (Opus). Branch `pe/w3-chai-night`, worktree `/home/user/wt/w5n` |
-| Revision | __HEAD__ (packet commit); code `121f011` + spec `43b10f2`. `kettle/src` tree __SRC__ |
+| Revision | the commit that adds this packet (the head of `pe/w3-chai-night`). Code `121f011`, spec `43b10f2`, comment `76144b4`. `kettle/src` tree `969977475e94a1dde88f8f69c034228939d7a7c6` (the packet commit does not change it) |
 | Base / control | `4d36939` (kettle/src `5cd9a44`): dev :5478 (debug), preview :5488 (`dist-w4final`, built from `/home/user/wt/w4-final` at `4d36939`) |
 | After | dev :5504 (restarted after the code commit; served `palette.ts`, `chai.ts`, `chaiModel.ts`, `Engine.ts` equal the committed blobs, and `verify.sh` VERIFIED), preview :5514 (`dist-w5n`, built from `121f011`) |
 | Evidence | `contracts/W3R1/N/` (`measure/`, `perf/`, `unlock/`, `runs/`, `scripts/`) |
@@ -96,7 +96,18 @@ The normal frame's raw RGBA is compared BEFORE vs AFTER at day: every pixel and 
 - **Counters:** `renderer.info` and the JS heap after 2× GC.
 - **Servers:** previews :5488 (base) vs :5514 (after).
 
-__PERFTABLE__
+**Set 1, base first in each round, 11:36–11:40** (`N/perf/perf-low-390x844-night.json`, log `perf-run.log`). The machine was contended: load 13–15, against LRC's ≈ 4, so absolute times are about 2× the LRC receipt's.
+
+| variant | fur fill read | frame median per run (ms) | median of medians | means | p90 | draw calls | triangles | geometries | textures | programs | JS heap MB |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| base `4d36939` (:5488) | 0.16 | 194, 201, 200 | 200 | 206, 219, 205 | 264, 282, 252 | 110 | 75,007 | 113 | 10 | 23 | 11.24, 11.25, 11.25 |
+| after (:5514) | 0.512 | 204, 209, 238 | 209 | 206, 220, 248 | 281, 305, 332 | 110 | 75,007 | 113 | 10 | 23 | 11.23, 11.22, 11.25 |
+
+**What is identical:** draw calls, triangles, geometries, textures, programs, canvas (442×395) and heap. This is expected: the change sets one existing uniform's value.
+
+**Frame time:** after reads +10 / +8 / +38 ms per round. In set 1 it always ran second in its round on a machine at load 13–15, and two of the three rounds sit within each side's run-to-run spread (base 194–201).
+- The shader, program and per-pixel work are the same, so a value-only uniform change cannot add GPU or CPU work. An ordering or contention effect is the likely reading, but this set alone does not prove it.
+- **Set 2, after first:** queued at 11:41 but **never got a browser slot** before the 12:00 stop, so it was withdrawn (open item N-8).
 
 ## 5. Captures (full size)
 
@@ -118,7 +129,14 @@ The pairs to open first:
 
 ## 6. Suites
 
-__SUITES__
+| Suite | Result | Log |
+|---|---|---|
+| `npx tsc --noEmit` | exit 0 | `N/runs/tsc.txt` |
+| `npx vitest run` (all) | 30 files, **293/293**: the base's 290 (`4d36939`, counted in its worktree) plus 3 new (1 palette, 2 for the model and procedural `setFill`) | `N/runs/vitest.txt` |
+| scene unit tests (`src/scene`) | 3 files, 17/17 | in the above |
+| chromium `chai3d.spec` + `w2-room.spec` on :5504, run 1 (11:01, load ≈ 12) | **16/17**. The one failure is `w2-room` "3D failure (WebGL context lost)": `page.screenshot` timed out at 60 s. This is C-7, the pre-existing flake under load (CHECKER-W2R2-C §6, 1/3 on both builds); it is not in the fill's path | `N/runs/chai3d-w2room-run1.txt` |
+| chromium `chai3d.spec` + `w2-room.spec` on :5504, run 2 (11:30) | **17/17** (6.2 min), including the new "fur self-fill follows the hour" | `N/runs/chai3d-w2room-run2.txt` |
+| full chromium suite | **not run** (slot time) | – |
 
 ## 7. Preserve list
 
@@ -129,7 +147,18 @@ __SUITES__
 
 ## 8. Open items
 
-__OPEN__
+| # | Item | Class | Note |
+|---|---|---|---|
+| N-1 | The AFTER separation numbers come from the shipped build with the fill applied through `chai.setFill(k)` at the shipped values (§2), not from a URL-only pass. The URL path's values are proven by `chai3d.spec` (0.16 / 0.448 / 0.512), and the k = 1 rows equal BEFORE exactly | **FOLLOW-UP** (evidence) | Re-run `scripts/sep.mjs --base <after>` for the full grid once slots allow. The first try was killed at the 30-minute background limit after one config (high/day, used in §3) |
+| N-2 | Dark theme (exposure 0.86), 390×844 phone captures and the unlock pair at night were **not captured**. Slot time ran out with three slots for four makers at load ≈ 12, and one SwiftShader high-tier context took ≈ 3 min | **FOLLOW-UP** (evidence) | Commands are in `scripts/chain3.sh`. Unlock (PRESERVE 8): the close-up frames Chai out of view (C, LC check 6), so the fill cannot reach it; this is unproven by capture this round |
+| N-3 | Eyes reach 84–87 % of the day's contrast ratio, not 100 %. The nose matches the day | **ACCEPTED** (art call, for Vibei) | A full match needs the fur at day brightness in a night room (k ≈ 4), which flattens the lamp's modelling. The values are two numbers in `palette.ts` |
+| N-4 | The procedural Chai (first frame and fallback) gets the same fill, so a night swap-in has no jump. Its numbers were not measured | FOLLOW-UP (minor) | Unit-tested (`setFill` scales fur 0.16 and snout 0.14) |
+| N-5 | The record-player platter angle accumulates real `dt` while the loop runs (`items.ts:514`), so frames from a probe that stops the loop are not byte-stable there | **ACCEPTED** (probe artefact, pre-existing) | Not a product defect; noted for future pixel compares |
+| N-6 | C-7 `w2-room` context-loss screenshot timeout under load | FOLLOW-UP (pre-existing) | Run 1 only; run 2 passed |
+| N-8 | Low-tier frame time: set 1 reads after +8 to +38 ms (median of medians 209 vs 200), with after always run second at load 13–15. Every `renderer.info` counter and the heap are identical. The order-swapped set 2 did not run | **UNPROVEN** (needs the order-swapped set) | `scripts/perf.mjs --first after`; one value-only uniform cannot add work, but this is not yet shown by measurement |
+| N-7 | Preview :5514 is built from `121f011`. `76144b4` changes only a comment in `palette.ts` | – | Same code |
+
+No BLOCKS known.
 
 ## 9. Cross-owner requests
 
