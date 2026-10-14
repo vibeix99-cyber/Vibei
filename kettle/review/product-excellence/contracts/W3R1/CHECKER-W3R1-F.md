@@ -319,3 +319,53 @@ What stays as before: the band itself, the next notice drawn in the room, `ENTRY
 **C-1.** `whistle.spec.ts:203` now reads `/If Kettle is closed or your phone has paused it by then, no nudge comes\./`. No other line changed.
 
 **`press()` (F-R4).** After each wheel it waits until the element's top and `scrollY` are unchanged across two frames (at most 1.5 s), before the existing on-top check. Nothing is removed or loosened.
+
+### ◆2 · F-D1, the band's lifetime, on the final code (:5528)
+I ran `w3-notices.spec.ts` + `w3-notices-idle.spec.ts` `--repeat-each=2` from the fix trial's worktree, through the slot gate (`fix/w3-notices-idle-x2.log`): **42/42 passed.** The band-lifetime spec asserts §6's rule directly (`w3-notices-idle.spec.ts:147–159`), at 390×844 light @100, 390×844 dark @200 reduced, 1440 light @100 and 1440 dark @200 reduced, for (a) no input, (b) scroll then idle and (c) pointer held. Per run it asserts:
+- exactly one collapse, and no other strip commit between the leave and it;
+- the pointer up at the collapse;
+- ≥ 1200 ms since the last input of any kind, and ≥ 1200 ms after the leave;
+- ≤ 4000 ms after the later of the two;
+- the room kept during the scroll and while the pointer is down;
+- the same screen (`#/`).
+
+Together with `w3-notices`' pointer-held test (1440 @100) and the scroll test (390×844 @200), that is 15 cases × 2 on the merged tree. The maker's own numbers (collapse 1.25–1.33 s; one commit; visible move = the band, once) agree.
+
+**The touch fling, my run** (`fix/idle3-above.log`, `fix/idle3/idle3-LEADFIX-above-390x844.json`; Lane I2's `LI2-idle3.mjs`, 390×844 light @200, a 600 px finger drag released into momentum), both reps:
+- the notice whose time ran out mid-fling leaves **keeping its 153.5 px room** (`why: above`, 482 / 514 ms after `pointercancel`). The frames around it move only by the fling's own 12 px per frame;
+- the band goes **1326 / 1359 ms after the last input** (`touchend`), in one frame with the page scrolled −153 px: **visible move −0.5 px** (rounding);
+- no band commit while the page was still scrolling.
+
+On the round-1 trial and on base, the same probe showed everything in view jump 153.5 px mid-fling (Lane I2 §2g, F-R2), so F-R2 is now fixed as well.
+
+**PASS.**
+
+### ◆3 · F-T2-1 kept, on the final code
+I ran Lane I2's `LI2-probe2.mjs` (L1, L2) against :5528 (`fix/probes2/probe2-LEADFIX.json`, `fix/probes2.log`): 16 configurations (390×844, 375×667, 844×390, 1440×900 × @100/@200 × light/dark, reduced motion on and off), pointerdown and click. **64 events, 0 off target, 0 px moved** (max move in the window 0). Every leave was `why: rest` with its room kept (68 / 113 / 56.5 / 137.5 px). In 3 L2 runs (1440) the notice had not yet left in the tap's window.
+
+This was asked for because the maker's 0/64 ran on `1130a13`, before the two above-view commits. It now holds on the final code. **PASS.**
+
+### ◆5 · F-D2
+The base's top bar is restored (code check above). The maker's `LI2-topbar2.mjs` on its fix and base (`F/fix/topbar2/`) shows the controls at the base's 352 px, visible 38.5 / 23.5 px. With the CSS byte-identical to `4d36939`, nothing else is possible. **PASS** (closed by the first alternative). F-T2-8 is a FOLLOW-UP again.
+
+### ◆6 · F-D3
+`w3-notices` "the status bar warm-days button is named …" passed in both of my runs, asserting with `toHaveAccessibleName`:
+- "23 days warm. Show details";
+- "5 days warm, today not brewed yet. Show details";
+- "1 day warm. Show details".
+
+**PASS.**
+
+### ◆7 · C-1
+`whistle.spec.ts` on :5528 (integration with G + F's fix; `fix/whistle.log`): **8/8 passed**, including `:183` / line 203 on G's sentence. **PASS.** C-1 is closed, and `whistle.spec.ts` is green on the tree that will merge.
+
+### X-3 (cross-effects) · `w3-notices` ×2
+42/42 above, including "the room a gone notice keeps stays while the page is scrolled, and goes on the same screen once idle (390×844, 200 %)" twice. **Closed.**
+
+### X-8 (cross-effects) · the "Paused" pill at 375×667
+`lead-x8.mjs`, the same steps as Lane R's capture state 04 (375×667@2 light, veteran, a brew, +12.5 min, pause), 3 runs each, base :5478 against the fix :5528 (`fix/x8/`), measured from the saved frames' pixels:
+- the pill's text rows are **702–721 device px on both builds in all 6 runs**;
+- the pill box has **0 differing pixels**, base against fix, in each run pair;
+- the controls' tops are 502.7 css px on both.
+
+Lane R's 4 px (703–721 → 711–730) does not reproduce, so it was a capture-timing artifact. **ACCEPTED (not a defect); closed.**
