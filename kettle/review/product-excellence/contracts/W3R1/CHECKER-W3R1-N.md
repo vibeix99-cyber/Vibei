@@ -147,6 +147,19 @@ Two related things for Vibei to look at while deciding (§6, O-1 and O-2):
 - the yuzu now reads darker than Chai's head at night;
 - in the dark theme, which is dusk or night all day under auto time, the nose stays just under 3:1.
 
+**For Vibei: the dark-theme evening/night phone pairs** (390×844, base left, trial right; paths under `contracts/W3R1/`):
+- the Nook as seen, default tier: `review/LEAD/N/pairs/390x844-dark-default-dusk-BASE_TRIAL.png` and `review/LEAD/N/pairs/390x844-dark-default-night-BASE_TRIAL.png` (2× nearest: the same names with `-x2`);
+- Chai's face close up, low tier: `review/LR/N/captures/montage-face/390x844-dark-low-dusk-close-face_BASE-left_TRIAL-right.png` and `review/LR/N/captures/montage-face/390x844-dark-low-night-close-face_BASE-left_TRIAL-right.png`.
+
+I opened all four at full size. On the base, the eyes and the nose's lower edge sink into a dark brown face. On the trial they are distinct black marks on a mid-tan face, and the mouth and brow marks read again. The trial Chai also reads paler and flatter against the warm cushion and rug, which is the trade-off Vibei is weighing.
+
+**LEAD-5 on Lane R's dark-theme phone nose (2.80 dusk, 2.91 night, under 3:1): it does not change the verdict.** It stays under vb's call, for three reasons:
+1. **The bar the brief sets is relative.** "As clearly as in the day renders" means the same theme's day. The dark theme's own day nose is 3.01 under the approved `DARK_DIM` 0.86, so 2.80 and 2.91 are 93 % and 97 % of it. That is the same share as in the light theme.
+2. **No absolute contrast rule binds a feature of the mascot art.** WCAG 1.4.11's 3:1 is for UI controls and graphics a person needs to understand content. Chai's nose is neither; nothing is conveyed only through it.
+3. **The residual rule.** On the base the dark nose was 1.80 / 1.67. The trial raises it by about 1.1 to 1.2. It is improved, not introduced or worsened, so it cannot BLOCK.
+
+Pushing dark to 3:1 would need a dark-only fill (a new per-theme value). That would make Chai paler still in a frame where he already reads paler than the room. That is art direction, so it is vb's call, and the item stays O-2 (ACCEPTED, for Vibei).
+
 ## 5. Defects
 
 **None.** Nothing is introduced or worsened by this change in a way that is a defect, so nothing BLOCKS. The narrow transient-artifact exception is not needed for any item.
@@ -155,9 +168,9 @@ Two related things for Vibei to look at while deciding (§6, O-1 and O-2):
 
 | # | Item | My check | Class | Owner |
 |---|---|---|---|---|
-| N-3 | Eyes at 84–88 % of the day's ratio, by design | §2, §4 | **ACCEPTED** (meets the request in substance). **Vibei's art call** whether to go to parity | Vibei |
+| N-3 | Eyes at 84–88 % of the day's ratio, by design | §2, §4 | **ACCEPTED** (meets the request in substance). **vb's call** whether to go to parity (`VB-DECISIONS-RESUME.md` §1) | Vibei |
 | O-1 | **The yuzu is not lifted, so at night it now reads darker than Chai's head.** Sampled L* on the close view:<br>• day: yuzu 61.9, head fur 60.2;<br>• night base: yuzu 23.4, head fur 29.8;<br>• night trial: yuzu 23.4, head fur 47.8.<br>The yuzu's colour and shape are as approved and drawn exactly as on the base. Its silhouette reads more strongly against the lighter head. The brief protects day colours (identical). Visible in `N/tune/…-night-k3.2.png` | — | **ACCEPTED** (not a defect). For Vibei's eye. If wanted, a small follow-up gives the yuzu the same per-hour fill (it is a separate, non-unique material, so on the low tier it would need its own unique copy) | Vibei / scene |
-| O-2 | **Dark theme: the nose stays under 3:1** (dusk 2.80, night 2.91; eyes 3.39 / 3.51). The dark theme's own day is 3.01 / 4.01 under `DARK_DIM` 0.86. As a share of the same theme's day it matches light (eyes 84–88 %, nose 93–97 %), and the base was 1.67–1.80. Dark-theme users see dusk or night all day (`autoTime`) | Lane R §2; mine at 390 and 1440 | **ACCEPTED** (not a defect; the dim is the approved dark theme). For Vibei if dark should get its own fill | Vibei |
+| O-2 | **Dark theme: the nose stays under 3:1** (dusk 2.80, night 2.91; eyes 3.39 / 3.51). The dark theme's own day is 3.01 / 4.01 under `DARK_DIM` 0.86. As a share of the same theme's day it matches light (eyes 84–88 %, nose 93–97 %), and the base was 1.67–1.80. Dark-theme users see dusk or night all day (`autoTime`) | Lane R §2; mine at 390 and 1440 | **ACCEPTED** (not a defect; the dim is the approved dark theme). Under vb's call if dark should get its own fill (LEAD-5's reasoning in §4) | Vibei |
 | N-8 | **Low-tier frame time.** Counters identical in all 18 runs (maker 6, Lane R 12): calls 110, triangles 75,007, geometries 113, textures 10, programs 23, heap 11.1–11.3 MB.<br>Paired same-round differences, trial − base: maker (base first) +10, +8, +38; Lane R A (base first) −35, +22, +67; Lane R B (trial first) −20, +65, +8.<br>Within-build spread is up to 57 ms. Load ran 10–18 on 4 CPUs | Raw JSON checked (`LR/N/perf/*.json`, `N/perf/*.json`) | **ACCEPTED.** No cost by construction (one uniform's value; same program, draw calls and fragment arithmetic), and no consistent sign across orders. An equal-load or base-vs-base timing control was not run (E-1) | — |
 | C-7 | `w2-room.spec.ts:144` "3D failure (WebGL context lost)" `page.screenshot` timeout under load, run 1 only. Lane R's and the maker's run 1 both fail it; both run 2s pass, 17/17 | Pre-existing (CHECKER-W2R2-C §6: 1/3 on both builds). Not in the fill's path | **FOLLOW-UP** (pre-existing) | Scene tests |
 | N-5 | Record-player platter angle accumulates real `dt` even under reduced motion (`items.ts:515`), so probes that stop the loop after it ran are not byte-stable there | Seen in mine (219 px) and the maker's (253 px); absent on Lane R's dt = 0 path | **ACCEPTED** (probe artefact, pre-existing) | — |
