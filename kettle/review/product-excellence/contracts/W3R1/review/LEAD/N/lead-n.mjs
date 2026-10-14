@@ -1,3 +1,16 @@
+// LEAD-4 · W3R1 N: my own frames of Chai's face, base vs trial, as people see the Nook (default camera), plus the
+// separation numbers with the maker's MEASURE function (copied verbatim from W3R1/N/scripts/sep.mjs, which I read),
+// loaded through the URL path only (no setFill injection). One Chromium launch, one fresh context per config.
+//   node lead-n.mjs --base http://127.0.0.1:5524 --label TRIAL --out <dir> --cfgs 390x844@3:light:default:day,...
+// cfg = <w>x<h>@<dpr>:<theme>:<tier high|low|default>:<day|dusk|night>[:close]
+import { chromium } from '/home/user/wt/w5tr-n/kettle/node_modules/playwright/index.mjs';
+import { mkdirSync, writeFileSync } from 'node:fs';
+const args = Object.fromEntries(process.argv.slice(2).reduce((a, x, i, all) => (x.startsWith('--') && a.push([x.slice(2), all[i + 1]]), a), []));
+const AT = '2026-10-12T07:40:00Z';
+mkdirSync(args.out, { recursive: true });
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const b = await chromium.launch({ args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] });
+const out = { label: args.label, base: args.base, clock: AT, startedAt: new Date().toISOString(), runs: [] };
 /** In-page: normal + id frame, regions and separation. `close` moves the camera in on Chai (C's art camera). */
 const MEASURE = async ({ close, k }) => {
   const e = window.__nook;
@@ -135,3 +148,71 @@ const MEASURE = async ({ close, k }) => {
   };
 };
 
+
+const faceClip = (scale) => {
+  const e = window.__nook;
+  const r = e.canvas.getBoundingClientRect();
+  const foot = e.chai.root.position.clone();
+  const top = foot.clone(); top.y += 1.15;
+  const mid = foot.clone(); mid.y += 0.62;
+  const P = (v) => { const q = v.clone().project(e.camera); return [r.left + ((q.x + 1) / 2) * r.width, r.top + ((1 - q.y) / 2) * r.height]; };
+  const [, fy] = P(foot), [, ty] = P(top), [cx, cy] = P(mid);
+  const s = Math.max(40, Math.abs(fy - ty) * scale);
+  const x = Math.max(0, cx - s / 2), y = Math.max(0, cy - s / 2);
+  return { x, y, width: Math.min(s, innerWidth - x), height: Math.min(s, innerHeight - y), chaiPx: Math.abs(fy - ty) };
+};
+for (const cfg of args.cfgs.split(',')) {
+  const [vp, theme, tier, time, close] = cfg.split(':');
+  const [, w, h, dpr] = vp.match(/^(\d+)x(\d+)@(\d+)$/).map(Number);
+  const mobile = w < 900;
+  const name = `${w}x${h}-${theme}-${tier}-${time}`;
+  const rec = { name, cfg, errors: [] };
+  const ctx = await b.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: dpr, isMobile: mobile && w < h, hasTouch: mobile, colorScheme: theme, timezoneId: 'UTC', locale: 'en-GB', serviceWorkers: 'block' });
+  const p = await ctx.newPage();
+  p.on('pageerror', (er) => rec.errors.push(er.message.slice(0, 200)));
+  await p.clock.install({ time: Date.parse(AT) });
+  await p.clock.resume();
+  const t0 = Date.now();
+  try {
+    const tq = tier === 'default' ? '' : `&nookq=${tier}`;
+    await p.goto(`${args.base}/?debug&seed=veteran&theme=${theme}${tq}&nooktime=${time}&nookweather=clear#/nook`);
+    await p.waitForSelector('section[aria-label="The room"] [data-scene-ready="true"]', { timeout: 150_000 });
+    await p.waitForFunction(() => window.__nook?.chaiKind === 'model', null, { timeout: 60_000 });
+    await sleep(2500);
+    rec.fill = await p.evaluate(() => { const s = new Set(); window.__nook.chai.root.traverse((o) => { if (o.isMesh && o.material?.name === 'chai_fur') s.add(+o.material.emissiveIntensity.toFixed(4)); }); return [...s]; });
+    rec.exposure = await p.evaluate(() => window.__nook.renderer.toneMappingExposure);
+    const canvasFilter = await p.evaluate(() => { const c = window.__nook.canvas; return getComputedStyle(c).filter + ' | ' + getComputedStyle(c.parentElement).filter; });
+    rec.canvasFilter = canvasFilter;
+    const nook = await p.evaluate(MEASURE, { close: false });
+    delete nook.b64; delete nook.dbg;
+    await p.screenshot({ path: `${args.out}/${name}-nook.png`, timeout: 240_000 });
+    const clip = await p.evaluate(faceClip, 0.75);
+    rec.chaiPx = clip.chaiPx; delete clip.chaiPx;
+    await p.screenshot({ path: `${args.out}/${name}-face.png`, clip, timeout: 240_000 });
+    let closeM = null;
+    if (close) {
+      closeM = await p.evaluate(MEASURE, { close: true });
+      delete closeM.b64; delete closeM.dbg;
+      const c2 = await p.evaluate(() => {
+        const e = window.__nook; const r = e.canvas.getBoundingClientRect();
+        const v = e.chai.root.position.clone(); v.y += 0.55; v.project(e.camera);
+        const cx = r.left + ((v.x + 1) / 2) * r.width, cy = r.top + ((1 - v.y) / 2) * r.height;
+        const s = Math.min(r.width, r.height) * 0.62;
+        return { x: Math.max(r.left, cx - s / 2), y: Math.max(r.top, cy - s / 2), width: s, height: s };
+      });
+      await p.screenshot({ path: `${args.out}/${name}-close.png`, clip: c2, timeout: 240_000 });
+    }
+    Object.assign(rec, { nook, close: closeM, ms: Date.now() - t0 });
+    const s = (m) => (m ? `eyes ${m.eyes.contrast}/${m.eyes.dL} nose ${m.nose.contrast}/${m.nose.dL} ringL ${m.eyes.ring.L} ${m.eyes.ring.meanHex} ${m.quality} ${m.chaiKind}` : '-');
+    console.log(new Date().toISOString(), args.label, name, 'fill', rec.fill, 'exp', rec.exposure, 'nook:', s(nook), 'close:', s(closeM), rec.errors.join('|'));
+  } catch (er) {
+    rec.errors.push('SCRIPT: ' + er.message.slice(0, 300));
+    console.log(name, 'FAILED', er.message.slice(0, 200));
+  }
+  out.runs.push(rec);
+  writeFileSync(`${args.out}/lead-${args.label}.json`, JSON.stringify(out, null, 1));
+  await ctx.close();
+}
+out.endedAt = new Date().toISOString();
+writeFileSync(`${args.out}/lead-${args.label}.json`, JSON.stringify(out, null, 1));
+await b.close();
