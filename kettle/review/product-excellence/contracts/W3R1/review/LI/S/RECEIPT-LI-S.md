@@ -540,7 +540,10 @@ So the 408 px layout viewport appeared only on the first, cold load of the 17:36
 - **Focus after Delete by keyboard**: Undo in 14 of 16 trial configs, `<main>` in 2 (390×844 light @200, 1440 light @200). Not re-run.
 - **§2b sheets** at 375×667 @200 and 1440 only, as the brief asked. 390×844 and 844×390 are not covered for the non-Stats sheets.
   - Probe errors: TRIAL 1440 light @100 `today-rhythm`, 1440 dark @200 `today-level`/`today-rhythm`; BASE 375 dark @200 and 1440 dark @200 `settings-reset`, 1440 dark @200 `today-rhythm`.
-  - TRIAL 1440 dark @200 was still running its last 3 sheets (`stats-delete-over-edit`, `focus-ambience`, `focus-end`) when I wrote this; see `sheets/LI-all-trial.log` for whatever it recorded.
+  - TRIAL 1440 dark @200 finished after §2b's table was written (18:06). Its last three rows are in `sheets/LI-all-trial.log`, not in the table:
+    - `stats-delete-over-edit`: see the log line;
+    - `focus-ambience`: all reachable, footer 728–824, trap ✓, Esc/outside → focus "Ambience: Rain. Change";
+    - `focus-end`: all reachable, footer 620–780, trap ✓, Esc/outside → focus "End session".
   - The × position after scrolling a tight sheet was not measured.
 - **Late completions in a browser**: only the after-midnight brew (§3 case A). "Ended late" (app closed past the end) and DST were not run by me; they are cited from code, docs and unit tests.
 - **A non-whole-minute brew** was not run by me. The maker's spec "12:40" passed in Lane R's 17:25 rerun.
