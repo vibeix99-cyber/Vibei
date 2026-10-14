@@ -1,0 +1,25 @@
+
+## 1. Control first: the measurement detects T2-D1 on `490ca97`, then the fix in the same session
+
+`chainfix.sh` P1, 03:42:28–03:44:57 UTC: the same probe, same configurations, task day, cases `none`, `adebug` (persistent, pending as the summary arrives) and `c` (timed, raised 1.5 s after arrival); `490ca97` (:5476) first, then the fix (:5477). JSON: `fix2/probes/sum-490ca97/`, `fix2/probes/sum-fix-ctl/`.
+
+CTLTABLE
+
+- `490ca97`: with a notice, P's sheet sits **74.5 px lower** (375×667 @100, 390×844 @100) and **208 px** (`adebug`) / **155.5 px** (`c`) lower at 375×667 @200; the footer row count changes (cut / under 2/6 → 1/8; 1/10 → 0/12); at 375×667 @200 the notice is the hit target at Chai's face and at the kettle gauge (34 frames with the notice over a figure). For `c` (raised after arrival) the sheet moves during the run (top 285.5 → 441).
+- Fix: 0.0 px at all three, footer rows unchanged, 0 frames with a notice drawn on the summary.
+- Full-size frames of the same moment: `fix2/shots/5476/375x667-light-t200-task-adebug-summary.png` (the strip over Chai's face, the sheet's heading pushed under the footer: only "Tea time · 5 min" and "Skip break" visible below the scene) and `fix2/shots/5477/375x667-light-t200-task-adebug-summary.png` (no notice; "25 minutes brewed" in place).
+
+## 2. The summary sheet with a queued notice vs the no-notice run, fix :5477
+
+`chainfix.sh` P1 matrix, 03:47:15–04:04:43 UTC: 20 configurations (375×667, 390×844, 844×390, 667×375 and 1440×900, each at 100 % and 200 %, light and dark) × task day and big day × `none`, `adebug`, `b`, `c` = **160 runs**, plus `areal` at 4 configurations (§3). JSON: `fix2/probes/sum-fix/<cfg>-<day>-<case>.json`.
+
+Totals over the 124 runs with a notice (each against its own configuration and day without one):
+- **max |Δ| of the settled sheet top = 0.0 px, sheet bottom = 0.0 px, footer top = 0.0 px** (124 of 124);
+- **frames with a notice drawn on the summary: 0** (all frames from arrival, 124 runs); frames with a notice box over the sheet, the footer, Chai's face or the gauge: 0;
+- rows cut by the footer / wholly under it: identical to the no-notice run in 124 of 124;
+- Chai's face centre and the gauge centre: the same top element as in the no-notice run in 124 of 124 (at these sizes it is the summary layer in both: P's transparent scroll layer reaches over the stage; the sheet's own box overlaps the face or gauge in 0 of 4,450 settled frames);
+- `__kettle.notices()` on the summary, +4.5 s: one notice in the queue and `strip: null` in 120 of 120 (`adebug`: `shown: 'lt-persist'`; `b`: `shown: null`; `c`: `shown: null`, its time left **4,000 ms of 4,000**, i.e. no time spent on the summary).
+
+MATRIXTABLE
+
+("summary/summary" = the element on top at Chai's face centre / the gauge centre belongs to the summary's region, in the no-notice run and with notices alike.)
