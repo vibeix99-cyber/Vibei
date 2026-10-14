@@ -9,8 +9,8 @@
  *  1. Mark done is measured every frame from Today's first moments until well after the notice has gone: it never
  *     moves. A real tap at the place Mark done was seen before the notice went then lands on Mark done (its inline
  *     Undo is drawn in its place).
- *  2. The room is given back only at a safe moment: scrolled wholly above the view, it goes in the same frame as the
- *     page is kept still (nothing in view moves); on the next screen there is no room at all.
+ *  2. The room stays while the page is scrolled over it and back (nothing moves by layout); the next screen starts
+ *     with no room at all.
  *
  *   KETTLE_PORT=5501 npx playwright test tests/w3-notices.spec.ts --project=chromium
  */
@@ -149,7 +149,7 @@ for (const c of CFGS) {
   });
 }
 
-test('the room a gone notice keeps is given back only where it moves nothing in view: scrolled above the view, or on the next screen (390×844, 200 %)', async ({ browser, baseURL }) => {
+test('the room a gone notice keeps stays while the page is scrolled over it and back: nothing in view moves (390×844, 200 %)', async ({ browser, baseURL }) => {
   test.setTimeout(120_000);
   const c: Cfg = { w: 390, h: 844, pct: 200, reduced: false, theme: 'light' };
   const { ctx, page, touch } = await open(browser, c);
@@ -161,43 +161,39 @@ test('the room a gone notice keeps is given back only where it moves nothing in 
   const room = await strip.evaluate((e) => e.getBoundingClientRect().height);
   expect(room).toBeGreaterThan(40);
   expect(await strip.evaluate((e) => e.textContent), 'nothing in the room').toBe('');
-  // Scroll (real touch drag) until the room is wholly above the view: it goes, and the page is kept still.
-  const cdp = await ctx.newCDPSession(page);
+  // Watch: anything in the page moving by layout (its page position changing), from here to the end.
   await page.evaluate(() => {
     const W = window as any;
-    W.__ref = { hits: [] as number[], stop: false };
-  });
-  for (let i = 0; i < 12; i++) {
-    const r = await page.evaluate(() => document.querySelector('[data-notice-strip]')!.getBoundingClientRect().bottom);
-    if (r < -20) break;
-    await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: 200, y: 600 }] });
-    for (let k = 1; k <= 6; k++) await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: 200, y: 600 - k * 25 }] });
-    await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
-    await page.waitForTimeout(250);
-  }
-  // From now on, nothing else touches the page: the next safe check gives the room back. What is in view must not move.
-  const watch = await page.evaluate(() => {
-    const W = window as any;
-    const el = document.elementFromPoint(innerWidth / 2, innerHeight / 2)!;
-    const top0 = el.getBoundingClientRect().top;
-    W.__still = { el, top0, moved: [] as number[], stop: false };
+    const el = document.querySelector('button[aria-label^="Mark “Chapter 3 notes” done"]')!;
+    W.__lay = { el, p0: el.getBoundingClientRect().top + scrollY, moved: [] as number[], stop: false };
     const f = () => {
-      if (W.__still.stop) return;
-      const d = W.__still.el.getBoundingClientRect().top - top0;
-      if (Math.abs(d) > 0.5) W.__still.moved.push(Math.round(d));
+      if (W.__lay.stop) return;
+      const d = W.__lay.el.getBoundingClientRect().top + scrollY - W.__lay.p0;
+      if (Math.abs(d) > 0.5) W.__lay.moved.push(Math.round(d));
       requestAnimationFrame(f);
     };
     requestAnimationFrame(f);
-    return { what: `${el.tagName}.${String(el.className).slice(0, 30)}`, top0 };
   });
-  await expect.poll(() => page.evaluate(() => (window as any).__kettle.notices().room), { timeout: 10_000 }).toBe(0);
-  await page.waitForTimeout(400);
-  const still = await page.evaluate(() => { const W = window as any; W.__still.stop = true; return W.__still.moved as number[]; });
-  const why = await page.evaluate(() => (window as any).__kettle.notices().why);
-  test.info().annotations.push({ type: 'facts', description: JSON.stringify({ room, watch, still, why }) });
-  expect(why, 'given back because the strip was above the view').toBe('above');
-  expect(still, 'what was in view did not move as the room went').toEqual([]);
-  expect(await page.locator('[data-notice-strip][data-room]').count()).toBe(0);
+  // Real touch drags: down until the room is wholly above the view, rest there, then back to the top.
+  const cdp = await ctx.newCDPSession(page);
+  const drag = async (dy: number) => {
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: 200, y: 420 }] });
+    for (let k = 1; k <= 6; k++) await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: 200, y: 420 - (k * dy) / 6 }] });
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+    await page.waitForTimeout(250);
+  };
+  for (let i = 0; i < 12; i++) {
+    const b = await page.evaluate(() => document.querySelector('[data-notice-strip]')!.getBoundingClientRect().bottom);
+    if (b < -20) break;
+    await drag(150);
+  }
+  await page.waitForTimeout(3000);
+  expect(await page.evaluate(() => (window as any).__kettle.notices().room), 'still kept, scrolled above the view at rest').toBeGreaterThan(40);
+  for (let i = 0; i < 12 && (await page.evaluate(() => scrollY)) > 0; i++) await drag(-200);
+  await page.waitForTimeout(800);
+  const moved = await page.evaluate(() => { const W = window as any; W.__lay.stop = true; return W.__lay.moved as number[]; });
+  test.info().annotations.push({ type: 'facts', description: JSON.stringify({ room, moved: moved.slice(0, 5) }) });
+  expect(moved, 'nothing moved by layout while the page was scrolled over the room and back').toEqual([]);
   await ctx.close();
 });
 

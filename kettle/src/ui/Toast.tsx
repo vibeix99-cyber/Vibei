@@ -20,8 +20,8 @@
  *  - **A notice leaving never moves the page** (W3R1, F-T2-1): when a notice goes at rest, or as the answer to a tap,
  *    its face goes but the strip **keeps its room** (an empty band of the same height, `Ctl.room`), so nothing under a
  *    finger that is about to land, or has just landed, moves. The next notice is drawn in that room. The room is given
- *    back only when that moves nothing the person could be aiming at: a new screen (or its first `ENTRY_MS`), the strip
- *    wholly above the view at rest (the page kept still in the same frame), or the page hidden. One exception: the
+ *    back only when that moves nothing the person could be aiming at: a new screen (or its first `ENTRY_MS`) or the page
+ *    hidden. (Not when scrolled above the view: a scroll still on its way would undo the compensation.) One exception: the
  *    session panel (`reach`), where a kept room would hold the countdown's or Break's over's controls below the panel's
  *    edge (F-T2-2), gives it back at rest, as every strip did before this round.
  *  - **A route change drops nothing**: the shown notice and the queue move to the next screen's strip (its first
@@ -288,21 +288,18 @@ function decide(): void {
   if ((next?.id ?? null) === (ctl.item?.id ?? null)) {
     if (next && next !== ctl.item) commit({ item: next, why: 'update' }); // the same notice, updated (same id)
     else if (ctl.room > 0 && !ctl.item) {
-      // The room a gone notice left: given back only when that moves nothing in view, and never mid-scroll (a scroll
-      // still animating would undo the page being kept still).
+      // The room a gone notice left: given back only when that moves nothing the person could be aiming at. Not when
+      // it is scrolled above the view: a scroll still on its way (a wheel or fling the page has not been handed yet)
+      // would undo the page being kept still, and what is in view would move (W3R1: 60 px at 1440 @200).
       if (now - ctl.at < ENTRY_MS) commit({ room: 0, hold: holdTop(el), why: 'entry' });
       else if (hidden) commit({ room: 0, hold: null, why: 'hidden' });
-      else if (atRest(now) && !inputPending()) {
-        const above = aboveView(el);
-        // A screen whose controls the room holds out of reach (the session panel, F-T2-2) gives it back at rest.
-        const reach = !above && strip.reach && holdsOutOfReach(el);
-        if (above || reach) {
-          if (!inRestFrame) {
-            confirmRestInFrame();
-            return;
-          }
-          commit({ room: 0, hold: above ? holdView(el) : holdTop(el), why: above ? 'above' : 'rest' });
+      else if (strip.reach && atRest(now) && !inputPending() && !aboveView(el) && holdsOutOfReach(el)) {
+        // A panel whose controls the room holds out of reach (the session panel, F-T2-2) gives it back at rest.
+        if (!inRestFrame) {
+          confirmRestInFrame();
+          return;
         }
+        commit({ room: 0, hold: holdTop(el), why: 'rest' });
       }
     }
     return;
