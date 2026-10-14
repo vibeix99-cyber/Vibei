@@ -1,0 +1,52 @@
+{
+ "label": "BASE-small",
+ "base": "http://127.0.0.1:5488",
+ "clock": "2026-10-12T07:40:00Z",
+ "rm": true,
+ "text": 100,
+ "init": "day",
+ "startedAt": "2026-10-14T13:15:02.071Z",
+ "runs": [
+  {
+   "cfg": "375x667@2:light:low",
+   "name": "375x667-light-low",
+   "theme": "light",
+   "tier": "low",
+   "dpr": 2,
+   "init": "day",
+   "errors": [
+    "console warning: [.WebGL-0x1f04022ed800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "console warning: [.WebGL-0x1f04022ed800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "console warning: [.WebGL-0x1f04022ed800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "console warning: [.WebGL-0x1f04022ed800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)",
+    "SCRIPT: page.screenshot: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - taking page screenshot\u001b[22m\n\u001b[2m    - disabled all CSS animations\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n"
+   ],
+   "notes": [],
+   "frames": {},
+   "url": "http://127.0.0.1:5488/?debug&seed=veteran&theme=light&nookq=low&nooktime=day&nookweather=clear#/nook",
+   "readyMs": 4426,
+   "prep": {
+    "quality": "low",
+    "chaiKind": "model",
+    "exposure": 1,
+    "time": "day",
+    "dim": 1
+   },
+   "chaiMeshes": [
+    "body/mesh_0:chai_fur:MeshStandardMaterial:v",
+    "body/mesh_0_1::MeshLambertMaterial:v",
+    "chai/eyes_happy::MeshLambertMaterial:-",
+    "chai/eyes_open::MeshLambertMaterial:v:eye",
+    "chai/eyes_sip::MeshLambertMaterial:-",
+    "chai/eyes_sleep::MeshLambertMaterial:-",
+    "paws_mug/mesh_5:chai_fur:MeshStandardMaterial:v",
+    "paws_mug/mesh_5_1::MeshLambertMaterial:v",
+    "chai/yuzu::MeshLambertMaterial:v",
+    "chai/::MeshBasicMaterial:v",
+    "chai/::ShaderMaterial:-",
+    "chai/::MeshBasicMaterial:v"
+   ],
+   "elapsedMs": 12602
+  }
+ ]
+}

@@ -1,7 +1,7 @@
 # RECEIPT-LR-N: Lane R, Maker N (Chai night readability), raw evidence
 
-Raw evidence only. No verdict, no visual judgement. Times are UTC, 2026-10-14. Lane started 11:53; the 80-minute box ended 13:13.
-No source edits, commits, pushes or merges. I killed only my own PIDs (my queued slot-gate wrappers, and one of my own capture jobs, section 3).
+Raw evidence only. No verdict, no visual judgement. Times are UTC, 2026-10-14. Lane started 11:53; the 80-minute box ended 13:13 (spec run 2 finished 13:14 and is included).
+No source edits, commits, pushes or merges. I killed only my own PIDs (my queued slot-gate wrappers, including the two still queued at the end, `lr-small` and `lr-text200`, and one of my own capture jobs, section 3).
 
 ## 0. What was tested, and how
 
@@ -173,7 +173,9 @@ Facts about the timing: in the two sets the trial reads slower in set A (second 
 | `npx vitest run` (all) | 30 files, **293/293** passed | `runs/vitest-all.txt` |
 | `npx vitest run src/scene` | 3 files, **17/17** passed: `palette.test.ts` (incl. "Chai fur self-fill by hour"), `chaiModel.test.ts` (incl. "setFill scales the fur self-fill only…" and "procedural Chai: setFill…"), `chaiHost.test.ts` | `runs/vitest-scene.txt` |
 | `KETTLE_PORT=5524 npx playwright test tests/chai3d.spec.ts tests/w2-room.spec.ts --project=chromium --workers=1`, run 1 | **16 passed / 17** (8.6 min, 12:55 to 13:04, load about 12 to 18), 1 failed, exit non-zero. Passed: all 10 `chai3d.spec.ts` cases, including the new "the fur self-fill follows the hour (day unchanged, stronger at dusk and night); eyes and nose untouched" (1.3 min), and 6 of 7 `w2-room.spec.ts` cases. **Failed:** `w2-room.spec.ts:144` "Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items": `page.screenshot: Test timeout of 60000ms exceeded` at `w2-room.spec.ts:80` (the second screenshot of `assertLayersDrawn`). This is the same test and the same step the maker's run 1 reported as failing (its C-7); I did not run this test on the base, so I have nothing on the base | `runs/spec-run1.log` |
-| the same, run 2 | SPECS-RUN2 | `runs/spec-run2.log` |
+| the same, run 2 | **17 passed / 17** (8.2 min, 13:06 to 13:14, exit 0), including the new fur-fill test (1.1 min) and `w2-room.spec.ts` "3D failure (WebGL context lost)…" (51.4 s), the case that failed in run 1 | `runs/spec-run2.log` |
+
+Facts about the two runs: both ran the same 17 tests in the same order (10 in `chai3d.spec.ts`, 7 in `w2-room.spec.ts`). The line numbers in run 2's list (e.g. `chai3d.spec.ts:93` for a test that is on line 72 of the file) differ from run 1's, which match the file; the maker's own run 2 log shows the same shifted numbers. The two spec files in the trial worktree are the committed blobs (`git show HEAD:` equals the file, mtime 11:51:59, before my first run), so I take it as a line-mapping effect of Playwright's cache on a second run; I did not confirm that. Run 1 failed on the same test as the maker's run 1; run 2 passed it, as the maker's did.
 
 ## 8. Notes on the maker's packet (claims checked)
 
@@ -181,7 +183,7 @@ Facts about the timing: in the two sets the trial reads slower in set A (second 
 - Claim "day close-up 0 px diff": reproduced on the high and low tier close view, and also for the Nook view and full-viewport screenshots on the low tier (section 3); the 253-px platter difference did not reproduce on the still-frame path.
 - Claim "low tier: draw calls, triangles, textures and programs identical": reproduced (110 / 75,007 / 10 / 23, plus geometries 113 and the heap).
 - Claim "frame time 200 → 209 ms, order not swapped": the order-swapped set was run (section 6): no consistent sign.
-- Claim "vitest 293/293": reproduced. Claim "chai3d + w2-room 17/17 on run 2": section 7.
+- Claim "vitest 293/293": reproduced. Claim "chai3d + w2-room 16/17 then 17/17": reproduced, 16/17 then 17/17, with the same failing test in run 1 (section 7).
 - The packet's gaps I covered: the unlock pair (section 5) and the order-swapped frame time (section 6). Gaps still open: dark theme, 390×844 frames, the procedural Chai's numbers (section 9).
 
 ## 9. Not proven, and why
