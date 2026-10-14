@@ -1,0 +1,12 @@
+Time the step "expect(banner).toHaveCount(0, { timeout: 6000 })" (integrity.spec.ts:1100, "gone when there is room") took, read from each run's trace (before/after events of the expect call), ms. Allowed: 6000.
+run 1 (no suffix)  874
+repeat1            370
+repeat2            1887
+repeat3            1881
+repeat4            373
+repeat5            1878
+repeat6            2881   (trace kept: x1/trace-repeat6-slowest-banner-step.zip)
+repeat7            1878
+repeat8            113    (trace kept: x1/trace-repeat8-fastest-banner-step.zip)
+repeat9            1888
+sorted: 113 370 373 874 1878 1878 1881 1887 1888 2881
