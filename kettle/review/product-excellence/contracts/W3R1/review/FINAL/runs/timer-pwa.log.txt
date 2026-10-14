@@ -2,3 +2,7 @@
 
 Running 31 tests using 1 worker
 
+  ✓   1 [timer-harness] › tests/timer.spec.ts:74:3 › timer reliability › start → reload mid-session → same session, same end, correct remaining; paused survives reload (4.5s)
+  ✓   2 [timer-harness] › tests/timer.spec.ts:111:3 › timer reliability › a phase that ended while the app was closed (3 h ago) completes once, at its real end, whileAway (2.3s)
+  ✓   3 [timer-harness] › tests/timer.spec.ts:143:3 › timer reliability › reload exactly at 0:00 records the session once (4.2s)
+  ✓   4 [timer-harness] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (4.1s)
