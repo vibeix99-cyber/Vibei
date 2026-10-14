@@ -35,7 +35,8 @@ No source edits, commits, pushes or merges. I killed only my own PIDs (my queued
 - **Unlock card:** Chai covers 0 px in the card frame at both viewports and both hours, on both builds; the card's drawing buffer is pixel-identical base vs trial (4 of 4 pairs, 0 differing pixels).
 - **Low-tier performance:** draw calls 110, triangles 75,007, geometries 113, textures 10, programs 23: identical on both builds in 12 of 12 runs; heap 11.1 to 11.3 MB both. Frame time differs by run and by load, with no consistent sign across the two orders (section 6).
 - **Suites:** tsc 0; vitest 293/293 (scene unit tests 17/17); the browser specs are in section 7.
-- **Not done** (slot starvation): dark theme, phone viewports in the base-vs-trial grid, 200 % text, the high tier at 390, a second spec run (see section 9 for exactly which).
+- **390×844@2, low tier, light and dark** (captured late, when slots freed): the same shape. Close view, eyes dusk / night: light 2.26 → 3.85 / 2.01 → 3.99, dark 2.07 → 3.39 / 1.87 → 3.51; nose dusk / night: light 1.93 → 3.14 / 1.78 → 3.27, dark 1.80 → 2.80 / 1.67 → 2.91. Day identical (frame hashes equal).
+- **Not done** (slot starvation): the high tier at phone widths and in the dark theme at 1440, 375×667, 844×390, 200 % text, see section 9 for exactly which.
 
 ## 2. Separation, measured independently
 
@@ -67,6 +68,21 @@ Share of the same build's day ratio (eyes / nose): base dusk 49-50 % / 58 %, nig
 
 **Nook framing (what people see), 1440×900@2, light, low tier.** The same ratios to ±0.02 (eyes dusk 2.26 → 3.85, night 2.01 → 3.99; nose dusk 1.93 → 3.14, night 1.78 → 3.27), but on 47 to 56 eye pixels and 163 to 178 nose pixels per frame (the face is small in the default camera), against 1,900 to 1,960 and 5,250 to 5,360 in the close view.
 
+**390×844@2, low tier, close view (the same camera; the canvas there is 442×395), light and dark theme.** Cells are contrast ratio / ΔL*.
+
+| theme | hour | eyes BASE | eyes TRIAL | nose BASE | nose TRIAL | fur ring L* BASE → TRIAL | fill BASE → TRIAL |
+|---|---|---|---|---|---|---|---|
+| light | day | 4.55 / 47.7 | 4.55 / 47.7 | 3.33 / 37.5 | 3.33 / 37.5 | 51.3 → 51.3 | 0.16 → 0.16 |
+| light | dusk | 2.26 / 30.0 | 3.85 / 44.4 | 1.93 / 25.4 | 3.14 / 38.7 | 30.5 → 44.9 | 0.16 → 0.448 |
+| light | night | 2.01 / 26.8 | 3.99 / 45.4 | 1.78 / 23.2 | 3.27 / 39.9 | 27.1 → 45.8 | 0.16 → 0.512 |
+| dark | day | 4.01 / 44.5 | 4.01 / 44.5 | 3.01 / 35.3 | 3.01 / 35.3 | 47.5 → 47.5 | 0.16 → 0.16 |
+| dark | dusk | 2.07 / 27.6 | 3.39 / 40.9 | 1.80 / 23.4 | **2.80** / 35.7 | 28.0 → 41.4 | 0.16 → 0.448 |
+| dark | night | 1.87 / 24.7 | 3.51 / 42.0 | 1.67 / 21.1 | **2.91** / 36.8 | 24.9 → 42.2 | 0.16 → 0.512 |
+
+In the dark theme the trial's nose ratio at dusk (2.80) and night (2.91) is below 3.0 (the dark day value is 3.01), and the eyes reach 3.39 and 3.51 against a dark day value of 4.01. As a share of the same build's day ratio, dark: eyes dusk 52 % → 84 %, night 47 % → 88 %; nose dusk 60 % → 93 %, night 55 % → 97 %.
+
+In the **Nook framing at 390×844** the eyes are too small to measure: 0 pixels after the 1-px erosion (two small components in the raw mask), the nose is 9 to 13 pixels. Its ratio agrees with the close view (nose, light: dusk 1.92 → 3.13, night 1.78 → 3.26; dark: dusk 1.79 → 2.79, night 1.67 → 2.91). So at phone size only the close view carries a measurement for the eyes.
+
 **Against the maker's packet.** My base rows reproduce the maker's BEFORE rows (eyes 2.01 / 2.26 / 4.58, nose 1.79 / 1.93 / 3.32 on the high tier) to ±0.02 in ratio and ±0.3 in ΔL*. My trial rows reproduce the maker's AFTER rows (3.85 / 3.99 and 3.14 / 3.27) to the second decimal. The maker's AFTER rows came from `chai.setFill(k)` on the dev build; mine come from the hour the app sets, through the URL, on the preview build, so the shipped wiring from hour to fill is now measured: the fur's `emissiveIntensity` reads 0.16 / 0.448 / 0.512 at day / dusk / night on the trial and 0.16 on every hour on the base.
 
 **Things in the data that are not what you would assume.**
@@ -83,6 +99,8 @@ Frames are compared at day on the same still-frame path (section 0), every pixel
 | 1440×900@2 light high | drawing buffer, close view | 1992×1828 | **0** | 0 | `da8bfc7a` / `da8bfc7a` |
 | 1440×900@2 light low | drawing buffer, close view | 1245×1142 | **0** | 0 | `9e78bf54` / `9e78bf54` |
 | 1440×900@2 light low | drawing buffer, Nook view | 1245×1142 | **0** (platter included) | 0 | `3d800a6d` / `3d800a6d` |
+| 390×844@2 light low | drawing buffer, Nook view and close view | 442×395 each | **0** | 0 | Nook `559f00b3` / `559f00b3`, close `ed09b85c` / `ed09b85c` |
+| 390×844@2 dark low | drawing buffer, Nook view and close view | 442×395 each | **0** | 0 | Nook `a4fcf9e` / `a4fcf9e`, close `bae31d88` / `bae31d88` |
 | 1440×900@2 light low | full-viewport screenshot, Nook view | 2880×1800 | **0** | 0 | (PNG diff) |
 | 1440×900@2 light low | full-viewport screenshot, close view | 2880×1800 | **0** | 0 | (PNG diff) |
 
@@ -92,6 +110,7 @@ Evening and night, for contrast, on the low tier Nook frame, full-viewport scree
 - **dusk:** 21,888 differing pixels, all inside Chai's screen box (x 1351-1489, y 1210-1413 in screenshot pixels); outside a box x 1340-1500, y 1200-1420 0 pixels differ.
 - **night:** 21,900 differing pixels inside that box (max channel difference up to 68); outside it 280,787 pixels (5.4 %) differ by exactly 1 level and 1 pixel by 3. Day and dusk show no such 1-level noise. I did not find the source (candidates: a time-dependent night effect not covered by the still time; screenshot compositing) and did not run a base-vs-base night control, so I cannot say whether it is present base-vs-base.
 - Diff map: `diff/1440x900-light-low-night-nook-frame_diffmap.png`.
+- **Full-viewport screenshots at 390×844 day are not identical although the canvas buffers are** (hashes above): light 32,836 pixels (2.5 %) differ, 32,762 of them by exactly 1 level, 32 by more than 2 (max 23), those within x 81-464, y 1061-1512 (screenshot pixels, i.e. below the canvas, in the page UI); dark the same (33,195 px; 32 above 2, same box). Diff map `diff/390x844-light-low-day-nook-frame_diffmap.png`. I did not find the cause (the page's animated UI is the candidate); the 1440 screenshots at day are 0. The scene itself, as drawn, is identical.
 
 **One defect of my own, disclosed.** My first trial job (`lr-TRIAL-1440L`) ran the views as `close,nook`; the close camera persists in the engine, so its "nook" frames were copies of the close frames (identical hashes). I removed those frames and files and re-ran the trial's Nook view for the low tier (`lr-TRIAL-1440L-nook.json`, valid); the high-tier trial Nook view was dropped to save slot time (not captured). The script now always runs `nook` before `close`. The base's first job was killed by me (own PID) after its low config, and its high tier was re-run close-view only (`lr-BASE-1440H.json`).
 
@@ -104,8 +123,8 @@ Everything is full size and native. Names: `<viewport>-<theme>-<tier>-<hour>-<vi
 | 1440×900@2 light, low tier, day / dusk / night, Nook and close views, BASE and TRIAL | `sep/BASE/`, `sep/TRIAL/` (`…-nook-frame.png`, `…-close-frame.png`, `…-close-face.png`, `…-nook-face.png`) | yes |
 | 1440×900@2 light, high tier, day / dusk / night, close view, BASE and TRIAL | `sep/BASE/` (face crops only; the base high job ran without screenshots), `sep/TRIAL/` (close frame and face crop) | yes, close view only |
 | Base-left / trial-right montages of the face crops, low tier: close view native, Nook view enlarged 4× (nearest neighbour, `_x4`) | `captures/montage-face/` | yes (low tier only) |
-| 390×844, 375×667, 844×390: Nook frames and face crops | `sep/*/390x844-*`, … | see section 9 |
-| dark theme, 200 % text, high tier at phone widths | | see section 9 |
+| 390×844@2 light and dark, low tier, day / dusk / night: Nook frames (full-viewport), close-view face crops, Nook face crops | `sep/BASE/390x844-*`, `sep/TRIAL/390x844-*`; montages `captures/montage-face/390x844-*` (close-view face crops, all 6 states; night Nook frames light and dark) | yes |
+| 375×667, 844×390; dark theme at 1440; high tier at 390; 200 % text | | see section 9 |
 
 ## 5. The unlock card
 
@@ -169,16 +188,17 @@ Facts about the timing: in the two sets the trial reads slower in set A (second 
 
 | Item | Status |
 |---|---|
-| Dark theme, any viewport (exposure 0.86, `autoTime` gives night most of the day) | **not captured, not measured** |
-| 390×844, 375×667, 844×390 base-vs-trial grids (light and dark, day / dusk / night) | PHONES |
-| High tier at phone widths; the high-tier Nook view at 1440 for the trial (and base) | **not captured** |
-| 200 % text spot check | TEXT200 |
+| 375×667 and 844×390 base-vs-trial grids (queued as `lr-small`, not run before the box ended) | **not captured, not measured** |
+| Dark theme at 1440×900 (queued, not run) | **not captured, not measured** (the dark theme at 390×844, low tier, is in section 2) |
+| High tier at 390×844, light and dark; the high tier at 1440 in the dark theme | **not captured, not measured** |
+| The high-tier Nook view at 1440, trial and base (the high tier was run close-view only) | **not captured** |
+| 200 % text spot check (queued as `lr-text200`, not run) | **not captured** |
 | Separation measured on the real unlock card | n/a: Chai is out of frame (section 5) |
 | The procedural Chai's separation numbers (first frame and fallback) | **not measured** |
-| Same-build repeatability across contexts (base vs base) for day frames and for the 1-level night noise (section 3) | **not run** |
+| Same-build repeatability across contexts (base vs base) for the day frames, the 1-level night noise (section 3) and the 390 screenshot differences | **not run** |
 | Order-swapped performance on equal load; a base-vs-base timing control | **not run**; sets A and B ran at different load |
 | Captures and measurements used the preview builds; the dev servers were used for the suites only | the dev build's frames were not captured by me |
-| Unlock: default tier only (low); the high-tier card; the drawing stage not diffed | **not run** |
+| Unlock: default tier only (low); the high-tier card; the drawing stage not diffed; Done-page screenshots differ outside the card (animation not frozen) | **not run / not isolated** |
 | Full chromium suite | **not run** |
 | "As clearly as by day", "looks right", fur "lit cut-out" | judgement, not mine |
 
