@@ -1,0 +1,8 @@
+ kettle/src/screens/focus/FocusScreen.module.css |  10 --
+ kettle/src/screens/home/StatusBar.tsx           |   9 +-
+ kettle/src/ui/Toast.tsx                         |  53 +++++---
+ kettle/tests/notice-strip.spec.ts               |  17 +++
+ kettle/tests/w3-notices-idle.spec.ts            | 162 ++++++++++++++++++++++++
+ kettle/tests/w3-notices.spec.ts                 | 102 ++++++++++++---
+ kettle/tests/whistle.spec.ts                    |   2 +-
+ 7 files changed, 310 insertions(+), 45 deletions(-)

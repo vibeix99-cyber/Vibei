@@ -71,3 +71,18 @@ Lane I2's aimed-tap probe `LI2-probe2.mjs fix http://127.0.0.1:5501 … '' L1,L2
 ## 7. Check 5 numbers — F-D2
 
 `LI2-topbar2.mjs` on fix :5501 and base :5478 (`fix/topbar2/topbar2-{fix,base}.log`, frames `fix/topbar2/{fix,base}-*-session-running.png`): **identical**. 844×390 @200 light/dark: Add 5 / Pause / End top **352**, visible **38.5** px; 667×375 @200: top **352**, visible **23.5** px; @100: one line, controls at **248** (844×390) / **239** (667×375).
+
+## 8. Check 4 — specs
+
+| Suite | Result | Src | Log |
+|---|---|---|---|
+| tsc | exit 0 | `8b42b9b` | `fix/final/tsc.log` |
+| vitest | **31 files, 297/297** | `8b42b9b` | `fix/final/vitest.log` |
+| `w3-notices` ×2 (9 tests: 5 aimed-tap configs, the renamed "…stays while the page is scrolled, and goes on the same screen once idle" — still asserts nothing moves by layout during the scroll —, the new pointer-held test, new screen, accessible name) | **18/18** | `f075a7a` | `fix/w3-notices-x2.log` |
+| `w3-notices-idle` (band lifetime, 12) | **12/12** | `f075a7a` | `fix/idle-own.log` |
+| `notice-strip:275` 1440 dark 200 % ×3 | **3/3** | `f075a7a` | `fix/ns275-1440-dark-200-x3.log` |
+| `notice-strip:275` 1440 light 200 % reduced ×3, twice | run A: 2/3 — #1 **invalid** (my :5501 was restarted by someone else at 18:22:10 mid-test; "Kettle's off" = the brew lost on reload); run B: 2/3 — #1 failed at **"the Undo is the deleted row … 111 px" = N-2** (S's `History.tsx` focus scroll, pre-existing; Mark done passed). Error contexts: `fix/failure-context/ns275-1440-light-x3-run{1,2}-1-error-context.md` | `f075a7a` | `fix/ns275-1440-light-200-reduced-x3{,-run2}.log` |
+| `notice-strip` 25 (workers 1) | PENDING-NS | `8b42b9b` | `fix/final/notice-strip-full.log` |
+| `toast-room`, `a11y`, `summary-notice`, `break-reach`, `w2-home`, `whistle` | PENDING-OWNED | `8b42b9b` | `fix/final/owned-specs.log` |
+
+`whistle.spec.ts:203` is expected to fail on :5501 (G's sentence is not on this branch; C-1).
