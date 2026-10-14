@@ -115,3 +115,22 @@ Shots (full size):
 | 2 | :5502 at `1d899b3` | **30/30 passed** (4.2 min) | `S/fix/suites/w3-stats-run2.log` |
 
 The old `:98` cases are now at `:101` ("both choices can be tapped, and Tab reaches them in a loop"). Each run passes them at all seven configurations, including "390×844 with 200 % text, fonts blocked" and "375×667 with 200 % text, fonts blocked".
+
+## Check 6: no regression
+
+| Check | Result | Log |
+|---|---|---|
+| `w3-stats` totals, wording, after-midnight, 12:40, "never says streak", delete dialog (21 earlier tests) | pass in both runs | `S/fix/suites/w3-stats-run{1,2}.log` |
+| `integrity.spec.ts`, whole file, on :5502 at `1d899b3` | **25/25 passed** (5.3 min) | `S/fix/suites/integrity-full.log` |
+| tsc | exit 0 | `S/fix/suites/tsc.log` |
+| vitest | 31 files, **292/292** | `S/fix/suites/vitest.log` |
+| Overview height at 375×667 @200 vs the trial | 504 px vs 319 px (table in Check 2) | `S/fix/fit/*-fit.json` |
+
+## Hash
+
+- **App code commits:**
+  - `0d240b6`: the CSS fix;
+  - `1d899b3`: the spec.
+- **Final hash:** the commit holding this section (`git log -1` on `pe/w3-stats`).
+- **kettle/src tree:** `6a020d9`, the same at `1d899b3` and at the final hash.
+- **Server:** `verify.sh` reports :5502 serving that src.
