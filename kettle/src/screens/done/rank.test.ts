@@ -101,7 +101,7 @@ describe('rankRewards — the order of milestones (biggest first; shaped from a 
     const { k } = holdsEverything(r);
     expect(k.highlight?.kind).toBe('badge');
     expect(k.highlight?.pill?.text).toBe('Badge: Warm Days II');
-    // tier II of "Keep a {n}-day warm streak" is 7 days (progress/badges.ts)
+    // tier II of "Brew {n} warm days in a row" is 7 days (progress/badges.ts)
     expect(k.highlight?.note).toBe('7 warm days in a row');
     // Warm days that are not a best are routine: they stay in the compact group.
     expect(k.secondary.some((p) => p.kind === 'streak' && p.text === '10 days warm')).toBe(true);
@@ -182,6 +182,6 @@ describe('words — Kettle’s own “warm days”, never “streak” (W2R2)', 
     expect(m.announce).toContain('7 days warm.');
     expect(warmNote(23)).toBe('23 days warm. One full brew a day keeps the kettle warm.');
     expect(warmNote(1)).toBe('1 day warm. One full brew a day keeps the kettle warm.');
-    expect(m.pills.find((p) => p.kind === 'cozy')?.sr).toBe('You earned a Tea Cozy: it covers one missed day, so your warm days keep going');
+    expect(m.pills.find((p) => p.kind === 'cozy')?.sr).toBe('You earned a Tea Cozy: it keeps the kettle warm through one missed day');
   });
 });

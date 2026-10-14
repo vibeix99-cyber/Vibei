@@ -66,7 +66,7 @@ describe('badges', () => {
 
   it('awards the highest new tier once, with timestamps, and never takes it back', () => {
     const first = evaluateBadges({}, { 'warm-streak': 8 }, 1000);
-    expect(first.awards).toEqual([expect.objectContaining({ id: 'warm-streak', tier: 2, description: 'Keep a 7-day warm streak' })]);
+    expect(first.awards).toEqual([expect.objectContaining({ id: 'warm-streak', tier: 2, description: 'Brew 7 warm days in a row' })]);
     expect(first.badges['warm-streak']).toEqual({ tier: 2, unlockedAt: [1000, 1000] });
     const again = evaluateBadges(first.badges, { 'warm-streak': 8 }, 2000);
     expect(again.awards).toEqual([]);

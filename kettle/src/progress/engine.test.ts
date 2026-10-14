@@ -112,7 +112,7 @@ describe('applyRecord — first brew ever', () => {
     const before = JSON.stringify(stored);
     const { data } = coerceData(stored, clock.now());
     expect(JSON.stringify(stored)).toBe(before); // read only: the stored object is not rewritten
-    expect(data.lastReport!.badges).toEqual([{ id: 'warm-streak', tier: 2, title: 'Warm Days', description: 'Keep a 7-day warm streak' }]);
+    expect(data.lastReport!.badges).toEqual([{ id: 'warm-streak', tier: 2, title: 'Warm Days', description: 'Brew 7 warm days in a row' }]);
     // Everything else in the report, and the earned-badge state (by id), is exactly what was stored.
     expect({ ...data.lastReport!, badges: [] }).toEqual({ ...stored.lastReport!, badges: [] });
     expect(data.badges).toEqual(stored.badges);

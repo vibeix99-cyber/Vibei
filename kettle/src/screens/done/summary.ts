@@ -55,8 +55,8 @@ const ROMAN = ['', 'I', 'II', 'III', 'IV', 'V'];
 
 /** What a full brew a day does, in Kettle's words (Stats: "You kept the kettle warm 23 days in a row"). */
 export const WARM_RULE = 'One full brew a day keeps the kettle warm.';
-/** What a Tea Cozy does (Stats: "each covers one missed day"). */
-export const COZY_MEANS = 'Covers one missed day, so your warm days keep going.';
+/** What a Tea Cozy does (the warm-days glossary, W3R1). */
+export const COZY_MEANS = 'Keeps the kettle warm through one missed day.';
 /** The arithmetic's closing line: the warm days so far, and what keeps them going. */
 export const warmNote = (days: number) => (days > 0 ? `${plural(days, 'day')} warm. ${WARM_RULE}` : WARM_RULE);
 export const roman = (n: number) => ROMAN[n] ?? String(n);
@@ -79,7 +79,7 @@ export function buildSummary(r: CompletionReport): SummaryModel {
     const best = st.extended && st.newBest && st.after > 1 ? ', your best yet' : '';
     pills.push({ kind: 'streak', text: `${plural(st.after, 'day')} warm${best}`, value: st.after });
   }
-  if (st.cozyEarned) pills.push({ kind: 'cozy', text: 'Tea Cozy earned', sr: 'You earned a Tea Cozy: it covers one missed day, so your warm days keep going' });
+  if (st.cozyEarned) pills.push({ kind: 'cozy', text: 'Tea Cozy earned', sr: 'You earned a Tea Cozy: it keeps the kettle warm through one missed day' });
 
   // Recipes earn a pill once one is done (progress alone — "Recipes 0/3" — would read as nothing happened).
   const moved = r.quests.filter((q) => q.after > q.before);
@@ -148,7 +148,7 @@ export interface RankedRewards {
   secondary: RewardPill[];
 }
 
-/** Which milestone a pill reports, if any (routine progress — leaves, the goal, a warm streak, recipes — is none). */
+/** Which milestone a pill reports, if any (routine progress — leaves, the goal, warm days, recipes — is none). */
 export function milestoneOf(p: RewardPill, r: CompletionReport): Milestone | null {
   const st = r.streak;
   switch (p.kind) {
@@ -192,8 +192,9 @@ function noteFor(kind: Milestone, pill: RewardPill, m: SummaryModel, r: Completi
     case 'best':
       return WARM_RULE;
     case 'badge': {
-      // The badge's own line, except the warm-days badge, whose catalogue line ("Keep a 7-day warm streak") reads
-      // as a to-do: on the summary it says what was reached, in warm days. Same threshold, same tier.
+      // The badge's own line, except the warm-days badge, whose catalogue line ("Brew 7 warm days in a row") reads
+      // as a to-do (and a report stored by an older build keeps that build's line): on the summary it says what was
+      // reached, in warm days. Same threshold, same tier.
       if (pill.id === 'warm-streak') {
         const n = BADGES.find((d) => d.id === pill.id)?.tiers[(pill.tier ?? 1) - 1];
         if (n) return `${plural(n, 'warm day')} in a row`;

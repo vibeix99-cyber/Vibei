@@ -6,6 +6,7 @@ import { useTimer } from '@/timer';
 import { dayKey, dayPart, parseDayKey, type DayKey } from '@/lib/dates';
 import { safeStorage, STORAGE_PREFIX } from '@/lib/storage';
 import { chaiLine, greeting, hashSeed } from './chai';
+import { warmState } from './warm';
 import { useNow } from './shims/useNow';
 
 const VISIT_KEY = `${STORAGE_PREFIX}home:lastVisit`;
@@ -85,6 +86,8 @@ export function useHomeData() {
       streak: streak.current,
       todayDone,
       cozies: streak.cozies,
+      best: streak.best,
+      cozyDays: warmState(streak, day).cozyDays,
       totalSessions: focus.length,
       daysSinceLast,
       firstVisitToday,
