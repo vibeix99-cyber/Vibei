@@ -1,0 +1,418 @@
+{
+ "label": "TRIAL-small",
+ "base": "http://127.0.0.1:5534",
+ "clock": "2026-10-12T07:40:00Z",
+ "rm": true,
+ "text": 100,
+ "init": "day",
+ "startedAt": "2026-10-14T13:14:18.471Z",
+ "runs": [
+  {
+   "cfg": "375x667@2:light:low",
+   "name": "375x667-light-low",
+   "theme": "light",
+   "tier": "low",
+   "dpr": 2,
+   "init": "day",
+   "errors": [
+    "console warning: [.WebGL-0x23e40010f800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "console warning: [.WebGL-0x23e40010f800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "console warning: [.WebGL-0x23e40010f800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "console warning: [.WebGL-0x23e40010f800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+   ],
+   "notes": [],
+   "frames": {
+    "nook-day": {
+     "buffer": [
+      423,
+      378
+     ],
+     "fnv": "14414748",
+     "restoreDiffBytes": 0,
+     "fillNow": 0.16,
+     "eyeMeshCount": 1,
+     "noseMeshCount": 1,
+     "nonFurCount": 10,
+     "masks": {
+      "eyePx": 14,
+      "nosePx": 29,
+      "nonFurPx": 102,
+      "chaiPx": 1121,
+      "furPx": 740
+     },
+     "featBox": {
+      "x0": 148,
+      "x1": 163,
+      "y0": 206,
+      "y1": 215
+     },
+     "chaiBox": {
+      "x0": 138,
+      "x1": 175,
+      "y0": 190,
+      "y1": 242
+     },
+     "headNdc": [
+      -0.264,
+      -0.125
+     ],
+     "eyes": {
+      "areaPx": 14,
+      "diamPx": 3,
+      "components": [
+       8,
+       6
+      ],
+      "feature": {
+       "n": 2,
+       "Ymed": 0.00393,
+       "Ymean": 0.00376,
+       "Lmed": 3.55,
+       "Lp25": 3.24,
+       "Lp75": 3.55,
+       "meanHex": "#1a0800"
+      },
+      "ringHalf": {
+       "rad": 2,
+       "n": 0,
+       "CR": null,
+       "CRmean": null,
+       "dL": null
+      },
+      "ringFull": {
+       "rad": 3,
+       "n": 34,
+       "Ymed": 0.19516,
+       "Ymean": 0.20136,
+       "Lmed": 51.29,
+       "Lp25": 48.99,
+       "Lp75": 53.43,
+       "meanHex": "#ae6c32",
+       "CR": 4.546,
+       "CRmean": 4.676,
+       "dL": 47.74
+      }
+     },
+     "nose": {
+      "areaPx": 29,
+      "diamPx": 6.1,
+      "components": [
+       29
+      ],
+      "feature": {
+       "n": 11,
+       "Ymed": 0.00775,
+       "Ymean": 0.03357,
+       "Lmed": 7,
+       "Lp25": 6.58,
+       "Lp75": 7,
+       "meanHex": "#311a0d"
+      },
+      "ringHalf": {
+       "rad": 3,
+       "n": 30,
+       "Ymed": 0.14218,
+       "Ymean": 0.15557,
+       "Lmed": 44.54,
+       "Lp25": 44.16,
+       "Lp75": 50.28,
+       "meanHex": "#9f5e24",
+       "CR": 3.328,
+       "CRmean": 2.46,
+       "dL": 37.54
+      },
+      "ringFull": {
+       "rad": 6,
+       "n": 125,
+       "Ymed": 0.14119,
+       "Ymean": 0.15489,
+       "Lmed": 44.4,
+       "Lp25": 44.16,
+       "Lp75": 48.99,
+       "meanHex": "#9f5d24",
+       "CR": 3.311,
+       "CRmean": 2.452,
+       "dL": 37.4
+      }
+     },
+     "cropBox": {
+      "x": 108,
+      "y": 163,
+      "w": 96,
+      "h": 96,
+      "half": 48
+     },
+     "timeApplied": "day"
+    },
+    "nook-dusk": {
+     "buffer": [
+      423,
+      378
+     ],
+     "fnv": "9aa894cd",
+     "restoreDiffBytes": 0,
+     "fillNow": 0.448,
+     "eyeMeshCount": 1,
+     "noseMeshCount": 1,
+     "nonFurCount": 10,
+     "masks": {
+      "eyePx": 14,
+      "nosePx": 29,
+      "nonFurPx": 107,
+      "chaiPx": 1127,
+      "furPx": 740
+     },
+     "featBox": {
+      "x0": 148,
+      "x1": 163,
+      "y0": 206,
+      "y1": 215
+     },
+     "chaiBox": {
+      "x0": 138,
+      "x1": 175,
+      "y0": 190,
+      "y1": 242
+     },
+     "headNdc": [
+      -0.264,
+      -0.125
+     ],
+     "eyes": {
+      "areaPx": 14,
+      "diamPx": 3,
+      "components": [
+       8,
+       6
+      ],
+      "feature": {
+       "n": 2,
+       "Ymed": 0.00054,
+       "Ymean": 0.00051,
+       "Lmed": 0.49,
+       "Lp25": 0.43,
+       "Lp75": 0.49,
+       "meanHex": "#080001"
+      },
+      "ringHalf": {
+       "rad": 2,
+       "n": 0,
+       "CR": null,
+       "CRmean": null,
+       "dL": null
+      },
+      "ringFull": {
+       "rad": 3,
+       "n": 36,
+       "Ymed": 0.1446,
+       "Ymean": 0.14466,
+       "Lmed": 44.89,
+       "Lp25": 44.49,
+       "Lp75": 45.97,
+       "meanHex": "#9a5a2d",
+       "CR": 3.85,
+       "CRmean": 3.854,
+       "dL": 44.4
+      }
+     },
+     "nose": {
+      "areaPx": 29,
+      "diamPx": 6.1,
+      "components": [
+       29
+      ],
+      "feature": {
+       "n": 11,
+       "Ymed": 0.00104,
+       "Ymean": 0.00543,
+       "Lmed": 0.94,
+       "Lp25": 0.86,
+       "Lp75": 1.03,
+       "meanHex": "#140509"
+      },
+      "ringHalf": {
+       "rad": 3,
+       "n": 30,
+       "Ymed": 0.11042,
+       "Ymean": 0.11991,
+       "Lmed": 39.65,
+       "Lp25": 39.5,
+       "Lp75": 44.49,
+       "meanHex": "#8f5224",
+       "CR": 3.143,
+       "CRmean": 3.065,
+       "dL": 38.71
+      },
+      "ringFull": {
+       "rad": 6,
+       "n": 125,
+       "Ymed": 0.10956,
+       "Ymean": 0.11889,
+       "Lmed": 39.51,
+       "Lp25": 39.5,
+       "Lp75": 43.31,
+       "meanHex": "#8e5123",
+       "CR": 3.126,
+       "CRmean": 3.047,
+       "dL": 38.57
+      }
+     },
+     "cropBox": {
+      "x": 108,
+      "y": 163,
+      "w": 96,
+      "h": 96,
+      "half": 48
+     },
+     "timeApplied": "dusk"
+    },
+    "nook-night": {
+     "buffer": [
+      423,
+      378
+     ],
+     "fnv": "88aadb12",
+     "restoreDiffBytes": 0,
+     "fillNow": 0.512,
+     "eyeMeshCount": 1,
+     "noseMeshCount": 1,
+     "nonFurCount": 10,
+     "masks": {
+      "eyePx": 14,
+      "nosePx": 30,
+      "nonFurPx": 108,
+      "chaiPx": 1123,
+      "furPx": 737
+     },
+     "featBox": {
+      "x0": 148,
+      "x1": 163,
+      "y0": 206,
+      "y1": 215
+     },
+     "chaiBox": {
+      "x0": 138,
+      "x1": 175,
+      "y0": 190,
+      "y1": 242
+     },
+     "headNdc": [
+      -0.264,
+      -0.125
+     ],
+     "eyes": {
+      "areaPx": 14,
+      "diamPx": 3,
+      "components": [
+       8,
+       6
+      ],
+      "feature": {
+       "n": 2,
+       "Ymed": 0.00037,
+       "Ymean": 0.00036,
+       "Lmed": 0.33,
+       "Lp25": 0.31,
+       "Lp75": 0.33,
+       "meanHex": "#050002"
+      },
+      "ringHalf": {
+       "rad": 2,
+       "n": 0,
+       "CR": null,
+       "CRmean": null,
+       "dL": null
+      },
+      "ringFull": {
+       "rad": 3,
+       "n": 36,
+       "Ymed": 0.15089,
+       "Ymean": 0.14681,
+       "Lmed": 45.76,
+       "Lp25": 45.37,
+       "Lp75": 46.18,
+       "meanHex": "#985c2f",
+       "CR": 3.988,
+       "CRmean": 3.908,
+       "dL": 45.43
+      }
+     },
+     "nose": {
+      "areaPx": 30,
+      "diamPx": 6.2,
+      "components": [
+       30
+      ],
+      "feature": {
+       "n": 11,
+       "Ymed": 0.00069,
+       "Ymean": 0.00308,
+       "Lmed": 0.62,
+       "Lp25": 0.54,
+       "Lp75": 0.62,
+       "meanHex": "#0e0309"
+      },
+      "ringHalf": {
+       "rad": 3,
+       "n": 31,
+       "Ymed": 0.1157,
+       "Ymean": 0.12544,
+       "Lmed": 40.52,
+       "Lp25": 40.14,
+       "Lp75": 45.37,
+       "meanHex": "#905526",
+       "CR": 3.269,
+       "CRmean": 3.305,
+       "dL": 39.9
+      },
+      "ringFull": {
+       "rad": 6,
+       "n": 125,
+       "Ymed": 0.1157,
+       "Ymean": 0.12338,
+       "Lmed": 40.52,
+       "Lp25": 40.14,
+       "Lp75": 44.19,
+       "meanHex": "#8f5425",
+       "CR": 3.269,
+       "CRmean": 3.266,
+       "dL": 39.9
+      }
+     },
+     "cropBox": {
+      "x": 108,
+      "y": 163,
+      "w": 96,
+      "h": 96,
+      "half": 48
+     },
+     "timeApplied": "night"
+    }
+   },
+   "url": "http://127.0.0.1:5534/?debug&seed=veteran&theme=light&nookq=low&nooktime=day&nookweather=clear#/nook",
+   "readyMs": 4660,
+   "prep": {
+    "quality": "low",
+    "chaiKind": "model",
+    "exposure": 1,
+    "time": "day",
+    "dim": 1
+   },
+   "chaiMeshes": [
+    "body/mesh_0:chai_fur:MeshStandardMaterial:v",
+    "body/mesh_0_1::MeshLambertMaterial:v",
+    "chai/eyes_happy::MeshLambertMaterial:-",
+    "chai/eyes_open::MeshLambertMaterial:v:eye",
+    "chai/eyes_sip::MeshLambertMaterial:-",
+    "chai/eyes_sleep::MeshLambertMaterial:-",
+    "paws_mug/mesh_5:chai_fur:MeshStandardMaterial:v",
+    "paws_mug/mesh_5_1::MeshLambertMaterial:v",
+    "chai/yuzu::MeshLambertMaterial:v",
+    "chai/::MeshBasicMaterial:v",
+    "chai/::ShaderMaterial:-",
+    "chai/::MeshBasicMaterial:v"
+   ],
+   "elapsedMs": 22090
+  }
+ ]
+}
