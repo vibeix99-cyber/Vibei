@@ -1,0 +1,209 @@
+{
+ "base": "http://127.0.0.1:5477",
+ "cfg": "375x667:light:100",
+ "flow": "summaryarrive",
+ "kind": "update",
+ "scene": "off",
+ "steps": [
+  {
+   "t": 2418,
+   "k": "tap",
+   "label": "field",
+   "at": [
+    188,
+    348
+   ],
+   "size": [
+    303,
+    52
+   ]
+  },
+  {
+   "t": 3323,
+   "k": "tap",
+   "label": "start",
+   "at": [
+    188,
+    529
+   ],
+   "size": [
+    343,
+    60
+   ]
+  }
+ ],
+ "fold": {
+  "F": 529,
+  "sheetTop": 284,
+  "notice": null,
+  "cutRows": [
+   {
+    "t": "Fairy lights is in your nook",
+    "top": 526,
+    "bottom": 567,
+    "cut": true
+   }
+  ],
+  "imgs": [
+   {
+    "src": "window-day-rain.webp",
+    "top": -2,
+    "bottom": 221
+   },
+   {
+    "src": "chai-cheering.webp",
+    "top": 115,
+    "bottom": 265
+   }
+  ]
+ },
+ "rec": {
+  "frames": 488,
+  "noticeFrames": 136,
+  "modalFrames": 0,
+  "covered": 0,
+  "coveredEx": [],
+  "geo": 0,
+  "geoEx": [],
+  "noticeHidden": 0,
+  "noticeHiddenEx": [],
+  "chromeOver": 0,
+  "shifts": [
+   {
+    "at": 2848,
+    "hash": "#/focus",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": -6,
+    "sinceTap": -6,
+    "why": "screen"
+   },
+   {
+    "at": 2848,
+    "hash": "#/focus",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": -6,
+    "sinceTap": -6,
+    "why": "screen"
+   },
+   {
+    "at": 4032,
+    "hash": "#/focus",
+    "sinceRoute": 1184,
+    "kind": "strip",
+    "from": 0,
+    "to": 67,
+    "top": 313,
+    "down": 0,
+    "sinceInput": 1178,
+    "sinceTap": 1178,
+    "why": "screen",
+    "app": {
+     "down": 0,
+     "sinceInput": 1036,
+     "sinceTap": 1168,
+     "atRest": false
+    }
+   },
+   {
+    "at": 6240,
+    "hash": "#/done",
+    "sinceRoute": 0,
+    "kind": "strip",
+    "from": 67,
+    "to": 0,
+    "top": 313,
+    "down": 0,
+    "sinceInput": 3386,
+    "sinceTap": 3386,
+    "why": "screen",
+    "app": {
+     "down": 0,
+     "sinceInput": 10,
+     "sinceTap": 3375,
+     "atRest": false
+    }
+   }
+  ],
+  "seen": {
+   "A fresh brew of Kettle is ready. Update": 136
+  }
+ },
+ "errors": [],
+ "shiftAudit": [
+  {
+   "at": 2848,
+   "hash": "#/focus",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": -6,
+   "sinceTap": -6,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 2848,
+   "hash": "#/focus",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": -6,
+   "sinceTap": -6,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 4032,
+   "hash": "#/focus",
+   "sinceRoute": 1184,
+   "kind": "strip",
+   "from": 0,
+   "to": 67,
+   "top": 313,
+   "down": 0,
+   "sinceInput": 1178,
+   "sinceTap": 1178,
+   "why": "screen",
+   "app": {
+    "down": 0,
+    "sinceInput": 1036,
+    "sinceTap": 1168,
+    "atRest": false
+   },
+   "ok": true
+  },
+  {
+   "at": 6240,
+   "hash": "#/done",
+   "sinceRoute": 0,
+   "kind": "strip",
+   "from": 67,
+   "to": 0,
+   "top": 313,
+   "down": 0,
+   "sinceInput": 3386,
+   "sinceTap": 3386,
+   "why": "screen",
+   "app": {
+    "down": 0,
+    "sinceInput": 10,
+    "sinceTap": 3375,
+    "atRest": false
+   },
+   "ok": true
+  }
+ ],
+ "shiftViolations": []
+}

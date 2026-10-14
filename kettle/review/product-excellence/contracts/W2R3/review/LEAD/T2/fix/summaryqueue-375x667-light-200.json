@@ -1,0 +1,209 @@
+{
+ "base": "http://127.0.0.1:5477",
+ "cfg": "375x667:light:200",
+ "flow": "summaryqueue",
+ "kind": null,
+ "scene": "off",
+ "steps": [
+  {
+   "t": 7948,
+   "k": "fallback-scroll",
+   "label": "field",
+   "onTop": false
+  },
+  {
+   "t": 7948,
+   "k": "not-on-top",
+   "label": "field"
+  },
+  {
+   "t": 8712,
+   "k": "tap",
+   "label": "start",
+   "at": [
+    188,
+    98
+   ],
+   "size": [
+    343,
+    155
+   ]
+  },
+  {
+   "t": 19663,
+   "k": "tap",
+   "label": "Tea time",
+   "at": [
+    188,
+    543
+   ],
+   "size": [
+    335,
+    108
+   ]
+  }
+ ],
+ "g0": {
+  "sheetTop": 285.5,
+  "sheetH": 1172,
+  "footer": 475,
+  "drawn": 0,
+  "scrollTop": 0
+ },
+ "sheetTopsWithQueue": [
+  285.5
+ ],
+ "g1": {
+  "sheetTop": 285.5,
+  "sheetH": 1172,
+  "footer": 475,
+  "drawn": 0,
+  "scrollTop": 0
+ },
+ "queueOnSummary": {
+  "queue": [
+   {
+    "id": "t1",
+    "message": "Couldn’t save just now. Your summary is still here.",
+    "left": 3200
+   },
+   {
+    "id": "lead-update",
+    "message": "A fresh brew of Kettle is ready.",
+    "left": null
+   },
+   {
+    "id": "t2",
+    "message": "Recipe done: Take a full tea break · +10 leaves",
+    "left": 3200
+   }
+  ],
+  "shown": null,
+  "strip": null,
+  "screen": null,
+  "why": "screen",
+  "changed": 11621,
+  "version": 9
+ },
+ "breakSequence": [
+  null,
+  "Couldn’t save just now. Your summary is still here."
+ ],
+ "saidBefore": [],
+ "saidAfter": [
+  "Couldn’t save just now. Your summary is still here.",
+  "A fresh brew of Kettle is ready. Update",
+  "Recipe done: Take a full tea break · +10 leaves"
+ ],
+ "hashEnd": "#/focus",
+ "rec": {
+  "frames": 1934,
+  "noticeFrames": 888,
+  "modalFrames": 0,
+  "covered": 0,
+  "coveredEx": [],
+  "geo": 0,
+  "geoEx": [],
+  "noticeHidden": 0,
+  "noticeHiddenEx": [],
+  "chromeOver": 0,
+  "shifts": [
+   {
+    "at": 8224,
+    "hash": "#/focus",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": 10,
+    "sinceTap": 11,
+    "why": "screen"
+   },
+   {
+    "at": 8224,
+    "hash": "#/focus",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": 10,
+    "sinceTap": 11,
+    "why": "screen"
+   },
+   {
+    "at": 17504,
+    "hash": "#/focus",
+    "sinceRoute": 64,
+    "kind": "strip",
+    "from": 0,
+    "to": 188,
+    "top": 313,
+    "down": 0,
+    "sinceInput": 260,
+    "sinceTap": 260,
+    "why": "screen",
+    "app": {
+     "down": 0,
+     "sinceInput": 257,
+     "sinceTap": 257,
+     "atRest": false
+    }
+   }
+  ],
+  "seen": {
+   "Couldn’t save just now. Your summary is still here": 888
+  }
+ },
+ "errors": [],
+ "shiftAudit": [
+  {
+   "at": 8224,
+   "hash": "#/focus",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": 10,
+   "sinceTap": 11,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 8224,
+   "hash": "#/focus",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": 10,
+   "sinceTap": 11,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 17504,
+   "hash": "#/focus",
+   "sinceRoute": 64,
+   "kind": "strip",
+   "from": 0,
+   "to": 188,
+   "top": 313,
+   "down": 0,
+   "sinceInput": 260,
+   "sinceTap": 260,
+   "why": "screen",
+   "app": {
+    "down": 0,
+    "sinceInput": 257,
+    "sinceTap": 257,
+    "atRest": false
+   },
+   "ok": true
+  }
+ ],
+ "shiftViolations": []
+}

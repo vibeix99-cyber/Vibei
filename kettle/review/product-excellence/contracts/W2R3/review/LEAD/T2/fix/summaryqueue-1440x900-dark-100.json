@@ -1,0 +1,190 @@
+{
+ "base": "http://127.0.0.1:5477",
+ "cfg": "1440x900:dark:100",
+ "flow": "summaryqueue",
+ "kind": null,
+ "scene": "off",
+ "steps": [
+  {
+   "t": 2214,
+   "k": "tap",
+   "label": "field",
+   "at": [
+    583,
+    401
+   ],
+   "size": [
+    551,
+    52
+   ]
+  },
+  {
+   "t": 3120,
+   "k": "tap",
+   "label": "start",
+   "at": [
+    583,
+    674
+   ],
+   "size": [
+    591,
+    60
+   ]
+  },
+  {
+   "t": 13640,
+   "k": "tap",
+   "label": "Tea time",
+   "at": [
+    1155,
+    777
+   ],
+   "size": [
+    450,
+    60
+   ]
+  }
+ ],
+ "g0": {
+  "sheetTop": 29.5,
+  "sheetH": 703,
+  "footer": 733,
+  "drawn": 0,
+  "scrollTop": 0
+ },
+ "sheetTopsWithQueue": [
+  29.5
+ ],
+ "g1": {
+  "sheetTop": 29.5,
+  "sheetH": 703,
+  "footer": 733,
+  "drawn": 0,
+  "scrollTop": 0
+ },
+ "queueOnSummary": {
+  "queue": [
+   {
+    "id": "t1",
+    "message": "Couldn’t save just now. Your summary is still here.",
+    "left": 3200
+   },
+   {
+    "id": "lead-update",
+    "message": "A fresh brew of Kettle is ready.",
+    "left": null
+   },
+   {
+    "id": "t2",
+    "message": "Recipe done: Take a full tea break · +10 leaves",
+    "left": 3200
+   }
+  ],
+  "shown": null,
+  "strip": null,
+  "screen": null,
+  "why": "screen",
+  "changed": 5891,
+  "version": 9
+ },
+ "breakSequence": [
+  null,
+  "Couldn’t save just now. Your summary is still here.",
+  "Recipe done: Take a full tea break · +10 leaves",
+  "A fresh brew of Kettle is ready."
+ ],
+ "saidBefore": [],
+ "saidAfter": [
+  "Couldn’t save just now. Your summary is still here.",
+  "A fresh brew of Kettle is ready. Update",
+  "Recipe done: Take a full tea break · +10 leaves"
+ ],
+ "hashEnd": "#/focus",
+ "rec": {
+  "frames": 1626,
+  "noticeFrames": 947,
+  "modalFrames": 0,
+  "covered": 0,
+  "coveredEx": [],
+  "geo": 0,
+  "geoEx": [],
+  "noticeHidden": 0,
+  "noticeHiddenEx": [],
+  "chromeOver": 0,
+  "shifts": [
+   {
+    "at": 2480,
+    "hash": "#/focus",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": -16,
+    "sinceTap": -16,
+    "why": "screen"
+   },
+   {
+    "at": 11568,
+    "hash": "#/focus",
+    "sinceRoute": 80,
+    "kind": "strip",
+    "from": 0,
+    "to": 62,
+    "top": 84,
+    "down": 0,
+    "sinceInput": 272,
+    "sinceTap": 272,
+    "why": "screen",
+    "app": {
+     "down": 0,
+     "sinceInput": 273,
+     "sinceTap": 273,
+     "atRest": false
+    }
+   }
+  ],
+  "seen": {
+   "Couldn’t save just now. Your summary is still here": 195,
+   "Recipe done: Take a full tea break · +10 leaves": 193,
+   "A fresh brew of Kettle is ready. Update": 559
+  }
+ },
+ "errors": [],
+ "shiftAudit": [
+  {
+   "at": 2480,
+   "hash": "#/focus",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": -16,
+   "sinceTap": -16,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 11568,
+   "hash": "#/focus",
+   "sinceRoute": 80,
+   "kind": "strip",
+   "from": 0,
+   "to": 62,
+   "top": 84,
+   "down": 0,
+   "sinceInput": 272,
+   "sinceTap": 272,
+   "why": "screen",
+   "app": {
+    "down": 0,
+    "sinceInput": 273,
+    "sinceTap": 273,
+    "atRest": false
+   },
+   "ok": true
+  }
+ ],
+ "shiftViolations": []
+}

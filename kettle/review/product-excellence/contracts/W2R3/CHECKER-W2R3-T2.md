@@ -1,8 +1,10 @@
 # CHECKER W2R3 · Maker T2: I10, notices without overlays
 
-**Status: DRAFT.** Lane T's and Lane R's receipts are due about 00:55 UTC. My own findings below are final; this verdict line changes only if a receipt contradicts them.
+**Status: DRAFT (fix round).** The first review (§1–§4) found one blocker on `6a64fbf`, T2-D1. The fix revision `pe/w2r3-notices@64f29cd` (code `40f92b6`, kettle/src `aa88587`) is reviewed in §6. The final verdict on `64f29cd` is written once Lane T's `RECEIPT-LT-FIX.md` and Lane R's `RECEIPT-LR.md` are in.
 
-**Verdict (draft): REJECT** `pe/w2r3-notices@6a64fbf` (code `61b463c`, kettle/src `5aa6228`). One blocker, T2-D1: a notice on the summary pushes P's summary sheet down. One 90-minute fix round applies.
+**First review: REJECT** `pe/w2r3-notices@6a64fbf` (code `61b463c`, kettle/src `5aa6228`). One blocker, T2-D1: a notice on the summary pushed P's summary sheet down.
+
+**Fix round (draft): T2-D1 closed by my own measurements; verdict pending the lane receipts.**
 
 | | |
 |---|---|
@@ -132,3 +134,86 @@ The base's cover was the defect to remove. T2 replaces it with different defects
 ## 5. Lane receipts
 
 _Pending: Lane T (`review/LT/RECEIPT-LT.md`) and Lane R (`review/LR/…`)._
+
+## 6. Fix round: `pe/w2r3-notices@64f29cd` (code `40f92b6`, kettle/src `aa88587`)
+
+**Context.** The container restarted at about 00:40 UTC. T2 then had a fresh 90-minute window (02:23–03:53) and handed back at 03:31.
+
+| | |
+|---|---|
+| Fix trial | `99d9368` = integration `8af5430` (C + B) + `64f29cd`; worktree `/home/user/wt/w4tr-t2f`; src `5cd9a44`; dev :5477 (all my fix runs) |
+| Revision check | `git rev-parse 64f29cd:kettle/src` = `40f92b6:kettle/src` = `aa88587…` |
+| Packet | `/home/user/wt/w4t2/kettle/review/product-excellence/contracts/W2R3/T2-FIX-READY.md`; evidence `…/W2R3/T2/fix/` |
+| My evidence | `contracts/W2R3/review/LEAD/T2/fix/` (`summaryarrive-update-*`, `summaryqueue-*`, `breakclock-*` JSON and PNG; `t2-lead.mjs`) |
+
+**Direction (Vibei, binding):**
+- no strip on `/done`;
+- no update prompt on `/focus` or `/done`;
+- queued notices are never dropped, and appear in order on the next screen with a strip, announced once;
+- acceptance: the summary sheet never moves when a notice is queued.
+
+### Code delta (`6a64fbf..40f92b6`, src)
+
+`FocusScreen.tsx`:
+- the summary's `NoticeStrip` and `summaryFill` wrapper are removed; `<Summary/>` is again the summary box's only child, as on the base;
+- the panel strip is still `off` on the summary.
+
+`FocusScreen.module.css`:
+- the summary block is identical to `61aba17` again (`git diff 61aba17 40f92b6` shows no line in it).
+
+`ShellOverlays.tsx`:
+- `busy = status !== 'idle' || route === '/focus' || route === '/done'`;
+- while busy the prompt is dismissed programmatically, so `needRefresh` stays set and the prompt is raised on the next screen.
+
+The session layer has no page-level strip (`App.tsx`: the `session` layer renders `<Session/>` only), so nothing is drawn while the summary is up: no strip is active, and a notice waits with its clock stopped. No P file is touched.
+
+**Tests:**
+- `summary-notice.spec.ts` (new) compares the sheet with and without queued notices.
+- `notice-strip.spec.ts`'s summary step now asserts nothing is drawn there, the notice waits with its full time, and it is drawn whole on the tea break.
+- `a11y.spec.ts:332` now asserts the notice is not drawn on the summary and is queued.
+
+All three are stricter or equivalent; nothing is weakened.
+
+### My reproduction, rerun on the fix (dev :5477)
+
+**1. Update prompt pending as the brew ends** (`summaryarrive`; prompt raised in the same task as the finish). The same flow found the defect on `490ca97`:
+
+| Config | Base `61aba17` (sheet top · prompt) | First trial `490ca97` | **Fix `99d9368`** |
+|---|---|---|---|
+| 375×667 @100 | 284 · prompt over Done / Carry forward | 359 (+75), task row under the footer, band | **284**, nothing drawn, P's fold as with no notice |
+| 375×667 @200 | 285 · prompt over the heading | 453 (summary off screen), prompt over Chai and the kettle | **285**, nothing drawn; "25 minutes brewed" on screen; Chai and the kettle clear |
+| 390×844 @100 | 382 · prompt over the unlock card | 457 (+75), unlock card cut, band | **382**, nothing drawn; unlock card whole |
+| 390×844 dark @200, 667×375 @100, 844×390 @200 | — | — | Nothing drawn on the summary; sheet top 393 / 15 / 26 (same as their no-notice runs in (2)) |
+
+**2. Three notices queued on a summary already shown** (`summaryqueue`): a timed warning, a persistent prompt stand-in and a recipe notice, raised 2.8 s after arrival. For each run:
+- the sheet's top was sampled every 100 ms for 3 s;
+- then Tea time was tapped for real, and I recorded what the break panel drew and what the announcer said.
+
+| Config | Sheet top before → with the queue (all samples) | Drawn on the summary | On the tea break | Announced |
+|---|---|---|---|---|
+| 375×667 @100 | 284.5 → 284.5 | 0 | Drawn whole at the panel's head (frame `summaryqueue-375x667-light-100-2-break-2.png`) | each once |
+| 375×667 @200 | 285.5 → 285.5 | 0 | Drawn first | each once |
+| 390×844 @100 | 382 → 382 | 0 | Warning → recipe → prompt, in order | each once |
+| 844×390 @200 | 26.4 → 26.4 | 0 | Warning → recipe → prompt, in order | each once |
+| 1440×900 dark @100 | 29.5 → 29.5 | 0 | Warning → recipe → prompt, in order | each once |
+
+The clocks stood still on the summary (3200 ms left each).
+
+**The 375×667 rows** showed only the first notice in my 15 s window. My diagnostic (`breakclock`) showed why. The notice is drawn at 323–380, in view and on top, but my harness had left the emulated mouse at the screen centre (187, 333), right over it, and a notice under the pointer pauses its clock by design. With the mouse moved off (`breakclock-mouseaway-375x667-light-100.json`), the queue runs down in order (3200 → 2200 → 800 → next → cleared). A harness artifact, not a defect.
+
+**3. Invariant on all fix runs:** 0 cover samples by hit-test and by geometry; 0 notices with anything over them; 0 moment violations.
+
+**Visual, opened at full size:**
+- `fix/summaryarrive-update-375x667-light-200-arrival.png` and `…-390x844-light-100-arrival.png`: identical in composition to P's no-notice summary (K02/K03). "25 minutes brewed" on screen at 200 %, the unlock card whole at 390, Chai and the kettle clear.
+- The matching T2-D1 frames on `490ca97` are in `shots/`; the base frames are in `base/`.
+
+**T2-D1: closed by my measurements.** P's sheet does not move with a notice queued, at any configuration I ran; nothing is drawn on the summary; the queue is kept and comes in order on the next screen, announced once.
+
+### Follow-ups ruled by Vibei (not blockers this round)
+
+| # | Item | Class | Owner |
+|---|---|---|---|
+| F-T2-4 | "Delete this brew?" unreachable at 375×667 @200 | **FOLLOW-UP** | Stats/History round |
+| F-T2-1 | The strip changing as a finger lands: needs a between-interactions rule | **FOLLOW-UP** | Next polish round |
+
+_Lane receipts: pending (`review/LT/RECEIPT-LT-FIX.md`, `review/LR/RECEIPT-LR.md`)._
