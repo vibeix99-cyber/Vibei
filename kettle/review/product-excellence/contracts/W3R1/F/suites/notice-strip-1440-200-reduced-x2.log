@@ -1,0 +1,28 @@
+[slots] F took 1/3 at 10:55:52: env KETTLE_PORT=5501 npx playwright test tests/notice-strip.spec.ts --project=chromium --workers=1 -g 1440×900 light 200 % reduced motion --repeat-each=2 --output /tmp/claude-0/-home-user-Vibei/af9014
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (35.5s)
+  ✓  2 [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (1.3m)
+
+
+  1) [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) 
+
+    Error: /^Saved 3 minutes of focus/ not drawn; notices: {"queue":[],"shown":null,"strip":2,"screen":"/","why":"rest","changed":19384,"version":9,"room":72.5}; said: Kettle’s off. See you soon.; drawn: []
+
+      252 |     await expect(page.locator('[data-notice-strip] li', { hasText: re })).toHaveCount(1, { timeout: 20_000 });
+      253 |   } catch (e) {
+    > 254 |     throw new Error(`${re} not drawn; notices: ${JSON.stringify(await page.evaluate(() => (window as any).__kettle.notices()))}; said: ${await page.evaluate(() => (window as any).__kettle.noticesSaid()?.textContent)}; drawn: ${await page.evaluate(() => [...document.querySelectorAll('[data-notice-strip] li')].map((li) => { const r = li.getBoundingClientRect(); const h = document.elementFromPoint((r.left + r.right) / 2, (r.top + r.bottom) / 2); return { r: [r.top, r.bottom], hit: h?.className, leaving: !!li.closest('[data-route-leaving]'), sy: scrollY, dlg: !!document.querySelector('[role=dialog]') }; })).then(JSON.stringify)}`);
+          |           ^
+      255 |   }
+      256 | };
+      257 | /** Raise a notice the way the app does (the app has no button that raises one on these screens on demand). */
+        at drawn (/home/user/wt/w5f/kettle/tests/notice-strip.spec.ts:254:11)
+        at /home/user/wt/w5f/kettle/tests/notice-strip.spec.ts:311:5
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-ns1440/notice-strip-no-notice-ove-d82ec-0-light-200-reduced-motion--chromium/error-context.md
+
+  1 failed
+    [chromium] › tests/notice-strip.spec.ts:389:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) 
+  1 passed (2.0m)
+[slots] F freed 1 at 10:57:57

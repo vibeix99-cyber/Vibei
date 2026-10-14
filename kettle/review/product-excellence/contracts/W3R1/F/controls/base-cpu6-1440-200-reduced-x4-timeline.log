@@ -1,0 +1,137 @@
+[slots] F took 1/3 at 10:08:02: env KETTLE_PORT=5478 CPU=6 FIRST_ONLY=1 REP=4 ONLY=1440x900-light-200-r npx playwright test tests/w3-notices-probe2.spec.ts --project=chromium --workers=1 --output /tmp/claude-0/-home-user-Vibei/af901
+
+Running 4 tests using 1 worker
+
+{"markDoneTapMs":6378,"markDone":{"tapAt":{"x":773.5,"y":647.1875,"w":151,"h":44,"top":625.1875},"undo":{"n":9,"w":80,"h":44}}}
+  ✓  1 [chromium] › tests/w3-notices-probe2.spec.ts:284:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #0 (24.1s)
+[{"t":2105,"ts":2105,"e":"pointerdown","x":583,"y":643,"sy":0},
+{"t":2335,"ts":2335,"e":"pointerup","x":583,"y":643,"sy":0},
+{"t":2340,"ts":2340,"e":"click","x":583,"y":642,"sy":0},
+{"t":2346,"ts":2346,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2202,"ts":2202,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2199,"ts":2199,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2233,"ts":2233,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2322,"ts":2322,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2235,"ts":2235,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2265,"ts":2265,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2301,"ts":2301,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2292,"ts":2292,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2311,"ts":2311,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2324,"ts":2324,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2321,"ts":2321,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2423,"ts":2423,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2513,"ts":2513,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2477,"ts":2477,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2552,"ts":2552,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2651,"ts":2651,"e":"pointermove","x":1,"y":899,"sy":0,"n":2,"t2":2679},
+{"t":2767,"ts":2767,"e":"pointerdown","x":583,"y":805,"sy":0},
+{"t":2814,"ts":2814,"e":"pointerup","x":583,"y":805,"sy":0},
+{"t":2816,"ts":2816,"e":"click","x":583,"y":804,"sy":0},
+{"t":2816,"e":"frame","key":"sy0|st0,0|screen|v7|m-1|null","ms":{"down":0,"sinceInput":0,"sinceTap":0,"atRest":false}},
+{"t":3378,"e":"frame","key":"sy0|st0|screen|v7|m-1|null","ms":{"down":0,"sinceInput":562,"sinceTap":562,"atRest":false}},
+{"t":7286,"ts":7286,"e":"pointermove","x":1,"y":899,"sy":0,"n":2,"t2":7434},
+{"t":7444,"ts":7444,"e":"pointerdown","x":1274,"y":598,"sy":0},
+{"t":7466,"ts":7466,"e":"pointerup","x":1274,"y":598,"sy":0},
+{"t":7466,"ts":7466,"e":"click","x":1274,"y":598,"sy":0},
+{"t":8201,"ts":8201,"e":"pointermove","x":1,"y":899,"sy":0,"n":2,"t2":8235},
+{"t":8239,"ts":8239,"e":"pointerdown","x":720,"y":706,"sy":0},
+{"t":8241,"ts":8241,"e":"pointerup","x":720,"y":706,"sy":0},
+{"t":8241,"ts":8241,"e":"click","x":720,"y":705,"sy":0},
+{"t":8241,"e":"frame","key":"sy0|st0,73|screen|v12|m745|t1","ms":{"down":0,"sinceInput":0,"sinceTap":0,"atRest":false}},
+{"t":9630,"ts":9630,"e":"pointermove","x":720,"y":450,"sy":0},
+{"t":9633,"e":"frame","key":"sy0|st73|screen|v12|m745|t1","ms":{"down":0,"sinceInput":2,"sinceTap":1392,"atRest":false}},
+{"t":11808,"e":"frame","key":"sy0|st0|rest|v13|m673|null","ms":{"down":0,"sinceInput":2177,"sinceTap":3567,"atRest":true}},
+{"t":13554,"ts":13554,"e":"wheel","x":720,"y":450,"sy":0},
+{"t":14686,"ts":14686,"e":"pointermove","x":1,"y":899,"sy":60},
+{"t":14686,"ts":14686,"e":"scroll","x":null,"y":null,"sy":60},
+{"t":14688,"e":"frame","key":"sy60|st0|rest|v13|m613|null","ms":{"down":0,"sinceInput":2,"sinceTap":6447,"atRest":false}},
+{"t":14725,"ts":14725,"e":"pointermove","x":774,"y":695,"sy":60},
+{"t":14727,"ts":14727,"e":"pointerdown","x":774,"y":695,"sy":60},
+{"t":14729,"ts":14729,"e":"pointerup","x":774,"y":695,"sy":60},
+{"t":14729,"ts":14729,"e":"click","x":773,"y":694,"sy":60}]
+  ✘  2 [chromium] › tests/w3-notices-probe2.spec.ts:284:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #1 (36.5s)
+{"markDoneTapMs":9671,"markDone":{"tapAt":{"x":773.5,"y":574.6875,"w":151,"h":44,"top":552.6875},"undo":{"n":9,"w":80,"h":44}}}
+  ✓  3 [chromium] › tests/w3-notices-probe2.spec.ts:284:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #2 (29.6s)
+[{"t":1917,"ts":1917,"e":"pointerdown","x":583,"y":643,"sy":0},
+{"t":2527,"ts":2527,"e":"pointerup","x":583,"y":643,"sy":0},
+{"t":2528,"ts":2528,"e":"click","x":583,"y":642,"sy":0},
+{"t":2539,"ts":2539,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2668,"ts":2668,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2853,"ts":2853,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":1961,"ts":1961,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2052,"ts":2052,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":1973,"ts":1973,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2051,"ts":2051,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2132,"ts":2132,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2384,"ts":2384,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2548,"ts":2548,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2632,"ts":2632,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2652,"ts":2652,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2751,"ts":2751,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2861,"ts":2861,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":3021,"ts":3021,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":2675,"ts":2675,"e":"keydown","x":null,"y":null,"sy":0},
+{"t":3017,"ts":3017,"e":"pointermove","x":1,"y":899,"sy":0,"n":2,"t2":3112},
+{"t":3117,"ts":3117,"e":"pointerdown","x":583,"y":805,"sy":0},
+{"t":3184,"ts":3184,"e":"pointerup","x":583,"y":805,"sy":0},
+{"t":3189,"ts":3189,"e":"click","x":583,"y":804,"sy":0},
+{"t":3164,"e":"frame","key":"sy0|st0,0|screen|v7|m-1|null","ms":{"down":0,"sinceInput":-25,"sinceTap":-25,"atRest":false}},
+{"t":3616,"e":"frame","key":"sy0|st0|screen|v7|m-1|null","ms":{"down":0,"sinceInput":427,"sinceTap":427,"atRest":false}},
+{"t":6453,"ts":6453,"e":"pointermove","x":1,"y":899,"sy":0,"n":2,"t2":6310},
+{"t":6316,"ts":6316,"e":"pointerdown","x":1274,"y":598,"sy":0},
+{"t":6317,"ts":6317,"e":"pointerup","x":1274,"y":598,"sy":0},
+{"t":6317,"ts":6317,"e":"click","x":1274,"y":598,"sy":0},
+{"t":7340,"ts":7340,"e":"pointermove","x":1,"y":899,"sy":0,"n":2,"t2":7422},
+{"t":7423,"ts":7423,"e":"pointerdown","x":720,"y":706,"sy":0},
+{"t":7424,"ts":7424,"e":"pointerup","x":720,"y":706,"sy":0},
+{"t":7424,"ts":7424,"e":"click","x":720,"y":705,"sy":0},
+{"t":7425,"e":"frame","key":"sy0|st0,73|screen|v12|m745|t1","ms":{"down":0,"sinceInput":1,"sinceTap":1,"atRest":false}},
+{"t":8366,"ts":8366,"e":"pointermove","x":720,"y":450,"sy":0},
+{"t":8368,"e":"frame","key":"sy0|st73|screen|v12|m745|t1","ms":{"down":0,"sinceInput":0,"sinceTap":944,"atRest":false}},
+{"t":11089,"e":"frame","key":"sy0|st0|rest|v13|m673|null","ms":{"down":0,"sinceInput":2721,"sinceTap":3665,"atRest":true}},
+{"t":11438,"ts":11438,"e":"wheel","x":720,"y":450,"sy":0},
+{"t":12165,"ts":12165,"e":"pointermove","x":1,"y":899,"sy":60},
+{"t":12167,"ts":12167,"e":"scroll","x":null,"y":null,"sy":60},
+{"t":12161,"e":"frame","key":"sy60|st0|rest|v13|m613|null","ms":{"down":0,"sinceInput":-7,"sinceTap":4737,"atRest":false}},
+{"t":12192,"ts":12192,"e":"pointermove","x":774,"y":695,"sy":60},
+{"t":12195,"ts":12195,"e":"pointerdown","x":774,"y":695,"sy":60},
+{"t":12200,"ts":12200,"e":"pointerup","x":774,"y":695,"sy":60},
+{"t":12200,"ts":12200,"e":"click","x":773,"y":694,"sy":60}]
+  ✘  4 [chromium] › tests/w3-notices-probe2.spec.ts:284:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #3 (34.5s)
+
+
+  1) [chromium] › tests/w3-notices-probe2.spec.ts:284:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #1 
+
+    Error: Mark done's Undo not drawn after the tap at {"x":773.5,"y":694.6875,"w":151,"h":44,"top":672.6875}: {"taps":["pointerdown@774,695→DIV._group_kjzqi_114 _tagGroup_ahn","click@773,694→DIV._group_kjzqi_114 _tagGroup_ahn"],"mark":{"x":698,"y":612.6875,"width":151,"height":44,"top":612.6875,"right":849,"bottom":656.6875,"left":698},"sy":60,"notices":{"queue":[],"shown":null,"strip":3,"screen":"/","why":"rest","changed":11804,"version":13}}
+
+      329 |     } catch (e) {
+      330 |       console.log(JSON.stringify(await page.evaluate(() => (window as any).__log.slice(-45))).replace(/\},\{/g, '},\n{'));
+    > 331 |       throw new Error(`Mark done's Undo not drawn after the tap at ${JSON.stringify(tapAt)}: ${JSON.stringify(await page.evaluate(() => ({ taps: (window as any).__taps, mark: document.querySelector('button[aria-label^="Mark"]')?.getBoundingClientRect().toJSON(), sy: scrollY, notices: (window as any).__kettle.notices() })))}`);
+          |             ^
+      332 |     }
+      333 |     const rowTop = await undoRow.evaluate((r) => r.getBoundingClientRect().top);
+      334 |     expect(Math.abs(rowTop - line), 'the Undo is drawn where Mark done was, on screen').toBeLessThanOrEqual(2);
+        at /home/user/wt/w5f/kettle/tests/w3-notices-probe2.spec.ts:331:13
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-probe2/w3-notices-probe2-no-notic-8e5e7--light-200-reduced-motion-1-chromium/error-context.md
+
+  2) [chromium] › tests/w3-notices-probe2.spec.ts:284:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #3 
+
+    Error: Mark done's Undo not drawn after the tap at {"x":773.5,"y":694.6875,"w":151,"h":44,"top":672.6875}: {"taps":["pointerdown@774,695→DIV._group_kjzqi_114 _tagGroup_ahn","click@773,694→DIV._group_kjzqi_114 _tagGroup_ahn"],"mark":{"x":698,"y":612.6875,"width":151,"height":44,"top":612.6875,"right":849,"bottom":656.6875,"left":698},"sy":60,"notices":{"queue":[],"shown":null,"strip":3,"screen":"/","why":"rest","changed":11076,"version":13}}
+
+      329 |     } catch (e) {
+      330 |       console.log(JSON.stringify(await page.evaluate(() => (window as any).__log.slice(-45))).replace(/\},\{/g, '},\n{'));
+    > 331 |       throw new Error(`Mark done's Undo not drawn after the tap at ${JSON.stringify(tapAt)}: ${JSON.stringify(await page.evaluate(() => ({ taps: (window as any).__taps, mark: document.querySelector('button[aria-label^="Mark"]')?.getBoundingClientRect().toJSON(), sy: scrollY, notices: (window as any).__kettle.notices() })))}`);
+          |             ^
+      332 |     }
+      333 |     const rowTop = await undoRow.evaluate((r) => r.getBoundingClientRect().top);
+      334 |     expect(Math.abs(rowTop - line), 'the Undo is drawn where Mark done was, on screen').toBeLessThanOrEqual(2);
+        at /home/user/wt/w5f/kettle/tests/w3-notices-probe2.spec.ts:331:13
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pw-probe2/w3-notices-probe2-no-notic-9b1d5--light-200-reduced-motion-3-chromium/error-context.md
+
+  2 failed
+    [chromium] › tests/w3-notices-probe2.spec.ts:284:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #1 
+    [chromium] › tests/w3-notices-probe2.spec.ts:284:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #3 
+  2 passed (2.2m)
+[slots] F freed 1 at 10:10:13
