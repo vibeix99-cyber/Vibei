@@ -1554,5 +1554,87 @@
     "room": 0
    }
   }
+ },
+ {
+  "cfg": "1440x900-light-t100",
+  "server": "trial",
+  "band": {
+   "target": "3 days warm . Show details",
+   "tgTopBefore": 44,
+   "tgTopWithNotice": 112,
+   "enterPush": 68,
+   "arriveWhy": "rest",
+   "withNotice": {
+    "stripTop": 32,
+    "stripH": 68
+   },
+   "tgTopAfterGone": 112,
+   "leaveMove": 0,
+   "leaveWhy": "rest",
+   "after": {
+    "stripTop": 32,
+    "stripH": 68,
+    "stripW": 560,
+    "room": 68,
+    "dataRoom": true,
+    "bg": "rgba(0, 0, 0, 0)",
+    "border": "0px none",
+    "over": [],
+    "hits": [
+     "DIV._strip_1dob8_5 _notices_ (strip)",
+     "DIV._strip_1dob8_5 _notices_ (strip)",
+     "DIV._strip_1dob8_5 _notices_ (strip)"
+    ]
+   },
+   "afterScrollBack": {
+    "room": 68,
+    "sy": 0
+   }
+  },
+  "L1": {
+   "target": "3 days warm . Show details",
+   "intentTop": 112,
+   "pointerdown": {
+    "dtFromChange": 31,
+    "tgTop": 112,
+    "moved": 0,
+    "landed": "span._statNum_ahnin_49 \"3\"",
+    "onTarget": true
+   },
+   "click": {
+    "tgTop": 112,
+    "moved": 0,
+    "landed": "span._statNum_ahnin_49 \"3\"",
+    "onTarget": true
+   },
+   "change": {
+    "why": "rest",
+    "room": 68
+   },
+   "maxTargetMoveInWindow": 0,
+   "note": "mouse resting over the target since ≥1.2 s before the time-up; click = down/up without moving"
+  },
+  "L2": {
+   "target": "3 days warm . Show details",
+   "intentTop": 112,
+   "pointerdown": {
+    "dtFromChange": null,
+    "tgTop": 112,
+    "moved": 0,
+    "landed": "span._statNum_ahnin_49 \"3\"",
+    "onTarget": true
+   },
+   "click": {
+    "tgTop": 112,
+    "moved": 0,
+    "landed": "span._statNum_ahnin_49 \"3\"",
+    "onTarget": true
+   },
+   "change": null,
+   "maxTargetMoveInWindow": 0
+  },
+  "E": {
+   "skipped": "no target in view"
+  }
  }
 ]
