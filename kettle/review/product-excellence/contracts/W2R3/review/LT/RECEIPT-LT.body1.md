@@ -1,0 +1,29 @@
+
+## Commands and times (UTC)
+
+| Time | Command (cwd `/home/user/wt/w4tr-t2/kettle`, every one through `python3 -I …/round7-review/tools/slots.py run --lane LT --n <n> --`) | Result |
+|---|---|---|
+| 23:24–23:27 | `env KETTLE_PORT=5476 npx playwright test tests/integrity.spec.ts tests/toast-room.spec.ts tests/w2-home.spec.ts tests/statusbar.spec.ts tests/a11y.spec.ts --project=chromium --workers=1 --output=/tmp/claude-0/lt3-out-6` (n 1) | **Stopped by Lane T** (PID 22119, SIGTERM) after 2 of 77 tests (`a11y.spec.ts:61` light and dark, both passed) so the slot could go to check 1; log `runs/suites6-aborted.log` |
+| 23:27–23:37 | `node .tmp/LT/ltprobe.mjs …` smoke runs on 2 configurations (n 1) | probe debugged (not evidence) |
+| 23:38:57–23:44:16 | `node .tmp/LT/ltprobe.mjs --base http://127.0.0.1:5476 --kind fix --out LT/probes/fix --cfgs <22> --par 3` (n 1) | 3 configurations written (844×390 light 200, 375×667 dark 200, 667×375 light 200), then the process died on an unhandled `filechooser` timeout (fixed in the probe); log `runs/probe-fix-part1.log` |
+| 23:48:45–00:07:50 | `bash .tmp/LT/chain.sh` part A1: the other 19 configurations, same probe (n 1) | `runs/chain.log` |
+| 00:07:50–00:13:55 | `chain.sh` part A2: `ltprobe.mjs --base2 http://127.0.0.1:5470 --out LT/probes/cmp` (base W2H-D1, base follow-ups, fix tap and storage, sheet exit) | base groups that raise a notice failed: the base debug API has no `__kettle.toast` (re-run in C) |
+| 00:13:55– | `chain.sh` part B: `BREAK_REACH_ALL_DAYS=1 KETTLE_PORT=<5470, then 5476> npx playwright test tests/break-reach.spec.ts --project=chromium --workers=1 -g "Break's over with a carried task" --grep-invert "844×390" --output=/tmp/claude-0/lt3-out-b<port>` (the trial's spec on both servers) | `runs/break-reach-{5470,5476}.{log,json}` |
+| later | `bash .tmp/LT/chain2.sh` (n 2): C = base re-run of the notice-raising groups (probe now raises a notice on the base through `import('/src/ui/Toast.tsx')`); D = `KETTLE_PORT=5476 npx playwright test tests/notice-strip.spec.ts --project=chromium --workers=2 --output=/tmp/claude-0/lt3-out-ns` | see §1.4 and §5 |
+
+Dates: every probe context installs `page.clock.install({ time: 2026-10-12T07:40:00Z })` (a Monday) then `resume()`. Setup through `?debug&seed=…&theme=…` and `window.__kettle` only (seed, `startFocus`, `ff`, `finish`, settings, raising a notice where the app has no button for it); every action under test is a real `touchscreen.tap` (phones, `hasTouch`, DPR 2) or `mouse.click` (1440), real `mouse.wheel`, real keys. 200 % = `html{font-size:200%!important}` injected at DOMContentLoaded (same method as the BEFORE set).
+
+## 1. The invariant, measured independently
+
+### 1.1 How the probe measures (different from `notice-strip.spec.ts`)
+
+The maker's spec checks every animation frame, element boxes (`getBoundingClientRect`) of controls / own-text elements / rows against each notice's box clipped by its ancestors, and counts apart: frames with a sheet open, and anything inside fixed or sticky chrome (`underChrome`).
+
+Lane T's probe (`tools/ltprobe.mjs`, `sampler()`): a `setInterval` of **100 ms** in every document, independent of rAF. Notices = `[data-notice-strip] li`, `[data-inline-undo]` and the base's `[aria-label="Notifications"] li`, not inside `[data-route-leaving]`, with a box in the viewport.
+- **(a) Geometry:** every notice box against every control box (button, link, field, every interactive role, tab order), every **text node's `Range.getClientRects()`** rect (not element boxes), and every list row box (`li`, `role=row|listitem`, `tr`); > 0.5 px each way. Each intersection is classified, in this order: outside the viewport; clipped away from the notice (by its scroll/clip ancestors); clipped away from the other element; **under a sheet** (the point lies in a `[role=dialog]` box the notice is not in); else **drawn**, and then the element on top at the centre of the drawn intersection (`elementFromPoint`): the notice, the other element, or a third element. Nothing is excluded for being fixed/sticky: those are labelled `@fixed` and still counted.
+- **(b) Hit test:** `elementFromPoint` at **9 points** (15/50/85 % × 15/50/85 %) of every visible control; a point whose top element is inside a notice (and not inside the control) is a covered point.
+- Each sample is tagged with the state the driver is in and whether a sheet is open. On the first non-modal drawn hit in a group the driver takes a screenshot (max 3 per group).
+
+States walked per configuration (each group a fresh context): `home` (veteran at rest), `end` (task typed, Put the kettle on, `ff` 3 min, End session → End session: Today with "Saved 3 minutes of focus"; Mark done at +0.6 s if 9/9 on top, else wheeled to and tapped; its inline Undo; Undo tapped; Mark done again and left to run out), `break` (summary → Tea time → Break's over on Monday with "Recipe done", panel wheeled down 6 and up 6 → Put the kettle on (real tap) → running brew → three notices raised → Ambience opened by tap, 2 s, Escape), `nextbrew` (Settings › Next brew on: autoStartBreaks + autoStartFocus; finish focus, wait for the break running, finish: the next brew starts by itself on Monday), `stats` (veteran, History: a mid-list row and the last row, each tapped → Edit brew → Delete this brew → Delete; mid: Undo tapped; last: left to run out), `import` (Settings › Your data › Import a backup tapped → real file chooser → `setFiles(backup)` → Add; Undo tapped; second import left to run out), `update` (the update prompt raised exactly as `ShellOverlays.tsx` raises it, then "Brew updated"), `queue` (four notices raised on Today, then the Stats tab tapped while three wait).
+
+Configurations: 390×844, 375×667, 844×390, 667×375, 1440×900 × light/dark × 100/200 % (20), plus reduced motion at 390×844 light 100 % and 375×667 dark 200 % = **22**, all on the fix :5476.
