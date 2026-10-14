@@ -180,3 +180,95 @@ The visible "N" and "days warm" are separate elements, so the name is computed w
 - **Ownership.** My diff stat shows 19 files, all F's.
 
 **The receipt's own limits** (its §7) are carried in §4 E-1. None of them bears on F-D1…F-D3.
+
+## 6. Fix round (90 minutes, one round; F's files only)
+
+**Where.** Work on `pe/w3-notices-polish` in `/home/user/wt/w5f`, from `5ee3e7c`. Commit locally and never push.
+
+**The fix trial** is the integration branch, which now holds N (`3faaf94`), G (`25b5e26`) and the docs (`a859d86`), plus F's fix. The orchestrator builds it, so C-1 can be proven green there.
+
+**Hand back** `contracts/W3R1/F-FIX-READY.md`, with evidence in `contracts/W3R1/F/fix/` (full-size PNGs, logs, probe JSON), giving:
+- the new hash and the `kettle/src` tree hash;
+- each check below with its result and paths.
+
+**Files you may change:**
+- `src/ui/Toast.tsx` (F-D1), plus `src/ui/moment.ts` only if the idle rule needs it;
+- `src/screens/focus/FocusScreen.module.css` (F-D2);
+- `src/screens/home/StatusBar.tsx` (F-D3);
+- `tests/whistle.spec.ts` (C-1, line 203 only);
+- your own specs: `tests/w3-notices*.spec.ts`, and `tests/notice-strip.spec.ts` (for `press()` hardening only, F-R4).
+
+Nothing else.
+
+### F-D1: the rule the band must follow (Vibei §3)
+1. **When it goes.** A kept room is given back **on the same screen** once touch and scroll are idle. That means all of these hold, confirmed in a fresh frame:
+   - no pointer down;
+   - **no input of any kind for at least `QUIET_MS` (1.2 s)**: pointer, touch, wheel, key, **and `scroll` events**, so momentum and smooth scrolling count as activity;
+   - at least `QUIET_MS` since the notice left;
+   - no input pending.
+
+   You may wait longer, but the room must be gone **no later than 4 s** after the later of the leave and the last input, while the page stays idle.
+2. **When it must not go.** Never while a pointer is down, never during a scroll or fling, and never within 1.2 s of the leave or of any input.
+3. **Out of view.** When the strip is above the view, the same rule applies, with the page kept still (`holdView`). Nothing in view moves.
+4. **What stays as it is.**
+   - The band itself: a notice leaving still moves nothing.
+   - The next notice is still drawn in a room that is still there.
+   - A new screen and the hidden page still give the room back.
+   - The session panel's `reach` exception is unchanged.
+
+### Acceptance checks (all must hold; I rerun the ones marked ◆)
+
+1. **◆ Ownership and scope.** `git diff --stat 5ee3e7c <fix> -- kettle/` lists only the files above (plus packet and evidence).
+2. **◆ F-D1, the band's lifetime.** Rerun Lane I2's idle probes on the fix trial, at 390×844 light @100, 390×844 dark @200 reduced, 1440 light @100 and 1440 dark @200 reduced (trial in the same table):
+   - the probes are `/home/user/wt/w5tr-f/kettle/.tmp/LI2/LI2-idle.mjs`, plus `LI2-idle2.mjs` for a real finger drag on phones;
+   - your own probe with the same tracker also counts.
+
+   Report, per config:
+   - **(a) No input after the leave:** room → 0 between 1.2 s and 4 s after the leave.
+   - **(b) Scroll down and back** (wheel; finger drag), then idle: room kept during the scroll, 0 commits; room → 0 within 1.2–4 s after the last input.
+   - **(c) Pointer held 3 s:** room kept while down; → 0 within 1.2–4 s after release.
+   - **(d)** Every band commit with its ms since the last input (≥ 1200), the pointer state (up) and the visible move at the collapse (= the band's height, once, or 0 when above the view).
+   - **(e) A touch fling** (`LI2-idle3.mjs`): no band commit while the page is still scrolling.
+
+   Give full-size frames before the notice, with the band, and after the collapse.
+3. **◆ F-T2-1 is kept.** Lane I2's aimed-tap probe (`LI2-probe.mjs` / `LI2-probe2.mjs`, L1 and L2), on the fix, at least at the 8 configurations where the base lands off target (390×844, 844×390, 1440 × 100/200): **0 taps off target, 0 px moved.**
+4. **Specs.**
+   - `w3-notices` passes, twice.
+   - Its test "the room a gone notice keeps stays while the page is scrolled over it and back" becomes "…stays while the page is scrolled, and goes on the same screen once idle". It must still assert that nothing in view moves during the scroll.
+   - A new test asserts that the room is gone on the same screen after idle, and was not given back while a pointer was held.
+   - `notice-strip` 25/25, plus `:275` at 1440 light 200 % reduced ×3 and 1440 dark 200 % ×3. Paste the error context of any failure. You may harden `press()` to wait until the wheel's scroll has landed (`scrollY` stable across two frames) before its on-top check (F-R4); remove or loosen nothing.
+   - `toast-room` 14/14, `a11y` 11/11, `summary-notice` 14/14, `break-reach` 17/17, `w2-home` 18/18 (R5-D1, LEAD-D1, R7-D1, D4, W2H-D1, T2-D1).
+   - tsc; vitest.
+5. **◆ F-D2.** At 844×390 and 667×375 @200, light and dark, a running brew "Chapter 3 notes · Study", no notice:
+   - Add 5 / Pause / End **top ≤ the base's 352 px**, visible part ≥ 38.5 / 23.5 px;
+   - the task label readable: whole words, no line holding a single letter;
+   - at @100, identical to base (one line; controls at 248 / 239).
+   - Frames: BEFORE (base) / trial / AFTER at full size.
+
+   **Alternatives that also close F-D2:**
+   - restore the base's top bar (the F-T2-8 block in `FocusScreen.module.css` identical to `4d36939`), in which case F-T2-8 returns to FOLLOW-UP;
+   - or a ruling from Vibei, relayed by the orchestrator, that the trade (readable label for controls 17 px lower) is accepted.
+6. **◆ F-D3.** The status button's accessible name is exactly:
+   - "23 days warm. Show details" (veteran, today brewed);
+   - "1 day warm. Show details";
+   - "5 days warm, today not brewed yet. Show details" (atRisk).
+
+   A spec asserts these with `toHaveAccessibleName`. The visible pill is unchanged.
+7. **◆ C-1.** `whistle.spec.ts:203` reads `/If Kettle is closed or your phone has paused it by then, no nudge comes\./`. `whistle.spec.ts` is 8/8 on the fix trial (integration with G + F's fix).
+8. **Preserve list and wording.** No visible, sr, `title` or `aria-*` "streak" in F's files; the glossary as now. Nothing else in the copy changes.
+
+## 7. BEFORE / AFTER for Vibei (full size)
+
+**REFERENCE:** K01 `kettle/.tmp/pkg/kettle-excellence-integrated/VISUAL_BENCHMARK_LIBRARY/assets/current/01-home.png`.
+
+**Today in each return state** (the maker's, base :5478 → trial src `0acce1a`), in `/home/user/wt/w5f/kettle/review/product-excellence/contracts/W3R1/F/shots/{before,after}/<w>x<h>-<theme>-t<100|200>/`:
+- `today-{blank,newbie,veteran,atRisk,missed-cozy,missed-nocozy}.png`;
+- `sheet-warm-{atRisk,missed-cozy}.png`;
+- `end-sheet.png`;
+- `today-after-end-gone.png` (the band).
+
+**The 1440 rail and Today** (Lane I2's AFTER): `contracts/W3R1/review/LI2/F/shots/{before,after}/1440x900-{light,dark}-t{100,200}/{today,rail}-*.png`.
+
+**The band (F-D1):** `contracts/W3R1/review/LI2/F/idle/trial/<cfg>-{0-no-notice,1-notice,2-band-at-leave,3-band-after-45s-idle,4-band-after-scroll-and-6s-idle}.png`.
+
+**The session top bar at 200 % landscape (F-T2-8 / F-D2):** `contracts/W3R1/review/LI2/F/topbar2/{base,trial}-{844x390,667x375}-{light,dark}-t200-session-running.png`.
