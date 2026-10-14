@@ -82,3 +82,13 @@
 - **C-2:** `docs/REAL_DEVICE_CHECKLIST.md` rows 2.3 and 8.5 were reworded to match G's nudge line (`a859d86`, orchestrator, as the verdict assigned).
 - **Check on `a859d86`:** tsc 0; vitest **293/293** (290 + N's 3).
 - **Known red until F's fix lands:** `tests/whistle.spec.ts:203` (F's file) still asserts the old "may hold" sentence (C-1). It goes in F's fix packet; if F does not merge, the orchestrator changes that one line, as CHECKER-W3R1-G.md allows.
+
+## F: REJECT (LEAD-5, `7b2b081`). Fix round 18:16–19:46 UTC
+
+- **Defects:**
+  - **F-D1:** the band never collapses on idle (Vibei §3).
+  - **F-D2:** the F-T2-8 wrap pushes the session controls 17 px lower at 200 % landscape.
+  - **F-D3:** the StatusBar accessible name.
+  - **C-1:** `whistle.spec.ts:203`.
+- The packet is `CHECKER-W3R1-F.md` §6.
+- The fix trial will be the integration branch (N + G + docs) + F's fix.
