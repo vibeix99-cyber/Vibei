@@ -355,5 +355,158 @@
     "version": 23
    }
   }
+ },
+ {
+  "cfg": "390x844-dark-t200-rm",
+  "server": "base",
+  "band": {
+   "target": "4 Level 4 Cozy level 4, 17 leaves to the",
+   "tgTopBefore": 83.1,
+   "tgTopWithNotice": 196.09375,
+   "enterPush": 113,
+   "arriveWhy": "rest",
+   "withNotice": {
+    "stripTop": 16,
+    "stripH": 113
+   },
+   "tgTopAfterGone": 83.09375,
+   "leaveMove": -113,
+   "leaveWhy": "rest",
+   "after": {
+    "stripTop": 16,
+    "stripH": 0,
+    "stripW": 358,
+    "dataRoom": false,
+    "bg": "rgba(0, 0, 0, 0)",
+    "border": "0px none",
+    "over": [
+     "BUTTON._stat_ahnin_10 \"3\ndays warm\nstreak. Show\" [8,10,184,69] pos=static",
+     "SPAN._statNum_ahnin_49 \"3\" [62,12,116,42] pos=static",
+     "BUTTON._stat_ahnin_10 \"188\nleaves\nShow details\" [253,10,129,69] pos=static",
+     "SPAN._statNum_ahnin_49 \"188\" [301,12,67,42] pos=static"
+    ],
+    "hits": [
+     "BUTTON._stat_ahnin_10",
+     "NAV._statusBar_ahnin_10",
+     "SPAN._statNum_ahnin_49"
+    ]
+   },
+   "afterScrollBack": {
+    "sy": 0
+   }
+  },
+  "L1": {
+   "target": "4 Level 4 Cozy level 4, 17 leaves to the",
+   "intentTop": 196.1,
+   "pointerdown": {
+    "dtFromChange": 32,
+    "tgTop": 83.1,
+    "moved": -113,
+    "landed": "h1._greeting_ahnin_96 \"Good afternoon, Sam\"",
+    "onTarget": false
+   },
+   "click": {
+    "tgTop": 83.1,
+    "moved": -113,
+    "landed": "h1._greeting_ahnin_96 \"Good afternoon, Sam\"",
+    "onTarget": false
+   },
+   "change": {
+    "why": "rest"
+   },
+   "maxTargetMoveInWindow": 113
+  },
+  "L2": {
+   "target": "4 Level 4 Cozy level 4, 17 leaves to the",
+   "intentTop": 196.1,
+   "pointerdown": {
+    "dtFromChange": 35,
+    "tgTop": 83.1,
+    "moved": -113,
+    "landed": "h1._greeting_ahnin_96 \"Good afternoon, Sam\"",
+    "onTarget": false
+   },
+   "click": {
+    "tgTop": 83.1,
+    "moved": -113,
+    "landed": "h1._greeting_ahnin_96 \"Good afternoon, Sam\"",
+    "onTarget": false
+   },
+   "change": {
+    "why": "rest"
+   },
+   "maxTargetMoveInWindow": 113
+  },
+  "E": {
+   "target": "4 Level 4 Cozy level 4, 17 leaves to the",
+   "intentTop": 83.1,
+   "pointerdown": {
+    "dtFromChange": 22,
+    "tgTop": 196.1,
+    "moved": 113,
+    "landed": "li._toast_1dob8_22 \"Break’s over · LI2 probe arriv\"",
+    "onTarget": false
+   },
+   "click": {
+    "tgTop": 196.1,
+    "moved": 113,
+    "landed": "li._toast_1dob8_22 \"Break’s over · LI2 probe arriv\"",
+    "onTarget": false
+   },
+   "change": {
+    "why": "rest"
+   },
+   "maxTargetMoveInWindow": 113
+  },
+  "S": {
+   "panel": {
+    "stripH": 188,
+    "panelScrollH": 634,
+    "panelClientH": 422,
+    "outOfReach": true,
+    "ctrls": [
+     {
+      "l": "Ambience: Rain. Change",
+      "top": 47.7,
+      "bottom": 96.8,
+      "onTop": true
+     },
+     {
+      "l": "Turn sound on",
+      "top": 50.3,
+      "bottom": 94.3,
+      "onTop": true
+     },
+     {
+      "l": "Add 5 minutes",
+      "top": 879.6,
+      "bottom": 943.6,
+      "onTop": false
+     },
+     {
+      "l": "Pause",
+      "top": 879.6,
+      "bottom": 959.6,
+      "onTop": false
+     },
+     {
+      "l": "End session",
+      "top": 879.6,
+      "bottom": 943.6,
+      "onTop": false
+     }
+    ]
+   },
+   "skipped": "no control on top in view below the strip",
+   "after": {
+    "queue": [],
+    "shown": null,
+    "strip": 6,
+    "screen": "session:focus",
+    "why": "rest",
+    "changed": 37959,
+    "version": 23
+   }
+  }
  }
 ]
