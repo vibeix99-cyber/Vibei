@@ -491,3 +491,26 @@ A tap aimed beforehand lands on the arriving notice or the card in **10 of 15** 
 **Totals with §1a:**
 - **base: 50 of 66 L1/L2 taps off target;**
 - **trial: 0 of 64.**
+
+### 3e. `reach` with a control already partly in view at rest (no scrolling)
+
+`LI2-reach2.mjs` (new), trial 17:43–17:46, base 17:46–17:48 UTC. Data `reach2/reach2-{trial,base}.json`; logs `reach2/reach2-*.log`; frames `reach2/{trial,base}-<cfg>-<msglen>-{1-notice,2-after-tap}.png`.
+
+**Setup:**
+- A running brew; light, full motion, touch.
+- A 3 s notice in the panel's strip, raised with nobody touching: "Saved 3 minutes of focus" (24 chars) or "Couldn't save just now. Your summary is still here." (51 chars), used as stand-ins of real length.
+- Target: the lowest of Add 5 / Pause / End with ≥ 20 px visible and on top at its visible middle.
+- Intent read ~200 ms before the time-up; a real tap at that point right after the notice goes.
+
+| Config | Panel with notice (scrollH/clientH) | TRIAL: leave / target moved / tap landed | BASE: leave / moved / landed |
+|---|---|---|---|
+| 375×667 @100, 24 ch (strip 62) | 368/354, **out of reach** | rest, **room 0** / **−45.1 px** / on "Add 5" **caption** span, **not the button** | rest / −45.1 / same caption span, not the button |
+| 375×667 @100, 51 ch (strip 66.5) | 372/354, out of reach | rest, room 0 / **−49.6** / caption, not the button | rest / −49.6 / caption, not the button |
+| 390×844 @200, 24 ch (strip 107) | 553/422, out of reach; Add 5 shows 45.4 px | rest, room 0 / **−107 px** / **the countdown** (`DIV._timer…` "24:53 Kettle's on…"), not the button | rest / −107 / the countdown, not the button |
+| 844×390 @100, both (strip 62 / 66.5) | 292/292, fits | rest, **room kept 62 / 66.5** / **0** / on target | rest / **−31 / −33.3** / on target (the 54 px button still under the point) |
+| 667×375 @100, both | 277/277, fits | rest, room kept / **0** / on target | rest / −31 / −33.2 / on target |
+| 375×667 @200, 844×390 @200, 667×375 @200, 390×844 @200 51 ch | out of reach | no control ≥ 20 px visible below the strip: no tap; leave `rest`, room 0 | same |
+
+Opened: `reach2/trial-390x844-light-t200-24-1-notice.png` (notice under the scene; 24:56; the tops of the three control circles at the bottom edge) and `…-2-after-tap.png` (strip gone, countdown and Add 5 / Pause / End moved up 107 px, fully in view).
+
+**Answer, raw:** yes. Where the notice pushes the session controls past the panel's edge (375×667 @100, 390×844 @200), the trial's `reach` close at rest moves a partly visible control 45–107 px up. A tap aimed at it just after lands on its caption or on the countdown, not the button. **The base does exactly the same** (same px, same landing). Where the panel fits (844×390 / 667×375 @100), the trial keeps the room (0 px) and the base moved 31–33 px; there the tap still hit the button on both builds.
