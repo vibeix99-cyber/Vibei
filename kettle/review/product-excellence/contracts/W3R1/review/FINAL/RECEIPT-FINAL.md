@@ -99,8 +99,8 @@ The F1 failure under load: `Error: timed out waiting for window.__kettle.timer.g
 | # | Reruns | Signature explained? | Class | Owner (PLAN.md) |
 |---|---|---|---|---|
 | **F3** `w2-room` WebGL context lost | alone :5540 pass; alone base pass; 3× :5540 pass; under load 6 of 6 pass | **Yes, as a load timeout:** the failing run spent 30.4 s of its 60 s waiting for the scene to be ready (trace), screenshots 1 to 3 s each; under load the same test takes 41 to 47 s against 27 to 35 s unloaded. Not reproduced as a failure in my 18 later runs (its margin under load is 13 to 19 s). The same test and step timed out in Lane R-N's first run on the N trial. A known environment limit (SwiftShader, 2 workers) | **Flaky (load, test timeout).** Not a product failure shown; the margin under load is thin | test file and feature **N** (`tests/w2-room.spec.ts`, `src/scene/**`; the test is N-owned by PLAN.md) |
-| **F1** `integrity` I01 two tabs, frozen leader | alone :5540 pass; alone base pass; 3× :5540 pass; under load **1 of 6 failed** | **Partly.** The failure follows load (1 in the full run at load 7 to 14, 1 in 6 under burners, 0 in 8 unloaded or lightly loaded runs), and both failures are 30 s timeouts of a cross-tab wait; but the failing step differs between the two (the other tab never completed, in the full run; the leader never saw the session, under load), and I did not determine whether the cause is the test (it fixes an 800 ms wait for the leader election between two freshly opened tabs, then starts a brew in the tab it believes is the follower) or the app's cross-tab hand-off being slow under load | **Not cleared as flaky: record as an open finding.** Load-sensitive, reproduced, mechanism not determined, product versus test unresolved | test file **S** (`tests/integrity.spec.ts`); feature: multi-tab timer leadership, `src/timer/**` (**unowned this round**) |
-| **F2** `integrity` I03 banner (X-1) | alone :5540 pass; alone base pass; 3× pass; 10× with trace pass (section 7); under load 6 of 6 pass | **Only from the code, not from a failing trace:** the banner leaves at a 2 s recovery tick (`RECOVERY_CHECK_MS = 2000`, `saveWarning.ts`); the step took 0.1 to 2.9 s in 10 traces against the 6 s limit. Two failures were seen (combined-trial part A and this full run), both in loaded multi-job runs; none in 20 later runs | **Intermittent, load-associated, not reproduced**; I cannot call the mechanism shown. Keep as X-1 "not isolated" | test file **S**; surface: the save-warning (`src/app/saveWarning.ts`, unowned) |
+| **F1** `integrity` I01 two tabs, frozen leader | alone :5540 pass; alone base pass; 3× :5540 pass; under load **1 of 6 failed** | **Partly.** The failure follows load (1 in the full run at load 7 to 14, 1 in 6 under burners, 0 in the 5 lightly loaded reruns of section 3 and 5 passes under the burners), and both failures are 30 s timeouts of a cross-tab wait; but the failing step differs between the two (the other tab never completed, in the full run; the leader never saw the session, under load), and I did not determine whether the cause is the test (it fixes an 800 ms wait for the leader election between two freshly opened tabs, then starts a brew in the tab it believes is the follower) or the app's cross-tab hand-off being slow under load | **Not cleared as flaky: record as an open finding.** Load-sensitive, reproduced, mechanism not determined, product versus test unresolved | test file **S** (`tests/integrity.spec.ts`); feature: multi-tab timer leadership, `src/timer/**` (**unowned this round**) |
+| **F2** `integrity` I03 banner (X-1) | alone :5540 pass; alone base pass; 3× pass; 10× with trace pass (section 7); under load 6 of 6 pass | **Only from the code, not from a failing trace:** the banner leaves at a 2 s recovery tick (`RECOVERY_CHECK_MS = 2000`, `saveWarning.ts`); the step took 0.1 to 2.9 s in 10 traces against the 6 s limit. Two failures were seen (combined-trial part A and this full run), both in loaded multi-job runs; none in the 21 later runs (5 reruns, 10 with trace, 6 under load) | **Intermittent, load-associated, not reproduced**; I cannot call the mechanism shown. Keep as X-1 "not isolated" | test file **S**; surface: the save-warning (`src/app/saveWarning.ts`, unowned) |
 
 None was a base failure (all pass on base alone). None failed alone or in the 3× repeats on :5540.
 
@@ -215,3 +215,37 @@ Not over noise but over 0.5 % at 1440: `13` (0.575 / 0.463, base against base 0.
 - **Focus** (`02`, `04`, `05`): 0.0 trial against base at 390 light and 375 light (at 390 dark and 1440 small differences at noise level, `02` at 1440 tint-level); the 375 "Paused" pill (X-8) was 0.0 at `04`.
 - **Stats:** S's Today / Last 7 days card and warm-days wording, at all four configs. **Settings:** G's copy and the Haptics line, a +17 px page height and no shift above the Haptics row.
 - **Chai at night (N):** the dark first-brew frame differs in the backdrop (above); the dark Nook frames differ at a size mixed with the sequence artifact. N's still-frame receipts remain the measure of Chai itself.
+
+## 10. Summary table and Unproven
+
+| Item | Result |
+|---|---|
+| tsc, vitest, build (§1) | 0; 302/302; OK |
+| Full chromium without notice-strip (§2) | 243 tests: 215 passed, **3 failed**, 25 skipped (`w3-notices-load`, gated). Not a clean pass |
+| The 3 failures (§3) | all pass alone on :5540, alone on base :5478, and 3× on :5540. F3 `w2-room` WebGL lost: flaky, explained (a 30 s scene-ready wait inside a 60 s budget; N). F1 `integrity` I01 two tabs: **open finding**, reproduced 1 in 6 under load, mechanism not determined (S's file, unowned timer multi-tab). F2 `integrity` I03 (X-1): intermittent, not reproduced in 21 runs; cause not shown |
+| `notice-strip.spec.ts` (§4) | 25 of 25 passed, including 1440 light 200 % reduced motion; nothing to classify |
+| timer-harness, timer-app, pwa (§5) | 29 passed, 2 skipped by design |
+| `w3-notices-load.spec.ts` W3_LOAD=1 (§6) | 23 passed, **2 failed** (390×844 and 375×667 light 200 % reduced motion): deterministic, fail identically on base (a base failure of F's stale control copy; the maintained spec passes both) |
+| X-1 I03 ×10 with trace (§7) | 10 of 10 passed; banner step 0.1 to 2.9 s of 6 s; no failing trace to open |
+| X-7 (§8) | the Settings first screen does not move (0.00 px, dark and light); +16.98 px from the Haptics row down, from G's longer Haptics line; the old "2 px" was a rigid 3-device-px shift in one dark capture frame |
+| Captures (§9) | base-vs-base control measured; pairs over noise are S's Stats and G's Settings changes, plus one repeatable dark first-brew backdrop difference (not isolated) |
+
+**Unproven**
+
+| Item | Status |
+|---|---|
+| A clean pass of the whole chromium project | **not achieved**: the full run (2 workers, load 7 to 14) had 3 failures; I did not rerun it as a whole, and I did not run it with `--workers=1` |
+| F1 mechanism | not determined: the traces of this test hold no page data (raw CDP tabs); I did not instrument the tabs or the app; the two failing steps differ |
+| F2/X-1 | never reproduced as a failure after the two sightings; the 2 s tick is read from the code, not shown to cause a failure |
+| F3 | a failure was not reproduced under my load (6 of 6 passed at 41 to 47 s); the explanation rests on the failing trace's step times |
+| The load control (§6) | I did not find why the load copy's flow leaves a 300 ms notice in the queue where `notice-strip.spec.ts` does not; the rerun field `playwright-exit` in `rerun/lg.log.txt` and `rerun/fb1.log.txt` is evaluated before the exit code in one script and was misleading in `lg`; the JSON files are the record |
+| The dark first-brew backdrop difference (390 dark `13`, 29.9 / 8.87, repeatable) | cause not isolated; I did not run it with the scene's hour pinned; N's code change (Chai fur emissive) does not touch the region |
+| Captures: one run per side per config plus one extra base; the solo re-capture only at 390×844 light; frames not opened (diff numbers only): the rest of the over-noise list except where "opened" is written; 844×390, 200 % text, the high tier not captured | |
+| X-7 | measured at 390×844@2 on previews with the frozen clock and the seed `veteran` only; the earlier "2 px" cause (a screen caught moving) is consistent with the data but not proven |
+| Raw frames deleted for size (diffs and numbers kept): every raw pair except states 15, 16, 19 and the 390 dark 13 | |
+| Load during the runs | two gate jobs ran at once for most of the time (load 4 to 12), as the coordinator allowed; the full run used 2 workers |
+| Judgement | whether any of this blocks anything: not mine |
+
+## 11. Evidence layout (`/home/user/Vibei/kettle/review/product-excellence/contracts/W3R1/review/FINAL/`)
+
+`runs/` (full run, notice-strip, timer-pwa, W3_LOAD logs as `.log.txt` and JSON, capture logs, basics), `rerun/` (`F*`, `L*`, `fb1`, `lg`, `stress*`, `fullrun-artifacts/` with the failing traces and error contexts), `x1/` (X-1 log, JSON, two traces, the step-time table), `x7/` (dump, section-top tables, logs), `cap/<config>/` (diffs, kept raw pairs, `pairs.json`, meta; `cap/matrix-*.md`), `scripts/`.
