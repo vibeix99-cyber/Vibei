@@ -1,7 +1,8 @@
 # W3R1 · Maker F · fix round (CHECKER-W3R1-F §6) — FIX READY
 
 - **Branch:** `pe/w3-notices-polish` (`/home/user/wt/w5f`), from `5ee3e7c`. Local commits only.
-- **Code commit:** `1130a13` · **kettle/src tree `f075a7a`**. Dev :5501 `verify.sh`: `PORT 5501 serves 1130a13 (src f075a7a): VERIFIED`. Later commits on top add only this packet and `contracts/W3R1/F/fix/` evidence.
+- **Code commits:** `1130a13` (the fix) + `14703f3` (above the view, the same idle rule; found by the fling probe, §5 (e)) · **final kettle/src tree `8b42b9b`**. Dev :5501 `verify.sh`: `PORT 5501 serves 14703f3 (src 8b42b9b): VERIFIED`. Later commits add only tests/evidence/this packet.
+- **Which src each result is on:** `f075a7a` (= `1130a13`) for `fix/*` at the folder's top level; `8b42b9b` (final) for everything under `fix/final/`.
 - **Evidence:** `contracts/W3R1/F/fix/`.
 
 ## 1. Check 1 — ownership and scope ◆
@@ -23,7 +24,7 @@ A kept room is given back when **all** hold, confirmed in a fresh animation fram
 - `atRest(now)`: no pointer down and no input of any kind for `QUIET_MS` — `moment.ts` already stamps pointer down/up/move (mouse), click, wheel, touchstart/move/end, keydown **and `scroll`** (window capture, so the session panel's and every inner scroller's scroll events count; a fling or a smooth scroll still running is activity);
 - `!inputPending()` (`navigator.scheduling.isInputPending({ includeContinuous: true })`).
 
-Then `commit({ room: 0, hold: above ? holdView(el) : holdTop(el), why: above ? 'above' : 'idle' })`: in view the band closes once (content below moves up by the band's height); above the view the page is scrolled by as much in the same frame (nothing in view moves). The clock ticks every 100 ms while a room is kept, so the room goes ≈ 1.2–1.4 s after the later of the leave and the last input. Unchanged: the band itself (a leave moves nothing), the next notice drawn in the room, a new screen / `ENTRY_MS` / the hidden page giving it back, and the session panel's `reach` rule.
+Above the view (`14703f3`): a notice that **leaves** there keeps its room like anywhere else (no height change), and any other change there (a notice arriving or swapping) waits for rest, confirmed in a fresh frame. Then `commit({ room: 0, hold: above ? holdView(el) : holdTop(el), why: above ? 'above' : 'idle' })`: in view the band closes once (content below moves up by the band's height); above the view the page is scrolled by as much in the same frame (nothing in view moves). The clock ticks every 100 ms while a room is kept, so the room goes ≈ 1.2–1.4 s after the later of the leave and the last input. Unchanged: the band itself (a leave moves nothing), the next notice drawn in the room, a new screen / `ENTRY_MS` / the hidden page giving it back, and the session panel's `reach` rule.
 
 ## 2. Check 5 — F-D2 ◆ (top bar at 200 % landscape)
 
@@ -61,7 +62,7 @@ Every collapse: `why: idle`, pointer up, ≥ 1200 ms since any input, ≥ 1200 m
 **Lane I2's probes on the fix** (`/home/user/wt/w5tr-f/kettle/.tmp/LI2/`, run read-only against :5501):
 - `LI2-idle.mjs fix … idle` → `fix/idle/idle-fix.{json,log}` + frames `fix/idle/<cfg>-{0-no-notice,1-notice,2-band-at-leave,3-band-after-45s-idle,4-…}.png`: at every config the band is present at the leave (`leave.move 0`) and **room 0 by the first 1 s sample after the 1.2 s window** (`why: idle`); frame 3 shows the page closed up. (Its later scroll/pointer steps then run without a band; (b)/(c) are measured by the own probe above.) Note: the server was restarted by someone else at 18:22:10 during its first config (390 light @100), whose samples show `why: screen`.
 - `LI2-idle2.mjs fix … idle` (real finger drag) → `fix/idle2/`.
-- **(e) fling** `LI2-idle3.mjs fix … above 390x844-light-t200` → `fix/idle3-above/` (PENDING-FLING).
+- **(e) fling** `LI2-idle3.mjs fix … above 390x844-light-t200` (finger drag 600 px released into momentum) — **on `f075a7a` it failed**: `fix/idle3-above/idle3-above-fix.log`, both reps: a commit `why: above, room 0` **463 / 528 ms after the last input**, visible move **−153.5 px** — not the kept band but the notice itself leaving above the view mid-fling through the pre-existing "above" path (free collapse with `holdView`, whose compensation the momentum scroll undid). Fixed in `14703f3` (a leave above the view keeps its room; other above-view changes wait for rest). Re-run on the final src: `fix/final/idle3-above/` (PENDING-FLING2).
 
 ## 6. Check 3 — F-T2-1 kept ◆
 
