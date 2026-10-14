@@ -100,5 +100,107 @@
    },
    "maxTargetMoveInWindow": 68
   }
+ },
+ {
+  "cfg": "390x844-dark-t100-rm",
+  "server": "base",
+  "band": {
+   "target": "INPUT",
+   "tgTopBefore": 432,
+   "tgTopWithNotice": 500,
+   "enterPush": 68,
+   "arriveWhy": "rest",
+   "withNotice": {
+    "stripTop": 16,
+    "stripH": 68
+   },
+   "tgTopAfterGone": 432,
+   "leaveMove": -68,
+   "leaveWhy": "rest",
+   "after": {
+    "stripTop": 16,
+    "stripH": 0,
+    "stripW": 358,
+    "dataRoom": false,
+    "bg": "rgba(0, 0, 0, 0)",
+    "border": "0px none",
+    "over": [
+     "BUTTON._stat_ahnin_10 \"3\ndays warm\nstreak. Show\" [8,10,126,48] pos=static",
+     "BUTTON._stat_ahnin_10 \"188\nleaves\nShow details\" [147,10,96,48] pos=static",
+     "BUTTON._stat_ahnin_10 \"4\nLevel 4\nCozy level 4, \" [256,10,126,48] pos=static"
+    ],
+    "hits": [
+     "BUTTON._stat_ahnin_10",
+     "SPAN._statNum_ahnin_49",
+     "BUTTON._stat_ahnin_10"
+    ]
+   },
+   "afterScrollBack": {
+    "sy": 0
+   }
+  },
+  "L1": {
+   "target": "INPUT",
+   "intentTop": 500,
+   "pointerdown": {
+    "dtFromChange": 51,
+    "tgTop": 432,
+    "moved": -68,
+    "landed": "span. \"Study\"",
+    "onTarget": false
+   },
+   "click": {
+    "tgTop": 432,
+    "moved": -68,
+    "landed": "span. \"Study\"",
+    "onTarget": false
+   },
+   "change": {
+    "why": "rest"
+   },
+   "maxTargetMoveInWindow": 68
+  },
+  "L2": {
+   "target": "INPUT",
+   "intentTop": 500,
+   "pointerdown": {
+    "dtFromChange": 82,
+    "tgTop": 432,
+    "moved": -68,
+    "landed": "span. \"Study\"",
+    "onTarget": false
+   },
+   "click": {
+    "tgTop": 432,
+    "moved": -68,
+    "landed": "span. \"Study\"",
+    "onTarget": false
+   },
+   "change": {
+    "why": "rest"
+   },
+   "maxTargetMoveInWindow": 68
+  },
+  "E": {
+   "target": "INPUT",
+   "intentTop": 432,
+   "pointerdown": {
+    "dtFromChange": 94,
+    "tgTop": 500,
+    "moved": 68,
+    "landed": "div._card_1tcuq_1 _pad-md_1tcuq_ \"What are you brewing? (optiona\"",
+    "onTarget": false
+   },
+   "click": {
+    "tgTop": 500,
+    "moved": 68,
+    "landed": "div._card_1tcuq_1 _pad-md_1tcuq_ \"What are you brewing? (optiona\"",
+    "onTarget": false
+   },
+   "change": {
+    "why": "rest"
+   },
+   "maxTargetMoveInWindow": 68
+  }
  }
 ]
