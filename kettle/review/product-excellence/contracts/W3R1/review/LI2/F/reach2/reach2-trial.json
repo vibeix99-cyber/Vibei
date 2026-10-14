@@ -52,5 +52,143 @@
    "msAfterLeave": 33
   },
   "paused": false
+ },
+ {
+  "cfg": "375x667-light-t100",
+  "msg": "Couldn’t save just now. Your summary is still here.",
+  "server": "trial",
+  "geo": {
+   "stripH": 66.5,
+   "panelScrollH": 372,
+   "panelClientH": 354,
+   "outOfReach": true,
+   "ctl": [
+    {
+     "l": "Add 5 minutes",
+     "top": 550.3,
+     "visible": 64,
+     "onTop": true
+    },
+    {
+     "l": "Pause",
+     "top": 550.3,
+     "visible": 80,
+     "onTop": true
+    },
+    {
+     "l": "End session",
+     "top": 550.3,
+     "visible": 64,
+     "onTop": true
+    }
+   ],
+   "target": {
+    "l": "Add 5 minutes",
+    "x": 83.75,
+    "y": 582.265625,
+    "top": 550.3,
+    "visible": 64
+   }
+  },
+  "leave": {
+   "why": "rest",
+   "room": 0,
+   "msAfterIntent": 455
+  },
+  "tap": {
+   "intentTop": 550.3,
+   "tgTopAtDown": 500.7,
+   "moved": -49.6,
+   "downOnTarget": false,
+   "downLanded": "SPAN._caption_1glyr_15 \"Add 5\"",
+   "clickOnTarget": false,
+   "clickLanded": "SPAN._caption_1glyr_15 \"Add 5\"",
+   "msAfterLeave": 125
+  },
+  "paused": false
+ },
+ {
+  "cfg": "375x667-light-t200",
+  "msg": "Saved 3 minutes of focus",
+  "server": "trial",
+  "geo": {
+   "stripH": 107,
+   "panelScrollH": 521,
+   "panelClientH": 354,
+   "outOfReach": true,
+   "ctl": [
+    {
+     "l": "Add 5 minutes",
+     "top": 670.3,
+     "visible": 0,
+     "onTop": false
+    },
+    {
+     "l": "Pause",
+     "top": 670.3,
+     "visible": 0,
+     "onTop": false
+    },
+    {
+     "l": "End session",
+     "top": 670.3,
+     "visible": 0,
+     "onTop": false
+    }
+   ],
+   "target": null
+  },
+  "noTarget": {
+   "queue": [],
+   "shown": null,
+   "strip": 6,
+   "screen": "session:focus",
+   "why": "rest",
+   "changed": 8097,
+   "version": 9,
+   "room": 0
+  }
+ },
+ {
+  "cfg": "375x667-light-t200",
+  "msg": "Couldn’t save just now. Your summary is still here.",
+  "server": "trial",
+  "geo": {
+   "stripH": 188,
+   "panelScrollH": 602,
+   "panelClientH": 354,
+   "outOfReach": true,
+   "ctl": [
+    {
+     "l": "Add 5 minutes",
+     "top": 751.3,
+     "visible": 0,
+     "onTop": false
+    },
+    {
+     "l": "Pause",
+     "top": 751.3,
+     "visible": 0,
+     "onTop": false
+    },
+    {
+     "l": "End session",
+     "top": 751.3,
+     "visible": 0,
+     "onTop": false
+    }
+   ],
+   "target": null
+  },
+  "noTarget": {
+   "queue": [],
+   "shown": null,
+   "strip": 3,
+   "screen": "session:focus",
+   "why": "rest",
+   "changed": 8144,
+   "version": 9,
+   "room": 0
+  }
  }
 ]
