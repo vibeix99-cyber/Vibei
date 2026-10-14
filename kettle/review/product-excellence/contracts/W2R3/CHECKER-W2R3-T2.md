@@ -1,10 +1,11 @@
 # CHECKER W2R3 · Maker T2: I10, notices without overlays
 
-**Status: DRAFT (fix round).** The first review (§1–§4) found one blocker on `6a64fbf`, T2-D1. The fix revision `pe/w2r3-notices@64f29cd` (code `40f92b6`, kettle/src `aa88587`) is reviewed in §6. The final verdict on `64f29cd` is written once Lane T's `RECEIPT-LT-FIX.md` and Lane R's `RECEIPT-LR.md` are in.
+**Final verdict: APPROVE** `pe/w2r3-notices@64f29cd` (code `40f92b6`, kettle/src `aa88587`), as merged in fix trial `99d9368` (integration `8af5430` + `64f29cd`, src `5cd9a44`). Final: the one fix round is spent. Any change to the branch after this invalidates it.
 
-**First review: REJECT** `pe/w2r3-notices@6a64fbf` (code `61b463c`, kettle/src `5aa6228`). One blocker, T2-D1: a notice on the summary pushed P's summary sheet down.
-
-**Fix round (draft): T2-D1 closed by my own measurements; verdict pending the lane receipts.**
+**History.**
+- **First review:** REJECT `6a64fbf` (§1–§4). One blocker, T2-D1: a notice on the summary pushed P's sheet down.
+- **Fix round (§6, Vibei's direction):** T2-D1 is closed. My own runs, Lane T's 124 summary runs and Lane R's suites agree.
+- **Final classification:** §7 gives every residual under the residual rule; nothing BLOCKS. §8 lists the BEFORE/AFTER pairs for Vibei.
 
 | | |
 |---|---|
@@ -133,7 +134,7 @@ The base's cover was the defect to remove. T2 replaces it with different defects
 
 ## 5. Lane receipts
 
-_Pending: Lane T (`review/LT/RECEIPT-LT.md`) and Lane R (`review/LR/…`)._
+See §7, written after the fix round. Lane T's first receipt for `490ca97` (`review/LT/RECEIPT-LT.md`) was cut by the 00:40 restart and later closed, with the cut noted in its §7–§8.
 
 ## 6. Fix round: `pe/w2r3-notices@64f29cd` (code `40f92b6`, kettle/src `aa88587`)
 
@@ -216,4 +217,101 @@ The clocks stood still on the summary (3200 ms left each).
 | F-T2-4 | "Delete this brew?" unreachable at 375×667 @200 | **FOLLOW-UP** | Stats/History round |
 | F-T2-1 | The strip changing as a finger lands: needs a between-interactions rule | **FOLLOW-UP** | Next polish round |
 
-_Lane receipts: pending (`review/LT/RECEIPT-LT-FIX.md`, `review/LR/RECEIPT-LR.md`)._
+
+## 7. Lane receipts on the fix, my checks of them, and the final residuals
+
+**Read in full:**
+- Lane T: `review/LT/RECEIPT-LT-FIX.md` (evidence `review/LT/fix2/`).
+- Lane R: `review/LR/RECEIPT-LR.md` (Part A on `490ca97`, Part B on `99d9368`; B.9 is the orchestrator's note).
+- Orchestrator: `review/ORCH/README.md`.
+
+I checked each fact I rely on against the raw files below, and ran the gaps myself.
+
+### What the receipts establish (fix trial, :5477 unless stated)
+
+**Lane T:**
+- **Control first:** the same probe sees T2-D1 on `490ca97` (sheet +74.5 px at 375×667 / 390×844 @100; +155.5–208 px at 375×667 @200, with the notice over Chai's face and the gauge). It sees 0.0 px on the fix.
+- **124 summary runs** (20 configurations × task/big day × 3 cases, plus 4 runs of the real update prompt via a served hook on `patch({ needRefresh: true })`):
+  - the max change of sheet top, sheet bottom and footer top against each run's own no-notice run is **0.0 px**;
+  - **0 frames** with a notice drawn on the summary;
+  - footer-cut rows unchanged; the timed notice keeps all 4,000 ms.
+- **The next screen:** the queued notice is drawn on the tea break or Today in 120/120 runs, one at a time, never clipped, **said exactly once**. Its action works by a real tap (76/76 where on top).
+- **The real prompt** is never drawn or queued during the brew or on the summary. On Today it is drawn whole and said once, and Update reloads the page.
+- **Invariant re-probe** (10 configurations): 0 control or row overlaps, 0 nine-point control hits with no sheet.
+- **Specs:** `summary-notice` 14/14, `toast-room` 14/14, `a11y` 11/11 (D4 included); `notice-strip` 22/25 on the first run, then the 3 alone 3/3.
+
+**Lane R:**
+- tsc 0; vitest 290/290 (base 289; +1 is B's test); production build OK.
+- `summary-notice` + `w2-summary` 32/32; `integrity` + `statusbar` 34/34; `break-reach` 17/17 (B.9); timer/pwa 29 + 2 skipped by design.
+- Capture matrix, fix preview vs base preview: the summary states without a notice are identical, or differ only in the 3D unlock/scene media timing (11, 14; base vs base-dev noise is of the same size, B.5).
+- Part A on `490ca97`: full chromium 167/167.
+
+**Orchestrator:** `w2-home` 18/18, `toast-room` 14/14.
+
+**Mine on the fix:**
+- the §6 runs;
+- `whistle` + `w2-room` **15/15** (`fix/e2e-whistle-room.txt`);
+- the next-screen timing (`fix/nexttiming-*.json`).
+
+### Final residuals (rule: BLOCKS = introduced or worsened by this change; FOLLOW-UP = present on the base and not worse, or ruled so by Vibei; ACCEPTED = not a defect)
+
+| # | Item | My check | Class | Owner |
+|---|---|---|---|---|
+| T2-D1 | A notice on the summary moved P's sheet | Fixed: 0.0 px in 124 Lane T runs and in all my runs; nothing drawn on the summary | **Closed** | — |
+| F-T2-1 | The strip changing as a finger lands, including the at-rest exit 57–97 px after a notice's time is up | Measured in round 3 (§4) | **FOLLOW-UP** (Vibei: needs a between-interactions rule) | Next polish round |
+| F-T2-4 | "Delete this brew?" unreachable by tap or Tab at 375×667 @200 | Base too | **FOLLOW-UP** (Vibei) | Stats/History round |
+| N-1 | `notice-strip`, first run, 844×390 @200 ×2: timed out waiting for Mark done | Snapshots (`LT/fix2/runs/notice-strip-failure/*/error-context.md`): the ended brew was saved as "Study brew", so the typed "Chapter 3 notes" never reached the field and no carried line could exist. A setup miss under three-browser load. The rerun passed; my own End runs at 844×390 @200 typed the task and crossed it off on both trials; Today's code is unchanged by the fix | **FOLLOW-UP** (test robustness: assert the field holds the task before Start) | I10 tests |
+| N-2 | `notice-strip`, first run, 1440 @200 reduced: History Undo 111 px from the row | The spec reads "where the person saw the row" right after the tap. The base's focus scroll when the tapped row takes focus (≈110 px; my `historytrace`, round 3: 2500 → 2610, then the Undo exactly where the row was) lands before or after that read depending on load. The rerun passed. Not T2's Undo placement | **FOLLOW-UP** (spec: read the row's place once the Edit sheet is open; product: the pre-existing focus scroll) | I10 tests / Stats |
+| N-3 | A long persistent notice on the tea break at 844×390 / 667×375 @200 runs below the fold; its action needs a ~50 px wheel | Only with Lane T's stand-in persistent notice. The app's one persistent notice (the update prompt) is never raised on `/focus` now. A timed notice of that length has no action, and its clock runs at ≥ 60 % in view. Whole after a short wheel; nothing covered. Same class as F-T2-2 | **FOLLOW-UP** (with F-T2-2) | I10 / session area |
+| N-4 | The queued notice is drawn 0.3–4.7 s after the tap, not "in the first frame" | Measured in Lane T's two slowest configurations (1440 dark @100, 667×375 @200): tap at ~20 ms, route to the tea break at ~200 ms (the summary's 180 ms leave), the notice drawn **one frame later** as that screen's arrival (`why: screen`), full opacity. The 2–4.7 s outliers came under heavy load with 120 ms sampling and do not reproduce | **ACCEPTED** (the next screen's arrival; load timing) | — |
+| N-5 | The production service-worker path (`onNeedRefresh` → `patch`) is unproven in a run | `src/pwa/**` is unchanged since `61aba17` (empty diff). Lane T proved everything from `patch({ needRefresh: true })` onward with the app's own code. Re-raising (and re-saying) the prompt each time the person leaves the session screen with `needRefresh` still true is by code only, the same as the base | **UNKNOWN** (environment), not a blocker | — |
+| N-6 | Text line-box "overlaps" | **(a)** The countdown ":" line box meets the bottom 2–4 px of a panel notice at landscape @200. Hit-test only: the frame (`LT/fix2/probes/inv-fix/shot-844x390-light-t200-nextbrew-0.png`) shows "25:00" wholly below the notice with clear space, and no control is involved. **(b)** The History Undo row "on top" of the sticky Stats bar's "Stats" / "23": the bar is `pointer-events: none` and `aria-hidden` (`stats.module.css:36–56`), opaque, at `z-index: var(--z-sticky)`. It paints over the row; hit-testing falls through to the row beneath. This is in-flow content scrolling under chrome, as every History row does | **ACCEPTED** (not a defect) | — |
+| F-T2-2 | Session readout or controls pushed below the fold by a notice at 200 % on short screens | Unchanged by the fix; the base covered the same readout | **FOLLOW-UP** | I10 / session area |
+| F-T2-3 | A notice arriving while a tab is scrolled waits until the person scrolls back up | — | **ACCEPTED** (design) | — |
+| F-T2-5 | `integrity:1004` flake cause at 1440 not established; Mark done click under heavy load at 1440 @200 | Not seen on the fix: Lane R's `integrity` 25/25 | **FOLLOW-UP / UNKNOWN** | I10 / M7a |
+| F-T2-6 | Polish: strip width at 1440; the import Undo row's icon tile | — | **ACCEPTED** | — |
+| F-T2-8 | Landscape session top bar squeezes the task label at 200 % | Base too | **FOLLOW-UP** (pre-existing) | Session area |
+| F-T2-7 | Real devices, WebKit, Firefox, real AT, notch safe areas | — | **UNKNOWN** (environment) | — |
+| E-1 | Evidence gaps, not defects: `chai3d` and `w2-firstvisit` not rerun on the fix (both passed in Lane R's full suite on `490ca97`, 167/167; the fix touches neither); Lane R's Part A dark captures of mixed provenance and its 1440 dark capture not run; `notice-strip`'s other configurations not rerun by Lane R | — | Noted | — |
+
+No item is introduced or worsened by this change in a way that is a defect, so nothing BLOCKS. The narrow transient-artifact exception is not needed for any item.
+
+## 8. BEFORE / AFTER pairs for Vibei (full size)
+
+**Today right after End: the notice heads Today, nothing covered**
+- 390×844 light @100:
+  - BEFORE `/home/user/wt/w4t2/kettle/review/product-excellence/contracts/W2R3/T2/shots/before/390x844-light-t100/03-today-after-end-0.6s.png`
+  - AFTER `…/T2/shots/after/390x844-light-t100/03-today-after-end-0.6s.png`
+- 1440×900 light @100 (BEFORE: End sheet frozen over Today):
+  - BEFORE `…/T2/shots/before/1440x900-light-t100/03-today-after-end-0.6s.png`
+  - AFTER `…/T2/shots/after/1440x900-light-t100/03-today-after-end-0.6s.png`
+
+**Break's over on a recipe day: notice at the panel's head, text uncovered**
+- 390×844 light @100:
+  - BEFORE `…/T2/shots/before/390x844-light-t100/06-break-over-0.6s.png`
+  - AFTER `…/T2/shots/after/390x844-light-t100/06-break-over-0.6s.png`
+- 844×390 light @200:
+  - BEFORE `…/T2/shots/before/844x390-light-t200/06-break-over-0.6s.png`
+  - AFTER `…/T2/shots/after/844x390-light-t200/06-break-over-0.6s.png`
+
+**Inline Undo** (`…/T2/shots/{before,after}/390x844-light-t100/`):
+- Mark done: `11-mark-done-undo.png`
+- History delete: `12-history-delete-undo.png`
+- Import: `13-import-undo.png`
+
+**K01 Today at rest (H's Brew length in the dock):** `…/T2/triples/K01-1-REFERENCE-01-home.png` → `K01-2-BEFORE-61aba17.png` → `K01-3-AFTER.png`
+
+**K02 summary without a notice (unchanged):** `…/T2/triples/K02-1-REFERENCE-07-summary.png` → `K02-2-BEFORE-61aba17-task.png` → `K02-3-AFTER-task.png`
+
+**The summary with an update pending as the brew ends (T2-D1)**, all under `contracts/W2R3/review/LEAD/T2/`:
+- 375×667 light @200:
+  - base `base/summaryarrive-update-375x667-light-200-arrival.png` (prompt over the heading)
+  - first trial `shots/summaryarrive-update-375x667-light-200-arrival.png` (summary pushed off; prompt over Chai and the kettle)
+  - **fix** `fix/summaryarrive-update-375x667-light-200-arrival.png` (P's summary, untouched)
+- 390×844 light @100: the same three paths, `…-390x844-light-100-arrival.png`.
+
+**The queued notice on the next screen:**
+- tea break: `contracts/W2R3/review/LEAD/T2/fix/summaryqueue-375x667-light-100-2-break-2.png`
+- Today: `contracts/W2R3/review/LT/fix2/shots/5477-today/390x844-dark-t100-task-b-next-drawn.png`
+
+**Lane T's REFERENCE → BEFORE → AFTER triples** (summary with a queued notice, then the next screen): `contracts/W2R3/review/LT/fix2/shots/` (`REFERENCE-07-summary.png`; `5470*`, `5476*`, `5477*`, `5477-next*`, `5477-today*`), listed in `RECEIPT-LT-FIX.md` §6.
