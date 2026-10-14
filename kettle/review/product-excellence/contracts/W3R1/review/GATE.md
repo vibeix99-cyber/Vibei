@@ -92,3 +92,9 @@
   - **C-1:** `whistle.spec.ts:203`.
 - The packet is `CHECKER-W3R1-F.md` §6.
 - The fix trial will be the integration branch (N + G + docs) + F's fix.
+
+## S: REJECT (LEAD-5, `d3033de`). Fix round 18:19–19:49 UTC
+
+- **Defect S-D1:** the "Warmest run" tile is cut at 200 %. Before the fonts load, the page widens to 408/401 px, which is the cause of the combined trial's `w3-stats:98` failure.
+- The packet is `CHECKER-W3R1-S.md` §6.
+- Vibei §2 is confirmed: exactly "Last 7 days"; the calendar logic is identical across the week boundary.
