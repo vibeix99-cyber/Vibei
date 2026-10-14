@@ -42,3 +42,7 @@ Restore a chain in order with `git fetch <bundle> 'refs/heads/*:refs/heads/*'` (
 | `pe-w3-stats-344069c.incremental.bundle` | pe/w3-stats@344069c (W3R1 Maker S READY; code 8158134) | 6b88eb0 | okay 2026-10-14 |
 | `pe-w3-notices-polish-5ee3e7c.incremental.bundle` | pe/w3-notices-polish@5ee3e7c (W3R1 Maker F READY; code 9f30a9b) | 6b88eb0 | okay 2026-10-14 |
 | `w3r1-trials-e478604.incremental.bundle` | combined trial e478604 = integration + F + S + G + N (merge commits only) | integration, maker tips | okay 2026-10-14 |
+| `w3r1-trial-e3b9eac.incremental.bundle` | trial e3b9eac = integration fc7f1a9 + 5ee3e7c (merge commit only) | fc7f1a9, 5ee3e7c | okay 2026-10-14 |
+| `w3r1-trial-c7a6b8f.incremental.bundle` | trial c7a6b8f = integration 1d961af + 344069c (merge commit only) | 1d961af, 344069c | okay 2026-10-14 |
+| `w3r1-trial-3d91793.incremental.bundle` | trial 3d91793 = integration 0c32046 + 808421d (merge commit only) | 0c32046, 808421d | okay 2026-10-14 |
+| `w3r1-trial-46f33e2.incremental.bundle` | trial 46f33e2 = integration 1af69d7 + 4168428 (merge commit only) | 1af69d7, 4168428 | okay 2026-10-14 |
