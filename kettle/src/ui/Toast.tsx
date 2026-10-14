@@ -328,7 +328,9 @@ function decide(): void {
     }
   }
   if (ctl.item?.id === tappedAway) tappedAway = null;
-  const room = free ? 0 : Math.max(ctl.room, ctl.item ? heightOf(el) : 0);
+  // A panel that must keep its controls in reach (the session panel) keeps no room when the notice's own height holds
+  // them past its edge: it closes up with the notice going, at the same moment, as before this round (F-T2-2).
+  const room = free || (strip.reach && holdsOutOfReach(el)) ? 0 : Math.max(ctl.room, ctl.item ? heightOf(el) : 0);
   commit({ item: next, hold, why, room });
 }
 
