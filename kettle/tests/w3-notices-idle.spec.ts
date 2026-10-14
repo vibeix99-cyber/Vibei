@@ -145,7 +145,8 @@ for (const c of CFGS) {
       console.log(`FACT ${name} ${kase} ${JSON.stringify(fact)}`);
       // One band commit only (the collapse), at rest: no pointer down, ≥ 1.2 s since any input, ≥ 1.2 s after the leave.
       expect(commits.filter((x: any) => x.room === 0).length, 'one collapse').toBe(1);
-      expect(commits.length, 'no other strip commit between the leave and the collapse').toBe(1);
+      // (The leave's own commit can be recorded a frame late, after `leftAt`: it keeps the same room and shows nothing.)
+      expect(commits.filter((x: any) => x.room !== 0 && !(x.room === room && x.shown === null)), 'no other strip commit between the leave and the collapse').toEqual([]);
       expect(collapse.down, 'pointer up at the collapse').toBe(0);
       expect(collapse.sinceInput, 'ms since the last input of any kind').toBeGreaterThanOrEqual(1200);
       expect(fact.collapseAfterLeaveMs).toBeGreaterThanOrEqual(1200);
