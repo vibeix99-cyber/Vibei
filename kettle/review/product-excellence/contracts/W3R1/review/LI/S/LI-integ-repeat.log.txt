@@ -1,0 +1,15 @@
+repeat start 13:39:44
+[slots] LI took 2/3 at 14:37:43: env KETTLE_PORT=5522 npx playwright test tests/integrity.spec.ts --project=chromium --repeat-each=5 --workers=2 --fully-parallel --reporter=list --output=/home/user/wt/w5tr-s/kettle/.tmp/LI/LI-pw-inte
+
+Running 5 tests using 2 workers
+
+  ✓  2 [chromium] › tests/integrity.spec.ts:781:3 › I03 data safety › export → reset (explicit confirmation) → import restores brews, settings and every reward exactly (22.0s)
+  ✓  1 [chromium] › tests/integrity.spec.ts:781:3 › I03 data safety › export → reset (explicit confirmation) → import restores brews, settings and every reward exactly (25.7s)
+  ✓  3 [chromium] › tests/integrity.spec.ts:781:3 › I03 data safety › export → reset (explicit confirmation) → import restores brews, settings and every reward exactly (26.7s)
+  ✓  4 [chromium] › tests/integrity.spec.ts:781:3 › I03 data safety › export → reset (explicit confirmation) → import restores brews, settings and every reward exactly (25.4s)
+  ✓  5 [chromium] › tests/integrity.spec.ts:781:3 › I03 data safety › export → reset (explicit confirmation) → import restores brews, settings and every reward exactly (20.7s)
+
+  5 passed (1.4m)
+[slots] LI freed 2 at 14:39:11
+exit 0
+repeat end 14:39:11

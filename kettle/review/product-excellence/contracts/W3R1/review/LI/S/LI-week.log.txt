@@ -1,0 +1,16 @@
+start 17:03:35
+[slots] LI took 1/3 at 17:18:09: env LI_BASE=http://127.0.0.1:5478 LI_TRIAL=http://127.0.0.1:5522 LI_OUT=.tmp/LI/out/weekboundary npx playwright test -c .tmp/LI/LI-pw.config.ts --output=.tmp/LI/LI-pw-week
+
+Running 3 tests using 1 worker
+
+{"case":"A-mon-enGB","rolling":"3h 39m","calendarWeek":"42 min","glance":"Today and the last 7 days Today Mon, 12 Oct 42 min focused 2 full brews Daily goal met Last 7 days 6 Oct–12 3h 39m focused Brewed on 7 of 7 days 4 days at goal","baseWeek":"Last 7 days 6 Oct–12 3h 39m focused 4 of 7 days at goal 31 min a day on average 0 15 45 60 Tue 6 Wed 7 Thu 8 Fri 9 Sat 1","trialWeek":"Last 7 days 6 Oct–12 3h 39m focused 4 of 7 days at goal 31 min a day on average 0 15 45 60 Tue 6 Wed 7 Thu 8 Fri 9 Sat 1","engine":{"current":14,"best":14,"cozies":1,"cozyDays":["2026-10-05"],"weekend":4},"overviewBase":"14 Day streak 14 Best streak 6h 20m Total focus 15 Full brews","overviewTrial":"14 Days warm 14 days Warmest run 6h 20m Total focus 15 Full brews"}
+  ✓  1 .tmp/LI/LI-weekboundary.spec.ts:100:3 › week boundary A-mon-enGB: warm days, Tea Cozy and badges match base; "Last 7 days" is rolling (21.6s)
+{"case":"B-sun-enUS","rolling":"2h 57m","calendarWeek":"32 min","glance":"Today and the last 7 days Today Sun, Oct 11 32 min focused 1 full brew Daily goal met Last 7 days Oct 5–11 2h 57m focused Brewed on 6 of 7 days 3 days at goal","baseWeek":"Last 7 days Oct 5–11 2h 57m focused 3 of 7 days at goal 25 min a day on average 0 10 20 40 Mon 5 Tue 6 Wed 7 Thu 8 Fri 9","trialWeek":"Last 7 days Oct 5–11 2h 57m focused 3 of 7 days at goal 25 min a day on average 0 10 20 40 Mon 5 Tue 6 Wed 7 Thu 8 Fri 9","engine":{"current":13,"best":13,"cozies":0,"cozyDays":["2026-10-05"],"weekend":4},"overviewBase":"13 Day streak 13 Best streak 5h 38m Total focus 13 Full brews","overviewTrial":"13 Days warm 13 days Warmest run 5h 38m Total focus 13 Full brews"}
+  ✓  2 .tmp/LI/LI-weekboundary.spec.ts:100:3 › week boundary B-sun-enUS: warm days, Tea Cozy and badges match base; "Last 7 days" is rolling (19.2s)
+{"case":"C-sun-enGB","rolling":"2h 57m","calendarWeek":"2h 57m","glance":"Today and the last 7 days Today Sun, 11 Oct 32 min focused 1 full brew Daily goal met Last 7 days 5 Oct–11 2h 57m focused Brewed on 6 of 7 days 3 days at goal","baseWeek":"Last 7 days 5 Oct–11 2h 57m focused 3 of 7 days at goal 25 min a day on average 0 10 20 40 Mon 5 Tue 6 Wed 7 Thu 8 Fri 9","trialWeek":"Last 7 days 5 Oct–11 2h 57m focused 3 of 7 days at goal 25 min a day on average 0 10 20 40 Mon 5 Tue 6 Wed 7 Thu 8 Fri 9","engine":{"current":13,"best":13,"cozies":0,"cozyDays":["2026-10-05"],"weekend":4},"overviewBase":"13 Day streak 13 Best streak 5h 38m Total focus 13 Full brews","overviewTrial":"13 Days warm 13 days Warmest run 5h 38m Total focus 13 Full brews"}
+  ✓  3 .tmp/LI/LI-weekboundary.spec.ts:100:3 › week boundary C-sun-enGB: warm days, Tea Cozy and badges match base; "Last 7 days" is rolling (22.9s)
+
+  3 passed (1.2m)
+[slots] LI freed 1 at 17:19:22
+exit 0
+end 17:19:22

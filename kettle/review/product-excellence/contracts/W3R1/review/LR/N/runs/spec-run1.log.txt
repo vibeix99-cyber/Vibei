@@ -1,0 +1,61 @@
+[slots] LR took 1/3 at 12:55:22: env KETTLE_PORT=5524 npx playwright test tests/chai3d.spec.ts tests/w2-room.spec.ts --project=chromium --workers=1 --reporter=list --output=/home/user/wt/w5tr-n/kettle/.tmp/LR/pw/run1
+
+Running 17 tests using 1 worker
+
+  ✓   1 [chromium] › tests/chai3d.spec.ts:72:3 › 3D Chai: the model replaces the procedural Chai › high tier: loads, validates and swaps in place, awake = eyes_open, on the cushion (27.2s)
+  ✓   2 [chromium] › tests/chai3d.spec.ts:85:3 › 3D Chai: the face reads at evening and night (W3R1 · N) › the fur self-fill follows the hour (day unchanged, stronger at dusk and night); eyes and nose untouched (1.3m)
+  ✓   3 [chromium] › tests/chai3d.spec.ts:112:3 › 3D Chai: fallbacks keep the procedural Chai › 404: procedural Chai, no error, the room is live (19.6s)
+  ✓   4 [chromium] › tests/chai3d.spec.ts:125:3 › 3D Chai: fallbacks keep the procedural Chai › slow network: the first frame is the procedural Chai; after 8 s the load gives up and it stays (30.9s)
+  ✓   5 [chromium] › tests/chai3d.spec.ts:141:3 › 3D Chai: fallbacks keep the procedural Chai › a file that fails validation (the r0 model: no eyes_sip) keeps the procedural Chai (35.9s)
+  ✓   6 [chromium] › tests/chai3d.spec.ts:154:3 › 3D Chai: fallbacks keep the procedural Chai › the loader chunk itself fails to load: procedural Chai, no error (23.5s)
+  ✓   7 [chromium] › tests/chai3d.spec.ts:167:3 › 3D Chai: fallbacks keep the procedural Chai › 3D off: the static drawing, no engine, no model request (18.9s)
+  ✓   8 [chromium] › tests/chai3d.spec.ts:176:3 › 3D Chai: fallbacks keep the procedural Chai › low tier: the model too (liteified), one request; the room is live first (22.2s)
+  ✓   9 [chromium] › tests/chai3d.spec.ts:197:3 › 3D Chai: fallbacks keep the procedural Chai › default tier on this machine (auto → low on SwiftShader): the model, with no frame without Chai (25.7s)
+  ✓  10 [chromium] › tests/chai3d.spec.ts:227:3 › 3D Chai: fallbacks keep the procedural Chai › WebGL context lost and restored: the engine is rebuilt with the model from memory, no second request (51.2s)
+  ✓  11 [chromium] › tests/w2-room.spec.ts:87:3 › Focus backdrop: earned items without the live 3D room › 3D off: the window still shows every earned window-visible item (34.0s)
+  ✓  12 [chromium] › tests/w2-room.spec.ts:96:3 › Focus backdrop: earned items without the live 3D room › 3D loading: the still shown before the engine is ready carries the same items (31.0s)
+  ✓  13 [chromium] › tests/w2-room.spec.ts:111:3 › Focus backdrop: earned items without the live 3D room › items never stand on the bare sky: no layer is drawn before the base room still has decoded (29.6s)
+  ✘  14 [chromium] › tests/w2-room.spec.ts:144:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items (1.0m)
+  ✓  15 [chromium] › tests/w2-room.spec.ts:166:3 › Nook hint tells the truth › 3D off: no drag-and-tap promise over the drawing (6.4s)
+  ✓  16 [chromium] › tests/w2-room.spec.ts:176:3 › Nook hint tells the truth › no WebGL: the same truthful hint (7.2s)
+  ✓  17 [chromium] › tests/w2-room.spec.ts:192:3 › Nook hint tells the truth › 3D on: the hint is unchanged (7.3s)
+
+
+  1) [chromium] › tests/w2-room.spec.ts:144:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error: page.screenshot: Test timeout of 60000ms exceeded.
+    Call log:
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+
+
+      78 |     const on = await page.screenshot({ clip, animations: 'disabled' });
+      79 |     await host.locator('svg[data-window-items]').evaluate((s) => ((s as SVGElement).style.visibility = 'hidden'));
+    > 80 |     const off = await page.screenshot({ clip, animations: 'disabled' });
+         |                            ^
+      81 |     await host.locator('svg[data-window-items]').evaluate((s) => ((s as SVGElement).style.visibility = ''));
+      82 |     expect(on.equals(off), `layer ${id} changes the backdrop`).toBe(false);
+      83 |   }
+        at assertLayersDrawn (/home/user/wt/w5tr-n/kettle/tests/w2-room.spec.ts:80:28)
+        at /home/user/wt/w5tr-n/kettle/tests/w2-room.spec.ts:159:5
+
+    Error Context: .tmp/LR/pw/run1/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/LR/pw/run1/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/LR/pw/run1/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  Slow test file: [chromium] › tests/chai3d.spec.ts (5.5m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  1 failed
+    [chromium] › tests/w2-room.spec.ts:144:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items 
+  16 passed (8.6m)
+[slots] LR freed 1 at 13:03:59

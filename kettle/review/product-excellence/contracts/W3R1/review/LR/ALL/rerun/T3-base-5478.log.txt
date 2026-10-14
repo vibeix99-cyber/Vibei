@@ -1,0 +1,37 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › tests/w3-notices.spec.ts:152:1 › the room a gone notice keeps stays while the page is scrolled over it and back: nothing in view moves (390×844, 200 %) (21.5s)
+
+
+  1) [chromium] › tests/w3-notices.spec.ts:152:1 › the room a gone notice keeps stays while the page is scrolled over it and back: nothing in view moves (390×844, 200 %) 
+
+    Error: the strip keeps its room, empty
+
+    [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  locator('[data-notice-strip][data-room]')
+    Expected: [32m1[39m
+    Received: [31m0[39m
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - the strip keeps its room, empty with timeout 10000ms[22m
+    [2m  - waiting for locator('[data-notice-strip][data-room]')[22m
+    [2m    14 × locator resolved to 0 elements[22m
+    [2m       - unexpected value "0"[22m
+
+
+      158 |   await expect(page.locator('[data-notice-strip] li')).toHaveCount(0, { timeout: 20_000 });
+      159 |   const strip = page.locator('[data-notice-strip][data-room]');
+    > 160 |   await expect(strip, 'the strip keeps its room, empty').toHaveCount(1);
+          |                                                          ^
+      161 |   const room = await strip.evaluate((e) => e.getBoundingClientRect().height);
+      162 |   expect(room).toBeGreaterThan(40);
+      163 |   expect(await strip.evaluate((e) => e.textContent), 'nothing in the room').toBe('');
+        at /home/user/wt/w5tr-all/kettle/tests/w3-notices.spec.ts:160:58
+
+    Error Context: .tmp/LR-pw/rr-T3-base-5478/w3-notices-the-room-a-gone-4a25d--in-view-moves-390×844-200--chromium/error-context.md
+
+  1 failed
+    [chromium] › tests/w3-notices.spec.ts:152:1 › the room a gone notice keeps stays while the page is scrolled over it and back: nothing in view moves (390×844, 200 %) 

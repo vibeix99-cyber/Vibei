@@ -1,0 +1,50 @@
+[slots] LR took 1/3 at 14:39:12: env KETTLE_PORT=5520 PLAYWRIGHT_JSON_OUTPUT_NAME=/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/full-C.json npx playwright test tests/w3-notices-load.spec.ts tests/w3-notices.spec.ts tests/w3-settings.spec.
+
+Running 70 tests using 1 worker
+
+  -   1 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 100 %) #0
+  -   2 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 %) #0
+  -   3 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 % reduced motion) #0
+  -   4 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 100 %) #0
+  -   5 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 200 %) #0
+  -   6 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 100 %) #0
+  -   7 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 %) #0
+  -   8 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 % reduced motion) #0
+  -   9 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 100 %) #0
+  -  10 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 200 %) #0
+  -  11 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 100 %) #0
+  -  12 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 %) #0
+  -  13 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion) #0
+  -  14 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 100 %) #0
+  -  15 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) #0
+  -  16 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 100 %) #0
+  -  17 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 %) #0
+  -  18 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 % reduced motion) #0
+  -  19 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 100 %) #0
+  -  20 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 200 %) #0
+  -  21 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 100 %) #0
+  -  22 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 %) #0
+  -  23 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #0
+  -  24 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 100 %) #0
+  -  25 [chromium] › tests/w3-notices-load.spec.ts:293:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 200 %) #0
+  ✓  26 [chromium] › tests/w3-notices.spec.ts:180:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 light 200 % reduced motion) (17.2s)
+  ✓  27 [chromium] › tests/w3-notices.spec.ts:180:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 light 100 %) (17.0s)
+  ✓  28 [chromium] › tests/w3-notices.spec.ts:180:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 dark 100 %) (16.4s)
+  ✓  29 [chromium] › tests/w3-notices.spec.ts:180:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 dark 100 %) (21.6s)
+  ✓  30 [chromium] › tests/w3-notices.spec.ts:180:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (844×390 dark 100 %) (15.8s)
+  ✘  31 [chromium] › tests/w3-notices.spec.ts:252:1 › the room a gone notice keeps stays while the page is scrolled over it and back: nothing in view moves (390×844, 200 %) (19.0s)
+  ✓  32 [chromium] › tests/w3-notices.spec.ts:344:1 › a new screen starts with no room: Today after End, then Stats and back (375×667, 100 %) (17.6s)
+  ✓  33 [chromium] › tests/w3-settings.spec.ts:39:1 › preferences persist across a reload; Reset everything returns each to its default (33.7s)
+  ✓  34 [chromium] › tests/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (390×844, light); inert controls are not Tab stops (10.1s)
+  ✓  35 [chromium] › tests/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (390×844, dark); inert controls are not Tab stops (12.9s)
+  ✓  36 [chromium] › tests/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (1440×900, light); inert controls are not Tab stops (11.9s)
+  ✓  37 [chromium] › tests/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (1440×900, dark); inert controls are not Tab stops (9.5s)
+  ✓  38 [chromium] › tests/w3-settings.spec.ts:194:1 › a row whose switch cannot change does not react to hover or press; a live row does (9.4s)
+  ✓  39 [chromium] › tests/w3-settings.spec.ts:233:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one (8.1s)
+  ✓  40 [chromium] › tests/w3-settings.spec.ts:255:1 › forced colours: the focused field keeps its ring and the selected segment stays visible (9.7s)
+  ✓  41 [chromium] › tests/w3-settings.spec.ts:282:1 › Settings never says "streak", and sound and nudges say what they cannot do (5.3s)
+  ✓  42 [chromium] › tests/w3-stats.spec.ts:98:5 › Delete this brew? at 375×667 with 200 % text › both choices can be tapped, and Tab reaches them in a loop (14.1s)
+  ✓  43 [chromium] › tests/w3-stats.spec.ts:146:5 › Delete this brew? at 375×667 with 200 % text › a tap on Delete deletes (14.1s)
+  ✘  44 [chromium] › tests/w3-stats.spec.ts:98:5 › Delete this brew? at 390×844 with 200 % text › both choices can be tapped, and Tab reaches them in a loop (16.7s)
+  ✓  45 [chromium] › tests/w3-stats.spec.ts:146:5 › Delete this brew? at 390×844 with 200 % text › a tap on Delete deletes (11.3s)
+  ✓  46 [chromium] › tests/w3-stats.spec.ts:98:5 › Delete this brew? at 844×390 with 200 % text › both choices can be tapped, and Tab reaches them in a loop (19.6s)

@@ -1,0 +1,15 @@
+combined start 16:54:48
+[slots] LI took 1/3 at 16:54:48: env KETTLE_PORT=5520 npx playwright test tests/w3-stats.spec.ts:98 --project=chromium --workers=1 --reporter=list --output=/home/user/wt/w5tr-s/kettle/.tmp/LI/LI-pw-s98-comb
+
+Running 5 tests using 1 worker
+
+  ✓  1 [chromium] › tests/w3-stats.spec.ts:98:5 › Delete this brew? at 375×667 with 200 % text › both choices can be tapped, and Tab reaches them in a loop (10.0s)
+  ✓  2 [chromium] › tests/w3-stats.spec.ts:98:5 › Delete this brew? at 390×844 with 200 % text › both choices can be tapped, and Tab reaches them in a loop (8.6s)
+  ✓  3 [chromium] › tests/w3-stats.spec.ts:98:5 › Delete this brew? at 844×390 with 200 % text › both choices can be tapped, and Tab reaches them in a loop (8.9s)
+  ✓  4 [chromium] › tests/w3-stats.spec.ts:98:5 › Delete this brew? at 1440×900 with 200 % text › both choices can be tapped, and Tab reaches them in a loop (17.1s)
+  ✓  5 [chromium] › tests/w3-stats.spec.ts:98:5 › Delete this brew? at 375×667 › both choices can be tapped, and Tab reaches them in a loop (11.6s)
+
+  5 passed (58.6s)
+[slots] LI freed 1 at 16:55:48
+exit 0
+combined end 16:55:48

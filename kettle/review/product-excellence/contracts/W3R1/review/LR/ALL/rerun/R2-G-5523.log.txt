@@ -1,0 +1,119 @@
+
+Running 8 tests using 1 worker
+
+  ✘  1 [chromium] › tests/w3-settings.spec.ts:378:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one (3.3s)
+  ✓  2 [chromium] › tests/w3-settings.spec.ts:378:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one (3.5s)
+  ✘  3 [chromium] › tests/w3-settings.spec.ts:378:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one (3.4s)
+  ✓  4 [chromium] › tests/w3-settings.spec.ts:378:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one (3.9s)
+  ✘  5 [chromium] › tests/w3-settings.spec.ts:378:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one (4.0s)
+  ✓  6 [chromium] › tests/w3-settings.spec.ts:378:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one (3.9s)
+  ✓  7 [chromium] › tests/w3-settings.spec.ts:378:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one (3.5s)
+  ✘  8 [chromium] › tests/w3-settings.spec.ts:378:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one (3.4s)
+
+
+  1) [chromium] › tests/w3-settings.spec.ts:378:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: not [32m"oklab(0.959197 0.00389533 0.0175539)"[39m
+
+      247 |   await page.mouse.move(2, 890);
+      248 |   await page.mouse.up();
+    > 249 |   expect(pressed).not.toBe(hover);
+          |                       ^
+      250 |   expect(pressed).not.toBe(selectedThumb);
+      251 |   await expect(group.getByRole('radio', { name: 'System', exact: true })).toBeChecked(); // released away: no change
+      252 |   await ctx.close();
+        at /home/user/wt/w5tr-g/kettle/tests/w3-settings.spec.ts:249:23
+
+    Error Context: ../../w5tr-all/kettle/.tmp/LR-pw/rr-R2-G-5523/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../w5tr-all/kettle/.tmp/LR-pw/rr-R2-G-5523/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../w5tr-all/kettle/.tmp/LR-pw/rr-R2-G-5523/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/w3-settings.spec.ts:378:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: not [32m"oklab(0.959197 0.00389533 0.0175539)"[39m
+
+      247 |   await page.mouse.move(2, 890);
+      248 |   await page.mouse.up();
+    > 249 |   expect(pressed).not.toBe(hover);
+          |                       ^
+      250 |   expect(pressed).not.toBe(selectedThumb);
+      251 |   await expect(group.getByRole('radio', { name: 'System', exact: true })).toBeChecked(); // released away: no change
+      252 |   await ctx.close();
+        at /home/user/wt/w5tr-g/kettle/tests/w3-settings.spec.ts:249:23
+
+    Error Context: ../../w5tr-all/kettle/.tmp/LR-pw/rr-R2-G-5523/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium-repeat2/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../w5tr-all/kettle/.tmp/LR-pw/rr-R2-G-5523/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../w5tr-all/kettle/.tmp/LR-pw/rr-R2-G-5523/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/w3-settings.spec.ts:378:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: not [32m"oklab(0.959197 0.00389533 0.0175539)"[39m
+
+      247 |   await page.mouse.move(2, 890);
+      248 |   await page.mouse.up();
+    > 249 |   expect(pressed).not.toBe(hover);
+          |                       ^
+      250 |   expect(pressed).not.toBe(selectedThumb);
+      251 |   await expect(group.getByRole('radio', { name: 'System', exact: true })).toBeChecked(); // released away: no change
+      252 |   await ctx.close();
+        at /home/user/wt/w5tr-g/kettle/tests/w3-settings.spec.ts:249:23
+
+    Error Context: ../../w5tr-all/kettle/.tmp/LR-pw/rr-R2-G-5523/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium-repeat4/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../w5tr-all/kettle/.tmp/LR-pw/rr-R2-G-5523/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium-repeat4/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../w5tr-all/kettle/.tmp/LR-pw/rr-R2-G-5523/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium-repeat4/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests/w3-settings.spec.ts:378:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: not [32m"oklab(0.959197 0.00389533 0.0175539)"[39m
+
+      247 |   await page.mouse.move(2, 890);
+      248 |   await page.mouse.up();
+    > 249 |   expect(pressed).not.toBe(hover);
+          |                       ^
+      250 |   expect(pressed).not.toBe(selectedThumb);
+      251 |   await expect(group.getByRole('radio', { name: 'System', exact: true })).toBeChecked(); // released away: no change
+      252 |   await ctx.close();
+        at /home/user/wt/w5tr-g/kettle/tests/w3-settings.spec.ts:249:23
+
+    Error Context: ../../w5tr-all/kettle/.tmp/LR-pw/rr-R2-G-5523/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium-repeat7/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../w5tr-all/kettle/.tmp/LR-pw/rr-R2-G-5523/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium-repeat7/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../w5tr-all/kettle/.tmp/LR-pw/rr-R2-G-5523/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium-repeat7/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [chromium] › tests/w3-settings.spec.ts:378:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one 
+    [chromium] › tests/w3-settings.spec.ts:378:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one 
+    [chromium] › tests/w3-settings.spec.ts:378:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one 
+    [chromium] › tests/w3-settings.spec.ts:378:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one 
+  4 passed (52.0s)

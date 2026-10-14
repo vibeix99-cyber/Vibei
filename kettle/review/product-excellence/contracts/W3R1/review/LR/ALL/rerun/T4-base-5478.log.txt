@@ -1,0 +1,34 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › tests/w3-stats.spec.ts:137:5 › Delete this brew? at 390×844 with 200 % text › both choices can be tapped, and Tab reaches them in a loop (6.8s)
+
+
+  1) [chromium] › tests/w3-stats.spec.ts:137:5 › Delete this brew? at 390×844 with 200 % text › both choices can be tapped, and Tab reaches them in a loop 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m"Delete"[39m
+    Received: [31m"Keep it"[39m
+
+      116 |         );
+      117 |       }
+    > 118 |       expect(seen[0].name).toBe('Delete');
+          |                            ^
+      119 |       expect(seen[1].name).toBe('Close');
+      120 |       // …and round to Keep it again; on a compact landscape screen the scrolling text may be a stop on the way.
+      121 |       const back = seen.findIndex((x, i) => i > 1 && x.name === 'Keep it');
+        at /home/user/wt/w5tr-all/kettle/tests/w3-stats.spec.ts:118:28
+
+    Error Context: .tmp/LR-pw/rr-T4-base-5478/w3-stats-Delete-this-brew--b098a--Tab-reaches-them-in-a-loop-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/LR-pw/rr-T4-base-5478/w3-stats-Delete-this-brew--b098a--Tab-reaches-them-in-a-loop-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/LR-pw/rr-T4-base-5478/w3-stats-Delete-this-brew--b098a--Tab-reaches-them-in-a-loop-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/w3-stats.spec.ts:137:5 › Delete this brew? at 390×844 with 200 % text › both choices can be tapped, and Tab reaches them in a loop 

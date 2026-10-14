@@ -1,0 +1,27 @@
+
+Running 3 tests using 1 worker
+
+  ✓  1 [chromium] › tests/notice-strip.spec.ts:275:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (1.5m)
+  ✓  2 [chromium] › tests/notice-strip.spec.ts:275:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (1.4m)
+  ✘  3 [chromium] › tests/notice-strip.spec.ts:275:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (24.4s)
+
+
+  1) [chromium] › tests/notice-strip.spec.ts:275:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) 
+
+    Error: Mark done's Undo not drawn after the tap at {"x":773.5,"y":707.1875,"w":151,"h":44,"top":685.1875}: {"taps":["pointerdown@774,707→DIV._group_kjzqi_114 _tagGroup_ahn","click@773,707→DIV._group_kjzqi_114 _tagGroup_ahn"],"mark":{"x":698,"y":624.6875,"width":151,"height":44,"top":624.6875,"right":849,"bottom":668.6875,"left":698},"sy":48,"notices":{"queue":[],"shown":null,"strip":3,"screen":"/","why":"above","changed":12628,"version":13,"room":0}}
+
+      328 |       await expect(undoRow).toBeVisible();
+      329 |     } catch (e) {
+    > 330 |       throw new Error(`Mark done's Undo not drawn after the tap at ${JSON.stringify(tapAt)}: ${JSON.stringify(await page.evaluate(() => ({ taps: (window as any).__taps, mark: document.querySelector('button[aria-label^="Mark"]')?.getBoundingClientRect().toJSON(), sy: scrollY, notices: (window as any).__kettle.notices() })))}`);
+          |             ^
+      331 |     }
+      332 |     const rowTop = await undoRow.evaluate((r) => r.getBoundingClientRect().top);
+      333 |     expect(Math.abs(rowTop - line), 'the Undo is drawn where Mark done was, on screen').toBeLessThanOrEqual(2);
+        at /home/user/wt/w5tr-f/kettle/tests/notice-strip.spec.ts:330:13
+
+    Error Context: .tmp/LI2/LI2-pw-A-trial/notice-strip-no-notice-ove-d82ec-0-light-200-reduced-motion--chromium-repeat2/error-context.md
+
+  1 failed
+    [chromium] › tests/notice-strip.spec.ts:275:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) 
+  2 passed (3.5m)
+exit 1 end 13:18:40

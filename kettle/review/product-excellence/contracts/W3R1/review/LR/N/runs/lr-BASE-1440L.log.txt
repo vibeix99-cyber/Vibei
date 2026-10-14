@@ -1,0 +1,41 @@
+[slots] LR took 1/3 at 12:35:50: node .tmp/LR/lr.mjs --base http://127.0.0.1:5488 --label BASE-1440L --out /home/user/Vibei/kettle/review/product-excellence/contracts/W3R1/review/LR/N/sep/BASE --raw .tmp/LR/raw/BASE --cfgs 1440x900@2
+12:36:15 BASE-1440L 1440x900-light-low nook-day eyes CR/dL 4.546/47.74 (n 56, comps 2) | nose 3.328/37.54 (n 178, comps 1) | fill 0.16 | restoreDiff 0 | fnv 3d800a6d
+12:36:30 BASE-1440L 1440x900-light-low nook-dusk eyes CR/dL 2.264/30.01 (n 52, comps 2) | nose 1.93/25.36 (n 163, comps 1) | fill 0.16 | restoreDiff 0 | fnv 38f70825
+12:36:43 BASE-1440L 1440x900-light-low nook-night eyes CR/dL 2.011/26.78 (n 47, comps 2) | nose 1.785/23.21 (n 163, comps 1) | fill 0.16 | restoreDiff 0 | fnv c2ced85f
+12:37:06 BASE-1440L 1440x900-light-low close-day eyes CR/dL 4.546/47.74 (n 1955, comps 5) | nose 3.311/37.4 (n 5349, comps 1) | fill 0.16 | restoreDiff 0 | fnv 9e78bf54
+12:37:30 BASE-1440L 1440x900-light-low close-dusk eyes CR/dL 2.264/30.01 (n 1932, comps 5) | nose 1.93/25.36 (n 5254, comps 1) | fill 0.16 | restoreDiff 0 | fnv 6d6ae388
+12:37:50 BASE-1440L 1440x900-light-low close-night eyes CR/dL 2.011/26.78 (n 1903, comps 3) | nose 1.785/23.21 (n 5253, comps 1) | fill 0.16 | restoreDiff 0 | fnv dd26dbc
+1440x900-light-high FAILED page.evaluate: Target page, context or browser has been closed
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+browserContext.close: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --enable-unsafe-swiftshader --use-angle=swiftshader --ignore-gpu-blocklist --user-data-dir=/tmp/playwright_chromiumdev_profile-YggDSV --remote-debugging-pipe --no-startup-window
+<launched> pid=10021
+[pid=10021][err] [1014/123551.637738:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[pid=10021][err] [1014/123551.647632:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[pid=10021][err] [1014/123551.648807:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[pid=10021][err] [1014/123551.657012:WARNING:device/bluetooth/dbus/bluez_dbus_manager.cc:209] Floss manager service not available, cannot set Floss enable/disable.
+[pid=10021][err] [1014/123551.693565:WARNING:sandbox/policy/linux/sandbox_linux.cc:414] InitializeSandbox() called with multiple threads in process gpu-process.
+[pid=10021][err] [1014/123552.378315:INFO:CONSOLE:3] "Service Worker registration blocked by Playwright", source:  (3)
+[pid=10021][err] [1014/123552.378343:INFO:CONSOLE:10] "[pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')", source: http://127.0.0.1:5488/assets/index-rWnj8aw2.js (10)
+[pid=10021][err] [1014/123553.296463:INFO:CONSOLE:1] "[chai3d] model ready [object Object] [object Object]", source: http://127.0.0.1:5488/assets/chaiLoad-C145CX60.js (1)
+[pid=10021][err] [1014/123558.446560:ERROR:gpu/command_buffer/service/gl_utils.cc:391] [.WebGL-0x1b3400111a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[pid=10021][err] [1014/123602.437194:ERROR:gpu/command_buffer/service/gl_utils.cc:391] [.WebGL-0x1b3400111a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[pid=10021][err] [1014/123603.282770:ERROR:gpu/command_buffer/service/gl_utils.cc:391] [.WebGL-0x1b3400111a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[pid=10021][err] [1014/123604.512360:ERROR:gpu/command_buffer/service/gl_utils.cc:391] [.WebGL-0x1b3400111a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+[pid=10021][err] [1014/123609.270296:INFO:CONSOLE:0] "[.WebGL-0x1b3400111a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels", source: http://127.0.0.1:5488/?debug&seed=veteran&theme=light&nookq=low&nooktime=day&nookweather=clear#/nook (0)
+[pid=10021][err] [1014/123609.270355:INFO:CONSOLE:0] "[.WebGL-0x1b3400111a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels", source: http://127.0.0.1:5488/?debug&seed=veteran&theme=light&nookq=low&nooktime=day&nookweather=clear#/nook (0)
+[pid=10021][err] [1014/123609.270397:INFO:CONSOLE:0] "[.WebGL-0x1b3400111a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels", source: http://127.0.0.1:5488/?debug&seed=veteran&theme=light&nookq=low&nooktime=day&nookweather=clear#/nook (0)
+[pid=10021][err] [1014/123609.270445:INFO:CONSOLE:0] "[.WebGL-0x1b3400111a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)", source: http://127.0.0.1:5488/?debug&seed=veteran&theme=light&nookq=low&nooktime=day&nookweather=clear#/nook (0)
+[pid=10021][err] [1014/123751.207231:INFO:CONSOLE:3] "Service Worker registration blocked by Playwright", source:  (3)
+[pid=10021][err] [1014/123751.207501:INFO:CONSOLE:10] "[pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')", source: http://127.0.0.1:5488/assets/index-rWnj8aw2.js (10)
+[pid=10021][err] [1014/123751.723441:INFO:CONSOLE:1] "[chai3d] model ready [object Object] [object Object]", source: http://127.0.0.1:5488/assets/chaiLoad-C145CX60.js (1)
+[pid=10021] <gracefully close start>
+    at async file:///home/user/wt/w5tr-n/kettle/.tmp/LR/lr.mjs:208:3
+
+Node.js v22.22.2
+[slots] LR freed 1 at 12:37:59

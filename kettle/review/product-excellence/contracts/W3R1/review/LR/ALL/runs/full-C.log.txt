@@ -1,0 +1,106 @@
+[slots] LR took 1/3 at 17:25:26: env KETTLE_PORT=5520 PLAYWRIGHT_JSON_OUTPUT_NAME=/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/full-C.json npx playwright test --project=chromium --workers=1 --reporter=list,json --output=/home/user/wt/w5t
+
+Running 70 tests using 1 worker
+
+  -   1 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 100 %) #0
+  -   2 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 %) #0
+  -   3 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 % reduced motion) #0
+  -   4 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 100 %) #0
+  -   5 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 200 %) #0
+  -   6 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 100 %) #0
+  -   7 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 %) #0
+  -   8 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 % reduced motion) #0
+  -   9 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 100 %) #0
+  -  10 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 200 %) #0
+  -  11 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 100 %) #0
+  -  12 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 %) #0
+  -  13 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion) #0
+  -  14 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 100 %) #0
+  -  15 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) #0
+  -  16 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 100 %) #0
+  -  17 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 %) #0
+  -  18 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 % reduced motion) #0
+  -  19 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 100 %) #0
+  -  20 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 200 %) #0
+  -  21 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 100 %) #0
+  -  22 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 %) #0
+  -  23 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #0
+  -  24 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 100 %) #0
+  -  25 [chromium] › tests/w3-notices-load.spec.ts:447:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 200 %) #0
+  ✓  26 [chromium] › tests/w3-notices.spec.ts:110:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 light 200 % reduced motion) (12.6s)
+  ✓  27 [chromium] › tests/w3-notices.spec.ts:110:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 light 100 %) (11.4s)
+  ✓  28 [chromium] › tests/w3-notices.spec.ts:110:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 dark 100 %) (12.3s)
+  ✓  29 [chromium] › tests/w3-notices.spec.ts:110:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 dark 100 %) (11.9s)
+  ✓  30 [chromium] › tests/w3-notices.spec.ts:110:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (844×390 dark 100 %) (11.0s)
+  ✓  31 [chromium] › tests/w3-notices.spec.ts:152:1 › the room a gone notice keeps stays while the page is scrolled over it and back: nothing in view moves (390×844, 200 %) (14.2s)
+  ✓  32 [chromium] › tests/w3-notices.spec.ts:200:1 › a new screen starts with no room: Today after End, then Stats and back (375×667, 100 %) (12.9s)
+  ✓  33 [chromium] › tests/w3-settings.spec.ts:59:1 › preferences persist across a reload; Reset everything returns each to its default (24.4s)
+  ✓  34 [chromium] › tests/w3-settings.spec.ts:271:88 › keyboard focus is always visible on Settings (390×844, light); inert controls are not Tab stops (3.7s)
+  ✓  35 [chromium] › tests/w3-settings.spec.ts:271:88 › keyboard focus is always visible on Settings (390×844, dark); inert controls are not Tab stops (4.8s)
+  ✓  36 [chromium] › tests/w3-settings.spec.ts:271:88 › keyboard focus is always visible on Settings (1440×900, light); inert controls are not Tab stops (5.5s)
+  ✓  37 [chromium] › tests/w3-settings.spec.ts:271:88 › keyboard focus is always visible on Settings (1440×900, dark); inert controls are not Tab stops (6.0s)
+  ✓  38 [chromium] › tests/w3-settings.spec.ts:321:1 › a row whose switch cannot change does not react to hover or press; a live row does (6.1s)
+  ✘  39 [chromium] › tests/w3-settings.spec.ts:378:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one (5.7s)
+  ✓  40 [chromium] › tests/w3-settings.spec.ts:415:1 › forced colours: the focused field keeps its ring and the selected segment stays visible (4.3s)
+  ✓  41 [chromium] › tests/w3-settings.spec.ts:459:1 › Settings never says "streak", and sound and nudges say what they cannot do (6.1s)
+  ✓  42 [chromium] › tests/w3-stats.spec.ts:98:5 › Delete this brew? at 375×667 with 200 % text › both choices can be tapped, and Tab reaches them in a loop (10.2s)
+  ✓  43 [chromium] › tests/w3-stats.spec.ts:146:5 › Delete this brew? at 375×667 with 200 % text › a tap on Delete deletes (8.3s)
+  ✓  44 [chromium] › tests/w3-stats.spec.ts:98:5 › Delete this brew? at 390×844 with 200 % text › both choices can be tapped, and Tab reaches them in a loop (11.9s)
+  ✓  45 [chromium] › tests/w3-stats.spec.ts:146:5 › Delete this brew? at 390×844 with 200 % text › a tap on Delete deletes (8.1s)
+  ✓  46 [chromium] › tests/w3-stats.spec.ts:98:5 › Delete this brew? at 844×390 with 200 % text › both choices can be tapped, and Tab reaches them in a loop (11.6s)
+  ✓  47 [chromium] › tests/w3-stats.spec.ts:146:5 › Delete this brew? at 844×390 with 200 % text › a tap on Delete deletes (9.8s)
+  ✓  48 [chromium] › tests/w3-stats.spec.ts:98:5 › Delete this brew? at 1440×900 with 200 % text › both choices can be tapped, and Tab reaches them in a loop (14.2s)
+  ✓  49 [chromium] › tests/w3-stats.spec.ts:146:5 › Delete this brew? at 1440×900 with 200 % text › a tap on Delete deletes (12.4s)
+  ✓  50 [chromium] › tests/w3-stats.spec.ts:98:5 › Delete this brew? at 375×667 › both choices can be tapped, and Tab reaches them in a loop (16.4s)
+  ✓  51 [chromium] › tests/w3-stats.spec.ts:146:5 › Delete this brew? at 375×667 › a tap on Delete deletes (9.0s)
+  ✓  52 [chromium] › tests/w3-stats.spec.ts:201:3 › Stats (veteran): the summary and tiles match the history recomputed from its records (5.1s)
+  ✓  53 [chromium] › tests/w3-stats.spec.ts:201:3 › Stats (celebrate): the summary and tiles match the history recomputed from its records (5.0s)
+  ✓  54 [chromium] › tests/w3-stats.spec.ts:201:3 › Stats (newbie): the summary and tiles match the history recomputed from its records (5.6s)
+  ✓  55 [chromium] › tests/w3-stats.spec.ts:223:1 › a brew that ends after midnight belongs to the day it ended on, everywhere on Stats (6.6s)
+  ✓  56 [chromium] › tests/w3-stats.spec.ts:249:1 › a brew ended early at 12:40 counts 12 minutes in History, as in its leaves and the End sheet (7.6s)
+  ✓  57 [chromium] › tests/w3-stats.spec.ts:293:3 › Stats (empty) never says "streak" (3.4s)
+  ✓  58 [chromium] › tests/w3-stats.spec.ts:293:3 › Stats (newbie) never says "streak" (4.3s)
+  ✓  59 [chromium] › tests/w3-stats.spec.ts:293:3 › Stats (veteran) never says "streak" (6.5s)
+  ✓  60 [chromium] › tests/w3-stats.spec.ts:293:3 › Stats (celebrate) never says "streak" (4.5s)
+  ✓  61 [chromium] › tests/w3-stats.spec.ts:293:3 › Stats (atRisk) never says "streak" (6.2s)
+  ✓  62 [chromium] › tests/w3-stats.spec.ts:301:1 › the History delete dialog speaks of warm days, and the at-risk card invites without a countdown (8.3s)
+  ✓  63 [chromium] › tests/whistle.spec.ts:45:1 › no audio context before the first gesture; the first tap unlocks it (7.4s)
+  ✓  64 [chromium] › tests/whistle.spec.ts:53:1 › the whistle sounds once at completion, and not again after a reload of the summary (12.8s)
+  ✓  65 [chromium] › tests/whistle.spec.ts:76:1 › late return: one whistle, the while-away summary, nothing more on later visibility changes (7.5s)
+  ✓  66 [chromium] › tests/whistle.spec.ts:100:1 › another tab in front (page hidden): the whistle is still scheduled once (8.6s)
+  ✓  67 [chromium] › tests/whistle.spec.ts:120:1 › muted: no sound at all, the visual whistle and summary remain (7.6s)
+  ✓  68 [chromium] › tests/whistle.spec.ts:165:1 › notification permission is asked only from the Nudges switch: not on load, not before or after the first brew (11.4s)
+  ✓  69 [chromium] › tests/whistle.spec.ts:183:1 › denied: Settings says so, shows the browser path, and turning it on later works (6.0s)
+  ✓  70 [chromium] › tests/whistle.spec.ts:208:1 › unsupported: the switch is off and disabled, and says what happens instead (2.9s)
+
+
+  1) [chromium] › tests/w3-settings.spec.ts:378:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: not [32m"oklab(0.959197 0.00389533 0.0175539)"[39m
+
+      247 |   await page.mouse.move(2, 890);
+      248 |   await page.mouse.up();
+    > 249 |   expect(pressed).not.toBe(hover);
+          |                       ^
+      250 |   expect(pressed).not.toBe(selectedThumb);
+      251 |   await expect(group.getByRole('radio', { name: 'System', exact: true })).toBeChecked(); // released away: no change
+      252 |   await ctx.close();
+        at /home/user/wt/w5tr-all/kettle/tests/w3-settings.spec.ts:249:23
+
+    Error Context: .tmp/LR-pw/full-C/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/LR-pw/full-C/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/LR-pw/full-C/w3-settings-a-pressed-segm-82854-and-unlike-the-selected-one-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/w3-settings.spec.ts:378:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one 
+  25 skipped
+  44 passed (6.7m)
+[slots] LR freed 1 at 17:32:07

@@ -1,0 +1,43 @@
+[slots] LR took 1/3 at 13:14:17: bash -c node .tmp/LR/lr.mjs --base http://127.0.0.1:5534 --label TRIAL-small --out /home/user/Vibei/kettle/review/product-excellence/contracts/W3R1/review/LR/N/sep/TRIAL --raw .tmp/LR/raw/TRIAL --cfgs
+13:14:30 TRIAL-small 375x667-light-low nook-day eyes CR/dL null/null (n 2, comps 2) | nose 3.328/37.54 (n 11, comps 1) | fill 0.16 | restoreDiff 0 | fnv 14414748
+13:14:35 TRIAL-small 375x667-light-low nook-dusk eyes CR/dL null/null (n 2, comps 2) | nose 3.143/38.71 (n 11, comps 1) | fill 0.448 | restoreDiff 0 | fnv 9aa894cd
+13:14:40 TRIAL-small 375x667-light-low nook-night eyes CR/dL null/null (n 2, comps 2) | nose 3.269/39.9 (n 11, comps 1) | fill 0.512 | restoreDiff 0 | fnv 88aadb12
+13:14:50 TRIAL-small 844x390-light-low nook-day eyes CR/dL null/null (n 3, comps 2) | nose 3.357/37.78 (n 15, comps 1) | fill 0.16 | restoreDiff 0 | fnv b0326e4c
+13:14:55 TRIAL-small 844x390-light-low nook-dusk eyes CR/dL null/null (n 2, comps 2) | nose 3.142/38.69 (n 15, comps 1) | fill 0.448 | restoreDiff 0 | fnv aff27547
+13:15:01 TRIAL-small 844x390-light-low nook-night eyes CR/dL null/null (n 2, comps 2) | nose 3.27/39.91 (n 15, comps 1) | fill 0.512 | restoreDiff 0 | fnv f404f4cb
+375x667-light-low FAILED page.screenshot: Target page, context or browser has been closed
+Call log:
+[2m  - taking page screenshot[22m
+[2m    - disabled all CSS animations[22m
+[2m  - waiting for fonts to load...[22m
+[2m  - fonts loaded[22m
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+browserContext.close: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --enable-unsafe-swiftshader --use-angle=swiftshader --ignore-gpu-blocklist --user-data-dir=/tmp/playwright_chromiumdev_profile-xuiCxI --remote-debugging-pipe --no-startup-window
+<launched> pid=16736
+[pid=16736][err] [1014/131502.022292:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[pid=16736][err] [1014/131502.025343:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[pid=16736][err] [1014/131502.025763:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[pid=16736][err] [1014/131502.033479:WARNING:device/bluetooth/dbus/bluez_dbus_manager.cc:209] Floss manager service not available, cannot set Floss enable/disable.
+[pid=16736][err] [1014/131502.136251:WARNING:sandbox/policy/linux/sandbox_linux.cc:414] InitializeSandbox() called with multiple threads in process gpu-process.
+[pid=16736][err] [1014/131502.824499:INFO:CONSOLE:3] "Service Worker registration blocked by Playwright", source:  (3)
+[pid=16736][err] [1014/131502.824903:INFO:CONSOLE:10] "[pwa] service worker registration failed TypeError: Cannot read properties of undefined (reading 'waiting')", source: http://127.0.0.1:5488/assets/index-rWnj8aw2.js (10)
+[pid=16736][err] [1014/131503.029846:INFO:CONSOLE:1] "[chai3d] model ready [object Object] [object Object]", source: http://127.0.0.1:5488/assets/chaiLoad-C145CX60.js (1)
+[pid=16736][err] [1014/131508.868833:ERROR:gpu/command_buffer/service/gl_utils.cc:391] [.WebGL-0x1f04022ed800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[pid=16736][err] [1014/131510.479521:ERROR:gpu/command_buffer/service/gl_utils.cc:391] [.WebGL-0x1f04022ed800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[pid=16736][err] [1014/131511.119969:ERROR:gpu/command_buffer/service/gl_utils.cc:391] [.WebGL-0x1f04022ed800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[pid=16736][err] [1014/131511.695315:ERROR:gpu/command_buffer/service/gl_utils.cc:391] [.WebGL-0x1f04022ed800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+[pid=16736][err] [1014/131513.824861:INFO:CONSOLE:0] "[.WebGL-0x1f04022ed800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels", source: http://127.0.0.1:5488/?debug&seed=veteran&theme=light&nookq=low&nooktime=day&nookweather=clear#/nook (0)
+[pid=16736][err] [1014/131513.824917:INFO:CONSOLE:0] "[.WebGL-0x1f04022ed800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels", source: http://127.0.0.1:5488/?debug&seed=veteran&theme=light&nookq=low&nooktime=day&nookweather=clear#/nook (0)
+[pid=16736][err] [1014/131513.824926:INFO:CONSOLE:0] "[.WebGL-0x1f04022ed800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels", source: http://127.0.0.1:5488/?debug&seed=veteran&theme=light&nookq=low&nooktime=day&nookweather=clear#/nook (0)
+[pid=16736][err] [1014/131513.824935:INFO:CONSOLE:0] "[.WebGL-0x1f04022ed800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)", source: http://127.0.0.1:5488/?debug&seed=veteran&theme=light&nookq=low&nooktime=day&nookweather=clear#/nook (0)
+[pid=16736] <gracefully close start>
+    at async file:///home/user/wt/w5tr-n/kettle/.tmp/LR/lr.mjs:208:3
+
+Node.js v22.22.2

@@ -1,0 +1,29 @@
+[slots] LI took 1/3 at 17:14:41: node LI-sheets.mjs http://127.0.0.1:5478 base-dlg2 /home/user/wt/w5tr-s/kettle/.tmp/LI/out dlg 390x844:light:100,390x844:light:200,390x844:dark:100,390x844:dark:200,375x667:light:100,375x667:light:200
+{"cfg":"390x844-light-100","keep":"ok","del":"ok","tight":false,"tab":"Keep it > Keep it > Keep it > Keep it > Keep it","shift":"Keep it < Keep it < Keep it < Keep it < Keep it","trap":[true,true],"esc":"1:Delete this brew","outside":"DIV._backdrop@8,17->2:Delete this brew","vp":{"iw":390,"ih":844,"sw":390,"vvw":390,"vvs":1},"error":"locator.focus: Timeout 30000ms exceeded. | Call log:"}
+{"cfg":"390x844-light-200","keep":"ok","del":"ok","tight":false,"tab":"Keep it > Keep it > Keep it > Keep it > Keep it","shift":"Keep it < Keep it < Keep it < Keep it < Keep it","trap":[true,true],"esc":"1:Delete this brew","outside":"DIV._backdrop@8,17->1:Delete this brew","kbKeep":"Keep it->1:Delete this brew:83","ptrKeep":"1:Delete this brew:83","kbDel":"Keep it->1:Delete this brew:83/undefined undo0","vp":{"iw":390,"ih":844,"sw":390,"vvw":390,"vvs":1},"error":"page.screenshot: Target page, context or browser has been closed | Call log:"}
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+browserContext.close: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --enable-unsafe-swiftshader --use-angle=swiftshader --ignore-gpu-blocklist --user-data-dir=/tmp/playwright_chromiumdev_profile-nPnRgu --remote-debugging-pipe --no-startup-window
+<launched> pid=26638
+[pid=26638][err] [1014/171441.423342:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[pid=26638][err] [1014/171441.424551:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[pid=26638][err] [1014/171441.427927:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[pid=26638][err] [1014/171441.451371:WARNING:device/bluetooth/dbus/bluez_dbus_manager.cc:209] Floss manager service not available, cannot set Floss enable/disable.
+[pid=26638][err] [1014/171441.463510:WARNING:sandbox/policy/linux/sandbox_linux.cc:414] InitializeSandbox() called with multiple threads in process gpu-process.
+[pid=26638][err] [1014/171441.745723:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5478/@vite/client (883)
+[pid=26638][err] [1014/171441.844169:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5478/@vite/client (996)
+[pid=26638][err] [1014/171442.292564:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5478/.tmp/vite-cache/deps/react-dom_client.js?v=97684b12 (15805)
+[pid=26638][err] [1014/171445.283095:WARNING:media/audio/linux/audio_manager_linux.cc:54] Falling back to ALSA for audio output. PulseAudio is not available or could not be initialized.
+[pid=26638][err] [1014/171533.281300:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5478/@vite/client (883)
+[pid=26638][err] [1014/171533.357231:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5478/@vite/client (996)
+[pid=26638][err] [1014/171533.975332:INFO:CONSOLE:15805] "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5478/.tmp/vite-cache/deps/react-dom_client.js?v=97684b12 (15805)
+[pid=26638] <gracefully close start>
+    at async file:///home/user/wt/w5tr-s/kettle/.tmp/LI/LI-sheets.mjs:212:5
+
+Node.js v22.22.2
+[slots] LI freed 1 at 17:16:03
