@@ -188,7 +188,7 @@ Totals on the fix: 15,603 samples, 6,443 with a notice drawn; **0 nine-point con
 | `summary-notice.spec.ts` | 03:35:38–03:42:36 | 14 passed (6.9m) | — |
 | `toast-room.spec.ts` | 03:42:36–03:47:19 | 14 passed (4.7m) | — |
 | `a11y.spec.ts` | 03:47:19–03:59:09 | 11 passed (11.8m) | — |
-| `notice-strip.spec.ts` | 03:59:09–running | (running: 15 reported so far) | `tests/notice-strip.spec.ts:275:3` tate, real input (844×390 light 200 % reduced motion) (4.0m) (); `tests/notice-strip.spec.ts:275:3` : every notice state, real input (844×390 dark 200 %) (4.0m) () |
+| `notice-strip.spec.ts` | 03:59:09–04:32:49 | 3 failed; 22 passed (33.6m) | 3: (844×390 light 200 % reduced motion) (4.0m); (844×390 dark 200 %) (4.0m); (1440×900 light 200 % reduced motion) (messages below) |
 
 `summary-notice` per test: ✓ 375×667 light 100 %, task day, ✓ 375×667 light 100 %, big day, ✓ 375×667 dark 200 %, task day, ✓ 375×667 dark 200 %, big day, ✓ 390×844 dark 100 %, task day, ✓ 390×844 dark 100 %, big day, ✓ 390×844 light 200 %, task day, ✓ 390×844 light 200 %, big day, ✓ 844×390 light 100 %, task day, ✓ 844×390 light 100 %, big day, ✓ 667×375 dark 100 %, task day, ✓ 667×375 dark 100 %, big day, ✓ 1440×900 light 100 %, task day, ✓ 1440×900 light 100 %, big day
 
@@ -196,7 +196,19 @@ Totals on the fix: 15,603 samples, 6,443 with a notice drawn; **0 nine-point con
 
 `a11y` per test: ✓ 1.7m, ✓ 1.6m, ✓ pointer targets are at least 24×24 px or meet a WC, ✓ 375×667): every control can be scrolled clear of sticky chrome, no sideways scroll, ✓ 4.8m, ✓ welcome: first brew from the keyboard alone, ✓ no spoken countdown, ✓ 390×844, ✓ 375×667, ✓ 390×844, ✓ 375×667
 
-`notice-strip` per test: ✓ 1.1m, ✓ 1.2m, ✓ 1.0m, ✓ 1.2m, ✓ 1.2m, ✓ 1.1m, ✓ 1.9m, ✓ 1.3m, ✓ 1.0m, ✓ 1.8m, ✓ 1.1m, ✓ 1.1m, ✘ 4.0m, ✓ 1.0m, ✘ 4.0m
+`notice-strip` per test: ✓ 1.1m, ✓ 1.2m, ✓ 1.0m, ✓ 1.2m, ✓ 1.2m, ✓ 1.1m, ✓ 1.9m, ✓ 1.3m, ✓ 1.0m, ✓ 1.8m, ✓ 1.1m, ✓ 1.1m, ✘ 4.0m, ✓ 1.0m, ✘ 4.0m, ✓ 667×375 light 100 %, ✓ 1.0m, ✓ 667×375 light 200 % reduced motion, ✓ 667×375 dark 100 %, ✓ 1.0m, ✓ 1440×900 light 100 %, ✓ 1440×900 light 200 %, ✘ 1440×900 light 200 % reduced motion, ✓ 1440×900 dark 100 %, ✓ 1440×900 dark 200 %
+**`notice-strip.spec.ts`, first run (03:59:09–04:32:49): 22 passed, 3 failed.** Error messages (verbatim from `fix2/runs/suite-notice-strip.log`):
+1. `(844×390 light 200 % reduced motion)`, 4.0 m: `Test timeout of 240000ms exceeded.` / `Error: locator.evaluate: Test ended.` waiting for `getByRole('button', { name: /^Mark “Chapter 3 notes” done/ })` at `notice-strip.spec.ts:306:31` (Today after End: the page snapshot shows the task field empty and no "Mark done" line).
+2. `(844×390 dark 200 %)`, 4.0 m: the same error at the same line.
+3. `(1440×900 light 200 % reduced motion)`, 39.9 s: `Error: the Undo is the deleted row, in place, on screen where the person saw the row` / `expect(received).toBeLessThanOrEqual(expected)` `Expected: <= 2` `Received: 111` at `notice-strip.spec.ts:403:117`.
+
+Traces: none (the spec sets `test.use({ trace: 'off' })`). Error contexts (page snapshots) copied to `fix2/runs/notice-strip-failure/<test dir>/error-context.md` (originals under `/tmp/claude-0/lt4-out-notice-strip/`). During this first run Lane T's probe chain (a second browser) and Lane R / Lead jobs were also running.
+
+**Second run, to classify only (04:33:08–04:35:55; the three tests alone, same command plus `-g`, `--output=/tmp/claude-0/lt4-out-ns-classify`):** 3 passed (51.0 s, 57.0 s, 55.8 s). Log `fix2/runs/notice-strip-classify.log`, JSON alongside. Both results are recorded: first run 3 of 25 failed; second run those 3 passed.
+
+Related Lane T probe facts: Lane T's own `end` group typed the task and tapped Mark done at 844×390 @200 on the fix in both themes (§4 run); the History Undo row lands 3–39 px from the row it replaces at the end of the list in Lane T's runs (round 3 §2; this run 1440 @200 last row: 599 → 620); the spec's first-row check measured 111 px once.
+
+`a11y.spec.ts` includes D4 ("toasts never cover the break-over controls, carried task included", 390×844 and 375×667: both passed) and the changed `:332` ("a toast never covers the session controls or the summary footer", both passed). `toast-room.spec.ts` carries the R5-D1, LEAD-D1 and R7-D1 shapes (14 of 14 passed).
 
 ## 6. REFERENCE → BEFORE → AFTER (full size; summary with a queued notice, then the next screen)
 
