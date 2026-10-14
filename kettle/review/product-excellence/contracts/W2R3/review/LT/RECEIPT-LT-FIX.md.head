@@ -1,0 +1,16 @@
+# W2R3 round 3 · Lane T receipt · Maker T2 fix revision (T2-D1, summary notices)
+
+Raw evidence only, no verdict. Lane T implemented none of this.
+
+| | |
+|---|---|
+| Under review | `pe/w2r3-notices@64f29cd` (code `40f92b6`, kettle/src `aa88587`) |
+| Fix trial | `99d9368` = integration `8af5430` + `64f29cd`, worktree `/home/user/wt/w4tr-t2f` (clean), `HEAD:kettle/src` = `5cd9a44`, dev **:5477** (served `ShellOverlays.tsx` has `busy = status !== 'idle' \|\| route === '/focus' \|\| route === '/done'`) |
+| First trial (control, defective) | `490ca97`, dev **:5476** |
+| Base | `61aba17`, dev **:5470** |
+| Window | 03:35–05:10 UTC, 2026-10-14 |
+| Gate | every browser through `slots.py run --lane LT --n 1`; one job for the suites, one chained job for the probes (`fix2/runs/chainfix.log`, `fix2/runs/suites.log`) |
+| Scripts | `/home/user/wt/w4tr-t2f/kettle/.tmp/LT/` (`sumprobe.mjs` new, `sumagg.py`, `ltprobe.mjs` and `agg.py` from round 3, `chainfix.sh`, `suites.sh`); copies in `fix2/tools/` |
+| Evidence | `review/LT/fix2/` (`probes/sum-*` summary runs as JSON, one per configuration × day × case; `probes/inv-fix` invariant re-probe; `shots/<port>*` full-size captures; `runs/` suite logs and JSON) |
+
+The round-3 receipt for `490ca97` (`RECEIPT-LT.md`) was closed first: the container restart at about 00:40 UTC cut `notice-strip.spec.ts` after 7 of 25 tests (all 7 passed); its §8 now says so. Nothing in it was re-run.
