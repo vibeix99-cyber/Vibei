@@ -221,7 +221,9 @@ So "in a tab" is true on a computer and untrue on the iPhone, the one platform w
 
 **What it leaves open:** see §4 E-1. None of it bears on a defect except the unrendered Nudges lines. The fix round must close that for the new On line.
 
-**Combined trial (Lane R):** `review/LR/ALL/RECEIPT-LR-ALL.md` has not landed. The cross-effects attributable to G, if any, will be ruled in my cross-effects note when it does. Of the combined failures seen so far, none touches a G file:
-- `integrity:1017` (the storage-full banner);
-- `w3-stats:98` ("Delete this brew?");
-- `w3-notices:252`.
+**Combined trial (Lane R):** `review/LR/ALL/RECEIPT-LR-ALL.md` has not landed. The cross-effects attributable to G, if any, will be ruled in my cross-effects note when it does. None of the combined failures seen so far is about a G control or G copy:
+- `integrity:1017` at 390×844: the storage-full banner (`app/SaveWarning*`, nobody's file) was still there 6 s after room was freed, at a step that writes from Settings;
+- `w3-stats:98` ("Delete this brew?", S's Sheet);
+- `w3-notices:252` (F's band).
+
+G's changes are copy plus CSS that takes no space and does not touch the save path. Their attribution waits for that receipt and is not a G defect now.
