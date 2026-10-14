@@ -313,10 +313,26 @@ function decide(): void {
   let why: Ctl['why'];
   // Moments when the strip may change height (nothing in view moves, or nothing on it has been aimed at yet)...
   let free = true;
+  let keepAbove = false;
   if (now - ctl.at < ENTRY_MS) [hold, why] = [holdTop(el), 'entry'];
   else if (hidden) [hold, why] = [null, 'hidden'];
-  else if (aboveView(el)) [hold, why] = [holdView(el), 'above'];
-  else {
+  else if (aboveView(el)) {
+    // Above the view (Vibei W3R1 §3, "out of view": the same idle rule, the page kept still). A notice leaving there
+    // keeps its room like anywhere else (the band then goes once idle, with holdView); any other change waits for rest,
+    // confirmed in a fresh frame, so a fling or a wheel still on its way never undoes the page being kept still.
+    if (!next && ctl.item) [hold, why, keepAbove] = [null, 'above', true];
+    else if (atRest(now) && !inputPending()) {
+      if (!inRestFrame) {
+        confirmRestInFrame();
+        return;
+      }
+      [hold, why] = [holdView(el), 'above'];
+    } else {
+      waitForRest(now);
+      return;
+    }
+    free = !keepAbove;
+  } else {
     // ... and moments when it changes in view: a notice going keeps its room (F-T2-1), so its going moves nothing.
     free = false;
     if (answeringInput(now) && ((next?.answer && now - lastTapAt() < RESPONSE_MS) || (ctl.item && ctl.item.id === tappedAway))) [hold, why] = [holdTop(el), 'answer'];
@@ -335,7 +351,8 @@ function decide(): void {
   if (ctl.item?.id === tappedAway) tappedAway = null;
   // A panel that must keep its controls in reach (the session panel) keeps no room when the notice's own height holds
   // them past its edge: it closes up with the notice going, at the same moment, as before this round (F-T2-2).
-  const room = free || (strip.reach && holdsOutOfReach(el)) ? 0 : Math.max(ctl.room, ctl.item ? heightOf(el) : 0);
+  const kept = Math.max(ctl.room, ctl.item ? heightOf(el) : 0);
+  const room = free ? 0 : keepAbove ? kept : strip.reach && holdsOutOfReach(el) ? 0 : kept;
   if (room > 0 && !next) roomLeftAt = now;
   commit({ item: next, hold, why, room });
 }
