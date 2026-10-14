@@ -155,3 +155,11 @@ The merged kettle/src `db28295` and kettle/tests `f071f53` equal trial `7145f49`
 - **All four makers are now merged:** N `3faaf94`, G `25b5e26` (+ docs `a859d86`), S `0efca36`, X-2 `60fdb7e`, F `2be3de1`.
 - **X-11 (test-only, F's `notice-strip.spec.ts:292`):** assigned to Maker F at 20:20 UTC on `pe/w3r1-x11-strip-test` (worktree `w5f-x11`, from `2be3de1`; stop 21:00). LEAD-5 checks it 6/6.
 - **Final regression:** started on `2be3de1` (worktree `/home/user/wt/w5-final`, dev :5540, preview :5550) by Lane R. `notice-strip.spec.ts` is held back until X-11 merges, then run on the final tree.
+
+## X-11: not achieved (Maker F, 20:20–20:45 UTC); nothing merged
+
+- `pe/w3r1-x11-strip-test@f0c84a5`, with its tests identical to `2be3de1` after the withdrawal.
+- **Attempt 1:** 3/6. The failures were Mark done's tap landing on the tag group with `why: "idle"`: the F-D1 idle band collapsed between the spec's on-top check and its tap, which is a third signature.
+- **Attempts 2–3:** timed out, undiagnosed.
+- Note `F-X11-READY.md` in the worktree; archive `archive/pe-w3r1-x11-strip-test-f0c84a5.incremental.bundle`.
+- **The final tree is `2be3de1`.** `notice-strip:292` at 1440 light @200 reduced is recorded as known flaky (X-11) in the final regression. LEAD-5 is asked for an outcome ruling.
