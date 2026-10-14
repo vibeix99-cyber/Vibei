@@ -470,6 +470,18 @@ try {
       }));
       await sleep(500);
     }
+  } else if (A.flow === 'nexttiming') {
+    // When does a notice queued on the summary get drawn on the tea break, and why (the app's stated moment)?
+    await startBrewWithTask(A.seed ?? 'newbie');
+    await k('finish');
+    await p.waitForFunction(() => location.hash.includes('done'), null, { timeout: 30000 });
+    await sleep(2800);
+    await p.evaluate(() => window.__kettle.toast('Couldn’t save just now. Your summary is still here.', { tone: 'warning' }));
+    await sleep(1500);
+    await p.evaluate(() => { const T = (window.__NT = []); window.__NT0 = performance.now(); addEventListener('pointerup', () => (window.__NTtap = performance.now()), { capture: true, once: true }); const f = () => { const st = window.__kettle.notices(); const li = document.querySelector('[data-notice-strip] li'); const panel = document.querySelector('[data-focus-view]')?.getAttribute('data-view') ?? document.querySelector('[data-view]')?.getAttribute('data-view'); const rec = { hash: location.hash, view: panel, strip: st.strip, shown: st.shown, why: st.why, li: !!li, op: li ? +getComputedStyle(li).opacity : 0 }; const last = T.at(-1); if (!last || JSON.stringify({ ...last, t: 0 }) !== JSON.stringify({ ...rec, t: 0 })) T.push({ t: Math.round(performance.now() - window.__NT0), ...rec }); if (T.length < 80 && performance.now() - window.__NT0 < 9000) requestAnimationFrame(f); }; requestAnimationFrame(f); });
+    await press(p.getByRole('button', { name: /^Tea time/ }), 'Tea time');
+    await sleep(8000);
+    out.timeline = await p.evaluate(() => ({ tap: Math.round((window.__NTtap ?? NaN) - window.__NT0), T: window.__NT }));
   } else if (A.flow === 'queue') {
     await p.goto(`${A.base}/?debug&seed=veteran&theme=${theme}#/`);
     await ready();
