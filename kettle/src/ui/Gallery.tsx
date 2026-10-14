@@ -561,6 +561,42 @@ export default function UiGallery() {
           </ListGroup>
         </Section>
 
+        <Section id="inert" title="Inert controls" note="One recipe: --disabled-opacity, not-allowed cursor, out of the Tab order, no hover or press. Buttons keep their own outlined inert face." wide>
+          <Row label="Buttons · chip · switches">
+            <Button disabled>Inert button</Button>
+            <Button disabled variant="secondary">
+              Inert secondary
+            </Button>
+            <Chip disabled>Inert chip</Chip>
+            <Toggle checked={false} onChange={() => {}} label="Inert switch off" disabled />
+            <Toggle checked onChange={() => {}} label="Inert switch on" disabled />
+          </Row>
+          <Row label="Segment · stepper">
+            <SegmentedControl
+              label="Inert segment"
+              value="a"
+              onChange={() => {}}
+              options={[
+                { value: 'a', label: 'On' },
+                { value: 'b', label: 'Inert', disabled: true },
+                { value: 'c', label: 'Off' },
+              ]}
+            />
+            <NumberStepper label="Inert stepper" value={25} onChange={() => {}} unit="min" disabled />
+          </Row>
+          <div className={s.stack}>
+            <Slider label="Inert slider" value={0.4} onChange={() => {}} disabled showValue format={(v) => `${Math.round(v * 100)}%`} />
+            <TextField label="Inert field" value="Can’t type here" onChange={() => {}} disabled />
+            <PressableCard disabled padding="sm">
+              Inert card
+            </PressableCard>
+          </div>
+          <ListGroup title="Inert rows">
+            <ListRow icon="bellOff" iconTone="persimmon" label="Switch can’t change" description="Blocked: the row is not pressable." toggle={{ checked: false, onChange: () => {}, disabled: true }} />
+            <ListRow icon="download" label="Row disabled" onClick={() => {}} disabled />
+          </ListGroup>
+        </Section>
+
         <Section id="misc" title="Pills, dividers & bits">
           <Row label="Pills">
             <Pill tone="matcha" icon="leaf">
