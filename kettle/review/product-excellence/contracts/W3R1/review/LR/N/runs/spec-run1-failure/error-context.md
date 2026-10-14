@@ -1,0 +1,54 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e6]:
+      - heading "Focus session" [level=1] [ref=e7]
+      - generic [ref=e9]:
+        - img [ref=e13]
+        - img [ref=e21]
+      - banner:
+        - generic [ref=e159]: Brew 1 of 4
+        - generic [ref=e160]:
+          - 'button "Ambience: Rain. Change" [ref=e161] [cursor=pointer]':
+            - generic [ref=e163]:
+              - img [ref=e165]
+              - generic [ref=e168]: Rain
+          - button "Turn sound on" [pressed] [ref=e170] [cursor=pointer]:
+            - img [ref=e174]
+      - main [ref=e177]:
+        - generic [ref=e178]:
+          - generic [ref=e179]:
+            - generic [ref=e182]:
+              - generic [ref=e183]: "2"
+              - generic [ref=e184]: "4"
+              - generic [ref=e185]: ":"
+              - generic [ref=e186]: "0"
+              - generic [ref=e187]: "8"
+            - timer "24 minutes 8 seconds left" [ref=e188]: Kettle’s on. Nice start.
+            - generic [ref=e189]: Whistles at 3:55 PM
+          - generic [ref=e190]:
+            - generic [ref=e191]:
+              - button "Add 5 minutes" [ref=e192] [cursor=pointer]:
+                - img [ref=e196]
+              - generic [ref=e198]: Add 5
+            - generic [ref=e199]:
+              - button "Pause" [ref=e200] [cursor=pointer]:
+                - img [ref=e204]
+              - generic [ref=e208]: Pause
+            - generic [ref=e209]:
+              - button "End session" [ref=e210] [cursor=pointer]:
+                - img [ref=e214]
+              - generic [ref=e216]: End
+          - paragraph:
+            - generic: Space
+            - text: pause ·
+            - generic: +
+            - text: 5 min ·
+            - generic: Esc
+            - text: end
+      - status [ref=e217]
+    - status [ref=e218]
+  - status [ref=e220]: Kettle’s on. Focus session started, 25 minutes.
+```
