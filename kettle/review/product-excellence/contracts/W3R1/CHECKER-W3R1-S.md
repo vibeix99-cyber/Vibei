@@ -273,3 +273,6 @@ No item is introduced or worsened by this change in a way that is a defect, so n
 - **The Overview at 200 %:** the maker's `/home/user/wt/w5s/kettle/review/product-excellence/contracts/W3R1/S/fix/fit/{BASE,TRIAL,FIX}-{390x844,844x390}-{light,dark}-200-overview.png` (I opened the 844×390 dark pair).
 - **Mine:** `contracts/W3R1/review/LEAD/S/fix/FIX-{390x844,1440x900}-200-*-overview.png` and `FIX-390x844-100-mobile-fonts-overview.png`.
 - **The page before the fonts arrive:** `S/fix/fit/{TRIAL,FIX}-{390x844,375x667}-200-mobile-nofonts-viewport.png`.
+
+
+*Run logs:* `kettle/.gitignore:6` ignores `*.log`, so every `.log` cited here is committed as a `.log.txt` copy beside it (same name plus `.txt`).
