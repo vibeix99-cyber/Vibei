@@ -241,3 +241,77 @@ No rule, threshold, id, tier or stored-data change.
 - No text clipped or overlapping in the sheets or End at 390×844 @100.
 - **375×667 dark @200 Today, missed-nocozy:** the greeting shows only "Good". The Chai bubble, goal and composer are scrolled out by the docked start/segmented control (the capture's scroll position). Not a wording issue, and not compared with the base frame.
 - **`summary-cozy-earn` at 390×844:** the Tea Cozy note lies below the sheet's fold. The text is confirmed in facts ("Tea Cozy earned", sr "You earned a Tea Cozy: it keeps the kettle warm through one missed day").
+
+## 2. Vibei's §3: after a notice leaves, does the empty band collapse once touch/scroll goes idle?
+
+Probe `LI2-idle.mjs` (new), trial :5521, 17:03–17:08 UTC. Data: `idle/trial/idle-trial.json`; log `idle/idle-trial.log`; frames `idle/trial/<cfg>-<n>-*.png`, full size.
+
+**Setup:**
+- Seed `veteran`, Today at rest (nobody touching ≥ 1.5 s).
+- A 3 s notice "Saved 3 minutes of focus · LI2 idle probe" is raised with `__kettle.toast()`.
+- A per-frame tracker records the target's top, the strip height, `room`, `why`, `scrollY`, every commit (version change) with ms since the last input event, and whether a pointer was down.
+
+**Configurations:** 390×844 light @100 (touch), 390×844 dark @200 reduced (touch), 1440 light @100 (mouse), 1440 dark @200 reduced (mouse).
+
+### 2a. Measurements (trial)
+
+| Step | 390×844 light 100 | 390×844 dark 200 rm | 1440 light 100 | 1440 dark 200 rm |
+|---|---|---|---|---|
+| Notice arrives at rest: drawn after raise / why / content pushed | 30 ms / rest / **+68 px** | 29 ms / rest / **+153.5 px** (the probe's text is 3 lines at 200 %) | 22 ms / rest / **+68 px** | 31 ms / rest / **+113 px** |
+| Notice leaves at rest: why / room kept / content moved | rest / 68 / **0** | rest / 153.5 / **0** | rest / 68 / **0** | rest / 113 / **0** |
+| Idle, sampled at 1, 5, 10 … 45 s: room / target top | **68 at every sample** / 500 constant | **153.5 every sample** / 236.6 constant | **68** / 112 constant | **113** / 157 constant |
+| Scroll down 300 px and back (phones: CDP touch gesture; 1440: wheel), then 0.3 / 1.3 / 2.5 / 6 s idle | room 68 at all four. **The touch gesture did not scroll the page** (sy 0, target unchanged): this step proves only idle after touch input. Redone with a real finger drag (§2e) | same: 153.5 at all four; gesture did not scroll | room 68 at all four (wheel reached sy 11, then back to 0) | room 113 at all four (wheel reached sy 300 with the band above the view, then back to 0) |
+| Pointer held down 3 s on the greeting, released, 3 s idle | room 68 while down and after | 153.5 / 153.5 | 68 / 68 | 113 / 113 |
+| Commits from the leave through idle, scroll and pointer | **none** | **none** | **none** | **none** |
+| Page hidden (**emulated**: `document.visibilityState` overridden and `visibilitychange` dispatched), then shown | room → 0 (`why: hidden`); on return the content sits **68 px higher** (target 500 → 432) | → 0; **153.5 px higher** | → 0; **68 px higher** | → 0; **113 px higher** |
+| A second notice leaves (room again), then Stats and Today by real taps/clicks on the nav | room 72.5 → **0** after the new screen (`why: screen`) | 153.5 → 0 | 68 → 0 | 113 → 0 |
+| A third notice leaves, then `page.reload()` | 72.5 → 0 | 153.5 → 0 | 68 → 0 | 113 → 0 |
+
+**Answers to the brief:**
+- **When it collapses.** On the trial the band **never collapsed while the screen stayed open and visible**: 45 s idle, after scrolling and 6 s idle, after a held pointer. It went only at:
+  - a new screen (Stats and back);
+  - a reload;
+  - the page hidden.
+
+  This matches the code. `Toast.tsx` `decide()` gives the room back only for `now − ctl.at < ENTRY_MS` (a screen's first moments), `document.visibilityState === 'hidden'`, or the session panel's `reach` case. There is no idle-timer path for tab screens. The comment says: "Not when scrolled above the view: a scroll still on its way would undo the compensation".
+- **How far content moves when it does:**
+  - **new screen / reload:** the screen is rebuilt, so nothing in the old layout moves;
+  - **page hidden and shown again** (the only in-place collapse): the person returns to content **68–153.5 px higher** than they left it (the band's height). No pointer is down: `moment.ts` zeroes `down` on hide.
+- **Any collapse while a pointer is down or within the settle time:** none in any run (0 commits during idle, scroll and pointer steps).
+  - The hidden-page collapse came 3.1–3.3 s after the last input.
+  - The "above" leave (§2d) is the only change made during active input, by design compensated.
+- **Frames (full size):**
+  - band present: `idle/trial/390x844-light-t100-2-band-at-leave.png`, `…-3-band-after-45s-idle.png`, `…-4-band-after-scroll-and-6s-idle.png`; the same three for `390x844-dark-t200-rm`, `1440x900-light-t100` and `1440x900-dark-t200-rm`;
+  - notice drawn: `…-1-notice.png`;
+  - before any notice: `…-0-no-notice.png`;
+  - after the emulated hide: `…-5-after-hidden-emulated.png`;
+  - after Stats and back: `…-6-after-stats-and-back.png`.
+
+  Opened: `390x844-light-t100-1-notice.png` and `-3-band-after-45s-idle.png`. After 45 s idle the 68 px band is an empty cream gap above the status bar. The page's lower content (Create/Life chips) stays hidden behind the docked start, as it was while the notice showed.
+
+### 2b. A notice arriving at rest (how much, when)
+
+- **How much.** Pushes content by its own height on both builds: §1a "E" and the table above. 68 px at phone and 1440 @100; 113 px with the real "Saved 3 minutes of focus" at 390×844, 375×667 and 1440 @200; 107 px at 844×390 @200; 0 / −16 px where the strip lies outside the content column (375×667 @100, 844×390 @100).
+- **When.** With nobody touching for ≥ 1.5 s it is drawn **22–31 ms** after it is raised (`why: rest`, in the next fresh frame). With input in the last 1.2 s (`QUIET_MS`) it waits until 1.2 s after the last input.
+- **The maker's packet** lists this as F3 (not eliminated).
+- **A tap aimed just before the arrival:**
+  - lands on the notice itself in 12 of 16 trial configurations (§1a E);
+  - base 13 of 17.
+
+### 2c. The kept band in the next notice
+
+The probe's second and third notices on the same screen were drawn in the kept room: the room is the max of the old room and the new strip height (`Toast.tsx` `room = Math.max(ctl.room, …)`). Room before the new screen was 72.5 px after a 68 px band and a 72.5 px notice: **the band grew to the larger height and stayed.**
+
+### 2d. The "above" path: a notice whose time is up leaves while the person scrolls on
+
+Busy at time-up: mouse moves every 150 ms. Then 1440: 12 wheel steps of 60 px; phones: a touch gesture.
+
+| Config | Leave | Commit timing | Visible effect |
+|---|---|---|---|
+| 1440 light 200 reduced (×2) | `why: above`, room 0, during the wheel | **51 / 78 ms** after a wheel event | In that frame the target's visible move was **0** with `scrollY −113` (compensated). Afterwards the wheel carried on to the page end (max scroll 427 → 314). Total visible move −427 px = the move the wheel alone gives on a 427 px page: no extra jump |
+| 1440 dark 100 (×2) | page scrolls only 11 px; the notice left **at rest**, room 68 kept | 1,322–1,349 ms after the last wheel | 0 px |
+| 390×844 light 200, 375×667 dark 100 rm (×2 each) | touch gesture did not scroll; the notice left at rest, room kept (153.5 / 72.5) | **1,261–1,285 ms after the last `touchend`**, i.e. just past `QUIET_MS` | 0 px |
+
+**Not covered:** full-motion smooth scrolling while the strip leaves above the view. At 1440 @100 the page cannot scroll far enough. This is the case the maker reports as undoing the compensation (60 px).
+
+**§2e** (a real CDP finger drag on phones: band after a touch scroll; the above path on phones) follows when the job finishes.
