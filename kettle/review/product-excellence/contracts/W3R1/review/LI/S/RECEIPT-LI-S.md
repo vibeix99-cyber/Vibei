@@ -342,3 +342,79 @@ Both were fixed and both builds re-run. **Final run: every TRIAL row matches** (
 - BEFORE 375×667 light @200: Delete is cut off below the panel; only Keep it shows.
 - AFTER 390×844 light @200: everything fits, not tight.
 
+## 1. F-T2-4: "Delete this brew?" by tap and by keyboard (controls first)
+
+**Tool:** `tools/LI-sheets.mjs … dlg`. For each config: veteran, Stats; tap or click the first History row, then "Edit brew", then "Delete this brew", then the dialog. The probe then does the following, in order:
+- Hit-tests Keep it and Delete: on screen, on top at their centre, not clipped by a scrolling ancestor.
+- Presses Tab ×5 and Shift+Tab ×5, recording each stop and whether it is inside the top dialog.
+- Presses Escape.
+- Reopens and taps or clicks the backdrop outside the panel.
+- Focuses the opener and presses Enter, then Enter on the initial focus (Keep it).
+- Reopens and taps or clicks Keep it.
+- Reopens and presses Tab, then Enter on Delete.
+- With all sheets closed, opens the next brew and taps or clicks Delete.
+
+It records the open dialogs (`[role=dialog][aria-modal=true]`), the focused element and the stored session count each time.
+
+Runs (UTC):
+- **BASE** :5478, 7 configs at 18:0x (`dialog/logs/LI-dlg-base4.log`) + 3 configs (`LI-dlg-base-r2.log`). Plus base 390×844 light @100 and @200 for tap and Tab only (`LI-dlg-base-run1-oldscript.log`, 17:00).
+- **TRIAL** :5522, 16 configs at 17:03–17:14 (`LI-dlg-trial.log`) + 1440 ×4, 390 @200 and 375 @200 again at 17:3x (`LI-dlg-trial-r2.log`); the table uses r2 for 1440.
+- Screenshots: `dialog/BASE/*-dialog.png`, `dialog/TRIAL/*-dialog.png`, `dialog/TRIAL/*-after-kb-delete.png`.
+
+**Run problems, kept for the record:**
+- My first two runs counted dialogs still in their exit animation (files `*-countsExiting.log`). At 1440 that misread "Keep it / outside" as "still open", and the probe then closed "Edit brew" itself.
+- The `aria-modal` count fixes that.
+- BASE configs marked "not run" were dropped to fit the slot queue. BASE 1440 light @200 timed out on its screenshot (`page.screenshot: Timeout`).
+
+| Config | BASE tap Keep it / Delete | BASE Tab ×5 | TRIAL tap Keep it / Delete (tight) | TRIAL Tab ×5 | TRIAL Shift+Tab ×5 | TRIAL trap Tab/Shift |
+|---|---|---|---|---|---|---|
+| 390x844-light-100 | ok / ok | Keep it→Keep it→Keep it→Keep it→Keep it | ok / ok (-) | Delete→Close→Keep it→Delete→Close | Delete←Keep it←Close←Delete←Keep it | [True, True] |
+| 390x844-light-200 | not run | not run | ok / ok (-) | Delete→Close→Keep it→Delete→Close | Delete←Keep it←Close←Delete←Keep it | [True, True] |
+| 390x844-dark-100 | not run | not run | ok / ok (-) | Delete→Close→Keep it→Delete→Close | Delete←Keep it←Close←Delete←Keep it | [True, True] |
+| 390x844-dark-200 | ok / ok | Keep it→Keep it→Keep it→Keep it→Keep it | ok / ok (-) | Delete→Close→Keep it→Delete→Close | Delete←Keep it←Close←Delete←Keep it | [True, True] |
+| 375x667-light-100 | ok / ok | Keep it→Keep it→Keep it→Keep it→Keep it | ok / ok (-) | Delete→Close→Keep it→Delete→Close | Delete←Keep it←Close←Delete←Keep it | [True, True] |
+| 375x667-light-200 | ok / off 641–698/667 | Keep it→Keep it→Keep it→Keep it→Keep it | ok / ok (tight) | Delete→Close→Keep it→Delete→Close | Delete←Keep it←Close←Delete←Keep it | [True, True] |
+| 375x667-dark-100 | not run | not run | ok / ok (-) | Delete→Close→Keep it→Delete→Close | Delete←Keep it←Close←Delete←Keep it | [True, True] |
+| 375x667-dark-200 | ok / off 641–698/667 | Keep it→Keep it→Keep it→Keep it→Keep it | ok / ok (tight) | Delete→Close→Keep it→Delete→Close | Delete←Keep it←Close←Delete←Keep it | [True, True] |
+| 844x390-light-100 | not run | not run | ok / ok (-) | Delete→Close→Keep it→Delete→Close | Delete←Keep it←Close←Delete←Keep it | [True, True] |
+| 844x390-light-200 | ok / ok | Keep it→Keep it→Keep it→Keep it→Keep it | ok / ok (-) | Delete→Close→Delete this brew? It leaves your h→Keep it→Delete | Keep it←Delete this brew? It leaves your h←Close←Delete←Keep it | [True, True] |
+| 844x390-dark-100 | ok / ok | Keep it→Keep it→Keep it→Keep it→Keep it | ok / ok (-) | Delete→Close→Keep it→Delete→Close | Delete←Keep it←Close←Delete←Keep it | [True, True] |
+| 844x390-dark-200 | not run | not run | ok / ok (-) | Delete→Close→Delete this brew? It leaves your h→Keep it→Delete | Keep it←Delete this brew? It leaves your h←Close←Delete←Keep it | [True, True] |
+| 1440x900-light-100 | ok / ok | Keep it→Keep it→Keep it→Keep it→Keep it | ok / ok (-) | Delete→Close→Keep it→Delete→Close | Delete←Keep it←Close←Delete←Keep it | [True, True] |
+| 1440x900-light-200 | None / None |  | ok / ok (-) | Delete→Close→Keep it→Delete→Close | Delete←Keep it←Close←Delete←Keep it | [True, True] |
+| 1440x900-dark-100 | not run | not run | ok / ok (-) | Delete→Close→Keep it→Delete→Close | Delete←Keep it←Close←Delete←Keep it | [True, True] |
+| 1440x900-dark-200 | ok / ok | Keep it→Keep it→Keep it→Keep it→Keep it | ok / ok (-) | Delete→Close→Keep it→Delete→Close | Delete←Keep it←Close←Delete←Keep it | [True, True] |
+
+| Config | BASE Escape → dialogs:focus | BASE outside tap → | BASE Enter on initial focus → dialogs:focus:sessions | BASE Tab+Enter "Delete" → | BASE tap Delete → | TRIAL Escape → | TRIAL outside → | TRIAL Enter on Keep it → | TRIAL tap Keep it → | TRIAL Tab+Enter Delete → | TRIAL tap Delete → |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 390x844-light-100 | 1:Delete this brew | DIV._backdrop@8,17->1:Delete this brew | Keep it->1:Delete this brew:83 | Keep it->1:Delete this brew:83/83 undo0 | 0:Stats 23 Stats Robin · brewing sin:82 | 1:Delete this brew | DIV._backdrop@8,17->1:Delete this brew | Keep it->1:Delete this brew:83 | 1:Delete this brew:83 | Delete->0:Undo: bring back Read brew:82/83 undo1 | 0:Stats 22 Stats Robin · brewing sin:81 |
+| 390x844-light-200 | — | — | — | — | — | 1:Delete this brew | DIV._backdrop@8,17->1:Delete this brew | Keep it->1:Delete this brew:83 | 1:Delete this brew:83 | Delete->0:Stats 23 Stats Robin · brewing sin:82/83 undo1 | 0:Stats 22 Stats Robin · brewing sin:81 |
+| 390x844-dark-100 | — | — | — | — | — | 1:Delete this brew | DIV._backdrop@8,17->1:Delete this brew | Keep it->1:Delete this brew:83 | 1:Delete this brew:83 | Delete->0:Undo: bring back Read brew:82/83 undo1 | 0:Stats 22 Stats Robin · brewing sin:81 |
+| 390x844-dark-200 | 1:Delete this brew | DIV._backdrop@8,17->1:Delete this brew | Keep it->1:Delete this brew:83 | Keep it->1:Delete this brew:83/83 undo0 | 0:Stats 23 Stats Robin · brewing sin:82 | 1:Delete this brew | DIV._backdrop@8,17->1:Delete this brew | Keep it->1:Delete this brew:83 | 1:Delete this brew:83 | Delete->0:Undo: bring back Read brew:82/83 undo1 | 0:Stats 22 Stats Robin · brewing sin:81 |
+| 375x667-light-100 | 1:Delete this brew | DIV._backdrop@8,13->1:Delete this brew | Keep it->1:Delete this brew:83 | Keep it->1:Delete this brew:83/83 undo0 | 0:Stats 23 Stats Robin · brewing sin:82 | 1:Delete this brew | DIV._backdrop@8,13->1:Delete this brew | Keep it->1:Delete this brew:83 | 1:Delete this brew:83 | Delete->0:Undo: bring back Read brew:82/83 undo1 | 0:Stats 22 Stats Robin · brewing sin:81 |
+| 375x667-light-200 | 1:Delete this brew | DIV._backdrop@8,13->1:Delete this brew | Keep it->1:Delete this brew:83 | Keep it->1:Delete this brew:83/undefined undo0 | — | 1:Delete this brew | DIV._backdrop@8,13->1:Delete this brew | Keep it->1:Delete this brew:83 | 1:Delete this brew:83 | Delete->0:Undo: bring back Read brew:82/83 undo1 | 0:Stats 22 Stats Robin · brewing sin:81 |
+| 375x667-dark-100 | — | — | — | — | — | 1:Delete this brew | DIV._backdrop@8,13->1:Delete this brew | Keep it->1:Delete this brew:83 | 1:Delete this brew:83 | Delete->0:Undo: bring back Read brew:82/83 undo1 | 0:Stats 22 Stats Robin · brewing sin:81 |
+| 375x667-dark-200 | 1:Delete this brew | DIV._backdrop@8,13->1:Delete this brew | Keep it->1:Delete this brew:83 | Keep it->1:Delete this brew:83/83 undo0 | 0:Stats 23 Stats Robin · brewing sin:82 | 1:Delete this brew | DIV._backdrop@8,13->1:Delete this brew | Keep it->1:Delete this brew:83 | 1:Delete this brew:83 | Delete->0:Undo: bring back Read brew:82/83 undo1 | 0:Stats 22 Stats Robin · brewing sin:81 |
+| 844x390-light-100 | — | — | — | — | — | 1:Delete this brew | DIV._backdrop@17,8->1:Delete this brew | Keep it->1:Delete this brew:83 | 1:Delete this brew:83 | Delete->0:Undo: bring back Read brew:82/83 undo1 | 0:Stats 22 Stats Robin · brewing sin:81 |
+| 844x390-light-200 | 1:Delete this brew | DIV._backdrop@17,8->1:Delete this brew | Keep it->1:Delete this brew:83 | Keep it->1:Delete this brew:83/83 undo0 | 0:Stats 23 Stats Robin · brewing sin:82 | 1:Delete this brew | DIV._backdrop@17,8->1:Delete this brew | Keep it->1:Delete this brew:83 | 1:Delete this brew:83 | Delete->0:Undo: bring back Read brew:82/83 undo1 | 0:Stats 22 Stats Robin · brewing sin:81 |
+| 844x390-dark-100 | 1:Delete this brew | DIV._backdrop@17,8->1:Delete this brew | Keep it->1:Delete this brew:83 | Keep it->1:Delete this brew:83/83 undo0 | 0:Stats 23 Stats Robin · brewing sin:82 | 1:Delete this brew | DIV._backdrop@17,8->1:Delete this brew | Keep it->1:Delete this brew:83 | 1:Delete this brew:83 | Delete->0:Undo: bring back Read brew:82/83 undo1 | 0:Stats 22 Stats Robin · brewing sin:81 |
+| 844x390-dark-200 | — | — | — | — | — | 1:Delete this brew | DIV._backdrop@17,8->1:Delete this brew | Keep it->1:Delete this brew:83 | 1:Delete this brew:83 | Delete->0:Undo: bring back Read brew:82/83 undo1 | 0:Stats 22 Stats Robin · brewing sin:81 |
+| 1440x900-light-100 | 1:Delete this brew | DIV._backdrop@29,18->1:Delete this brew | Keep it->1:Delete this brew:83 | Keep it->1:Delete this brew:83/83 undo0 | 0:Stats 23 Stats Robin · brewing sin:82 | 1:Delete this brew | DIV._backdrop@29,18->1:Delete this brew | Keep it->1:Delete this brew:83 | 1:Delete this brew:83 | Delete->0:Undo: bring back Read brew:82/83 undo1 | 0:Stats 22 Stats Robin · brewing sin:81 |
+| 1440x900-light-200 | — | — | — | — | — | 1:Delete this brew | DIV._backdrop@29,18->1:Delete this brew | Keep it->1:Delete this brew:83 | 1:Delete this brew:83 | Delete->0:Stats 23 Stats Robin · brewing sin:82/83 undo1 | 0:Stats 22 Stats Robin · brewing sin:81 |
+| 1440x900-dark-100 | — | — | — | — | — | 1:Delete this brew | DIV._backdrop@29,18->1:Delete this brew | Keep it->1:Delete this brew:83 | 1:Delete this brew:83 | Delete->0:Undo: bring back Read brew:82/83 undo1 | 0:Stats 22 Stats Robin · brewing sin:81 |
+| 1440x900-dark-200 | 1:Delete this brew | DIV._backdrop@29,18->1:Delete this brew | Keep it->1:Delete this brew:83 | Keep it->1:Delete this brew:83/83 undo0 | 0:Stats 23 Stats Robin · brewing sin:82 | 1:Delete this brew | DIV._backdrop@29,18->1:Delete this brew | Keep it->1:Delete this brew:83 | 1:Delete this brew:83 | Delete->0:Undo: bring back Read brew:82/83 undo1 | 0:Stats 22 Stats Robin · brewing sin:81 |
+
+(Table cells: `dialogs:focused element:sessions stored`. The initial count is 83. "Stats 22/23 Stats Robin…" is `<main>`. The BASE 390×844 light @100 and @200 tap and Tab cells come from the 17:00 run.)
+
+**Facts:**
+- **BASE, every config tried (9 of 16): Tab and Shift+Tab are frozen on "Keep it".** Enter therefore keeps the brew (83 → 83). Delete cannot be reached from the keyboard; the dialog is still "trapped", but with one stop.
+- **BASE 375×667 @200, light and dark:** Delete is **off screen (641–698 of 667)**; a tap on it cannot land. Everywhere else on BASE, Delete can be tapped and it deletes.
+- **TRIAL, all 16 configs (4 sizes × light/dark × @100/@200):** Keep it and Delete are tappable. Tab cycles Delete → Close → Keep it → … and Shift+Tab cycles back; every stop is inside the top dialog. At 844×390 @200 the scrolling description is one extra stop. At 375×667 @200 the dialog is `data-tight`.
+- **TRIAL, Escape:** only the top dialog closes; "Edit brew" stays open and **focus returns to "Delete this brew"**.
+- **TRIAL, backdrop tap or click:** same as Escape (Edit brew stays; focus on "Delete this brew"). BASE behaves the same.
+- **TRIAL, Keep it** (Enter or tap): the dialog closes, the brew stays (83), and focus returns to "Delete this brew" in "Edit brew".
+- **TRIAL, Delete by Tab+Enter:**
+  - The brew goes (83 → 82). Both sheets close and the row's inline **Undo** exists ("Undo: bring back Read brew").
+  - Focus goes to that Undo in 14 of 16 configs. At **390×844 light @200 and 1440 light @200 it was on `<main>`** 1 s after Enter. Timing or a real difference: unproven.
+- **TRIAL, Delete by tap or click:** the brew goes (→ 81); focus is on `<main>`. **BASE does the same** (focus `<main>`, 82). The row that opened the sheets no longer exists.
+
