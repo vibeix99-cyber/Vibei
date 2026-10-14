@@ -255,3 +255,109 @@ FACT 1440x900-dark-t200-rm c-pointer-held {"leftAt":5225,"room":113,"roomWhileDo
   ✓  239 [chromium] › tests/w3-notices.spec.ts:424:1 › a new screen starts with no room: Today after End, then Stats and back (375×667, 100 %) (10.5s)
   ✓  241 [chromium] › tests/w3-notices.spec.ts:469:1 › the status bar warm-days button is named "N days warm. Show details" (and ", today not brewed yet") (4.8s)
   ✓  240 [chromium] › tests/toast-room.spec.ts:610:3 › three notices never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, dark) (13.9s)
+  ✓  242 [chromium] › tests/toast-room.spec.ts:658:3 › the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (667×375, 200 % text, wheel, light) (17.7s)
+  ✓  243 [chromium] › tests/toast-room.spec.ts:658:3 › the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (844×390, 200 % text, touch, dark) (23.0s)
+
+
+  1) [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second 
+
+    Error: timed out waiting for window.__kettle.timer.getState().status === 'idle' && location.hash === '#/done' (page: {"hash":"#/","timer":"idle","info":{"multiTab":true,"leader":false,"leaderMode":"locks","leaderForMs":-1,"scheduler":"worker","settling":false,"dueForMs":null,"wakes":8,"claims":true,"lastClaim":null}})
+
+      111 |         if (Date.now() > until) {
+      112 |           const seen = await evaluate(`JSON.stringify({ hash: location.hash, timer: window.__kettle?.timer.getState().status, info: window.__kettle?.timerInfo(), log: window.__log })`).catch(() => '?');
+    > 113 |           throw new Error(`timed out waiting for ${expression} (page: ${seen})`);
+          |                 ^
+      114 |         }
+      115 |         await sleep(150);
+      116 |       }
+        at Object.waitFor (/home/user/wt/w5-final/kettle/tests/integrity.spec.ts:113:17)
+        at /home/user/wt/w5-final/kettle/tests/integrity.spec.ts:326:7
+
+    attachment #1: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/LR-pw/full/integrity-I01-session-time-17740-p-and-does-not-add-a-second-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/LR-pw/full/integrity-I01-session-time-17740-p-and-does-not-add-a-second-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/integrity.spec.ts:1017:5 › I03 storage-full warning is a banner in the page (phone 390×844) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  getByRole('region', { name: /storage is full/ })
+    Expected: [32m0[39m
+    Received: [31m1[39m
+    Timeout:  6000ms
+
+    Call log:
+    [2m  - Expect "toHaveCount" with timeout 6000ms[22m
+    [2m  - waiting for getByRole('region', { name: /storage is full/ })[22m
+    [2m    10 × locator resolved to 1 element[22m
+    [2m       - unexpected value "1"[22m
+
+
+      1098 |         k.settings.getState().set({ name: k.settings.getState().name });
+      1099 |       });
+    > 1100 |       await expect(banner(page)).toHaveCount(0, { timeout: 6_000 });
+           |                                  ^
+      1101 |     });
+      1102 |
+      1103 |     test('a banner that appears while Today is open moves nothing under the finger (Mark done with storage full)', async ({ page }) => {
+        at /home/user/wt/w5-final/kettle/tests/integrity.spec.ts:1100:34
+
+    Error Context: .tmp/LR-pw/full/integrity-I03-storage-full-5c5d1-ull-gone-when-there-is-room-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/LR-pw/full/integrity-I03-storage-full-5c5d1-ull-gone-when-there-is-room-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/LR-pw/full/integrity-I03-storage-full-5c5d1-ull-gone-when-there-is-room-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/w2-room.spec.ts:167:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items 
+
+    [31mTest timeout of 60000ms exceeded.[39m
+
+    Error: page.screenshot: Test timeout of 60000ms exceeded.
+    Call log:
+    [2m  - taking page screenshot[22m
+    [2m    - disabled all CSS animations[22m
+    [2m  - waiting for fonts to load...[22m
+    [2m  - fonts loaded[22m
+
+
+      76 |     const clip = box && { x: Math.max(0, box.x), y: Math.max(0, box.y), width: Math.min(view.width, box.x + box.width) - Math.max(0, box.x), height: Math.min(view.height, box.y + box.height) - Math.max(0, box.y) };
+      77 |     if (!clip || clip.width < 4 || clip.height < 4) continue; // cropped out at this aspect
+    > 78 |     const on = await page.screenshot({ clip, animations: 'disabled' });
+         |                           ^
+      79 |     await host.locator('svg[data-window-items]').evaluate((s) => ((s as SVGElement).style.visibility = 'hidden'));
+      80 |     const off = await page.screenshot({ clip, animations: 'disabled' });
+      81 |     await host.locator('svg[data-window-items]').evaluate((s) => ((s as SVGElement).style.visibility = ''));
+        at assertLayersDrawn (/home/user/wt/w5-final/kettle/tests/w2-room.spec.ts:78:27)
+        at /home/user/wt/w5-final/kettle/tests/w2-room.spec.ts:159:5
+
+    Error Context: .tmp/LR-pw/full/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/LR-pw/full/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/LR-pw/full/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  Slow test file: [chromium] › tests/a11y.spec.ts (10.6m)
+  Slow test file: [chromium] › tests/w2-summary.spec.ts (6.8m)
+  Slow test file: [chromium] › tests/w3-stats.spec.ts (5.4m)
+  Slow test file: [chromium] › tests/break-reach.spec.ts (5.4m)
+  Slow test file: [chromium] › tests/chai3d.spec.ts (5.1m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  3 failed
+    [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second 
+    [chromium] › tests/integrity.spec.ts:1017:5 › I03 storage-full warning is a banner in the page (phone 390×844) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room 
+    [chromium] › tests/w2-room.spec.ts:167:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items 
+  25 skipped
+  215 passed (36.0m)
+[slots] LR freed 2 at 20:56:30
