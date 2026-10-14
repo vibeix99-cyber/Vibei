@@ -83,6 +83,7 @@ Lane I2's aimed-tap probe `LI2-probe2.mjs fix http://127.0.0.1:5501 … '' L1,L2
 | `notice-strip:275` 1440 dark 200 % ×3 | **3/3** | `f075a7a` | `fix/ns275-1440-dark-200-x3.log` |
 | `notice-strip:275` 1440 light 200 % reduced ×3, twice | run A: 2/3 — #1 **invalid** (my :5501 was restarted by someone else at 18:22:10 mid-test; "Kettle's off" = the brew lost on reload); run B: 2/3 — #1 failed at **"the Undo is the deleted row … 111 px" = N-2** (S's `History.tsx` focus scroll, pre-existing; Mark done passed). Error contexts: `fix/failure-context/ns275-1440-light-x3-run{1,2}-1-error-context.md` | `f075a7a` | `fix/ns275-1440-light-200-reduced-x3{,-run2}.log` |
 | `notice-strip` 25 (workers 1) | **25/25** (incl. 1440 light 200 % reduced and 1440 dark 200 % once each) | `8b42b9b` | `fix/final/notice-strip-full.log` |
-| `toast-room`, `a11y`, `summary-notice`, `break-reach`, `w2-home`, `whistle` | PENDING-OWNED | `8b42b9b` | `fix/final/owned-specs.log` |
+| `toast-room` 14, `a11y` 11, `summary-notice` 14, `break-reach` 17, `w2-home` 18, `whistle` 8 | **81/82**: the one failure is `whistle.spec.ts:183` at **line 203** (C-1: G's sentence is not on this branch, as expected) | `8b42b9b` | `fix/final/owned-specs.log` |
+| `w3-notices` (9) + `w3-notices-idle` (12) | **21/21** | `8b42b9b` | `fix/final/w3-notices-and-idle.log` |
 
 `whistle.spec.ts:203` is expected to fail on :5501 (G's sentence is not on this branch; C-1).
