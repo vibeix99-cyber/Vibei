@@ -1,0 +1,895 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w4tr-t2/kettle/playwright.config.ts",
+    "rootDir": "/home/user/wt/w4tr-t2/kettle/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/tmp/claude-0/lt3-out-b5470",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-harness",
+        "name": "timer-harness",
+        "testDir": "/home/user/wt/w4tr-t2/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/tmp/claude-0/lt3-out-b5470",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-app",
+        "name": "timer-app",
+        "testDir": "/home/user/wt/w4tr-t2/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/tmp/claude-0/lt3-out-b5470",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pwa",
+        "name": "pwa",
+        "testDir": "/home/user/wt/w4tr-t2/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/pwa\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/tmp/claude-0/lt3-out-b5470",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w4tr-t2/kettle/tests",
+        "testIgnore": [
+          "/(timer|pwa)\\.spec\\.ts/"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite --config tests/e2e.vite.config.ts --port 5470 --strictPort",
+      "url": "http://127.0.0.1:5470/",
+      "reuseExistingServer": true,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "break-reach.spec.ts",
+      "file": "break-reach.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "200 % text, 375×667 light, Mon: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "notices on Mon",
+                  "description": "[\"Recipe done: Take a full tea break · +10 leaves\"]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 16132,
+                  "error": {
+                    "message": "Error: wheel: /^Put the kettle on/ brought wholly into view (centre y 730, visible 313–667)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: wheel: /^Put the kettle on/ brought wholly into view (centre y 730, visible 313–667)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at everyControlReached (/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts:172:140)\n    at /home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts:212:7",
+                    "location": {
+                      "file": "/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts",
+                      "column": 140,
+                      "line": 172
+                    },
+                    "snippet": "  170 |       const s = await reach(page, cdp, how, re);\n  171 |       expect(s, `${re} is on the screen`).not.toBeNull();\n> 172 |       expect(s!.ok, `${how}: ${re} brought wholly into view (centre y ${Math.round(s!.cy)}, visible ${s!.vis.map(Math.round).join('–')})`).toBe(true);\n      |                                                                                                                                            ^\n  173 |     }\n  174 |   for (const key of ['Tab', 'Shift+Tab'] as const) {\n  175 |     const left = [...controls];"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts",
+                        "column": 140,
+                        "line": 172
+                      },
+                      "message": "Error: wheel: /^Put the kettle on/ brought wholly into view (centre y 730, visible 313–667)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  170 |       const s = await reach(page, cdp, how, re);\n  171 |       expect(s, `${re} is on the screen`).not.toBeNull();\n> 172 |       expect(s!.ok, `${how}: ${re} brought wholly into view (centre y ${Math.round(s!.cy)}, visible ${s!.vis.map(Math.round).join('–')})`).toBe(true);\n      |                                                                                                                                            ^\n  173 |     }\n  174 |   for (const key of ['Tab', 'Shift+Tab'] as const) {\n  175 |     const left = [...controls];\n    at everyControlReached (/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts:172:140)\n    at /home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts:212:7"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T00:13:58.486Z",
+                  "annotations": [
+                    {
+                      "type": "notices on Mon",
+                      "description": "[\"Recipe done: Take a full tea break · +10 leaves\"]"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/claude-0/lt3-out-b5470/break-reach-200-text-375×6-13b9e-able-by-wheel-touch-and-Tab-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts",
+                    "column": 140,
+                    "line": 172
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "52ba2f72d10fa13e17b7-e911369241005da36966",
+          "file": "break-reach.spec.ts",
+          "line": 201,
+          "column": 5
+        },
+        {
+          "title": "200 % text, 375×667 light, Tue: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "notices on Tue",
+                  "description": "[]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17692,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T00:14:15.887Z",
+                  "annotations": [
+                    {
+                      "type": "notices on Tue",
+                      "description": "[]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "52ba2f72d10fa13e17b7-4cd6f321f6a0062b3fef",
+          "file": "break-reach.spec.ts",
+          "line": 201,
+          "column": 5
+        },
+        {
+          "title": "200 % text, 375×667 light, Wed: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "notices on Wed",
+                  "description": "[]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17291,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T00:14:33.761Z",
+                  "annotations": [
+                    {
+                      "type": "notices on Wed",
+                      "description": "[]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "52ba2f72d10fa13e17b7-b08af21879d80345ed5e",
+          "file": "break-reach.spec.ts",
+          "line": 201,
+          "column": 5
+        },
+        {
+          "title": "200 % text, 375×667 light, Thu: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "notices on Thu",
+                  "description": "[\"Recipe done: Take a full tea break · +10 leaves\"]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 15907,
+                  "error": {
+                    "message": "Error: wheel: /^Put the kettle on/ brought wholly into view (centre y 730, visible 313–667)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: wheel: /^Put the kettle on/ brought wholly into view (centre y 730, visible 313–667)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at everyControlReached (/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts:172:140)\n    at /home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts:212:7",
+                    "location": {
+                      "file": "/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts",
+                      "column": 140,
+                      "line": 172
+                    },
+                    "snippet": "  170 |       const s = await reach(page, cdp, how, re);\n  171 |       expect(s, `${re} is on the screen`).not.toBeNull();\n> 172 |       expect(s!.ok, `${how}: ${re} brought wholly into view (centre y ${Math.round(s!.cy)}, visible ${s!.vis.map(Math.round).join('–')})`).toBe(true);\n      |                                                                                                                                            ^\n  173 |     }\n  174 |   for (const key of ['Tab', 'Shift+Tab'] as const) {\n  175 |     const left = [...controls];"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts",
+                        "column": 140,
+                        "line": 172
+                      },
+                      "message": "Error: wheel: /^Put the kettle on/ brought wholly into view (centre y 730, visible 313–667)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  170 |       const s = await reach(page, cdp, how, re);\n  171 |       expect(s, `${re} is on the screen`).not.toBeNull();\n> 172 |       expect(s!.ok, `${how}: ${re} brought wholly into view (centre y ${Math.round(s!.cy)}, visible ${s!.vis.map(Math.round).join('–')})`).toBe(true);\n      |                                                                                                                                            ^\n  173 |     }\n  174 |   for (const key of ['Tab', 'Shift+Tab'] as const) {\n  175 |     const left = [...controls];\n    at everyControlReached (/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts:172:140)\n    at /home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts:212:7"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T00:14:51.061Z",
+                  "annotations": [
+                    {
+                      "type": "notices on Thu",
+                      "description": "[\"Recipe done: Take a full tea break · +10 leaves\"]"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/claude-0/lt3-out-b5470/break-reach-200-text-375×6-82689-able-by-wheel-touch-and-Tab-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts",
+                    "column": 140,
+                    "line": 172
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "52ba2f72d10fa13e17b7-db2aa76c72ea63e97cf5",
+          "file": "break-reach.spec.ts",
+          "line": 201,
+          "column": 5
+        },
+        {
+          "title": "200 % text, 375×667 light, Fri: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "notices on Fri",
+                  "description": "[]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 19027,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T00:15:08.092Z",
+                  "annotations": [
+                    {
+                      "type": "notices on Fri",
+                      "description": "[]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "52ba2f72d10fa13e17b7-54f68beb92e0d9dc2c10",
+          "file": "break-reach.spec.ts",
+          "line": 201,
+          "column": 5
+        },
+        {
+          "title": "200 % text, 375×667 light, Sat: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "notices on Sat",
+                  "description": "[]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17855,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T00:15:27.218Z",
+                  "annotations": [
+                    {
+                      "type": "notices on Sat",
+                      "description": "[]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "52ba2f72d10fa13e17b7-75988923f83d23a6e1c0",
+          "file": "break-reach.spec.ts",
+          "line": 201,
+          "column": 5
+        },
+        {
+          "title": "200 % text, 375×667 light, Sun: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "notices on Sun",
+                  "description": "[\"Recipe done: Take a full tea break · +10 leaves\",\"Cozy level 5!\"]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17509,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T00:15:45.082Z",
+                  "annotations": [
+                    {
+                      "type": "notices on Sun",
+                      "description": "[\"Recipe done: Take a full tea break · +10 leaves\",\"Cozy level 5!\"]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "52ba2f72d10fa13e17b7-51e5efd8fd19f1cf66ac",
+          "file": "break-reach.spec.ts",
+          "line": 201,
+          "column": 5
+        },
+        {
+          "title": "200 % text, 390×844 dark, Mon: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "notices on Mon",
+                  "description": "[\"Recipe done: Take a full tea break · +10 leaves\"]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 15536,
+                  "error": {
+                    "message": "Error: wheel: /^Put the kettle on/ brought wholly into view (centre y 838, visible 422–844)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: wheel: /^Put the kettle on/ brought wholly into view (centre y 838, visible 422–844)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at everyControlReached (/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts:172:140)\n    at /home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts:212:7",
+                    "location": {
+                      "file": "/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts",
+                      "column": 140,
+                      "line": 172
+                    },
+                    "snippet": "  170 |       const s = await reach(page, cdp, how, re);\n  171 |       expect(s, `${re} is on the screen`).not.toBeNull();\n> 172 |       expect(s!.ok, `${how}: ${re} brought wholly into view (centre y ${Math.round(s!.cy)}, visible ${s!.vis.map(Math.round).join('–')})`).toBe(true);\n      |                                                                                                                                            ^\n  173 |     }\n  174 |   for (const key of ['Tab', 'Shift+Tab'] as const) {\n  175 |     const left = [...controls];"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts",
+                        "column": 140,
+                        "line": 172
+                      },
+                      "message": "Error: wheel: /^Put the kettle on/ brought wholly into view (centre y 838, visible 422–844)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  170 |       const s = await reach(page, cdp, how, re);\n  171 |       expect(s, `${re} is on the screen`).not.toBeNull();\n> 172 |       expect(s!.ok, `${how}: ${re} brought wholly into view (centre y ${Math.round(s!.cy)}, visible ${s!.vis.map(Math.round).join('–')})`).toBe(true);\n      |                                                                                                                                            ^\n  173 |     }\n  174 |   for (const key of ['Tab', 'Shift+Tab'] as const) {\n  175 |     const left = [...controls];\n    at everyControlReached (/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts:172:140)\n    at /home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts:212:7"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T00:16:02.616Z",
+                  "annotations": [
+                    {
+                      "type": "notices on Mon",
+                      "description": "[\"Recipe done: Take a full tea break · +10 leaves\"]"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/claude-0/lt3-out-b5470/break-reach-200-text-390×8-7c2fb-able-by-wheel-touch-and-Tab-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts",
+                    "column": 140,
+                    "line": 172
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "52ba2f72d10fa13e17b7-b4f0acacdadf851d1b37",
+          "file": "break-reach.spec.ts",
+          "line": 201,
+          "column": 5
+        },
+        {
+          "title": "200 % text, 390×844 dark, Tue: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "notices on Tue",
+                  "description": "[]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17846,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T00:16:19.700Z",
+                  "annotations": [
+                    {
+                      "type": "notices on Tue",
+                      "description": "[]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "52ba2f72d10fa13e17b7-2c8b51b8d0e2a4dbc81b",
+          "file": "break-reach.spec.ts",
+          "line": 201,
+          "column": 5
+        },
+        {
+          "title": "200 % text, 390×844 dark, Wed: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "notices on Wed",
+                  "description": "[]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17073,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T00:16:37.738Z",
+                  "annotations": [
+                    {
+                      "type": "notices on Wed",
+                      "description": "[]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "52ba2f72d10fa13e17b7-ae363f86719fea34699e",
+          "file": "break-reach.spec.ts",
+          "line": 201,
+          "column": 5
+        },
+        {
+          "title": "200 % text, 390×844 dark, Thu: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "notices on Thu",
+                  "description": "[\"Recipe done: Take a full tea break · +10 leaves\"]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 15574,
+                  "error": {
+                    "message": "Error: wheel: /^Put the kettle on/ brought wholly into view (centre y 838, visible 422–844)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: wheel: /^Put the kettle on/ brought wholly into view (centre y 838, visible 422–844)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at everyControlReached (/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts:172:140)\n    at /home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts:212:7",
+                    "location": {
+                      "file": "/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts",
+                      "column": 140,
+                      "line": 172
+                    },
+                    "snippet": "  170 |       const s = await reach(page, cdp, how, re);\n  171 |       expect(s, `${re} is on the screen`).not.toBeNull();\n> 172 |       expect(s!.ok, `${how}: ${re} brought wholly into view (centre y ${Math.round(s!.cy)}, visible ${s!.vis.map(Math.round).join('–')})`).toBe(true);\n      |                                                                                                                                            ^\n  173 |     }\n  174 |   for (const key of ['Tab', 'Shift+Tab'] as const) {\n  175 |     const left = [...controls];"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts",
+                        "column": 140,
+                        "line": 172
+                      },
+                      "message": "Error: wheel: /^Put the kettle on/ brought wholly into view (centre y 838, visible 422–844)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  170 |       const s = await reach(page, cdp, how, re);\n  171 |       expect(s, `${re} is on the screen`).not.toBeNull();\n> 172 |       expect(s!.ok, `${how}: ${re} brought wholly into view (centre y ${Math.round(s!.cy)}, visible ${s!.vis.map(Math.round).join('–')})`).toBe(true);\n      |                                                                                                                                            ^\n  173 |     }\n  174 |   for (const key of ['Tab', 'Shift+Tab'] as const) {\n  175 |     const left = [...controls];\n    at everyControlReached (/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts:172:140)\n    at /home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts:212:7"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T00:16:54.827Z",
+                  "annotations": [
+                    {
+                      "type": "notices on Thu",
+                      "description": "[\"Recipe done: Take a full tea break · +10 leaves\"]"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/claude-0/lt3-out-b5470/break-reach-200-text-390×8-18401-able-by-wheel-touch-and-Tab-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts",
+                    "column": 140,
+                    "line": 172
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "52ba2f72d10fa13e17b7-3a829364f6c1ff0d8caf",
+          "file": "break-reach.spec.ts",
+          "line": 201,
+          "column": 5
+        },
+        {
+          "title": "200 % text, 390×844 dark, Fri: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "notices on Fri",
+                  "description": "[]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17828,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T00:17:11.561Z",
+                  "annotations": [
+                    {
+                      "type": "notices on Fri",
+                      "description": "[]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "52ba2f72d10fa13e17b7-90d3960e2aae474a723f",
+          "file": "break-reach.spec.ts",
+          "line": 201,
+          "column": 5
+        },
+        {
+          "title": "200 % text, 390×844 dark, Sat: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "notices on Sat",
+                  "description": "[]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17518,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T00:17:29.570Z",
+                  "annotations": [
+                    {
+                      "type": "notices on Sat",
+                      "description": "[]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "52ba2f72d10fa13e17b7-b4572d1e10a8ee0c6b95",
+          "file": "break-reach.spec.ts",
+          "line": 201,
+          "column": 5
+        },
+        {
+          "title": "200 % text, 390×844 dark, Sun: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "notices on Sun",
+                  "description": "[\"Recipe done: Take a full tea break · +10 leaves\",\"Cozy level 5!\"]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 15602,
+                  "error": {
+                    "message": "Error: wheel: /^Put the kettle on/ brought wholly into view (centre y 838, visible 422–844)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: wheel: /^Put the kettle on/ brought wholly into view (centre y 838, visible 422–844)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at everyControlReached (/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts:172:140)\n    at /home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts:212:7",
+                    "location": {
+                      "file": "/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts",
+                      "column": 140,
+                      "line": 172
+                    },
+                    "snippet": "  170 |       const s = await reach(page, cdp, how, re);\n  171 |       expect(s, `${re} is on the screen`).not.toBeNull();\n> 172 |       expect(s!.ok, `${how}: ${re} brought wholly into view (centre y ${Math.round(s!.cy)}, visible ${s!.vis.map(Math.round).join('–')})`).toBe(true);\n      |                                                                                                                                            ^\n  173 |     }\n  174 |   for (const key of ['Tab', 'Shift+Tab'] as const) {\n  175 |     const left = [...controls];"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts",
+                        "column": 140,
+                        "line": 172
+                      },
+                      "message": "Error: wheel: /^Put the kettle on/ brought wholly into view (centre y 838, visible 422–844)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  170 |       const s = await reach(page, cdp, how, re);\n  171 |       expect(s, `${re} is on the screen`).not.toBeNull();\n> 172 |       expect(s!.ok, `${how}: ${re} brought wholly into view (centre y ${Math.round(s!.cy)}, visible ${s!.vis.map(Math.round).join('–')})`).toBe(true);\n      |                                                                                                                                            ^\n  173 |     }\n  174 |   for (const key of ['Tab', 'Shift+Tab'] as const) {\n  175 |     const left = [...controls];\n    at everyControlReached (/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts:172:140)\n    at /home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts:212:7"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T00:17:47.096Z",
+                  "annotations": [
+                    {
+                      "type": "notices on Sun",
+                      "description": "[\"Recipe done: Take a full tea break · +10 leaves\",\"Cozy level 5!\"]"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/claude-0/lt3-out-b5470/break-reach-200-text-390×8-0aa1d-able-by-wheel-touch-and-Tab-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w4tr-t2/kettle/tests/break-reach.spec.ts",
+                    "column": 140,
+                    "line": 172
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "52ba2f72d10fa13e17b7-8847f0ef7a41f060286d",
+          "file": "break-reach.spec.ts",
+          "line": 201,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-14T00:13:57.382Z",
+    "duration": 245638.69900000002,
+    "expected": 9,
+    "skipped": 0,
+    "unexpected": 5,
+    "flaky": 0
+  }
+}
