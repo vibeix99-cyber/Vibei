@@ -423,7 +423,7 @@ The phone sizes @200 kept a 194 px band. On the trial, "Saved 3 minutes of focus
 
 ### 2e. Redone on phones with a real finger drag
 
-`LI2-idle2.mjs`: CDP `Input.dispatchTouchEvent` touchStart, touchMove in 12 px steps every 16 ms, touchEnd. Run 17:22–17:30 UTC. Data `idle2/{trial,base}/idle2-*.json`, logs `idle2/*.log`, frames `idle2/{trial,base}/*.png`.
+`LI2-idle2.mjs`: CDP `Input.dispatchTouchEvent` touchStart, touchMove in 12 px steps every 16 ms, touchEnd. Run 17:22–17:30 UTC. Data `idle2/{trial,base}/idle2-*.json`, logs `idle2/*.log`, frames `idle2/trial/390x844-*.png` (the "above" after-frames removed for size).
 
 **Band after a touch scroll (trial, 10 s idle variant):**
 - 390×844 light @100: the drag scrolled the page to **sy 297** with the band above the view (strip top −281). Dragged back to sy 0, then sampled at 0.3 / 1.3 / 2.5 / **6 s**: **room 68 at every sample**, **0 commits**. Before that: 10 s idle with room 68; pointer held 3 s with room 68.
@@ -527,3 +527,31 @@ Opened: `reach2/trial-390x844-light-t200-24-1-notice.png` (notice under the scen
 | BASE r1 (463 ms) | 71.6 / 165 → 59.6 / 177 | **top −93.9, sy 177** | sy 189, 201 … no compensation |
 
 **Result.** During a touch fling, the notice whose time ran out leaves on the "above" path. On both builds, everything below the strip jumps up **153.5 px** on screen in one frame: the target, a status-bar control, went from **35.6 / 47.6 px (in view)** to −129.9 / −105.9. The page's scroll is not compensated in that frame or any of the next 8. **The trial and the base behave the same.** It happens 460–630 ms after the finger lifts, while the page is still moving.
+
+## 7. Unproven, and limits of this evidence
+
+- **Page hidden:** the hidden-page collapse was **emulated** (property override plus a dispatched `visibilitychange`), not a real tab switch or app backgrounding. The −68 to −153.5 px on return is what the app does on that event; real platforms were not driven.
+- **Real devices, WebKit, Firefox:** not run. `isInputPending` (the trial's extra guard) is Chromium-only. Touch was CDP-dispatched in headless Chromium, with `hasTouch`/`isMobile`; there was no real finger or momentum physics.
+- **Smooth scrolling on the "above" path:** a full-motion wheel scroll while the strip leaves above the view was not exercised at 1440 (the page at @100 scrolls only 11 px). The touch-fling case is §2e; whether its 153.5 px jump is undone a frame later is in §2g if that job finished.
+- **`w2-home:203`:** the cause of the 13 px overflow in the D run is not established (blank trace frames). It passes alone on both builds.
+- **Lane R's `w3-notices` failure:** not reproduced alone. Its cause inside the full run is not established.
+- **The combined probe's 194 px band** (§4d): which notice set it is inferred, not recorded.
+- **Not run by me:** tsc, vitest, the full chromium suite (not asked); the maker's `w3-notices-load` CPU×6 control.
+- **Seeds and dates:** the captures (prior `LI2-cap.mjs`) build the missed days with the debug API: seed `veteran` (Tea Cozy held) or `newbie` (none), then `__kettle.ff(2 × 86 400 000)` and a fresh visit to Today (Stats and back). "cozy-earn" is `atRisk`, one finished brew, `ff` one day. I did not re-run these captures this session; I read their frames and facts.
+- **`reach` with a scrolled panel:** with the panel scrolled so a control was in view, the notice never left within 30 s (§3d). What happens when it finally leaves after the person scrolls back is not measured.
+- **Evidence size:** 58 MB after removing redundant new frames (listed where each section cites them). No prior evidence was removed.
+
+## 8. Index of new evidence (this session)
+
+| Path | What |
+|---|---|
+| `runs2/E1…E6-*.log`, `runs2/{E,F,G,H,I,J}-slots.log` | spec runs (§1c, §4b, §4c) and slot records |
+| `idle/{trial,base}/` | §2a, §2d, §2f (Vibei's §3 band; arrival; "above" with stepped wheel) |
+| `idle2/{trial,base}/` | §2e, §3d (real finger drag) |
+| `idle3/{trial,base}/` | §2g (fling frames) |
+| `probes2/{trial,base}/` | §1e (the other theme/motion pairs) |
+| `topbar2/` | §3a (F-T2-8 cost) |
+| `reach2/` | §3e (`reach` close at rest) |
+| Scripts, `/home/user/wt/w5tr-f/kettle/.tmp/LI2/` | `LI2-idle.mjs`, `LI2-idle2.mjs`, `LI2-idle3.mjs`, `LI2-probe2.mjs`, `LI2-topbar2.mjs`, `LI2-reach2.mjs`, `LI2-job{E,F,G,H,I,J}.sh` |
+
+Finished 17:55 UTC. Raw evidence only; LEAD-5 decides.
