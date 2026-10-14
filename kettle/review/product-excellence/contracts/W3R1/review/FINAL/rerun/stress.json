@@ -1,0 +1,907 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w5-final/kettle/playwright.config.ts",
+    "rootDir": "/home/user/wt/w5-final/kettle/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w5-final/kettle/.tmp/LR-pw/stress",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "timer-harness",
+        "name": "timer-harness",
+        "testDir": "/home/user/wt/w5-final/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w5-final/kettle/.tmp/LR-pw/stress",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "timer-app",
+        "name": "timer-app",
+        "testDir": "/home/user/wt/w5-final/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w5-final/kettle/.tmp/LR-pw/stress",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pwa",
+        "name": "pwa",
+        "testDir": "/home/user/wt/w5-final/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/pwa\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/home/user/wt/w5-final/kettle/.tmp/LR-pw/stress",
+        "repeatEach": 6,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w5-final/kettle/tests",
+        "testIgnore": [
+          "/(timer|pwa)\\.spec\\.ts/"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 2,
+    "webServer": {
+      "command": "npx vite --config tests/e2e.vite.config.ts --port 5540 --strictPort",
+      "url": "http://127.0.0.1:5540/",
+      "reuseExistingServer": true,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "integrity.spec.ts",
+      "file": "integrity.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "I01 session time survives reload, suspension and late return",
+          "file": "integrity.spec.ts",
+          "line": 214,
+          "column": 6,
+          "specs": [
+            {
+              "title": "two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 35354,
+                      "error": {
+                        "message": "Error: timed out waiting for window.__kettle.timer.getState().sessionId === \"s_mv8rme7s5b5f0835\" (page: {\"hash\":\"#/\",\"timer\":\"idle\",\"info\":{\"multiTab\":true,\"leader\":true,\"leaderMode\":\"locks\",\"leaderForMs\":31415.700000000186,\"scheduler\":\"worker\",\"settling\":false,\"dueForMs\":null,\"wakes\":6,\"claims\":true,\"lastClaim\":null}})",
+                        "stack": "Error: timed out waiting for window.__kettle.timer.getState().sessionId === \"s_mv8rme7s5b5f0835\" (page: {\"hash\":\"#/\",\"timer\":\"idle\",\"info\":{\"multiTab\":true,\"leader\":true,\"leaderMode\":\"locks\",\"leaderForMs\":31415.700000000186,\"scheduler\":\"worker\",\"settling\":false,\"dueForMs\":null,\"wakes\":6,\"claims\":true,\"lastClaim\":null}})\n    at Object.waitFor (/home/user/wt/w5-final/kettle/tests/integrity.spec.ts:113:17)\n    at /home/user/wt/w5-final/kettle/tests/integrity.spec.ts:324:7",
+                        "location": {
+                          "file": "/home/user/wt/w5-final/kettle/tests/integrity.spec.ts",
+                          "column": 17,
+                          "line": 113
+                        },
+                        "snippet": "  111 |         if (Date.now() > until) {\n  112 |           const seen = await evaluate(`JSON.stringify({ hash: location.hash, timer: window.__kettle?.timer.getState().status, info: window.__kettle?.timerInfo(), log: window.__log })`).catch(() => '?');\n> 113 |           throw new Error(`timed out waiting for ${expression} (page: ${seen})`);\n      |                 ^\n  114 |         }\n  115 |         await sleep(150);\n  116 |       }"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/wt/w5-final/kettle/tests/integrity.spec.ts",
+                            "column": 17,
+                            "line": 113
+                          },
+                          "message": "Error: timed out waiting for window.__kettle.timer.getState().sessionId === \"s_mv8rme7s5b5f0835\" (page: {\"hash\":\"#/\",\"timer\":\"idle\",\"info\":{\"multiTab\":true,\"leader\":true,\"leaderMode\":\"locks\",\"leaderForMs\":31415.700000000186,\"scheduler\":\"worker\",\"settling\":false,\"dueForMs\":null,\"wakes\":6,\"claims\":true,\"lastClaim\":null}})\n\n  111 |         if (Date.now() > until) {\n  112 |           const seen = await evaluate(`JSON.stringify({ hash: location.hash, timer: window.__kettle?.timer.getState().status, info: window.__kettle?.timerInfo(), log: window.__log })`).catch(() => '?');\n> 113 |           throw new Error(`timed out waiting for ${expression} (page: ${seen})`);\n      |                 ^\n  114 |         }\n  115 |         await sleep(150);\n  116 |       }\n    at Object.waitFor (/home/user/wt/w5-final/kettle/tests/integrity.spec.ts:113:17)\n    at /home/user/wt/w5-final/kettle/tests/integrity.spec.ts:324:7"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T23:53:01.644Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/user/wt/w5-final/kettle/.tmp/LR-pw/stress/integrity-I01-session-time-17740-p-and-does-not-add-a-second-chromium/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/wt/w5-final/kettle/tests/integrity.spec.ts",
+                        "column": 17,
+                        "line": 113
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "4ecf11d4c5bfdec3cd1b-2ce11dee9944b239be82",
+              "file": "integrity.spec.ts",
+              "line": 309,
+              "column": 3
+            },
+            {
+              "title": "two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 19966,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T23:53:46.724Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/user/wt/w5-final/kettle/.tmp/LR-pw/stress/integrity-I01-session-time-17740-p-and-does-not-add-a-second-chromium-repeat1/trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4ecf11d4c5bfdec3cd1b-3cc5a138d7d4f6b6076f",
+              "file": "integrity.spec.ts",
+              "line": 309,
+              "column": 3
+            },
+            {
+              "title": "two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 20311,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T23:54:39.783Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/user/wt/w5-final/kettle/.tmp/LR-pw/stress/integrity-I01-session-time-17740-p-and-does-not-add-a-second-chromium-repeat2/trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4ecf11d4c5bfdec3cd1b-0e2be65941460d8d1e1c",
+              "file": "integrity.spec.ts",
+              "line": 309,
+              "column": 3
+            },
+            {
+              "title": "two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 20548,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T23:55:34.183Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/user/wt/w5-final/kettle/.tmp/LR-pw/stress/integrity-I01-session-time-17740-p-and-does-not-add-a-second-chromium-repeat3/trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4ecf11d4c5bfdec3cd1b-59a6e4dded645e66e4d0",
+              "file": "integrity.spec.ts",
+              "line": 309,
+              "column": 3
+            },
+            {
+              "title": "two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 20675,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T23:56:28.487Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/user/wt/w5-final/kettle/.tmp/LR-pw/stress/integrity-I01-session-time-17740-p-and-does-not-add-a-second-chromium-repeat4/trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4ecf11d4c5bfdec3cd1b-83ede2541b6525b318b7",
+              "file": "integrity.spec.ts",
+              "line": 309,
+              "column": 3
+            },
+            {
+              "title": "two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 19403,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T23:57:23.112Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/user/wt/w5-final/kettle/.tmp/LR-pw/stress/integrity-I01-session-time-17740-p-and-does-not-add-a-second-chromium-repeat5/trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4ecf11d4c5bfdec3cd1b-13f30ea1775bbfeb0efe",
+              "file": "integrity.spec.ts",
+              "line": 309,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "I03 storage-full warning is a banner in the page (phone 390×844)",
+          "file": "integrity.spec.ts",
+          "line": 1013,
+          "column": 8,
+          "specs": [
+            {
+              "title": "nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 31050,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T23:53:39.656Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/user/wt/w5-final/kettle/.tmp/LR-pw/stress/integrity-I03-storage-full-5c5d1-ull-gone-when-there-is-room-chromium/trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4ecf11d4c5bfdec3cd1b-ebdd9e5d604a67d89f2b",
+              "file": "integrity.spec.ts",
+              "line": 1017,
+              "column": 5
+            },
+            {
+              "title": "nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 30175,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T23:54:07.076Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/user/wt/w5-final/kettle/.tmp/LR-pw/stress/integrity-I03-storage-full-5c5d1-ull-gone-when-there-is-room-chromium-repeat1/trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4ecf11d4c5bfdec3cd1b-71160046b4b75c4a37fa",
+              "file": "integrity.spec.ts",
+              "line": 1017,
+              "column": 5
+            },
+            {
+              "title": "nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 30494,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T23:55:00.370Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/user/wt/w5-final/kettle/.tmp/LR-pw/stress/integrity-I03-storage-full-5c5d1-ull-gone-when-there-is-room-chromium-repeat2/trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4ecf11d4c5bfdec3cd1b-5c3542e15a84522a3ebc",
+              "file": "integrity.spec.ts",
+              "line": 1017,
+              "column": 5
+            },
+            {
+              "title": "nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 31123,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T23:55:55.038Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/user/wt/w5-final/kettle/.tmp/LR-pw/stress/integrity-I03-storage-full-5c5d1-ull-gone-when-there-is-room-chromium-repeat3/trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4ecf11d4c5bfdec3cd1b-cf1be7c2476c6a071bac",
+              "file": "integrity.spec.ts",
+              "line": 1017,
+              "column": 5
+            },
+            {
+              "title": "nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 32424,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T23:56:49.472Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/user/wt/w5-final/kettle/.tmp/LR-pw/stress/integrity-I03-storage-full-5c5d1-ull-gone-when-there-is-room-chromium-repeat4/trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4ecf11d4c5bfdec3cd1b-5cf4f2ee724ff79dc121",
+              "file": "integrity.spec.ts",
+              "line": 1017,
+              "column": 5
+            },
+            {
+              "title": "nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 30472,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T23:57:42.791Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/user/wt/w5-final/kettle/.tmp/LR-pw/stress/integrity-I03-storage-full-5c5d1-ull-gone-when-there-is-room-chromium-repeat5/trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4ecf11d4c5bfdec3cd1b-8533f1a4da6c6a91de3e",
+              "file": "integrity.spec.ts",
+              "line": 1017,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "w2-room.spec.ts",
+      "file": "w2-room.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Focus backdrop: earned items without the live 3D room",
+          "file": "w2-room.spec.ts",
+          "line": 86,
+          "column": 6,
+          "specs": [
+            {
+              "title": "3D failure (WebGL context lost): the still that takes over carries the same items",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 41366,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T23:53:01.304Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/user/wt/w5-final/kettle/.tmp/LR-pw/stress/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium/trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0b6ff45299426c0d2d82-dcbf98bf223acb05f494",
+              "file": "w2-room.spec.ts",
+              "line": 144,
+              "column": 3
+            },
+            {
+              "title": "3D failure (WebGL context lost): the still that takes over carries the same items",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 41650,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T23:54:13.066Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/user/wt/w5-final/kettle/.tmp/LR-pw/stress/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium-repeat1/trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0b6ff45299426c0d2d82-cb86122f7f5fbb98fc79",
+              "file": "w2-room.spec.ts",
+              "line": 144,
+              "column": 3
+            },
+            {
+              "title": "3D failure (WebGL context lost): the still that takes over carries the same items",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 46820,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T23:54:57.021Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/user/wt/w5-final/kettle/.tmp/LR-pw/stress/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium-repeat2/trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0b6ff45299426c0d2d82-69a81aa5306e7656e69c",
+              "file": "w2-room.spec.ts",
+              "line": 144,
+              "column": 3
+            },
+            {
+              "title": "3D failure (WebGL context lost): the still that takes over carries the same items",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 46993,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T23:55:46.159Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/user/wt/w5-final/kettle/.tmp/LR-pw/stress/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium-repeat3/trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0b6ff45299426c0d2d82-be60a9f107d90a31e512",
+              "file": "w2-room.spec.ts",
+              "line": 144,
+              "column": 3
+            },
+            {
+              "title": "3D failure (WebGL context lost): the still that takes over carries the same items",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 44573,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T23:56:35.866Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/user/wt/w5-final/kettle/.tmp/LR-pw/stress/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium-repeat4/trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0b6ff45299426c0d2d82-661ca56231e4b6202548",
+              "file": "w2-room.spec.ts",
+              "line": 144,
+              "column": 3
+            },
+            {
+              "title": "3D failure (WebGL context lost): the still that takes over carries the same items",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 47398,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-14T23:57:24.015Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/user/wt/w5-final/kettle/.tmp/LR-pw/stress/w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium-repeat5/trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0b6ff45299426c0d2d82-7fed5f3628650c381ef3",
+              "file": "w2-room.spec.ts",
+              "line": 144,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-14T23:52:59.823Z",
+    "duration": 313880.613,
+    "expected": 17,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

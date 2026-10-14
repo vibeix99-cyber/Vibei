@@ -18,3 +18,31 @@ Running 18 tests using 2 workers
   ✓  15 [chromium] › tests/integrity.spec.ts:1017:5 › I03 storage-full warning is a banner in the page (phone 390×844) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room (32.4s)
   ✓  16 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (19.4s)
   ✓  17 [chromium] › tests/w2-room.spec.ts:144:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items (47.4s)
+  ✓  18 [chromium] › tests/integrity.spec.ts:1017:5 › I03 storage-full warning is a banner in the page (phone 390×844) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room (30.5s)
+
+
+  1) [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second 
+
+    Error: timed out waiting for window.__kettle.timer.getState().sessionId === "s_mv8rme7s5b5f0835" (page: {"hash":"#/","timer":"idle","info":{"multiTab":true,"leader":true,"leaderMode":"locks","leaderForMs":31415.700000000186,"scheduler":"worker","settling":false,"dueForMs":null,"wakes":6,"claims":true,"lastClaim":null}})
+
+      111 |         if (Date.now() > until) {
+      112 |           const seen = await evaluate(`JSON.stringify({ hash: location.hash, timer: window.__kettle?.timer.getState().status, info: window.__kettle?.timerInfo(), log: window.__log })`).catch(() => '?');
+    > 113 |           throw new Error(`timed out waiting for ${expression} (page: ${seen})`);
+          |                 ^
+      114 |         }
+      115 |         await sleep(150);
+      116 |       }
+        at Object.waitFor (/home/user/wt/w5-final/kettle/tests/integrity.spec.ts:113:17)
+        at /home/user/wt/w5-final/kettle/tests/integrity.spec.ts:324:7
+
+    attachment #1: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/LR-pw/stress/integrity-I01-session-time-17740-p-and-does-not-add-a-second-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/LR-pw/stress/integrity-I01-session-time-17740-p-and-does-not-add-a-second-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second 
+  17 passed (5.2m)
