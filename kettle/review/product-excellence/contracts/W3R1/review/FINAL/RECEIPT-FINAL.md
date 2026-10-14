@@ -32,7 +32,7 @@ Resumed 22:29 after a usage limit and a container restart (about 21:00). The ful
 
 Run 20:20:29 to 20:56:30 (36.0 min), `--project=chromium --workers=2` (gate `--n 2`), dev :5540, 17 spec files listed in `runs/full-spec-list.txt`: `runs/full.log.txt`, `runs/full.json`, `runs/list-chromium.json` (the 268-test list). Maker F held one other slot (X-11) during the first part. Load average 7 to 14 during the run (my two workers, F's job, and the dev server's own load), higher than the 2-worker figure would suggest on a quiet machine; it fell to 3 at the end.
 
-**243 tests announced: 215 passed, 3 failed, 25 skipped, 0 flaky.** The 25 skips are `w3-notices-load.spec.ts` (gated on `W3_LOAD=1`; run separately in section 5).
+**243 tests announced: 215 passed, 3 failed, 25 skipped, 0 flaky.** The 25 skips are `w3-notices-load.spec.ts` (gated on `W3_LOAD=1`; run separately in section 6).
 
 | Spec file | Passed | Failed | Skipped |
 |---|---|---|---|
@@ -79,7 +79,7 @@ All nine runs passed; none failed on base. Classification on this evidence (6 ru
 | # | Class | Owner (PLAN.md) | Signature |
 |---|---|---|---|
 | F1 | **Flaky** (load): 1 failure in the full run, 0 in 5 later runs, 0 on base. Not a base failure, not shown to be a product failure. The same test passed in the combined-trial part A (its one integrity failure there was I03) | test file: **S** (`tests/integrity.spec.ts`); feature: the multi-tab timer, `src/timer/**` (nobody edits it this round) | the other tab did not take the finished brew to `#/done` within the wait; `leader false, leaderMode "locks", wakes 8` |
-| F2 | **Flaky**, the X-1 sighting again: 1 failure in the full run, 1 in the combined-trial part A, 0 in all reruns on this tree and base. Section 6 repeats it 10 times with a trace | test file **S** (`tests/integrity.spec.ts`, I03 unchanged by S); surface: save-warning (unowned) in F's Shell/Toast | `region /storage is full/` count 1, expected 0, 6000 ms, "gone when there is room" step |
+| F2 | **Flaky**, the X-1 sighting again: 1 failure in the full run, 1 in the combined-trial part A, 0 in all reruns on this tree and base. Section 7 repeats it 10 times with a trace | test file **S** (`tests/integrity.spec.ts`, I03 unchanged by S); surface: save-warning (unowned) in F's Shell/Toast | `region /storage is full/` count 1, expected 0, 6000 ms, "gone when there is room" step |
 | F3 | **Flaky**: the same test and the same step (`assertLayersDrawn`, `page.screenshot`) timed out in Lane R-N's first run on the N trial (passed on its second run); 1 failure here, 0 in 5 later runs, 0 on base | test file and feature: **N** (`tests/w2-room.spec.ts`; `src/scene/**`) | `Test timeout of 60000ms exceeded` at a `page.screenshot` under 2 workers (SwiftShader, WebGL context lost then restored) |
 
 None was a base failure. None reproduced alone or in repeats on this tree.
@@ -118,3 +118,30 @@ Classification: **deterministic, and a base failure**: the two cases fail identi
 **10 of 10 passed**, 0 failed, 0 flaky. There is no failing run to open a trace for. What the 10 traces show about the step that failed twice before ("gone when there is room", `integrity.spec.ts:1100`, `toHaveCount(0)` within 6000 ms): I read each trace's before/after events for that expect (`x1/banner-step-ms.txt`). The step took **113, 370, 373, 874, 1878, 1878, 1881, 1887, 1888 and 2881 ms** (median about 1.88 s) of the 6000 ms allowed. The times cluster at about 0.1 to 0.9 s, at about 1.9 s (four runs) and at 2.9 s. Traces kept: the slowest (`x1/trace-repeat6-slowest-banner-step.zip`) and the fastest (`x1/trace-repeat8-fastest-banner-step.zip`).
 
 What the code does at that step (read, not run): the test frees the filler keys and calls `setState({})` on the timer, progress and settings stores; the banner (`src/app/saveWarning.ts`) is removed by `checkRecovered`, which runs on a `setInterval` of `RECOVERY_CHECK_MS = 2000` ms and only clears the warning when no failed key still reports `lastWriteFailed`. So the banner can go only at a 2-second tick that comes after the write succeeded; the observed 2.9 s case is a tick that came before the write had landed, followed by the next one. The margin is 6000 ms against about 0.1 to 2.9 s here. **I did not see a failing run on this tree under 10 repeats, so what happened in the two earlier failures (the combined-trial part A at 20:30-type load, and this tree's full run at 2 workers, load 7 to 14) is not shown by a trace.** Of the two explanations the question names, "a write still failing" would show as the banner outlasting every tick, "a timing issue" as the tick or the write arriving late under load; the 10 runs show tick-quantised times, which is consistent with the second, but a failing trace was not obtained.
+
+## 8. X-7: where the Settings blocks sit, :5550 against base :5488, 390×844@2, dark and light
+
+`scripts/LR-x7.mjs` (one gate slot, 22:56 to 22:57), dump `x7/x7-dump.json`, tables `x7/x7-section-tops.md`. For each of dark and light, for each of two ways of getting there (a direct load of `#/settings`, and `Home` then `navigate('/settings')`), two repetitions per side: frozen clock `2026-10-12T07:40:00Z`, `?debug&seed=veteran`, `nooktime=day` in light, fonts ready, the leaving screen gone (`[data-route-leaving]` absent) and 600 ms more. The script records the document y of every block of `main` down to depth 7 (75 blocks), the shell blocks above 140 px, and the notice strip. The two repetitions gave identical numbers in all 8 cells.
+
+**Result (identical in dark and light, direct and via Home, base then final):**
+
+| Block | base y | final y | shift |
+|---|---|---|---|
+| h1 "Settings" | 16 | 16 | 0 |
+| Profile card | 77 | 77 | 0 |
+| Rhythm | 279 | 279 | 0 |
+| Auto-start | 732.3 | 732.3 | 0 |
+| Daily goal | 950.06 | 950.06 | 0 |
+| Sound | 1200.86 | 1200.86 | 0 |
+| Notifications & device | 1868.64 | 1868.64 | 0 |
+| **Appearance** | 2264.41 | 2281.39 | **+16.98** |
+| Your data | 2729.2 | 2746.19 | +16.99 |
+| Keyboard shortcuts | 3016.17 | 3033.16 | +16.99 |
+| About | 3430.47 | 3447.45 | +16.98 |
+| document height | 4150 | 4167 | +17 |
+
+- **Above the Haptics row nothing moves:** the largest shift of any of the first 47 blocks (everything from the heading down to the row above Haptics) is **0.00 px** in all 8 cells. The first screen is where it was on base.
+- **The one change:** the Haptics row (in "Notifications & device") is **64 px high on base and 80.98 px on the final tree** (+16.98), and every block after it moves by that amount. No other block changes height.
+- **Cause:** G's copy in `src/screens/settings/SettingsScreen.tsx` (a diff against base): the Haptics description goes from "Little buzzes for key moments." to "Little buzzes for key moments, on devices that can vibrate." and now wraps to a second line. The same diff changes the Daily goal footer, the Sounds and Nudges lines and the Keep-awake line, but none of those changes a block height here. G's tokens in `src/styles/{tokens,global}.css` and the `src/ui/*.module.css` files change outlines, opacities and an outline offset only (diff read), and no block above the Haptics row moved.
+- **F's strip is not involved:** the notice strip is at y 16 with height 0 on both sides in all cells (no room kept).
+- **The "about 2 px lower in dark at 390" of the combined matrix:** it is not a layout difference of the tree. I measured the old frames (`LR/ALL/cap/390x844@2-dark/{ctrl,trial}-19-settings.png`, combined trial `e478604`, full-page frames) by sliding the trial frame over the base frame in 200 px bands of the first 1700 device px: in dark the best match is a rigid shift of **3 device px (1.5 css px)** in every band, with an error of 0.01 to 0.06 (grey levels) after the shift, against 3 to 9 without it; so the two frames hold the same pixels, one moved down by 3 device px as a whole. In the light solo pair (`LR/ALL/cap/390x844@2-light-solo`) the best shift is 0 in every band with error 0.0. A uniform shift of the whole page in one capture of a sequence is what a screen caught mid-transition looks like (that frame was taken without waiting for the route change); it is consistent with, but I did not prove, that cause. `scripts/LR-shift.py` is the script. On the final tree, with the route settled, the first screen has no shift in dark or light.
