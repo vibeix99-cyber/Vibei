@@ -60,7 +60,6 @@ for (const cfg of CFGS) {
     run.iw = run.samples.at(-1)?.iw;
     run.wideSamples = run.samples.filter((s) => s.sw > s.iw + 0.5).length;
     run.wideAt = await page.evaluate(() => window.__wOff ?? null);
-    run.cols = await page.evaluate(() => window.__cols ?? null);
     run.fontsLoaded = await page.evaluate(() => [...document.fonts].filter((f) => f.status === 'loaded').map((f) => f.family).join(','));
     // Overview tiles: any text cut (ellipsis or overflow) in a tile?
     run.tiles = await page.evaluate(() => {
@@ -88,6 +87,7 @@ for (const cfg of CFGS) {
       return out;
     });
     run.ovH = await page.evaluate(() => window.__ovH ?? null);
+    run.cols = await page.evaluate(() => window.__cols ?? null);
     await page.locator('[aria-label="Overview"]').first().screenshot({ path: `${args.out}/${args.label}-${cfg.replaceAll(':', '-')}-overview.png` }).catch(() => {});
   } catch (e) {
     run.error = String(e).slice(0, 300);
