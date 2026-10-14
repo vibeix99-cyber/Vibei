@@ -1,0 +1,249 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w4tr-t2f/kettle/playwright.config.ts",
+    "rootDir": "/home/user/wt/w4tr-t2f/kettle/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/tmp/claude-0/lr4-out-C1-a11y-noticestrip",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-harness",
+        "name": "timer-harness",
+        "testDir": "/home/user/wt/w4tr-t2f/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/tmp/claude-0/lr4-out-C1-a11y-noticestrip",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-app",
+        "name": "timer-app",
+        "testDir": "/home/user/wt/w4tr-t2f/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/tmp/claude-0/lr4-out-C1-a11y-noticestrip",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pwa",
+        "name": "pwa",
+        "testDir": "/home/user/wt/w4tr-t2f/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/pwa\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/tmp/claude-0/lr4-out-C1-a11y-noticestrip",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w4tr-t2f/kettle/tests",
+        "testIgnore": [
+          "/(timer|pwa)\\.spec\\.ts/"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite --config tests/e2e.vite.config.ts --port 5477 --strictPort",
+      "url": "http://127.0.0.1:5477/",
+      "reuseExistingServer": true,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "a11y.spec.ts",
+      "file": "a11y.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "a toast never covers the session controls or the summary footer (390×844)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14476,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T04:36:51.793Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa3ad05f8c0e05077efb-fe74770555de87a67b53",
+          "file": "a11y.spec.ts",
+          "line": 332,
+          "column": 3
+        },
+        {
+          "title": "a toast never covers the session controls or the summary footer (375×667)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12705,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T04:37:06.371Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa3ad05f8c0e05077efb-a413b7518f8fe09179ee",
+          "file": "a11y.spec.ts",
+          "line": 332,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "notice-strip.spec.ts",
+      "file": "notice-strip.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (390×844 light 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":953,\"markDone\":{\"tapAt\":{\"x\":282.5,\"y\":578,\"w\":79,\"h\":44,\"top\":556},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":723,\"undoY\":723},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":160,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":160},\"noticeFrames\":1696,\"modalFrames\":23,\"frames\":2666,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":196,\"Crossed off. Nice work. Undo\":8,\"Couldn’t save just now. Your summary is still he\":248,\"Recipe done: Take a full tea break · +10 leaves\":206,\"Recipe done: Take 2 full tea breaks · +15 leaves\":244,\"Kettle’s off. See you soon.\":199,\"Brew updated\":246,\"Brew deleted Undo\":20,\"A notice on Settings, here to be read.\":249,\"A notice on Nook, here to be read.\":88}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":62,\"modalFrames\":0,\"frames\":178,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":62}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 53125,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T04:37:20.112Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":953,\"markDone\":{\"tapAt\":{\"x\":282.5,\"y\":578,\"w\":79,\"h\":44,\"top\":556},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":723,\"undoY\":723},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":160,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":160},\"noticeFrames\":1696,\"modalFrames\":23,\"frames\":2666,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":196,\"Crossed off. Nice work. Undo\":8,\"Couldn’t save just now. Your summary is still he\":248,\"Recipe done: Take a full tea break · +10 leaves\":206,\"Recipe done: Take 2 full tea breaks · +15 leaves\":244,\"Kettle’s off. See you soon.\":199,\"Brew updated\":246,\"Brew deleted Undo\":20,\"A notice on Settings, here to be read.\":249,\"A notice on Nook, here to be read.\":88}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":62,\"modalFrames\":0,\"frames\":178,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":62}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-41deed2571370f68d806",
+          "file": "notice-strip.spec.ts",
+          "line": 275,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-14T04:36:50.715Z",
+    "duration": 82747.081,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
