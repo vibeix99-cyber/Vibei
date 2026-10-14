@@ -2,10 +2,13 @@
 
 **Verdict: APPROVE** `pe/w3-chai-night@4168428` (code `121f011`, `43b10f2`, `76144b4`; kettle/src `9699774`), as gated in trial `46f33e2`. Lane R's receipt is in and checked (§7). Any change to the branch after this invalidates it.
 
-**One call is Vibei's, not mine (§4):**
+**One call is Vibei's, not mine (§4): the eye contrast is vb's call** (`VB-DECISIONS-RESUME.md` §1).
 - **What the maker shipped.** The eyes stop at 84–88 % of the day's contrast ratio (93–95 % of its lightness difference). The nose matches the day.
 - **What I judge.** That meets "as clearly as in the day renders" in substance. I do not reject for it.
 - **What Vibei decides.** Whether Chai should go all the way to the day ratio at night, with the fur at about day brightness in a night room, is art direction. That is Vibei's choice. It is two numbers in `palette.ts`.
+- **For Vibei:** the dark-theme evening/night phone pairs are listed at the end of §4.
+
+*LEAD-5 note (2026-10-14, after LEAD-4's cutoff):* I added the words "vb's call" and the "For Vibei" pointer in §4, and my reading of Lane R's dark-theme nose numbers (§4, last part). LEAD-4's verdict, findings and classifications are otherwise unchanged.
 
 | | |
 |---|---|
@@ -132,7 +135,7 @@ High and low tier match to 0.01 (maker, Lane R, mine). Mine (`shots/*/lead-*.jso
 - **Before:** the separation was about half the day's (44–58 %), under 3:1 for both features. That was Vibei's complaint, and it is gone.
 - **Not a defect.** The 84–88 % is a deliberate stopping point, documented in the packet (N-3) and in the code comment. It is not a shortfall the maker could not close.
 
-**What belongs to Vibei** (art direction, not a defect):
+**What belongs to Vibei: this is vb's call** (art direction, not a defect; `VB-DECISIONS-RESUME.md` §1 holds it for Vibei's own visual check):
 - **The question:** does Chai stop at k 3.2 / 2.8, keeping the lamp's modelling at slightly less than day eye contrast? Or go to full eye parity, k ≈ 3.8 at night and 3.6 at dusk, with the fur near day brightness in a night room?
 - **The cost of changing it:** two numbers in `palette.ts` (`MOODS.dusk.chaiFill`, `MOODS.night.chaiFill`) and the `chai3d.spec` expectation.
 - **Frames to compare,** all close view, 1440×900@2, light, high tier:
