@@ -1,6 +1,6 @@
 /**
  * Stat tile: icon + big number + label (Duolingo-profile style). OWNER: design-system area.
- *   <Stat icon="mug" value={<Counter value={5}/>} label="Day streak" tone="persimmon" />
+ *   <Stat icon="mug" value={<Counter value={5}/>} label="days warm" tone="persimmon" />
  */
 import type { ReactNode } from 'react';
 import { cx, renderIcon, type IconSlot, type Tone } from './util';

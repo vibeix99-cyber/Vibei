@@ -1,8 +1,9 @@
 /**
  * Stats — your brewing story. OWNER: progress area.
  *
+ * Top (full width): today and the last 7 days at a glance (populated only).
  * Left column: overview tiles → cozy level → last 7 days (bars vs goal) → warm
- * streak calendar (joined runs, Tea Cozy days) → personal bests.
+ * days calendar (joined runs, Tea Cozy days) → personal bests.
  * Right column: badges (6 + view all) → your rhythm (collapsible) → history.
  * Phones stack left then right; ≥ 760px content width shows both columns.
  */
@@ -14,6 +15,7 @@ import { useSettings } from '@/state/settings';
 import { useTimer } from '@/timer';
 import { Button, Card, EmptyState, ProgressBar, ScreenHeader, Stat, cx, useMediaQuery } from '@/ui';
 import { BadgesSection } from './Badges';
+import { GlanceCard } from './Glance';
 import { hm, monthDay } from './format';
 import { HistorySection } from './History';
 import { PersonalBestsCard } from './PersonalBests';
@@ -59,10 +61,10 @@ export default function StatsScreen() {
       />
       </div>
 
-      {empty && <EmptyHero />}
+      {empty ? <EmptyHero /> : <GlanceCard byDay={byDay} metDays={metDays} today={today} goalMin={goalMin} />}
 
       <div className={s.columns}>
-        {/* Left: how you're doing — overview, level, week, streak calendar, records. */}
+        {/* Left: how you're doing — overview, level, week, warm days calendar, records. */}
         <div className={s.col}>
           <section aria-label="Overview" className={s.area}>
             <div className={s.tiles}>
@@ -70,10 +72,20 @@ export default function StatsScreen() {
                 icon={<StreakMug size={34} state={streak.current === 0 ? 'cold' : streak.todayDone ? 'warm' : 'atRisk'} animate={false} title="" />}
                 tone="persimmon"
                 value={streak.current.toLocaleString()}
-                label="Day streak"
-                hint={streak.atRisk ? <span className={s.riskHint}>Brew tonight</span> : undefined}
+                label={streak.current === 1 ? 'Day warm' : 'Days warm'}
+                hint={streak.atRisk ? <span className={s.riskHint}>One brew warms today</span> : undefined}
               />
-              <Stat icon={<Icon name="trophy" size={26} tone="color" />} tone="honey" value={streak.best.toLocaleString()} label="Best streak" />
+              <Stat
+                icon={<Icon name="trophy" size={26} tone="color" />}
+                tone="honey"
+                value={
+                  <>
+                    {streak.best.toLocaleString()}
+                    <span className={s.tileUnit}> {streak.best === 1 ? 'day' : 'days'}</span>
+                  </>
+                }
+                label="Warmest run"
+              />
               <Stat icon="clock" tone="sky" value={hm(t.focusMs)} label="Total focus" />
               <Stat icon="cup" tone="matcha" value={t.brews.toLocaleString()} label="Full brews" />
             </div>
@@ -140,7 +152,7 @@ function EmptyHero() {
           </Button>
         }
       >
-        Your first brew is one tap away. Your streak, charts and badges will fill in as you brew.
+        Your first brew is one tap away. Your warm days, charts and badges will fill in as you brew.
       </EmptyState>
     </Card>
   );

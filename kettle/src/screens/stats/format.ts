@@ -3,9 +3,14 @@ import { addDays, parseDayKey, type DayKey } from '@/lib/dates';
 
 const MIN = 60_000;
 
-/** "38h 20m", "3h", "45 min", "0 min". */
+/**
+ * "38h 20m", "3h", "45 min", "0 min". Whole focused minutes, rounded down: the way the engine counts minutes for
+ * leaves and the daily goal (`progress/engine.ts`), the chart's bars (`insights.weekSeries`) and the End sheet ("12
+ * minutes of focus will be saved"). Rounding to nearest showed a brew ended at 12:40 as "13 min" here, beside a "12"
+ * bar and 12 minutes' worth of leaves.
+ */
 export function hm(ms: number): string {
-  const total = Math.round(ms / MIN);
+  const total = Math.floor(ms / MIN);
   const h = Math.floor(total / 60);
   const m = total % 60;
   if (h === 0) return `${m} min`;
@@ -15,7 +20,7 @@ export function hm(ms: number): string {
 
 /** Spoken/long: "3 hours 20 minutes". */
 export function hmLong(ms: number): string {
-  const total = Math.round(ms / MIN);
+  const total = Math.floor(ms / MIN);
   const h = Math.floor(total / 60);
   const m = total % 60;
   const parts: string[] = [];

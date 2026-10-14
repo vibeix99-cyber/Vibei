@@ -100,6 +100,8 @@
 }
 .dialog .header {
   padding-top: var(--space-5);
+  /* No drag to dismiss on a dialog: the header is free to scroll by touch when it has to (below). */
+  touch-action: auto;
 }
 .hasClose {
   padding-right: 64px;
@@ -233,3 +235,34 @@
     padding-bottom: max(var(--space-3), env(safe-area-inset-bottom));
   }
 }
+
+/* ---------- Tight: the actions would not fit on screen ----------
+ * Large text on a short phone (375×667 at 200 %, F-T2-4): the art, title and description alone can be taller than
+ * the screen, which pushed the footer (the actions) out of the panel, out of reach of a tap. `Sheet.tsx` measures
+ * that case and marks the panel `data-tight`: the panel then scrolls as one column (art, title, description, body)
+ * and the footer stays pinned at the bottom, on screen, with a divider. Never set when everything fits, so every
+ * other layout is unchanged. */
+.panel[data-tight] {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.panel[data-tight] > .header,
+.panel[data-tight] > .body {
+  flex: none;
+  min-height: auto;
+  overflow: visible;
+}
+.panel[data-tight] > .header {
+  /* The whole panel scrolls: a finger on the text scrolls it (the handle still drags a sheet down). */
+  touch-action: auto;
+}
+.panel[data-tight] > .footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  border-top: var(--border) solid var(--line);
+  padding-top: var(--space-3);
+}
+/* (A sheet's panel runs 40px past the bottom edge, inside its bottom padding; a sticky box already stops at the
+ * scroll container's padding edge, so `bottom: 0` lands the footer on the screen's edge in both modes.) */
+

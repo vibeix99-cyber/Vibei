@@ -1,5 +1,5 @@
 /**
- * Warm streak card: current streak, Tea Cozies, and a month calendar where
+ * Warm days card: the current run of warm days, Tea Cozies, and a month calendar where
  * consecutive warm days join into one pill (cozy days bridge the pill).
  */
 import { useId, useMemo, useState } from 'react';
@@ -43,12 +43,16 @@ export function StreakCard({ streak, byDay, today, weekStartsOn, firstDay }: Pro
   const cozyCount = inMonth.filter((d) => streak.days[d] === 'cozy').length;
 
   const alive = streak.current > 0;
-  const headline = alive ? `${plural(streak.current, 'day')} warm` : 'Start a new streak';
+  // Warm-days wording (W3R1 glossary) and I13's principles: an invitation, never a threat or a countdown; the Tea Cozy
+  // is mentioned only when one is ready and today is still open (then it is true that it would cover today).
+  const headline = alive ? `${plural(streak.current, 'day')} warm` : streak.best > 0 ? 'Ready for a warm day' : 'Warm days';
   let line: string;
-  if (!alive) line = streak.best > 0 ? 'One brew today warms the kettle again.' : 'Finish a brew to start your warm streak.';
-  else if (streak.atRisk) line = streak.cozies > 0 ? 'Brew tonight — or a Tea Cozy will keep it warm.' : 'One brew before midnight keeps it warm.';
+  if (!alive) line = streak.best > 0 ? `One brew today warms the kettle again. Your warmest run: ${plural(streak.best, 'day')}.` : 'Finish one brew and today is a warm day.';
   else if (streak.todayDone) line = `You kept the kettle warm ${plural(streak.current, 'day')} in a row.`;
-  else line = 'Brew today to keep it going.';
+  else {
+    line = `One brew today makes it ${plural(streak.current + 1, 'warm day')} in a row.`;
+    if (streak.atRisk && streak.cozies > 0) line += ' If today stays quiet, a Tea Cozy keeps the kettle warm.';
+  }
 
   return (
     <Card as="section" className={cx(s.card, s.streakCard)} aria-labelledby={headingId}>
@@ -97,7 +101,7 @@ export function StreakCard({ streak, byDay, today, weekStartsOn, firstDay }: Pro
       </div>
 
       <table className={s.cal}>
-        <caption className="sr-only">Warm streak calendar for {monthName}</caption>
+        <caption className="sr-only">Warm days calendar for {monthName}</caption>
         <thead>
           <tr>
             {names.map((n) => (
