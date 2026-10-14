@@ -93,9 +93,244 @@ A tap aimed beforehand lands on the arriving notice (`li._toast…`) or the card
 
 No assertion, timeout, tolerance, configuration or step is removed or loosened. One retry is added for the setup typing: a typing miss is now repaired rather than failing ~1 min later at Mark done. The assertion after it is new.
 
-## 4. The invariant and the T2 controls on the trial
+### 1e. Gap filled: the other theme/motion pairs (light + reduced motion, dark + full motion)
 
-(Written before §2 and §3, which wait on a probe job; the numbering follows the brief.)
+`LI2-probe2.mjs` = the prior probe with the pairs swapped, scenarios L1, L2, E. Trial :5521, 17:30–17:38 UTC. Data `probes2/trial/probe2-trial.json`; log `probes2/probe2-trial.log`. 16 configurations: 4 sizes × 100/200 % × {light rm, dark full}.
+
+**L1 and L2:** 31 taps (one L2 skipped at 390×844 dark @200, no target in view). **All 31 landed on the target, which moved 0 px.** Every leave was `why: rest` with the room kept:
+- 68 px (phones and 1440 @100);
+- 113 px (390×844 / 375×667 / 1440 @200);
+- 56.5 px (844×390 @100);
+- 137.5 px (844×390 @200).
+
+In 6 L2 runs the notice had not yet left in the tap's window (no change seen).
+
+**E, a notice arriving at rest:** pushes as in §1a:
+- 68 px at 390×844 @100 and 1440 @100;
+- 113 px at 390×844 / 375×667 @200;
+- 107 px at 844×390 @200;
+- 72.5 px at 1440 @200.
+
+A tap aimed beforehand lands on the arriving notice or the card in **10 of 15** (one skipped). The 5 on target:
+- 375×667 @100 ×2 and 844×390 @100 ×2, where the push is 0 / −16 px;
+- 390×844 dark @200, where the tap came 2,043 ms before the change the probe saw.
+
+**Base control for 1e** (`probes2/base/probe2-base.json`, 17:38–17:43 UTC, L1/L2, same 16 configurations):
+- **24 of 32 taps landed off target**, at −68 px (390×844 @100, 1440 @100), −70.5 (844×390 @100), −113 (390×844 @200, 1440 @200) and −151.5 (844×390 @200). Every one `why: rest`, the strip closing.
+- They landed on the "Study" chip, the greeting h1 or a status image.
+- The 8 on target are all 375×667, as in §1a.
+
+**Totals with §1a:**
+- **base: 50 of 66 L1/L2 taps off target;**
+- **trial: 0 of 64.**
+
+## 2. Vibei's §3: after a notice leaves, does the empty band collapse once touch/scroll goes idle?
+
+Probe `LI2-idle.mjs` (new), trial :5521, 17:03–17:08 UTC. Data: `idle/trial/idle-trial.json`; log `idle/idle-trial.log`; frames `idle/trial/<cfg>-<n>-*.png`, full size.
+
+**Setup:**
+- Seed `veteran`, Today at rest (nobody touching ≥ 1.5 s).
+- A 3 s notice "Saved 3 minutes of focus · LI2 idle probe" is raised with `__kettle.toast()`.
+- A per-frame tracker records the target's top, the strip height, `room`, `why`, `scrollY`, every commit (version change) with ms since the last input event, and whether a pointer was down.
+
+**Configurations:** 390×844 light @100 (touch), 390×844 dark @200 reduced (touch), 1440 light @100 (mouse), 1440 dark @200 reduced (mouse).
+
+### 2a. Measurements (trial)
+
+| Step | 390×844 light 100 | 390×844 dark 200 rm | 1440 light 100 | 1440 dark 200 rm |
+|---|---|---|---|---|
+| Notice arrives at rest: drawn after raise / why / content pushed | 30 ms / rest / **+68 px** | 29 ms / rest / **+153.5 px** (the probe's text is 3 lines at 200 %) | 22 ms / rest / **+68 px** | 31 ms / rest / **+113 px** |
+| Notice leaves at rest: why / room kept / content moved | rest / 68 / **0** | rest / 153.5 / **0** | rest / 68 / **0** | rest / 113 / **0** |
+| Idle, sampled at 1, 5, 10 … 45 s: room / target top | **68 at every sample** / 500 constant | **153.5 every sample** / 236.6 constant | **68** / 112 constant | **113** / 157 constant |
+| Scroll down 300 px and back (phones: CDP touch gesture; 1440: wheel), then 0.3 / 1.3 / 2.5 / 6 s idle | room 68 at all four. **The touch gesture did not scroll the page** (sy 0, target unchanged): this step proves only idle after touch input. Redone with a real finger drag (§2e) | same: 153.5 at all four; gesture did not scroll | room 68 at all four (wheel reached sy 11, then back to 0) | room 113 at all four (wheel reached sy 300 with the band above the view, then back to 0) |
+| Pointer held down 3 s on the greeting, released, 3 s idle | room 68 while down and after | 153.5 / 153.5 | 68 / 68 | 113 / 113 |
+| Commits from the leave through idle, scroll and pointer | **none** | **none** | **none** | **none** |
+| Page hidden (**emulated**: `document.visibilityState` overridden and `visibilitychange` dispatched), then shown | room → 0 (`why: hidden`); on return the content sits **68 px higher** (target 500 → 432) | → 0; **153.5 px higher** | → 0; **68 px higher** | → 0; **113 px higher** |
+| A second notice leaves (room again), then Stats and Today by real taps/clicks on the nav | room 72.5 → **0** after the new screen (`why: screen`) | 153.5 → 0 | 68 → 0 | 113 → 0 |
+| A third notice leaves, then `page.reload()` | 72.5 → 0 | 153.5 → 0 | 68 → 0 | 113 → 0 |
+
+**Answers to the brief:**
+- **When it collapses.** On the trial the band **never collapsed while the screen stayed open and visible**: 45 s idle, after scrolling and 6 s idle, after a held pointer. It went only at:
+  - a new screen (Stats and back);
+  - a reload;
+  - the page hidden.
+
+  This matches the code. `Toast.tsx` `decide()` gives the room back only for `now − ctl.at < ENTRY_MS` (a screen's first moments), `document.visibilityState === 'hidden'`, or the session panel's `reach` case. There is no idle-timer path for tab screens. The comment says: "Not when scrolled above the view: a scroll still on its way would undo the compensation".
+- **How far content moves when it does:**
+  - **new screen / reload:** the screen is rebuilt, so nothing in the old layout moves;
+  - **page hidden and shown again** (the only in-place collapse): the person returns to content **68–153.5 px higher** than they left it (the band's height). No pointer is down: `moment.ts` zeroes `down` on hide.
+- **Any collapse while a pointer is down or within the settle time:** none in any run (0 commits during idle, scroll and pointer steps).
+  - The hidden-page collapse came 3.1–3.3 s after the last input.
+  - The "above" leave (§2d) is the only change made during active input, by design compensated.
+- **Frames (full size):**
+  - band present: `idle/trial/390x844-light-t100-2-band-at-leave.png`, `…-3-band-after-45s-idle.png`, `…-4-band-after-scroll-and-6s-idle.png`; the same three for `390x844-dark-t200-rm`, `1440x900-light-t100` and `1440x900-dark-t200-rm`;
+  - notice drawn: `…-1-notice.png`;
+  - before any notice: `…-0-no-notice.png`;
+  - after the emulated hide: `…-5-after-hidden-emulated.png`;
+  - after Stats and back: `…-6-after-stats-and-back.png`.
+
+  Opened: `390x844-light-t100-1-notice.png` and `-3-band-after-45s-idle.png`. After 45 s idle the 68 px band is an empty cream gap above the status bar. The page's lower content (Create/Life chips) stays hidden behind the docked start, as it was while the notice showed.
+
+### 2b. A notice arriving at rest (how much, when)
+
+- **How much.** Pushes content by its own height on both builds: §1a "E" and the table above. 68 px at phone and 1440 @100; 113 px with the real "Saved 3 minutes of focus" at 390×844, 375×667 and 1440 @200; 107 px at 844×390 @200; 0 / −16 px where the strip lies outside the content column (375×667 @100, 844×390 @100).
+- **When.** With nobody touching for ≥ 1.5 s it is drawn **22–31 ms** after it is raised (`why: rest`, in the next fresh frame). With input in the last 1.2 s (`QUIET_MS`) it waits until 1.2 s after the last input.
+- **The maker's packet** lists this as F3 (not eliminated).
+- **A tap aimed just before the arrival:**
+  - lands on the notice itself in 12 of 16 trial configurations (§1a E);
+  - base 13 of 17.
+
+### 2c. The kept band and the next notice
+
+By the code (`Toast.tsx`, `room = … Math.max(ctl.room, ctl.item ? heightOf(el) : 0)`), a later notice on the same screen is drawn in the kept room, and the room after it goes is the larger of the two heights. My probe did not measure two bands in a row: its second notice came after the emulated hide had already given the room back (room 0). That notice ("…LI2 idle probe 2", one line longer at 390×844 @100) left a 72.5 px room.
+
+### 2d. The "above" path: a notice whose time is up leaves while the person scrolls on
+
+Busy at time-up: mouse moves every 150 ms. Then 1440: 12 wheel steps of 60 px; phones: a touch gesture.
+
+| Config | Leave | Commit timing | Visible effect |
+|---|---|---|---|
+| 1440 light 200 reduced (×2) | `why: above`, room 0, during the wheel | **51 / 78 ms** after a wheel event | In that frame the target's visible move was **0** with `scrollY −113` (compensated). Afterwards the wheel carried on to the page end (max scroll 427 → 314). Total visible move −427 px = the move the wheel alone gives on a 427 px page: no extra jump |
+| 1440 dark 100 (×2) | page scrolls only 11 px; the notice left **at rest**, room 68 kept | 1,322–1,349 ms after the last wheel | 0 px |
+| 390×844 light 200, 375×667 dark 100 rm (×2 each) | touch gesture did not scroll; the notice left at rest, room kept (153.5 / 72.5) | **1,261–1,285 ms after the last `touchend`**, i.e. just past `QUIET_MS` | 0 px |
+
+**Not covered:** full-motion smooth scrolling while the strip leaves above the view. At 1440 @100 the page cannot scroll far enough. This is the case the maker reports as undoing the compensation (60 px).
+
+**§2e** redoes the phone steps with a real CDP finger drag: the band after a touch scroll, and the "above" path on phones.
+
+### 2e. Redone on phones with a real finger drag
+
+`LI2-idle2.mjs`: CDP `Input.dispatchTouchEvent` touchStart, touchMove in 12 px steps every 16 ms, touchEnd. Run 17:22–17:30 UTC. Data `idle2/{trial,base}/idle2-*.json`, logs `idle2/*.log`, frames `idle2/trial/390x844-*.png` (the "above" after-frames removed for size).
+
+**Band after a touch scroll (trial, 10 s idle variant):**
+- 390×844 light @100: the drag scrolled the page to **sy 297** with the band above the view (strip top −281). Dragged back to sy 0, then sampled at 0.3 / 1.3 / 2.5 / **6 s**: **room 68 at every sample**, **0 commits**. Before that: 10 s idle with room 68; pointer held 3 s with room 68.
+- 390×844 dark @200 reduced: sy 311 (strip top −295). After the drag back, **room 153.5 at every sample to 6 s**, 0 commits.
+- Hidden (emulated): room → 0, content **−68 / −153.5 px** on return.
+- New screen and reload: room → 0.
+
+Frames: `idle2/trial/390x844-{light-t100,dark-t200-rm}-{2-band-at-leave,3-band-after-10s-idle,4-band-after-scroll-and-6s-idle}.png`.
+
+**The "above" path during a touch fling** (time-up while busy, then a 600 px finger drag released into momentum scrolling):
+
+| Build | Config | The leave | Visible effect in the leave's frame |
+|---|---|---|---|
+| TRIAL | 390×844 light 200 (×2) | `why: above`, room 0, **513 / 549 ms after the last touch input** (`pointercancel`, i.e. while the fling was still moving the page) | rep 0: target moved **−153.5 px with scroll 0**; rep 1: **−165.5 px with scroll +12**. In both, the layout shift (−153.5, the strip's height) was **not compensated**: everything below the strip jumped up 153.5 px on screen mid-fling |
+| BASE | 390×844 light 200 (×2) | `why: above`, 478 / 532 ms after `pointercancel` | rep 0: −165.5 visible with scroll +12; rep 1: −153.5 with scroll 0. **Same jump on the base** |
+| TRIAL | 375×667 dark 100 reduced (×2) | `why: above`, 293 / 318 ms after `pointercancel` | the frame scrolled −60 / −72 (the strip is 72.5). The target was the docked brew-length control, which does not move with the page, so the visible content shift is **not measured** |
+
+The target was above the view at that moment (top −118). The 153.5 px jump is of the content in view below the strip. At 1440 with stepped wheel and reduced motion, the same path was compensated (§2d).
+
+**Caveat on the fling rows:** the tracker saved only frames whose layout shifted (`|visible + scroll| > 2 px`). A compensation applied one frame late would show as visible +153.5 with scroll −153.5. That frame would not be saved, so whether the jump was undone a frame later is **not recorded**. In the leave's own frame the content had moved 153.5 px with no matching scroll (both builds).
+
+**Interpretation, raw:** the "above" leave is not part of the band question (it keeps no room). It is the one change the trial makes while a scroll is still running. On a touch fling the compensation did not hold, on both builds.
+
+### 2f. Control: the same probe on BASE :5478
+
+17:11–17:19 UTC; `idle/base/idle-base.json`, `idle/idle-base.log`, frames `idle/base/<cfg>-{0-no-notice,1-notice,2-band-at-leave}.png`. Frames 3–6 were removed to stay under 60 MB; the JSON keeps every number.
+
+| Step | 390×844 light 100 | 390×844 dark 200 rm | 1440 light 100 | 1440 dark 200 rm |
+|---|---|---|---|---|
+| Arrival at rest: push | +68 | +153.5 | +68 | +113 |
+| Leave at rest: content moved | **−68** (the strip closes) | **−153.5** | **−68** | **−113** |
+| After 45 s idle / after scroll | no band (strip 0), target back at its pre-notice top | same | same | same |
+
+On the "above" path (§2d) the base behaves like the trial at 1440 light 200 reduced:
+- `why: above`, 39 / 61 ms after a wheel event;
+- visible move 0 in that frame, scroll −113.
+
+Where the notice leaves at rest after input, the base moves content:
+- **1440 dark 100:** at 1,343–1,346 ms after the last wheel, the target moves −57 px visible (−68 layout, −11 scroll clamp);
+- **390×844 light 200:** at 1,280–1,311 ms after the last `touchend`, **−153.5 px**.
+
+The trial in the same steps: 0 px, room kept.
+
+### 2g. The fling "above" leave, every frame (resolves §2e's caveat)
+
+`LI2-idle3.mjs` = idle2's "above" with every frame from 6 before to 8 after the leave saved. 390×844 light @200, finger drag 600 px released into momentum, 17:48–17:49 UTC. Data `idle3/{trial,base}/idle3-*.json`; frames `idle3/*/…-above-r*-after.png`.
+
+| Build, rep | Frames before the leave (16 ms apart): target top / sy | The leave's frame | Frames after |
+|---|---|---|---|
+| TRIAL r0 (leave 632 ms after `pointercancel`) | 47.6 / 189 → 35.6 / 201 (scroll 12 px per frame or none) | **top −129.9, sy 213** (strip 153.5 → 0, `why: above`) | −129.9 / 213, −141.9 / 225, −153.9 / 237 … sy keeps climbing 12 px per frame; **no frame with sy −153.5** |
+| TRIAL r1 (500 ms) | 59.6 / 177 → 47.6 / 189 | **top −105.9, sy 189** (scroll 0 in that frame) | −117.9 / 201 … no compensation frame |
+| BASE r0 (473 ms) | 78.6 / 158 → 66.6 / 170 | **top −98.9, sy 182** | sy 194, 206, 218 … no compensation |
+| BASE r1 (463 ms) | 71.6 / 165 → 59.6 / 177 | **top −93.9, sy 177** | sy 189, 201 … no compensation |
+
+**Result.** During a touch fling, the notice whose time ran out leaves on the "above" path. On both builds, everything below the strip jumps up **153.5 px** on screen in one frame: the target, a status-bar control, went from **35.6 / 47.6 px (in view)** to −129.9 / −105.9. The page's scroll is not compensated in that frame or any of the next 8. **The trial and the base behave the same.** It happens 460–630 ms after the finger lifts, while the page is still moving.
+
+## 3. The session-panel exception (`reach`), F-T2-8 and N-1
+
+### 3a. F-T2-8: the landscape top bar at 200 %
+
+Probe `LI2-topbar2.mjs` (new), base :5478 then trial :5521, 17:01–17:02 UTC. Seed `veteran`, a running brew "Chapter 3 notes · Study", no notice, reduced motion. Data `topbar2/topbar2-{base,trial}.json`; frames `topbar2/{base,trial}-<cfg>-session-running.png`. Prior trial-only frames are in `topbar/`.
+
+| Config | BASE: task label / Rain & sound / Add 5 · Pause · End | TRIAL |
+|---|---|---|
+| 844×390 @100 | one line; Rain, sound at y 24; controls at y 248, wholly in view | **identical** (y 24; y 248, wholly in view) |
+| 667×375 @100 | same; controls y 239 in view | **identical** |
+| 844×390 @200 light/dark | task squeezed to one letter per line ("C / h / a.."); Rain, sound at y 50 beside it; controls at y 352, **38.5 px of 54 visible**; panel overflows by 41 px | task on two readable lines ("Chapter 3 / notes · Study"); Rain, sound on their own line at **y 105**; controls at **y 369, 20.8 px visible**; panel overflows by **59 px** |
+| 667×375 @200 light/dark | same squeeze; controls y 352, **23.5 px visible**; overflow 56 px | readable two-line task; Rain, sound y 105; controls y 369, **5.8 px visible**; overflow **74 px** |
+
+Opened: `topbar2/base-667x375-light-t200-session-running.png` (the "C h a.." stack beside Rain; the tops of the three control circles at the bottom edge) and `topbar2/trial-667x375-light-t200-session-running.png` (task readable; the controls are below the fold, only a sliver of shadow at the bottom edge). Also `topbar/844x390-light-t200-session-running.png` (trial) and the maker's `…/F/shots/before/844x390-light-t200/session-running.png` (base).
+
+**Measured cost:** at 200 % landscape the wrap moves the session controls down **17 px** further (y 352 → 369). Visible control height drops from 38.5 to 20.8 px at 844×390 and from 23.5 to 5.8 px at 667×375. The panel scrolls to them on both builds (panel overflow +18 px). This is F-T2-2's class: controls below the fold at 200 % on short screens.
+
+### 3b. N-1: the spec change
+
+§1d. The new `toHaveValue('Chapter 3 notes')` held in every trial run of `notice-strip:275`: D run 25 configurations, plus 7 runs at 1440 @200. No failure message mentions the field: both failures are at Mark done, §1c.
+
+### 3c. The session panel's `reach` close: can it move a control under a tap?
+
+**Code** (`Toast.tsx` `decide()`): on a strip with `reach` (only the session panel, `FocusScreen.tsx:359`), a notice going in view keeps **no** room when `holdsOutOfReach(el)`: the panel's `scrollHeight > clientHeight`, whatever its scroll position. The panel then closes up at rest:
+- `atRest` = no pointer down and no input for 1.2 s;
+- `!inputPending()`, confirmed in a fresh frame;
+- `holdTop(el)`: the strip's top is kept still, so everything below it moves up by the notice's height.
+
+A room kept there and later holding the controls out of reach is given back the same way.
+
+**First attempt** (`LI2-idle.mjs` "reach", trial 17:09–17:10, base 17:18–17:19; data in `idle/{trial,base}/idle-*.json`; frames removed for size):
+- A brew running; a 6 s notice in the panel's strip at 375×667, 844×390 and 390×844 @200.
+- The notice (228 px tall at 375×667 @200) puts Add 5 / Pause / End below the fold on both builds. No control was on top in view below the strip.
+- The CDP `synthesizeScrollGesture` touch scroll did not move the panel, so no tap was aimed.
+- Redone with a real finger drag in §3d.
+
+### 3d. `reach`, redone with a real finger drag
+
+`LI2-idle2.mjs` "reach": trial 17:22–17:25, base 17:28–17:30. Frames `idle2/{trial,base}/{375x667,390x844}-*-reach-{1-notice,2-scrolled}.png` (844×390 frames removed for size); data `idle2/*/idle2-*-reach-all.json`. A 6 s notice "Couldn't save just now. Your summary is still here. · LI2 reach probe" was shown in the panel's strip of a running brew. A finger drag then brought the lowest control (Add 5) into view.
+
+| Config | After the drag | Did the notice leave? |
+|---|---|---|
+| 375×667 light / dark @200 (both builds) | Add 5 at y 585–590, in view. The whole page scrolled: the strip (228 px) went **under the sticky scene**, its last ~30 px showing below it (`reach-2-scrolled.png`) | **No, not within 30 s** (timeout). Less than 60 % of the strip is in view, so its clock is stopped (the T2 rule, F-T2-3) |
+| 390×844 light @200 (both builds) | Add 5 at y 767 in view; strip 309–497, of which ~77 px show below the scene (opened: `idle2/base/390x844-light-t200-reach-2-scrolled.png`) | **No, not within 30 s**, same reason |
+| 844×390 light / dark @200 (both builds) | no Add 5 / Pause / End on top in view below the strip (strip 228.5 px, panel 218–236 px tall) | not tapped |
+
+**Raw finding:** at these sizes, with this notice, bringing a control into view by touch hides most of the strip. Its clock stops, so neither build closes the strip while that control is in view. It would leave later, when scrolled back (then "above" or at rest), which these runs did not reach.
+
+The case of a short notice with a control already partly in view at rest is §3e.
+
+### 3e. `reach` with a control already partly in view at rest (no scrolling)
+
+`LI2-reach2.mjs` (new), trial 17:43–17:46, base 17:46–17:48 UTC. Data `reach2/reach2-{trial,base}.json`; logs `reach2/reach2-*.log`; frames kept for 375×667 @100, 390×844 @200 and 844×390 @100 with the 24-character notice: `reach2/{trial,base}-<cfg>-24-{1-notice,2-after-tap}.png` (the rest removed for size).
+
+**Setup:**
+- A running brew; light, full motion, touch.
+- A 3 s notice in the panel's strip, raised with nobody touching: "Saved 3 minutes of focus" (24 chars) or "Couldn't save just now. Your summary is still here." (51 chars), used as stand-ins of real length.
+- Target: the lowest of Add 5 / Pause / End with ≥ 20 px visible and on top at its visible middle.
+- Intent read ~200 ms before the time-up; a real tap at that point right after the notice goes.
+
+| Config | Panel with notice (scrollH/clientH) | TRIAL: leave / target moved / tap landed | BASE: leave / moved / landed |
+|---|---|---|---|
+| 375×667 @100, 24 ch (strip 62) | 368/354, **out of reach** | rest, **room 0** / **−45.1 px** / on "Add 5" **caption** span, **not the button** | rest / −45.1 / same caption span, not the button |
+| 375×667 @100, 51 ch (strip 66.5) | 372/354, out of reach | rest, room 0 / **−49.6** / caption, not the button | rest / −49.6 / caption, not the button |
+| 390×844 @200, 24 ch (strip 107) | 553/422, out of reach; Add 5 shows 45.4 px | rest, room 0 / **−107 px** / **the countdown** (`DIV._timer…` "24:53 Kettle's on…"), not the button | rest / −107 / the countdown, not the button |
+| 844×390 @100, both (strip 62 / 66.5) | 292/292, fits | rest, **room kept 62 / 66.5** / **0** / on target | rest / **−31 / −33.3** / on target (the 54 px button still under the point) |
+| 667×375 @100, both | 277/277, fits | rest, room kept / **0** / on target | rest / −31 / −33.2 / on target |
+| 375×667 @200, 844×390 @200, 667×375 @200, 390×844 @200 51 ch | out of reach | no control ≥ 20 px visible below the strip: no tap; leave `rest`, room 0 | same |
+
+Opened: `reach2/trial-390x844-light-t200-24-1-notice.png` (notice under the scene; 24:56; the tops of the three control circles at the bottom edge) and `…-2-after-tap.png` (strip gone, countdown and Add 5 / Pause / End moved up 107 px, fully in view).
+
+**Answer, raw:** yes. Where the notice pushes the session controls past the panel's edge (375×667 @100, 390×844 @200), the trial's `reach` close at rest moves a partly visible control 45–107 px up. A tap aimed at it just after lands on its caption or on the countdown, not the button. **The base does exactly the same** (same px, same landing). Where the panel fits (844×390 / 667×375 @100), the trial keeps the room (0 px) and the base moved 31–33 px; there the tap still hit the button on both builds.
+
+## 4. The invariant and the T2 controls on the trial
 
 ### 4a. The prior D run
 
@@ -135,9 +370,20 @@ Lane R's `w3-notices.spec.ts:252`. In these worktrees Playwright lists it as `:1
 
 Lane R's failure (`review/LR/ALL/runs/full-C-cut.log`, test 31) came inside a cut full run. It did not reproduce alone on either server.
 
-## 5. Warm-days wording and I13 (supportive return)
+### 4d. Combined `e478604` :5520, F's surfaces with S/G/N merged
 
-(Written before §2 and §3; numbering follows the brief.)
+Prior: `combined/comb-comb.json`, `combined/comb.log`, 12 frames `combined/<cfg>-{composer-notice,end-sheet,markdone-undo}.png`, script `LI2-comb.mjs`. Configurations: 375×667 light and dark @200, 390×844 light @200, 1440 dark @200.
+
+| Check | 375×667 L 200 | 375×667 D 200 | 390×844 L 200 | 1440 D 200 |
+|---|---|---|---|---|
+| A notice over the composer: elements hit under the notice / task field in view | none / yes (`why: above`) | none / yes | none / yes | none / yes (`why: answer`) |
+| End sheet (S's `Sheet.*` + F's text): Keep brewing / End session on top 9/9 and in view | yes / yes | yes / yes | yes / yes | yes / yes |
+| Kept band after End's notice went (px) | **194** | **194** | **194** | 113 |
+| Mark done → inline Undo: on top 9/9; overlaps with notices; Undo restores the task | 9/9; none; yes | 9/9; none; yes | 9/9; none; yes | 9/9; none; yes |
+
+The phone sizes @200 kept a 194 px band. On the trial, "Saved 3 minutes of focus" alone leaves 113 px at these sizes (§1a), so this is not that notice's height. The probe's 3-line composer warning was raised on Today before the brew. Notices queued at a route change move to the next screen, and the room keeps the tallest notice that left. That the warning came back to Today and set the room is my inference; the probe did not record which notice set it.
+
+## 5. Warm-days wording and I13 (supportive return)
 
 ### 5a. "streak" in the trial's `src`
 
@@ -242,136 +488,6 @@ No rule, threshold, id, tier or stored-data change.
 - **375×667 dark @200 Today, missed-nocozy:** the greeting shows only "Good". The Chai bubble, goal and composer are scrolled out by the docked start/segmented control (the capture's scroll position). Not a wording issue, and not compared with the base frame.
 - **`summary-cozy-earn` at 390×844:** the Tea Cozy note lies below the sheet's fold. The text is confirmed in facts ("Tea Cozy earned", sr "You earned a Tea Cozy: it keeps the kettle warm through one missed day").
 
-## 2. Vibei's §3: after a notice leaves, does the empty band collapse once touch/scroll goes idle?
-
-Probe `LI2-idle.mjs` (new), trial :5521, 17:03–17:08 UTC. Data: `idle/trial/idle-trial.json`; log `idle/idle-trial.log`; frames `idle/trial/<cfg>-<n>-*.png`, full size.
-
-**Setup:**
-- Seed `veteran`, Today at rest (nobody touching ≥ 1.5 s).
-- A 3 s notice "Saved 3 minutes of focus · LI2 idle probe" is raised with `__kettle.toast()`.
-- A per-frame tracker records the target's top, the strip height, `room`, `why`, `scrollY`, every commit (version change) with ms since the last input event, and whether a pointer was down.
-
-**Configurations:** 390×844 light @100 (touch), 390×844 dark @200 reduced (touch), 1440 light @100 (mouse), 1440 dark @200 reduced (mouse).
-
-### 2a. Measurements (trial)
-
-| Step | 390×844 light 100 | 390×844 dark 200 rm | 1440 light 100 | 1440 dark 200 rm |
-|---|---|---|---|---|
-| Notice arrives at rest: drawn after raise / why / content pushed | 30 ms / rest / **+68 px** | 29 ms / rest / **+153.5 px** (the probe's text is 3 lines at 200 %) | 22 ms / rest / **+68 px** | 31 ms / rest / **+113 px** |
-| Notice leaves at rest: why / room kept / content moved | rest / 68 / **0** | rest / 153.5 / **0** | rest / 68 / **0** | rest / 113 / **0** |
-| Idle, sampled at 1, 5, 10 … 45 s: room / target top | **68 at every sample** / 500 constant | **153.5 every sample** / 236.6 constant | **68** / 112 constant | **113** / 157 constant |
-| Scroll down 300 px and back (phones: CDP touch gesture; 1440: wheel), then 0.3 / 1.3 / 2.5 / 6 s idle | room 68 at all four. **The touch gesture did not scroll the page** (sy 0, target unchanged): this step proves only idle after touch input. Redone with a real finger drag (§2e) | same: 153.5 at all four; gesture did not scroll | room 68 at all four (wheel reached sy 11, then back to 0) | room 113 at all four (wheel reached sy 300 with the band above the view, then back to 0) |
-| Pointer held down 3 s on the greeting, released, 3 s idle | room 68 while down and after | 153.5 / 153.5 | 68 / 68 | 113 / 113 |
-| Commits from the leave through idle, scroll and pointer | **none** | **none** | **none** | **none** |
-| Page hidden (**emulated**: `document.visibilityState` overridden and `visibilitychange` dispatched), then shown | room → 0 (`why: hidden`); on return the content sits **68 px higher** (target 500 → 432) | → 0; **153.5 px higher** | → 0; **68 px higher** | → 0; **113 px higher** |
-| A second notice leaves (room again), then Stats and Today by real taps/clicks on the nav | room 72.5 → **0** after the new screen (`why: screen`) | 153.5 → 0 | 68 → 0 | 113 → 0 |
-| A third notice leaves, then `page.reload()` | 72.5 → 0 | 153.5 → 0 | 68 → 0 | 113 → 0 |
-
-**Answers to the brief:**
-- **When it collapses.** On the trial the band **never collapsed while the screen stayed open and visible**: 45 s idle, after scrolling and 6 s idle, after a held pointer. It went only at:
-  - a new screen (Stats and back);
-  - a reload;
-  - the page hidden.
-
-  This matches the code. `Toast.tsx` `decide()` gives the room back only for `now − ctl.at < ENTRY_MS` (a screen's first moments), `document.visibilityState === 'hidden'`, or the session panel's `reach` case. There is no idle-timer path for tab screens. The comment says: "Not when scrolled above the view: a scroll still on its way would undo the compensation".
-- **How far content moves when it does:**
-  - **new screen / reload:** the screen is rebuilt, so nothing in the old layout moves;
-  - **page hidden and shown again** (the only in-place collapse): the person returns to content **68–153.5 px higher** than they left it (the band's height). No pointer is down: `moment.ts` zeroes `down` on hide.
-- **Any collapse while a pointer is down or within the settle time:** none in any run (0 commits during idle, scroll and pointer steps).
-  - The hidden-page collapse came 3.1–3.3 s after the last input.
-  - The "above" leave (§2d) is the only change made during active input, by design compensated.
-- **Frames (full size):**
-  - band present: `idle/trial/390x844-light-t100-2-band-at-leave.png`, `…-3-band-after-45s-idle.png`, `…-4-band-after-scroll-and-6s-idle.png`; the same three for `390x844-dark-t200-rm`, `1440x900-light-t100` and `1440x900-dark-t200-rm`;
-  - notice drawn: `…-1-notice.png`;
-  - before any notice: `…-0-no-notice.png`;
-  - after the emulated hide: `…-5-after-hidden-emulated.png`;
-  - after Stats and back: `…-6-after-stats-and-back.png`.
-
-  Opened: `390x844-light-t100-1-notice.png` and `-3-band-after-45s-idle.png`. After 45 s idle the 68 px band is an empty cream gap above the status bar. The page's lower content (Create/Life chips) stays hidden behind the docked start, as it was while the notice showed.
-
-### 2b. A notice arriving at rest (how much, when)
-
-- **How much.** Pushes content by its own height on both builds: §1a "E" and the table above. 68 px at phone and 1440 @100; 113 px with the real "Saved 3 minutes of focus" at 390×844, 375×667 and 1440 @200; 107 px at 844×390 @200; 0 / −16 px where the strip lies outside the content column (375×667 @100, 844×390 @100).
-- **When.** With nobody touching for ≥ 1.5 s it is drawn **22–31 ms** after it is raised (`why: rest`, in the next fresh frame). With input in the last 1.2 s (`QUIET_MS`) it waits until 1.2 s after the last input.
-- **The maker's packet** lists this as F3 (not eliminated).
-- **A tap aimed just before the arrival:**
-  - lands on the notice itself in 12 of 16 trial configurations (§1a E);
-  - base 13 of 17.
-
-### 2c. The kept band and the next notice
-
-By the code (`Toast.tsx`, `room = … Math.max(ctl.room, ctl.item ? heightOf(el) : 0)`), a later notice on the same screen is drawn in the kept room, and the room after it goes is the larger of the two heights. My probe did not measure two bands in a row: its second notice came after the emulated hide had already given the room back (room 0). That notice ("…LI2 idle probe 2", one line longer at 390×844 @100) left a 72.5 px room.
-
-### 2d. The "above" path: a notice whose time is up leaves while the person scrolls on
-
-Busy at time-up: mouse moves every 150 ms. Then 1440: 12 wheel steps of 60 px; phones: a touch gesture.
-
-| Config | Leave | Commit timing | Visible effect |
-|---|---|---|---|
-| 1440 light 200 reduced (×2) | `why: above`, room 0, during the wheel | **51 / 78 ms** after a wheel event | In that frame the target's visible move was **0** with `scrollY −113` (compensated). Afterwards the wheel carried on to the page end (max scroll 427 → 314). Total visible move −427 px = the move the wheel alone gives on a 427 px page: no extra jump |
-| 1440 dark 100 (×2) | page scrolls only 11 px; the notice left **at rest**, room 68 kept | 1,322–1,349 ms after the last wheel | 0 px |
-| 390×844 light 200, 375×667 dark 100 rm (×2 each) | touch gesture did not scroll; the notice left at rest, room kept (153.5 / 72.5) | **1,261–1,285 ms after the last `touchend`**, i.e. just past `QUIET_MS` | 0 px |
-
-**Not covered:** full-motion smooth scrolling while the strip leaves above the view. At 1440 @100 the page cannot scroll far enough. This is the case the maker reports as undoing the compensation (60 px).
-
-**§2e** (a real CDP finger drag on phones: band after a touch scroll; the above path on phones) follows when the job finishes.
-
-### 2f. Control: the same probe on BASE :5478
-
-17:11–17:19 UTC; `idle/base/idle-base.json`, `idle/idle-base.log`, frames `idle/base/<cfg>-{0-no-notice,1-notice,2-band-at-leave}.png`. Frames 3–6 were removed to stay under 60 MB; the JSON keeps every number.
-
-| Step | 390×844 light 100 | 390×844 dark 200 rm | 1440 light 100 | 1440 dark 200 rm |
-|---|---|---|---|---|
-| Arrival at rest: push | +68 | +153.5 | +68 | +113 |
-| Leave at rest: content moved | **−68** (the strip closes) | **−153.5** | **−68** | **−113** |
-| After 45 s idle / after scroll | no band (strip 0), target back at its pre-notice top | same | same | same |
-
-On the "above" path (§2d) the base behaves like the trial at 1440 light 200 reduced:
-- `why: above`, 39 / 61 ms after a wheel event;
-- visible move 0 in that frame, scroll −113.
-
-Where the notice leaves at rest after input, the base moves content:
-- **1440 dark 100:** at 1,343–1,346 ms after the last wheel, the target moves −57 px visible (−68 layout, −11 scroll clamp);
-- **390×844 light 200:** at 1,280–1,311 ms after the last `touchend`, **−153.5 px**.
-
-The trial in the same steps: 0 px, room kept.
-
-## 3. The session-panel exception (`reach`), F-T2-8 and N-1
-
-### 3a. F-T2-8: the landscape top bar at 200 %
-
-Probe `LI2-topbar2.mjs` (new), base :5478 then trial :5521, 17:01–17:02 UTC. Seed `veteran`, a running brew "Chapter 3 notes · Study", no notice, reduced motion. Data `topbar2/topbar2-{base,trial}.json`; frames `topbar2/{base,trial}-<cfg>-session-running.png`. Prior trial-only frames are in `topbar/`.
-
-| Config | BASE: task label / Rain & sound / Add 5 · Pause · End | TRIAL |
-|---|---|---|
-| 844×390 @100 | one line; Rain, sound at y 24; controls at y 248, wholly in view | **identical** (y 24; y 248, wholly in view) |
-| 667×375 @100 | same; controls y 239 in view | **identical** |
-| 844×390 @200 light/dark | task squeezed to one letter per line ("C / h / a.."); Rain, sound at y 50 beside it; controls at y 352, **38.5 px of 54 visible**; panel overflows by 41 px | task on two readable lines ("Chapter 3 / notes · Study"); Rain, sound on their own line at **y 105**; controls at **y 369, 20.8 px visible**; panel overflows by **59 px** |
-| 667×375 @200 light/dark | same squeeze; controls y 352, **23.5 px visible**; overflow 56 px | readable two-line task; Rain, sound y 105; controls y 369, **5.8 px visible**; overflow **74 px** |
-
-Opened: `topbar2/base-667x375-light-t200-session-running.png` (the "C h a.." stack beside Rain; the tops of the three control circles at the bottom edge) and `topbar2/trial-667x375-light-t200-session-running.png` (task readable; the controls are below the fold, only a sliver of shadow at the bottom edge). Also `topbar/844x390-light-t200-session-running.png` (trial) and the maker's `…/F/shots/before/844x390-light-t200/session-running.png` (base).
-
-**Measured cost:** at 200 % landscape the wrap moves the session controls down **17 px** further (y 352 → 369). Visible control height drops from 38.5 to 20.8 px at 844×390 and from 23.5 to 5.8 px at 667×375. The panel scrolls to them on both builds (panel overflow +18 px). This is F-T2-2's class: controls below the fold at 200 % on short screens.
-
-### 3b. N-1: the spec change
-
-§1d. The new `toHaveValue('Chapter 3 notes')` held in every trial run of `notice-strip:275`: D run 25 configurations, plus 7 runs at 1440 @200. No failure message mentions the field: both failures are at Mark done, §1c.
-
-### 3c. The session panel's `reach` close: can it move a control under a tap?
-
-**Code** (`Toast.tsx` `decide()`): on a strip with `reach` (only the session panel, `FocusScreen.tsx:359`), a notice going in view keeps **no** room when `holdsOutOfReach(el)`: the panel's `scrollHeight > clientHeight`, whatever its scroll position. The panel then closes up at rest:
-- `atRest` = no pointer down and no input for 1.2 s;
-- `!inputPending()`, confirmed in a fresh frame;
-- `holdTop(el)`: the strip's top is kept still, so everything below it moves up by the notice's height.
-
-A room kept there and later holding the controls out of reach is given back the same way.
-
-**First attempt** (`LI2-idle.mjs` "reach", trial 17:09–17:10, base 17:18–17:19; data in `idle/{trial,base}/idle-*.json`; frames removed for size):
-- A brew running; a 6 s notice in the panel's strip at 375×667, 844×390 and 390×844 @200.
-- The notice (228 px tall at 375×667 @200) puts Add 5 / Pause / End below the fold on both builds. No control was on top in view below the strip.
-- The CDP `synthesizeScrollGesture` touch scroll did not move the panel, so no tap was aimed.
-- Redone with a real finger drag in §3d.
-
 ## 6. REFERENCE → BEFORE → AFTER (full size)
 
 **REFERENCE:** K01 `kettle/.tmp/pkg/kettle-excellence-integrated/VISUAL_BENCHMARK_LIBRARY/assets/current/01-home.png` (also the maker's copy `…/W3R1/F/REFERENCE-K01-01-home.png`). Opened: Today at 390-class width, "23 days warm" pill, greeting, Chai's bubble, goal card, composer, docked start.
@@ -408,126 +524,6 @@ Missing: none of the brief's 16 configurations lacks a BEFORE/AFTER pair for Tod
   - Raw: a warmest run of 0 and a Tea Cozy countdown shown to someone who has never brewed.
 - **No overlap or clipping** of F's new copy in the frames opened. The longest new line, the Tea Cozy note in the sheet, wraps inside its card at 390×844 @100.
 
-### 4d. Combined `e478604` :5520, F's surfaces with S/G/N merged
-
-Prior: `combined/comb-comb.json`, `combined/comb.log`, 12 frames `combined/<cfg>-{composer-notice,end-sheet,markdone-undo}.png`, script `LI2-comb.mjs`. Configurations: 375×667 light and dark @200, 390×844 light @200, 1440 dark @200.
-
-| Check | 375×667 L 200 | 375×667 D 200 | 390×844 L 200 | 1440 D 200 |
-|---|---|---|---|---|
-| A notice over the composer: elements hit under the notice / task field in view | none / yes (`why: above`) | none / yes | none / yes | none / yes (`why: answer`) |
-| End sheet (S's `Sheet.*` + F's text): Keep brewing / End session on top 9/9 and in view | yes / yes | yes / yes | yes / yes | yes / yes |
-| Kept band after End's notice went (px) | **194** | **194** | **194** | 113 |
-| Mark done → inline Undo: on top 9/9; overlaps with notices; Undo restores the task | 9/9; none; yes | 9/9; none; yes | 9/9; none; yes | 9/9; none; yes |
-
-The phone sizes @200 kept a 194 px band. On the trial, "Saved 3 minutes of focus" alone leaves 113 px at these sizes (§1a), so this is not that notice's height. The probe's 3-line composer warning was raised on Today before the brew. Notices queued at a route change move to the next screen, and the room keeps the tallest notice that left. That the warning came back to Today and set the room is my inference; the probe did not record which notice set it.
-
-### 2e. Redone on phones with a real finger drag
-
-`LI2-idle2.mjs`: CDP `Input.dispatchTouchEvent` touchStart, touchMove in 12 px steps every 16 ms, touchEnd. Run 17:22–17:30 UTC. Data `idle2/{trial,base}/idle2-*.json`, logs `idle2/*.log`, frames `idle2/trial/390x844-*.png` (the "above" after-frames removed for size).
-
-**Band after a touch scroll (trial, 10 s idle variant):**
-- 390×844 light @100: the drag scrolled the page to **sy 297** with the band above the view (strip top −281). Dragged back to sy 0, then sampled at 0.3 / 1.3 / 2.5 / **6 s**: **room 68 at every sample**, **0 commits**. Before that: 10 s idle with room 68; pointer held 3 s with room 68.
-- 390×844 dark @200 reduced: sy 311 (strip top −295). After the drag back, **room 153.5 at every sample to 6 s**, 0 commits.
-- Hidden (emulated): room → 0, content **−68 / −153.5 px** on return.
-- New screen and reload: room → 0.
-
-Frames: `idle2/trial/390x844-{light-t100,dark-t200-rm}-{2-band-at-leave,3-band-after-10s-idle,4-band-after-scroll-and-6s-idle}.png`.
-
-**The "above" path during a touch fling** (time-up while busy, then a 600 px finger drag released into momentum scrolling):
-
-| Build | Config | The leave | Visible effect in the leave's frame |
-|---|---|---|---|
-| TRIAL | 390×844 light 200 (×2) | `why: above`, room 0, **513 / 549 ms after the last touch input** (`pointercancel`, i.e. while the fling was still moving the page) | rep 0: target moved **−153.5 px with scroll 0**; rep 1: **−165.5 px with scroll +12**. In both, the layout shift (−153.5, the strip's height) was **not compensated**: everything below the strip jumped up 153.5 px on screen mid-fling |
-| BASE | 390×844 light 200 (×2) | `why: above`, 478 / 532 ms after `pointercancel` | rep 0: −165.5 visible with scroll +12; rep 1: −153.5 with scroll 0. **Same jump on the base** |
-| TRIAL | 375×667 dark 100 reduced (×2) | `why: above`, 293 / 318 ms after `pointercancel` | the frame scrolled −60 / −72 (the strip is 72.5). The target was the docked brew-length control, which does not move with the page, so the visible content shift is **not measured** |
-
-The target was above the view at that moment (top −118). The 153.5 px jump is of the content in view below the strip. At 1440 with stepped wheel and reduced motion, the same path was compensated (§2d).
-
-**Caveat on the fling rows:** the tracker saved only frames whose layout shifted (`|visible + scroll| > 2 px`). A compensation applied one frame late would show as visible +153.5 with scroll −153.5. That frame would not be saved, so whether the jump was undone a frame later is **not recorded**. In the leave's own frame the content had moved 153.5 px with no matching scroll (both builds).
-
-**Interpretation, raw:** the "above" leave is not part of the band question (it keeps no room). It is the one change the trial makes while a scroll is still running. On a touch fling the compensation did not hold, on both builds.
-
-### 3d. `reach`, redone with a real finger drag
-
-`LI2-idle2.mjs` "reach": trial 17:22–17:25, base 17:28–17:30. Frames `idle2/{trial,base}/{375x667,390x844}-*-reach-{1-notice,2-scrolled}.png` (844×390 frames removed for size); data `idle2/*/idle2-*-reach-all.json`. A 6 s notice "Couldn't save just now. Your summary is still here. · LI2 reach probe" was shown in the panel's strip of a running brew. A finger drag then brought the lowest control (Add 5) into view.
-
-| Config | After the drag | Did the notice leave? |
-|---|---|---|
-| 375×667 light / dark @200 (both builds) | Add 5 at y 585–590, in view. The whole page scrolled: the strip (228 px) went **under the sticky scene**, its last ~30 px showing below it (`reach-2-scrolled.png`) | **No, not within 30 s** (timeout). Less than 60 % of the strip is in view, so its clock is stopped (the T2 rule, F-T2-3) |
-| 390×844 light @200 (both builds) | Add 5 at y 767 in view; strip 309–497, of which ~77 px show below the scene (opened: `idle2/base/390x844-light-t200-reach-2-scrolled.png`) | **No, not within 30 s**, same reason |
-| 844×390 light / dark @200 (both builds) | no Add 5 / Pause / End on top in view below the strip (strip 228.5 px, panel 218–236 px tall) | not tapped |
-
-**Raw finding:** at these sizes, with this notice, bringing a control into view by touch hides most of the strip. Its clock stops, so neither build closes the strip while that control is in view. It would leave later, when scrolled back (then "above" or at rest), which these runs did not reach.
-
-The case of a short notice with a control already partly in view at rest is §3e.
-
-### 1e. Gap filled: the other theme/motion pairs (light + reduced motion, dark + full motion)
-
-`LI2-probe2.mjs` = the prior probe with the pairs swapped, scenarios L1, L2, E. Trial :5521, 17:30–17:38 UTC. Data `probes2/trial/probe2-trial.json`; log `probes2/probe2-trial.log`. 16 configurations: 4 sizes × 100/200 % × {light rm, dark full}.
-
-**L1 and L2:** 31 taps (one L2 skipped at 390×844 dark @200, no target in view). **All 31 landed on the target, which moved 0 px.** Every leave was `why: rest` with the room kept:
-- 68 px (phones and 1440 @100);
-- 113 px (390×844 / 375×667 / 1440 @200);
-- 56.5 px (844×390 @100);
-- 137.5 px (844×390 @200).
-
-In 6 L2 runs the notice had not yet left in the tap's window (no change seen).
-
-**E, a notice arriving at rest:** pushes as in §1a:
-- 68 px at 390×844 @100 and 1440 @100;
-- 113 px at 390×844 / 375×667 @200;
-- 107 px at 844×390 @200;
-- 72.5 px at 1440 @200.
-
-A tap aimed beforehand lands on the arriving notice or the card in **10 of 15** (one skipped). The 5 on target:
-- 375×667 @100 ×2 and 844×390 @100 ×2, where the push is 0 / −16 px;
-- 390×844 dark @200, where the tap came 2,043 ms before the change the probe saw.
-
-**Base control for 1e** (`probes2/base/probe2-base.json`, 17:38–17:43 UTC, L1/L2, same 16 configurations):
-- **24 of 32 taps landed off target**, at −68 px (390×844 @100, 1440 @100), −70.5 (844×390 @100), −113 (390×844 @200, 1440 @200) and −151.5 (844×390 @200). Every one `why: rest`, the strip closing.
-- They landed on the "Study" chip, the greeting h1 or a status image.
-- The 8 on target are all 375×667, as in §1a.
-
-**Totals with §1a:**
-- **base: 50 of 66 L1/L2 taps off target;**
-- **trial: 0 of 64.**
-
-### 3e. `reach` with a control already partly in view at rest (no scrolling)
-
-`LI2-reach2.mjs` (new), trial 17:43–17:46, base 17:46–17:48 UTC. Data `reach2/reach2-{trial,base}.json`; logs `reach2/reach2-*.log`; frames kept for 375×667 @100, 390×844 @200 and 844×390 @100 with the 24-character notice: `reach2/{trial,base}-<cfg>-24-{1-notice,2-after-tap}.png` (the rest removed for size).
-
-**Setup:**
-- A running brew; light, full motion, touch.
-- A 3 s notice in the panel's strip, raised with nobody touching: "Saved 3 minutes of focus" (24 chars) or "Couldn't save just now. Your summary is still here." (51 chars), used as stand-ins of real length.
-- Target: the lowest of Add 5 / Pause / End with ≥ 20 px visible and on top at its visible middle.
-- Intent read ~200 ms before the time-up; a real tap at that point right after the notice goes.
-
-| Config | Panel with notice (scrollH/clientH) | TRIAL: leave / target moved / tap landed | BASE: leave / moved / landed |
-|---|---|---|---|
-| 375×667 @100, 24 ch (strip 62) | 368/354, **out of reach** | rest, **room 0** / **−45.1 px** / on "Add 5" **caption** span, **not the button** | rest / −45.1 / same caption span, not the button |
-| 375×667 @100, 51 ch (strip 66.5) | 372/354, out of reach | rest, room 0 / **−49.6** / caption, not the button | rest / −49.6 / caption, not the button |
-| 390×844 @200, 24 ch (strip 107) | 553/422, out of reach; Add 5 shows 45.4 px | rest, room 0 / **−107 px** / **the countdown** (`DIV._timer…` "24:53 Kettle's on…"), not the button | rest / −107 / the countdown, not the button |
-| 844×390 @100, both (strip 62 / 66.5) | 292/292, fits | rest, **room kept 62 / 66.5** / **0** / on target | rest / **−31 / −33.3** / on target (the 54 px button still under the point) |
-| 667×375 @100, both | 277/277, fits | rest, room kept / **0** / on target | rest / −31 / −33.2 / on target |
-| 375×667 @200, 844×390 @200, 667×375 @200, 390×844 @200 51 ch | out of reach | no control ≥ 20 px visible below the strip: no tap; leave `rest`, room 0 | same |
-
-Opened: `reach2/trial-390x844-light-t200-24-1-notice.png` (notice under the scene; 24:56; the tops of the three control circles at the bottom edge) and `…-2-after-tap.png` (strip gone, countdown and Add 5 / Pause / End moved up 107 px, fully in view).
-
-**Answer, raw:** yes. Where the notice pushes the session controls past the panel's edge (375×667 @100, 390×844 @200), the trial's `reach` close at rest moves a partly visible control 45–107 px up. A tap aimed at it just after lands on its caption or on the countdown, not the button. **The base does exactly the same** (same px, same landing). Where the panel fits (844×390 / 667×375 @100), the trial keeps the room (0 px) and the base moved 31–33 px; there the tap still hit the button on both builds.
-
-### 2g. The fling "above" leave, every frame (resolves §2e's caveat)
-
-`LI2-idle3.mjs` = idle2's "above" with every frame from 6 before to 8 after the leave saved. 390×844 light @200, finger drag 600 px released into momentum, 17:48–17:49 UTC. Data `idle3/{trial,base}/idle3-*.json`; frames `idle3/*/…-above-r*-after.png`.
-
-| Build, rep | Frames before the leave (16 ms apart): target top / sy | The leave's frame | Frames after |
-|---|---|---|---|
-| TRIAL r0 (leave 632 ms after `pointercancel`) | 47.6 / 189 → 35.6 / 201 (scroll 12 px per frame or none) | **top −129.9, sy 213** (strip 153.5 → 0, `why: above`) | −129.9 / 213, −141.9 / 225, −153.9 / 237 … sy keeps climbing 12 px per frame; **no frame with sy −153.5** |
-| TRIAL r1 (500 ms) | 59.6 / 177 → 47.6 / 189 | **top −105.9, sy 189** (scroll 0 in that frame) | −117.9 / 201 … no compensation frame |
-| BASE r0 (473 ms) | 78.6 / 158 → 66.6 / 170 | **top −98.9, sy 182** | sy 194, 206, 218 … no compensation |
-| BASE r1 (463 ms) | 71.6 / 165 → 59.6 / 177 | **top −93.9, sy 177** | sy 189, 201 … no compensation |
-
-**Result.** During a touch fling, the notice whose time ran out leaves on the "above" path. On both builds, everything below the strip jumps up **153.5 px** on screen in one frame: the target, a status-bar control, went from **35.6 / 47.6 px (in view)** to −129.9 / −105.9. The page's scroll is not compensated in that frame or any of the next 8. **The trial and the base behave the same.** It happens 460–630 ms after the finger lifts, while the page is still moving.
-
 ## 7. Unproven, and limits of this evidence
 
 - **Page hidden:** the hidden-page collapse was **emulated** (property override plus a dispatched `visibilitychange`), not a real tab switch or app backgrounding. The −68 to −153.5 px on return is what the app does on that event; real platforms were not driven.
@@ -554,4 +550,4 @@ Opened: `reach2/trial-390x844-light-t200-24-1-notice.png` (notice under the scen
 | `reach2/` | §3e (`reach` close at rest) |
 | Scripts, `/home/user/wt/w5tr-f/kettle/.tmp/LI2/` | `LI2-idle.mjs`, `LI2-idle2.mjs`, `LI2-idle3.mjs`, `LI2-probe2.mjs`, `LI2-topbar2.mjs`, `LI2-reach2.mjs`, `LI2-job{E,F,G,H,I,J}.sh` |
 
-Finished 17:55 UTC. Raw evidence only; LEAD-5 decides.
+Finished 17:51 UTC. Raw evidence only; LEAD-5 decides.
