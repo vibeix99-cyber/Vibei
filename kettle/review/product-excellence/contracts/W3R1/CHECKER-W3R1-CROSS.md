@@ -95,3 +95,6 @@ Lane R's pairs over 0.5 % fall into four groups:
 The maker's results: 8/8 at `--workers=2`, 8/8 at `--workers=1`, the whole `w3-settings` 10/10, and base failing by design.
 
 **X-2 is closed.** The final regression counts this test normally.
+
+
+*Run logs:* `kettle/.gitignore:6` ignores `*.log`, so every `.log` cited here is committed as a `.log.txt` copy beside it (same name plus `.txt`).
