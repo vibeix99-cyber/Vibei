@@ -446,3 +446,17 @@ The target was above the view at that moment (top −118). The 153.5 px jump is 
 **Caveat on the fling rows:** the tracker saved only frames whose layout shifted (`|visible + scroll| > 2 px`). A compensation applied one frame late would show as visible +153.5 with scroll −153.5. That frame would not be saved, so whether the jump was undone a frame later is **not recorded**. In the leave's own frame the content had moved 153.5 px with no matching scroll (both builds).
 
 **Interpretation, raw:** the "above" leave is not part of the band question (it keeps no room). It is the one change the trial makes while a scroll is still running. On a touch fling the compensation did not hold, on both builds.
+
+### 3d. `reach`, redone with a real finger drag
+
+`LI2-idle2.mjs` "reach": trial 17:22–17:25, base 17:28–17:30. Frames `idle2/{trial,base}/<cfg>-reach-{1-notice,2-scrolled}.png`; data `idle2/*/idle2-*-reach-all.json`. A 6 s notice "Couldn't save just now. Your summary is still here. · LI2 reach probe" was shown in the panel's strip of a running brew. A finger drag then brought the lowest control (Add 5) into view.
+
+| Config | After the drag | Did the notice leave? |
+|---|---|---|
+| 375×667 light / dark @200 (both builds) | Add 5 at y 585–590, in view. The whole page scrolled: the strip (228 px) went **under the sticky scene**, its last ~30 px showing below it (`reach-2-scrolled.png`) | **No, not within 30 s** (timeout). Less than 60 % of the strip is in view, so its clock is stopped (the T2 rule, F-T2-3) |
+| 390×844 light @200 (both builds) | Add 5 at y 767 in view; strip 309–497, of which ~77 px show below the scene (opened: `idle2/base/390x844-light-t200-reach-2-scrolled.png`) | **No, not within 30 s**, same reason |
+| 844×390 light / dark @200 (both builds) | no Add 5 / Pause / End on top in view below the strip (strip 228.5 px, panel 218–236 px tall) | not tapped |
+
+**Raw finding:** at these sizes, with this notice, bringing a control into view by touch hides most of the strip. Its clock stops, so neither build closes the strip while that control is in view. It would leave later, when scrolled back (then "above" or at rest), which these runs did not reach.
+
+The case of a short notice with a control already partly in view at rest is §3e.
