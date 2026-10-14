@@ -25,3 +25,17 @@
 | The maker's claims (to verify) | **Tokens:** new `--focus-w`, `--focus-gap`, `--focus-gap-inset` and `--disabled-opacity` (no colour or font change). **States:** one disabled opacity (0.5); the TextField focus is now an outline; a pressed state on segments; selected segments and chips survive forced colours; a blocked row has no hover or press. **Copy:** honest Sound/Nudges/Keep awake/Haptics lines; warm-days wording. **Tests:** `w3-settings` 9/9 fails on base and 9/9 passes on the fix; 52/52 on the specs touching G's controls |
 | Maker's open items | Full chromium was stopped at 12:18. `notice-strip` had **2 failures at 200 %** (375×667 dark, 844×390 light), timeout or real unknown. integrity, summary-notice, toast-room, statusbar, w2-summary, w2-room and chai3d were not run. **Cross-owner (F):** `Toast.module.css` uses the non-token `var(--focus, var(--sky))` |
 | Archive | `archive/pe-w3-settings-808421d.incremental.bundle` |
+
+## Maker S: Stats and History (I12), F-T2-4, the backup test. GATE PASSED, 2026-10-14 12:58 UTC
+
+| Item | Result |
+|---|---|
+| Packet | `/home/user/wt/w5s/kettle/review/product-excellence/contracts/W3R1/S-READY-FOR-REVIEW.md`. Evidence: `…/W3R1/S/` (23 MB) |
+| Revision | `pe/w3-stats@344069c`; code last changed at `8158134`; kettle/src `20a4698` |
+| Files (ownership OK) | `src/screens/stats/{Glance.tsx (new), History.tsx, StatsScreen.tsx, StreakCard.tsx, format.ts, format.test.ts, stats.module.css}`, `src/ui/{Sheet.tsx, Sheet.module.css, Stat.tsx}`, `src/progress/dst.test.ts`, `tests/{integrity.spec.ts, w3-stats.spec.ts}`. All are S's |
+| Test change check | `integrity.spec.ts` `profilePills`: now reads the Profile card only, after the route settles (`[data-route-leaving]` exists in `App.tsx`) and once the card shows the stored leaves total. It waits on real state; the before/after comparison is kept. The lead to judge |
+| Checks | No secrets. No model identifiers outside the standard trailers. No file > 47 MB |
+| **Trial** | **`c7a6b8f`** = integration + `344069c`, worktree `/home/user/wt/w5tr-s`, src `20a4698`. tsc 0, build OK. Dev **:5522** (served files verified), preview **:5532** |
+| The maker's claims (to verify) | **F-T2-4:** a sheet only handles Tab from inside itself, which fixes Tab frozen in the stacked "Delete this brew?"; `data-tight` keeps the footer pinned on short screens, also fixing Settings "Start fresh?" and the End sheet at 375×667 @200. **Stats:** a "Today / Last 7 days" glance (rolling week); minutes rounded down, as the engine counts them; warm-days wording, with the Tea Cozy line only when true. **Suites:** vitest 292/292; integrity 25/25; backup test 5/5 under `--workers=2`; `w3-stats` 21/21 (17 fail on base) |
+| Maker's gaps | Full BEFORE/AFTER only at 375×667; 390×844, 844×390 and 1440 have probe shots only. Full chromium suite not run. **Cross-owner:** F, the badge description (`badges.ts`) and the summary rounding minutes to the nearest; G, keep the Profile card's `aria-label` and pills. **Lead:** a rolling "Last 7 days" vs a calendar week |
+| Archive | `archive/pe-w3-stats-344069c.incremental.bundle` |
