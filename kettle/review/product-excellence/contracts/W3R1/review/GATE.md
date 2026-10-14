@@ -98,3 +98,13 @@
 - **Defect S-D1:** the "Warmest run" tile is cut at 200 %. Before the fonts load, the page widens to 408/401 px, which is the cause of the combined trial's `w3-stats:98` failure.
 - The packet is `CHECKER-W3R1-S.md` §6.
 - Vibei §2 is confirmed: exactly "Last 7 days"; the calendar logic is identical across the week boundary.
+
+## Maker S fix round. GATE PASSED, 2026-10-14 18:47 UTC
+
+| Item | Result |
+|---|---|
+| Hand-back | ≈18:43 UTC (window 18:19–19:49). Packet `/home/user/wt/w5s/kettle/review/product-excellence/contracts/W3R1/S-FIX-READY.md`; evidence `…/W3R1/S/fix/` (1 MB) |
+| Revision | `pe/w3-stats@697c1eb`; code `0d240b6` (CSS) and `1d899b3` (spec); kettle/src `6a020d9` |
+| Scope (checked) | `git diff 344069c 697c1eb -- kettle/src kettle/tests` touches only `stats.module.css` (one `@container (max-width: 21rem)` block: tiles one a row at large text) and `tests/w3-stats.spec.ts` |
+| **Fix trial** | **`f63286e`** = integration `283ae93` (N + G + docs) + `697c1eb`, worktree `/home/user/wt/w5tr-s2`, src `db28295`. tsc 0, vitest **295/295**, build OK. Dev **:5526** (verified), preview **:5536** |
+| Archive | `archive/pe-w3-stats-fix-697c1eb.incremental.bundle`, `archive/w3r1-trial-f63286e.incremental.bundle` |
