@@ -10,6 +10,56 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
+## ■ WAVE 2 ROUND 3 CLOSED · 2026-10-14 ~05:50 UTC (read this first)
+
+Integration `claude/wizardly-galileo-uy89d9` now contains **C, B and T2**. App code is `4d36939` (kettle/src `5cd9a44`, kettle/tests `d641e59`). Nothing is running and the slot gate is reset.
+
+**Verdicts and merges:**
+
+| Work | Verdict | Revision | Merge |
+|---|---|---|---|
+| **C** (3D Chai, `MODEL_ON_LOW=true`) | Vibei's sign-off; the targeted regression passed (`W2R2/review/LRC/RECEIPT-LRC.md`) | `pe/w2r2-chai3d@6fb2136` | **`61aba17`** |
+| **B** (badge rename "Warm Streak" → "Warm Days", display name only) | **APPROVE** (`W2R3/CHECKER-W2R3-B.md`) | `pe/w2r3-badge@2994005` | **`8df3076`** |
+| **T2** (notices without overlays, I10) | First review REJECT (T2-D1). One fix round, then **APPROVE (final)** (`W2R3/CHECKER-W2R3-T2.md`) | `pe/w2r3-notices@64f29cd` (code `40f92b6`) | **`4d36939`**: src and tests equal trial `99d9368` |
+
+**Final regression** on `4d36939` (`W2R3/review/FINAL/README.md`):
+- tsc 0; vitest **290/290**; build OK; timer/pwa **29 + 2 skipped**.
+- Full chromium **179/181**, with two failures, each re-run once:
+  1. `integrity:768`: a transient on-screen read under load. Data was restored exactly. Re-runs pass 3/3 on merged and 3/3 on base. **FOLLOW-UP** (test robustness).
+  2. `notice-strip`, 1440×900 @200 reduced motion: **fails 2/2** (also alone). The cause is **F-T2-1**: the strip's at-rest exit shifts the page 60 px just before the tap. Vibei ruled F-T2-1 a follow-up, so **this one configuration stays red until the polish round**. The test is not skipped.
+
+**Follow-ups closed by T2:**
+- W2H-D1: Brew length restored, ≥ 24×24, in view;
+- Mark done covered by notices or by the End sheet's frozen frame;
+- notices over the Ambience sheet;
+- folded notices losing their icon and amount (folding is gone);
+- the Next-brew badge over the status line;
+- `break-reach:179` (the recipe-day notice over Break's over, Monday and Thursday);
+- B-F6 (the badge and "Saved…" notices over the tag chips and Brew length);
+- T2-D1.
+
+R5-D1, LEAD-D1, R7-D1 and D4 still pass.
+
+**Waiting on Vibei:**
+1. **F-T2-1** (strips change only between interactions): it now keeps `notice-strip` 1440 @200 reduced-motion red. Either accept the red test until the polish round, or authorise a small fix sooner.
+2. **The fur readability follow-up for C** (evening and night light).
+3. **B-F2 / B-F3 wording:** the badge description "Keep a {n}-day warm streak", and the other "warm streak" wording.
+4. **Other follow-ups:** F-T2-2 (200 % short screens push the session readout below the fold), F-T2-4 ("Delete this brew?" at 375×667 @200; Stats/History round), F-T2-8, N-1, N-2 and N-3 (`CHECKER-W2R3-T2.md` §7).
+5. **The remote branch `pe/w2r3-notices`** (the off-container backup): Vibei deletes it now that the round is closed.
+
+**Incidents:**
+- Two container restarts, at about 00:40 and 04:40 UTC.
+- After the first: the T2 WIP was saved as `3462b93`, and Vibei granted a fresh fix window (02:23–03:53).
+- After the second: Lane R's receipt was closed by an orchestrator note (B.9), and the orchestrator ran gap runs (`review/ORCH/`: w2-home 18/18, toast-room 14/14).
+
+**Models used in round 3:**
+- **Lead:** LEAD-3 on Opus 5.5.
+- **Makers:** T2 and B on Opus 5.5, high effort; the C flip by Maker C on Opus 5.5.
+- **Lanes:**
+  - Lane T on Opus 5.5;
+  - Lanes B and R on Sonnet 5.5;
+  - the C regression lane (LRC) on Sonnet 5.5.
+
 ## ▶ VIBEI'S DECISIONS AFTER W2R2, AND WAVE 2 ROUND 3 · 2026-10-13 18:30 UTC (read this first)
 
 **Decisions:**
