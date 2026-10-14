@@ -287,6 +287,15 @@ for (const c of CFGS) {
     await press(page, touch, field);
     await page.keyboard.type('Chapter 3 notes');
     await page.keyboard.press('Escape').catch(() => {});
+    // (W3R1 N-1) The task is in the field before the brew starts. Under heavy load the typing once missed the field
+    // (the brew was saved as "Study brew", so no carried line, and Mark done timed out much later): typed again, for
+    // real, if it is not there, then asserted.
+    if ((await field.inputValue()) !== 'Chapter 3 notes') {
+      await press(page, touch, field);
+      await page.keyboard.press('ControlOrMeta+A');
+      await page.keyboard.type('Chapter 3 notes');
+    }
+    await expect(field).toHaveValue('Chapter 3 notes');
     await press(page, touch, page.getByRole('button', { name: /^Put the kettle on · / }));
     await page.waitForFunction(() => location.hash === '#/focus', null, { timeout: 15_000 });
     await page.waitForTimeout(1500);

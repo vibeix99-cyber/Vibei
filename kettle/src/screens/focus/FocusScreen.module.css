@@ -473,6 +473,16 @@
     grid-area: top;
     align-self: center;
     padding: 0;
+    /* Large text (W3R1 F-T2-8): when the task and the buttons can't share the column's line, the buttons move to a
+       line of their own instead of squeezing the task to a letter a line. At 100 % text they share one line as before. */
+    flex-wrap: wrap;
+    row-gap: 6px;
+  }
+  .topLeft {
+    flex: 1 1 8rem;
+  }
+  .topRight {
+    margin-left: auto;
   }
   /* In the column the chips read as plain labels. */
   .chip,
