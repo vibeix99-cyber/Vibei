@@ -39,3 +39,20 @@
 | The maker's claims (to verify) | **F-T2-4:** a sheet only handles Tab from inside itself, which fixes Tab frozen in the stacked "Delete this brew?"; `data-tight` keeps the footer pinned on short screens, also fixing Settings "Start fresh?" and the End sheet at 375×667 @200. **Stats:** a "Today / Last 7 days" glance (rolling week); minutes rounded down, as the engine counts them; warm-days wording, with the Tea Cozy line only when true. **Suites:** vitest 292/292; integrity 25/25; backup test 5/5 under `--workers=2`; `w3-stats` 21/21 (17 fail on base) |
 | Maker's gaps | Full BEFORE/AFTER only at 375×667; 390×844, 844×390 and 1440 have probe shots only. Full chromium suite not run. **Cross-owner:** F, the badge description (`badges.ts`) and the summary rounding minutes to the nearest; G, keep the Profile card's `aria-label` and pills. **Lead:** a rolling "Last 7 days" vs a calendar week |
 | Archive | `archive/pe-w3-stats-344069c.incremental.bundle` |
+
+## Maker F: notices polish, warm-days wording, I13. GATE PASSED, 2026-10-14 13:00 UTC
+
+| Item | Result |
+|---|---|
+| Packet | `/home/user/wt/w5f/kettle/review/product-excellence/contracts/W3R1/F-READY-FOR-REVIEW.md`. Evidence: `…/W3R1/F/` (35 MB) |
+| Revision | `pe/w3-notices-polish@5ee3e7c`; code last changed at `9f30a9b`; kettle/src `0acce1a` |
+| Files (ownership OK) | `src/ui/Toast.tsx`, `src/app/Rail.tsx`, `src/screens/home/{StatusBar.tsx, chai.ts, chai.test.ts, useHomeData.ts, warm.ts (new), warm.test.ts (new)}`, `src/screens/focus/{FocusScreen.tsx, FocusScreen.module.css, parts/EndSheet.tsx}`, `src/screens/done/{summary.ts, rank.test.ts}`, `src/progress/{badges.ts, badges.test.ts, engine.test.ts}`, `tests/{notice-strip.spec.ts, w3-notices.spec.ts, w3-notices-load.spec.ts}`. All are F's |
+| Checks | No secrets. No model identifiers outside the standard trailers. No file > 47 MB |
+| **Trial** | **`e3b9eac`** = integration + `5ee3e7c`, worktree `/home/user/wt/w5tr-f`, src `0acce1a`. tsc 0, build OK. Dev **:5521** (verified), preview **:5531** |
+| The maker's claims (to verify) | **F-T2-1:** a leaving notice keeps its room (an empty band) until a new screen or the page is hidden. Changes with nobody touching wait for a fresh frame and no pending input. On the session panel the strip closes if the notice holds controls past the edge. **F-T2-8:** the landscape top bar wraps at 200 %. **N-1:** the spec asserts the task before Start. **Wording and I13:** a new `home/warm.ts`; Today, rail, Chai, status sheet, badge line, summary notes and End's line. **Controls:** the new `w3-notices` fails 4/5 on base; under CPU ×6 base reproduces the tap on the tag group 2/4, the fix 4/4. **Suites:** vitest 297/297; notice-strip 25/25 (src `2d5719e`); a combined run of 11 specs 146/147 (src `3027de2`) |
+| Maker's gaps | The break-reach re-run on the final src. Two clean 1440 @200 reduced passes in a row (1/2; the failure was N-2, History Undo 111 px). The 1440 AFTER shots (rail). The full chromium suite. **Trade-offs for Vibei:** the kept band of 57–97 px; a notice arriving at rest still pushes content. **Follow-ups:** F-T2-2, N-3. **Cross-owner:** S, N-2 (`History.tsx` focus scroll) |
+| Archive | `archive/pe-w3-notices-polish-5ee3e7c.incremental.bundle` |
+
+## Combined trial (Lane R regression and cross-effects)
+
+**`e478604`** = integration + F (`5ee3e7c`) + S (`344069c`) + G (`808421d`) + N (`4168428`): no conflicts. Worktree `/home/user/wt/w5tr-all`, src `07c26ff`, tests `b0ed48b`. tsc 0. vitest **302/302** (290 + F 7 + S 2 + N 3). Build OK. Dev **:5520** (verified), preview **:5530**. Archive: `archive/w3r1-trials-e478604.incremental.bundle`.

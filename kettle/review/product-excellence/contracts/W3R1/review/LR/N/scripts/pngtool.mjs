@@ -22,3 +22,8 @@ if (cmd === 'diff') {
   let ox = 0; for (const im of imgs) { PNG.bitblt(im, O, 0, 0, im.width, im.height, ox, 0); ox += im.width + gap; }
   writeFileSync(outf, PNG.sync.write(O)); console.log('wrote', outf, W, H);
 }
+if (cmd === 'up') { // pngtool.mjs up <in.png> <out.png> <k>: nearest-neighbour k× enlargement (for the small Nook-view crops)
+  const [fi, fo, kS] = r; const k = +kS; const A = rd(fi); const O = new PNG({ width: A.width * k, height: A.height * k });
+  for (let y = 0; y < O.height; y++) for (let x = 0; x < O.width; x++) { const s = ((Math.floor(y / k)) * A.width + Math.floor(x / k)) * 4, d = (y * O.width + x) * 4; O.data[d] = A.data[s]; O.data[d + 1] = A.data[s + 1]; O.data[d + 2] = A.data[s + 2]; O.data[d + 3] = 255; }
+  writeFileSync(fo, PNG.sync.write(O)); console.log('wrote', fo, O.width, O.height);
+}

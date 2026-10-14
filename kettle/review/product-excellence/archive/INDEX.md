@@ -40,3 +40,5 @@ Restore a chain in order with `git fetch <bundle> 'refs/heads/*:refs/heads/*'` (
 | `pe-w3-chai-night-4168428.incremental.bundle` | pe/w3-chai-night@4168428 (W3R1 Maker N READY; code 121f011+43b10f2+76144b4) | 6b88eb0 | okay 2026-10-14 |
 | `pe-w3-settings-808421d.incremental.bundle` | pe/w3-settings@808421d (W3R1 Maker G READY; code 876bf18) | 6b88eb0 | okay 2026-10-14 |
 | `pe-w3-stats-344069c.incremental.bundle` | pe/w3-stats@344069c (W3R1 Maker S READY; code 8158134) | 6b88eb0 | okay 2026-10-14 |
+| `pe-w3-notices-polish-5ee3e7c.incremental.bundle` | pe/w3-notices-polish@5ee3e7c (W3R1 Maker F READY; code 9f30a9b) | 6b88eb0 | okay 2026-10-14 |
+| `w3r1-trials-e478604.incremental.bundle` | combined trial e478604 = integration + F + S + G + N (merge commits only) | integration, maker tips | okay 2026-10-14 |

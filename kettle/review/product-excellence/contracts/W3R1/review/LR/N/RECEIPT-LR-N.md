@@ -1,0 +1,193 @@
+# RECEIPT-LR-N: Lane R, Maker N (Chai night readability), raw evidence
+
+Raw evidence only. No verdict, no visual judgement. Times are UTC, 2026-10-14. Lane started 11:53; the 80-minute box ended 13:13.
+No source edits, commits, pushes or merges. I killed only my own PIDs (my queued slot-gate wrappers, and one of my own capture jobs, section 3).
+
+## 0. What was tested, and how
+
+| | |
+|---|---|
+| Trial | `46f33e2` = integration `1af69d7`+ + `pe/w3-chai-night@4168428`, worktree `/home/user/wt/w5tr-n` (kettle/src `9699774`). Dev `:5524` (suites), preview `:5534` (captures and perf) |
+| Base | `4d36939` (kettle/src `5cd9a44`), worktree `/home/user/wt/w4-final`. Dev `:5478` (not used), preview `:5488` (captures and perf) |
+| Servers verified (`runs/server-verify.txt`, `scripts/servedcheck.sh`) | Dev `:5524`: `palette.ts`, `chai.ts`, `chaiModel.ts`, `Engine.ts`, `tests/chai3d.spec.ts` served = committed blobs of `46f33e2` (5/5 OK); `:5478` served = blobs of `4d36939` (5/5 OK, and no `chaiFill` in the served `palette.ts`; `:5524` has 4 hits). Preview `:5534` bundle `scene-BkWyrHlL.js` holds `chaiFill:1 chaiFill:1 chaiFill:2.8 chaiFill:3.2`; preview `:5488` bundles hold none. `chai.glb` sha256 over HTTP is `b401bc6c0fa9dd7a…` on both previews (the approved asset) |
+| Machine | 4 CPUs, Chromium headless shell with SwiftShader (`--enable-unsafe-swiftshader --use-angle=swiftshader --ignore-gpu-blocklist`). Load average 10 to 18 during my runs (makers F, S, G and lanes LI, LEAD were running), against about 4 in the LRC receipt, so absolute times are not comparable with LRC's |
+| Gate | every browser run through `slots.py run --lane LR --n 1`; each Playwright run has its own `--output`. Slot wait was the limit: the lane often waited 5 to 10 minutes for a slot |
+| Frozen clock | `page.clock.install({time: 2026-10-12T07:40:00Z})` then `resume()` in every capture script; service workers blocked |
+| Hour | The scene's hours are `morning`, `day`, `dusk`, `night`. **"Evening" in the brief is `dusk`.** The first hour of a context comes from the app's own `?debug&nooktime=` override (`src/scene/resolve.ts`; the debug seeds pin the time of day, so the clock alone does not make night). Later hours in the same context use `window.__nook.setState({time})` with the loop stopped, the call React makes (the mood applies at once when the loop is stopped, `Engine.setState`). Tier: `?nookq=low|high`. The model is awaited (`chaiKind === 'model'`), not forced |
+| Still frame (capture scripts; not the perf script, which runs the loop as LRC did) | The context emulates `prefers-reduced-motion: reduce` and the script also calls `setState({reducedMotion:true})`, loop stopped: the engine draws single frames with dt = 0 at its fixed still time. The record-player platter angle (`items.ts:514`, `rotation.y -= dt*3.5`) therefore never accumulates, which is what made the maker's day Nook frames differ by 253 px |
+| Scripts | `/home/user/wt/w5tr-n/kettle/.tmp/LR/` (git-ignored); copies in `scripts/` |
+
+### Scripts: written by me or reused
+
+| Script | Origin | What it measures (checked) |
+|---|---|---|
+| `scripts/lr.mjs` | **mine**, not the maker's `sep.mjs` | frames from the engine's drawing buffer (`gl.readPixels`), masks from hide-diff frames (section 2) |
+| `scripts/lru.mjs` | mine; the flow (celebrate seed, "Put the kettle on", `finish()`, wait for the card's `data-scene-ready`) is the maker's `unlock.mjs` / LRC's `unlockready.mjs` flow | the unlock card |
+| `scripts/perf.mjs` | **reused verbatim** from maker N's `scripts/perf.mjs` (one header line added; `diff` of the rest is empty), which is LRC's `check4.mjs` adapted to base vs trial | I read it: one Chromium launch; per round a fresh 390×844@3 mobile context; `nooktime=night`, default tier (low on this machine); `engine.frame(1/30)` + 1-px `readPixels` per frame, 10 warm-up and 60 timed frames after `setRunning(false)`; `renderer.info` counters; JS heap after 2 GCs via CDP. It does **not** use `--first` order unless told: I ran both orders |
+| `scripts/sumsep.mjs`, `sumperf.mjs`, `cmpraw.mjs`, `pngtool.mjs`, `pngout.mjs` | mine | tables, raw pixel diff, PNG diff and montage |
+
+## 1. Summary of what the evidence shows (numbers only; details in the sections)
+
+- **Separation, close view, 1440×900@2, light, base `4d36939` → trial `46f33e2`** (contrast ratio / ΔL*; my own masks):
+  - eyes, dusk 2.26 → 3.85 (high and low tier), night 2.01 → 3.99; day 4.58 (high) / 4.55 (low), unchanged;
+  - nose, dusk 1.93 → 3.14, night 1.79 → 3.27 (both tiers); day 3.34 / 3.31, unchanged.
+- **Day pixel diff:** 0 differing pixels in every day frame compared (3 frames, section 3), both as drawing buffers and (low tier, Nook and close) as full-viewport screenshots.
+- **Unlock card:** Chai covers 0 px in the card frame at both viewports and both hours, on both builds; the card's drawing buffer is pixel-identical base vs trial (4 of 4 pairs, 0 differing pixels).
+- **Low-tier performance:** draw calls 110, triangles 75,007, geometries 113, textures 10, programs 23: identical on both builds in 12 of 12 runs; heap 11.1 to 11.3 MB both. Frame time differs by run and by load, with no consistent sign across the two orders (section 6).
+- **Suites:** tsc 0; vitest 293/293 (scene unit tests 17/17); the browser specs are in section 7.
+- **Not done** (slot starvation): dark theme, phone viewports in the base-vs-trial grid, 200 % text, the high tier at 390, a second spec run (see section 9 for exactly which).
+
+## 2. Separation, measured independently
+
+**Method (`scripts/lr.mjs`).** Everything is read from the engine's own drawing buffer after tone mapping (`gl.readPixels`), loop stopped, still frame, so no UI or DOM overlay is in it. I did not use the maker's id-frame masks. Masks come from hide-diff frames, the same camera and the same frame:
+
+1. `N` = the normal frame.
+2. Frames with (a) the `eyes_open` subtree hidden, (b) the nose hidden (the `body` primitive `mesh_0_1`), (c) every Chai mesh whose material is not `chai_fur`, or that is in the eyes, hidden, (d) the whole Chai root hidden. `chai.update` is neutralised while hiding (it would re-toggle `eyes_open`/`eyes_closed` each frame). After restoring, the frame equals `N` byte for byte (`restoreDiffBytes` 0 in every row).
+3. A pixel belongs to a part when the maximum channel difference to its hide frame is above 24 (above 8 for the whole Chai). Fur = Chai pixels minus the non-fur parts dilated by 1 px, eroded by 1 px. Feature core = the part's mask eroded by 1 px.
+4. Ring around a feature = fur pixels within `r` px of the feature's mask, outside a 1-px gap. `r = round(0.5 × feature diameter)` ("half ring", used in the tables; the same rule as the maker's) and a second ring at `r = 1 × diameter` ("full ring"). Feature diameter = `sqrt(4·area/pieces/π)` (eyes 2 pieces, nose 1).
+5. Per region: median relative luminance Y (WCAG, from sRGB), median CIE L*, also mean Y, p25/p75 L* and mean colour. **Contrast ratio** = `(Y_ring + 0.05) / (Y_feature + 0.05)` on the medians. **ΔL\*** = `L*_ring − L*_feature` on the medians.
+6. Views: `close` = the camera of C's art renders (the room's direction moved in on Chai: `fitTarget (-0.95, 0.82, 1.15)`, zoom 0.2; copied from the maker's script so the numbers are comparable); `nook` = the default camera people see.
+
+**How independent this is.** The masks, ring and statistics code are mine. The frames come from the same engine and camera as the maker's, and the statistic's definition (median-based WCAG ratio, ring ½ diameter) is the same one by choice, so the check is independent in masks and implementation, not in frame source or metric.
+
+Full table (all rows, with full ring, mean colours, pixel counts and component counts): `sep/SEPARATION-TABLES.md`. Raw: `sep/BASE/lr-*.json`, `sep/TRIAL/lr-*.json`.
+
+**Close view, 1440×900@2, light theme, the model, preview servers.** Cells are contrast ratio / ΔL*.
+
+| tier | hour | eyes BASE | eyes TRIAL | nose BASE | nose TRIAL | fur ring L* (eyes) BASE → TRIAL | fur ring mean colour BASE → TRIAL | fur fill read BASE → TRIAL |
+|---|---|---|---|---|---|---|---|---|
+| high | day | 4.58 / 48.0 | 4.58 / 48.0 | 3.34 / 37.8 | 3.34 / 37.8 | 51.3 → 51.3 | #ae6d33 → #ae6d33 | 0.16 → 0.16 |
+| high | dusk | 2.26 / 30.0 | 3.85 / 44.4 | 1.93 / 25.4 | 3.14 / 38.7 | 30.5 → 44.9 | #723a19 → #9b5b2f | 0.16 → 0.448 |
+| high | night | 2.01 / 26.8 | 3.99 / 45.4 | 1.79 / 23.3 | 3.27 / 40.0 | 27.1 → 45.8 | #653416 → #9a5e31 | 0.16 → 0.512 |
+| low | day | 4.55 / 47.7 | 4.55 / 47.7 | 3.31 / 37.4 | 3.31 / 37.4 | 51.3 → 51.3 | #ae6d34 → #ae6d34 | 0.16 → 0.16 |
+| low | dusk | 2.26 / 30.0 | 3.85 / 44.4 | 1.93 / 25.4 | 3.14 / 38.7 | 30.5 → 44.9 | #723a19 → #9b5b2f | 0.16 → 0.448 |
+| low | night | 2.01 / 26.8 | 3.99 / 45.4 | 1.78 / 23.2 | 3.27 / 39.9 | 27.1 → 45.8 | #653416 → #9a5e31 | 0.16 → 0.512 |
+
+Share of the same build's day ratio (eyes / nose): base dusk 49-50 % / 58 %, night 44 % / 54 %; trial dusk 84-85 % / 94-95 %, night 87-88 % / 98-99 %.
+
+**Nook framing (what people see), 1440×900@2, light, low tier.** The same ratios to ±0.02 (eyes dusk 2.26 → 3.85, night 2.01 → 3.99; nose dusk 1.93 → 3.14, night 1.78 → 3.27), but on 47 to 56 eye pixels and 163 to 178 nose pixels per frame (the face is small in the default camera), against 1,900 to 1,960 and 5,250 to 5,360 in the close view.
+
+**Against the maker's packet.** My base rows reproduce the maker's BEFORE rows (eyes 2.01 / 2.26 / 4.58, nose 1.79 / 1.93 / 3.32 on the high tier) to ±0.02 in ratio and ±0.3 in ΔL*. My trial rows reproduce the maker's AFTER rows (3.85 / 3.99 and 3.14 / 3.27) to the second decimal. The maker's AFTER rows came from `chai.setFill(k)` on the dev build; mine come from the hour the app sets, through the URL, on the preview build, so the shipped wiring from hour to fill is now measured: the fur's `emissiveIntensity` reads 0.16 / 0.448 / 0.512 at day / dusk / night on the trial and 0.16 on every hour on the base.
+
+**Things in the data that are not what you would assume.**
+- The eye mask has 5 to 6 connected components on the trial and 3 to 6 on the base (two eyes plus eye highlights or fragments), where two were expected. The nose mask is 1 component on the low tier and 2 to 6 on the high tier, with 2.5× more pixels there (13,250 to 13,750 against 5,250 to 5,360): on the high tier a hide-diff catches shadow or occlusion changes around the nose as well. The ratios agree with the maker's id-frame ratios (same to 0.02), so the medians are robust to that, but the high-tier nose pixel count is not "just the nose".
+- The "full ring" ratios equal the half-ring ratios to the printed precision in every row (the face plate is a flat vertex colour).
+- Chrome logs a "GPU stall due to ReadPixels" performance warning from my own `readPixels`; no page error and no other console error in any capture job (`sep/*/lr-*.json`, field `errors`).
+
+## 3. Day unchanged: pixel diff
+
+Frames are compared at day on the same still-frame path (section 0), every pixel and channel.
+
+| config | what | size | differing pixels | max channel diff | FNV-1a of the buffer, base / trial |
+|---|---|---|---|---|---|
+| 1440×900@2 light high | drawing buffer, close view | 1992×1828 | **0** | 0 | `da8bfc7a` / `da8bfc7a` |
+| 1440×900@2 light low | drawing buffer, close view | 1245×1142 | **0** | 0 | `9e78bf54` / `9e78bf54` |
+| 1440×900@2 light low | drawing buffer, Nook view | 1245×1142 | **0** (platter included) | 0 | `3d800a6d` / `3d800a6d` |
+| 1440×900@2 light low | full-viewport screenshot, Nook view | 2880×1800 | **0** | 0 | (PNG diff) |
+| 1440×900@2 light low | full-viewport screenshot, close view | 2880×1800 | **0** | 0 | (PNG diff) |
+
+How moving parts were handled: loop stopped, reduced-motion still frame (dt = 0, fixed still time), so the platter, steam and breath do not depend on wall time; the clock is frozen. The maker's 253-px platter difference does not occur on this path. I did not run a base-versus-base control (two base day frames from separate contexts) and did not compare the base and trial day frames of the same build across two contexts, so "same-build repeatability across contexts" is not shown; the base-vs-trial result of 0 px is.
+
+Evening and night, for contrast, on the low tier Nook frame, full-viewport screenshots 2880×1800 (`pngtool.mjs`, `pngout.mjs`):
+- **dusk:** 21,888 differing pixels, all inside Chai's screen box (x 1351-1489, y 1210-1413 in screenshot pixels); outside a box x 1340-1500, y 1200-1420 0 pixels differ.
+- **night:** 21,900 differing pixels inside that box (max channel difference up to 68); outside it 280,787 pixels (5.4 %) differ by exactly 1 level and 1 pixel by 3. Day and dusk show no such 1-level noise. I did not find the source (candidates: a time-dependent night effect not covered by the still time; screenshot compositing) and did not run a base-vs-base night control, so I cannot say whether it is present base-vs-base.
+- Diff map: `diff/1440x900-light-low-night-nook-frame_diffmap.png`.
+
+**One defect of my own, disclosed.** My first trial job (`lr-TRIAL-1440L`) ran the views as `close,nook`; the close camera persists in the engine, so its "nook" frames were copies of the close frames (identical hashes). I removed those frames and files and re-ran the trial's Nook view for the low tier (`lr-TRIAL-1440L-nook.json`, valid); the high-tier trial Nook view was dropped to save slot time (not captured). The script now always runs `nook` before `close`. The base's first job was killed by me (own PID) after its low config, and its high tier was re-run close-view only (`lr-BASE-1440H.json`).
+
+## 4. Captures
+
+Everything is full size and native. Names: `<viewport>-<theme>-<tier>-<hour>-<view>-frame.png` (full-viewport screenshot) and `…-face.png` (native crop of the drawing buffer around Chai's eyes and nose, about 3.8× the eye-to-nose span on each side, no UI). `BASE` = `4d36939` preview `:5488`, `TRIAL` = `46f33e2` preview `:5534`.
+
+| Set | Where | Done |
+|---|---|---|
+| 1440×900@2 light, low tier, day / dusk / night, Nook and close views, BASE and TRIAL | `sep/BASE/`, `sep/TRIAL/` (`…-nook-frame.png`, `…-close-frame.png`, `…-close-face.png`, `…-nook-face.png`) | yes |
+| 1440×900@2 light, high tier, day / dusk / night, close view, BASE and TRIAL | `sep/BASE/` (face crops only; the base high job ran without screenshots), `sep/TRIAL/` (close frame and face crop) | yes, close view only |
+| Base-left / trial-right montages of the face crops, low tier: close view native, Nook view enlarged 4× (nearest neighbour, `_x4`) | `captures/montage-face/` | yes (low tier only) |
+| 390×844, 375×667, 844×390: Nook frames and face crops | `sep/*/390x844-*`, … | see section 9 |
+| dark theme, 200 % text, high tier at phone widths | | see section 9 |
+
+## 5. The unlock card
+
+Script `scripts/lru.mjs`, previews, default tier (no `nookq`; the resolved tier is `low` on this machine), light theme, `celebrate` seed on Home, "Put the kettle on", `__kettle.finish()`, the Done route, the early frame (about 0.9 s: the drawing), then the card's `data-scene-ready="true"` + 3.5 s, loop stopped. Night first by the URL override, day second by `setState({time})` on the card's engine. Reduced motion emulated (still frames). Raw: `unlock/BASE/lru-BASE.json`, `unlock/TRIAL/lru-TRIAL.json`; frames `unlock/{BASE,TRIAL}/<vp>-light-<hour>-unlock-{early,frame,card-canvas}.png`.
+
+| viewport | hour | engine mode / tier / Chai kind (both builds) | card canvas (buffer px) | Chai pixels in the card frame (base / trial) | Chai head, NDC x, y | card buffer, differing pixels base vs trial | FNV base / trial |
+|---|---|---|---|---|---|---|---|
+| 390×844@2 | night | showcase / low / procedural | 189×142 (css 152×114 at 30,509) | 0 / 0 | -12.46, -1.69 | **0** | `a4b1cf73` / `a4b1cf73` |
+| 390×844@2 | day | showcase / low / procedural | 189×142 | 0 / 0 | -12.46, -1.69 | **0** | `c954648b` / `c954648b` |
+| 1440×900@1 | night | showcase / low / procedural | 425×239 | 0 / 0 | -9.35, -1.69 | **0** | `ba1d601a` / `ba1d601a` |
+| 1440×900@1 | day | showcase / low / procedural | 425×239 | 0 / 0 | -9.35, -1.69 | **0** | `b1aadd35` / `b1aadd35` |
+
+- **Is Chai in frame?** No. "Chai pixels in frame" = pixels that change when the Chai root is hidden (threshold 8): 0 in all 8 states. The head's projected position is far outside the view (|x| of 9 to 12). The card shows the record player (`highlight: recordPlayer`) at camera zoom 0.125.
+- **Chai kind in the card engine is `procedural`** on both builds (the card's engine does not hold the model), as the LRC receipt also recorded. Its fur fill was therefore not read (`furFill` null); it is out of frame either way.
+- **Anything different?** In the card's drawing buffer, no: 0 of 26,838 and 0 of 101,575 pixels, in all 4 pairs. The night and day card frames do differ from each other (the hour reaches the card: `unlock/TRIAL/…-night-unlock-card-canvas.png` against `…-day-…`).
+- **Full-viewport screenshots of the Done page differ** base vs trial outside the card (e.g. 390: 131,219 px, 10 %, max channel 24; 1440: 3,013 px, max channel 1). The page's hero scene, confetti and entry animations are not frozen by my stop (`setRunning(false)` stops the card's engine only), and the day and night pairs show the same clusters, so I take this to be page animation, not the scene change; I did not isolate it further. The unlock card's own canvas is the comparison that matters here.
+- The "drawing" stage (the early frames, night, both builds) is in `…-unlock-early.png`; I did not compare it pixel by pixel.
+
+## 6. Low-tier performance, LRC method
+
+Method: `scripts/perf.mjs` (verbatim from the maker; section 0). Previews `:5488` (base) and `:5534` (trial), 390×844@3 mobile, light, `veteran`, `nooktime=night`, default tier (low, confirmed `quality` low in all 12 runs), model on both (`chaiKind` model, `root.userData.model` true, 1 `.glb` request each), canvas 442×395. One Chromium launch per set; 3 rounds, alternating; 10 warm-up and 60 timed frames. Full tables: `perf/PERF-TABLES.md`; raw JSON `perf/perf-low-390x844-night-*.json`; logs `runs/perf-*.log`.
+
+| set | order in each round | slot start | load at runs |
+|---|---|---|---|
+| A | base first, then trial | 12:02 | 10 to 14 |
+| B | trial first, then base | 12:48 | 17 to 18 |
+
+Frame time, median per run (ms), engine frame + 1-px readPixels:
+
+| set | base per run | base median of medians | trial per run | trial median of medians |
+|---|---|---|---|---|
+| A (base first) | 135, 164, 107 | **135** | 100, 186, 174 | **174** |
+| B (trial first) | 307, 286, 277 | **286** | 287, 351, 285 | **287** |
+
+Same-round difference (trial minus base, ms): set A: -35, +22, +67; set B: -20, +65, +8.
+
+Counters, identical in all 12 runs on both builds: draw calls **110**, triangles **75,007**, geometries **113**, textures **10**, programs **23**. JS heap after 2 GCs: base 11.17 to 11.25 MB, trial 11.09 to 11.26 MB. The fur fill read from the model is 0.16 on the base and 0.512 on the trial in every run. No page error. (The LRC receipt's numbers, 108 calls / 74,910 triangles / 111 geometries, belong to its older build and are not comparable.)
+
+Facts about the timing: in the two sets the trial reads slower in set A (second in each round, +39 ms on the medians) and level in set B (first in each round, +1 ms), and the run-to-run spread inside one build is larger than either difference (base 107 to 164 in set A; trial 285 to 351 in set B). The load average was different between sets, so the two sets are not on the same footing; I ran no control of base against base.
+
+## 7. Suites (trial dev :5524)
+
+| Command | Result | Log |
+|---|---|---|
+| `npx tsc --noEmit` (trial worktree) | exit 0, no output | `runs/tsc.txt` |
+| `npx vitest run` (all) | 30 files, **293/293** passed | `runs/vitest-all.txt` |
+| `npx vitest run src/scene` | 3 files, **17/17** passed: `palette.test.ts` (incl. "Chai fur self-fill by hour"), `chaiModel.test.ts` (incl. "setFill scales the fur self-fill only…" and "procedural Chai: setFill…"), `chaiHost.test.ts` | `runs/vitest-scene.txt` |
+| `KETTLE_PORT=5524 npx playwright test tests/chai3d.spec.ts tests/w2-room.spec.ts --project=chromium --workers=1`, run 1 | SPECS-RUN1 | `runs/spec-run1.log` |
+| the same, run 2 | SPECS-RUN2 | `runs/spec-run2.log` |
+
+## 8. Notes on the maker's packet (claims checked)
+
+- Claim "eyes/nose contrast evening 2.26/1.93 → 3.85/3.14, night 2.01/1.79 → 3.99/3.27, day 4.58/3.32": reproduced (section 2), with my own masks.
+- Claim "day close-up 0 px diff": reproduced on the high and low tier close view, and also for the Nook view and full-viewport screenshots on the low tier (section 3); the 253-px platter difference did not reproduce on the still-frame path.
+- Claim "low tier: draw calls, triangles, textures and programs identical": reproduced (110 / 75,007 / 10 / 23, plus geometries 113 and the heap).
+- Claim "frame time 200 → 209 ms, order not swapped": the order-swapped set was run (section 6): no consistent sign.
+- Claim "vitest 293/293": reproduced. Claim "chai3d + w2-room 17/17 on run 2": section 7.
+- The packet's gaps I covered: the unlock pair (section 5) and the order-swapped frame time (section 6). Gaps still open: dark theme, 390×844 frames, the procedural Chai's numbers (section 9).
+
+## 9. Not proven, and why
+
+| Item | Status |
+|---|---|
+| Dark theme, any viewport (exposure 0.86, `autoTime` gives night most of the day) | **not captured, not measured** |
+| 390×844, 375×667, 844×390 base-vs-trial grids (light and dark, day / dusk / night) | PHONES |
+| High tier at phone widths; the high-tier Nook view at 1440 for the trial (and base) | **not captured** |
+| 200 % text spot check | TEXT200 |
+| Separation measured on the real unlock card | n/a: Chai is out of frame (section 5) |
+| The procedural Chai's separation numbers (first frame and fallback) | **not measured** |
+| Same-build repeatability across contexts (base vs base) for day frames and for the 1-level night noise (section 3) | **not run** |
+| Order-swapped performance on equal load; a base-vs-base timing control | **not run**; sets A and B ran at different load |
+| Captures and measurements used the preview builds; the dev servers were used for the suites only | the dev build's frames were not captured by me |
+| Unlock: default tier only (low); the high-tier card; the drawing stage not diffed | **not run** |
+| Full chromium suite | **not run** |
+| "As clearly as by day", "looks right", fur "lit cut-out" | judgement, not mine |
+
+## 10. Evidence layout (`/home/user/Vibei/kettle/review/product-excellence/contracts/W3R1/review/LR/N/`)
+
+- `runs/`: command logs (vitest, tsc, specs, every capture/perf job, `server-verify.txt`).
+- `sep/BASE`, `sep/TRIAL`: frames, face crops and `lr-*.json` (all numbers); `sep/SEPARATION-TABLES.md`: all rows.
+- `unlock/BASE`, `unlock/TRIAL`: unlock frames and JSON.
+- `perf/`: JSON and `PERF-TABLES.md`.
+- `diff/`: day and night diff maps.
+- `captures/montage-face/`: base-left / trial-right face montages.
+- `scripts/`: every script used.
