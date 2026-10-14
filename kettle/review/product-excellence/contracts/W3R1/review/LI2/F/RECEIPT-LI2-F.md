@@ -83,7 +83,7 @@ A tap aimed beforehand lands on the arriving notice (`li._toast…`) or the card
   - the click went out, and the second wheel's 60 px landed before it.
 
   A test-harness wheel race, not a strip change: the base spec has the same `press()`.
-- **Not seen on the trial in 8 runs of :275 at 1440 @200:** the base's mechanism, the strip closing at rest under the aimed tap (`why: rest`, Mark done 745 → 673).
+- **Neither trial failure shows the base's mechanism**, the strip closing at rest under the aimed tap (`why: rest`, Mark done 745 → 673). In 10 trial runs at 1440 @200 (prior A ×3, E1 ×2, E2 ×2, and the D run's three 1440 @200 configurations), 8 passed.
 
 ### 1d. `notice-strip.spec.ts` vs base (`git diff 4d36939 e3b9eac -- kettle/tests/notice-strip.spec.ts`)
 
