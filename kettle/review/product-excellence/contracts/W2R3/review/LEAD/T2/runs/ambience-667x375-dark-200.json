@@ -1,0 +1,279 @@
+{
+ "base": "http://127.0.0.1:5476",
+ "cfg": "667x375:dark:200",
+ "flow": "ambience",
+ "kind": null,
+ "scene": "off",
+ "steps": [
+  {
+   "t": 2226,
+   "k": "tap",
+   "label": "field",
+   "at": [
+    503,
+    251
+   ],
+   "size": [
+    249,
+    52
+   ]
+  },
+  {
+   "t": 3869,
+   "k": "tap",
+   "label": "start",
+   "at": [
+    503,
+    220
+   ],
+   "size": [
+    281,
+    155
+   ]
+  },
+  {
+   "t": 5969,
+   "k": "tap",
+   "label": "Ambience",
+   "at": [
+    541,
+    74
+   ],
+   "size": [
+    117,
+    49
+   ]
+  },
+  {
+   "t": 7607,
+   "k": "tap",
+   "label": "Close sheet",
+   "at": [
+    600,
+    96
+   ],
+   "size": [
+    44,
+    44
+   ]
+  }
+ ],
+ "sheetControls": [
+  {
+   "name": "Close",
+   "ok": 9
+  },
+  {
+   "name": "Turn on",
+   "ok": 6
+  },
+  {
+   "name": "Rain",
+   "ok": 0
+  },
+  {
+   "name": "Fireside",
+   "ok": 0
+  },
+  {
+   "name": "Forest",
+   "inView": false
+  },
+  {
+   "name": "Brown noise",
+   "inView": false
+  },
+  {
+   "name": "Lo-fi keys",
+   "inView": false
+  },
+  {
+   "name": "Quiet",
+   "inView": false
+  },
+  {
+   "name": "",
+   "inView": false
+  },
+  {
+   "name": "Done",
+   "ok": 9
+  }
+ ],
+ "noticeOverSheet": [
+  {
+   "top": 153,
+   "onTopAtMiddle": false
+  }
+ ],
+ "noticesEnd": {
+  "queue": [
+   {
+    "id": "t2",
+    "message": "New badge: Tea Time",
+    "left": 699
+   },
+   {
+    "id": "t3",
+    "message": "Cozy level 5!",
+    "left": 3200
+   }
+  ],
+  "shown": "t2",
+  "strip": 3,
+  "screen": "session:focus",
+  "why": "rest",
+  "changed": 9692,
+  "version": 12
+ },
+ "rec": {
+  "frames": 738,
+  "noticeFrames": 362,
+  "modalFrames": 16,
+  "covered": 0,
+  "coveredEx": [],
+  "geo": 0,
+  "geoEx": [],
+  "noticeHidden": 0,
+  "noticeHiddenEx": [],
+  "chromeOver": 0,
+  "shifts": [
+   {
+    "at": 3488,
+    "hash": "#/focus",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": 0,
+    "sinceTap": 1,
+    "why": "screen"
+   },
+   {
+    "at": 3488,
+    "hash": "#/focus",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": 0,
+    "sinceTap": 1,
+    "why": "screen"
+   },
+   {
+    "at": 4800,
+    "hash": "#/focus",
+    "sinceRoute": 1312,
+    "kind": "strip",
+    "from": 0,
+    "to": 188,
+    "top": 143,
+    "down": 0,
+    "sinceInput": 1312,
+    "sinceTap": 1313,
+    "why": "rest",
+    "app": {
+     "down": 0,
+     "sinceInput": 1208,
+     "sinceTap": 1301,
+     "atRest": true
+    }
+   },
+   {
+    "at": 9697,
+    "hash": "#/focus",
+    "sinceRoute": 6209,
+    "kind": "strip",
+    "from": 188,
+    "to": 107,
+    "top": 143,
+    "down": 0,
+    "sinceInput": 2876,
+    "sinceTap": 2876,
+    "why": "rest",
+    "app": {
+     "down": 0,
+     "sinceInput": 2874,
+     "sinceTap": 2874,
+     "atRest": true
+    }
+   }
+  ],
+  "seen": {
+   "Recipe done: Name what you’re brewing · +10 leaves": 202,
+   "New badge: Tea Time": 160
+  }
+ },
+ "errors": [],
+ "shiftAudit": [
+  {
+   "at": 3488,
+   "hash": "#/focus",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": 0,
+   "sinceTap": 1,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 3488,
+   "hash": "#/focus",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": 0,
+   "sinceTap": 1,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 4800,
+   "hash": "#/focus",
+   "sinceRoute": 1312,
+   "kind": "strip",
+   "from": 0,
+   "to": 188,
+   "top": 143,
+   "down": 0,
+   "sinceInput": 1312,
+   "sinceTap": 1313,
+   "why": "rest",
+   "app": {
+    "down": 0,
+    "sinceInput": 1208,
+    "sinceTap": 1301,
+    "atRest": true
+   },
+   "ok": true
+  },
+  {
+   "at": 9697,
+   "hash": "#/focus",
+   "sinceRoute": 6209,
+   "kind": "strip",
+   "from": 188,
+   "to": 107,
+   "top": 143,
+   "down": 0,
+   "sinceInput": 2876,
+   "sinceTap": 2876,
+   "why": "rest",
+   "app": {
+    "down": 0,
+    "sinceInput": 2874,
+    "sinceTap": 2874,
+    "atRest": true
+   },
+   "ok": true
+  }
+ ],
+ "shiftViolations": []
+}

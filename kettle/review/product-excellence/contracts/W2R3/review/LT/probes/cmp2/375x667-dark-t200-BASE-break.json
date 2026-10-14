@@ -1,0 +1,2419 @@
+{
+ "cfg": {
+  "w": 375,
+  "h": 667,
+  "theme": "dark",
+  "pct": 200,
+  "reduced": false,
+  "groups": [
+   "break"
+  ],
+  "base": "http://127.0.0.1:5470",
+  "fix": false,
+  "name": "375x667-dark-t200-BASE-break"
+ },
+ "base": "http://127.0.0.1:5470",
+ "startedAt": "2026-10-14T00:23:01.477Z",
+ "groups": {
+  "break": {
+   "breakoverNotices": [
+    "Recipe done: Take a full tea break · +10 leaves"
+   ],
+   "breakoverPut": {
+    "ok": true,
+    "wheels": 1,
+    "nine": 9
+   },
+   "ambience": {
+    "opened": true,
+    "dialog": true,
+    "sheetCtlsCovered": {
+     "tot": 5,
+     "cov": 0
+    }
+   },
+   "shots": [
+    {
+     "file": "shot-375x667-dark-t200-BASE-break-break-0.png",
+     "kind": "text",
+     "top": "notice",
+     "what": "text \"Tea time. Sip slowly.\" in span",
+     "state": "breakover"
+    },
+    {
+     "file": "shot-375x667-dark-t200-BASE-break-break-1.png",
+     "kind": "text",
+     "top": "notice",
+     "what": "text \"0\" in span",
+     "state": "breakover"
+    },
+    {
+     "file": "shot-375x667-dark-t200-BASE-break-break-2.png",
+     "kind": "row",
+     "top": "other",
+     "what": "li \"Notice one, waiting its turn.\"",
+     "state": "ambience"
+    }
+   ],
+   "sampler": {
+    "samples": 270,
+    "nSamples": 78,
+    "modalSamples": 29,
+    "geo": {
+     "ctl": 37,
+     "text": 907,
+     "row": 16
+    },
+    "geoTop": {
+     "ctl|noticeClippedAway": 10,
+     "text|notice": 341,
+     "text|noticeClippedAway": 3,
+     "row|other": 7,
+     "row|notice": 7,
+     "text|third:span._message_1ogmq_54": 18,
+     "row|third:span._message_1ogmq_54": 2,
+     "text|third:li._toast_1ogmq_27": 2,
+     "text+modal|notice": 26,
+     "ctl+modal|noticeClippedAway": 2,
+     "text+modal|underSheet:notice": 507,
+     "text+modal|noticeClippedAway": 10,
+     "ctl+modal|underSheet:notice": 25,
+     "efp9+modal": 25
+    },
+    "efp": 81,
+    "efpCtl": 25,
+    "efpUnderSheet": 81,
+    "cut": 0,
+    "cutSeen": {},
+    "hits": [
+     {
+      "dlg": null,
+      "t": 11669,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "ctl",
+      "top": "noticeClippedAway",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       26,
+       480,
+       322,
+       129
+      ],
+      "what": "button \"Skip break\"",
+      "box": [
+       34,
+       605,
+       62,
+       64
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11669,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "ctl",
+      "top": "noticeClippedAway",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       26,
+       480,
+       322,
+       129
+      ],
+      "what": "button \"Pause break\"",
+      "box": [
+       149,
+       605,
+       78,
+       80
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11669,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "ctl",
+      "top": "noticeClippedAway",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       26,
+       480,
+       322,
+       129
+      ],
+      "what": "button \"Start next brew\"",
+      "box": [
+       279,
+       605,
+       62,
+       64
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11670,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       26,
+       480,
+       322,
+       129
+      ],
+      "what": "text \"Tea time. Sip slowly.\" in span",
+      "box": [
+       37,
+       467,
+       302,
+       41
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11670,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       26,
+       480,
+       322,
+       129
+      ],
+      "what": "text \"Next brew whenever you’re ready\" in span",
+      "box": [
+       54,
+       515,
+       267,
+       38
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11670,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       26,
+       480,
+       322,
+       129
+      ],
+      "what": "text \"Next brew whenever you’re ready\" in span",
+      "box": [
+       109,
+       557,
+       158,
+       38
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11769,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       20,
+       467,
+       334,
+       134
+      ],
+      "what": "text \"0\" in span",
+      "box": [
+       81,
+       344,
+       58,
+       126
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11770,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       20,
+       467,
+       334,
+       134
+      ],
+      "what": "text \"0\" in span",
+      "box": [
+       174,
+       344,
+       58,
+       126
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11770,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       20,
+       467,
+       334,
+       134
+      ],
+      "what": "text \"0\" in span",
+      "box": [
+       236,
+       344,
+       58,
+       126
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11770,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       20,
+       467,
+       334,
+       134
+      ],
+      "what": "text \"Tea time. Sip slowly.\" in span",
+      "box": [
+       37,
+       467,
+       302,
+       41
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11770,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       20,
+       467,
+       334,
+       134
+      ],
+      "what": "text \"Next brew whenever you’re ready\" in span",
+      "box": [
+       54,
+       515,
+       267,
+       38
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11770,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       20,
+       467,
+       334,
+       134
+      ],
+      "what": "text \"Next brew whenever you’re ready\" in span",
+      "box": [
+       109,
+       557,
+       158,
+       38
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11869,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       457,
+       343,
+       138
+      ],
+      "what": "text \"0\" in span",
+      "box": [
+       81,
+       344,
+       58,
+       126
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11869,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       457,
+       343,
+       138
+      ],
+      "what": "text \":\" in span",
+      "box": [
+       145,
+       338,
+       22,
+       126
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11869,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       457,
+       343,
+       138
+      ],
+      "what": "text \"0\" in span",
+      "box": [
+       174,
+       344,
+       58,
+       126
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11869,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       457,
+       343,
+       138
+      ],
+      "what": "text \"0\" in span",
+      "box": [
+       236,
+       344,
+       58,
+       126
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11869,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       457,
+       343,
+       138
+      ],
+      "what": "text \"Tea time. Sip slowly.\" in span",
+      "box": [
+       37,
+       467,
+       302,
+       41
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11869,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       457,
+       343,
+       138
+      ],
+      "what": "text \"Next brew whenever you’re ready\" in span",
+      "box": [
+       54,
+       515,
+       267,
+       38
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11869,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       457,
+       343,
+       138
+      ],
+      "what": "text \"Next brew whenever you’re ready\" in span",
+      "box": [
+       109,
+       557,
+       158,
+       38
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11968,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "ctl",
+      "top": "noticeClippedAway",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       457,
+       344,
+       138
+      ],
+      "what": "button \"Mark it done, start fresh\"",
+      "box": [
+       16,
+       569,
+       343,
+       96
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11969,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       457,
+       344,
+       138
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       65,
+       461,
+       245,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11969,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       457,
+       344,
+       138
+      ],
+      "what": "text \"Chapter 3 notes\" in strong",
+      "box": [
+       51,
+       512,
+       258,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11969,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       457,
+       344,
+       138
+      ],
+      "what": "text \"?\" in p",
+      "box": [
+       309,
+       512,
+       15,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 11969,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "noticeClippedAway",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       457,
+       344,
+       138
+      ],
+      "what": "text \"Mark it done, start fresh\" in button",
+      "box": [
+       58,
+       571,
+       284,
+       43
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12069,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "ctl",
+      "top": "noticeClippedAway",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       444,
+       343,
+       138
+      ],
+      "what": "button \"Mark it done, start fresh\"",
+      "box": [
+       16,
+       564,
+       343,
+       96
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12069,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       444,
+       343,
+       138
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       113,
+       405,
+       149,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12071,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       444,
+       343,
+       138
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       65,
+       456,
+       245,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12071,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       444,
+       343,
+       138
+      ],
+      "what": "text \"Chapter 3 notes\" in strong",
+      "box": [
+       51,
+       507,
+       258,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12071,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       444,
+       343,
+       138
+      ],
+      "what": "text \"?\" in p",
+      "box": [
+       309,
+       507,
+       15,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12071,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "noticeClippedAway",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       444,
+       343,
+       138
+      ],
+      "what": "text \"Mark it done, start fresh\" in button",
+      "box": [
+       58,
+       566,
+       284,
+       43
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12168,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "ctl",
+      "top": "noticeClippedAway",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       429,
+       343,
+       138
+      ],
+      "what": "button \"Mark it done, start fresh\"",
+      "box": [
+       16,
+       564,
+       343,
+       96
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12169,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       429,
+       343,
+       138
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       113,
+       405,
+       149,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12169,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       429,
+       343,
+       138
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       65,
+       456,
+       245,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12169,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       429,
+       343,
+       138
+      ],
+      "what": "text \"Chapter 3 notes\" in strong",
+      "box": [
+       51,
+       507,
+       258,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12169,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       429,
+       343,
+       138
+      ],
+      "what": "text \"?\" in p",
+      "box": [
+       309,
+       507,
+       15,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12169,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "noticeClippedAway",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       429,
+       343,
+       138
+      ],
+      "what": "text \"Mark it done, start fresh\" in button",
+      "box": [
+       58,
+       566,
+       284,
+       43
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12269,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "ctl",
+      "top": "noticeClippedAway",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       427,
+       343,
+       138
+      ],
+      "what": "button \"Mark it done, start fresh\"",
+      "box": [
+       16,
+       563,
+       343,
+       96
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12269,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       427,
+       343,
+       138
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       113,
+       404,
+       149,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12269,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       427,
+       343,
+       138
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       65,
+       455,
+       245,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12269,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       427,
+       343,
+       138
+      ],
+      "what": "text \"Chapter 3 notes\" in strong",
+      "box": [
+       51,
+       506,
+       258,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12269,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       427,
+       343,
+       138
+      ],
+      "what": "text \"?\" in p",
+      "box": [
+       309,
+       506,
+       15,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12369,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       420,
+       343,
+       138
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       113,
+       404,
+       149,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12369,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       420,
+       343,
+       138
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       65,
+       455,
+       245,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12369,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       420,
+       343,
+       138
+      ],
+      "what": "text \"Chapter 3 notes\" in strong",
+      "box": [
+       51,
+       506,
+       258,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12369,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       420,
+       343,
+       138
+      ],
+      "what": "text \"?\" in p",
+      "box": [
+       309,
+       506,
+       15,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12469,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       417,
+       343,
+       138
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       113,
+       404,
+       149,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12469,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       417,
+       343,
+       138
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       65,
+       455,
+       245,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12469,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       417,
+       343,
+       138
+      ],
+      "what": "text \"Chapter 3 notes\" in strong",
+      "box": [
+       51,
+       506,
+       258,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12470,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       417,
+       343,
+       138
+      ],
+      "what": "text \"?\" in p",
+      "box": [
+       309,
+       506,
+       15,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12569,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       416,
+       343,
+       137
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       113,
+       404,
+       149,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12569,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       416,
+       343,
+       137
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       65,
+       455,
+       245,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12569,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       416,
+       343,
+       137
+      ],
+      "what": "text \"Chapter 3 notes\" in strong",
+      "box": [
+       51,
+       506,
+       258,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12570,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       416,
+       343,
+       137
+      ],
+      "what": "text \"?\" in p",
+      "box": [
+       309,
+       506,
+       15,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12669,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       416,
+       343,
+       138
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       113,
+       404,
+       149,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12669,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       416,
+       343,
+       138
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       65,
+       455,
+       245,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12669,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       416,
+       343,
+       138
+      ],
+      "what": "text \"Chapter 3 notes\" in strong",
+      "box": [
+       51,
+       506,
+       258,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12669,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       416,
+       343,
+       138
+      ],
+      "what": "text \"?\" in p",
+      "box": [
+       309,
+       506,
+       15,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12769,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       416,
+       343,
+       138
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       113,
+       404,
+       149,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12769,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       416,
+       343,
+       138
+      ],
+      "what": "text \"Ready for another brew of\" in p",
+      "box": [
+       65,
+       455,
+       245,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 12769,
+      "state": "breakover",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "notice",
+      "notice": "li \"Recipe done: Take a full tea break · +10\"",
+      "nbox": [
+       16,
+       416,
+       343,
+       138
+      ],
+      "what": "text \"Chapter 3 notes\" in strong",
+      "box": [
+       51,
+       506,
+       258,
+       46
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 22970,
+      "state": "ambience",
+      "hash": "#/focus",
+      "kind": "row",
+      "top": "other",
+      "notice": "li \"Notice two, waiting its turn.\"",
+      "nbox": [
+       26,
+       477,
+       322,
+       91
+      ],
+      "what": "li \"Notice one, waiting its turn.\"",
+      "box": [
+       22,
+       468,
+       331,
+       94
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 22970,
+      "state": "ambience",
+      "hash": "#/focus",
+      "kind": "row",
+      "top": "notice",
+      "notice": "li \"Notice one, waiting its turn.\"",
+      "nbox": [
+       22,
+       468,
+       331,
+       94
+      ],
+      "what": "li \"Notice two, waiting its turn.\"",
+      "box": [
+       26,
+       477,
+       322,
+       91
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 22970,
+      "state": "ambience",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "third:span._message_1ogmq_54",
+      "notice": "li \"Notice two, waiting its turn.\"",
+      "nbox": [
+       26,
+       477,
+       322,
+       91
+      ],
+      "what": "text \"Kettle’s on. Nice start.\" in span",
+      "box": [
+       23,
+       467,
+       329,
+       41
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 22971,
+      "state": "ambience",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "third:span._message_1ogmq_54",
+      "notice": "li \"Notice two, waiting its turn.\"",
+      "nbox": [
+       26,
+       477,
+       322,
+       91
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       72,
+       515,
+       231,
+       38
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 23070,
+      "state": "ambience",
+      "hash": "#/focus",
+      "kind": "row",
+      "top": "other",
+      "notice": "li \"Notice two, waiting its turn.\"",
+      "nbox": [
+       20,
+       456,
+       335,
+       95
+      ],
+      "what": "li \"Notice one, waiting its turn.\"",
+      "box": [
+       17,
+       442,
+       342,
+       97
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 23070,
+      "state": "ambience",
+      "hash": "#/focus",
+      "kind": "row",
+      "top": "other",
+      "notice": "li \"Notice three, waiting its turn.\"",
+      "nbox": [
+       21,
+       467,
+       332,
+       94
+      ],
+      "what": "li \"Notice one, waiting its turn.\"",
+      "box": [
+       17,
+       442,
+       342,
+       97
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 23070,
+      "state": "ambience",
+      "hash": "#/focus",
+      "kind": "row",
+      "top": "notice",
+      "notice": "li \"Notice one, waiting its turn.\"",
+      "nbox": [
+       17,
+       442,
+       342,
+       97
+      ],
+      "what": "li \"Notice two, waiting its turn.\"",
+      "box": [
+       20,
+       456,
+       335,
+       95
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 23070,
+      "state": "ambience",
+      "hash": "#/focus",
+      "kind": "row",
+      "top": "third:span._message_1ogmq_54",
+      "notice": "li \"Notice three, waiting its turn.\"",
+      "nbox": [
+       21,
+       467,
+       332,
+       94
+      ],
+      "what": "li \"Notice two, waiting its turn.\"",
+      "box": [
+       20,
+       456,
+       335,
+       95
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 23070,
+      "state": "ambience",
+      "hash": "#/focus",
+      "kind": "row",
+      "top": "notice",
+      "notice": "li \"Notice one, waiting its turn.\"",
+      "nbox": [
+       17,
+       442,
+       342,
+       97
+      ],
+      "what": "li \"Notice three, waiting its turn.\"",
+      "box": [
+       21,
+       467,
+       332,
+       94
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 23070,
+      "state": "ambience",
+      "hash": "#/focus",
+      "kind": "row",
+      "top": "third:span._message_1ogmq_54",
+      "notice": "li \"Notice two, waiting its turn.\"",
+      "nbox": [
+       20,
+       456,
+       335,
+       95
+      ],
+      "what": "li \"Notice three, waiting its turn.\"",
+      "box": [
+       21,
+       467,
+       332,
+       94
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 23070,
+      "state": "ambience",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "third:span._message_1ogmq_54",
+      "notice": "li \"Notice two, waiting its turn.\"",
+      "nbox": [
+       20,
+       456,
+       335,
+       95
+      ],
+      "what": "text \"2\" in span",
+      "box": [
+       49,
+       344,
+       59,
+       126
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 23070,
+      "state": "ambience",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "third:span._message_1ogmq_54",
+      "notice": "li \"Notice three, waiting its turn.\"",
+      "nbox": [
+       21,
+       467,
+       332,
+       94
+      ],
+      "what": "text \"2\" in span",
+      "box": [
+       49,
+       344,
+       59,
+       126
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 23070,
+      "state": "ambience",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "third:span._message_1ogmq_54",
+      "notice": "li \"Notice two, waiting its turn.\"",
+      "nbox": [
+       20,
+       456,
+       335,
+       95
+      ],
+      "what": "text \"4\" in span",
+      "box": [
+       113,
+       344,
+       56,
+       126
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 23071,
+      "state": "ambience",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "third:span._message_1ogmq_54",
+      "notice": "li \"Notice three, waiting its turn.\"",
+      "nbox": [
+       21,
+       467,
+       332,
+       94
+      ],
+      "what": "text \"4\" in span",
+      "box": [
+       113,
+       344,
+       56,
+       126
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 23071,
+      "state": "ambience",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "third:li._toast_1ogmq_27",
+      "notice": "li \"Notice two, waiting its turn.\"",
+      "nbox": [
+       20,
+       456,
+       335,
+       95
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       72,
+       515,
+       231,
+       38
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 23071,
+      "state": "ambience",
+      "hash": "#/focus",
+      "kind": "text",
+      "top": "third:li._toast_1ogmq_27",
+      "notice": "li \"Notice three, waiting its turn.\"",
+      "nbox": [
+       21,
+       467,
+       332,
+       94
+      ],
+      "what": "text \"Whistles at 16:25\" in span",
+      "box": [
+       72,
+       515,
+       231,
+       38
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 23174,
+      "state": "ambience",
+      "hash": "#/focus",
+      "kind": "row",
+      "top": "other",
+      "notice": "li \"Notice two, waiting its turn.\"",
+      "nbox": [
+       16,
+       390,
+       344,
+       97
+      ],
+      "what": "li \"Notice one, waiting its turn.\"",
+      "box": [
+       16,
+       324,
+       344,
+       97
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 23174,
+      "state": "ambience",
+      "hash": "#/focus",
+      "kind": "row",
+      "top": "notice",
+      "notice": "li \"Notice one, waiting its turn.\"",
+      "nbox": [
+       16,
+       324,
+       344,
+       97
+      ],
+      "what": "li \"Notice two, waiting its turn.\"",
+      "box": [
+       16,
+       390,
+       344,
+       97
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 23174,
+      "state": "ambience",
+      "hash": "#/focus",
+      "kind": "row",
+      "top": "other",
+      "notice": "li \"Notice three, waiting its turn.\"",
+      "nbox": [
+       16,
+       456,
+       343,
+       97
+      ],
+      "what": "li \"Notice two, waiting its turn.\"",
+      "box": [
+       16,
+       390,
+       344,
+       97
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 23174,
+      "state": "ambience",
+      "hash": "#/focus",
+      "kind": "row",
+      "top": "notice",
+      "notice": "li \"Notice two, waiting its turn.\"",
+      "nbox": [
+       16,
+       390,
+       344,
+       97
+      ],
+      "what": "li \"Notice three, waiting its turn.\"",
+      "box": [
+       16,
+       456,
+       343,
+       97
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 23270,
+      "state": "ambience",
+      "hash": "#/focus",
+      "kind": "row",
+      "top": "other",
+      "notice": "li \"Notice two, waiting its turn.\"",
+      "nbox": [
+       16,
+       360,
+       343,
+       97
+      ],
+      "what": "li \"Notice one, waiting its turn.\"",
+      "box": [
+       16,
+       265,
+       343,
+       97
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": null,
+      "t": 23270,
+      "state": "ambience",
+      "hash": "#/focus",
+      "kind": "row",
+      "top": "notice",
+      "notice": "li \"Notice one, waiting its turn.\"",
+      "nbox": [
+       16,
+       265,
+       343,
+       97
+      ],
+      "what": "li \"Notice two, waiting its turn.\"",
+      "box": [
+       16,
+       360,
+       343,
+       97
+      ],
+      "modal": false,
+      "sy": 0
+     },
+     {
+      "dlg": {
+       "o": 1,
+       "pe": "none"
+      },
+      "t": 23771,
+      "state": "ambience+modal",
+      "hash": "#/focus",
+      "kind": "efp9",
+      "points": 3,
+      "what": "button \"Turn on\"",
+      "box": [
+       194,
+       457,
+       143,
+       49
+      ],
+      "notice": "li \"Notice three, waiting its turn.\""
+     },
+     {
+      "dlg": {
+       "o": 1,
+       "pe": "none"
+      },
+      "t": 23873,
+      "state": "ambience+modal",
+      "hash": "#/focus",
+      "kind": "efp9",
+      "points": 3,
+      "what": "button \"Turn on\"",
+      "box": [
+       194,
+       447,
+       143,
+       49
+      ],
+      "notice": "li \"Notice three, waiting its turn.\""
+     },
+     {
+      "dlg": {
+       "o": 1,
+       "pe": "none"
+      },
+      "t": 23975,
+      "state": "ambience+modal",
+      "hash": "#/focus",
+      "kind": "efp9",
+      "points": 3,
+      "what": "button \"Turn on\"",
+      "box": [
+       194,
+       446,
+       143,
+       49
+      ],
+      "notice": "li \"Notice three, waiting its turn.\""
+     },
+     {
+      "dlg": {
+       "o": 1,
+       "pe": "none"
+      },
+      "t": 24071,
+      "state": "ambience+modal",
+      "hash": "#/focus",
+      "kind": "efp9",
+      "points": 3,
+      "what": "button \"Turn on\"",
+      "box": [
+       194,
+       446,
+       143,
+       49
+      ],
+      "notice": "li \"Notice three, waiting its turn.\""
+     },
+     {
+      "dlg": {
+       "o": 1,
+       "pe": "none"
+      },
+      "t": 24171,
+      "state": "ambience+modal",
+      "hash": "#/focus",
+      "kind": "efp9",
+      "points": 3,
+      "what": "button \"Turn on\"",
+      "box": [
+       194,
+       446,
+       143,
+       49
+      ],
+      "notice": "li \"Notice three, waiting its turn.\""
+     },
+     {
+      "dlg": {
+       "o": 1,
+       "pe": "none"
+      },
+      "t": 24273,
+      "state": "ambience+modal",
+      "hash": "#/focus",
+      "kind": "efp9",
+      "points": 3,
+      "what": "button \"Turn on\"",
+      "box": [
+       194,
+       446,
+       143,
+       49
+      ],
+      "notice": "li \"Notice three, waiting its turn.\""
+     },
+     {
+      "dlg": {
+       "o": 1,
+       "pe": "none"
+      },
+      "t": 24371,
+      "state": "ambience+modal",
+      "hash": "#/focus",
+      "kind": "efp9",
+      "points": 3,
+      "what": "button \"Turn on\"",
+      "box": [
+       194,
+       446,
+       143,
+       49
+      ],
+      "notice": "li \"Notice three, waiting its turn.\""
+     },
+     {
+      "dlg": {
+       "o": 1,
+       "pe": "none"
+      },
+      "t": 24479,
+      "state": "ambience+modal",
+      "hash": "#/focus",
+      "kind": "efp9",
+      "points": 3,
+      "what": "button \"Turn on\"",
+      "box": [
+       194,
+       446,
+       143,
+       49
+      ],
+      "notice": "li \"Notice three, waiting its turn.\""
+     },
+     {
+      "dlg": {
+       "o": 1,
+       "pe": "none"
+      },
+      "t": 24599,
+      "state": "ambience+modal",
+      "hash": "#/focus",
+      "kind": "efp9",
+      "points": 3,
+      "what": "button \"Turn on\"",
+      "box": [
+       194,
+       446,
+       143,
+       49
+      ],
+      "notice": "li \"Notice three, waiting its turn.\""
+     },
+     {
+      "dlg": {
+       "o": 1,
+       "pe": "none"
+      },
+      "t": 24676,
+      "state": "ambience+modal",
+      "hash": "#/focus",
+      "kind": "efp9",
+      "points": 3,
+      "what": "button \"Turn on\"",
+      "box": [
+       194,
+       446,
+       143,
+       49
+      ],
+      "notice": "li \"Notice three, waiting its turn.\""
+     },
+     {
+      "dlg": {
+       "o": 1,
+       "pe": "none"
+      },
+      "t": 24771,
+      "state": "ambience+modal",
+      "hash": "#/focus",
+      "kind": "efp9",
+      "points": 3,
+      "what": "button \"Turn on\"",
+      "box": [
+       194,
+       446,
+       143,
+       49
+      ],
+      "notice": "li \"Notice three, waiting its turn.\""
+     },
+     {
+      "dlg": {
+       "o": 1,
+       "pe": "none"
+      },
+      "t": 24871,
+      "state": "ambience+modal",
+      "hash": "#/focus",
+      "kind": "efp9",
+      "points": 3,
+      "what": "button \"Turn on\"",
+      "box": [
+       194,
+       446,
+       143,
+       49
+      ],
+      "notice": "li \"Notice three, waiting its turn.\""
+     },
+     {
+      "dlg": {
+       "o": 1,
+       "pe": "none"
+      },
+      "t": 24971,
+      "state": "ambience+modal",
+      "hash": "#/focus",
+      "kind": "efp9",
+      "points": 3,
+      "what": "button \"Turn on\"",
+      "box": [
+       194,
+       446,
+       143,
+       49
+      ],
+      "notice": "li \"Notice three, waiting its turn.\""
+     },
+     {
+      "dlg": {
+       "o": 1,
+       "pe": "none"
+      },
+      "t": 25087,
+      "state": "ambience+modal",
+      "hash": "#/focus",
+      "kind": "efp9",
+      "points": 3,
+      "what": "button \"Turn on\"",
+      "box": [
+       194,
+       446,
+       143,
+       49
+      ],
+      "notice": "li \"Notice three, waiting its turn.\""
+     },
+     {
+      "dlg": {
+       "o": 1,
+       "pe": "none"
+      },
+      "t": 25171,
+      "state": "ambience+modal",
+      "hash": "#/focus",
+      "kind": "efp9",
+      "points": 3,
+      "what": "button \"Turn on\"",
+      "box": [
+       194,
+       446,
+       143,
+       49
+      ],
+      "notice": "li \"Notice three, waiting its turn.\""
+     }
+    ],
+    "seen": {
+     "Recipe done: Take a full tea break · +10 lea": 34,
+     "Notice one, waiting its turn.": 44,
+     "Notice two, waiting its turn.": 44,
+     "Notice three, waiting its turn.": 43
+    },
+    "floatPos": [],
+    "live": [
+     {
+      "t": 3476,
+      "state": "",
+      "text": "Kettle’s on. Focus session started, 25 minutes.",
+      "region": "status"
+     },
+     {
+      "t": 4981,
+      "state": "summary",
+      "text": "The kettle’s whistling! Focus session complete. Time for tea.",
+      "region": "status"
+     },
+     {
+      "t": 7798,
+      "state": "summary",
+      "text": "25 minutes brewed. 40 leaves earned. Daily goal met. Cozy level 5: something new in your n",
+      "region": "status"
+     },
+     {
+      "t": 9928,
+      "state": "break",
+      "text": "Tea break started, 5 minutes. Stretch, sip, look out the window.",
+      "region": "status"
+     },
+     {
+      "t": 11693,
+      "state": "breakover",
+      "text": "Tea’s done. Ready for another brew?",
+      "region": "status"
+     },
+     {
+      "t": 11693,
+      "state": "breakover",
+      "text": "Recipe done: Take a full tea break · +10 leaves",
+      "region": "Notifications"
+     },
+     {
+      "t": 21524,
+      "state": "breakover-put",
+      "text": "Kettle’s on. Focus session started, 25 minutes.",
+      "region": "status"
+     },
+     {
+      "t": 22960,
+      "state": "ambience",
+      "text": "Notice one, waiting its turn.",
+      "region": "Notifications"
+     },
+     {
+      "t": 22974,
+      "state": "ambience",
+      "text": "Notice two, waiting its turn.",
+      "region": "Notifications"
+     },
+     {
+      "t": 22990,
+      "state": "ambience",
+      "text": "Notice three, waiting its turn.",
+      "region": "Notifications"
+     }
+    ],
+    "sampleMsAvg": 0.9
+   },
+   "ms": 29648,
+   "pageErrors": []
+  }
+ },
+ "endedAt": "2026-10-14T00:23:31.980Z"
+}

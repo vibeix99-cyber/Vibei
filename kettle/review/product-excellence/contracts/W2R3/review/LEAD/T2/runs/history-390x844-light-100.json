@@ -1,0 +1,163 @@
+{
+ "base": "http://127.0.0.1:5476",
+ "cfg": "390x844:light:100",
+ "flow": "history",
+ "scene": "off",
+ "steps": [
+  {
+   "t": 2372,
+   "k": "tap",
+   "label": "Stats tab",
+   "at": [
+    147,
+    810
+   ],
+   "size": [
+    96,
+    68
+   ]
+  },
+  {
+   "t": 10807,
+   "k": "row",
+   "name": "Budget spreadsheet, 8:15 AM, 25 minutes, Full brew, tagged Work, 33 leaves. Edit",
+   "top": 754
+  },
+  {
+   "t": 11440,
+   "k": "tap",
+   "label": "history row",
+   "at": [
+    195,
+    677
+   ],
+   "size": [
+    318,
+    68
+   ]
+  },
+  {
+   "t": 12133,
+   "k": "tap",
+   "label": "Delete this brew",
+   "at": [
+    195,
+    794
+   ],
+   "size": [
+    338,
+    52
+   ]
+  },
+  {
+   "t": 12911,
+   "k": "tap",
+   "label": "Delete (confirm)",
+   "at": [
+    195,
+    571
+   ],
+   "size": [
+    290,
+    52
+   ]
+  },
+  {
+   "t": 14759,
+   "k": "tap",
+   "label": "Undo",
+   "at": [
+    311,
+    674
+   ],
+   "size": [
+    62,
+    36
+   ]
+  }
+ ],
+ "undoRow": {
+  "top": 643.578125,
+  "text": "Brew deleted\nUndo"
+ },
+ "rowTopBefore": 753.578125,
+ "undoOnTop": {
+  "x": 311,
+  "y": 673.578125,
+  "top": 655.578125,
+  "w": 62,
+  "h": 36
+ },
+ "rowBack": 1,
+ "rec": {
+  "frames": 1002,
+  "noticeFrames": 52,
+  "modalFrames": 24,
+  "covered": 0,
+  "coveredEx": [],
+  "geo": 0,
+  "geoEx": [],
+  "noticeHidden": 0,
+  "noticeHiddenEx": [],
+  "chromeOver": 0,
+  "shifts": [
+   {
+    "at": 1984,
+    "hash": "#/stats",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": -55,
+    "sinceTap": -54,
+    "why": "screen"
+   },
+   {
+    "at": 12400,
+    "hash": "#/stats",
+    "sinceRoute": 10416,
+    "kind": "removed",
+    "from": 60,
+    "to": 0,
+    "down": 0,
+    "sinceInput": -4,
+    "sinceTap": -4,
+    "why": "screen"
+   }
+  ],
+  "seen": {
+   "Brew deleted Undo": 52
+  }
+ },
+ "errors": [],
+ "shiftAudit": [
+  {
+   "at": 1984,
+   "hash": "#/stats",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": -55,
+   "sinceTap": -54,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 12400,
+   "hash": "#/stats",
+   "sinceRoute": 10416,
+   "kind": "removed",
+   "from": 60,
+   "to": 0,
+   "down": 0,
+   "sinceInput": -4,
+   "sinceTap": -4,
+   "why": "screen",
+   "ok": true
+  }
+ ],
+ "shiftViolations": []
+}

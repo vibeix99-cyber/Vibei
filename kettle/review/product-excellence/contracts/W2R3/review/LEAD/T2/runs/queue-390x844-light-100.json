@@ -1,0 +1,215 @@
+{
+ "base": "http://127.0.0.1:5476",
+ "cfg": "390x844:light:100",
+ "flow": "queue",
+ "scene": "off",
+ "steps": [],
+ "s1": {
+  "queue": [
+   {
+    "id": "pwa-update",
+    "message": "A fresh brew of Kettle is ready.",
+    "left": null
+   }
+  ],
+  "shown": "pwa-update",
+  "strip": 1,
+  "screen": "/",
+  "why": "rest",
+  "changed": 1891,
+  "version": 4
+ },
+ "sequence": [
+  "Saved 3 minutes of focus",
+  "Recipe done: Take a full tea break · +10 leaves",
+  "A fresh brew of Kettle is ready."
+ ],
+ "liCount": 1,
+ "updateBtnOnTop": {
+  "x": 328,
+  "y": 44.25,
+  "top": 26.25,
+  "w": 72,
+  "h": 36
+ },
+ "updClicks": 1,
+ "rec": {
+  "frames": 922,
+  "noticeFrames": 839,
+  "modalFrames": 0,
+  "covered": 0,
+  "coveredEx": [],
+  "geo": 0,
+  "geoEx": [],
+  "noticeHidden": 0,
+  "noticeHiddenEx": [],
+  "chromeOver": 0,
+  "shifts": [
+   {
+    "at": 1888,
+    "hash": "#/",
+    "sinceRoute": 1873,
+    "kind": "strip",
+    "from": 0,
+    "to": 73,
+    "top": 16,
+    "down": 0,
+    "sinceInput": 1000001888,
+    "sinceTap": 1000001888,
+    "why": "rest",
+    "app": {
+     "down": 0,
+     "sinceInput": null,
+     "sinceTap": null,
+     "atRest": true
+    }
+   },
+   {
+    "at": 3108,
+    "hash": "#/",
+    "sinceRoute": 3093,
+    "kind": "strip",
+    "from": 73,
+    "to": 68,
+    "top": 16,
+    "down": 0,
+    "sinceInput": 1000003108,
+    "sinceTap": 1000003108,
+    "why": "rest",
+    "app": {
+     "down": 0,
+     "sinceInput": null,
+     "sinceTap": null,
+     "atRest": true
+    }
+   },
+   {
+    "at": 6304,
+    "hash": "#/",
+    "sinceRoute": 6289,
+    "kind": "strip",
+    "from": 68,
+    "to": 73,
+    "top": 16,
+    "down": 0,
+    "sinceInput": 1000006304,
+    "sinceTap": 1000006304,
+    "why": "rest",
+    "app": {
+     "down": 0,
+     "sinceInput": null,
+     "sinceTap": null,
+     "atRest": true
+    }
+   },
+   {
+    "at": 16160,
+    "hash": "#/",
+    "sinceRoute": 16145,
+    "kind": "strip",
+    "from": 73,
+    "to": 0,
+    "top": 16,
+    "down": 0,
+    "sinceInput": -64,
+    "sinceTap": -64,
+    "why": "answer",
+    "app": {
+     "down": 0,
+     "sinceInput": 1,
+     "sinceTap": 1,
+     "atRest": false
+    }
+   }
+  ],
+  "seen": {
+   "A fresh brew of Kettle is ready. Update": 461,
+   "Saved 3 minutes of focus": 189,
+   "Recipe done: Take a full tea break · +10 leaves": 189
+  }
+ },
+ "errors": [],
+ "shiftAudit": [
+  {
+   "at": 1888,
+   "hash": "#/",
+   "sinceRoute": 1873,
+   "kind": "strip",
+   "from": 0,
+   "to": 73,
+   "top": 16,
+   "down": 0,
+   "sinceInput": 1000001888,
+   "sinceTap": 1000001888,
+   "why": "rest",
+   "app": {
+    "down": 0,
+    "sinceInput": null,
+    "sinceTap": null,
+    "atRest": true
+   },
+   "ok": true
+  },
+  {
+   "at": 3108,
+   "hash": "#/",
+   "sinceRoute": 3093,
+   "kind": "strip",
+   "from": 73,
+   "to": 68,
+   "top": 16,
+   "down": 0,
+   "sinceInput": 1000003108,
+   "sinceTap": 1000003108,
+   "why": "rest",
+   "app": {
+    "down": 0,
+    "sinceInput": null,
+    "sinceTap": null,
+    "atRest": true
+   },
+   "ok": true
+  },
+  {
+   "at": 6304,
+   "hash": "#/",
+   "sinceRoute": 6289,
+   "kind": "strip",
+   "from": 68,
+   "to": 73,
+   "top": 16,
+   "down": 0,
+   "sinceInput": 1000006304,
+   "sinceTap": 1000006304,
+   "why": "rest",
+   "app": {
+    "down": 0,
+    "sinceInput": null,
+    "sinceTap": null,
+    "atRest": true
+   },
+   "ok": true
+  },
+  {
+   "at": 16160,
+   "hash": "#/",
+   "sinceRoute": 16145,
+   "kind": "strip",
+   "from": 73,
+   "to": 0,
+   "top": 16,
+   "down": 0,
+   "sinceInput": -64,
+   "sinceTap": -64,
+   "why": "answer",
+   "app": {
+    "down": 0,
+    "sinceInput": 1,
+    "sinceTap": 1,
+    "atRest": false
+   },
+   "ok": true
+  }
+ ],
+ "shiftViolations": []
+}

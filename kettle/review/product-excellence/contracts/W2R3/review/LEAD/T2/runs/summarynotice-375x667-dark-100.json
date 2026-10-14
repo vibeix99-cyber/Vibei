@@ -1,0 +1,233 @@
+{
+ "base": "http://127.0.0.1:5476",
+ "cfg": "375x667:dark:100",
+ "flow": "summarynotice",
+ "scene": "off",
+ "steps": [
+  {
+   "t": 2099,
+   "k": "tap",
+   "label": "field",
+   "at": [
+    188,
+    348
+   ],
+   "size": [
+    303,
+    52
+   ]
+  },
+  {
+   "t": 3014,
+   "k": "tap",
+   "label": "start",
+   "at": [
+    188,
+    529
+   ],
+   "size": [
+    343,
+    60
+   ]
+  }
+ ],
+ "geom": {
+  "notice": {
+   "top": 10,
+   "bottom": 67,
+   "left": 12,
+   "right": 363
+  },
+  "imgs": [
+   {
+    "src": "window-night-rain.webp",
+    "top": -2,
+    "bottom": 221,
+    "left": -2,
+    "right": 373
+   },
+   {
+    "src": "chai-cheering.webp",
+    "top": 115,
+    "bottom": 265,
+    "left": 227,
+    "right": 336
+   }
+  ],
+  "footer": {
+   "top": 529,
+   "bottom": 667,
+   "left": 0,
+   "right": 375
+  },
+  "tea": {
+   "top": 543,
+   "bottom": 603,
+   "left": 20,
+   "right": 355
+  },
+  "heading": {
+   "top": 394,
+   "bottom": 425,
+   "left": 20,
+   "right": 355
+  },
+  "vh": 667
+ },
+ "teaOnTop": {
+  "x": 187.5,
+  "y": 573,
+  "top": 543,
+  "w": 335,
+  "h": 60
+ },
+ "rec": {
+  "frames": 843,
+  "noticeFrames": 201,
+  "modalFrames": 0,
+  "covered": 0,
+  "coveredEx": [],
+  "geo": 0,
+  "geoEx": [],
+  "noticeHidden": 0,
+  "noticeHiddenEx": [],
+  "chromeOver": 0,
+  "shifts": [
+   {
+    "at": 2576,
+    "hash": "#/focus",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": -3,
+    "sinceTap": -3,
+    "why": "screen"
+   },
+   {
+    "at": 2576,
+    "hash": "#/focus",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": -3,
+    "sinceTap": -3,
+    "why": "screen"
+   },
+   {
+    "at": 8112,
+    "hash": "#/done",
+    "sinceRoute": 2192,
+    "kind": "strip",
+    "from": 0,
+    "to": 75,
+    "top": 0,
+    "down": 0,
+    "sinceInput": 5533,
+    "sinceTap": 5533,
+    "why": "rest",
+    "app": {
+     "down": 0,
+     "sinceInput": 1977,
+     "sinceTap": 5522,
+     "atRest": true
+    }
+   },
+   {
+    "at": 11329,
+    "hash": "#/done",
+    "sinceRoute": 5409,
+    "kind": "strip",
+    "from": 75,
+    "to": 0,
+    "top": 0,
+    "down": 0,
+    "sinceInput": 8750,
+    "sinceTap": 8750,
+    "why": "rest",
+    "app": {
+     "down": 0,
+     "sinceInput": 5194,
+     "sinceTap": 8739,
+     "atRest": true
+    }
+   }
+  ],
+  "seen": {
+   "Couldn’t save just now. Your summary is still here": 201
+  }
+ },
+ "errors": [],
+ "shiftAudit": [
+  {
+   "at": 2576,
+   "hash": "#/focus",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": -3,
+   "sinceTap": -3,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 2576,
+   "hash": "#/focus",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": -3,
+   "sinceTap": -3,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 8112,
+   "hash": "#/done",
+   "sinceRoute": 2192,
+   "kind": "strip",
+   "from": 0,
+   "to": 75,
+   "top": 0,
+   "down": 0,
+   "sinceInput": 5533,
+   "sinceTap": 5533,
+   "why": "rest",
+   "app": {
+    "down": 0,
+    "sinceInput": 1977,
+    "sinceTap": 5522,
+    "atRest": true
+   },
+   "ok": true
+  },
+  {
+   "at": 11329,
+   "hash": "#/done",
+   "sinceRoute": 5409,
+   "kind": "strip",
+   "from": 75,
+   "to": 0,
+   "top": 0,
+   "down": 0,
+   "sinceInput": 8750,
+   "sinceTap": 8750,
+   "why": "rest",
+   "app": {
+    "down": 0,
+    "sinceInput": 5194,
+    "sinceTap": 8739,
+    "atRest": true
+   },
+   "ok": true
+  }
+ ],
+ "shiftViolations": []
+}

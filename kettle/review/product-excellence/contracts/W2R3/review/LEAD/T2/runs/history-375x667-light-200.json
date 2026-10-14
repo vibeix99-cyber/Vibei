@@ -1,0 +1,176 @@
+{
+ "base": "http://127.0.0.1:5476",
+ "cfg": "375x667:light:200",
+ "flow": "history",
+ "kind": null,
+ "scene": "off",
+ "steps": [
+  {
+   "t": 2161,
+   "k": "tap",
+   "label": "Stats tab",
+   "at": [
+    142,
+    628
+   ],
+   "size": [
+    92,
+    79
+   ]
+  },
+  {
+   "t": 10592,
+   "k": "row",
+   "name": "Budget spreadsheet, 8:15 AM, 25 minutes, Full brew, tagged Work, 33 leaves. Edit",
+   "top": 3810
+  },
+  {
+   "t": 16713,
+   "k": "fallback-scroll",
+   "label": "history row",
+   "onTop": true
+  },
+  {
+   "t": 16798,
+   "k": "tap",
+   "label": "history row",
+   "at": [
+    188,
+    320
+   ],
+   "size": [
+    303,
+    146
+   ]
+  },
+  {
+   "t": 18697,
+   "k": "tap",
+   "label": "Delete this brew",
+   "at": [
+    188,
+    593
+   ],
+   "size": [
+    323,
+    100
+   ]
+  },
+  {
+   "t": 25971,
+   "k": "fallback-scroll",
+   "label": "Delete (confirm)",
+   "onTop": true
+  },
+  {
+   "t": 26210,
+   "k": "tap",
+   "label": "Delete (confirm)",
+   "at": [
+    188,
+    592
+   ],
+   "size": [
+    275,
+    58
+   ]
+  },
+  {
+   "t": 28040,
+   "k": "tap",
+   "label": "Undo",
+   "at": [
+    277,
+    357
+   ],
+   "size": [
+    100,
+    45
+   ]
+  }
+ ],
+ "undoRow": {
+  "top": 246.90625,
+  "text": "Brew deleted\nUndo"
+ },
+ "rowTopBefore": 3809.90625,
+ "undoOnTop": {
+  "x": 277,
+  "y": 357.40625,
+  "top": 334.90625,
+  "w": 100,
+  "h": 45
+ },
+ "rowBack": 1,
+ "rec": {
+  "frames": 1788,
+  "noticeFrames": 53,
+  "modalFrames": 27,
+  "covered": 0,
+  "coveredEx": [],
+  "geo": 0,
+  "geoEx": [],
+  "noticeHidden": 0,
+  "noticeHiddenEx": [],
+  "chromeOver": 0,
+  "shifts": [
+   {
+    "at": 1552,
+    "hash": "#/stats",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": -45,
+    "sinceTap": -44,
+    "why": "screen"
+   },
+   {
+    "at": 24752,
+    "hash": "#/stats",
+    "sinceRoute": 23200,
+    "kind": "removed",
+    "from": 143,
+    "to": 0,
+    "down": 0,
+    "sinceInput": -14,
+    "sinceTap": -14,
+    "why": "screen"
+   }
+  ],
+  "seen": {
+   "Brew deleted Undo": 53
+  }
+ },
+ "errors": [],
+ "shiftAudit": [
+  {
+   "at": 1552,
+   "hash": "#/stats",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": -45,
+   "sinceTap": -44,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 24752,
+   "hash": "#/stats",
+   "sinceRoute": 23200,
+   "kind": "removed",
+   "from": 143,
+   "to": 0,
+   "down": 0,
+   "sinceInput": -14,
+   "sinceTap": -14,
+   "why": "screen",
+   "ok": true
+  }
+ ],
+ "shiftViolations": []
+}

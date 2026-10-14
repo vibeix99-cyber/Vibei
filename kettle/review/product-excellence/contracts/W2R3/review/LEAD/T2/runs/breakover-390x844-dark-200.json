@@ -1,0 +1,256 @@
+{
+ "base": "http://127.0.0.1:5476",
+ "cfg": "390x844:dark:200",
+ "flow": "breakover",
+ "kind": null,
+ "scene": "off",
+ "steps": [
+  {
+   "t": 4702,
+   "k": "tap",
+   "label": "field",
+   "at": [
+    195,
+    325
+   ],
+   "size": [
+    318,
+    52
+   ]
+  },
+  {
+   "t": 5574,
+   "k": "tap",
+   "label": "start",
+   "at": [
+    195,
+    588
+   ],
+   "size": [
+    358,
+    155
+   ]
+  },
+  {
+   "t": 11790,
+   "k": "tap",
+   "label": "Tea time",
+   "at": [
+    195,
+    720
+   ],
+   "size": [
+    350,
+    108
+   ]
+  },
+  {
+   "t": 13357,
+   "k": "break-over"
+  },
+  {
+   "t": 24273,
+   "k": "fallback-scroll",
+   "label": "Put the kettle on",
+   "onTop": true
+  },
+  {
+   "t": 24338,
+   "k": "tap",
+   "label": "Put the kettle on",
+   "at": [
+    195,
+    712
+   ],
+   "size": [
+    358,
+    108
+   ]
+  }
+ ],
+ "putOnTop": null,
+ "hashAfter": "#/focus",
+ "noticesEnd": {
+  "queue": [],
+  "shown": null,
+  "strip": 3,
+  "screen": "session:focus",
+  "why": "screen",
+  "changed": 21863,
+  "version": 20
+ },
+ "rec": {
+  "frames": 1411,
+  "noticeFrames": 604,
+  "modalFrames": 0,
+  "covered": 0,
+  "coveredEx": [],
+  "geo": 0,
+  "geoEx": [],
+  "noticeHidden": 0,
+  "noticeHiddenEx": [],
+  "chromeOver": 0,
+  "shifts": [
+   {
+    "at": 5024,
+    "hash": "#/focus",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": -2,
+    "sinceTap": -1,
+    "why": "screen"
+   },
+   {
+    "at": 5024,
+    "hash": "#/focus",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": -2,
+    "sinceTap": -1,
+    "why": "screen"
+   },
+   {
+    "at": 10432,
+    "hash": "#/focus",
+    "sinceRoute": 16,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": 208,
+    "sinceTap": 208,
+    "why": "screen"
+   },
+   {
+    "at": 11584,
+    "hash": "#/focus",
+    "sinceRoute": 1168,
+    "kind": "strip",
+    "from": 0,
+    "to": 148,
+    "top": 422,
+    "down": 0,
+    "sinceInput": 1360,
+    "sinceTap": 1360,
+    "why": "screen",
+    "app": {
+     "down": 0,
+     "sinceInput": 1357,
+     "sinceTap": 1357,
+     "atRest": true
+    }
+   },
+   {
+    "at": 21250,
+    "hash": "#/focus",
+    "sinceRoute": 10834,
+    "kind": "strip",
+    "from": 148,
+    "to": 0,
+    "top": 296,
+    "down": 0,
+    "sinceInput": 366,
+    "sinceTap": 11026,
+    "why": "above",
+    "app": {
+     "down": 0,
+     "sinceInput": 3,
+     "sinceTap": 11023,
+     "atRest": false
+    }
+   }
+  ],
+  "seen": {
+   "Recipe done: Take a full tea break · +10 leaves": 604
+  }
+ },
+ "errors": [],
+ "shiftAudit": [
+  {
+   "at": 5024,
+   "hash": "#/focus",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": -2,
+   "sinceTap": -1,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 5024,
+   "hash": "#/focus",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": -2,
+   "sinceTap": -1,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 10432,
+   "hash": "#/focus",
+   "sinceRoute": 16,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": 208,
+   "sinceTap": 208,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 11584,
+   "hash": "#/focus",
+   "sinceRoute": 1168,
+   "kind": "strip",
+   "from": 0,
+   "to": 148,
+   "top": 422,
+   "down": 0,
+   "sinceInput": 1360,
+   "sinceTap": 1360,
+   "why": "screen",
+   "app": {
+    "down": 0,
+    "sinceInput": 1357,
+    "sinceTap": 1357,
+    "atRest": true
+   },
+   "ok": true
+  },
+  {
+   "at": 21250,
+   "hash": "#/focus",
+   "sinceRoute": 10834,
+   "kind": "strip",
+   "from": 148,
+   "to": 0,
+   "top": 296,
+   "down": 0,
+   "sinceInput": 366,
+   "sinceTap": 11026,
+   "why": "above",
+   "app": {
+    "down": 0,
+    "sinceInput": 3,
+    "sinceTap": 11023,
+    "atRest": false
+   },
+   "ok": true
+  }
+ ],
+ "shiftViolations": []
+}

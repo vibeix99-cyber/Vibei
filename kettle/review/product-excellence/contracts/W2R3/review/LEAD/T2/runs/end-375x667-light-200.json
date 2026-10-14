@@ -1,0 +1,101 @@
+{
+ "base": "http://127.0.0.1:5476",
+ "cfg": "375x667:light:200",
+ "flow": "end",
+ "scene": "off",
+ "steps": [
+  {
+   "t": 7463,
+   "k": "not-on-top",
+   "label": "field"
+  },
+  {
+   "t": 8342,
+   "k": "tap",
+   "label": "start",
+   "at": [
+    188,
+    335
+   ],
+   "size": [
+    343,
+    155
+   ]
+  },
+  {
+   "t": 15978,
+   "k": "not-on-top",
+   "label": "End"
+  }
+ ],
+ "error": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Leave the kettle early?' }) to be visible\u001b[22m\n",
+ "rec": {
+  "frames": 1489,
+  "noticeFrames": 0,
+  "modalFrames": 0,
+  "covered": 0,
+  "coveredEx": [],
+  "geo": 0,
+  "geoEx": [],
+  "noticeHidden": 0,
+  "noticeHiddenEx": [],
+  "chromeOver": 0,
+  "shifts": [
+   {
+    "at": 7616,
+    "hash": "#/focus",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": 3,
+    "sinceTap": 3,
+    "why": "screen"
+   },
+   {
+    "at": 7616,
+    "hash": "#/focus",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": 3,
+    "sinceTap": 3,
+    "why": "screen"
+   }
+  ],
+  "seen": {}
+ },
+ "errors": [],
+ "shiftAudit": [
+  {
+   "at": 7616,
+   "hash": "#/focus",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": 3,
+   "sinceTap": 3,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 7616,
+   "hash": "#/focus",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": 3,
+   "sinceTap": 3,
+   "why": "screen",
+   "ok": true
+  }
+ ],
+ "shiftViolations": []
+}

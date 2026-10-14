@@ -1,0 +1,159 @@
+{
+ "base": "http://127.0.0.1:5476",
+ "cfg": "390x844:light:100",
+ "flow": "historytrace",
+ "scene": "off",
+ "steps": [
+  {
+   "t": 2231,
+   "k": "tap",
+   "label": "Stats tab",
+   "at": [
+    147,
+    810
+   ],
+   "size": [
+    96,
+    68
+   ]
+  },
+  {
+   "t": 11795,
+   "k": "tap",
+   "label": "history row",
+   "at": [
+    195,
+    677
+   ],
+   "size": [
+    318,
+    68
+   ]
+  },
+  {
+   "t": 12613,
+   "k": "tap",
+   "label": "Delete this brew",
+   "at": [
+    195,
+    794
+   ],
+   "size": [
+    338,
+    52
+   ]
+  },
+  {
+   "t": 13672,
+   "k": "tap",
+   "label": "Delete (confirm)",
+   "at": [
+    195,
+    571
+   ],
+   "size": [
+    290,
+    52
+   ]
+  }
+ ],
+ "trace": [
+  {
+   "lab": "before tap",
+   "scrollY": 2500,
+   "row": 754,
+   "undo": null,
+   "active": "MAIN Stats23StatsRobin · brewing si"
+  },
+  {
+   "lab": "edit open",
+   "scrollY": 2610,
+   "row": 644,
+   "undo": null,
+   "active": "INPUT "
+  },
+  {
+   "lab": "confirm open",
+   "scrollY": 2610,
+   "row": 644,
+   "undo": null,
+   "active": "BUTTON Keep it"
+  },
+  {
+   "lab": "after delete +2.5s",
+   "scrollY": 2610,
+   "row": null,
+   "undo": 644,
+   "active": "MAIN Stats22StatsRobin · brewing si"
+  }
+ ],
+ "frames": [
+  {
+   "t": 16,
+   "y": 2610,
+   "row": 644,
+   "undo": null,
+   "dlg": true
+  },
+  {
+   "t": 95,
+   "y": 2610,
+   "row": null,
+   "undo": 644,
+   "dlg": true
+  },
+  {
+   "t": 643,
+   "y": 2610,
+   "row": null,
+   "undo": 644,
+   "dlg": false
+  }
+ ],
+ "rec": {
+  "frames": 784,
+  "noticeFrames": 76,
+  "modalFrames": 33,
+  "covered": 0,
+  "coveredEx": [],
+  "geo": 0,
+  "geoEx": [],
+  "noticeHidden": 0,
+  "noticeHiddenEx": [],
+  "chromeOver": 0,
+  "shifts": [
+   {
+    "at": 1728,
+    "hash": "#/stats",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": -83,
+    "sinceTap": -82,
+    "why": "screen"
+   }
+  ],
+  "seen": {
+   "Brew deleted Undo": 76
+  }
+ },
+ "errors": [],
+ "shiftAudit": [
+  {
+   "at": 1728,
+   "hash": "#/stats",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": -83,
+   "sinceTap": -82,
+   "why": "screen",
+   "ok": true
+  }
+ ],
+ "shiftViolations": []
+}

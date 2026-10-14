@@ -1,0 +1,272 @@
+{
+ "base": "http://127.0.0.1:5476",
+ "cfg": "667x375:light:100",
+ "flow": "end",
+ "scene": "off",
+ "steps": [
+  {
+   "t": 2160,
+   "k": "tap",
+   "label": "field",
+   "at": [
+    503,
+    181
+   ],
+   "size": [
+    249,
+    52
+   ]
+  },
+  {
+   "t": 3111,
+   "k": "tap",
+   "label": "start",
+   "at": [
+    503,
+    283
+   ],
+   "size": [
+    281,
+    62
+   ]
+  },
+  {
+   "t": 5001,
+   "k": "tap",
+   "label": "End",
+   "at": [
+    594,
+    266
+   ],
+   "size": [
+    52,
+    54
+   ]
+  },
+  {
+   "t": 5567,
+   "k": "tap",
+   "label": "End session (sheet)",
+   "at": [
+    463,
+    337
+   ],
+   "size": [
+    250,
+    52
+   ]
+  },
+  {
+   "t": 6620,
+   "k": "tap",
+   "label": "Mark done",
+   "at": [
+    418,
+    146
+   ],
+   "size": [
+    79,
+    44
+   ]
+  },
+  {
+   "t": 7804,
+   "k": "tap",
+   "label": "Undo",
+   "at": [
+    581,
+    123
+   ],
+   "size": [
+    43,
+    44
+   ]
+  }
+ ],
+ "markDoneTapMs": 1212,
+ "undoRow": {
+  "top": 100.75,
+  "h": 44,
+  "text": "Crossed off. Nice work.\nUndo"
+ },
+ "undoRowVsMarkRow": 100.8,
+ "markRowTopAtTap": 123.75,
+ "undoOnTop": {
+  "x": 580.578125,
+  "y": 122.75,
+  "top": 100.75,
+  "w": 43,
+  "h": 44
+ },
+ "fieldAfterUndo": "Chapter 3 notes",
+ "noticesEnd": {
+  "queue": [],
+  "shown": null,
+  "strip": 5,
+  "screen": "/",
+  "why": "rest",
+  "changed": 8195,
+  "version": 18
+ },
+ "rec": {
+  "frames": 976,
+  "noticeFrames": 202,
+  "modalFrames": 0,
+  "covered": 0,
+  "coveredEx": [],
+  "geo": 0,
+  "geoEx": [],
+  "noticeHidden": 0,
+  "noticeHiddenEx": [],
+  "chromeOver": 0,
+  "shifts": [
+   {
+    "at": 2752,
+    "hash": "#/focus",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": 10,
+    "sinceTap": 10,
+    "why": "screen"
+   },
+   {
+    "at": 2752,
+    "hash": "#/focus",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": 10,
+    "sinceTap": 10,
+    "why": "screen"
+   },
+   {
+    "at": 4912,
+    "hash": "#/",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": 0,
+    "sinceTap": 0,
+    "why": "screen"
+   },
+   {
+    "at": 6496,
+    "hash": "#/",
+    "sinceRoute": 1584,
+    "kind": "removed",
+    "from": 44,
+    "to": 0,
+    "down": 0,
+    "sinceInput": -1,
+    "sinceTap": 0,
+    "why": "screen"
+   },
+   {
+    "at": 8208,
+    "hash": "#/",
+    "sinceRoute": 3296,
+    "kind": "strip",
+    "from": 57,
+    "to": 0,
+    "top": 0,
+    "down": 0,
+    "sinceInput": 1711,
+    "sinceTap": 1712,
+    "why": "rest",
+    "app": {
+     "down": 0,
+     "sinceInput": 1708,
+     "sinceTap": 1708,
+     "atRest": true
+    }
+   }
+  ],
+  "seen": {
+   "Saved 3 minutes of focus": 202,
+   "Crossed off. Nice work. Undo": 58
+  }
+ },
+ "errors": [],
+ "shiftAudit": [
+  {
+   "at": 2752,
+   "hash": "#/focus",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": 10,
+   "sinceTap": 10,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 2752,
+   "hash": "#/focus",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": 10,
+   "sinceTap": 10,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 4912,
+   "hash": "#/",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": 0,
+   "sinceTap": 0,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 6496,
+   "hash": "#/",
+   "sinceRoute": 1584,
+   "kind": "removed",
+   "from": 44,
+   "to": 0,
+   "down": 0,
+   "sinceInput": -1,
+   "sinceTap": 0,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 8208,
+   "hash": "#/",
+   "sinceRoute": 3296,
+   "kind": "strip",
+   "from": 57,
+   "to": 0,
+   "top": 0,
+   "down": 0,
+   "sinceInput": 1711,
+   "sinceTap": 1712,
+   "why": "rest",
+   "app": {
+    "down": 0,
+    "sinceInput": 1708,
+    "sinceTap": 1708,
+    "atRest": true
+   },
+   "ok": true
+  }
+ ],
+ "shiftViolations": []
+}

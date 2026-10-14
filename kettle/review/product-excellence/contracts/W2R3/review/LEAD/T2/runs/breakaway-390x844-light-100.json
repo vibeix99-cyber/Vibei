@@ -1,0 +1,288 @@
+{
+ "base": "http://127.0.0.1:5476",
+ "cfg": "390x844:light:100",
+ "flow": "breakaway",
+ "kind": null,
+ "scene": "off",
+ "steps": [
+  {
+   "t": 1836,
+   "k": "tap",
+   "label": "field",
+   "at": [
+    195,
+    458
+   ],
+   "size": [
+    318,
+    52
+   ]
+  },
+  {
+   "t": 2687,
+   "k": "tap",
+   "label": "start",
+   "at": [
+    195,
+    706
+   ],
+   "size": [
+    358,
+    60
+   ]
+  },
+  {
+   "t": 8945,
+   "k": "tap",
+   "label": "Tea time",
+   "at": [
+    195,
+    750
+   ],
+   "size": [
+    350,
+    60
+   ]
+  },
+  {
+   "t": 16974,
+   "k": "stopped-wheeling",
+   "after": 4367
+  }
+ ],
+ "noticesMid": {
+  "queue": [
+   {
+    "id": "t1",
+    "message": "Recipe done: Take a full tea break · +10 leaves",
+    "left": 3200
+   },
+   {
+    "id": "t2",
+    "message": "Break’s over — ready when you are.",
+    "left": 3200
+   }
+  ],
+  "shown": "t1",
+  "strip": 5,
+  "screen": "/stats",
+  "why": "above",
+  "changed": 10936,
+  "version": 19
+ },
+ "noticesEnd": {
+  "queue": [
+   {
+    "id": "t2",
+    "message": "Break’s over — ready when you are.",
+    "left": 972
+   }
+  ],
+  "shown": "t2",
+  "strip": 5,
+  "screen": "/stats",
+  "why": "rest",
+  "changed": 20751,
+  "version": 20
+ },
+ "rec": {
+  "frames": 1339,
+  "noticeFrames": 277,
+  "modalFrames": 0,
+  "covered": 0,
+  "coveredEx": [],
+  "geo": 0,
+  "geoEx": [],
+  "noticeHidden": 0,
+  "noticeHiddenEx": [],
+  "chromeOver": 0,
+  "shifts": [
+   {
+    "at": 2288,
+    "hash": "#/focus",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": 9,
+    "sinceTap": 10,
+    "why": "screen"
+   },
+   {
+    "at": 2288,
+    "hash": "#/focus",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": 9,
+    "sinceTap": 10,
+    "why": "screen"
+   },
+   {
+    "at": 7728,
+    "hash": "#/focus",
+    "sinceRoute": 16,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": 193,
+    "sinceTap": 194,
+    "why": "screen"
+   },
+   {
+    "at": 8688,
+    "hash": "#/stats",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": 1153,
+    "sinceTap": 1154,
+    "why": "screen"
+   },
+   {
+    "at": 10944,
+    "hash": "#/stats",
+    "sinceRoute": 2256,
+    "kind": "strip",
+    "from": 0,
+    "to": 73,
+    "top": -297,
+    "down": 0,
+    "sinceInput": 222,
+    "sinceTap": 3410,
+    "why": "above",
+    "app": {
+     "down": 0,
+     "sinceInput": 224,
+     "sinceTap": 3425,
+     "atRest": false
+    }
+   },
+   {
+    "at": 20752,
+    "hash": "#/stats",
+    "sinceRoute": 12064,
+    "kind": "strip",
+    "from": 73,
+    "to": 68,
+    "top": 16,
+    "down": 0,
+    "sinceInput": 1922,
+    "sinceTap": 13218,
+    "why": "rest",
+    "app": {
+     "down": 0,
+     "sinceInput": 1922,
+     "sinceTap": 13230,
+     "atRest": true
+    }
+   }
+  ],
+  "seen": {
+   "Recipe done: Take a full tea break · +10 leaves": 159,
+   "Break’s over — ready when you are.": 118
+  }
+ },
+ "errors": [],
+ "shiftAudit": [
+  {
+   "at": 2288,
+   "hash": "#/focus",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": 9,
+   "sinceTap": 10,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 2288,
+   "hash": "#/focus",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": 9,
+   "sinceTap": 10,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 7728,
+   "hash": "#/focus",
+   "sinceRoute": 16,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": 193,
+   "sinceTap": 194,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 8688,
+   "hash": "#/stats",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": 1153,
+   "sinceTap": 1154,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 10944,
+   "hash": "#/stats",
+   "sinceRoute": 2256,
+   "kind": "strip",
+   "from": 0,
+   "to": 73,
+   "top": -297,
+   "down": 0,
+   "sinceInput": 222,
+   "sinceTap": 3410,
+   "why": "above",
+   "app": {
+    "down": 0,
+    "sinceInput": 224,
+    "sinceTap": 3425,
+    "atRest": false
+   },
+   "ok": true
+  },
+  {
+   "at": 20752,
+   "hash": "#/stats",
+   "sinceRoute": 12064,
+   "kind": "strip",
+   "from": 73,
+   "to": 68,
+   "top": 16,
+   "down": 0,
+   "sinceInput": 1922,
+   "sinceTap": 13218,
+   "why": "rest",
+   "app": {
+    "down": 0,
+    "sinceInput": 1922,
+    "sinceTap": 13230,
+    "atRest": true
+   },
+   "ok": true
+  }
+ ],
+ "shiftViolations": []
+}

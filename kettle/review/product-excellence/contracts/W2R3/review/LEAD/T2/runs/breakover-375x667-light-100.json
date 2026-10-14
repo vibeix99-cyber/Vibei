@@ -1,0 +1,256 @@
+{
+ "base": "http://127.0.0.1:5476",
+ "cfg": "375x667:light:100",
+ "flow": "breakover",
+ "kind": null,
+ "scene": "off",
+ "steps": [
+  {
+   "t": 2341,
+   "k": "tap",
+   "label": "field",
+   "at": [
+    188,
+    348
+   ],
+   "size": [
+    303,
+    52
+   ]
+  },
+  {
+   "t": 3162,
+   "k": "tap",
+   "label": "start",
+   "at": [
+    188,
+    529
+   ],
+   "size": [
+    343,
+    60
+   ]
+  },
+  {
+   "t": 9357,
+   "k": "tap",
+   "label": "Tea time",
+   "at": [
+    188,
+    573
+   ],
+   "size": [
+    335,
+    60
+   ]
+  },
+  {
+   "t": 10946,
+   "k": "break-over"
+  },
+  {
+   "t": 15745,
+   "k": "tap",
+   "label": "Put the kettle on",
+   "at": [
+    188,
+    583
+   ],
+   "size": [
+    343,
+    60
+   ]
+  }
+ ],
+ "putOnTop": {
+  "x": 187.5,
+  "y": 583.484375,
+  "top": 553.484375,
+  "w": 343,
+  "h": 60
+ },
+ "hashAfter": "#/focus",
+ "noticesEnd": {
+  "queue": [],
+  "shown": null,
+  "strip": 3,
+  "screen": "session:focus",
+  "why": "screen",
+  "changed": 13695,
+  "version": 18
+ },
+ "rec": {
+  "frames": 899,
+  "noticeFrames": 272,
+  "modalFrames": 0,
+  "covered": 0,
+  "coveredEx": [],
+  "geo": 0,
+  "geoEx": [],
+  "noticeHidden": 0,
+  "noticeHiddenEx": [],
+  "chromeOver": 0,
+  "shifts": [
+   {
+    "at": 2864,
+    "hash": "#/focus",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": 13,
+    "sinceTap": 13,
+    "why": "screen"
+   },
+   {
+    "at": 2864,
+    "hash": "#/focus",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": 13,
+    "sinceTap": 13,
+    "why": "screen"
+   },
+   {
+    "at": 8288,
+    "hash": "#/focus",
+    "sinceRoute": 16,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": 206,
+    "sinceTap": 207,
+    "why": "screen"
+   },
+   {
+    "at": 9248,
+    "hash": "#/focus",
+    "sinceRoute": 976,
+    "kind": "strip",
+    "from": 0,
+    "to": 67,
+    "top": 313,
+    "down": 0,
+    "sinceInput": 1166,
+    "sinceTap": 1167,
+    "why": "screen",
+    "app": {
+     "down": 0,
+     "sinceInput": 1164,
+     "sinceTap": 1164,
+     "atRest": false
+    }
+   },
+   {
+    "at": 13600,
+    "hash": "#/focus",
+    "sinceRoute": 5328,
+    "kind": "strip",
+    "from": 67,
+    "to": 0,
+    "top": 313,
+    "down": 0,
+    "sinceInput": 3,
+    "sinceTap": 3,
+    "why": "screen",
+    "app": {
+     "down": 0,
+     "sinceInput": 1,
+     "sinceTap": 1,
+     "atRest": false
+    }
+   }
+  ],
+  "seen": {
+   "Recipe done: Take a full tea break · +10 leaves": 272
+  }
+ },
+ "errors": [],
+ "shiftAudit": [
+  {
+   "at": 2864,
+   "hash": "#/focus",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": 13,
+   "sinceTap": 13,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 2864,
+   "hash": "#/focus",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": 13,
+   "sinceTap": 13,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 8288,
+   "hash": "#/focus",
+   "sinceRoute": 16,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": 206,
+   "sinceTap": 207,
+   "why": "screen",
+   "ok": true
+  },
+  {
+   "at": 9248,
+   "hash": "#/focus",
+   "sinceRoute": 976,
+   "kind": "strip",
+   "from": 0,
+   "to": 67,
+   "top": 313,
+   "down": 0,
+   "sinceInput": 1166,
+   "sinceTap": 1167,
+   "why": "screen",
+   "app": {
+    "down": 0,
+    "sinceInput": 1164,
+    "sinceTap": 1164,
+    "atRest": false
+   },
+   "ok": true
+  },
+  {
+   "at": 13600,
+   "hash": "#/focus",
+   "sinceRoute": 5328,
+   "kind": "strip",
+   "from": 67,
+   "to": 0,
+   "top": 313,
+   "down": 0,
+   "sinceInput": 3,
+   "sinceTap": 3,
+   "why": "screen",
+   "app": {
+    "down": 0,
+    "sinceInput": 1,
+    "sinceTap": 1,
+    "atRest": false
+   },
+   "ok": true
+  }
+ ],
+ "shiftViolations": []
+}
