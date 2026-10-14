@@ -1040,5 +1040,108 @@
     "room": 0
    }
   }
+ },
+ {
+  "cfg": "844x390-light-t100",
+  "server": "trial",
+  "band": {
+   "target": "15 min",
+   "tgTopBefore": 20,
+   "tgTopWithNotice": 4,
+   "enterPush": -16,
+   "arriveWhy": "rest",
+   "withNotice": {
+    "stripTop": 0,
+    "stripH": 0
+   },
+   "tgTopAfterGone": 4,
+   "leaveMove": 0,
+   "leaveWhy": "rest",
+   "after": {
+    "stripTop": 0,
+    "stripH": 0,
+    "stripW": 712,
+    "room": 56.5,
+    "dataRoom": false,
+    "bg": "rgba(0, 0, 0, 0)",
+    "border": "0px none",
+    "over": [],
+    "hits": [
+     "DIV._screen_ahnin_2",
+     "DIV._rhythm_ahnin_363",
+     "DIV._control_chqjy_1 _md_chq"
+    ]
+   },
+   "afterScrollBack": {
+    "room": 56.5,
+    "sy": 16
+   }
+  },
+  "L1": {
+   "target": "3 days warm . Show details",
+   "intentTop": 78.5,
+   "pointerdown": {
+    "dtFromChange": 12,
+    "tgTop": 78.5,
+    "moved": 0,
+    "landed": "span._statNum_ahnin_49 \"3\"",
+    "onTarget": true
+   },
+   "click": {
+    "tgTop": 78.5,
+    "moved": 0,
+    "landed": "span._statNum_ahnin_49 \"3\"",
+    "onTarget": true
+   },
+   "change": {
+    "why": "rest",
+    "room": 56.5
+   },
+   "maxTargetMoveInWindow": 0
+  },
+  "L2": {
+   "target": "3 days warm . Show details",
+   "intentTop": 78.5,
+   "pointerdown": {
+    "dtFromChange": 13,
+    "tgTop": 78.5,
+    "moved": 0,
+    "landed": "span._statNum_ahnin_49 \"3\"",
+    "onTarget": true
+   },
+   "click": {
+    "tgTop": 78.5,
+    "moved": 0,
+    "landed": "span._statNum_ahnin_49 \"3\"",
+    "onTarget": true
+   },
+   "change": {
+    "why": "rest",
+    "room": 56.5
+   },
+   "maxTargetMoveInWindow": 0
+  },
+  "E": {
+   "target": "15 min",
+   "intentTop": 20,
+   "pointerdown": {
+    "dtFromChange": -5,
+    "tgTop": 4,
+    "moved": -16,
+    "landed": "span._inner_chqjy_41 \"15 min\"",
+    "onTarget": true
+   },
+   "click": {
+    "tgTop": 4,
+    "moved": -16,
+    "landed": "span._inner_chqjy_41 \"15 min\"",
+    "onTarget": true
+   },
+   "change": {
+    "why": "rest",
+    "room": 0
+   },
+   "maxTargetMoveInWindow": 16
+  }
  }
 ]
