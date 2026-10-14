@@ -131,7 +131,7 @@ Mechanism candidates, from reading the test code (not proven by a run): T2 reads
 
 None of the four failed on a maker trial alone; none failed alone on the combined tree. One run each cannot tell flaky from rare, so batch 2 repeats them (section 3b).
 
-Script `scripts/LR-batch1.sh` is the exact list of eight-plus invocations (13 processes).
+Script `scripts/LR-batch1.sh` is the exact list: 13 separate playwright processes (4 on the combined dev server, 4 on base, 5 on maker trials). Its `exit=` field in `rerun/batch1.log` is the exit of the `git rev-parse` in the same line, not of playwright (my script's error); the results are in each `rerun/<label>.log` and `.json`.
 
 ## 4. The standard capture matrix, preview :5530 (trial `e478604`) against preview :5488 (base `4d36939`)
 
@@ -195,3 +195,26 @@ Opened: trial `01-home`, `07-summary`, `08-summary-end`, `14-summary-first` (390
 - **Stats:** S's changes are visible in every Stats frame that is valid: the empty state and tiles speak of warm days ("Days warm", "Warmest run"); the populated page gains the Today / Last 7 days card at the top and is 191 css px taller at 390, 209 at 375 and 178 at 1440 (device px 382, 418, 178). Nothing else on the page was seen to change in the opened part.
 - **Settings:** G's changes are copy only in what I saw: the Daily goal footer, the Keep screen awake line and the Haptics line (one more line). The rest of the page keeps its form; in dark the content sits about 2 css px lower in the first screen (not measured).
 - **Chai at evening and night (N):** in light the tool forces day; in the dark Nook (night lighting) the pair differs around Chai and along the room's edges together; I cannot separate N's fur change from scene animation in these captures. N's own receipts (Lane R-N) cover that with still frames.
+
+### 3b. Repeat runs of the tests that passed alone (batch 2, 18:34 to 18:41, natural machine load 5 to 11)
+
+`scripts/LR-batch2.sh`: one playwright process per line, `--repeat-each`, `--workers=1`, logs and JSON in `rerun/R*.{log,json}`; `playwright-exit` and `load` are in `rerun/batch2.log`.
+
+| Test | Server and tests from | Runs | Passed | Failed | Failure |
+|---|---|---|---|---|---|
+| T2 pressed segment | combined dev :5520, combined tests | 8 | 4 | **4** (runs 3, 4, 6, 7) | `w3-settings.spec.ts:249`, `pressed` = `hover` = `oklab(0.959197 0.00389533 0.0175539)`, the same assertion and value as in the suite and on base |
+| T2 pressed segment | **G trial :5523**, G's tests (`3d91793`) | 8 | 4 | **4** (runs 1, 3, 5, 8) | the same assertion and value |
+| T1 integrity I03 | combined :5520 | 4 | 4 | 0 | |
+| T3 `w3-notices` room | combined :5520 | 4 | 4 | 0 | |
+| T4 `w3-stats` Delete 390×844 @200 | combined :5520 | 4 | 4 | 0 | |
+
+### 3c. Classification (all evidence above)
+
+| # | Test | Seen failing | Rerun results | Class | Owner |
+|---|---|---|---|---|---|
+| T2 | `w3-settings` "a pressed segment reads as pressed…" | 1 of 1 in complete C (it passed in the cut C) | alone: pass on combined, pass on G trial; repeats: **fail 4 of 8 on combined and 4 of 8 on the G trial**, same assertion; fails on base too (no pressed colour there, by design) | **Flaky, and present on the maker's own trial** (not a combined-only effect). A timing-dependent test: it reads the colour a fixed 120 ms after `mouse.down()` while `.inner` has a colour transition (candidate, not proven) | **G** (`tests/w3-settings.spec.ts`, `src/ui/SegmentedControl.module.css`) |
+| T1 | `integrity` I03 storage-full banner "gone when there is room" (390×844) | 1 of 1 in A (load 10 to 18) | alone: pass on combined, base, S trial, F trial; repeats: 4 of 4 pass on combined | **Flaky** (1 failure in 6 combined-tree runs, 0 in 3 on base, S and F). Too few runs to exclude a rare combined-only effect | test file **S**; surface F (Shell/Toast) and the unowned save-warning |
+| T3 | `w3-notices` "the room a gone notice keeps…" (390×844 @200) | cut C only | complete C pass; alone pass on combined and F trial; repeats 4 of 4 pass; fails on base by design | **Flaky or load-sensitive** (one sighting, in the run the restart cut) | **F** |
+| T4 | `w3-stats` "Delete this brew?" 390×844 @200 "both choices can be tapped…" | cut C only | complete C pass; alone pass on combined and S trial; repeats 4 of 4 pass; fails on base by design | **Flaky or load-sensitive** (one sighting, in the cut run) | **S** (`Sheet.tsx`) |
+
+No failure was a base failure (T1 passes on base; T2 to T4 fail on base only because they test the fix). No failure was combined-only: each passes on, or is flaky on, its owner's trial. One failure (T2) fails equally on the maker's trial.
