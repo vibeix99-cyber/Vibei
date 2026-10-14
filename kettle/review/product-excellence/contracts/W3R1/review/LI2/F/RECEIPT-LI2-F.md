@@ -318,7 +318,7 @@ Busy at time-up: mouse moves every 150 ms. Then 1440: 12 wheel steps of 60 px; p
 
 ### 2f. Control: the same probe on BASE :5478
 
-17:11–17:19 UTC; `idle/base/idle-base.json`, `idle/idle-base.log`, frames `idle/base/*`.
+17:11–17:19 UTC; `idle/base/idle-base.json`, `idle/idle-base.log`, frames `idle/base/<cfg>-{0-no-notice,1-notice,2-band-at-leave}.png`. Frames 3–6 were removed to stay under 60 MB; the JSON keeps every number.
 
 | Step | 390×844 light 100 | 390×844 dark 200 rm | 1440 light 100 | 1440 dark 200 rm |
 |---|---|---|---|---|
@@ -366,7 +366,7 @@ Opened: `topbar2/base-667x375-light-t200-session-running.png` (the "C h a.." sta
 
 A room kept there and later holding the controls out of reach is given back the same way.
 
-**First attempt** (`LI2-idle.mjs` "reach", trial 17:09–17:10, base 17:18–17:19, `idle/{trial,base}/*-reach-*.png`):
+**First attempt** (`LI2-idle.mjs` "reach", trial 17:09–17:10, base 17:18–17:19; data in `idle/{trial,base}/idle-*.json`; frames removed for size):
 - A brew running; a 6 s notice in the panel's strip at 375×667, 844×390 and 390×844 @200.
 - The notice (228 px tall at 375×667 @200) puts Add 5 / Pause / End below the fold on both builds. No control was on top in view below the strip.
 - The CDP `synthesizeScrollGesture` touch scroll did not move the panel, so no tap was aimed.
@@ -449,7 +449,7 @@ The target was above the view at that moment (top −118). The 153.5 px jump is 
 
 ### 3d. `reach`, redone with a real finger drag
 
-`LI2-idle2.mjs` "reach": trial 17:22–17:25, base 17:28–17:30. Frames `idle2/{trial,base}/<cfg>-reach-{1-notice,2-scrolled}.png`; data `idle2/*/idle2-*-reach-all.json`. A 6 s notice "Couldn't save just now. Your summary is still here. · LI2 reach probe" was shown in the panel's strip of a running brew. A finger drag then brought the lowest control (Add 5) into view.
+`LI2-idle2.mjs` "reach": trial 17:22–17:25, base 17:28–17:30. Frames `idle2/{trial,base}/{375x667,390x844}-*-reach-{1-notice,2-scrolled}.png` (844×390 frames removed for size); data `idle2/*/idle2-*-reach-all.json`. A 6 s notice "Couldn't save just now. Your summary is still here. · LI2 reach probe" was shown in the panel's strip of a running brew. A finger drag then brought the lowest control (Add 5) into view.
 
 | Config | After the drag | Did the notice leave? |
 |---|---|---|
@@ -494,7 +494,7 @@ A tap aimed beforehand lands on the arriving notice or the card in **10 of 15** 
 
 ### 3e. `reach` with a control already partly in view at rest (no scrolling)
 
-`LI2-reach2.mjs` (new), trial 17:43–17:46, base 17:46–17:48 UTC. Data `reach2/reach2-{trial,base}.json`; logs `reach2/reach2-*.log`; frames `reach2/{trial,base}-<cfg>-<msglen>-{1-notice,2-after-tap}.png`.
+`LI2-reach2.mjs` (new), trial 17:43–17:46, base 17:46–17:48 UTC. Data `reach2/reach2-{trial,base}.json`; logs `reach2/reach2-*.log`; frames kept for 375×667 @100, 390×844 @200 and 844×390 @100 with the 24-character notice: `reach2/{trial,base}-<cfg>-24-{1-notice,2-after-tap}.png` (the rest removed for size).
 
 **Setup:**
 - A running brew; light, full motion, touch.

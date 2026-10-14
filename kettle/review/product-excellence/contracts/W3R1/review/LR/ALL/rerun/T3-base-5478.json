@@ -1,0 +1,193 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w5tr-all/kettle/playwright.config.ts",
+    "rootDir": "/home/user/wt/w5tr-all/kettle/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/rr-T3-base-5478",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-harness",
+        "name": "timer-harness",
+        "testDir": "/home/user/wt/w5tr-all/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/rr-T3-base-5478",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-app",
+        "name": "timer-app",
+        "testDir": "/home/user/wt/w5tr-all/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/rr-T3-base-5478",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pwa",
+        "name": "pwa",
+        "testDir": "/home/user/wt/w5tr-all/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/pwa\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/rr-T3-base-5478",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w5tr-all/kettle/tests",
+        "testIgnore": [
+          "/(timer|pwa)\\.spec\\.ts/"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite --config tests/e2e.vite.config.ts --port 5478 --strictPort",
+      "url": "http://127.0.0.1:5478/",
+      "reuseExistingServer": true,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "w3-notices.spec.ts",
+      "file": "w3-notices.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "the room a gone notice keeps stays while the page is scrolled over it and back: nothing in view moves (390×844, 200 %)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 21516,
+                  "error": {
+                    "message": "Error: the strip keeps its room, empty\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-notice-strip][data-room]')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - the strip keeps its room, empty with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-notice-strip][data-room]')\u001b[22m\n\u001b[2m    14 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n",
+                    "stack": "Error: the strip keeps its room, empty\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-notice-strip][data-room]')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - the strip keeps its room, empty with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-notice-strip][data-room]')\u001b[22m\n\u001b[2m    14 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n    at /home/user/wt/w5tr-all/kettle/tests/w3-notices.spec.ts:160:58",
+                    "location": {
+                      "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices.spec.ts",
+                      "column": 58,
+                      "line": 160
+                    },
+                    "snippet": "  158 |   await expect(page.locator('[data-notice-strip] li')).toHaveCount(0, { timeout: 20_000 });\n  159 |   const strip = page.locator('[data-notice-strip][data-room]');\n> 160 |   await expect(strip, 'the strip keeps its room, empty').toHaveCount(1);\n      |                                                          ^\n  161 |   const room = await strip.evaluate((e) => e.getBoundingClientRect().height);\n  162 |   expect(room).toBeGreaterThan(40);\n  163 |   expect(await strip.evaluate((e) => e.textContent), 'nothing in the room').toBe('');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices.spec.ts",
+                        "column": 58,
+                        "line": 160
+                      },
+                      "message": "Error: the strip keeps its room, empty\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-notice-strip][data-room]')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - the strip keeps its room, empty with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-notice-strip][data-room]')\u001b[22m\n\u001b[2m    14 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n\n  158 |   await expect(page.locator('[data-notice-strip] li')).toHaveCount(0, { timeout: 20_000 });\n  159 |   const strip = page.locator('[data-notice-strip][data-room]');\n> 160 |   await expect(strip, 'the strip keeps its room, empty').toHaveCount(1);\n      |                                                          ^\n  161 |   const room = await strip.evaluate((e) => e.getBoundingClientRect().height);\n  162 |   expect(room).toBeGreaterThan(40);\n  163 |   expect(await strip.evaluate((e) => e.textContent), 'nothing in the room').toBe('');\n    at /home/user/wt/w5tr-all/kettle/tests/w3-notices.spec.ts:160:58"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T17:49:28.645Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w5tr-all/kettle/.tmp/LR-pw/rr-T3-base-5478/w3-notices-the-room-a-gone-4a25d--in-view-moves-390×844-200--chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w5tr-all/kettle/tests/w3-notices.spec.ts",
+                    "column": 58,
+                    "line": 160
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-3eab3d6da45d76ded143",
+          "file": "w3-notices.spec.ts",
+          "line": 152,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-14T17:49:26.966Z",
+    "duration": 23897.47,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}
