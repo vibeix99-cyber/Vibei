@@ -420,3 +420,27 @@ Prior: `combined/comb-comb.json`, `combined/comb.log`, 12 frames `combined/<cfg>
 | Mark done → inline Undo: on top 9/9; overlaps with notices; Undo restores the task | 9/9; none; yes | 9/9; none; yes | 9/9; none; yes | 9/9; none; yes |
 
 The phone sizes @200 kept a 194 px band. On the trial, "Saved 3 minutes of focus" alone leaves 113 px at these sizes (§1a), so this is not that notice's height. The probe's 3-line composer warning was raised on Today before the brew. Notices queued at a route change move to the next screen, and the room keeps the tallest notice that left. That the warning came back to Today and set the room is my inference; the probe did not record which notice set it.
+
+### 2e. Redone on phones with a real finger drag
+
+`LI2-idle2.mjs`: CDP `Input.dispatchTouchEvent` touchStart, touchMove in 12 px steps every 16 ms, touchEnd. Run 17:22–17:30 UTC. Data `idle2/{trial,base}/idle2-*.json`, logs `idle2/*.log`, frames `idle2/{trial,base}/*.png`.
+
+**Band after a touch scroll (trial, 10 s idle variant):**
+- 390×844 light @100: the drag scrolled the page to **sy 297** with the band above the view (strip top −281). Dragged back to sy 0, then sampled at 0.3 / 1.3 / 2.5 / **6 s**: **room 68 at every sample**, **0 commits**. Before that: 10 s idle with room 68; pointer held 3 s with room 68.
+- 390×844 dark @200 reduced: sy 311 (strip top −295). After the drag back, **room 153.5 at every sample to 6 s**, 0 commits.
+- Hidden (emulated): room → 0, content **−68 / −153.5 px** on return.
+- New screen and reload: room → 0.
+
+Frames: `idle2/trial/390x844-{light-t100,dark-t200-rm}-{2-band-at-leave,3-band-after-10s-idle,4-band-after-scroll-and-6s-idle}.png`.
+
+**The "above" path during a touch fling** (time-up while busy, then a 600 px finger drag released into momentum scrolling):
+
+| Build | Config | The leave | Visible effect in the leave's frame |
+|---|---|---|---|
+| TRIAL | 390×844 light 200 (×2) | `why: above`, room 0, **513 / 549 ms after the last touch input** (`pointercancel`, i.e. while the fling was still moving the page) | rep 0: target moved **−153.5 px with scroll 0**; rep 1: **−165.5 px with scroll +12**. In both, the layout shift (−153.5, the strip's height) was **not compensated**: everything below the strip jumped up 153.5 px on screen mid-fling |
+| BASE | 390×844 light 200 (×2) | `why: above`, 478 / 532 ms after `pointercancel` | rep 0: −165.5 visible with scroll +12; rep 1: −153.5 with scroll 0. **Same jump on the base** |
+| TRIAL | 375×667 dark 100 reduced (×2) | `why: above`, 293 / 318 ms after `pointercancel` | the frame scrolled −60 / −72 (the strip is 72.5). The target was the docked brew-length control, which does not move with the page, so the visible content shift is **not measured** |
+
+The target was above the view at that moment (top −118). The 153.5 px jump is of the content in view below the strip. At 1440 with stepped wheel and reduced motion, the same path was compensated (§2d).
+
+**Interpretation, raw:** the "above" leave is not part of the band question (it keeps no room). It is the one change the trial makes while a scroll is still running. On a touch fling the compensation did not hold, on both builds.
