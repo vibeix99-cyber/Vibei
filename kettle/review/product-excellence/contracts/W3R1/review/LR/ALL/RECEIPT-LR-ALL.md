@@ -104,3 +104,31 @@ Started 17:25:26, freed 17:32:07 (6.7 min), dev :5520, `--workers=1`, load avera
 | timer-harness, timer-app, pwa (1b) | 29 | 0 | 2 | 31 |
 
 Failures in the union: `integrity.spec.ts` "I03 storage-full warning is a banner in the page (phone 390×844) › nothing over the brew; …" (A) and `w3-settings.spec.ts` "a pressed segment reads as pressed…" (C). The 25 skips are one spec file (`w3-notices-load`, `W3_LOAD` unset); nothing else in the chromium project was skipped. The four runs were made at different times and under different load (A at load 10 to 18, B 6 to 15, C 12), not as one pass.
+
+## 3. Every failure, rerun alone (batch 1)
+
+Four tests were seen failing on the combined tree: two in the complete runs (`integrity` I03, `w3-settings` pressed segment) and two in the cut runs of the previous instance (`w3-notices` room, `w3-stats` Delete). Each was rerun once alone (one `playwright test -g <title>` process, `--workers=1`, own `--output`, 17:47 to 17:52, one gate slot): on the combined dev :5520, on base :5478, and on the owning maker's trial. The scripts are `scripts/LR-batch1.sh` (below) and the logs and JSON are in `rerun/<label>.{log,json}`. For base :5478 the test files are the combined tree's (the `w3-*` specs exist only on the maker branches, so they run against base code; `integrity.spec.ts` differs from base only in `profilePills`, not in the I03 tests). For a maker trial the test files are that trial's own. Machine load during these runs was lower than during the suites; I did not measure it per run (batch 2 records it).
+
+| # | Test (spec file, owner of the file) | In the suite | Alone, combined :5520 | Alone, base :5478 | Alone, owner trial |
+|---|---|---|---|---|---|
+| T1 | `integrity.spec.ts` I03 "storage-full warning is a banner in the page (phone 390×844) › nothing over the brew; …" (file: **S**; feature: the save-warning banner, no maker's file, shown by F's Shell/Toast surface) | **failed** in A (`:1100`, banner still there 6 s after room was freed) | **passed** 30.3 s | **passed** 29.3 s | S :5522 **passed** 38.9 s; F :5521 **passed** 29.6 s |
+| T2 | `w3-settings.spec.ts` "a pressed segment reads as pressed: unlike hover and unlike the selected one" (file and feature: **G**) | **failed** in C (`:249`, `pressed` = `hover` = `oklab(0.959197 0.00389533 0.0175539)`); passed in the cut C | **passed** 4.2 s | **failed** 4.1 s, same assertion `:249`, same value `oklab(0.959197 0.00389533 0.0175539)` | G :5523 **passed** 12.7 s |
+| T3 | `w3-notices.spec.ts` "the room a gone notice keeps stays while the page is scrolled over it and back… (390×844, 200 %)" (file and feature: **F**) | failed in the cut C; **passed** in the complete C | **passed** 16.7 s | **failed** 21.5 s: `[data-notice-strip][data-room]` count 0, expected 1 ("the strip keeps its room, empty", spec line 160) | F :5521 **passed** 28.2 s |
+| T4 | `w3-stats.spec.ts` "Delete this brew? at 390×844 with 200 % text › both choices can be tapped, and Tab reaches them in a loop" (file and feature: **S**, `ui/Sheet.tsx`) | failed in the cut C; **passed** in the complete C | **passed** 8.7 s | **failed** 6.8 s: first Tab focus "Keep it", expected "Delete" (spec line 118) | S :5522 **passed** 12.2 s |
+
+What each base result is: T2, T3 and T4 are the makers' new "fails on base, passes on the fix" tests (G claims `w3-settings` 9/9 fail on base; F claims `w3-notices` fails 4/5 on base; S claims 17 of 21 `w3-stats` fail on base), so a base failure here shows the test reaches the changed behaviour, not that base has a defect. T1 is an old test and passes on base.
+
+Mechanism candidates, from reading the test code (not proven by a run): T2 reads the segment's `inner` background 120 ms after `mouse.down()` (`w3-settings.spec.ts:244`), and `SegmentedControl.module.css:84` gives `.inner` a `background-color var(--dur-fast)` transition; if the main thread is starved the colour read still equals the hover colour that the transition starts from, which is the value the failure shows (identical to base, where no pressed colour exists). T1's last step waits 6 s for the banner to go after storage is freed (`integrity.spec.ts:1100`). Both are timing-dependent steps, and part A ran at load 10 to 18 and C at load 12.
+
+### Classification on this evidence (before batch 2)
+
+| # | Failed in | Alone on combined | Class (on one rerun each) | Owner |
+|---|---|---|---|---|
+| T1 | A of the complete suite | passed; passes on base, on S and on F trial | **not reproduced alone, so flaky or load-dependent**; no base failure, no combined-only cross-effect shown, no maker-trial failure | test file: S (`integrity.spec.ts`); surface: F (Shell/Toast) and the unowned save-warning |
+| T2 | C of the complete suite | passed; passes on G trial | **not reproduced alone, so flaky or load-dependent**; not a combined-only effect (passes on combined and on G) | G (`w3-settings.spec.ts`, `SegmentedControl.module.css`) |
+| T3 | cut C only | passed in the complete C and alone | **not reproduced in the complete run or alone: flaky** (one sighting in the cut run) | F (`w3-notices.spec.ts`) |
+| T4 | cut C only | passed in the complete C and alone | **not reproduced in the complete run or alone: flaky** (one sighting in the cut run) | S (`w3-stats.spec.ts`, `Sheet.tsx`) |
+
+None of the four failed on a maker trial alone; none failed alone on the combined tree. One run each cannot tell flaky from rare, so batch 2 repeats them (section 3b).
+
+Script `scripts/LR-batch1.sh` is the exact list of eight-plus invocations (13 processes).
