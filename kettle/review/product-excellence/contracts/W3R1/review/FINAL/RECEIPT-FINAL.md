@@ -74,15 +74,35 @@ Each test: once alone on :5540 (this tree), once alone on base :5478 (this tree'
 | F2 | `integrity` I03 storage-full banner at 390×844 (X-1) | **pass** 26.7 s | **pass** 27.2 s | **3 of 3 pass** (26.5, 28.9, 26.5 s) |
 | F3 | `w2-room` "3D failure (WebGL context lost): the still that takes over carries the same items" | **pass** 29.5 s | **pass** 34.8 s | **3 of 3 pass** (30.4, 33.6, 26.9 s) |
 
-All nine runs passed; none failed on base. Classification on this evidence (6 runs per test: the full run and the five reruns; each failure was seen once, in the 2-worker full run at load 7 to 14):
+All nine runs passed; none failed on base. Artifacts of the three failures of the full run (copied from `kettle/.tmp/LR-pw/full/`): `rerun/fullrun-artifacts/` holds `F1-I01-trace.zip` (the test uses raw CDP tabs, so its Playwright trace has only the test's own steps, no page snapshots; no error-context was written for F1), `F2-I03-trace.zip` and `F2-I03-error-context.md`, `F3-w2room-trace.zip` and `F3-w2room-error-context.md` (the page snapshot at the timeout: the focus screen, "Kettle's on. Nice start", 24:12 left). Original paths: `.tmp/LR-pw/full/integrity-I01-session-time-17740-p-and-does-not-add-a-second-chromium/`, `.../integrity-I03-storage-full-5c5d1-ull-gone-when-there-is-room-chromium/`, `.../w2-room-Focus-backdrop-ear-6a083-over-carries-the-same-items-chromium/`.
 
-| # | Class | Owner (PLAN.md) | Signature |
-|---|---|---|---|
-| F1 | **Flaky** (load): 1 failure in the full run, 0 in 5 later runs, 0 on base. Not a base failure, not shown to be a product failure. The same test passed in the combined-trial part A (its one integrity failure there was I03) | test file: **S** (`tests/integrity.spec.ts`); feature: the multi-tab timer, `src/timer/**` (nobody edits it this round) | the other tab did not take the finished brew to `#/done` within the wait; `leader false, leaderMode "locks", wakes 8` |
-| F2 | **Flaky**, the X-1 sighting again: 1 failure in the full run, 1 in the combined-trial part A, 0 in all reruns on this tree and base. Section 7 repeats it 10 times with a trace | test file **S** (`tests/integrity.spec.ts`, I03 unchanged by S); surface: save-warning (unowned) in F's Shell/Toast | `region /storage is full/` count 1, expected 0, 6000 ms, "gone when there is room" step |
-| F3 | **Flaky**: the same test and the same step (`assertLayersDrawn`, `page.screenshot`) timed out in Lane R-N's first run on the N trial (passed on its second run); 1 failure here, 0 in 5 later runs, 0 on base | test file and feature: **N** (`tests/w2-room.spec.ts`; `src/scene/**`) | `Test timeout of 60000ms exceeded` at a `page.screenshot` under 2 workers (SwiftShader, WebGL context lost then restored) |
+### 3a. Reading of the failing traces
 
-None was a base failure. None reproduced alone or in repeats on this tree.
+- **F3 (`w2-room`, 60.9 s):** the trace's steps show where the 60 s went: `expect(host).toHaveAttribute('data-scene-ready', 'true', { timeout: 45000 })` took **30.4 s** (spec line 149), then six `page.screenshot` calls took 0.6 to 2.8 s each (about 11 s in all), and the seventh was cut by the test timeout. The same test passes alone in 27 to 35 s. So the budget went to the 3D scene taking 30 s to become ready on SwiftShader with two workers running.
+- **F1 (`integrity` I01, 35.7 s):** the trace has only the hook steps (the test drives raw Chromium tabs over CDP), so it shows nothing of the two tabs. Its assertion output is the signature in section 2: the *other* tab, 30 s after the brew started, had `status idle` at `#/` with `leader false`, so it never reached `#/done`.
+- **F2 (`integrity` I03):** `toHaveCount(0)` on the banner failed after its 6 s limit; the 10-run trace table in section 7 gives the same step's usual duration (0.1 to 2.9 s).
+
+### 3b. The same three tests under load (`scripts/LR-stress.sh`, 23:52 to 23:58, `rerun/stress.{log.txt,json}`, `rerun/stress-run.log.txt`)
+
+To see whether the failures follow load: `--workers=2` (as in the full run, gate `--n 2`) plus four CPU burners (my own PIDs, stopped after), `--repeat-each=6 --trace=on` over the three tests (18 runs). Load average 4.5 at the start and 11.6 at the end.
+
+| Test | Result under load | Time per run |
+|---|---|---|
+| F1 `integrity` I01 two tabs, frozen leader | **5 passed, 1 failed** (the first run of the batch, 35.4 s) | 19.4 to 20.7 s when it passed (17.4 to 21.8 s unloaded) |
+| F2 `integrity` I03 banner (X-1) | **6 of 6 passed** | 30.2 to 32.4 s (26.5 to 29 s unloaded) |
+| F3 `w2-room` WebGL lost | **6 of 6 passed** | **41.4 to 47.4 s** (26.9 to 34.8 s unloaded; the limit is 60 s) |
+
+The F1 failure under load: `Error: timed out waiting for window.__kettle.timer.getState().sessionId === "s_mv8rme7s5b5f0835"` (page: `hash "#/"`, `timer "idle"`, `multiTab true`, `leader true`, `leaderMode "locks"`, `leaderForMs 31415`, `wakes 6`). That is a different step from the one in the full run: here the **leader** tab never saw the session that the other tab started, within 30 s (trace `rerun/fullrun-artifacts/F1-stress-failing-run-trace.zip`; again only test steps in it). In the full run the failing wait was the other tab's wait for completion and `#/done`.
+
+### 3c. Classification (Vibei's standard: flaky only if the reruns show it, with the signature explained)
+
+| # | Reruns | Signature explained? | Class | Owner (PLAN.md) |
+|---|---|---|---|---|
+| **F3** `w2-room` WebGL context lost | alone :5540 pass; alone base pass; 3× :5540 pass; under load 6 of 6 pass | **Yes, as a load timeout:** the failing run spent 30.4 s of its 60 s waiting for the scene to be ready (trace), screenshots 1 to 3 s each; under load the same test takes 41 to 47 s against 27 to 35 s unloaded. Not reproduced as a failure in my 18 later runs (its margin under load is 13 to 19 s). The same test and step timed out in Lane R-N's first run on the N trial. A known environment limit (SwiftShader, 2 workers) | **Flaky (load, test timeout).** Not a product failure shown; the margin under load is thin | test file and feature **N** (`tests/w2-room.spec.ts`, `src/scene/**`; the test is N-owned by PLAN.md) |
+| **F1** `integrity` I01 two tabs, frozen leader | alone :5540 pass; alone base pass; 3× :5540 pass; under load **1 of 6 failed** | **Partly.** The failure follows load (1 in the full run at load 7 to 14, 1 in 6 under burners, 0 in 8 unloaded or lightly loaded runs), and both failures are 30 s timeouts of a cross-tab wait; but the failing step differs between the two (the other tab never completed, in the full run; the leader never saw the session, under load), and I did not determine whether the cause is the test (it fixes an 800 ms wait for the leader election between two freshly opened tabs, then starts a brew in the tab it believes is the follower) or the app's cross-tab hand-off being slow under load | **Not cleared as flaky: record as an open finding.** Load-sensitive, reproduced, mechanism not determined, product versus test unresolved | test file **S** (`tests/integrity.spec.ts`); feature: multi-tab timer leadership, `src/timer/**` (**unowned this round**) |
+| **F2** `integrity` I03 banner (X-1) | alone :5540 pass; alone base pass; 3× pass; 10× with trace pass (section 7); under load 6 of 6 pass | **Only from the code, not from a failing trace:** the banner leaves at a 2 s recovery tick (`RECOVERY_CHECK_MS = 2000`, `saveWarning.ts`); the step took 0.1 to 2.9 s in 10 traces against the 6 s limit. Two failures were seen (combined-trial part A and this full run), both in loaded multi-job runs; none in 20 later runs | **Intermittent, load-associated, not reproduced**; I cannot call the mechanism shown. Keep as X-1 "not isolated" | test file **S**; surface: the save-warning (`src/app/saveWarning.ts`, unowned) |
+
+None was a base failure (all pass on base alone). None failed alone or in the 3× repeats on :5540.
 
 ## 4. `notice-strip.spec.ts`, the whole file once on :5540 (X-11 withdrawn, so the final tree is `2be3de1`)
 
