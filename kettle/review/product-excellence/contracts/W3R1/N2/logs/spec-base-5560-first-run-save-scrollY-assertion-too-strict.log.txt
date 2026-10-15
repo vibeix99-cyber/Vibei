@@ -1,0 +1,42 @@
+[slots] N2 took 1/3 at 11:50:56: npx playwright test tests/w3-history-focus-scroll.spec.ts --project=chromium --workers=1 --reporter=list --output=/tmp/n2/pw/run1
+
+Running 14 tests using 1 worker
+
+  ✓   1 [chromium] › tests/w3-history-focus-scroll.spec.ts:159:5 › 1440×900 @200 % reduced motion, light (where X-11 was found) › a tap on a History row opens Edit brew and the row, and the page, stay where the person saw them; Close and Escape too (9.1s)
+  ✓   2 [chromium] › tests/w3-history-focus-scroll.spec.ts:194:5 › 1440×900 @200 % reduced motion, light (where X-11 was found) › Save: the row stays where it was seen (8.7s)
+  ✓   3 [chromium] › tests/w3-history-focus-scroll.spec.ts:159:5 › 1440×900 @100 %, light › a tap on a History row opens Edit brew and the row, and the page, stay where the person saw them; Close and Escape too (19.2s)
+  ✘   4 [chromium] › tests/w3-history-focus-scroll.spec.ts:194:5 › 1440×900 @100 %, light › Save: the row stays where it was seen (12.7s)
+  ✓   5 [chromium] › tests/w3-history-focus-scroll.spec.ts:159:5 › 390×844 phone, touch, light › a tap on a History row opens Edit brew and the row, and the page, stay where the person saw them; Close and Escape too (7.6s)
+  ✓   6 [chromium] › tests/w3-history-focus-scroll.spec.ts:194:5 › 390×844 phone, touch, light › Save: the row stays where it was seen (6.6s)
+  ✓   7 [chromium] › tests/w3-history-focus-scroll.spec.ts:159:5 › 390×844 phone, touch, dark › a tap on a History row opens Edit brew and the row, and the page, stay where the person saw them; Close and Escape too (7.0s)
+  ✓   8 [chromium] › tests/w3-history-focus-scroll.spec.ts:194:5 › 390×844 phone, touch, dark › Save: the row stays where it was seen (5.0s)
+  ✓   9 [chromium] › tests/w3-history-focus-scroll.spec.ts:251:5 › keyboard and Delete, 1440×900 @200 % reduced motion, light (where X-11 was found) › Tab brings an off-screen row into view; Enter and Space open Edit brew; closing returns focus to the row (7.6s)
+  ✓  10 [chromium] › tests/w3-history-focus-scroll.spec.ts:276:5 › keyboard and Delete, 1440×900 @200 % reduced motion, light (where X-11 was found) › Delete from the keyboard: the row turns into its Undo in its exact place, focus lands on the Undo, Undo restores the row (6.9s)
+  ✓  11 [chromium] › tests/w3-history-focus-scroll.spec.ts:312:5 › keyboard and Delete, 1440×900 @200 % reduced motion, light (where X-11 was found) › Delete by pointer or touch: the row turns into its Undo in its exact place; Undo restores the row (12.4s)
+  ✓  12 [chromium] › tests/w3-history-focus-scroll.spec.ts:251:5 › keyboard and Delete, 390×844 phone, touch, light › Tab brings an off-screen row into view; Enter and Space open Edit brew; closing returns focus to the row (12.5s)
+  ✓  13 [chromium] › tests/w3-history-focus-scroll.spec.ts:276:5 › keyboard and Delete, 390×844 phone, touch, light › Delete from the keyboard: the row turns into its Undo in its exact place, focus lands on the Undo, Undo restores the row (8.0s)
+  ✓  14 [chromium] › tests/w3-history-focus-scroll.spec.ts:312:5 › keyboard and Delete, 390×844 phone, touch, light › Delete by pointer or touch: the row turns into its Undo in its exact place; Undo restores the row (7.9s)
+
+
+  1) [chromium] › tests/w3-history-focus-scroll.spec.ts:194:5 › 1440×900 @100 %, light › Save: the row stays where it was seen 
+
+    Error: scrollY never moved from Save to after it
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBeLessThanOrEqual[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: <= [32m0[39m
+    Received:    [31m68[39m
+
+      212 |         expect(after.settled).toBe(true);
+      213 |         const d = await stopRec(page, seen);
+    > 214 |         expect(d.dSy, 'scrollY never moved from Save to after it').toBeLessThanOrEqual(0);
+          |                                                                    ^
+      215 |         expect(d.dTop, 'the row stays where it was seen through Save').toBeLessThanOrEqual(TOL);
+      216 |         expect(Math.abs(after.top - seen.top)).toBeLessThanOrEqual(TOL);
+      217 |       } finally {
+        at /home/user/wt/w7n/kettle/tests/w3-history-focus-scroll.spec.ts:214:68
+
+  1 failed
+    [chromium] › tests/w3-history-focus-scroll.spec.ts:194:5 › 1440×900 @100 %, light › Save: the row stays where it was seen 
+  13 passed (2.3m)
+[slots] N2 freed 1 at 11:53:16
