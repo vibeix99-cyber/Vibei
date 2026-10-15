@@ -185,7 +185,7 @@ The strict 9-of-9 on-top check, the 2 px Undo-in-place checks and the frame reco
 The History row is read once the Edit sheet is open and the row has been still for five frames (≤ 3 s), after the page's focus scroll. That is the approach agreed for N-2 (W2R3 §7).
 
 **Not weakened, with one coverage note.** Because the pointer move just before the tap is input, no at-rest strip change can now happen between the aim and the tap. So this spec no longer *incidentally* reproduces F-T2-1's original race (where the base failed it). That property is still guarded by `w3-notices`' dedicated test "End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done":
-- it is unchanged by Phase B, runs in 5 configurations, fails 4/5 on base, and passed 42/42 on the merged tree (above);
+- it is unchanged by Phase B, runs in 5 configurations, fails 4/5 on base, and passed 42/42 on the Phase A tree (`CHECKER-W3R1-F.md`, band-idle follow-up);
 - the 64-tap aimed-tap probe guards it too (0 off target).
 
 The N-2 product side (S's `History.tsx` focus scroll) stays a FOLLOW-UP.
