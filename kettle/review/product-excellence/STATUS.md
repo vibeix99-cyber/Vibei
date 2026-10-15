@@ -12,6 +12,18 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 
 ## ▶ WAVE 3 ROUND 1 · started 2026-10-14 10:00 UTC (read this first)
 
+**Before the Final Product Boss: Vibei's post-follow-up decisions (2026-10-15 08:55 UTC; `contracts/W3R1/VB-DECISIONS-POSTFOLLOWUP.md`):**
+- **Item 1: the `integrity:309` fix.**
+  - **Maker:** fix maker F1X (Opus, high) on `pe/w3r1-f1-intention`, worktree `w6x`, :5561; brief `BRIEF-F1FIX.md`; stop 11:30 UTC.
+  - **Fix:** `setIntention` writes only the intention, with the storage format unchanged.
+  - **Proof:** a deterministic test that fails on base and passes on the fix; `integrity:309` 20/20 under load.
+  - **Audit:** the other full-state writers, listed but not fixed.
+  - **Then:** the Sonnet regression lane (timer/PWA, full integrity, notice suite, a 2-tab manual check), then LEAD-5's verdict, and merge only on APPROVE.
+- **Item 2: backdrop investigation.** Investigator BD (Sonnet) bisects the 390 dark first-brew backdrop difference. Report only; brief `BRIEF-BACKDROP.md`; stop 11:00 UTC.
+- **Item 3: N-2 (History focus scroll).** A Sonnet fix maker, after item 1 merges; LEAD-5 gates it separately.
+- **Item 4: the Final Product Boss is on hold.** Vibei is generating the 2D sipping and cheering poses first.
+- **Servers:** base :5478/:5488; current integration (app `f2298d3`) :5560/:5570 (worktree `w6-int`).
+
 **W3R1 follow-ups done; waiting on Vibei (2026-10-15 02:50 UTC):**
 - **Item 2, band idle 1.2 → 4 s:** Maker Q Phase A, APPROVE (LEAD-5: 0/64 aimed taps off target, `w3-notices` + idle 42/42). Merged as `8b1ed4d`.
 - **Item 3, test stability:** Maker Q Phase B, tests only, APPROVE (LEAD-5 under load: `notice-strip:292` 6/6, X-1 10/10, `w2-room:167` 3/3, `notice-strip` 25/25, `w3-notices-load` 25/25). Merged as `f2298d3`. X-11 and X-1 are closed.
