@@ -1,7 +1,7 @@
 # N2 — the History focus scroll (N-2): packet
 
 **Branch** `pe/w3r1-n2-history` (worktree `/home/user/wt/w7n`), base `5f78af1` (src `b74e6b3`). Dev :5565; controls :5560 / :5570 (the base) and :5478 / :5488 (old base `4d36939`).
-**Status: STAGES 1–3 of 6 (root cause; change; tests).** The brief's rule applies — *"if the root cause lies outside `History.tsx`, stop, write it up with evidence, and hand back"* — and it applies in the strongest form: **there is no product scroll to fix.** Nothing in `src/` has been changed.
+**Status: STAGES 1–4 and 6 of 6 written (§5 regressions: running).** The brief's rule applies — *"if the root cause lies outside `History.tsx`, stop, write it up with evidence, and hand back"* — and it applies in the strongest form: **there is no product scroll to fix.** Nothing in `src/` has been changed.
 
 ## §1 Root cause, with the trace
 
@@ -101,4 +101,29 @@ The branch carries **one new file**: `kettle/tests/w3-history-focus-scroll.spec.
 
 **Kept (the preserve list, §4)** — the other 6 tests (1440 @200 reduced and 390 touch), 3× on the base and 3× on the branch: all pass.
 
-*(§4–§6 follow.)*
+## §4 The preserve list
+
+Because `src/` is unchanged, every item holds by construction; the file also **shows** the behaviour-bearing ones, each test run 3× on the base :5560 and 3× on the branch :5565, **all 6 of 6 pass** at 1440×900 @200 % reduced light and at 390×844 touch light (`logs/spec-*-x3.log.txt`):
+
+| item | shown by | result |
+|---|---|---|
+| **Keyboard:** a row reached by Tab that is off screen is brought into view | `Tab brings an off-screen row into view; …`: from the top of the page, Tab until a History row has focus; asserts `scrollY > 0` and the row wholly in view | passes |
+| **Enter / Space opens the sheet; closing returns focus to the row** | same test, both keys, Escape, `document.activeElement === the row`, the row not moved (≤ 2 px) | passes |
+| **Delete, from the keyboard:** the row turns into its inline Undo in its exact place (≤ 2 px), focus lands on the Undo (`History.tsx:180`, `:focus-visible`), Undo restores the row | `Delete from the keyboard: …`: Tab to the row (seen at its top), Enter, Tab to "Delete this brew", Enter, Tab to "Delete", Enter; Undo's top vs the row's; `activeElement` inside `[data-undo-for=history-delete]` and a button; Enter; the rows' count and the row's aria-label are back | passes |
+| **Delete by pointer / touch:** the Undo in the row's exact place; Undo restores | `Delete by pointer or touch: …` (real tap / click, `keepStill` ≤ 2 px) | passes |
+| **Unchanged:** the row's look, its aria-label, the order and grouping of days, "Show earlier days" paging, the Edit sheet's contents and behaviour | `git diff 5f78af1 -- kettle/src` is empty; the aria-label is asserted round trip (Undo restores the same label); captures §6 | holds |
+| **Themes** | no change in either; captures §6 (390 light, 390 dark, 1440 light) | holds |
+
+## §6 Captures
+
+`captures/BEFORE/` (:5560, the base) and `captures/AFTER/` (:5565, the branch): the Stats screen of the `veteran` seed with History scrolled (its heading 90 px from the top), frozen date (Mon 12 Oct 2026 07:40 UTC), reduced motion, full size (`390×844 @2×` = 780×1688; `1440×900 @1×`). Script: `evidence/scripts/captures.mjs`; comparison by decoding both PNGs (`evidence/scripts/pngdiff.py`):
+
+| capture | pixels | differing | bbox | max channel delta |
+|---|---|---|---|---|
+| `stats-history-1440-light.png` | 1440×900 | **0** (byte-identical, same sha256) | — | 0 |
+| `stats-history-390-light.png` | 780×1688 | 8 (0.0006 %) | x551–662, y1231–1394 | 2 / 255 |
+| `stats-history-390-dark.png` | 780×1688 | 45 (0.0034 %) | x551–683, y418–1449 | 2 / 255 |
+
+Nothing visual changes — as it cannot: there is no product diff. The few 390 px differences are ≤ 2/255 in a column at x 551–683 (the "+N leaves" / tag column of the rows, anti-aliased icon edges) — render noise between two page loads, not a change.
+
+*(§5 follows when the regression runs finish.)*
