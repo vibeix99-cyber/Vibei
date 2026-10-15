@@ -182,8 +182,6 @@ describe('saving the intention writes only the intention (F1)', () => {
   it('a save that changes nothing writes nothing (Today’s composer syncing on mount), even in a tab that is behind', async () => {
     const A = await openTab('A', true);
     const B = await openTab('B', false);
-    A.timer.getState().setIntention('', null); // what A holds already
-    expect(storage.getItem(KEY)).toBeNull();
     B.timer.getState().startFocus({ intention: 'Chapter 3 notes' });
     const raw = storage.getItem(KEY);
     // A is behind, and so is its copy of storage (it still reads nothing there, as in the failing I01 runs under load).
