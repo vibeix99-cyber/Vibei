@@ -1,6 +1,6 @@
 # CHECKER W3R1 · F1FIX: the `integrity:309` intention-save race
 
-**Verdict: DRAFT, pending Lane R's receipt (`review/F1FIX-LR/RECEIPT-LR-F1FIX.md`).** My reading so far: **REJECT, with one defect for the fix round.** F1X-D1 is audit #1 (`syncIdleLength`), which I rule to be **the same bug**: shown deterministically on the fix, §3. Everything else in the fix verifies.
+**Verdict: DRAFT, pending Lane R's receipt (`review/F1FIX-LR/RECEIPT-LR-F1FIX.md`).** My reading so far: **REJECT, with one defect for the fix round.** F1X-D1 is audit #1 (`syncIdleLength`), which I rule to be **the same bug**: shown deterministically on the fix, §4. Everything else in the fix verifies.
 
 | | |
 |---|---|
@@ -68,3 +68,60 @@ I ran the maker's `compat.spec.ts` (read: real composer typing on FROM, every `k
 I compared each pair's printed `kettle:timer` myself: saved by FROM against the same key after TO booted and its composer synced. **All four are byte-identical** (370 / 303 bytes). The fix's idle profile's last save was an intention-only save (case 4).
 
 Code agrees: same key, same `{ state, version: 1 }` envelope, `partialize` unchanged in content and order, no migration. **PASS.**
+
+## 4. The audit: my rulings
+
+The maker's table (packet §5) lists every other `set` in `store.ts` that persists the whole timer, with file:line and trigger. I checked each against the code. The question for each: **is it the same bug?** That is, can a tab that has not yet taken in another tab's newer timer write put its stale whole timer over storage **automatically**, without the person acting on that tab's timer?
+
+### #1 `syncIdleLength` (`store.ts:416` base / `:506` fix): **the same bug. It is F1X-D1, for this round.**
+**The trigger is automatic, in every idle tab.**
+- On Today, picking 15 / 25 / 50 min calls `applyRhythm` (`Composer.tsx:286` → `settings.ts:111`), which changes `focusMin` and writes `kettle:settings`.
+- Every other idle Kettle tab, on any screen, gets that `storage` event, rehydrates its settings (`sync.ts:176–178`), and its subscription (`ticker.ts:304`) runs `syncIdleLength`.
+- `syncIdleLength` then `set`s `plannedMs` / `remainingMs`, and `persist` writes that tab's **whole** idle timer.
+
+**The race follows a natural sequence:** pick a length, then tap Start. Events arrive in write order, so the other tab handles the settings event, and writes its idle timer, before it has taken in the start. If Start came within the event lag (a few ms unloaded, 0.1–0.6 s under load), the brew is undone in both tabs with no record. That is F1's outcome, with no typing at all.
+
+**Shown deterministically, on the fix.** I wrote a scratch case in the maker's own Vitest harness (`LEAD/F1FIX/scratch-syncIdleLengthRace.test.ts.txt`; not committed to the branch):
+1. B sets `focusMin: 50` and starts a brew; storage holds it running.
+2. A rehydrates its settings (B's settings event) and runs `syncIdleLength`, as its subscription would, before taking in B's timer write.
+
+Result: **storage holds `status: 'idle'`**, so B's brew is gone. That is **1/1 FAIL on the fix `74138d3`** and **1/1 FAIL on `f2298d3`** (`LEAD/F1FIX/scratch-syncIdleLength-on-*.log`).
+
+**Why the same bug and not a FOLLOW-UP.**
+- **Same mechanism and outcome:** an automatic whole-timer write from a stale tab, undoing another tab's brew in both tabs with no record.
+- **A more natural trigger than F1's:** F1 needed Today mounting or typing in the other tab. This needs only another Kettle tab open and idle, and the person's own length-then-Start.
+- **Narrower exposure in time:** it needs a length change just before the start.
+
+Vibei's §1 asks me to say whether one is the same bug. It is, so it is fixed this round.
+
+### #2 `rebase` (`:404` / `:499`): **FOLLOW-UP**
+Automatic, but only in the leader, only while not idle, and only on a wall-clock jump back (or remaining > plan) inside the lag. Same shape, but it needs a clock jump inside a 0.1–0.6 s window. Rare.
+
+### #3–#6 `pause` / `resume` / `toggle`, `addTime`, `end` (and `endActive`), `startFocus` / `startBreak`: **FOLLOW-UP (not the same bug)**
+They write only on the person's own action on that tab's timer (a tap, Space, the OS media keys). One person cannot act on tab Z within the lag of starting in tab A. Starts replace by design (last writer wins; `multitab.test.ts`), and the completion case is already guarded.
+
+### #7 `reset`: **ACCEPTED (by design)**
+A deliberate wipe (reset or import), or mirroring a cleared key.
+
+### `tick`: **not the same bug**
+It re-reads storage first (`guard.refresh()`), with the `lastEnded` and IndexedDB claims for exactly-once.
+
+### The maker's open item: a real edit typed in a tab whose copy of storage is also behind: **FOLLOW-UP, not blocking**
+Case 3 of `saveIntentionOnly` relies on that tab's read of storage being current. If the browser has not yet updated the tab's copy either, a *real* change (typed words, Done / Carry, the day turning at midnight) inside the lag still writes over the newer state.
+- **Typed words and Done / Carry** are the person acting in Z within 0.1–0.6 s of starting in A. One person cannot do that.
+- **The day turning** (`Composer.tsx:77`) is automatic, but only at midnight and only inside the lag.
+
+The robust guard is on the receiving side (`sync.ts`): the tab that owns a running session re-asserts it when it sees that session replaced by an idle state with no `lastEnded` for it. That one guard would close #2–#6, this item, and any future writer of the same shape. It is outside this brief, so it is a **FOLLOW-UP for Vibei / the timer owner**, recommended for the next round.
+
+## 5. Defect
+
+### F1X-D1 · `syncIdleLength` writes a stale tab's whole idle timer over another tab's new brew (BLOCKS by ruling: the same bug as F1, Vibei §1 audit)
+**Where:** `src/timer/store.ts` `syncIdleLength` (`:506` on the fix). It is triggered by `ticker.ts:304` on every `focusMin` change, including one made in another tab.
+
+**Required** (the approach is the maker's; this is the outcome):
+- A brew-length sync never writes this tab's in-memory timer over storage. Either:
+  - persist only the fields it changes (`phase`, `plannedMs`, `remainingMs`) into what storage holds now, and only when storage holds an idle timer of the same session as this tab (`sessionId` equal; with idle, null); write nothing when storage holds another session or a non-idle state; or
+  - do not persist it at all, if each tab can derive its idle length locally.
+- A no-op still writes nothing.
+- The storage-full repair (after this tab's own failed save) behaves as before.
+- Same key, envelope and field order; no migration.
