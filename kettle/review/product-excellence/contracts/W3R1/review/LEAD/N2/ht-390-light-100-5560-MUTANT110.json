@@ -1,0 +1,658 @@
+{
+ "base": "http://127.0.0.1:5560",
+ "cfg": "390x844:light:100",
+ "flow": "historytrace",
+ "kind": null,
+ "scene": "off",
+ "steps": [
+  {
+   "t": 2119,
+   "k": "tap",
+   "label": "Stats tab",
+   "at": [
+    147,
+    810
+   ],
+   "size": [
+    96,
+    68
+   ]
+  },
+  {
+   "t": 12045,
+   "k": "tap",
+   "label": "history row",
+   "at": [
+    195,
+    649
+   ],
+   "size": [
+    318,
+    68
+   ]
+  },
+  {
+   "t": 12827,
+   "k": "tap",
+   "label": "Delete this brew",
+   "at": [
+    195,
+    794
+   ],
+   "size": [
+    338,
+    52
+   ]
+  },
+  {
+   "t": 13686,
+   "k": "tap",
+   "label": "Delete (confirm)",
+   "at": [
+    195,
+    571
+   ],
+   "size": [
+    290,
+    52
+   ]
+  }
+ ],
+ "trace": [
+  {
+   "lab": "before tap",
+   "scrollY": 2500,
+   "row": 945,
+   "undo": null,
+   "active": "MAIN Stats23StatsRobin · brewing si"
+  },
+  {
+   "lab": "edit open",
+   "scrollY": 2940,
+   "row": 505,
+   "undo": null,
+   "active": "INPUT "
+  },
+  {
+   "lab": "confirm open",
+   "scrollY": 2940,
+   "row": 505,
+   "undo": null,
+   "active": "BUTTON Keep it"
+  },
+  {
+   "lab": "after delete +2.5s",
+   "scrollY": 2940,
+   "row": null,
+   "undo": 505,
+   "active": "MAIN Stats22StatsRobin · brewing si"
+  }
+ ],
+ "frames": [
+  {
+   "t": 13,
+   "y": 2940,
+   "row": 505,
+   "undo": null,
+   "dlg": true
+  },
+  {
+   "t": 46,
+   "y": 2940,
+   "row": null,
+   "undo": 505,
+   "dlg": true
+  },
+  {
+   "t": 450,
+   "y": 2940,
+   "row": null,
+   "undo": 505,
+   "dlg": false
+  }
+ ],
+ "rec": {
+  "frames": 792,
+  "noticeFrames": 82,
+  "modalFrames": 24,
+  "covered": 0,
+  "coveredEx": [],
+  "geo": 0,
+  "geoEx": [],
+  "noticeHidden": 0,
+  "noticeHiddenEx": [],
+  "chromeOver": 0,
+  "shifts": [
+   {
+    "at": 1584,
+    "hash": "#/stats",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": -57,
+    "sinceTap": -57,
+    "why": "screen"
+   }
+  ],
+  "seen": {
+   "Brew deleted Undo": 82
+  }
+ },
+ "errors": [],
+ "shiftAudit": [
+  {
+   "at": 1584,
+   "hash": "#/stats",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": -57,
+   "sinceTap": -57,
+   "why": "screen",
+   "ok": true
+  }
+ ],
+ "shiftViolations": [],
+ "events": [
+  {
+   "k": "focusin",
+   "t": 438,
+   "sy": 0,
+   "row": null
+  },
+  {
+   "k": "pointerdown",
+   "t": 1584,
+   "sy": 0,
+   "row": null
+  },
+  {
+   "k": "touchstart",
+   "t": 1640,
+   "sy": 0,
+   "row": null
+  },
+  {
+   "k": "focusin",
+   "t": 1646,
+   "sy": 0,
+   "row": null
+  },
+  {
+   "k": "click",
+   "t": 1646,
+   "sy": 0,
+   "row": null
+  },
+  {
+   "k": "focusin",
+   "t": 1922,
+   "sy": 0,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 2599,
+   "sy": 100,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 2600,
+   "sy": 100,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 2760,
+   "sy": 200,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 2760,
+   "sy": 200,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 2930,
+   "sy": 300,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 2931,
+   "sy": 300,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 3105,
+   "sy": 400,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 3106,
+   "sy": 400,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 3267,
+   "sy": 500,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 3268,
+   "sy": 500,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 3490,
+   "sy": 600,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 3490,
+   "sy": 600,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 3749,
+   "sy": 700,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 3749,
+   "sy": 700,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 4013,
+   "sy": 800,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 4014,
+   "sy": 800,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 4259,
+   "sy": 900,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 4259,
+   "sy": 900,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 4508,
+   "sy": 1000,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 4509,
+   "sy": 1000,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 4770,
+   "sy": 1100,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 4770,
+   "sy": 1100,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 5038,
+   "sy": 1200,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 5039,
+   "sy": 1200,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 5286,
+   "sy": 1300,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 5286,
+   "sy": 1300,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 5552,
+   "sy": 1400,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 5553,
+   "sy": 1400,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 5811,
+   "sy": 1500,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 5811,
+   "sy": 1500,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 6077,
+   "sy": 1600,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 6077,
+   "sy": 1600,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 6321,
+   "sy": 1700,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 6321,
+   "sy": 1700,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 6571,
+   "sy": 1800,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 6572,
+   "sy": 1800,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 6817,
+   "sy": 1900,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 6818,
+   "sy": 1900,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 7084,
+   "sy": 2000,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 7085,
+   "sy": 2000,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 7346,
+   "sy": 2100,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 7347,
+   "sy": 2100,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 7592,
+   "sy": 2200,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 7592,
+   "sy": 2200,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 7842,
+   "sy": 2300,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 7842,
+   "sy": 2300,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 8087,
+   "sy": 2400,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 8088,
+   "sy": 2400,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 8351,
+   "sy": 2500,
+   "row": null,
+   "dy": 50
+  },
+  {
+   "k": "scroll",
+   "t": 8352,
+   "sy": 2500,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 9236,
+   "sy": 2610,
+   "row": null,
+   "dy": 55
+  },
+  {
+   "k": "scroll",
+   "t": 9237,
+   "sy": 2610,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 9620,
+   "sy": 2720,
+   "row": "Read brew, 1:20 PM, 25 minutes, Full bre",
+   "dy": 55
+  },
+  {
+   "k": "scroll",
+   "t": 9621,
+   "sy": 2720,
+   "row": null
+  },
+  {
+   "k": "wheel",
+   "t": 10021,
+   "sy": 2830,
+   "row": "Roadmap draft, 9:05 AM, 25 minutes, Full",
+   "dy": 55
+  },
+  {
+   "k": "scroll",
+   "t": 10022,
+   "sy": 2830,
+   "row": null
+  },
+  {
+   "k": "pointerdown",
+   "t": 10371,
+   "sy": 2830,
+   "row": "Budget spreadsheet, 8:15 AM, 25 minutes,"
+  },
+  {
+   "k": "touchstart",
+   "t": 10371,
+   "sy": 2830,
+   "row": "Budget spreadsheet, 8:15 AM, 25 minutes,"
+  },
+  {
+   "k": "focusin",
+   "t": 10374,
+   "sy": 2830,
+   "row": "Budget spreadsheet, 8:15 AM, 25 minutes,"
+  },
+  {
+   "k": "click",
+   "t": 10374,
+   "sy": 2830,
+   "row": "Budget spreadsheet, 8:15 AM, 25 minutes,"
+  },
+  {
+   "k": "focusin",
+   "t": 10442,
+   "sy": 2830,
+   "row": null
+  },
+  {
+   "k": "scroll",
+   "t": 10380,
+   "sy": 2940,
+   "row": null
+  },
+  {
+   "k": "pointerdown",
+   "t": 11025,
+   "sy": 2940,
+   "row": null
+  },
+  {
+   "k": "touchstart",
+   "t": 11026,
+   "sy": 2940,
+   "row": null
+  },
+  {
+   "k": "focusin",
+   "t": 11028,
+   "sy": 2940,
+   "row": null
+  },
+  {
+   "k": "click",
+   "t": 11028,
+   "sy": 2940,
+   "row": null
+  },
+  {
+   "k": "focusin",
+   "t": 11044,
+   "sy": 2940,
+   "row": null
+  },
+  {
+   "k": "pointerdown",
+   "t": 11556,
+   "sy": 2940,
+   "row": null
+  },
+  {
+   "k": "touchstart",
+   "t": 11556,
+   "sy": 2940,
+   "row": null
+  },
+  {
+   "k": "focusin",
+   "t": 11559,
+   "sy": 2940,
+   "row": null
+  },
+  {
+   "k": "click",
+   "t": 11559,
+   "sy": 2940,
+   "row": null
+  },
+  {
+   "k": "focusin",
+   "t": 11754,
+   "sy": 2940,
+   "row": null
+  }
+ ]
+}

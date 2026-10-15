@@ -1,0 +1,27 @@
+===== ht-390-light-100-5560.json
+trace: [('before tap', 2500, 945), ('edit open', 2830, 615), ('confirm open', 2830, 615), ('after delete +2.5s', 2830, None)]
+taps: [('Stats tab', [147, 810], [96, 68]), ('history row', [195, 649], [318, 68]), ('Delete this brew', [195, 794], [338, 52])]
+before the tap: 28 wheels (sum dy 1415), 28 scroll events; ms from latest wheel to each scroll: max 1, none-without-wheel 0
+last 3 wheels before tap: [(-1134, 55, 2610), (-739, 55, 2720), (-352, 55, 2830)]
+last scroll before tap: t-tap -351 sy 2830
+from the row tap until the next probe wheel (15 events, 1392 ms): [('pointerdown', 0, 2830, True), ('touchstart', 1, 2830, True), ('focusin', 4, 2830, True), ('click', 5, 2830, True), ('focusin', 99, 2830, False), ('pointerdown', 688, 2830, False), ('touchstart', 689, 2830, False), ('focusin', 691, 2830, False), ('click', 692, 2830, False), ('focusin', 713, 2830, False), ('pointerdown', 1242, 2830, False), ('touchstart', 1243, 2830, False), ('focusin', 1244, 2830, False), ('click', 1244, 2830, False)]
+scroll events in that window: []
+all events after the tap: scrolls 0 wheels 0
+===== ht-1440-light-200r-5560.json
+trace: [('before tap', 2500, 1037), ('edit open', 2830, 707), ('confirm open', 2830, 707), ('after delete +2.5s', 2830, None)]
+taps: [('Stats tab', [127, 180], [230, 52]), ('history row', [1106, 763], [421, 111]), ('Delete this brew', [713, 740], [468, 58])]
+before the tap: 28 wheels (sum dy 2830), 28 scroll events; ms from latest wheel to each scroll: max 1, none-without-wheel 0
+last 3 wheels before tap: [(-1083, 110, 2610), (-722, 110, 2720), (-339, 110, 2830)]
+last scroll before tap: t-tap -338 sy 2830
+from the row tap until the next probe wheel (12 events, 1592 ms): [('pointerdown', 0, 2830, True), ('focusin', 1, 2830, True), ('click', 1, 2830, True), ('focusin', 53, 2830, False), ('pointerdown', 720, 2830, False), ('focusin', 722, 2830, False), ('click', 722, 2830, False), ('focusin', 738, 2830, False), ('pointerdown', 1369, 2830, False), ('focusin', 1370, 2830, False), ('click', 1370, 2830, False), ('focusin', 1592, 2830, False)]
+scroll events in that window: []
+all events after the tap: scrolls 0 wheels 0
+===== ht-390-light-100-5560-MUTANT110.json
+trace: [('before tap', 2500, 945), ('edit open', 2940, 505), ('confirm open', 2940, 505), ('after delete +2.5s', 2940, None)]
+taps: [('Stats tab', [147, 810], [96, 68]), ('history row', [195, 649], [318, 68]), ('Delete this brew', [195, 794], [338, 52])]
+before the tap: 28 wheels (sum dy 1415), 28 scroll events; ms from latest wheel to each scroll: max 1, none-without-wheel 0
+last 3 wheels before tap: [(-1135, 55, 2610), (-751, 55, 2720), (-350, 55, 2830)]
+last scroll before tap: t-tap -349 sy 2830
+from the row tap until the next probe wheel (16 events, 1383 ms): [('pointerdown', 0, 2830, True), ('touchstart', 0, 2830, True), ('focusin', 3, 2830, True), ('click', 3, 2830, True), ('focusin', 71, 2830, False), ('scroll', 9, 2940, False), ('pointerdown', 654, 2940, False), ('touchstart', 655, 2940, False), ('focusin', 657, 2940, False), ('click', 657, 2940, False), ('focusin', 673, 2940, False), ('pointerdown', 1185, 2940, False), ('touchstart', 1185, 2940, False), ('focusin', 1188, 2940, False)]
+scroll events in that window: [(9, 2940)]
+all events after the tap: scrolls 1 wheels 0

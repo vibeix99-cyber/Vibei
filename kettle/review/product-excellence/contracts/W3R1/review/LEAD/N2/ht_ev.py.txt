@@ -1,0 +1,30 @@
+import json, sys
+for p in sys.argv[1:]:
+    d = json.load(open(p))
+    print('=====', p.split('/')[-1])
+    print('trace:', [(t['lab'], t['scrollY'], t['row']) for t in d.get('trace', [])])
+    taps = [s for s in d.get('steps', []) if s.get('k') == 'tap']
+    print('taps:', [(s['label'], s['at'], s['size']) for s in taps][:3])
+    ev = d.get('events') or []
+    if isinstance(ev, str): print('events error', ev); continue
+    # find the pointerdown on the history row
+    i0 = next((i for i, e in enumerate(ev) if e['k'] in ('pointerdown', 'touchstart') and e.get('row')), None)
+    if i0 is None: print('no row pointerdown'); continue
+    t0 = ev[i0]['t']
+    wheels = [e for e in ev[:i0] if e['k'] == 'wheel']
+    scrolls = [e for e in ev[:i0] if e['k'] == 'scroll']
+    # each scroll before the tap: ms since the latest wheel before it
+    gaps = []
+    for s in scrolls:
+        w = [x['t'] for x in wheels if x['t'] <= s['t']]
+        gaps.append(s['t'] - w[-1] if w else None)
+    print(f'before the tap: {len(wheels)} wheels (sum dy {sum(w["dy"] for w in wheels)}), {len(scrolls)} scroll events; ms from latest wheel to each scroll: max {max([g for g in gaps if g is not None], default=None)}, none-without-wheel {sum(g is None for g in gaps)}')
+    print('last 3 wheels before tap:', [(w['t'] - t0, w['dy'], w['sy']) for w in wheels[-3:]])
+    print('last scroll before tap: t-tap', (scrolls[-1]['t'] - t0) if scrolls else None, 'sy', scrolls[-1]['sy'] if scrolls else None)
+    # after the tap, until the next wheel (the confirm/delete steps use press() too)
+    after = ev[i0:]
+    nxt = next((j for j, e in enumerate(after) if e['k'] == 'wheel'), len(after))
+    win = after[:nxt]
+    print(f'from the row tap until the next probe wheel ({len(win)} events, {win[-1]["t"] - t0} ms):', [(e['k'], e['t'] - t0, e['sy'], e.get('row') is not None) for e in win][:14])
+    print('scroll events in that window:', [(e['t'] - t0, e['sy']) for e in win if e['k'] == 'scroll'])
+    print('all events after the tap: scrolls', len([e for e in after if e['k'] == 'scroll']), 'wheels', len([e for e in after if e['k'] == 'wheel']))
