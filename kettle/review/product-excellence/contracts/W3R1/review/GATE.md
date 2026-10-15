@@ -190,3 +190,10 @@ The merged src and tests equal trial `cf4a89c`'s. LEAD-5 on :5546:
 | The maker's results | `:292` 1440 light @200 reduced **6/6** under load (2 workers + 4 burners); `notice-strip` 25/25; X-1 **10/10** under load; `w3-notices-load` 25/25 (`W3_LOAD=1`); `w2-room:167` 3/3 under load; `integrity` 25/25. **Cause of the 4-minute timeouts:** the History inline Undo (5 s) expired under load, and `locator.evaluate` without a timeout then waited for a vanished element until the 240 s test timeout |
 | **F1, `integrity:309`** | **Product race, pre-existing.** `Composer.tsx:83–86` syncs the intention 150 ms after Today mounts → `store.ts:399 setIntention` → persist writes that tab's stale idle timer over the brew another tab just started; both tabs lose it. Reproduced 3/20 and 2/12 under load on the trial, and **1/20 on base `4d36939`**. No timer change made; the test is left as is. Note: `review/F1-ROOT-CAUSE.md` (copied from `…/W3R1/Q/F1-ROOT-CAUSE.md`). **Waiting on Vibei** |
 | Archive | `archive/pe-w3r1-stability-01575cb.incremental.bundle` |
+
+## Phase B: APPROVE (LEAD-5 `5efdb39`) → merged as `f2298d3` (2026-10-15 02:45 UTC)
+
+- The merged src `db6de7e` and tests `0927568` equal trial `d7f9126`'s.
+- **LEAD-5 under load (≈10.5):** `:292` 6/6; X-1 10/10; `w2-room:167` 3/3; `notice-strip` 25/25; `w3-notices-load` (`W3_LOAD=1`) 25/25. Nothing weakened (I03 is stricter). X-11 and X-1 are closed.
+- **F1 (`integrity:309`):** LEAD-5 confirms a pre-existing product race, severity medium. A real finding (Vibei §0) to fix before the Final Product Boss, **waiting on Vibei's decision** (`review/F1-ROOT-CAUSE.md`).
+- **Integration HEAD app code is now `f2298d3`** (src `db6de7e`).

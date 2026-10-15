@@ -12,6 +12,16 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 
 ## ▶ WAVE 3 ROUND 1 · started 2026-10-14 10:00 UTC (read this first)
 
+**W3R1 follow-ups done; waiting on Vibei (2026-10-15 02:50 UTC):**
+- **Item 2, band idle 1.2 → 4 s:** Maker Q Phase A, APPROVE (LEAD-5: 0/64 aimed taps off target, `w3-notices` + idle 42/42). Merged as `8b1ed4d`.
+- **Item 3, test stability:** Maker Q Phase B, tests only, APPROVE (LEAD-5 under load: `notice-strip:292` 6/6, X-1 10/10, `w2-room:167` 3/3, `notice-strip` 25/25, `w3-notices-load` 25/25). Merged as `f2298d3`. X-11 and X-1 are closed.
+- **F1, `integrity:309`: a pre-existing product race, severity medium.**
+  - **Mechanism:** `Composer.tsx:83–86` syncs the intention 150 ms after Today mounts → `src/timer/store.ts:399 setIntention` → `persist` writes the tab's whole stale idle timer over a brew another tab just started → the brew is lost in both tabs, with no record.
+  - Reproduced 3/20 and 2/12 under load, and 1/20 on base `4d36939`. Note: `contracts/W3R1/review/F1-ROOT-CAUSE.md`. No product change made.
+  - **Waiting on Vibei:** authorise a fix before the Final Product Boss (it touches `src/timer` and/or `Composer.tsx`).
+- **Still open, smaller:** N-2 (the History focus scroll, product side, S's file); the follow-up "collapse only off-screen or on a screen change" (post-Final-Boss polish round).
+- **Integration HEAD app code `f2298d3`** (src `db6de7e`). Nothing is running. **The Final Product Boss has not started** (Vibei's go needed).
+
 **W3R1 final regression and Vibei's follow-ups (2026-10-15 00:05 UTC):**
 - **Final regression on `2be3de1`** (Lane R, `contracts/W3R1/review/FINAL/RECEIPT-FINAL.md`, through `a2b00cd`):
   - tsc 0; vitest 302/302; build OK.
