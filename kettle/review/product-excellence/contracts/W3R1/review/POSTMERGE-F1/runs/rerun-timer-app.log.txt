@@ -1,0 +1,7 @@
+### start 11:53:17 UTC; load:  11:53:17 up  3:07,  0 user,  load average: 10.88, 11.16, 10.87
+### cmd: env KETTLE_PORT=5560 PLAYWRIGHT_JSON_OUTPUT_NAME=/home/user/wt/w6-int/kettle/.tmp/LR-pw/rerun-timer-app.json npx playwright test --project=timer-app tests/timer.spec.ts:156 tests/timer.spec.ts:183 --workers=1 --reporter=list,json --output=/home/user/wt/w6-int/kettle/.tmp/LR-pw/rerun-timer-app
+Error: No tests found.
+Make sure that arguments are regular expressions matching test files.
+You may need to escape symbols like "$" or "*" and quote the arguments.
+
+### end 11:53:19 UTC; exit=1; load:  11:53:19 up  3:07,  0 user,  load average: 10.88, 11.16, 10.87
