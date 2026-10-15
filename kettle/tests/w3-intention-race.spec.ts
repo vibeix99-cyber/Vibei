@@ -109,3 +109,43 @@ test('a tab that has not yet taken in another tab’s new brew saves its intenti
   await a.waitForTimeout(1000);
   for (const p of [a, b]) expect(await records(p, brew.sessionId!)).toEqual({ stored: 1, memory: 1 });
 });
+
+test('F1X-D1: B picks another brew length and starts; A (idle, its timer events held) takes in the length change first: the brew survives, one record', async ({ context }) => {
+  test.setTimeout(60_000);
+  await context.addInitScript(PRIME);
+  await context.addInitScript(HOLD);
+  const a = await context.newPage();
+  await openToday(a);
+  const b = await context.newPage();
+  await openToday(b);
+  await a.waitForTimeout(600);
+  expect((await memory(a)).status).toBe('idle');
+
+  // A's timer events are held; its settings events are not (they arrive first anyway: written first).
+  await a.evaluate(() => ((window as any).__f1.hold = true));
+  // B: the person picks another brew length (kettle:settings; B's own idle length follows), then starts a 6-second brew.
+  // Both in one task, so both writes have landed before A gets either event (as when A is a moment behind).
+  await b.evaluate(() => {
+    const k = (window as any).__kettle;
+    k.settings.getState().set({ focusMin: 50 });
+    k.timer.getState().startFocus({ minutes: 0.1, intention: 'Chapter 3 notes' });
+  });
+  const brew = await memory(b);
+  expect(brew.status).toBe('running');
+  // A has taken in the length change (its idle timer shows 50 min), but not B's brew.
+  await expect.poll(() => a.evaluate(() => (window as any).__kettle.timer.getState().plannedMs), { message: 'A’s idle length followed the settings change' }).toBe(50 * 60_000);
+  await expect.poll(() => a.evaluate(() => (window as any).__f1.held())).toBeGreaterThan(0);
+  expect(await memory(a), 'precondition: A has not taken in B’s brew').toMatchObject({ status: 'idle', sessionId: null });
+
+  const after = await stored(a);
+  expect(after?.state, 'storage still holds B’s running brew').toMatchObject({ status: 'running', sessionId: brew.sessionId, endsAt: brew.endsAt, startedAt: brew.startedAt, intention: 'Chapter 3 notes' });
+
+  await a.evaluate(() => (window as any).__f1.release());
+  for (const p of [a, b]) {
+    await expect.poll(() => hash(p)).toBe('#/focus');
+    await expect.poll(async () => (await memory(p)).sessionId).toBe(brew.sessionId);
+  }
+  for (const p of [a, b]) await expect.poll(() => hash(p), { timeout: 20_000 }).toBe('#/done');
+  await a.waitForTimeout(1000);
+  for (const p of [a, b]) expect(await records(p, brew.sessionId!)).toEqual({ stored: 1, memory: 1 });
+});

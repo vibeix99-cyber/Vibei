@@ -50,6 +50,10 @@ async function openTab(name: string, leader: boolean) {
   const progress = await import('@/progress');
   const settings = await import('@/state/settings');
   progress.initProgress();
+  // As initTimer does (ticker.ts:304): the idle length follows a focusMin change, from this tab or another.
+  settings.useSettings.subscribe((st, prev) => {
+    if (st.focusMin !== prev.focusMin) store.useTimer.getState().syncIdleLength();
+  });
   store.setCompletionGuard({
     canComplete: () => leader,
     refresh: () => {
@@ -71,20 +75,10 @@ async function openTab(name: string, leader: boolean) {
     /** Deliver the `storage` event this tab gets for the timer key (another tab's write has landed). */
     storageEvent: () => sync.mirrorTimerFromStorage({ event: true }),
     settings: settings.useSettings,
-    /**
-     * Deliver the `storage` event for `kettle:settings`: settings rehydrate, and (as `ticker.ts:304` does on a focusMin
-     * change) the timer's idle length follows.
-     */
-    settingsEvent: async () => {
-      const before = settings.useSettings.getState().focusMin;
-      await settings.useSettings.persist.rehydrate();
-      if (settings.useSettings.getState().focusMin !== before) store.useTimer.getState().syncIdleLength();
-    },
+    /** Deliver the `storage` event for `kettle:settings` (another tab changed settings): settings rehydrate. */
+    settingsEvent: () => settings.useSettings.persist.rehydrate(),
     /** This tab's person picks a brew length (Today's length control): settings save, then the idle length follows. */
-    pickLength: (focusMin: number) => {
-      settings.useSettings.getState().set({ focusMin });
-      store.useTimer.getState().syncIdleLength();
-    },
+    pickLength: (focusMin: number) => settings.useSettings.getState().set({ focusMin }),
   };
 }
 
@@ -240,15 +234,23 @@ describe('the idle brew length sync writes only the length (F1X-D1)', () => {
     const B = await openTab('B', false);
     A.timer.getState().setIntention('Inbox', null); // a saved idle timer, both tabs in step
     B.storageEvent();
+    const idleRaw = storage.getItem(KEY);
 
     // B: the person picks 50 min on Today (kettle:settings), then taps Start (kettle:timer, running).
     B.pickLength(50);
+    expect(stored().state.plannedMs).toBe(50 * MIN);
     B.timer.getState().startFocus({ intention: 'Chapter 3 notes' });
     const { sessionId, endsAt, startedAt } = B.timer.getState();
     expect(stored().state).toMatchObject({ status: 'running', sessionId, endsAt, plannedMs: 50 * MIN });
 
-    // A gets B's settings event first (events arrive in write order): its length sync runs before it has B's start.
-    await A.settingsEvent();
+    // A gets B's settings event first (events arrive in write order): its length sync runs before it has B's start,
+    // and, as in Chromium, before its copy of localStorage has B's timer write (what it held before: A's idle timer).
+    storage.stale = new Map([[KEY, idleRaw]]);
+    try {
+      await A.settingsEvent();
+    } finally {
+      storage.stale = null;
+    }
     expect(A.timer.getState()).toMatchObject({ status: 'idle', sessionId: null, plannedMs: 50 * MIN });
     expect(stored().state, 'storage still holds B’s running brew').toMatchObject({ status: 'running', sessionId, endsAt, startedAt, plannedMs: 50 * MIN, intention: 'Chapter 3 notes' });
 

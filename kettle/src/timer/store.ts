@@ -19,7 +19,7 @@ import { emit } from '@/lib/events';
 import { uid } from '@/lib/id';
 import { dayKey } from '@/lib/dates';
 import { lastWriteFailed, safeStorage, STORAGE_PREFIX } from '@/lib/storage';
-import { getSettings } from '@/state/settings';
+import { getSettings, useSettings } from '@/state/settings';
 import type { SessionRecord } from '@/progress/types';
 import type { LastEnded, Phase, StartFocusOptions, TimerState } from './types';
 
@@ -257,6 +257,8 @@ interface FieldSave {
   fields: readonly (keyof TimerState)[];
   /** Write only over an idle stored timer (the idle brew length means nothing for a running or paused one). */
   idleOnly: boolean;
+  /** Write nothing at all: this tab only follows a change another tab has made (and saved). */
+  memoryOnly?: boolean;
 }
 let fieldSave: FieldSave | null = null;
 
@@ -278,6 +280,7 @@ const jsonStorage = createJSONStorage<TimerState>(() => safeStorage)!;
  * Same key, same envelope, same version, same field order: only the given fields change.
  */
 function saveFieldsOnly(name: string, value: StorageValue<TimerState>, f: FieldSave): void {
+  if (f.memoryOnly) return;
   // This tab's own last save failed (storage full or blocked): storage holds an older timer than this tab, so the
   // whole save is the newer one, and the one that repairs storage (as before).
   if (lastWriteFailed(name)) {
@@ -320,9 +323,9 @@ const timerStorage: PersistStorage<TimerState> = {
 };
 
 /** Run `fn` (one `set`) as a fields-only save of `fields` (see `saveFieldsOnly`). */
-function savingOnly(get: () => TimerState, fields: FieldSave['fields'], idleOnly: boolean, fn: () => void): void {
+function savingOnly(get: () => TimerState, fields: FieldSave['fields'], idleOnly: boolean, fn: () => void, memoryOnly = false): void {
   const outer = fieldSave;
-  fieldSave = { before: persistedTimer(get()), fields, idleOnly };
+  fieldSave = { before: persistedTimer(get()), fields, idleOnly, memoryOnly };
   try {
     fn();
   } finally {
@@ -523,15 +526,20 @@ export const useTimer = create<TimerStore>()(
           });
         },
 
-        // Runs in every idle tab when the brew length changes, also on another tab's settings change, which can arrive
-        // before that tab's timer write (a length picked, then Start). So it writes only the length, and only over the
-        // same idle timer in storage now, never this tab's (possibly stale) copy of the rest (F1X-D1, see saveFieldsOnly).
+        // Runs in every idle tab when the brew length changes (ticker.ts), also when another tab changed it. Never
+        // writes this tab's (possibly stale) copy of the timer over storage (F1X-D1):
+        //  - Following another tab's change (settings are being rehydrated from its storage event): this tab only
+        //    follows in memory and writes nothing. That event can arrive before this tab has (even in its copy of
+        //    localStorage) the brew that tab then started, so no read here can be trusted. The other tab has saved the
+        //    length, and every tab derives the idle length from its settings anyway (sanitizeTimer).
+        //  - The person changed it here (or at boot): only the length, and only over the same idle timer in storage now.
         syncIdleLength: () => {
           const s = get();
           if (s.status !== 'idle') return;
           const len = phaseLengthMs('focus');
           if (s.phase !== 'focus' || s.plannedMs !== len || s.remainingMs !== len) {
-            savingOnly(get, IDLE_LENGTH_FIELDS, true, () => set({ phase: 'focus', plannedMs: len, remainingMs: len }));
+            const followingOtherTab = !useSettings.persist.hasHydrated();
+            savingOnly(get, IDLE_LENGTH_FIELDS, true, () => set({ phase: 'focus', plannedMs: len, remainingMs: len }), followingOtherTab);
           }
         },
       };
