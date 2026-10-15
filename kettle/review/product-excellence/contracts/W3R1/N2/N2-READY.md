@@ -124,6 +124,6 @@ Because `src/` is unchanged, every item holds by construction; the file also **s
 | `stats-history-390-light.png` | 780×1688 | 8 (0.0006 %) | x551–662, y1231–1394 | 2 / 255 |
 | `stats-history-390-dark.png` | 780×1688 | 45 (0.0034 %) | x551–683, y418–1449 | 2 / 255 |
 
-Nothing visual changes — as it cannot: there is no product diff. The few 390 px differences are ≤ 2/255 in a column at x 551–683 (the "+N leaves" / tag column of the rows, anti-aliased icon edges) — render noise between two page loads, not a change.
+Nothing visual changes — as it cannot: there is no product diff. The few 390 px differences are render noise between two page loads, not a change: **re-capturing the base itself** (`captures/BEFORE-recapture/`, :5560 again) differs from `BEFORE/` at 390 light in **the same 8 pixels** (same bbox x551–662, y1231–1394, ≤ 2/255), at 390 dark in 0 pixels (the AFTER/BEFORE dark difference, 45 px, is of the same size and nature), and at 1440 light in 0.
 
 *(§5 follows when the regression runs finish.)*
