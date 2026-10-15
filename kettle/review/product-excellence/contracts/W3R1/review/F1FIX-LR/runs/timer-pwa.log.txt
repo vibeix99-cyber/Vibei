@@ -1,0 +1,9 @@
+[slots] LR took 1/3 at 09:47:13: env KETTLE_PORT=5562 KETTLE_PWA_PORT=5499 PLAYWRIGHT_JSON_OUTPUT_NAME=/home/user/wt/w6tr-x/kettle/.tmp/LR-pw/timer-pwa.json npx playwright test --project=timer-harness --project=timer-app --project=pw
+
+Running 31 tests using 1 worker
+
+  ✓   1 [timer-harness] › tests/timer.spec.ts:74:3 › timer reliability › start → reload mid-session → same session, same end, correct remaining; paused survives reload (4.6s)
+  ✓   2 [timer-harness] › tests/timer.spec.ts:111:3 › timer reliability › a phase that ended while the app was closed (3 h ago) completes once, at its real end, whileAway (2.6s)
+  ✓   3 [timer-harness] › tests/timer.spec.ts:143:3 › timer reliability › reload exactly at 0:00 records the session once (4.5s)
+  ✓   4 [timer-harness] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (4.1s)
+  ✓   5 [timer-harness] › tests/timer.spec.ts:183:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (4.1s)
