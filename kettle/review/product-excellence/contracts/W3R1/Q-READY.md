@@ -40,8 +40,8 @@ So only the band's give-back gets the 4 s, through a constant of its own.
 | `npx tsc --noEmit` | exit 0 | (console) |
 | `npx vitest run` | 32 files, **302/302** | (console) |
 | `w3-notices` + `w3-notices-idle` `--repeat-each=2 --workers=2` | **42/42** (4.6 min) | `Q/A/w3-notices-idle-x2.log.txt`, `.json` |
-| `notice-strip.spec.ts`, all 25 | *(running)* | `Q/A/notice-strip-all.log.txt` |
-| `toast-room` + `summary-notice` + `w2-home` | *(pending)* | `Q/A/owned-3.log.txt` |
+| `notice-strip.spec.ts`, all 25, `--workers=2` | **25/25** (12.5 min; 1440 light 200 % reduced passed, 54.1 s) | `Q/A/notice-strip-all.log.txt`, `.json` |
+| `toast-room` 14 + `summary-notice` 14 + `w2-home` 18, `--workers=2` | **46/46** (8.2 min) | `Q/A/owned-3.log.txt`, `.json` |
 
 The band's facts from the 42 (24 band-lifetime cases, from the JSON annotations):
 - the collapse came **4037–4125 ms after the later of the leave and the last input**;
@@ -51,4 +51,6 @@ The band's facts from the 42 (24 band-lifetime cases, from the JSON annotations)
 
 Pointer held 3 s: given back 4074 / 4113 ms after release, `why: idle`.
 
-*Chain:* `Q/scripts/QA-chain.sh` (gate `--lane Q --n 2`), timings in `Q/A/chain.log.txt`.
+*Chain:* `Q/scripts/QA-chain.sh` (gate `--lane Q --n 2`), 00:08:58–00:34:20 UTC, load 0.3–6.2; timings in `Q/A/chain.log.txt`.
+
+**Phase A: done.** For LEAD-5: the 64-tap aimed-tap check and the notice suite on `61aec4b` (:5545).
