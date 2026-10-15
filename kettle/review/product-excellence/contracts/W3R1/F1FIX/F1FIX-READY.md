@@ -79,3 +79,26 @@ Note on Maker Q's earlier attempt (`f1-repro.spec.ts.txt`, which did not reprodu
 - Why Q's version leaked was not investigated further.
 
 **tsc:** clean (`logs/tsc-fix.log.txt`). **Vitest, all:** 33 files, **308/308** (`logs/vitest-all-fix.log.txt`).
+
+## 5. Audit: other whole-state writers in `store.ts` (not changed)
+
+**Rule:** every `set` inside the store goes through zustand `persist`, which writes `partialize(get())`, the whole timer. Any of them, run in a tab that has not yet taken in another tab's `kettle:timer` write, can therefore carry that tab's stale `status` / `sessionId` / `endsAt` over storage. Lines are given as base `f2298d3` / fix `84a7e18`.
+
+The table is ordered by how close each one is to F1, which is an **automatic** write that the person did not aim at the timer.
+
+| # | Function, `set` at | Trigger | Same mechanism as F1? |
+|---|---|---|---|
+| 1 | **`syncIdleLength`** `:416` / `:506` | **Automatic.** `initTimer` at boot (`ticker.ts:302`), and **on every `focusMin` change** (`ticker.ts:304`), including a change made in **another** tab: its `kettle:settings` storage event rehydrates settings, and the subscription runs here. Only while this tab is idle and its displayed length differs | **Yes, the closest.** Tab A changes the brew length, then starts within the storage-event lag. Tab Z gets A's settings event first (events arrive in write order) while still idle, and writes its whole idle timer over A's brew before A's timer event lands. **Not reproduced here.** No single action writes `focusMin` and starts (checked `Composer.tsx`, `CustomRhythmSheet.save` `:313`), so it needs a length change and then a Start inside the lag. **For LEAD-5 to rule.** |
+| 2 | **`rebase`** `:404` / `:494` | **Automatic.** The ticker's `wake()` when the wall clock jumps back (`ticker.ts:98`), or when remaining > plan (`ticker.ts:108`); only in the leader (`mayMutate`) and only while not idle | Same shape: a leader still on an old session can write it back over a newer one. It needs a clock jump inside the lag: rare |
+| 3 | `pause` `:293` / `:374`, `resume` `:303` / `:384`, `toggle` (calls them) | Person: Pause/Resume, Space, OS media keys (`mediaSession.ts:46–47`) | Same shape, but a person's action on a tab showing the old brew. Example: another tab ended brew s1, this tab still shows it and is paused → s1 comes back paused |
+| 4 | `addTime` `:331`, `:333` / `:412`, `:414` | Person: +5 / −time | As 3 |
+| 5 | `end` `:356` / `:437` (also `endActive` inside `startFocus` / `startBreak`) | Person: End sheet, Skip break; `startNextBrew` (`flow.ts:134`) | As 3. If another tab has already started a new brew s2, ending the stale s1 writes idle over s2. The completion case is already guarded (`isDue` → `tick`; multitab test "a stale tab that ends early after the leader completed cannot resurrect the session") |
+| 6 | `startFocus` `:244` / `:325`, `startBreak` `:266` / `:347` | Person: Start / Enter (`Composer.tsx:89–94`), Tea time (`flow.ts:114`), Next brew (`flow.ts:138`); auto-start after a break (`flow.ts:220`, in the tab that just completed, after its own fresh `tick`) | A new session replaces whatever is stored by design (last writer wins; multitab "two tabs pressing start at the same time converge on one session"). From a stale tab it can replace another tab's just-started brew without ending it. That brew is < 1 min old, so no record would be lost. Not the F1 shape |
+| 7 | `reset` `:396` / `:477` | Reset data / import (`portability.ts:315`); mirroring a cleared key (`sync.ts:75`) | Wipes on purpose; not this bug |
+| — | `tick` `:373`, `:381` / `:454`, `:462` | Ticker | **Not the same bug:** it re-reads storage first (`guard.refresh()` → `mirrorTimerFromStorage`, `:367` / `:448`). The exception is deliberate: after this tab's own failed save, it keeps its newer state |
+
+**Other callers of `setIntention`, now covered by the fix:**
+- `app/intention.ts:21`, `:23` (`setIntentionOutcome`: Done / Carry forward on the summary, Focus and Today);
+- `Composer.tsx:77` (day turned) and `:91` (`start`, followed at once by the whole `startFocus` save).
+
+**Not fixed, per the brief.** If LEAD-5 rules #1 to be the same bug, the same pattern applies (persist only the changed fields into what storage holds now) and is a small follow-up.
