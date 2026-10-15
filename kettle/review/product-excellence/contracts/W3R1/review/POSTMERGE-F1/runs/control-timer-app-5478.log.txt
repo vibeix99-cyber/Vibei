@@ -4,3 +4,7 @@
 Running 2 tests using 1 worker
 
   ✓  1 [timer-app] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (9.2s)
+  ✓  2 [timer-app] › tests/timer.spec.ts:183:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (12.1s)
+
+  2 passed (25.5s)
+### end 11:56:06 UTC; exit=0; load:  11:56:06 up  3:09,  0 user,  load average: 15.76, 12.57, 11.42
