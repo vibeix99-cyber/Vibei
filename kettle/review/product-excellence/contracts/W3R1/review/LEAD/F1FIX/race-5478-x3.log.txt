@@ -1,0 +1,135 @@
+
+Running 3 tests using 1 worker
+
+  ✘  1 [chromium] › tests/w3-intention-race.spec.ts:58:1 › a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs, one record (5.3s)
+  ✘  2 [chromium] › tests/w3-intention-race.spec.ts:58:1 › a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs, one record (7.2s)
+  ✘  3 [chromium] › tests/w3-intention-race.spec.ts:58:1 › a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs, one record (6.1s)
+
+
+  1) [chromium] › tests/w3-intention-race.spec.ts:58:1 › a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs, one record 
+
+    Error: storage still holds B’s running brew
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoMatchObject[2m([22m[32mexpected[39m[2m)[22m
+
+    [32m- Expected  - 5[39m
+    [31m+ Received  + 5[39m
+
+    [2m  Object {[22m
+    [32m-   "endsAt": 1792057741627,[39m
+    [32m-   "intention": "Chapter 3 notes",[39m
+    [32m-   "sessionId": "s_mv9cwmh7d829d8da",[39m
+    [32m-   "startedAt": 1792057735627,[39m
+    [32m-   "status": "running",[39m
+    [31m+   "endsAt": null,[39m
+    [31m+   "intention": "Reply to Sam",[39m
+    [31m+   "sessionId": null,[39m
+    [31m+   "startedAt": null,[39m
+    [31m+   "status": "idle",[39m
+    [2m  }[22m
+
+      89 |   const after = await stored(a);
+      90 |   expect(after?.version).toBe(1);
+    > 91 |   expect(after?.state, 'storage still holds B’s running brew').toMatchObject({
+         |                                                                ^
+      92 |     status: 'running',
+      93 |     sessionId: brew.sessionId,
+      94 |     endsAt: brew.endsAt,
+        at /home/user/wt/w6tr-x/kettle/tests/w3-intention-race.spec.ts:91:64
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/l5-f1x-race-5478/w3-intention-race-a-tab-th-4e4de-ves-in-both-tabs-one-record-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/l5-f1x-race-5478/w3-intention-race-a-tab-th-4e4de-ves-in-both-tabs-one-record-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/l5-f1x-race-5478/w3-intention-race-a-tab-th-4e4de-ves-in-both-tabs-one-record-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/w3-intention-race.spec.ts:58:1 › a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs, one record 
+
+    Error: storage still holds B’s running brew
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoMatchObject[2m([22m[32mexpected[39m[2m)[22m
+
+    [32m- Expected  - 5[39m
+    [31m+ Received  + 5[39m
+
+    [2m  Object {[22m
+    [32m-   "endsAt": 1792057753346,[39m
+    [32m-   "intention": "Chapter 3 notes",[39m
+    [32m-   "sessionId": "s_mv9cwviqd3aeb979",[39m
+    [32m-   "startedAt": 1792057747346,[39m
+    [32m-   "status": "running",[39m
+    [31m+   "endsAt": null,[39m
+    [31m+   "intention": "Reply to Sam",[39m
+    [31m+   "sessionId": null,[39m
+    [31m+   "startedAt": null,[39m
+    [31m+   "status": "idle",[39m
+    [2m  }[22m
+
+      89 |   const after = await stored(a);
+      90 |   expect(after?.version).toBe(1);
+    > 91 |   expect(after?.state, 'storage still holds B’s running brew').toMatchObject({
+         |                                                                ^
+      92 |     status: 'running',
+      93 |     sessionId: brew.sessionId,
+      94 |     endsAt: brew.endsAt,
+        at /home/user/wt/w6tr-x/kettle/tests/w3-intention-race.spec.ts:91:64
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/l5-f1x-race-5478/w3-intention-race-a-tab-th-4e4de-ves-in-both-tabs-one-record-chromium-repeat1/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/l5-f1x-race-5478/w3-intention-race-a-tab-th-4e4de-ves-in-both-tabs-one-record-chromium-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/l5-f1x-race-5478/w3-intention-race-a-tab-th-4e4de-ves-in-both-tabs-one-record-chromium-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/w3-intention-race.spec.ts:58:1 › a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs, one record 
+
+    Error: storage still holds B’s running brew
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoMatchObject[2m([22m[32mexpected[39m[2m)[22m
+
+    [32m- Expected  - 5[39m
+    [31m+ Received  + 5[39m
+
+    [2m  Object {[22m
+    [32m-   "endsAt": 1792057762767,[39m
+    [32m-   "intention": "Chapter 3 notes",[39m
+    [32m-   "sessionId": "s_mv9cx2sf7bbde5cd",[39m
+    [32m-   "startedAt": 1792057756767,[39m
+    [32m-   "status": "running",[39m
+    [31m+   "endsAt": null,[39m
+    [31m+   "intention": "Reply to Sam",[39m
+    [31m+   "sessionId": null,[39m
+    [31m+   "startedAt": null,[39m
+    [31m+   "status": "idle",[39m
+    [2m  }[22m
+
+      89 |   const after = await stored(a);
+      90 |   expect(after?.version).toBe(1);
+    > 91 |   expect(after?.state, 'storage still holds B’s running brew').toMatchObject({
+         |                                                                ^
+      92 |     status: 'running',
+      93 |     sessionId: brew.sessionId,
+      94 |     endsAt: brew.endsAt,
+        at /home/user/wt/w6tr-x/kettle/tests/w3-intention-race.spec.ts:91:64
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/l5-f1x-race-5478/w3-intention-race-a-tab-th-4e4de-ves-in-both-tabs-one-record-chromium-repeat2/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/l5-f1x-race-5478/w3-intention-race-a-tab-th-4e4de-ves-in-both-tabs-one-record-chromium-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/l5-f1x-race-5478/w3-intention-race-a-tab-th-4e4de-ves-in-both-tabs-one-record-chromium-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [chromium] › tests/w3-intention-race.spec.ts:58:1 › a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs, one record 
+    [chromium] › tests/w3-intention-race.spec.ts:58:1 › a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs, one record 
+    [chromium] › tests/w3-intention-race.spec.ts:58:1 › a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs, one record 

@@ -1,0 +1,41 @@
+
+ RUN  v5.0.2 /tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/f1x-vitest/f2298d3/kettle
+
+ × src/timer/syncIdleLengthRace.test.ts > LEAD-5 scratch: syncIdleLength from a tab that is behind (audit #1) > B picks another brew length, then starts; A (idle, not yet seen the start) takes in the settings change: the brew of B must survive 392ms
+   → storage still holds the running brew of B: expected { status: 'idle', …(13) } to match object { status: 'running', …(2) }
+(11 matching properties omitted from actual)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/timer/syncIdleLengthRace.test.ts > LEAD-5 scratch: syncIdleLength from a tab that is behind (audit #1) > B picks another brew length, then starts; A (idle, not yet seen the start) takes in the settings change: the brew of B must survive
+AssertionError: storage still holds the running brew of B: expected { status: 'idle', …(13) } to match object { status: 'running', …(2) }
+(11 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "endsAt": 1791801000000,
+-   "sessionId": "s_mv529l6od9a4d612",
+-   "status": "running",
++   "endsAt": null,
++   "sessionId": null,
++   "status": "idle",
+  }
+
+ ❯ src/timer/syncIdleLengthRace.test.ts:113:73
+    111|     A.timer.getState().syncIdleLength();
+    112|     // Storage must still hold B's running brew.
+    113|     expect(stored().state, 'storage still holds the running brew of B'…
+       |                                                                         ^
+    114|   });
+    115| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  09:49:54
+   Duration  742ms (tests 88%, transform 7%, import 3%, worker 1%)
+

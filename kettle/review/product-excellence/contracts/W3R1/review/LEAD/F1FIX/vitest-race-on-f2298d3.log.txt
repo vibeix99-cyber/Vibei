@@ -1,0 +1,134 @@
+
+ RUN  v5.0.2 /tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/f1x-vitest/f2298d3/kettle
+
+ × src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs and is recorded once 513ms
+   → expected { status: 'idle', …(13) } to match object { status: 'running', …(5) }
+(8 matching properties omitted from actual)
+ × src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a tab that has not yet seen the other tab end the brew does not bring it back by saving its intention 49ms
+   → expected { status: 'running', …(13) } to match object { status: 'idle', sessionId: null }
+(12 matching properties omitted from actual)
+ × src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > same brew, other tab paused it: the intention is saved and the pause is kept 12ms
+   → expected { status: 'running', …(13) } to deeply equal { status: 'paused', …(13) }
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > keeps the stored format: same key, the { state, version: 1 } envelope, the same fields in the same order 12ms
+ × src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a save that changes nothing writes nothing (Today’s composer syncing on mount), even in a tab that is behind 12ms
+   → expected '{"state":{"status":"idle","phase":"fo…' to be '{"state":{"status":"running","phase":…' // Object.is equality
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a fresh profile (nothing saved yet) saves as before 5ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > storage full: once this tab’s own save failed, the intention save writes the whole (newer) timer, as before, and repairs storage 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs and is recorded once
+AssertionError: expected { status: 'idle', …(13) } to match object { status: 'running', …(5) }
+(8 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "endsAt": 1791799500000,
+-   "intention": "Chapter 3 notes",
+-   "sessionId": "s_mv529l6oa33df120",
+-   "startedAt": 1791798000000,
+-   "status": "running",
+-   "tag": "study",
++   "endsAt": null,
++   "intention": "Reply to Sam",
++   "sessionId": null,
++   "startedAt": null,
++   "status": "idle",
++   "tag": "work",
+  }
+
+ ❯ src/timer/intentionRace.test.ts:114:28
+    112|     // Storage still holds B's brew, untouched: status, session, ancho…
+    113|     expect(stored().version).toBe(1);
+    114|     expect(stored().state).toMatchObject({ status: 'running', sessionI…
+       |                            ^
+    115|
+    116|     // The storage events arrive. Both tabs end with the brew.
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a tab that has not yet seen the other tab end the brew does not bring it back by saving its intention
+AssertionError: expected { status: 'running', …(13) } to match object { status: 'idle', sessionId: null }
+(12 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "sessionId": null,
+-   "status": "idle",
++   "sessionId": "s_mv529l6o8f4f11f0",
++   "status": "running",
+  }
+
+ ❯ src/timer/intentionRace.test.ts:145:28
+    143|     // B is still running in memory; its composer saves.
+    144|     B.timer.getState().setIntention('Essay, part 2');
+    145|     expect(stored().state).toMatchObject({ status: 'idle', sessionId: …
+       |                            ^
+    146|     B.storageEvent();
+    147|     expect(B.timer.getState().status).toBe('idle');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > same brew, other tab paused it: the intention is saved and the pause is kept
+AssertionError: expected { status: 'running', …(13) } to deeply equal { status: 'paused', …(13) }
+
+- Expected
++ Received
+
+  {
+    "addedMs": 0,
+    "completedInCycle": 0,
+-   "endsAt": null,
++   "endsAt": 1791799500000,
+    "intention": "Essay, intro",
+    "lastEnded": null,
+-   "pausedAt": 1791798120000,
++   "pausedAt": null,
+    "pausedTotalMs": 0,
+    "phase": "focus",
+    "plannedMs": 1500000,
+-   "remainingMs": 1380000,
++   "remainingMs": 1500000,
+    "sessionId": "s_mv529l6o8766e9d0",
+    "startedAt": 1791798000000,
+-   "status": "paused",
++   "status": "running",
+    "tag": "work",
+  }
+
+ ❯ src/timer/intentionRace.test.ts:161:28
+    159|     // B still thinks it is running; it saves new words for the same b…
+    160|     B.timer.getState().setIntention('Essay, intro', 'work');
+    161|     expect(stored().state).toEqual({ ...paused, intention: 'Essay, int…
+       |                            ^
+    162|     A.storageEvent();
+    163|     B.storageEvent();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a save that changes nothing writes nothing (Today’s composer syncing on mount), even in a tab that is behind
+AssertionError: expected '{"state":{"status":"idle","phase":"fo…' to be '{"state":{"status":"running","phase":…' // Object.is equality
+
+Expected: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1791798000000,"endsAt":1791799500000,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Chapter 3 notes","tag":null,"sessionId":"s_mv529l6of018971e","lastEnded":null},"version":1}"
+Received: "{"state":{"status":"idle","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":null,"endsAt":null,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"","tag":null,"sessionId":null,"lastEnded":null},"version":1}"
+
+ ❯ src/timer/intentionRace.test.ts:196:34
+    194|       storage.stale = null;
+    195|     }
+    196|     expect(storage.getItem(KEY)).toBe(raw);
+       |                                  ^
+    197|     A.storageEvent();
+    198|     expect(A.timer.getState()).toMatchObject({ status: 'running', sess…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 3 passed (7)
+   Start at  09:47:38
+   Duration  950ms (tests 85%, transform 13%, import 2%, worker 1%)
+
