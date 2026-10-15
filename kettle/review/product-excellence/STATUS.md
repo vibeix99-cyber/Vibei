@@ -12,6 +12,17 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 
 ## ▶ WAVE 3 ROUND 1 · started 2026-10-14 10:00 UTC (read this first)
 
+**Now (2026-10-15 11:05 UTC):**
+- **Item 1, F1 fix:**
+  - First pass `74138d3`: **REJECT** (LEAD-5 `5060817`). Defect F1X-D1: `syncIdleLength` is the same bug.
+  - Fix round handed back `10ecf2c` (src `b74e6b3`), gate passed (`GATE.md`).
+  - Trial **`37de54a`** on :5563/:5573 (worktree `w6tr-x2`), vitest 314/314.
+  - **LEAD-5 is rerunning its §6 checks for the final verdict.** Merge only on APPROVE.
+- **Item 2, backdrop:** done, report only. No merge changed it; it is capture timing (pre-rendered still vs faded-in live canvas, `capture.mjs:184-186`, `NookScene.tsx:222-246`), pre-existing. Receipt: `review/BACKDROP/RECEIPT-BACKDROP.md`.
+- **Item 3, N-2:** waits for item 1 to merge.
+- **Item 4:** the Final Product Boss is on hold.
+- **Servers:** base :5478/:5488; integration :5560/:5570; trial :5563/:5573.
+
 **Before the Final Product Boss: Vibei's post-follow-up decisions (2026-10-15 08:55 UTC; `contracts/W3R1/VB-DECISIONS-POSTFOLLOWUP.md`):**
 - **Item 1: the `integrity:309` fix.**
   - **Maker:** fix maker F1X (Opus, high) on `pe/w3r1-f1-intention`, worktree `w6x`, :5561; brief `BRIEF-F1FIX.md`; stop 11:30 UTC.
