@@ -5,6 +5,7 @@
  * A copy of the spec with three switches; skipped unless W3_LOAD=1:
  *
  *   W3_LOAD=1 KETTLE_PORT=5501 CPU=6 FIRST_ONLY=1 REP=4 ONLY=1440x900-light-200-r npx playwright test tests/w3-notices-load.spec.ts --project=chromium
+ *   (W3_LOG=1 adds the per-frame input and frame log printed when Mark done's Undo is not drawn.)
  */
 /**
  * I10, notices without overlays (W2R3, Vibei's decision): the invariant, with real input, at every size, text size and
@@ -171,7 +172,10 @@ async function context(browser: Browser, c: Cfg) {
         document.head.appendChild(s);
       });
   }, c.pct);
-  await ctx.addInitScript(() => {
+  // (W3R1 Q) The per-frame input / frame logger is diagnostics, opt-in with W3_LOG=1: its forced layout every frame
+  // slowed the page enough that at 390×844 and 375×667 light 200 % reduced "Saved … of focus" had not run out on Today
+  // when the summary's check came (the two cases failed with it on base and on 2be3de1, and pass without it).
+  if (process.env.W3_LOG) await ctx.addInitScript(() => {
     const L: any[] = ((window as any).__log = []);
     for (const t of ['pointerdown', 'pointerup', 'pointermove', 'click', 'wheel', 'scroll', 'keydown'])
       addEventListener(t, (e: any) => { if ((t === 'pointermove' || t === 'scroll' || t === 'wheel') && L.length && L[L.length - 1].e === t) { L[L.length - 1].n = (L[L.length - 1].n || 1) + 1; L[L.length - 1].t2 = Math.round(performance.now()); return; } L.push({ t: Math.round(performance.now()), ts: Math.round(e.timeStamp), e: t, x: Math.round(e.clientX), y: Math.round(e.clientY), sy: scrollY }); }, { capture: true, passive: true });
@@ -205,59 +209,122 @@ async function onTop(page: Page, el: ReturnType<Page['locator']>, strict = false
         if (!h || !e.contains(h)) return null;
       }
     return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width, h: r.height, top: r.top };
-  }, strict);
+  }, strict, { timeout: GONE_MS });
 }
+/** (W3R1 Q, X-11) Every read of a target in `press()` waits at most this long for it to be in the page: a target that
+ *  has gone (an inline Undo whose time ran out) fails the test at once, saying so, instead of holding it to its 4-minute
+ *  timeout. */
+const GONE_MS = 15_000;
 /** Scroll by real wheel (over `over`, or the page's middle) until `el` is on top, then tap / click it for real. */
 async function press(page: Page, touch: boolean, el: ReturnType<Page['locator']>, over?: { x: number; y: number }, strict = false) {
   await el.waitFor({ state: 'attached', timeout: 20_000 });
   let at = await onTop(page, el, strict);
-  // Inside a sheet, the wheel goes over the sheet (its body scrolls); elsewhere over the page's middle.
-  const sheet = await el.evaluate((e) => {
-    const d = e.closest('[role="dialog"]')?.getBoundingClientRect();
-    return d ? { x: Math.round(d.left + d.width / 2), y: Math.round(Math.max(0, d.top) + (Math.min(innerHeight, d.bottom) - Math.max(0, d.top)) / 2) } : null;
-  });
-  // Otherwise over the element's own scroller (the session panel, a column), where the wheel scrolls it.
-  const scroller = await el.evaluate((e) => {
-    for (let a = e.parentElement; a && a !== document.body; a = a.parentElement) {
-      const oy = getComputedStyle(a).overflowY;
-      if ((oy === 'auto' || oy === 'scroll') && a.scrollHeight > a.clientHeight) {
-        const r = a.getBoundingClientRect();
-        return { x: Math.round(r.left + r.width / 2), y: Math.round(Math.max(0, r.top) + (Math.min(innerHeight, r.bottom) - Math.max(0, r.top)) / 2) };
+  if (!at) {
+    // Inside a sheet, the wheel goes over the sheet (its body scrolls); elsewhere over the page's middle.
+    const sheet = await el.evaluate((e) => {
+      const d = e.closest('[role="dialog"]')?.getBoundingClientRect();
+      return d ? { x: Math.round(d.left + d.width / 2), y: Math.round(Math.max(0, d.top) + (Math.min(innerHeight, d.bottom) - Math.max(0, d.top)) / 2) } : null;
+    }, undefined, { timeout: GONE_MS });
+    // Otherwise over the element's own scroller (the session panel, a column), where the wheel scrolls it.
+    const scroller = await el.evaluate((e) => {
+      for (let a = e.parentElement; a && a !== document.body; a = a.parentElement) {
+        const oy = getComputedStyle(a).overflowY;
+        if ((oy === 'auto' || oy === 'scroll') && a.scrollHeight > a.clientHeight) {
+          const r = a.getBoundingClientRect();
+          return { x: Math.round(r.left + r.width / 2), y: Math.round(Math.max(0, r.top) + (Math.min(innerHeight, r.bottom) - Math.max(0, r.top)) / 2) };
+        }
       }
+      return null;
+    }, undefined, { timeout: GONE_MS });
+    // (W3R1 Q, X-11) One wheel at a time: each wheel is sent only once the previous one has landed. After a wheel, wait
+    // until the element has actually moved from where it was before that wheel (a wheel the browser has received but
+    // not yet handed to the page leaves everything still, so stillness alone cannot see it), then until it is still
+    // across two frames (the end of the scroll). Both waits are bounded; a wheel that moves nothing within its bound
+    // counts as stuck, and three stuck wheels in a row end the walk (nothing more can be brought by wheel there).
+    let stuck = 0;
+    for (let i = 0; !at && i < 60 && stuck < 3; i++) {
+      const r = (await el.boundingBox({ timeout: GONE_MS }))!;
+      const vh = page.viewportSize()!.height;
+      const aim = over ?? sheet ?? scroller;
+      await page.mouse.move(aim?.x ?? Math.round(page.viewportSize()!.width / 2), aim?.y ?? Math.round(vh / 2));
+      const before = await el.evaluate((e) => e.getBoundingClientRect().top, undefined, { timeout: GONE_MS });
+      // Above the view: bring it down; anywhere else (below it, or under the docked start / tab bar): bring it up.
+      await page.mouse.wheel(0, r.y < 4 ? -60 : r.y > vh ? 120 : 60);
+      const moved = await el.evaluate(
+        (e, before) =>
+          new Promise<boolean>((done) => {
+            const t0 = performance.now();
+            const f = () => {
+              if (Math.abs(e.getBoundingClientRect().top - before) > 0.5) done(true);
+              else if (performance.now() - t0 > 1000) done(false);
+              else requestAnimationFrame(f);
+            };
+            requestAnimationFrame(f);
+          }),
+        before,
+        { timeout: GONE_MS },
+      );
+      stuck = moved ? 0 : stuck + 1;
+      // The scroll has landed: the element and the page still across two frames (up to 1.5 s).
+      await el.evaluate(
+        (e) =>
+          new Promise<void>((done) => {
+            const t0 = performance.now();
+            let last = e.getBoundingClientRect().top + ':' + scrollY;
+            let still = 0;
+            const f = () => {
+              const now = e.getBoundingClientRect().top + ':' + scrollY;
+              still = now === last ? still + 1 : 0;
+              last = now;
+              if (still >= 2 || performance.now() - t0 > 1500) done();
+              else requestAnimationFrame(f);
+            };
+            requestAnimationFrame(f);
+          }),
+        undefined,
+        { timeout: GONE_MS },
+      );
+      at = await onTop(page, el, strict);
     }
-    return null;
-  });
-  for (let i = 0; !at && i < 60; i++) {
-    const r = (await el.boundingBox())!;
-    const vh = page.viewportSize()!.height;
-    const aim = over ?? sheet ?? scroller;
-    await page.mouse.move(aim?.x ?? Math.round(page.viewportSize()!.width / 2), aim?.y ?? Math.round(vh / 2));
-    // Above the view: bring it down; anywhere else (below it, or under the docked start / tab bar): bring it up.
-    await page.mouse.wheel(0, r.y < 4 ? -60 : r.y > vh ? 120 : 60);
-    await page.waitForTimeout(120);
-    at = await onTop(page, el, strict);
-  }
-  await park(page);
-  if (!at && sheet) {
-    // A sheet's control that no wheel brings on screen (its footer below a short screen at 200 % text: pre-existing,
-    // recorded in the packet): reached by the keyboard instead, Tab then Enter (real input too).
-    for (let i = 0; i < 20; i++) {
-      await page.keyboard.press('Tab');
-      if (await el.evaluate((e) => document.activeElement === e)) {
-        await page.keyboard.press('Enter');
-        keyboardFallbacks.push(`${el}: Tab + Enter`);
-        return { x: -1, y: -1, w: 0, h: 0, top: -1 };
+    await park(page);
+    if (!at && sheet) {
+      // A sheet's control that no wheel brings on screen (its footer below a short screen at 200 % text: pre-existing,
+      // recorded in the packet): reached by the keyboard instead, Tab then Enter (real input too).
+      for (let i = 0; i < 20; i++) {
+        await page.keyboard.press('Tab');
+        if (await el.evaluate((e) => document.activeElement === e, undefined, { timeout: GONE_MS })) {
+          await page.keyboard.press('Enter');
+          keyboardFallbacks.push(`${el}: Tab + Enter`);
+          return { x: -1, y: -1, w: 0, h: 0, top: -1 };
+        }
       }
+      // Neither: pre-existing on the base too (61aba17: the confirm dialog's footer runs past its box at 375×667 @200 and
+      // its focus trap never reaches "Delete"). Reported in the packet; the click is synthetic, for setup only.
+      await el.evaluate((e) => (e as HTMLElement).click(), undefined, { timeout: GONE_MS });
+      keyboardFallbacks.push(`${el}: UNREACHABLE by pointer and Tab (pre-existing), synthetic click`);
+      return { x: -1, y: -1, w: 0, h: 0, top: -1 };
     }
-    // Neither: pre-existing on the base too (61aba17: the confirm dialog's footer runs past its box at 375×667 @200 and
-    // its focus trap never reaches "Delete"). Reported in the packet; the click is synthetic, for setup only.
-    await el.evaluate((e) => (e as HTMLElement).click());
-    keyboardFallbacks.push(`${el}: UNREACHABLE by pointer and Tab (pre-existing), synthetic click`);
-    return { x: -1, y: -1, w: 0, h: 0, top: -1 };
+    expect(at, `${el} can be brought on top by real scrolling (${JSON.stringify(await el.boundingBox())}, scrollY ${await page.evaluate(() => scrollY)})`).not.toBeNull();
   }
-  expect(at, `${el} can be brought on top by real scrolling (${JSON.stringify(await el.boundingBox())}, scrollY ${await page.evaluate(() => scrollY)})`).not.toBeNull();
-  if (touch) await page.touchscreen.tap(at!.x, at!.y);
-  else await page.mouse.click(at!.x, at!.y);
+  // (W3R1 Q, X-11) Aim and tap inside one input window, as a person does: the pointer moves onto the target (input), its
+  // place is read again right then, and the tap follows at once. The strip changes height at rest only after a quiet
+  // spell with no input at all (QUIET_MS, or BAND_IDLE_MS for a kept band: src/ui/moment.ts), so nothing can move
+  // between that read and the tap; if the target has moved, or the read took 800 ms or more, the move and the read are
+  // made again.
+  for (let k = 0; ; k++) {
+    const t = Date.now();
+    await page.mouse.move(Math.round(at!.x), Math.round(at!.y));
+    const again = await onTop(page, el, strict);
+    const same = !!again && Math.abs(again.x - at!.x) < 0.5 && Math.abs(again.y - at!.y) < 0.5;
+    at = again;
+    if (!at || (same && Date.now() - t < 800) || k >= 4) break;
+  }
+  expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();
+  if (touch) {
+    await page.touchscreen.tap(at!.x, at!.y);
+    // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)
+    await park(page);
+  } else await page.mouse.click(at!.x, at!.y);
   return at!;
 }
 /** Controls reached by the keyboard because no wheel could bring them on screen (reported per test). */
@@ -305,6 +372,15 @@ for (const c of CFGS.filter((c) => !process.env.ONLY || `${c.w}x${c.h}-${c.theme
     await press(page, touch, field);
     await page.keyboard.type('Chapter 3 notes');
     await page.keyboard.press('Escape').catch(() => {});
+    // (W3R1 N-1) The task is in the field before the brew starts. Under heavy load the typing once missed the field
+    // (the brew was saved as "Study brew", so no carried line, and Mark done timed out much later): typed again, for
+    // real, if it is not there, then asserted.
+    if ((await field.inputValue()) !== 'Chapter 3 notes') {
+      await press(page, touch, field);
+      await page.keyboard.press('ControlOrMeta+A');
+      await page.keyboard.type('Chapter 3 notes');
+    }
+    await expect(field).toHaveValue('Chapter 3 notes');
     await press(page, touch, page.getByRole('button', { name: /^Put the kettle on · / }));
     await page.waitForFunction(() => location.hash === '#/focus', null, { timeout: 15_000 });
     await page.waitForTimeout(1500);
@@ -336,7 +412,7 @@ for (const c of CFGS.filter((c) => !process.env.ONLY || `${c.w}x${c.h}-${c.theme
     try {
       await expect(undoRow).toBeVisible();
     } catch (e) {
-      console.log(JSON.stringify(await page.evaluate(() => (window as any).__log.slice(-45))).replace(/\},\{/g, '},\n{'));
+      console.log(JSON.stringify(await page.evaluate(() => ((window as any).__log ?? []).slice(-45))).replace(/\},\{/g, '},\n{'));
       throw new Error(`Mark done's Undo not drawn after the tap at ${JSON.stringify(tapAt)}: ${JSON.stringify(await page.evaluate(() => ({ taps: (window as any).__taps, mark: document.querySelector('button[aria-label^="Mark"]')?.getBoundingClientRect().toJSON(), sy: scrollY, notices: (window as any).__kettle.notices() })))}`);
     }
     const rowTop = await undoRow.evaluate((r) => r.getBoundingClientRect().top);

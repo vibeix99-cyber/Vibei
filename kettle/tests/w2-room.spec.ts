@@ -142,6 +142,10 @@ test.describe('Focus backdrop: earned items without the live 3D room', () => {
   });
 
   test('3D failure (WebGL context lost): the still that takes over carries the same items', async ({ page }) => {
+    // (W3R1 Q) The test's own budget covers its own bounded waits: the scene may take up to 45 s to be ready (below), and
+    // the layer check after it takes 10–20 s on a loaded machine (screenshots on SwiftShader), so the default 60 s left
+    // too thin a margin (Lane R: 30.4 s to ready, then cut at 60.9 s). No bound or assertion is changed.
+    test.setTimeout(120_000);
     await boot(page, 'auto');
     const want = await expectedItems(page);
     await startBrew(page);
