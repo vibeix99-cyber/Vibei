@@ -34,3 +34,68 @@ Running 31 tests using 1 worker
   ✓  29 [pwa] › tests/pwa.spec.ts:48:1 › manifest is installable: name, colors, standalone, icons that exist (79ms)
   ✓  30 [pwa] › tests/pwa.spec.ts:59:1 › precaches the shell, fonts, 3D chunk and tick worker; boots and times a brew offline (1.4m)
   ✓  31 [pwa] › tests/pwa.spec.ts:85:1 › update: new version waits for the user (no reload mid-brew), then applies and the brew carries on (45.1s)
+
+
+  1) [timer-app] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      173 |       document.dispatchEvent(new Event('visibilitychange'));
+      174 |     });
+    > 175 |     await expect.poll(() => page.evaluate(() => (window as any).__doneAt ?? null), { timeout: 10_000, intervals: [200] }).not.toBeNull();
+          |     ^
+      176 |     const doneAt = await page.evaluate(() => (window as any).__doneAt as number);
+      177 |     expect(doneAt - (endsAt as number)).toBeGreaterThanOrEqual(0);
+      178 |     expect(doneAt - (endsAt as number)).toBeLessThan(lateBudget(kettlePage));
+        at /home/user/wt/w6-int/kettle/tests/timer.spec.ts:175:5
+
+    Error Context: .tmp/LR-pw/timer-pwa/timer-timer-reliability-ba-a1533-h-main-thread-timers-frozen-timer-app/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/LR-pw/timer-pwa/timer-timer-reliability-ba-a1533-h-main-thread-timers-frozen-timer-app/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/LR-pw/timer-pwa/timer-timer-reliability-ba-a1533-h-main-thread-timers-frozen-timer-app/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [timer-app] › tests/timer.spec.ts:183:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m1[39m
+    Received: [31m0[39m
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      202 |     await start(page, secs(kettlePage, 2), 'Essay');
+      203 |     await setHidden(page, true);
+    > 204 |     await expect.poll(() => page.evaluate(() => (window as any).__notes.length), { timeout: 10_000 }).toBe(1);
+          |     ^
+      205 |     const note = await page.evaluate(() => (window as any).__notes[0]);
+      206 |     expect(note.title).toBe('The kettle’s whistling! Time for tea.');
+      207 |     expect(note.body).toContain('Essay');
+        at /home/user/wt/w6-int/kettle/tests/timer.spec.ts:204:5
+
+    Error Context: .tmp/LR-pw/timer-pwa/timer-timer-reliability-hi-c226d-ing-back-restores-the-title-timer-app/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/LR-pw/timer-pwa/timer-timer-reliability-hi-c226d-ing-back-restores-the-title-timer-app/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/LR-pw/timer-pwa/timer-timer-reliability-hi-c226d-ing-back-restores-the-title-timer-app/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [timer-app] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen 
+    [timer-app] › tests/timer.spec.ts:183:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title 
+  2 skipped
+  27 passed (10.1m)
+### end 11:35:50 UTC; exit=1; load:  11:35:50 up  2:49,  0 user,  load average: 14.73, 13.01, 9.23
