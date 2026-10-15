@@ -77,3 +77,7 @@ FACT 1440x900-dark-t200-rm a-no-input {"leftAt":5216,"room":113,"commits":[{"t":
   ✓  63 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (1440x900-dark-t200-rm) (10.1s)
 FACT 1440x900-dark-t200-rm b-scroll-then-idle {"leftAt":5249,"room":113,"maxSy":300,"scrollMs":2160,"roomAfterScroll":113,"commits":[{"t":11456,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4047,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":6207,"collapseAfterLastBusyMs":4047,"visibleMove":113}
   ✓  64 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (1440x900-dark-t200-rm) (12.4s)
+FACT 1440x900-dark-t200-rm c-pointer-held {"leftAt":5185,"room":113,"roomWhileDown":113,"downWhileHeld":1,"commits":[{"t":12384,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4055,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":7199,"collapseAfterLastBusyMs":4055,"visibleMove":113}
+  ✓  65 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (1440x900-dark-t200-rm) (13.4s)
+  ✓  66 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 light 200 % reduced motion) (13.2s)
+  ✓  67 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 light 100 %) (13.8s)
