@@ -63,3 +63,40 @@ By cell (6 iterations each; survives = running, same session and `endsAt`; the f
 - **The 7 iterations that are not `running` (control 6, fix 1) are `paused`, same session, both tabs and storage** (`endsAt null` at the first dump after the Enter). Cause from the data: the words typed in tab 2 contain spaces; once tab 2 has taken in the brew and moved to the focus screen, the remaining keystrokes reach that screen, where Space is the pause shortcut (the screen shows "Space pause"). It happened on both servers; those iterations had no record because a paused brew is not ended by the fast-forward. It is an effect of my typing, not of either build.
 - **The task label.** A tab's composer shows the words typed in the other tab (tab 2's composer already held "Write the report" when I typed into it: S2 recorded its value as "Write the reportReply"). Words typed in tab 2 while the brew starts can therefore become the running brew's task label in both tabs: labels seen include "Reply to SamWrite the report", "Write the reportReply" and " to SamWrite the reportReply". It happens on **both** servers (control 17 of 24, fix 14 of 24), so it is not introduced by the fix; S2 changed it in all 12 iterations on each server, S1 in 5 of 12 on the control and 2 of 12 on the fix. In the fix's runs the brew itself is unharmed (same session, same end).
 - The 1 `paused` iteration on the fix and the 6 on the control are all the Space effect above; I did not re-run them with text without spaces.
+
+## 5. The notice suite on :5562
+
+`runs/notice-suite.log.txt`, `runs/notice-suite.json`; `KETTLE_PORT=5562 npx playwright test tests/notice-strip.spec.ts tests/w3-notices.spec.ts tests/w3-notices-idle.spec.ts tests/summary-notice.spec.ts tests/toast-room.spec.ts --project=chromium --workers=1`; 09:47:14 to 10:28:11 (40.9 min), one gate slot; a second gate job (integrity, race spec, the 2-tab check) ran beside it for the first part, load average about 3 to 10.
+
+**74 of 74 passed**, 0 failed, 0 flaky, 0 skipped: `notice-strip` 25, `w3-notices` 9, `w3-notices-idle` 12, `summary-notice` 14, `toast-room` 14. The `notice-strip` case at 1440×900 light 200 % reduced motion (the former X-11 flake) passed (1.0 min). One run of each file, no repeats.
+
+## 6. One extra run (not asked for): `integrity.spec.ts` "two tabs, the leading one frozen across the end" ×10 on :5562
+
+`runs/integrity309-x10-5562.log.txt`, `.json`; `--repeat-each=10 --workers=1`, 10:22 to 10:25, load about 3 to 8 (the notice suite beside it): **10 of 10 passed** (17.3 to 17.8 s each). This is the test that failed twice before the fix (1 in the full run at 2 workers and 1 in 6 under 4 burners); there was no burner load in this run, so it says little about the load case. The maker reports 20/20 twice under load (6 burners); I did not repeat that.
+
+## 7. Summary and Unproven
+
+| Item | Result |
+|---|---|
+| Timer-harness, timer-app, pwa on :5562 (§1) | 29 passed, 2 skipped by design |
+| Full `integrity.spec.ts` on :5562, once (§2) | **25 of 25** (including `:309`, and the I03 cases) |
+| Notice suite on :5562 (§5) | **74 of 74** |
+| `w3-intention-race.spec.ts` (§3) | :5562 **passes**; :5560 **fails** at the storage step (A's whole idle timer over B's running brew) |
+| 2-tab manual check with real input (§4) | 48 iterations. On both :5562 and :5560 the brew survived in both tabs (same session, never `idle`) in 24 of 24; **the original bug did not show on :5560** (0 of 24 idle), quiet or with CPU ×6. 7 iterations ended `paused` by my own typed Space (6 control, 1 fix). Of the `running` ones, 41 of 41 made exactly one record. The running brew's label can be overwritten by words typed in tab 2 on **both** servers (control 17 of 24, fix 14 of 24) |
+| Extra: `integrity:309` ×10 on :5562 (§6) | 10 of 10, without burner load |
+
+**Unproven**
+
+| Item | Status |
+|---|---|
+| The manual check does not separate the fix from the control on the bug itself | the race needs the storage-event lag; main-thread throttling did not produce it in 48 iterations. Only the deterministic spec (hold the events) shows it, on :5560 |
+| The 7 `paused` iterations | explained from the data (Space typed on the focus screen), not re-run with space-free text; so for those 7 the fast-forward and record step was not exercised |
+| `integrity:309` under load on the fix | not run by me (§6 had no burners); the maker's 20/20 ×2 under 6 burners is not reproduced here |
+| Full integrity and the notice suite were run once each, at load 3 to 10 with two gate jobs side by side | no repeats; no `--workers=2` |
+| The task-label overwrite in the manual check | seen on both servers; I did not look at the code path beyond the data (a tab's composer holds the other tab's words, so words typed in tab 2 are saved as the intention of the brew tab 2 has by then taken in); whether it is intended is not mine to say |
+| Screenshots | first iteration of each of the 8 cells only; no screenshot of the failing-looking moments beyond what the four moments show; frames not annotated |
+| Judgement | none given |
+
+## 8. Evidence layout (`/home/user/Vibei/kettle/review/product-excellence/contracts/W3R1/review/F1FIX-LR/`)
+
+`runs/` (timer-pwa, integrity, race spec ×2, notice suite, integrity:309 ×10 logs as `.log.txt` and JSON; `manual-2tab.log.txt`; `race-5560-artifacts/` with the control's error context and trace), `manual/` (8 JSON files, `summary.txt`, 64 screenshots, `attempt1-discarded/`), `scripts/`.
