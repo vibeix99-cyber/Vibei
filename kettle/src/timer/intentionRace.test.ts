@@ -48,6 +48,7 @@ async function openTab(name: string, leader: boolean) {
   const sync = await import('./sync');
   const events = await import('@/lib/events');
   const progress = await import('@/progress');
+  const settings = await import('@/state/settings');
   progress.initProgress();
   store.setCompletionGuard({
     canComplete: () => leader,
@@ -69,6 +70,21 @@ async function openTab(name: string, leader: boolean) {
     syncs,
     /** Deliver the `storage` event this tab gets for the timer key (another tab's write has landed). */
     storageEvent: () => sync.mirrorTimerFromStorage({ event: true }),
+    settings: settings.useSettings,
+    /**
+     * Deliver the `storage` event for `kettle:settings`: settings rehydrate, and (as `ticker.ts:304` does on a focusMin
+     * change) the timer's idle length follows.
+     */
+    settingsEvent: async () => {
+      const before = settings.useSettings.getState().focusMin;
+      await settings.useSettings.persist.rehydrate();
+      if (settings.useSettings.getState().focusMin !== before) store.useTimer.getState().syncIdleLength();
+    },
+    /** This tab's person picks a brew length (Today's length control): settings save, then the idle length follows. */
+    pickLength: (focusMin: number) => {
+      settings.useSettings.getState().set({ focusMin });
+      store.useTimer.getState().syncIdleLength();
+    },
   };
 }
 
@@ -215,5 +231,92 @@ describe('saving the intention writes only the intention (F1)', () => {
     storage.full = false;
     A.timer.getState().setIntention('Essay, intro');
     expect(stored().state).toMatchObject({ status: 'running', sessionId: A.timer.getState().sessionId, intention: 'Essay, intro' });
+  });
+});
+
+describe('the idle brew length sync writes only the length (F1X-D1)', () => {
+  it('B picks another length and starts; A (idle, not yet seen the start) takes in the length change first: the brew survives in both tabs and is recorded once', async () => {
+    const A = await openTab('A', true);
+    const B = await openTab('B', false);
+    A.timer.getState().setIntention('Inbox', null); // a saved idle timer, both tabs in step
+    B.storageEvent();
+
+    // B: the person picks 50 min on Today (kettle:settings), then taps Start (kettle:timer, running).
+    B.pickLength(50);
+    B.timer.getState().startFocus({ intention: 'Chapter 3 notes' });
+    const { sessionId, endsAt, startedAt } = B.timer.getState();
+    expect(stored().state).toMatchObject({ status: 'running', sessionId, endsAt, plannedMs: 50 * MIN });
+
+    // A gets B's settings event first (events arrive in write order): its length sync runs before it has B's start.
+    await A.settingsEvent();
+    expect(A.timer.getState()).toMatchObject({ status: 'idle', sessionId: null, plannedMs: 50 * MIN });
+    expect(stored().state, 'storage still holds B’s running brew').toMatchObject({ status: 'running', sessionId, endsAt, startedAt, plannedMs: 50 * MIN, intention: 'Chapter 3 notes' });
+
+    // The timer events arrive. Both tabs end with the brew; it completes once.
+    A.storageEvent();
+    B.storageEvent();
+    for (const t of [A, B]) expect(t.timer.getState()).toMatchObject({ status: 'running', sessionId, endsAt });
+    expect(A.syncs).toEqual(['start']);
+    expect(B.syncs).toEqual([]);
+    advance(50 * MIN + 100);
+    A.timer.getState().tick();
+    B.timer.getState().tick();
+    B.storageEvent();
+    expect(A.completes.map((r) => r.id)).toEqual([sessionId]);
+    expect(B.completes).toHaveLength(0);
+    expect(storedSessions().filter((r) => r.id === sessionId)).toHaveLength(1);
+    for (const t of [A, B]) expect(t.progress.getState().sessions.filter((r) => r.id === sessionId)).toHaveLength(1);
+  });
+
+  it('a real length change still persists: one tab', async () => {
+    const A = await openTab('A', true);
+    A.pickLength(40); // nothing saved yet: the whole idle timer, as before
+    expect(stored()).toMatchObject({ version: 1, state: { status: 'idle', phase: 'focus', plannedMs: 40 * MIN, remainingMs: 40 * MIN } });
+    A.timer.getState().setIntention('Essay', 'work');
+    const whole = storage.getItem(KEY)!;
+    A.pickLength(30); // the same idle timer in storage: only the length changes
+    expect(storage.getItem(KEY)).toBe(whole.replace(`"plannedMs":${40 * MIN}`, `"plannedMs":${30 * MIN}`).replace(`"remainingMs":${40 * MIN}`, `"remainingMs":${30 * MIN}`));
+    const B = await openTab('B', false); // a fresh tab loads it
+    expect(B.timer.getState()).toMatchObject({ status: 'idle', plannedMs: 30 * MIN, intention: 'Essay', tag: 'work' });
+  });
+
+  it('a real length change still persists: two tabs in step, and the other tab’s newer words in storage are kept', async () => {
+    const A = await openTab('A', true);
+    const B = await openTab('B', false);
+    A.timer.getState().setIntention('Inbox', null);
+    B.storageEvent();
+    // B saves new words; A has not taken them in yet when it picks a new length.
+    B.timer.getState().setIntention('Reply to Sam', 'work');
+    A.pickLength(45);
+    expect(stored().state).toMatchObject({ status: 'idle', sessionId: null, plannedMs: 45 * MIN, remainingMs: 45 * MIN, intention: 'Reply to Sam', tag: 'work' });
+    const raw = storage.getItem(KEY);
+    // B takes in the settings change, then the timer write: in step, and its own sync changes nothing in storage.
+    await B.settingsEvent();
+    expect(storage.getItem(KEY)).toBe(raw);
+    B.storageEvent();
+    A.storageEvent();
+    for (const t of [A, B]) expect(t.timer.getState()).toMatchObject({ status: 'idle', plannedMs: 45 * MIN, intention: 'Reply to Sam', tag: 'work' });
+  });
+
+  it('a sync that changes nothing writes nothing', async () => {
+    const A = await openTab('A', true);
+    A.pickLength(40);
+    const raw = storage.getItem(KEY);
+    storage.map.set(KEY, raw!.replace('"intention":""', '"intention":"written elsewhere"')); // spot any rewrite
+    const marked = storage.getItem(KEY);
+    A.timer.getState().syncIdleLength();
+    A.pickLength(40);
+    expect(storage.getItem(KEY)).toBe(marked);
+  });
+
+  it('storage full: once this tab’s own save failed, the length sync writes the whole (newer) timer, as before, and repairs storage', async () => {
+    const A = await openTab('A', true);
+    A.timer.getState().setIntention('Inbox', null);
+    storage.full = true;
+    A.timer.getState().setIntention('Essay', 'work'); // fails: storage still holds 'Inbox'
+    expect(stored().state.intention).toBe('Inbox');
+    storage.full = false;
+    A.pickLength(40);
+    expect(stored().state).toMatchObject({ status: 'idle', plannedMs: 40 * MIN, intention: 'Essay', tag: 'work' });
   });
 });
