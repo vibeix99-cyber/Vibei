@@ -1,7 +1,7 @@
 # N2 — the History focus scroll (N-2): packet
 
 **Branch** `pe/w3r1-n2-history` (worktree `/home/user/wt/w7n`), base `5f78af1` (src `b74e6b3`). Dev :5565; controls :5560 / :5570 (the base) and :5478 / :5488 (old base `4d36939`).
-**Status: STAGES 1–4 and 6 of 6 written (§5 regressions: running).** The brief's rule applies — *"if the root cause lies outside `History.tsx`, stop, write it up with evidence, and hand back"* — and it applies in the strongest form: **there is no product scroll to fix.** Nothing in `src/` has been changed.
+**Status: all six stages written; §5 integrity / a11y still running at the time of this edit (see the table).** The brief's rule applies — *"if the root cause lies outside `History.tsx`, stop, write it up with evidence, and hand back"* — and it applies in the strongest form: **there is no product scroll to fix.** Nothing in `src/` has been changed.
 
 ## §1 Root cause, with the trace
 
@@ -128,4 +128,41 @@ Because `src/` is unchanged, every item holds by construction; the file also **s
 
 Nothing visual changes — as it cannot: there is no product diff. The few 390 px differences are render noise between two page loads, not a change: **re-capturing the base itself** (`captures/BEFORE-recapture/`, :5560 again) differs from `BEFORE/` at 390 light in **the same 8 pixels** (same bbox x551–662, y1231–1394, ≤ 2/255), at 390 dark in 0 pixels (the AFTER/BEFORE dark difference, 45 px, is of the same size and nature), and at 1440 light in 0.
 
-*(§5 follows when the regression runs finish.)*
+## §5 Regressions
+
+The branch's `src/` **is** the base's (`b74e6b3`), so a regression here can only be a base regression. They were run anyway, on the branch's own dev server :5565 (HMR on, serving `/home/user/wt/w7n`), every browser run through the slot gate (`--lane N2`); logs in `logs/`:
+
+| check | result | log |
+|---|---|---|
+| **`notice-strip.spec.ts` 25/25** (unchanged) | **25 of 25 passed** (14.6 min, 2 workers) | `notice-strip-full-25-5565.log.txt` |
+| **`notice-strip.spec.ts` at 1440×900 light @200 % reduced motion** (the test formerly at `:292`, now `:338`) **×6 under load** | **6 of 6 passed.** `--workers=2 --repeat-each=6` plus 4 CPU burners (PIDs 773 774 775 776, each killed by PID at the end; `stress-burners.log.txt`: load average 10.6 at start, 13.1 at the end; the gate held 2 slots); the shape of `review/FINAL/scripts/LR-stress.sh` | `notice-strip-292-1440-light-200r-x6-UNDER-LOAD-5565.log.txt` |
+| `w3-notices.spec.ts` | **9 of 9** | `w3-notices-5565.log.txt` |
+| `w3-stats.spec.ts` (Stats / History) | **30 of 30** | `w3-stats-5565.log.txt` |
+| `w3-notices-load.spec.ts` | 25 skipped — by design: it runs only with `W3_LOAD=1` (a CPU-throttled copy of the notice-strip's first part, Today / Mark done; it does not reach History) | `w3-notices-load-5565.log.txt` |
+| Vitest, the full suite | **314 of 314** (33 files) | `vitest.log.txt` |
+| `tsc --noEmit` (the project) | exit 0 | `tsc.log.txt` |
+| the new spec, strict `tsc` on its own | exit 0 (not covered by the project's `include: ["src"]`) | — |
+| `integrity.spec.ts`, `a11y.spec.ts` (the other two files that mention Stats / History) | see "Late results" below | `integrity-5565.log.txt`, `a11y-5565.log.txt` |
+
+The `:338` 6 of 6 under load is the number that bears on N-2: the symptom the finding described is the one the test had on the old spec's reads (F's Run B), and with the base's current spec (X-11's test-only fix `e00b5fa`) it does not recur under the same stress. It does not need a product counterpart.
+
+## Open, for LEAD-5's ruling
+
+1. **The finding.** N-2 as written ("tapping a History row scrolls the page ~110 px, the base's focus scroll") is not reproducible: 0 px, 0 calls, 0 events in 18 + 9 + 9 scenarios on the base, the production preview, and the old base (§1 A); the 110 is the lead's own `press()` wheel (§1 C, replayed). **Recommend: close N-2 as "not a product defect (probe artifact)".** I did not invent a fix (§2).
+2. **The guard.** `tests/w3-history-focus-scroll.spec.ts` can merge as it is (it holds the invariant, the preserve list, and was shown to detect a 110 px move 8 of 8) — or be dropped if LEAD-5 prefers not to carry a test that has nothing to fail on today. It is the only change on the branch.
+3. **A wrong comment** (not mine to touch, test-only): `tests/notice-strip.spec.ts`, in the History step, says the read waits for "the page's own focus scroll for the tapped row (History.tsx, pre-existing: W2R3 N-2)". There is no such scroll. The wait is harmless (the row is already still), but the comment points the next reader at `History.tsx` for nothing.
+4. **Run B's 111 px, itself, is not reproduced.** The mechanism that fits the evidence is the old spec's read timing against `press()`'s wheel race (§1 D); the product emits no scroll in that window (§1 B), and the current spec passes 25 of 25, and `:338` 6 of 6 under load.
+5. **Side note, not an N-2 defect:** the sheet's scroll lock (`html{overflow:hidden}`) does not stop a *programmatic* scroll already in flight (`evidence/inflight-smooth-scroll.out.log.txt`: a smooth `scrollTo` of 60 or 300 px keeps running to its end with the dialog open — as `overflow:hidden` only restricts user scrolling). Nothing in the app starts one at that moment; it is only how a test's late scroll would still land under an open sheet. `Sheet.tsx` is not mine to change and I did not.
+
+## Reproduce
+
+```
+# in /home/user/wt/w7n/kettle, through the slot gate (python3 -I …/round7-review/tools/slots.py run --lane N2 --n 2 -- …)
+KETTLE_PORT=5560 npx playwright test tests/w3-history-focus-scroll.spec.ts --project=chromium --workers=2 --repeat-each=3   # base
+KETTLE_PORT=5565 npx playwright test tests/w3-history-focus-scroll.spec.ts --project=chromium --workers=2 --repeat-each=3   # branch
+KETTLE_PORT=5560 npx playwright test -c .tmp/n2/pw-mutant.config.ts -g "tap on a History row|Save: the row"                  # the 110 px mutant: 8 of 8 fail
+node .tmp/n2/probe.mjs http://127.0.0.1:5560 out.json                                                                        # the 18-scenario matrix
+node .tmp/n2/t2-lead-instr.mjs --base http://127.0.0.1:5560 --cfg 390x844:light:100 --flow historytrace --out out.json      # the lead's flow, with the scroll log
+```
+(The `.tmp/n2/` scripts are copied to `evidence/scripts/`.)
+
