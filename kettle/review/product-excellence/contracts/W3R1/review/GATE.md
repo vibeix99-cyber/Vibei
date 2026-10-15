@@ -250,3 +250,15 @@ The merged src and tests equal trial `cf4a89c`'s. LEAD-5 on :5546:
 
   One receiving-side `sync.ts` guard is recommended for both. Separately: Lane R's label overwrite, a Today composer design question.
 - **Integration HEAD app code is now `5f78af1`** (src `b74e6b3`). Next: item 3 (N-2).
+
+## N-2 (History focus scroll, Vibei post-follow-up item 3). GATE PASSED (scope), 2026-10-15 ~12:50 UTC
+
+| Item | Result |
+|---|---|
+| Revision | `pe/w3r1-n2-history@2280e7d` (one commit on base `5f78af1`). Packet `contracts/W3R1/N2/N2-READY.md` (evidence through `0cbc418`) |
+| Scope (checked, `5f78af1..2280e7d`) | One new file, `tests/w3-history-focus-scroll.spec.ts` (+352). **No product change:** src `b74e6b3` is identical to the base. `History.tsx`, `Sheet.tsx` and `notice-strip.spec.ts` are untouched |
+| The maker's finding | **N-2 does not reproduce as a product scroll.** Traced frame by frame on :5560, :5570 and :5478: 36 scenarios (1440 @200 reduced, 1440 @100, 390 touch, 375, dark; row at top, middle and bottom). 0 px, 0 scroll calls and 0 scroll events from pointerdown through open to Escape. The app's `focus()` calls all pass `preventScroll`. The "110 px" is attributed to the probe: `historytrace`'s 25 wheel loops ×100 = `scrollY` 2500, then `press()` wheels exactly 110 because the row sat under the tab bar. Each `scroll` event follows a probe `wheel`, none follows the tap |
+| The maker's checks | The new spec (14 tests: 8 pointer/touch at 4 configs plus 6 on the preserve list) passes 42/42 on :5560 and 42/42 on :5565. **It cannot fail on base**, since nothing moves. A throw-away mutant (a 110 px `scrollBy` after the row click) fails 8/8. Save: `scrollY` changes 68–73 px from Toast `keepStill`; the row's top moves ≤ 0.5 px. Preserve list 3×3 at 2 configs. `notice-strip` 25/25 and `:338` (was `:292`) 6/6 under load; `w3-stats` 30/30; `w3-notices` 9/9; `integrity` 25/25; `a11y` 11/11; vitest 314/314; tsc 0. Captures: 1440 byte-identical; 390 shows ≤ 45 px of ≤ 2/255 noise, the same as recapturing the base itself |
+| Trial | Not built: the app code equals integration (`5f78af1`). The new spec runs against :5560 as-is |
+| Open (for LEAD-5) | Close N-2 as a probe artifact, or name a product change. Merge or drop the guard spec. The `notice-strip.spec.ts` History-step comment blaming the "History.tsx focus scroll" (F's file, not touched). F's Run B 111 px not reproduced |
+| Archive | `archive/pe-w3r1-n2-history-2280e7d.incremental.bundle` (requires `5f78af1`) |
