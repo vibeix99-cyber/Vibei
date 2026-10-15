@@ -53,3 +53,10 @@ FACT 390x844-light-t100 c-pointer-held {"leftAt":5390,"room":68,"roomWhileDown":
 FACT 390x844-dark-t200-rm a-no-input {"leftAt":5488,"room":113,"commits":[{"t":9584,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8613,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":4096,"collapseAfterLastBusyMs":4096,"visibleMove":113}
   ✓  45 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (390x844-dark-t200-rm) (10.5s)
   ✓  46 [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by wheel (844×390, 200 % text) (20.5s)
+FACT 390x844-dark-t200-rm b-scroll-then-idle {"leftAt":5409,"room":113,"maxSy":500,"scrollMs":3376,"roomAfterScroll":113,"commits":[{"t":12912,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4127,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":7503,"collapseAfterLastBusyMs":4127,"visibleMove":113}
+  ✓  47 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (390x844-dark-t200-rm) (14.1s)
+FACT 390x844-dark-t200-rm c-pointer-held {"leftAt":5550,"room":113,"roomWhileDown":113,"downWhileHeld":1,"commits":[{"t":12656,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4027,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":7106,"collapseAfterLastBusyMs":4027,"visibleMove":113}
+  ✓  49 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (390x844-dark-t200-rm) (13.9s)
+FACT 1440x900-light-t100 a-no-input {"leftAt":5456,"room":68,"commits":[{"t":9536,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8416,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":4080,"collapseAfterLastBusyMs":4080,"visibleMove":68}
+  ✓  50 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (1440x900-light-t100) (10.8s)
+  ✓  48 [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by touch (844×390, 200 % text) (26.7s)
