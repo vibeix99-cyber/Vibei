@@ -1,0 +1,120 @@
+### round 1: env KETTLE_PORT=5560 npx playwright test -c .tmp/lead5-pm/pw.config.ts --reporter=list --output=/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pmstall2/pw-5560-1
+### start 12:43:24 load 7.57 11.78 13.40
+
+Running 6 tests using 1 worker
+
+  ✘  1 [timer-app] › .tmp/lead5-pm/stall.spec.ts:107:5 › LEAD-5 v2 › 156 as written + late runner: background: the worker completes on time even with main-thread timers frozen (18.0s)
+  ✘  2 [timer-app] › .tmp/lead5-pm/stall.spec.ts:134:5 › LEAD-5 v2 › 183 as written + late runner: hidden page: completion shows a warm notification; coming back restores the title (16.3s)
+  ✓  3 [timer-app] › .tmp/lead5-pm/stall.spec.ts:107:5 › LEAD-5 v2 › 156 as written + page stall: background: the worker completes on time even with main-thread timers frozen (8.6s)
+  ✓  4 [timer-app] › .tmp/lead5-pm/stall.spec.ts:134:5 › LEAD-5 v2 › 183 as written + page stall: hidden page: completion shows a warm notification; coming back restores the title (7.9s)
+  ✓  5 [timer-app] › .tmp/lead5-pm/stall.spec.ts:154:3 › LEAD-5 v2 › 156 armed first + late runner: the running->idle transition reaches subscribe on time, the session is stored once (8.7s)
+  ✓  6 [timer-app] › .tmp/lead5-pm/stall.spec.ts:174:3 › LEAD-5 v2 › 183 armed first + late runner: hidden before the end, one warm notification and the done title (6.9s)
+
+
+  1) [timer-app] › .tmp/lead5-pm/stall.spec.ts:107:5 › LEAD-5 v2 › 156 as written + late runner: background: the worker completes on time even with main-thread timers frozen 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      124 |         document.dispatchEvent(new Event('visibilitychange'));
+      125 |       });
+    > 126 |       await expect.poll(() => page.evaluate(() => (window as any).__doneAt ?? null), { timeout: 10_000, intervals: [200] }).not.toBeNull();
+          |       ^
+      127 |       const doneAt = await page.evaluate(() => (window as any).__doneAt as number);
+      128 |       expect(doneAt - (endsAt as number)).toBeGreaterThanOrEqual(0);
+      129 |       expect(doneAt - (endsAt as number)).toBeLessThan(lateBudget(kettlePage));
+        at /home/user/wt/w6-int/kettle/.tmp/lead5-pm/stall.spec.ts:126:7
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pmstall2/pw-5560-1/stall-LEAD-5-v2-156-as-wri-77676-h-main-thread-timers-frozen-timer-app/error-context.md
+
+  2) [timer-app] › .tmp/lead5-pm/stall.spec.ts:134:5 › LEAD-5 v2 › 183 as written + late runner: hidden page: completion shows a warm notification; coming back restores the title 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m1[39m
+    Received: [31m0[39m
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      141 |       await wait(page, how, 4500); // ADDED: a 4 s brew
+      142 |       await setHidden(page, true);
+    > 143 |       await expect.poll(() => page.evaluate(() => (window as any).__notes.length), { timeout: 10_000 }).toBe(1);
+          |       ^
+      144 |       const note = await page.evaluate(() => (window as any).__notes[0]);
+      145 |       expect(note.title).toBe('The kettle’s whistling! Time for tea.');
+      146 |       expect(note.body).toContain('Essay');
+        at /home/user/wt/w6-int/kettle/.tmp/lead5-pm/stall.spec.ts:143:7
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pmstall2/pw-5560-1/stall-LEAD-5-v2-183-as-wri-14852-ing-back-restores-the-title-timer-app/error-context.md
+
+  2 failed
+    [timer-app] › .tmp/lead5-pm/stall.spec.ts:107:5 › LEAD-5 v2 › 156 as written + late runner: background: the worker completes on time even with main-thread timers frozen 
+    [timer-app] › .tmp/lead5-pm/stall.spec.ts:134:5 › LEAD-5 v2 › 183 as written + late runner: hidden page: completion shows a warm notification; coming back restores the title 
+  4 passed (1.2m)
+### end 12:44:36 exit=1 load 9.56 11.29 13.09
+
+### round 2: env KETTLE_PORT=5560 npx playwright test -c .tmp/lead5-pm/pw.config.ts --reporter=list --output=/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pmstall2/pw-5560-2
+### start 12:47:11 load 8.26 10.01 12.33
+
+Running 6 tests using 1 worker
+
+  ✘  1 [timer-app] › .tmp/lead5-pm/stall.spec.ts:107:5 › LEAD-5 v2 › 156 as written + late runner: background: the worker completes on time even with main-thread timers frozen (18.3s)
+  ✘  2 [timer-app] › .tmp/lead5-pm/stall.spec.ts:134:5 › LEAD-5 v2 › 183 as written + late runner: hidden page: completion shows a warm notification; coming back restores the title (15.3s)
+  ✓  3 [timer-app] › .tmp/lead5-pm/stall.spec.ts:107:5 › LEAD-5 v2 › 156 as written + page stall: background: the worker completes on time even with main-thread timers frozen (8.5s)
+  ✓  4 [timer-app] › .tmp/lead5-pm/stall.spec.ts:134:5 › LEAD-5 v2 › 183 as written + page stall: hidden page: completion shows a warm notification; coming back restores the title (7.3s)
+  ✓  5 [timer-app] › .tmp/lead5-pm/stall.spec.ts:154:3 › LEAD-5 v2 › 156 armed first + late runner: the running->idle transition reaches subscribe on time, the session is stored once (9.3s)
+  ✓  6 [timer-app] › .tmp/lead5-pm/stall.spec.ts:174:3 › LEAD-5 v2 › 183 armed first + late runner: hidden before the end, one warm notification and the done title (7.2s)
+
+
+  1) [timer-app] › .tmp/lead5-pm/stall.spec.ts:107:5 › LEAD-5 v2 › 156 as written + late runner: background: the worker completes on time even with main-thread timers frozen 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      124 |         document.dispatchEvent(new Event('visibilitychange'));
+      125 |       });
+    > 126 |       await expect.poll(() => page.evaluate(() => (window as any).__doneAt ?? null), { timeout: 10_000, intervals: [200] }).not.toBeNull();
+          |       ^
+      127 |       const doneAt = await page.evaluate(() => (window as any).__doneAt as number);
+      128 |       expect(doneAt - (endsAt as number)).toBeGreaterThanOrEqual(0);
+      129 |       expect(doneAt - (endsAt as number)).toBeLessThan(lateBudget(kettlePage));
+        at /home/user/wt/w6-int/kettle/.tmp/lead5-pm/stall.spec.ts:126:7
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pmstall2/pw-5560-2/stall-LEAD-5-v2-156-as-wri-77676-h-main-thread-timers-frozen-timer-app/error-context.md
+
+  2) [timer-app] › .tmp/lead5-pm/stall.spec.ts:134:5 › LEAD-5 v2 › 183 as written + late runner: hidden page: completion shows a warm notification; coming back restores the title 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m1[39m
+    Received: [31m0[39m
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      141 |       await wait(page, how, 4500); // ADDED: a 4 s brew
+      142 |       await setHidden(page, true);
+    > 143 |       await expect.poll(() => page.evaluate(() => (window as any).__notes.length), { timeout: 10_000 }).toBe(1);
+          |       ^
+      144 |       const note = await page.evaluate(() => (window as any).__notes[0]);
+      145 |       expect(note.title).toBe('The kettle’s whistling! Time for tea.');
+      146 |       expect(note.body).toContain('Essay');
+        at /home/user/wt/w6-int/kettle/.tmp/lead5-pm/stall.spec.ts:143:7
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pmstall2/pw-5560-2/stall-LEAD-5-v2-183-as-wri-14852-ing-back-restores-the-title-timer-app/error-context.md
+
+  2 failed
+    [timer-app] › .tmp/lead5-pm/stall.spec.ts:107:5 › LEAD-5 v2 › 156 as written + late runner: background: the worker completes on time even with main-thread timers frozen 
+    [timer-app] › .tmp/lead5-pm/stall.spec.ts:134:5 › LEAD-5 v2 › 183 as written + late runner: hidden page: completion shows a warm notification; coming back restores the title 
+  4 passed (1.2m)
+### end 12:48:23 exit=1 load 8.04 9.56 12.00
+

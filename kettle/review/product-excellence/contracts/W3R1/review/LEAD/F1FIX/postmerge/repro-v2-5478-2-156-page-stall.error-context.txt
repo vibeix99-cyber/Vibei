@@ -1,0 +1,51 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e6]:
+      - generic [ref=e8]:
+        - img [ref=e11]
+        - img [ref=e19]
+      - main [ref=e224]:
+        - region "1 minute brewed" [ref=e226]:
+          - generic [ref=e228]:
+            - generic [ref=e229]:
+              - heading "1 minute brewed" [level=1] [ref=e230]
+              - paragraph [ref=e231]: Tea’s ready. Take five before the next one.
+            - list "Rewards" [ref=e232]:
+              - listitem [ref=e233]:
+                - img [ref=e235]
+                - generic [ref=e273]:
+                  - generic [ref=e274]: "Badge: First Brew"
+                  - generic [ref=e275]: Finish your first full brew
+              - listitem [ref=e276]:
+                - img [ref=e278]
+                - generic [ref=e284]: +8 leaves
+              - listitem [ref=e285]:
+                - img [ref=e288]
+                - generic [ref=e291]: 0/30 min today
+                - generic [ref=e292]: "Daily goal: 0 of 30 minutes"
+              - listitem [ref=e293]:
+                - img [ref=e295]:
+                  - generic [ref=e306]: "1"
+                - generic [ref=e311]: 1 day warm
+              - listitem [ref=e312]:
+                - img [ref=e314]:
+                  - generic [ref=e333]: "1"
+                - generic [ref=e334]: 17 leaves to level 2
+                - generic [ref=e335]: 17 leaves to cozy level 2
+            - button "How your leaves added up" [ref=e338] [cursor=pointer]:
+              - text: How your leaves added up
+              - img [ref=e339]
+          - generic [ref=e341]:
+            - button "Tea time · 5 min" [ref=e342] [cursor=pointer]:
+              - generic [ref=e344]:
+                - img [ref=e346]
+                - generic [ref=e351]: Tea time · 5 min
+            - button "Skip break" [ref=e353] [cursor=pointer]:
+              - generic [ref=e356]: Skip break
+          - status [ref=e357]
+    - status [ref=e358]
+  - status [ref=e360]: The kettle’s whistling! Focus session complete. Time for tea.
+```

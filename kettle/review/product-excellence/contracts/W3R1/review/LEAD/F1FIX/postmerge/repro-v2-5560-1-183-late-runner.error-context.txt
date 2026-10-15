@@ -1,0 +1,65 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e6]:
+      - generic [ref=e8]:
+        - img [ref=e11]
+        - img [ref=e19]
+      - main [ref=e149]:
+        - region "1 minute brewed" [ref=e151]:
+          - generic [ref=e153]:
+            - generic [ref=e154]:
+              - heading "1 minute brewed" [active] [level=1] [ref=e155]
+              - paragraph [ref=e156]: Tea’s ready. Take five before the next one.
+            - region "Your task" [ref=e157]:
+              - paragraph [ref=e158]:
+                - img [ref=e159]
+                - generic [ref=e162]: Essay
+              - 'group "“Essay”: done, or carry it forward to your next brew?" [ref=e163]':
+                - button "Done" [ref=e164] [cursor=pointer]:
+                  - generic [ref=e165]:
+                    - img [ref=e167]
+                    - generic [ref=e169]: Done
+                - button "Carry forward" [ref=e171] [cursor=pointer]:
+                  - generic [ref=e172]:
+                    - img [ref=e174]
+                    - generic [ref=e177]: Carry forward
+              - paragraph [ref=e179]
+            - list "Rewards" [ref=e180]:
+              - listitem [ref=e181]:
+                - img [ref=e183]
+                - generic [ref=e221]:
+                  - generic [ref=e222]: "Badge: First Brew"
+                  - generic [ref=e223]: Finish your first full brew
+              - listitem [ref=e224]:
+                - img [ref=e226]
+                - generic [ref=e232]: +8 leaves
+              - listitem [ref=e233]:
+                - img [ref=e236]
+                - generic [ref=e239]: 0/30 min today
+                - generic [ref=e240]: "Daily goal: 0 of 30 minutes"
+              - listitem [ref=e241]:
+                - img [ref=e243]:
+                  - generic [ref=e254]: "1"
+                - generic [ref=e259]: 1 day warm
+              - listitem [ref=e260]:
+                - img [ref=e262]:
+                  - generic [ref=e281]: "1"
+                - generic [ref=e282]: 17 leaves to level 2
+                - generic [ref=e283]: 17 leaves to cozy level 2
+            - button "How your leaves added up" [ref=e286] [cursor=pointer]:
+              - text: How your leaves added up
+              - img [ref=e287]
+          - generic [ref=e289]:
+            - button "Tea time · 5 min" [ref=e290] [cursor=pointer]:
+              - generic [ref=e292]:
+                - img [ref=e294]
+                - generic [ref=e299]: Tea time · 5 min
+            - button "Skip break" [ref=e301] [cursor=pointer]:
+              - generic [ref=e304]: Skip break
+          - status [ref=e305]
+    - status [ref=e306]
+  - status [ref=e308]: The kettle’s whistling! Focus session complete. Time for tea.
+```
