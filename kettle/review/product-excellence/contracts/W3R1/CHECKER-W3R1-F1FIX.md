@@ -258,3 +258,22 @@ The receiving-side guard in `sync.ts` is the recommended single follow-up for th
 - **vitest in full: 33 files, 314/314.**
 
 The new F1X-D1 case asserts storage, both tabs, the sync events and exactly one record. The "still persists" cases compare the stored string byte for byte. The no-op and storage-full cases are covered. **PASS.**
+
+### ◆2 · The browser race file (my runs, through the gate)
+`tests/w3-intention-race.spec.ts` now has two tests:
+- the original intention case, its event hold unchanged in behaviour;
+- the new F1X-D1 case. A's `kettle:settings` and `kettle:timer` events are held separately. B sets `focusMin: 50` and starts. A's **settings** event alone is released, and A's idle length follows it to 50 min, with the precondition "A has not taken in B's brew" asserted. The test then asserts that B's brew is still running in B, and that storage still holds it. Release, then both tabs reach `#/focus` and `#/done` with one record.
+
+| Server | Result | Log |
+|---|---|---|
+| :5560 integration `f2298d3` | **6/6 FAIL** (3 × each test). F1X-D1 fails at "B’s brew is still running in B (not undone by A’s length sync)": B's own brew undone by A's write, the real-world outcome. The intention case fails at "storage still holds B’s running brew" | `r2/race-5560-x3.log` |
+| :5478 base `4d36939` | **6/6 FAIL**, the same two assertions | `r2/race-5478-x3.log` |
+| :5563 fix | **10/10 pass** (5 × each, 2.1 min) | `r2/race-5563-x5.log` |
+
+The maker's runs on the now-stopped `74138d3` server (:5562) show the F1X-D1 browser case failing 3/3 there as well (`F1FIX/logs/r2/d1v2-5562-x3.log.txt`). My Vitest run on `74138d3` (above) independently confirms that the fix commits are what close it. **PASS.**
+
+### ◆4 · Compatibility (my runs)
+`compat.spec.ts`: **base `4d36939` (:5478) → fix (:5563): 2/2**; **fix → base: 2/2**. I compared all four saved / after-boot `kettle:timer` pairs: **byte-identical.** The fields-only patch keeps the stored key order (`{ ...state, ...patch }` over existing keys). **PASS.**
+
+### ◆5 · `integrity:309` under load (my run)
+`--repeat-each=20 --workers=2` plus 6 CPU burners of mine, on :5563, through the gate (`--n 2`). Load average 3.7 at the start, 9.3 at the end. **20/20 passed** (3.7 min). The maker's r2 run agrees: 20/20, `stress-r2-x20-nb6.log.txt`. **PASS.**
