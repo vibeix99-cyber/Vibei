@@ -177,3 +177,34 @@ Reporter quirk, for the record: Playwright listed the race test as `:73:1` in so
 1. **Residual inside the fix's own scope** (§1, "What (b) cannot cover"): a *real* edit typed in a tab whose copy of localStorage is also behind, inside the lag, still writes over the newer state. The automatic writes that caused every observed failure are gone. The robust guard is on the receiving side (`sync.ts`), outside this brief.
 2. **Audit #1, `syncIdleLength`**: an automatic whole-state write from a possibly stale tab, triggered by another tab's brew-length change. Same mechanism; not reproduced; not fixed. Your ruling.
 3. **Not run by me** (the Sonnet regression lane's): timer/PWA (`pwa` project), the notice suite, and the 2-tab manual check.
+
+## 8. Fix round: F1X-D1, `syncIdleLength` (LEAD-5 `CHECKER-W3R1-F1FIX.md` §5–§6)
+
+| | |
+|---|---|
+| From | `74138d3` (REJECT, one defect: F1X-D1) |
+| **Head** | **`ac9f1e0` (src `b74e6b3`)**. Commits: `f7b66da` (fields-only length sync), `db31fbb` (a tab following another tab's length change writes nothing), `ac9f1e0` (test label only) |
+| Files (check 1) | `git diff --stat 74138d3 ac9f1e0`: `src/timer/store.ts` +54 / −23, `src/timer/intentionRace.test.ts` +105, `tests/w3-intention-race.spec.ts` +40. **No `sync.ts`, `ticker.ts` or `Composer.tsx` change** |
+| Dev | :5561 restarted; `verify.sh` → `PORT 5561 serves ac9f1e0 (src b74e6b3): VERIFIED` |
+| Evidence | `F1FIX/logs/r2/*.log.txt`; `scripts/chain2.sh.txt` |
+
+### 8.1 The change
+**Mechanism.** The intention-only save becomes a general **fields-only save**:
+- `FieldSave` `store.ts:255`, `saveFieldsOnly` `:282`, `savingOnly` `:326`;
+- the same decision as before: the whole timer after this tab's own failed save; the whole timer when nothing is stored; nothing over another session; otherwise only the given fields into what storage holds now. Same key, envelope and field order;
+- new option `idleOnly` (`:310`): write only over an **idle** stored timer;
+- new option `memoryOnly` (`:283`): write nothing.
+
+`setIntention` (`:510`) uses it unchanged, with fields `intention`/`tag`.
+
+**`syncIdleLength` (`:536`):**
+- not idle, or nothing to change → returns, as before (a no-op writes nothing);
+- **the person changed the length in this tab**, or at boot → a fields-only save of `phase`/`plannedMs`/`remainingMs`, `idleOnly`. Over the same idle session in storage now it changes only those three. Over another session, or a running or paused timer, nothing. After its own failed save, the whole timer (the storage-full repair, as before);
+- **following another tab's change** (`:541`: `useSettings.persist.hasHydrated()` is false; zustand runs the settings subscribers, and so `ticker.ts:304`, inside `rehydrate()`, before it sets hydrated) → **memory only, no write**. The other tab saved the length, and every tab derives its idle length from its settings anyway (`sanitizeTimer`'s `idle()`).
+
+**Why the second branch is needed (found in a real browser, not in the harness):**
+- `f7b66da` (fields-only for every tab) passed LEAD's harness case, but **failed my Playwright case on the fix** (`r2/d1-try2-5561.log.txt`): B's brew was undone at once.
+- Tab A gets B's `kettle:settings` event **before its own copy of localStorage has B's `kettle:timer` write**. Chromium delivers storage changes in write order, and the settings event task runs before the timer change is applied to the tab's copy. So any read A makes then sees the old timer, or nothing.
+- The setIntention no-op had the same root; here the trigger is the other tab's own write, so it is deterministic.
+- So a tab that is only following another tab's change must not write at all. This is LEAD §5's second option, applied to the following tab.
+- The Vitest race models this with the stale-copy hook and **fails on `f7b66da`** (below).
