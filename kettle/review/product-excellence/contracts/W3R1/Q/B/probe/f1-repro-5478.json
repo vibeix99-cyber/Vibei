@@ -1,0 +1,193 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w5q/kettle/.tmp/q-probes/pw.config.ts",
+    "rootDir": "/home/user/wt/w5q/kettle/.tmp/q-probes",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w5q/kettle/.tmp/Q-pw/repro-5478",
+        "repeatEach": 3,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w5q/kettle/.tmp/q-probes",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite --config tests/e2e.vite.config.ts --port 5478 --strictPort",
+      "url": "http://127.0.0.1:5478/",
+      "reuseExistingServer": true,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "f1-repro.spec.ts",
+      "file": "f1-repro.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "a stale tab writing the timer store undoes a brew another tab has just started",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5906,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "QREPRO {\"sid\":\"s_mv8too4v1ff48dc5\",\"after\":{\"stored\":\"running\",\"a\":{\"st\":\"running\",\"sid\":\"s_mv8too4v1ff48dc5\",\"hash\":\"#/focus\"},\"z\":{\"st\":\"running\",\"hash\":\"#/focus\"}}}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:50:47.777Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d92e784c798a569e1fd0-23d7db8e0cba06599e51",
+          "file": "f1-repro.spec.ts",
+          "line": 9,
+          "column": 1
+        },
+        {
+          "title": "a stale tab writing the timer store undoes a brew another tab has just started",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4865,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "QREPRO {\"sid\":\"s_mv8totis72b11634\",\"after\":{\"stored\":\"running\",\"a\":{\"st\":\"running\",\"sid\":\"s_mv8totis72b11634\",\"hash\":\"#/focus\"},\"z\":{\"st\":\"running\",\"hash\":\"#/focus\"}}}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:50:55.627Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d92e784c798a569e1fd0-1602b6b03144e350a164",
+          "file": "f1-repro.spec.ts",
+          "line": 9,
+          "column": 1
+        },
+        {
+          "title": "a stale tab writing the timer store undoes a brew another tab has just started",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6061,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "QREPRO {\"sid\":\"s_mv8toz7d6a15629b\",\"after\":{\"stored\":\"running\",\"a\":{\"st\":\"running\",\"sid\":\"s_mv8toz7d6a15629b\",\"hash\":\"#/focus\"},\"z\":{\"st\":\"running\",\"hash\":\"#/focus\"}}}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:51:02.070Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d92e784c798a569e1fd0-968f4189ab541a2d6ebb",
+          "file": "f1-repro.spec.ts",
+          "line": 9,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-15T00:50:46.962Z",
+    "duration": 23212.697,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

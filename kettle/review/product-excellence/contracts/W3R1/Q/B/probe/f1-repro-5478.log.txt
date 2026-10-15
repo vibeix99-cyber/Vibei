@@ -1,0 +1,11 @@
+
+Running 3 tests using 1 worker
+
+QREPRO {"sid":"s_mv8too4v1ff48dc5","after":{"stored":"running","a":{"st":"running","sid":"s_mv8too4v1ff48dc5","hash":"#/focus"},"z":{"st":"running","hash":"#/focus"}}}
+  ✓  1 [chromium] › .tmp/q-probes/f1-repro.spec.ts:9:1 › a stale tab writing the timer store undoes a brew another tab has just started (5.9s)
+QREPRO {"sid":"s_mv8totis72b11634","after":{"stored":"running","a":{"st":"running","sid":"s_mv8totis72b11634","hash":"#/focus"},"z":{"st":"running","hash":"#/focus"}}}
+  ✓  2 [chromium] › .tmp/q-probes/f1-repro.spec.ts:9:1 › a stale tab writing the timer store undoes a brew another tab has just started (4.9s)
+QREPRO {"sid":"s_mv8toz7d6a15629b","after":{"stored":"running","a":{"st":"running","sid":"s_mv8toz7d6a15629b","hash":"#/focus"},"z":{"st":"running","hash":"#/focus"}}}
+  ✓  3 [chromium] › .tmp/q-probes/f1-repro.spec.ts:9:1 › a stale tab writing the timer store undoes a brew another tab has just started (6.1s)
+
+  3 passed (23.2s)

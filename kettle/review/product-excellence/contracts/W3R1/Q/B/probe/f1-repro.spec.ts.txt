@@ -1,0 +1,42 @@
+/**
+ * W3R1 Q, F1 root cause: minimal repro (scratch; not part of the suite). Two Kettle tabs on Today, one browser profile.
+ * Tab Z has not yet taken in tab A's write when Z's Today composer syncs its (empty) intention into the timer store
+ * (src/screens/home/Composer.tsx, the 150 ms effect -> setIntention -> zustand persist writes Z's whole, idle timer).
+ * The storage event's lag is stood in for by holding back Z's `storage` events for kettle:timer for a moment.
+ */
+import { test, expect } from '@playwright/test';
+
+test('a stale tab writing the timer store undoes a brew another tab has just started', async ({ context, baseURL }) => {
+  await context.addInitScript(() => {
+    try {
+      if (!localStorage.getItem('kettle:settings'))
+        localStorage.setItem('kettle:settings', JSON.stringify({ state: { onboarded: true, scene: 'off', motion: 'reduce', autoStartBreaks: false, autoStartFocus: false, muted: true }, version: 1 }));
+    } catch { /* */ }
+  });
+  const a = await context.newPage();
+  await a.goto(`${baseURL}/?debug#/`);
+  const z = await context.newPage();
+  await z.goto(`${baseURL}/?debug#/`);
+  for (const p of [a, z]) await p.waitForFunction(() => !!(window as any).__kettle?.timerInfo, null, { timeout: 30_000 });
+  await a.waitForTimeout(1500); // both tabs idle on Today, settled
+  // Z: the storage event for kettle:timer arrives late (as under load: 0.3–0.6 s in the failing runs).
+  await z.evaluate(() => addEventListener('storage', (e) => { const W = window as any; (W.__ev ||= []).push([e.key, !!W.__hold, Math.round(performance.now())]); if (e.key === 'kettle:timer' && W.__hold) e.stopImmediatePropagation(); }, { capture: true }));
+  await z.evaluate(() => ((window as any).__hold = true));
+  await a.evaluate(() => (window as any).__kettle.timer.getState().startFocus({ minutes: 0.15, intention: 'Frozen leader' }));
+  const sid = await a.evaluate(() => (window as any).__kettle.timer.getState().sessionId);
+  expect(await a.evaluate(() => JSON.parse(localStorage.getItem('kettle:timer')!).state.status)).toBe('running');
+  // Z's Today composer syncs its intention (what its 150 ms effect does on mount, or on a keystroke).
+  const zBefore = await z.evaluate(() => (window as any).__kettle.timer.getState().status);
+  const storedAfterZ = await z.evaluate(() => { (window as any).__kettle.timer.getState().setIntention('', 'study'); return JSON.parse(localStorage.getItem('kettle:timer')!).state.status; });
+  console.log('QZ ' + JSON.stringify({ zBefore, storedAfterZ, ev: await z.evaluate(() => (window as any).__ev), now: await z.evaluate(() => Math.round(performance.now())), log: await z.evaluate(() => (window as any).__kettle.timerInfo()) }));
+  await z.evaluate(() => ((window as any).__hold = false));
+  await a.waitForTimeout(1500);
+  const after = {
+    stored: await a.evaluate(() => JSON.parse(localStorage.getItem('kettle:timer')!).state.status),
+    a: await a.evaluate(() => ({ st: (window as any).__kettle.timer.getState().status, sid: (window as any).__kettle.timer.getState().sessionId, hash: location.hash })),
+    z: await z.evaluate(() => ({ st: (window as any).__kettle.timer.getState().status, hash: location.hash })),
+  };
+  console.log('QREPRO ' + JSON.stringify({ sid, after }));
+  // The product's expectation: the brew A started survives. It does not: storage holds Z's idle timer, A goes idle on Today.
+  expect(after.a.st, 'tab A\'s brew survives').toBe('running');
+});

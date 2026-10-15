@@ -1,0 +1,296 @@
+/**
+ * Session and data integrity, end to end in a real browser (Product Excellence I01, I02, I03).
+ *
+ *   KETTLE_PORT=5221 npx playwright test --project=chromium tests/integrity.spec.ts
+ *
+ * Every test runs in its own fresh browser context (a disposable profile), so nothing here can touch real data.
+ * Time: the debug API's fast-forward (`__kettle.ff`) moves only this tab's clock and is lost on reload, so the
+ * reload / "app was closed" cases use real time or a state planted before boot instead.
+ * The engine-level cases (DST, clock jumps, split-brain tabs, sanitize) are unit tested in src/timer and
+ * src/progress, and the harness-level timer cases in tests/timer.spec.ts; this file does not repeat them.
+ */
+import { test, expect, chromium, type BrowserContext, type Page } from '@playwright/test';
+import { spawn } from 'node:child_process';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+const MIN = 60_000;
+
+type Rec = { id: string; phase: string; completed: boolean; focusedMs: number; plannedMs: number; endedAt: number; intention: string; outcome?: string };
+type Leaf = { id: string; amount: number; kind: string; ref?: string };
+type Stored = { sessions: Rec[]; ledger: Leaf[]; leaves: number; cozies: number; badges: Record<string, { tier: number }>; lastReport: { id: string } | null } | null;
+
+/** Quiet, fast defaults written before the app boots (only on a fresh profile): no 3D scene, no auto-start. */
+const PRIME = `(() => {
+  try {
+    if (localStorage.getItem('kettle:settings')) return;
+    const state = { onboarded: true, scene: 'off', motion: 'reduce', autoStartBreaks: false, autoStartFocus: false, muted: true };
+    localStorage.setItem('kettle:settings', JSON.stringify({ state, version: 1 }));
+  } catch {
+    /* storage blocked: the test will say so */
+  }
+})();`;
+
+const QREC = `(() => {
+  const L = (window.__q = []);
+  const t = () => Math.round(performance.timeOrigin + performance.now());
+  const p = (e, x) => L.push(Object.assign({ t: t(), e }, x || {}));
+  p('boot', { vis: document.visibilityState });
+  addEventListener('storage', (ev) => {
+    if (ev.key !== 'kettle:timer') return p('storage', { key: ev.key });
+    let v = null; try { v = JSON.parse(ev.newValue).state; } catch {}
+    p('storage', { key: ev.key, st: v && v.status, sid: v && v.sessionId });
+  });
+  document.addEventListener('visibilitychange', () => p('vis', { vis: document.visibilityState }));
+  document.addEventListener('freeze', () => p('freeze'));
+  document.addEventListener('resume', () => p('resume'));
+  addEventListener('focus', () => p('focus'));
+  addEventListener('blur', () => p('blur'));
+  addEventListener('hashchange', () => p('hash', { h: location.hash }));
+  const origSet = Storage.prototype.setItem;
+  Storage.prototype.setItem = function (k, v) {
+    if (k === 'kettle:timer') { let s = null; try { s = JSON.parse(v).state; } catch {} p('write', { st: s && s.status, sid: s && s.sessionId, stack: String(new Error().stack).split('\\n').slice(2, 14).map((l) => l.trim().replace(/https?:\\/\\/[^/]+/, '').replace(/\\?[^:)]*/, '')).join(' < ') }); }
+    return origSet.call(this, k, v);
+  };
+  let last = '';
+  const poll = () => {
+    const k = window.__kettle;
+    if (k && k.timerInfo) {
+      const i = k.timerInfo(); const s = k.timer.getState();
+      const key = [i.leader, s.status, s.sessionId, location.hash, i.settling].join('|');
+      if (key !== last) { last = key; p('state', { leader: i.leader, st: s.status, sid: s.sessionId, h: location.hash, settling: i.settling, lf: Math.round(i.leaderForMs) }); }
+    }
+  };
+  setInterval(poll, 50);
+})();`;
+
+async function prime(ctx: BrowserContext) {
+  await ctx.addInitScript(PRIME);
+}
+
+// ---------- a plain Chromium over raw CDP (real Page Lifecycle freezes) ----------
+//
+// Playwright keeps the pages it drives visible, and Chromium won't freeze a visible page, so
+// `Page.setWebLifecycleState({state:'frozen'})` through a Playwright page does nothing here (no `freeze` event; timers
+// keep running). Driving Chromium directly, the same command hides and really freezes the page.
+
+type CdpTab = {
+  send: (method: string, params?: Record<string, unknown>) => Promise<Record<string, unknown>>;
+  evaluate: (expression: string) => Promise<unknown>;
+  waitFor: (expression: string, timeoutMs?: number) => Promise<void>;
+};
+
+async function rawChromium() {
+  const dir = mkdtempSync(join(tmpdir(), 'kettle-m1-')); // a disposable profile
+  const args = ['--headless=new', '--no-sandbox', '--no-first-run', '--remote-debugging-port=0', `--user-data-dir=${dir}`, '--enable-unsafe-swiftshader', '--use-angle=swiftshader', 'about:blank'];
+  const proc = spawn(chromium.executablePath(), args, { stdio: 'ignore' });
+  const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+  let port = 0;
+  for (let i = 0; i < 150 && !port; i++) {
+    await sleep(100);
+    try {
+      port = Number(readFileSync(join(dir, 'DevToolsActivePort'), 'utf8').split('\n')[0]) || 0;
+    } catch {
+      /* not yet */
+    }
+  }
+  if (!port) throw new Error('Chromium did not start');
+  const sockets: WebSocket[] = [];
+  const connect = async (url: string) => {
+    const ws = new WebSocket(url);
+    sockets.push(ws);
+    await new Promise((resolve, reject) => {
+      ws.onopen = resolve;
+      ws.onerror = reject;
+    });
+    let id = 0;
+    const pending = new Map<number, (d: { result?: Record<string, unknown>; error?: { message: string } }) => void>();
+    ws.onmessage = (m) => {
+      const d = JSON.parse(String(m.data));
+      if (d.id && pending.has(d.id)) {
+        pending.get(d.id)!(d);
+        pending.delete(d.id);
+      }
+    };
+    return (method: string, params: Record<string, unknown> = {}) =>
+      new Promise<Record<string, unknown>>((resolve, reject) => {
+        const i = ++id;
+        pending.set(i, (d) => (d.error ? reject(new Error(`${method}: ${d.error.message}`)) : resolve(d.result ?? {})));
+        ws.send(JSON.stringify({ id: i, method, params }));
+      });
+  };
+  const version = (await (await fetch(`http://127.0.0.1:${port}/json/version`)).json()) as { webSocketDebuggerUrl: string };
+  const browser = await connect(version.webSocketDebuggerUrl);
+  const { browserContextId } = await browser('Target.createBrowserContext');
+
+  async function newTab(url: string): Promise<CdpTab> {
+    const { targetId } = await browser('Target.createTarget', { url: 'about:blank', browserContextId });
+    const send = await connect(`ws://127.0.0.1:${port}/devtools/page/${targetId}`);
+    const evaluate = async (expression: string) => {
+      const r = (await send('Runtime.evaluate', { expression, returnByValue: true, awaitPromise: true })) as { result?: { value?: unknown }; exceptionDetails?: { text: string } };
+      if (r.exceptionDetails) throw new Error(`${expression.slice(0, 80)}: ${JSON.stringify(r.exceptionDetails).slice(0, 300)}`);
+      return r.result?.value;
+    };
+    const waitFor = async (expression: string, timeoutMs = 30_000) => {
+      const until = Date.now() + timeoutMs;
+      for (;;) {
+        try {
+          if (await evaluate(expression)) return;
+        } catch {
+          /* page still loading */
+        }
+        if (Date.now() > until) {
+          const seen = await evaluate(`JSON.stringify({ hash: location.hash, timer: window.__kettle?.timer.getState().status, info: window.__kettle?.timerInfo(), log: window.__log })`).catch(() => '?');
+          throw new Error(`timed out waiting for ${expression} (page: ${seen})`);
+        }
+        await sleep(150);
+      }
+    };
+    await send('Page.enable');
+    await send('Page.addScriptToEvaluateOnNewDocument', { source: PRIME });
+    await send('Page.addScriptToEvaluateOnNewDocument', { source: QREC });
+    await send('Page.navigate', { url });
+    return { send, evaluate, waitFor };
+  }
+
+  return {
+    newTab,
+    close: () => {
+      sockets.forEach((ws) => ws.close());
+      proc.kill();
+      setTimeout(() => rmSync(dir, { recursive: true, force: true }), 500);
+    },
+  };
+}
+
+async function ready(page: Page, leader = true) {
+  await page.waitForFunction(() => !!(window as any).__kettle?.timerInfo, null, { timeout: 30_000 });
+  if (leader)
+    await page.waitForFunction(
+      () => {
+        const i = (window as any).__kettle.timerInfo();
+        return i.leader && i.leaderForMs > 400 && !i.settling;
+      },
+      null,
+      { timeout: 15_000 },
+    );
+}
+async function open(page: Page, route = '/') {
+  await page.goto(`/?debug#${route}`);
+  await ready(page);
+}
+async function reload(page: Page) {
+  await page.reload();
+  await ready(page);
+}
+
+const timer = (page: Page) =>
+  page.evaluate(() => {
+    const s = (window as any).__kettle.timer.getState();
+    return {
+      status: s.status as string,
+      phase: s.phase as string,
+      sessionId: s.sessionId as string | null,
+      startedAt: s.startedAt as number | null,
+      endsAt: s.endsAt as number | null,
+      remainingMs: s.remainingMs as number,
+      plannedMs: s.plannedMs as number,
+      addedMs: s.addedMs as number,
+      pausedTotalMs: s.pausedTotalMs as number,
+      intention: s.intention as string,
+      completedInCycle: s.completedInCycle as number,
+      lastEnded: s.lastEnded as { sessionId: string; reason: string; at: number; whileAway: boolean } | null,
+    };
+  });
+/** What is actually saved in this profile (not what the tab holds in memory). */
+const stored = (page: Page): Promise<Stored> =>
+  page.evaluate(() => {
+    try {
+      return JSON.parse(localStorage.getItem('kettle:progress') ?? 'null')?.state ?? null;
+    } catch {
+      return null;
+    }
+  });
+const memory = (page: Page) =>
+  page.evaluate(() => {
+    const p = (window as any).__kettle.progress.getState();
+    return { sessions: p.sessions as Rec[], ledger: p.ledger as Leaf[], leaves: p.leaves as number, lastReport: p.lastReport as { id: string; leaves: { total: number } } | null };
+  });
+const recordsFor = (st: Stored, id: string) => (st?.sessions ?? []).filter((r) => r.id === id);
+const grantsFor = (st: Stored, id: string) => (st?.ledger ?? []).filter((e) => e.id === `focus:${id}` || e.id === `full:${id}` || e.id === `deep:${id}`);
+const hash = (page: Page) => page.evaluate(() => location.hash);
+const ff = (page: Page, ms: number) => page.evaluate((m) => (window as any).__kettle.ff(m), ms);
+/** Move this tab's clock to `msBefore` before the running phase ends. */
+const toEnd = (page: Page, msBefore: number) =>
+  page.evaluate((b) => {
+    const k = (window as any).__kettle;
+    const s = k.timer.getState();
+    k.ff(s.endsAt - k.clock.now() - b);
+  }, msBefore);
+
+const startButton = (page: Page) => page.getByRole('button', { name: /^Put the kettle on · / });
+const summaryHeading = (page: Page) => page.getByRole('heading', { level: 1, name: /minutes? brewed/ });
+const endDialog = (page: Page) => page.getByRole('dialog', { name: 'Leave the kettle early?' });
+
+async function startFromHome(page: Page, intention?: string) {
+  if (intention !== undefined) await page.getByRole('textbox', { name: /What are you brewing/ }).fill(intention);
+  await startButton(page).click();
+  await expect.poll(() => hash(page)).toBe('#/focus');
+  await expect.poll(async () => (await timer(page)).status).toBe('running');
+}
+
+
+test.describe('Q F1 probe', () => {
+  test('Q probe two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second', async ({ baseURL }) => {
+    test.setTimeout(90_000);
+    const b = await rawChromium();
+    let qa: CdpTab | null = null, qz: CdpTab | null = null, qroles: unknown = null;
+    try {
+      const booted = `(() => !!window.__kettle?.timerInfo)()`;
+      const a = await b.newTab(`${baseURL}/?debug#/`);
+      qa = a;
+      await a.waitFor(booted);
+      const z = await b.newTab(`${baseURL}/?debug#/`);
+      qz = z;
+      await z.waitFor(booted);
+      const leaderOf = async () => ((await a.evaluate('window.__kettle.timerInfo().leader')) ? [a, z] : [z, a]);
+      await new Promise((r) => setTimeout(r, 800));
+      const [leader, other] = await leaderOf();
+      qroles = { leader: leader === a ? 'a' : 'z', at: Date.now() };
+      // A real 9-second brew (no fast-forward: both tabs keep real time).
+      await other.evaluate(`window.__kettle.timer.getState().startFocus({ minutes: 0.15, intention: 'Frozen leader' }), true`);
+      const sid = (await other.evaluate('window.__kettle.timer.getState().sessionId')) as string;
+      (qroles as any).startAt = Date.now();
+      await leader.waitFor(`window.__kettle.timer.getState().sessionId === ${JSON.stringify(sid)}`);
+      await leader.send('Page.setWebLifecycleState', { state: 'frozen' });
+      await other.waitFor(`window.__kettle.timer.getState().status === 'idle' && location.hash === '#/done'`, 30_000);
+      const count = (t: CdpTab) => t.evaluate(`JSON.parse(localStorage.getItem('kettle:progress')).state.sessions.filter((s) => s.id === ${JSON.stringify(sid)}).length`);
+      expect(await count(other)).toBe(1);
+      await leader.send('Page.setWebLifecycleState', { state: 'active' });
+      await leader.waitFor(`window.__kettle.timer.getState().status === 'idle'`);
+      await new Promise((r) => setTimeout(r, 1500));
+      expect(await count(leader)).toBe(1);
+      expect(await leader.evaluate(`window.__kettle.progress.getState().sessions.filter((s) => s.id === ${JSON.stringify(sid)}).length`)).toBe(1);
+      expect(await leader.evaluate(`JSON.parse(localStorage.getItem('kettle:progress')).state.ledger.filter((e) => e.id === 'full:' + ${JSON.stringify(sid)}).length`)).toBe(1);
+      const okd: Record<string, unknown> = { ok: true, roles: qroles };
+      for (const [n, tb] of [['a', qa], ['z', qz]] as const) okd[n] = await tb!.evaluate('JSON.stringify(window.__q)').catch((e) => 'ERR ' + e);
+      console.log('QOK ' + JSON.stringify(okd));
+    } catch (err) {
+      const dump: Record<string, unknown> = { err: String(err).slice(0, 600) };
+      for (const [n, tb] of [['a', qa], ['z', qz]] as const) {
+        try { await tb!.send('Page.setWebLifecycleState', { state: 'active' }); } catch {}
+        dump[n] = await tb!.evaluate('JSON.stringify(window.__q)').catch((e) => 'ERR ' + e);
+      }
+      dump.roles = qroles;
+      console.log('QDUMP ' + JSON.stringify(dump));
+      test.info().annotations.push({ type: 'qdump', description: JSON.stringify(dump) });
+      throw err;
+    } finally {
+      b.close();
+    }
+  });
+
+});
