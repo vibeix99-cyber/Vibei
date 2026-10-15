@@ -6,6 +6,17 @@ Worktree /home/user/wt/w6-int at f817931 (serves :5560); merge 5f78af1 = 26b37bc
  kettle/src/timer/store.ts              | 155 +++++++++++++---
  2 files changed, 457 insertions(+), 22 deletions(-)
 
+== 1b. store.ts hunks of the merge (new file lines): imports; the new FieldSave helpers after idleAfter (226-335); setIntention (509-517, 529-535) and syncIdleLength (541-551). The end and tick actions (new 449-503: set(idleAfter(...)), emit('timer:complete')) are outside every hunk.
+@@ -16 +16 @@ import { create } from 'zustand';
+@@ -21,2 +21,2 @@ import { dayKey } from '@/lib/dates';
+@@ -225,0 +226,110 @@ function idleAfter(s: TimerState, patch: Partial<TimerState>): TimerState {
+@@ -399 +509,9 @@ export const useTimer = create<TimerStore>()(
+@@ -410,0 +529,7 @@ export const useTimer = create<TimerStore>()(
+@@ -416 +541,2 @@ export const useTimer = create<TimerStore>()(
+@@ -424,17 +550,2 @@ export const useTimer = create<TimerStore>()(
+
+== 1c. tick() calls guard.refresh() -> mirrorTimerFromStorage() -> persist.rehydrate() before it completes (ticker.ts 276-278, sync.ts 63-82, both unchanged). During a brew nothing writes a partial save: syncIdleLength returns at once unless idle (store.ts 536-537), and the two failing tests set the intention only through startFocus (a whole save). So the rehydrate reads back the running brew that startFocus wrote whole, as before the merge, and the completion still arrives as set(idleAfter(...)), which subscribe() sees.
+
 == 2. Completion, notification, title and cross-tab files: diff line counts across the merge, and across the whole base..merge range
 src/timer/ticker.ts: merge 0 lines; 4d36939..5f78af1 0 lines
 src/timer/notify.ts: merge 0 lines; 4d36939..5f78af1 0 lines
