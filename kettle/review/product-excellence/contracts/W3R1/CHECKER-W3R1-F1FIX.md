@@ -209,3 +209,52 @@ The receiving-side guard in `sync.ts` is the recommended single follow-up for th
 **The §6 packet is complete:** scope, the required outcome (§5), and checks 1–6 (◆ are the ones I rerun).
 
 *Run logs:* each `.log` / `.out` in `LEAD/F1FIX/` is committed as a `.txt` copy beside it.
+
+## 8. Fix round: `pe/w3r1-f1-intention@10ecf2c` (src `b74e6b3`)
+
+| | |
+|---|---|
+| Commits on top of `74138d3` | `f7b66da` (the length sync writes only the length), `db31fbb` (a tab following another tab's length change writes nothing), `ac9f1e0` and `10ecf2c` (tests) |
+| Revision check | `git rev-parse 10ecf2c:kettle/src` = `b74e6b3…` (checked in `/home/user/wt/w6x`) |
+| Trial | `37de54a` = integration (app `f2298d3`) + `10ecf2c`; worktree `/home/user/wt/w6tr-x2`; dev :5563 (all my fix runs) |
+| Controls | :5560 integration `f2298d3`; :5478 base `4d36939`; `74138d3` as a scratch `git archive` for Vitest (its servers are stopped) |
+| Packet | `F1FIX/F1FIX-READY.md` §8 (through `90cc348`); logs `F1FIX/logs/r2/`; gate `review/GATE.md` "F1 fix round (F1X-D1). GATE PASSED" |
+| My evidence | `contracts/W3R1/review/LEAD/F1FIX/r2/` (`chain.sh`, logs as `.log.txt`) |
+
+### ◆1 · Scope
+`git diff --stat 74138d3 10ecf2c -- kettle/src kettle/tests` lists three files:
+- `src/timer/store.ts` (+49 / −28);
+- `src/timer/intentionRace.test.ts` (+105);
+- `tests/w3-intention-race.spec.ts` (+60 / −5).
+
+`sync.ts`, `ticker.ts`, `Composer.tsx` and `integrity.spec.ts` are untouched. **PASS.**
+
+### The code (read in full)
+**One mechanism for both saves.** The intention-only save becomes a **fields-only save** (`FieldSave`, `savingOnly`, `saveFieldsOnly`): `setIntention` with `['intention', 'tag']`, and `syncIdleLength` with `['phase', 'plannedMs', 'remainingMs']` and `idleOnly`. The cases are unchanged:
+1. this tab's own failed save → write whole (the repair);
+2. nothing readable → write whole;
+3. another session stored → write nothing;
+4. same session → patch only those fields into the stored envelope (key order kept).
+
+`idleOnly` adds one more: the length is never patched over a stored running or paused timer.
+
+**Following another tab writes nothing.** `syncIdleLength` passes `memoryOnly` when `!useSettings.persist.hasHydrated()`. That is the case when the call comes from a settings **rehydrate**, which only `sync.ts` triggers: another tab's `kettle:settings` storage event, or a cleared store. I checked zustand 5's `hydrate()` (`middleware.mjs:380–436`). It sets `hasHydrated = false`, then `set(…)`, which notifies the `focusMin` subscription synchronously over the sync storage, and only then sets `hasHydrated = true`. So the flag is reliable exactly there.
+- That tab updates its idle length in memory only. The other tab, where the person changed the length, has saved it, and the idle length is derived from settings anyway.
+- A length change made in this tab, or the boot-time sync, takes the fields-only path.
+- A no-op still writes nothing (unchanged early return).
+
+**This closes F1X-D1 by construction.** The settings event is exactly where a stale read cannot be trusted, and there nothing is written.
+
+### ◆2, ◆3 · The deterministic tests (my runs; Vitest, no load)
+
+| Tree | `intentionRace.test.ts` (12 tests) | Failing |
+|---|---|---|
+| fix (trial `37de54a`) | **12/12** | — |
+| `74138d3` (scratch archive, new test file) | **2 failed / 10 passed** | the F1X-D1 case ("B picks another length and starts … the brew survives in both tabs and is recorded once") and "a real length change still persists: two tabs in step, and the other tab’s newer words in storage are kept" |
+| `f2298d3` (scratch archive, new test file) | **6 failed / 6 passed** | the 4 intention-race cases + the same 2 |
+
+**Also on the fix:**
+- **my own scratch F1X-D1 case** (§4), the one that failed on `74138d3` and `f2298d3`, now **passes on `10ecf2c`**;
+- **vitest in full: 33 files, 314/314.**
+
+The new F1X-D1 case asserts storage, both tabs, the sync events and exactly one record. The "still persists" cases compare the stored string byte for byte. The no-op and storage-full cases are covered. **PASS.**
