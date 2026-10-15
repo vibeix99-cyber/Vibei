@@ -1,0 +1,552 @@
+{
+ "base": "http://127.0.0.1:5560",
+ "cfg": "390x844:light:100",
+ "flow": "historytrace",
+ "kind": null,
+ "scene": "off",
+ "steps": [
+  {
+   "t": 2173,
+   "k": "tap",
+   "label": "Stats tab",
+   "at": [
+    147,
+    810
+   ],
+   "size": [
+    96,
+    68
+   ]
+  },
+  {
+   "t": 12299,
+   "k": "tap",
+   "label": "history row",
+   "at": [
+    195,
+    649
+   ],
+   "size": [
+    318,
+    68
+   ]
+  },
+  {
+   "t": 13114,
+   "k": "tap",
+   "label": "Delete this brew",
+   "at": [
+    195,
+    794
+   ],
+   "size": [
+    338,
+    52
+   ]
+  },
+  {
+   "t": 14058,
+   "k": "tap",
+   "label": "Delete (confirm)",
+   "at": [
+    195,
+    571
+   ],
+   "size": [
+    290,
+    52
+   ]
+  }
+ ],
+ "trace": [
+  {
+   "lab": "before tap",
+   "scrollY": 2500,
+   "row": 945,
+   "undo": null,
+   "active": "MAIN Stats23StatsRobin · brewing si"
+  },
+  {
+   "lab": "edit open",
+   "scrollY": 2830,
+   "row": 615,
+   "undo": null,
+   "active": "INPUT "
+  },
+  {
+   "lab": "confirm open",
+   "scrollY": 2830,
+   "row": 615,
+   "undo": null,
+   "active": "BUTTON Keep it"
+  },
+  {
+   "lab": "after delete +2.5s",
+   "scrollY": 2830,
+   "row": null,
+   "undo": 615,
+   "active": "MAIN Stats22StatsRobin · brewing si"
+  }
+ ],
+ "frames": [
+  {
+   "t": 18,
+   "y": 2830,
+   "row": 615,
+   "undo": null,
+   "dlg": true
+  },
+  {
+   "t": 64,
+   "y": 2830,
+   "row": null,
+   "undo": 615,
+   "dlg": true
+  },
+  {
+   "t": 482,
+   "y": 2830,
+   "row": null,
+   "undo": 615,
+   "dlg": false
+  }
+ ],
+ "rec": {
+  "frames": 811,
+  "noticeFrames": 80,
+  "modalFrames": 26,
+  "covered": 0,
+  "coveredEx": [],
+  "geo": 0,
+  "geoEx": [],
+  "noticeHidden": 0,
+  "noticeHiddenEx": [],
+  "chromeOver": 0,
+  "shifts": [
+   {
+    "at": 1392,
+    "hash": "#/stats",
+    "sinceRoute": 0,
+    "kind": "removed",
+    "from": 0,
+    "to": 0,
+    "down": 0,
+    "sinceInput": -83,
+    "sinceTap": -83,
+    "why": "screen"
+   }
+  ],
+  "seen": {
+   "Brew deleted Undo": 80
+  }
+ },
+ "errors": [],
+ "shiftAudit": [
+  {
+   "at": 1392,
+   "hash": "#/stats",
+   "sinceRoute": 0,
+   "kind": "removed",
+   "from": 0,
+   "to": 0,
+   "down": 0,
+   "sinceInput": -83,
+   "sinceTap": -83,
+   "why": "screen",
+   "ok": true
+  }
+ ],
+ "shiftViolations": [],
+ "scrollLog": [
+  {
+   "t": 241,
+   "k": "window.scrollTo",
+   "a": "[{\"top\":0,\"behavior\":\"instant\"}]",
+   "stack": [
+    "at window.<computed> (<anonymous>:9:175)",
+    "at /src/app/Shell.tsx:55:10",
+    "at Object.react_stack_bottom_frame (/.tmp/vite-cache/deps/react-dom_client.js?v=80b3ccae:14178:13)",
+    "at runWithFiberInDEV (/.tmp/vite-cache/deps/react-dom_client.js?v=80b3ccae:944:66)"
+   ]
+  },
+  {
+   "t": 1401,
+   "k": "pointerdown",
+   "target": "[object SVGAnimatedString]"
+  },
+  {
+   "t": 1473,
+   "k": "touchstart",
+   "target": "[object SVGAnimatedString]"
+  },
+  {
+   "t": 1481,
+   "k": "click",
+   "target": "[object SVGAnimatedString]"
+  },
+  {
+   "t": 1855,
+   "k": "window.scrollTo",
+   "a": "[{\"top\":0,\"behavior\":\"instant\"}]",
+   "stack": [
+    "at window.<computed> (<anonymous>:9:175)",
+    "at /src/app/Shell.tsx:55:10",
+    "at Object.react_stack_bottom_frame (/.tmp/vite-cache/deps/react-dom_client.js?v=80b3ccae:14178:13)",
+    "at runWithFiberInDEV (/.tmp/vite-cache/deps/react-dom_client.js?v=80b3ccae:944:66)"
+   ]
+  },
+  {
+   "t": 2617,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 100
+  },
+  {
+   "t": 2618,
+   "k": "scroll",
+   "sy": 100
+  },
+  {
+   "t": 2780,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 200
+  },
+  {
+   "t": 2782,
+   "k": "scroll",
+   "sy": 200
+  },
+  {
+   "t": 2949,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 300
+  },
+  {
+   "t": 2949,
+   "k": "scroll",
+   "sy": 300
+  },
+  {
+   "t": 3106,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 400
+  },
+  {
+   "t": 3106,
+   "k": "scroll",
+   "sy": 400
+  },
+  {
+   "t": 3295,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 500
+  },
+  {
+   "t": 3296,
+   "k": "scroll",
+   "sy": 500
+  },
+  {
+   "t": 3555,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 600
+  },
+  {
+   "t": 3555,
+   "k": "scroll",
+   "sy": 600
+  },
+  {
+   "t": 3813,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 700
+  },
+  {
+   "t": 3814,
+   "k": "scroll",
+   "sy": 700
+  },
+  {
+   "t": 4050,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 800
+  },
+  {
+   "t": 4051,
+   "k": "scroll",
+   "sy": 800
+  },
+  {
+   "t": 4318,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 900
+  },
+  {
+   "t": 4319,
+   "k": "scroll",
+   "sy": 900
+  },
+  {
+   "t": 4573,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 1000
+  },
+  {
+   "t": 4574,
+   "k": "scroll",
+   "sy": 1000
+  },
+  {
+   "t": 4850,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 1100
+  },
+  {
+   "t": 4850,
+   "k": "scroll",
+   "sy": 1100
+  },
+  {
+   "t": 5093,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 1200
+  },
+  {
+   "t": 5093,
+   "k": "scroll",
+   "sy": 1200
+  },
+  {
+   "t": 5343,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 1300
+  },
+  {
+   "t": 5346,
+   "k": "scroll",
+   "sy": 1300
+  },
+  {
+   "t": 5601,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 1400
+  },
+  {
+   "t": 5601,
+   "k": "scroll",
+   "sy": 1400
+  },
+  {
+   "t": 5847,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 1500
+  },
+  {
+   "t": 5848,
+   "k": "scroll",
+   "sy": 1500
+  },
+  {
+   "t": 6110,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 1600
+  },
+  {
+   "t": 6110,
+   "k": "scroll",
+   "sy": 1600
+  },
+  {
+   "t": 6370,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 1700
+  },
+  {
+   "t": 6370,
+   "k": "scroll",
+   "sy": 1700
+  },
+  {
+   "t": 6625,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 1800
+  },
+  {
+   "t": 6628,
+   "k": "scroll",
+   "sy": 1800
+  },
+  {
+   "t": 6878,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 1900
+  },
+  {
+   "t": 6879,
+   "k": "scroll",
+   "sy": 1900
+  },
+  {
+   "t": 7138,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 2000
+  },
+  {
+   "t": 7139,
+   "k": "scroll",
+   "sy": 2000
+  },
+  {
+   "t": 7452,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 2100
+  },
+  {
+   "t": 7453,
+   "k": "scroll",
+   "sy": 2100
+  },
+  {
+   "t": 7713,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 2200
+  },
+  {
+   "t": 7713,
+   "k": "scroll",
+   "sy": 2200
+  },
+  {
+   "t": 7972,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 2300
+  },
+  {
+   "t": 7973,
+   "k": "scroll",
+   "sy": 2300
+  },
+  {
+   "t": 8222,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 2400
+  },
+  {
+   "t": 8223,
+   "k": "scroll",
+   "sy": 2400
+  },
+  {
+   "t": 8461,
+   "k": "wheel",
+   "dy": 50,
+   "sy": 2500
+  },
+  {
+   "t": 8461,
+   "k": "scroll",
+   "sy": 2500
+  },
+  {
+   "t": 9349,
+   "k": "wheel",
+   "dy": 55,
+   "sy": 2610
+  },
+  {
+   "t": 9350,
+   "k": "scroll",
+   "sy": 2610
+  },
+  {
+   "t": 9749,
+   "k": "wheel",
+   "dy": 55,
+   "sy": 2720
+  },
+  {
+   "t": 9749,
+   "k": "scroll",
+   "sy": 2720
+  },
+  {
+   "t": 10145,
+   "k": "wheel",
+   "dy": 55,
+   "sy": 2830
+  },
+  {
+   "t": 10145,
+   "k": "scroll",
+   "sy": 2830
+  },
+  {
+   "t": 10506,
+   "k": "pointerdown",
+   "target": "_sessionTitle_1i2qo_1236"
+  },
+  {
+   "t": 10507,
+   "k": "touchstart",
+   "target": "_sessionTitle_1i2qo_1236"
+  },
+  {
+   "t": 10510,
+   "k": "click",
+   "target": "_sessionTitle_1i2qo_1236"
+  },
+  {
+   "t": 11153,
+   "k": "pointerdown",
+   "target": "_label_1npvj_64"
+  },
+  {
+   "t": 11153,
+   "k": "touchstart",
+   "target": "_label_1npvj_64"
+  },
+  {
+   "t": 11157,
+   "k": "click",
+   "target": "_label_1npvj_64"
+  },
+  {
+   "t": 11729,
+   "k": "pointerdown",
+   "target": "_label_1npvj_64"
+  },
+  {
+   "t": 11729,
+   "k": "touchstart",
+   "target": "_label_1npvj_64"
+  },
+  {
+   "t": 11731,
+   "k": "click",
+   "target": "_label_1npvj_64"
+  }
+ ]
+}
