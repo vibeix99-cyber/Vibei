@@ -48,3 +48,28 @@ With the two reruns counted in place of the two failures: 29 passed, 2 skipped (
 
 **3b. `integrity:309` x10**: `runs/integrity309-x10.log.txt`, `.json`; `-g 'two tabs, the leading one frozen across the end' --repeat-each=10 --workers=1`; 11:50:58 to 11:54:19 (3.3 min); load average about 10 to 11 at both ends. **10 of 10 passed.**
 
+## 4. The notice suite on :5560
+
+`runs/notice-suite.log.txt`, `runs/notice.json`; `KETTLE_PORT=5560 npx playwright test tests/notice-strip.spec.ts tests/w3-notices.spec.ts tests/w3-notices-idle.spec.ts tests/summary-notice.spec.ts tests/toast-room.spec.ts --project=chromium --workers=2`; two gate slots; 11:25:45 to 11:50:56 (25.1 min); load average 1.4 at the start, 10.0 at the end (13 to 15 in between).
+
+**73 passed, 1 failed** (74 tests): `notice-strip` 24 passed + 1 failed (of 25), `w3-notices` 9, `w3-notices-idle` 12, `summary-notice` 14, `toast-room` 14 (all passed). 0 flaky, 0 skipped.
+
+| Failed (first run) | Error | Error-context (first lines) |
+|---|---|---|
+| `notice-strip.spec.ts:338` "no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %)" (8.2 s) | at line 300 (`press`): "getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed", `expect(at).not.toBeNull()` received `null` (called from line 350) | page snapshot of Today: "Good afternoon, Sam", progress buttons ("3 days warm", "188 leaves", "Cozy level 4"), Today's goal 25 min brewed / 5 min to go, the Brew length group with "25 min" checked, the composer textbox; no notice in the first 90 lines |
+
+Files: `runs/failures/first-run-notice-strip-*/error-context.md`.
+
+**Rerun once, :5560**: `runs/rerun-notice-strip-5560.log.txt`, `-g '844×390 dark 200 %\)$'` (matches that one test), 11:53:21 to 11:54:26, load average 10.9 to 11.5: **passed** (1.0 min).
+**Same case on :5478** (old base, control): `runs/control-notice-strip-5478.log.txt`, 11:57:03 to 11:58:26, load average 17.7 to 19.6: **passed** (1.3 min).
+
+Classification: **does not reproduce** on :5560 (the rerun passes); it does not fail on :5478 either. The failing step is the real-input "still on top as the tap is aimed" check, 8.2 s into the test, on a run at load average 10 to 15.
+
+Counted with the rerun in place of the failure: 74 of 74 (as in the previous round, 74 tests).
+
+## 5. `w2-home` (the brew-length control) and the new race spec on :5560
+
+**5a. `w2-home`**: `runs/w2-home.log.txt`; `KETTLE_PORT=5560 npx playwright test tests/w2-home.spec.ts --project=chromium --workers=1`; 11:54:59 to 11:59:43 (4.7 min); load average 12.9 at the start, 15.5 at the end. **18 of 18 passed** (12 "Brew length: every option on screen at rest, clear of the docked start, tapped and keyed", 6 "first visit: one plain line, one primary action, the 15-minute brew").
+
+**5b. `w3-intention-race.spec.ts`**: `runs/race-5560.log.txt`, `.json`; `--workers=1`; 11:54:27 to 11:54:59 (31 s); load average 11.5 to 12.9. **2 of 2 passed**: the intention race (13.6 s) and "F1X-D1: B picks another brew length and starts; A (idle, its timer events held) takes in the length change first: the brew survives, one record" (14.5 s).
+
