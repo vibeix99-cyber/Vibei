@@ -21,7 +21,10 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
     - a `sync.ts` receiving-side guard covering `rebase`, the person's own actions in a stale tab, and a typed edit in a doubly stale tab;
     - the Today composer label overwrite.
 - **Item 2, backdrop:** done, report only. No merge changed it; it is capture timing (pre-rendered still vs faded-in live canvas, `capture.mjs:184-186`, `NookScene.tsx:222-246`), pre-existing. Receipt: `review/BACKDROP/RECEIPT-BACKDROP.md`.
-- **Item 3, N-2:** fix maker N2 (Sonnet) on `pe/w3r1-n2-history`, worktree `w7n`, :5565. Brief `contracts/W3R1/BRIEF-N2.md` (product change `History.tsx` only, plus one new test file). Hard stop 13:23 UTC. LEAD-5 gates and reviews it separately.
+- **Post-merge regression** (Lane R, `review/POSTMERGE-F1/`, 12:14):
+  - All green except three first-run failures under load 13–15: `timer.spec:156`, `timer.spec:183` and `notice-strip:338`. Each passed on rerun on :5560 and :5478.
+  - LEAD-5 matched-load control: timer 20/20 on both builds; the notice test 3/3 on both. Its classification is pending.
+- **Item 3, N-2:** maker N2 (Sonnet) handed back `2280e7d` with **no product change**. It found that N-2 does not reproduce as a product scroll and attributes the 110 px to the W2R3 probe's own wheels. The branch adds only a guard spec, `tests/w3-history-focus-scroll.spec.ts`. Gate passed (scope). **LEAD-5 is to rule:** close N-2 or name a product change; merge or drop the spec.
 - **Item 4:** the Final Product Boss is on hold.
 - **Servers:** base :5478/:5488; integration (`f817931`, app `5f78af1`) :5560/:5570; N2 dev :5565. The trial servers :5563/:5573 are stopped.
 
