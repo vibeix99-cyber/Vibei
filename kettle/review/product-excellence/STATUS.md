@@ -12,6 +12,29 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 
 ## ▶ WAVE 3 ROUND 1 · started 2026-10-14 10:00 UTC (read this first)
 
+**W3R1 final regression and Vibei's follow-ups (2026-10-15 00:05 UTC):**
+- **Final regression on `2be3de1`** (Lane R, `contracts/W3R1/review/FINAL/RECEIPT-FINAL.md`, through `a2b00cd`):
+  - tsc 0; vitest 302/302; build OK.
+  - Chromium without `notice-strip`: 243 tests, **215 passed, 3 failed**, 25 skipped (`w3-notices-load`, gated). Of the 3:
+    - **F3 `w2-room:167`:** flaky (load timeout; 30.4 s to scene-ready).
+    - **F1 `integrity:309`:** **open finding** (1/6 under load; mechanism unknown).
+    - **F2 `integrity:1017`:** X-1, not reproduced in 21 runs.
+  - `notice-strip` **25/25** (including `:292`).
+  - timer/pwa 29 + 2 skipped.
+  - `w3-notices-load` (`W3_LOAD=1`): 23/25. The 2 failures happen identically on base: a stale control copy.
+  - **X-7:** only G's Haptics wrap (+16.98 px below it).
+  - Captures: S's and G's changes, plus one unisolated 390 dark first-brew backdrop difference.
+- **Vibei's decisions** (`contracts/W3R1/VB-DECISIONS-FINAL.md`):
+  - N kept.
+  - F's idle wait goes to 4 s (follow-up).
+  - One test-stability task before the Final Product Boss.
+  - F1 is a real finding unless shown flaky.
+  - **No Final Product Boss until Vibei says so.**
+- **Maker Q** (Opus, high; `pe/w3r1-stability`, worktree `w5q`, :5545; brief `BRIEF-Q.md`):
+  - Phase A: idle 1.2 → 4 s (stop 00:55).
+  - Phase B: `notice-strip:292`, the 4-minute timeouts, `integrity:1017`, F1 root cause (stop 02:55).
+  - LEAD-5 verifies; merge on APPROVE.
+
 **W3R1 state (2026-10-14 22:30 UTC):** all four makers are APPROVE and merged. Only the final regression is still running.
 
 | Maker | Verdict | Merge |
