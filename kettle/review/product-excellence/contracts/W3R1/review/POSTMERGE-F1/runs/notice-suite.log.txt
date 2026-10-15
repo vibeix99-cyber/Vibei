@@ -47,3 +47,9 @@ FACT 390x844-light-t100 a-no-input {"leftAt":5396,"room":68,"commits":[{"t":5408
   ✓  41 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (390x844-light-t100) (11.7s)
 FACT 390x844-light-t100 b-scroll-then-idle {"leftAt":5631,"room":68,"maxSy":480,"scrollMs":3440,"roomAfterScroll":68,"commits":[{"t":13120,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4049,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":7489,"collapseAfterLastBusyMs":4049,"visibleMove":68}
   ✓  43 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (390x844-light-t100) (15.1s)
+FACT 390x844-light-t100 c-pointer-held {"leftAt":5390,"room":68,"roomWhileDown":68,"downWhileHeld":1,"commits":[{"t":12576,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4063,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":7186,"collapseAfterLastBusyMs":4063,"visibleMove":68}
+  ✓  44 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (390x844-light-t100) (13.9s)
+  ✓  42 [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by touch (375×667, 200 % text) (36.1s)
+FACT 390x844-dark-t200-rm a-no-input {"leftAt":5488,"room":113,"commits":[{"t":9584,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8613,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":4096,"collapseAfterLastBusyMs":4096,"visibleMove":113}
+  ✓  45 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (390x844-dark-t200-rm) (10.5s)
+  ✓  46 [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by wheel (844×390, 200 % text) (20.5s)
