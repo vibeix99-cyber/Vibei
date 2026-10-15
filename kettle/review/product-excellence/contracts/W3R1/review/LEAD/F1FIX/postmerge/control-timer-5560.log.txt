@@ -1,0 +1,65 @@
+### round 1: env KETTLE_PORT=5560 npx playwright test --project=timer-app -g background: the worker completes on time even with main-thread timers frozen|hidden page: completion shows a warm notification; coming back restores the title --repeat-each=2 --workers=1 --reporter=list --output=/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pmctl/pw-timer-5560-1
+### start 12:23:00 load 8.65 9.41 11.33
+
+Running 4 tests using 1 worker
+
+  ✓  1 [timer-app] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (9.3s)
+  ✓  2 [timer-app] › tests/timer.spec.ts:183:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (11.7s)
+  ✓  3 [timer-app] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (9.4s)
+  ✓  4 [timer-app] › tests/timer.spec.ts:183:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (9.4s)
+
+  4 passed (50.7s)
+### end 12:23:57 exit=0 load 15.53 11.12 11.80
+
+### round 2: env KETTLE_PORT=5560 npx playwright test --project=timer-app -g background: the worker completes on time even with main-thread timers frozen|hidden page: completion shows a warm notification; coming back restores the title --repeat-each=2 --workers=1 --reporter=list --output=/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pmctl/pw-timer-5560-2
+### start 12:25:59 load 17.53 13.28 12.50
+
+Running 4 tests using 1 worker
+
+  ✓  1 [timer-app] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (9.0s)
+  ✓  2 [timer-app] › tests/timer.spec.ts:183:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (15.5s)
+  ✓  3 [timer-app] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (8.7s)
+  ✓  4 [timer-app] › tests/timer.spec.ts:183:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (12.6s)
+
+  4 passed (58.4s)
+### end 12:27:03 exit=0 load 16.82 13.90 12.77
+
+### round 3: env KETTLE_PORT=5560 npx playwright test --project=timer-app -g background: the worker completes on time even with main-thread timers frozen|hidden page: completion shows a warm notification; coming back restores the title --repeat-each=2 --workers=1 --reporter=list --output=/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pmctl/pw-timer-5560-3
+### start 12:27:03 load 16.82 13.90 12.77
+
+Running 4 tests using 1 worker
+
+  ✓  1 [timer-app] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (13.5s)
+  ✓  2 [timer-app] › tests/timer.spec.ts:183:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (11.2s)
+  ✓  3 [timer-app] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (8.0s)
+  ✓  4 [timer-app] › tests/timer.spec.ts:183:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (8.4s)
+
+  4 passed (55.1s)
+### end 12:28:05 exit=0 load 17.27 14.74 13.14
+
+### round 4: env KETTLE_PORT=5560 npx playwright test --project=timer-app -g background: the worker completes on time even with main-thread timers frozen|hidden page: completion shows a warm notification; coming back restores the title --repeat-each=2 --workers=1 --reporter=list --output=/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pmctl/pw-timer-5560-4
+### start 12:30:04 load 16.86 15.61 13.67
+
+Running 4 tests using 1 worker
+
+  ✓  1 [timer-app] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (9.6s)
+  ✓  2 [timer-app] › tests/timer.spec.ts:183:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (11.3s)
+  ✓  3 [timer-app] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (14.9s)
+  ✓  4 [timer-app] › tests/timer.spec.ts:183:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (13.1s)
+
+  4 passed (1.0m)
+### end 12:31:09 exit=0 load 17.49 16.02 13.93
+
+### round 5: env KETTLE_PORT=5560 npx playwright test --project=timer-app -g background: the worker completes on time even with main-thread timers frozen|hidden page: completion shows a warm notification; coming back restores the title --repeat-each=2 --workers=1 --reporter=list --output=/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pmctl/pw-timer-5560-5
+### start 12:31:09 load 17.21 15.98 13.93
+
+Running 4 tests using 1 worker
+
+  ✓  1 [timer-app] › tests/timer.spec.ts:207:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (11.0s)
+  ✓  2 [timer-app] › tests/timer.spec.ts:251:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (10.1s)
+  ✓  3 [timer-app] › tests/timer.spec.ts:207:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (10.3s)
+  ✓  4 [timer-app] › tests/timer.spec.ts:251:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (10.9s)
+
+  4 passed (55.8s)
+### end 12:32:08 exit=0 load 19.04 16.68 14.28
+
