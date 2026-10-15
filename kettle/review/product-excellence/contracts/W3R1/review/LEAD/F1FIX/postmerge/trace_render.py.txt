@@ -1,0 +1,39 @@
+import json, sys, re
+p = sys.argv[1]
+snaps = []; calls = {}; t0 = None
+for line in open(p + '/0-trace.trace'):
+    try: e = json.loads(line)
+    except Exception: continue
+    if e.get('type') == 'before':
+        if t0 is None: t0 = e['startTime']
+        calls[e['callId']] = e['startTime'] - t0
+    if e.get('type') == 'frame-snapshot':
+        s = e['snapshot']
+        if s.get('isMainFrame', True): snaps.append(s)
+def nodes_of(i):
+    s = snaps[i]
+    if '_nodes' not in s:
+        out = []
+        def v(n):
+            if isinstance(n, str): out.append(n)
+            elif isinstance(n, list) and n and isinstance(n[0], str):
+                for c in n[2:]: v(c)
+                out.append(n)
+        v(s['html']); s['_nodes'] = out
+    return s['_nodes']
+def text(n, i, acc, skip=('SCRIPT','STYLE','svg','SVG')):
+    if isinstance(n, str): acc.append(n); return
+    if not isinstance(n, list) or not n: return
+    if isinstance(n[0], list):
+        ri = i - n[0][0]; ns = nodes_of(ri)
+        if 0 <= n[0][1] < len(ns): text(ns[n[0][1]], ri, acc)
+        return
+    if n[0] in skip: return
+    for c in n[2:]: text(c, i, acc)
+for i, s in enumerate(snaps):
+    acc = []; text(s['html'], i, acc)
+    t = re.sub(r'\s+', ' ', ' '.join(acc)).strip()
+    m = t.find('Settings')
+    body = t[m+8:m+8+int(sys.argv[2]) if len(sys.argv)>2 else m+220]
+    c = calls.get(s.get('callId'))
+    print(f"{s['snapshotName']:<16} call@{('%.0f'%c) if c is not None else '-':>6} | {body}")

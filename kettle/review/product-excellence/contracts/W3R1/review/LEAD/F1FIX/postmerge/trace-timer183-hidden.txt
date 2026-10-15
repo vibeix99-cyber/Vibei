@@ -1,0 +1,73 @@
+LEAD-5, post-merge regression (5f78af1): Lane R's first-run failure trace, read back
+Test: timer.spec.ts:183 "hidden page: completion shows a warm notification; coming back restores the title"
+Source: review/POSTMERGE-F1/runs/failures/first-run-timer-timer-reliability-hi-c226d-ing-back-restores-the-title-timer-app/trace.zip (Lane R, first timer/PWA run on :5560, f817931)
+Tools: trace_steps.py.txt (action timeline from 0-trace.trace) and trace_render.py.txt (text of each DOM snapshot, references resolved), both in this folder
+
+== 1. Playwright actions: start ms (from newPage), duration ms, method, params (cut), result (cut)
+
+  
+      0.0     81.0 newPage {} -> {"page": "<Page>"} 
+     88.0      3.5 addInitScript {"source": "(() => {\n      const notes = [];\n      window.__notes = notes;\n      class FakeNotification {\n        constructor(title, opts) {\n          this.onclick = null;\n          notes.push({\n            title,\n            body: opts === null || opt ->  
+     95.7   8173.6 goto {"url": "/?debug&onboarded=1#/", "timeout": 0, "waitUntil": "load"} -> {"response": "<Response>"} 
+   8416.0     65.8 waitForFunction {"expression": "() => {\n    var _kettle;\n    return !!((_kettle = window.__kettle) !== null && _kettle !== void 0 && _kettle.timerInfo);\n  }", "isFunction": true, "arg": {"value": {"v": "null"}, "handles": []}, "timeout": 20000} -> {"handle": "<JSHandle>"} 
+   8487.6     24.5 evaluateExpression {"expression": "() => window.__kettle.settings.getState().set({\n    autoStartBreaks: false,\n    autoStartFocus: false,\n    scene: 'off',\n    motion: 'reduce'\n  })", "isFunction": true, "arg": {"value": {"v": "undefined"}, "handles": []}} -> {"value": {"v": "undefined"}} 
+   8519.8    320.0 waitForFunction {"expression": "() => {\n    const i = window.__kettle.timerInfo();\n    return i.leader && i.leaderForMs > 400 && !i.settling;\n  }", "isFunction": true, "arg": {"value": {"v": "null"}, "handles": []}, "timeout": 10000} -> {"handle": "<JSHandle>"} 
+   8845.9      1.8 title {} -> {"value": "Kettle \u2014 cozy focus timer"} 
+   8849.9      4.5 evaluateExpression {"expression": "() => window.__kettle.settings.getState().set({\n      notifications: true\n    })", "isFunction": true, "arg": {"value": {"v": "undefined"}, "handles": []}} -> {"value": {"v": "undefined"}} 
+   8861.6   3271.1 evaluateExpression {"expression": "([m, i]) => window.__kettle.timer.getState().startFocus({\n  minutes: m,\n  intention: i\n})", "isFunction": true, "arg": {"value": {"a": [{"n": 0.06666666666666667}, {"s": "Essay"}], "id": 1}, "handles": []}} -> {"value": {"v": "undefined"}} 
+  12553.3   2677.9 evaluateExpression {"expression": "h => {\n  Object.defineProperty(document, 'visibilityState', {\n    configurable: true,\n    get: () => h ? 'hidden' : 'visible'\n  });\n  Object.defineProperty(document, 'hidden', {\n    configurable: true,\n    get: () => h\n  });\n  document -> {"value": {"v": "undefined"}
+  16121.7      6.2 evaluateExpression {"expression": "() => window.__notes.length", "isFunction": true, "arg": {"value": {"v": "undefined"}, "handles": []}} -> {"value": {"n": 0}} 
+  16236.4      7.0 evaluateExpression {"expression": "() => window.__notes.length", "isFunction": true, "arg": {"value": {"v": "undefined"}, "handles": []}} -> {"value": {"n": 0}} 
+  16499.7      3.0 evaluateExpression {"expression": "() => window.__notes.length", "isFunction": true, "arg": {"value": {"v": "undefined"}, "handles": []}} -> {"value": {"n": 0}} 
+  17008.4      5.7 evaluateExpression {"expression": "() => window.__notes.length", "isFunction": true, "arg": {"value": {"v": "undefined"}, "handles": []}} -> {"value": {"n": 0}} 
+  18019.8     16.9 evaluateExpression {"expression": "() => window.__notes.length", "isFunction": true, "arg": {"value": {"v": "undefined"}, "handles": []}} -> {"value": {"n": 0}} 
+  19051.1     10.8 evaluateExpression {"expression": "() => window.__notes.length", "isFunction": true, "arg": {"value": {"v": "undefined"}, "handles": []}} -> {"value": {"n": 0}} 
+  20067.6      5.8 evaluateExpression {"expression": "() => window.__notes.length", "isFunction": true, "arg": {"value": {"v": "undefined"}, "handles": []}} -> {"value": {"n": 0}} 
+  21083.4    751.8 evaluateExpression {"expression": "() => window.__notes.length", "isFunction": true, "arg": {"value": {"v": "undefined"}, "handles": []}} -> {"value": {"n": 0}} 
+  22848.1    849.1 evaluateExpression {"expression": "() => window.__notes.length", "isFunction": true, "arg": {"value": {"v": "undefined"}, "handles": []}} -> {"value": {"n": 0}} 
+  24709.7    186.6 evaluateExpression {"expression": "() => window.__notes.length", "isFunction": true, "arg": {"value": {"v": "undefined"}, "handles": []}} -> {"value": {"n": 0}} 
+  26000.9      9.2 evaluateExpression {"expression": "() => window.__notes.length", "isFunction": true, "arg": {"value": {"v": "undefined"}, "handles": []}} -> {"value": {"n": 0}} 
+
+== 2. Console messages in the page
+CONSOLE 240178.793 debug [vite] connecting...
+CONSOLE 240181.582 debug [vite] connected.
+CONSOLE 247898.693 info %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+CONSOLE 248769.541 error React has detected a change in the order of Hooks called by %s. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules-of-hooks
+
+== 3. Page text of each DOM snapshot after the nav ('Settings'), before/after each action; action start ms
+before@call@10   call@    96 | 
+after@call@10    call@    96 |  0 0 days warm 0 0 leaves 0 / 30 min today
+before@call@12   call@  8416 |  0 0 days warm 0 0 leaves 0 / 30 min today
+after@call@12    call@  8416 |  0 0 days warm 0 0 leaves 0 / 30 min today
+before@call@14   call@  8488 |  0 0 days warm 0 0 leaves 0 / 30 min today
+after@call@14    call@  8488 |  0 0 days warm 0 0 leaves 0 / 30 min today
+before@call@16   call@  8520 |  0 0 days warm 0 0 leaves 0 / 30 min today
+after@call@16    call@  8520 |  0 0 days warm 0 0 leaves 0 / 30 min today
+before@call@20   call@  8850 |  0 0 days warm 0 0 leaves 0 / 30 min today
+after@call@20    call@  8850 |  0 0 days warm 0 0 leaves 0 / 30 min today
+before@call@22   call@  8862 |  0 0 days warm 0 0 leaves 0 / 30 min today
+after@call@22    call@  8862 |  0 0 days warm 0 0 leaves 0 / 30 min today Kettle’s on. Focus session started, 4 seconds.
+before@call@24   call@ 12553 | Focusing — Kettle Kettle’s on. Focus session started, 4 seconds.
+after@call@24    call@ 12553 | — cozy focus timer The kettle’s whistling! Focus session complete. Time for tea.
+before@call@26   call@ 16122 | — cozy focus timer The kettle’s whistling! Focus session complete. Time for tea.
+after@call@26    call@ 16122 | — cozy focus timer The kettle’s whistling! Focus session complete. Time for tea.
+before@call@28   call@ 16236 | — cozy focus timer The kettle’s whistling! Focus session complete. Time for tea.
+after@call@28    call@ 16236 | — cozy focus timer The kettle’s whistling! Focus session complete. Time for tea.
+before@call@30   call@ 16500 | — cozy focus timer The kettle’s whistling! Focus session complete. Time for tea.
+after@call@30    call@ 16500 | — cozy focus timer The kettle’s whistling! Focus session complete. Time for tea.
+before@call@32   call@ 17008 | — cozy focus timer The kettle’s whistling! Focus session complete. Time for tea.
+after@call@32    call@ 17008 | — cozy focus timer The kettle’s whistling! Focus session complete. Time for tea.
+before@call@34   call@ 18020 | — cozy focus timer The kettle’s whistling! Focus session complete. Time for tea.
+after@call@34    call@ 18020 | — cozy focus timer The kettle’s whistling! Focus session complete. Time for tea.
+before@call@36   call@ 19051 | — cozy focus timer The kettle’s whistling! Focus session complete. Time for tea.
+after@call@36    call@ 19051 | — cozy focus timer The kettle’s whistling! Focus session complete. Time for tea.
+before@call@38   call@ 20068 | — cozy focus timer The kettle’s whistling! Focus session complete. Time for tea.
+after@call@38    call@ 20068 | — cozy focus timer The kettle’s whistling! Focus session complete. Time for tea.
+before@call@40   call@ 21083 | — cozy focus timer The kettle’s whistling! Focus session complete. Time for tea.
+after@call@40    call@ 21083 | — cozy focus timer 1 minute brewed Tea’s ready. Take five before the next one. Essay Done Carry forward Badge: First Brew Finish your first full brew +8 leaves 0/30 min t
+before@call@42   call@ 22848 | — cozy focus timer 1 minute brewed Tea’s ready. Take five before the next one. Essay Done Carry forward Badge: First Brew Finish your first full brew +8 leaves 0/30 min t
+after@call@42    call@ 22848 | — cozy focus timer 1 minute brewed Tea’s ready. Take five before the next one. Essay Done Carry forward Badge: First Brew Finish your first full brew +8 leaves 0/30 min t
+before@call@44   call@ 24710 | — cozy focus timer 1 minute brewed Tea’s ready. Take five before the next one. Essay Done Carry forward Badge: First Brew Finish your first full brew +8 leaves 0/30 min t
+after@call@44    call@ 24710 | — cozy focus timer 1 minute brewed Tea’s ready. Take five before the next one. Essay Done Carry forward Badge: First Brew Finish your first full brew +8 leaves 0/30 min t
+before@call@46   call@ 26001 | — cozy focus timer 1 minute brewed Tea’s ready. Take five before the next one. Essay Done Carry forward Badge: First Brew Finish your first full brew +8 leaves 0/30 min t
+after@call@46    call@ 26001 | — cozy focus timer 1 minute brewed Tea’s ready. Take five before the next one. Essay Done Carry forward Badge: First Brew Finish your first full brew +8 leaves 0/30 min t
