@@ -490,3 +490,21 @@ No item is introduced or worsened by this change in a way that is a defect, so n
 - the visible move at the collapse is the band itself (68 or 113 px), once.
 
 The aimed tap on Mark done (5 configs), the scroll test, the pointer-held test (≥ 4 s after the last input, ≤ 6.5 s after release), the new-screen test and the accessible-name test all passed twice. **PASS.**
+
+**3. `notice-strip.spec.ts`, all 25** (`band4s/notice-strip-all.log`; load average 5 at the start, 12 at the end): **23/25.** Both failures are at **1440×900 light 200 %** and **1440×900 light 200 % reduced motion**, with the same state (error contexts in `band4s/failure-context/`):
+- Mark done aimed at top 685.2, landed on the tag group; Mark done at 625.2 (**−60.0 px**), `scrollY` **120**;
+- **the strip unchanged since the screen arrived**: `why: "screen"`, version 12, **room 0**, "Saved 3 minutes of focus" still shown (1,700 / 1,000 ms left).
+
+That is X-11 signature **(a)**, the spec's own wheel race (`CHECKER-W3R1-CROSS.md` §7.2), not the band: no band existed at the failure (the notice had not left, so there was no room), and the 4 s change touches nothing else.
+
+The race is load-sensitive. It reached the 1440 light @200 full-motion configuration only at load 12; the same file passed 25/25 on :5528 at load ~5 (§8) and 25/25 in the maker's run on this code (:5545, `Q/A/notice-strip-all.log.txt`). It stays in X-11, which Maker Q's Phase B is fixing.
+
+### Verdict: **APPROVE** `pe/w3r1-stability@04b1ad9`, Phase A (the band's idle wait 4 s)
+- **It does what Vibei ruled and nothing more.** The kept band goes on the same screen ≥ 4 s after the later of the leave and the last input (4026–4121 ms measured), never under a pointer or mid-scroll, and never "in answer to the next tap".
+- **F-T2-1 holds:** 64 aimed events, 0 off target.
+- **Nothing is loosened.**
+- **The two `notice-strip` failures** are X-11 (a), unrelated to this change. For the final regression they are classified as before: known flaky (X-11), with each failure's error context checked against the three signatures.
+
+**The residual Vibei weighed** (CROSS §7.1) is now narrower. A touch user must hold a finger still for ≥ 4 s, not 1.2 s, before the band can move content. "Collapse only off screen or on a screen change" stays logged for the post-Final-Boss polish round.
+
+*Run logs:* each `.log` / `.out` in `band4s/` is committed as a `.txt` copy beside it.
