@@ -131,7 +131,7 @@ test('F1X-D1: B picks another brew length and starts; A (idle, its timer events 
     k.timer.getState().startFocus({ minutes: 0.1, intention: 'Chapter 3 notes' });
   });
   const brew = await memory(b);
-  expect(brew.status).toBe('running');
+  expect(brew.status, 'B’s brew is still running in B (not undone by A’s length sync)').toBe('running');
   // A has taken in the length change (its idle timer shows 50 min), but not B's brew.
   await expect.poll(() => a.evaluate(() => (window as any).__kettle.timer.getState().plannedMs), { message: 'A’s idle length followed the settings change' }).toBe(50 * 60_000);
   await expect.poll(() => a.evaluate(() => (window as any).__f1.held())).toBeGreaterThan(0);
