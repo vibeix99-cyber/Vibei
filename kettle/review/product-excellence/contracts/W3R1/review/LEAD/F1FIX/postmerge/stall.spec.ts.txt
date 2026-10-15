@@ -1,0 +1,184 @@
+/**
+ * LEAD-5, post-merge regression (5f78af1): the two timer.spec.ts tests (:156, :183), copied verbatim with their helpers
+ * (timer.spec.ts lines 7-71), plus ONE added step: the page's main thread is kept busy (`stall`) right after the brew is
+ * started, as a loaded machine did in Lane R's first run (startFocus 5.9 s / 3.3 s in the traces).
+ *   "as written + stall": the test's own steps after the stall. Expected to fail the same way on any build.
+ *   "armed first + stall": the same stall, but the observer (subscribe / hidden page) is set up BEFORE the brew starts.
+ *     It shows whether the build's running->idle transition and notification arrive (as a set that subscribe sees).
+ */
+import { test as base, expect, type Page } from '@playwright/test';
+
+const test = base.extend<{ kettlePage: string }>({
+  kettlePage: ['/tests/harness/timer.html', { option: true }],
+});
+
+type Rec = { id: string; completed: boolean; endedAt: number; startedAt: number; focusedMs: number; phase: string };
+type TState = {
+  status: string;
+  phase: string;
+  sessionId: string | null;
+  endsAt: number | null;
+  remainingMs: number;
+  plannedMs: number;
+  lastEnded: { sessionId: string; reason: string; at: number; whileAway: boolean } | null;
+};
+type Info = { leader: boolean; leaderMode: string; leaderForMs: number; scheduler: string; settling: boolean };
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+async function open(page: Page, url: string) {
+  await page.goto(url);
+  await page.waitForFunction(() => !!(window as any).__kettle?.timerInfo, null, { timeout: 20_000 });
+  // The app may auto-start the next phase after a completion; tests look at one phase at a time.
+  // The 3D nook runs on software GL here and starves the CPU; the timer is what's under test.
+  await page.evaluate(() =>
+    (window as any).__kettle.settings.getState().set({ autoStartBreaks: false, autoStartFocus: false, scene: 'off', motion: 'reduce' }),
+  );
+}
+/** Phase length in minutes: the full app is much heavier than the harness, so give it more room. */
+const secs = (kettlePage: string, n: number) => (kettlePage.includes('harness') ? n : n * 2) / 60;
+/** How late a completion may land after its real end on this page. */
+const lateBudget = (kettlePage: string) => (kettlePage.includes('harness') ? 400 : 1500);
+const info = (page: Page): Promise<Info> => page.evaluate(() => (window as any).__kettle.timerInfo());
+async function settledLeader(page: Page) {
+  await page.waitForFunction(() => {
+    const i = (window as any).__kettle.timerInfo();
+    return i.leader && i.leaderForMs > 400 && !i.settling;
+  }, null, { timeout: 10_000 });
+}
+const state = (page: Page): Promise<TState> =>
+  page.evaluate(() => {
+    const s = (window as any).__kettle.timer.getState();
+    return { status: s.status, phase: s.phase, sessionId: s.sessionId, endsAt: s.endsAt, remainingMs: s.remainingMs, plannedMs: s.plannedMs, lastEnded: s.lastEnded };
+  });
+const start = (page: Page, minutes: number, intention = '') =>
+  page.evaluate(([m, i]) => (window as any).__kettle.timer.getState().startFocus({ minutes: m, intention: i }), [minutes, intention] as const);
+const storedSessions = (page: Page): Promise<Rec[]> =>
+  page.evaluate(() => {
+    try {
+      return JSON.parse(localStorage.getItem('kettle:progress') ?? 'null')?.state?.sessions ?? [];
+    } catch {
+      return [];
+    }
+  });
+const waitIdle = (page: Page, timeout = 12_000) =>
+  expect.poll(async () => (await state(page)).status, { timeout, intervals: [100] }).toBe('idle');
+
+/** Pretend the tab went to the background (the app only sees visibilityState). */
+const setHidden = (page: Page, hidden: boolean) =>
+  page.evaluate((h) => {
+    Object.defineProperty(document, 'visibilityState', { configurable: true, get: () => (h ? 'hidden' : 'visible') });
+    Object.defineProperty(document, 'hidden', { configurable: true, get: () => h });
+    document.dispatchEvent(new Event('visibilitychange'));
+  }, hidden);
+
+/** Keep the page's main thread busy for `ms` (one long task), so the worker's end-of-brew message waits behind it. */
+const stall = (page: Page, ms: number) =>
+  page.evaluate((ms) => {
+    const t = performance.now();
+    while (performance.now() - t < ms) {
+      /* busy */
+    }
+  }, ms);
+
+test.describe('LEAD-5 stall', () => {
+  test('156 as written + stall: background: the worker completes on time even with main-thread timers frozen', async ({ page, kettlePage }) => {
+    await open(page, kettlePage);
+    await settledLeader(page);
+    expect((await info(page)).scheduler).toBe('worker');
+    await start(page, secs(kettlePage, 3));
+    await stall(page, 6500); // ADDED: a 6 s brew; the page is busy past its end
+    const { endsAt, sessionId } = await state(page);
+    await page.evaluate(() => {
+      const w = window as any;
+      w.__kettle.timer.subscribe((s: any, p: any) => {
+        if (p.status === 'running' && s.status === 'idle') w.__doneAt = Date.now();
+      });
+      w.setTimeout = () => 0;
+      w.setInterval = () => 0;
+      w.requestAnimationFrame = () => 0;
+      Object.defineProperty(document, 'visibilityState', { configurable: true, get: () => 'hidden' });
+      Object.defineProperty(document, 'hidden', { configurable: true, get: () => true });
+      document.dispatchEvent(new Event('visibilitychange'));
+    });
+    await expect.poll(() => page.evaluate(() => (window as any).__doneAt ?? null), { timeout: 10_000, intervals: [200] }).not.toBeNull();
+    const doneAt = await page.evaluate(() => (window as any).__doneAt as number);
+    expect(doneAt - (endsAt as number)).toBeGreaterThanOrEqual(0);
+    expect(doneAt - (endsAt as number)).toBeLessThan(lateBudget(kettlePage));
+    expect((await storedSessions(page)).filter((r) => r.id === sessionId)).toHaveLength(1);
+    await expect(page).toHaveTitle('Tea’s ready — Kettle');
+  });
+
+  test('156 armed first + stall: the running->idle transition reaches subscribe, the session is stored once', async ({ page, kettlePage }) => {
+    await open(page, kettlePage);
+    await settledLeader(page);
+    expect((await info(page)).scheduler).toBe('worker');
+    await page.evaluate(() => {
+      const w = window as any;
+      w.__kettle.timer.subscribe((s: any, p: any) => {
+        if (p.status === 'running' && s.status === 'idle') w.__doneAt = Date.now();
+      });
+    });
+    await start(page, secs(kettlePage, 3));
+    const { endsAt, sessionId } = await state(page);
+    await stall(page, 6500);
+    await expect.poll(() => page.evaluate(() => (window as any).__doneAt ?? null), { timeout: 10_000, intervals: [200] }).not.toBeNull();
+    const doneAt = await page.evaluate(() => (window as any).__doneAt as number);
+    expect(doneAt - (endsAt as number)).toBeGreaterThanOrEqual(0);
+    expect(doneAt - (endsAt as number)).toBeLessThan(1500); // the stall ends 0.5 s after the brew: lateness ~0.5 s
+    expect((await storedSessions(page)).filter((r) => r.id === sessionId)).toHaveLength(1);
+  });
+
+  const fakeNotes = () => {
+    const notes: { title: string; body?: string; tag?: string }[] = [];
+    (window as any).__notes = notes;
+    class FakeNotification {
+      static permission = 'granted';
+      static requestPermission = async () => 'granted';
+      onclick: null | (() => void) = null;
+      constructor(title: string, opts?: { body?: string; tag?: string }) {
+        notes.push({ title, body: opts?.body, tag: opts?.tag });
+      }
+      close() {}
+    }
+    (window as any).Notification = FakeNotification;
+  };
+
+  test('183 as written + stall: hidden page: completion shows a warm notification; coming back restores the title', async ({ page, context, kettlePage }) => {
+    await context.addInitScript(fakeNotes);
+    await open(page, kettlePage);
+    await settledLeader(page);
+    const baseTitle = await page.title();
+    await page.evaluate(() => (window as any).__kettle.settings.getState().set({ notifications: true }));
+    await start(page, secs(kettlePage, 2), 'Essay');
+    await stall(page, 4500); // ADDED: a 4 s brew; the page is busy past its end, before the hide
+    await setHidden(page, true);
+    await expect.poll(() => page.evaluate(() => (window as any).__notes.length), { timeout: 10_000 }).toBe(1);
+    const note = await page.evaluate(() => (window as any).__notes[0]);
+    expect(note.title).toBe('The kettle’s whistling! Time for tea.');
+    expect(note.body).toContain('Essay');
+    expect(note.tag).toBe('kettle-timer');
+    await expect(page).toHaveTitle('Tea’s ready — Kettle');
+    await setHidden(page, false);
+    await expect(page).toHaveTitle(baseTitle);
+  });
+
+  test('183 armed first + stall: hidden before the end, one warm notification and the done title', async ({ page, context, kettlePage }) => {
+    await context.addInitScript(fakeNotes);
+    await open(page, kettlePage);
+    await settledLeader(page);
+    const baseTitle = await page.title();
+    await page.evaluate(() => (window as any).__kettle.settings.getState().set({ notifications: true }));
+    await start(page, secs(kettlePage, 2), 'Essay');
+    await setHidden(page, true);
+    await stall(page, 4500);
+    await expect.poll(() => page.evaluate(() => (window as any).__notes.length), { timeout: 10_000 }).toBe(1);
+    const note = await page.evaluate(() => (window as any).__notes[0]);
+    expect(note.title).toBe('The kettle’s whistling! Time for tea.');
+    expect(note.body).toContain('Essay');
+    expect(note.tag).toBe('kettle-timer');
+    await expect(page).toHaveTitle('Tea’s ready — Kettle');
+    await setHidden(page, false);
+    await expect(page).toHaveTitle(baseTitle);
+  });
+});
