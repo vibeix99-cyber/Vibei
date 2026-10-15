@@ -1,0 +1,63 @@
+LEAD-5, post-merge regression (5f78af1): does the F1 merge reach the running->idle transition or the notification path?
+Worktree /home/user/wt/w6-int at f817931 (serves :5560); merge 5f78af1 = 26b37bc (first parent) + 10ecf2c
+
+== 1. What the merge changes in src (5f78af1^1..5f78af1)
+ kettle/src/timer/intentionRace.test.ts | 324 +++++++++++++++++++++++++++++++++
+ kettle/src/timer/store.ts              | 155 +++++++++++++---
+ 2 files changed, 457 insertions(+), 22 deletions(-)
+
+== 2. Completion, notification, title and cross-tab files: diff line counts across the merge, and across the whole base..merge range
+src/timer/ticker.ts: merge 0 lines; 4d36939..5f78af1 0 lines
+src/timer/notify.ts: merge 0 lines; 4d36939..5f78af1 0 lines
+src/timer/tabPresence.ts: merge 0 lines; 4d36939..5f78af1 0 lines
+src/timer/sync.ts: merge 0 lines; 4d36939..5f78af1 0 lines
+src/timer/scheduler.ts: merge 0 lines; 4d36939..5f78af1 0 lines
+src/timer/tick.worker.ts: merge 0 lines; 4d36939..5f78af1 0 lines
+src/timer/leader.ts: merge 0 lines; 4d36939..5f78af1 0 lines
+src/timer/announce.ts: merge 0 lines; 4d36939..5f78af1 0 lines
+
+== 3. The only entries into the fields-only save (savingOnly) and their callers
+326:function savingOnly(get: () => TimerState, fields: FieldSave['fields'], idleOnly: boolean, fn: () => void, memoryOnly = false): void {
+516:          savingOnly(get, INTENTION_FIELDS, false, () => set(tag === undefined ? { intention } : { intention, tag }));
+542:            savingOnly(get, IDLE_LENGTH_FIELDS, true, () => set({ phase: 'focus', plannedMs: len, remainingMs: len }), followingOtherTab);
+src/app/intention.ts:21:    if (next === words) t.setIntention('');
+src/app/intention.ts:23:    t.setIntention(words, record.tag);
+src/timer/ticker.ts:302:  useTimer.getState().syncIdleLength();
+src/timer/ticker.ts:304:    if (s.focusMin !== p.focusMin) useTimer.getState().syncIdleLength();
+
+== 4. Where completion happens (unchanged ticker.ts) and where it is noticed
+src/timer/store.ts:212:function idleAfter(s: TimerState, patch: Partial<TimerState>): TimerState {
+src/timer/store.ts:466:          set(idleAfter(s, { lastEnded }));
+src/timer/store.ts:483:              set(idleAfter(s, {}));
+src/timer/store.ts:492:              idleAfter(s, {
+src/timer/store.ts:498:            emit('timer:complete', { phase: s.phase, record, whileAway });
+165:export function shouldNotify(opts: { enabled: boolean; status: NotificationStatus; pageVisible: boolean; otherTabVisible: boolean }): boolean {
+175:  on('timer:complete', ({ phase, record }) => {
+185:  const base = { enabled: s.notifications, status: notificationStatus(), pageVisible: document.visibilityState === 'visible' };
+186:  if (!shouldNotify({ ...base, otherTabVisible: false })) return;
+188:  if (!shouldNotify({ ...base, pageVisible: document.visibilityState === 'visible', otherTabVisible })) return;
+193:function render(v: TimerView): void {
+194-  if (v.status === 'idle' && pendingDone && document.visibilityState === 'hidden') setTitle(completionTitle(pendingDone));
+195-  else {
+196-    if (v.status !== 'idle' || document.visibilityState === 'visible') pendingDone = null;
+197-    setTitle(timerTitle(v));
+198-  }
+
+== 5. timerStorage.setItem: a save outside a savingOnly window (fieldSave === null) is the whole save, as before the merge
+const timerStorage: PersistStorage<TimerState> = {
+  getItem: (name) => jsonStorage.getItem(name),
+  setItem: (name, value) => {
+    if (fieldSave && onlyFieldsChanged(fieldSave, value.state)) saveFieldsOnly(name, value, fieldSave);
+    else jsonStorage.setItem(name, value);
+  },
+  removeItem: (name) => jsonStorage.removeItem(name),
+};
+
+
+== 6. Test files of the failing tests across the merge and the whole range (0 = unchanged)
+tests/timer.spec.ts: merge 0 lines; 4d36939..5f78af1 0 lines
+tests/notice-strip.spec.ts: merge 0 lines; 4d36939..5f78af1 217 lines
+
+== 7. The React hooks-order warning in both traces (NoticeStrip): the line on the merge and on base 4d36939
+482:  const leaving = useContext(Leaving) || !useIsPresent() || off;
+349:  const leaving = useContext(Leaving) || !useIsPresent() || off;
