@@ -98,8 +98,16 @@ Note on Maker Q's earlier attempt (`f1-repro.spec.ts.txt`, which did not reprodu
 
 **tsc:** clean (`tsc-fix.log.txt`). **Vitest, all:** 33 files, **309/309** (`vitest-all-fix.log.txt`).
 
-## 3. Storage compatibility (real browsers)
-*Pending (chain).* Script: `scripts/compat.spec.ts.txt`.
+## 3. Storage compatibility (real browsers): all pass
+Script: `scripts/compat.spec.ts.txt`, run with `scripts/pw.config.ts.txt`, through the gate.
+
+| FROM → TO | idle profile | paused profile | Log |
+|---|---|---|---|
+| base `4d36939` :5478 → fix :5561 | pass | pass | `compat-base4d-to-fix.log.txt` |
+| fix :5561 → base `4d36939` :5478 | pass | pass | `compat-fix-to-base4d.log.txt` |
+| integration `f2298d3` :5560 → fix :5561 | pass | pass | `compat-int-to-fix.log.txt` |
+
+Each log prints the saved `kettle:timer` and the same key after TO booted (`F1XCOMPAT` lines); they are identical. The fix's idle profile is the one whose last save went through `saveIntentionOnly` (same session, case 4): typed words after an ended brew, with `lastEnded` kept.
 
 Two profiles are made on FROM with real composer typing:
 - **idle:** typed, started with Enter, ended, then new words typed on Today. This has `lastEnded`, and the words are the last save.

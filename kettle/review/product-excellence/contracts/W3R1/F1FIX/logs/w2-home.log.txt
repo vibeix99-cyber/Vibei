@@ -1,0 +1,25 @@
+[slots] F1X took 1/3 at 09:28:59: env KETTLE_PORT=5561 npx playwright test tests/w2-home.spec.ts --project=chromium --output=.tmp/f1x-pw/w2home --reporter=list
+
+Running 18 tests using 1 worker
+
+  ✓   1 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (390×844, 100 % text, light) (16.0s)
+  ✓   2 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (390×844, 100 % text, dark) (15.5s)
+  ✓   3 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (390×844, 200 % text, light) (16.2s)
+  ✓   4 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (390×844, 200 % text, dark) (15.8s)
+  ✓   5 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (375×667, 100 % text, light) (16.3s)
+  ✓   6 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (375×667, 100 % text, dark) (16.3s)
+  ✓   7 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (375×667, 200 % text, light) (16.9s)
+  ✓   8 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (375×667, 200 % text, dark) (16.3s)
+  ✓   9 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (844×390, 100 % text, light) (17.2s)
+  ✓  10 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (844×390, 100 % text, dark) (20.0s)
+  ✓  11 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (844×390, 200 % text, light) (17.9s)
+  ✓  12 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (844×390, 200 % text, dark) (17.8s)
+  ✓  13 [chromium] › tests/w2-home.spec.ts:203:5 › first visit: one plain line, one primary action, the 15-minute brew (390×844, 100 % text) (4.6s)
+  ✓  14 [chromium] › tests/w2-home.spec.ts:203:5 › first visit: one plain line, one primary action, the 15-minute brew (390×844, 200 % text) (4.6s)
+  ✓  15 [chromium] › tests/w2-home.spec.ts:203:5 › first visit: one plain line, one primary action, the 15-minute brew (375×667, 100 % text) (4.2s)
+  ✓  16 [chromium] › tests/w2-home.spec.ts:203:5 › first visit: one plain line, one primary action, the 15-minute brew (375×667, 200 % text) (4.4s)
+  ✓  17 [chromium] › tests/w2-home.spec.ts:203:5 › first visit: one plain line, one primary action, the 15-minute brew (844×390, 100 % text) (3.8s)
+  ✓  18 [chromium] › tests/w2-home.spec.ts:203:5 › first visit: one plain line, one primary action, the 15-minute brew (844×390, 200 % text) (3.8s)
+
+  18 passed (3.9m)
+[slots] F1X freed 1 at 09:32:52
