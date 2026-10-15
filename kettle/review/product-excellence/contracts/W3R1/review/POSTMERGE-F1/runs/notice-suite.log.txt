@@ -1,0 +1,5 @@
+### start 11:25:45 UTC; load:  11:25:45 up  2:39,  0 user,  load average: 1.39, 3.57, 4.83
+### cmd: env KETTLE_PORT=5560 PLAYWRIGHT_JSON_OUTPUT_NAME=/home/user/wt/w6-int/kettle/.tmp/LR-pw/notice.json npx playwright test tests/notice-strip.spec.ts tests/w3-notices.spec.ts tests/w3-notices-idle.spec.ts tests/summary-notice.spec.ts tests/toast-room.spec.ts --project=chromium --workers=2 --reporter=list,json --output=/home/user/wt/w6-int/kettle/.tmp/LR-pw/notice
+
+Running 74 tests using 2 workers
+
