@@ -1,0 +1,21 @@
+[slots] LR took 1/3 at 10:00:48: bash -c 
+for spec in 'fix-5562 http://127.0.0.1:5562' 'control-5560 http://127.0.0.1:5560'; do
+  set -- $spec
+  for ph in quiet loaded; do node .tmp/LR-manual.mjs $1 $2 8 $ph /home/user/Vibei/kettle/r
+fix-5562 quiet #1: survives={"both_running":true,"same_sessionId":true,"same_endsAt":true,"stored_running_same_session":true} oneRecord=true typing2Error=- t2ComposerAtBackForth=nnn
+fix-5562 quiet #2: survives={"both_running":true,"same_sessionId":true,"same_endsAt":true,"stored_running_same_session":true} oneRecord=true typing2Error=- t2ComposerAtBackForth=nnn
+fix-5562 quiet #3: survives={"both_running":true,"same_sessionId":true,"same_endsAt":true,"stored_running_same_session":true} oneRecord=true typing2Error=- t2ComposerAtBackForth=nnn
+fix-5562 quiet #4: survives={"both_running":true,"same_sessionId":true,"same_endsAt":true,"stored_running_same_session":true} oneRecord=true typing2Error=- t2ComposerAtBackForth=nnn
+fix-5562 quiet #5: survives={"both_running":true,"same_sessionId":true,"same_endsAt":true,"stored_running_same_session":true} oneRecord=true typing2Error=- t2ComposerAtBackForth=nnn
+fix-5562 quiet #6: survives={"both_running":true,"same_sessionId":true,"same_endsAt":true,"stored_running_same_session":true} oneRecord=true typing2Error=- t2ComposerAtBackForth=nnn
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+locator.waitFor: Target page, context or browser has been closed
+Call log:
+[2m  - waiting for getByRole('textbox', { name: /What are you brewing/ }) to be visible[22m
+
+    at /home/user/wt/w6tr-x/kettle/.tmp/LR-manual.mjs:33:165
+
+Node.js v22.22.2
