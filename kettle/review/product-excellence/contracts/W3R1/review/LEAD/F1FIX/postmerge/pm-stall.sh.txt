@@ -1,5 +1,5 @@
 #!/bin/bash
-# LEAD-5 post-merge: the stall reproduction (.tmp/lead5-pm/stall.spec.ts) on :5560 (f817931) and :5478 (base 4d36939),
+# LEAD-5 post-merge: the reproduction spec (.tmp/lead5-pm/stall.spec.ts; v1, then v2) on :5560 (f817931) and :5478 (base 4d36939),
 # A B B A, one browser at a time, no burners (the stall is the load, placed exactly).
 set -u
 OUT=$1; mkdir -p "$OUT"; cd /home/user/wt/w6-int/kettle || exit 9
