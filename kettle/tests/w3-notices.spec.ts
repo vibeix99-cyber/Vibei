@@ -10,8 +10,8 @@
  *     moves. A real tap at the place Mark done was seen before the notice went then lands on Mark done (its inline
  *     Undo is drawn in its place).
  *  2. The room stays while the page is scrolled over it and back (nothing moves by layout) and while a pointer is
- *     held; it goes on the same screen once touch and scroll have been idle for 1.2 s (Vibei, W3R1 §3), by 4 s; the
- *     next screen starts with no room at all.
+ *     held; it goes on the same screen once touch and scroll have been idle for 4 s (Vibei, W3R1 §3 and its follow-up,
+ *     raised from 1.2 s), by 6.5 s; the next screen starts with no room at all.
  *
  *   KETTLE_PORT=5501 npx playwright test tests/w3-notices.spec.ts --project=chromium
  */
@@ -135,7 +135,7 @@ for (const c of CFGS) {
     await expect(page.locator('[data-notice-strip] li')).toHaveCount(0, { timeout: 20_000 });
     const gone = await page.evaluate(() => ({ ...(window as any).__kettle.notices(), now: performance.now() }));
     // The tap the person aimed before the notice went lands now, just after it went (the band is still there: it is
-    // given back only once touch and scroll have been idle for 1.2 s).
+    // given back only once touch and scroll have been idle for 4 s).
     if (touch) await page.touchscreen.tap(aimed.x, aimed.y);
     else await page.mouse.click(aimed.x, aimed.y);
     const tapAt = await page.evaluate(() => performance.now());
@@ -147,9 +147,9 @@ for (const c of CFGS) {
     expect(after.some((f) => f.li) && after.some((f) => !f.li), 'frames before and after the notice went were measured').toBe(true);
     expect(moved, `Mark done moved on screen when the notice went (aimed at top ${aimed.top})`).toEqual([]);
     await expect(page.locator('[data-undo-for="mark-done"]'), 'the tap reached Mark done: its Undo is drawn').toBeVisible({ timeout: 5_000 });
-    // Then, with nobody touching, the band goes on the same screen (Vibei W3R1 §3: idle ≥ 1.2 s, by 4 s).
+    // Then, with nobody touching, the band goes on the same screen (Vibei W3R1 §3 and its follow-up: idle ≥ 4 s, by 6.5 s).
     await page.mouse.move(1, c.h - 1).catch(() => {});
-    await expect.poll(() => page.evaluate(() => (window as any).__kettle.notices().room), { timeout: 6_000 }).toBe(0);
+    await expect.poll(() => page.evaluate(() => (window as any).__kettle.notices().room), { timeout: 10_000 }).toBe(0);
     expect(await page.evaluate(() => location.hash), 'on the same screen').toBe('#/');
     await ctx.close();
   });
@@ -180,7 +180,7 @@ test('the room a gone notice keeps stays while the page is scrolled, and goes on
     };
     requestAnimationFrame(f);
   });
-  // Real touch drags, one after another (never 1.2 s apart): down until the room is wholly above the view, then back.
+  // Real touch drags, one after another (never 4 s apart): down until the room is wholly above the view, then back.
   const cdp = await ctx.newCDPSession(page);
   const drag = async (dy: number) => {
     await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: 200, y: 420 }] });
@@ -197,8 +197,8 @@ test('the room a gone notice keeps stays while the page is scrolled, and goes on
   const during = await page.evaluate(() => { const W = window as any; W.__lay.stop = true; return { moved: W.__lay.moved as number[], room: W.__kettle.notices().room as number }; });
   expect(during.moved, 'nothing moved by layout while the page was scrolled over the room and back').toEqual([]);
   expect(during.room, 'the room kept during the scroll').toBeGreaterThan(40);
-  // Then idle: the room goes on this screen, 1.2–4 s after the last scroll event.
-  await expect.poll(() => page.evaluate(() => (window as any).__kettle.notices().room), { timeout: 8_000 }).toBe(0);
+  // Then idle: the room goes on this screen, 4–6.5 s after the last scroll event.
+  await expect.poll(() => page.evaluate(() => (window as any).__kettle.notices().room), { timeout: 12_000 }).toBe(0);
   const end = await page.evaluate(() => ({ n: (window as any).__kettle.notices(), m: (window as any).__kettle.moment(), hash: location.hash }));
   const sinceInput = end.m.sinceInput - (performance.now() - end.n.changed);
   test.info().annotations.push({ type: 'facts', description: JSON.stringify({ room, during, why: end.n.why, sinceInputAtCollapse: Math.round(sinceInput) }) });
@@ -207,7 +207,7 @@ test('the room a gone notice keeps stays while the page is scrolled, and goes on
   await ctx.close();
 });
 
-test('the room is not given back while a pointer is held; it goes 1.2–4 s after release (1440×900, 100 %)', async ({ browser, baseURL }) => {
+test('the room is not given back while a pointer is held; it goes 4–6.5 s after release (1440×900, 100 %)', async ({ browser, baseURL }) => {
   test.setTimeout(120_000);
   const c: Cfg = { w: 1440, h: 900, pct: 100, reduced: false, theme: 'light' };
   const { ctx, page, touch } = await open(browser, c);
@@ -227,11 +227,11 @@ test('the room is not given back while a pointer is held; it goes 1.2–4 s afte
   const upAt = await page.evaluate(() => performance.now());
   await page.mouse.move(1, c.h - 1);
   const moveAt = await page.evaluate(() => performance.now());
-  await expect.poll(() => page.evaluate(() => (window as any).__kettle.notices().room), { timeout: 8_000 }).toBe(0);
+  await expect.poll(() => page.evaluate(() => (window as any).__kettle.notices().room), { timeout: 12_000 }).toBe(0);
   const n = await page.evaluate(() => (window as any).__kettle.notices());
   test.info().annotations.push({ type: 'facts', description: JSON.stringify({ held, afterUpMs: Math.round(n.changed - upAt), afterLastInputMs: Math.round(n.changed - moveAt), why: n.why }) });
-  expect(n.changed - moveAt, 'given back no sooner than 1.2 s after the last input').toBeGreaterThanOrEqual(1200);
-  expect(n.changed - upAt, 'given back by 4 s after release').toBeLessThanOrEqual(4000);
+  expect(n.changed - moveAt, 'given back no sooner than 4 s after the last input').toBeGreaterThanOrEqual(4000);
+  expect(n.changed - upAt, 'given back by 6.5 s after release').toBeLessThanOrEqual(6500);
   expect(await page.evaluate(() => location.hash)).toBe('#/');
   await ctx.close();
 });
