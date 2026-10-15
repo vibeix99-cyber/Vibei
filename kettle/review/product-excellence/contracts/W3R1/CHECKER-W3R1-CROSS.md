@@ -161,3 +161,64 @@ No combined-only effect appeared. The final regression still owes: X-1 (I03 ×10
   - Done when `:292` at 1440 light 200 % reduced passes `--repeat-each=6` 6/6, and the whole file 25/25.
 - **S, `src/screens/stats/History.tsx`:** the focus scroll when the tapped row takes focus (N-2, the product side), the same round.
 - **Vibei:** the touch residual of the idle band (§7.1). If (b) or (c) is chosen, the change is F's, in `src/ui/Toast.tsx`.
+
+## Follow-up: test stability (Vibei item 3)
+
+| | |
+|---|---|
+| Under review | Maker Q, Phase B: `pe/w3r1-stability@01575cb`, **tests only**. `git diff --stat 04b1ad9 01575cb -- kettle/src kettle/tests` lists four test files: `notice-strip`, `integrity`, `w3-notices-load`, `w2-room` (+298 / −109). There is no `src` change (src `db6de7e`, as Phase A, merged `8b1ed4d`) |
+| Trial | `d7f9126` = integration (with Phase A) + `01575cb`; worktree `/home/user/wt/w5tr-qb`; dev :5547 (all my runs) |
+| Packet | `/home/user/wt/w5q/kettle/review/product-excellence/contracts/W3R1/Q-READY.md` (Phase B); evidence `…/W3R1/Q/B/`; F1 note `contracts/W3R1/review/F1-ROOT-CAUSE.md` |
+| My evidence | `contracts/W3R1/review/LEAD/QB/` (`chain.sh`, logs as `.log.txt`) |
+
+### Is anything weakened? (diffs read in full)
+**`notice-strip.spec.ts` (X-11).** No assertion is removed: the two `expect(at …).not.toBeNull()` lines move inside the new `if`. Added:
+- a check that the target is still on top as the tap is aimed;
+- `toHaveValue('Chapter 3 notes')` (N-1).
+
+The strict 9-of-9 on-top check, the 2 px Undo-in-place checks and the frame recorder are unchanged. `press()` now:
+- sends one wheel at a time and waits until the target has actually moved (≤ 1 s), then until it is still (≤ 1.5 s). This closes signature (a);
+- ends the walk after three wheels in a row that move nothing (the 60-wheel cap stays);
+- bounds every target read at 15 s, so a vanished inline Undo fails at once instead of at the 4-minute timeout. That was the mechanism of X-11's attempts 2–3, reproduced in Q's own first version;
+- moves the pointer onto the target, re-checks on top and taps at once, which closes signature (c).
+
+The History row is read once the Edit sheet is open and the row has been still for five frames (≤ 3 s), after the page's focus scroll. That is the approach agreed for N-2 (W2R3 §7).
+
+**Not weakened, with one coverage note.** Because the pointer move just before the tap is input, no at-rest strip change can now happen between the aim and the tap. So this spec no longer *incidentally* reproduces F-T2-1's original race (where the base failed it). That property is still guarded by `w3-notices`' dedicated test "End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done":
+- it is unchanged by Phase B, runs in 5 configurations, fails 4/5 on base, and passed 42/42 on the merged tree (above);
+- the 64-tap aimed-tap probe guards it too (0 off target).
+
+The N-2 product side (S's `History.tsx` focus scroll) stays a FOLLOW-UP.
+
+**`integrity.spec.ts` I03 (X-1): stricter, not looser.**
+- **Old:** the banner gone ≤ 6 s of wall time after the room step.
+- **New:**
+  - (1) every `kettle:` key whose save had failed has saved since, polled ≤ 10 s;
+  - (2) the banner gone, waited ≤ 15 s (a bound only);
+  - (3) **asserted in page time: gone ≤ 3000 ms after those saves.**
+
+The room step itself performs the saves synchronously (`timer.setState`, `progress.setState`, `settings.set`; Q measured 0 ms), so (3) amounts to gone ≤ about 3 s after the room step, against the old 6 s. A key whose save never goes through now fails by name. The banner coming back is caught too (`gone.shown` must be false).
+
+**`w2-room.spec.ts`:** the test's budget goes 60 → 120 s, for this test only. Its own bound (scene ready within 45 s) and every assertion are unchanged, so a slower scene still fails at 45 s. The budget is not an assertion about the product. **Not weakened.**
+
+**`w3-notices-load.spec.ts`:**
+- its `onTop()` / `press()` are synced with `notice-strip`, and the N-1 retry is added;
+- the per-frame diagnostic logger becomes opt-in (`W3_LOG=1`); no assertion reads it, only failure messages do (now null-safe);
+- this is the opt-in load control (`W3_LOAD=1`), not part of the default run.
+
+**Not weakened.** Not explained (Q's own note): how the logger's per-frame work held a notice's clock back. It failed identically on base, so this is FOLLOW-UP only.
+
+### F1 (`integrity:309`, I01): my assessment
+**The evidence supports "product, pre-existing".** I read the note and checked its pointers:
+- `Composer.tsx:84–86`: the 150 ms `setIntention` sync on mount and on every keystroke;
+- `store.ts:399`: `setIntention`;
+- `store.ts:425–440`: `partialize` writes the whole timer;
+- `sync.ts:25–35`: `diffTimer` gives `'reset'` for running → idle without `lastEnded`.
+
+`src/timer/**` and `Composer.tsx` are unchanged since `4d36939`. Every failure's write stack names `Composer → setIntention`, and the base reproduces it (1/20 under load). The mechanism (a tab that has not yet received the other tab's write persists its stale idle copy over a just-started brew) explains both of Lane R's signatures.
+
+**Severity: medium.**
+- **Impact is high when it hits:** a brew started in one tab is silently undone in both, with no record, and the starting tab is sent back to Today.
+- **Exposure is narrow:** two tabs of one profile, with the brew started within ~0.1–0.6 s of the other tab's Today mounting or a keystroke in its composer. Under load it is about 1 in 6 of I01's runs; unloaded the window is a few ms.
+
+**Vibei's §0 applies:** it is not flaky but a real race, so a real finding to fix before the Final Product Boss. The owners are the timer area (`store.ts` / `sync.ts`: e.g. refuse to persist an idle copy over a stored running session it never saw) and Today (`Composer.tsx`: do not write the intention while idle when storage holds another session). Leaving I01 unchanged is right; making it wait would hide the race.
