@@ -21,10 +21,10 @@
  *    its face goes but the strip **keeps its room** (an empty band of the same height, `Ctl.room`), so nothing under a
  *    finger that is about to land, or has just landed, moves. The next notice is drawn in that room. The room is given
  *    back (Vibei, W3R1 §3) on a new screen (or its first `ENTRY_MS`), with the page hidden, or on the same screen once
- *    touch and scroll are idle: no pointer down, no input of any kind for `QUIET_MS` (scroll events included: a fling
- *    or smooth scroll still running is activity), at least `QUIET_MS` since the notice left, none pending, confirmed in
- *    a fresh frame (above the view, the page kept still). The session panel (`reach`) keeps no room at all where the
- *    notice itself holds its controls past the panel's edge (F-T2-2).
+ *    touch and scroll are idle: no pointer down, no input of any kind for `BAND_IDLE_MS` (4 s; scroll events included: a
+ *    fling or smooth scroll still running is activity), at least `BAND_IDLE_MS` since the notice left, none pending,
+ *    confirmed in a fresh frame (above the view, the page kept still). The session panel (`reach`) keeps no room at all
+ *    where the notice itself holds its controls past the panel's edge (F-T2-2).
  *  - **A route change drops nothing**: the shown notice and the queue move to the next screen's strip (its first
  *    frame), with the time each has left.
  *  - **Announced once**, on arrival, by a light-DOM polite announcer (`[data-notices-said]`); showing, waiting and
@@ -37,7 +37,7 @@ import { on } from '@/lib/events';
 import { audio } from '@/audio';
 import { useReducedMotion } from '@/lib/useReducedMotion';
 import { cx, renderIcon, type IconSlot } from './util';
-import { aboveView, answeringInput, atRest, holdTop, holdView, keepStill, lastTapAt, QUIET_MS, RESPONSE_MS, scrollerOf, untilRest, viewOf, watchInput, type Still } from './moment';
+import { aboveView, answeringInput, atRest, BAND_IDLE_MS, holdTop, holdView, keepStill, lastTapAt, RESPONSE_MS, scrollerOf, untilRest, viewOf, watchInput, type Still } from './moment';
 import s from './Toast.module.css';
 
 export type ToastTone = 'neutral' | 'success' | 'warning' | 'info';
@@ -272,7 +272,7 @@ function holdBelow(el: HTMLElement): Still | null {
   if (!next) return holdView(el);
   return { scroller: scrollerOf(el), ref: next, top: next.getBoundingClientRect().top };
 }
-/** When the notice whose room the strip keeps left (its room is given back no sooner than QUIET_MS after). */
+/** When the notice whose room the strip keeps left (its room is given back no sooner than BAND_IDLE_MS after). */
 let roomLeftAt = -Infinity;
 /** The strip's height now (what it keeps as its room when its notice goes). */
 const heightOf = (el: HTMLElement) => el.getBoundingClientRect().height;
@@ -300,12 +300,12 @@ function decide(): void {
     else if (ctl.room > 0 && !ctl.item) {
       // The room a gone notice left (Vibei, W3R1 §3): given back on the same screen once touch and scroll are idle —
       // no pointer down, no input of any kind (pointer, touch, wheel, key, and scroll events, so a fling or a smooth
-      // scroll still running counts) for QUIET_MS, at least QUIET_MS since the notice left, none pending — confirmed in
-      // a fresh frame. Above the view the page is kept still (nothing in view moves). Never under a finger, never
-      // mid-scroll.
+      // scroll still running counts) for BAND_IDLE_MS (4 s), at least BAND_IDLE_MS since the notice left, none pending —
+      // confirmed in a fresh frame. Above the view the page is kept still (nothing in view moves). Never under a finger,
+      // never mid-scroll.
       if (now - ctl.at < ENTRY_MS) commit({ room: 0, hold: holdTop(el), why: 'entry' });
       else if (hidden) commit({ room: 0, hold: null, why: 'hidden' });
-      else if (now - roomLeftAt >= QUIET_MS && atRest(now) && !inputPending()) {
+      else if (now - roomLeftAt >= BAND_IDLE_MS && atRest(now, BAND_IDLE_MS) && !inputPending()) {
         if (!inRestFrame) {
           confirmRestInFrame();
           return;

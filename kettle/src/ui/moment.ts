@@ -16,6 +16,13 @@
 
 /** No input for this long (and no pointer down): the person is not touching or about to touch what they last used. */
 export const QUIET_MS = 1200;
+/**
+ * The room a gone notice keeps (Toast.tsx) is given back on the same screen only after this long with no input (and at
+ * least this long after the notice left): Vibei, W3R1 follow-up, 1.2 s → 4 s. A person who stops scrolling to read and
+ * then taps below the band is less likely to see it close just before the finger lands. Its own constant: `QUIET_MS`
+ * stays the rest rule for everything else (a notice leaving or arriving, inline Undo rows).
+ */
+export const BAND_IDLE_MS = 4000;
 /** A change within this long after a tap or key is that action's own answer. */
 export const RESPONSE_MS = 600;
 
@@ -67,9 +74,9 @@ export function watchInput(): void {
   });
 }
 
-/** Nobody is touching the page and nothing has happened for QUIET_MS. */
-export function atRest(now = performance.now()): boolean {
-  return down === 0 && now - lastInput >= QUIET_MS;
+/** Nobody is touching the page and nothing has happened for `quiet` ms (QUIET_MS unless a rule names its own). */
+export function atRest(now = performance.now(), quiet = QUIET_MS): boolean {
+  return down === 0 && now - lastInput >= quiet;
 }
 /** ms until `atRest` can be true (0 if it is; Infinity while a pointer is down). */
 export function untilRest(now = performance.now()): number {

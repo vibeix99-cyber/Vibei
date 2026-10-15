@@ -1,0 +1,2041 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w5q/kettle/playwright.config.ts",
+    "rootDir": "/home/user/wt/w5q/kettle/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w5q/kettle/.tmp/Q-pw/w3-notices-idle-x2",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "timer-harness",
+        "name": "timer-harness",
+        "testDir": "/home/user/wt/w5q/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w5q/kettle/.tmp/Q-pw/w3-notices-idle-x2",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "timer-app",
+        "name": "timer-app",
+        "testDir": "/home/user/wt/w5q/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w5q/kettle/.tmp/Q-pw/w3-notices-idle-x2",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pwa",
+        "name": "pwa",
+        "testDir": "/home/user/wt/w5q/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/pwa\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/home/user/wt/w5q/kettle/.tmp/Q-pw/w3-notices-idle-x2",
+        "repeatEach": 2,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w5q/kettle/tests",
+        "testIgnore": [
+          "/(timer|pwa)\\.spec\\.ts/"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 2,
+    "webServer": {
+      "command": "npx vite --config tests/e2e.vite.config.ts --port 5545 --strictPort",
+      "url": "http://127.0.0.1:5545/",
+      "reuseExistingServer": true,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "w3-notices-idle.spec.ts",
+      "file": "w3-notices-idle.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "band lifetime a-no-input (390x844-light-t100)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5804,\"room\":68,\"commits\":[{\"t\":9904,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8493,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":4100,\"collapseAfterLastBusyMs\":4100,\"visibleMove\":68}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10961,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 390x844-light-t100 a-no-input {\"leftAt\":5804,\"room\":68,\"commits\":[{\"t\":9904,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8493,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":4100,\"collapseAfterLastBusyMs\":4100,\"visibleMove\":68}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:09:00.477Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5804,\"room\":68,\"commits\":[{\"t\":9904,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8493,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":4100,\"collapseAfterLastBusyMs\":4100,\"visibleMove\":68}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-2b393b9bd47696060c64",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime b-scroll-then-idle (390x844-light-t100)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5808,\"room\":68,\"maxSy\":481,\"scrollMs\":3411,\"roomAfterScroll\":68,\"commits\":[{\"t\":13312,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4093,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":7504,\"collapseAfterLastBusyMs\":4093,\"visibleMove\":68}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 14699,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 390x844-light-t100 b-scroll-then-idle {\"leftAt\":5808,\"room\":68,\"maxSy\":481,\"scrollMs\":3411,\"roomAfterScroll\":68,\"commits\":[{\"t\":13312,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4093,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":7504,\"collapseAfterLastBusyMs\":4093,\"visibleMove\":68}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:09:00.450Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5808,\"room\":68,\"maxSy\":481,\"scrollMs\":3411,\"roomAfterScroll\":68,\"commits\":[{\"t\":13312,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4093,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":7504,\"collapseAfterLastBusyMs\":4093,\"visibleMove\":68}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-2f3a5794b72df223e398",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime c-pointer-held (390x844-light-t100)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5278,\"room\":68,\"roomWhileDown\":68,\"downWhileHeld\":1,\"commits\":[{\"t\":12480,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4052,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":7202,\"collapseAfterLastBusyMs\":4052,\"visibleMove\":68}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13375,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 390x844-light-t100 c-pointer-held {\"leftAt\":5278,\"room\":68,\"roomWhileDown\":68,\"downWhileHeld\":1,\"commits\":[{\"t\":12480,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4052,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":7202,\"collapseAfterLastBusyMs\":4052,\"visibleMove\":68}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:09:11.557Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5278,\"room\":68,\"roomWhileDown\":68,\"downWhileHeld\":1,\"commits\":[{\"t\":12480,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4052,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":7202,\"collapseAfterLastBusyMs\":4052,\"visibleMove\":68}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-3ebadc155b9d396d8aef",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime a-no-input (390x844-dark-t200-rm)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5252,\"room\":113,\"commits\":[{\"t\":9344,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8608,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":4092,\"collapseAfterLastBusyMs\":4092,\"visibleMove\":113}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 10088,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 390x844-dark-t200-rm a-no-input {\"leftAt\":5252,\"room\":113,\"commits\":[{\"t\":9344,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8608,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":4092,\"collapseAfterLastBusyMs\":4092,\"visibleMove\":113}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:09:15.250Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5252,\"room\":113,\"commits\":[{\"t\":9344,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8608,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":4092,\"collapseAfterLastBusyMs\":4092,\"visibleMove\":113}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-b40a54dafb1d915e3305",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime b-scroll-then-idle (390x844-dark-t200-rm)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5297,\"room\":113,\"maxSy\":492,\"scrollMs\":3276,\"roomAfterScroll\":113,\"commits\":[{\"t\":12688,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4115,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7391,\"collapseAfterLastBusyMs\":4115,\"visibleMove\":113}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13774,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 390x844-dark-t200-rm b-scroll-then-idle {\"leftAt\":5297,\"room\":113,\"maxSy\":492,\"scrollMs\":3276,\"roomAfterScroll\":113,\"commits\":[{\"t\":12688,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4115,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7391,\"collapseAfterLastBusyMs\":4115,\"visibleMove\":113}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:09:24.949Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5297,\"room\":113,\"maxSy\":492,\"scrollMs\":3276,\"roomAfterScroll\":113,\"commits\":[{\"t\":12688,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4115,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7391,\"collapseAfterLastBusyMs\":4115,\"visibleMove\":113}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-542c5569d791e9815a6a",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime c-pointer-held (390x844-dark-t200-rm)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5345,\"room\":113,\"roomWhileDown\":113,\"downWhileHeld\":1,\"commits\":[{\"t\":12448,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4042,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7103,\"collapseAfterLastBusyMs\":4042,\"visibleMove\":113}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 13274,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 390x844-dark-t200-rm c-pointer-held {\"leftAt\":5345,\"room\":113,\"roomWhileDown\":113,\"downWhileHeld\":1,\"commits\":[{\"t\":12448,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4042,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7103,\"collapseAfterLastBusyMs\":4042,\"visibleMove\":113}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:09:25.348Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5345,\"room\":113,\"roomWhileDown\":113,\"downWhileHeld\":1,\"commits\":[{\"t\":12448,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4042,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7103,\"collapseAfterLastBusyMs\":4042,\"visibleMove\":113}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-37179a47501d887f87c3",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime a-no-input (1440x900-light-t100)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5379,\"room\":68,\"commits\":[{\"t\":5392,\"why\":\"rest\",\"room\":68,\"shown\":null,\"down\":0,\"sinceInput\":4452,\"topBefore\":168,\"topAfter\":168,\"sy\":0},{\"t\":9504,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8564,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":4125,\"collapseAfterLastBusyMs\":4125,\"visibleMove\":68}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 10482,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 1440x900-light-t100 a-no-input {\"leftAt\":5379,\"room\":68,\"commits\":[{\"t\":5392,\"why\":\"rest\",\"room\":68,\"shown\":null,\"down\":0,\"sinceInput\":4452,\"topBefore\":168,\"topAfter\":168,\"sy\":0},{\"t\":9504,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8564,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":4125,\"collapseAfterLastBusyMs\":4125,\"visibleMove\":68}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:09:38.639Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5379,\"room\":68,\"commits\":[{\"t\":5392,\"why\":\"rest\",\"room\":68,\"shown\":null,\"down\":0,\"sinceInput\":4452,\"topBefore\":168,\"topAfter\":168,\"sy\":0},{\"t\":9504,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8564,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":4125,\"collapseAfterLastBusyMs\":4125,\"visibleMove\":68}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-94e5020336bc54616e44",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime b-scroll-then-idle (1440x900-light-t100)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5555,\"room\":68,\"maxSy\":11,\"scrollMs\":2360,\"roomAfterScroll\":68,\"commits\":[{\"t\":11952,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4037,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":6397,\"collapseAfterLastBusyMs\":4037,\"visibleMove\":68}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12947,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 1440x900-light-t100 b-scroll-then-idle {\"leftAt\":5555,\"room\":68,\"maxSy\":11,\"scrollMs\":2360,\"roomAfterScroll\":68,\"commits\":[{\"t\":11952,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4037,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":6397,\"collapseAfterLastBusyMs\":4037,\"visibleMove\":68}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:09:38.741Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5555,\"room\":68,\"maxSy\":11,\"scrollMs\":2360,\"roomAfterScroll\":68,\"commits\":[{\"t\":11952,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4037,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":6397,\"collapseAfterLastBusyMs\":4037,\"visibleMove\":68}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-a22d0fb53eda16803b33",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime c-pointer-held (1440x900-light-t100)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5208,\"room\":68,\"roomWhileDown\":68,\"downWhileHeld\":1,\"commits\":[{\"t\":5216,\"why\":\"rest\",\"room\":68,\"shown\":null,\"down\":0,\"sinceInput\":4513,\"topBefore\":168,\"topAfter\":168,\"sy\":0},{\"t\":12528,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4089,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":7320,\"collapseAfterLastBusyMs\":4089,\"visibleMove\":68}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 13648,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 1440x900-light-t100 c-pointer-held {\"leftAt\":5208,\"room\":68,\"roomWhileDown\":68,\"downWhileHeld\":1,\"commits\":[{\"t\":5216,\"why\":\"rest\",\"room\":68,\"shown\":null,\"down\":0,\"sinceInput\":4513,\"topBefore\":168,\"topAfter\":168,\"sy\":0},{\"t\":12528,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4089,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":7320,\"collapseAfterLastBusyMs\":4089,\"visibleMove\":68}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:09:49.134Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5208,\"room\":68,\"roomWhileDown\":68,\"downWhileHeld\":1,\"commits\":[{\"t\":5216,\"why\":\"rest\",\"room\":68,\"shown\":null,\"down\":0,\"sinceInput\":4513,\"topBefore\":168,\"topAfter\":168,\"sy\":0},{\"t\":12528,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4089,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":7320,\"collapseAfterLastBusyMs\":4089,\"visibleMove\":68}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-7756696967abb3660636",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime a-no-input (1440x900-dark-t200-rm)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5338,\"room\":113,\"commits\":[{\"t\":5344,\"why\":\"rest\",\"room\":113,\"shown\":null,\"down\":0,\"sinceInput\":4506,\"topBefore\":234.09375,\"topAfter\":234.09375,\"sy\":0},{\"t\":9440,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8602,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":4102,\"collapseAfterLastBusyMs\":4102,\"visibleMove\":113}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10384,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 1440x900-dark-t200-rm a-no-input {\"leftAt\":5338,\"room\":113,\"commits\":[{\"t\":5344,\"why\":\"rest\",\"room\":113,\"shown\":null,\"down\":0,\"sinceInput\":4506,\"topBefore\":234.09375,\"topAfter\":234.09375,\"sy\":0},{\"t\":9440,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8602,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":4102,\"collapseAfterLastBusyMs\":4102,\"visibleMove\":113}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:09:51.707Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5338,\"room\":113,\"commits\":[{\"t\":5344,\"why\":\"rest\",\"room\":113,\"shown\":null,\"down\":0,\"sinceInput\":4506,\"topBefore\":234.09375,\"topAfter\":234.09375,\"sy\":0},{\"t\":9440,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8602,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":4102,\"collapseAfterLastBusyMs\":4102,\"visibleMove\":113}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-995aa033149bdb1a3fb1",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime b-scroll-then-idle (1440x900-dark-t200-rm)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5443,\"room\":113,\"maxSy\":300,\"scrollMs\":2174,\"roomAfterScroll\":113,\"commits\":[{\"t\":5457,\"why\":\"rest\",\"room\":113,\"shown\":null,\"down\":0,\"sinceInput\":4500,\"topBefore\":234.09375,\"topAfter\":234.09375,\"sy\":0},{\"t\":11664,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4047,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":6221,\"collapseAfterLastBusyMs\":4047,\"visibleMove\":113}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12573,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 1440x900-dark-t200-rm b-scroll-then-idle {\"leftAt\":5443,\"room\":113,\"maxSy\":300,\"scrollMs\":2174,\"roomAfterScroll\":113,\"commits\":[{\"t\":5457,\"why\":\"rest\",\"room\":113,\"shown\":null,\"down\":0,\"sinceInput\":4500,\"topBefore\":234.09375,\"topAfter\":234.09375,\"sy\":0},{\"t\":11664,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4047,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":6221,\"collapseAfterLastBusyMs\":4047,\"visibleMove\":113}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:10:02.101Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5443,\"room\":113,\"maxSy\":300,\"scrollMs\":2174,\"roomAfterScroll\":113,\"commits\":[{\"t\":5457,\"why\":\"rest\",\"room\":113,\"shown\":null,\"down\":0,\"sinceInput\":4500,\"topBefore\":234.09375,\"topAfter\":234.09375,\"sy\":0},{\"t\":11664,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4047,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":6221,\"collapseAfterLastBusyMs\":4047,\"visibleMove\":113}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-92ffeecbc30f29ed3ff6",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime c-pointer-held (1440x900-dark-t200-rm)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5506,\"room\":113,\"roomWhileDown\":113,\"downWhileHeld\":1,\"commits\":[{\"t\":12800,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4063,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7294,\"collapseAfterLastBusyMs\":4063,\"visibleMove\":113}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 13946,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 1440x900-dark-t200-rm c-pointer-held {\"leftAt\":5506,\"room\":113,\"roomWhileDown\":113,\"downWhileHeld\":1,\"commits\":[{\"t\":12800,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4063,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7294,\"collapseAfterLastBusyMs\":4063,\"visibleMove\":113}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:10:02.794Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5506,\"room\":113,\"roomWhileDown\":113,\"downWhileHeld\":1,\"commits\":[{\"t\":12800,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4063,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7294,\"collapseAfterLastBusyMs\":4063,\"visibleMove\":113}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-5f5d24b1253e5eec74e2",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime a-no-input (390x844-light-t100)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5472,\"room\":68,\"commits\":[{\"t\":9584,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8631,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":4112,\"collapseAfterLastBusyMs\":4112,\"visibleMove\":68}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10495,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 390x844-light-t100 a-no-input {\"leftAt\":5472,\"room\":68,\"commits\":[{\"t\":9584,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8631,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":4112,\"collapseAfterLastBusyMs\":4112,\"visibleMove\":68}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:11:16.542Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5472,\"room\":68,\"commits\":[{\"t\":9584,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8631,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":4112,\"collapseAfterLastBusyMs\":4112,\"visibleMove\":68}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-2873198110c68a6d6966",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime b-scroll-then-idle (390x844-light-t100)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5517,\"room\":68,\"maxSy\":484,\"scrollMs\":3416,\"roomAfterScroll\":68,\"commits\":[{\"t\":13025,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4092,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":7508,\"collapseAfterLastBusyMs\":4092,\"visibleMove\":68}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 14214,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 390x844-light-t100 b-scroll-then-idle {\"leftAt\":5517,\"room\":68,\"maxSy\":484,\"scrollMs\":3416,\"roomAfterScroll\":68,\"commits\":[{\"t\":13025,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4092,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":7508,\"collapseAfterLastBusyMs\":4092,\"visibleMove\":68}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:11:16.795Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5517,\"room\":68,\"maxSy\":484,\"scrollMs\":3416,\"roomAfterScroll\":68,\"commits\":[{\"t\":13025,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4092,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":7508,\"collapseAfterLastBusyMs\":4092,\"visibleMove\":68}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-b501d48ad800d87f2d27",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime c-pointer-held (390x844-light-t100)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5213,\"room\":68,\"roomWhileDown\":68,\"downWhileHeld\":1,\"commits\":[{\"t\":12400,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4072,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":7187,\"collapseAfterLastBusyMs\":4072,\"visibleMove\":68}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13221,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 390x844-light-t100 c-pointer-held {\"leftAt\":5213,\"room\":68,\"roomWhileDown\":68,\"downWhileHeld\":1,\"commits\":[{\"t\":12400,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4072,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":7187,\"collapseAfterLastBusyMs\":4072,\"visibleMove\":68}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:11:27.145Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5213,\"room\":68,\"roomWhileDown\":68,\"downWhileHeld\":1,\"commits\":[{\"t\":12400,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4072,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":7187,\"collapseAfterLastBusyMs\":4072,\"visibleMove\":68}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-fb10dda01fb225bcb1da",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime a-no-input (390x844-dark-t200-rm)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5227,\"room\":113,\"commits\":[{\"t\":9330,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8599,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":4103,\"collapseAfterLastBusyMs\":4103,\"visibleMove\":113}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 10073,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 390x844-dark-t200-rm a-no-input {\"leftAt\":5227,\"room\":113,\"commits\":[{\"t\":9330,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8599,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":4103,\"collapseAfterLastBusyMs\":4103,\"visibleMove\":113}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:11:31.132Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5227,\"room\":113,\"commits\":[{\"t\":9330,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8599,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":4103,\"collapseAfterLastBusyMs\":4103,\"visibleMove\":113}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-f0e527a8175c2099ac0c",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime b-scroll-then-idle (390x844-dark-t200-rm)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5315,\"room\":113,\"maxSy\":494,\"scrollMs\":3342,\"roomAfterScroll\":113,\"commits\":[{\"t\":12720,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4063,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7405,\"collapseAfterLastBusyMs\":4063,\"visibleMove\":113}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13631,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 390x844-dark-t200-rm b-scroll-then-idle {\"leftAt\":5315,\"room\":113,\"maxSy\":494,\"scrollMs\":3342,\"roomAfterScroll\":113,\"commits\":[{\"t\":12720,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4063,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7405,\"collapseAfterLastBusyMs\":4063,\"visibleMove\":113}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:11:40.379Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5315,\"room\":113,\"maxSy\":494,\"scrollMs\":3342,\"roomAfterScroll\":113,\"commits\":[{\"t\":12720,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4063,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7405,\"collapseAfterLastBusyMs\":4063,\"visibleMove\":113}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-9b27501b2c78649f1bd5",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime c-pointer-held (390x844-dark-t200-rm)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5267,\"room\":113,\"roomWhileDown\":113,\"downWhileHeld\":1,\"commits\":[{\"t\":5280,\"why\":\"rest\",\"room\":113,\"shown\":null,\"down\":0,\"sinceInput\":4510,\"topBefore\":250.09375,\"topAfter\":250.09375,\"sy\":0},{\"t\":12385,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4063,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7118,\"collapseAfterLastBusyMs\":4063,\"visibleMove\":113}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 13204,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 390x844-dark-t200-rm c-pointer-held {\"leftAt\":5267,\"room\":113,\"roomWhileDown\":113,\"downWhileHeld\":1,\"commits\":[{\"t\":5280,\"why\":\"rest\",\"room\":113,\"shown\":null,\"down\":0,\"sinceInput\":4510,\"topBefore\":250.09375,\"topAfter\":250.09375,\"sy\":0},{\"t\":12385,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4063,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7118,\"collapseAfterLastBusyMs\":4063,\"visibleMove\":113}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:11:41.227Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5267,\"room\":113,\"roomWhileDown\":113,\"downWhileHeld\":1,\"commits\":[{\"t\":5280,\"why\":\"rest\",\"room\":113,\"shown\":null,\"down\":0,\"sinceInput\":4510,\"topBefore\":250.09375,\"topAfter\":250.09375,\"sy\":0},{\"t\":12385,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4063,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7118,\"collapseAfterLastBusyMs\":4063,\"visibleMove\":113}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-53bd8f9b5370eeb23606",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime a-no-input (1440x900-light-t100)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5202,\"room\":68,\"commits\":[{\"t\":9296,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8581,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":4094,\"collapseAfterLastBusyMs\":4094,\"visibleMove\":68}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10332,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 1440x900-light-t100 a-no-input {\"leftAt\":5202,\"room\":68,\"commits\":[{\"t\":9296,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8581,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":4094,\"collapseAfterLastBusyMs\":4094,\"visibleMove\":68}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:11:54.026Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5202,\"room\":68,\"commits\":[{\"t\":9296,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8581,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":4094,\"collapseAfterLastBusyMs\":4094,\"visibleMove\":68}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-4e4e4da8fc31ad439464",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime b-scroll-then-idle (1440x900-light-t100)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5523,\"room\":68,\"maxSy\":11,\"scrollMs\":2353,\"roomAfterScroll\":68,\"commits\":[{\"t\":5536,\"why\":\"rest\",\"room\":68,\"shown\":null,\"down\":0,\"sinceInput\":4528,\"topBefore\":168,\"topAfter\":168,\"sy\":0},{\"t\":11936,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4060,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":6413,\"collapseAfterLastBusyMs\":4060,\"visibleMove\":68}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 13385,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 1440x900-light-t100 b-scroll-then-idle {\"leftAt\":5523,\"room\":68,\"maxSy\":11,\"scrollMs\":2353,\"roomAfterScroll\":68,\"commits\":[{\"t\":5536,\"why\":\"rest\",\"room\":68,\"shown\":null,\"down\":0,\"sinceInput\":4528,\"topBefore\":168,\"topAfter\":168,\"sy\":0},{\"t\":11936,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4060,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":6413,\"collapseAfterLastBusyMs\":4060,\"visibleMove\":68}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:11:54.448Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5523,\"room\":68,\"maxSy\":11,\"scrollMs\":2353,\"roomAfterScroll\":68,\"commits\":[{\"t\":5536,\"why\":\"rest\",\"room\":68,\"shown\":null,\"down\":0,\"sinceInput\":4528,\"topBefore\":168,\"topAfter\":168,\"sy\":0},{\"t\":11936,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4060,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":6413,\"collapseAfterLastBusyMs\":4060,\"visibleMove\":68}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-bddd5100f64b021a0b6c",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime c-pointer-held (1440x900-light-t100)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5106,\"room\":68,\"roomWhileDown\":68,\"downWhileHeld\":1,\"commits\":[{\"t\":12416,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4073,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":7310,\"collapseAfterLastBusyMs\":4073,\"visibleMove\":68}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13471,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 1440x900-light-t100 c-pointer-held {\"leftAt\":5106,\"room\":68,\"roomWhileDown\":68,\"downWhileHeld\":1,\"commits\":[{\"t\":12416,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4073,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":7310,\"collapseAfterLastBusyMs\":4073,\"visibleMove\":68}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:12:04.373Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5106,\"room\":68,\"roomWhileDown\":68,\"downWhileHeld\":1,\"commits\":[{\"t\":12416,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4073,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":7310,\"collapseAfterLastBusyMs\":4073,\"visibleMove\":68}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-92679f1df3d7495c2e5a",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime a-no-input (1440x900-dark-t200-rm)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5597,\"room\":113,\"commits\":[{\"t\":9696,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8609,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":4099,\"collapseAfterLastBusyMs\":4099,\"visibleMove\":113}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 10789,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 1440x900-dark-t200-rm a-no-input {\"leftAt\":5597,\"room\":113,\"commits\":[{\"t\":9696,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8609,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":4099,\"collapseAfterLastBusyMs\":4099,\"visibleMove\":113}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:12:07.849Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5597,\"room\":113,\"commits\":[{\"t\":9696,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8609,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":4099,\"collapseAfterLastBusyMs\":4099,\"visibleMove\":113}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-61784a13542b386af5cc",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime b-scroll-then-idle (1440x900-dark-t200-rm)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5210,\"room\":113,\"maxSy\":300,\"scrollMs\":2152,\"roomAfterScroll\":113,\"commits\":[{\"t\":5217,\"why\":\"rest\",\"room\":113,\"shown\":null,\"down\":0,\"sinceInput\":4486,\"topBefore\":234.09375,\"topAfter\":234.09375,\"sy\":0},{\"t\":11424,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4062,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":6214,\"collapseAfterLastBusyMs\":4062,\"visibleMove\":113}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12337,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 1440x900-dark-t200-rm b-scroll-then-idle {\"leftAt\":5210,\"room\":113,\"maxSy\":300,\"scrollMs\":2152,\"roomAfterScroll\":113,\"commits\":[{\"t\":5217,\"why\":\"rest\",\"room\":113,\"shown\":null,\"down\":0,\"sinceInput\":4486,\"topBefore\":234.09375,\"topAfter\":234.09375,\"sy\":0},{\"t\":11424,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4062,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":6214,\"collapseAfterLastBusyMs\":4062,\"visibleMove\":113}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:12:17.854Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5210,\"room\":113,\"maxSy\":300,\"scrollMs\":2152,\"roomAfterScroll\":113,\"commits\":[{\"t\":5217,\"why\":\"rest\",\"room\":113,\"shown\":null,\"down\":0,\"sinceInput\":4486,\"topBefore\":234.09375,\"topAfter\":234.09375,\"sy\":0},{\"t\":11424,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4062,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":6214,\"collapseAfterLastBusyMs\":4062,\"visibleMove\":113}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-8515587afbdf60efeb94",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime c-pointer-held (1440x900-dark-t200-rm)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5291,\"room\":113,\"roomWhileDown\":113,\"downWhileHeld\":1,\"commits\":[{\"t\":12672,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4109,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7381,\"collapseAfterLastBusyMs\":4109,\"visibleMove\":113}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 13811,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 1440x900-dark-t200-rm c-pointer-held {\"leftAt\":5291,\"room\":113,\"roomWhileDown\":113,\"downWhileHeld\":1,\"commits\":[{\"t\":12672,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4109,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7381,\"collapseAfterLastBusyMs\":4109,\"visibleMove\":113}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:12:18.647Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5291,\"room\":113,\"roomWhileDown\":113,\"downWhileHeld\":1,\"commits\":[{\"t\":12672,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4109,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7381,\"collapseAfterLastBusyMs\":4109,\"visibleMove\":113}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-026def3d2ecb866f812e",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "w3-notices.spec.ts",
+      "file": "w3-notices.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 light 200 % reduced motion)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"aimed\":{\"x\":773.5,\"y\":767.1875,\"top\":745.1875,\"at\":5971},\"why\":\"rest\",\"leftToTapMs\":-5,\"frames\":231,\"framesWithNotice\":176,\"moved\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15400,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:10:14.698Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"aimed\":{\"x\":773.5,\"y\":767.1875,\"top\":745.1875,\"at\":5971},\"why\":\"rest\",\"leftToTapMs\":-5,\"frames\":231,\"framesWithNotice\":176,\"moved\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-fea3b8e26f891dc6aacb",
+          "file": "w3-notices.spec.ts",
+          "line": 111,
+          "column": 3
+        },
+        {
+          "title": "End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 light 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"aimed\":{\"x\":282.5,\"y\":578.0020751953125,\"top\":556.0020751953125,\"at\":5419},\"why\":\"rest\",\"leftToTapMs\":10,\"frames\":231,\"framesWithNotice\":186,\"moved\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 14904,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:10:16.767Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"aimed\":{\"x\":282.5,\"y\":578.0020751953125,\"top\":556.0020751953125,\"at\":5419},\"why\":\"rest\",\"leftToTapMs\":10,\"frames\":231,\"framesWithNotice\":186,\"moved\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-d13ab2ba7f8176c5afb1",
+          "file": "w3-notices.spec.ts",
+          "line": 111,
+          "column": 3
+        },
+        {
+          "title": "End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 dark 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"aimed\":{\"x\":282.5,\"y\":578,\"top\":556,\"at\":4942},\"why\":\"rest\",\"leftToTapMs\":12,\"frames\":230,\"framesWithNotice\":179,\"moved\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14397,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:10:30.113Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"aimed\":{\"x\":282.5,\"y\":578,\"top\":556,\"at\":4942},\"why\":\"rest\",\"leftToTapMs\":12,\"frames\":230,\"framesWithNotice\":179,\"moved\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-1570ac95d2b05fa8c872",
+          "file": "w3-notices.spec.ts",
+          "line": 111,
+          "column": 3
+        },
+        {
+          "title": "End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 dark 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"aimed\":{\"x\":554.5,\"y\":521.390625,\"top\":499.390625,\"at\":5394},\"why\":\"rest\",\"leftToTapMs\":3,\"frames\":225,\"framesWithNotice\":182,\"moved\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 14784,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:10:31.681Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"aimed\":{\"x\":554.5,\"y\":521.390625,\"top\":499.390625,\"at\":5394},\"why\":\"rest\",\"leftToTapMs\":3,\"frames\":225,\"framesWithNotice\":182,\"moved\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-738af81993b363550427",
+          "file": "w3-notices.spec.ts",
+          "line": 111,
+          "column": 3
+        },
+        {
+          "title": "End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (844×390 dark 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"aimed\":{\"x\":705.03125,\"y\":206.25,\"top\":184.25,\"at\":4578},\"why\":\"rest\",\"leftToTapMs\":8,\"frames\":227,\"framesWithNotice\":180,\"moved\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13931,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:10:44.523Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"aimed\":{\"x\":705.03125,\"y\":206.25,\"top\":184.25,\"at\":4578},\"why\":\"rest\",\"leftToTapMs\":8,\"frames\":227,\"framesWithNotice\":180,\"moved\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-54f3a7e107eefd74a7d1",
+          "file": "w3-notices.spec.ts",
+          "line": 111,
+          "column": 3
+        },
+        {
+          "title": "the room a gone notice keeps stays while the page is scrolled, and goes on the same screen once idle (390×844, 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"room\":113,\"during\":{\"moved\":[],\"room\":113},\"why\":\"idle\",\"sinceInputAtCollapse\":-103921}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 14302,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:10:46.481Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"room\":113,\"during\":{\"moved\":[],\"room\":113},\"why\":\"idle\",\"sinceInputAtCollapse\":-103921}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-7197bc9ab644a4252b30",
+          "file": "w3-notices.spec.ts",
+          "line": 158,
+          "column": 1
+        },
+        {
+          "title": "the room is not given back while a pointer is held; it goes 4–6.5 s after release (1440×900, 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"held\":{\"room\":68,\"down\":1},\"afterUpMs\":4074,\"afterLastInputMs\":4074,\"why\":\"idle\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17097,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:10:58.466Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"held\":{\"room\":68,\"down\":1},\"afterUpMs\":4074,\"afterLastInputMs\":4074,\"why\":\"idle\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-c67f982bc003334545f5",
+          "file": "w3-notices.spec.ts",
+          "line": 210,
+          "column": 1
+        },
+        {
+          "title": "a new screen starts with no room: Today after End, then Stats and back (375×667, 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 10804,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:11:00.816Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-ea7346334b1019a35f6e",
+          "file": "w3-notices.spec.ts",
+          "line": 239,
+          "column": 1
+        },
+        {
+          "title": "the status bar warm-days button is named \"N days warm. Show details\" (and \", today not brewed yet\")",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 4080,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:11:11.630Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-26bbb466c6bb60b6525a",
+          "file": "w3-notices.spec.ts",
+          "line": 265,
+          "column": 1
+        },
+        {
+          "title": "End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 light 200 % reduced motion)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"aimed\":{\"x\":773.5,\"y\":767.1875,\"top\":745.1875,\"at\":7807},\"why\":\"rest\",\"leftToTapMs\":0,\"frames\":172,\"framesWithNotice\":137,\"moved\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16109,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:12:30.223Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"aimed\":{\"x\":773.5,\"y\":767.1875,\"top\":745.1875,\"at\":7807},\"why\":\"rest\",\"leftToTapMs\":0,\"frames\":172,\"framesWithNotice\":137,\"moved\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-5fdd1270ef073319686e",
+          "file": "w3-notices.spec.ts",
+          "line": 111,
+          "column": 3
+        },
+        {
+          "title": "End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 light 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"aimed\":{\"x\":282.5,\"y\":578,\"top\":556,\"at\":5241},\"why\":\"rest\",\"leftToTapMs\":12,\"frames\":230,\"framesWithNotice\":181,\"moved\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 14751,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:12:32.485Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"aimed\":{\"x\":282.5,\"y\":578,\"top\":556,\"at\":5241},\"why\":\"rest\",\"leftToTapMs\":12,\"frames\":230,\"framesWithNotice\":181,\"moved\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-69bd919f1677c350880c",
+          "file": "w3-notices.spec.ts",
+          "line": 111,
+          "column": 3
+        },
+        {
+          "title": "End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 dark 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"aimed\":{\"x\":282.5,\"y\":578,\"top\":556,\"at\":5271},\"why\":\"rest\",\"leftToTapMs\":16,\"frames\":227,\"framesWithNotice\":182,\"moved\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14639,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:12:46.344Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"aimed\":{\"x\":282.5,\"y\":578,\"top\":556,\"at\":5271},\"why\":\"rest\",\"leftToTapMs\":16,\"frames\":227,\"framesWithNotice\":182,\"moved\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-48cda72134893ef26c21",
+          "file": "w3-notices.spec.ts",
+          "line": 111,
+          "column": 3
+        },
+        {
+          "title": "End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 dark 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"aimed\":{\"x\":554.5,\"y\":521.390625,\"top\":499.390625,\"at\":4979},\"why\":\"rest\",\"leftToTapMs\":-1,\"frames\":226,\"framesWithNotice\":178,\"moved\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 14430,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:12:47.253Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"aimed\":{\"x\":554.5,\"y\":521.390625,\"top\":499.390625,\"at\":4979},\"why\":\"rest\",\"leftToTapMs\":-1,\"frames\":226,\"framesWithNotice\":178,\"moved\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-e4ef4f143ad653dd3c39",
+          "file": "w3-notices.spec.ts",
+          "line": 111,
+          "column": 3
+        },
+        {
+          "title": "End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (844×390 dark 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"aimed\":{\"x\":705.03125,\"y\":206.25,\"top\":184.25,\"at\":4946},\"why\":\"rest\",\"leftToTapMs\":28,\"frames\":230,\"framesWithNotice\":177,\"moved\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14419,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:13:01.003Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"aimed\":{\"x\":705.03125,\"y\":206.25,\"top\":184.25,\"at\":4946},\"why\":\"rest\",\"leftToTapMs\":28,\"frames\":230,\"framesWithNotice\":177,\"moved\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-c77e454a881567bb36e5",
+          "file": "w3-notices.spec.ts",
+          "line": 111,
+          "column": 3
+        },
+        {
+          "title": "the room a gone notice keeps stays while the page is scrolled, and goes on the same screen once idle (390×844, 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"room\":113,\"during\":{\"moved\":[],\"room\":113},\"why\":\"idle\",\"sinceInputAtCollapse\":-102997}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 15393,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:13:01.692Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"room\":113,\"during\":{\"moved\":[],\"room\":113},\"why\":\"idle\",\"sinceInputAtCollapse\":-102997}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-cea3f6b263c92bf0e7f7",
+          "file": "w3-notices.spec.ts",
+          "line": 158,
+          "column": 1
+        },
+        {
+          "title": "the room is not given back while a pointer is held; it goes 4–6.5 s after release (1440×900, 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"held\":{\"room\":68,\"down\":1},\"afterUpMs\":4113,\"afterLastInputMs\":4095,\"why\":\"idle\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17131,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:13:15.442Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"held\":{\"room\":68,\"down\":1},\"afterUpMs\":4113,\"afterLastInputMs\":4095,\"why\":\"idle\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-78eb3db88f7eda2740a7",
+          "file": "w3-notices.spec.ts",
+          "line": 210,
+          "column": 1
+        },
+        {
+          "title": "a new screen starts with no room: Today after End, then Stats and back (375×667, 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 10254,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:13:17.115Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-9d7fa01ad7fb7d83cb09",
+          "file": "w3-notices.spec.ts",
+          "line": 239,
+          "column": 1
+        },
+        {
+          "title": "the status bar warm-days button is named \"N days warm. Show details\" (and \", today not brewed yet\")",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3957,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T00:13:27.384Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-6ef3e8226db4e1b327af",
+          "file": "w3-notices.spec.ts",
+          "line": 265,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-15T00:08:59.449Z",
+    "duration": 273222.89,
+    "expected": 42,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -1,7 +1,10 @@
 /**
  * W3R1 F fix round, F-D1 (Vibei §3): the band a gone notice leaves goes on the same screen once touch and scroll are
- * idle — no pointer down, no input of any kind (scroll events included) for 1.2 s, at least 1.2 s after the leave — and
- * by 4 s; never while a pointer is down or a scroll is running. Four configurations × three cases:
+ * idle — no pointer down, no input of any kind (scroll events included) for 4 s (BAND_IDLE_MS; Vibei's W3R1 follow-up,
+ * raised from 1.2 s), at least 4 s after the leave — and by 6.5 s; never while a pointer is down or a scroll is running.
+ * (The upper bound: the strip's clock looks every 100 ms and confirms in a fresh frame, so on a quiet machine the band
+ * goes about 4.0–4.2 s after; 6.5 s keeps about the old bound's margin, 2.5 s, for a loaded machine's late timers and
+ * frames.) Four configurations × three cases:
  *  (a) no input after the leave; (b) the page scrolled down and back right after the leave (finger drag on phones,
  *  wheel at 1440), then idle; (c) a pointer held 3 s right after the leave, then released.
  * Every strip commit is recorded in the page with: time, why, room, pointer state, ms since the last input of any kind
@@ -132,7 +135,7 @@ for (const c of CFGS) {
         await page.mouse.up();
         busyUntil = await lastInput(page);
       }
-      await page.waitForFunction(() => (window as any).__kettle.notices().room === 0, null, { timeout: 8_000, polling: 'raf' });
+      await page.waitForFunction(() => (window as any).__kettle.notices().room === 0, null, { timeout: 12_000, polling: 'raf' });
       await page.waitForTimeout(300);
       await page.screenshot({ path: `${shots}/${name}-${kase}-2-after-collapse.png` });
       const commits = await commitsAfter(page, leftAt + 5);
@@ -143,14 +146,14 @@ for (const c of CFGS) {
       fact.visibleMove = collapse.topBefore != null && collapse.topAfter != null ? Math.round((collapse.topBefore - collapse.topAfter) * 10) / 10 : null;
       test.info().annotations.push({ type: 'facts', description: JSON.stringify(fact) });
       console.log(`FACT ${name} ${kase} ${JSON.stringify(fact)}`);
-      // One band commit only (the collapse), at rest: no pointer down, ≥ 1.2 s since any input, ≥ 1.2 s after the leave.
+      // One band commit only (the collapse), at rest: no pointer down, ≥ 4 s since any input, ≥ 4 s after the leave.
       expect(commits.filter((x: any) => x.room === 0).length, 'one collapse').toBe(1);
       // (The leave's own commit can be recorded a frame late, after `leftAt`: it keeps the same room and shows nothing.)
       expect(commits.filter((x: any) => x.room !== 0 && !(x.room === room && x.shown === null)), 'no other strip commit between the leave and the collapse').toEqual([]);
       expect(collapse.down, 'pointer up at the collapse').toBe(0);
-      expect(collapse.sinceInput, 'ms since the last input of any kind').toBeGreaterThanOrEqual(1200);
-      expect(fact.collapseAfterLeaveMs).toBeGreaterThanOrEqual(1200);
-      expect(fact.collapseAfterLastBusyMs, 'no later than 4 s after the later of the leave and the last input').toBeLessThanOrEqual(4000);
+      expect(collapse.sinceInput, 'ms since the last input of any kind').toBeGreaterThanOrEqual(4000);
+      expect(fact.collapseAfterLeaveMs).toBeGreaterThanOrEqual(4000);
+      expect(fact.collapseAfterLastBusyMs, 'no later than 6.5 s after the later of the leave and the last input').toBeLessThanOrEqual(6500);
       if (kase === 'b-scroll-then-idle') expect(fact.roomAfterScroll, 'kept during the scroll').toBeGreaterThan(0);
       if (kase === 'c-pointer-held') {
         expect(fact.downWhileHeld).toBeGreaterThan(0);
