@@ -15,7 +15,7 @@ Worktree /home/user/wt/w6-int at f817931 (serves :5560); merge 5f78af1 = 26b37bc
 @@ -416 +541,2 @@ export const useTimer = create<TimerStore>()(
 @@ -424,17 +550,2 @@ export const useTimer = create<TimerStore>()(
 
-== 1c. tick() calls guard.refresh() -> mirrorTimerFromStorage() -> persist.rehydrate() before it completes (ticker.ts 276-278, sync.ts 63-82, both unchanged). During a brew nothing writes a partial save: syncIdleLength returns at once unless idle (store.ts 536-537), and the two failing tests set the intention only through startFocus (a whole save). So the rehydrate reads back the running brew that startFocus wrote whole, as before the merge, and the completion still arrives as set(idleAfter(...)), which subscribe() sees.
+== 1c. tick() calls guard.refresh() -> mirrorTimerFromStorage() -> persist.rehydrate() before it completes (ticker.ts 276-278, sync.ts 63-82, both unchanged). During a brew nothing writes a partial save: syncIdleLength returns at once unless idle (store.ts 536-537), and the two failing tests type nothing and set the intention only through startFocus (a whole save; Composer's debounced setIntention runs only when its text or tag changes). So the rehydrate reads back the running brew that startFocus wrote whole, as before the merge, and the completion still arrives as set(idleAfter(...)), which subscribe() sees.
 
 == 2. Completion, notification, title and cross-tab files: diff line counts across the merge, and across the whole base..merge range
 src/timer/ticker.ts: merge 0 lines; 4d36939..5f78af1 0 lines
@@ -35,6 +35,18 @@ src/app/intention.ts:21:    if (next === words) t.setIntention('');
 src/app/intention.ts:23:    t.setIntention(words, record.tag);
 src/timer/ticker.ts:302:  useTimer.getState().syncIdleLength();
 src/timer/ticker.ts:304:    if (s.focusMin !== p.focusMin) useTimer.getState().syncIdleLength();
+
+(and every use of the timer's setIntention action, including Today's composer: on mount and on typing, 150 ms debounced, and at Start; an unchanged intention now returns without any set)
+src/app/intention.ts:21:    if (next === words) t.setIntention('');
+src/app/intention.ts:23:    t.setIntention(words, record.tag);
+src/timer/store.ts:203:  setIntention: (intention: string, tag?: TimerState['tag']) => void;
+src/timer/store.ts:251: * A save that may write only some fields. While `setIntention` or `syncIdleLength` runs, `fieldSave` holds the saved
+src/timer/store.ts:510:        setIntention: (intention, tag) => {
+src/screens/home/Composer.tsx:28:  const setIntention = useTimer((t) => t.setIntention);
+src/screens/home/Composer.tsx:77:      setIntention('', tag);
+src/screens/home/Composer.tsx:85:    const id = setTimeout(() => setIntention(text, tag), 150);
+src/screens/home/Composer.tsx:87:  }, [text, tag, setIntention]);
+src/screens/home/Composer.tsx:91:    setIntention(trimmed, tag);
 
 == 4. Where completion happens (unchanged ticker.ts) and where it is noticed
 src/timer/store.ts:212:function idleAfter(s: TimerState, patch: Partial<TimerState>): TimerState {
