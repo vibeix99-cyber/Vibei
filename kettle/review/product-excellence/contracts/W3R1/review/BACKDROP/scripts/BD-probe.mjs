@@ -33,7 +33,13 @@ for (let i = 1; i <= N; i++) {
   await p.waitForTimeout(1200);
   if (PRE12) await p.screenshot({ path: `${out}/${TAG}${i}-12.png`, timeout: 240000 });
   await p.getByRole('button', { name: /Start a 15-min brew/ }).click();
-  await p.waitForTimeout(WAIT);
+  const rc0 = Date.now();
+  let readyReal = null;
+  for (let t = 0; t < WAIT; t += 100) {
+    await p.waitForTimeout(100);
+    if (readyReal == null && (await p.evaluate(() => window.__bd.ready != null))) readyReal = Date.now() - rc0;
+  }
+  const shotReal = Date.now() - rc0;
   const at = await p.evaluate(() => {
     const bd = window.__bd, now = performance.now();
     const timer = [...document.querySelectorAll('*')].find((e) => /^\d\d:\d\d$/.test(e.textContent?.trim() ?? '') && e.children.length === 0)?.textContent;
@@ -43,8 +49,13 @@ for (let i = 1; i <= N; i++) {
     return { sinceClick: Math.round(now - bd.t0), ready: bd.ready == null ? null : Math.round(bd.ready - bd.t0), nook: bd.nook == null ? null : Math.round(bd.nook - bd.t0), coverGone: bd.coverGone == null ? null : Math.round(bd.coverGone - bd.t0), timer, canvasOpacity: op, readyAttr: host?.getAttribute('data-scene-ready') };
   });
   await p.screenshot({ path: `${out}/${TAG}${i}-13.png`, timeout: 240000 });
+  const shotDone = Date.now() - rc0;
+  for (let t = 0; readyReal == null && t < 20000; t += 100) {
+    await p.waitForTimeout(100);
+    if (await p.evaluate(() => window.__bd.ready != null)) readyReal = Date.now() - rc0;
+  }
   const after = await p.evaluate(() => { const bd = window.__bd; return { ready: bd.ready == null ? null : Math.round(bd.ready - bd.t0), nook: bd.nook == null ? null : Math.round(bd.nook - bd.t0), coverGone: bd.coverGone == null ? null : Math.round(bd.coverGone - bd.t0), sinceClick: Math.round(performance.now() - bd.t0) }; });
-  const row = { i, load: process.env.BD_LOAD ?? '', at3s: at, afterShot: after, wallS: Math.round((Date.now() - t00) / 100) / 10 };
+  const row = { i, load: (await import('node:fs')).readFileSync('/proc/loadavg', 'utf8').split(' ')[0], readyReal, shotReal, shotDone, at3s: at, afterShot: after, wallS: Math.round((Date.now() - t00) / 100) / 10 };
   rows.push(row);
   console.log(JSON.stringify(row));
   await b.close();
