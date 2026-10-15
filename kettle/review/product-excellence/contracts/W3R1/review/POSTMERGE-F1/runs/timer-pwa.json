@@ -1,0 +1,1342 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w6-int/kettle/playwright.config.ts",
+    "rootDir": "/home/user/wt/w6-int/kettle/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w6-int/kettle/.tmp/LR-pw/timer-pwa",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-harness",
+        "name": "timer-harness",
+        "testDir": "/home/user/wt/w6-int/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w6-int/kettle/.tmp/LR-pw/timer-pwa",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-app",
+        "name": "timer-app",
+        "testDir": "/home/user/wt/w6-int/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w6-int/kettle/.tmp/LR-pw/timer-pwa",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pwa",
+        "name": "pwa",
+        "testDir": "/home/user/wt/w6-int/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/pwa\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/home/user/wt/w6-int/kettle/.tmp/LR-pw/timer-pwa",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w6-int/kettle/tests",
+        "testIgnore": [
+          "/(timer|pwa)\\.spec\\.ts/"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite --config tests/e2e.vite.config.ts --port 5560 --strictPort",
+      "url": "http://127.0.0.1:5560/",
+      "reuseExistingServer": true,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "timer.spec.ts",
+      "file": "timer.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "timer reliability",
+          "file": "timer.spec.ts",
+          "line": 73,
+          "column": 6,
+          "specs": [
+            {
+              "title": "start → reload mid-session → same session, same end, correct remaining; paused survives reload",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9397,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:25:47.983Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-63c63efcfc79f1ba45de",
+              "file": "timer.spec.ts",
+              "line": 74,
+              "column": 3
+            },
+            {
+              "title": "a phase that ended while the app was closed (3 h ago) completes once, at its real end, whileAway",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5795,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:25:57.470Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-1e2c01166e3dd4730232",
+              "file": "timer.spec.ts",
+              "line": 111,
+              "column": 3
+            },
+            {
+              "title": "reload exactly at 0:00 records the session once",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8880,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:26:03.280Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-c0bd8a6db8e23f630528",
+              "file": "timer.spec.ts",
+              "line": 143,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6718,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:26:12.184Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-7e1adfa710f761cc9ea0",
+              "file": "timer.spec.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "hidden page: completion shows a warm notification; coming back restores the title",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8342,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:26:18.916Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-3fdac3ae0c0f3d9eeb36",
+              "file": "timer.spec.ts",
+              "line": 183,
+              "column": 3
+            },
+            {
+              "title": "frozen tab (OS suspended it) across the end completes once on resume, at the real end",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8464,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:26:27.271Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-4af5454c2e33256c9dc1",
+              "file": "timer.spec.ts",
+              "line": 214,
+              "column": 3
+            },
+            {
+              "title": "start → reload mid-session → same session, same end, correct remaining; paused survives reload",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 26028,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:27:34.796Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-8f65b52febf2aaea138e",
+              "file": "timer.spec.ts",
+              "line": 74,
+              "column": 3
+            },
+            {
+              "title": "a phase that ended while the app was closed (3 h ago) completes once, at its real end, whileAway",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 20062,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:28:00.977Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-b09f7072efb5c8573ee2",
+              "file": "timer.spec.ts",
+              "line": 111,
+              "column": 3
+            },
+            {
+              "title": "reload exactly at 0:00 records the session once",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 52451,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:28:21.055Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-903f11da35832e8a5e55",
+              "file": "timer.spec.ts",
+              "line": 143,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 21974,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate\n    at /home/user/wt/w6-int/kettle/tests/timer.spec.ts:175:5",
+                        "location": {
+                          "file": "/home/user/wt/w6-int/kettle/tests/timer.spec.ts",
+                          "column": 5,
+                          "line": 175
+                        },
+                        "snippet": "  173 |       document.dispatchEvent(new Event('visibilitychange'));\n  174 |     });\n> 175 |     await expect.poll(() => page.evaluate(() => (window as any).__doneAt ?? null), { timeout: 10_000, intervals: [200] }).not.toBeNull();\n      |     ^\n  176 |     const doneAt = await page.evaluate(() => (window as any).__doneAt as number);\n  177 |     expect(doneAt - (endsAt as number)).toBeGreaterThanOrEqual(0);\n  178 |     expect(doneAt - (endsAt as number)).toBeLessThan(lateBudget(kettlePage));"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/wt/w6-int/kettle/tests/timer.spec.ts",
+                            "column": 5,
+                            "line": 175
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate\n\n  173 |       document.dispatchEvent(new Event('visibilitychange'));\n  174 |     });\n> 175 |     await expect.poll(() => page.evaluate(() => (window as any).__doneAt ?? null), { timeout: 10_000, intervals: [200] }).not.toBeNull();\n      |     ^\n  176 |     const doneAt = await page.evaluate(() => (window as any).__doneAt as number);\n  177 |     expect(doneAt - (endsAt as number)).toBeGreaterThanOrEqual(0);\n  178 |     expect(doneAt - (endsAt as number)).toBeLessThan(lateBudget(kettlePage));\n    at /home/user/wt/w6-int/kettle/tests/timer.spec.ts:175:5"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:29:13.518Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/wt/w6-int/kettle/.tmp/LR-pw/timer-pwa/timer-timer-reliability-ba-a1533-h-main-thread-timers-frozen-timer-app/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/user/wt/w6-int/kettle/.tmp/LR-pw/timer-pwa/timer-timer-reliability-ba-a1533-h-main-thread-timers-frozen-timer-app/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/wt/w6-int/kettle/tests/timer.spec.ts",
+                        "column": 5,
+                        "line": 175
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-5633ce3bc04fea8097e0",
+              "file": "timer.spec.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "hidden page: completion shows a warm notification; coming back restores the title",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 26265,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate\n    at /home/user/wt/w6-int/kettle/tests/timer.spec.ts:204:5",
+                        "location": {
+                          "file": "/home/user/wt/w6-int/kettle/tests/timer.spec.ts",
+                          "column": 5,
+                          "line": 204
+                        },
+                        "snippet": "  202 |     await start(page, secs(kettlePage, 2), 'Essay');\n  203 |     await setHidden(page, true);\n> 204 |     await expect.poll(() => page.evaluate(() => (window as any).__notes.length), { timeout: 10_000 }).toBe(1);\n      |     ^\n  205 |     const note = await page.evaluate(() => (window as any).__notes[0]);\n  206 |     expect(note.title).toBe('The kettle’s whistling! Time for tea.');\n  207 |     expect(note.body).toContain('Essay');"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/wt/w6-int/kettle/tests/timer.spec.ts",
+                            "column": 5,
+                            "line": 204
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate\n\n  202 |     await start(page, secs(kettlePage, 2), 'Essay');\n  203 |     await setHidden(page, true);\n> 204 |     await expect.poll(() => page.evaluate(() => (window as any).__notes.length), { timeout: 10_000 }).toBe(1);\n      |     ^\n  205 |     const note = await page.evaluate(() => (window as any).__notes[0]);\n  206 |     expect(note.title).toBe('The kettle’s whistling! Time for tea.');\n  207 |     expect(note.body).toContain('Essay');\n    at /home/user/wt/w6-int/kettle/tests/timer.spec.ts:204:5"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:29:44.778Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/wt/w6-int/kettle/.tmp/LR-pw/timer-pwa/timer-timer-reliability-hi-c226d-ing-back-restores-the-title-timer-app/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/user/wt/w6-int/kettle/.tmp/LR-pw/timer-pwa/timer-timer-reliability-hi-c226d-ing-back-restores-the-title-timer-app/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/wt/w6-int/kettle/tests/timer.spec.ts",
+                        "column": 5,
+                        "line": 204
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-d681656cbd67921dcb99",
+              "file": "timer.spec.ts",
+              "line": 183,
+              "column": 3
+            },
+            {
+              "title": "frozen tab (OS suspended it) across the end completes once on resume, at the real end",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 12416,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:30:17.457Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-b704ae64043d7e442264",
+              "file": "timer.spec.ts",
+              "line": 214,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "device integrations",
+          "file": "timer.spec.ts",
+          "line": 231,
+          "column": 6,
+          "specs": [
+            {
+              "title": "wake lock: held while running and visible; released on pause, idle and setting off; re-acquired on return",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3311,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:26:35.754Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-c7c59d260dc3234c5a7c",
+              "file": "timer.spec.ts",
+              "line": 232,
+              "column": 3
+            },
+            {
+              "title": "media session: metadata + play/pause handlers while a phase runs, cleared when idle",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1847,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:26:39.075Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-b475b16862549f09353c",
+              "file": "timer.spec.ts",
+              "line": 281,
+              "column": 3
+            },
+            {
+              "title": "wake lock: held while running and visible; released on pause, idle and setting off; re-acquired on return",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 12048,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:30:30.007Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-a74238fe2ffdaa36bb56",
+              "file": "timer.spec.ts",
+              "line": 232,
+              "column": 3
+            },
+            {
+              "title": "media session: metadata + play/pause handlers while a phase runs, cleared when idle",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9287,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:30:42.075Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-980163e6a4f4cd03c2b6",
+              "file": "timer.spec.ts",
+              "line": 281,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "keyboard shortcuts infra",
+          "file": "timer.spec.ts",
+          "line": 293,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Space toggles — but never while typing, on a focused button, or on key repeat; ? toggles help, not over a dialog",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3934,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:26:40.936Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-f04d837fdd01129b7b31",
+              "file": "timer.spec.ts",
+              "line": 294,
+              "column": 3
+            },
+            {
+              "title": "Space toggles — but never while typing, on a focused button, or on key repeat; ? toggles help, not over a dialog",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "infra is exercised in the harness; screens bind their own keys",
+                      "location": {
+                        "file": "/home/user/wt/w6-int/kettle/tests/timer.spec.ts",
+                        "line": 295,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 1167,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:30:51.412Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "infra is exercised in the harness; screens bind their own keys",
+                          "location": {
+                            "file": "/home/user/wt/w6-int/kettle/tests/timer.spec.ts",
+                            "line": 295,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-5442d7a550019d903e5f",
+              "file": "timer.spec.ts",
+              "line": 294,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "multiple tabs",
+          "file": "timer.spec.ts",
+          "line": 338,
+          "column": 6,
+          "specs": [
+            {
+              "title": "two tabs show the same session live and exactly one records it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 14863,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:26:44.887Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-4e8ff14e06544f36d868",
+              "file": "timer.spec.ts",
+              "line": 339,
+              "column": 3
+            },
+            {
+              "title": "two tabs pressing start at the same moment converge on one session",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 11155,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:26:59.761Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-1ed7df206b100d328e61",
+              "file": "timer.spec.ts",
+              "line": 377,
+              "column": 3
+            },
+            {
+              "title": "closing the leader tab mid-session hands over; the other tab completes it once",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8139,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:27:10.923Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-bc94ceac8793d70d4596",
+              "file": "timer.spec.ts",
+              "line": 399,
+              "column": 3
+            },
+            {
+              "title": "frozen leader: the other tab takes over at the end; the leader waking up later does not double-count",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6701,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:27:19.073Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-617a75bf509213018ca5",
+              "file": "timer.spec.ts",
+              "line": 416,
+              "column": 3
+            },
+            {
+              "title": "two tabs show the same session live and exactly one records it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 22421,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:30:52.590Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-38001b075b72f8ccaca1",
+              "file": "timer.spec.ts",
+              "line": 339,
+              "column": 3
+            },
+            {
+              "title": "two tabs pressing start at the same moment converge on one session",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 27277,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:31:15.020Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-9f4afad5012de4596165",
+              "file": "timer.spec.ts",
+              "line": 377,
+              "column": 3
+            },
+            {
+              "title": "closing the leader tab mid-session hands over; the other tab completes it once",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 38513,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:31:42.311Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-0b98c9d7c438df5f01a4",
+              "file": "timer.spec.ts",
+              "line": 399,
+              "column": 3
+            },
+            {
+              "title": "frozen leader: the other tab takes over at the end; the leader waking up later does not double-count",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 31411,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:32:20.842Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-c3b1e7381d967f443127",
+              "file": "timer.spec.ts",
+              "line": 416,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "rendering budget",
+          "file": "timer.spec.ts",
+          "line": 437,
+          "column": 6,
+          "specs": [
+            {
+              "title": "useRemaining re-renders about once per displayed second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5458,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:27:25.785Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-2f06363be377bfd75c57",
+              "file": "timer.spec.ts",
+              "line": 438,
+              "column": 3
+            },
+            {
+              "title": "useRemaining re-renders about once per displayed second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "render counter lives in the harness",
+                      "location": {
+                        "file": "/home/user/wt/w6-int/kettle/tests/timer.spec.ts",
+                        "line": 439,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 3490,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T11:32:52.266Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "render counter lives in the harness",
+                          "location": {
+                            "file": "/home/user/wt/w6-int/kettle/tests/timer.spec.ts",
+                            "line": 439,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-f7672ab42b204f3013c9",
+              "file": "timer.spec.ts",
+              "line": 438,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "pwa.spec.ts",
+      "file": "pwa.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "manifest is installable: name, colors, standalone, icons that exist",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pwa",
+              "projectName": "pwa",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 79,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T11:33:01.665Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "30bf0965a0eb07fc9173-4b3a85fcb8ef6997b124",
+          "file": "pwa.spec.ts",
+          "line": 48,
+          "column": 1
+        },
+        {
+          "title": "precaches the shell, fonts, 3D chunk and tick worker; boots and times a brew offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pwa",
+              "projectName": "pwa",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 85034,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T11:33:09.428Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "30bf0965a0eb07fc9173-63eff10830570240297c",
+          "file": "pwa.spec.ts",
+          "line": 59,
+          "column": 1
+        },
+        {
+          "title": "update: new version waits for the user (no reload mid-brew), then applies and the brew carries on",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pwa",
+              "projectName": "pwa",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 45118,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T11:34:34.569Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "30bf0965a0eb07fc9173-f39068c87323bc22a1e1",
+          "file": "pwa.spec.ts",
+          "line": 85,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-15T11:25:46.200Z",
+    "duration": 604013.3060000001,
+    "expected": 27,
+    "skipped": 2,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}
