@@ -30,3 +30,23 @@ From `contracts/W2R3/review/LEAD/T2/runs/historytrace-390x844-light-100.json` an
 - **"edit open" changes nothing further.** It reads row 644, scrollY 2610, the same place as at the tap. The tap and the opening moved nothing; only my `press()` wheel did.
 
 **I misread my own trace in W2R3.** The 2500 → 2610 is my probe's wheel, not a focus scroll. The maker's reading of it (packet §1 C) is correct, and my N-2 row in `CHECKER-W2R3-T2.md` and the "focus scroll" wording I carried into `CHECKER-W3R1-F.md` §4 were wrong about the cause.
+
+## 3. My `historytrace` rerun with an event log (my runs, :5560, through the gate)
+**What I ran:**
+- **The probe:** `historytrace-ev.mjs` is `t2-lead.mjs` unchanged except for two additions:
+  - an event log of every `wheel`, `scroll`, `pointerdown`, `touchstart`, `click` and `focusin`, each with `performance.now`, `scrollY` and the History row it hit;
+  - a `--mutant N` switch: a click on a History row scrolls the page by N px in the next task, which is what a product focus scroll would look like.
+- **The summary:** `ht_ev.py.txt` produces `historytrace-ev-summary.txt`. The raw JSON is beside it.
+
+| Run | before tap (scrollY, row) | the tap lands at (row top) | edit open | scroll events before the tap | scroll events after the row tap, through Edit, Delete this brew, confirm, Delete |
+|---|---|---|---|---|---|
+| 390×844 light 100 (touch), my W2R3 config | 2500, 945 | 615 (tap y 649, h 68) | 2830, 615 | 28, each ≤ 1 ms after a probe wheel (25 loop wheels + 3 `press()` wheels of 110) | **0** |
+| 1440×900 light @200 reduced (mouse), the X-11 config | 2500, 1037 | 707 (tap y 763, h 111) | 2830, 707 | 28, each ≤ 1 ms after a probe wheel (25 + 3 × 110) | **0** |
+| **Positive control:** 390 light 100, `--mutant 110` | 2500, 945 | 615 | **2940, 505** | 28, all after wheels | **1, 9 ms after the tap, with no wheel: scrollY 2830 → 2940** |
+
+**What this shows:**
+- This seed needs three `press()` wheels (2500 → 2830), where the W2R3 seed needed one (→ 2610). The pattern is the same, and it matches the maker's replay (packet §1 C).
+- In both configurations, every scroll comes from a probe wheel. From the row's pointerdown onwards, there is no scroll event at all.
+- The positive control shows the log would have caught a product scroll after the tap: one scroll event, 110 px, with no wheel behind it.
+
+**So N-2 does not reproduce as a product scroll in my own probe either.** The maker's probe matrix (18 + 9 + 9 scenarios, rAF `scrollY` and row top, wrapped scroll APIs; `N2/evidence/scripts/probe.mjs`, read) agrees.
