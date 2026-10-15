@@ -1,0 +1,177 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e6]:
+      - link "Skip to content" [ref=e7] [cursor=pointer]:
+        - /url: "#main"
+      - navigation "Main" [ref=e8]:
+        - link "Kettle, today" [ref=e9] [cursor=pointer]:
+          - /url: "#/"
+          - img [ref=e11]:
+            - generic [ref=e27]: Kettle
+        - list [ref=e28]:
+          - listitem [ref=e29]:
+            - link "Today" [ref=e30] [cursor=pointer]:
+              - /url: "#/"
+              - img [ref=e34]
+              - generic [ref=e38]: Today
+          - listitem [ref=e39]:
+            - link "Stats" [ref=e40] [cursor=pointer]:
+              - /url: "#/stats"
+              - img [ref=e43]
+              - generic [ref=e47]: Stats
+          - listitem [ref=e48]:
+            - link "Nook" [ref=e49] [cursor=pointer]:
+              - /url: "#/nook"
+              - img [ref=e52]
+              - generic [ref=e57]: Nook
+          - listitem [ref=e58]:
+            - link "Settings" [ref=e59] [cursor=pointer]:
+              - /url: "#/settings"
+              - img [ref=e62]
+              - generic [ref=e74]: Settings
+      - main [ref=e76]:
+        - generic [ref=e80]:
+          - generic [ref=e81]:
+            - region "Good morning" [ref=e82]:
+              - generic [ref=e83]:
+                - navigation "Your progress" [ref=e84]:
+                  - button "0 days warm. Show details" [ref=e85] [cursor=pointer]:
+                    - img [ref=e86]
+                    - generic [ref=e100]:
+                      - generic [ref=e101]: "0"
+                      - generic [ref=e102]: days warm
+                  - button "0 leaves Show details" [ref=e103] [cursor=pointer]:
+                    - img [ref=e104]
+                    - generic [ref=e110]:
+                      - generic [ref=e111]: "0"
+                      - generic [ref=e112]: leaves
+                    - generic [ref=e113]: Show details
+                  - button "Cozy level 1, 25 leaves to the next. Show details" [ref=e114] [cursor=pointer]:
+                    - img [ref=e115]:
+                      - generic [ref=e134]: "1"
+                    - generic [ref=e135]:
+                      - generic [ref=e136]: Level 1
+                      - progressbar [ref=e137]
+                    - generic [ref=e138]: Cozy level 1, 25 leaves to the next. Show details
+                - heading "Good morning" [level=1] [ref=e139]
+              - paragraph [ref=e146]: Let’s brew your very first one. No rush.
+            - region "What are you brewing? (optional)" [ref=e147]:
+              - generic [ref=e148]:
+                - heading "What are you brewing? (optional)" [level=2] [ref=e150]
+                - generic [ref=e152]:
+                  - generic [ref=e153]: What are you brewing? (optional)
+                  - generic [ref=e154]:
+                    - textbox "What are you brewing? (optional)" [active] [ref=e155]:
+                      - /placeholder: e.g. Chapter 3 notes, or leave it blank
+                      - text: Reply to Sam
+                    - button "Clear what are you brewing? (optional)" [ref=e156] [cursor=pointer]:
+                      - img [ref=e158]
+                - group "Tag" [ref=e160]:
+                  - button "Work" [ref=e161] [cursor=pointer]:
+                    - generic [ref=e162]:
+                      - img [ref=e164]
+                      - generic [ref=e169]: Work
+                  - button "Study" [ref=e171] [cursor=pointer]:
+                    - generic [ref=e172]:
+                      - img [ref=e174]
+                      - generic [ref=e177]: Study
+                  - button "Read" [ref=e179] [cursor=pointer]:
+                    - generic [ref=e180]:
+                      - img [ref=e182]
+                      - generic [ref=e186]: Read
+                  - button "Create" [ref=e188] [cursor=pointer]:
+                    - generic [ref=e189]:
+                      - img [ref=e191]
+                      - generic [ref=e194]: Create
+                  - button "Life" [ref=e196] [cursor=pointer]:
+                    - generic [ref=e197]:
+                      - img [ref=e199]
+                      - generic [ref=e201]: Life
+                - generic [ref=e203]:
+                  - paragraph [ref=e204]: Brew length
+                  - radiogroup "Brew length" [ref=e205]:
+                    - radio "15 min Gentle" [ref=e206] [cursor=pointer]:
+                      - generic [ref=e208]:
+                        - generic [ref=e209]: 15 min
+                        - generic [ref=e210]: Gentle
+                    - radio "25 min Classic" [checked] [ref=e211] [cursor=pointer]:
+                      - generic [ref=e213]:
+                        - generic [ref=e214]: 25 min
+                        - generic [ref=e215]: Classic
+                    - radio "50 min Deep" [ref=e216] [cursor=pointer]:
+                      - generic [ref=e218]:
+                        - generic [ref=e219]: 50 min
+                        - generic [ref=e220]: Deep
+                    - radio "Custom Set it" [ref=e221] [cursor=pointer]:
+                      - generic [ref=e223]:
+                        - generic [ref=e224]: Custom
+                        - generic [ref=e225]: Set it
+            - generic [ref=e226]:
+              - button "Put the kettle on · 25 min" [ref=e227] [cursor=pointer]:
+                - generic [ref=e229]:
+                  - img [ref=e231]
+                  - generic [ref=e233]: Put the kettle on · 25 min
+              - paragraph [ref=e234]: Then a 5 min tea break.
+          - generic [ref=e235]:
+            - region "Today’s goal" [ref=e236]:
+              - heading "Today’s goal" [level=2] [ref=e237]
+              - generic [ref=e238]:
+                - paragraph [ref=e239]:
+                  - strong [ref=e240]: 0 min
+                  - text: brewed
+                - paragraph [ref=e241]:
+                  - strong [ref=e242]: 30 min
+                  - text: to go
+              - progressbar "Today’s goal" [ref=e243]
+              - paragraph [ref=e244]: Today’s goal · 30 min (a cup)
+            - region "Today’s brews" [ref=e245]:
+              - heading "Today’s brews" [level=2] [ref=e247]
+              - paragraph [ref=e251]: Nothing brewed yet today. Your first brew is one tap away.
+            - region "Today’s recipes" [ref=e252]:
+              - generic [ref=e253]:
+                - img [ref=e255]
+                - heading "Today’s recipes" [level=2] [ref=e259]
+                - generic [ref=e260]: 0 of 3
+              - list [ref=e261]:
+                - listitem [ref=e262]:
+                  - img [ref=e264]
+                  - generic [ref=e269]:
+                    - generic [ref=e270]:
+                      - paragraph [ref=e271]: Take a full tea break
+                      - generic [ref=e272]:
+                        - img [ref=e273]
+                        - text: "+10"
+                        - generic [ref=e279]: leaves
+                    - generic [ref=e280]:
+                      - 'progressbar "Take a full tea break: 0 of 1" [ref=e281]'
+                      - generic [ref=e282]: 0/1
+                - listitem [ref=e283]:
+                  - img [ref=e285]
+                  - generic [ref=e288]:
+                    - generic [ref=e289]:
+                      - paragraph [ref=e290]: Brew with 2 different tags
+                      - generic [ref=e291]:
+                        - img [ref=e292]
+                        - text: "+15"
+                        - generic [ref=e298]: leaves
+                    - generic [ref=e299]:
+                      - 'progressbar "Brew with 2 different tags: 0 of 2" [ref=e300]'
+                      - generic [ref=e301]: 0/2
+                - listitem [ref=e302]:
+                  - img [ref=e304]
+                  - generic [ref=e309]:
+                    - generic [ref=e310]:
+                      - paragraph [ref=e311]: Finish 3 full brews
+                      - generic [ref=e312]:
+                        - img [ref=e313]
+                        - text: "+20"
+                        - generic [ref=e319]: leaves
+                    - generic [ref=e320]:
+                      - 'progressbar "Finish 3 full brews: 0 of 3" [ref=e321]'
+                      - generic [ref=e322]: 0/3
+    - status [ref=e323]
+  - status [ref=e325]
+```
