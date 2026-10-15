@@ -479,6 +479,11 @@ export const useTimer = create<TimerStore>()(
 
         // Writes only the intention to storage, never this tab's (possibly stale) copy of the rest (see saveIntentionOnly).
         setIntention: (intention, tag) => {
+          const s = get();
+          // Nothing new (Today's composer syncs on mount and after every keystroke): no save at all. A tab that is behind
+          // can also read an old copy of storage (the browser updates a tab's copy with the same message that brings its
+          // `storage` event), so a save that only re-sent what it holds could still put that copy over a new brew.
+          if (s.intention === intention && (tag === undefined || s.tag === tag)) return;
           const outer = intentionSave;
           intentionSave = persistedTimer(get());
           try {

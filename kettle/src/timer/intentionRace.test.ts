@@ -15,7 +15,10 @@ class MemoryStorage {
   map = new Map<string, string>();
   /** Storage full: every write throws, as a real full localStorage does. */
   full = false;
+  /** A tab's stale copy: reads of these keys return these values (Chromium updates a tab's copy with its storage event). */
+  stale: Map<string, string | null> | null = null;
   getItem(k: string) {
+    if (this.stale?.has(k)) return this.stale.get(k)!;
     return this.map.has(k) ? this.map.get(k)! : null;
   }
   setItem(k: string, v: string) {
@@ -80,6 +83,7 @@ beforeEach(() => {
   vi.useFakeTimers({ toFake: ['Date'] });
   vi.setSystemTime(new Date(2026, 9, 12, 9, 40, 0));
   storage.full = false;
+  storage.stale = null;
   storage.clear();
 });
 afterEach(() => {
@@ -175,6 +179,27 @@ describe('saving the intention writes only the intention (F1)', () => {
     expect(B.timer.getState()).toMatchObject({ status: 'running', intention: 'y', tag: 'study', sessionId: A.timer.getState().sessionId });
   });
 
+  it('a save that changes nothing writes nothing (Today’s composer syncing on mount), even in a tab that is behind', async () => {
+    const A = await openTab('A', true);
+    const B = await openTab('B', false);
+    A.timer.getState().setIntention('', null); // what A holds already
+    expect(storage.getItem(KEY)).toBeNull();
+    B.timer.getState().startFocus({ intention: 'Chapter 3 notes' });
+    const raw = storage.getItem(KEY);
+    // A is behind, and so is its copy of storage (it still reads nothing there, as in the failing I01 runs under load).
+    // Its composer mounts with the words its timer already holds.
+    storage.stale = new Map([[KEY, null]]);
+    try {
+      A.timer.getState().setIntention('', null);
+      A.timer.getState().setIntention('');
+    } finally {
+      storage.stale = null;
+    }
+    expect(storage.getItem(KEY)).toBe(raw);
+    A.storageEvent();
+    expect(A.timer.getState()).toMatchObject({ status: 'running', sessionId: B.timer.getState().sessionId });
+  });
+
   it('a fresh profile (nothing saved yet) saves as before', async () => {
     const A = await openTab('A', true);
     expect(storage.getItem(KEY)).toBeNull();
@@ -184,7 +209,8 @@ describe('saving the intention writes only the intention (F1)', () => {
 
   it('storage full: once this tab’s own save failed, the intention save writes the whole (newer) timer, as before, and repairs storage', async () => {
     const A = await openTab('A', true);
-    A.timer.getState().setIntention('', null);
+    A.timer.getState().setIntention('Essay plan', null);
+    expect(stored().state).toMatchObject({ status: 'idle', intention: 'Essay plan' });
     storage.full = true;
     A.timer.getState().startFocus({ intention: 'Essay' }); // fails: storage still holds the idle timer
     expect(stored().state.status).toBe('idle');
