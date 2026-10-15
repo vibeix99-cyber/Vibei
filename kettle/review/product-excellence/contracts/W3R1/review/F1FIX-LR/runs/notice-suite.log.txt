@@ -85,3 +85,12 @@ FACT 1440x900-dark-t200-rm c-pointer-held {"leftAt":5185,"room":113,"roomWhileDo
   ✓  69 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 dark 100 %) (14.5s)
   ✓  70 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (844×390 dark 100 %) (13.3s)
   ✓  71 [chromium] › tests/w3-notices.spec.ts:158:1 › the room a gone notice keeps stays while the page is scrolled, and goes on the same screen once idle (390×844, 200 %) (14.3s)
+  ✓  72 [chromium] › tests/w3-notices.spec.ts:210:1 › the room is not given back while a pointer is held; it goes 4–6.5 s after release (1440×900, 100 %) (16.8s)
+  ✓  73 [chromium] › tests/w3-notices.spec.ts:239:1 › a new screen starts with no room: Today after End, then Stats and back (375×667, 100 %) (10.0s)
+  ✓  74 [chromium] › tests/w3-notices.spec.ts:265:1 › the status bar warm-days button is named "N days warm. Show details" (and ", today not brewed yet") (4.1s)
+
+  Slow test file: [chromium] › tests/notice-strip.spec.ts (24.9m)
+  Slow test file: [chromium] › tests/summary-notice.spec.ts (6.6m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  74 passed (40.9m)
+[slots] LR freed 1 at 10:28:11
