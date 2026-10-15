@@ -1,0 +1,12 @@
+#!/bin/bash
+# f1x-probe.sh <port> <tag> <burners> <repeat>: Q's instrumented I01 copy (every kettle:timer write with its stack) under load.
+PORT=$1; TAG=$2; NB=$3; REP=$4
+EV=/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/ev
+cd /home/user/wt/w6x/kettle
+PIDS=""
+for i in $(seq 1 $NB); do ( while :; do :; done ) & PIDS="$PIDS $!"; done
+echo "burners: $PIDS start $(date -u +%T) load $(cut -d' ' -f1 /proc/loadavg)" > $EV/probe-$TAG.meta.log
+env KETTLE_PORT=$PORT npx playwright test --config .tmp/f1x/pw.config.ts f1-probe.spec.ts --workers=2 --repeat-each=$REP --reporter=list --output=.tmp/f1x-pw/probe-$TAG > $EV/probe-$TAG.log 2>&1
+echo "playwright exit $? end $(date -u +%T) load $(cut -d' ' -f1 /proc/loadavg)" >> $EV/probe-$TAG.meta.log
+kill $PIDS 2>/dev/null; wait 2>/dev/null
+echo "burners stopped $(date -u +%T)" >> $EV/probe-$TAG.meta.log

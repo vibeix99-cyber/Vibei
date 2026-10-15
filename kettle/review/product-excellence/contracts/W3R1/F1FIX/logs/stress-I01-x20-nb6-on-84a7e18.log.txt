@@ -1,0 +1,50 @@
+
+Running 20 tests using 2 workers
+
+  ✓   1 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (35.1s)
+  ✓   2 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (34.8s)
+  ✓   4 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (18.9s)
+  ✓   3 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (21.7s)
+  ✓   5 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (23.7s)
+  ✓   6 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (23.8s)
+  ✓   7 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (24.5s)
+  ✓   8 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (23.6s)
+  ✓   9 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (22.5s)
+  ✓  10 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (23.1s)
+  ✓  11 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (21.1s)
+  ✓  12 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (24.0s)
+  ✓  14 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (22.1s)
+  ✘  13 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (35.6s)
+  ✓  15 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (21.5s)
+  ✓  16 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (22.2s)
+  ✓  17 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (22.5s)
+  ✓  18 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (24.3s)
+  ✓  19 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (24.5s)
+  ✓  20 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (21.0s)
+
+
+  1) [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second 
+
+    Error: timed out waiting for window.__kettle.timer.getState().status === 'idle' && location.hash === '#/done' (page: {"hash":"#/","timer":"idle","info":{"multiTab":true,"leader":false,"leaderMode":"locks","leaderForMs":-1,"scheduler":"worker","settling":false,"dueForMs":null,"wakes":8,"claims":true,"lastClaim":null}})
+
+      111 |         if (Date.now() > until) {
+      112 |           const seen = await evaluate(`JSON.stringify({ hash: location.hash, timer: window.__kettle?.timer.getState().status, info: window.__kettle?.timerInfo(), log: window.__log })`).catch(() => '?');
+    > 113 |           throw new Error(`timed out waiting for ${expression} (page: ${seen})`);
+          |                 ^
+      114 |         }
+      115 |         await sleep(150);
+      116 |       }
+        at Object.waitFor (/home/user/wt/w6x/kettle/tests/integrity.spec.ts:113:17)
+        at /home/user/wt/w6x/kettle/tests/integrity.spec.ts:326:7
+
+    attachment #1: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/f1x-pw/stress-fix-5561-x20-nb6/integrity-I01-session-time-17740-p-and-does-not-add-a-second-chromium-repeat12/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/f1x-pw/stress-fix-5561-x20-nb6/integrity-I01-session-time-17740-p-and-does-not-add-a-second-chromium-repeat12/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second 
+  19 passed (4.9m)

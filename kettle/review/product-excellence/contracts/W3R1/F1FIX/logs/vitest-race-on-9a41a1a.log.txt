@@ -1,0 +1,36 @@
+
+ RUN  v5.0.2 /tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/s9a/kettle
+
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs and is recorded once 628ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a tab that has not yet seen the other tab end the brew does not bring it back by saving its intention 15ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > same brew, other tab paused it: the intention is saved and the pause is kept 32ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > keeps the stored format: same key, the { state, version: 1 } envelope, the same fields in the same order 12ms
+ × src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a save that changes nothing writes nothing (Today’s composer syncing on mount), even in a tab that is behind 28ms
+   → expected '{"state":{"status":"idle","phase":"fo…' to be '{"state":{"status":"running","phase":…' // Object.is equality
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a fresh profile (nothing saved yet) saves as before 9ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > storage full: once this tab’s own save failed, the intention save writes the whole (newer) timer, as before, and repairs storage 10ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a save that changes nothing writes nothing (Today’s composer syncing on mount), even in a tab that is behind
+AssertionError: expected '{"state":{"status":"idle","phase":"fo…' to be '{"state":{"status":"running","phase":…' // Object.is equality
+
+Expected: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1791798000000,"endsAt":1791799500000,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Chapter 3 notes","tag":null,"sessionId":"s_mv529l6o1445d0bd","lastEnded":null},"version":1}"
+Received: "{"state":{"status":"idle","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":null,"endsAt":null,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"","tag":null,"sessionId":null,"lastEnded":null},"version":1}"
+
+ ❯ src/timer/intentionRace.test.ts:196:34
+    194|       storage.stale = null;
+    195|     }
+    196|     expect(storage.getItem(KEY)).toBe(raw);
+       |                                  ^
+    197|     A.storageEvent();
+    198|     expect(A.timer.getState()).toMatchObject({ status: 'running', sess…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 passed (7)
+   Start at  09:17:09
+   Duration  998ms (tests 90%, transform 8%, import 1%)
+
