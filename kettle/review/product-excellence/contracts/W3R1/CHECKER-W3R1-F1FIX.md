@@ -1,6 +1,18 @@
 # CHECKER W3R1 · F1FIX: the `integrity:309` intention-save race
 
-**Verdict: DRAFT, pending Lane R's receipt (`review/F1FIX-LR/RECEIPT-LR-F1FIX.md`).** My reading so far: **REJECT, with one defect for the fix round.** F1X-D1 is audit #1 (`syncIdleLength`), which I rule to be **the same bug**: shown deterministically on the fix, §4. Everything else in the fix verifies.
+**Verdict: REJECT** `pe/w3r1-f1-intention@74138d3` (app `9a41a1a` + `882233b`, src `e2041c1`), as gated in trial `986bda4`. There is one defect, F1X-D1, and one 90-minute fix round (§6). After it, the verdict is final.
+
+**F1X-D1 is audit #1, `syncIdleLength`, ruled the same bug** (§4, §5):
+- a brew-length change in one tab makes every other idle tab write its whole stale timer;
+- so "pick a length, then Start" inside the event lag undoes the brew in both tabs;
+- it is reproduced deterministically on the fix.
+
+**Everything else verifies:**
+- the `setIntention` fix (§1);
+- the deterministic tests, which fail on base and pass on the fix (§2);
+- compatibility, byte-identical both ways (§3);
+- `integrity:309` 20/20 under load (§7);
+- Lane R's regression (§7).
 
 | | |
 |---|---|
@@ -144,3 +156,56 @@ The robust guard is on the receiving side (`sync.ts`): the tab that owns a runni
 4. **◆ Compatibility:** `compat.spec.ts` base ↔ fix, byte-identical, as in §3.
 5. **◆ `integrity:309` ×20 under load** (`--workers=2` + 6 burners): 20/20. `w3-intention-race` 5/5 on the fix, and 3/3 FAIL on :5560.
 6. **The rest:** `integrity.spec.ts` whole once; `w2-home` (the brew-length control) once; `timer.spec.ts` (`timer-app` + `timer-harness`).
+
+## 7. `integrity:309` under load, and Lane R's receipt
+
+**My run** (`LEAD/F1FIX/chain2.sh`, `i01-x20-nb6.log`): `integrity.spec.ts -g 'two tabs, the leading one frozen across the end' --repeat-each=20 --workers=2`, with 6 CPU burners of mine (as the maker used, and as in Q's base run that failed 1/20), on :5562, through the gate (`--n 2`). Load average 7.9 at the start, **15.3 at the end**. **20/20 passed** (4.4 min). With the maker's 40/40 and its probe's **0 writes** from the non-starting tab, Vibei's "20/20 under load" is met.
+
+**Lane R** (`review/F1FIX-LR/RECEIPT-LR-F1FIX.md`, at `bea12a3`; read in full; all on :5562 unless stated):
+
+| Item | Result | My reading |
+|---|---|---|
+| timer-harness, timer-app, pwa | 29 passed, 2 skipped by design | **PASS** |
+| `integrity.spec.ts` whole | 25/25, including `:309` and I03 | **PASS** |
+| The notice suite (`notice-strip`, `w3-notices`, `w3-notices-idle`, `summary-notice`, `toast-room`) | 74/74 | **PASS:** no effect on the notice layer |
+| `w3-intention-race` | passes on :5562, fails on :5560 (A's idle timer over B's brew) | **PASS:** agrees with my 5/5 and 3/3 FAIL (§2) |
+| `integrity:309` ×10, no burners | 10/10 | Agrees. My ×20 under load above covers the loaded case Lane R did not run |
+| The 2-tab manual check (real keys, 48 iterations, quiet and CPU ×6) | The brew kept its session in both tabs and in storage 24/24 on each server; 41/41 running brews made exactly one record. The original bug did **not** show on the control (0/24), so the manual check cannot tell the two apart | **Consistent, not discriminating:** the deterministic tests (§2) are the proof. The 7 `paused` iterations were Lane R's own typed Space reaching the focus screen (its §4), on both servers: **not a finding** |
+
+### Lane R's finding: words typed in tab 2 can become the running brew's label in both tabs. **FOLLOW-UP (pre-existing). It is not related to F1X-D1, and the `sync.ts` guard would not cover it.**
+**What happens** (from Lane R's data and the code). Each tab's Today composer starts from the timer's shared `intention`, so tab 2 already shows tab 1's words. Keystrokes typed into tab 2 around the start are saved (the 150 ms sync) after tab 2 has taken in the brew, so they are saved for the **same session**:
+- **on the fix:** `saveIntentionOnly` case 4, by design (a real edit of the brew's words);
+- **on base:** a whole write of the same running state.
+
+Either way the running brew's label changes in both tabs.
+
+**Classification.**
+- **Pre-existing, and not worse:** control 17/24, fix 14/24.
+- **Not data loss:** the brew, its session and its end are unharmed, and one record is made.
+- **The relations:**
+  - not F1X-D1, which is an idle timer written over a running brew;
+  - not covered by the receiving-side `sync.ts` guard, which re-asserts a running session replaced by idle; a same-session edit is legitimate there.
+- **Where a fix belongs:** it is a design question for Today's composer. A composer that is not the brew's own probably should not edit a running brew's words. One option: the composer's sync writes only while the timer is idle, unless the person edits the brew's task on purpose.
+- **Owner:** Today (`Composer.tsx`) with the timer area. For Vibei, low priority: it needs typing in a second tab within moments of a start in the first.
+
+## Verdict: **REJECT** `pe/w3r1-f1-intention@74138d3`, one defect (F1X-D1), with one 90-minute fix round (§6)
+
+**What verifies (kept for the fix round):**
+- the `setIntention` fix itself (§1): parts (a) and (b), in scope, meeting Vibei §1;
+- the deterministic tests: Vitest 4/7 FAIL on base, 7/7 on the fix; Playwright 3/3 FAIL on both controls, 5/5 on the fix (§2);
+- storage compatibility in both directions, byte-identical (§3);
+- `integrity:309` 20/20 under load (my run), 40/40 (the maker's);
+- Lane R's suites: timer/PWA, integrity 25/25, the notice suite 74/74.
+
+**What blocks.** F1X-D1 (§5): `syncIdleLength` writes a stale tab's whole idle timer over another tab's new brew. It fires automatically, in every idle tab, on a brew-length change made in another tab. I rule it **the same bug** under Vibei's §1 audit, and it is reproduced deterministically on this fix (§4).
+
+**FOLLOW-UPs** (not this round):
+- audit #2 `rebase`, and #3–#6 (the person's own timer actions on a stale tab);
+- the maker's open item (a real edit in a doubly stale tab);
+- the label overwrite above.
+
+The receiving-side guard in `sync.ts` is the recommended single follow-up for the first three. Its owner is the timer area, and it is for Vibei.
+
+**The §6 packet is complete:** scope, the required outcome (§5), and checks 1–6 (◆ are the ones I rerun).
+
+*Run logs:* each `.log` / `.out` in `LEAD/F1FIX/` is committed as a `.txt` copy beside it.
