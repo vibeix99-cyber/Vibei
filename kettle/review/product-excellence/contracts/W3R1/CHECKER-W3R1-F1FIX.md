@@ -375,3 +375,65 @@ The brew ended while the page was still visible: the test's hide came too late. 
 
   Neither can put anything over the field, move it, or change what the page draws.
 - **What is not known:** what was over the field, or had moved it, at that one read. This spec opens its own browser contexts, so no trace was kept.
+
+### Matched-load control (my runs, through the gate, `--lane LEAD --n 1`)
+**Set-up:**
+- The specs are the merged tree's tests, run from `/home/user/wt/w6-int/kettle`.
+- The two arms are :5560 (`f817931`) and :5478 (base `4d36939`), interleaved A B B A … so that both see the same load.
+- Load came from 4 CPU burners (my own PIDs, killed on exit) plus the N2 lane beside them. The load average was 15–20 through the timer part and 13–19 through the notice part; Lane R's first run ended at 14.7.
+
+The script is `pm-control.sh.txt`, the load samples are in `control-load.txt`, and the logs are `control-*.log.txt`.
+
+| Test | :5560 (merge) | :5478 (base) |
+|---|---|---|
+| `timer.spec.ts:156` background, `timer-app` (5 rounds × 2) | **10/10** | **10/10** |
+| `timer.spec.ts:183` hidden page, `timer-app` (5 rounds × 2) | **10/10** | **10/10** |
+| `notice-strip.spec.ts:338` 844×390 dark 200 % (3 rounds) | **3/3** | **3/3** |
+
+Together with Lane R's reruns (1/1 on each server for each test), all three pass on the merged build under the same load. Base behaves the same. On its own, the control does not tell flaky from F1, because the first-run failure did not come back under this load. So for the timer tests I reproduced the failure on purpose.
+
+### Reproduction of both timer failures, on both builds (my runs, through the gate)
+**The spec:** `stall.spec.v2.ts.txt`, run with `stall-pw.config.ts.txt` from the git-ignored `.tmp/lead5-pm/`, A B B A, 2 rounds per server. It holds the two tests copied verbatim with their helpers, each run three ways:
+- **(a) late runner:** one added step, in which the *test process* waits right after `startFocus` (6.5 s for `:156`, 4.5 s for `:183`). The page is untouched. This is the delay the traces show.
+- **(b) armed first:** the same delay, but the observer (the `subscribe` for `:156`, or the hidden page for `:183`) is set up *before* the delay.
+- **(c) page stall:** instead of (a), the page's main thread is kept busy for the same time.
+
+| Variant | :5560 (merge) | :5478 (base) |
+|---|---|---|
+| `:156` (a) as written + late runner | **fails 2/2**: `__doneAt` poll null, done screen showing | **fails 2/2**: identical |
+| `:183` (a) as written + late runner | **fails 2/2**: notifications 0 (expected 1), done screen showing | **fails 2/2**: identical |
+| `:156` (b) armed first + late runner: transition seen within `lateBudget`, session stored once | **2/2** | **2/2** |
+| `:183` (b) hidden first + late runner: one notification, "Tea’s ready — Kettle", title restored | **2/2** | **2/2** |
+| `:156` (c) as written + page stall (v1 + v2) | 3/3 | 3/4: one failure with the same `__doneAt` null |
+| `:183` (c) as written + page stall (v1 + v2) | 3/3 | 3/3 |
+
+The logs are `repro-v2-*.log.txt` and `stall-v1-page-stall.log.txt`; the failure snapshots are `repro-v2-*.error-context.txt`.
+
+**What this shows:**
+- **(a)** gives Lane R's two failures exactly, every time, on the merge and on base alike. When a test's next command arrives after the brew has ended, the test fails as written, whatever the build.
+- **(b)** answers the coordinator's question on the running build. The merged build's running→idle transition does reach `subscribe`, on time, and the session is stored once. The hidden-page notification and both titles also work.
+- **(c)** produced the same `:156` failure once on base. A page that is merely busy delays the end and the test's commands in the same queue, so it gives the failure only sometimes.
+
+### Seen in both traces: React's hook-order warning in `NoticeStrip`. **FOLLOW-UP (pre-existing; not F1)**
+- **The console error:** "React has detected a change in the order of Hooks called by NoticeStrip".
+- **The cause:** `Toast.tsx:482`, `const leaving = useContext(Leaving) || !useIsPresent() || off;`, skips the `useIsPresent()` hook when its layer is leaving.
+- **Pre-existing:** the same line is at `Toast.tsx:349` on base `4d36939`, and the merge does not touch `Toast.tsx`.
+- `useIsPresent` reads one context, and in a production build a context read keeps no hook state, so nothing shifts there. It is still a rules-of-hooks violation and logs this error in development builds and in every e2e run.
+- Area: Notices. Fix: call `useIsPresent()` unconditionally, before the `||`.
+
+### Classification
+| # | Failure | Class | Basis |
+|---|---|---|---|
+| 1 | `timer.spec.ts:156` background | **FLAKY, not F1** (test timing) | Trace: the observer was armed after the brew had ended. Reproduced 2/2 on merge and 2/2 on base by a late test process; passes with the observer armed first. The test file and the completion path (`tick`, `ticker`, `sync`, `tabPresence`) have no diff from base, and the merge's hunks are not on that path. |
+| 2 | `timer.spec.ts:183` hidden page | **FLAKY, not F1** (test timing) | Trace: the brew ended while visible, so there was no notification and the base title showed, which is the visible-page path. Reproduced 2/2 on merge and 2/2 on base by a late test process; passes when hidden first. `notify.ts` and `tabPresence.ts` have no diff from base. |
+| 3 | `notice-strip.spec.ts:338` 844×390 dark 200 % | **FLAKY, not F1** | Same build, same load: 3/3 plus Lane R's 1/1 pass; base 3/3 plus 1/1. It failed before any notice and before any intention save, and the merge changes no UI file. The one transient read is not explained (no trace), so it goes to FOLLOW-UP. |
+
+**No real finding against the merge. The APPROVE of `10ecf2c` stands.**
+
+**FOLLOW-UPs** (for Vibei; tests and Notices; none of them introduced or worsened by F1):
+- **`timer.spec.ts:156`** (unchanged since base): arm the `subscribe` before `startFocus`. Variant (b) shows that this holds under the same delay.
+- **`timer.spec.ts:183`** (unchanged since base): hide the page before the brew can end.
+- **`notice-strip.spec.ts` `press()`** (Q Phase B): a null on the aim re-check fails the test at once. It could aim again, by scrolling once more. The spec's own browser contexts keep no trace, so a one-off like this cannot be read back.
+- **`NoticeStrip`'s conditional `useIsPresent()`** (above).
+
+*Run logs:* `.log` files are git-ignored, so each is committed as a `.log.txt` copy in `LEAD/F1FIX/postmerge/`. The scratch spec lives in the git-ignored `/home/user/wt/w6-int/kettle/.tmp/lead5-pm/`; copies are in the folder. I killed my CPU burners and stopped the v1 run myself, by PID.
