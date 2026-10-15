@@ -1,0 +1,14 @@
+#!/bin/bash
+# LEAD-5 N-2 review job (one browser at a time): my historytrace with an event log (+ a positive control), the guard
+# spec on :5560, and my own focus-scroll mutant of the guard on :5560.
+set -u
+O=$1; L=/home/user/Vibei/kettle/review/product-excellence/contracts/W3R1/review/LEAD/N2
+h() { echo "### $* | start $(date -u +%T) load $(cut -d' ' -f1-3 /proc/loadavg)"; }
+cd "$L" || exit 9
+{ h historytrace 390 light 100 :5560; node historytrace-ev.mjs --base http://127.0.0.1:5560 --cfg 390x844:light:100 --flow historytrace --out "$O/ht-390-light-100-5560.json"; echo "exit $?"; } > "$O/ht.log" 2>&1
+{ h historytrace 1440 light 200 reduced :5560; node historytrace-ev.mjs --base http://127.0.0.1:5560 --cfg 1440x900:light:200 --reduced 1 --flow historytrace --out "$O/ht-1440-light-200r-5560.json"; echo "exit $?"; } >> "$O/ht.log" 2>&1
+{ h POSITIVE CONTROL historytrace 390 light 100 :5560 --mutant 110; node historytrace-ev.mjs --base http://127.0.0.1:5560 --cfg 390x844:light:100 --flow historytrace --mutant 110 --out "$O/ht-390-light-100-5560-MUTANT110.json"; echo "exit $?"; } >> "$O/ht.log" 2>&1
+cd /home/user/wt/w7n/kettle || exit 9
+{ h guard spec on :5560; KETTLE_PORT=5560 npx playwright test tests/w3-history-focus-scroll.spec.ts --project=chromium --workers=1 --reporter=list --output="$O/pw-guard"; echo "exit $?"; } > "$O/guard-5560.log" 2>&1
+{ h LEAD-5 mutant scrollIntoView-start on :5560; KETTLE_PORT=5560 npx playwright test -c .tmp/lead5-n2/pw.config.ts -g 'tap on a History row|Save: the row' --reporter=list --output="$O/pw-mutant"; echo "exit $?"; } > "$O/mutant-siv-5560.log" 2>&1
+echo "done $(date -u +%T)" > "$O/done.txt"

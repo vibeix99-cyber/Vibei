@@ -1,0 +1,168 @@
+### LEAD-5 mutant scrollIntoView-start on :5560 | start 12:54:38 load 3.24 4.00 8.50
+
+Running 8 tests using 1 worker
+
+  ✘  1 [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:169:5 › 1440×900 @200 % reduced motion, light (where X-11 was found) › a tap on a History row opens Edit brew and the row, and the page, stay where the person saw them; Close and Escape too (3.2s)
+  ✘  2 [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:204:5 › 1440×900 @200 % reduced motion, light (where X-11 was found) › Save: the row stays where it was seen (4.6s)
+  ✘  3 [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:169:5 › 1440×900 @100 %, light › a tap on a History row opens Edit brew and the row, and the page, stay where the person saw them; Close and Escape too (4.2s)
+  ✘  4 [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:204:5 › 1440×900 @100 %, light › Save: the row stays where it was seen (6.0s)
+  ✘  5 [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:169:5 › 390×844 phone, touch, light › a tap on a History row opens Edit brew and the row, and the page, stay where the person saw them; Close and Escape too (3.0s)
+  ✘  6 [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:204:5 › 390×844 phone, touch, light › Save: the row stays where it was seen (5.7s)
+  ✘  7 [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:169:5 › 390×844 phone, touch, dark › a tap on a History row opens Edit brew and the row, and the page, stay where the person saw them; Close and Escape too (3.2s)
+  ✘  8 [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:204:5 › 390×844 phone, touch, dark › Save: the row stays where it was seen (5.4s)
+
+
+  1) [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:169:5 › 1440×900 @200 % reduced motion, light (where X-11 was found) › a tap on a History row opens Edit brew and the row, and the page, stay where the person saw them; Close and Escape too 
+
+    Error: Close: scrollY never moved from the tap to the open sheet (66 frames; seen 2962)
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBeLessThanOrEqual[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: <= [32m0[39m
+    Received:    [31m394[39m
+
+      181 |           expect(open.settled, `${how}: the row and the page are still once the sheet is open`).toBe(true);
+      182 |           const dOpen = await stopRec(page, seen);
+    > 183 |           expect(dOpen.dSy, `${how}: scrollY never moved from the tap to the open sheet (${dOpen.frames} frames; seen ${seen.sy})`).toBeLessThanOrEqual(0);
+          |                                                                                                                                     ^
+      184 |           expect(dOpen.dTop, `${how}: the row never moved more than ${TOL} px from the tap to the open sheet (seen at ${seen.top})`).toBeLessThanOrEqual(TOL);
+      185 |
+      186 |           await startRec(page, IDX);
+        at /home/user/wt/w7n/kettle/.tmp/lead5-n2/mutant-siv.spec.ts:183:133
+
+  2) [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:204:5 › 1440×900 @200 % reduced motion, light (where X-11 was found) › Save: the row stays where it was seen 
+
+    Error: the row stays where it was seen through Save
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBeLessThanOrEqual[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: <= [32m2[39m
+    Received:    [31m394[39m
+
+      226 |         // `scrollY` may change here by the strip's height; what the person sees, the row, must not.
+      227 |         test.info().annotations.push({ type: 'save scrollY change (the notice strip kept out of view)', description: `${Math.round(d.dSy)} px` });
+    > 228 |         expect(d.dTop, 'the row stays where it was seen through Save').toBeLessThanOrEqual(TOL);
+          |                                                                        ^
+      229 |         expect(Math.abs(after.top - seen.top)).toBeLessThanOrEqual(TOL);
+      230 |       } finally {
+      231 |         await ctx.close();
+        at /home/user/wt/w7n/kettle/.tmp/lead5-n2/mutant-siv.spec.ts:228:72
+
+  3) [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:169:5 › 1440×900 @100 %, light › a tap on a History row opens Edit brew and the row, and the page, stay where the person saw them; Close and Escape too 
+
+    Error: Close: scrollY never moved from the tap to the open sheet (68 frames; seen 1683)
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBeLessThanOrEqual[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: <= [32m0[39m
+    Received:    [31m417[39m
+
+      181 |           expect(open.settled, `${how}: the row and the page are still once the sheet is open`).toBe(true);
+      182 |           const dOpen = await stopRec(page, seen);
+    > 183 |           expect(dOpen.dSy, `${how}: scrollY never moved from the tap to the open sheet (${dOpen.frames} frames; seen ${seen.sy})`).toBeLessThanOrEqual(0);
+          |                                                                                                                                     ^
+      184 |           expect(dOpen.dTop, `${how}: the row never moved more than ${TOL} px from the tap to the open sheet (seen at ${seen.top})`).toBeLessThanOrEqual(TOL);
+      185 |
+      186 |           await startRec(page, IDX);
+        at /home/user/wt/w7n/kettle/.tmp/lead5-n2/mutant-siv.spec.ts:183:133
+
+  4) [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:204:5 › 1440×900 @100 %, light › Save: the row stays where it was seen 
+
+    Error: the row stays where it was seen through Save
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBeLessThanOrEqual[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: <= [32m2[39m
+    Received:    [31m417[39m
+
+      226 |         // `scrollY` may change here by the strip's height; what the person sees, the row, must not.
+      227 |         test.info().annotations.push({ type: 'save scrollY change (the notice strip kept out of view)', description: `${Math.round(d.dSy)} px` });
+    > 228 |         expect(d.dTop, 'the row stays where it was seen through Save').toBeLessThanOrEqual(TOL);
+          |                                                                        ^
+      229 |         expect(Math.abs(after.top - seen.top)).toBeLessThanOrEqual(TOL);
+      230 |       } finally {
+      231 |         await ctx.close();
+        at /home/user/wt/w7n/kettle/.tmp/lead5-n2/mutant-siv.spec.ts:228:72
+
+  5) [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:169:5 › 390×844 phone, touch, light › a tap on a History row opens Edit brew and the row, and the page, stay where the person saw them; Close and Escape too 
+
+    Error: Close: scrollY never moved from the tap to the open sheet (40 frames; seen 2940)
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBeLessThanOrEqual[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: <= [32m0[39m
+    Received:    [31m328[39m
+
+      181 |           expect(open.settled, `${how}: the row and the page are still once the sheet is open`).toBe(true);
+      182 |           const dOpen = await stopRec(page, seen);
+    > 183 |           expect(dOpen.dSy, `${how}: scrollY never moved from the tap to the open sheet (${dOpen.frames} frames; seen ${seen.sy})`).toBeLessThanOrEqual(0);
+          |                                                                                                                                     ^
+      184 |           expect(dOpen.dTop, `${how}: the row never moved more than ${TOL} px from the tap to the open sheet (seen at ${seen.top})`).toBeLessThanOrEqual(TOL);
+      185 |
+      186 |           await startRec(page, IDX);
+        at /home/user/wt/w7n/kettle/.tmp/lead5-n2/mutant-siv.spec.ts:183:133
+
+  6) [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:204:5 › 390×844 phone, touch, light › Save: the row stays where it was seen 
+
+    Error: the row stays where it was seen through Save
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBeLessThanOrEqual[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: <= [32m2[39m
+    Received:    [31m328[39m
+
+      226 |         // `scrollY` may change here by the strip's height; what the person sees, the row, must not.
+      227 |         test.info().annotations.push({ type: 'save scrollY change (the notice strip kept out of view)', description: `${Math.round(d.dSy)} px` });
+    > 228 |         expect(d.dTop, 'the row stays where it was seen through Save').toBeLessThanOrEqual(TOL);
+          |                                                                        ^
+      229 |         expect(Math.abs(after.top - seen.top)).toBeLessThanOrEqual(TOL);
+      230 |       } finally {
+      231 |         await ctx.close();
+        at /home/user/wt/w7n/kettle/.tmp/lead5-n2/mutant-siv.spec.ts:228:72
+
+  7) [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:169:5 › 390×844 phone, touch, dark › a tap on a History row opens Edit brew and the row, and the page, stay where the person saw them; Close and Escape too 
+
+    Error: Close: scrollY never moved from the tap to the open sheet (36 frames; seen 2940)
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBeLessThanOrEqual[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: <= [32m0[39m
+    Received:    [31m328[39m
+
+      181 |           expect(open.settled, `${how}: the row and the page are still once the sheet is open`).toBe(true);
+      182 |           const dOpen = await stopRec(page, seen);
+    > 183 |           expect(dOpen.dSy, `${how}: scrollY never moved from the tap to the open sheet (${dOpen.frames} frames; seen ${seen.sy})`).toBeLessThanOrEqual(0);
+          |                                                                                                                                     ^
+      184 |           expect(dOpen.dTop, `${how}: the row never moved more than ${TOL} px from the tap to the open sheet (seen at ${seen.top})`).toBeLessThanOrEqual(TOL);
+      185 |
+      186 |           await startRec(page, IDX);
+        at /home/user/wt/w7n/kettle/.tmp/lead5-n2/mutant-siv.spec.ts:183:133
+
+  8) [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:204:5 › 390×844 phone, touch, dark › Save: the row stays where it was seen 
+
+    Error: the row stays where it was seen through Save
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBeLessThanOrEqual[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: <= [32m2[39m
+    Received:    [31m328[39m
+
+      226 |         // `scrollY` may change here by the strip's height; what the person sees, the row, must not.
+      227 |         test.info().annotations.push({ type: 'save scrollY change (the notice strip kept out of view)', description: `${Math.round(d.dSy)} px` });
+    > 228 |         expect(d.dTop, 'the row stays where it was seen through Save').toBeLessThanOrEqual(TOL);
+          |                                                                        ^
+      229 |         expect(Math.abs(after.top - seen.top)).toBeLessThanOrEqual(TOL);
+      230 |       } finally {
+      231 |         await ctx.close();
+        at /home/user/wt/w7n/kettle/.tmp/lead5-n2/mutant-siv.spec.ts:228:72
+
+  8 failed
+    [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:169:5 › 1440×900 @200 % reduced motion, light (where X-11 was found) › a tap on a History row opens Edit brew and the row, and the page, stay where the person saw them; Close and Escape too 
+    [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:204:5 › 1440×900 @200 % reduced motion, light (where X-11 was found) › Save: the row stays where it was seen 
+    [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:169:5 › 1440×900 @100 %, light › a tap on a History row opens Edit brew and the row, and the page, stay where the person saw them; Close and Escape too 
+    [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:204:5 › 1440×900 @100 %, light › Save: the row stays where it was seen 
+    [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:169:5 › 390×844 phone, touch, light › a tap on a History row opens Edit brew and the row, and the page, stay where the person saw them; Close and Escape too 
+    [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:204:5 › 390×844 phone, touch, light › Save: the row stays where it was seen 
+    [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:169:5 › 390×844 phone, touch, dark › a tap on a History row opens Edit brew and the row, and the page, stay where the person saw them; Close and Escape too 
+    [chromium] › .tmp/lead5-n2/mutant-siv.spec.ts:204:5 › 390×844 phone, touch, dark › Save: the row stays where it was seen 
+exit 1

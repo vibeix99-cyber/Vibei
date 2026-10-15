@@ -1,0 +1,9 @@
+// LEAD-5 scratch config (git-ignored .tmp): the chromium project, pointed at this folder only.
+import { defineConfig, devices } from '@playwright/test';
+const port = Number(process.env.KETTLE_PORT ?? 5183);
+const launchOptions = { args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist', '--autoplay-policy=no-user-gesture-required'] };
+export default defineConfig({
+  testDir: '.', timeout: 60_000, expect: { timeout: 10_000 }, fullyParallel: false, workers: 1, reporter: [['list']],
+  use: { baseURL: `http://127.0.0.1:${port}`, launchOptions, trace: 'off' },
+  projects: [{ name: 'chromium', testMatch: /mutant-siv\.spec\.ts/, use: { ...devices['Desktop Chrome'], launchOptions } }],
+});
