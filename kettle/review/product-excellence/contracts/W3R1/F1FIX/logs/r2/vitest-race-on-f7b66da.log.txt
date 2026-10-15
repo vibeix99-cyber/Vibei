@@ -1,0 +1,57 @@
+
+ RUN  v5.0.2 /tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/sf7/kettle
+
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs and is recorded once 230ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a tab that has not yet seen the other tab end the brew does not bring it back by saving its intention 10ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > same brew, other tab paused it: the intention is saved and the pause is kept 13ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > keeps the stored format: same key, the { state, version: 1 } envelope, the same fields in the same order 11ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a save that changes nothing writes nothing (Today’s composer syncing on mount), even in a tab that is behind 7ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a fresh profile (nothing saved yet) saves as before 4ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > storage full: once this tab’s own save failed, the intention save writes the whole (newer) timer, as before, and repairs storage 5ms
+ × src/timer/intentionRace.test.ts > the idle brew length sync writes only the length (F1X-D1) > B picks another length and starts; A (idle, not yet seen the start) takes in the length change first: the brew survives in both tabs and is recorded once 15ms
+   → storage still holds B’s running brew: expected { status: 'idle', …(13) } to match object { status: 'running', …(5) }
+(8 matching properties omitted from actual)
+ ✓ src/timer/intentionRace.test.ts > the idle brew length sync writes only the length (F1X-D1) > a real length change still persists: one tab 7ms
+ ✓ src/timer/intentionRace.test.ts > the idle brew length sync writes only the length (F1X-D1) > a real length change still persists: two tabs in step, and the other tab’s newer words in storage are kept 5ms
+ ✓ src/timer/intentionRace.test.ts > the idle brew length sync writes only the length (F1X-D1) > a sync that changes nothing writes nothing 3ms
+ ✓ src/timer/intentionRace.test.ts > the idle brew length sync writes only the length (F1X-D1) > storage full: once this tab’s own save failed, the length sync writes the whole (newer) timer, as before, and repairs storage 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/timer/intentionRace.test.ts > the idle brew length sync writes only the length (F1X-D1) > B picks another length and starts; A (idle, not yet seen the start) takes in the length change first: the brew survives in both tabs and is recorded once
+AssertionError: storage still holds B’s running brew: expected { status: 'idle', …(13) } to match object { status: 'running', …(5) }
+(8 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "endsAt": 1791801000000,
+-   "intention": "Chapter 3 notes",
++   "endsAt": null,
++   "intention": "Inbox",
+    "plannedMs": 3000000,
+-   "sessionId": "s_mv529l6o91855a29",
+-   "startedAt": 1791798000000,
+-   "status": "running",
++   "sessionId": null,
++   "startedAt": null,
++   "status": "idle",
+  }
+
+ ❯ src/timer/intentionRace.test.ts:255:68
+    253|     }
+    254|     expect(A.timer.getState()).toMatchObject({ status: 'idle', session…
+    255|     expect(stored().state, 'storage still holds B’s running brew').toM…
+       |                                                                    ^
+    256|
+    257|     // The timer events arrive. Both tabs end with the brew; it comple…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 11 passed (12)
+   Start at  10:35:21
+   Duration  558ms (tests 82%, transform 13%, import 4%, worker 1%)
+

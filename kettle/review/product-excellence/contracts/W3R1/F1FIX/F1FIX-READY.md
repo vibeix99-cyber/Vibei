@@ -208,3 +208,26 @@ Reporter quirk, for the record: Playwright listed the race test as `:73:1` in so
 - The setIntention no-op had the same root; here the trigger is the other tab's own write, so it is deterministic.
 - So a tab that is only following another tab's change must not write at all. This is LEAD §5's second option, applied to the following tab.
 - The Vitest race models this with the stale-copy hook and **fails on `f7b66da`** (below).
+
+### 8.2 Check 2: deterministic Vitest (`src/timer/intentionRace.test.ts`, 12 tests: the 7 earlier ones + 5 new)
+The harness now subscribes the timer to `focusMin` exactly as `ticker.ts:304` does. `settingsEvent()` = `useSettings.persist.rehydrate()` (another tab's settings change arriving); `pickLength(n)` = this tab's person setting `focusMin`.
+
+| New test (F1X-D1) | `4d36939` | `f2298d3` | `74138d3` | `f7b66da` | **fix** |
+|---|---|---|---|---|---|
+| **The race (LEAD's case, completed):** both tabs in step on a saved idle timer. B picks 50 min and starts. A takes in B's settings change first, **with its copy of `kettle:timer` still the old idle one** (the browser's order). Asserted: storage still holds B's `running` session, `endsAt`, `startedAt`, 50 min and B's words; after the timer events both tabs `running` on B's session (A `start`, B nothing); completes once (A leads); 1 record in storage and in each tab | **FAIL** | **FAIL** | **FAIL** | **FAIL** | pass |
+| A real length change persists, **one tab**: nothing stored → whole idle timer at 40 min (as before); then over the same idle timer → byte-identical except `plannedMs`/`remainingMs`; a fresh tab loads 30 min with the words | pass | pass | pass | pass | pass |
+| A real length change persists, **two tabs in step**: A picks 45 min while B's newer words are in storage → storage has 45 min **and B's words**; B takes in the settings change → storage unchanged; both tabs at 45 min with B's words | **FAIL** (A's stale words written back) | **FAIL** | **FAIL** | pass | pass |
+| A sync that changes nothing writes nothing (storage marked, then `syncIdleLength()` and `pickLength(same)` → byte-identical) | pass | pass | pass | pass | pass |
+| Storage full: after this tab's own failed save, the length sync writes the whole newer timer (repair), as before | pass | pass | pass | pass | pass |
+
+| Tree | Result | Log |
+|---|---|---|
+| `4d36939` | 6 failed / 6 passed (the 4 F1 cases + D1 race + two-tabs-in-step) | `r2/vitest-race-on-4d36939.log.txt` |
+| `f2298d3` (`793321b`) | 6 failed / 6 passed | `r2/vitest-race-on-f2298d3.log.txt` |
+| **`74138d3`** | **2 failed** (D1 race, two-tabs-in-step) / 10 passed | `r2/vitest-race-on-74138d3.log.txt` |
+| `f7b66da` | 1 failed (D1 race, stale copy) / 11 passed | `r2/vitest-race-on-f7b66da.log.txt` |
+| **fix `ac9f1e0`** | **12/12** | `r2/vitest-race-on-fix.log.txt` |
+
+Older trees were run as before: `git archive <rev> kettle/src kettle/vite.config.ts kettle/package.json kettle/tsconfig*` into scratch, `node_modules` symlinked, this test file copied in.
+
+**Check 3:** the 7 earlier race tests pass on the fix (above); **Vitest, all: 33 files, 314/314** (`r2/vitest-all-fix.log.txt`); tsc clean (`r2/tsc-fix.log.txt`).

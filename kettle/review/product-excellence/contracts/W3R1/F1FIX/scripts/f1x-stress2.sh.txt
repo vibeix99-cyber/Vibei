@@ -1,0 +1,13 @@
+#!/bin/bash
+# f1x-stress.sh <port> <tag> <burners> <repeat>: integrity:309 (I01 two tabs, leading one frozen) under load:
+# --workers=2 plus CPU burners (own PIDs, killed at the end), as review/FINAL/scripts/LR-stress.sh.
+PORT=$1; TAG=$2; NB=$3; REP=$4
+EV=${EVDIR}
+cd /home/user/wt/w6x/kettle
+PIDS=""
+for i in $(seq 1 $NB); do ( while :; do :; done ) & PIDS="$PIDS $!"; done
+echo "burners: $PIDS start $(date -u +%T) load $(cut -d' ' -f1 /proc/loadavg)" > $EV/stress-$TAG.meta.log
+env KETTLE_PORT=$PORT npx playwright test tests/integrity.spec.ts --project=chromium --workers=2 --repeat-each=$REP --reporter=list --output=.tmp/f1x-pw/stress-$TAG -g 'two tabs, the leading one frozen across the end' > $EV/stress-$TAG.log 2>&1
+echo "playwright exit $? end $(date -u +%T) load $(cut -d' ' -f1 /proc/loadavg)" >> $EV/stress-$TAG.meta.log
+kill $PIDS 2>/dev/null; wait 2>/dev/null
+echo "burners stopped $(date -u +%T)" >> $EV/stress-$TAG.meta.log
