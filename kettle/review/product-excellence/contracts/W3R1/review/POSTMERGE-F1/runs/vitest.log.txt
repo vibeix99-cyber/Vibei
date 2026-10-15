@@ -3,3 +3,55 @@ load@start:  11:24:37 up  2:38,  0 user,  load average: 1.34, 4.04, 5.06
 
  RUN  v5.0.2 /home/user/wt/w6-int/kettle
 
+ ✓ src/timer/intentionRace.test.ts (12 tests) 493ms
+   ✓ saving the intention writes only the intention (F1) (7)
+     ✓ a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs and is recorded once 388ms
+ ✓ src/audio/ambience.test.ts (7 tests) 466ms
+   ✓ ambience noise beds are prepared off the critical path (7)
+     ✓ prepared beds are identical to synchronously generated ones 386ms
+ ✓ src/progress/engine.test.ts (12 tests) 611ms
+   ✓ replay (2)
+     ✓ handles a long history quickly 558ms
+ ✓ src/timer/multitab.test.ts (15 tests) 303ms
+ ✓ src/audio/dsp.test.ts (16 tests) 211ms
+ ✓ src/audio/analysis.test.ts (12 tests) 161ms
+ ✓ src/scene/engine/chaiModel.test.ts (12 tests) 330ms
+ ✓ src/progress/quests.test.ts (8 tests) 152ms
+ ✓ src/progress/portability.test.ts (14 tests) 136ms
+ ✓ src/progress/merge.test.ts (14 tests) 62ms
+ ✓ src/progress/storageFull.test.ts (5 tests) 61ms
+ ✓ src/audio/logic.test.ts (15 tests) 168ms
+ ✓ src/progress/seed.test.ts (5 tests) 62ms
+ ✓ src/timer/store.test.ts (40 tests) 49ms
+ ✓ src/screens/done/rank.test.ts (11 tests) 67ms
+ ✓ src/timer/storageFull.test.ts (4 tests) 46ms
+ ✓ src/screens/done/summary.test.ts (6 tests) 51ms
+ ✓ src/progress/streak.test.ts (12 tests) 28ms
+ ✓ src/progress/dst.test.ts (7 tests) 32ms
+ ✓ src/progress/badges.test.ts (6 tests) 37ms
+ ✓ src/screens/home/chai.test.ts (17 tests) 23ms
+ ✓ src/timer/dst.test.ts (4 tests) 14ms
+ ✓ src/app/intention.test.ts (7 tests) 13ms
+ ✓ src/progress/insights.test.ts (9 tests) 10ms
+ ✓ src/timer/presentation.test.ts (15 tests) 11ms
+ ✓ src/screens/focus/cycle.test.ts (8 tests) 6ms
+ ✓ src/screens/home/shims/data.test.ts (3 tests) 18ms
+ ✓ src/screens/home/warm.test.ts (4 tests) 10ms
+ ✓ src/progress/levels.test.ts (6 tests) 7ms
+ ✓ src/scene/engine/palette.test.ts (4 tests) 6ms
+ ✓ src/scene/chaiHost.test.ts (1 test) 3ms
+ ✓ src/screens/stats/format.test.ts (1 test) 3ms
+ ✓ src/app/saveWarning.test.ts (2 tests) 12ms
+
+ Test Files  33 passed (33)
+      Tests  314 passed (314)
+   Start at  11:24:38
+   Duration  4.41s (tests 47%, transform 32%, import 19%, worker 2%)
+
+  Transform  transforming modules took 2.49s · 32% of tracked time, re-done on every run
+             persist transforms across runs with fsModuleCache: true
+             learn more: https://vitest.dev/guide/improving-performance#caching-between-reruns
+
+vitest exit=0
+11:24:43
+load@end:  11:24:43 up  2:38,  0 user,  load average: 1.79, 4.09, 5.07
