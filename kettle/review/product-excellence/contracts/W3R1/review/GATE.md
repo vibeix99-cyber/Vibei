@@ -207,3 +207,18 @@ The merged src and tests equal trial `cf4a89c`'s. LEAD-5 on :5546:
 | **Trial** | **`986bda4`** = integration (app `f2298d3`) + `74138d3`, worktree `/home/user/wt/w6tr-x`, src `e2041c1`. tsc 0, vitest **309/309**, build OK. Dev **:5562** (verified, `store.ts` served), preview **:5572** |
 | The maker's claims | Storage format unchanged: `4d36939`/`f2298d3` → fix and fix → `4d36939` round-trips 6/6, byte-identical. The vitest race test fails 4/7 on `4d36939` and `f2298d3`, passes 7/7 on the fix. The Playwright race test fails 3/3 on :5560 and :5478, passes 5/5 on the fix. `integrity:309` **20/20 ×2** under load (6 burners). Audit: `syncIdleLength` is the nearest relative (automatic, not reproduced), plus `rebase`; the rest fire on user action; `tick` re-reads. **Open:** a real edit in a tab whose storage copy is also behind can still overwrite; the robust guard belongs in `sync.ts`, out of scope |
 | Archive | `archive/pe-w3r1-f1-intention-74138d3.incremental.bundle` |
+
+## F1 fix: REJECT (LEAD-5 `5060817`, final for this pass). Fix round 10:32–12:02 UTC
+
+- **Defect F1X-D1:** `syncIdleLength` is the same bug as F1 (a length change in another tab makes every idle tab write its whole stale timer). Packet: `CHECKER-W3R1-F1FIX.md` §6.
+- **What verifies:**
+  - the `setIntention` fix;
+  - the race tests: vitest fails 4/7 on base and passes 7/7 on the fix; Playwright fails 3/3 on base and passes 5/5 on the fix;
+  - compatibility, byte-identical;
+  - `integrity:309` 20/20 under load (load 15);
+  - Lane R: timer/pwa, integrity 25/25, notice suite 74/74.
+- **Follow-ups** (for Vibei to schedule; a single `sync.ts` guard suggested):
+  - `rebase`;
+  - the action-triggered writers;
+  - the maker's typed-edit-in-a-stale-tab case.
+- **Lane R's label finding** (each composer mirrors shared words): a pre-existing FOLLOW-UP, a composer design question, low priority.
