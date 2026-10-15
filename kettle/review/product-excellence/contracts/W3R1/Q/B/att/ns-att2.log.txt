@@ -7,3 +7,31 @@ QPRESS getByRole('button', { name: 'End session' }).first() wheels=0 ms=0 at=tru
 QPRESS getByRole('dialog', { name: 'Leave the kettle early?' }).getByRole('button', { name: 'End session' }) wheels=0 ms=0 at=true sheet=true scroller=null
 QPRESS getByRole('button', { name: /^Mark “Chapter 3 notes” done/ }) wheels=1 ms=1386 at=true sheet=false scroller=null
 QPRESS locator('[data-undo-for="mark-done"]').getByRole('button', { name: /^Undo/ }) wheels=0 ms=1 at=true sheet=false scroller=null
+QPRESS getByRole('button', { name: /Tea time|Long tea break/ }) wheels=0 ms=0 at=true sheet=false scroller=null
+QPRESS getByRole('button', { name: /^Put the kettle on/ }) wheels=0 ms=0 at=true sheet=false scroller=null
+QPRESS getByRole('link', { name: 'Stats' }).first() wheels=0 ms=0 at=true sheet=false scroller=null
+QPRESS locator('main button[aria-label*="Edit"]').first() wheels=19 ms=7890 at=true sheet=false scroller=null
+QPRESS getByRole('dialog', { name: 'Edit brew' }).getByRole('button', { name: 'Delete this brew' }) wheels=0 ms=0 at=true sheet=true scroller=null
+QPRESS getByRole('dialog', { name: 'Delete this brew?' }).getByRole('button', { name: 'Delete', exact: true }) wheels=0 ms=0 at=true sheet=true scroller=null
+QPRESS locator('[data-undo-for="history-delete"]').getByRole('button', { name: /^Undo/ }) wheels=0 ms=0 at=true sheet=false scroller=null
+QPRESS getByRole('link', { name: 'Settings' }).first() wheels=0 ms=0 at=true sheet=false scroller=null
+QPRESS getByRole('link', { name: 'Nook' }).first() wheels=0 ms=0 at=true sheet=false scroller=null
+  ✓  1 [chromium] › .tmp/q-probes/ns-att2.spec.ts:340:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (1.1m)
+QPRESS getByRole('textbox', { name: /What are you brewing/ }) wheels=0 ms=0 at=true sheet=false scroller=null
+QPRESS getByRole('button', { name: /^Put the kettle on · / }) wheels=0 ms=0 at=true sheet=false scroller=null
+QPRESS getByRole('button', { name: 'End session' }).first() wheels=0 ms=0 at=true sheet=false scroller=null
+QPRESS getByRole('dialog', { name: 'Leave the kettle early?' }).getByRole('button', { name: 'End session' }) wheels=0 ms=0 at=true sheet=true scroller=null
+QPRESS getByRole('button', { name: /^Mark “Chapter 3 notes” done/ }) wheels=1 ms=1615 at=true sheet=false scroller=null
+QPRESS locator('[data-undo-for="mark-done"]').getByRole('button', { name: /^Undo/ }) wheels=0 ms=0 at=true sheet=false scroller=null
+QPRESS getByRole('button', { name: /Tea time|Long tea break/ }) wheels=0 ms=0 at=true sheet=false scroller=null
+QPRESS getByRole('button', { name: /^Put the kettle on/ }) wheels=0 ms=0 at=true sheet=false scroller=null
+QPRESS getByRole('link', { name: 'Stats' }).first() wheels=0 ms=0 at=true sheet=false scroller=null
+QPRESS locator('main button[aria-label*="Edit"]').first() wheels=19 ms=7310 at=true sheet=false scroller=null
+QPRESS getByRole('dialog', { name: 'Edit brew' }).getByRole('button', { name: 'Delete this brew' }) wheels=0 ms=0 at=true sheet=true scroller=null
+QPRESS getByRole('dialog', { name: 'Delete this brew?' }).getByRole('button', { name: 'Delete', exact: true }) wheels=0 ms=0 at=true sheet=true scroller=null
+QPRESS locator('[data-undo-for="history-delete"]').getByRole('button', { name: /^Undo/ }) wheels=0 ms=0 at=true sheet=false scroller=null
+QPRESS getByRole('link', { name: 'Settings' }).first() wheels=0 ms=1 at=true sheet=false scroller=null
+QPRESS getByRole('link', { name: 'Nook' }).first() wheels=0 ms=0 at=true sheet=false scroller=null
+  ✓  2 [chromium] › .tmp/q-probes/ns-att2.spec.ts:340:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (1.0m)
+
+  2 passed (2.3m)

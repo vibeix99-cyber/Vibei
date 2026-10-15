@@ -109,7 +109,8 @@ Nothing is removed or loosened. The same assertions, the 2 px Undo-in-place chec
 | Run | Result | Log |
 |---|---|---|
 | `:292` 1440 light 200 % reduced, `--repeat-each=6`, `--workers=2` + 4 burners (load to 12.4) | **6/6** (1.2–1.6 min each) | `Q/B/proof/ns292-x6-load-v2.log.txt`, `.json` |
-| `notice-strip.spec.ts`, all 25, `--workers=2` | *(see below)* | `Q/B/proof/notice-strip-all-v2.log.txt` |
+| `notice-strip.spec.ts`, all 25, `--workers=2` (right after the burners stopped; load 12 → 6) | **25/25** (11.8 min) | `Q/B/proof/notice-strip-all-v2.log.txt`, `.json` |
+| The first version (move, park and re-read before the tap; unbounded reads), ×6 under load, for the record | 4/6: the two 4-minute timeouts above | `Q/B/proof/ns292-x6-load.log.txt` |
 
 ### B2 · `integrity:1017` (I03, the storage-full banner, X-1)
 
@@ -146,3 +147,25 @@ That is stricter than the old 6 s of wall time. A failure now says which state d
 - In every failing run the non-starting tab's `idle` write comes 4–556 ms after the starting tab's `running` write, before it has mirrored it; its JS stack is `Composer.tsx` → `setIntention`.
 
 **Classification: product.** The test's 0.8 s after boot is something a person can do. Making the test wait until both composers have synced would hide the race, so **I01 is left unchanged** and nothing in `src/timer/**` was touched. The options for the timer owner are in the note.
+
+### B4 · Optional, done (test only, commit `dcf5595`)
+
+**`w3-notices-load.spec.ts`** (the load control; 2 failures at 390×844 / 375×667 light 200 % reduced, also failing on base):
+- **Synced with `notice-strip`:** its `onTop()` / `press()` now match `notice-strip`'s (B1), and the N-1 retry for the typed task is added.
+- **That alone did not fix the two cases.** Both still failed the same way: the summary's queue held `[200–400, 4000]`, meaning "Saved … of focus" had not run out on Today (`Q/B/proof/w3-notices-load-2cfg{,-v2}.log.txt`).
+- **The rest of the difference from the maintained spec is the copy's diagnostic per-frame logger** (an init script that reads notice state and lays out on every frame).
+- **A scratch copy without it passes both** (`Q/B/proof/w3-notices-load-2cfg-nolog-scratch.log.txt`, 2/2).
+- **Change:** the logger is now opt-in (`W3_LOG=1`), and its read on failure is null-safe.
+- **Result:** the two cases, ×2 with `REP=2` → **8/8** (`Q/B/proof/w3-notices-load-2cfg-v3.log.txt`).
+- **Not explained:** exactly how the logger's work held the notice's clock back.
+
+**`w2-room:167`** (WebGL lost):
+- The test already waits on real state (`data-scene-ready`, bounded at 45 s). Its trouble is that the default 60 s test budget leaves too little after that bound.
+- **Change:** `test.setTimeout(120_000)` for this test only; no bound or assertion is changed.
+- **Under load, ×3:** **3/3** at **53.4 s, 57.5 s** and 33.9 s, two of them within 3 s of the old 60 s cut (`Q/B/proof/w2room-webgl-x3-load.log.txt`).
+
+### Unproven / open
+- **X-1:** the cause of the two historical ≥ 6 s banner failures is not shown; no failure in 20 loaded runs. The new test asserts the real state and would name it.
+- **F1:** a product race, stopped for Vibei. `integrity:309` will keep failing about 1 in 6–20 under load until the timer or Composer is fixed. No deterministic, load-free repro: a same-profile Playwright attempt did not reproduce (in the note).
+- **X-11, attempt 2's own file:** not re-run to a timeout; ×2 passed. Its timeouts are explained by the mechanism reproduced with my first version (the same snapshot: Stats, Undo announced and gone).
+- **Not run on this branch:** the full chromium suite. Run here: tsc and vitest (Phase A; `src` unchanged since), notice-strip 25/25, the owned notice specs, and `integrity` plus `w3-notices-load` in full (below).
