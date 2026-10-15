@@ -1,18 +1,14 @@
 # CHECKER W3R1 · F1FIX: the `integrity:309` intention-save race
 
-**Verdict: REJECT** `pe/w3r1-f1-intention@74138d3` (app `9a41a1a` + `882233b`, src `e2041c1`), as gated in trial `986bda4`. There is one defect, F1X-D1, and one 90-minute fix round (§6). After it, the verdict is final.
+**Final verdict: APPROVE** `pe/w3r1-f1-intention@10ecf2c` (src `b74e6b3`), as gated in fix trial `37de54a` (integration app `f2298d3` + `10ecf2c`). Final: the one fix round is spent. Any change to the branch after this invalidates it.
 
-**F1X-D1 is audit #1, `syncIdleLength`, ruled the same bug** (§4, §5):
-- a brew-length change in one tab makes every other idle tab write its whole stale timer;
-- so "pick a length, then Start" inside the event lag undoes the brew in both tabs;
-- it is reproduced deterministically on the fix.
-
-**Everything else verifies:**
-- the `setIntention` fix (§1);
-- the deterministic tests, which fail on base and pass on the fix (§2);
-- compatibility, byte-identical both ways (§3);
-- `integrity:309` 20/20 under load (§7);
-- Lane R's regression (§7).
+**History.**
+- **First review:** REJECT `74138d3` (§1–§7). The `setIntention` fix itself verified. One defect, F1X-D1: audit #1, `syncIdleLength`, ruled the same bug and reproduced deterministically on that commit.
+- **Fix round (§8):** F1X-D1 is closed. Every check was rerun by me on :5563 against :5560 and :5478:
+  - Vitest and browser cases fail on the controls and pass on the fix;
+  - compatibility is byte-identical both ways;
+  - `integrity:309` 20/20 under load;
+  - integrity, `w2-home`, timer, PWA and vitest are green.
 
 | | |
 |---|---|
@@ -277,3 +273,33 @@ The maker's runs on the now-stopped `74138d3` server (:5562) show the F1X-D1 bro
 
 ### ◆5 · `integrity:309` under load (my run)
 `--repeat-each=20 --workers=2` plus 6 CPU burners of mine, on :5563, through the gate (`--n 2`). Load average 3.7 at the start, 9.3 at the end. **20/20 passed** (3.7 min). The maker's r2 run agrees: 20/20, `stress-r2-x20-nb6.log.txt`. **PASS.**
+
+### Check 6 · The rest, on the final code (my runs, :5563, through the gate)
+I ran these because the fix round changes the idle-length sync, which runs at every boot and on every length change, and the maker's `w2-home` log predates it.
+
+| Suite | Result | Log |
+|---|---|---|
+| `integrity.spec.ts`, whole (includes `:309` and I03) | **25/25** (5.1 min) | `r2/integrity-all.log` |
+| `w2-home.spec.ts` (Today's composer and brew-length control) | **18/18** (3.3 min) | `r2/w2-home.log` |
+| `timer-harness` + `timer-app` + `pwa` | **29 passed, 2 skipped** by design (`timer.spec.ts:295`, `:439`) | `r2/timer-pwa.log` |
+| vitest, all | **33 files, 314/314** | `r2/vitest-all-fix.log` |
+
+## Final verdict: **APPROVE** `pe/w3r1-f1-intention@10ecf2c` (src `b74e6b3`), as gated in fix trial `37de54a`
+Final: the one fix round is spent. Any change to the branch after this invalidates it.
+
+- **F1 (`integrity:309`) is fixed as Vibei ruled.** Saving the intention writes only the intention, into what storage holds now, and nothing at all when it changes nothing or another session is stored.
+- **F1X-D1 is closed.** A tab following another tab's brew-length change writes nothing, and a length change made in this tab writes only the length, and only over the same idle timer.
+  - Reproduced deterministically before: Vitest fails on `74138d3` and `f2298d3`; the browser case fails 3/3 on :5560 and :5478 (and on the maker's :5562).
+  - Passes on the fix: Vitest 12/12; browser 10/10; my own scratch case passes.
+- **Storage is compatible both ways, byte-identical.** `integrity:309` passes 20/20 under load. Integrity, `w2-home`, timer, PWA and vitest are all green on the final code.
+- **No item is introduced or worsened by this change** in a way that is a defect.
+
+**FOLLOW-UPs** (for Vibei; not this round):
+- audit #2 `rebase` and #3–#6 (writes on the person's own timer actions in a stale tab);
+- a real edit typed in a tab whose copy of storage is also behind;
+- **recommended single fix for those three:** a receiving-side guard in `sync.ts` (timer area);
+- the label overwrite Lane R found (a second tab's composer words becoming a just-started brew's words; pre-existing; Today / Composer).
+
+**A Lane R rerun before merge: not needed.** My runs cover timer / PWA, integrity, `w2-home` and the race file on the final code. The change cannot reach the notice layer (only `store.ts` persistence). Lane R's 2-tab manual check could not tell fix from control (§7). The post-merge regression should still include the notice suite, as usual.
+
+*Run logs:* each `.log` / `.out` in `LEAD/F1FIX/r2/` is committed as a `.txt` copy beside it.
