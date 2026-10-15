@@ -222,3 +222,14 @@ The room step itself performs the saves synchronously (`timer.setState`, `progre
 - **Exposure is narrow:** two tabs of one profile, with the brew started within ~0.1–0.6 s of the other tab's Today mounting or a keystroke in its composer. Under load it is about 1 in 6 of I01's runs; unloaded the window is a few ms.
 
 **Vibei's §0 applies:** it is not flaky but a real race, so a real finding to fix before the Final Product Boss. The owners are the timer area (`store.ts` / `sync.ts`: e.g. refuse to persist an idle copy over a stored running session it never saw) and Today (`Composer.tsx`: do not write the intention while idle when storage holds another session). Leaving I01 unchanged is right; making it wait would hide the race.
+
+### My runs on :5547, through the gate
+**Load:** `--workers=2` plus 2 CPU burners of mine (own PIDs, bounded at 900 s) for the first three runs; the X-1 run on the third slot alongside them. Load average 10.4–10.5 at the ends of the loaded runs (`QB/chain.out`).
+
+| Run | Result | Log |
+|---|---|---|
+| `notice-strip` 1440×900 light 200 % reduced motion (listed `:338`, the old `:292`), `--repeat-each=6`, `--workers=2` + burners | **6/6** (3.5 min) | `QB/ns-1440-light-200-rm-x6-load.log` |
+| I03 storage-full banner at 390×844 (X-1), `--repeat-each=10`, alongside the loaded chain (load 10.4 at its start) | **10/10** (4.8 min) | `QB/x1-i03-x10-load.log` |
+| `w2-room` "3D failure (WebGL context lost)", `--repeat-each=3`, `--workers=2` + burners | **3/3**, at **54.1 s, 57.2 s** and 39.1 s. Two of three would have been within 6 s of the old 60 s budget, which supports Q's reading | `QB/w2room-webgl-x3-load.log` |
+
+My first X-1 invocation matched no test: Playwright's `-g` matches the title path joined by spaces, not by `›`. It was rerun with the right filter; the log above is the rerun.
