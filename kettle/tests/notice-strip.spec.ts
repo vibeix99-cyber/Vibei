@@ -459,9 +459,10 @@ for (const c of CFGS) {
     await press(page, touch, row);
     const edit = page.getByRole('dialog', { name: 'Edit brew' });
     await edit.waitFor({ timeout: 10_000 });
-    // Where the person saw the row (on screen) as they opened it: read once the Edit sheet is open and the page's own
-    // focus scroll for the tapped row (History.tsx, pre-existing: W2R3 N-2) has settled (the row still across five
-    // frames, up to 3 s), so the read cannot land before or after that scroll depending on load (W3R1 X-11).
+    // Where the person saw the row (on screen) as they opened it: read once the Edit sheet is open and the row has been
+    // still for five frames (up to 3 s), so a late press() wheel cannot land between this read and the Undo read
+    // (W3R1 X-11). Opening the sheet does not scroll the page (W3R1 N-2, closed as a probe artifact; guarded by
+    // tests/w3-history-focus-scroll.spec.ts).
     const rowY = await row.evaluate(
       (b) =>
         new Promise<number>((done) => {
