@@ -138,7 +138,7 @@ The robust guard is on the receiving side (`sync.ts`): the tab that owns a runni
 - The storage-full repair (after this tab's own failed save) behaves as before.
 - Same key, envelope and field order; no migration.
 
-## 6. Fix round (for when this DRAFT is confirmed: 90 minutes, one round)
+## 6. Fix round (90 minutes, one round; F1X-D1 only)
 
 **Where.** Work on `pe/w3r1-f1-intention` from `74138d3`. Commit locally and never push.
 
