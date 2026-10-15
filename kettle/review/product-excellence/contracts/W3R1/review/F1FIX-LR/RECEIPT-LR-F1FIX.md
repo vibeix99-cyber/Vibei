@@ -18,3 +18,9 @@ Raw evidence only. No verdict. Times are UTC, 2026-10-15. Task received 09:46, b
 `runs/timer-pwa.log.txt`, `runs/timer-pwa.json`; `KETTLE_PORT=5562 KETTLE_PWA_PORT=5499 npx playwright test --project=timer-harness --project=timer-app --project=pwa --workers=1`; 09:47 to 09:50:39 (3.4 min).
 
 **29 passed, 2 skipped, 0 failed, 0 flaky** (31 tests): `timer-harness` 14 passed; `timer-app` 12 passed, 2 skipped; `pwa` 3 passed. The 2 skips are by design in `tests/timer.spec.ts` (lines 295 and 439, `test.skip(!kettlePage.includes('harness'))`). Same counts as the earlier final run on `2be3de1` and the combined trial.
+
+## 2. The full integrity suite on :5562, once
+
+`runs/integrity-5562.log.txt`, `runs/integrity-5562.json`; `KETTLE_PORT=5562 npx playwright test tests/integrity.spec.ts --project=chromium --workers=1`; 09:50:41 to 09:55:46 (5.1 min); load average about 3 to 8 (the notice suite ran at the same time).
+
+**25 of 25 passed**, 0 failed, 0 flaky, 0 skipped. This includes `integrity.spec.ts:309` (I01 "two tabs, the leading one frozen across the end…": passed, 18.4 s) and the two I03 storage-full cases at 390×844, 375×667 and 1440×900 (the earlier-flaky I03 "gone when there is room" among them). `integrity.spec.ts` is unchanged by the fix (the packet and `git diff` agree). One run of the whole file, no repeats.
