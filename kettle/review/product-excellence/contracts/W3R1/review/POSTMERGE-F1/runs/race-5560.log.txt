@@ -4,3 +4,7 @@
 Running 2 tests using 1 worker
 
   ✓  1 [chromium] › tests/w3-intention-race.spec.ts:64:1 › a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs, one record (13.6s)
+  ✓  2 [chromium] › tests/w3-intention-race.spec.ts:119:1 › F1X-D1: B picks another brew length and starts; A (idle, its timer events held) takes in the length change first: the brew survives, one record (14.5s)
+
+  2 passed (30.6s)
+### end 11:54:59 UTC; exit=0; load:  11:54:59 up  3:08,  0 user,  load average: 12.85, 11.67, 11.08

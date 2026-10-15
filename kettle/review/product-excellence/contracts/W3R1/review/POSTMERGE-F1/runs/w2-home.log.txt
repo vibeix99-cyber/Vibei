@@ -1,0 +1,6 @@
+### start 11:54:59 UTC; load:  11:54:59 up  3:08,  0 user,  load average: 12.85, 11.67, 11.08
+### cmd: env KETTLE_PORT=5560 KETTLE_PWA_PORT=5499 PLAYWRIGHT_JSON_OUTPUT_NAME=/home/user/wt/w6-int/kettle/.tmp/LR-pw/w2-home.json npx playwright test tests/w2-home.spec.ts --project=chromium --workers=1 --reporter=list,json --output=/home/user/wt/w6-int/kettle/.tmp/LR-pw/w2-home
+
+Running 18 tests using 1 worker
+
+  ✓   1 [chromium] › tests/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (390×844, 100 % text, light) (14.9s)
