@@ -128,7 +128,7 @@ Load: `--workers=2` plus **6** CPU burners (own PIDs, killed at the end). This i
 | `84a7e18` (part b only) | I01 ×20 | **19/20.** 1 fail with the full-run signature: the starting tab idle at `#/`, `leader: false` | `stress-I01-x20-nb6-on-84a7e18.log.txt` |
 | `84a7e18` | Q's instrumented copy ×20 (`f1-probe.spec.ts`; every `kettle:timer` write logged with its stack) | **18/20.** In both failures the non-starting tab wrote `idle` 667 ms / 217 ms after the start. Stack: `Composer.tsx` 150 ms sync → `setIntention` → `saveIntentionOnly`, **"nothing readable stored" branch**: its copy of storage was also behind. Its storage event came 50–66 ms after. That is a no-op save (`''`, `null`), which led to part (a) | `probe-I01-x20-nb6-on-84a7e18.log.txt` (`QDUMP` lines) |
 | **`882233b` (final)** | I01 ×20 | **20/20** (4.6 min, load 16.2 at the end) | `stress-I01-x20-nb6-on-882233b-run1.log.txt` |
-| `882233b` | Q's instrumented copy ×20 | *pending (chain)* | |
+| `882233b` | Q's instrumented copy ×20 | **20/20** (4.3 min, load 15.9 at the end). **The non-starting tab made 0 `kettle:timer` writes in 20 runs**; on `84a7e18` it made 20 (one composer sync per run, 7 of them `idle` within 2 s of the start) | `probe-I01-x20-nb6-on-882233b.log.txt` (`QOK` lines) |
 | `882233b` | I01 ×20, second run | *pending (chain)* | |
 
 ## 5. Audit: other whole-state writers in `store.ts` (not changed)
