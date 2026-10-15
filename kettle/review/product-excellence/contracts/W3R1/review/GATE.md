@@ -222,3 +222,15 @@ The merged src and tests equal trial `cf4a89c`'s. LEAD-5 on :5546:
   - the action-triggered writers;
   - the maker's typed-edit-in-a-stale-tab case.
 - **Lane R's label finding** (each composer mirrors shared words): a pre-existing FOLLOW-UP, a composer design question, low priority.
+
+## F1 fix round (F1X-D1). GATE PASSED, 2026-10-15 ~11:02 UTC
+
+| Item | Result |
+|---|---|
+| Revision | `pe/w3r1-f1-intention@10ecf2c` (fix-round commits `f7b66da`, `db31fbb`, `ac9f1e0`, `10ecf2c` on top of `74138d3`); src `b74e6b3`. Packet `contracts/W3R1/F1FIX/F1FIX-READY.md` §8 (committed through `90cc348`, logs `F1FIX/logs/r2/`) |
+| Scope (checked, `74138d3..10ecf2c`) | `src/timer/store.ts` (+49/−28), `src/timer/intentionRace.test.ts` (+105), `tests/w3-intention-race.spec.ts` (+60/−5). Nothing else; `Composer.tsx` and `integrity.spec.ts` untouched |
+| Change | `syncIdleLength`: the tab picking the length saves only phase/plannedMs/remainingMs over the same idle timer; a no-op writes nothing; a tab following another tab's length change (settings rehydrate, `persist.hasHydrated()` false) writes nothing |
+| **Trial** | **`37de54a`** = integration (app `f2298d3`) + `10ecf2c`, worktree `/home/user/wt/w6tr-x2`, src `b74e6b3`, tests `5aa1d48`. tsc 0, vitest **314/314**, build OK. Dev **:5563** (verified, `store.ts` served), preview **:5573** (200). Old trial servers :5561/:5562/:5572 stopped |
+| The maker's claims | Vitest F1X-D1 case fails on `4d36939`, `f2298d3`, `74138d3`, `f7b66da`; 12/12 on the fix. Browser F1X-D1 case fails 3/3 on :5560, :5562, :5478; passes 3/3 on the fix. Earlier 7 race tests pass; vitest 314/314. Compatibility base↔fix and integration→fix 2/2 each, byte-identical. `integrity:309` ×20 under load (2 workers + 6 burners) 20/20; race file 10/10 on fix, fails 6/6 on :5560. `integrity` 25/25, `w2-home` 18/18, timer 26 + 2 skipped |
+| Archive | `archive/pe-w3r1-f1-intention-fix-10ecf2c.incremental.bundle` (requires `74138d3`) |
+| Next | LEAD-5 final F1FIX verdict on trial :5563 (its ◆ checks from `CHECKER-W3R1-F1FIX.md` §6). Merge only on APPROVE |
