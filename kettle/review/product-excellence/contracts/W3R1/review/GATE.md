@@ -234,3 +234,19 @@ The merged src and tests equal trial `cf4a89c`'s. LEAD-5 on :5546:
 | The maker's claims | Vitest F1X-D1 case fails on `4d36939`, `f2298d3`, `74138d3`, `f7b66da`; 12/12 on the fix. Browser F1X-D1 case fails 3/3 on :5560, :5562, :5478; passes 3/3 on the fix. Earlier 7 race tests pass; vitest 314/314. Compatibility base↔fix and integration→fix 2/2 each, byte-identical. `integrity:309` ×20 under load (2 workers + 6 burners) 20/20; race file 10/10 on fix, fails 6/6 on :5560. `integrity` 25/25, `w2-home` 18/18, timer 26 + 2 skipped |
 | Archive | `archive/pe-w3r1-f1-intention-fix-10ecf2c.incremental.bundle` (requires `74138d3`) |
 | Next | LEAD-5 final F1FIX verdict on trial :5563 (its ◆ checks from `CHECKER-W3R1-F1FIX.md` §6). Merge only on APPROVE |
+
+## F1 fix: APPROVE (LEAD-5 `26b37bc`, final) → merged as `5f78af1` (2026-10-15 ~11:30 UTC)
+
+- The merged src `b74e6b3` and tests `5aa1d48` equal trial `37de54a`'s.
+- **LEAD-5 on :5563:**
+  - Vitest 12/12 on the fix; it fails 2 on `74138d3` and 6 on `f2298d3`.
+  - The browser race file passes 10/10 on the fix and fails 6/6 on both :5560 and :5478.
+  - Storage compatibility: base↔fix byte-identical.
+  - `integrity:309` 20/20 (2 workers + 6 burners); `integrity` 25/25; `w2-home` 18/18; timer + PWA 29 passed + 2 skipped; vitest 314/314.
+  - No Lane R rerun is needed before merge. The post-merge regression includes the notice suite.
+- **Follow-ups for Vibei** (not scheduled):
+  - `rebase`, and the person's own timer actions in an out-of-date tab;
+  - a typed edit in a doubly stale tab.
+
+  One receiving-side `sync.ts` guard is recommended for both. Separately: Lane R's label overwrite, a Today composer design question.
+- **Integration HEAD app code is now `5f78af1`** (src `b74e6b3`). Next: item 3 (N-2).
