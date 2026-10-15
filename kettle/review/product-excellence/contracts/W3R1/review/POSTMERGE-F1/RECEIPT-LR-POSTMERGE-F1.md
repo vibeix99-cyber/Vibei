@@ -8,7 +8,7 @@ Raw evidence only. No verdict. Times are UTC, 2026-10-15. Task received 11:23, b
 |---|---|
 | Tree | integration worktree `/home/user/wt/w6-int` at `f817931`, app `5f78af1`, `kettle/src` tree `b74e6b3`; `git status` clean |
 | Servers | dev **:5560** (debug API, `window.__kettle`) and **:5570** (preview) answered 200 at 11:24. `verify.sh /home/user/wt/w6-int 5560`: "PORT 5560 serves f817931 (src b74e6b3): VERIFIED"; the served `src/timer/store.ts` has the same hash as the committed blob (`ecb09baca37315a7`). Old base :5478 / :5488 answered 200 (a control only if something failed) |
-| Machine | 4 CPUs; gate maximum 3 browser processes; a second maker lane (N2) shared the machine and the gate. **Load average was 13 to 15 for most of the run** (1-minute average, from 11:31 on; it was 0.6 at 11:24), so every browser run below ran loaded; the load at the start and the end of each run is in its log header and trailer |
+| Machine | 4 CPUs; gate maximum 3 browser processes; a second maker lane (N2) shared the machine and the gate. **Load average was 8 to 19 for most of the run** (1-minute average, mostly 10 to 15 from 11:31 on; it was 0.6 at 11:24), so every browser run below ran loaded; the load at the start and the end of each run is in its log header and trailer |
 | Gate | every Playwright and every manual-script run went through `slots.py run --lane LR`: the notice suite with `--n 2` and two workers; every other job `--n 1`, one worker. Up to three of my jobs were queued side by side; the gate let at most one per lane hold while another lane waited |
 | Reused | commands, environment and spec lists from `F1FIX-LR/RECEIPT-LR-F1FIX.md`, pointed at :5560; the 2-tab script is rewritten (below) |
 | Scripts | `scripts/`: `LR-common.sh` (the gate helper that writes the load header and trailer), `LR-lane1.sh`, `LR-lane2.sh`, `LR-lane3.sh`, `LR-manual.mjs` |
@@ -38,7 +38,7 @@ Files: `runs/failures/first-run-timer-timer-reliability-*/` (error-context.md an
 - **:5560**, `runs/rerun-timer-app-5560.log.txt`, 11:55:16: **2 of 2 passed** (9.0 s and 7.8 s); load average 11.9 at the start, 14.3 at the end.
 - **:5478** (old base, control), `runs/control-timer-app-5478.log.txt`, 11:55:38: **2 of 2 passed** (9.2 s and 12.1 s); load average 14.3 to 15.8.
 
-Classification: **does not reproduce** on :5560 (both pass on the rerun); **does not fail on :5478** either. Both failures were a 10 s poll on a 2-second brew while the machine's load average was 13 to 15.
+Classification: **does not reproduce** on :5560 (both pass on the rerun); **does not fail on :5478** either. Both failures were a 10 s `expect.poll` for a marker the page sets when the brew completes (`__doneAt`, `__notes`), while the machine's load average was 13 to 15; the snapshot at the failure shows the done screen.
 
 With the two reruns counted in place of the two failures: 29 passed, 2 skipped (the expected 29 + 2). A whole second run of the three projects, asked for by nobody, is in section 2b if it finished.
 
@@ -50,7 +50,7 @@ With the two reruns counted in place of the two failures: 29 passed, 2 skipped (
 
 ## 4. The notice suite on :5560
 
-`runs/notice-suite.log.txt`, `runs/notice.json`; `KETTLE_PORT=5560 npx playwright test tests/notice-strip.spec.ts tests/w3-notices.spec.ts tests/w3-notices-idle.spec.ts tests/summary-notice.spec.ts tests/toast-room.spec.ts --project=chromium --workers=2`; two gate slots; 11:25:45 to 11:50:56 (25.1 min); load average 1.4 at the start, 10.0 at the end (13 to 15 in between).
+`runs/notice-suite.log.txt`, `runs/notice.json`; `KETTLE_PORT=5560 npx playwright test tests/notice-strip.spec.ts tests/w3-notices.spec.ts tests/w3-notices-idle.spec.ts tests/summary-notice.spec.ts tests/toast-room.spec.ts --project=chromium --workers=2`; two gate slots; 11:25:45 to 11:50:56 (25.1 min); load average 1.4 at the start, 10.0 at the end (13 to 19 in between).
 
 **73 passed, 1 failed** (74 tests): `notice-strip` 24 passed + 1 failed (of 25), `w3-notices` 9, `w3-notices-idle` 12, `summary-notice` 14, `toast-room` 14 (all passed). 0 flaky, 0 skipped.
 
@@ -113,12 +113,12 @@ Cells (each 6 iterations): **S1** both tabs on Today; A types "Write the report"
 | S1 loaded, re-run with an 8 s typing wait (`manual-loaded-slowtype/`) | 6 of 6 | 6 of 6 | **6 of 6** | 6 of 6 | 0 |
 | S2 loaded, re-run with an 8 s typing wait | 6 of 6 | 6 of 6 | **6 of 6** | 6 of 6 | 0 |
 
-Totals for 6a and 6b: 54 iterations (12 in 6a, 42 in 6b), **54 of 54 with the brew surviving as defined, 54 of 54 with exactly one record, 0 page errors**; no iteration had `idle` in either tab or in storage after the brew started.
+Totals for 6a and 6b: 54 iterations (12 in 6a, 42 in 6b), **54 of 54 with the brew surviving as defined, 54 of 54 with exactly one record, 0 page errors**; no dump taken after the Start (the two moments before the end, both tabs and storage, in all 54 iterations) showed `idle`; S0 also timed out typing in tab A's missing composer in 6 of 6.
 
 What else was seen:
 - **S0 (B opened after the start):** B's Today is sent to `#/focus` at once in 6 of 6 (composer present on B: 0 of 6), so there is no task field to type in on either tab; the typing calls in both tabs timed out (1.5 s) in 6 of 6. The brew survived in 6 of 6.
-- **Typing in B did not always happen.** In S1 and S2 the typing call in B gave up (the composer was no longer on B because B had already taken in the brew and moved to the focus screen) in: S1 quiet 1 of 6; S1 loaded 5 of 6 (first run) and 2 of 6 (8 s wait); S2 quiet 0 of 6; S2 loaded 3 of 6 (first run) and 5 of 6 (8 s wait). A longer wait did not change that (the element was gone, not slow), so the loaded S1 and S2 counts above are for runs in which B's text was typed in part or in whole in some iterations and not in others; the brew survived in all of them.
-- **The running brew's task label can be changed by the words typed in B**, as in the earlier round: the label differs from "Write the report" in S1 quiet 1 of 6, S2 quiet 6 of 6, S0 quiet 0 of 6, S1 loaded 3 of 6 and 2 of 6 (re-run), S2 loaded 6 of 6 and 6 of 6 (re-run). Examples: "ReplyToBobWrite the report", "ToBobWrite the reportReply", "Write the reportReply", "RepWrite the report", "-1Write the report". In S2, B's composer already held A's "Write the report" (taken in by the sync) when "Reply" was typed (`valueBefore` "Write the reportReply" in 36 of 36 S2 iterations). The label is the same in A, B and storage in every iteration. The earlier round saw the same on both the old and the fixed build (control 17 of 24, fix 14 of 24); I did not run this script on :5478, so there is no control for these counts. Whether it is intended is not mine to say.
+- **Typing in B did not always happen.** In S1 and S2 the typing call in B gave up (B was on the focus screen at the next dump, composer gone; B had taken in the brew) in: S1 quiet 1 of 6; S1 loaded 5 of 6 (first run) and 2 of 6 (8 s wait); S2 quiet 0 of 6; S2 loaded 3 of 6 (first run) and 5 of 6 (8 s wait). A longer wait did not change that (the element was gone, not slow), so the loaded S1 and S2 counts above are for runs in which B's text was typed in part or in whole in some iterations and not in others; the brew survived in all of them.
+- **The running brew's task label can be changed by the words typed in B**, as in the earlier round: the label differs from "Write the report" in S1 quiet 1 of 6, S2 quiet 6 of 6, S0 quiet 0 of 6, S1 loaded 3 of 6 and 2 of 6 (re-run), S2 loaded 6 of 6 and 6 of 6 (re-run). Examples: "ReplyToBobWrite the report", "ToBobWrite the reportReply", "Write the reportReply", "RepWrite the report", "-1Write the report". In S2, B's composer already held A's "Write the report" (taken in by the sync) when "Reply" was typed (`valueBefore` "Write the reportReply" in 18 of 18 S2 iterations). The label is the same in A, B and storage in every iteration. The earlier round saw the same on both the old and the fixed build (control 17 of 24, fix 14 of 24); I did not run this script on :5478, so there is no control for these counts. Whether it is intended is not mine to say.
 - The A/B Start-button text, `focusMin` and `plannedMs` all moved together (6a).
 
 ## 7. Summary and Unproven
@@ -139,7 +139,7 @@ What else was seen:
 
 | Item | Status |
 |---|---|
-| Everything ran at a load average of 8 to 19 (my parallel jobs and the other lane); the machine was never quiet | the two timer-app failures and the one notice-strip failure fit that, and passed on rerun; a quiet-machine run of the whole set was not done |
+| Everything ran at a load average of 8 to 19 (my parallel jobs and the other lane); the machine was never quiet | the two timer-app failures and the one notice-strip failure happened at that load, and passed on rerun; a quiet-machine run of the whole set was not done |
 | The manual check does not separate this build from the old one | I ran it on :5560 only. The earlier round saw that the original bug did not show in this kind of check on the unfixed build either (the deterministic race spec is what shows it); no control run on :5478 this time |
 | 6b "type a task in each tab" | B's composer was gone before or during the typing in a share of the iterations (counts in section 6b); in those the brew survives, but B's text was not (all) entered |
 | Notice suite and the other files were run once each (plus one rerun of each failure), not repeated | no repeats beyond `integrity:309` x10; notice suite at two workers this time (the earlier round used one) |
