@@ -41,3 +41,9 @@ Running 74 tests using 2 workers
   ✓  36 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (667×375 dark 100 %, task day) (28.9s)
   ✓  37 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (667×375 dark 100 %, big day) (29.6s)
   ✓  38 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (1440×900 light 100 %, task day) (30.3s)
+  ✓  39 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (1440×900 light 100 %, big day) (29.8s)
+  ✓  40 [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by wheel (375×667, 200 % text) (25.7s)
+FACT 390x844-light-t100 a-no-input {"leftAt":5396,"room":68,"commits":[{"t":5408,"why":"rest","room":68,"shown":null,"down":0,"sinceInput":4493,"topBefore":132,"topAfter":132,"sy":0},{"t":9520,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8605,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":4124,"collapseAfterLastBusyMs":4124,"visibleMove":68}
+  ✓  41 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (390x844-light-t100) (11.7s)
+FACT 390x844-light-t100 b-scroll-then-idle {"leftAt":5631,"room":68,"maxSy":480,"scrollMs":3440,"roomAfterScroll":68,"commits":[{"t":13120,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4049,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":7489,"collapseAfterLastBusyMs":4049,"visibleMove":68}
+  ✓  43 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (390x844-light-t100) (15.1s)
