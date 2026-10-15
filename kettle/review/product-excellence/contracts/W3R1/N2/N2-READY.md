@@ -93,7 +93,7 @@ The branch carries **one new file**: `kettle/tests/w3-history-focus-scroll.spec.
 
 **What it asserts** (8 tests, pointer and touch; `IDX = 2`, the target row placed mid-screen by an instant script scroll, a real mouse down/up or a real touch tap on its middle):
 * from the tap through the Edit sheet being open (700 ms spring + five still frames) the row's top never differs from where it was seen by more than **2 px**, and `scrollY` never differs **at all**, on **every animation frame** (not only at the end);
-* then the same through **Close (×)** and through **Escape**, with focus back on the row, and finally the row where it was seen;
+* then the same through **Close (×)** and through **Escape**, with focus back on the row, and finally the row where it was seen (the Edit sheet has no Cancel button; its closers are ×, Escape and the backdrop; × and Escape are exercised, the backdrop goes through the same `requestClose`);
 * **Save**: the row's top never differs by more than 2 px. (`scrollY` is *not* asserted here: Saving raises "Brew updated" in the notice strip above the list, and `Toast.tsx:521` → `keepStill` scrolls the page by the strip's height in the same frame to keep what is in view still — the I10 rule. Measured: +68 px at 1440 @100 and 390, +73 px at 1440 @200; the row's top changes by 0 / −0.5 / 0 px — `evidence/save-*.json`. It is recorded as a test annotation.)
 * configurations: **1440×900 @200 % reduced motion, light** (where X-11 was found); **1440×900 @100 %**; **390×844 phone, touch, light**; **390×844 phone, touch, dark**.
 
