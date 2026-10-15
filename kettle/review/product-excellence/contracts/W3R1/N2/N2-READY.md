@@ -24,6 +24,8 @@
 | 390×844 @200 %, light, touch | mid / bottom / top | 372.3 / 6135 · 733.3 / 5774 · 37.3 / 6470 | same | same | 0 | 0 | 0 | 0 |
 | 375×667 @200 % reduced, light, touch | mid / bottom / top | 283.7 / 6524 · 556.7 / 6251 · 42.7 / 6765 | same | same | 0 | 0 | 0 | 0 |
 
+The same probe on the other builds: **:5570** (the integration's production preview build) and **:5478** (the old base `4d36939`), 1440 @200 reduced / 1440 @100 / 390 touch × mid / bottom / top = **9 of 9 each at exactly 0 px**, no scroll call, no scroll event (`evidence/probe-integration-preview-5570-matrix.json`, `evidence/probe-old-base-4d36939-5478-matrix.json`).
+
 **18 of 18: the page and the row never move by a single pixel** (not 0.5, exactly 0) from the tap through the open sheet to after the close; no programmatic scroll call, no `scroll` event. The base does not move in **any** of the three configurations the brief names (1440 @200 % reduced light, 1440 @100 %, 390 phone touch), nor in the other three.
 
 ### B. What the page does on a tap, call by call (`evidence/base-1440-200r.json`, 1440×900 @200 % reduced, mouse)

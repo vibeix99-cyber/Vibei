@@ -1,0 +1,37 @@
+[slots] N2 took 2/3 at 12:16:21: npx playwright test tests/w3-stats.spec.ts --project=chromium --workers=2 --reporter=list --output=/tmp/n2/pw/Cw3-stats
+
+Running 30 tests using 1 worker
+
+  ✓   1 [chromium] › tests/w3-stats.spec.ts:102:5 › Delete this brew? at 375×667 with 200 % text › both choices can be tapped, and Tab reaches them in a loop (8.0s)
+  ✓   2 [chromium] › tests/w3-stats.spec.ts:151:5 › Delete this brew? at 375×667 with 200 % text › a tap on Delete deletes (6.6s)
+  ✓   3 [chromium] › tests/w3-stats.spec.ts:102:5 › Delete this brew? at 390×844 with 200 % text › both choices can be tapped, and Tab reaches them in a loop (6.4s)
+  ✓   4 [chromium] › tests/w3-stats.spec.ts:151:5 › Delete this brew? at 390×844 with 200 % text › a tap on Delete deletes (6.5s)
+  ✓   5 [chromium] › tests/w3-stats.spec.ts:102:5 › Delete this brew? at 844×390 with 200 % text › both choices can be tapped, and Tab reaches them in a loop (9.1s)
+  ✓   6 [chromium] › tests/w3-stats.spec.ts:151:5 › Delete this brew? at 844×390 with 200 % text › a tap on Delete deletes (9.7s)
+  ✓   7 [chromium] › tests/w3-stats.spec.ts:102:5 › Delete this brew? at 1440×900 with 200 % text › both choices can be tapped, and Tab reaches them in a loop (9.2s)
+  ✓   8 [chromium] › tests/w3-stats.spec.ts:151:5 › Delete this brew? at 1440×900 with 200 % text › a tap on Delete deletes (8.5s)
+  ✓   9 [chromium] › tests/w3-stats.spec.ts:102:5 › Delete this brew? at 375×667 › both choices can be tapped, and Tab reaches them in a loop (11.4s)
+  ✓  10 [chromium] › tests/w3-stats.spec.ts:151:5 › Delete this brew? at 375×667 › a tap on Delete deletes (6.1s)
+  ✓  11 [chromium] › tests/w3-stats.spec.ts:102:5 › Delete this brew? at 390×844 with 200 % text, fonts blocked › both choices can be tapped, and Tab reaches them in a loop (11.4s)
+  ✓  12 [chromium] › tests/w3-stats.spec.ts:151:5 › Delete this brew? at 390×844 with 200 % text, fonts blocked › a tap on Delete deletes (7.3s)
+  ✓  13 [chromium] › tests/w3-stats.spec.ts:102:5 › Delete this brew? at 375×667 with 200 % text, fonts blocked › both choices can be tapped, and Tab reaches them in a loop (9.2s)
+  ✓  14 [chromium] › tests/w3-stats.spec.ts:151:5 › Delete this brew? at 375×667 with 200 % text, fonts blocked › a tap on Delete deletes (7.0s)
+  ✓  15 [chromium] › tests/w3-stats.spec.ts:207:3 › Stats (veteran): the summary and tiles match the history recomputed from its records (5.3s)
+  ✓  16 [chromium] › tests/w3-stats.spec.ts:207:3 › Stats (celebrate): the summary and tiles match the history recomputed from its records (3.1s)
+  ✓  17 [chromium] › tests/w3-stats.spec.ts:207:3 › Stats (newbie): the summary and tiles match the history recomputed from its records (3.1s)
+  ✓  18 [chromium] › tests/w3-stats.spec.ts:229:1 › a brew that ends after midnight belongs to the day it ended on, everywhere on Stats (6.7s)
+  ✓  19 [chromium] › tests/w3-stats.spec.ts:255:1 › a brew ended early at 12:40 counts 12 minutes in History, as in its leaves and the End sheet (5.0s)
+  ✓  20 [chromium] › tests/w3-stats.spec.ts:299:3 › Stats (empty) never says "streak" (3.4s)
+  ✓  21 [chromium] › tests/w3-stats.spec.ts:299:3 › Stats (newbie) never says "streak" (4.0s)
+  ✓  22 [chromium] › tests/w3-stats.spec.ts:299:3 › Stats (veteran) never says "streak" (5.0s)
+  ✓  23 [chromium] › tests/w3-stats.spec.ts:299:3 › Stats (celebrate) never says "streak" (5.3s)
+  ✓  24 [chromium] › tests/w3-stats.spec.ts:299:3 › Stats (atRisk) never says "streak" (4.8s)
+  ✓  25 [chromium] › tests/w3-stats.spec.ts:307:1 › the History delete dialog speaks of warm days, and the at-risk card invites without a countdown (7.0s)
+  ✓  26 [chromium] › tests/w3-stats.spec.ts:348:5 › Overview tiles at 390×844 with 200 % text › every tile text fits once the fonts are in (4.9s)
+  ✓  27 [chromium] › tests/w3-stats.spec.ts:348:5 › Overview tiles at 375×667 with 200 % text › every tile text fits once the fonts are in (1.8s)
+  ✓  28 [chromium] › tests/w3-stats.spec.ts:348:5 › Overview tiles at 844×390 with 200 % text › every tile text fits once the fonts are in (3.4s)
+  ✓  29 [chromium] › tests/w3-stats.spec.ts:365:5 › Stats before the web fonts arrive, 390×844, 200 % text › the page stays the width of the screen and the tiles fit (fonts blocked) (6.5s)
+  ✓  30 [chromium] › tests/w3-stats.spec.ts:365:5 › Stats before the web fonts arrive, 375×667, 200 % text › the page stays the width of the screen and the tiles fit (fonts blocked) (5.6s)
+
+  30 passed (3.2m)
+[slots] N2 freed 2 at 12:19:35
