@@ -1,0 +1,34 @@
+[slots] N2 took 2/3 at 12:35:21: npx playwright test tests/integrity.spec.ts --project=chromium --workers=2 --reporter=list --output=/tmp/n2/pw/Dintegrity
+
+Running 25 tests using 1 worker
+
+  ✓   1 [chromium] › tests/integrity.spec.ts:217:3 › I01 session time survives reload, suspension and late return › pause → reload → resume: the paused time is kept and the deadline moves by exactly the pause (9.7s)
+  ✓   2 [chromium] › tests/integrity.spec.ts:244:3 › I01 session time survives reload, suspension and late return › +5 → reload: the extension, its deadline and the gauge segment survive; completion records the full 30 min once (9.1s)
+  ✓   3 [chromium] › tests/integrity.spec.ts:267:3 › I01 session time survives reload, suspension and late return › suspended tab (a real Page Lifecycle freeze) across the end: one completion right after resume, at the real end, "while away" summary (19.6s)
+  ✓   4 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (24.6s)
+  ✓   5 [chromium] › tests/integrity.spec.ts:340:3 › I01 session time survives reload, suspension and late return › late return: an extended brew that ended 2 h ago while the app was closed completes once, at its real end, with the right minutes (8.1s)
+  ✓   6 [chromium] › tests/integrity.spec.ts:373:3 › I01 session time survives reload, suspension and late return › late return to a paused brew: nothing completes; the same time is waiting (3.3s)
+  ✓   7 [chromium] › tests/integrity.spec.ts:395:3 › I01 exactly once › repeated finish / tick / end / pause at 0:00 and a double-clicked Tea time: one record, one grant, one break (7.7s)
+  ✓   8 [chromium] › tests/integrity.spec.ts:430:3 › I01 exactly once › reload during the whistle and again on the summary: one record, rewards granted once, the summary still there (8.9s)
+  ✓   9 [chromium] › tests/integrity.spec.ts:459:3 › I01 exactly once › two tabs on one profile: one record and one grant; both show the same summary; Tea time in one moves both (13.8s)
+  ✓  10 [chromium] › tests/integrity.spec.ts:502:3 › I02 End, dismissal and task disposition › dismissing the End sheet (Esc, backdrop, Keep brewing) or leaving the screen never stops the brew (11.3s)
+  ✓  11 [chromium] › tests/integrity.spec.ts:543:3 › I02 End, dismissal and task disposition › End early after 12 active minutes (with a pause): 12 minutes saved as an unfinished brew, 12 leaves, no full-brew bonus, task kept (7.8s)
+  ✓  12 [chromium] › tests/integrity.spec.ts:575:3 › I02 End, dismissal and task disposition › End within the first minute: the sheet says nothing will be saved, and nothing is (7.6s)
+  ✓  13 [chromium] › tests/integrity.spec.ts:586:3 › I02 End, dismissal and task disposition › Done / Carry forward are reversible; the carried task returns on Home; editing it and Mark done → Undo never add a focus record (11.3s)
+  ✓  14 [chromium] › tests/integrity.spec.ts:637:3 › I02 End, dismissal and task disposition › Skip break, Next brew and That’s all for now do what they say, and never record a skipped break (18.9s)
+  ✓  15 [chromium] › tests/integrity.spec.ts:781:3 › I03 data safety › export → reset (explicit confirmation) → import restores brews, settings and every reward exactly (19.4s)
+  ✓  16 [chromium] › tests/integrity.spec.ts:840:3 › I03 data safety › invalid files change nothing and say why (not JSON, another app, truncated, newer version, huge, empty, damaged) (12.9s)
+  ✓  17 [chromium] › tests/integrity.spec.ts:880:3 › I03 data safety › storage full: a brew that completes still reaches its summary, once; saved data stays intact; a backup carries the brew; making room saves it (16.6s)
+  ✓  18 [chromium] › tests/integrity.spec.ts:916:3 › I03 data safety › storage full: a restore that cannot be saved is refused with a plain reason and changes nothing (8.6s)
+  ✓  19 [chromium] › tests/integrity.spec.ts:942:3 › I03 data safety › “Everything lives on this device”: a brew, an export and an import send nothing anywhere (10.1s)
+  ✓  20 [chromium] › tests/integrity.spec.ts:1048:5 › I03 storage-full warning is a banner in the page (phone 390×844) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room (29.0s)
+  ✓  21 [chromium] › tests/integrity.spec.ts:1148:5 › I03 storage-full warning is a banner in the page (phone 390×844) › a banner that appears while Today is open moves nothing under the finger (Mark done with storage full) (6.5s)
+  ✓  22 [chromium] › tests/integrity.spec.ts:1048:5 › I03 storage-full warning is a banner in the page (phone 375×667) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room (27.8s)
+  ✓  23 [chromium] › tests/integrity.spec.ts:1148:5 › I03 storage-full warning is a banner in the page (phone 375×667) › a banner that appears while Today is open moves nothing under the finger (Mark done with storage full) (4.2s)
+  ✓  24 [chromium] › tests/integrity.spec.ts:1048:5 › I03 storage-full warning is a banner in the page (desktop 1440×900) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room (31.6s)
+  ✓  25 [chromium] › tests/integrity.spec.ts:1148:5 › I03 storage-full warning is a banner in the page (desktop 1440×900) › a banner that appears while Today is open moves nothing under the finger (Mark done with storage full) (8.6s)
+
+  Slow test file: [chromium] › tests/integrity.spec.ts (5.6m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  25 passed (5.7m)
+[slots] N2 freed 2 at 12:41:03
