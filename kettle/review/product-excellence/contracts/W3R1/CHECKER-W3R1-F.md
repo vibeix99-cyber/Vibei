@@ -475,3 +475,18 @@ No item is introduced or worsened by this change in a way that is a defect, so n
 - The pointer-held test: ≥ 4000 after the last input, ≤ 6500 after release.
 - Poll timeouts are raised to match (8 → 12 s, 6/8 → 10/12 s); they are bounds, not assertions.
 - Everything else stays: one collapse, no other strip commit, pointer up, same screen, room kept during the scroll and while held, and nothing moving when the notice leaves.
+
+### My checks on :5546 (through the gate, one slot, sharing the machine with Maker Q's Phase B; load average 5–8)
+
+**1. The 64-tap aimed-tap check** (Lane I2's `LI2-probe2.mjs`, L1 and L2, run read-only against :5546; `band4s/probes2/probe2-LEADQA.json`, `band4s/probes2.log`):
+- **64 events across 16 configurations, 0 off target.** Every pointerdown moved 0 px. One click moved 0.4 px, sub-pixel and on target (1440 dark @200, L1).
+- Every leave was `why: rest` with its room kept (56.5 / 68 / 113 / 137.5 px). In 2 L2 runs the notice had not yet left in the tap's window.
+
+**PASS**, unchanged from the 1.2 s code (§8 ◆3).
+
+**2. The band's lifetime and the notice specs:** `w3-notices` + `w3-notices-idle` `--repeat-each=2` (`band4s/w3-notices-idle-x2.log`): **42/42 passed** (9.1 min). From the 24 band-lifetime cases' facts:
+- the collapse came **4026–4121 ms after the later of the leave and the last input**, and 4037–7713 ms after the leave;
+- one collapse per case, with the pointer up;
+- the visible move at the collapse is the band itself (68 or 113 px), once.
+
+The aimed tap on Mark done (5 configs), the scroll test, the pointer-held test (≥ 4 s after the last input, ≤ 6.5 s after release), the new-screen test and the accessible-name test all passed twice. **PASS.**
