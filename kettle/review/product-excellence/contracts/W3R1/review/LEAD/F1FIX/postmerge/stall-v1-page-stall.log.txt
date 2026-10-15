@@ -1,4 +1,4 @@
-LEAD-5 stall spec v1 (page main-thread stall only; .tmp/lead5-pm/stall.spec.ts as in stall.spec.v1.ts.txt). Stopped by me after round 1 on :5560 and the first two tests on :5478, when the 'as written + stall' case passed: a page-side stall does not give the failure (see the verdict).
+LEAD-5 stall spec v1 (a page main-thread stall only; the spec is stall.spec.v1.ts.txt). Ran A B B: round 1 on :5560 (4/4), round 1 on :5478 (4/4), then round 2 on :5478 stopped by me after its first test (passed), once the 'as written + stall' case had passed on both: a page-side stall does not give the failure, so v2 adds the delay on the test-runner side (see the verdict). Reported line numbers differ between the two servers' runs for the same file (Playwright's location mapping); the titles are the tests.
 
 ### round 1: env KETTLE_PORT=5560 npx playwright test -c .tmp/lead5-pm/pw.config.ts --reporter=list --output=/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/pmstall/pw-5560-1
 ### start 12:41:01 load 12.47 14.32 14.35
