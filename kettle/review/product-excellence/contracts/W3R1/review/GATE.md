@@ -179,3 +179,14 @@ The merged src and tests equal trial `cf4a89c`'s. LEAD-5 on :5546:
 - aimed taps 0/64 off target;
 - `w3-notices` + idle 42/42 (collapse at 4026–4121 ms);
 - `notice-strip` 23/25 at load 12, both failures X-11 signature (a) (the spec's wheel race; no band involved) and left to Phase B.
+
+## Maker Q Phase B (Vibei item 3: test stability, plus F1). GATE PASSED, 2026-10-15 ~02:15 UTC
+
+| Item | Result |
+|---|---|
+| Revision | `pe/w3r1-stability@01575cb`. **Phase B changes tests only**; src `db6de7e` is unchanged since Phase A (`61aec4b`) |
+| Tests changed | `notice-strip.spec.ts` (X-11 `press()`: one wheel at a time and bounded, aim and tap in one input window, bounded reads, History row read after its focus scroll); `integrity.spec.ts` (I03/X-1 waits on real state: failed saves gone through, then the banner gone ≤ 3 s in page time); `w3-notices-load.spec.ts` (the control synced with `press()` and N-1; the per-frame logger opt-in, `W3_LOG=1`); `w2-room.spec.ts` (test budget 120 s for its own 45 s scene-ready bound) |
+| **Trial** | **`d7f9126`** = integration (with Phase A) + `01575cb`, worktree `/home/user/wt/w5tr-qb`, src `db6de7e`, tests `0927568`. tsc 0, vitest 302/302, build OK. Dev **:5547** (verified), preview **:5557** |
+| The maker's results | `:292` 1440 light @200 reduced **6/6** under load (2 workers + 4 burners); `notice-strip` 25/25; X-1 **10/10** under load; `w3-notices-load` 25/25 (`W3_LOAD=1`); `w2-room:167` 3/3 under load; `integrity` 25/25. **Cause of the 4-minute timeouts:** the History inline Undo (5 s) expired under load, and `locator.evaluate` without a timeout then waited for a vanished element until the 240 s test timeout |
+| **F1, `integrity:309`** | **Product race, pre-existing.** `Composer.tsx:83–86` syncs the intention 150 ms after Today mounts → `store.ts:399 setIntention` → persist writes that tab's stale idle timer over the brew another tab just started; both tabs lose it. Reproduced 3/20 and 2/12 under load on the trial, and **1/20 on base `4d36939`**. No timer change made; the test is left as is. Note: `review/F1-ROOT-CAUSE.md` (copied from `…/W3R1/Q/F1-ROOT-CAUSE.md`). **Waiting on Vibei** |
+| Archive | `archive/pe-w3r1-stability-01575cb.incremental.bundle` |
