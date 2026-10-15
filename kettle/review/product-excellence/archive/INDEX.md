@@ -57,3 +57,4 @@ Restore a chain in order with `git fetch <bundle> 'refs/heads/*:refs/heads/*'` (
 | `pe-w3r1-stability-01575cb.incremental.bundle` | pe/w3r1-stability@01575cb (Maker Q: Phase A 61aec4b band idle 4 s; Phase B tests e00b5fa/316d9ab/dcf5595; F1 root-cause note) | a2b00cd | okay 2026-10-15 |
 | `pe-w3r1-f1-intention-74138d3.incremental.bundle` | pe/w3r1-f1-intention@74138d3 (F1 fix: setIntention writes only the intention; code 9a41a1a+882233b) | 793321b | okay 2026-10-15 |
 | `pe-w3r1-f1-intention-fix-10ecf2c.incremental.bundle` | pe/w3r1-f1-intention@10ecf2c (F1 fix round F1X-D1: syncIdleLength writes only the length; src b74e6b3) | 74138d3 | okay 2026-10-15 |
+| `pe-w3r1-n2-history-2280e7d.incremental.bundle` | pe/w3r1-n2-history@2280e7d (N-2: no product change; new guard spec tests/w3-history-focus-scroll.spec.ts) | 5f78af1 | okay 2026-10-15 |
