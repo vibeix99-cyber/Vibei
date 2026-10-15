@@ -262,3 +262,24 @@ The merged src and tests equal trial `cf4a89c`'s. LEAD-5 on :5546:
 | Trial | Not built: the app code equals integration (`5f78af1`). The new spec runs against :5560 as-is |
 | Open (for LEAD-5) | Close N-2 as a probe artifact, or name a product change. Merge or drop the guard spec. The `notice-strip.spec.ts` History-step comment blaming the "History.tsx focus scroll" (F's file, not touched). F's Run B 111 px not reproduced |
 | Archive | `archive/pe-w3r1-n2-history-2280e7d.incremental.bundle` (requires `5f78af1`) |
+
+## Post-merge regression of the F1 fix (`5f78af1`): LEAD-5 classification (`4619d21`, CHECKER-W3R1-F1FIX §9)
+
+- **All three first-run failures are flaky and not caused by F1.** The F1 APPROVE stands; there is no real finding.
+- **`timer:156` / `:183`:** a test-timing failure. The brew ended on time, but replies to the loaded test process were late, so the test's observer and hide came after the end. One added test-side delay reproduces both 2/2, identically on :5560 and :5478. Setting up the observer first makes both pass. Matched-load control: 20/20 vs 20/20.
+- **`notice-strip:338` (844×390 dark 200 %):** 3/3 vs 3/3. It failed before any notice or intention save; the merge changes no UI file.
+- **FOLLOW-UPs, none blocking:**
+  - `timer:156` should set up `subscribe` before the brew starts;
+  - `timer:183` should hide the page before the brew can end;
+  - notice-strip `press()` should aim again when the re-check finds the field covered;
+  - `NoticeStrip` calls `useIsPresent()` conditionally (`Toast.tsx:482`), so React logs a hook-order error in dev and e2e runs. Pre-existing; the same line is on base.
+
+## N-2: APPROVE (LEAD-5 `2a46721`, CHECKER-W3R1-N2.md) → merged as `d71fcfa`, plus comment fix `3e7b189` (2026-10-15 ~13:30 UTC)
+
+- **N-2 is CLOSED as a probe artifact** (LEAD-5's own W2R3 `press()` wheel), with no product change.
+  - Evidence: LEAD-5's rerun of the probe with an event log shows 0 scroll events after the tap, and its positive control sees 110.
+  - F's Run B (111 px) is closed with it; erratum `fdde620`.
+- **The guard spec merged as a guard**, without fail-first. It is mutation-checked: 110 px fails 8/8, and `scrollIntoView` on open fails 8/8.
+- **Merge check:** the merged src `b74e6b3` and tests `ddb5a30` equal `2280e7d`'s.
+- **`3e7b189`:** the `notice-strip.spec.ts` History-step comment is reworded, comment only, per LEAD-5 §5.3; the wait is kept. `--list` gives 25 tests.
+- **Integration HEAD app code is unchanged at `5f78af1`** (src `b74e6b3`); tests are now `3e7b189`.

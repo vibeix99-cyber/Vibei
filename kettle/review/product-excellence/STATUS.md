@@ -12,21 +12,20 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 
 ## ▶ WAVE 3 ROUND 1 · started 2026-10-14 10:00 UTC (read this first)
 
-**Now (2026-10-15 11:25 UTC):**
-- **Item 1, F1 fix: MERGED as `5f78af1`** (src `b74e6b3`).
-  - First pass `74138d3` was REJECTed for F1X-D1 (`syncIdleLength`). The fix round `10ecf2c` got **APPROVE** (LEAD-5 `26b37bc`).
-  - The merged trees equal trial `37de54a`'s.
-  - **Post-merge regression:** Lane R (Sonnet) on :5560 runs tsc/vitest, timer/PWA, integrity, the notice suite, `w2-home`, the race file, and a 2-tab check with a length change. Receipt `review/POSTMERGE-F1/`; stop 12:50.
-  - **Follow-ups for Vibei** (unscheduled):
-    - a `sync.ts` receiving-side guard covering `rebase`, the person's own actions in a stale tab, and a typed edit in a doubly stale tab;
-    - the Today composer label overwrite.
-- **Item 2, backdrop:** done, report only. No merge changed it; it is capture timing (pre-rendered still vs faded-in live canvas, `capture.mjs:184-186`, `NookScene.tsx:222-246`), pre-existing. Receipt: `review/BACKDROP/RECEIPT-BACKDROP.md`.
-- **Post-merge regression** (Lane R, `review/POSTMERGE-F1/`, 12:14):
-  - All green except three first-run failures under load 13–15: `timer.spec:156`, `timer.spec:183` and `notice-strip:338`. Each passed on rerun on :5560 and :5478.
-  - LEAD-5 matched-load control: timer 20/20 on both builds; the notice test 3/3 on both. Its classification is pending.
-- **Item 3, N-2:** maker N2 (Sonnet) handed back `2280e7d` with **no product change**. It found that N-2 does not reproduce as a product scroll and attributes the 110 px to the W2R3 probe's own wheels. The branch adds only a guard spec, `tests/w3-history-focus-scroll.spec.ts`. Gate passed (scope). **LEAD-5 is to rule:** close N-2 or name a product change; merge or drop the spec.
-- **Item 4:** the Final Product Boss is on hold.
-- **Servers:** base :5478/:5488; integration (`f817931`, app `5f78af1`) :5560/:5570; N2 dev :5565. The trial servers :5563/:5573 are stopped.
+**Now (2026-10-15 13:35 UTC): Vibei's post-follow-up items 1–3 are DONE; the Final Product Boss is on hold (item 4).**
+- **Item 1, F1 fix: MERGED `5f78af1`** (src `b74e6b3`).
+  - The first pass `74138d3` was REJECTed for F1X-D1 (`syncIdleLength`); the fix round `10ecf2c` got APPROVE (LEAD-5 `26b37bc`).
+  - Post-merge regression (Lane R, `review/POSTMERGE-F1/`) is green apart from three first-run failures under load 13–20. LEAD-5 classified them as flaky and not caused by F1 (test timing, reproduced identically on base), so the APPROVE stands (`4619d21`).
+- **Item 2, backdrop:** report only, done. It is capture timing (pre-rendered still vs faded-in live canvas) and pre-existing. Receipt `review/BACKDROP/RECEIPT-BACKDROP.md`.
+- **Item 3, N-2: CLOSED as a probe artifact** (LEAD-5's own W2R3 wheel), with no product change. Guard spec `tests/w3-history-focus-scroll.spec.ts` merged (`d71fcfa`, APPROVE `2a46721`). The stale `notice-strip` comment was fixed (`3e7b189`).
+- **Item 4:** the Final Product Boss is on hold until Vibei's go, after the 2D sipping and cheering poses.
+- **FOLLOW-UPs for Vibei to schedule:**
+  - one `sync.ts` receiving-side guard covering `rebase`, the person's own actions in a stale tab, and a typed edit in a doubly stale tab;
+  - the Today composer label overwrite (low priority);
+  - `NoticeStrip`'s conditional `useIsPresent()` hook (`Toast.tsx:482`, a React hook-order error logged in dev/e2e; pre-existing);
+  - test-only: `timer:156`/`:183` observer ordering, and `notice-strip` `press()` re-aim;
+  - post-Final-Boss polish: collapse the band "only off-screen or on a screen change".
+- **Integration HEAD:** app `5f78af1` (src `b74e6b3`), tests `3e7b189`. Nothing is running: servers, agents and the autocommit loop are all stopped.
 
 **Before the Final Product Boss: Vibei's post-follow-up decisions (2026-10-15 08:55 UTC; `contracts/W3R1/VB-DECISIONS-POSTFOLLOWUP.md`):**
 - **Item 1: the `integrity:309` fix.**
