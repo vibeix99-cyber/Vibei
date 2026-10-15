@@ -1,0 +1,888 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w5q/kettle/.tmp/q-probes/pw.config.ts",
+    "rootDir": "/home/user/wt/w5q/kettle/.tmp/q-probes",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w5q/kettle/.tmp/Q-pw/probe-f1-base-x20-nb6",
+        "repeatEach": 20,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w5q/kettle/.tmp/q-probes",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 2,
+    "webServer": {
+      "command": "npx vite --config tests/e2e.vite.config.ts --port 5478 --strictPort",
+      "url": "http://127.0.0.1:5478/",
+      "reuseExistingServer": true,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "f1-probe.spec.ts",
+      "file": "f1-probe.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Q F1 probe",
+          "file": "f1-probe.spec.ts",
+          "line": 246,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Q probe two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 21886,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QOK {\"ok\":true,\"roles\":{\"leader\":\"z\",\"at\":1792025809987,\"startAt\":1792025810738},\"a\":\"[{\\\"t\\\":1792025806457,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025808351,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025808422,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025808424,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025809096,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":653},{\\\"t\\\":1792025809990,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8twchw71550fc6\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.startFocus (/src/timer/store.ts:218:4) < at <anonymous>:1:34\\\"},{\\\"t\\\":1792025810736,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8twchw71550fc6\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025810746,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:home:lastVisit\\\"},{\\\"t\\\":1792025823654,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.tick (/src/timer/store.ts:386:5) < at wake (/src/timer/ticker.ts:107:23)\\\"},{\\\"t\\\":1792025824209,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":1060}]\",\"z\":\"[{\\\"t\\\":1792025807974,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025807975,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025807975,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025809701,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025809851,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":1},{\\\"t\\\":1792025809999,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8twchw71550fc6\\\"},{\\\"t\\\":1792025810459,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8twchw71550fc6\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":609},{\\\"t\\\":1792025810777,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025810778,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025810812,\\\"e\\\":\\\"freeze\\\"},{\\\"t\\\":1792025824373,\\\"e\\\":\\\"resume\\\"},{\\\"t\\\":1792025825022,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8twchw71550fc6\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025825022,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025825023,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025825442,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025826062,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":-1}]\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:56:44.830Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c3e36ec2d3d9242386f-e412b7b75fad577423f3",
+              "file": "f1-probe.spec.ts",
+              "line": 247,
+              "column": 3
+            },
+            {
+              "title": "Q probe two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [
+                    {
+                      "type": "qdump",
+                      "description": "{\"err\":\"Error: timed out waiting for window.__kettle.timer.getState().sessionId === \\\"s_mv8twd9u73eedc05\\\" (page: {\\\"hash\\\":\\\"#/\\\",\\\"timer\\\":\\\"idle\\\",\\\"info\\\":{\\\"multiTab\\\":true,\\\"leader\\\":false,\\\"leaderMode\\\":\\\"locks\\\",\\\"leaderForMs\\\":-1,\\\"scheduler\\\":\\\"worker\\\",\\\"settling\\\":false,\\\"dueForMs\\\":null,\\\"wakes\\\":7,\\\"claims\\\":true,\\\"lastClaim\\\":null}})\",\"a\":\"[{\\\"t\\\":1792025806300,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025807759,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025807849,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025807885,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025807887,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":64},{\\\"t\\\":1792025811097,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025811097,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025811129,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8twd9u73eedc05\\\"}]\",\"z\":\"[{\\\"t\\\":1792025808675,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025808749,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025808749,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025809538,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:home:lastVisit\\\"},{\\\"t\\\":1792025810447,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025810560,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":1},{\\\"t\\\":1792025810574,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025810995,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8twd9u73eedc05\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.startFocus (/src/timer/store.ts:218:4) < at <anonymous>:1:34\\\"},{\\\"t\\\":1792025811519,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8twd9u73eedc05\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":960},{\\\"t\\\":1792025811606,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025811933,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":1374},{\\\"t\\\":1792025812041,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"}]\",\"roles\":{\"leader\":\"a\",\"at\":1792025810982,\"startAt\":1792025811530}}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 36735,
+                      "error": {
+                        "message": "Error: timed out waiting for window.__kettle.timer.getState().sessionId === \"s_mv8twd9u73eedc05\" (page: {\"hash\":\"#/\",\"timer\":\"idle\",\"info\":{\"multiTab\":true,\"leader\":false,\"leaderMode\":\"locks\",\"leaderForMs\":-1,\"scheduler\":\"worker\",\"settling\":false,\"dueForMs\":null,\"wakes\":7,\"claims\":true,\"lastClaim\":null}})",
+                        "stack": "Error: timed out waiting for window.__kettle.timer.getState().sessionId === \"s_mv8twd9u73eedc05\" (page: {\"hash\":\"#/\",\"timer\":\"idle\",\"info\":{\"multiTab\":true,\"leader\":false,\"leaderMode\":\"locks\",\"leaderForMs\":-1,\"scheduler\":\"worker\",\"settling\":false,\"dueForMs\":null,\"wakes\":7,\"claims\":true,\"lastClaim\":null}})\n    at Object.waitFor (/home/user/wt/w5q/kettle/.tmp/q-probes/f1-probe.spec.ts:147:17)\n    at /home/user/wt/w5q/kettle/.tmp/q-probes/f1-probe.spec.ts:267:7",
+                        "location": {
+                          "file": "/home/user/wt/w5q/kettle/.tmp/q-probes/f1-probe.spec.ts",
+                          "column": 17,
+                          "line": 147
+                        },
+                        "snippet": "  145 |         if (Date.now() > until) {\n  146 |           const seen = await evaluate(`JSON.stringify({ hash: location.hash, timer: window.__kettle?.timer.getState().status, info: window.__kettle?.timerInfo(), log: window.__log })`).catch(() => '?');\n> 147 |           throw new Error(`timed out waiting for ${expression} (page: ${seen})`);\n      |                 ^\n  148 |         }\n  149 |         await sleep(150);\n  150 |       }"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/wt/w5q/kettle/.tmp/q-probes/f1-probe.spec.ts",
+                            "column": 17,
+                            "line": 147
+                          },
+                          "message": "Error: timed out waiting for window.__kettle.timer.getState().sessionId === \"s_mv8twd9u73eedc05\" (page: {\"hash\":\"#/\",\"timer\":\"idle\",\"info\":{\"multiTab\":true,\"leader\":false,\"leaderMode\":\"locks\",\"leaderForMs\":-1,\"scheduler\":\"worker\",\"settling\":false,\"dueForMs\":null,\"wakes\":7,\"claims\":true,\"lastClaim\":null}})\n\n  145 |         if (Date.now() > until) {\n  146 |           const seen = await evaluate(`JSON.stringify({ hash: location.hash, timer: window.__kettle?.timer.getState().status, info: window.__kettle?.timerInfo(), log: window.__log })`).catch(() => '?');\n> 147 |           throw new Error(`timed out waiting for ${expression} (page: ${seen})`);\n      |                 ^\n  148 |         }\n  149 |         await sleep(150);\n  150 |       }\n    at Object.waitFor (/home/user/wt/w5q/kettle/.tmp/q-probes/f1-probe.spec.ts:147:17)\n    at /home/user/wt/w5q/kettle/.tmp/q-probes/f1-probe.spec.ts:267:7"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "QDUMP {\"err\":\"Error: timed out waiting for window.__kettle.timer.getState().sessionId === \\\"s_mv8twd9u73eedc05\\\" (page: {\\\"hash\\\":\\\"#/\\\",\\\"timer\\\":\\\"idle\\\",\\\"info\\\":{\\\"multiTab\\\":true,\\\"leader\\\":false,\\\"leaderMode\\\":\\\"locks\\\",\\\"leaderForMs\\\":-1,\\\"scheduler\\\":\\\"worker\\\",\\\"settling\\\":false,\\\"dueForMs\\\":null,\\\"wakes\\\":7,\\\"claims\\\":true,\\\"lastClaim\\\":null}})\",\"a\":\"[{\\\"t\\\":1792025806300,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025807759,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025807849,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025807885,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025807887,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":64},{\\\"t\\\":1792025811097,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025811097,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025811129,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8twd9u73eedc05\\\"}]\",\"z\":\"[{\\\"t\\\":1792025808675,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025808749,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025808749,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025809538,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:home:lastVisit\\\"},{\\\"t\\\":1792025810447,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025810560,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":1},{\\\"t\\\":1792025810574,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025810995,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8twd9u73eedc05\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.startFocus (/src/timer/store.ts:218:4) < at <anonymous>:1:34\\\"},{\\\"t\\\":1792025811519,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8twd9u73eedc05\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":960},{\\\"t\\\":1792025811606,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025811933,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":1374},{\\\"t\\\":1792025812041,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"}]\",\"roles\":{\"leader\":\"a\",\"at\":1792025810982,\"startAt\":1792025811530}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:56:44.883Z",
+                      "annotations": [
+                        {
+                          "type": "qdump",
+                          "description": "{\"err\":\"Error: timed out waiting for window.__kettle.timer.getState().sessionId === \\\"s_mv8twd9u73eedc05\\\" (page: {\\\"hash\\\":\\\"#/\\\",\\\"timer\\\":\\\"idle\\\",\\\"info\\\":{\\\"multiTab\\\":true,\\\"leader\\\":false,\\\"leaderMode\\\":\\\"locks\\\",\\\"leaderForMs\\\":-1,\\\"scheduler\\\":\\\"worker\\\",\\\"settling\\\":false,\\\"dueForMs\\\":null,\\\"wakes\\\":7,\\\"claims\\\":true,\\\"lastClaim\\\":null}})\",\"a\":\"[{\\\"t\\\":1792025806300,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025807759,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025807849,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025807885,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025807887,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":64},{\\\"t\\\":1792025811097,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025811097,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025811129,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8twd9u73eedc05\\\"}]\",\"z\":\"[{\\\"t\\\":1792025808675,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025808749,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025808749,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025809538,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:home:lastVisit\\\"},{\\\"t\\\":1792025810447,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025810560,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":1},{\\\"t\\\":1792025810574,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025810995,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8twd9u73eedc05\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.startFocus (/src/timer/store.ts:218:4) < at <anonymous>:1:34\\\"},{\\\"t\\\":1792025811519,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8twd9u73eedc05\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":960},{\\\"t\\\":1792025811606,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025811933,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":1374},{\\\"t\\\":1792025812041,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"}]\",\"roles\":{\"leader\":\"a\",\"at\":1792025810982,\"startAt\":1792025811530}}"
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/user/wt/w5q/kettle/.tmp/Q-pw/probe-f1-base-x20-nb6/f1-probe-Q-F1-probe-Q-prob-b21d9-p-and-does-not-add-a-second-chromium-repeat1/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/wt/w5q/kettle/.tmp/q-probes/f1-probe.spec.ts",
+                        "column": 17,
+                        "line": 147
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1c3e36ec2d3d9242386f-e500642513b5e79539d5",
+              "file": "f1-probe.spec.ts",
+              "line": 247,
+              "column": 3
+            },
+            {
+              "title": "Q probe two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 22819,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QOK {\"ok\":true,\"roles\":{\"leader\":\"z\",\"at\":1792025831859,\"startAt\":1792025832998},\"a\":\"[{\\\"t\\\":1792025829496,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025830089,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025830173,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025830181,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025830200,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":74},{\\\"t\\\":1792025831099,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025831867,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8twtdmff35a4bf\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.startFocus (/src/timer/store.ts:218:4) < at <anonymous>:1:34\\\"},{\\\"t\\\":1792025832930,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8twtdmff35a4bf\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025833063,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8twtdmff35a4bf\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025845061,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8twtdmff35a4bf\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":121},{\\\"t\\\":1792025845473,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.tick (/src/timer/store.ts:386:5) < at wake (/src/timer/ticker.ts:107:23)\\\"},{\\\"t\\\":1792025847361,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":2421}]\",\"z\":\"[{\\\"t\\\":1792025830312,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025830348,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025830348,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025831001,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025831043,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:home:lastVisit\\\"},{\\\"t\\\":1792025831050,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":8},{\\\"t\\\":1792025831638,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025832013,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8twtdmff35a4bf\\\"},{\\\"t\\\":1792025832390,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8twtdmff35a4bf\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":1349},{\\\"t\\\":1792025832447,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8twtdmff35a4bf\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025833202,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025833203,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025833203,\\\"e\\\":\\\"freeze\\\"},{\\\"t\\\":1792025847590,\\\"e\\\":\\\"resume\\\"},{\\\"t\\\":1792025847880,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8twtdmff35a4bf\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":true,\\\"lf\\\":-1},{\\\"t\\\":1792025847880,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025849968,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025850186,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":-1}]\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:57:08.741Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c3e36ec2d3d9242386f-555b15ab940ab7fdc236",
+              "file": "f1-probe.spec.ts",
+              "line": 247,
+              "column": 3
+            },
+            {
+              "title": "Q probe two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 23043,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QOK {\"ok\":true,\"roles\":{\"leader\":\"z\",\"at\":1792025849736,\"startAt\":1792025851948},\"a\":\"[{\\\"t\\\":1792025844109,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025845229,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025845322,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025845328,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":3},{\\\"t\\\":1792025845328,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025849630,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025849739,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tx761fc18f6d6\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.startFocus (/src/timer/store.ts:218:4) < at <anonymous>:1:34\\\"},{\\\"t\\\":1792025851981,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tx761fc18f6d6\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025852071,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tx761fc18f6d6\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025863063,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tx761fc18f6d6\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":108},{\\\"t\\\":1792025863488,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.tick (/src/timer/store.ts:386:5) < at wake (/src/timer/ticker.ts:107:23)\\\"},{\\\"t\\\":1792025864266,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":1312}]\",\"z\":\"[{\\\"t\\\":1792025846319,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025846846,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025846846,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025849141,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025849142,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:home:lastVisit\\\"},{\\\"t\\\":1792025849226,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":29},{\\\"t\\\":1792025849281,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025850076,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tx761fc18f6d6\\\"},{\\\"t\\\":1792025851117,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tx761fc18f6d6\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":1919},{\\\"t\\\":1792025851246,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tx761fc18f6d6\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025851956,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025851957,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025851970,\\\"e\\\":\\\"freeze\\\"},{\\\"t\\\":1792025864343,\\\"e\\\":\\\"resume\\\"},{\\\"t\\\":1792025864427,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025864967,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025865061,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":-1}]\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:57:23.456Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c3e36ec2d3d9242386f-1df18e308b833cfd8350",
+              "file": "f1-probe.spec.ts",
+              "line": 247,
+              "column": 3
+            },
+            {
+              "title": "Q probe two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 22654,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QOK {\"ok\":true,\"roles\":{\"leader\":\"z\",\"at\":1792025858812,\"startAt\":1792025860531},\"a\":\"[{\\\"t\\\":1792025854797,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025856032,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025856077,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025856085,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025858845,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025858873,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8txe7j5d1fbbeb\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.startFocus (/src/timer/store.ts:218:4) < at <anonymous>:1:34\\\"},{\\\"t\\\":1792025860466,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025860501,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8txe7j5d1fbbeb\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025861327,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8txe7j5d1fbbeb\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025872741,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.tick (/src/timer/store.ts:386:5) < at wake (/src/timer/ticker.ts:107:23)\\\"},{\\\"t\\\":1792025874211,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":1982}]\",\"z\":\"[{\\\"t\\\":1792025856240,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025856258,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025856258,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025857110,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025857155,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":5},{\\\"t\\\":1792025857270,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:home:lastVisit\\\"},{\\\"t\\\":1792025858246,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025858873,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8txe7j5d1fbbeb\\\"},{\\\"t\\\":1792025860154,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8txe7j5d1fbbeb\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":3003},{\\\"t\\\":1792025860270,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8txe7j5d1fbbeb\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025860543,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025860557,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025860558,\\\"e\\\":\\\"freeze\\\"},{\\\"t\\\":1792025874369,\\\"e\\\":\\\"resume\\\"},{\\\"t\\\":1792025874408,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8txe7j5d1fbbeb\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":true,\\\"lf\\\":-1},{\\\"t\\\":1792025874408,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025874945,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025875061,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":-1}]\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:57:33.816Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c3e36ec2d3d9242386f-b08675e8aab6495612f0",
+              "file": "f1-probe.spec.ts",
+              "line": 247,
+              "column": 3
+            },
+            {
+              "title": "Q probe two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 21021,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QOK {\"ok\":true,\"roles\":{\"leader\":\"z\",\"at\":1792025874799,\"startAt\":1792025875380},\"a\":\"[{\\\"t\\\":1792025871628,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025872379,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025872569,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025872682,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025873064,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":320},{\\\"t\\\":1792025874791,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025874833,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025874834,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025874836,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8txqj70cd838cd\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.startFocus (/src/timer/store.ts:218:4) < at <anonymous>:1:34\\\"},{\\\"t\\\":1792025875366,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8txqj70cd838cd\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025876062,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8txqj70cd838cd\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025888061,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8txqj70cd838cd\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":151},{\\\"t\\\":1792025888423,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.tick (/src/timer/store.ts:386:5) < at wake (/src/timer/ticker.ts:107:23)\\\"},{\\\"t\\\":1792025889149,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":1239}]\",\"z\":\"[{\\\"t\\\":1792025872812,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025872963,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025872963,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025873722,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025873769,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:home:lastVisit\\\"},{\\\"t\\\":1792025873775,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":6},{\\\"t\\\":1792025874418,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025874837,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8txqj70cd838cd\\\"},{\\\"t\\\":1792025875415,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8txqj70cd838cd\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":1647},{\\\"t\\\":1792025875426,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025875427,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025875428,\\\"e\\\":\\\"freeze\\\"},{\\\"t\\\":1792025889211,\\\"e\\\":\\\"resume\\\"},{\\\"t\\\":1792025889219,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025889666,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025890114,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025890114,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"}]\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:57:50.229Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c3e36ec2d3d9242386f-7250f8770752ebaea050",
+              "file": "f1-probe.spec.ts",
+              "line": 247,
+              "column": 3
+            },
+            {
+              "title": "Q probe two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 19116,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QOK {\"ok\":true,\"roles\":{\"leader\":\"z\",\"at\":1792025881032,\"startAt\":1792025882358},\"a\":\"[{\\\"t\\\":1792025878886,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025879686,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025879722,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025879738,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025880065,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":288},{\\\"t\\\":1792025881038,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8txvbh78bcae2d\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.startFocus (/src/timer/store.ts:218:4) < at <anonymous>:1:34\\\"},{\\\"t\\\":1792025882239,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8txvbh78bcae2d\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025882241,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:home:lastVisit\\\"},{\\\"t\\\":1792025882827,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025894623,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.tick (/src/timer/store.ts:386:5) < at wake (/src/timer/ticker.ts:107:23)\\\"},{\\\"t\\\":1792025895309,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":1210}]\",\"z\":\"[{\\\"t\\\":1792025879573,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025879584,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025879584,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025880347,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025880478,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":1},{\\\"t\\\":1792025881086,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8txvbh78bcae2d\\\"},{\\\"t\\\":1792025882026,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8txvbh78bcae2d\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":1548},{\\\"t\\\":1792025883139,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025883642,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025883646,\\\"e\\\":\\\"freeze\\\"},{\\\"t\\\":1792025895440,\\\"e\\\":\\\"resume\\\"},{\\\"t\\\":1792025895556,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8txvbh78bcae2d\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":true,\\\"lf\\\":-1},{\\\"t\\\":1792025895557,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025895665,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025896064,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":-1}]\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:57:58.135Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c3e36ec2d3d9242386f-ebcf3538ce12d522099b",
+              "file": "f1-probe.spec.ts",
+              "line": 247,
+              "column": 3
+            },
+            {
+              "title": "Q probe two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 20188,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QOK {\"ok\":true,\"roles\":{\"leader\":\"z\",\"at\":1792025896717,\"startAt\":1792025897567},\"a\":\"[{\\\"t\\\":1792025893881,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025894621,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025894621,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025894631,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025895066,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":427},{\\\"t\\\":1792025896392,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025896678,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025896719,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8ty7f2aad4c64c\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.startFocus (/src/timer/store.ts:218:4) < at <anonymous>:1:34\\\"},{\\\"t\\\":1792025897565,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8ty7f2aad4c64c\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025898062,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8ty7f2aad4c64c\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025910064,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8ty7f2aad4c64c\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":86},{\\\"t\\\":1792025910502,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.tick (/src/timer/store.ts:386:5) < at wake (/src/timer/ticker.ts:107:23)\\\"},{\\\"t\\\":1792025911070,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":1092}]\",\"z\":\"[{\\\"t\\\":1792025894821,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025894954,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025894954,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025895899,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025895900,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:home:lastVisit\\\"},{\\\"t\\\":1792025895977,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":7},{\\\"t\\\":1792025896119,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025896655,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025896719,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8ty7f2aad4c64c\\\"},{\\\"t\\\":1792025896938,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8ty7f2aad4c64c\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":968},{\\\"t\\\":1792025897082,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8ty7f2aad4c64c\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025897685,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025897686,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025897689,\\\"e\\\":\\\"freeze\\\"},{\\\"t\\\":1792025911060,\\\"e\\\":\\\"resume\\\"},{\\\"t\\\":1792025911162,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8ty7f2aad4c64c\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":true,\\\"lf\\\":-1},{\\\"t\\\":1792025911162,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025911782,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025912073,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":-1}]\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:58:13.089Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c3e36ec2d3d9242386f-fe89b94f8d32940fad1c",
+              "file": "f1-probe.spec.ts",
+              "line": 247,
+              "column": 3
+            },
+            {
+              "title": "Q probe two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 19594,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QOK {\"ok\":true,\"roles\":{\"leader\":\"a\",\"at\":1792025903208,\"startAt\":1792025903957},\"a\":\"[{\\\"t\\\":1792025899911,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025900685,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025900971,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025901030,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025901031,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":107},{\\\"t\\\":1792025903180,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025903622,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tycnqd8c76a22\\\"},{\\\"t\\\":1792025905372,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tycnqd8c76a22\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025905462,\\\"e\\\":\\\"freeze\\\"},{\\\"t\\\":1792025914067,\\\"e\\\":\\\"resume\\\"},{\\\"t\\\":1792025914163,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tycnqd8c76a22\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025914556,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025915479,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025915798,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025917101,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1}]\",\"z\":\"[{\\\"t\\\":1792025901149,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025902026,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:home:lastVisit\\\"},{\\\"t\\\":1792025902459,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025902524,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":7},{\\\"t\\\":1792025902705,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025903512,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tycnqd8c76a22\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.startFocus (/src/timer/store.ts:218:4) < at <anonymous>:1:34\\\"},{\\\"t\\\":1792025903903,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tycnqd8c76a22\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":1385},{\\\"t\\\":1792025903911,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025903982,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tycnqd8c76a22\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025912576,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.tick (/src/timer/store.ts:386:5) < at wake (/src/timer/ticker.ts:107:23)\\\"},{\\\"t\\\":1792025912710,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":10192},{\\\"t\\\":1792025914051,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":11534},{\\\"t\\\":1792025914173,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tycnqd8c76a22\\\"},{\\\"t\\\":1792025914175,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.tick (/src/timer/store.ts:378:6) < at wake (/src/timer/ticker.ts:107:23)\\\"}]\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:58:19.149Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c3e36ec2d3d9242386f-1b885add1d0653d6599a",
+              "file": "f1-probe.spec.ts",
+              "line": 247,
+              "column": 3
+            },
+            {
+              "title": "Q probe two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 23160,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QOK {\"ok\":true,\"roles\":{\"leader\":\"z\",\"at\":1792025922592,\"startAt\":1792025925811},\"a\":\"[{\\\"t\\\":1792025917729,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025917796,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025917796,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025919487,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025919756,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025919764,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025920061,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":292},{\\\"t\\\":1792025922591,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025922622,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025922624,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tyrena0cc4e2c\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.startFocus (/src/timer/store.ts:218:4) < at <anonymous>:1:34\\\"},{\\\"t\\\":1792025925775,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025925808,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tyrena0cc4e2c\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025926062,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tyrena0cc4e2c\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025936071,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tyrena0cc4e2c\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":276},{\\\"t\\\":1792025936391,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.tick (/src/timer/store.ts:386:5) < at wake (/src/timer/ticker.ts:107:23)\\\"},{\\\"t\\\":1792025937561,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":1766}]\",\"z\":\"[{\\\"t\\\":1792025920208,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025920547,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025920547,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025921241,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025921297,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":1},{\\\"t\\\":1792025921297,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:home:lastVisit\\\"},{\\\"t\\\":1792025922269,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025922624,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tyrena0cc4e2c\\\"},{\\\"t\\\":1792025925147,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tyrena0cc4e2c\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":3851},{\\\"t\\\":1792025925253,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tyrena0cc4e2c\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025925815,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025925821,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025925826,\\\"e\\\":\\\"freeze\\\"},{\\\"t\\\":1792025937695,\\\"e\\\":\\\"resume\\\"},{\\\"t\\\":1792025937868,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025938078,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025938106,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":-1}]\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:58:36.401Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c3e36ec2d3d9242386f-72fc0cab0bd8c62e6d14",
+              "file": "f1-probe.spec.ts",
+              "line": 247,
+              "column": 3
+            },
+            {
+              "title": "Q probe two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 20157,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QOK {\"ok\":true,\"roles\":{\"leader\":\"z\",\"at\":1792025926235,\"startAt\":1792025926898},\"a\":\"[{\\\"t\\\":1792025923128,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025923263,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025923263,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025924448,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025924484,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025924484,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025925061,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":548},{\\\"t\\\":1792025926242,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025926264,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tyu7q578f5ee0\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.startFocus (/src/timer/store.ts:218:4) < at <anonymous>:1:34\\\"},{\\\"t\\\":1792025927062,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tyu7q578f5ee0\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025927062,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tyu7q578f5ee0\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025940070,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tyu7q578f5ee0\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":597},{\\\"t\\\":1792025940076,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.tick (/src/timer/store.ts:386:5) < at wake (/src/timer/ticker.ts:107:23)\\\"},{\\\"t\\\":1792025941064,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":1590}]\",\"z\":\"[{\\\"t\\\":1792025924590,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025925540,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025925629,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:home:lastVisit\\\"},{\\\"t\\\":1792025925635,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":7},{\\\"t\\\":1792025926077,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025926564,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tyu7q578f5ee0\\\"},{\\\"t\\\":1792025926846,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tyu7q578f5ee0\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":1219},{\\\"t\\\":1792025926902,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025926902,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025926903,\\\"e\\\":\\\"freeze\\\"},{\\\"t\\\":1792025940640,\\\"e\\\":\\\"resume\\\"},{\\\"t\\\":1792025940657,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025940974,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025941067,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025941067,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":-1}]\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:58:42.303Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c3e36ec2d3d9242386f-b56c0e1d2edb7e42a3f6",
+              "file": "f1-probe.spec.ts",
+              "line": 247,
+              "column": 3
+            },
+            {
+              "title": "Q probe two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 19223,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QOK {\"ok\":true,\"roles\":{\"leader\":\"z\",\"at\":1792025945209,\"startAt\":1792025946927},\"a\":\"[{\\\"t\\\":1792025942772,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025943401,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025943482,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025943483,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025944066,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":589},{\\\"t\\\":1792025945123,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025945133,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:home:lastVisit\\\"},{\\\"t\\\":1792025945234,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tz8upd4519bcd\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.startFocus (/src/timer/store.ts:218:4) < at <anonymous>:1:34\\\"},{\\\"t\\\":1792025946924,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tz8upd4519bcd\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025946941,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025958804,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.tick (/src/timer/store.ts:386:5) < at wake (/src/timer/ticker.ts:107:23)\\\"},{\\\"t\\\":1792025959266,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":969}]\",\"z\":\"[{\\\"t\\\":1792025943634,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025943742,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025943742,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025944374,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025944466,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":2},{\\\"t\\\":1792025945572,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tz8upd4519bcd\\\"},{\\\"t\\\":1792025945946,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tz8upd4519bcd\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":1482},{\\\"t\\\":1792025946033,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tz8upd4519bcd\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025946940,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025946943,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025946944,\\\"e\\\":\\\"freeze\\\"},{\\\"t\\\":1792025959394,\\\"e\\\":\\\"resume\\\"},{\\\"t\\\":1792025959533,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025959781,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025960061,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":-1}]\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:59:02.066Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c3e36ec2d3d9242386f-f552f577081bf4e64c9e",
+              "file": "f1-probe.spec.ts",
+              "line": 247,
+              "column": 3
+            },
+            {
+              "title": "Q probe two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 21493,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QOK {\"ok\":true,\"roles\":{\"leader\":\"z\",\"at\":1792025950248,\"startAt\":1792025950617},\"a\":\"[{\\\"t\\\":1792025946342,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025947322,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025947493,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025947495,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025947496,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":47},{\\\"t\\\":1792025949115,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025950246,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025950247,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025950248,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025950258,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tzcq9cd4235e4\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.startFocus (/src/timer/store.ts:218:4) < at <anonymous>:1:34\\\"},{\\\"t\\\":1792025951186,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tzcq9cd4235e4\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025952063,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tzcq9cd4235e4\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025964002,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.tick (/src/timer/store.ts:386:5) < at wake (/src/timer/ticker.ts:107:23)\\\"},{\\\"t\\\":1792025964693,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":1277}]\",\"z\":\"[{\\\"t\\\":1792025947814,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025947887,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025947887,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025948834,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025948897,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:home:lastVisit\\\"},{\\\"t\\\":1792025948903,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":6},{\\\"t\\\":1792025950034,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025950263,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tzcq9cd4235e4\\\"},{\\\"t\\\":1792025950545,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tzcq9cd4235e4\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":1648},{\\\"t\\\":1792025950636,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025950636,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025950636,\\\"e\\\":\\\"freeze\\\"},{\\\"t\\\":1792025964841,\\\"e\\\":\\\"resume\\\"},{\\\"t\\\":1792025964882,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025965251,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025965271,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025965271,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"}]\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:59:05.345Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c3e36ec2d3d9242386f-4b957ba84ebeda450dca",
+              "file": "f1-probe.spec.ts",
+              "line": 247,
+              "column": 3
+            },
+            {
+              "title": "Q probe two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 20174,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QOK {\"ok\":true,\"roles\":{\"leader\":\"z\",\"at\":1792025966808,\"startAt\":1792025967587},\"a\":\"[{\\\"t\\\":1792025963950,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025963966,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025963966,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025964773,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025964870,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025964872,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025964876,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":6},{\\\"t\\\":1792025966823,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tzpie38c5b8db\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.startFocus (/src/timer/store.ts:218:4) < at <anonymous>:1:34\\\"},{\\\"t\\\":1792025967563,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tzpie38c5b8db\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025968182,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tzpie38c5b8db\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025980061,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tzpie38c5b8db\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":108},{\\\"t\\\":1792025980470,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.tick (/src/timer/store.ts:386:5) < at wake (/src/timer/ticker.ts:107:23)\\\"},{\\\"t\\\":1792025981079,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":1126}]\",\"z\":\"[{\\\"t\\\":1792025965122,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025965168,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025965168,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025965542,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:home:lastVisit\\\"},{\\\"t\\\":1792025966292,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025966369,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":5},{\\\"t\\\":1792025966526,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025966859,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tzpie38c5b8db\\\"},{\\\"t\\\":1792025967482,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tzpie38c5b8db\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":1118},{\\\"t\\\":1792025967590,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025967591,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025967593,\\\"e\\\":\\\"freeze\\\"},{\\\"t\\\":1792025981062,\\\"e\\\":\\\"resume\\\"},{\\\"t\\\":1792025981226,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025981770,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025982065,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":-1}]\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:59:23.065Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c3e36ec2d3d9242386f-9b7cc81f3bb921c3131b",
+              "file": "f1-probe.spec.ts",
+              "line": 247,
+              "column": 3
+            },
+            {
+              "title": "Q probe two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 20789,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QOK {\"ok\":true,\"roles\":{\"leader\":\"z\",\"at\":1792025974412,\"startAt\":1792025975621},\"a\":\"[{\\\"t\\\":1792025970973,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025972099,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025972224,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":30},{\\\"t\\\":1792025972232,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025972232,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025973808,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:home:lastVisit\\\"},{\\\"t\\\":1792025974406,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025974406,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025974408,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025974456,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tzvef19411c5a\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.startFocus (/src/timer/store.ts:218:4) < at <anonymous>:1:34\\\"},{\\\"t\\\":1792025975613,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tzvef19411c5a\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025976062,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tzvef19411c5a\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025988063,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.tick (/src/timer/store.ts:386:5) < at wake (/src/timer/ticker.ts:107:23)\\\"},{\\\"t\\\":1792025988822,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":1272}]\",\"z\":\"[{\\\"t\\\":1792025972634,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025972805,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025972805,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025973613,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025973664,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":11},{\\\"t\\\":1792025974230,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025974457,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tzvef19411c5a\\\"},{\\\"t\\\":1792025974626,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tzvef19411c5a\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":972},{\\\"t\\\":1792025974760,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8tzvef19411c5a\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025975649,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025975667,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025975670,\\\"e\\\":\\\"freeze\\\"},{\\\"t\\\":1792025988919,\\\"e\\\":\\\"resume\\\"},{\\\"t\\\":1792025988940,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025989068,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025989070,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":true,\\\"lf\\\":-1},{\\\"t\\\":1792025990129,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":-1}]\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:59:29.902Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c3e36ec2d3d9242386f-8d257d983fcb52915711",
+              "file": "f1-probe.spec.ts",
+              "line": 247,
+              "column": 3
+            },
+            {
+              "title": "Q probe two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 21750,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QOK {\"ok\":true,\"roles\":{\"leader\":\"z\",\"at\":1792025990133,\"startAt\":1792025991809},\"a\":\"[{\\\"t\\\":1792025985575,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025986876,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025986923,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025986998,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025988061,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":1004},{\\\"t\\\":1792025988062,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025990129,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025990139,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u07i2bdc955ed\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.startFocus (/src/timer/store.ts:218:4) < at <anonymous>:1:34\\\"},{\\\"t\\\":1792025991633,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u07i2bdc955ed\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025992063,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u07i2bdc955ed\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792026004035,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.tick (/src/timer/store.ts:386:5) < at wake (/src/timer/ticker.ts:107:23)\\\"},{\\\"t\\\":1792026004434,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":949}]\",\"z\":\"[{\\\"t\\\":1792025987888,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025988063,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792025989184,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025989245,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":23},{\\\"t\\\":1792025989711,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025990141,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u07i2bdc955ed\\\"},{\\\"t\\\":1792025990556,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u07i2bdc955ed\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":1334},{\\\"t\\\":1792025990642,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u07i2bdc955ed\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792025991993,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025992002,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025992002,\\\"e\\\":\\\"freeze\\\"},{\\\"t\\\":1792026004453,\\\"e\\\":\\\"resume\\\"},{\\\"t\\\":1792026004593,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u07i2bdc955ed\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":true,\\\"lf\\\":-1},{\\\"t\\\":1792026004593,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792026005158,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792026005165,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":-1}]\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:59:44.907Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c3e36ec2d3d9242386f-e3511ac78d72738cfd45",
+              "file": "f1-probe.spec.ts",
+              "line": 247,
+              "column": 3
+            },
+            {
+              "title": "Q probe two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 20934,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QOK {\"ok\":true,\"roles\":{\"leader\":\"z\",\"at\":1792025998997,\"startAt\":1792026000304},\"a\":\"[{\\\"t\\\":1792025995270,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025996333,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025996421,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":38},{\\\"t\\\":1792025996454,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792025996464,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792025998996,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025999013,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u0eck51043b3b\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.startFocus (/src/timer/store.ts:218:4) < at <anonymous>:1:34\\\"},{\\\"t\\\":1792026000300,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u0eck51043b3b\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792026001233,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u0eck51043b3b\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792026012751,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.tick (/src/timer/store.ts:386:5) < at wake (/src/timer/ticker.ts:107:23)\\\"},{\\\"t\\\":1792026013235,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":1042}]\",\"z\":\"[{\\\"t\\\":1792025996881,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792025997023,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025997023,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792025997109,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:home:lastVisit\\\"},{\\\"t\\\":1792025997819,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792025998187,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":96},{\\\"t\\\":1792025998320,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792025999029,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u0eck51043b3b\\\"},{\\\"t\\\":1792025999562,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u0eck51043b3b\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":1471},{\\\"t\\\":1792026000351,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792026000363,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792026000363,\\\"e\\\":\\\"freeze\\\"},{\\\"t\\\":1792026013252,\\\"e\\\":\\\"resume\\\"},{\\\"t\\\":1792026013398,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u0eck51043b3b\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":true,\\\"lf\\\":-1},{\\\"t\\\":1792026013398,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792026013633,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792026014069,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":-1}]\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:59:54.224Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c3e36ec2d3d9242386f-1d9c7dc8d9519330b06b",
+              "file": "f1-probe.spec.ts",
+              "line": 247,
+              "column": 3
+            },
+            {
+              "title": "Q probe two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 21095,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QOK {\"ok\":true,\"roles\":{\"leader\":\"z\",\"at\":1792026014555,\"startAt\":1792026015183},\"a\":\"[{\\\"t\\\":1792026011049,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792026012614,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792026012657,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792026012680,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792026013061,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":348},{\\\"t\\\":1792026014393,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792026014557,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u0qcc49460e83\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.startFocus (/src/timer/store.ts:218:4) < at <anonymous>:1:34\\\"},{\\\"t\\\":1792026015182,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u0qcc49460e83\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792026016062,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u0qcc49460e83\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792026028065,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u0qcc49460e83\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":284},{\\\"t\\\":1792026028323,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.tick (/src/timer/store.ts:386:5) < at wake (/src/timer/ticker.ts:107:23)\\\"},{\\\"t\\\":1792026029061,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":1280}]\",\"z\":\"[{\\\"t\\\":1792026012987,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792026013729,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792026013729,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:home:lastVisit\\\"},{\\\"t\\\":1792026013799,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":0},{\\\"t\\\":1792026014135,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792026014562,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u0qcc49460e83\\\"},{\\\"t\\\":1792026014894,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u0qcc49460e83\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":1095},{\\\"t\\\":1792026015038,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u0qcc49460e83\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792026015186,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792026015187,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792026015194,\\\"e\\\":\\\"freeze\\\"},{\\\"t\\\":1792026028800,\\\"e\\\":\\\"resume\\\"},{\\\"t\\\":1792026028871,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792026029119,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792026029130,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":-1}]\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T01:00:09.501Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c3e36ec2d3d9242386f-d0d1fcbd722d0079ccae",
+              "file": "f1-probe.spec.ts",
+              "line": 247,
+              "column": 3
+            },
+            {
+              "title": "Q probe two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 21977,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QOK {\"ok\":true,\"roles\":{\"leader\":\"z\",\"at\":1792026020444,\"startAt\":1792026020828},\"a\":\"[{\\\"t\\\":1792026017988,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792026018631,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792026018668,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792026018681,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792026019066,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":376},{\\\"t\\\":1792026020171,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792026020172,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792026020445,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u0uvw1034dc3d\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.startFocus (/src/timer/store.ts:218:4) < at <anonymous>:1:34\\\"},{\\\"t\\\":1792026021076,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u0uvw1034dc3d\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792026021077,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u0uvw1034dc3d\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792026034061,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.tick (/src/timer/store.ts:386:5) < at wake (/src/timer/ticker.ts:107:23)\\\"},{\\\"t\\\":1792026034777,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":1260}]\",\"z\":\"[{\\\"t\\\":1792026019068,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792026019253,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792026019253,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792026020003,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792026020003,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:home:lastVisit\\\"},{\\\"t\\\":1792026020083,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":1},{\\\"t\\\":1792026020084,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792026020184,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792026020473,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u0uvw1034dc3d\\\"},{\\\"t\\\":1792026020845,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u0uvw1034dc3d\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":764},{\\\"t\\\":1792026020857,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792026020905,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792026020908,\\\"e\\\":\\\"freeze\\\"},{\\\"t\\\":1792026035064,\\\"e\\\":\\\"resume\\\"},{\\\"t\\\":1792026035151,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u0uvw1034dc3d\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":true,\\\"lf\\\":-1},{\\\"t\\\":1792026035294,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792026037568,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792026037698,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":-1}]\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T01:00:17.196Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c3e36ec2d3d9242386f-f0e1eddd51ef5257ec29",
+              "file": "f1-probe.spec.ts",
+              "line": 247,
+              "column": 3
+            },
+            {
+              "title": "Q probe two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 20794,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QOK {\"ok\":true,\"roles\":{\"leader\":\"z\",\"at\":1792026036781,\"startAt\":1792026038507},\"a\":\"[{\\\"t\\\":1792026033060,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792026033689,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792026033782,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792026033786,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792026034092,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":310},{\\\"t\\\":1792026036783,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792026036790,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u17hwbc694979\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.startFocus (/src/timer/store.ts:218:4) < at <anonymous>:1:34\\\"},{\\\"t\\\":1792026038501,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u17hwbc694979\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792026039066,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u17hwbc694979\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792026050063,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u17hwbc694979\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":8},{\\\"t\\\":1792026050648,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at Object.tick (/src/timer/store.ts:386:5) < at wake (/src/timer/ticker.ts:107:23)\\\"},{\\\"t\\\":1792026051301,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":1246}]\",\"z\":\"[{\\\"t\\\":1792026033999,\\\"e\\\":\\\"boot\\\",\\\"vis\\\":\\\"visible\\\"},{\\\"t\\\":1792026034201,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792026034201,\\\"e\\\":\\\"focus\\\"},{\\\"t\\\":1792026035535,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":-1},{\\\"t\\\":1792026035536,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:home:lastVisit\\\"},{\\\"t\\\":1792026035646,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/\\\",\\\"settling\\\":false,\\\"lf\\\":5},{\\\"t\\\":1792026036153,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792026036945,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u17hwbc694979\\\"},{\\\"t\\\":1792026037452,\\\"e\\\":\\\"state\\\",\\\"leader\\\":true,\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u17hwbc694979\\\",\\\"h\\\":\\\"#/focus\\\",\\\"settling\\\":false,\\\"lf\\\":1811},{\\\"t\\\":1792026037582,\\\"e\\\":\\\"write\\\",\\\"st\\\":\\\"running\\\",\\\"sid\\\":\\\"s_mv8u17hwbc694979\\\",\\\"stack\\\":\\\"at Object.setItem (/src/lib/storage.ts:86:17) < at Object.setItem (/.tmp/vite-cache/deps/zustand_middleware.js:237:40) < at setItem (/.tmp/vite-cache/deps/zustand_middleware.js:286:18) < at /.tmp/vite-cache/deps/zustand_middleware.js:298:10 < at setIntention (/src/timer/store.ts:414:37) < at /src/screens/home/Composer.tsx:77:31\\\"},{\\\"t\\\":1792026038522,\\\"e\\\":\\\"blur\\\"},{\\\"t\\\":1792026038535,\\\"e\\\":\\\"vis\\\",\\\"vis\\\":\\\"hidden\\\"},{\\\"t\\\":1792026038540,\\\"e\\\":\\\"freeze\\\"},{\\\"t\\\":1792026051318,\\\"e\\\":\\\"resume\\\"},{\\\"t\\\":1792026051390,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:timer\\\",\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null},{\\\"t\\\":1792026051695,\\\"e\\\":\\\"storage\\\",\\\"key\\\":\\\"kettle:progress\\\"},{\\\"t\\\":1792026052073,\\\"e\\\":\\\"state\\\",\\\"leader\\\":false,\\\"st\\\":\\\"idle\\\",\\\"sid\\\":null,\\\"h\\\":\\\"#/done\\\",\\\"settling\\\":false,\\\"lf\\\":-1}]\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T01:00:32.379Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1c3e36ec2d3d9242386f-da8b51467d970644dabd",
+              "file": "f1-probe.spec.ts",
+              "line": 247,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-15T00:56:41.959Z",
+    "duration": 251366.45299999998,
+    "expected": 19,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

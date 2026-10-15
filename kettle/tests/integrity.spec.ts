@@ -996,6 +996,37 @@ const inFlow = (page: Page) =>
     return 'in flow';
   });
 /** Count what the polite announcer says, from now on. */
+/**
+ * (W3R1 Q, X-1) What the storage-full banner's going depends on, recorded in the page (before the app boots): the
+ * result of the latest write of every `kettle:` key (saved, or refused by the browser), and when the banner section
+ * last came or went (page time). The banner goes once every save that failed has gone through, at the save warning's
+ * next recovery check (src/app/saveWarning.ts, every 2 s), so the test waits on those, not on a fixed time.
+ */
+function saveRecorder() {
+  const W = window as any;
+  const saves: Record<string, { ok: boolean; t: number; failedBefore: boolean }> = (W.__saves = {});
+  const orig = Storage.prototype.setItem;
+  Storage.prototype.setItem = function (this: Storage, k: string, v: string) {
+    if (this !== localStorage || !k.startsWith('kettle:')) return orig.call(this, k, v);
+    const failedBefore = !!saves[k] && (!saves[k].ok || saves[k].failedBefore);
+    try {
+      orig.call(this, k, v);
+      saves[k] = { ok: true, t: performance.now(), failedBefore };
+    } catch (e) {
+      saves[k] = { ok: false, t: performance.now(), failedBefore: true };
+      throw e;
+    }
+  };
+  W.__bannerAt = { shown: null as boolean | null, t: -1 };
+  const look = () => {
+    const shown = !!document.querySelector('section[data-save-warning]');
+    if (shown !== W.__bannerAt.shown) W.__bannerAt = { shown, t: performance.now() };
+  };
+  addEventListener('DOMContentLoaded', () => {
+    new MutationObserver(look).observe(document.body, { childList: true, subtree: true });
+    look();
+  });
+}
 const countSaid = (page: Page) =>
   page.evaluate(() => {
     const w = window as any;
@@ -1016,6 +1047,7 @@ for (const vp of [
 
     test('nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room', async ({ page }) => {
       test.setTimeout(150_000);
+      await page.addInitScript(saveRecorder);
       await newbieWithFullStorage(page);
       await countSaid(page);
       let downloads = 0;
@@ -1090,14 +1122,27 @@ for (const vp of [
       expect(await page.evaluate(() => (window as any).__said.length), 'said once').toBe(1);
 
       // Room again: the next saves go through and the banner goes.
-      await page.evaluate(() => {
+      const roomAt = await page.evaluate(() => {
         for (const k of Object.keys(localStorage)) if (k.startsWith('filler')) localStorage.removeItem(k);
         const k = (window as any).__kettle;
         k.timer.setState({});
         k.progress.setState({});
         k.settings.getState().set({ name: k.settings.getState().name });
+        return performance.now();
       });
-      await expect(banner(page)).toHaveCount(0, { timeout: 6_000 });
+      // (W3R1 Q, X-1) Waits on the real state, not on a fixed time: first, every save that had failed has gone through
+      // (no `kettle:` key's latest write refused) ...
+      const unsaved = () => page.evaluate(() => Object.entries((window as any).__saves as Record<string, { ok: boolean }>).filter(([, v]) => !v.ok).map(([k]) => k));
+      await expect.poll(unsaved, { message: 'every failed save has gone through', timeout: 10_000 }).toEqual([]);
+      const savedAt = await page.evaluate(() => Math.max(...Object.values((window as any).__saves as Record<string, { t: number; failedBefore: boolean }>).filter((v) => v.failedBefore).map((v) => v.t)));
+      // ... then the banner goes at the warning's next recovery check (every 2 s): within one check of the saves, plus
+      // 1 s for a late timer and the render on a loaded machine, in the page's own time. (The wait itself is only a
+      // bound for a page slowed by load; the 3 s is what is asserted.)
+      await expect(banner(page)).toHaveCount(0, { timeout: 15_000 });
+      const gone = await page.evaluate(() => (window as any).__bannerAt as { shown: boolean; t: number });
+      test.info().annotations.push({ type: 'facts', description: JSON.stringify({ savedAfterRoomMs: Math.round(savedAt - roomAt), goneAfterSavedMs: Math.round(gone.t - savedAt) }) });
+      expect(gone.shown, 'the banner is gone').toBe(false);
+      expect(gone.t - savedAt, 'the banner went at the first recovery check after the saves went through').toBeLessThanOrEqual(3000);
     });
 
     test('a banner that appears while Today is open moves nothing under the finger (Mark done with storage full)', async ({ page }) => {

@@ -1,0 +1,568 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w5q/kettle/.tmp/q-probes/pw.config.ts",
+    "rootDir": "/home/user/wt/w5q/kettle/.tmp/q-probes",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w5q/kettle/.tmp/Q-pw/probe-x1-x10",
+        "repeatEach": 10,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w5q/kettle/.tmp/q-probes",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 2,
+    "webServer": {
+      "command": "npx vite --config tests/e2e.vite.config.ts --port 5545 --strictPort",
+      "url": "http://127.0.0.1:5545/",
+      "reuseExistingServer": true,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "x1-probe.spec.ts",
+      "file": "x1-probe.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "I03 storage-full warning is a banner in the page (phone 390×844)",
+          "file": "x1-probe.spec.ts",
+          "line": 1038,
+          "column": 8,
+          "specs": [
+            {
+              "title": "nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [
+                    {
+                      "type": "qx1",
+                      "description": "{\"gone\":true,\"roomAt\":28945,\"goneAfterMs\":875,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":null,\"kettle:progress\":null},\"writesAfter\":[{\"t\":875,\"banner\":false}]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 33944,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QX1 {\"gone\":true,\"roomAt\":28945,\"goneAfterMs\":875,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":null,\"kettle:progress\":null},\"writesAfter\":[{\"t\":875,\"banner\":false}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:36:25.957Z",
+                      "annotations": [
+                        {
+                          "type": "qx1",
+                          "description": "{\"gone\":true,\"roomAt\":28945,\"goneAfterMs\":875,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":null,\"kettle:progress\":null},\"writesAfter\":[{\"t\":875,\"banner\":false}]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "83a1c8b0d1da007cd682-93ea74bf62e2f7d10e07",
+              "file": "x1-probe.spec.ts",
+              "line": 1042,
+              "column": 5
+            },
+            {
+              "title": "nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [
+                    {
+                      "type": "qx1",
+                      "description": "{\"gone\":true,\"roomAt\":29313,\"goneAfterMs\":139,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":null,\"kettle:progress\":null},\"writesAfter\":[{\"t\":139,\"banner\":false}]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 31937,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QX1 {\"gone\":true,\"roomAt\":29313,\"goneAfterMs\":139,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":null,\"kettle:progress\":null},\"writesAfter\":[{\"t\":139,\"banner\":false}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:36:25.557Z",
+                      "annotations": [
+                        {
+                          "type": "qx1",
+                          "description": "{\"gone\":true,\"roomAt\":29313,\"goneAfterMs\":139,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":null,\"kettle:progress\":null},\"writesAfter\":[{\"t\":139,\"banner\":false}]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "83a1c8b0d1da007cd682-a86da54cab3a007ae4ae",
+              "file": "x1-probe.spec.ts",
+              "line": 1042,
+              "column": 5
+            },
+            {
+              "title": "nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [
+                    {
+                      "type": "qx1",
+                      "description": "{\"gone\":true,\"roomAt\":29028,\"goneAfterMs\":986,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":null,\"kettle:progress\":null},\"writesAfter\":[{\"t\":-45,\"k\":\"kettle:settings\",\"ok\":1},{\"t\":986,\"banner\":false}]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 32842,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QX1 {\"gone\":true,\"roomAt\":29028,\"goneAfterMs\":986,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":null,\"kettle:progress\":null},\"writesAfter\":[{\"t\":-45,\"k\":\"kettle:settings\",\"ok\":1},{\"t\":986,\"banner\":false}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:36:58.869Z",
+                      "annotations": [
+                        {
+                          "type": "qx1",
+                          "description": "{\"gone\":true,\"roomAt\":29028,\"goneAfterMs\":986,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":null,\"kettle:progress\":null},\"writesAfter\":[{\"t\":-45,\"k\":\"kettle:settings\",\"ok\":1},{\"t\":986,\"banner\":false}]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "83a1c8b0d1da007cd682-18396cd0bd42d5598a6f",
+              "file": "x1-probe.spec.ts",
+              "line": 1042,
+              "column": 5
+            },
+            {
+              "title": "nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [
+                    {
+                      "type": "qx1",
+                      "description": "{\"gone\":true,\"roomAt\":27996,\"goneAfterMs\":1718,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":null,\"kettle:progress\":null},\"writesAfter\":[{\"t\":1718,\"banner\":false}]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 32706,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QX1 {\"gone\":true,\"roomAt\":27996,\"goneAfterMs\":1718,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":null,\"kettle:progress\":null},\"writesAfter\":[{\"t\":1718,\"banner\":false}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:37:03.933Z",
+                      "annotations": [
+                        {
+                          "type": "qx1",
+                          "description": "{\"gone\":true,\"roomAt\":27996,\"goneAfterMs\":1718,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":null,\"kettle:progress\":null},\"writesAfter\":[{\"t\":1718,\"banner\":false}]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "83a1c8b0d1da007cd682-47df9a6f327b1389dea4",
+              "file": "x1-probe.spec.ts",
+              "line": 1042,
+              "column": 5
+            },
+            {
+              "title": "nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [
+                    {
+                      "type": "qx1",
+                      "description": "{\"gone\":true,\"roomAt\":30351,\"goneAfterMs\":903,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":-48,\"kettle:progress\":-48},\"writesAfter\":[{\"t\":-48,\"k\":\"kettle:timer\",\"ok\":1},{\"t\":-48,\"k\":\"kettle:progress\",\"ok\":1},{\"t\":-48,\"k\":\"kettle:settings\",\"ok\":1},{\"t\":903,\"banner\":false}]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 34162,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QX1 {\"gone\":true,\"roomAt\":30351,\"goneAfterMs\":903,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":-48,\"kettle:progress\":-48},\"writesAfter\":[{\"t\":-48,\"k\":\"kettle:timer\",\"ok\":1},{\"t\":-48,\"k\":\"kettle:progress\",\"ok\":1},{\"t\":-48,\"k\":\"kettle:settings\",\"ok\":1},{\"t\":903,\"banner\":false}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:37:33.770Z",
+                      "annotations": [
+                        {
+                          "type": "qx1",
+                          "description": "{\"gone\":true,\"roomAt\":30351,\"goneAfterMs\":903,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":-48,\"kettle:progress\":-48},\"writesAfter\":[{\"t\":-48,\"k\":\"kettle:timer\",\"ok\":1},{\"t\":-48,\"k\":\"kettle:progress\",\"ok\":1},{\"t\":-48,\"k\":\"kettle:settings\",\"ok\":1},{\"t\":903,\"banner\":false}]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "83a1c8b0d1da007cd682-2b9de974fc9fc3f97320",
+              "file": "x1-probe.spec.ts",
+              "line": 1042,
+              "column": 5
+            },
+            {
+              "title": "nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [
+                    {
+                      "type": "qx1",
+                      "description": "{\"gone\":true,\"roomAt\":28710,\"goneAfterMs\":951,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":null,\"kettle:progress\":null},\"writesAfter\":[{\"t\":951,\"banner\":false}]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 32420,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QX1 {\"gone\":true,\"roomAt\":28710,\"goneAfterMs\":951,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":null,\"kettle:progress\":null},\"writesAfter\":[{\"t\":951,\"banner\":false}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:37:40.575Z",
+                      "annotations": [
+                        {
+                          "type": "qx1",
+                          "description": "{\"gone\":true,\"roomAt\":28710,\"goneAfterMs\":951,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":null,\"kettle:progress\":null},\"writesAfter\":[{\"t\":951,\"banner\":false}]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "83a1c8b0d1da007cd682-4f580bbd0f70edcbf244",
+              "file": "x1-probe.spec.ts",
+              "line": 1042,
+              "column": 5
+            },
+            {
+              "title": "nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [
+                    {
+                      "type": "qx1",
+                      "description": "{\"gone\":true,\"roomAt\":29852,\"goneAfterMs\":1673,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":null,\"kettle:progress\":null},\"writesAfter\":[{\"t\":1673,\"banner\":false}]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 33349,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QX1 {\"gone\":true,\"roomAt\":29852,\"goneAfterMs\":1673,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":null,\"kettle:progress\":null},\"writesAfter\":[{\"t\":1673,\"banner\":false}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:38:10.614Z",
+                      "annotations": [
+                        {
+                          "type": "qx1",
+                          "description": "{\"gone\":true,\"roomAt\":29852,\"goneAfterMs\":1673,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":null,\"kettle:progress\":null},\"writesAfter\":[{\"t\":1673,\"banner\":false}]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "83a1c8b0d1da007cd682-27606fd90355d9d70e22",
+              "file": "x1-probe.spec.ts",
+              "line": 1042,
+              "column": 5
+            },
+            {
+              "title": "nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [
+                    {
+                      "type": "qx1",
+                      "description": "{\"gone\":true,\"roomAt\":29654,\"goneAfterMs\":null,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":null,\"kettle:progress\":null},\"writesAfter\":[]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 32152,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QX1 {\"gone\":true,\"roomAt\":29654,\"goneAfterMs\":null,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":null,\"kettle:progress\":null},\"writesAfter\":[]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:38:15.255Z",
+                      "annotations": [
+                        {
+                          "type": "qx1",
+                          "description": "{\"gone\":true,\"roomAt\":29654,\"goneAfterMs\":null,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":null,\"kettle:progress\":null},\"writesAfter\":[]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "83a1c8b0d1da007cd682-c3e955731aa475c104f0",
+              "file": "x1-probe.spec.ts",
+              "line": 1042,
+              "column": 5
+            },
+            {
+              "title": "nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [
+                    {
+                      "type": "qx1",
+                      "description": "{\"gone\":true,\"roomAt\":28858,\"goneAfterMs\":576,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":-47,\"kettle:progress\":-47},\"writesAfter\":[{\"t\":-47,\"k\":\"kettle:timer\",\"ok\":1},{\"t\":-47,\"k\":\"kettle:progress\",\"ok\":1},{\"t\":-46,\"k\":\"kettle:settings\",\"ok\":1},{\"t\":576,\"banner\":false}]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 31894,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QX1 {\"gone\":true,\"roomAt\":28858,\"goneAfterMs\":576,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":-47,\"kettle:progress\":-47},\"writesAfter\":[{\"t\":-47,\"k\":\"kettle:timer\",\"ok\":1},{\"t\":-47,\"k\":\"kettle:progress\",\"ok\":1},{\"t\":-46,\"k\":\"kettle:settings\",\"ok\":1},{\"t\":576,\"banner\":false}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:38:46.229Z",
+                      "annotations": [
+                        {
+                          "type": "qx1",
+                          "description": "{\"gone\":true,\"roomAt\":28858,\"goneAfterMs\":576,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":-47,\"kettle:progress\":-47},\"writesAfter\":[{\"t\":-47,\"k\":\"kettle:timer\",\"ok\":1},{\"t\":-47,\"k\":\"kettle:progress\",\"ok\":1},{\"t\":-46,\"k\":\"kettle:settings\",\"ok\":1},{\"t\":576,\"banner\":false}]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "83a1c8b0d1da007cd682-5fb68ee03d5a7d0c14bb",
+              "file": "x1-probe.spec.ts",
+              "line": 1042,
+              "column": 5
+            },
+            {
+              "title": "nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 150000,
+                  "annotations": [
+                    {
+                      "type": "qx1",
+                      "description": "{\"gone\":true,\"roomAt\":28287,\"goneAfterMs\":201,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":-46,\"kettle:progress\":-46},\"writesAfter\":[{\"t\":-46,\"k\":\"kettle:timer\",\"ok\":1},{\"t\":-46,\"k\":\"kettle:progress\",\"ok\":1},{\"t\":-46,\"k\":\"kettle:settings\",\"ok\":1},{\"t\":201,\"banner\":false}]}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 31569,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "QX1 {\"gone\":true,\"roomAt\":28287,\"goneAfterMs\":201,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":-46,\"kettle:progress\":-46},\"writesAfter\":[{\"t\":-46,\"k\":\"kettle:timer\",\"ok\":1},{\"t\":-46,\"k\":\"kettle:progress\",\"ok\":1},{\"t\":-46,\"k\":\"kettle:settings\",\"ok\":1},{\"t\":201,\"banner\":false}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-15T00:38:50.311Z",
+                      "annotations": [
+                        {
+                          "type": "qx1",
+                          "description": "{\"gone\":true,\"roomAt\":28287,\"goneAfterMs\":201,\"failedEver\":[\"kettle:timer\",\"kettle:progress\"],\"firstOkAfterRoomMs\":{\"kettle:timer\":-46,\"kettle:progress\":-46},\"writesAfter\":[{\"t\":-46,\"k\":\"kettle:timer\",\"ok\":1},{\"t\":-46,\"k\":\"kettle:progress\",\"ok\":1},{\"t\":-46,\"k\":\"kettle:settings\",\"ok\":1},{\"t\":201,\"banner\":false}]}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "83a1c8b0d1da007cd682-fcf88775be3e427b506f",
+              "file": "x1-probe.spec.ts",
+              "line": 1042,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-15T00:36:23.071Z",
+    "duration": 179211,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

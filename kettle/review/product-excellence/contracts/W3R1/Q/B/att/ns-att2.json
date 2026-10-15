@@ -1,0 +1,271 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w5q/kettle/.tmp/q-probes/pw.config.ts",
+    "rootDir": "/home/user/wt/w5q/kettle/.tmp/q-probes",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w5q/kettle/.tmp/Q-pw/att-ns-att2",
+        "repeatEach": 2,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w5q/kettle/.tmp/q-probes",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite --config tests/e2e.vite.config.ts --port 5540 --strictPort",
+      "url": "http://127.0.0.1:5540/",
+      "reuseExistingServer": true,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "ns-att2.spec.ts",
+      "file": "ns-att2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":2399,\"markDone\":{\"tapAt\":{\"x\":773.5,\"y\":707.1875,\"w\":151,\"h\":44,\"top\":685.1875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":757.15625,\"undoY\":757.15625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1980,\"modalFrames\":38,\"frames\":3548,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":240,\"Crossed off. Nice work. Undo\":12,\"Couldn’t save just now. Your summary is still he\":243,\"Recipe done: Take a full tea break · +10 leaves\":215,\"Recipe done: Take 2 full tea breaks · +15 leaves\":247,\"Kettle’s off. See you soon.\":194,\"Brew updated\":256,\"Brew deleted Undo\":232,\"A notice on Settings, here to be read.\":273,\"A notice on Nook, here to be read.\":80}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":81,\"modalFrames\":0,\"frames\":224,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":81}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 68749,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "QPRESS getByRole('textbox', { name: /What are you brewing/ }) wheels=0 ms=1 at=true sheet=false scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS getByRole('button', { name: /^Put the kettle on · / }) wheels=0 ms=0 at=true sheet=false scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS getByRole('button', { name: 'End session' }).first() wheels=0 ms=0 at=true sheet=false scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS getByRole('dialog', { name: 'Leave the kettle early?' }).getByRole('button', { name: 'End session' }) wheels=0 ms=0 at=true sheet=true scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS getByRole('button', { name: /^Mark “Chapter 3 notes” done/ }) wheels=1 ms=1386 at=true sheet=false scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS locator('[data-undo-for=\"mark-done\"]').getByRole('button', { name: /^Undo/ }) wheels=0 ms=1 at=true sheet=false scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS getByRole('button', { name: /Tea time|Long tea break/ }) wheels=0 ms=0 at=true sheet=false scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS getByRole('button', { name: /^Put the kettle on/ }) wheels=0 ms=0 at=true sheet=false scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS getByRole('link', { name: 'Stats' }).first() wheels=0 ms=0 at=true sheet=false scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS locator('main button[aria-label*=\"Edit\"]').first() wheels=19 ms=7890 at=true sheet=false scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS getByRole('dialog', { name: 'Edit brew' }).getByRole('button', { name: 'Delete this brew' }) wheels=0 ms=0 at=true sheet=true scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS getByRole('dialog', { name: 'Delete this brew?' }).getByRole('button', { name: 'Delete', exact: true }) wheels=0 ms=0 at=true sheet=true scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS locator('[data-undo-for=\"history-delete\"]').getByRole('button', { name: /^Undo/ }) wheels=0 ms=0 at=true sheet=false scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS getByRole('link', { name: 'Settings' }).first() wheels=0 ms=0 at=true sheet=false scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS getByRole('link', { name: 'Nook' }).first() wheels=0 ms=0 at=true sheet=false scroller=null\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T01:00:55.885Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":2399,\"markDone\":{\"tapAt\":{\"x\":773.5,\"y\":707.1875,\"w\":151,\"h\":44,\"top\":685.1875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":757.15625,\"undoY\":757.15625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1980,\"modalFrames\":38,\"frames\":3548,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":240,\"Crossed off. Nice work. Undo\":12,\"Couldn’t save just now. Your summary is still he\":243,\"Recipe done: Take a full tea break · +10 leaves\":215,\"Recipe done: Take 2 full tea breaks · +15 leaves\":247,\"Kettle’s off. See you soon.\":194,\"Brew updated\":256,\"Brew deleted Undo\":232,\"A notice on Settings, here to be read.\":273,\"A notice on Nook, here to be read.\":80}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":81,\"modalFrames\":0,\"frames\":224,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":81}}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/home/user/wt/w5q/kettle/.tmp/Q-pw/att-ns-att2/ns-att2-no-notice-overlaps-853da-0-light-200-reduced-motion--chromium/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b8c4856f5747ead35090-352d477b6188fc4f7843",
+          "file": "ns-att2.spec.ts",
+          "line": 340,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":3161,\"markDone\":{\"tapAt\":{\"x\":773.5,\"y\":707.1875,\"w\":151,\"h\":44,\"top\":685.1875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":757.15625,\"undoY\":757.15625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1901,\"modalFrames\":22,\"frames\":3275,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":280,\"Crossed off. Nice work. Undo\":22,\"Couldn’t save just now. Your summary is still he\":250,\"Recipe done: Take a full tea break · +10 leaves\":208,\"Recipe done: Take 2 full tea breaks · +15 leaves\":249,\"Kettle’s off. See you soon.\":195,\"Brew updated\":270,\"Brew deleted Undo\":106,\"A notice on Settings, here to be read.\":257,\"A notice on Nook, here to be read.\":86}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":52,\"modalFrames\":0,\"frames\":186,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":52}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 62971,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "QPRESS getByRole('textbox', { name: /What are you brewing/ }) wheels=0 ms=0 at=true sheet=false scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS getByRole('button', { name: /^Put the kettle on · / }) wheels=0 ms=0 at=true sheet=false scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS getByRole('button', { name: 'End session' }).first() wheels=0 ms=0 at=true sheet=false scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS getByRole('dialog', { name: 'Leave the kettle early?' }).getByRole('button', { name: 'End session' }) wheels=0 ms=0 at=true sheet=true scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS getByRole('button', { name: /^Mark “Chapter 3 notes” done/ }) wheels=1 ms=1615 at=true sheet=false scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS locator('[data-undo-for=\"mark-done\"]').getByRole('button', { name: /^Undo/ }) wheels=0 ms=0 at=true sheet=false scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS getByRole('button', { name: /Tea time|Long tea break/ }) wheels=0 ms=0 at=true sheet=false scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS getByRole('button', { name: /^Put the kettle on/ }) wheels=0 ms=0 at=true sheet=false scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS getByRole('link', { name: 'Stats' }).first() wheels=0 ms=0 at=true sheet=false scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS locator('main button[aria-label*=\"Edit\"]').first() wheels=19 ms=7310 at=true sheet=false scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS getByRole('dialog', { name: 'Edit brew' }).getByRole('button', { name: 'Delete this brew' }) wheels=0 ms=0 at=true sheet=true scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS getByRole('dialog', { name: 'Delete this brew?' }).getByRole('button', { name: 'Delete', exact: true }) wheels=0 ms=0 at=true sheet=true scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS locator('[data-undo-for=\"history-delete\"]').getByRole('button', { name: /^Undo/ }) wheels=0 ms=0 at=true sheet=false scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS getByRole('link', { name: 'Settings' }).first() wheels=0 ms=1 at=true sheet=false scroller=null\n"
+                    },
+                    {
+                      "text": "QPRESS getByRole('link', { name: 'Nook' }).first() wheels=0 ms=0 at=true sheet=false scroller=null\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T01:02:07.176Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":3161,\"markDone\":{\"tapAt\":{\"x\":773.5,\"y\":707.1875,\"w\":151,\"h\":44,\"top\":685.1875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":757.15625,\"undoY\":757.15625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1901,\"modalFrames\":22,\"frames\":3275,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":280,\"Crossed off. Nice work. Undo\":22,\"Couldn’t save just now. Your summary is still he\":250,\"Recipe done: Take a full tea break · +10 leaves\":208,\"Recipe done: Take 2 full tea breaks · +15 leaves\":249,\"Kettle’s off. See you soon.\":195,\"Brew updated\":270,\"Brew deleted Undo\":106,\"A notice on Settings, here to be read.\":257,\"A notice on Nook, here to be read.\":86}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":52,\"modalFrames\":0,\"frames\":186,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":52}}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/home/user/wt/w5q/kettle/.tmp/Q-pw/att-ns-att2/ns-att2-no-notice-overlaps-853da-0-light-200-reduced-motion--chromium-repeat1/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b8c4856f5747ead35090-83e1bf125299234a9d38",
+          "file": "ns-att2.spec.ts",
+          "line": 340,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-15T01:00:54.563Z",
+    "duration": 136852.075,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

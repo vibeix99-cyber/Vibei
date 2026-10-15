@@ -1,0 +1,8 @@
+
+Running 1 test using 1 worker
+
+QZ {"zBefore":"running","storedAfterZ":"running","ev":[["kettle:timer",true,2877],["kettle:timer",true,3189]],"now":3241,"log":{"multiTab":true,"leader":true,"leaderMode":"locks","leaderForMs":2332.5,"scheduler":"worker","settling":false,"dueForMs":null,"wakes":9,"claims":true,"lastClaim":null}}
+QREPRO {"sid":"s_mv8tqhgaf26183f8","after":{"stored":"running","a":{"st":"running","sid":"s_mv8tqhgaf26183f8","hash":"#/focus"},"z":{"st":"running","hash":"#/focus"}}}
+  ✓  1 [chromium] › .tmp/q-probes/f1-repro.spec.ts:9:1 › a stale tab writing the timer store undoes a brew another tab has just started (5.8s)
+
+  1 passed (8.6s)
