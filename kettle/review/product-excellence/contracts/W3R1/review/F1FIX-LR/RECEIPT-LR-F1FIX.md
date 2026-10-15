@@ -35,3 +35,31 @@ Raw evidence only. No verdict. Times are UTC, 2026-10-15. Task received 09:46, b
 | **:5560** (integration `f2298d3`, control) | **failed** (5.3 s) as expected, at the "storage still holds B's running brew" step (spec line 91): storage `kettle:timer.state` held `status "idle"`, `sessionId null`, `endsAt null`, `startedAt null`, `intention "Reply to Sam"` where B's brew was expected (`status "running"`, B's `sessionId`, `endsAt`, `startedAt`, `intention "Chapter 3 notes"`): tab A's whole idle timer written over tab B's running brew. Error context and trace: `runs/race-5560-artifacts/` |
 
 One run each; no repeats (the packet reports 3/3 failing on :5560 and :5478 and 5/5 passing on the fix).
+
+## 4. The 2-tab manual check, real input in two tabs of one browser context, :5562 (fix) and :5560 (control)
+
+Script `scripts/LR-manual.mjs` (Playwright, one browser context, two pages = two tabs; Playwright's keyboard sends real key events, `bringToFront` switches tabs; the debug API is used only to read state dumps and to fast-forward). Log `runs/manual-2tab.log.txt`; per cell a JSON with the dumps at four moments for both tabs (`manual/<server>-<scenario>-<phase>.json`), the summary `manual/summary.txt`, screenshots of both tabs at the four moments for the **first iteration of each cell** (`manual/<server>-<scenario>-<phase>-<t1|t2>-<moment>.png`, 64 files). Fresh profile per iteration, with the quiet defaults the race spec uses (onboarded, no 3D scene, reduced motion, muted).
+
+**Procedure per iteration.** Both tabs open Today (idle, composers mounted). Tab 1 (front): click the composer, type "Write the report", press Enter (brew starts). Tab 2 is typed into with real keys, in two orders: **S1**: tab 2 is brought to the front right after tab 1's Enter and "Reply to Sam" is typed into its composer; **S2**: tab 2's composer is typed "Reply" first (its intention sync pending), tab 1 is brought to the front and presses Enter, tab 2 is brought to the front again and " to Sam" is typed. Then three rounds of back and forth (switch tab, type where a composer exists). Then the debug API fast-forwards 27 minutes in tab 1; both tabs are given up to 20 s to reach `#/done`; the records for the session are counted in `kettle:progress` and in each tab's memory. Moments dumped (each: route, the timer in memory and in `kettle:timer`, composer present, record counts): `01` both on Today, `02` brew started and tab 2 typed, `03` after the back and forth, `04` after the fast-forward. **Phases:** quiet, and loaded (CDP `Emulation.setCPUThrottlingRate` 6 on both tabs, so storage events are handled late; no burners, since the notice suite was running at the same time). **6 iterations per cell, 2 scenarios, 2 phases, 2 servers = 48 iterations.** Page errors: 0 in all 48.
+
+**A first version of the script was discarded** (`manual/attempt1-discarded/`): it typed into tab 2 without bringing it to the front, and those keystrokes reached tab 1's composer (the brew label read "Write the reportRep"). Its 6 completed iterations are kept but not counted; the second version brings each tab to the front before typing in it.
+
+**Results (state at moment 03, before the fast-forward, and the record count after it):**
+
+| Check, per server (24 iterations each) | :5562 fix | :5560 control |
+|---|---|---|
+| **Bug signature: either tab, or `kettle:timer`, `idle` after tab 1 started the brew** | **0 of 24** | **0 of 24** |
+| Same `sessionId` as tab 1's, in both tabs and in storage | 24 of 24 | 24 of 24 |
+| `running` in both tabs with the same `endsAt` (equal to storage's) | 23 of 24 | 18 of 24 |
+| `paused` in both tabs and in storage (see below) | 1 of 24 | 6 of 24 |
+| Of those `running`, after the fast-forward: both tabs on `#/done` and **exactly one record** (storage, tab 1 memory, tab 2 memory) | 23 of 23 | 18 of 18 |
+| Tab 2's composer still on screen when tab 2 was brought to the front after tab 1's Enter (S1) or after the switch (S2) | 23 of 24 | 24 of 24 |
+| The running brew's task label differs from "Write the report" (changed by tab 2's text) | 14 of 24 | 17 of 24 |
+
+By cell (6 iterations each; survives = running, same session and `endsAt`; the full table is `manual/summary.txt`): fix S1 quiet 6, S1 loaded 5, S2 quiet 6, S2 loaded 6; control S1 quiet 4, S1 loaded 5, S2 quiet 5, S2 loaded 4.
+
+**What was seen, and what it is not:**
+- **The original bug did not show on :5560 in these runs.** No iteration on the control had `idle` in either tab or in storage, quiet or with CPU ×6. (The coordinator said it might not without load; the lag the race needs is not produced by main-thread throttling here. The deterministic spec, section 3, is what shows it on :5560.) So this check does not distinguish the fix from the control on the bug itself.
+- **The 7 iterations that are not `running` (control 6, fix 1) are `paused`, same session, both tabs and storage** (`endsAt null` at the first dump after the Enter). Cause from the data: the words typed in tab 2 contain spaces; once tab 2 has taken in the brew and moved to the focus screen, the remaining keystrokes reach that screen, where Space is the pause shortcut (the screen shows "Space pause"). It happened on both servers; those iterations had no record because a paused brew is not ended by the fast-forward. It is an effect of my typing, not of either build.
+- **The task label.** A tab's composer shows the words typed in the other tab (tab 2's composer already held "Write the report" when I typed into it: S2 recorded its value as "Write the reportReply"). Words typed in tab 2 while the brew starts can therefore become the running brew's task label in both tabs: labels seen include "Reply to SamWrite the report", "Write the reportReply" and " to SamWrite the reportReply". It happens on **both** servers (control 17 of 24, fix 14 of 24), so it is not introduced by the fix; S2 changed it in all 12 iterations on each server, S1 in 5 of 12 on the control and 2 of 12 on the fix. In the fix's runs the brew itself is unharmed (same session, same end).
+- The 1 `paused` iteration on the fix and the 6 on the control are all the Space effect above; I did not re-run them with text without spaces.
