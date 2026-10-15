@@ -84,3 +84,36 @@ FACT 1440x900-dark-t200-rm c-pointer-held {"leftAt":5406,"room":113,"roomWhileDo
   ✓  67 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (844×390 dark 100 %) (15.7s)
   ✓  68 [chromium] › tests/toast-room.spec.ts:431:3 › three notices never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, dark) (18.6s)
   ✓  69 [chromium] › tests/w3-notices.spec.ts:158:1 › the room a gone notice keeps stays while the page is scrolled, and goes on the same screen once idle (390×844, 200 %) (15.1s)
+  ✓  70 [chromium] › tests/toast-room.spec.ts:466:3 › the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (667×375, 200 % text, wheel, light) (22.0s)
+  ✓  71 [chromium] › tests/w3-notices.spec.ts:210:1 › the room is not given back while a pointer is held; it goes 4–6.5 s after release (1440×900, 100 %) (19.0s)
+  ✓  73 [chromium] › tests/w3-notices.spec.ts:239:1 › a new screen starts with no room: Today after End, then Stats and back (375×667, 100 %) (12.0s)
+  ✓  74 [chromium] › tests/w3-notices.spec.ts:265:1 › the status bar warm-days button is named "N days warm. Show details" (and ", today not brewed yet") (4.9s)
+  ✓  72 [chromium] › tests/toast-room.spec.ts:466:3 › the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (844×390, 200 % text, touch, dark) (28.2s)
+
+
+  1) [chromium] › tests/notice-strip.spec.ts:338:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+
+    Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+      298 |     if (!at || (same && Date.now() - t < 800) || k >= 4) break;
+      299 |   }
+    > 300 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();
+          |                                                            ^
+      301 |   if (touch) {
+      302 |     await page.touchscreen.tap(at!.x, at!.y);
+      303 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)
+        at press (/home/user/wt/w6-int/kettle/tests/notice-strip.spec.ts:300:60)
+        at /home/user/wt/w6-int/kettle/tests/notice-strip.spec.ts:350:5
+
+    Error Context: .tmp/LR-pw/notice/notice-strip-no-notice-ove-011b9-eal-input-844×390-dark-200--chromium/error-context.md
+
+  Slow test file: [chromium] › tests/toast-room.spec.ts (5.2m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  1 failed
+    [chromium] › tests/notice-strip.spec.ts:338:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+  73 passed (25.1m)
+### end 11:50:56 UTC; exit=1; load:  11:50:56 up  3:04,  0 user,  load average: 9.97, 10.82, 10.71
