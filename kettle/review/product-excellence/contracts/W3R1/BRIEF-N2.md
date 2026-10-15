@@ -7,9 +7,9 @@
 - **What happens:** when a History row is tapped to open "Edit brew", the page scrolls by about 110 px. LEAD-5's `historytrace`, W2R3 round 3, shows scrollY 2500 → 2610 at 1440 × 900 @200 % reduced. The row the person tapped moves under their finger.
 - **Today:** `tests/notice-strip.spec.ts` (F's file) waits for this scroll to settle before reading "where the person saw the row" (X-11). That keeps the test stable; the product movement remains.
 
-**Base:** integration HEAD after the F1 fix merge, **`__BASE__`** (src `__SRC__`).
+**Base:** integration HEAD after the F1 fix merge, **`5f78af1`** (src `b74e6b3`).
 - Branch `pe/w3r1-n2-history`, worktree `/home/user/wt/w7n`, dev **:5565**.
-- Controls: the integration on **:5560 / :5570** (rebuilt on `__BASE__`) and old base `4d36939` on :5478 / :5488.
+- Controls: the integration on **:5560 / :5570** (rebuilt on `5f78af1`) and old base `4d36939` on :5478 / :5488.
 
 ## Scope (only these)
 
@@ -72,4 +72,4 @@
   ```
   /tmp/rv7-servers/commit-evidence.sh /home/user/Vibei/kettle/review/product-excellence/contracts/W3R1/N2 "<message>"
   ```
-- **Budget:** 2 h. Hard stop **__STOP__ UTC**. Hand back what you have at the stop, with an honest status.
+- **Budget:** 2 h. Hard stop **13:23 UTC**. Hand back what you have at the stop, with an honest status.
