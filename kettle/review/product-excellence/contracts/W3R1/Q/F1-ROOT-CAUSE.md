@@ -26,7 +26,7 @@ Probe: `Q/B/probe/f1-probe.spec.ts.txt` (scratch copy of I01's test plus a recor
 | ×10, 4 burners | :5545 (`61aec4b`) | 10/10 pass | `Q/B/probe/f1-x10.log.txt` |
 | ×20, 6 burners | :5545 | **3 fail / 20** | `Q/B/probe/f1-x20-nb6.log.txt` (`QDUMP` / `QOK` lines hold both tabs' logs) |
 | ×12, 6 burners, with write stacks | :5545 | **2 fail / 12** | `Q/B/probe/f1-stack-x12-nb6.log.txt` |
-| ×20, 6 burners | base :5478 (`4d36939`) | see below | `Q/B/probe/f1-base-x20-nb6.log.txt` |
+| ×20, 6 burners | base :5478 (`4d36939`) | **1 fail / 20**: the same mechanism. Tab z started the brew; tab a's `Composer.tsx` → `setIntention` wrote idle 102 ms after it; the leader never saw the session | `Q/B/probe/f1-base-x20-nb6.log.txt` |
 
 **What every failure shows:**
 - the tab that did not start the brew writes `kettle:timer` with `status: idle` **after** the starting tab's `running` write:

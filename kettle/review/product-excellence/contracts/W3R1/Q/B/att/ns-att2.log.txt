@@ -1,0 +1,9 @@
+
+Running 2 tests using 1 worker
+
+QPRESS getByRole('textbox', { name: /What are you brewing/ }) wheels=0 ms=1 at=true sheet=false scroller=null
+QPRESS getByRole('button', { name: /^Put the kettle on · / }) wheels=0 ms=0 at=true sheet=false scroller=null
+QPRESS getByRole('button', { name: 'End session' }).first() wheels=0 ms=0 at=true sheet=false scroller=null
+QPRESS getByRole('dialog', { name: 'Leave the kettle early?' }).getByRole('button', { name: 'End session' }) wheels=0 ms=0 at=true sheet=true scroller=null
+QPRESS getByRole('button', { name: /^Mark “Chapter 3 notes” done/ }) wheels=1 ms=1386 at=true sheet=false scroller=null
+QPRESS locator('[data-undo-for="mark-done"]').getByRole('button', { name: /^Undo/ }) wheels=0 ms=1 at=true sheet=false scroller=null
