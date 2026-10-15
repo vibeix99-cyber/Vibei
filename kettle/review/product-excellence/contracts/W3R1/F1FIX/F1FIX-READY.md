@@ -7,10 +7,10 @@
 | Base | integration `793321b` (app `f2298d3`, src `db6de7e`) |
 | **Head** | **`74138d3` (src `e2041c1`)**. App code is final at `882233b` (src `3738f08`); `74138d3` changes only the Vitest file |
 | Commits | `9a41a1a` fix part 1 (intention-only save) + Vitest test · `84a7e18` Playwright test · `882233b` fix part 2 (no-op saves write nothing; found by my own stress probe, §4) · `74138d3` Vitest tweak |
-| Dev | :5561, restarted after each source change; `verify.sh` → `PORT 5561 serves 882233b (src 3738f08): VERIFIED` (app code) |
+| Dev | :5561, restarted after each source change; final `verify.sh` → `PORT 5561 serves 74138d3 (src e2041c1): VERIFIED` |
 | Evidence | `F1FIX/logs/*.log.txt`, scripts in `F1FIX/scripts/*.txt` |
 
-**Status: stage 2.** Change, deterministic tests and the first stress runs are in. The proof chain (`scripts/chain.sh.txt`) is running; its results are filled into §3, §4 and §6.
+**Status: READY for LEAD-5.** All proof is in (§2–§4, §6). Open points: §7.
 
 ## 1. The change (scope: `src/timer/store.ts` only; `Composer.tsx` untouched)
 
@@ -129,7 +129,9 @@ Load: `--workers=2` plus **6** CPU burners (own PIDs, killed at the end). This i
 | `84a7e18` | Q's instrumented copy ×20 (`f1-probe.spec.ts`; every `kettle:timer` write logged with its stack) | **18/20.** In both failures the non-starting tab wrote `idle` 667 ms / 217 ms after the start. Stack: `Composer.tsx` 150 ms sync → `setIntention` → `saveIntentionOnly`, **"nothing readable stored" branch**: its copy of storage was also behind. Its storage event came 50–66 ms after. That is a no-op save (`''`, `null`), which led to part (a) | `probe-I01-x20-nb6-on-84a7e18.log.txt` (`QDUMP` lines) |
 | **`882233b` (final)** | I01 ×20 | **20/20** (4.6 min, load 16.2 at the end) | `stress-I01-x20-nb6-on-882233b-run1.log.txt` |
 | `882233b` | Q's instrumented copy ×20 | **20/20** (4.3 min, load 15.9 at the end). **The non-starting tab made 0 `kettle:timer` writes in 20 runs**; on `84a7e18` it made 20 (one composer sync per run, 7 of them `idle` within 2 s of the start) | `probe-I01-x20-nb6-on-882233b.log.txt` (`QOK` lines) |
-| `882233b` | I01 ×20, second run | *pending (chain)* | |
+| `882233b` | I01 ×20, second run | **20/20** (3.7 min, load 10.1 at the end) | `stress-I01-x20-nb6-on-882233b-run2.log.txt` |
+
+**On the final code: I01 40/40 and the instrumented copy 20/20 under load.** For comparison, base failed 1/20 in Q's run at the same setting, and `84a7e18` failed 1/20 and 2/20. 60 clean runs alone would not rule out a rate of about 1 in 20 at high confidence. The stronger evidence is the probe's write log: the write that caused every observed failure no longer happens (0 writes against 20).
 
 ## 5. Audit: other whole-state writers in `store.ts` (not changed)
 
@@ -154,5 +156,24 @@ The table is ordered by how close each one is to F1, which is an **automatic** w
 
 **Not fixed, per the brief.** If LEAD-5 rules #1 to be the same bug, the same two-part pattern applies: skip a no-op, and persist only the changed fields into what storage holds now.
 
-## 6. Suites and reruns on the final code (chain, through the gate)
-*Pending.*
+## 6. Suites and reruns on the final code (`scripts/chain.sh.txt`, every browser run through the gate)
+
+| Run | Result | Log |
+|---|---|---|
+| tsc | clean | `tsc-fix.log.txt` |
+| Vitest, all | 33 files, **309/309** | `vitest-all-fix.log.txt` |
+| `w3-intention-race` on the fix :5561 ×5 | **5/5** | `race-pw-fix-5561-x5-final.log.txt` |
+| `w3-intention-race` on :5560 (`f2298d3`) ×3 | **3/3 FAIL** at "storage still holds B's running brew" | `race-pw-base-5560-x3-final.log.txt` |
+| `w3-intention-race` on :5478 (`4d36939`) ×3 | **3/3 FAIL**, same | `race-pw-base-5478-x3-final.log.txt` |
+| `integrity.spec.ts`, whole file, once | **25/25** (5.1 min) | `integrity-all.log.txt` |
+| `w2-home.spec.ts` (the composer) | **18/18** (3.9 min) | `w2-home.log.txt` |
+| `timer.spec.ts`, `timer-app` + `timer-harness` | **26 passed, 2 skipped** (by design: `:295` and `:439` skip outside the harness) | `timer-spec.log.txt` |
+| Compatibility, three directions | 6/6 (§3) | `compat-*.log.txt` |
+| `integrity:309` ×20 under load, twice, plus the probe ×20 | 20/20, 20/20, 20/20 (§4) | `stress-*`, `probe-*` |
+
+Reporter quirk, for the record: Playwright listed the race test as `:73:1` in some runs and `:58:1` in others. The file has one test, at line 58. The runs are the same file and the same test, whose title is printed in full in every log.
+
+## 7. Open, for LEAD-5
+1. **Residual inside the fix's own scope** (§1, "What (b) cannot cover"): a *real* edit typed in a tab whose copy of localStorage is also behind, inside the lag, still writes over the newer state. The automatic writes that caused every observed failure are gone. The robust guard is on the receiving side (`sync.ts`), outside this brief.
+2. **Audit #1, `syncIdleLength`**: an automatic whole-state write from a possibly stale tab, triggered by another tab's brew-length change. Same mechanism; not reproduced; not fixed. Your ruling.
+3. **Not run by me** (the Sonnet regression lane's): timer/PWA (`pwa` project), the notice suite, and the 2-tab manual check.
