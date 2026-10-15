@@ -1,0 +1,13 @@
+[slots] F1X took 1/3 at 10:41:46: env F1X_FROM=http://127.0.0.1:5478 F1X_TO=http://127.0.0.1:5561 KETTLE_PORT=5561 npx playwright test --config .tmp/f1x/pw.config.ts compat.spec.ts --output=.tmp/f1x-pw/r2-compat-b2f --reporter=list
+
+Running 2 tests using 1 worker
+
+F1XCOMPAT idle saved-by http://127.0.0.1:5478: {"state":{"status":"idle","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":null,"endsAt":null,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Outline the talk","tag":null,"sessionId":null,"lastEnded":{"sessionId":"s_mv9esnkb77d018c9","phase":"focus","reason":"user","at":1792060909884,"whileAway":false}},"version":1}
+F1XCOMPAT idle after-boot on http://127.0.0.1:5561: {"state":{"status":"idle","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":null,"endsAt":null,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Outline the talk","tag":null,"sessionId":null,"lastEnded":{"sessionId":"s_mv9esnkb77d018c9","phase":"focus","reason":"user","at":1792060909884,"whileAway":false}},"version":1}
+  ✓  1 [chromium] › .tmp/f1x/compat.spec.ts:52:3 › idle profile saved by http://127.0.0.1:5478 loads unchanged on http://127.0.0.1:5561 (6.2s)
+F1XCOMPAT paused saved-by http://127.0.0.1:5478: {"state":{"status":"paused","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792060915792,"endsAt":null,"remainingMs":1498602,"pausedAt":1792060917190,"pausedTotalMs":0,"completedInCycle":0,"intention":"Reply to Sam","tag":null,"sessionId":"s_mv9essb437f2892c","lastEnded":null},"version":1}
+F1XCOMPAT paused after-boot on http://127.0.0.1:5561: {"state":{"status":"paused","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792060915792,"endsAt":null,"remainingMs":1498602,"pausedAt":1792060917190,"pausedTotalMs":0,"completedInCycle":0,"intention":"Reply to Sam","tag":null,"sessionId":"s_mv9essb437f2892c","lastEnded":null},"version":1}
+  ✓  2 [chromium] › .tmp/f1x/compat.spec.ts:52:3 › paused profile saved by http://127.0.0.1:5478 loads unchanged on http://127.0.0.1:5561 (5.8s)
+
+  2 passed (13.0s)
+[slots] F1X freed 1 at 10:42:00

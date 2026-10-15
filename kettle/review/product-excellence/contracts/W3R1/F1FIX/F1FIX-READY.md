@@ -231,3 +231,29 @@ The harness now subscribes the timer to `focusMin` exactly as `ticker.ts:304` do
 Older trees were run as before: `git archive <rev> kettle/src kettle/vite.config.ts kettle/package.json kettle/tsconfig*` into scratch, `node_modules` symlinked, this test file copied in.
 
 **Check 3:** the 7 earlier race tests pass on the fix (above); **Vitest, all: 33 files, 314/314** (`r2/vitest-all-fix.log.txt`); tsc clean (`r2/tsc-fix.log.txt`).
+
+### 8.3 Real browser: `tests/w3-intention-race.spec.ts`, new case "F1X-D1"
+Two tabs of one profile on Today, as for F1.
+1. A's `kettle:timer` **and** `kettle:settings` events are held.
+2. In one task, B sets `focusMin` 50 (its own idle length follows) and starts a 6-second brew.
+3. Polls until storage holds B's session and A has both kinds of event held.
+4. **A's settings events are released** (its timer events still held): A takes in the length change while B's brew is already in storage. This is the order of a tab that is a moment behind.
+5. Asserted: A's idle length is 50 min, and A is still idle with no session (precondition). After 300 ms, **B is still running** (any write by A would have reached B). **Storage still holds B's brew.** Then everything is released: both tabs go to Focus on B's session, then to the summary, with **one record** in storage and in each tab.
+
+**Why there are two versions:** the first (`ac9f1e0`) did not hold the settings events. A could then handle them, and write, before B's running write committed: harmless ordering, but the case failed on base only 1/3 (:5560) and 2/3 (:5562) (`*-d1v1.log.txt`). The final version (`10ecf2c`, tests only) is deterministic:
+
+| Server | F1X-D1 case ×3 | Log |
+|---|---|---|
+| :5561 fix | **3/3 pass** | `r2/d1v2-5561-x3.log.txt` |
+| :5560 `f2298d3` | **3/3 FAIL**: "B's brew is still running in B (not undone by A's length sync)" | `r2/d1v2-5560-x3.log.txt` |
+| :5562 `74138d3` (LEAD's trial `w6tr-x@986bda4`, src identical to `74138d3`; used read-only) | **3/3 FAIL**, same | `r2/d1v2-5562-x3.log.txt` |
+| :5478 `4d36939` | **3/3 FAIL**, same | `r2/d1v2-5478-x3.log.txt` |
+
+On base the brew is undone **in B itself** within moments: A's idle write reaches B, and B mirrors `reset`. This is F1's full-run signature.
+
+### 8.4 Check 4: storage compatibility (`scripts/compat.spec.ts.txt`, unchanged), all byte-identical
+| FROM → TO | idle | paused | Log |
+|---|---|---|---|
+| base `4d36939` → fix | pass | pass | `r2/compat-base4d-to-fix.log.txt` |
+| fix → base `4d36939` | pass | pass | `r2/compat-fix-to-base4d.log.txt` |
+| integration `f2298d3` → fix | pass | pass | `r2/compat-int-to-fix.log.txt` |
