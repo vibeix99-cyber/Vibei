@@ -1,0 +1,227 @@
+[slots] F1X took 1/3 at 10:58:36: env KETTLE_PORT=5560 npx playwright test tests/w3-intention-race.spec.ts --project=chromium --repeat-each=3 --output=.tmp/f1x-pw/r2f-race-5560 --reporter=list
+
+Running 6 tests using 1 worker
+
+  ✘  1 [chromium] › tests/w3-intention-race.spec.ts:64:1 › a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs, one record (4.2s)
+  ✘  2 [chromium] › tests/w3-intention-race.spec.ts:119:1 › F1X-D1: B picks another brew length and starts; A (idle, its timer events held) takes in the length change first: the brew survives, one record (3.7s)
+  ✘  3 [chromium] › tests/w3-intention-race.spec.ts:64:1 › a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs, one record (3.8s)
+  ✘  4 [chromium] › tests/w3-intention-race.spec.ts:119:1 › F1X-D1: B picks another brew length and starts; A (idle, its timer events held) takes in the length change first: the brew survives, one record (3.5s)
+  ✘  5 [chromium] › tests/w3-intention-race.spec.ts:64:1 › a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs, one record (3.8s)
+  ✘  6 [chromium] › tests/w3-intention-race.spec.ts:119:1 › F1X-D1: B picks another brew length and starts; A (idle, its timer events held) takes in the length change first: the brew survives, one record (3.7s)
+
+
+  1) [chromium] › tests/w3-intention-race.spec.ts:64:1 › a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs, one record 
+
+    Error: storage still holds B’s running brew
+
+    expect(received).toMatchObject(expected)
+
+    - Expected  - 5
+    + Received  + 5
+
+      Object {
+    -   "endsAt": 1792061927975,
+    -   "intention": "Chapter 3 notes",
+    -   "sessionId": "s_mv9fecon51bc2fb3",
+    -   "startedAt": 1792061921975,
+    -   "status": "running",
+    +   "endsAt": null,
+    +   "intention": "Reply to Sam",
+    +   "sessionId": null,
+    +   "startedAt": null,
+    +   "status": "idle",
+      }
+
+       95 |   const after = await stored(a);
+       96 |   expect(after?.version).toBe(1);
+    >  97 |   expect(after?.state, 'storage still holds B’s running brew').toMatchObject({
+          |                                                                ^
+       98 |     status: 'running',
+       99 |     sessionId: brew.sessionId,
+      100 |     endsAt: brew.endsAt,
+        at /home/user/wt/w6x/kettle/tests/w3-intention-race.spec.ts:97:64
+
+    Error Context: .tmp/f1x-pw/r2f-race-5560/w3-intention-race-a-tab-th-4e4de-ves-in-both-tabs-one-record-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/f1x-pw/r2f-race-5560/w3-intention-race-a-tab-th-4e4de-ves-in-both-tabs-one-record-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/f1x-pw/r2f-race-5560/w3-intention-race-a-tab-th-4e4de-ves-in-both-tabs-one-record-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/w3-intention-race.spec.ts:119:1 › F1X-D1: B picks another brew length and starts; A (idle, its timer events held) takes in the length change first: the brew survives, one record 
+
+    Error: B’s brew is still running in B (not undone by A’s length sync)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "running"
+    Received: "idle"
+
+      151 |   expect(await memory(a), 'precondition: A has not taken in B’s brew').toMatchObject({ status: 'idle', sessionId: null });
+      152 |   await a.waitForTimeout(300); // B would mirror any write A made
+    > 153 |   expect((await memory(b)).status, 'B’s brew is still running in B (not undone by A’s length sync)').toBe('running');
+          |                                                                                                      ^
+      154 |
+      155 |   const after = await stored(a);
+      156 |   expect(after?.state, 'storage still holds B’s running brew').toMatchObject({ status: 'running', sessionId: brew.sessionId, endsAt: brew.endsAt, startedAt: brew.startedAt, intention: 'Chapter 3 notes' });
+        at /home/user/wt/w6x/kettle/tests/w3-intention-race.spec.ts:153:102
+
+    Error Context: .tmp/f1x-pw/r2f-race-5560/w3-intention-race-F1X-D1-B-41b87-he-brew-survives-one-record-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/f1x-pw/r2f-race-5560/w3-intention-race-F1X-D1-B-41b87-he-brew-survives-one-record-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/f1x-pw/r2f-race-5560/w3-intention-race-F1X-D1-B-41b87-he-brew-survives-one-record-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/w3-intention-race.spec.ts:64:1 › a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs, one record 
+
+    Error: storage still holds B’s running brew
+
+    expect(received).toMatchObject(expected)
+
+    - Expected  - 5
+    + Received  + 5
+
+      Object {
+    -   "endsAt": 1792061939686,
+    -   "intention": "Chapter 3 notes",
+    -   "sessionId": "s_mv9felpy7fbafdec",
+    -   "startedAt": 1792061933686,
+    -   "status": "running",
+    +   "endsAt": null,
+    +   "intention": "Reply to Sam",
+    +   "sessionId": null,
+    +   "startedAt": null,
+    +   "status": "idle",
+      }
+
+       95 |   const after = await stored(a);
+       96 |   expect(after?.version).toBe(1);
+    >  97 |   expect(after?.state, 'storage still holds B’s running brew').toMatchObject({
+          |                                                                ^
+       98 |     status: 'running',
+       99 |     sessionId: brew.sessionId,
+      100 |     endsAt: brew.endsAt,
+        at /home/user/wt/w6x/kettle/tests/w3-intention-race.spec.ts:97:64
+
+    Error Context: .tmp/f1x-pw/r2f-race-5560/w3-intention-race-a-tab-th-4e4de-ves-in-both-tabs-one-record-chromium-repeat1/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/f1x-pw/r2f-race-5560/w3-intention-race-a-tab-th-4e4de-ves-in-both-tabs-one-record-chromium-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/f1x-pw/r2f-race-5560/w3-intention-race-a-tab-th-4e4de-ves-in-both-tabs-one-record-chromium-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests/w3-intention-race.spec.ts:119:1 › F1X-D1: B picks another brew length and starts; A (idle, its timer events held) takes in the length change first: the brew survives, one record 
+
+    Error: B’s brew is still running in B (not undone by A’s length sync)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "running"
+    Received: "idle"
+
+      151 |   expect(await memory(a), 'precondition: A has not taken in B’s brew').toMatchObject({ status: 'idle', sessionId: null });
+      152 |   await a.waitForTimeout(300); // B would mirror any write A made
+    > 153 |   expect((await memory(b)).status, 'B’s brew is still running in B (not undone by A’s length sync)').toBe('running');
+          |                                                                                                      ^
+      154 |
+      155 |   const after = await stored(a);
+      156 |   expect(after?.state, 'storage still holds B’s running brew').toMatchObject({ status: 'running', sessionId: brew.sessionId, endsAt: brew.endsAt, startedAt: brew.startedAt, intention: 'Chapter 3 notes' });
+        at /home/user/wt/w6x/kettle/tests/w3-intention-race.spec.ts:153:102
+
+    Error Context: .tmp/f1x-pw/r2f-race-5560/w3-intention-race-F1X-D1-B-41b87-he-brew-survives-one-record-chromium-repeat1/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/f1x-pw/r2f-race-5560/w3-intention-race-F1X-D1-B-41b87-he-brew-survives-one-record-chromium-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/f1x-pw/r2f-race-5560/w3-intention-race-F1X-D1-B-41b87-he-brew-survives-one-record-chromium-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › tests/w3-intention-race.spec.ts:64:1 › a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs, one record 
+
+    Error: storage still holds B’s running brew
+
+    expect(received).toMatchObject(expected)
+
+    - Expected  - 5
+    + Received  + 5
+
+      Object {
+    -   "endsAt": 1792061951890,
+    -   "intention": "Chapter 3 notes",
+    -   "sessionId": "s_mv9fev4yfffe194b",
+    -   "startedAt": 1792061945890,
+    -   "status": "running",
+    +   "endsAt": null,
+    +   "intention": "Reply to Sam",
+    +   "sessionId": null,
+    +   "startedAt": null,
+    +   "status": "idle",
+      }
+
+       95 |   const after = await stored(a);
+       96 |   expect(after?.version).toBe(1);
+    >  97 |   expect(after?.state, 'storage still holds B’s running brew').toMatchObject({
+          |                                                                ^
+       98 |     status: 'running',
+       99 |     sessionId: brew.sessionId,
+      100 |     endsAt: brew.endsAt,
+        at /home/user/wt/w6x/kettle/tests/w3-intention-race.spec.ts:97:64
+
+    Error Context: .tmp/f1x-pw/r2f-race-5560/w3-intention-race-a-tab-th-4e4de-ves-in-both-tabs-one-record-chromium-repeat2/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/f1x-pw/r2f-race-5560/w3-intention-race-a-tab-th-4e4de-ves-in-both-tabs-one-record-chromium-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/f1x-pw/r2f-race-5560/w3-intention-race-a-tab-th-4e4de-ves-in-both-tabs-one-record-chromium-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [chromium] › tests/w3-intention-race.spec.ts:119:1 › F1X-D1: B picks another brew length and starts; A (idle, its timer events held) takes in the length change first: the brew survives, one record 
+
+    Error: B’s brew is still running in B (not undone by A’s length sync)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "running"
+    Received: "idle"
+
+      151 |   expect(await memory(a), 'precondition: A has not taken in B’s brew').toMatchObject({ status: 'idle', sessionId: null });
+      152 |   await a.waitForTimeout(300); // B would mirror any write A made
+    > 153 |   expect((await memory(b)).status, 'B’s brew is still running in B (not undone by A’s length sync)').toBe('running');
+          |                                                                                                      ^
+      154 |
+      155 |   const after = await stored(a);
+      156 |   expect(after?.state, 'storage still holds B’s running brew').toMatchObject({ status: 'running', sessionId: brew.sessionId, endsAt: brew.endsAt, startedAt: brew.startedAt, intention: 'Chapter 3 notes' });
+        at /home/user/wt/w6x/kettle/tests/w3-intention-race.spec.ts:153:102
+
+    Error Context: .tmp/f1x-pw/r2f-race-5560/w3-intention-race-F1X-D1-B-41b87-he-brew-survives-one-record-chromium-repeat2/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/f1x-pw/r2f-race-5560/w3-intention-race-F1X-D1-B-41b87-he-brew-survives-one-record-chromium-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/f1x-pw/r2f-race-5560/w3-intention-race-F1X-D1-B-41b87-he-brew-survives-one-record-chromium-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6 failed
+    [chromium] › tests/w3-intention-race.spec.ts:64:1 › a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs, one record 
+    [chromium] › tests/w3-intention-race.spec.ts:119:1 › F1X-D1: B picks another brew length and starts; A (idle, its timer events held) takes in the length change first: the brew survives, one record 
+    [chromium] › tests/w3-intention-race.spec.ts:64:1 › a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs, one record 
+    [chromium] › tests/w3-intention-race.spec.ts:119:1 › F1X-D1: B picks another brew length and starts; A (idle, its timer events held) takes in the length change first: the brew survives, one record 
+    [chromium] › tests/w3-intention-race.spec.ts:64:1 › a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs, one record 
+    [chromium] › tests/w3-intention-race.spec.ts:119:1 › F1X-D1: B picks another brew length and starts; A (idle, its timer events held) takes in the length change first: the brew survives, one record 
+[slots] F1X freed 1 at 10:59:14

@@ -257,3 +257,25 @@ On base the brew is undone **in B itself** within moments: A's idle write reache
 | base `4d36939` → fix | pass | pass | `r2/compat-base4d-to-fix.log.txt` |
 | fix → base `4d36939` | pass | pass | `r2/compat-fix-to-base4d.log.txt` |
 | integration `f2298d3` → fix | pass | pass | `r2/compat-int-to-fix.log.txt` |
+
+### 8.5 Check 5: `integrity:309` under load, and the race file
+| Run | Result | Log |
+|---|---|---|
+| `integrity:309` ×20, `--workers=2` + 6 CPU burners (own PIDs), on app code `db31fbb` = final | **20/20** (4.0 min; load 5.8 → 12.7) | `r2/stress-r2-x20-nb6.log.txt` (+ `.meta`) |
+| `w3-intention-race.spec.ts` (both cases) on the fix :5561, ×5 | **10/10** | `r2/race-final-fix-5561-x5.log.txt` |
+| same on :5560 `f2298d3`, ×3 | **6/6 FAIL** (every repeat: F1 case "storage still holds B's running brew", D1 case "B's brew is still running in B") | `r2/race-final-5560-x3.log.txt` |
+| same on :5562 `74138d3`, ×3 | F1 case 3/3 pass (fixed there), **D1 case 3/3 FAIL** | `r2/race-final-5562-x3.log.txt` |
+
+### 8.6 Check 6: the rest (on the fix, through the gate)
+| Run | Result | Log |
+|---|---|---|
+| `integrity.spec.ts`, whole, once | **25/25** (4.3 min) | `r2/integrity-all.log.txt` |
+| `w2-home.spec.ts` (includes the brew-length control) | **18/18** | `r2/w2-home.log.txt` |
+| `timer.spec.ts`, `timer-app` + `timer-harness` | **26 passed, 2 skipped** by design (`:295`, `:439`) | `r2/timer-spec.log.txt` |
+
+### 8.7 Final state, and what remains open
+- **Head `10ecf2c` (src `b74e6b3`)**. `10ecf2c` touches only `tests/`, so the src tree is the one served. `verify.sh` → `PORT 5561 serves 10ecf2c (src b74e6b3): VERIFIED`. Commits since `74138d3`: `f7b66da`, `db31fbb`, `ac9f1e0`, `10ecf2c`. All local; never pushed.
+- **Scope (check 1):** `git diff --stat 74138d3 10ecf2c` lists `src/timer/store.ts`, `src/timer/intentionRace.test.ts` and `tests/w3-intention-race.spec.ts` only.
+- **Open:**
+  1. The following tab is detected through zustand's `persist.hasHydrated()` being false while settings rehydrate. That is a library behaviour, pinned by the Vitest harness that subscribes like `ticker.ts:304`. If a future zustand changed it, the length sync would fall back to the fields-only save (still never a whole write), and only the stale-copy case would come back. The D1 Vitest race would catch that.
+  2. Unchanged from §7: audit #2–#6, a real edit in a doubly stale tab, and Lane R's label-overwrite follow-up.
