@@ -444,3 +444,34 @@ No item is introduced or worsened by this change in a way that is a defect, so n
 - **X-8:** `contracts/W3R1/review/LEAD/F/fix/x8/{BASE,FIX}-375x667-light-paused-r{1,2,3}.png`.
 
 *Run logs:* `kettle/.gitignore:6` ignores `*.log`, so every `.log` cited here is committed as a `.log.txt` copy beside it (same name plus `.txt`).
+
+## Follow-up: band idle 4 s (Vibei item 2)
+
+**Vibei's ruling** (`VB-DECISIONS-FINAL.md` item 2):
+- raise the kept band's idle wait from 1.2 s to **4 s**;
+- do not give the room back "in answer to the next tap";
+- LEAD-5 verifies the 64-tap aimed-tap check and the notice suite on the result.
+
+| | |
+|---|---|
+| Under review | Maker Q, Phase A: `pe/w3r1-stability@04b1ad9` (code `61aec4b`; kettle/src `db6de7e`, checked: `04b1ad9:kettle/src` = `61aec4b:kettle/src`) |
+| Trial | `cf4a89c` = integration (final `2be3de1`) + `04b1ad9`; worktree `/home/user/wt/w5tr-qa`; dev :5546 (all my runs) |
+| Packet | `/home/user/wt/w5q/kettle/review/product-excellence/contracts/W3R1/Q-READY.md` (Phase A); logs `…/W3R1/Q/A/` |
+| My evidence | `contracts/W3R1/review/LEAD/F/band4s/` (`chainA.sh`, `chainB.sh`, `probes2/`, logs as `.log.txt`) |
+
+### Scope and diff (read in full)
+`git diff --stat a2b00cd 04b1ad9 -- kettle/src kettle/tests` lists four files: `src/ui/moment.ts`, `src/ui/Toast.tsx`, `tests/w3-notices-idle.spec.ts` and `tests/w3-notices.spec.ts` (+42 / −32).
+
+**`moment.ts`:**
+- adds `BAND_IDLE_MS = 4000`;
+- `atRest(now, quiet = QUIET_MS)` gets an optional threshold. The default is unchanged, so every existing caller behaves exactly as before;
+- `QUIET_MS` stays 1200, so a notice leaving or arriving at rest, other above-view changes and InlineUndo are unaffected.
+
+**`Toast.tsx`:** only the kept band's give-back branch changes, to `now − roomLeftAt ≥ BAND_IDLE_MS && atRest(now, BAND_IDLE_MS) && !inputPending()`, still confirmed in a fresh frame. It covers both the in-view `idle` collapse and the above-view one (page kept still). No give-back on the next tap was added (Vibei). The unused `QUIET_MS` import is dropped.
+
+**The tests are tightened, not loosened.**
+- The band commit must now be ≥ **4000** ms since the last input of any kind and ≥ 4000 ms after the leave (was 1200).
+- The upper bound becomes 6500 ms after the later of the two. It was 4000 for a 1200 ms rule, a 2.8 s margin; it is now 2.5 s.
+- The pointer-held test: ≥ 4000 after the last input, ≤ 6500 after release.
+- Poll timeouts are raised to match (8 → 12 s, 6/8 → 10/12 s); they are bounds, not assertions.
+- Everything else stays: one collapse, no other strip commit, pointer up, same screen, room kept during the scroll and while held, and nothing moving when the notice leaves.
