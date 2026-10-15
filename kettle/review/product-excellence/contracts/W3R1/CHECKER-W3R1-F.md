@@ -378,7 +378,7 @@ Lane R's 4 px (703–721 → 711–730) does not reproduce, so it was a capture-
 
 **The maker's runs** (`F/fix/ns275-1440-light-200-reduced-x3{,-run2}.log`, `F/fix/failure-context/`, read):
 - **Run A, 2/3:** #1 lost its brew ("Kettle’s off", "Saved…" never drawn), which fits the reported restart of :5501. I could not verify the restart time from the server log, which `start.sh` overwrites on start. Not counted either way.
-- **Run B, 2/3:** #1 failed later, at the History step: "the Undo is the deleted row … on screen where the person saw the row", 111 px. **This is N-2:** S's `History.tsx` focus scroll when the tapped row takes focus, pre-existing since T2 (W2R3 §7). Mark done had passed.
+- **Run B, 2/3:** #1 failed later, at the History step: "the Undo is the deleted row … on screen where the person saw the row", 111 px. **This is N-2:** S's `History.tsx` focus scroll when the tapped row takes focus, pre-existing since T2 (W2R3 §7). Mark done had passed. *(LEAD-5 erratum, 2026-10-15: there is no such focus scroll. N-2 was my W2R3 probe's own `press()` wheel, and Run B is not reproduced; see `CHECKER-W3R1-N2.md` §2–§5.)*
 - **Inside the full 25:** passed (src `8b42b9b`).
 
 **Mechanism of the Mark done failure.** It is the one Lane I2 described in round 1 (§2, F-R4).
