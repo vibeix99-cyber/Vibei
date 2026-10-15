@@ -169,3 +169,12 @@ That is stricter than the old 6 s of wall time. A failure now says which state d
 - **F1:** a product race, stopped for Vibei. `integrity:309` will keep failing about 1 in 6–20 under load until the timer or Composer is fixed. No deterministic, load-free repro: a same-profile Playwright attempt did not reproduce (in the note).
 - **X-11, attempt 2's own file:** not re-run to a timeout; ×2 passed. Its timeouts are explained by the mechanism reproduced with my first version (the same snapshot: Stats, Undo announced and gone).
 - **Not run on this branch:** the full chromium suite. Run here: tsc and vitest (Phase A; `src` unchanged since), notice-strip 25/25, the owned notice specs, and `integrity` plus `w3-notices-load` in full (below).
+
+### Regression on the final Phase B tree (:5545, `--workers=2`, light load 0.9–6.4)
+
+| Run | Result | Log |
+|---|---|---|
+| `integrity.spec.ts`, whole file (includes I01 `:309`, unloaded, and the new I03) | **25/25** (4.3 min) | `Q/B/final/integrity-all.log.txt`, `.json` |
+| `w3-notices-load.spec.ts`, whole file, `W3_LOAD=1` | **25/25** (11.8 min; Lane R had 23/25 on `2be3de1`) | `Q/B/final/w3-notices-load-all.log.txt`, `.json` |
+
+*Scripts:* `Q/scripts/QB-*.sh`; each ran through the gate (`--lane Q`).
