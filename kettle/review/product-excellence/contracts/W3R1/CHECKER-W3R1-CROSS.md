@@ -231,10 +231,10 @@ The room step itself performs the saves synchronously (`timer.setState`, `progre
 | `notice-strip` 1440×900 light 200 % reduced motion (listed `:338`, the old `:292`), `--repeat-each=6`, `--workers=2` + burners | **6/6** (3.5 min) | `QB/ns-1440-light-200-rm-x6-load.log` |
 | I03 storage-full banner at 390×844 (X-1), `--repeat-each=10`, alongside the loaded chain (load 10.4 at its start) | **10/10** (4.8 min) | `QB/x1-i03-x10-load.log` |
 | `w2-room` "3D failure (WebGL context lost)", `--repeat-each=3`, `--workers=2` + burners | **3/3**, at **54.1 s, 57.2 s** and 39.1 s. Two of three would have been within 6 s of the old 60 s budget, which supports Q's reading | `QB/w2room-webgl-x3-load.log` |
-
-My first X-1 invocation matched no test: Playwright's `-g` matches the title path joined by spaces, not by `›`. It was rerun with the right filter; the log above is the rerun.
 | `notice-strip.spec.ts`, all 25, `--workers=2` (after the burners stopped) | **25/25** (11.8 min) | `QB/notice-strip-all.log` |
 | `w3-notices-load.spec.ts`, all 25, `W3_LOAD=1`, `--workers=2` | **25/25** (12.1 min; none skipped). Lane R had 23/25 on `2be3de1` | `QB/w3-notices-load-all.log` |
+
+My first X-1 invocation matched no test: Playwright's `-g` matches the title path joined by spaces, not by `›`. It was rerun with the right filter; the log above is the rerun.
 
 The maker's runs (`Q/B/proof/`, `Q/B/final/`) agree:
 - `:292` 6/6 under 2 workers + 4 burners;
