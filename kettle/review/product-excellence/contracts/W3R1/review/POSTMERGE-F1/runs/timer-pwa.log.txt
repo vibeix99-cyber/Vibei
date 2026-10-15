@@ -14,3 +14,6 @@ Running 31 tests using 1 worker
   ✓   9 [timer-harness] › tests/timer.spec.ts:294:3 › keyboard shortcuts infra › Space toggles — but never while typing, on a focused button, or on key repeat; ? toggles help, not over a dialog (3.9s)
   ✓  10 [timer-harness] › tests/timer.spec.ts:339:3 › multiple tabs › two tabs show the same session live and exactly one records it (14.9s)
   ✓  11 [timer-harness] › tests/timer.spec.ts:377:3 › multiple tabs › two tabs pressing start at the same moment converge on one session (11.2s)
+  ✓  12 [timer-harness] › tests/timer.spec.ts:399:3 › multiple tabs › closing the leader tab mid-session hands over; the other tab completes it once (8.1s)
+  ✓  13 [timer-harness] › tests/timer.spec.ts:416:3 › multiple tabs › frozen leader: the other tab takes over at the end; the leader waking up later does not double-count (6.7s)
+  ✓  14 [timer-harness] › tests/timer.spec.ts:438:3 › rendering budget › useRemaining re-renders about once per displayed second (5.5s)
