@@ -1,0 +1,15 @@
+
+ RUN  v5.0.2 /home/user/wt/w6x/kettle
+
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs and is recorded once 897ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a tab that has not yet seen the other tab end the brew does not bring it back by saving its intention 12ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > same brew, other tab paused it: the intention is saved and the pause is kept 11ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > keeps the stored format: same key, the { state, version: 1 } envelope, the same fields in the same order 9ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a fresh profile (nothing saved yet) saves as before 3ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > storage full: once this tab’s own save failed, the intention save writes the whole (newer) timer, as before, and repairs storage 4ms
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  09:06:17
+   Duration  1.33s (tests 82%, transform 17%, import 1%)
+
