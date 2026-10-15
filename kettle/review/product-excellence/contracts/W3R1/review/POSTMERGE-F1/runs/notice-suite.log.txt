@@ -67,3 +67,8 @@ FACT 1440x900-light-t100 c-pointer-held {"leftAt":5258,"room":68,"roomWhileDown"
   ✓  53 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (1440x900-light-t100) (14.3s)
 FACT 1440x900-dark-t200-rm a-no-input {"leftAt":6115,"room":113,"commits":[{"t":10208,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8498,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":4093,"collapseAfterLastBusyMs":4093,"visibleMove":113}
   ✓  55 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (1440x900-dark-t200-rm) (11.2s)
+FACT 1440x900-dark-t200-rm b-scroll-then-idle {"leftAt":5357,"room":113,"maxSy":300,"scrollMs":2226,"roomAfterScroll":113,"commits":[{"t":11664,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4081,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":6307,"collapseAfterLastBusyMs":4081,"visibleMove":113}
+  ✓  56 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (1440x900-dark-t200-rm) (12.8s)
+  ✓  54 [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while every notice in the strip is read by touch (667×375, 200 % text) (29.8s)
+FACT 1440x900-dark-t200-rm c-pointer-held {"leftAt":5406,"room":113,"roomWhileDown":113,"downWhileHeld":1,"commits":[{"t":13104,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4044,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":7698,"collapseAfterLastBusyMs":4044,"visibleMove":113}
+  ✓  57 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (1440x900-dark-t200-rm) (14.2s)
