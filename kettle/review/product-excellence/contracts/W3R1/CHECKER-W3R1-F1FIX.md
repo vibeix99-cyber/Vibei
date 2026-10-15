@@ -125,3 +125,22 @@ The robust guard is on the receiving side (`sync.ts`): the tab that owns a runni
 - A no-op still writes nothing.
 - The storage-full repair (after this tab's own failed save) behaves as before.
 - Same key, envelope and field order; no migration.
+
+## 6. Fix round (for when this DRAFT is confirmed: 90 minutes, one round)
+
+**Where.** Work on `pe/w3r1-f1-intention` from `74138d3`. Commit locally and never push.
+
+**Hand back** a §8 stage in `F1FIX/F1FIX-READY.md`, with logs beside it.
+
+**Files:** `src/timer/store.ts` (`syncIdleLength` and its persistence), `src/timer/intentionRace.test.ts` (or a sibling Vitest file), and `tests/w3-intention-race.spec.ts` (optional). Nothing else: no `sync.ts`, `ticker.ts` or `Composer.tsx` change.
+
+### Acceptance checks (◆ = I rerun)
+1. **◆ Scope:** only the files above.
+2. **◆ A deterministic test** in the maker's harness. B sets a new `focusMin` and starts a brew; A, idle and not yet having taken in B's timer write, takes in the settings change and runs `syncIdleLength`; storage still holds B's running brew; after the events both tabs hold the brew; one record.
+   - It must **fail on `f2298d3` and on `74138d3`** (my scratch case already does: `LEAD/F1FIX/scratch-syncIdleLength-on-*.log.txt`) and **pass on the fix**.
+   - Also: a real length change in a tab whose storage holds the same idle timer still persists the new length (one tab, and two tabs in step).
+   - And: a no-op sync writes nothing.
+3. **◆ The 7 existing race tests** still pass, and `vitest` passes in full.
+4. **◆ Compatibility:** `compat.spec.ts` base ↔ fix, byte-identical, as in §3.
+5. **◆ `integrity:309` ×20 under load** (`--workers=2` + 6 burners): 20/20. `w3-intention-race` 5/5 on the fix, and 3/3 FAIL on :5560.
+6. **The rest:** `integrity.spec.ts` whole once; `w2-home` (the brew-length control) once; `timer.spec.ts` (`timer-app` + `timer-harness`).
