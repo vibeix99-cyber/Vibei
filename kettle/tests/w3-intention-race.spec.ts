@@ -24,16 +24,22 @@ const PRIME = `(() => {
   }
 })();`;
 
-/** Holds this tab's `storage` events for the timer key while `__f1.hold` is on; `__f1.release()` delivers them in order. */
+/**
+ * Holds this tab's `storage` events for the timer key while `__f1.hold` is on (and for `kettle:settings` while
+ * `__f1.holdSettings` is on); `__f1.release(key?)` delivers the held events (of that key) in order.
+ */
 const HOLD = `(() => {
   const held = [];
-  const f1 = { hold: false, held: () => held.length, release() {
-    f1.hold = false;
-    for (const h of held.splice(0)) dispatchEvent(new StorageEvent('storage', { ...h, storageArea: localStorage }));
+  const f1 = { hold: false, holdSettings: false, held: (key) => held.filter((h) => !key || h.key === key).length, release(key) {
+    if (!key || key === 'kettle:timer') f1.hold = false;
+    if (!key || key === 'kettle:settings') f1.holdSettings = false;
+    const out = held.filter((h) => !key || h.key === key);
+    for (const h of out) held.splice(held.indexOf(h), 1);
+    for (const h of out) dispatchEvent(new StorageEvent('storage', { ...h, storageArea: localStorage }));
   } };
   window.__f1 = f1;
   addEventListener('storage', (e) => {
-    if (!f1.hold || e.key !== 'kettle:timer') return;
+    if (!((f1.hold && e.key === 'kettle:timer') || (f1.holdSettings && e.key === 'kettle:settings'))) return;
     e.stopImmediatePropagation();
     held.push({ key: e.key, oldValue: e.oldValue, newValue: e.newValue, url: e.url });
   }, { capture: true });
@@ -121,21 +127,30 @@ test('F1X-D1: B picks another brew length and starts; A (idle, its timer events 
   await a.waitForTimeout(600);
   expect((await memory(a)).status).toBe('idle');
 
-  // A's timer events are held; its settings events are not (they arrive first anyway: written first).
-  await a.evaluate(() => ((window as any).__f1.hold = true));
+  // A's timer and settings events are held.
+  await a.evaluate(() => {
+    const f1 = (window as any).__f1;
+    f1.hold = true;
+    f1.holdSettings = true;
+  });
   // B: the person picks another brew length (kettle:settings; B's own idle length follows), then starts a 6-second brew.
-  // Both in one task, so both writes have landed before A gets either event (as when A is a moment behind).
   await b.evaluate(() => {
     const k = (window as any).__kettle;
     k.settings.getState().set({ focusMin: 50 });
     k.timer.getState().startFocus({ minutes: 0.1, intention: 'Chapter 3 notes' });
   });
   const brew = await memory(b);
-  expect(brew.status, 'B’s brew is still running in B (not undone by A’s length sync)').toBe('running');
-  // A has taken in the length change (its idle timer shows 50 min), but not B's brew.
+  expect(brew.status).toBe('running');
+  await expect.poll(async () => (await stored(a))?.state.sessionId).toBe(brew.sessionId);
+  await expect.poll(() => a.evaluate(() => (window as any).__f1.held('kettle:settings'))).toBeGreaterThan(0);
+  await expect.poll(() => a.evaluate(() => (window as any).__f1.held('kettle:timer'))).toBeGreaterThan(0);
+  // Now A takes in the length change, B's brew already in storage but not yet taken in by A (the event order of a tab
+  // that is a moment behind). Its idle timer follows the new length.
+  await a.evaluate(() => (window as any).__f1.release('kettle:settings'));
   await expect.poll(() => a.evaluate(() => (window as any).__kettle.timer.getState().plannedMs), { message: 'A’s idle length followed the settings change' }).toBe(50 * 60_000);
-  await expect.poll(() => a.evaluate(() => (window as any).__f1.held())).toBeGreaterThan(0);
   expect(await memory(a), 'precondition: A has not taken in B’s brew').toMatchObject({ status: 'idle', sessionId: null });
+  await a.waitForTimeout(300); // B would mirror any write A made
+  expect((await memory(b)).status, 'B’s brew is still running in B (not undone by A’s length sync)').toBe('running');
 
   const after = await stored(a);
   expect(after?.state, 'storage still holds B’s running brew').toMatchObject({ status: 'running', sessionId: brew.sessionId, endsAt: brew.endsAt, startedAt: brew.startedAt, intention: 'Chapter 3 notes' });
