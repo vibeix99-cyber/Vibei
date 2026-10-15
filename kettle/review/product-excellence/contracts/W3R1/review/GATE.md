@@ -172,3 +172,10 @@ The merged kettle/src `db28295` and kettle/tests `f071f53` equal trial `7145f49`
 | Scope | `src/ui/moment.ts`: new `BAND_IDLE_MS = 4000`, plus `atRest(now, quiet = QUIET_MS)` so existing callers are unchanged. `src/ui/Toast.tsx`: the band's give-back uses `BAND_IDLE_MS`, and the `QUIET_MS` import is removed. Tests: `w3-notices.spec.ts` and `w3-notices-idle.spec.ts` assert ≥ 4000 / ≤ 6500 ms. Nothing gives the room back "in answer to the next tap" |
 | **Trial** | **`cf4a89c`** = integration (final `2be3de1`) + `04b1ad9`, worktree `/home/user/wt/w5tr-qa`, src `db6de7e`. tsc 0, vitest 302/302, build OK. Dev **:5546** (verified), preview **:5556** |
 | The maker's suites | `w3-notices` + `w3-notices-idle` ×2: 42/42 (collapse at 4037–4125 ms); `notice-strip` 25/25; `toast-room` + `summary-notice` + `w2-home` 46/46 |
+
+## Phase A: APPROVE (LEAD-5 `695f4ec`) → merged (see the next commit)
+
+The merged src and tests equal trial `cf4a89c`'s. LEAD-5 on :5546:
+- aimed taps 0/64 off target;
+- `w3-notices` + idle 42/42 (collapse at 4026–4121 ms);
+- `notice-strip` 23/25 at load 12, both failures X-11 signature (a) (the spec's wheel race; no band involved) and left to Phase B.
