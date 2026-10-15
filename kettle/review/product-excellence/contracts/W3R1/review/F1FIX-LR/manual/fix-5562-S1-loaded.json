@@ -1,0 +1,1592 @@
+[
+ {
+  "label": "fix-5562",
+  "base": "http://127.0.0.1:5562",
+  "phase": "loaded",
+  "scenario": "S1",
+  "iteration": 1,
+  "steps": {
+   "01-both-on-today": {
+    "t1": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    }
+   },
+   "02-brew-started-and-tab2-typed": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9di2itdf27f91c",
+      "startedAt": 1792058736196,
+      "endsAt": 1792060236196,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9di2itdf27f91c",
+      "startedAt": 1792058736196,
+      "endsAt": 1792060236196,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9di2itdf27f91c",
+      "startedAt": 1792058736196,
+      "endsAt": 1792060236196,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9di2itdf27f91c",
+      "startedAt": 1792058736196,
+      "endsAt": 1792060236196,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "03-after-back-and-forth": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9di2itdf27f91c",
+      "startedAt": 1792058736196,
+      "endsAt": 1792060236196,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9di2itdf27f91c",
+      "startedAt": 1792058736196,
+      "endsAt": 1792060236196,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9di2itdf27f91c",
+      "startedAt": 1792058736196,
+      "endsAt": 1792060236196,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9di2itdf27f91c",
+      "startedAt": 1792058736196,
+      "endsAt": 1792060236196,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "04-after-fast-forward": {
+    "t1": {
+     "hash": "#/done",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9di2itdf27f91c",
+       "reason": "complete"
+      }
+     },
+     "stored": {
+      "version": 1,
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9di2itdf27f91c",
+       "reason": "complete"
+      }
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 1,
+      "memory": 1
+     },
+     "sessionsInStorage": 1
+    },
+    "t2": {
+     "hash": "#/done",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9di2itdf27f91c",
+       "reason": "complete"
+      }
+     },
+     "stored": {
+      "version": 1,
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9di2itdf27f91c",
+       "reason": "complete"
+      }
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 1,
+      "memory": 1
+     },
+     "sessionsInStorage": 1
+    }
+   }
+  },
+  "t2Typing": {
+   "composerPresentOnArrival": true,
+   "error": "locator.pressSequentially: Timeout 1500ms exceeded."
+  },
+  "enterAt": 1792058736903,
+  "typing2Error": "locator.pressSequentially: Timeout 1500ms exceeded.",
+  "sessionIdFromTab1": "s_mv9di2itdf27f91c",
+  "backAndForth": [
+   {
+    "i": 1,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 2,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 3,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   }
+  ],
+  "survives": {
+   "both_running": true,
+   "same_sessionId": true,
+   "same_endsAt": true,
+   "stored_running_same_session": true
+  },
+  "records": {
+   "stored": 1,
+   "t1_memory": 1,
+   "t2_memory": 1,
+   "sessionsInStorage": 1
+  },
+  "exactlyOneRecord": true,
+  "pageErrors": []
+ },
+ {
+  "label": "fix-5562",
+  "base": "http://127.0.0.1:5562",
+  "phase": "loaded",
+  "scenario": "S1",
+  "iteration": 2,
+  "steps": {
+   "01-both-on-today": {
+    "t1": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    }
+   },
+   "02-brew-started-and-tab2-typed": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9disl9292be75d",
+      "startedAt": 1792058769981,
+      "endsAt": 1792060269981,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9disl9292be75d",
+      "startedAt": 1792058769981,
+      "endsAt": 1792060269981,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9disl9292be75d",
+      "startedAt": 1792058769981,
+      "endsAt": 1792060269981,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9disl9292be75d",
+      "startedAt": 1792058769981,
+      "endsAt": 1792060269981,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "03-after-back-and-forth": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9disl9292be75d",
+      "startedAt": 1792058769981,
+      "endsAt": 1792060269981,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9disl9292be75d",
+      "startedAt": 1792058769981,
+      "endsAt": 1792060269981,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9disl9292be75d",
+      "startedAt": 1792058769981,
+      "endsAt": 1792060269981,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9disl9292be75d",
+      "startedAt": 1792058769981,
+      "endsAt": 1792060269981,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "04-after-fast-forward": {
+    "t1": {
+     "hash": "#/done",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9disl9292be75d",
+       "reason": "complete"
+      }
+     },
+     "stored": {
+      "version": 1,
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9disl9292be75d",
+       "reason": "complete"
+      }
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 1,
+      "memory": 1
+     },
+     "sessionsInStorage": 1
+    },
+    "t2": {
+     "hash": "#/done",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9disl9292be75d",
+       "reason": "complete"
+      }
+     },
+     "stored": {
+      "version": 1,
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9disl9292be75d",
+       "reason": "complete"
+      }
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 1,
+      "memory": 1
+     },
+     "sessionsInStorage": 1
+    }
+   }
+  },
+  "t2Typing": {
+   "composerPresentOnArrival": true,
+   "error": "locator.pressSequentially: Timeout 1500ms exceeded."
+  },
+  "enterAt": 1792058770953,
+  "typing2Error": "locator.pressSequentially: Timeout 1500ms exceeded.",
+  "sessionIdFromTab1": "s_mv9disl9292be75d",
+  "backAndForth": [
+   {
+    "i": 1,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 2,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 3,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   }
+  ],
+  "survives": {
+   "both_running": true,
+   "same_sessionId": true,
+   "same_endsAt": true,
+   "stored_running_same_session": true
+  },
+  "records": {
+   "stored": 1,
+   "t1_memory": 1,
+   "t2_memory": 1,
+   "sessionsInStorage": 1
+  },
+  "exactlyOneRecord": true,
+  "pageErrors": []
+ },
+ {
+  "label": "fix-5562",
+  "base": "http://127.0.0.1:5562",
+  "phase": "loaded",
+  "scenario": "S1",
+  "iteration": 3,
+  "steps": {
+   "01-both-on-today": {
+    "t1": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    }
+   },
+   "02-brew-started-and-tab2-typed": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9dj4bb9414b024",
+      "startedAt": 1792058785175,
+      "endsAt": 1792060285386,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9dj4bb9414b024",
+      "startedAt": 1792058785175,
+      "endsAt": 1792060285386,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9dj4bb9414b024",
+      "startedAt": 1792058785175,
+      "endsAt": 1792060285386,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9dj4bb9414b024",
+      "startedAt": 1792058785175,
+      "endsAt": 1792060285386,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "03-after-back-and-forth": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9dj4bb9414b024",
+      "startedAt": 1792058785175,
+      "endsAt": 1792060285386,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9dj4bb9414b024",
+      "startedAt": 1792058785175,
+      "endsAt": 1792060285386,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9dj4bb9414b024",
+      "startedAt": 1792058785175,
+      "endsAt": 1792060285386,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9dj4bb9414b024",
+      "startedAt": 1792058785175,
+      "endsAt": 1792060285386,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "04-after-fast-forward": {
+    "t1": {
+     "hash": "#/done",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9dj4bb9414b024",
+       "reason": "complete"
+      }
+     },
+     "stored": {
+      "version": 1,
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9dj4bb9414b024",
+       "reason": "complete"
+      }
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 1,
+      "memory": 1
+     },
+     "sessionsInStorage": 1
+    },
+    "t2": {
+     "hash": "#/done",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9dj4bb9414b024",
+       "reason": "complete"
+      }
+     },
+     "stored": {
+      "version": 1,
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9dj4bb9414b024",
+       "reason": "complete"
+      }
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 1,
+      "memory": 1
+     },
+     "sessionsInStorage": 1
+    }
+   }
+  },
+  "t2Typing": {
+   "composerPresentOnArrival": true,
+   "error": "locator.pressSequentially: Timeout 1500ms exceeded."
+  },
+  "enterAt": 1792058786109,
+  "typing2Error": "locator.pressSequentially: Timeout 1500ms exceeded.",
+  "sessionIdFromTab1": "s_mv9dj4bb9414b024",
+  "backAndForth": [
+   {
+    "i": 1,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 2,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 3,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   }
+  ],
+  "survives": {
+   "both_running": true,
+   "same_sessionId": true,
+   "same_endsAt": true,
+   "stored_running_same_session": true
+  },
+  "records": {
+   "stored": 1,
+   "t1_memory": 1,
+   "t2_memory": 1,
+   "sessionsInStorage": 1
+  },
+  "exactlyOneRecord": true,
+  "pageErrors": []
+ },
+ {
+  "label": "fix-5562",
+  "base": "http://127.0.0.1:5562",
+  "phase": "loaded",
+  "scenario": "S1",
+  "iteration": 4,
+  "steps": {
+   "01-both-on-today": {
+    "t1": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    }
+   },
+   "02-brew-started-and-tab2-typed": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9djh8pd372f909",
+      "startedAt": 1792058801928,
+      "endsAt": 1792060301928,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9djh8pd372f909",
+      "startedAt": 1792058801928,
+      "endsAt": 1792060301928,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9djh8pd372f909",
+      "startedAt": 1792058801928,
+      "endsAt": 1792060301928,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9djh8pd372f909",
+      "startedAt": 1792058801928,
+      "endsAt": 1792060301928,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "03-after-back-and-forth": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9djh8pd372f909",
+      "startedAt": 1792058801928,
+      "endsAt": 1792060301928,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9djh8pd372f909",
+      "startedAt": 1792058801928,
+      "endsAt": 1792060301928,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9djh8pd372f909",
+      "startedAt": 1792058801928,
+      "endsAt": 1792060301928,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9djh8pd372f909",
+      "startedAt": 1792058801928,
+      "endsAt": 1792060301928,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "04-after-fast-forward": {
+    "t1": {
+     "hash": "#/done",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9djh8pd372f909",
+       "reason": "complete"
+      }
+     },
+     "stored": {
+      "version": 1,
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9djh8pd372f909",
+       "reason": "complete"
+      }
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 1,
+      "memory": 1
+     },
+     "sessionsInStorage": 1
+    },
+    "t2": {
+     "hash": "#/done",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9djh8pd372f909",
+       "reason": "complete"
+      }
+     },
+     "stored": {
+      "version": 1,
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9djh8pd372f909",
+       "reason": "complete"
+      }
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 1,
+      "memory": 1
+     },
+     "sessionsInStorage": 1
+    }
+   }
+  },
+  "t2Typing": {
+   "composerPresentOnArrival": true,
+   "error": "locator.pressSequentially: Timeout 1500ms exceeded."
+  },
+  "enterAt": 1792058802978,
+  "typing2Error": "locator.pressSequentially: Timeout 1500ms exceeded.",
+  "sessionIdFromTab1": "s_mv9djh8pd372f909",
+  "backAndForth": [
+   {
+    "i": 1,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 2,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 3,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   }
+  ],
+  "survives": {
+   "both_running": true,
+   "same_sessionId": true,
+   "same_endsAt": true,
+   "stored_running_same_session": true
+  },
+  "records": {
+   "stored": 1,
+   "t1_memory": 1,
+   "t2_memory": 1,
+   "sessionsInStorage": 1
+  },
+  "exactlyOneRecord": true,
+  "pageErrors": []
+ },
+ {
+  "label": "fix-5562",
+  "base": "http://127.0.0.1:5562",
+  "phase": "loaded",
+  "scenario": "S1",
+  "iteration": 5,
+  "steps": {
+   "01-both-on-today": {
+    "t1": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    }
+   },
+   "02-brew-started-and-tab2-typed": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9djthh9e613df0",
+      "startedAt": 1792058817796,
+      "endsAt": 1792060317796,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9djthh9e613df0",
+      "startedAt": 1792058817796,
+      "endsAt": 1792060317796,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9djthh9e613df0",
+      "startedAt": 1792058817796,
+      "endsAt": 1792060317796,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9djthh9e613df0",
+      "startedAt": 1792058817796,
+      "endsAt": 1792060317796,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "03-after-back-and-forth": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9djthh9e613df0",
+      "startedAt": 1792058817796,
+      "endsAt": 1792060317796,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9djthh9e613df0",
+      "startedAt": 1792058817796,
+      "endsAt": 1792060317796,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9djthh9e613df0",
+      "startedAt": 1792058817796,
+      "endsAt": 1792060317796,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9djthh9e613df0",
+      "startedAt": 1792058817796,
+      "endsAt": 1792060317796,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "04-after-fast-forward": {
+    "t1": {
+     "hash": "#/done",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9djthh9e613df0",
+       "reason": "complete"
+      }
+     },
+     "stored": {
+      "version": 1,
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9djthh9e613df0",
+       "reason": "complete"
+      }
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 1,
+      "memory": 1
+     },
+     "sessionsInStorage": 1
+    },
+    "t2": {
+     "hash": "#/done",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9djthh9e613df0",
+       "reason": "complete"
+      }
+     },
+     "stored": {
+      "version": 1,
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9djthh9e613df0",
+       "reason": "complete"
+      }
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 1,
+      "memory": 1
+     },
+     "sessionsInStorage": 1
+    }
+   }
+  },
+  "t2Typing": {
+   "composerPresentOnArrival": true,
+   "error": "locator.pressSequentially: Timeout 1500ms exceeded."
+  },
+  "enterAt": 1792058818769,
+  "typing2Error": "locator.pressSequentially: Timeout 1500ms exceeded.",
+  "sessionIdFromTab1": "s_mv9djthh9e613df0",
+  "backAndForth": [
+   {
+    "i": 1,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 2,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 3,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   }
+  ],
+  "survives": {
+   "both_running": true,
+   "same_sessionId": true,
+   "same_endsAt": true,
+   "stored_running_same_session": true
+  },
+  "records": {
+   "stored": 1,
+   "t1_memory": 1,
+   "t2_memory": 1,
+   "sessionsInStorage": 1
+  },
+  "exactlyOneRecord": true,
+  "pageErrors": []
+ },
+ {
+  "label": "fix-5562",
+  "base": "http://127.0.0.1:5562",
+  "phase": "loaded",
+  "scenario": "S1",
+  "iteration": 6,
+  "steps": {
+   "01-both-on-today": {
+    "t1": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    }
+   },
+   "02-brew-started-and-tab2-typed": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "paused",
+      "sessionId": "s_mv9dk5e57d5bde8e",
+      "startedAt": 1792058833225,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "paused",
+      "sessionId": "s_mv9dk5e57d5bde8e",
+      "startedAt": 1792058833225,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "paused",
+      "sessionId": "s_mv9dk5e57d5bde8e",
+      "startedAt": 1792058833225,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "paused",
+      "sessionId": "s_mv9dk5e57d5bde8e",
+      "startedAt": 1792058833225,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "03-after-back-and-forth": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "paused",
+      "sessionId": "s_mv9dk5e57d5bde8e",
+      "startedAt": 1792058833225,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "paused",
+      "sessionId": "s_mv9dk5e57d5bde8e",
+      "startedAt": 1792058833225,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "paused",
+      "sessionId": "s_mv9dk5e57d5bde8e",
+      "startedAt": 1792058833225,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "paused",
+      "sessionId": "s_mv9dk5e57d5bde8e",
+      "startedAt": 1792058833225,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "04-after-fast-forward": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "paused",
+      "sessionId": "s_mv9dk5e57d5bde8e",
+      "startedAt": 1792058833225,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "paused",
+      "sessionId": "s_mv9dk5e57d5bde8e",
+      "startedAt": 1792058833225,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "paused",
+      "sessionId": "s_mv9dk5e57d5bde8e",
+      "startedAt": 1792058833225,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "paused",
+      "sessionId": "s_mv9dk5e57d5bde8e",
+      "startedAt": 1792058833225,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   }
+  },
+  "t2Typing": {
+   "composerPresentOnArrival": true,
+   "error": "locator.pressSequentially: Timeout 1500ms exceeded."
+  },
+  "enterAt": 1792058834046,
+  "typing2Error": "locator.pressSequentially: Timeout 1500ms exceeded.",
+  "sessionIdFromTab1": "s_mv9dk5e57d5bde8e",
+  "backAndForth": [
+   {
+    "i": 1,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 2,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 3,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   }
+  ],
+  "survives": {
+   "both_running": false,
+   "same_sessionId": true,
+   "same_endsAt": false,
+   "stored_running_same_session": false
+  },
+  "records": {
+   "stored": 0,
+   "t1_memory": 0,
+   "t2_memory": 0,
+   "sessionsInStorage": 0
+  },
+  "exactlyOneRecord": false,
+  "pageErrors": []
+ }
+]
