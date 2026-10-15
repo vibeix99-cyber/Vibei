@@ -1,0 +1,64 @@
+
+Running 25 tests using 1 worker
+
+  ✓   1 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 100 %) (54.8s)
+  ✓   2 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 %) (1.1m)
+  ✓   3 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 % reduced motion) (59.0s)
+  ✓   4 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 100 %) (52.0s)
+  ✓   5 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 200 %) (1.1m)
+  ✓   6 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 100 %) (57.6s)
+  ✓   7 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 %) (1.2m)
+  ✓   8 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 % reduced motion) (1.0m)
+  ✓   9 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 100 %) (56.3s)
+  ✓  10 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 200 %) (1.2m)
+  ✓  11 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 100 %) (53.8s)
+  ✓  12 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 %) (59.9s)
+  ✓  13 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion) (53.0s)
+  ✓  14 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 100 %) (53.6s)
+  ✓  15 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (1.0m)
+  ✓  16 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 100 %) (1.1m)
+  ✓  17 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 %) (1.1m)
+  ✓  18 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 % reduced motion) (59.8s)
+  ✓  19 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 100 %) (1.0m)
+  ✓  20 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 200 %) (1.1m)
+  ✓  21 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 100 %) (1.1m)
+  ✘  22 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 %) (21.8s)
+  ✘  23 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (20.3s)
+  ✓  24 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 100 %) (1.0m)
+  ✓  25 [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 200 %) (1.0m)
+
+
+  1) [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 %) 
+
+    Error: Mark done's Undo not drawn after the tap at {"x":773.5,"y":707.1875,"w":151,"h":44,"top":685.1875}: {"taps":["pointerdown@774,707→DIV._group_njw8r_121 _tagGroup_ahn","click@773,707→DIV._group_njw8r_121 _tagGroup_ahn"],"mark":{"x":698,"y":625.1875,"width":151,"height":44,"top":625.1875,"right":849,"bottom":669.1875,"left":698},"sy":120,"notices":{"queue":[{"id":"t1","message":"Saved 3 minutes of focus","left":1700}],"shown":"t1","strip":3,"screen":"/","why":"screen","changed":5328,"version":12,"room":0}}
+
+      345 |       await expect(undoRow).toBeVisible();
+      346 |     } catch (e) {
+    > 347 |       throw new Error(`Mark done's Undo not drawn after the tap at ${JSON.stringify(tapAt)}: ${JSON.stringify(await page.evaluate(() => ({ taps: (window as any).__taps, mark: document.querySelector('button[aria-label^="Mark"]')?.getBoundingClientRect().toJSON(), sy: scrollY, notices: (window as any).__kettle.notices() })))}`);
+          |             ^
+      348 |     }
+      349 |     const rowTop = await undoRow.evaluate((r) => r.getBoundingClientRect().top);
+      350 |     expect(Math.abs(rowTop - line), 'the Undo is drawn where Mark done was, on screen').toBeLessThanOrEqual(2);
+        at /home/user/wt/w5tr-qa/kettle/tests/notice-strip.spec.ts:347:13
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/l5-qa-ns/notice-strip-no-notice-ove-eec87-l-input-1440×900-light-200--chromium/error-context.md
+
+  2) [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) 
+
+    Error: Mark done's Undo not drawn after the tap at {"x":773.5,"y":707.1875,"w":151,"h":44,"top":685.1875}: {"taps":["pointerdown@774,707→DIV._group_njw8r_121 _tagGroup_ahn","click@773,707→DIV._group_njw8r_121 _tagGroup_ahn"],"mark":{"x":698,"y":625.1875,"width":151,"height":44,"top":625.1875,"right":849,"bottom":669.1875,"left":698},"sy":120,"notices":{"queue":[{"id":"t1","message":"Saved 3 minutes of focus","left":1000}],"shown":"t1","strip":3,"screen":"/","why":"screen","changed":7077,"version":12,"room":0}}
+
+      345 |       await expect(undoRow).toBeVisible();
+      346 |     } catch (e) {
+    > 347 |       throw new Error(`Mark done's Undo not drawn after the tap at ${JSON.stringify(tapAt)}: ${JSON.stringify(await page.evaluate(() => ({ taps: (window as any).__taps, mark: document.querySelector('button[aria-label^="Mark"]')?.getBoundingClientRect().toJSON(), sy: scrollY, notices: (window as any).__kettle.notices() })))}`);
+          |             ^
+      348 |     }
+      349 |     const rowTop = await undoRow.evaluate((r) => r.getBoundingClientRect().top);
+      350 |     expect(Math.abs(rowTop - line), 'the Undo is drawn where Mark done was, on screen').toBeLessThanOrEqual(2);
+        at /home/user/wt/w5tr-qa/kettle/tests/notice-strip.spec.ts:347:13
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/l5-qa-ns/notice-strip-no-notice-ove-d82ec-0-light-200-reduced-motion--chromium/error-context.md
+
+  2 failed
+    [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 %) 
+    [chromium] › tests/notice-strip.spec.ts:292:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) 
+  23 passed (24.1m)
