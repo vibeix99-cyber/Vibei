@@ -13,12 +13,12 @@
  *  - Progress also dedupes records by id (defence in depth).
  */
 import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+import { persist, createJSONStorage, type PersistStorage, type StorageValue } from 'zustand/middleware';
 import { clock } from '@/lib/clock';
 import { emit } from '@/lib/events';
 import { uid } from '@/lib/id';
 import { dayKey } from '@/lib/dates';
-import { safeStorage, STORAGE_PREFIX } from '@/lib/storage';
+import { lastWriteFailed, safeStorage, STORAGE_PREFIX } from '@/lib/storage';
 import { getSettings } from '@/state/settings';
 import type { SessionRecord } from '@/progress/types';
 import type { LastEnded, Phase, StartFocusOptions, TimerState } from './types';
@@ -223,6 +223,87 @@ function idleAfter(s: TimerState, patch: Partial<TimerState>): TimerState {
   };
 }
 
+// ---------- persistence ----------
+
+/** What the timer saves: the `state` of the `kettle:timer` envelope (`{ state, version: 1 }`, zustand persist). */
+function persistedTimer(s: TimerState): TimerState {
+  return {
+    status: s.status,
+    phase: s.phase,
+    plannedMs: s.plannedMs,
+    addedMs: s.addedMs,
+    startedAt: s.startedAt,
+    endsAt: s.endsAt,
+    remainingMs: s.remainingMs,
+    pausedAt: s.pausedAt,
+    pausedTotalMs: s.pausedTotalMs,
+    completedInCycle: s.completedInCycle,
+    intention: s.intention,
+    tag: s.tag,
+    sessionId: s.sessionId,
+    lastEnded: s.lastEnded,
+  };
+}
+
+const TIMER_FIELDS = Object.keys(INITIAL_TIMER) as (keyof TimerState)[];
+
+/**
+ * While `setIntention` runs: the saved timer as it was just before. A save made meanwhile that changes nothing but
+ * the intention and tag is an intention-only save (`saveIntentionOnly`); any other save is written whole, as always.
+ */
+let intentionSave: TimerState | null = null;
+
+const onlyIntentionChanged = (before: TimerState, next: TimerState): boolean =>
+  TIMER_FIELDS.every((k) => k === 'intention' || k === 'tag' || Object.is(before[k], next[k]));
+
+const jsonStorage = createJSONStorage<TimerState>(() => safeStorage)!;
+
+/**
+ * Saving the intention writes only the intention (and its tag), into what storage holds *now*.
+ *
+ * This tab's copy of the rest of the timer can be a moment behind: another tab's write reaches it only through a
+ * `storage` event, which arrives later (0.3–0.6 s under load). Saving that whole copy would put this tab's idle timer
+ * over a brew another tab has just started, and undo it in both tabs with no record (F1, `integrity:309`).
+ * Same key, same envelope, same version: only the two fields change.
+ */
+function saveIntentionOnly(name: string, value: StorageValue<TimerState>): void {
+  // This tab's own last save failed (storage full or blocked): storage holds an older timer than this tab, so the
+  // whole save is the newer one, and the one that repairs storage (as before).
+  if (lastWriteFailed(name)) {
+    jsonStorage.setItem(name, value);
+    return;
+  }
+  let stored: unknown = null;
+  try {
+    const raw = safeStorage.getItem(name);
+    stored = raw == null ? null : JSON.parse(raw);
+  } catch {
+    stored = null;
+  }
+  const env = stored && typeof stored === 'object' ? (stored as { state?: unknown; version?: unknown }) : null;
+  const state = env && env.version === value.version && env.state && typeof env.state === 'object' ? (env.state as Record<string, unknown>) : null;
+  if (!state) {
+    // Nothing readable is saved yet, so there is nothing to overwrite.
+    jsonStorage.setItem(name, value);
+    return;
+  }
+  // Storage holds another session than this tab knows of: another tab started or ended one, and its storage event is
+  // still on the way. These words were typed for a timer that has moved on; leave storage alone (the event brings
+  // this tab up to date), so the other tab's brew keeps its own intention too.
+  const storedSid = typeof state.sessionId === 'string' ? state.sessionId : null;
+  if (storedSid !== value.state.sessionId) return;
+  jsonStorage.setItem(name, { ...env, state: { ...state, intention: value.state.intention, tag: value.state.tag } } as StorageValue<TimerState>);
+}
+
+const timerStorage: PersistStorage<TimerState> = {
+  getItem: (name) => jsonStorage.getItem(name),
+  setItem: (name, value) => {
+    if (intentionSave && onlyIntentionChanged(intentionSave, value.state)) saveIntentionOnly(name, value);
+    else jsonStorage.setItem(name, value);
+  },
+  removeItem: (name) => jsonStorage.removeItem(name),
+};
+
 export const useTimer = create<TimerStore>()(
   persist(
     (set, get) => {
@@ -396,7 +477,16 @@ export const useTimer = create<TimerStore>()(
           set({ ...INITIAL_TIMER, plannedMs: len, remainingMs: len });
         },
 
-        setIntention: (intention, tag) => set(tag === undefined ? { intention } : { intention, tag }),
+        // Writes only the intention to storage, never this tab's (possibly stale) copy of the rest (see saveIntentionOnly).
+        setIntention: (intention, tag) => {
+          const outer = intentionSave;
+          intentionSave = persistedTimer(get());
+          try {
+            set(tag === undefined ? { intention } : { intention, tag });
+          } finally {
+            intentionSave = outer;
+          }
+        },
 
         rebase: (deltaMs) => {
           const s = get();
@@ -421,23 +511,8 @@ export const useTimer = create<TimerStore>()(
     {
       name: TIMER_STORAGE_KEY,
       version: 1,
-      storage: createJSONStorage(() => safeStorage),
-      partialize: (s): TimerState => ({
-        status: s.status,
-        phase: s.phase,
-        plannedMs: s.plannedMs,
-        addedMs: s.addedMs,
-        startedAt: s.startedAt,
-        endsAt: s.endsAt,
-        remainingMs: s.remainingMs,
-        pausedAt: s.pausedAt,
-        pausedTotalMs: s.pausedTotalMs,
-        completedInCycle: s.completedInCycle,
-        intention: s.intention,
-        tag: s.tag,
-        sessionId: s.sessionId,
-        lastEnded: s.lastEnded,
-      }),
+      storage: timerStorage,
+      partialize: (s): TimerState => persistedTimer(s),
       merge: (persisted, current) => ({ ...current, ...sanitizeTimer(persisted) }),
     },
   ),
