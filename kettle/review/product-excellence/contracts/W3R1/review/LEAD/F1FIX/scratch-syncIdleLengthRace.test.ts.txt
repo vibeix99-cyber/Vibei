@@ -93,7 +93,7 @@ afterEach(() => {
 });
 
 describe('LEAD-5 scratch: syncIdleLength from a tab that is behind (audit #1)', () => {
-  it('B picks another brew length, then starts; A (idle, not yet seen the start) takes in the settings change: B's brew must survive', async () => {
+  it('B picks another brew length, then starts; A (idle, not yet seen the start) takes in the settings change: the brew of B must survive', async () => {
     const A = await openTab('A', true);
     const B = await openTab('B', false);
     A.timer.getState().syncIdleLength();
@@ -110,6 +110,6 @@ describe('LEAD-5 scratch: syncIdleLength from a tab that is behind (audit #1)', 
     expect(A.timer.getState().status).toBe('idle');
     A.timer.getState().syncIdleLength();
     // Storage must still hold B's running brew.
-    expect(stored().state, 'storage still holds B's running brew').toMatchObject({ status: 'running', sessionId, endsAt });
+    expect(stored().state, 'storage still holds the running brew of B').toMatchObject({ status: 'running', sessionId, endsAt });
   });
 });
