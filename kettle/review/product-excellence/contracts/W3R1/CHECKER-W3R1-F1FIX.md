@@ -303,3 +303,75 @@ Final: the one fix round is spent. Any change to the branch after this invalidat
 **A Lane R rerun before merge: not needed.** My runs cover timer / PWA, integrity, `w2-home` and the race file on the final code. The change cannot reach the notice layer (only `store.ts` persistence). Lane R's 2-tab manual check could not tell fix from control (§7). The post-merge regression should still include the notice suite, as usual.
 
 *Run logs:* each `.log` / `.out` in `LEAD/F1FIX/r2/` is committed as a `.txt` copy beside it.
+
+
+## 9. Post-merge regression (5f78af1)
+Lane R ran the post-merge regression on :5560 (`f817931`, F1 merged at `5f78af1`). Three tests failed on the first run:
+- `timer.spec.ts:156`;
+- `timer.spec.ts:183`;
+- `notice-strip.spec.ts:338` at 844×390 dark 200 %.
+
+Each passed on a rerun on :5560 and on :5478. The second whole timer/PWA run was 29 passed + 2 skipped. Under Vibei's rule, a failure counts as flaky only if it is *shown* flaky, so I did four things:
+- read back both timer traces;
+- checked what the merge can reach;
+- ran a matched-load control;
+- reproduced the two timer failures on purpose, on both servers.
+
+Evidence is in `review/LEAD/F1FIX/postmerge/`:
+- `trace-timer156-background.txt` and `trace-timer183-hidden.txt`: Lane R's `trace.zip` read back, actions plus the page text of every DOM snapshot;
+- `code-paths.txt`;
+- the control logs (`control-*`) and the reproduction logs (`repro-*`, `stall-v1-*`);
+- the specs and scripts as `.txt`.
+
+### What the merge can reach (`code-paths.txt`)
+**The merge changes only `store.ts` in src** (plus a Vitest file). It touches:
+- the imports;
+- the new fields-only save helpers;
+- `setIntention`;
+- `syncIdleLength`.
+
+`end` and `tick` lie outside every hunk; that is where `set(idleAfter(…))` and `emit('timer:complete')` run.
+
+**These files have 0 diff lines**, both across the merge and across the whole range `4d36939..5f78af1`:
+- `ticker.ts`, `notify.ts`, `tabPresence.ts`, `sync.ts`;
+- `scheduler.ts`, `tick.worker.ts`, `leader.ts`, `announce.ts`;
+- `timer.spec.ts`.
+
+**The coordinator's question: does a completion now arrive through a rehydrate, or does `syncIdleLength` / `setIntention` run on the completion path? No.**
+- `tick` still calls `guard.refresh()` first, which runs `mirrorTimerFromStorage()` and then `persist.rehydrate()`. All of that is unchanged.
+- During a brew nothing writes a partial save:
+  - `syncIdleLength` returns at once unless the timer is idle. It is called only at boot and on a `focusMin` change (`ticker.ts:302`, `:304`).
+  - `setIntention` is called by Today's composer: on mount and on typing, 150 ms debounced, and at Start. It is also called by Done and Carry forward (`app/intention.ts`).
+  - Both tests type nothing and set the intention only through `startFocus`, which is a whole save.
+- So the rehydrate reads back the running brew exactly as before the merge. The completion is still `set(idleAfter(…))`, which `subscribe` sees, followed by `emit('timer:complete')`.
+
+### 1 · `timer.spec.ts:156` "background: the worker completes on time even with main-thread timers frozen": **FLAKY (shown); not F1**
+The test arms its observer only after the brew has already ended. From the trace (times from the test's `newPage`):
+- The brew is 6 s (`secs(app, 3)` = 0.1 min). Under load, the `startFocus` evaluate ran from 3.63 s to 9.51 s, which is 5.88 s.
+- The page itself started the brew at once. The brew had already ended by 10.04 s, so it began no later than about 4.0 s. So the 5.9 s was the reply reaching the loaded test process late, not the page being slow.
+- The test's `state()` read at 10.04 s already returned `status: 'idle'`, `sessionId: null`, `endsAt: null`. The DOM snapshot taken just before that read already holds "The kettle’s whistling! Focus session complete. Time for tea."
+- The `subscribe` that sets `__doneAt` on running→idle was installed after that, at 10.18 s. No such transition was left to see, so the 10-second poll could only time out, on any build.
+- The brew did complete: the done screen, the completion announcement, and "Badge: First Brew" are all present.
+- **Reproduced on both builds (below):** with the test process made 6.5 s late after `startFocus` and nothing else changed, the test fails 2/2 on :5560 and 2/2 on :5478. It fails at the same poll (`__doneAt` null), with the done screen showing.
+
+### 2 · `timer.spec.ts:183` "hidden page: completion shows a warm notification; coming back restores the title": **FLAKY (shown); not F1**
+The brew ended while the page was still visible: the test's hide came too late. From the trace:
+- The brew is 4 s. Under load, `startFocus` took 3.27 s (8.86 to 12.13 s) and `setHidden(true)` took 2.68 s (12.55 to 15.23 s).
+- **Before `setHidden`** the snapshot shows the brew still running: the title is "Focusing — Kettle" and the live text is "Kettle’s on. Focus session started, 4 seconds."
+- **After `setHidden`** the snapshot shows the completion announced and the title "Kettle — cozy focus timer", the base title. Both stay to the end, and 0 notifications were made.
+- The app shows that title only when the page is visible as the brew ends:
+  - `tabPresence.ts:194–197` drops the pending done title and sets the base title;
+  - `notify.ts:185–188` skips the notification because the page is visible.
+- Had the brew ended while the page was hidden, the title would read "Tea’s ready — Kettle" until the page came back. So the page ended the brew before the test's hide reached it.
+- The test hides the page only after the reply to `startFocus` arrives, and under load that reply took 3.3 s of a 4 s brew.
+- **Reproduced on both builds (below):** with the test process made 4.5 s late after `startFocus`, the test fails 2/2 on :5560 and 2/2 on :5478. It fails at the same poll (0 notifications received, 1 expected), with the done screen showing.
+
+### 3 · `notice-strip.spec.ts:338` (844×390 dark 200 %): **FLAKY (shown: same build, same load, passes); not F1**
+- **Where it failed:** at 8.2 s, in the test's first `press()` on Today's "What are you brewing?" field, at the re-check made while aiming. This is before any notice exists and before anything is typed, so no intention save has run.
+- **The cause:** `onTop` returned null once, which means the field was not the topmost element at its centre at that read. `press()` breaks on a null re-check rather than aiming again.
+- **Why it cannot be the merge:** the merge does not change any UI file. At page load, the only merge code that can run is:
+  - `syncIdleLength` at boot. Its in-memory result is as before; only what it writes differs.
+  - the composer's mount-time `setIntention`. With the intention unchanged, it now returns without a `set` at all.
+
+  Neither can put anything over the field, move it, or change what the page draws.
+- **What is not known:** what was over the field, or had moved it, at that one read. This spec opens its own browser contexts, so no trace was kept.
