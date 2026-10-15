@@ -1,27 +1,33 @@
 #!/bin/bash
-# LEAD-5 post-merge matched-load control: the same specs on :5560 (f817931, F1 merged) and :5478 (base 4d36939),
-# both arms at the same time (one Chromium each), under the same CPU burners (own PIDs, killed on exit).
+# LEAD-5 post-merge matched-load control (one browser at a time, one gate slot): the same specs, from the merged tree's
+# tests, against :5560 (f817931, F1 merged) and :5478 (base 4d36939), interleaved A B B A ... so both arms see the same
+# load, under the same CPU burners (own PIDs, killed on exit) and whatever the other lanes run beside it.
 set -u
 OUT=$1
 mkdir -p "$OUT"
 cd /home/user/wt/w6-int/kettle || exit 9
 B=()
-for i in $(seq 1 "${BURN:-6}"); do ( while :; do :; done ) & B+=($!); done
+for i in $(seq 1 "${BURN:-4}"); do ( while :; do :; done ) & B+=($!); done
 ( while :; do echo "$(date -u +%T) $(cut -d' ' -f1-3 /proc/loadavg)"; sleep 15; done ) > "$OUT/load.txt" 2>&1 & B+=($!)
 trap 'kill "${B[@]}" 2>/dev/null' EXIT
-echo "burners+sampler PIDs: ${B[*]} (BURN=${BURN:-6}); nproc $(nproc); HEAD $(git rev-parse --short HEAD)" > "$OUT/setup.txt"
+echo "burners+sampler PIDs: ${B[*]} (BURN=${BURN:-4}); nproc $(nproc); HEAD $(git rev-parse --short HEAD); start $(date -u +%T)" > "$OUT/setup.txt"
 run() {
-  local port=$1 tag=$2; shift 2
+  local port=$1 tag=$2 i=$3; shift 3
   {
-    echo "### cmd: env KETTLE_PORT=$port npx playwright test $* --reporter=list,json --output=$OUT/pw-$tag-$port"
+    echo "### round $i: env KETTLE_PORT=$port npx playwright test $* --reporter=list --output=$OUT/pw-$tag-$port-$i"
     echo "### start $(date -u +%T) load $(cut -d' ' -f1-3 /proc/loadavg)"
-    env KETTLE_PORT=$port PLAYWRIGHT_JSON_OUTPUT_NAME="$OUT/$tag-$port.json" npx playwright test "$@" --reporter=list,json --output="$OUT/pw-$tag-$port"
+    env KETTLE_PORT=$port npx playwright test "$@" --reporter=list --output="$OUT/pw-$tag-$port-$i"
     local rc=$?
     echo "### end $(date -u +%T) exit=$rc load $(cut -d' ' -f1-3 /proc/loadavg)"
-  } > "$OUT/$tag-$port.log" 2>&1
+    echo
+  } >> "$OUT/$tag-$port.log" 2>&1
 }
-T=(--project=timer-app -g 'background: the worker completes on time even with main-thread timers frozen|hidden page: completion shows a warm notification; coming back restores the title' --repeat-each="${TR:-10}" --workers=1)
-run 5560 timer "${T[@]}" & a=$!; run 5478 timer "${T[@]}" & b=$!; wait $a $b
-N=(tests/notice-strip.spec.ts --project=chromium -g 'every notice state, real input \(844×390 dark 200 %\)$' --repeat-each="${NR:-3}" --workers=1)
-run 5560 notice "${N[@]}" & a=$!; run 5478 notice "${N[@]}" & b=$!; wait $a $b
+T=(--project=timer-app -g 'background: the worker completes on time even with main-thread timers frozen|hidden page: completion shows a warm notification; coming back restores the title' --repeat-each="${TR:-2}" --workers=1)
+for i in $(seq 1 "${TROUNDS:-5}"); do
+  if [ $((i % 2)) = 1 ]; then run 5560 timer $i "${T[@]}"; run 5478 timer $i "${T[@]}"; else run 5478 timer $i "${T[@]}"; run 5560 timer $i "${T[@]}"; fi
+done
+N=(tests/notice-strip.spec.ts --project=chromium -g 'every notice state, real input \(844×390 dark 200 %\)$' --repeat-each=1 --workers=1)
+for i in $(seq 1 "${NROUNDS:-3}"); do
+  if [ $((i % 2)) = 1 ]; then run 5560 notice $i "${N[@]}"; run 5478 notice $i "${N[@]}"; else run 5478 notice $i "${N[@]}"; run 5560 notice $i "${N[@]}"; fi
+done
 echo "done $(date -u +%T)" >> "$OUT/setup.txt"
