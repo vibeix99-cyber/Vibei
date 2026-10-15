@@ -12,16 +12,18 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 
 ## ▶ WAVE 3 ROUND 1 · started 2026-10-14 10:00 UTC (read this first)
 
-**Now (2026-10-15 11:05 UTC):**
-- **Item 1, F1 fix:**
-  - First pass `74138d3`: **REJECT** (LEAD-5 `5060817`). Defect F1X-D1: `syncIdleLength` is the same bug.
-  - Fix round handed back `10ecf2c` (src `b74e6b3`), gate passed (`GATE.md`).
-  - Trial **`37de54a`** on :5563/:5573 (worktree `w6tr-x2`), vitest 314/314.
-  - **LEAD-5 is rerunning its §6 checks for the final verdict.** Merge only on APPROVE.
+**Now (2026-10-15 11:25 UTC):**
+- **Item 1, F1 fix: MERGED as `5f78af1`** (src `b74e6b3`).
+  - First pass `74138d3` was REJECTed for F1X-D1 (`syncIdleLength`). The fix round `10ecf2c` got **APPROVE** (LEAD-5 `26b37bc`).
+  - The merged trees equal trial `37de54a`'s.
+  - **Post-merge regression:** Lane R (Sonnet) on :5560 runs tsc/vitest, timer/PWA, integrity, the notice suite, `w2-home`, the race file, and a 2-tab check with a length change. Receipt `review/POSTMERGE-F1/`; stop 12:50.
+  - **Follow-ups for Vibei** (unscheduled):
+    - a `sync.ts` receiving-side guard covering `rebase`, the person's own actions in a stale tab, and a typed edit in a doubly stale tab;
+    - the Today composer label overwrite.
 - **Item 2, backdrop:** done, report only. No merge changed it; it is capture timing (pre-rendered still vs faded-in live canvas, `capture.mjs:184-186`, `NookScene.tsx:222-246`), pre-existing. Receipt: `review/BACKDROP/RECEIPT-BACKDROP.md`.
-- **Item 3, N-2:** waits for item 1 to merge.
+- **Item 3, N-2:** fix maker N2 (Sonnet) on `pe/w3r1-n2-history`, worktree `w7n`, :5565. Brief `contracts/W3R1/BRIEF-N2.md` (product change `History.tsx` only, plus one new test file). Hard stop 13:23 UTC. LEAD-5 gates and reviews it separately.
 - **Item 4:** the Final Product Boss is on hold.
-- **Servers:** base :5478/:5488; integration :5560/:5570; trial :5563/:5573.
+- **Servers:** base :5478/:5488; integration (`f817931`, app `5f78af1`) :5560/:5570; N2 dev :5565. The trial servers :5563/:5573 are stopped.
 
 **Before the Final Product Boss: Vibei's post-follow-up decisions (2026-10-15 08:55 UTC; `contracts/W3R1/VB-DECISIONS-POSTFOLLOWUP.md`):**
 - **Item 1: the `integrity:309` fix.**
