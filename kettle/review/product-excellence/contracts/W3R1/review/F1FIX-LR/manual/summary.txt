@@ -1,0 +1,9 @@
+server | scenario | phase | n | survives(all 4 checks) | exactly one record | session label unchanged ("Write the report") | label changed by tab 2 text | tab2 composer still present on arrival/after switch | any tab idle or storage idle after tab 1 started | page errors
+control-5560 | S1 | loaded | 6 | 5/6 | 5/6 | 4/6 | 2/6 ['Reply to SWrite the report', 'Reply to SamWrite the report'] | 6/6 | 0/6 | 0
+control-5560 | S1 | quiet | 6 | 4/6 | 4/6 | 3/6 | 3/6 ['Reply to SamWrite the report'] | 6/6 | 0/6 | 0
+control-5560 | S2 | loaded | 6 | 4/6 | 4/6 | 0/6 | 6/6 [' to SamWrite the reportReply', 'Write the reportReply'] | 6/6 | 0/6 | 0
+control-5560 | S2 | quiet | 6 | 5/6 | 5/6 | 0/6 | 6/6 [' to SamWrite the reportReply', 'Write the reportReply'] | 6/6 | 0/6 | 0
+fix-5562 | S1 | loaded | 6 | 5/6 | 5/6 | 6/6 | 0/6 [] | 6/6 | 0/6 | 0
+fix-5562 | S1 | quiet | 6 | 6/6 | 6/6 | 4/6 | 2/6 ['Reply to SamWrite the report'] | 6/6 | 0/6 | 0
+fix-5562 | S2 | loaded | 6 | 6/6 | 6/6 | 0/6 | 6/6 [' to SaWrite the reportReply', ' to SamWrite the reportReply', 'Write the reportReply'] | 5/6 | 0/6 | 0
+fix-5562 | S2 | quiet | 6 | 6/6 | 6/6 | 0/6 | 6/6 [' to SamWrite the reportReply', 'Write the reportReply'] | 6/6 | 0/6 | 0
