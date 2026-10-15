@@ -1,0 +1,11 @@
+
+Running 2 tests using 1 worker
+
+F1XCOMPAT idle saved-by http://127.0.0.1:5478: {"state":{"status":"idle","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":null,"endsAt":null,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Outline the talk","tag":null,"sessionId":null,"lastEnded":{"sessionId":"s_mv9ftlz10e00ffb9","phase":"focus","reason":"user","at":1792062634173,"whileAway":false}},"version":1}
+F1XCOMPAT idle after-boot on http://127.0.0.1:5563: {"state":{"status":"idle","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":null,"endsAt":null,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Outline the talk","tag":null,"sessionId":null,"lastEnded":{"sessionId":"s_mv9ftlz10e00ffb9","phase":"focus","reason":"user","at":1792062634173,"whileAway":false}},"version":1}
+  ✓  1 [chromium] › .tmp/lead5-f1x/compat.spec.ts:52:3 › idle profile saved by http://127.0.0.1:5478 loads unchanged on http://127.0.0.1:5563 (6.4s)
+F1XCOMPAT paused saved-by http://127.0.0.1:5478: {"state":{"status":"paused","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792062640032,"endsAt":null,"remainingMs":1498560,"pausedAt":1792062641472,"pausedTotalMs":0,"completedInCycle":0,"intention":"Reply to Sam","tag":null,"sessionId":"s_mv9ftqqof9871058","lastEnded":null},"version":1}
+F1XCOMPAT paused after-boot on http://127.0.0.1:5563: {"state":{"status":"paused","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792062640032,"endsAt":null,"remainingMs":1498560,"pausedAt":1792062641472,"pausedTotalMs":0,"completedInCycle":0,"intention":"Reply to Sam","tag":null,"sessionId":"s_mv9ftqqof9871058","lastEnded":null},"version":1}
+  ✓  2 [chromium] › .tmp/lead5-f1x/compat.spec.ts:52:3 › paused profile saved by http://127.0.0.1:5478 loads unchanged on http://127.0.0.1:5563 (6.0s)
+
+  2 passed (13.6s)
