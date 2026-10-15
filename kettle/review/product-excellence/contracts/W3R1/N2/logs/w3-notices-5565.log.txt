@@ -1,0 +1,16 @@
+[slots] N2 took 2/3 at 12:19:35: npx playwright test tests/w3-notices.spec.ts --project=chromium --workers=2 --reporter=list --output=/tmp/n2/pw/Cw3-notices
+
+Running 9 tests using 2 workers
+
+  ✓  1 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 light 100 %) (17.4s)
+  ✓  2 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 light 200 % reduced motion) (17.6s)
+  ✓  3 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 dark 100 %) (15.6s)
+  ✓  4 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 dark 100 %) (16.6s)
+  ✓  5 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (844×390 dark 100 %) (14.6s)
+  ✓  6 [chromium] › tests/w3-notices.spec.ts:158:1 › the room a gone notice keeps stays while the page is scrolled, and goes on the same screen once idle (390×844, 200 %) (15.0s)
+  ✓  8 [chromium] › tests/w3-notices.spec.ts:239:1 › a new screen starts with no room: Today after End, then Stats and back (375×667, 100 %) (11.0s)
+  ✓  9 [chromium] › tests/w3-notices.spec.ts:265:1 › the status bar warm-days button is named "N days warm. Show details" (and ", today not brewed yet") (4.2s)
+  ✓  7 [chromium] › tests/w3-notices.spec.ts:210:1 › the room is not given back while a pointer is held; it goes 4–6.5 s after release (1440×900, 100 %) (17.3s)
+
+  9 passed (1.1m)
+[slots] N2 freed 2 at 12:20:43
