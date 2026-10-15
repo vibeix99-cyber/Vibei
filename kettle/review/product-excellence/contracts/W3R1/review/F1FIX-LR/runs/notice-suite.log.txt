@@ -54,3 +54,6 @@ Running 74 tests using 1 worker
   ✓  50 [chromium] › tests/toast-room.spec.ts:431:3 › three notices never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, light) (17.3s)
   ✓  51 [chromium] › tests/toast-room.spec.ts:431:3 › three notices never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, dark) (17.4s)
   ✓  52 [chromium] › tests/toast-room.spec.ts:466:3 › the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (667×375, 200 % text, wheel, light) (21.9s)
+  ✓  53 [chromium] › tests/toast-room.spec.ts:466:3 › the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (844×390, 200 % text, touch, dark) (27.4s)
+FACT 390x844-light-t100 a-no-input {"leftAt":5229,"room":68,"commits":[{"t":9328,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8603,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":4099,"collapseAfterLastBusyMs":4099,"visibleMove":68}
+  ✓  54 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (390x844-light-t100) (10.2s)
