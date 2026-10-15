@@ -1,0 +1,59 @@
+
+Running 6 tests using 2 workers
+
+  ✓  1 [chromium] › tests/notice-strip.spec.ts:324:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (1.7m)
+  ✓  3 [chromium] › tests/notice-strip.spec.ts:324:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (1.3m)
+  ✘  2 [chromium] › tests/notice-strip.spec.ts:324:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (4.0m)
+  ✓  5 [chromium] › tests/notice-strip.spec.ts:324:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (1.3m)
+  ✓  6 [chromium] › tests/notice-strip.spec.ts:324:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (1.3m)
+  ✘  4 [chromium] › tests/notice-strip.spec.ts:324:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (4.0m)
+
+
+  1) [chromium] › tests/notice-strip.spec.ts:324:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) 
+
+    [31mTest timeout of 240000ms exceeded.[39m
+
+    Error: locator.evaluate: Test ended.
+    Call log:
+    [2m  - waiting for locator('[data-undo-for="history-delete"]').getByRole('button', { name: /^Undo/ })[22m
+
+
+      179 | /** The element's centre, if it is wholly in the viewport and on top at its centre (strict: at 9 of 9 points). */
+      180 | async function onTop(page: Page, el: ReturnType<Page['locator']>, strict = false) {
+    > 181 |   return el.evaluate((e, strict) => {
+          |             ^
+      182 |     const r = e.getBoundingClientRect();
+      183 |     if (r.width <= 0 || r.top < 0 || r.bottom > innerHeight || r.left < 0 || r.right > innerWidth) return null;
+      184 |     for (const fx of strict ? [0.15, 0.5, 0.85] : [0.5])
+        at onTop (/home/user/wt/w5q/kettle/tests/notice-strip.spec.ts:181:13)
+        at press (/home/user/wt/w5q/kettle/tests/notice-strip.spec.ts:286:16)
+        at /home/user/wt/w5q/kettle/tests/notice-strip.spec.ts:480:5
+
+    Error Context: .tmp/Q-pw/ns292-x6-load/notice-strip-no-notice-ove-d82ec-0-light-200-reduced-motion--chromium/error-context.md
+
+  2) [chromium] › tests/notice-strip.spec.ts:324:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) 
+
+    [31mTest timeout of 240000ms exceeded.[39m
+
+    Error: locator.evaluate: Test ended.
+    Call log:
+    [2m  - waiting for locator('[data-undo-for="history-delete"]').getByRole('button', { name: /^Undo/ })[22m
+
+
+      179 | /** The element's centre, if it is wholly in the viewport and on top at its centre (strict: at 9 of 9 points). */
+      180 | async function onTop(page: Page, el: ReturnType<Page['locator']>, strict = false) {
+    > 181 |   return el.evaluate((e, strict) => {
+          |             ^
+      182 |     const r = e.getBoundingClientRect();
+      183 |     if (r.width <= 0 || r.top < 0 || r.bottom > innerHeight || r.left < 0 || r.right > innerWidth) return null;
+      184 |     for (const fx of strict ? [0.15, 0.5, 0.85] : [0.5])
+        at onTop (/home/user/wt/w5q/kettle/tests/notice-strip.spec.ts:181:13)
+        at press (/home/user/wt/w5q/kettle/tests/notice-strip.spec.ts:286:16)
+        at /home/user/wt/w5q/kettle/tests/notice-strip.spec.ts:480:5
+
+    Error Context: .tmp/Q-pw/ns292-x6-load/notice-strip-no-notice-ove-d82ec-0-light-200-reduced-motion--chromium-repeat3/error-context.md
+
+  2 failed
+    [chromium] › tests/notice-strip.spec.ts:324:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) 
+    [chromium] › tests/notice-strip.spec.ts:324:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) 
+  4 passed (7.2m)
