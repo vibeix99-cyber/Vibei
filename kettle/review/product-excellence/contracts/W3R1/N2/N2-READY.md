@@ -1,7 +1,7 @@
 # N2 — the History focus scroll (N-2): packet
 
 **Branch** `pe/w3r1-n2-history` (worktree `/home/user/wt/w7n`), base `5f78af1` (src `b74e6b3`). Dev :5565; controls :5560 / :5570 (the base) and :5478 / :5488 (old base `4d36939`).
-**Status: STAGE 1 of 6 (root cause).** The brief's rule applies — *"if the root cause lies outside `History.tsx`, stop, write it up with evidence, and hand back"* — and it applies in the strongest form: **there is no product scroll to fix.** Nothing in `src/` has been changed.
+**Status: STAGES 1–3 of 6 (root cause; change; tests).** The brief's rule applies — *"if the root cause lies outside `History.tsx`, stop, write it up with evidence, and hand back"* — and it applies in the strongest form: **there is no product scroll to fix.** Nothing in `src/` has been changed.
 
 ## §1 Root cause, with the trace
 
@@ -77,4 +77,28 @@ And what a wheel that has not yet landed does to a tap, with nothing of the prod
 * **I have not changed `src/`.** The branch's src tree is the base's (`b74e6b3`).
 * What I did add: the brief's deterministic test as a **guard of the invariant** (`tests/w3-history-focus-scroll.spec.ts`), which passes on the base — §3.
 
-*(§2–§6 follow in the next stages.)*
+## §2 The change
+
+**None to the product.** `git diff 5f78af1 -- kettle/src` is empty: the branch's src tree is `b74e6b3`, the base's. `History.tsx` and its CSS module are untouched.
+
+Why not "some" change to `History.tsx`: on the base the tap does not move the page at all (§1 A, 18 of 18 at exactly 0 px, no scroll call, no scroll event), so no edit can turn a failing check into a passing one. A defensive edit (for example an explicit `focus({preventScroll:true})` on `pointerdown`) would change how focus reaches the row — the one thing the Sheet's focus return and the keyboard path depend on (`:focus-visible`, `History.tsx:180`) — to guard against a movement nothing shows, and would be indistinguishable from the base in every check. I judged that the wrong trade and did not make it. If LEAD-5 rules otherwise, the guard below is the test to hold such a change to.
+
+The branch carries **one new file**: `kettle/tests/w3-history-focus-scroll.spec.ts` (commit `2280e7d`; 14 tests). Nothing else is touched: not `Sheet.tsx`, not `moment.ts`, not `notice-strip.spec.ts`, no CSS.
+
+## §3 Tests: fail on the base, pass on the fix
+
+**It cannot fail on the base, because the base does not move** (§1). What the file does, and what I can honestly show:
+
+**What it asserts** (8 tests, pointer and touch; `IDX = 2`, the target row placed mid-screen by an instant script scroll, a real mouse down/up or a real touch tap on its middle):
+* from the tap through the Edit sheet being open (700 ms spring + five still frames) the row's top never differs from where it was seen by more than **2 px**, and `scrollY` never differs **at all**, on **every animation frame** (not only at the end);
+* then the same through **Close (×)** and through **Escape**, with focus back on the row, and finally the row where it was seen;
+* **Save**: the row's top never differs by more than 2 px. (`scrollY` is *not* asserted here: Saving raises "Brew updated" in the notice strip above the list, and `Toast.tsx:521` → `keepStill` scrolls the page by the strip's height in the same frame to keep what is in view still — the I10 rule. Measured: +68 px at 1440 @100 and 390, +73 px at 1440 @200; the row's top changes by 0 / −0.5 / 0 px — `evidence/save-*.json`. It is recorded as a test annotation.)
+* configurations: **1440×900 @200 % reduced motion, light** (where X-11 was found); **1440×900 @100 %**; **390×844 phone, touch, light**; **390×844 phone, touch, dark**.
+
+**Which configurations move on the base: none.** Base :5560: 42 of 42 (the 14 tests × 3), `logs/spec-base-5560-x3.log.txt`. Branch dev :5565 (the same code): 42 of 42, `logs/spec-branch-5565-x3.log.txt`. (The first base run, `logs/spec-base-5560-first-run-…log.txt`, had 13 of 14: my own Save assertion on `scrollY` was too strict and caught the notice strip's `keepStill` above; I corrected the test, not the product.)
+
+**That the test would catch the movement if there were one** — a mutation check, in a throw-away copy outside the repo (`evidence/scripts/mutant.spec.ts.txt`, the same file with one init script: a `click` listener on a History row that calls `window.scrollBy({top:110, behavior:'instant'})` in the next task, i.e. exactly the 110 px the finding describes): run against the base, **8 of 8 pointer / touch tests fail** (`logs/spec-MUTANT-scrollBy110-on-base-5560.log.txt`: "Received: 110" in all 8; at open / close for the four configurations, and at Save for the four). The test is as sensitive as the brief asks; it is the base that has nothing to show it.
+
+**Kept (the preserve list, §4)** — the other 6 tests (1440 @200 reduced and 390 touch), 3× on the base and 3× on the branch: all pass.
+
+*(§4–§6 follow.)*
