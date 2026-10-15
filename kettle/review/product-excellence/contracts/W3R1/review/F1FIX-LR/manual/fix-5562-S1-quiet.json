@@ -1,0 +1,1604 @@
+[
+ {
+  "label": "fix-5562",
+  "base": "http://127.0.0.1:5562",
+  "phase": "quiet",
+  "scenario": "S1",
+  "iteration": 1,
+  "steps": {
+   "01-both-on-today": {
+    "t1": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    }
+   },
+   "02-brew-started-and-tab2-typed": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9degqb0b2c3c8f",
+      "startedAt": 1792058567987,
+      "endsAt": 1792060067987,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9degqb0b2c3c8f",
+      "startedAt": 1792058567987,
+      "endsAt": 1792060067987,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9degqb0b2c3c8f",
+      "startedAt": 1792058567987,
+      "endsAt": 1792060067987,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9degqb0b2c3c8f",
+      "startedAt": 1792058567987,
+      "endsAt": 1792060067987,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "03-after-back-and-forth": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9degqb0b2c3c8f",
+      "startedAt": 1792058567987,
+      "endsAt": 1792060067987,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9degqb0b2c3c8f",
+      "startedAt": 1792058567987,
+      "endsAt": 1792060067987,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9degqb0b2c3c8f",
+      "startedAt": 1792058567987,
+      "endsAt": 1792060067987,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9degqb0b2c3c8f",
+      "startedAt": 1792058567987,
+      "endsAt": 1792060067987,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "04-after-fast-forward": {
+    "t1": {
+     "hash": "#/done",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9degqb0b2c3c8f",
+       "reason": "complete"
+      }
+     },
+     "stored": {
+      "version": 1,
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9degqb0b2c3c8f",
+       "reason": "complete"
+      }
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 1,
+      "memory": 1
+     },
+     "sessionsInStorage": 1
+    },
+    "t2": {
+     "hash": "#/done",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9degqb0b2c3c8f",
+       "reason": "complete"
+      }
+     },
+     "stored": {
+      "version": 1,
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9degqb0b2c3c8f",
+       "reason": "complete"
+      }
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 1,
+      "memory": 1
+     },
+     "sessionsInStorage": 1
+    }
+   }
+  },
+  "t2Typing": {
+   "composerPresentOnArrival": true,
+   "error": null
+  },
+  "enterAt": 1792058568129,
+  "typing2Error": null,
+  "sessionIdFromTab1": "s_mv9degqb0b2c3c8f",
+  "backAndForth": [
+   {
+    "i": 1,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 2,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 3,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   }
+  ],
+  "survives": {
+   "both_running": true,
+   "same_sessionId": true,
+   "same_endsAt": true,
+   "stored_running_same_session": true
+  },
+  "records": {
+   "stored": 1,
+   "t1_memory": 1,
+   "t2_memory": 1,
+   "sessionsInStorage": 1
+  },
+  "exactlyOneRecord": true,
+  "pageErrors": []
+ },
+ {
+  "label": "fix-5562",
+  "base": "http://127.0.0.1:5562",
+  "phase": "quiet",
+  "scenario": "S1",
+  "iteration": 2,
+  "steps": {
+   "01-both-on-today": {
+    "t1": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    }
+   },
+   "02-brew-started-and-tab2-typed": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9dey23eb0f725d",
+      "startedAt": 1792058590443,
+      "endsAt": 1792060090567,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9dey23eb0f725d",
+      "startedAt": 1792058590443,
+      "endsAt": 1792060090567,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9dey23eb0f725d",
+      "startedAt": 1792058590443,
+      "endsAt": 1792060090567,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9dey23eb0f725d",
+      "startedAt": 1792058590443,
+      "endsAt": 1792060090567,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "03-after-back-and-forth": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9dey23eb0f725d",
+      "startedAt": 1792058590443,
+      "endsAt": 1792060090567,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9dey23eb0f725d",
+      "startedAt": 1792058590443,
+      "endsAt": 1792060090567,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9dey23eb0f725d",
+      "startedAt": 1792058590443,
+      "endsAt": 1792060090567,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9dey23eb0f725d",
+      "startedAt": 1792058590443,
+      "endsAt": 1792060090567,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "04-after-fast-forward": {
+    "t1": {
+     "hash": "#/done",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9dey23eb0f725d",
+       "reason": "complete"
+      }
+     },
+     "stored": {
+      "version": 1,
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9dey23eb0f725d",
+       "reason": "complete"
+      }
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 1,
+      "memory": 1
+     },
+     "sessionsInStorage": 1
+    },
+    "t2": {
+     "hash": "#/done",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9dey23eb0f725d",
+       "reason": "complete"
+      }
+     },
+     "stored": {
+      "version": 1,
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9dey23eb0f725d",
+       "reason": "complete"
+      }
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 1,
+      "memory": 1
+     },
+     "sessionsInStorage": 1
+    }
+   }
+  },
+  "t2Typing": {
+   "composerPresentOnArrival": true,
+   "error": null
+  },
+  "enterAt": 1792058590655,
+  "typing2Error": null,
+  "sessionIdFromTab1": "s_mv9dey23eb0f725d",
+  "backAndForth": [
+   {
+    "i": 1,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 2,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 3,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   }
+  ],
+  "survives": {
+   "both_running": true,
+   "same_sessionId": true,
+   "same_endsAt": true,
+   "stored_running_same_session": true
+  },
+  "records": {
+   "stored": 1,
+   "t1_memory": 1,
+   "t2_memory": 1,
+   "sessionsInStorage": 1
+  },
+  "exactlyOneRecord": true,
+  "pageErrors": []
+ },
+ {
+  "label": "fix-5562",
+  "base": "http://127.0.0.1:5562",
+  "phase": "quiet",
+  "scenario": "S1",
+  "iteration": 3,
+  "steps": {
+   "01-both-on-today": {
+    "t1": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    }
+   },
+   "02-brew-started-and-tab2-typed": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9df7hb7c643e19",
+      "startedAt": 1792058602655,
+      "endsAt": 1792060102655,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9df7hb7c643e19",
+      "startedAt": 1792058602655,
+      "endsAt": 1792060102655,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9df7hb7c643e19",
+      "startedAt": 1792058602655,
+      "endsAt": 1792060102655,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9df7hb7c643e19",
+      "startedAt": 1792058602655,
+      "endsAt": 1792060102655,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "03-after-back-and-forth": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9df7hb7c643e19",
+      "startedAt": 1792058602655,
+      "endsAt": 1792060102655,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9df7hb7c643e19",
+      "startedAt": 1792058602655,
+      "endsAt": 1792060102655,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9df7hb7c643e19",
+      "startedAt": 1792058602655,
+      "endsAt": 1792060102655,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9df7hb7c643e19",
+      "startedAt": 1792058602655,
+      "endsAt": 1792060102655,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "04-after-fast-forward": {
+    "t1": {
+     "hash": "#/done",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9df7hb7c643e19",
+       "reason": "complete"
+      }
+     },
+     "stored": {
+      "version": 1,
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9df7hb7c643e19",
+       "reason": "complete"
+      }
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 1,
+      "memory": 1
+     },
+     "sessionsInStorage": 1
+    },
+    "t2": {
+     "hash": "#/done",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9df7hb7c643e19",
+       "reason": "complete"
+      }
+     },
+     "stored": {
+      "version": 1,
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Reply to SamWrite the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9df7hb7c643e19",
+       "reason": "complete"
+      }
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 1,
+      "memory": 1
+     },
+     "sessionsInStorage": 1
+    }
+   }
+  },
+  "t2Typing": {
+   "composerPresentOnArrival": true,
+   "error": null
+  },
+  "enterAt": 1792058602858,
+  "typing2Error": null,
+  "sessionIdFromTab1": "s_mv9df7hb7c643e19",
+  "backAndForth": [
+   {
+    "i": 1,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 2,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 3,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   }
+  ],
+  "survives": {
+   "both_running": true,
+   "same_sessionId": true,
+   "same_endsAt": true,
+   "stored_running_same_session": true
+  },
+  "records": {
+   "stored": 1,
+   "t1_memory": 1,
+   "t2_memory": 1,
+   "sessionsInStorage": 1
+  },
+  "exactlyOneRecord": true,
+  "pageErrors": []
+ },
+ {
+  "label": "fix-5562",
+  "base": "http://127.0.0.1:5562",
+  "phase": "quiet",
+  "scenario": "S1",
+  "iteration": 4,
+  "steps": {
+   "01-both-on-today": {
+    "t1": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    }
+   },
+   "02-brew-started-and-tab2-typed": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9dfgoqe5ea817f",
+      "startedAt": 1792058614586,
+      "endsAt": 1792060114586,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9dfgoqe5ea817f",
+      "startedAt": 1792058614586,
+      "endsAt": 1792060114586,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9dfgoqe5ea817f",
+      "startedAt": 1792058614586,
+      "endsAt": 1792060114586,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9dfgoqe5ea817f",
+      "startedAt": 1792058614586,
+      "endsAt": 1792060114586,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "03-after-back-and-forth": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9dfgoqe5ea817f",
+      "startedAt": 1792058614586,
+      "endsAt": 1792060114586,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9dfgoqe5ea817f",
+      "startedAt": 1792058614586,
+      "endsAt": 1792060114586,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9dfgoqe5ea817f",
+      "startedAt": 1792058614586,
+      "endsAt": 1792060114586,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9dfgoqe5ea817f",
+      "startedAt": 1792058614586,
+      "endsAt": 1792060114586,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "04-after-fast-forward": {
+    "t1": {
+     "hash": "#/done",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9dfgoqe5ea817f",
+       "reason": "complete"
+      }
+     },
+     "stored": {
+      "version": 1,
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9dfgoqe5ea817f",
+       "reason": "complete"
+      }
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 1,
+      "memory": 1
+     },
+     "sessionsInStorage": 1
+    },
+    "t2": {
+     "hash": "#/done",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9dfgoqe5ea817f",
+       "reason": "complete"
+      }
+     },
+     "stored": {
+      "version": 1,
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9dfgoqe5ea817f",
+       "reason": "complete"
+      }
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 1,
+      "memory": 1
+     },
+     "sessionsInStorage": 1
+    }
+   }
+  },
+  "t2Typing": {
+   "composerPresentOnArrival": true,
+   "error": null
+  },
+  "enterAt": 1792058614730,
+  "typing2Error": null,
+  "sessionIdFromTab1": "s_mv9dfgoqe5ea817f",
+  "backAndForth": [
+   {
+    "i": 1,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 2,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 3,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   }
+  ],
+  "survives": {
+   "both_running": true,
+   "same_sessionId": true,
+   "same_endsAt": true,
+   "stored_running_same_session": true
+  },
+  "records": {
+   "stored": 1,
+   "t1_memory": 1,
+   "t2_memory": 1,
+   "sessionsInStorage": 1
+  },
+  "exactlyOneRecord": true,
+  "pageErrors": []
+ },
+ {
+  "label": "fix-5562",
+  "base": "http://127.0.0.1:5562",
+  "phase": "quiet",
+  "scenario": "S1",
+  "iteration": 5,
+  "steps": {
+   "01-both-on-today": {
+    "t1": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    }
+   },
+   "02-brew-started-and-tab2-typed": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9dfpjp625254fe",
+      "startedAt": 1792058626069,
+      "endsAt": 1792060126184,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9dfpjp625254fe",
+      "startedAt": 1792058626069,
+      "endsAt": 1792060126184,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9dfpjp625254fe",
+      "startedAt": 1792058626069,
+      "endsAt": 1792060126184,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9dfpjp625254fe",
+      "startedAt": 1792058626069,
+      "endsAt": 1792060126184,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "03-after-back-and-forth": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9dfpjp625254fe",
+      "startedAt": 1792058626069,
+      "endsAt": 1792060126184,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9dfpjp625254fe",
+      "startedAt": 1792058626069,
+      "endsAt": 1792060126184,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9dfpjp625254fe",
+      "startedAt": 1792058626069,
+      "endsAt": 1792060126184,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9dfpjp625254fe",
+      "startedAt": 1792058626069,
+      "endsAt": 1792060126184,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "04-after-fast-forward": {
+    "t1": {
+     "hash": "#/done",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9dfpjp625254fe",
+       "reason": "complete"
+      }
+     },
+     "stored": {
+      "version": 1,
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9dfpjp625254fe",
+       "reason": "complete"
+      }
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 1,
+      "memory": 1
+     },
+     "sessionsInStorage": 1
+    },
+    "t2": {
+     "hash": "#/done",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9dfpjp625254fe",
+       "reason": "complete"
+      }
+     },
+     "stored": {
+      "version": 1,
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9dfpjp625254fe",
+       "reason": "complete"
+      }
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 1,
+      "memory": 1
+     },
+     "sessionsInStorage": 1
+    }
+   }
+  },
+  "t2Typing": {
+   "composerPresentOnArrival": true,
+   "error": null
+  },
+  "enterAt": 1792058626204,
+  "typing2Error": null,
+  "sessionIdFromTab1": "s_mv9dfpjp625254fe",
+  "backAndForth": [
+   {
+    "i": 1,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 2,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 3,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   }
+  ],
+  "survives": {
+   "both_running": true,
+   "same_sessionId": true,
+   "same_endsAt": true,
+   "stored_running_same_session": true
+  },
+  "records": {
+   "stored": 1,
+   "t1_memory": 1,
+   "t2_memory": 1,
+   "sessionsInStorage": 1
+  },
+  "exactlyOneRecord": true,
+  "pageErrors": []
+ },
+ {
+  "label": "fix-5562",
+  "base": "http://127.0.0.1:5562",
+  "phase": "quiet",
+  "scenario": "S1",
+  "iteration": 6,
+  "steps": {
+   "01-both-on-today": {
+    "t1": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": null,
+     "composerPresent": true,
+     "records": null,
+     "sessionsInStorage": 0
+    }
+   },
+   "02-brew-started-and-tab2-typed": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9dfyrle5994adf",
+      "startedAt": 1792058638017,
+      "endsAt": 1792060138017,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9dfyrle5994adf",
+      "startedAt": 1792058638017,
+      "endsAt": 1792060138017,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9dfyrle5994adf",
+      "startedAt": 1792058638017,
+      "endsAt": 1792060138017,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9dfyrle5994adf",
+      "startedAt": 1792058638017,
+      "endsAt": 1792060138017,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "03-after-back-and-forth": {
+    "t1": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9dfyrle5994adf",
+      "startedAt": 1792058638017,
+      "endsAt": 1792060138017,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9dfyrle5994adf",
+      "startedAt": 1792058638017,
+      "endsAt": 1792060138017,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    },
+    "t2": {
+     "hash": "#/focus",
+     "memory": {
+      "status": "running",
+      "sessionId": "s_mv9dfyrle5994adf",
+      "startedAt": 1792058638017,
+      "endsAt": 1792060138017,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "stored": {
+      "version": 1,
+      "status": "running",
+      "sessionId": "s_mv9dfyrle5994adf",
+      "startedAt": 1792058638017,
+      "endsAt": 1792060138017,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": null
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 0,
+      "memory": 0
+     },
+     "sessionsInStorage": 0
+    }
+   },
+   "04-after-fast-forward": {
+    "t1": {
+     "hash": "#/done",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9dfyrle5994adf",
+       "reason": "complete"
+      }
+     },
+     "stored": {
+      "version": 1,
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9dfyrle5994adf",
+       "reason": "complete"
+      }
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 1,
+      "memory": 1
+     },
+     "sessionsInStorage": 1
+    },
+    "t2": {
+     "hash": "#/done",
+     "memory": {
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9dfyrle5994adf",
+       "reason": "complete"
+      }
+     },
+     "stored": {
+      "version": 1,
+      "status": "idle",
+      "sessionId": null,
+      "startedAt": null,
+      "endsAt": null,
+      "intention": "Write the report",
+      "tag": null,
+      "lastEnded": {
+       "sessionId": "s_mv9dfyrle5994adf",
+       "reason": "complete"
+      }
+     },
+     "composerPresent": false,
+     "records": {
+      "stored": 1,
+      "memory": 1
+     },
+     "sessionsInStorage": 1
+    }
+   }
+  },
+  "t2Typing": {
+   "composerPresentOnArrival": true,
+   "error": null
+  },
+  "enterAt": 1792058638243,
+  "typing2Error": null,
+  "sessionIdFromTab1": "s_mv9dfyrle5994adf",
+  "backAndForth": [
+   {
+    "i": 1,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 2,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   },
+   {
+    "i": 3,
+    "t1ComposerPresent": false,
+    "t2ComposerPresent": false
+   }
+  ],
+  "survives": {
+   "both_running": true,
+   "same_sessionId": true,
+   "same_endsAt": true,
+   "stored_running_same_session": true
+  },
+  "records": {
+   "stored": 1,
+   "t1_memory": 1,
+   "t2_memory": 1,
+   "sessionsInStorage": 1
+  },
+  "exactlyOneRecord": true,
+  "pageErrors": []
+ }
+]
