@@ -1,4 +1,5 @@
 // LR-manual.mjs <label> <baseURL> <iterations> <phase quiet|loaded> <outdir> <scenario LEN|S1|S2|S0>
+// env TYPE_TIMEOUT_MS (default 1500): how long a typing call may wait for the composer before it gives up (raised for the loaded re-run).
 // Two tabs of ONE browser context (= one profile, shared localStorage); real mouse and keyboard input (Playwright's
 // locator.click / pressSequentially / keyboard.press); the debug API is used only to read state and to fast-forward.
 //   LEN (a): tab A on Today, idle. Tab B clicks a Brew length radio on Today, then clicks "Put the kettle on".
@@ -111,7 +112,7 @@ for (let it = 1; it <= N; it++) {
   } else {
     // ---- (b)
     R.t2Typing = {};
-    const typeIn = (p, text) => p.getByRole('textbox', COMPOSER).pressSequentially(text, { delay: 20, timeout: 1500 }).then(() => null, (e) => String(e.message).split('\n')[0]);
+    const typeIn = (p, text) => p.getByRole('textbox', COMPOSER).pressSequentially(text, { delay: 20, timeout: +(process.env.TYPE_TIMEOUT_MS ?? 1500) }).then(() => null, (e) => String(e.message).split('\n')[0]);
     await p1.bringToFront();
     await p1.getByRole('textbox', COMPOSER).click();
     await p1.getByRole('textbox', COMPOSER).pressSequentially('Write the report', { delay: 25 });
