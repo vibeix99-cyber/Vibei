@@ -1,0 +1,71 @@
+
+Running 42 tests using 2 workers
+
+FACT 390x844-light-t100 a-no-input {"leftAt":5804,"room":68,"commits":[{"t":9904,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8493,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":4100,"collapseAfterLastBusyMs":4100,"visibleMove":68}
+  ✓   2 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (390x844-light-t100) (11.0s)
+FACT 390x844-light-t100 b-scroll-then-idle {"leftAt":5808,"room":68,"maxSy":481,"scrollMs":3411,"roomAfterScroll":68,"commits":[{"t":13312,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4093,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":7504,"collapseAfterLastBusyMs":4093,"visibleMove":68}
+  ✓   1 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (390x844-light-t100) (14.7s)
+FACT 390x844-light-t100 c-pointer-held {"leftAt":5278,"room":68,"roomWhileDown":68,"downWhileHeld":1,"commits":[{"t":12480,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4052,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":7202,"collapseAfterLastBusyMs":4052,"visibleMove":68}
+  ✓   3 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (390x844-light-t100) (13.4s)
+FACT 390x844-dark-t200-rm a-no-input {"leftAt":5252,"room":113,"commits":[{"t":9344,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8608,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":4092,"collapseAfterLastBusyMs":4092,"visibleMove":113}
+  ✓   4 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (390x844-dark-t200-rm) (10.1s)
+FACT 390x844-dark-t200-rm c-pointer-held {"leftAt":5345,"room":113,"roomWhileDown":113,"downWhileHeld":1,"commits":[{"t":12448,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4042,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":7103,"collapseAfterLastBusyMs":4042,"visibleMove":113}
+  ✓   6 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (390x844-dark-t200-rm) (13.3s)
+FACT 390x844-dark-t200-rm b-scroll-then-idle {"leftAt":5297,"room":113,"maxSy":492,"scrollMs":3276,"roomAfterScroll":113,"commits":[{"t":12688,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4115,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":7391,"collapseAfterLastBusyMs":4115,"visibleMove":113}
+  ✓   5 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (390x844-dark-t200-rm) (13.8s)
+FACT 1440x900-light-t100 a-no-input {"leftAt":5379,"room":68,"commits":[{"t":5392,"why":"rest","room":68,"shown":null,"down":0,"sinceInput":4452,"topBefore":168,"topAfter":168,"sy":0},{"t":9504,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8564,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":4125,"collapseAfterLastBusyMs":4125,"visibleMove":68}
+  ✓   7 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (1440x900-light-t100) (10.5s)
+FACT 1440x900-light-t100 b-scroll-then-idle {"leftAt":5555,"room":68,"maxSy":11,"scrollMs":2360,"roomAfterScroll":68,"commits":[{"t":11952,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4037,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":6397,"collapseAfterLastBusyMs":4037,"visibleMove":68}
+  ✓   8 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (1440x900-light-t100) (12.9s)
+FACT 1440x900-dark-t200-rm a-no-input {"leftAt":5338,"room":113,"commits":[{"t":5344,"why":"rest","room":113,"shown":null,"down":0,"sinceInput":4506,"topBefore":234.09375,"topAfter":234.09375,"sy":0},{"t":9440,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8602,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":4102,"collapseAfterLastBusyMs":4102,"visibleMove":113}
+  ✓  10 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (1440x900-dark-t200-rm) (10.4s)
+FACT 1440x900-light-t100 c-pointer-held {"leftAt":5208,"room":68,"roomWhileDown":68,"downWhileHeld":1,"commits":[{"t":5216,"why":"rest","room":68,"shown":null,"down":0,"sinceInput":4513,"topBefore":168,"topAfter":168,"sy":0},{"t":12528,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4089,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":7320,"collapseAfterLastBusyMs":4089,"visibleMove":68}
+  ✓   9 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (1440x900-light-t100) (13.6s)
+FACT 1440x900-dark-t200-rm b-scroll-then-idle {"leftAt":5443,"room":113,"maxSy":300,"scrollMs":2174,"roomAfterScroll":113,"commits":[{"t":5457,"why":"rest","room":113,"shown":null,"down":0,"sinceInput":4500,"topBefore":234.09375,"topAfter":234.09375,"sy":0},{"t":11664,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4047,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":6221,"collapseAfterLastBusyMs":4047,"visibleMove":113}
+  ✓  11 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (1440x900-dark-t200-rm) (12.6s)
+FACT 1440x900-dark-t200-rm c-pointer-held {"leftAt":5506,"room":113,"roomWhileDown":113,"downWhileHeld":1,"commits":[{"t":12800,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4063,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":7294,"collapseAfterLastBusyMs":4063,"visibleMove":113}
+  ✓  12 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (1440x900-dark-t200-rm) (13.9s)
+  ✓  13 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 light 200 % reduced motion) (15.4s)
+  ✓  14 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 light 100 %) (14.9s)
+  ✓  15 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 dark 100 %) (14.4s)
+  ✓  16 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 dark 100 %) (14.8s)
+  ✓  17 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (844×390 dark 100 %) (13.9s)
+  ✓  18 [chromium] › tests/w3-notices.spec.ts:158:1 › the room a gone notice keeps stays while the page is scrolled, and goes on the same screen once idle (390×844, 200 %) (14.3s)
+  ✓  20 [chromium] › tests/w3-notices.spec.ts:239:1 › a new screen starts with no room: Today after End, then Stats and back (375×667, 100 %) (10.8s)
+  ✓  19 [chromium] › tests/w3-notices.spec.ts:210:1 › the room is not given back while a pointer is held; it goes 4–6.5 s after release (1440×900, 100 %) (17.1s)
+  ✓  21 [chromium] › tests/w3-notices.spec.ts:265:1 › the status bar warm-days button is named "N days warm. Show details" (and ", today not brewed yet") (4.1s)
+FACT 390x844-light-t100 a-no-input {"leftAt":5472,"room":68,"commits":[{"t":9584,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8631,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":4112,"collapseAfterLastBusyMs":4112,"visibleMove":68}
+  ✓  22 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (390x844-light-t100) (10.5s)
+FACT 390x844-light-t100 b-scroll-then-idle {"leftAt":5517,"room":68,"maxSy":484,"scrollMs":3416,"roomAfterScroll":68,"commits":[{"t":13025,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4092,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":7508,"collapseAfterLastBusyMs":4092,"visibleMove":68}
+  ✓  23 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (390x844-light-t100) (14.2s)
+FACT 390x844-light-t100 c-pointer-held {"leftAt":5213,"room":68,"roomWhileDown":68,"downWhileHeld":1,"commits":[{"t":12400,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4072,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":7187,"collapseAfterLastBusyMs":4072,"visibleMove":68}
+  ✓  24 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (390x844-light-t100) (13.2s)
+FACT 390x844-dark-t200-rm a-no-input {"leftAt":5227,"room":113,"commits":[{"t":9330,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8599,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":4103,"collapseAfterLastBusyMs":4103,"visibleMove":113}
+  ✓  25 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (390x844-dark-t200-rm) (10.1s)
+FACT 390x844-dark-t200-rm b-scroll-then-idle {"leftAt":5315,"room":113,"maxSy":494,"scrollMs":3342,"roomAfterScroll":113,"commits":[{"t":12720,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4063,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":7405,"collapseAfterLastBusyMs":4063,"visibleMove":113}
+  ✓  26 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (390x844-dark-t200-rm) (13.6s)
+FACT 390x844-dark-t200-rm c-pointer-held {"leftAt":5267,"room":113,"roomWhileDown":113,"downWhileHeld":1,"commits":[{"t":5280,"why":"rest","room":113,"shown":null,"down":0,"sinceInput":4510,"topBefore":250.09375,"topAfter":250.09375,"sy":0},{"t":12385,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4063,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":7118,"collapseAfterLastBusyMs":4063,"visibleMove":113}
+  ✓  27 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (390x844-dark-t200-rm) (13.2s)
+FACT 1440x900-light-t100 a-no-input {"leftAt":5202,"room":68,"commits":[{"t":9296,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8581,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":4094,"collapseAfterLastBusyMs":4094,"visibleMove":68}
+  ✓  28 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (1440x900-light-t100) (10.3s)
+FACT 1440x900-light-t100 b-scroll-then-idle {"leftAt":5523,"room":68,"maxSy":11,"scrollMs":2353,"roomAfterScroll":68,"commits":[{"t":5536,"why":"rest","room":68,"shown":null,"down":0,"sinceInput":4528,"topBefore":168,"topAfter":168,"sy":0},{"t":11936,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4060,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":6413,"collapseAfterLastBusyMs":4060,"visibleMove":68}
+  ✓  29 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (1440x900-light-t100) (13.4s)
+FACT 1440x900-light-t100 c-pointer-held {"leftAt":5106,"room":68,"roomWhileDown":68,"downWhileHeld":1,"commits":[{"t":12416,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4073,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":7310,"collapseAfterLastBusyMs":4073,"visibleMove":68}
+  ✓  30 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (1440x900-light-t100) (13.5s)
+FACT 1440x900-dark-t200-rm a-no-input {"leftAt":5597,"room":113,"commits":[{"t":9696,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8609,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":4099,"collapseAfterLastBusyMs":4099,"visibleMove":113}
+  ✓  31 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (1440x900-dark-t200-rm) (10.8s)
+FACT 1440x900-dark-t200-rm b-scroll-then-idle {"leftAt":5210,"room":113,"maxSy":300,"scrollMs":2152,"roomAfterScroll":113,"commits":[{"t":5217,"why":"rest","room":113,"shown":null,"down":0,"sinceInput":4486,"topBefore":234.09375,"topAfter":234.09375,"sy":0},{"t":11424,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4062,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":6214,"collapseAfterLastBusyMs":4062,"visibleMove":113}
+  ✓  32 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (1440x900-dark-t200-rm) (12.3s)
+FACT 1440x900-dark-t200-rm c-pointer-held {"leftAt":5291,"room":113,"roomWhileDown":113,"downWhileHeld":1,"commits":[{"t":12672,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4109,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":7381,"collapseAfterLastBusyMs":4109,"visibleMove":113}
+  ✓  33 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (1440x900-dark-t200-rm) (13.8s)
+  ✓  34 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 light 200 % reduced motion) (16.1s)
+  ✓  35 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 light 100 %) (14.8s)
+  ✓  36 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 dark 100 %) (14.6s)
+  ✓  37 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 dark 100 %) (14.4s)
+  ✓  38 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (844×390 dark 100 %) (14.4s)
+  ✓  39 [chromium] › tests/w3-notices.spec.ts:158:1 › the room a gone notice keeps stays while the page is scrolled, and goes on the same screen once idle (390×844, 200 %) (15.4s)
+  ✓  41 [chromium] › tests/w3-notices.spec.ts:239:1 › a new screen starts with no room: Today after End, then Stats and back (375×667, 100 %) (10.3s)
+  ✓  42 [chromium] › tests/w3-notices.spec.ts:265:1 › the status bar warm-days button is named "N days warm. Show details" (and ", today not brewed yet") (4.0s)
+  ✓  40 [chromium] › tests/w3-notices.spec.ts:210:1 › the room is not given back while a pointer is held; it goes 4–6.5 s after release (1440×900, 100 %) (17.1s)
+
+  42 passed (4.6m)
