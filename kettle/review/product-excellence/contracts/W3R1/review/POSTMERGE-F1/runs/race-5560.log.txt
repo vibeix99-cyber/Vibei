@@ -1,0 +1,6 @@
+### start 11:54:27 UTC; load:  11:54:27 up  3:08,  0 user,  load average: 11.50, 11.28, 10.93
+### cmd: env KETTLE_PORT=5560 KETTLE_PWA_PORT=5499 PLAYWRIGHT_JSON_OUTPUT_NAME=/home/user/wt/w6-int/kettle/.tmp/LR-pw/race-5560.json npx playwright test tests/w3-intention-race.spec.ts --project=chromium --workers=1 --reporter=list,json --output=/home/user/wt/w6-int/kettle/.tmp/LR-pw/race-5560
+
+Running 2 tests using 1 worker
+
+  ✓  1 [chromium] › tests/w3-intention-race.spec.ts:64:1 › a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs, one record (13.6s)
