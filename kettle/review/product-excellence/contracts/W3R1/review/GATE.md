@@ -163,3 +163,12 @@ The merged kettle/src `db28295` and kettle/tests `f071f53` equal trial `7145f49`
 - **Attempts 2–3:** timed out, undiagnosed.
 - Note `F-X11-READY.md` in the worktree; archive `archive/pe-w3r1-x11-strip-test-f0c84a5.incremental.bundle`.
 - **The final tree is `2be3de1`.** `notice-strip:292` at 1440 light @200 reduced is recorded as known flaky (X-11) in the final regression. LEAD-5 is asked for an outcome ruling.
+
+## Maker Q Phase A (Vibei item 2: band idle 1.2 → 4 s). GATE PASSED, 2026-10-15 ~00:45 UTC
+
+| Item | Result |
+|---|---|
+| Revision | `pe/w3r1-stability@04b1ad9` (code `61aec4b`), src `db6de7e`. Packet: `/home/user/wt/w5q/kettle/review/product-excellence/contracts/W3R1/Q-READY.md` (Phase A) |
+| Scope | `src/ui/moment.ts`: new `BAND_IDLE_MS = 4000`, plus `atRest(now, quiet = QUIET_MS)` so existing callers are unchanged. `src/ui/Toast.tsx`: the band's give-back uses `BAND_IDLE_MS`, and the `QUIET_MS` import is removed. Tests: `w3-notices.spec.ts` and `w3-notices-idle.spec.ts` assert ≥ 4000 / ≤ 6500 ms. Nothing gives the room back "in answer to the next tap" |
+| **Trial** | **`cf4a89c`** = integration (final `2be3de1`) + `04b1ad9`, worktree `/home/user/wt/w5tr-qa`, src `db6de7e`. tsc 0, vitest 302/302, build OK. Dev **:5546** (verified), preview **:5556** |
+| The maker's suites | `w3-notices` + `w3-notices-idle` ×2: 42/42 (collapse at 4037–4125 ms); `notice-strip` 25/25; `toast-room` + `summary-notice` + `w2-home` 46/46 |
