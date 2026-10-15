@@ -233,3 +233,34 @@ The room step itself performs the saves synchronously (`timer.setState`, `progre
 | `w2-room` "3D failure (WebGL context lost)", `--repeat-each=3`, `--workers=2` + burners | **3/3**, at **54.1 s, 57.2 s** and 39.1 s. Two of three would have been within 6 s of the old 60 s budget, which supports Q's reading | `QB/w2room-webgl-x3-load.log` |
 
 My first X-1 invocation matched no test: Playwright's `-g` matches the title path joined by spaces, not by `›`. It was rerun with the right filter; the log above is the rerun.
+| `notice-strip.spec.ts`, all 25, `--workers=2` (after the burners stopped) | **25/25** (11.8 min) | `QB/notice-strip-all.log` |
+| `w3-notices-load.spec.ts`, all 25, `W3_LOAD=1`, `--workers=2` | **25/25** (12.1 min; none skipped). Lane R had 23/25 on `2be3de1` | `QB/w3-notices-load-all.log` |
+
+The maker's runs (`Q/B/proof/`, `Q/B/final/`) agree:
+- `:292` 6/6 under 2 workers + 4 burners;
+- `notice-strip` 25/25;
+- X-1 10/10, with the banner going 365–1890 ms after the saves;
+- `w2-room` 3/3;
+- `integrity` 25/25;
+- `w3-notices-load` 25/25.
+
+### Verdict: **APPROVE** `pe/w3r1-stability@01575cb`, Phase B (tests only)
+- **Nothing is weakened** (ruled above).
+  - The I03 change is **stricter**: the banner must go ≤ 3 s after the saves in page time, where it used to be ≤ 6 s of wall time.
+  - The `w2-room` budget leaves its 45 s scene bound and every assertion as they were.
+  - The logger is diagnostic and opt-in.
+  - `press()`'s pointer move before the tap removes `notice-strip`'s incidental replay of F-T2-1's race; F-T2-1 stays guarded by `w3-notices`' dedicated test and the aimed-tap probe.
+- **Every case Vibei listed passes under load on :5547:**
+  - X-11 / `:292`: 6/6;
+  - X-1: 10/10;
+  - `w2-room:167`: 3/3;
+  - the 4-minute timeouts: explained (a 5 s inline Undo gone under load plus an unbounded `locator.evaluate`) and bounded at 15 s;
+  - `notice-strip` 25/25 and `w3-notices-load` 25/25 unloaded.
+- **X-11 and X-1 close.** For the Final Product Boss, `:292` and I03 count normally; they are no longer "known flaky".
+
+**Open, for Vibei (not test stability):**
+- **F1** (`integrity:309`, I01): a real, pre-existing product race. It is not flaky, so per Vibei's §0 it is to be fixed before the Final Product Boss (assessment above). Until fixed, I01 is expected to fail about 1 in 6–20 under load.
+- **The N-2 product side:** S's `History.tsx` focus scroll.
+- **What the per-frame logger did to a notice's clock:** not explained. It is test-only.
+
+*Run logs:* each `.log` / `.out` in `QB/` is committed as a `.txt` copy beside it.
