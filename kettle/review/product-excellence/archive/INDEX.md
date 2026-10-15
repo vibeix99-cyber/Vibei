@@ -55,3 +55,4 @@ Restore a chain in order with `git fetch <bundle> 'refs/heads/*:refs/heads/*'` (
 | `w3r1-trial-1358e00.incremental.bundle` | trial 1358e00 = integration 8af9fcb (N+G+S+X-2) + 11a7ac6 (merge only) | 8af9fcb, 11a7ac6 | okay 2026-10-14 |
 | `pe-w3r1-x11-strip-test-f0c84a5.incremental.bundle` | pe/w3r1-x11-strip-test@f0c84a5 (X-11 attempts a4be67b/99f3741/dd519c5, withdrawn; tests = 2be3de1) | 2be3de1 | okay 2026-10-14 |
 | `pe-w3r1-stability-01575cb.incremental.bundle` | pe/w3r1-stability@01575cb (Maker Q: Phase A 61aec4b band idle 4 s; Phase B tests e00b5fa/316d9ab/dcf5595; F1 root-cause note) | a2b00cd | okay 2026-10-15 |
+| `pe-w3r1-f1-intention-74138d3.incremental.bundle` | pe/w3r1-f1-intention@74138d3 (F1 fix: setIntention writes only the intention; code 9a41a1a+882233b) | 793321b | okay 2026-10-15 |

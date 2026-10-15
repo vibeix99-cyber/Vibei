@@ -197,3 +197,13 @@ The merged src and tests equal trial `cf4a89c`'s. LEAD-5 on :5546:
 - **LEAD-5 under load (≈10.5):** `:292` 6/6; X-1 10/10; `w2-room:167` 3/3; `notice-strip` 25/25; `w3-notices-load` (`W3_LOAD=1`) 25/25. Nothing weakened (I03 is stricter). X-11 and X-1 are closed.
 - **F1 (`integrity:309`):** LEAD-5 confirms a pre-existing product race, severity medium. A real finding (Vibei §0) to fix before the Final Product Boss, **waiting on Vibei's decision** (`review/F1-ROOT-CAUSE.md`).
 - **Integration HEAD app code is now `f2298d3`** (src `db6de7e`).
+
+## F1 fix (`integrity:309`, Vibei post-follow-up item 1). GATE PASSED, 2026-10-15 ~11:00 UTC
+
+| Item | Result |
+|---|---|
+| Revision | `pe/w3r1-f1-intention@74138d3`; app code `9a41a1a` + `882233b`; src `e2041c1`. Packet `contracts/W3R1/F1FIX/F1FIX-READY.md` (committed through `d9c0dd7`) |
+| Scope (checked) | `src/timer/store.ts`; new `src/timer/intentionRace.test.ts`; new `tests/w3-intention-race.spec.ts`. `Composer.tsx` untouched; `integrity.spec.ts` unchanged |
+| **Trial** | **`986bda4`** = integration (app `f2298d3`) + `74138d3`, worktree `/home/user/wt/w6tr-x`, src `e2041c1`. tsc 0, vitest **309/309**, build OK. Dev **:5562** (verified, `store.ts` served), preview **:5572** |
+| The maker's claims | Storage format unchanged: `4d36939`/`f2298d3` → fix and fix → `4d36939` round-trips 6/6, byte-identical. The vitest race test fails 4/7 on `4d36939` and `f2298d3`, passes 7/7 on the fix. The Playwright race test fails 3/3 on :5560 and :5478, passes 5/5 on the fix. `integrity:309` **20/20 ×2** under load (6 burners). Audit: `syncIdleLength` is the nearest relative (automatic, not reproduced), plus `rebase`; the rest fire on user action; `tick` re-reads. **Open:** a real edit in a tab whose storage copy is also behind can still overwrite; the robust guard belongs in `sync.ts`, out of scope |
+| Archive | `archive/pe-w3r1-f1-intention-74138d3.incremental.bundle` |
