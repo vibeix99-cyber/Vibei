@@ -37,3 +37,34 @@ Any other save, including a nested one by a listener that changes other fields, 
 **What (b) does to a stale tab's typed words.** They are dropped when another session is stored (case 3). That is right: they were typed for a timer that has moved on, and the arriving event navigates that tab to the running brew.
 
 **It meets Vibei's §1:** "Saving the intention writes only the intention … read fresh, or update just the intention field."
+
+## 2. The deterministic tests fail on base and pass on the fix (my runs)
+
+**Vitest `src/timer/intentionRace.test.ts`** (7 tests; the two-module-graph tab harness, no load, no timing). I ran it on the fix trial's tree, and on scratch `git archive`s of `f2298d3` and `4d36939` with the same test file copied in (`LEAD/F1FIX/vitest-race-*.log`):
+
+| Tree | Result | Failing |
+|---|---|---|
+| fix (`986bda4`) | **7/7** | — |
+| `f2298d3` | **4 failed / 3 passed** | the four race cases: a new brew survives the save; an ended brew is not brought back; a pause is kept; a no-op save from a doubly stale tab writes nothing |
+| `4d36939` | **4 failed / 3 passed** | the same four |
+
+The three that pass everywhere are compatibility guards: same format, a fresh profile saves as before, and the storage-full repair. They should pass on base too.
+
+**Playwright `tests/w3-intention-race.spec.ts`** (real browser, two tabs of one profile; tab A's `storage` events held by an init script; the precondition "A still idle" asserted before A types), through the gate:
+
+| Server | Result | Log |
+|---|---|---|
+| :5560 integration `f2298d3` | **3/3 FAIL** at "storage still holds B’s running brew" | `LEAD/F1FIX/race-5560-x3.log` |
+| :5478 base `4d36939` | **3/3 FAIL**, same assertion | `LEAD/F1FIX/race-5478-x3.log` |
+| :5562 fix | **5/5 pass** (1.4 min) | `LEAD/F1FIX/race-5562-x5.log` |
+
+**The new tests are right.** Both reproduce the race without load or luck; both fail on base and pass on the fix. Vibei's test requirement is met.
+
+## 3. Storage compatibility (my runs)
+I ran the maker's `compat.spec.ts` (read: real composer typing on FROM, every `kettle:*` key copied into a fresh profile on TO before boot; it asserts the envelope keys, version 1, the 14 fields in order, and TO's in-memory timer equal to FROM's stored state):
+- **base `4d36939` → fix: 2/2** (idle profile with `lastEnded`; paused profile);
+- **fix → base: 2/2.**
+
+I compared each pair's printed `kettle:timer` myself: saved by FROM against the same key after TO booted and its composer synced. **All four are byte-identical** (370 / 303 bytes). The fix's idle profile's last save was an intention-only save (case 4).
+
+Code agrees: same key, same `{ state, version: 1 }` envelope, `partialize` unchanged in content and order, no migration. **PASS.**
