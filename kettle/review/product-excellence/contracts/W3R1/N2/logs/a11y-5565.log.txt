@@ -1,0 +1,20 @@
+[slots] N2 took 2/3 at 12:41:03: npx playwright test tests/a11y.spec.ts --project=chromium --workers=2 --reporter=list --output=/tmp/n2/pw/Da11y
+
+Running 11 tests using 1 worker
+
+  ✓   1 [chromium] › tests/a11y.spec.ts:61:3 › axe: no serious/critical violations in any state (light) (1.2m)
+  ✓   2 [chromium] › tests/a11y.spec.ts:61:3 › axe: no serious/critical violations in any state (dark) (1.1m)
+  ✓   3 [chromium] › tests/a11y.spec.ts:73:1 › pointer targets are at least 24×24 px or meet a WCAG 2.5.8 exception (45.4s)
+  ✓   4 [chromium] › tests/a11y.spec.ts:110:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll (45.4s)
+  ✓   5 [chromium] › tests/a11y.spec.ts:177:1 › keyboard-only critical journey with focus restoration (2.1m)
+  ✓   6 [chromium] › tests/a11y.spec.ts:292:1 › welcome: first brew from the keyboard alone (3.5s)
+  ✓   7 [chromium] › tests/a11y.spec.ts:303:1 › live regions stay quiet while a brew runs (no spoken countdown) (17.8s)
+  ✓   8 [chromium] › tests/a11y.spec.ts:332:3 › a toast never covers the session controls or the summary footer (390×844) (15.1s)
+  ✓   9 [chromium] › tests/a11y.spec.ts:332:3 › a toast never covers the session controls or the summary footer (375×667) (14.7s)
+  ✓  10 [chromium] › tests/a11y.spec.ts:371:3 › toasts never cover the break-over controls, carried task included (390×844) (20.9s)
+  ✓  11 [chromium] › tests/a11y.spec.ts:371:3 › toasts never cover the break-over controls, carried task included (375×667) (19.9s)
+
+  Slow test file: [chromium] › tests/a11y.spec.ts (7.4m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  11 passed (7.4m)
+[slots] N2 freed 2 at 12:48:31

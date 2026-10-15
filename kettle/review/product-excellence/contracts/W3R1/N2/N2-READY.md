@@ -1,7 +1,7 @@
 # N2 — the History focus scroll (N-2): packet
 
 **Branch** `pe/w3r1-n2-history` (worktree `/home/user/wt/w7n`), base `5f78af1` (src `b74e6b3`). Dev :5565; controls :5560 / :5570 (the base) and :5478 / :5488 (old base `4d36939`).
-**Status: all six stages written; §5 integrity / a11y still running at the time of this edit (see the table).** The brief's rule applies — *"if the root cause lies outside `History.tsx`, stop, write it up with evidence, and hand back"* — and it applies in the strongest form: **there is no product scroll to fix.** Nothing in `src/` has been changed.
+**Status: COMPLETE — all six stages written. Verdict of this packet: there is no product defect to fix; `src/` is unchanged; one guard spec added (§2, §3).** The brief's rule applies — *"if the root cause lies outside `History.tsx`, stop, write it up with evidence, and hand back"* — and it applies in the strongest form: **there is no product scroll to fix.** Nothing in `src/` has been changed.
 
 ## §1 Root cause, with the trace
 
@@ -142,7 +142,8 @@ The branch's `src/` **is** the base's (`b74e6b3`), so a regression here can only
 | Vitest, the full suite | **314 of 314** (33 files) | `vitest.log.txt` |
 | `tsc --noEmit` (the project) | exit 0 | `tsc.log.txt` |
 | the new spec, strict `tsc` on its own | exit 0 (not covered by the project's `include: ["src"]`) | — |
-| `integrity.spec.ts`, `a11y.spec.ts` (the other two files that mention Stats / History) | see "Late results" below | `integrity-5565.log.txt`, `a11y-5565.log.txt` |
+| `integrity.spec.ts` (mentions Stats / History) | **25 of 25** (5.7 min) | `integrity-5565.log.txt` |
+| `a11y.spec.ts` (mentions Stats / History) | **11 of 11** (7.4 min) | `a11y-5565.log.txt` |
 
 The `:338` 6 of 6 under load is the number that bears on N-2: the symptom the finding described is the one the test had on the old spec's reads (F's Run B), and with the base's current spec (X-11's test-only fix `e00b5fa`) it does not recur under the same stress. It does not need a product counterpart.
 
