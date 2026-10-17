@@ -1,0 +1,101 @@
+{
+ "label": "smoke",
+ "base": "http://127.0.0.1:5591",
+ "N": 1,
+ "cases": {
+  "a": {
+   "iterations": 1,
+   "pass": 1,
+   "fail": 0,
+   "perCheck": {
+    "precondition_B_behind": 1,
+    "paused_in_A": 1,
+    "paused_in_B": 1,
+    "paused_in_storage": 1,
+    "same_session_A_B_storage": 1,
+    "kept_plus5_A_B_storage": 1,
+    "A_B_storage_agree": 1,
+    "remaining_gt_planned_minus_2min": 1
+   },
+   "exceptions": 0,
+   "pageErrors": 0,
+   "plus5Notes": []
+  },
+  "b": {
+   "iterations": 1,
+   "pass": 1,
+   "fail": 0,
+   "perCheck": {
+    "precondition_B_behind": 1,
+    "same_session_A_B_storage": 1,
+    "A_B_storage_agree": 1,
+    "still_paused_A_B_storage": 1,
+    "plus5_applied_A_B_storage": 1
+   },
+   "exceptions": 0,
+   "pageErrors": 0,
+   "plus5Notes": []
+  },
+  "c": {
+   "iterations": 1,
+   "pass": 1,
+   "fail": 0,
+   "perCheck": {
+    "precondition_B_behind": 1,
+    "brew2_running_A_B_storage": 1,
+    "A_B_storage_agree": 1,
+    "brew2_not_extended_or_ended": 1,
+    "B_shows_focus": 1,
+    "records_brew1_exactly_one_stored": 1,
+    "records_brew1_exactly_one_A_memory": 1,
+    "records_brew1_exactly_one_B_memory": 1,
+    "no_record_for_brew2": 1
+   },
+   "exceptions": 0,
+   "pageErrors": 0,
+   "plus5Notes": []
+  },
+  "d": {
+   "iterations": 1,
+   "pass": 1,
+   "fail": 0,
+   "perCheck": {
+    "paused_in_A_and_B_after_B_pause": 1,
+    "plus5_in_A_B_storage": 1,
+    "still_paused_after_plus5": 1,
+    "brew1_ended_idle_in_A_B_storage": 1,
+    "brew1_one_record_everywhere": 1,
+    "brew2_one_record_everywhere": 1,
+    "final_idle_A_B_storage_agree": 1,
+    "exactly_two_records_total": 1
+   },
+   "exceptions": 0,
+   "pageErrors": 0,
+   "plus5Notes": []
+  },
+  "e": {
+   "iterations": 1,
+   "pass": 1,
+   "fail": 0,
+   "perCheck": {
+    "precondition_B_behind": 1,
+    "brew2_running_A_B_storage": 1,
+    "A_B_storage_agree": 1,
+    "brew2_not_extended_or_ended": 1,
+    "B_shows_focus": 1,
+    "storage_byte_identical_after_B_click": 1
+   },
+   "exceptions": 0,
+   "pageErrors": 0,
+   "plus5Notes": [
+    [
+     ""
+    ]
+   ]
+  }
+ },
+ "startedAt": "18:05:07",
+ "loadAtStart": "13.49 13.35 13.40",
+ "endedAt": "18:06:41",
+ "loadAtEnd": "14.18 13.50 13.45"
+}
