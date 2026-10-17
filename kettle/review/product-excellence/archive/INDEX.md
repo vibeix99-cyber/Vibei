@@ -59,3 +59,4 @@ Restore a chain in order with `git fetch <bundle> 'refs/heads/*:refs/heads/*'` (
 | `pe-w3r1-f1-intention-fix-10ecf2c.incremental.bundle` | pe/w3r1-f1-intention@10ecf2c (F1 fix round F1X-D1: syncIdleLength writes only the length; src b74e6b3) | 74138d3 | okay 2026-10-15 |
 | `pe-w3r1-n2-history-2280e7d.incremental.bundle` | pe/w3r1-n2-history@2280e7d (N-2: no product change; new guard spec tests/w3-history-focus-scroll.spec.ts) | 5f78af1 | okay 2026-10-15 |
 | `pe-w3r2-toast-hook-203b057.incremental.bundle` | pe/w3r2-toast-hook@203b057 (W3R2 item 2: NoticeStrip hooks unconditional; src 07df367) | 494748b | okay 2026-10-17 |
+| `pe-w3r2-sync-guard-54a9721.incremental.bundle` | pe/w3r2-sync-guard@54a9721 (W3R2 item 1: stale-tab guard; src dd6944e) | 494748b | okay 2026-10-17 |
