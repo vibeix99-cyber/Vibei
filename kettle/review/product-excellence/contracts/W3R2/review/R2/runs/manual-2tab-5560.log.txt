@@ -1,3 +1,15 @@
 ### start 18:30:49 UTC; load:  18:30:49 up  2:40,  0 user,  load average: 18.25, 15.35, 13.25
 ### cmd: node .tmp/R2-2tab.mjs control-5560 http://127.0.0.1:5560 5 /home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/review/R2/manual a,b,c,d,e
 ### control-5560 http://127.0.0.1:5560 N=5 cases=a,b,c,d,e start 18:30:50 load 18.25 15.35 13.25
+[18:31:14] control-5560 (a) it1 FAIL load 18.25 15.35 13.25->19.53 15.91 13.49 failed: kept_plus5_A_B_storage
+    A=paused/s_mvcqfm/25m/ends=null
+    B=paused/s_mvcqfm/25m/ends=null
+    S=paused/s_mvcqfm/25m/ends=null  S(read in B)=paused/s_mvcqfm/25m/ends=null  pageErrors=0
+[18:31:26] control-5560 (a) it2 FAIL load 19.53 15.91 13.49->17.72 15.68 13.45 failed: kept_plus5_A_B_storage
+    A=paused/s_mvcqg6/25m/ends=null
+    B=paused/s_mvcqg6/25m/ends=null
+    S=paused/s_mvcqg6/25m/ends=null  S(read in B)=paused/s_mvcqg6/25m/ends=null  pageErrors=0
+[18:31:35] control-5560 (a) it3 FAIL load 17.72 15.68 13.45->15.91 15.36 13.37 failed: kept_plus5_A_B_storage
+    A=paused/s_mvcqge/25m/ends=null
+    B=paused/s_mvcqge/25m/ends=null
+    S=paused/s_mvcqge/25m/ends=null  S(read in B)=paused/s_mvcqge/25m/ends=null  pageErrors=0
