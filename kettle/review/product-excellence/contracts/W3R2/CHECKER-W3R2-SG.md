@@ -271,3 +271,32 @@ Its §6b recorded SG-D3 on :5591 (the note shown, 5/5), which the fix round remo
 The one fix round is spent. Any change to the branch after this invalidates the approval.
 
 *Run logs:* mine are in `review/LEAD/SG/r2/` as `.log.txt`. Scratch trees (`git archive` of `7cb3242`, `88d6b64` and `2c9ec66`) are in my scratchpad; my compat copy is in the git-ignored `/home/user/wt/w8tr-g2/kettle/.tmp/lead5-sg/`.
+
+### Addendum: Lane R2's rerun on trial 2, and the `pwa.spec.ts:85` failure (ruling)
+**R2's rerun on :5601 is green except `pwa.spec.ts:85`:**
+- tsc 0; Vitest 342/342;
+- integrity 25/25, and `:309` ×10 10/10;
+- race and stale-tab 7/7; `w2-home` 18/18;
+- notice suites 74/74;
+- 2-tab real clicks (a)–(g) 5/5 each. In (e) no "+5 min" note shows (strict observer), and in (f) no pause sound plays on a dropped action.
+
+**`pwa:85`: ENVIRONMENT ARTIFACT, not a defect.**
+- **The mechanism is in the spec itself.**
+  - `pwa.spec.ts` builds its own worktree into `test-results/pwa-dist` and spawns `vite preview --strictPort` on `KETTLE_PWA_PORT`.
+  - Its readiness check is only "`fetch(BASE)` is ok". So when another worktree's leftover preview holds the port, the new preview exits and the tests run against the stale build.
+  - The update test edits *its own* `sw.js`, so `needRefresh` never comes. That is the timeout at :91 that R2 saw on :5601 and on its ":5560" run alike; the PWA test ignores `KETTLE_PORT`.
+- **My verified rerun** (`r2/pwa-trial2-clean-port-5495.log.txt`, through the gate):
+  - trial 2 `2c9ec66` (src `5f504d4`, 0 dirty files);
+  - port 5495 checked free before the run;
+  - the serving process recorded during the run was trial 2's own preview of its own `test-results/pwa-dist` (`…listener.txt`);
+  - **3/3 passed**, with the update test in 4.0 s;
+  - my leftover preview (PID 27011, `w8tr-g2`) was killed by PID, and the port was free afterwards.
+- **FOLLOW-UP (timer/PWA owner):**
+  - `pwa.spec.ts` should refuse a port that is already answering before it spawns, or check that the server it reaches is its own;
+  - its `afterAll` kills only the `npx` wrapper, which leaves the node preview behind.
+
+**Strays and earlier PWA results:**
+- The maker's "pwa 3/3" (preview :5597) and R2's first-pass PWA result (trial 1) cannot be shown to have run against their own builds. **They are superseded for the merge by the verified run above.**
+- None of my own TH or SG checks used the PWA project, so they are unaffected.
+
+**The SG APPROVE stands; SG can merge.**
