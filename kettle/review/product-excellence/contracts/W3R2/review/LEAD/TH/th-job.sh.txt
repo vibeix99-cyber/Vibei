@@ -1,0 +1,22 @@
+#!/bin/bash
+# LEAD-5 W3R2 TH: hook-order console count, trial :5592 vs base :5560, with Chromium's own console log (my method,
+# independent of the maker's listener), and notice-strip 25/25 on the trial. Tests from the trial tree (= integration).
+set -u
+O=$1; cd /home/user/wt/w8tr-t/kettle || exit 9
+run() {
+  local port=$1 tag=$2; shift 2
+  {
+    echo "### $tag: DEBUG=pw:browser KETTLE_PORT=$port npx playwright test -c .tmp/lead5-th/pw.config.ts $* --project=chromium --workers=2 --reporter=list"
+    echo "### start $(date -u +%T) load $(cut -d' ' -f1-3 /proc/loadavg)"
+    env DEBUG=pw:browser KETTLE_PORT=$port npx playwright test -c .tmp/lead5-th/pw.config.ts "$@" --project=chromium --workers=2 --reporter=list --output="$O/pw-$tag"
+    local rc=$?
+    echo "### end $(date -u +%T) exit=$rc load $(cut -d' ' -f1-3 /proc/loadavg)"
+  } > "$O/$tag.log" 2>&1
+}
+run 5592 trial-notice-strip tests/notice-strip.spec.ts
+run 5592 trial-summary-notice tests/summary-notice.spec.ts
+run 5592 trial-w3-notices tests/w3-notices.spec.ts
+run 5560 base-summary-notice tests/summary-notice.spec.ts
+run 5560 base-w3-notices tests/w3-notices.spec.ts
+run 5560 base-notice-strip-4cfg tests/notice-strip.spec.ts -g '\((390×844 light 100 %|1440×900 dark 200 %|844×390 dark 200 %|375×667 light 200 % reduced motion)\)$'
+echo "done $(date -u +%T)" > "$O/done.txt"
