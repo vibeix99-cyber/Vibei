@@ -1,0 +1,15 @@
+#!/bin/bash
+# Runs inside ONE gate slot (lane SG, --n 1): compat x4, integrity whole, w2-home, timer-app + timer-harness, pwa.
+# Each step logs to its own file in the packet's logs/ folder.
+L=/home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/SG/logs
+cd /home/user/wt/w8g/kettle || exit 9
+hdr() { echo "### $1 | branch $(git -C /home/user/wt/w8g rev-parse --short HEAD) (src $(git -C /home/user/wt/w8g rev-parse --short HEAD:kettle/src)) | start $(date -u +%FT%TZ) load $(cut -d' ' -f1-3 /proc/loadavg) | inside one SG gate slot (bundle.sh)"; }
+ftr() { echo "### exit $1 | end $(date -u +%FT%TZ) load $(cut -d' ' -f1-3 /proc/loadavg)"; }
+step() { local log=$1 title=$2; shift 2; { hdr "$title"; "$@"; ftr $?; } > $L/$log 2>&1; echo "$(date -u +%T) done $log: $(grep -E '^\s+[0-9]+ (passed|failed|flaky|skipped)' $L/$log | tr '\n' ' ')"; }
+for d in "5560 5581" "5581 5560" "5478 5581" "5581 5478"; do set -- $d
+  step compat-$1-to-$2.log.txt "compat: profiles saved on :$1 load unchanged on :$2" env SG_FROM=http://127.0.0.1:$1 SG_TO=http://127.0.0.1:$2 npx playwright test --config .tmp/sg/compat/pw.config.ts compat.spec.ts --output=.tmp/sg/pw-compat --reporter=list
+done
+step integrity-all-fix.log.txt "integrity.spec.ts whole, on the fix :5581" env KETTLE_PORT=5581 npx playwright test tests/integrity.spec.ts --project=chromium --output=.tmp/sg/pw-integrity --reporter=list
+step w2-home-fix.log.txt "w2-home.spec.ts on the fix :5581" env KETTLE_PORT=5581 npx playwright test tests/w2-home.spec.ts --project=chromium --output=.tmp/sg/pw-home --reporter=list
+step timer-app-harness-fix.log.txt "timer.spec.ts timer-app + timer-harness on the fix :5581" env KETTLE_PORT=5581 npx playwright test --project=timer-app --project=timer-harness --output=.tmp/sg/pw-timer --reporter=list
+step pwa-fix.log.txt "pwa project (build of the worktree + preview on :5597)" env KETTLE_PORT=5581 KETTLE_PWA_PORT=5597 npx playwright test --project=pwa --output=.tmp/sg/pw-pwa --reporter=list

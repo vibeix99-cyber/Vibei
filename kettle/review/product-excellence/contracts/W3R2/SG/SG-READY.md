@@ -172,6 +172,20 @@ Served code: `logs/served-blobs.log.txt`. Blob hashes of `store.ts`, `sync.ts` a
 
 Reporter quirk, as F1FIX noted: the HEAD run lists the four tests at `:154`, `:197`, `:221`, `:251`, while the fix runs list `:121`, `:145`, `:158`, `:174`. It is the same file and the same four tests; their titles are printed in full in every log.
 
+### 3d. The existing browser race spec (unchanged file)
+| Run | Result | Log |
+|---|---|---|
+| `tests/w3-intention-race.spec.ts` (F1 case + F1X-D1 case) on the fix :5581 ×3 | **6/6** | `logs/intention-race-pw-fix-5581-x3.log.txt` |
+
+## 4. Storage compatibility (real browsers, through the gate)
+(running: `scripts/compat.spec.ts.txt`, F1FIX's script plus a third profile saved through `reset`)
+
+## 5. `integrity:309` ×20 under load
+(queued: `--workers=2` plus 6 CPU burners, own PIDs, killed by PID; `scripts/chain.sh.txt` step `stress`)
+
+## 6. The rest
+(running: `integrity.spec.ts` whole, `w2-home`, `timer.spec.ts` timer-app + timer-harness, `pwa`; `scripts/bundle.sh.txt`)
+
 ## 7. Open items, for LEAD (draft; completed at the last stage)
 
 ### 7.1 Existing test whose behaviour Vibei's rule overturns (not edited)

@@ -24,5 +24,8 @@ s = rep(s, "    const again = await onTop(page, el, strict);\n",
         "    const again = await onTop(page, el, strict);\n    if (!again) console.log(`[diag] re-check null (round ${round}) ${await __why(el)}`);\n")
 s = rep(s, "      at = await onTop(page, el, strict);\n      continue;\n",
         "      at = await onTop(page, el, strict);\n      console.log(`[diag] aim again ${covered} -> ${at ? 'on top' : 'null'} ${await __why(el)}`);\n      continue;\n")
+# optional CPU throttling of the page (a slow page, as on a loaded machine): THROTTLE=<rate>
+s = rep(s, "  const page = await ctx.newPage();\n  await page.clock.install({ time: MONDAY });",
+        "  const page = await ctx.newPage();\n  if (process.env.THROTTLE) await (await ctx.newCDPSession(page)).send('Emulation.setCPUThrottlingRate', { rate: Number(process.env.THROTTLE) });\n  await page.clock.install({ time: MONDAY });")
 (out / 'notice-strip.spec.ts').write_text(s, encoding='utf-8')
 print('built', out / 'notice-strip.spec.ts')
