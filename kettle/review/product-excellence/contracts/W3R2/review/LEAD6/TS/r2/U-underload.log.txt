@@ -32,3 +32,18 @@ Running 10 tests using 2 workers
   ✓   6 [chromium] › tests/notice-strip.spec.ts:388:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion) (1.2m)
   ✓   7 [chromium] › tests/notice-strip.spec.ts:388:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion) (1.2m)
   ✓   8 [chromium] › tests/notice-strip.spec.ts:388:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion) (1.2m)
+  ✓   9 [chromium] › tests/notice-strip.spec.ts:388:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion) (1.2m)
+  ✓  10 [chromium] › tests/notice-strip.spec.ts:388:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion) (1.1m)
+
+  10 passed (6.4m)
+### end 20:32:44 exit=0 load 14.96 15.51 12.98
+
+######## U-diag3-x10: KETTLE_PORT=5560 COVER= npx playwright test -c .tmp/lead6/ts-pw.config.ts ts/diag3/notice-strip.spec.ts --project=chromium --repeat-each=10 -g real input \(844×390 dark 200 %\) --workers=2
+### start 20:32:44 load 14.96 15.51 12.98
+
+Running 10 tests using 2 workers
+
+[diag] first read (rescrolled 0) -> null {"t":2530,"top":296,"bottom":348,"left":459,"right":804,"ih":390,"iw":844,"sy":0,"hit":"p._ctaNote_ahnin_487 | Then a 5 min tea break. Change | inField=false leaving=false inert=false chrome=sticky div._ctaDock_ahnin_439","dock":"tall=false pos=sticky top=182 bottom=390 h=208 dockH=209px","leavingLayers":0,"dialogs":0,"hash":"#/","vv":[390,0]}
+[diag] first read (rescrolled 0) -> null {"t":2435,"top":296,"bottom":348,"left":459,"right":804,"ih":390,"iw":844,"sy":0,"hit":"p._ctaNote_ahnin_487 | Then a 5 min tea break. Change | inField=false leaving=false inert=false chrome=sticky div._ctaDock_ahnin_439","dock":"tall=false pos=sticky top=182 bottom=390 h=208 dockH=209px","leavingLayers":0,"dialogs":0,"hash":"#/","vv":[390,0]}
+[diag] after walk (rescrolled 0) -> on top {"t":4164,"top":116,"bottom":168,"left":459,"right":804,"ih":390,"iw":844,"sy":180,"hit":"input#_r_h_-input._input_vv3ei_47 |  | inField=true leaving=false inert=false chrome=none","dock":"tall=false pos=sticky top=182 bottom=390 h=208 dockH=209px","leavingLayers":0,"dialogs":0,"hash":"#/","vv":[390,0]}
+[diag] after walk (rescrolled 0) -> on top {"t":4508,"top":116,"bottom":168,"left":459,"right":804,"ih":390,"iw":844,"sy":180,"hit":"input#_r_h_-input._input_vv3ei_47 |  | inField=true leaving=false inert=false chrome=none","dock":"tall=false pos=sticky top=182 bottom=390 h=208 dockH=209px","leavingLayers":0,"dialogs":0,"hash":"#/","vv":[390,0]}
