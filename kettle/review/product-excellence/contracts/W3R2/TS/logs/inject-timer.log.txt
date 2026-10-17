@@ -26,3 +26,189 @@ Running 8 tests using 1 worker
 [inject] runner late by 6500 ms after the start command (background: the work, /?debug&onboarded=1#)
   ✘  7 [timer-app] › .tmp/ts/old/timer.spec.ts:172:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (19.3s)
 [inject] runner late by 4500 ms after the start command (hidden page: complet, /?debug&onboarded=1#)
+  ✘  8 [timer-app] › .tmp/ts/old/timer.spec.ts:199:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (16.3s)
+
+
+  1) [timer-harness] › .tmp/ts/old/timer.spec.ts:172:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      189 |       document.dispatchEvent(new Event('visibilitychange'));
+      190 |     });
+    > 191 |     await expect.poll(() => page.evaluate(() => (window as any).__doneAt ?? null), { timeout: 10_000, intervals: [200] }).not.toBeNull();
+          |     ^
+      192 |     const doneAt = await page.evaluate(() => (window as any).__doneAt as number);
+      193 |     expect(doneAt - (endsAt as number)).toBeGreaterThanOrEqual(0);
+      194 |     expect(doneAt - (endsAt as number)).toBeLessThan(lateBudget(kettlePage));
+        at /home/user/wt/w8q/kettle/.tmp/ts/old/timer.spec.ts:191:5
+
+    Error Context: .tmp/ts-out/old/old-timer-timer-reliabilit-aed0b-h-main-thread-timers-frozen-timer-harness/error-context.md
+
+  2) [timer-harness] › .tmp/ts/old/timer.spec.ts:199:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m1[39m
+    Received: [31m0[39m
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      218 |     await start(page, secs(kettlePage, 2), 'Essay');
+      219 |     await setHidden(page, true);
+    > 220 |     await expect.poll(() => page.evaluate(() => (window as any).__notes.length), { timeout: 10_000 }).toBe(1);
+          |     ^
+      221 |     const note = await page.evaluate(() => (window as any).__notes[0]);
+      222 |     expect(note.title).toBe('The kettle’s whistling! Time for tea.');
+      223 |     expect(note.body).toContain('Essay');
+        at /home/user/wt/w8q/kettle/.tmp/ts/old/timer.spec.ts:220:5
+
+    Error Context: .tmp/ts-out/old/old-timer-timer-reliabilit-fb1c6-ing-back-restores-the-title-timer-harness/error-context.md
+
+  3) [timer-harness] › .tmp/ts/old/timer.spec.ts:172:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      189 |       document.dispatchEvent(new Event('visibilitychange'));
+      190 |     });
+    > 191 |     await expect.poll(() => page.evaluate(() => (window as any).__doneAt ?? null), { timeout: 10_000, intervals: [200] }).not.toBeNull();
+          |     ^
+      192 |     const doneAt = await page.evaluate(() => (window as any).__doneAt as number);
+      193 |     expect(doneAt - (endsAt as number)).toBeGreaterThanOrEqual(0);
+      194 |     expect(doneAt - (endsAt as number)).toBeLessThan(lateBudget(kettlePage));
+        at /home/user/wt/w8q/kettle/.tmp/ts/old/timer.spec.ts:191:5
+
+    Error Context: .tmp/ts-out/old/old-timer-timer-reliabilit-aed0b-h-main-thread-timers-frozen-timer-harness-repeat1/error-context.md
+
+  4) [timer-harness] › .tmp/ts/old/timer.spec.ts:199:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m1[39m
+    Received: [31m0[39m
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      218 |     await start(page, secs(kettlePage, 2), 'Essay');
+      219 |     await setHidden(page, true);
+    > 220 |     await expect.poll(() => page.evaluate(() => (window as any).__notes.length), { timeout: 10_000 }).toBe(1);
+          |     ^
+      221 |     const note = await page.evaluate(() => (window as any).__notes[0]);
+      222 |     expect(note.title).toBe('The kettle’s whistling! Time for tea.');
+      223 |     expect(note.body).toContain('Essay');
+        at /home/user/wt/w8q/kettle/.tmp/ts/old/timer.spec.ts:220:5
+
+    Error Context: .tmp/ts-out/old/old-timer-timer-reliabilit-fb1c6-ing-back-restores-the-title-timer-harness-repeat1/error-context.md
+
+  5) [timer-app] › .tmp/ts/old/timer.spec.ts:172:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      189 |       document.dispatchEvent(new Event('visibilitychange'));
+      190 |     });
+    > 191 |     await expect.poll(() => page.evaluate(() => (window as any).__doneAt ?? null), { timeout: 10_000, intervals: [200] }).not.toBeNull();
+          |     ^
+      192 |     const doneAt = await page.evaluate(() => (window as any).__doneAt as number);
+      193 |     expect(doneAt - (endsAt as number)).toBeGreaterThanOrEqual(0);
+      194 |     expect(doneAt - (endsAt as number)).toBeLessThan(lateBudget(kettlePage));
+        at /home/user/wt/w8q/kettle/.tmp/ts/old/timer.spec.ts:191:5
+
+    Error Context: .tmp/ts-out/old/old-timer-timer-reliabilit-aed0b-h-main-thread-timers-frozen-timer-app/error-context.md
+
+  6) [timer-app] › .tmp/ts/old/timer.spec.ts:199:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m1[39m
+    Received: [31m0[39m
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      218 |     await start(page, secs(kettlePage, 2), 'Essay');
+      219 |     await setHidden(page, true);
+    > 220 |     await expect.poll(() => page.evaluate(() => (window as any).__notes.length), { timeout: 10_000 }).toBe(1);
+          |     ^
+      221 |     const note = await page.evaluate(() => (window as any).__notes[0]);
+      222 |     expect(note.title).toBe('The kettle’s whistling! Time for tea.');
+      223 |     expect(note.body).toContain('Essay');
+        at /home/user/wt/w8q/kettle/.tmp/ts/old/timer.spec.ts:220:5
+
+    Error Context: .tmp/ts-out/old/old-timer-timer-reliabilit-fb1c6-ing-back-restores-the-title-timer-app/error-context.md
+
+  7) [timer-app] › .tmp/ts/old/timer.spec.ts:172:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      189 |       document.dispatchEvent(new Event('visibilitychange'));
+      190 |     });
+    > 191 |     await expect.poll(() => page.evaluate(() => (window as any).__doneAt ?? null), { timeout: 10_000, intervals: [200] }).not.toBeNull();
+          |     ^
+      192 |     const doneAt = await page.evaluate(() => (window as any).__doneAt as number);
+      193 |     expect(doneAt - (endsAt as number)).toBeGreaterThanOrEqual(0);
+      194 |     expect(doneAt - (endsAt as number)).toBeLessThan(lateBudget(kettlePage));
+        at /home/user/wt/w8q/kettle/.tmp/ts/old/timer.spec.ts:191:5
+
+    Error Context: .tmp/ts-out/old/old-timer-timer-reliabilit-aed0b-h-main-thread-timers-frozen-timer-app-repeat1/error-context.md
+
+  8) [timer-app] › .tmp/ts/old/timer.spec.ts:199:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m1[39m
+    Received: [31m0[39m
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      218 |     await start(page, secs(kettlePage, 2), 'Essay');
+      219 |     await setHidden(page, true);
+    > 220 |     await expect.poll(() => page.evaluate(() => (window as any).__notes.length), { timeout: 10_000 }).toBe(1);
+          |     ^
+      221 |     const note = await page.evaluate(() => (window as any).__notes[0]);
+      222 |     expect(note.title).toBe('The kettle’s whistling! Time for tea.');
+      223 |     expect(note.body).toContain('Essay');
+        at /home/user/wt/w8q/kettle/.tmp/ts/old/timer.spec.ts:220:5
+
+    Error Context: .tmp/ts-out/old/old-timer-timer-reliabilit-fb1c6-ing-back-restores-the-title-timer-app-repeat1/error-context.md
+
+  8 failed
+    [timer-harness] › .tmp/ts/old/timer.spec.ts:172:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen 
+    [timer-harness] › .tmp/ts/old/timer.spec.ts:199:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title 
+    [timer-harness] › .tmp/ts/old/timer.spec.ts:172:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen 
+    [timer-harness] › .tmp/ts/old/timer.spec.ts:199:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title 
+    [timer-app] › .tmp/ts/old/timer.spec.ts:172:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen 
+    [timer-app] › .tmp/ts/old/timer.spec.ts:199:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title 
+    [timer-app] › .tmp/ts/old/timer.spec.ts:172:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen 
+    [timer-app] › .tmp/ts/old/timer.spec.ts:199:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title 
+### end 16:12:07 exit=0 load 8.90 3.86 2.15
+
+######## mid: KETTLE_PORT=5583 npx playwright test -c .tmp/ts-pw.config.ts ts/mid/timer.spec.ts --project=timer-app --project=timer-harness --repeat-each=2 -g 'background: the worker|hidden page: completion'
+### start 16:12:07 load 8.90 3.86 2.15
+
+Running 8 tests using 1 worker
+
+[inject] runner late by 3500 ms after the start command (background: the work, /tests/harness/timer)
+  ✘  1 [timer-harness] › .tmp/ts/mid/timer.spec.ts:172:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (4.8s)
+[inject] runner late by 2500 ms after the start command (hidden page: complet, /tests/harness/timer)
