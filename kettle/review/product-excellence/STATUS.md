@@ -10,6 +10,18 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
+## ▶ W3R2 HARDENING ROUND · started 2026-10-17 16:00 UTC (read this first)
+
+**Binding:** `contracts/W3R2/VB-DECISIONS-W3R2.md`. The Final Product Boss stays on hold. Plan: `contracts/W3R2/PLAN.md`; gate record: `contracts/W3R2/review/GATE.md`.
+
+- **Start:** integration HEAD `494748b`, clean and equal to origin. Servers, slot gate (MAX 3) and autocommit were restarted after the container restart. Old worktrees were pruned; their branches and bundles remain.
+- **Item 1, stale-tab guard:** maker **SG** (Opus) on `pe/w3r2-sync-guard`, worktree `w8g`, :5581; brief `BRIEF-SG.md`; stop 19:15 UTC. Then the gate, a Sonnet regression lane (Lane R2, including the 2-tab manual check with real clicks), and LEAD's verdict.
+- **Item 2, `Toast.tsx:482` hook:** maker **TH** (Sonnet) on `pe/w3r2-toast-hook`, worktree `w8t`, :5582; brief `BRIEF-TH.md`; stop 18:15 UTC.
+- **Item 3, test stability:** maker **TS** (Sonnet) on `pe/w3r2-test-stability`, worktree `w8q`, :5583; brief `BRIEF-TS.md`; stop 18:15 UTC.
+- **Then:** merges on APPROVE only, a full regression on the merged tree (Lane RF, Sonnet), and the report to Vibei.
+- **Not this round:** the composer label quirk (for the Final Boss), the low-tier backdrop still vs live (Vibei's phone check), band collapse only off-screen (post-Boss polish).
+- **Servers:** integration :5560/:5570; old base :5478/:5488; makers :5581, :5582, :5583.
+
 ## ▶ WAVE 3 ROUND 1 · started 2026-10-14 10:00 UTC (read this first)
 
 **Now (2026-10-15 13:35 UTC): Vibei's post-follow-up items 1–3 are DONE; the Final Product Boss is on hold (item 4).**
