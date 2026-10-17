@@ -1,6 +1,11 @@
 # TS-READY: W3R2 item 3, test-only stability (maker TS)
 
-**Branch** `pe/w3r2-test-stability`, worktree `/home/user/wt/w8q`, base `494748b`.
+**Status at the stop, honestly.**
+- **Timer pair: done.** Old fails and new passes under the same injected late runner (§2.1); 20/20 and 20/20 under load (§3); the whole timer file 26 passed + 2 skipped (§4).
+- **`press()`: the fix is shown by injection (§2.2), but the 10/10 under load is NOT met**: 6/10 with the re-aim alone, 9/10 with the final code (§3). One failure of the same kind remains and its cause is not identified (§5.1).
+- **The whole `notice-strip.spec.ts` (25/25) was not run** (no free slots in time; §4, §5.2).
+
+**Branch** `pe/w3r2-test-stability`, worktree `/home/user/wt/w8q`, base `494748b`, tip `21e5644`, `kettle/tests` tree `59f5e49`.
 **Scope kept:** `kettle/tests/timer.spec.ts` and `kettle/tests/notice-strip.spec.ts` only; no `src/` file, no other spec. The injection code lives in the git-ignored `kettle/.tmp/` and is copied into this folder as `.txt`.
 
 **How every spec was run** (the same for all runs below):

@@ -219,15 +219,17 @@ async function __cover(page: Page, el: ReturnType<Page['locator']>) {
     console.log(`[inject] shift: the page scrolled ${a} -> ${b}; the field is now at ${v}`);
     return;
   }
-  const ms = mode === 'permanent' ? 0 : Number(process.env.COVER_MS ?? 300);
-  await el.evaluate((e, ms) => {
+  const ms = mode.startsWith('permanent') ? 0 : Number(process.env.COVER_MS ?? 300);
+  // permanent / transient: fixed to the screen (page chrome would look like this); permanent-abs: anchored in the page (scrolls with the field)
+  const abs = mode === 'permanent-abs';
+  await el.evaluate((e, [ms, abs]) => {
     const r = e.getBoundingClientRect();
     const d = document.createElement('div');
     d.id = '__cover';
-    Object.assign(d.style, { position: 'fixed', left: r.left - 4 + 'px', top: r.top - 4 + 'px', width: r.width + 8 + 'px', height: r.height + 8 + 'px', zIndex: '2147483647', background: 'rgba(255,0,0,0.2)' });
+    Object.assign(d.style, { position: abs ? 'absolute' : 'fixed', left: r.left - 4 + (abs ? scrollX : 0) + 'px', top: r.top - 4 + (abs ? scrollY : 0) + 'px', width: r.width + 8 + 'px', height: r.height + 8 + 'px', zIndex: '2147483647', background: 'rgba(255,0,0,0.2)' });
     document.body.appendChild(d);
-    if (ms) setTimeout(() => d.remove(), ms);
-  }, ms);
+    if (ms) setTimeout(() => d.remove(), ms as number);
+  }, [ms, abs] as const);
   console.log(`[inject] ${mode} cover over ${el} ${ms ? 'for ' + ms + ' ms' : '(never removed)'} at ${new Date().toISOString().slice(11, 23)}`);
 }
 /** Scroll by real wheel (over `over`, or the page's middle) until `el` is on top, then tap / click it for real. */
