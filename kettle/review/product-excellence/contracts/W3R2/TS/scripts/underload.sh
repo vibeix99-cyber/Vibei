@@ -1,5 +1,5 @@
 #!/bin/bash
-# underload.sh <timer|notice>: 2 Playwright workers plus 4 CPU burners (own PIDs, killed by PID at the end), as in
+# underload.sh <timer|notice|timer-whole|notice-whole>: timer, notice: 2 Playwright workers plus 4 CPU burners (own PIDs, killed by PID at the end), as in
 # contracts/W3R1/review/FINAL/scripts/LR-stress.sh. Run through the gate with --n 2 (gate.sh 2 <log> underload.sh <what>).
 # Dev server :5583 (worktree /home/user/wt/w8q, branch pe/w3r2-test-stability). Load average (1, 5, 15 min) before and after each run.
 WHAT=$1
@@ -8,14 +8,20 @@ OUT=/home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/TS/logs
 PIDS=""
 cleanup() { [ -n "$PIDS" ] && kill $PIDS 2>/dev/null; wait $PIDS 2>/dev/null; echo "burners stopped $(date -u +%T): $(for p in $PIDS; do kill -0 $p 2>/dev/null && echo "$p ALIVE" || echo "$p gone"; done | tr '\n' ' ')"; PIDS=""; }
 trap cleanup EXIT
-for i in 1 2 3 4; do ( while :; do :; done ) & PIDS="$PIDS $!"; done
-echo "burners:$PIDS started $(date -u +%T) load $(cut -d' ' -f1-3 /proc/loadavg)"
-sleep 5
+W=2
+case $WHAT in
+  timer|notice)  # under load: 4 burners
+    for i in 1 2 3 4; do ( while :; do :; done ) & PIDS="$PIDS $!"; done
+    echo "burners:$PIDS started $(date -u +%T) load $(cut -d' ' -f1-3 /proc/loadavg)"
+    sleep 5 ;;
+  timer-whole) W=1; echo "no burners (whole-file run, the config's default of one worker)" ;;
+  notice-whole) echo "no burners (whole-file run, --workers=2 as the spec's header says)" ;;
+esac
 run() { # <name> <args...>
   local name=$1; shift
-  echo "######## $name: env KETTLE_PORT=5583 PLAYWRIGHT_JSON_OUTPUT_NAME=$OUT/$name.json npx playwright test $* --workers=2 --reporter=list,json --output=.tmp/ts-out/$name"
+  echo "######## $name: env KETTLE_PORT=5583 PLAYWRIGHT_JSON_OUTPUT_NAME=$OUT/$name.json npx playwright test $* --workers=$W --reporter=list,json --output=.tmp/ts-out/$name"
   echo "### start $(date -u +%T) load $(cut -d' ' -f1-3 /proc/loadavg)"
-  env KETTLE_PORT=5583 PLAYWRIGHT_JSON_OUTPUT_NAME=$OUT/$name.json npx playwright test "$@" --workers=2 --reporter=list,json --output=.tmp/ts-out/$name
+  env KETTLE_PORT=5583 PLAYWRIGHT_JSON_OUTPUT_NAME=$OUT/$name.json npx playwright test "$@" --workers=$W --reporter=list,json --output=.tmp/ts-out/$name
   local rc=$?
   echo "### end $(date -u +%T) exit=$rc load $(cut -d' ' -f1-3 /proc/loadavg)"
   echo
