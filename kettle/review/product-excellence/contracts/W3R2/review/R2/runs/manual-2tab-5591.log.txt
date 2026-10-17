@@ -85,3 +85,8 @@
     B=idle/null/25m/ends=null
     S=idle/null/25m/ends=null  S(read in B)=idle/null/25m/ends=null  pageErrors=0
 ### case (d) fix-5591: pass 5/5 {"paused_in_A_and_B_after_B_pause":5,"plus5_in_A_B_storage":5,"still_paused_after_plus5":5,"brew1_ended_idle_in_A_B_storage":5,"brew1_one_record_everywhere":5,"brew2_one_record_everywhere":5,"final_idle_A_B_storage_agree":5,"exactly_two_records_total":5}
+[18:14:04] fix-5591 (e) it1 PASS load 12.93 13.37 13.42->13.19 13.38 13.42
+    A=running/s_mvcpts/25m/ends=1792262426915
+    B=running/s_mvcpts/25m/ends=1792262426915
+    S=running/s_mvcpts/25m/ends=1792262426915  S(read in B)=running/s_mvcpts/25m/ends=1792262426915  pageErrors=0
+    plus5Note=["5 min · whistles at 6:40 PM now"]
