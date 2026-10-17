@@ -1,0 +1,7 @@
+### pwa project (build of the worktree + preview on :5597) | branch 54a9721 (src dd6944e) | start 2026-10-17T17:26:13Z load 19.29 18.43 16.52 | inside one SG gate slot (bundle.sh)
+
+Running 3 tests using 1 worker
+
+  ✓  1 [pwa] › tests/pwa.spec.ts:48:1 › manifest is installable: name, colors, standalone, icons that exist (85ms)
+  ✓  2 [pwa] › tests/pwa.spec.ts:59:1 › precaches the shell, fonts, 3D chunk and tick worker; boots and times a brew offline (7.5s)
+  ✓  3 [pwa] › tests/pwa.spec.ts:85:1 › update: new version waits for the user (no reload mid-brew), then applies and the brew carries on (9.4s)

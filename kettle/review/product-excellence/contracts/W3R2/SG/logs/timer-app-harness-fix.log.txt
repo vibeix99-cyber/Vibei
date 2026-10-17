@@ -29,3 +29,8 @@ Running 28 tests using 1 worker
   ✓  25 [timer-app] › tests/timer.spec.ts:377:3 › multiple tabs › two tabs pressing start at the same moment converge on one session (16.7s)
   ✓  26 [timer-app] › tests/timer.spec.ts:399:3 › multiple tabs › closing the leader tab mid-session hands over; the other tab completes it once (14.7s)
   ✓  27 [timer-app] › tests/timer.spec.ts:416:3 › multiple tabs › frozen leader: the other tab takes over at the end; the leader waking up later does not double-count (12.9s)
+  -  28 [timer-app] › tests/timer.spec.ts:438:3 › rendering budget › useRemaining re-renders about once per displayed second
+
+  2 skipped
+  26 passed (3.5m)
+### exit 0 | end 2026-10-17T17:26:13Z load 19.29 18.43 16.52
