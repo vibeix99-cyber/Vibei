@@ -43,3 +43,74 @@ Running 10 tests using 2 workers
 [diag] aim again 8 (rescrolled 0) -> null inView=true {"t":4865,"top":296,"bottom":348,"left":459,"right":804,"ih":390,"iw":844,"sy":0,"hit":"p._ctaNote_ahnin_487 | Then a 5 min tea break. Change | inField=false leaving=false inert=false chrome=sticky div._ctaDock_ahnin_439","leavingLayers":0,"dialogs":0,"hash":"#/","vv":[390,0]}
 [diag] FAIL screenshot /home/user/wt/w8tr-q/kettle/.tmp/lead6/out/diag-fail-1792263055953.png {"t":5707,"top":296,"bottom":348,"left":459,"right":804,"ih":390,"iw":844,"sy":0,"hit":"p._ctaNote_ahnin_487 | Then a 5 min tea break. Change | inField=false leaving=false inert=false chrome=sticky div._ctaDock_ahnin_439","leavingLayers":0,"dialogs":0,"hash":"#/","vv":[390,0]}
   ✘  10 [chromium] › .tmp/lead6/ts/diag/notice-strip.spec.ts:380:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (6.1s)
+  ✓   9 [chromium] › .tmp/lead6/ts/diag/notice-strip.spec.ts:380:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (1.1m)
+
+
+  1) [chromium] › .tmp/lead6/ts/diag/notice-strip.spec.ts:380:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+
+    Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+      340 |   }
+      341 |   if (!at) { const f = `/home/user/wt/w8tr-q/kettle/.tmp/lead6/out/diag-fail-${Date.now()}.png`; await page.screenshot({ path: f }).catch(() => {}); console.log(`[diag] FAIL screenshot ${f} ${await __why(el)}`); }
+    > 342 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();
+          |                                                            ^
+      343 |   if (touch) {
+      344 |     await page.touchscreen.tap(at!.x, at!.y);
+      345 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)
+        at press (/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/diag/notice-strip.spec.ts:342:60)
+        at /home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/diag/notice-strip.spec.ts:392:5
+
+    Error Context: .tmp/lead6/out/E-diag844-x10/diag-notice-strip-no-notic-ed187-eal-input-844×390-dark-200--chromium-repeat1/error-context.md
+
+  2) [chromium] › .tmp/lead6/ts/diag/notice-strip.spec.ts:380:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+
+    Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+      340 |   }
+      341 |   if (!at) { const f = `/home/user/wt/w8tr-q/kettle/.tmp/lead6/out/diag-fail-${Date.now()}.png`; await page.screenshot({ path: f }).catch(() => {}); console.log(`[diag] FAIL screenshot ${f} ${await __why(el)}`); }
+    > 342 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();
+          |                                                            ^
+      343 |   if (touch) {
+      344 |     await page.touchscreen.tap(at!.x, at!.y);
+      345 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)
+        at press (/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/diag/notice-strip.spec.ts:342:60)
+        at /home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/diag/notice-strip.spec.ts:392:5
+
+    Error Context: .tmp/lead6/out/E-diag844-x10/diag-notice-strip-no-notic-ed187-eal-input-844×390-dark-200--chromium-repeat2/error-context.md
+
+  3) [chromium] › .tmp/lead6/ts/diag/notice-strip.spec.ts:380:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+
+    Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+      340 |   }
+      341 |   if (!at) { const f = `/home/user/wt/w8tr-q/kettle/.tmp/lead6/out/diag-fail-${Date.now()}.png`; await page.screenshot({ path: f }).catch(() => {}); console.log(`[diag] FAIL screenshot ${f} ${await __why(el)}`); }
+    > 342 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();
+          |                                                            ^
+      343 |   if (touch) {
+      344 |     await page.touchscreen.tap(at!.x, at!.y);
+      345 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)
+        at press (/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/diag/notice-strip.spec.ts:342:60)
+        at /home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/diag/notice-strip.spec.ts:392:5
+
+    Error Context: .tmp/lead6/out/E-diag844-x10/diag-notice-strip-no-notic-ed187-eal-input-844×390-dark-200--chromium-repeat9/error-context.md
+
+  3 failed
+    [chromium] › .tmp/lead6/ts/diag/notice-strip.spec.ts:380:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+    [chromium] › .tmp/lead6/ts/diag/notice-strip.spec.ts:380:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+    [chromium] › .tmp/lead6/ts/diag/notice-strip.spec.ts:380:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+  7 passed (4.7m)
+### end 18:51:37 exit=1 load 10.43 10.21 10.39
+
+burners stopped 18:51:37: 15442 gone 15443 gone 15444 gone 15445 gone 
