@@ -4,3 +4,7 @@
 Running 7 tests using 1 worker
 
   ✓  1 [chromium] › tests/w3-intention-race.spec.ts:64:1 › a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs, one record (15.7s)
+  ✓  2 [chromium] › tests/w3-intention-race.spec.ts:119:1 › F1X-D1: B picks another brew length and starts; A (idle, its timer events held) takes in the length change first: the brew survives, one record (15.7s)
+  ✓  3 [chromium] › tests/w3r2-stale-tab.spec.ts:154:1 › pause in the lagging tab: the brew current in storage pauses, with its real remaining time (the other tab’s +5 kept) (7.7s)
+  ✓  4 [chromium] › tests/w3r2-stale-tab.spec.ts:197:1 › add 5 in the lagging tab after the other tab ended its brew and started another: nothing added, the newer brew untouched, the lagging tab shows it (7.3s)
+  ✓  5 [chromium] › tests/w3r2-stale-tab.spec.ts:237:1 › Next brew in the lagging tab after the other tab already did: it joins that brew; ending it there later still says so and goes home (15.3s)
