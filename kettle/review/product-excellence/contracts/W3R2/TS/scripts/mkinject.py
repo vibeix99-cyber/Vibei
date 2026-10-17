@@ -8,7 +8,10 @@ committed specs are never edited by this. Usage: mkinject.py <worktree kettle di
 timer.spec.ts  -> a `page` fixture whose evaluate() is followed by a test-side wait (the runner is late) after the
                   command that starts the brew (the one whose function text holds `startFocus`): the page is untouched.
 notice-strip   -> before the re-check read in press(), a positioned element covers the target (COVER=transient: ~300 ms,
-                  once per test; permanent: never removed; shift: the page is scrolled 400 px at that read; none: nothing).
+                  once per test; permanent: never removed; shift: the page is scrolled 400 px at that read; dock: the Today dock is in the flow at the first read and docked over
+                  the field at the re-check; permanent-abs: a cover anchored in the page; sheet: a sheet's control leaves the view for good; none).
+
+  v2 = 21e5644 (the rejected tip); new = the working tree (the fix round).
 """
 import subprocess, sys, pathlib
 
@@ -76,11 +79,47 @@ def timer(src, mid=False):
 # ---------------------------------------------------------------- notice-strip
 COVER = '''
 let __covers = 0;
+let __dockPrepared = false;
+let __sheetDone = false;
+/** INJECTION (scratch only, COVER=dock): the Today composer's dock is in the page flow (data-tall) at the first read of the
+ *  first press, as it is for the first moments after boot; __cover then docks it (sticky) at the re-check. */
+async function __dockOn(page: Page, el: ReturnType<Page['locator']>) {
+  if ((process.env.COVER ?? 'transient') !== 'dock' || __dockPrepared || !String(el).includes('What are you brewing')) return;
+  __dockPrepared = true;
+  const s = await page.evaluate(async () => {
+    const d = document.querySelector('[class*=ctaDock]');
+    if (!d) return 'no dock';
+    d.setAttribute('data-tall', '');
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    const b = d.getBoundingClientRect();
+    return `dock in the flow: ${getComputedStyle(d).position} top ${Math.round(b.top)} bottom ${Math.round(b.bottom)} of ${innerHeight}`;
+  });
+  console.log(`[inject] dock: ${s}`);
+}
 /** INJECTION (scratch only): cover the target, then the re-check in press() reads it. */
 async function __cover(page: Page, el: ReturnType<Page['locator']>) {
   const mode = process.env.COVER ?? 'transient';
+  if (mode === 'sheet') {  // a sheet's control leaves the view at the re-check and no wheel can bring it back
+    if (__sheetDone || !(await el.evaluate((e) => !!e.closest('[role="dialog"]')))) return;
+    __sheetDone = true;
+    await el.evaluate((e) => { (e as HTMLElement).style.transform = 'translateY(-3000px)'; });
+    console.log(`[inject] sheet: ${el} moved out of the view for good at the re-check`);
+    return;
+  }
   if (mode === 'none' || __covers >= 1) return;
   __covers++;
+  if (mode === 'dock') {  // the dock settles: docked (sticky) over the field, for good
+    const v = await page.evaluate(async () => {
+      const d = document.querySelector('[class*=ctaDock]');
+      if (!d) return 'no dock';
+      d.removeAttribute('data-tall');
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      const b = d.getBoundingClientRect();
+      return `docked: ${getComputedStyle(d).position} top ${Math.round(b.top)} bottom ${Math.round(b.bottom)} of ${innerHeight}`;
+    });
+    console.log(`[inject] dock: ${v}`);
+    return;
+  }
   if (mode === 'shift') {  // the page moves under the target (a layout shift): the target is out of the view at the re-check
     const [a, b, v] = await page.evaluate(() => { const a = scrollY; window.scrollBy({ top: 400, behavior: 'instant' }); return [a, scrollY]; }).then(async ([a, b]) => [a, b, await el.evaluate((e) => { const r = e.getBoundingClientRect(); return `top ${Math.round(r.top)} bottom ${Math.round(r.bottom)} of ${innerHeight}`; })] as const);
     console.log(`[inject] shift: the page scrolled ${a} -> ${b}; the field is now at ${v}`);
@@ -105,8 +144,9 @@ def notice(src):
             COVER + "/** Scroll by real wheel (over `over`, or the page's middle) until `el` is on top, then tap / click it for real. */")
     s = rep(s, "    const again = await onTop(page, el, strict);\n",
             "    await __cover(page, el);\n    const again = await onTop(page, el, strict);\n    if (!again) console.log(`[inject] re-check: covered at ${new Date().toISOString().slice(11, 23)}`);\n")
+    s = rep(s, "  let at = await onTop(page, el, strict);\n", "  await __dockOn(page, el);\n  let at = await onTop(page, el, strict);\n")
     if 'rescrolled + 1' in s:
-        s = rep(s, "!(await inView(el))) return press(", "!(await inView(el)) && (console.log('[inject] out of view: bring it back by the wheel') || true)) return press(")
+        s = rep(s, ") return press(page, touch, el, over, strict, rescrolled + 1);", ") { console.log('[inject] rescroll: bring it clear by the wheel'); return press(page, touch, el, over, strict, rescrolled + 1); }")
     if 'AIM_PAUSE_MS);' in s:
         s = rep(s, "      await page.waitForTimeout(AIM_PAUSE_MS);\n",
                 "      await page.waitForTimeout(AIM_PAUSE_MS);\n      console.log(`[inject] aim again ${covered} at ${new Date().toISOString().slice(11, 23)}`);\n")
@@ -114,10 +154,12 @@ def notice(src):
 
 def v1_src(name):
     return subprocess.check_output(['git', '-C', str(wt), 'show', f'a6b3790:kettle/tests/{name}'], text=True)
+def v2_src(name):
+    return subprocess.check_output(['git', '-C', str(wt), 'show', f'21e5644:kettle/tests/{name}'], text=True)
 
-for name, getter in (('old', base_src), ('v1', v1_src), ('new', work_src)):
+for name, getter in (('old', base_src), ('v1', v1_src), ('v2', v2_src), ('new', work_src)):
     d = out / name; d.mkdir(parents=True, exist_ok=True)
-    if name != 'v1': (d / 'timer.spec.ts').write_text(timer(getter('timer.spec.ts')), encoding='utf-8')
+    if name not in ('v1', 'v2'): (d / 'timer.spec.ts').write_text(timer(getter('timer.spec.ts')), encoding='utf-8')
     (d / 'notice-strip.spec.ts').write_text(notice(getter('notice-strip.spec.ts')), encoding='utf-8')
 d = out / 'mid'; d.mkdir(parents=True, exist_ok=True)
 (d / 'timer.spec.ts').write_text(timer(base_src('timer.spec.ts'), mid=True), encoding='utf-8')
