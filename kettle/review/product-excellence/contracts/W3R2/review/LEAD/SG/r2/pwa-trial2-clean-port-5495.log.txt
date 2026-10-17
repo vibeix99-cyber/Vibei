@@ -1,0 +1,13 @@
+### start 21:23:03 load 0.85 3.98 7.80; HEAD 2c9ec66 src 5f504d4 dirty 0
+port 5495 free before the run
+
+Running 3 tests using 1 worker
+
+  ✓  1 [pwa] › tests/pwa.spec.ts:48:1 › manifest is installable: name, colors, standalone, icons that exist (62ms)
+  ✓  2 [pwa] › tests/pwa.spec.ts:59:1 › precaches the shell, fonts, 3D chunk and tick worker; boots and times a brew offline (5.6s)
+  ✓  3 [pwa] › tests/pwa.spec.ts:85:1 › update: new version waits for the user (no reload mid-brew), then applies and the brew carries on (4.0s)
+
+  3 passed (14.9s)
+### end 21:23:19 exit=0
+killing my leftover pid 27011 :: node /home/user/wt/w8tr-g2/kettle/node_modules/.bin/vite preview --outDir /home/user/wt/w8tr-g2/kettle/test-results/pwa-
+port 5495 free after cleanup

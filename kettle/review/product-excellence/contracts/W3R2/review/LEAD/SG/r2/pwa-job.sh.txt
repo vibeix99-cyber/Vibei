@@ -1,0 +1,17 @@
+#!/bin/bash
+# LEAD-5: the pwa project on SG trial 2 (/home/user/wt/w8tr-g2) on a port verified free, with the serving process
+# recorded during the run; my own leftover preview killed by explicit PID afterwards.
+set -u
+O=$1; PORT=5495; cd /home/user/wt/w8tr-g2/kettle || exit 9
+{
+echo "### start $(date -u +%T) load $(cut -d' ' -f1-3 /proc/loadavg); HEAD $(git rev-parse --short HEAD) src $(git rev-parse --short HEAD:kettle/src) dirty $(git status --short | wc -l)"
+if curl -s -m 2 -o /dev/null http://127.0.0.1:$PORT/; then echo "PORT $PORT IN USE before the run: abort"; exit 3; else echo "port $PORT free before the run"; fi
+( for i in $(seq 1 120); do for p in $(ls /proc | grep -E '^[0-9]+$'); do c=$(tr '\0' ' ' </proc/$p/cmdline 2>/dev/null); case "$c" in *"preview --outDir"*"--port $PORT"*) echo "$(date -u +%T) serving pid $p cwd $(readlink /proc/$p/cwd) :: ${c:0:150}";; esac; done 2>/dev/null; sleep 2; done ) > "$O/listener.txt" & SAMP=$!
+env KETTLE_PORT=5601 KETTLE_PWA_PORT=$PORT npx playwright test --project=pwa --workers=1 --reporter=list --output="$O/pw"
+rc=$?
+kill $SAMP 2>/dev/null
+echo "### end $(date -u +%T) exit=$rc"
+for p in $(ls /proc | grep -E '^[0-9]+$'); do c=$(tr '\0' ' ' </proc/$p/cmdline 2>/dev/null); case "$c" in *"--port $PORT"*) if [ "$(readlink /proc/$p/cwd)" = /home/user/wt/w8tr-g2/kettle ]; then echo "killing my leftover pid $p :: ${c:0:120}"; kill $p; fi;; esac; done 2>/dev/null
+sleep 1; if curl -s -m 2 -o /dev/null http://127.0.0.1:$PORT/; then echo "port $PORT still answering after cleanup"; else echo "port $PORT free after cleanup"; fi
+} > "$O/pwa-trial2-clean-port.log" 2>&1
+echo done > "$O/done.txt"
