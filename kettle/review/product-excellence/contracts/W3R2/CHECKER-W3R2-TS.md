@@ -76,3 +76,18 @@ One exposure is the same as before, not new: if the page's own main thread stall
 | `:156` | **No.** Same six assertions, same budgets, same messages. FOLLOW-UP: assert the freeze landed before `endsAt` |
 | `:189` (was `:183`) | **No.** Same six assertions; only the order of the hide and the start |
 | `press()` | **No** for the tap rule and the permanent cover. **Yes in one corner:** a rescrolled call can end in the sheet's keyboard / synthetic fallback instead of failing (note 2). To be closed in the fix round |
+
+## 4. Under load, on the trial specs (my runs)
+
+**Recipe** (as `W3R1/review/FINAL/scripts/LR-stress.sh`): `--workers=2` (two gate slots, lane `LEAD6`) plus 4 CPU burners `( while :; do :; done ) &`, their PIDs kept and killed by PID at the end, each checked gone; never `pkill -f`. Trial worktree `/home/user/wt/w8tr-q/kettle`, `KETTLE_PORT=5560`. One `playwright test` per row; the load average (1, 5, 15 min) is printed at each start and end. The other lead held one more slot throughout, on the same four cores. Script `lead6-ts-job.sh` (stage A); log `A-underload.log.txt`; reports `A-*.json.txt`.
+
+| Run | Result | Load at start → end |
+|---|---|---|
+| `notice-strip.spec.ts` "…real input (844×390 dark 200 %)" ×10 (`--repeat-each=10`) | **7/10. FAILS the bar.** 3 failures, all the same: `getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed` at `press` (`notice-strip.spec.ts:328`) called from `:378`, the **first** `press()` of the test (Today's composer field, before any notice and before anything is typed), 7.1 s, 6.6 s and 5.2 s into the test, i.e. after the 8 pauses. The 7 passes took 1.3–1.5 min each | 6.67 7.81 10.57 (18:22:57) → 13.21 13.50 12.44 (18:28:51) |
+| `timer.spec.ts:156` ×10 and `:189` ×10, project `timer-app`, one invocation (20 tests) | **20/20**: `:156` **10/10** (9.4–14.4 s), `:189` **10/10** (11.1–15.3 s) | 13.21 13.50 12.44 (18:28:51) → 17.72 15.68 13.45 (18:31:25) |
+
+Burners PIDs 379 380 381 382, started 18:22:52, stopped 18:31:25, all four gone.
+
+Failure snapshots: `A-notice-fail-repeat{0,4,6}.error-context.txt` (an ordinary Today screen, the composer field present, no dialog, no notice; the spec keeps no trace).
+
+With the maker's two runs this is three independent samples of the final helper at this configuration under load: **9/10, 7/10** (mine), and with `a6b3790` 6/10. The final code does not meet "each test must pass 10/10 under load", and my run does not support the reading that one failure in ten is a rare tail.
