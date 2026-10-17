@@ -1,0 +1,8 @@
+### start 18:05:06 UTC; load:  18:05:06 up  2:14,  0 user,  load average: 13.49, 13.35, 13.40
+### cmd: node .tmp/R2-2tab.mjs smoke http://127.0.0.1:5591 1 /home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/review/R2/manual/smoke a,b,c,d,e
+### smoke http://127.0.0.1:5591 N=1 cases=a,b,c,d,e start 18:05:07 load 13.49 13.35 13.40
+[18:05:19] smoke (a) it1 PASS load 13.49 13.35 13.40->13.55 13.39 13.42
+    A=paused/s_mvcpik/30m/ends=null
+    B=paused/s_mvcpik/30m/ends=null
+    S=paused/s_mvcpik/30m/ends=null  S(read in B)=paused/s_mvcpik/30m/ends=null  pageErrors=0
+### case (a) smoke: pass 1/1 {"precondition_B_behind":1,"paused_in_A":1,"paused_in_B":1,"paused_in_storage":1,"same_session_A_B_storage":1,"kept_plus5_A_B_storage":1,"A_B_storage_agree":1,"remaining_gt_planned_minus_2min":1}
