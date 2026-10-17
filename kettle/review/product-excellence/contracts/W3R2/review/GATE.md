@@ -103,3 +103,24 @@
 | Open | LEAD-5's FOLLOW-UPs only (the doubly stale +5 loss, the composer label). The bfcache paused-brew case is now covered, except a very rare third-stale-tab `lastEnded` rollback |
 | Archive | `archive/pe-w3r2-sync-guard-fix-4b2690f.incremental.bundle` (requires `54a9721`) |
 | Next | LEAD-5's final SG verdict on :5601, with Lane R2's receipt |
+
+## Lane R2 receipt (SG first trial `88d6b64`, :5591), and a correction to the control switch time (2026-10-17 ~19:55 UTC)
+
+- **R2 results** (`review/R2/RECEIPT-R2.md`, last `70661a0`), at load 5–20:
+  - tsc 0; vitest 338/338.
+  - timer, timer-harness and pwa: 29 passed + 2 skipped (by design).
+  - integrity 25/25; `:309` ×10 10/10.
+  - `w2-home` 18/18; `w3-intention-race` 2/2; `w3r2-stale-tab` 4/4.
+  - Notice suites 74/74.
+  - **2-tab check with real clicks, B's storage held, passes out of 5 (fix vs control):**
+    - (a) pause: fix 5, control 0 (A's +5 lost);
+    - (b) +5 after A paused: fix 5, control 0 (the brew runs again);
+    - (c) end: fix 5, control 0 (A's second brew gone);
+    - (d) no hold: 5 on both;
+    - (e) +5 on a replaced brew: fix 5, control 0;
+    - (f) pause on a replaced brew: fix 5, control 0.
+  - Page errors: 0.
+  - On the first trial, the "+5 min" note still showed after a dropped +5 (5/5): that is **SG-D3, fixed in the fix round**.
+- **Correction (orchestrator):** :5560/:5570 switched to the new integration HEAD (app `7cb3242`, src `07df367`) at **19:02:16–19:02:59 UTC**, not "about 19:12" as I told LEAD-6, Lane R2 and maker TS. R2 established this from its own served-file checks.
+  - LEAD-6's TS runs dated 19:02–19:07 may have used src `07df367` (TH's `Toast.tsx` hook change) rather than `b74e6b3`.
+  - LEAD-6 is asked to note this in its fix-round review.
