@@ -1,0 +1,7 @@
+### start 19:36:41 UTC; load:  19:36:41 up  3:46,  0 user,  load average: 20.11, 16.78, 13.79
+### cmd: node .tmp/R2-2tab-v2.mjs control-5560-after http://127.0.0.1:5560 5 /home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/review/R2/manual f
+### control-5560-after http://127.0.0.1:5560 N=5 cases=f start 19:36:42 load 20.11 16.78 13.79
+[19:37:12] control-5560-after (f) it1 FAIL load 20.11 16.78 13.79->18.92 16.82 13.89 failed: brew2_running_A_B_storage,brew2_not_paused
+    A=paused/s_mvcssd/25m/ends=null
+    B=paused/s_mvcssd/25m/ends=null
+    S=paused/s_mvcssd/25m/ends=null  S(read in B)=paused/s_mvcssd/25m/ends=null  pageErrors=0

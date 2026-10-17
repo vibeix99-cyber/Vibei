@@ -1,0 +1,8 @@
+### LEAD-5 probe file (unchanged from the first review) on git archive 2c9ec66 (trial 2)
+LEAD5-PROBE {"x":"s_mvc86kg045d688ac","y":"s_mvc87fb4cdb7207f","zCompletes":[],"sessions":["s_mvc87fb4cdb7207f"],"storedStatus":"idle","storedSid":null}
+LEAD5-PROBE-PAUSE {"storedStatus":"idle","storedSid":null}
+LEAD5-PROBE-EVENT {"x":"s_mvc86kg0b7685753","storedStatus":"idle","storedSid":null,"A":"idle","Z":"idle"}
+ ✓ src/timer/zz-lead5-probe.test.ts > LEAD-5 probe (W3R2 SG review) > a tab that missed every event (back/forward cache) does not complete a brew another tab ended under 1 min 1302ms
+ ✓ src/timer/zz-lead5-probe.test.ts > LEAD-5 probe (W3R2 SG review) > the same tab, the person presses Pause there (no tick): X does not come back 15ms
+ ✓ src/timer/zz-lead5-probe.test.ts > LEAD-5 probe (W3R2 SG review) > the same tab receives any later write (the other tab types its next words): X does not come back 10ms
+      Tests  3 passed (3)
