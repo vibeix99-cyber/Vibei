@@ -3,3 +3,32 @@
 
 Running 1 test using 1 worker
 
+  ✘  1 [pwa] › tests/pwa.spec.ts:85:1 › update: new version waits for the user (no reload mid-brew), then applies and the brew carries on (25.0s)
+
+
+  1) [pwa] › tests/pwa.spec.ts:85:1 › update: new version waits for the user (no reload mid-brew), then applies and the brew carries on 
+
+    TimeoutError: page.waitForFunction: Timeout 20000ms exceeded.
+
+      89 |   appendFileSync(join(OUT, 'sw.js'), `\n// update ${Date.now()}\n`); // "deploy" a new version
+      90 |   await page.evaluate(async () => (await navigator.serviceWorker.getRegistration())!.update());
+    > 91 |   await page.waitForFunction(() => (window as any).__kettle.pwa.state().needRefresh, null, { timeout: 20_000 });
+         |              ^
+      92 |   expect(await page.evaluate(async () => !!(await navigator.serviceWorker.getRegistration())!.waiting)).toBe(true);
+      93 |   expect(await page.evaluate(() => (window as any).__kettle.timer.getState().status)).toBe('running');
+      94 |
+        at /home/user/wt/w8tr-g2/kettle/tests/pwa.spec.ts:91:14
+
+    Error Context: .tmp/RR-pw/timer-pwa-5601-rerun-5601/pwa-update-new-version-wai-877e1-ies-and-the-brew-carries-on-pwa/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/RR-pw/timer-pwa-5601-rerun-5601/pwa-update-new-version-wai-877e1-ies-and-the-brew-carries-on-pwa/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/RR-pw/timer-pwa-5601-rerun-5601/pwa-update-new-version-wai-877e1-ies-and-the-brew-carries-on-pwa/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [pwa] › tests/pwa.spec.ts:85:1 › update: new version waits for the user (no reload mid-brew), then applies and the brew carries on 
+### end 20:54:51 UTC; exit=0; load:  20:54:51 up  5:04,  0 user,  load average: 12.42, 13.04, 13.69
