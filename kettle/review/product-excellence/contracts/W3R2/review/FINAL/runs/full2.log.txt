@@ -15,3 +15,6 @@ Running 264 tests using 2 workers
   ✓   10 [chromium] › tests/chai3d.spec.ts:176:3 › 3D Chai: fallbacks keep the procedural Chai › low tier: the model too (liteified), one request; the room is live first (15.1s)
   ✓   11 [chromium] › tests/a11y.spec.ts:73:1 › pointer targets are at least 24×24 px or meet a WCAG 2.5.8 exception (55.3s)
   ✘   12 [chromium] › tests/chai3d.spec.ts:197:3 › 3D Chai: fallbacks keep the procedural Chai › default tier on this machine (auto → low on SwiftShader): the model, with no frame without Chai (49.3s)
+  ✓   13 [chromium] › tests/a11y.spec.ts:110:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll (49.4s)
+  ✓   14 [chromium] › tests/chai3d.spec.ts:227:3 › 3D Chai: fallbacks keep the procedural Chai › WebGL context lost and restored: the engine is rebuilt with the model from memory, no second request (40.2s)
+  ✓   16 [chromium] › tests/integrity.spec.ts:217:3 › I01 session time survives reload, suspension and late return › pause → reload → resume: the paused time is kept and the deadline moves by exactly the pause (18.8s)
