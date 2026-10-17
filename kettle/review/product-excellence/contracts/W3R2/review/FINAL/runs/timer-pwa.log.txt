@@ -35,3 +35,13 @@ Running 31 tests using 1 worker
   ✓  26 [timer-app] › tests/timer.spec.ts:410:3 › multiple tabs › closing the leader tab mid-session hands over; the other tab completes it once (12.0s)
   ✓  27 [timer-app] › tests/timer.spec.ts:427:3 › multiple tabs › frozen leader: the other tab takes over at the end; the leader waking up later does not double-count (10.7s)
   -  28 [timer-app] › tests/timer.spec.ts:449:3 › rendering budget › useRemaining re-renders about once per displayed second
+  ✓  29 [pwa] › tests/pwa.spec.ts:48:1 › manifest is installable: name, colors, standalone, icons that exist (114ms)
+  ✓  30 [pwa] › tests/pwa.spec.ts:59:1 › precaches the shell, fonts, 3D chunk and tick worker; boots and times a brew offline (6.7s)
+  ✓  31 [pwa] › tests/pwa.spec.ts:85:1 › update: new version waits for the user (no reload mid-brew), then applies and the brew carries on (5.8s)
+
+  2 skipped
+  29 passed (3.4m)
+### playwright exit=0; after the run 22:00:33
+killing my leftover pid 32155 :: node /home/user/wt/w6-int/kettle/node_modules/.bin/vite preview --outDir /home/user/wt/w6-int/kettle/test-results/pwa-di
+port 5495 free after cleanup
+### end 22:00:36 UTC; exit=0; load:  22:00:36 up  6:10,  0 user,  load average: 15.29, 14.95, 13.93
