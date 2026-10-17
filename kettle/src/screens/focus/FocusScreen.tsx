@@ -157,8 +157,10 @@ export default function FocusScreen() {
     const st = useTimer.getState();
     if (st.status === 'idle') return;
     mainAt.current = shownTop(mainRef.current, panelRef.current);
-    audio.play(st.status === 'running' ? 'pause' : 'resume');
-    st.toggle();
+    const sound = st.status === 'running' ? 'pause' : 'resume';
+    // Dropped (another tab had already ended or replaced this brew; this tab now shows the current one): no sound.
+    if (st.toggle() === false) return;
+    audio.play(sound);
   }, []);
 
   // With large text the panel scrolls, and pausing adds lines above the controls (the "Paused" flag, a longer status):
@@ -177,7 +179,8 @@ export default function FocusScreen() {
   const addFive = useCallback(() => {
     const st = useTimer.getState();
     if (st.status === 'idle' || st.phase !== 'focus') return;
-    st.addTime(FIVE_MIN);
+    // Dropped (another tab had already ended or replaced this brew; this tab now shows the current one): no "+5 min" note.
+    if (st.addTime(FIVE_MIN) === false) return;
     const now = clock.now();
     const after = useTimer.getState();
     const left = Math.max(0, after.plannedMs - elapsedActiveMs(after, now));

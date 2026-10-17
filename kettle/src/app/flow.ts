@@ -134,6 +134,10 @@ export function startNextBrew(): void {
   if (t.status !== 'idle' && t.phase !== 'focus') {
     suppressNextStop = true;
     t.end('skip');
+    // The break's own stop (emitted synchronously) has taken the flag. When the end did not stop it (another tab had
+    // already ended or replaced this break, so the end was dropped; or it ran out at 0:00 and completed instead), the
+    // flag must not wait for a later stop: that one would lose its toast and its way home.
+    suppressNextStop = false;
   }
   getTimer().startFocus({ intention: t.intention, tag: t.tag });
 }

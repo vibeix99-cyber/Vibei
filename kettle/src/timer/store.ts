@@ -184,25 +184,80 @@ export function setCompletionGuard(g: CompletionGuard | null): void {
 
 let completing = false;
 
+// ---------- stale-tab guard: act on the current brew (multi-tab) ----------
+
+/**
+ * Another tab's write reaches this tab only through a `storage` event, which arrives a moment later (0.3–0.6 s under
+ * load). An action taken meanwhile would be computed from this tab's old copy and save it whole over a newer brew
+ * (W3R2). So every action that changes the timer first takes in what storage holds now (`catchUp`, installed by the tab
+ * sync, which also re-emits the change as `timer:sync` so the screens follow) and then:
+ *  - the same brew (only paused, resumed, extended or re-worded elsewhere): the action applies to it as it is now;
+ *  - another brew, or none (it was ended, or another tab started one): the action was aimed at a brew that is gone, so
+ *    it does nothing more and returns `false`. This tab now shows the current brew (a start joins the brew already
+ *    running), and the screens must not report the action as done (FocusScreen: no "+5 min" note, no pause sound).
+ * When this tab's own copy of storage is behind too, nothing here can tell; the receiving side (sync.ts) restores the
+ * newer brew then.
+ */
+let catchUp: () => void = () => {};
+export function setActionCatchUp(fn: (() => void) | null): void {
+  catchUp = fn ?? (() => {});
+}
+
+/** The person's gesture was aimed at a brew another tab has replaced or ended: the rest of it (this task) does nothing. */
+let behind = false;
+
+function actsOnCurrentBrew(get: () => TimerState): boolean {
+  if (behind) return false;
+  const shown = get().sessionId;
+  catchUp();
+  if (get().sessionId === shown) return true;
+  behind = true;
+  queueMicrotask(() => {
+    behind = false;
+  });
+  return false;
+}
+
+/**
+ * Not behind the catch-up: `tick` re-reads storage itself (the completion guard); `reset` is a wipe; `setIntention` and
+ * `syncIdleLength` save only their own fields into what storage holds now (never this tab's copy of the brew); `toggle`
+ * only picks `pause` or `resume`, which are. Every other action, including any added later, is.
+ */
+const NO_CATCH_UP: ReadonlySet<string> = new Set(['tick', 'reset', 'setIntention', 'syncIdleLength', 'toggle']);
+
+function onCurrentBrew<T extends object>(actions: T, get: () => TimerState): T {
+  const out = { ...actions } as Record<string, unknown>;
+  for (const [k, v] of Object.entries(out)) {
+    if (typeof v !== 'function' || NO_CATCH_UP.has(k)) continue;
+    const fn = v as (...args: unknown[]) => unknown;
+    out[k] = (...args: unknown[]) => (actsOnCurrentBrew(get) ? fn(...args) : false);
+  }
+  return out as T;
+}
+
 // ---------- store ----------
 
+/** `false`: the action was dropped, aimed at a brew another tab had already ended or replaced (see `onCurrentBrew`). */
+type Acted = void | false;
+
 interface TimerActions {
-  startFocus: (opts?: StartFocusOptions) => void;
-  startBreak: (kind?: Phase) => void;
-  pause: () => void;
-  resume: () => void;
-  toggle: () => void;
+  startFocus: (opts?: StartFocusOptions) => Acted;
+  startBreak: (kind?: Phase) => Acted;
+  pause: () => Acted;
+  resume: () => Acted;
+  /** Pause or resume, as the brew this tab shows; returns what that action returned. */
+  toggle: () => Acted;
   /** Add (or, with a negative value, remove) time from the current phase. */
-  addTime: (ms: number) => void;
+  addTime: (ms: number) => Acted;
   /** End the current phase early. Focus ≥ 1 min is still recorded (not completed). */
-  end: (reason?: 'user' | 'skip') => void;
+  end: (reason?: 'user' | 'skip') => Acted;
   /** Check for completion. Called by the ticker; safe to call any time, from any tab. */
   tick: () => void;
   /** Back to idle without recording anything (e.g. reset data). */
   reset: () => void;
   setIntention: (intention: string, tag?: TimerState['tag']) => void;
   /** Shift all wall-clock anchors by `deltaMs` (system clock changed under us). */
-  rebase: (deltaMs: number) => void;
+  rebase: (deltaMs: number) => Acted;
   /** While idle, make the displayed length follow the focus-length setting. */
   syncIdleLength: () => void;
 }
@@ -342,7 +397,7 @@ export const useTimer = create<TimerStore>()(
         if (s.status !== 'idle') get().end(s.phase === 'focus' ? 'user' : 'skip');
       };
 
-      return {
+      return onCurrentBrew<TimerStore>({
         ...INITIAL_TIMER,
 
         startFocus: (opts = {}) => {
@@ -422,8 +477,8 @@ export const useTimer = create<TimerStore>()(
 
         toggle: () => {
           const s = get();
-          if (s.status === 'running') s.pause();
-          else if (s.status === 'paused') s.resume();
+          if (s.status === 'running') return s.pause();
+          if (s.status === 'paused') return s.resume();
         },
 
         addTime: (ms) => {
@@ -502,6 +557,9 @@ export const useTimer = create<TimerStore>()(
         },
 
         reset: () => {
+          // A wipe (reset data), not an edit of the brew: the key is removed first, so other tabs see a removal and
+          // follow it (sync.ts), rather than taking the idle kettle for a stale tab's write and putting their brew back.
+          safeStorage.removeItem(TIMER_STORAGE_KEY);
           const len = phaseLengthMs('focus');
           set({ ...INITIAL_TIMER, plannedMs: len, remainingMs: len });
         },
@@ -542,7 +600,7 @@ export const useTimer = create<TimerStore>()(
             savingOnly(get, IDLE_LENGTH_FIELDS, true, () => set({ phase: 'focus', plannedMs: len, remainingMs: len }), followingOtherTab);
           }
         },
-      };
+      }, get);
     },
     {
       name: TIMER_STORAGE_KEY,
@@ -555,3 +613,25 @@ export const useTimer = create<TimerStore>()(
 );
 
 export const getTimer = () => useTimer.getState();
+
+/** Another tab wiped the timer (its key was removed): show an idle kettle, as `reset` does, but only follow the wipe. */
+export function followWipe(): void {
+  const len = phaseLengthMs('focus');
+  useTimer.setState({ ...INITIAL_TIMER, plannedMs: len, remainingMs: len });
+}
+
+/**
+ * What storage holds now, as this tab would load it (same sanitising as a rehydrate), or null when nothing readable of
+ * this version is stored. Read by the receiving side of the stale-tab guard (sync.ts) before it mirrors.
+ */
+export function readStoredTimer(now: number = clock.now()): TimerState | null {
+  try {
+    const raw = safeStorage.getItem(TIMER_STORAGE_KEY);
+    if (raw == null) return null;
+    const env = JSON.parse(raw) as { state?: unknown; version?: unknown } | null;
+    if (!env || env.version !== useTimer.persist.getOptions().version || !env.state || typeof env.state !== 'object') return null;
+    return { ...INITIAL_TIMER, ...sanitizeTimer(env.state, now) };
+  } catch {
+    return null;
+  }
+}
