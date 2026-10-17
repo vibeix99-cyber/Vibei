@@ -1,0 +1,6 @@
+######## I-timer-whole: KETTLE_PORT=5560 COVER= npx playwright test tests/timer.spec.ts --project=timer-harness --project=timer-app --workers=1
+### start 20:42:19 load 17.38 17.47 15.25
+
+Running 28 tests using 1 worker
+
+  ✓   1 [timer-harness] › tests/timer.spec.ts:74:3 › timer reliability › start → reload mid-session → same session, same end, correct remaining; paused survives reload (5.0s)
