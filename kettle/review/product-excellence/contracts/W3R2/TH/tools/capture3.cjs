@@ -217,6 +217,7 @@ const STATES = {
     }
   };
   // One job = one state in one configuration, captured for every target back to back (same load for all of them).
+  if (process.env.PAIRS) { const want = new Set(process.env.PAIRS.split(',')); for (let k = jobs.length - 1; k >= 0; k--) if (!want.has(`${jobs[k].cfg}/${jobs[k].st}`)) jobs.splice(k, 1); }
   const one = async (job) => { for (const [label, port] of TARGETS) await shoot(job, label, port); };
   const N = Number(process.env.PAR || 3);
   let i = 0;

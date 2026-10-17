@@ -26,7 +26,7 @@ for (const cfg of cfgs) for (const f of fs.readdirSync(path.join(root, 'before',
   const row = { cfg, state, size: [W, H] };
   if (a.width !== W || a.height !== H) { row.sizeDiff = [a.width, a.height]; rows.push(row); continue; }
   const d1 = b1.data, da = a.data, d2 = b2 && b2.width === W && b2.height === H ? b2.data : null;
-  let n = 0, nn = 0, masked = 0;
+  let n = 0, nn = 0, masked = 0, nmax = 0, nbig = 0;
   const mk = new Uint8Array(W * H);
   for (const [rx, ry, rw, rh] of maskRects[cfg + '/' + state] || []) for (let y = Math.max(0, ry - 4); y < Math.min(H, ry + rh + 4); y++) for (let x = Math.max(0, rx - 4); x < Math.min(W, rx + rw + 4); x++) mk[y * W + x] = 1;
   const noise = new Uint8Array(W * H), diffA = new Uint8Array(W * H);
@@ -34,9 +34,9 @@ for (const cfg of cfgs) for (const f of fs.readdirSync(path.join(root, 'before',
     const i = k * 4;
     if (mk[k]) { if (dl(d1, da, i)) masked++; continue; }
     if (dl(d1, da, i)) { diffA[k] = 1; n++; }
-    if (d2 && dl(d1, d2, i)) { noise[k] = 1; nn++; }
+    if (d2) { const q = dl(d1, d2, i); if (q) { noise[k] = 1; nn++; if (q > nmax) nmax = q; if (q > TOL) nbig++; } }
   }
-  row.px = n; row.noisePx = d2 ? nn : null; row.maskedPx = masked;
+  row.px = n; row.noisePx = d2 ? nn : null; row.maskedPx = masked; row.noiseMax = nmax; row.noiseBig = nbig;
   // grow the noise mask by RADIUS (separable box)
   let grown = noise;
   if (d2 && nn) {
