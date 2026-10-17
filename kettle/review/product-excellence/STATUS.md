@@ -15,14 +15,16 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 **Binding:** `contracts/W3R2/VB-DECISIONS-W3R2.md`. The Final Product Boss stays on hold. Plan: `contracts/W3R2/PLAN.md`; gate record: `contracts/W3R2/review/GATE.md`.
 
 - **Start:** integration HEAD `494748b`, clean and equal to origin. Servers, slot gate (MAX 3) and autocommit were restarted after the container restart. Old worktrees were pruned; their branches and bundles remain.
-- **Item 1, stale-tab guard (SG): APPROVE `4b2690f`** after one fix round (LEAD-5 `4db5fa1`), **conditional on a Lane R2 rerun on trial 2 :5601** (`2c9ec66`, with TH). The rerun started 20:20 (stop 21:45). Merge if green.
+- **Item 1, stale-tab guard (SG): APPROVE `4b2690f`** after one fix round (LEAD-5) → **merged `72214c8`**. Lane R2's rerun on trial 2 was green. `pwa:85` was ruled an environment artifact (a stray preview held the PWA port); LEAD-5's clean-port pwa run gave 3/3.
 - **Item 2, `Toast.tsx:482` hook (TH): APPROVE** (LEAD-5) → **merged `7cb3242`**.
-- **Item 3, test stability (TS): APPROVE `89396e8`** after one fix round (LEAD-6 `23c6d1a`) → **merged `a391cdc`**. The flake's cause was the Today dock switching mode after boot; `press()` now wheels clear the page's own docked chrome only.
+- **Item 3, test stability (TS): APPROVE `89396e8`** after one fix round (LEAD-6) → **merged `a391cdc`**.
+- **Now:** **Lane RF** (Sonnet) full regression on the merged tree `1c791f3` (src `5f504d4`) on :5560 / :5570; pre-round control :5583 (src `b74e6b3`); stop 00:30 UTC. Then LEAD classifies any failure, then the report to Vibei.
 - **FOLLOW-UPs logged:**
   - R8, the Today dock switching mode after boot at 844×390 @200 % (product, pre-existing);
   - the doubly stale same-brew +5 loss;
   - the composer label.
-- **Integration HEAD:** app `7cb3242` (src `07df367`), tests `1f5feee`.
+- **Integration HEAD:** app `72214c8` (src `5f504d4`); all three W3R2 items merged.
+- **Also FOLLOW-UP:** `pwa.spec.ts` should refuse a port that already answers, and its `afterAll` leaves the preview running (LEAD-5).
 - **Then:** merges on APPROVE only, a full regression on the merged tree (Lane RF, Sonnet), and the report to Vibei.
 - **Not this round:** the composer label quirk (for the Final Boss), the low-tier backdrop still vs live (Vibei's phone check), band collapse only off-screen (post-Boss polish).
 - **Servers:** integration :5560/:5570; old base :5478/:5488; makers :5581, :5582, :5583.
