@@ -1,0 +1,6 @@
+### start 18:56:46 UTC; load:  18:56:46 up  3:06,  0 user,  load average: 12.38, 10.37, 10.29
+### cmd: (cd /home/user/wt/w8tr-g/kettle) KETTLE_PORT=5591 KETTLE_PWA_PORT=5498 npx playwright test tests/integrity.spec.ts -g two tabs, the leading one frozen across the end --project=chromium --repeat-each=10 --workers=1 --reporter=list,json
+
+Running 10 tests using 1 worker
+
+  ✓   1 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (18.3s)
