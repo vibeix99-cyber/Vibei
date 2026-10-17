@@ -1,0 +1,6 @@
+108a109
+>   sync.installActionCatchUp();
+241c242
+<     expect(A.timer.getState().intention).toBe('from B');
+---
+>     expect(A.timer.getState().intention).toBe('from A');

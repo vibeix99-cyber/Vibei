@@ -12,3 +12,12 @@ no burners (whole-file run, the config's default of one worker)
 
 Running 28 tests using 1 worker
 
+  ✓   1 [timer-harness] › tests/timer.spec.ts:74:3 › timer reliability › start → reload mid-session → same session, same end, correct remaining; paused survives reload (5.7s)
+  ✓   2 [timer-harness] › tests/timer.spec.ts:111:3 › timer reliability › a phase that ended while the app was closed (3 h ago) completes once, at its real end, whileAway (3.2s)
+  ✓   3 [timer-harness] › tests/timer.spec.ts:143:3 › timer reliability › reload exactly at 0:00 records the session once (4.8s)
+  ✓   4 [timer-harness] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (4.2s)
+  ✓   5 [timer-harness] › tests/timer.spec.ts:189:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (4.2s)
+  ✓   6 [timer-harness] › tests/timer.spec.ts:222:3 › timer reliability › frozen tab (OS suspended it) across the end completes once on resume, at the real end (5.0s)
+  ✓   7 [timer-harness] › tests/timer.spec.ts:240:3 › device integrations › wake lock: held while running and visible; released on pause, idle and setting off; re-acquired on return (768ms)
+  ✓   8 [timer-harness] › tests/timer.spec.ts:289:3 › device integrations › media session: metadata + play/pause handlers while a phase runs, cleared when idle (1.2s)
+  ✓   9 [timer-harness] › tests/timer.spec.ts:302:3 › keyboard shortcuts infra › Space toggles — but never while typing, on a focused button, or on key repeat; ? toggles help, not over a dialog (1.7s)

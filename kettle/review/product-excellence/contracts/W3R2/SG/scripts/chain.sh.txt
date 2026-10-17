@@ -1,0 +1,44 @@
+#!/bin/bash
+# W3R2 SG browser checks, each through the slot gate (lane SG). Logs into the packet's logs/ folder.
+SLOTS=/home/user/Vibei/kettle/review/product-excellence/contracts/I04/integration-fix/round7-review/tools/slots.py
+L=/home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/SG/logs
+W=/home/user/wt/w8g/kettle
+cd $W || exit 9
+hdr() { echo "### $1 | branch $(git -C /home/user/wt/w8g rev-parse --short HEAD) (src $(git -C /home/user/wt/w8g rev-parse --short HEAD:kettle/src)) | start $(date -u +%FT%TZ) load $(cut -d' ' -f1-3 /proc/loadavg)"; }
+ftr() { echo "### exit $1 | end $(date -u +%FT%TZ) load $(cut -d' ' -f1-3 /proc/loadavg)"; }
+gate() { local n=$1; shift; python3 -I $SLOTS run --lane SG --n $n -- "$@"; }
+run() { # run <log> <n> <title> <cmd...>
+  local log=$1 n=$2 title=$3; shift 3
+  { hdr "$title"; gate $n "$@"; ftr $?; } > $L/$log 2>&1
+  echo "$(date -u +%T) done $log: $(grep -E '^\s+[0-9]+ (passed|failed|flaky|skipped)' $L/$log | tr '\n' ' ')"
+}
+STEPS=${STEPS:-"stale race compat"}
+for s in $STEPS; do case $s in
+  stale)
+    run stale-tab-pw-fix-5581-x3.log.txt 1 "w3r2-stale-tab.spec.ts on the fix :5581 x3" env KETTLE_PORT=5581 npx playwright test --project=chromium tests/w3r2-stale-tab.spec.ts --repeat-each=3 --output=.tmp/sg/pw-stale-fix --reporter=list
+    run stale-tab-pw-HEAD-5560-x3.log.txt 1 "w3r2-stale-tab.spec.ts on HEAD 494748b :5560 x3" env KETTLE_PORT=5560 npx playwright test --project=chromium tests/w3r2-stale-tab.spec.ts --repeat-each=3 --output=.tmp/sg/pw-stale-5560 --reporter=list
+    run stale-tab-pw-base-5478-x1.log.txt 1 "w3r2-stale-tab.spec.ts on old base 4d36939 :5478 x1" env KETTLE_PORT=5478 npx playwright test --project=chromium tests/w3r2-stale-tab.spec.ts --output=.tmp/sg/pw-stale-5478 --reporter=list ;;
+  race)
+    run intention-race-pw-fix-5581-x3.log.txt 1 "w3-intention-race.spec.ts (existing, unchanged) on the fix :5581 x3" env KETTLE_PORT=5581 npx playwright test --project=chromium tests/w3-intention-race.spec.ts --repeat-each=3 --output=.tmp/sg/pw-race-fix --reporter=list ;;
+  compat)
+    for d in "5560 5581" "5581 5560" "5478 5581" "5581 5478"; do set -- $d
+      run compat-$1-to-$2.log.txt 1 "compat: profiles saved on :$1 load unchanged on :$2" env SG_FROM=http://127.0.0.1:$1 SG_TO=http://127.0.0.1:$2 npx playwright test --config .tmp/sg/compat/pw.config.ts compat.spec.ts --output=.tmp/sg/pw-compat --reporter=list
+    done ;;
+  stress)
+    run stress-309-x20-w2-nb6.log.txt 2 "integrity:309 x20, --workers=2 + 6 CPU burners (own PIDs), on the fix :5581" bash -c '
+      PIDS=""; for i in 1 2 3 4 5 6; do ( while :; do :; done ) & PIDS="$PIDS $!"; done
+      echo "burners:$PIDS start $(date -u +%T) load $(cut -d" " -f1-3 /proc/loadavg)"
+      env KETTLE_PORT=5581 npx playwright test tests/integrity.spec.ts --project=chromium --workers=2 --repeat-each=20 --output=.tmp/sg/pw-stress --reporter=list -g "two tabs, the leading one frozen across the end"
+      rc=$?
+      echo "playwright exit $rc end $(date -u +%T) load $(cut -d" " -f1-3 /proc/loadavg)"
+      kill $PIDS; wait $PIDS 2>/dev/null
+      echo "burners stopped (kill$PIDS) $(date -u +%T)"; exit $rc' ;;
+  integrity)
+    run integrity-all-fix.log.txt 1 "integrity.spec.ts whole, on the fix :5581" env KETTLE_PORT=5581 npx playwright test tests/integrity.spec.ts --project=chromium --output=.tmp/sg/pw-integrity --reporter=list ;;
+  home)
+    run w2-home-fix.log.txt 1 "w2-home.spec.ts on the fix :5581" env KETTLE_PORT=5581 npx playwright test tests/w2-home.spec.ts --project=chromium --output=.tmp/sg/pw-home --reporter=list ;;
+  timer)
+    run timer-app-harness-fix.log.txt 1 "timer.spec.ts timer-app + timer-harness on the fix :5581" env KETTLE_PORT=5581 npx playwright test --project=timer-app --project=timer-harness --output=.tmp/sg/pw-timer --reporter=list ;;
+  pwa)
+    run pwa-fix.log.txt 1 "pwa project (build of the worktree + preview on :5597)" env KETTLE_PORT=5581 KETTLE_PWA_PORT=5597 npx playwright test --project=pwa --output=.tmp/sg/pw-pwa --reporter=list ;;
+esac; done
