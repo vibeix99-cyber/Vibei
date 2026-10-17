@@ -170,3 +170,14 @@
   - R2's cause: its own leftover first-pass preview (PID 409) held the PWA port :5498, so the test ran against an old build.
   - The orchestrator also found and killed SG maker's leftover `test-results/pwa-dist` preview on :5597 (PID 10314).
   - **Sent to LEAD-5 to rule before the SG merge**, per its condition. Every PWA-project result this round is flagged as possibly affected by stray builds.
+
+## Item 1, SG: LEAD-5 rules `pwa:85` an environment artifact (`3e9823a`); APPROVE stands → merged as `72214c8` (2026-10-17 ~21:35 UTC)
+
+- **LEAD-5 on `pwa:85`:** when an old preview holds the PWA port, `pwa.spec.ts` checks only that the port answers and runs against that build. Its update test edits its own `sw.js`, so the update never comes.
+- **LEAD-5's own run:** `pwa` on trial 2 on port 5495 (checked free first; trial 2's own preview served it), **3/3**. Its leftover preview was killed and the port freed.
+- **The earlier PWA results** (maker SG's "pwa 3/3" and R2's first pass) are superseded by this run.
+- **FOLLOW-UP for the timer/PWA owner:** `pwa.spec.ts` should refuse a port that already answers, and its `afterAll` kills only the npx wrapper, leaving the preview running.
+- **Merge check:**
+  - the merged src `5f504d4` equals SG trial 2 `2c9ec66`'s;
+  - the merged tests differ from trial 2's only by `notice-strip.spec.ts` and `timer.spec.ts`, which are identical to TS's approved trial `41b3424`'s.
+- **Integration HEAD app is now `72214c8`** (src `5f504d4`). All three W3R2 items are merged. Next: the full regression on the merged tree (Lane RF, Sonnet).
