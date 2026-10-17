@@ -1,0 +1,63 @@
+[slots] TS took 1/3 at 16:30:24: bash -c 
+  cd "$WT" || exit 9
+  echo "### start $(date -u +%T) load $(cut -d" " -f1-3 /proc/loadavg)"
+  echo "### cmd: $*"
+  "$@"; rc=$?
+  echo "### end $(date -u +%T) exit=$rc load $(cut -d" " -f1-3 
+### start 16:30:24 load 11.83 14.54 11.30
+### cmd: /home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/TS/scripts/inject-notice-bound.sh
+######## new COVER=transient COVER_MS=3500: KETTLE_PORT=5583 npx playwright test -c .tmp/ts-pw.config.ts ts/new/notice-strip.spec.ts --project=chromium --workers=1 -g 'real input \(844×390 dark 200 %\)'
+### start 16:30:24 load 11.83 14.54 11.30
+
+Running 1 test using 1 worker
+
+[inject] transient cover over getByRole('textbox', { name: /What are you brewing/ }) for 3500 ms at 16:30:29.391
+[inject] re-check: covered at 16:30:29.410
+[inject] aim again 1 at 16:30:29.663
+[inject] aim again 2 at 16:30:29.929
+[inject] aim again 3 at 16:30:30.193
+[inject] aim again 4 at 16:30:30.463
+[inject] aim again 5 at 16:30:30.730
+[inject] aim again 6 at 16:30:31.012
+[inject] aim again 7 at 16:30:31.277
+[inject] aim again 8 at 16:30:31.552
+  ✘  1 [chromium] › .tmp/ts/new/notice-strip.spec.ts:375:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (4.6s)
+
+
+  1) [chromium] › .tmp/ts/new/notice-strip.spec.ts:375:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+
+    Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+      335 |     if (at && ((same && Date.now() - t < 800) || round >= 4)) break;
+      336 |   }
+    > 337 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();
+          |                                                            ^
+      338 |   if (touch) {
+      339 |     await page.touchscreen.tap(at!.x, at!.y);
+      340 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)
+        at press (/home/user/wt/w8q/kettle/.tmp/ts/new/notice-strip.spec.ts:337:60)
+        at /home/user/wt/w8q/kettle/.tmp/ts/new/notice-strip.spec.ts:387:5
+
+    Error Context: .tmp/ts-out/nb-new-transient-3500/new-notice-strip-no-notice-58846-eal-input-844×390-dark-200--chromium/error-context.md
+
+  1 failed
+    [chromium] › .tmp/ts/new/notice-strip.spec.ts:375:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+### end 16:30:32 exit=1 load 10.61 14.19 11.22
+
+######## new COVER=transient COVER_MS=1500: KETTLE_PORT=5583 npx playwright test -c .tmp/ts-pw.config.ts ts/new/notice-strip.spec.ts --project=chromium --workers=1 -g 'real input \(844×390 dark 200 %\)'
+### start 16:30:32 load 10.61 14.19 11.22
+
+Running 1 test using 1 worker
+
+[inject] transient cover over getByRole('textbox', { name: /What are you brewing/ }) for 1500 ms at 16:30:38.215
+[inject] re-check: covered at 16:30:38.240
+[inject] aim again 1 at 16:30:38.492
+[inject] aim again 2 at 16:30:38.769
+[inject] aim again 3 at 16:30:39.031
+[inject] aim again 4 at 16:30:39.295
+[inject] aim again 5 at 16:30:39.558
+[inject] aim again 6 at 16:30:39.821
