@@ -4,4 +4,5 @@ source /home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/review/R
 cd $W
 cp $E/scripts/RR-2tab.mjs $W/.tmp/RR-2tab-e2.mjs
 { echo "### start $(date -u +%H:%M:%S) UTC; load: $(uptime)"; echo "### cmd: node .tmp/RR-2tab-e2.mjs e2-5601 http://127.0.0.1:5601 5 $E/manual e"; node .tmp/RR-2tab-e2.mjs e2-5601 http://127.0.0.1:5601 5 $E/manual e; echo "### end $(date -u +%H:%M:%S) UTC; exit=$?; load: $(uptime)"; } > $E/runs/manual-2tab-5601-e2.log.txt 2>&1
+{ echo "### start $(date -u +%H:%M:%S) UTC; load: $(uptime)"; echo "### cmd: node .tmp/RR-2tab-e2.mjs e2-5560-control http://127.0.0.1:5560 5 $E/manual e"; node .tmp/RR-2tab-e2.mjs e2-5560-control http://127.0.0.1:5560 5 $E/manual e; echo "### end $(date -u +%H:%M:%S) UTC; exit=$?; load: $(uptime)"; } > $E/runs/manual-2tab-5560-e2.log.txt 2>&1
 echo done > $E/runs/e2.done
