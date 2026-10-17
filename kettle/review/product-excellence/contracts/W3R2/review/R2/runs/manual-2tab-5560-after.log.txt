@@ -43,3 +43,11 @@
     B=running/s_mvcsjs/30m/ends=1792267209669
     S=running/s_mvcsjs/30m/ends=1792267209669  S(read in B)=running/s_mvcsjs/30m/ends=1792267209669  pageErrors=0
 ### case (b) control-5560-after: pass 0/5 {"precondition_B_behind":5,"same_session_A_B_storage":5,"A_B_storage_agree":5,"still_paused_A_B_storage":0,"plus5_applied_A_B_storage":5}
+[19:30:40] control-5560-after (c) it1 FAIL load 16.62 10.77 11.22->17.30 11.43 11.43 failed: brew2_running_A_B_storage,B_shows_focus
+    A=idle/null/25m/ends=null
+    B=idle/null/25m/ends=null
+    S=idle/null/25m/ends=null  S(read in B)=idle/null/25m/ends=null  pageErrors=0
+[19:31:02] control-5560-after (c) it2 FAIL load 17.30 11.43 11.43->17.16 11.79 11.55 failed: brew2_running_A_B_storage,B_shows_focus
+    A=idle/null/25m/ends=null
+    B=idle/null/25m/ends=null
+    S=idle/null/25m/ends=null  S(read in B)=idle/null/25m/ends=null  pageErrors=0
