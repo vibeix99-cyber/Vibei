@@ -128,3 +128,57 @@ So the field is **not** briefly crossed and **not** out of the view: it sits, st
 **Why the field was on top a moment earlier (inferred, consistent with every log):** the helper skipped the wheel walk, so its first read found the field on top at `scrollY` 0, while the final state at `scrollY` 0 has the field under the dock. In passing runs the walk is taken (the maker's injection logs show `scrollY` 180 at this press). The Today dock changes mode after boot: `Composer.tsx` measures the dock in a `useLayoutEffect` + `ResizeObserver` and sets `data-tall` when it is taller than 60 % of the screen, which takes the dock out of the sticky position into the page flow (`Home.module.css:1013`); at 844×390 @200 % the settled dock is under that line (~210 of 390 px), so it ends docked. Under CPU load that measurement settles after the test's `ready()` and `document.fonts.ready`, i.e. after the first read. Stage F (below, if it ran) logs `data-tall` and the dock's box at the first read to confirm this; the defect does not depend on it.
 
 **Classification.** A test race with the page's boot-time layout, the same failure as W3R1 §9 item 3 (same field, same first `press()`, same words, before any notice exists) and as the base failure in TH's run at 844×390 light 200 % reduced motion (`W3R2/TH/logs/base-notice-suite.log.txt`). Not a new failure introduced by `21e5644`, and not caused by any `src/` change (src is untouched). It is pre-existing product behaviour that a test must be robust to; it is not a product defect of this round (see §5, product note).
+
+## 5. Residuals
+
+| # | Residual | Class | Why |
+|---|---|---|---|
+| R1 | `press()` at 844×390 dark 200 % under load: **7/10** (mine, twice: stages A and E), 9/10 and 6/10 (the maker's). The composer field sits, in view, under the Today page's sticky docked Start for the whole re-aim window (§4.1) | **BLOCKS** (TS-D1) | Vibei's bar is 10/10 under load. The remaining failure is the same flake as W3R1 §9.3, now observed: not a momentary cover and not out of the view, so the re-aim's premise does not match it |
+| R2 | A rescrolled `press()` can end in the sheet's Tab + Enter or synthetic `click()` instead of failing (§2.3 note 2) | **BLOCKS** (TS-D2) | Turns a former failure into non-real input recorded only as an annotation; "no assertion may be weakened". One-line fix |
+| R3 | `:156` does not assert that its freeze landed before `endsAt` (§2.1) | FOLLOW-UP | Not a weakening (the base had the same gap); a one-line strengthening, welcome in the fix round, not required |
+| R4 | Packet wording: "at most 8 times in all" is per `press()` call; with `AIM_RESCROLL` = 2 the worst case is 3 × 8 re-reads; "the freeze is now guaranteed to run before the end" holds for a late runner, not a stalled page | FOLLOW-UP | Wording only; correct it in the fix-round packet |
+| R5 | The timer pair: **10/10 + 10/10** under load (mine, `timer-app`); the maker's 20/20 + 20/20 in both projects; injected race old fails / new passes (mine and the maker's); whole `timer.spec.ts` 26 + 2 skipped (the maker's) | ACCEPTED | Meets the bar; no assertion weakened |
+| R6 | The old tests were not run under the same burners as a control | ACCEPTED | The injection is the proof; LEAD-5's matched-load control (W3R1 §9) already showed load alone passes the old pair |
+| R7 | Whole `notice-strip.spec.ts` | ACCEPTED for this round: **25/25** (mine, stage D, no burners) | Closes the maker's open §5.2 |
+| R8 | **Product note, not this item:** at 844×390 @200 % the Today dock appears to change mode after boot (in the page flow, then docked) and then covers the task field at `scrollY` 0; a person tapping the field in that moment would hit the dock's note ("Change brew length" is in it). Pre-existing (W3R1, TH base) | FOLLOW-UP for Vibei / the Final Boss (out of scope; no `src/` change allowed in item 3) | Logged so the test fix does not hide it: the test must handle it, the product question stays open |
+
+## Verdict: **REJECT** `pe/w3r2-test-stability@21e5644` (trial `6babf87`), two defects (TS-D1, TS-D2), one 90-minute fix round (§6)
+
+- **Timer pair: done.** No assertion weakened; the injected race fails the old tests and passes the new ones; 10/10 and 10/10 under load on the trial. These two changes may be kept as they are.
+- **`press()`: not done.** 7/10 under load (twice), so Vibei's 10/10 is not met, and the failure that remains is now observed and is not one the re-aim can cure. One corner of the rescroll also loosens a former failure into a keyboard or synthetic press.
+- Nothing merges from this branch until the fix round passes.
+
+## 6. Fix round (90 minutes, one round): TS-D1 and TS-D2
+
+**Branch:** continue `pe/w3r2-test-stability` from `21e5644` (worktree `/home/user/wt/w8q`). Keep `a6b3790`/`21e5644`; add commits.
+**Files allowed:** `kettle/tests/notice-strip.spec.ts` only. `kettle/tests/timer.spec.ts` only for the optional R3 line. No `src/`, no other spec, no config. Scratch/injection/diagnostic copies stay in git-ignored `.tmp/` and are copied into the packet as `.txt`.
+
+### TS-D1 · the composer field under the docked Start (the observed cause)
+**Defect.** At 844×390 dark 200 % under load, the first `press()` (Today's "What are you brewing?" field) finds the field on top, then the page's boot layout settles and the field is, from then on, wholly in view but under the sticky docked Start (`.ctaDock`). The re-aim waits 8 × 250 ms and fails with "… still on top as the tap is aimed". 3/10 in two of my runs (§4, §4.1).
+
+**Required outcome.**
+1. `press()` brings a target that is in view but covered by the **page's own docked chrome** (the Today `.ctaDock` and the tab bar or side rail, i.e. what the walk at the top of `press()` already treats as "under the docked start / tab bar: bring it up") clear of it by the same real wheel walk, within the existing `AIM_RESCROLL` bound. The maker's `scratch/UNVERIFIED-chrome-aware-rescroll.diff.txt` is a starting point, **but** its rule "any fixed or sticky ancestor" is too wide: it must **not** treat a notice (`[data-notice-strip]`, `[data-inline-undo]`), a sheet (`[role=dialog]`, `#root[inert]`), or a cover the test did not identify as page chrome, as something to wheel away from. Those keep the wait-only path and fail as now. An alternative that also meets the outcome: before the first `press()` of a screen, wait (bounded, stated) until the composer dock's mode and box are stable across frames. Either way, state the bound.
+2. Unchanged: the `expect(at, \`${el} still on top as the tap is aimed\`)` line and words; the tap only after a move-then-read that finds the target on top; strict mode; the 800 ms / 0.5 px / 5-round rules; `GONE_MS`.
+3. Confirm the cause in the packet with a diagnostic under load before the fix: the dock's `data-tall`, computed `position` and box at the field's first read and at the failing re-check (my stage-F copy does this: `.tmp/lead6/ts/diag3/` in `/home/user/wt/w8tr-q/kettle`, `E-`/`F-` logs here). If what is seen is **not** the docked Start, stop and report; do not widen the helper to fit.
+
+### TS-D2 · a rescroll must not end in a non-real press
+**Defect.** The recursive `press(…, rescrolled + 1)` reruns the sheet fallbacks (Tab + Enter, then a synthetic `click()`), which on base could not follow an aim-time failure.
+**Required outcome.** A rescrolled (or chrome-cleared) call that cannot bring the target on top **fails**, with "… can be brought on top by real scrolling" or the unchanged "… still on top as the tap is aimed"; it never takes the keyboard or synthetic fallback.
+
+### Optional in the same round (R3, R4)
+- R3: return `Date.now()` at the freeze from `:156`'s evaluate and assert it is before `endsAt` (state the margin). If taken, rerun `:156` ×10 under load in both projects.
+- R4: correct the two sentences in the packet.
+
+### Acceptance (◆ = I rerun)
+1. ◆ **Diff and no-weakening.** Only the allowed file(s); the packet's §1 table updated line by line for the new path; the classes of cover that are wheeled away from are listed and justified; notices and sheets are not among them; the total bound per target is stated.
+2. ◆ **Injection, old vs new, 844×390 dark 200 %, workers=1** (scratch copies by `mkinject.py`, extended):
+   - `COVER=dock`: at the first press's re-check, put the field under the docked Start the way the page does (e.g. scroll to 0 so the field is at 296–348 under `.ctaDock`, or toggle the dock out of `data-tall`): **`21e5644` fails** with "… still on top as the tap is aimed" after the 8 re-reads, **the fix passes** (whole test);
+   - `COVER=transient` (300 ms) passes;
+   - `COVER=permanent-abs` (a cover anchored in the page over the field) **fails** with the same words;
+   - `COVER=permanent` (the fixed-position cover) **fails** with the same words (it is not page chrome);
+   - a sheet target forced through a rescroll (or a code-path argument, if no injection can reach it) shows TS-D2 fails rather than falls back.
+3. ◆ **Under load** (recipe of `W3R1/review/FINAL/scripts/LR-stress.sh`: `--workers=2` + 4 burners killed by PID; load average at each start and end): `notice-strip` 844×390 dark 200 % **×20: 20/20**, and 844×390 light 200 % reduced motion **×10: 10/10** (the same flake on TH's base run). I rerun ×10 of each.
+4. ◆ **Under load, the fix is exercised, not just lucky:** the diagnostic copy on the fix, ×10 under the same load, logs how many times the new chrome path was taken; 10/10 passes.
+5. ◆ **Whole `notice-strip.spec.ts` once: 25/25** (`--workers=2`).
+6. **Timer pair unchanged** (or, with R3, `:156` ×10 under load in `timer-app` and `timer-harness`, 10/10 each).
+7. Packet `TS-READY.md` §6 (fix round), staged commits, `.txt` evidence ≤ 20 MB each, no model names; hard stop as set by the orchestrator.
