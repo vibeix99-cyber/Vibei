@@ -136,3 +136,14 @@
 | Open | `:189` and the whole `timer.spec.ts` were not rerun after R3 (which touches `:156` only). Product note R8 (the dock changes mode after boot) is unchanged |
 | Archive | `archive/pe-w3r2-test-stability-fix-89396e8.incremental.bundle` (requires `21e5644`) |
 | Next | LEAD-6's final TS verdict |
+
+## Item 1, SG: APPROVE `4b2690f` (LEAD-5 `4db5fa1`), conditional on a Lane R2 rerun on trial 2 (:5601) before merge (2026-10-17 ~20:20 UTC)
+
+- **All three defects closed**, each within the scope widened for the round.
+  - **SG-D1:** LEAD-5's unchanged probe passes 3/3. Vitest 28 cases: 3 fail on `54a9721`, 19 on HEAD, 28/28 on the fix. Every doubly stale restore still works.
+  - **SG-D2 and SG-D3:** their browser cases fail on :5591 and pass on :5601.
+- **LEAD-5 reruns on :5601:** stale-tab spec 10/10 (HEAD :5560 5/5 fail); compatibility 6/6 byte-identical; `integrity:309` ×20 under load 20/20; vitest 342/342; tsc 0. `multitab.test.ts` carries exactly the ruled edit.
+- **Condition:** Lane R2 reruns on :5601, because the fix round touched single-tab code (`flow.ts` Next brew, `FocusScreen.tsx` pause/+5) and :5601 is the first build with TH and SG together.
+  - The rerun covers timer/PWA, integrity plus `:309` ×10, `w2-home`, the race and stale-tab specs, the notice suite, and the 2-tab check (a)–(e). In (e), no "+5 min" note may show.
+  - **Merge if green; any failure goes back to LEAD-5.** Rerun started 20:20 UTC (stop 21:45).
+- Servers for superseded trials (:5591/:5593, :5592/:5594) and the TH maker (:5582) are stopped.
