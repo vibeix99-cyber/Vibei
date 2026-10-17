@@ -193,3 +193,17 @@ Running 1 test using 1 worker
 [inject] re-check: covered at 19:16:48.125
 [inject] aim again 1 at 19:16:48.377
 [inject] rescroll: bring it clear by the wheel
+  ✓  1 [chromium] › .tmp/ts/v2/notice-strip.spec.ts:431:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (1.2m)
+
+  1 passed (1.2m)
+### end 19:17:52 exit=0 load 11.40 13.31 13.84
+
+######## new COVER=transient: KETTLE_PORT=5583 COVER=transient npx playwright test -c .tmp/ts-pw.config.ts ts/new/notice-strip.spec.ts --project=chromium --workers=1 -g 'real input \(844×390 dark 200 %\)'
+### start 19:17:52 load 11.40 13.31 13.84
+
+Running 1 test using 1 worker
+
+[inject] transient cover over getByRole('textbox', { name: /What are you brewing/ }) for 300 ms at 19:17:57.957
+[inject] re-check: covered at 19:17:57.980
+[inject] aim again 1 at 19:17:58.236
+[inject] aim again 2 at 19:17:58.516
