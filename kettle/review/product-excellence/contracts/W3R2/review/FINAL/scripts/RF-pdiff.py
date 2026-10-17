@@ -10,7 +10,7 @@ differs from every BEFORE by more than 16. Class:
 The Focus states (02 to 05) carry a countdown readout that is not frozen (the page clock runs at the real rate from the fixed start), so its
 seconds digit differs between any two captures (12:16 to 12:26 seen across all frames, both sides). Robust pixels inside the readout box
 (390 wide: x 85-305, y 490-580; 1440 wide: x 990-1340, y 325-440) are counted separately (`robust_px_readout`) and do not decide the class.
-Raw frames are kept only for pairs that are not identical, with a diff overlay (red = robust difference, or tol difference when none) and a
+Raw frames are kept only for pairs classed different; every pair that is not identical gets a diff overlay (red = robust difference, or tol difference when none) and a
 crop (before | after | overlay) of the biggest band."""
 import sys, os, json, hashlib, shutil
 import numpy as np
@@ -80,7 +80,7 @@ for tag in sys.argv[2:]:
             m = robust if (rb_px or 0) > 0 else (d_ab > TOL if (d_ab > TOL).any() else d_ab > 0)
             base = (F['after'][:h, :w] * 0.35 + 255 * 0.65).astype(np.uint8); base[m[:h, :w]] = [255, 0, 0]
             Image.fromarray(base).save(f'{EV}/diff-{n}')
-            if KEEP_RAW:
+            if KEEP_RAW and cls == 'different':
                 for s, p in P.items(): shutil.copy(p, f'{EV}/{s}-{n}')
             bs = row['robust_bands'] or bands(m)
             if bs:
