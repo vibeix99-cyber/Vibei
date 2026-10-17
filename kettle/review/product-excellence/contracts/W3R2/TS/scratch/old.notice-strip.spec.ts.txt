@@ -200,6 +200,11 @@ async function __cover(page: Page, el: ReturnType<Page['locator']>) {
   const mode = process.env.COVER ?? 'transient';
   if (mode === 'none' || __covers >= 1) return;
   __covers++;
+  if (mode === 'shift') {  // the page moves under the target (a layout shift): the target is out of the view at the re-check
+    const [a, b, v] = await page.evaluate(() => { const a = scrollY; window.scrollBy({ top: 400, behavior: 'instant' }); return [a, scrollY]; }).then(async ([a, b]) => [a, b, await el.evaluate((e) => { const r = e.getBoundingClientRect(); return `top ${Math.round(r.top)} bottom ${Math.round(r.bottom)} of ${innerHeight}`; })] as const);
+    console.log(`[inject] shift: the page scrolled ${a} -> ${b}; the field is now at ${v}`);
+    return;
+  }
   const ms = mode === 'permanent' ? 0 : Number(process.env.COVER_MS ?? 300);
   await el.evaluate((e, ms) => {
     const r = e.getBoundingClientRect();

@@ -62,7 +62,7 @@ After:  `await setHidden(page, true); await start(page, secs(kettlePage, 2), 'Es
 
 **Why no assertion is weaker.** Only the order of two existing statements changed; every `expect` after them is untouched: exactly one fake `Notification` (poll, 10 s), its title `The kettle’s whistling! Time for tea.`, body contains `Essay`, tag `kettle-timer`, page title `Tea’s ready — Kettle` while hidden, and after `setHidden(false)` the title is `baseTitle`. The behaviour under test is unchanged: the brew still ends in a hidden page, and `notifyCompletion` / `tabPresence` read `document.visibilityState` only at the end of the brew (`notify.ts:185–188`, `tabPresence.ts:194–197`), not at the start. Hiding earlier does not make the test easier; it removes the case where the brew ends in a *visible* page, which the app handles by making no notification, so the test could only fail there for a reason that is not the product's.
 
-### 1.3 `notice-strip.spec.ts`, `press()`
+### 1.3 `notice-strip.spec.ts`, `press()` (two commits: `a6b3790` re-aim, `21e5644` bring back by the wheel)
 
 Before (the aim loop and its check):
 ```ts
@@ -76,34 +76,45 @@ for (let k = 0; ; k++) {
 }
 expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();
 ```
-After:
+After (final):
 ```ts
-const AIM_AGAIN = 8; const AIM_PAUSE_MS = 250;                      // next to GONE_MS
-for (let k = 0, covered = 0; ; ) {
-  if (!at) {                                                        // covered at the last re-check: look again
-    if (covered++ >= AIM_AGAIN) break;
-    await page.waitForTimeout(AIM_PAUSE_MS);
-    at = await onTop(page, el, strict);
-    continue;
+const AIM_AGAIN = 8; const AIM_PAUSE_MS = 250; const AIM_RESCROLL = 2;          // next to GONE_MS
+const inView = (el) => el.evaluate((e) => { const r = e.getBoundingClientRect();   // the first test of onTop
+  return r.width > 0 && r.top >= 0 && r.bottom <= innerHeight && r.left >= 0 && r.right <= innerWidth; }, undefined, { timeout: GONE_MS });
+async function press(page, touch, el, over?, strict = false, rescrolled = 0): Promise<{ x; y; w; h; top }> {
+  …                                                                                // (unchanged up to the aim loop)
+  for (let k = 0, covered = 0; ; ) {
+    if (!at) {                                                                     // not on top at the last re-check: look again
+      if (covered++ >= AIM_AGAIN) break;
+      await page.waitForTimeout(AIM_PAUSE_MS);
+      at = await onTop(page, el, strict);
+      if (!at && rescrolled < AIM_RESCROLL && !(await inView(el))) return press(page, touch, el, over, strict, rescrolled + 1);
+      continue;
+    }
+    const round = k++;
+    const t = Date.now();
+    await page.mouse.move(Math.round(at.x), Math.round(at.y));
+    const again = await onTop(page, el, strict);
+    const same = !!again && Math.abs(again.x - at.x) < 0.5 && Math.abs(again.y - at.y) < 0.5;
+    at = again;
+    if (at && ((same && Date.now() - t < 800) || round >= 4)) break;
   }
-  const round = k++;
-  const t = Date.now();
-  await page.mouse.move(Math.round(at.x), Math.round(at.y));
-  const again = await onTop(page, el, strict);
-  const same = !!again && Math.abs(again.x - at.x) < 0.5 && Math.abs(again.y - at.y) < 0.5;
-  at = again;
-  if (at && ((same && Date.now() - t < 800) || round >= 4)) break;
-}
-expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();   // the same line, the same words
+  expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();             // the same line, the same words
 ```
-**The bound, stated:** after a re-check finds the target covered, `press()` waits 250 ms and reads the target again, at most 8 times in all (a window of about 2 s plus the reads). A ninth covered read ends the loop with `at === null` and the unchanged `expect` fails with the unchanged message. Pre-existing bounds are untouched: at most 5 aim rounds (`round >= 4`), a round that took 800 ms or more is made again, a target that has gone fails within `GONE_MS` (15 s) on any read.
+**The bounds, stated:**
+- After a re-check finds the target not on top, `press()` waits 250 ms and reads it again, at most 8 times in all (about 2 s plus the reads). A ninth ends the loop with `at === null` and the unchanged `expect` fails with the unchanged message.
+- If that read finds the target **not covered but out of the view** (the page moved under it), `press()` is run again from the top, which brings it back by the same wheel walk as at the start (its own limits: 60 wheels, three stuck wheels end it), at most `AIM_RESCROLL` = 2 times.
+- Untouched: at most 5 aim rounds (`round >= 4`), a round that took 800 ms or more is made again, a target that has gone fails within `GONE_MS` (15 s) on any read.
+
+**Why the second commit (what the first under-load run showed).** `a6b3790` alone (re-aim only) failed 4 of 10 runs in the first under-load run (`logs/underload-notice-first.log.txt`): each at the first `press()` (the "What are you brewing?" field), after the 8 pauses, with the message above, in 4.7–5.7 s. A covered field would have come free within 2 s; these did not, so the field was not on top for a reason that waiting does not cure. In the injection runs the first `press()` starts with the page already scrolled (`scrollY` 180 at 844×390 dark 200 %: the field needed the wheel walk), so a later move of the page puts the field out of the view. The snapshot at each failure (`error-context.md`) shows an ordinary Today screen, nothing covering. I did not catch the moving page itself (a diagnostic run at one worker with 4 burners, 4 of 4 passed and was stopped; the page-level trace was not available in a spec with `trace: 'off'`). So: the cause "the page moved the field out of the view" is **inferred, not observed**; what is shown is that this condition, injected, fails the old helper and the re-aim-only helper with the very same message and passes the final one (§2.2), and the under-load runs of §3.
 
 **Why no assertion is weaker.**
-- The `expect(at, "… still on top as the tap is aimed").not.toBeNull()` line is the same text.
-- The tap (`touchscreen.tap` / `mouse.click`) is reached only through the `break`, and that break needs `at` non-null, which is the result of an `onTop` read made **after** `mouse.move` onto the target in the same round: "on top at the moment of the tap" is checked exactly as before (strict mode is still 9 of 9 points; `same` and the 800 ms rule are unchanged). After a covered read the next tap-bound read is again a *move, then read* round, never the pause's own read alone.
-- A target that stays covered still fails (§2.2: permanent cover, new helper fails with the same message after the 8 pauses).
-- What changed is only that a single covered read no longer ends the walk. The same reads that used to fail the test at once now have to be followed by 8 more covered reads (about 2 s) to fail it.
+- The `expect(at, "… still on top as the tap is aimed").not.toBeNull()` line is the same text, reached the same way.
+- The tap (`touchscreen.tap` / `mouse.click`) is reached only through the `break`, which needs `at` non-null from an `onTop` read made **after** `mouse.move` onto the target in the same round, or through the nested `press()`, which ends in the same tap under the same rule. "On top at the moment of the tap" is checked as before (strict mode is still 9 of 9 points; `same` and the 800 ms rule are unchanged). After a not-on-top read the next tap-bound read is again a *move, then read* round, never the pause's own read alone.
+- A target that stays covered (in the view, something on top of it) still fails, after the 8 pauses, with the same message (§2.2, permanent cover).
+- What changed is only that a single not-on-top read no longer ends the walk. A target that has left the view is walked back to as at the start; the same reads that used to fail the test at once now have to be followed by 8 more reads (about 2 s) to fail it.
 - `press()` is local to this spec and used by all 25 tests; the whole-file run (§4) covers every configuration.
+- The product invariant (zero overlap between any notice and any control) is asserted by the frame recorder (`__inv`, every animation frame of every test) and is untouched; `press()` only gates the test's own input.
 
 ## 2. The injected race: old fails, new passes
 
@@ -121,23 +132,31 @@ The injection code is a scratch copy, derived from the committed specs by `scrip
 
 `mid` shows why 1.1 moves the read of `endsAt` / `sessionId` into the page as well: with only the observer first, a runner that is late after the start still fails, one assertion later.
 
-### 2.2 `press()` (`logs/inject-notice.log.txt`, `logs/inject-notice-bound.log.txt`)
+### 2.2 `press()` (`logs/inject-notice.log.txt`, `logs/inject-notice-bound.log.txt`, `logs/inject-notice2.log.txt`)
 
-**Injection:** just before the re-check read in `press()`, a fixed-position element (`z-index` max) the size of the target (+4 px) is put over it. It is applied once per test, to the first `press()` (Today's "What are you brewing?" field, the very place of the original failure). `COVER=transient`: removed after 300 ms; `permanent`: never removed. The test is the original failing one, 844×390 dark 200 %, workers=1, :5583.
+**Injection:** just before the re-check read in `press()` of the **first** press of the test (Today's "What are you brewing?" field, the place of the original failure), once per test, 844×390 dark 200 %, workers=1, :5583:
+- `COVER=transient`: a fixed-position element (`z-index` max) the size of the target (+4 px) is put over it and removed after 300 ms;
+- `COVER=permanent`: the same, never removed;
+- `COVER=shift`: the page is scrolled 400 px (`scrollBy`, instant) at that read, so the field is out of the view (the log shows `top -284 bottom -232 of 390`; the page had been at `scrollY` 180).
 
-| cover | old `press()` | new `press()` |
-|---|---|---|
-| transient 300 ms | **fails** in 2.7 s: `getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed`, received `null` | **passes** (whole test, 1.2 min): the re-check is covered at +81 ms, one `aim again` at +389 ms finds the field free, the tap follows |
-| permanent | **fails** in 2.3 s, same message | **fails** after 8 pauses (the log lists `aim again 1 … 8` over 2.2 s: 59.842 to 02.000), **same message**, same line (`expect(at, … still on top as the tap is aimed)`) |
+Variants: `old` = base `494748b`; `v1` = `a6b3790` (re-aim only); `new` = the final `21e5644`.
 
-**The bound, shown (new `press()` only, `logs/inject-notice-bound.log.txt`):**
+| injection | old | v1 (re-aim only) | new (final) |
+|---|---|---|---|
+| transient 300 ms cover | **fails** in 2.7 s: `getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed`, received `null` | **passes** (whole test, 1.2 min): covered at +81 ms, one `aim again`, tap | **passes** (1.3 min): covered, two `aim again`, tap |
+| permanent cover | **fails** in 2.3 s, same message | **fails** after 8 pauses, **same message**, same line | **fails** after 8 pauses (the log lists `aim again 1 … 8`), **same message**, same line (`expect(at, … still on top as the tap is aimed)`) |
+| page moved, field out of the view | **fails** in 3.1 s, same message | **fails** after 8 pauses, same message | **passes** (1.2 min): one `aim again`, `out of view: bring it back by the wheel`, the walk, the tap, and the rest of the test |
+
+The transient and permanent rows for `v1` are `logs/inject-notice.log.txt`; the rest of the `old` / `v1` / `new` rows of this table are `logs/inject-notice2.log.txt` (the `new` transient and permanent rows are re-measured there on the final code).
+
+**The bound, shown (v1 code; the covered-in-view path is the same in the final code, `logs/inject-notice-bound.log.txt`):**
 
 | transient cover | result |
 |---|---|
 | 1500 ms | **passes** (whole test, 1.1 min): covered re-check, 6 `aim again`, then the field is free and the tap follows |
 | 3500 ms | **fails** in 4.6 s with the same message: it outlasts the 8 pauses (2.1 s: 29.410 to 31.552) |
 
-So a cover is tolerated only while it lasts less than about 2 s; the frame recorder (`__inv`, every animation frame of the test) is untouched and still counts any real notice-over-control overlap as a hit, whether or not `press()` waited for it.
+So a cover is tolerated only while it lasts less than about 2 s. The frame recorder (`__inv`, every animation frame of the test) is untouched and still counts any real notice-over-control overlap as a hit, whether or not `press()` waited for it.
 
 ## 3. Under load: 10/10
 
