@@ -33,3 +33,6 @@ Running 28 tests using 1 worker
   ✓  19 [timer-app] › tests/timer.spec.ts:189:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (9.2s)
   ✓  20 [timer-app] › tests/timer.spec.ts:222:3 › timer reliability › frozen tab (OS suspended it) across the end completes once on resume, at the real end (9.8s)
   ✓  21 [timer-app] › tests/timer.spec.ts:240:3 › device integrations › wake lock: held while running and visible; released on pause, idle and setting off; re-acquired on return (4.7s)
+  ✓  22 [timer-app] › tests/timer.spec.ts:289:3 › device integrations › media session: metadata + play/pause handlers while a phase runs, cleared when idle (6.9s)
+  -  23 [timer-app] › tests/timer.spec.ts:302:3 › keyboard shortcuts infra › Space toggles — but never while typing, on a focused button, or on key repeat; ? toggles help, not over a dialog
+  ✓  24 [timer-app] › tests/timer.spec.ts:347:3 › multiple tabs › two tabs show the same session live and exactly one records it (17.0s)
