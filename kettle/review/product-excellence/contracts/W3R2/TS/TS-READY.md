@@ -40,7 +40,7 @@ const { endsAt, sessionId } = await page.evaluate(async (minutes) => {
   return { endsAt, sessionId };
 }, secs(kettlePage, 3));
 ```
-**Why this is what the race needs.** The brief's fix is "arm the observer before the brew starts". The traces (`W3R1/…/postmerge/trace-timer156-background.txt`) show three commands after `startFocus` all arriving after the brew had ended: `state()` (10.04 s: `idle`, `sessionId` null, `endsAt` null), then the observer and freeze evaluate (10.18 s). Arming the observer first fixes the first miss, but `state()` is then read from an idle timer (`endsAt` null) and `doneAt − endsAt` is nonsense (§2.1, variant `mid`: it fails 4/4 under the same injection). So the observer, the start, the read of `endsAt` / `sessionId` and the freeze are one page task chain; the freeze keeps the same place in the brew (about 100 ms after the start, in the page, where the separate commands of before took a few tens of ms) and can no longer land after the end.
+**Why this is what the race needs.** The brief's fix is "arm the observer before the brew starts". The traces (`W3R1/…/postmerge/trace-timer156-background.txt`) show three commands after `startFocus` all arriving after the brew had ended: `state()` (10.04 s: `idle`, `sessionId` null, `endsAt` null), then the observer and freeze evaluate (10.18 s). Arming the observer first fixes the first miss, but `state()` is then read from an idle timer (`endsAt` null) and `doneAt − endsAt` is nonsense (§2.1, variant `mid`: it fails 4/4 under the same injection). So the observer, the start, the read of `endsAt` / `sessionId` and the freeze are one page task chain; the freeze keeps its place early in the brew (100 ms after the start, timed in the page, where the separate commands used to leave the gap of two round trips) and can no longer land after the end.
 
 **Why no assertion is weaker.** The assertions after the evaluate are not touched, line for line:
 
@@ -111,7 +111,7 @@ The injection code is a scratch copy, derived from the committed specs by `scrip
 
 ### 2.1 Timer pair (`logs/inject-timer.log.txt`)
 
-**Injection:** a `page` fixture whose `evaluate` is followed by a test-side wait of (brew length + 0.5 s) after the command whose function text holds `startFocus` (the command that starts the brew): the reply reaches the test process late, the next command is sent after the brew is over. The page is not touched. Wait 3.5 s / 2.5 s in the harness and 6.5 s / 4.5 s in the app (the delays LEAD-5 used, `W3R1/CHECKER-W3R1-F1FIX.md` §9). Two rounds of each test in each project, one browser at a time, :5583.
+**Injection:** a `page` fixture whose `evaluate` is followed by a test-side wait of (brew length + 0.5 s) after the command whose function text holds `startFocus` (the command that starts the brew): the reply reaches the test process late, the next command is sent after the brew is over. The page is not touched. Wait 3.5 s / 2.5 s in the harness and 6.5 s / 4.5 s in the app (in the app the delays LEAD-5 used, `W3R1/CHECKER-W3R1-F1FIX.md` §9). Two rounds of each test in each project, one browser at a time, :5583.
 
 | variant | `:156` background (harness ×2, app ×2) | hidden page (harness ×2, app ×2) |
 |---|---|---|
