@@ -103,3 +103,27 @@
 **Matched control** (`th-ctl.sh.txt`): the 390×844 dark 200 % test, :5592 and :5560 alternating A B B A A B, one worker, the same logging config, load 6–18.
 - **Trial :5592: 3/3.** Base :5560: 3/3.
 - Logs: `control-390-dark-200-{5592,5560}.log.txt`.
+
+**Rerun of the other flaky failure** (`th-ctl2.sh.txt`): `(844×390 light 200 % reduced motion)` ×2 on :5592, one worker, load 8–10.
+- **2/2.** Log: `rerun-844x390-light-200r-5592-x2.log.txt`.
+
+**So every one of the 25 configurations passes on the trial :5592.** The two first-run failures are flaky, shown by the same build passing them under matched load, and neither can come from this change.
+- **On "25/25":** the maker's 25/25 in one run was on :5582 (the branch dev server, the same src `07df367`). My single full run on :5592 was 23/25 plus these reruns.
+- Neither flake is new to TH:
+  - the re-aim flake is TS's open item;
+  - the tab-bar read is a `press()` robustness case for TS to note.
+
+## Residuals
+- **FOLLOW-UP, for TS:** `notice-strip.spec.ts` `press()` gives up on a fixed control (the tab bar's Stats link) whose box ends 0.4 px past the viewport. Wheeling cannot change that. This is one first-run occurrence, at 390×844 dark 200 %, with no trace (the spec's own contexts keep none). Not introduced by TH.
+- **No other residual.** No visible, behavioural or console change other than the removed error.
+
+## Verdict: **APPROVE** `pe/w3r2-toast-hook@203b057` (src `07df367`), as gated in trial `0ad85b9`
+- **The rules of hooks hold in `Toast.tsx`.** `useIsPresent()` is now read on every render, in the same order. The audit finds no other violation.
+- **`leaving` has the same value in every state.** `useIsPresent` is a single context read, so exit timing is unchanged (motion 13.4.4 source, ◆2).
+- **The hook-order error is gone; nothing new appears in the console.** Base vs trial: `notice-strip` 4 (in the 4 configs run on base) vs 0 (all 25), `summary-notice` 28 vs 0, `w3-notices` 9 vs 0. The maker's full-suite counts are 73 vs 0.
+- **`notice-strip` passes in every configuration on the trial.** The two first-run flakes are classified, with matched reruns of 3/3 and 2/2. The rest of the notice suite I ran passes (`summary-notice` 14/14, `w3-notices` 9/9).
+- **Captures show no difference beyond noise** (◆5). This is Vibei's bar.
+
+Any change to the branch after this invalidates it.
+
+*Run logs:* `.log` files are git-ignored, so mine are committed as `.log.txt` in `review/LEAD/TH/`. My scratch config lives in the git-ignored `/home/user/wt/w8tr-t/kettle/.tmp/lead5-th/`; a copy is in the folder.
