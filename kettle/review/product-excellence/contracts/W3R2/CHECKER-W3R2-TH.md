@@ -91,3 +91,15 @@
 - the session countdown;
 - the focus scene's motion phase;
 - a few pixels (≤ 7 levels) in a blurred backdrop or away from any notice.
+
+## ◆4 · `notice-strip` on the trial :5592 (my runs, through the gate)
+**First run** (the ◆3 run: all 25 tests, 2 workers, load 9.7–13.6): **23/25.**
+
+| Failure | Where | Classification |
+|---|---|---|
+| `(844×390 light 200 % reduced motion)`, 1.9 s in | `press()` :300, "textbox … still on top as the tap is aimed": the setup tap on Today's field, before any notice | **FLAKY, not TH.** It is the `press()` re-aim flake that W3R2 item 3 (TS) owns. The same failure was in the maker's base run (:5560) and in Lane R's post-merge run (`CHECKER-W3R1-F1FIX.md` §9). Rerun below |
+| `(390×844 dark 200 %)`, 42 s in | `press()` :285 on the tab bar's Stats link after End: "can be brought on top by real scrolling", box y 765.6 + h 78.8 = **844.4 > innerHeight 844**. A fixed tab bar cannot be scrolled, so the wheels could not help. The page shows Today with "Recipe done …" in its strip (`trial-failures/…390×844-dark-200….error-context.txt`) | **FLAKY, not TH.** In the matched control below, the same build passes 3/3. The bar's resting box normally ends at ≤ 844, so it was caught off its resting place, 0.4 px low. `Toast.tsx` does not draw or move the tab bar, and `leaving` is unchanged in every state (◆1) |
+
+**Matched control** (`th-ctl.sh.txt`): the 390×844 dark 200 % test, :5592 and :5560 alternating A B B A A B, one worker, the same logging config, load 6–18.
+- **Trial :5592: 3/3.** Base :5560: 3/3.
+- Logs: `control-390-dark-200-{5592,5560}.log.txt`.
