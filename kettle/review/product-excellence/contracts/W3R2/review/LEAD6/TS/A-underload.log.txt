@@ -88,3 +88,7 @@ Running 10 tests using 2 workers
 
 Running 20 tests using 2 workers
 
+  ✓   1 [timer-app] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (14.0s)
+  ✓   2 [timer-app] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (14.2s)
+  ✓   3 [timer-app] › tests/timer.spec.ts:189:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (12.7s)
+  ✓   4 [timer-app] › tests/timer.spec.ts:189:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (12.1s)
