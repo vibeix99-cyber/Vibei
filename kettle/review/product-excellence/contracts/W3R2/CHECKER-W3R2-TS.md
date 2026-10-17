@@ -107,4 +107,6 @@ Burners PIDs 379 380 381 382, started 18:22:52, stopped 18:31:25, all four gone.
 
 Failure snapshots: `A-notice-fail-repeat{0,4,6}.error-context.txt` (an ordinary Today screen, the composer field present, no dialog, no notice; the spec keeps no trace).
 
+**The whole `notice-strip.spec.ts` once** (stage D, `D-notice-whole.log.txt`, `D-notice-whole.json.txt`): `--project=chromium --workers=2` as the spec's header says, no burners, the other lead's job beside it. **25/25 passed** (12.5 min), including 844×390 dark 200 % (56.7 s) and 844×390 light 200 % reduced motion (49.1 s). Load 6.00 11.40 12.18 (18:34:16) → 6.56 7.75 9.87 (18:46:48). This closes the maker's open item §5.2 (the whole file was not run) for the unloaded case; it does not bear on the under-load bar.
+
 With the maker's two runs this is three independent samples of the final helper at this configuration under load: **9/10, 7/10** (mine), and with `a6b3790` 6/10. The final code does not meet "each test must pass 10/10 under load", and my run does not support the reading that one failure in ten is a rare tail.
