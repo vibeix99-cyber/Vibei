@@ -1,0 +1,12 @@
+### start 21:57:10 UTC; load:  21:57:10 up  6:07,  0 user,  load average: 12.45, 14.10, 13.45
+### cmd: bash /home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/review/FINAL/scripts/RF-pwa-inner.sh
+### port check 21:57:10 load 12.45 14.10 13.45; HEAD 1c791f3 src 5f504d4 dirty=0
+port 5495 free before the run (curl: no answer)
+port 5193 free before the run (curl: no answer)
+listeners on 5495 per /proc/net/tcp: 0
+
+Running 31 tests using 1 worker
+
+  ✓   1 [timer-harness] › tests/timer.spec.ts:74:3 › timer reliability › start → reload mid-session → same session, same end, correct remaining; paused survives reload (5.1s)
+  ✓   2 [timer-harness] › tests/timer.spec.ts:111:3 › timer reliability › a phase that ended while the app was closed (3 h ago) completes once, at its real end, whileAway (3.2s)
+  ✓   3 [timer-harness] › tests/timer.spec.ts:143:3 › timer reliability › reload exactly at 0:00 records the session once (4.9s)
