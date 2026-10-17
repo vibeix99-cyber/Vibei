@@ -14,6 +14,12 @@ Raw evidence only. No verdict. Times are UTC, 2026-10-17. Task received 17:58, b
 | Scripts | `scripts/R2-common.sh` (gate helper with the uptime header and trailer), `R2-unit.sh`, `R2-chainX.sh`, `R2-chainY.sh`, `R2-notice.sh`, `R2-2tab.mjs` (the 2-tab script), `R2-jsum.mjs`; superseded: `R2-chain1.sh` (replaced by `R2-chainX.sh` after its first job; I killed its explicit PID 14439 and the waiting gate PID 16685, which had not started any browser), `R2-smoke.sh` |
 | Logs and JSON | `runs/*.log.txt`, `json/*.json` (Playwright JSON), `manual/` (2-tab JSON per iteration, summaries, screenshots) |
 
+**Control timeline (orchestrator's note on the integration HEAD).** The control :5560 changed under me: `w6-int` took TH's `Toast.tsx` hook merge (`7cb3242`), HEAD `a1e3d04` (src `07df367`), at **19:02:16 to 19:02:59 UTC by this machine's clock** (commit times; `Toast.tsx` mtime 19:02:59). I checked at 19:04: `verify.sh /home/user/wt/w6-int 5560` says "PORT 5560 serves a1e3d04 (src 07df367): VERIFIED"; the served `store.ts`, `sync.ts`, `ticker.ts` hashes are unchanged and equal the pre-change ones and those of :5583 (`494748b`, src `b74e6b3`): `ecb09baca37315a7` / `cfc45d0b7bb4ccbe` / `ddbf46b63efc5cdf`. There is still no stale-tab guard on it.
+- **Control runs BEFORE the change (on `494748b`, src `b74e6b3`):** the whole 2-tab control, `runs/manual-2tab-5560.log.txt`, 18:30:49 to 18:38:12 (section 6). My only other look at :5560 was the served-blob check at 17:59.
+- **Control runs AFTER the change (on `a1e3d04`):** none up to this stage. The browser bundle on :5591 had no failure to classify, so no rerun on :5560 was made. (If a post-change control 2-tab run was made later, it is listed at the end of section 6.)
+- **:5591 was not touched**: HEAD `88d6b64`, src `dd6944e`, no change during the run (checked 19:04).
+- Not used: :5583 (exact `494748b`), :5570, :5478, :5593.
+
 ## 1. Typecheck and unit tests (not browser runs, no gate)
 
 | Check | Command | Result |
