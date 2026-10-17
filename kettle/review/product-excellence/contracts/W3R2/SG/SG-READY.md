@@ -10,7 +10,15 @@
 | Controls | :5560 integration = HEAD `494748b` (its `store.ts` and `sync.ts` blobs equal HEAD's, checked); :5478 old base `4d36939` |
 | Evidence | `SG/logs/*.log.txt`, `SG/scripts/*.txt` |
 
-**Status: stage 1 (code + deterministic Vitest). Browser runs, compatibility and load runs follow in §3–§6.**
+**Status: READY for LEAD.** All of the brief's proof is in (§3–§6). One existing-test question is for LEAD to rule (§7.1); residuals are in §7.2–§7.4.
+
+**Summary of the proof:**
+- **Vitest:** 24 cases, 17 FAIL on HEAD `494748b`, 24/24 on the fix. Every trigger fails on HEAD and passes on the fix, except the singly stale typed edit, which F1 already guards.
+- **Browser** (real clicks in the lagging tab): pause, add 5, end and start fail **12/12** on :5560, fail 4/4 on :5478, and pass **12/12** plus 4/4 on the fix.
+- **Existing race tests** green.
+- **Compatibility:** byte-identical both ways (12/12 pairs).
+- **`integrity:309` ×20 under load:** 20/20.
+- **Suites:** integrity 25/25, `w2-home` 18/18, timer 26 + 2 skipped by design, `pwa` 3/3, tsc 0, Vitest 338/338.
 
 ## 1. Design: one rule, applied where every write passes
 
@@ -229,7 +237,7 @@ Branch `54a9721` (src `dd6944e`). The app code served on :5581 is `e18b621`'s: `
 
 Not mine (the regression lane's): the notice suites and the 2-tab manual check with real clicks.
 
-## 7. Open items, for LEAD (draft; completed at the last stage)
+## 7. Open items, for LEAD
 
 ### 7.1 Existing test whose behaviour Vibei's rule overturns (not edited)
 **Test:** `src/timer/multitab.test.ts:229`, "two tabs pressing start at the same time converge on one session":
