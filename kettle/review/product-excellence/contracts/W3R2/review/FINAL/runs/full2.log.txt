@@ -274,3 +274,122 @@ FACT 1440x900-dark-t200-rm c-pointer-held {"leftAt":5302,"room":113,"roomWhileDo
   ✓  257 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 light 100 %) (13.9s)
   ✓  258 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 dark 100 %) (13.8s)
   ✓  259 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 dark 100 %) (14.5s)
+  ✓  260 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (844×390 dark 100 %) (14.7s)
+  ✓  261 [chromium] › tests/w3-notices.spec.ts:158:1 › the room a gone notice keeps stays while the page is scrolled, and goes on the same screen once idle (390×844, 200 %) (14.3s)
+  ✓  262 [chromium] › tests/w3-notices.spec.ts:210:1 › the room is not given back while a pointer is held; it goes 4–6.5 s after release (1440×900, 100 %) (17.3s)
+  ✓  263 [chromium] › tests/w3-notices.spec.ts:239:1 › a new screen starts with no room: Today after End, then Stats and back (375×667, 100 %) (10.0s)
+  ✓  264 [chromium] › tests/w3-notices.spec.ts:265:1 › the status bar warm-days button is named "N days warm. Show details" (and ", today not brewed yet") (4.2s)
+
+
+  1) [chromium] › tests/chai3d.spec.ts:197:3 › 3D Chai: fallbacks keep the procedural Chai › default tier on this machine (auto → low on SwiftShader): the model, with no frame without Chai 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m"[7mmode[27ml"[39m
+    Received: [31m"[7mprocedura[27ml"[39m
+
+    Call Log:
+    - Timeout 30000ms exceeded while waiting on the predicate
+
+      220 |     expect(await chaiKind(page)).toBe('procedural');
+      221 |     release();
+    > 222 |     await expect.poll(() => chaiKind(page), { timeout: 30_000 }).toBe('model');
+          |     ^
+      223 |     await page.waitForTimeout(1500);
+      224 |     expect(await page.evaluate(() => (window as any).__noChai)).toBe(0);
+      225 |   });
+        at /home/user/wt/w6-int/kettle/tests/chai3d.spec.ts:222:5
+
+    Error Context: .tmp/RF-pw/full2/chai3d-3D-Chai-fallbacks-k-ba2f2--with-no-frame-without-Chai-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/RF-pw/full2/chai3d-3D-Chai-fallbacks-k-ba2f2--with-no-frame-without-Chai-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/RF-pw/full2/chai3d-3D-Chai-fallbacks-k-ba2f2--with-no-frame-without-Chai-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/integrity.spec.ts:1048:5 › I03 storage-full warning is a banner in the page (phone 390×844) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room 
+
+    Error: every failed save has gone through
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
+
+    [32m- Expected  - 1[39m
+    [31m+ Received  + 3[39m
+
+    [32m- Array [][39m
+    [31m+ Array [[39m
+    [31m+   "kettle:home:lastVisit",[39m
+    [31m+ ][39m
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      1134 |       // (no `kettle:` key's latest write refused) ...
+      1135 |       const unsaved = () => page.evaluate(() => Object.entries((window as any).__saves as Record<string, { ok: boolean }>).filter(([, v]) => !v.ok).map(([k]) => k));
+    > 1136 |       await expect.poll(unsaved, { message: 'every failed save has gone through', timeout: 10_000 }).toEqual([]);
+           |       ^
+      1137 |       const savedAt = await page.evaluate(() => Math.max(...Object.values((window as any).__saves as Record<string, { t: number; failedBefore: boolean }>).filter((v) => v.failedBefore).map((v) => v.t)));
+      1138 |       // ... then the banner goes at the warning's next recovery check (every 2 s): within one check of the saves, plus
+      1139 |       // 1 s for a late timer and the render on a loaded machine, in the page's own time. (The wait itself is only a
+        at /home/user/wt/w6-int/kettle/tests/integrity.spec.ts:1136:7
+
+    Error Context: .tmp/RF-pw/full2/integrity-I03-storage-full-5c5d1-ull-gone-when-there-is-room-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/RF-pw/full2/integrity-I03-storage-full-5c5d1-ull-gone-when-there-is-room-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/RF-pw/full2/integrity-I03-storage-full-5c5d1-ull-gone-when-there-is-room-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/integrity.spec.ts:1048:5 › I03 storage-full warning is a banner in the page (desktop 1440×900) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room 
+
+    Error: every failed save has gone through
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
+
+    [32m- Expected  - 1[39m
+    [31m+ Received  + 3[39m
+
+    [32m- Array [][39m
+    [31m+ Array [[39m
+    [31m+   "kettle:home:lastVisit",[39m
+    [31m+ ][39m
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      1134 |       // (no `kettle:` key's latest write refused) ...
+      1135 |       const unsaved = () => page.evaluate(() => Object.entries((window as any).__saves as Record<string, { ok: boolean }>).filter(([, v]) => !v.ok).map(([k]) => k));
+    > 1136 |       await expect.poll(unsaved, { message: 'every failed save has gone through', timeout: 10_000 }).toEqual([]);
+           |       ^
+      1137 |       const savedAt = await page.evaluate(() => Math.max(...Object.values((window as any).__saves as Record<string, { t: number; failedBefore: boolean }>).filter((v) => v.failedBefore).map((v) => v.t)));
+      1138 |       // ... then the banner goes at the warning's next recovery check (every 2 s): within one check of the saves, plus
+      1139 |       // 1 s for a late timer and the render on a loaded machine, in the page's own time. (The wait itself is only a
+        at /home/user/wt/w6-int/kettle/tests/integrity.spec.ts:1136:7
+
+    Error Context: .tmp/RF-pw/full2/integrity-I03-storage-full-fcb56-ull-gone-when-there-is-room-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/RF-pw/full2/integrity-I03-storage-full-fcb56-ull-gone-when-there-is-room-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/RF-pw/full2/integrity-I03-storage-full-fcb56-ull-gone-when-there-is-room-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  Slow test file: [chromium] › tests/a11y.spec.ts (9.6m)
+  Slow test file: [chromium] › tests/w2-summary.spec.ts (5.9m)
+  Slow test file: [chromium] › tests/break-reach.spec.ts (5.3m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  3 failed
+    [chromium] › tests/chai3d.spec.ts:197:3 › 3D Chai: fallbacks keep the procedural Chai › default tier on this machine (auto → low on SwiftShader): the model, with no frame without Chai 
+    [chromium] › tests/integrity.spec.ts:1048:5 › I03 storage-full warning is a banner in the page (phone 390×844) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room 
+    [chromium] › tests/integrity.spec.ts:1048:5 › I03 storage-full warning is a banner in the page (desktop 1440×900) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room 
+  25 skipped
+  236 passed (35.3m)
+### end 23:31:55 UTC; exit=1; load:  23:31:55 up  7:41,  0 user,  load average: 5.36, 5.83, 7.50
