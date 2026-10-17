@@ -23,3 +23,18 @@ Running 1 test using 1 worker
 [inject] re-check: covered at 21:02:01.266
 [inject] aim again 1 at 21:02:01.518
 [inject] rescroll: bring it clear by the wheel
+  ✓  1 [chromium] › .tmp/lead6/ts/new/notice-strip.spec.ts:601:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (1.1m)
+
+  1 passed (1.1m)
+### end 21:03:04 exit=0 load 12.62 13.30 13.73
+
+######## J-new-dock-3: KETTLE_PORT=5560 COVER=dock npx playwright test -c .tmp/lead6/ts-pw.config.ts ts/new/notice-strip.spec.ts --project=chromium --workers=1 -g 844x390 dark 200
+### start 21:03:04 load 12.62 13.30 13.73
+
+Running 1 test using 1 worker
+
+[inject] dock: dock in the flow: relative top 538 bottom 746 of 390
+[inject] dock: docked: sticky top 182 bottom 390 of 390
+[inject] re-check: covered at 21:03:10.221
+[inject] aim again 1 at 21:03:10.478
+[inject] rescroll: bring it clear by the wheel
