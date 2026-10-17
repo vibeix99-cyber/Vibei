@@ -103,3 +103,66 @@ On HEAD, Z simply adopts the idle kettle on a tick or a received event.
 | §7.3 `flow.ts` `startNextBrew` leaves `suppressNextStop` set when the lagging tab's `end` is dropped | **BLOCKS: SG-D2** | Worsened. A new, user-reachable trigger (both tabs press "Next brew" within the lag) for a flag leak that HEAD had only at 0:00. The next local stop in that tab then loses its "Saved … of focus" toast and the way home |
 | §7.3 Focus "+5 min · whistles at …" shown, and the pause / resume sound played, when the store dropped the action | **BLOCKS: SG-D3** | Introduced. The note tells the person a +5 was added when it was not. The pause/resume sound is chosen by the outcome. (The button's generic press sound is press feedback: ACCEPTED) |
 | §7.4 the composer label | **FOLLOW-UP** (logged only, per Vibei; for the Final Boss) | Unchanged and pinned by #22 |
+
+## 5. ◆ Browser reruns (my runs, through the gate, `--lane LEAD`)
+Tests from the trial tree. Logs in `LEAD/SG/`.
+
+| Run | Result | Log |
+|---|---|---|
+| `w3r2-stale-tab.spec.ts` on HEAD :5560 ×1 | **4/4 FAIL** at Z's action: pause "paused: the same brew, with A's +5"; add 5 and end "Z now shows the current brew"; start: Z runs its own brew | `stale-tab-HEAD-5560-x1.log.txt` |
+| the same on the trial :5591 ×2 | **8/8** | `stale-tab-trial-5591-x2.log.txt` |
+| compatibility, HEAD :5560 → trial :5591 (the maker's F1FIX-based script, unchanged, `compat.spec.ts.txt`) | **3/3** (idle, paused, reset). In-memory state equals the stored state field by field, and the bytes are identical after boot | `compat-5560-to-5591.log.txt` |
+| compatibility, trial :5591 → HEAD :5560 | **3/3**, byte-identical | `compat-5591-to-5560.log.txt` |
+| `integrity:309` ×20, `--workers=2`, plus 6 CPU burners (PIDs 21836–21841, started and killed by PID, `burners.txt`), load 9.5 → 14.4 | **20/20** (3.9 min) | `stress-309-x20-trial-5591.log.txt` |
+
+**Lane R2** (`review/R2/RECEIPT-R2.md`; read as far as it stood at about 19:05, with its last section due 19:45):
+- tsc 0; Vitest 338/338; race specs on :5591 6/6.
+- **2-tab real-click check:** pause, add 5, end, add 5 on a replaced brew, and no hold. **25/25** on :5591; on :5560, **5/25**, with only the no-hold case passing.
+- This agrees with my reruns. The rest of R2's receipt goes into the fix-round review.
+
+## Defect packet: one 90-minute fix round
+**SG-D1 · BLOCKS (introduced). The receive rule, and the catch-up that runs it, puts back a brew another tab has already ended, once neither a record nor `lastEnded` names it.**
+- **Shown by** `LEAD/SG/lead5-probe.test.ts.txt` (§3):
+  - (1) A tab that missed the events and leads at the brew's planned end saves the brew back and completes it. The result is a 25-minute record for a brew the person ended at 0:30.
+  - (3) The same tab, on any later write, puts the brew back running in both tabs.
+  - Both pass on HEAD and fail on `54a9721`.
+- **Required:**
+  - A brew another tab has ended is never put back by `olderThanMine` or the catch-up, and never completed by this tab. That holds whether or not a record exists or `lastEnded` still names it.
+  - Every doubly stale case must still restore: #13, #14, #16, #17 and #24.
+  - Existing fields only; the storage format stays unchanged.
+- **A signal the maker can test** (a suggestion, not a mandate): the incoming state proves a later timeline than this tab's brew. For example, its `lastEnded.at`, or its brew's `startedAt`, is later than this brew's `startedAt`. A writer that saw time after this brew began cannot be the stale tab, whereas the doubly stale copies in #13 and #16 carry a `lastEnded` from before.
+- **Tests:**
+  - Add my probes (1), (2) and (3) to `staleTab.test.ts`, with the comments tidied as the maker likes. (1) and (3) must fail on `54a9721` and pass on the fix.
+  - (2) is pre-existing; it should pass with the same rule. If it cannot, say why in the packet.
+  - All 24 existing cases stay green.
+
+**SG-D2 · BLOCKS (worsened). `src/app/flow.ts` `startNextBrew` leaves `suppressNextStop` set when the lagging tab's `end('skip')` is dropped.**
+- In a lagging tab where the other tab has already pressed "Next brew", the next local stop loses its "Saved … of focus" toast and its way home.
+- **Fix:** clear the flag when that `end` did not stop the brew. **Scope widened for this round to `src/app/flow.ts`, for this flag only.**
+- **Test:** Vitest, or a case in `w3r2-stale-tab.spec.ts`. After the joined brew is ended locally in that tab, the toast is raised and the tab goes home.
+
+**SG-D3 · BLOCKS (introduced). When the store drops a Focus action, the person is still told it happened.** The "+5 min · whistles at …" note shows, and the pause/resume sound plays.
+- **Fix:** show the note and play that sound only when the action applied.
+  - The store may report whether it applied (for example, the wrapped action returns `false` when dropped).
+  - **Scope widened for this round to `src/screens/focus/FocusScreen.tsx`'s `addFive` and `toggle` only.**
+  - The button's generic press sound stays.
+- **Test:** in `w3r2-stale-tab.spec.ts`'s add 5 case, no "+5 min" note in Z.
+
+**In the same round:**
+- the `multitab.test.ts` edit ruled in §4.1;
+- re-run the maker's own proof on the final code: Vitest all, the stale-tab spec on HEAD and on the fix, `integrity:309` ×20 under load, and compatibility.
+
+## Verdict: **REJECT** `pe/w3r2-sync-guard@54a9721` (src `dd6944e`). Three defects (SG-D1, SG-D2, SG-D3), with one 90-minute fix round
+**What holds:**
+- The design is sound: one write-side entry that every action passes, and one receive-side rule from existing fields.
+- Every trigger fails on HEAD and passes on the fix (Vitest 17/24 on HEAD → 24/24; browser 4/4 → 8/8).
+- Storage is compatible both ways, byte-identical.
+- `integrity:309` passes 20/20 under load.
+
+**What blocks:**
+- **SG-D1:** the receive rule can resurrect, and then complete, a brew another tab ended. That is a new false record, which the brief's "exactly-once records" forbids.
+- **SG-D2 and SG-D3:** two smaller user-visible side effects of the new "refresh first" path.
+
+**Rulings:** `multitab.test.ts` (b) in the fix round; `reset()` ACCEPTED; open items as in §4.
+
+*Run logs:* `.log` files are git-ignored, so mine are committed as `.log.txt` in `review/LEAD/SG/`. Scratch trees (`git archive` of `494748b` and of `88d6b64`) and my compat copy are in my scratchpad and in the git-ignored `/home/user/wt/w8tr-g/kettle/.tmp/lead5-sg/`.
