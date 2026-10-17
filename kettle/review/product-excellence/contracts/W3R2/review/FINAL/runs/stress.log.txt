@@ -14,3 +14,15 @@ Running 10 tests using 2 workers
   ✓   7 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (18.7s)
   ✓   8 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (18.7s)
   ✓   9 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (19.3s)
+  ✓  10 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (19.5s)
+
+  10 passed (1.9m)
+--- integrity309 end 22:38:35 exit=0 load 8.47 5.04 5.72
+--- stale-tab start 22:38:35 load 8.47 5.04 5.72
+
+Running 15 tests using 2 workers
+
+  ✓   2 [chromium] › tests/w3r2-stale-tab.spec.ts:154:1 › pause in the lagging tab: the brew current in storage pauses, with its real remaining time (the other tab’s +5 kept) (8.5s)
+  ✓   1 [chromium] › tests/w3r2-stale-tab.spec.ts:154:1 › pause in the lagging tab: the brew current in storage pauses, with its real remaining time (the other tab’s +5 kept) (9.8s)
+  ✓   4 [chromium] › tests/w3r2-stale-tab.spec.ts:197:1 › add 5 in the lagging tab after the other tab ended its brew and started another: nothing added, the newer brew untouched, the lagging tab shows it (10.8s)
+  ✓   3 [chromium] › tests/w3r2-stale-tab.spec.ts:197:1 › add 5 in the lagging tab after the other tab ended its brew and started another: nothing added, the newer brew untouched, the lagging tab shows it (12.7s)
