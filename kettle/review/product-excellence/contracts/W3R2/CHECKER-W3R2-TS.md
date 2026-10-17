@@ -3,7 +3,7 @@
 **Under review:** `pe/w3r2-test-stability@21e5644` (`a6b3790`, `21e5644` on base `494748b`), tests tree `59f5e49`, src unchanged (`b74e6b3`).
 **Trial:** `6babf87` = integration `f4e57e1` + `21e5644`, worktree `/home/user/wt/w8tr-q`; its `kettle/tests` tree is `59f5e49` (checked: identical to `21e5644:kettle/tests`), its `kettle/src` has 0 diff lines against `494748b`. So the trial's specs are run against integration dev **:5560** (`KETTLE_PORT=5560`; `playwright.config.ts` takes the port from `KETTLE_PORT` and has `reuseExistingServer: true`, so no server of its own is started).
 **Binding bar** (`VB-DECISIONS-W3R2.md` §3): the two hidden-tab timer tests and the `press()` re-aim; *no assertion may be weakened; LEAD confirms; each test must pass 10/10 under load.*
-**Server timing:** every browser run in this review (stages A, C, D, E, F) ran from 18:22:52 to 19:07:08 UTC, **before** :5560 was moved to the new integration HEAD (app `7cb3242`, src `07df367`) at about 19:12 UTC (orchestrator's note). So all of them ran against app `5f78af1`, src `b74e6b3`, the trial's own src.
+**Server timing (corrected):** :5560 moved to the new integration HEAD (app `7cb3242`, src `07df367`, TH's `Toast.tsx` hook change, no behaviour change) at **19:02 UTC** (Lane R2's served-file check; first reported as about 19:12). Stages A, C, D and E (18:22:52–18:51:37) ran against app `5f78af1`, src `b74e6b3`, the trial's own src. **Stage F (19:00:23–19:07:08) straddles the switch**: its later tests may have run on `07df367`. F is diagnostic only (the cause), and its two failures show the same state as E's three.
 **Evidence:** `contracts/W3R2/review/LEAD6/TS/` (my job script `lead6-ts-job.sh`, logs `*.log.txt`). Every browser run went through the slot gate, lane `LEAD6`.
 
 ## 1. Scope and the diff, read in full
@@ -192,3 +192,33 @@ So the field is **not** briefly crossed and **not** out of the view: it sits, st
 5. ◆ **Whole `notice-strip.spec.ts` once: 25/25** (`--workers=2`).
 6. **Timer pair unchanged** (or, with R3, `:156` ×10 under load in `timer-app` and `timer-harness`, 10/10 each).
 7. Packet `TS-READY.md` §6 (fix round), staged commits, `.txt` evidence ≤ 20 MB each, no model names; hard stop as set by the orchestrator.
+
+---
+
+## Fix round: `pe/w3r2-test-stability@89396e8` (TS-D1, TS-D2; R3 and R4 taken)
+
+**Revision:** `a6b3790`, `21e5644` kept; `1befde2` (TS-D1, TS-D2: `notice-strip.spec.ts`), `89396e8` (R3: `timer.spec.ts` `:156` only). Tests tree `1f5feee`. Packet `TS/TS-READY.md` §6, logs `TS/logs/r2/`.
+**Trial 2:** `41b3424` = integration `34daff1` (app `7cb3242`, src `07df367`) + `89396e8`, worktree `/home/user/wt/w8tr-q2`; its tests tree is `1f5feee` (checked equal to `89396e8:kettle/tests`). All my fix-round runs are against **:5560** from that worktree, after the 19:02 switch (served `Toast.tsx` checked at the start of the job: the `07df367` version). Evidence: `review/LEAD6/TS/r2/` (job script `lead6-ts-r2-job.sh`).
+
+### F.1 The diff, read in full (`git -C /home/user/wt/w8q diff 21e5644..89396e8`)
+
+| File | Change |
+|---|---|
+| `notice-strip.spec.ts` (+35/−15) | `inView()` becomes `wheelCures(el, strict)`: `'out of view'` as before; **`'docked chrome'`** only when the target is wholly in view, no sheet is open (`[role=dialog]`, `#root[inert]`), and **every** read point (`onTop`'s 1, or 9 when strict) that is not the target itself hits an element inside `PAGE_CHROME` = `[class*="ctaDock"], nav[aria-label="Main"]`; a point inside `[data-notice-strip]`, `[data-inline-undo]` or `[inert]`, or outside the chrome, gives `null` (wait-only). The aim loop rescrolls on either reason, within `AIM_RESCROLL` = 2. The sheet fallbacks (Tab + Enter, synthetic click) now run only when `rescrolled === 0`. Comments restate the bound: at most 3 calls per target, each with at most 8 re-reads and one wheel walk |
+| `timer.spec.ts` (+5/−2) | `:156`'s evaluate also returns `frozeAt: Date.now()` taken after the freeze; new `expect(endsAt − frozeAt, 'the main-thread timers were frozen at least 1 s before the end of the brew').toBeGreaterThanOrEqual(1000)` before the poll. Nothing else |
+
+No `src/`, no other spec, no config (the orchestrator's scope check agrees).
+
+### F.2 No assertion weakened (line by line, on top of §2)
+
+| Item | `21e5644` | `89396e8` | Ruling |
+|---|---|---|---|
+| final check in `press()` | `expect(at, \`${el} still on top as the tap is aimed\`).not.toBeNull()` | same line, same words | same |
+| the tap | only after a move-then-read round that finds the target on top | unchanged loop body | same |
+| a cover that is not the page's chrome (a fixed or in-page overlay, a notice, an inert subtree, an open sheet, a mixed cover) | wait-only (8 re-reads), then fails | still wait-only, then fails: `wheelCures` returns `null` for each | same |
+| the target under the Today dock or the tab bar / side rail, in view | wait-only, then fails (the TS-D1 failure) | brought clear by the same wheel walk as at the top of `press()` (which already treats "under the docked start / tab bar" as "bring it up"), then the same move-then-read and tap | consistent with the walk the helper has always made before its first tap; on top at the tap still proven |
+| a rescrolled call that cannot bring the target on top | could end in Tab + Enter or a synthetic click (TS-D2) | fails at `… can be brought on top by real scrolling` | **TS-D2 closed**; on base such a target failed too |
+| bound | per call 8 re-reads; 2 rescrolls | the same, now stated: ≤ 3 calls × (≤ 8 re-reads + 1 walk) per target | R4 closed |
+| `:156` | six assertions (§2.1) | the same six, plus the freeze-leg line | **strengthened** (R3 closed) |
+
+The chrome list is narrow and named (the dock by its CSS-module class stem, the main nav by its label); the notice check runs before the chrome check, so a notice drawn inside the dock still counts as a notice. **Ruling: no assertion weakened; TS-D2 and R3/R4 closed in the code.**
