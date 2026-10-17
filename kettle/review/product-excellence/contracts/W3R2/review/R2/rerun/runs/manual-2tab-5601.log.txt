@@ -22,3 +22,13 @@
     B=idle/null/25m/ends=null
     S=idle/null/25m/ends=null  S(read in B)=idle/null/25m/ends=null  pageErrors=0
 ### case (g) trial2-5601: pass 5/5 {"precondition_B_behind":5,"B_joined_A_brew_after_its_click":5,"A_storage_byte_identical_after_B_click":5,"no_second_brew_started_by_B":5,"A_B_storage_agree_after_release":5,"saved_of_focus_toast_shown_in_B":5,"B_went_home":5,"one_record_for_joined_brew_everywhere":5,"idle_in_A_B_storage_at_the_end":5}
+[20:24:53] trial2-5601 (e) it1 FAIL load 17.63 13.02 10.63->17.21 13.37 10.82 failed: no_plus5_note_ever_in_B
+    A=running/s_mvcuhy/25m/ends=1792270272342
+    B=running/s_mvcuhy/25m/ends=1792270272342
+    S=running/s_mvcuhy/25m/ends=1792270272342  S(read in B)=running/s_mvcuhy/25m/ends=1792270272342  pageErrors=0
+    plus5Note=[""]
+[20:25:17] trial2-5601 (e) it2 FAIL load 17.21 13.37 10.82->17.05 13.66 10.99 failed: no_plus5_note_ever_in_B
+    A=running/s_mvcuii/25m/ends=1792270299133
+    B=running/s_mvcuii/25m/ends=1792270299133
+    S=running/s_mvcuii/25m/ends=1792270299133  S(read in B)=running/s_mvcuii/25m/ends=1792270299133  pageErrors=0
+    plus5Note=[""]
