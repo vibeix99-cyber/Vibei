@@ -179,3 +179,25 @@ Run 1: 390 light 3 identical, 2 within noise, **1 different**; 390 dark 3 identi
 **Nothing else differs between BEFORE and AFTER outside the timer readout:** no pair in either run has a robust difference elsewhere, and the sub-tolerance differences (strict under 0.1 %, tol 0) are the same size between the two AFTER frames as between AFTER and BEFORE.
 
 **The first 1440×900 set of run 2** (22:33 to 22:37) was not used: its last frame (BEFORE again, started 22:36:39) overlapped the start of section 6's burners (22:36:41), so I captured the 1440 set again (22:45 to 22:49) after the burners had stopped. The first set's tables are kept in `cap/run2-first1440-overlapped-stress/` (01, 02, 03, 07 identical, 04 and 16 within noise; no different pair there either).
+
+## 10. The failures, rerun, and their signatures (no verdicts)
+
+Two tests failed in the one full run (section 2). The brief's rule: rerun once, quietly, on :5560; if it fails again, also run it on :5583 and :5478. **Neither failed again, so neither was run on :5583 or :5478.** Because the reruns were not quiet (load 11 to 12), I added repeats on a quiet machine and under load (`scripts/RF-extra.sh`, `scripts/RF-extra-inner.sh`; logs `runs/rerun-*.log.txt`, JSON `rerun/*.json`).
+
+| # | Test | Full run (2 workers, load 12 to 18) | Rerun once on :5560 | ×5 alone on :5560 (quiet) | ×5 under 2 workers + 4 burners (PIDs 27192 to 27195, stopped 22:56:22) |
+|---|---|---|---|---|---|
+| F1 | `integrity.spec.ts:1048` I03 storage-full banner (phone 390×844) | **fail** (45.2 s) | pass, 31.5 s | **5 of 5 pass**, 26.2 to 27.1 s | **5 of 5 pass**, 29.7 to 34.1 s |
+| F2 | `w3-settings.spec.ts:39` preferences persist across a reload; Reset everything | **fail** (27.2 s) | pass, 21.0 s | **5 of 5 pass**, 15.3 to 17.4 s | **5 of 5 pass**, 26.0 to 29.7 s |
+
+(The loaded repeat ran both tests together: 10 tests, `--workers=2`, 22:53:40 to 22:56:22, load 3.9 at the start and 14.1 at the end.)
+
+**F1, first error lines** (`json/full.json`): `Error: every failed save has gone through` / `expect(received).toEqual(expected)` / `- Array []` `+ Array [ "kettle:home:lastVisit" ]` / "Timeout 10000ms exceeded while waiting on the predicate", at `tests/integrity.spec.ts:1136`. This is the first of the two waits the W3R1 Q change added to this test ("every save that had failed has gone through", an `expect.poll` over `window.__saves`, 10 s); the second wait, the banner going at the 2 s recovery check, was not reached. The W3R1 receipt's failures of this same test (X-1) were at the banner wait (`toHaveCount(0)`, old line 1100); this one is at the new line 1136. Reading of the code (read, not run): `kettle:home:lastVisit` is written once each time Today mounts (`src/screens/home/useHomeData.ts:17-18`, `safeStorage.setItem(VISIT_KEY, day)`), and the test's "room again" step re-saves the timer, progress and settings stores only (`integrity.spec.ts:1125-1131`); so if that one write is refused while storage is full and Today does not mount again, the key stays in the failed list. I did not instrument the page to see whether that is what happened in the failing run; the failing run's trace is `rerun/fullrun-artifacts/F1-integrity-I03-trace.zip` (with `...error-context.md`).
+
+**F2, first error lines**: `Error: expect(locator).toBeHidden() failed` / Locator `getByRole('dialog', { name: 'Start fresh?' })` / "Expected: hidden, Received: visible, Timeout: 10000ms" / 12 polls each resolving to the `<div role="dialog" ... class="_panel_344q3_25 _md_344q3_56">`, at `tests/w3-settings.spec.ts:83`, the line after the click on the sheet's "Reset everything" button. The page snapshot taken at the failure shows the welcome screen ("Hi, I'm Chai.", the first-visit composer) and no dialog, so the reset itself had happened; I did not find out why the locator still resolved to a visible dialog for 10 s (trace `rerun/fullrun-artifacts/F2-w3-settings-trace.zip`). Neither `w3-settings.spec.ts` nor `src/screens/settings` is among the files W3R2 changed.
+
+| # | Signature | Reproduced | Class |
+|---|---|---|---|
+| F1 | a refused write of `kettle:home:lastVisit` still in the failed-saves list after 10 s | 1 failure in 12 attempts of this test on this tree (1 full run, 1 rerun, 5 quiet, 5 under load); 0 failures in the 11 later attempts | **Intermittent; seen only in the loaded full run; not reproduced; mechanism read from the code, not shown** |
+| F2 | the "Start fresh?" dialog still reported visible 10 s after its confirm button was clicked, while the page shows the welcome screen | 1 failure in 12 attempts on this tree (1 full run, 1 rerun, 5 quiet, 5 under load); 0 in the 11 later attempts | **Intermittent; seen only in the loaded full run; not reproduced; mechanism not determined** |
+
+Neither is a base failure shown: they were not run on base because they did not fail on rerun.
