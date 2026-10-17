@@ -91,3 +91,15 @@
   - the diagnostic copy shows the new path is taken;
   - whole file 25/25.
 - **Product note for Vibei** (pre-existing, out of scope): the Today dock switches mode after boot at 844×390 @200 %.
+
+## Item 1, SG fix round (SG-D1..D3): GATE PASSED, 2026-10-17 ~19:45 UTC
+
+| Item | Result |
+|---|---|
+| Revision | `pe/w3r2-sync-guard@4b2690f` (one commit on `54a9721`), src `8a67658`. Packet `contracts/W3R2/SG/SG-READY.md` §8, logs `SG/logs/r2/` |
+| Scope (checked, `54a9721..4b2690f`) | `src/timer/sync.ts` (+9: rule 4), `src/timer/store.ts` (dropped actions return `false`), `src/app/flow.ts` (+4: `suppressNextStop = false` after `end('skip')`, **the flag only**, as widened), `src/screens/focus/FocusScreen.tsx` (**`toggle` and `addFive` only**, as widened), `src/timer/multitab.test.ts` (the ruled edit: catch-up installed, expects `'from A'`), `staleTab.test.ts` (+72), `w3r2-stale-tab.spec.ts` (+41). Nothing else |
+| **Trial 2** | **`2c9ec66`** = integration `d8749ad` (app `7cb3242`, with TH) + `4b2690f`, worktree `/home/user/wt/w8tr-g2`, src `5f504d4`, tests `8109152`. tsc 0, vitest **342/342**, build OK. Dev **:5601** (verified; `store.ts`, `sync.ts`, `flow.ts`, `FocusScreen.tsx` and `Toast.tsx` served), preview **:5603**. The first trial :5591/:5593 stays up until Lane R2 finishes |
+| The maker's claims | **D1:** LEAD-5's probes (1) and (3) fail on `54a9721` and pass on the fix. (2) fails on HEAD (pre-existing) and now passes. Doubly stale restores #13, #14, #16, #17 and #24 still pass; a new guard case passes. **D2/D3 (browser):** the add 5 case (note shown) and a new Next brew case (toast missing) fail on `54a9721` and pass 10/10 on the fix. Vitest 28 cases: `54a9721` 3 fail, HEAD 19 fail, fix 28/28. **Reruns:** vitest 342/342; tsc 0; race files 10× 55/55; stale-tab spec fix 10/10, HEAD :5560 5/5 fail; compatibility 6/6 byte-identical; `integrity:309` ×20 under load 20/20 |
+| Open | LEAD-5's FOLLOW-UPs only (the doubly stale +5 loss, the composer label). The bfcache paused-brew case is now covered, except a very rare third-stale-tab `lastEnded` rollback |
+| Archive | `archive/pe-w3r2-sync-guard-fix-4b2690f.incremental.bundle` (requires `54a9721`) |
+| Next | LEAD-5's final SG verdict on :5601, with Lane R2's receipt |
