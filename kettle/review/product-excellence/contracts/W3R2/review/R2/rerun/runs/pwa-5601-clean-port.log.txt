@@ -4,3 +4,10 @@
 Running 3 tests using 1 worker
 
   ✓  1 [pwa] › tests/pwa.spec.ts:48:1 › manifest is installable: name, colors, standalone, icons that exist (87ms)
+  ✓  2 [pwa] › tests/pwa.spec.ts:59:1 › precaches the shell, fonts, 3D chunk and tick worker; boots and times a brew offline (6.7s)
+  ✓  3 [pwa] › tests/pwa.spec.ts:85:1 › update: new version waits for the user (no reload mid-brew), then applies and the brew carries on (6.0s)
+
+  3 passed (20.0s)
+### end 21:00:42 UTC; exit=0; load:  21:00:42 up  5:10,  0 user,  load average: 12.78, 14.18, 14.06
+leftover preview servers on 5496 after the run:
+root     16928  6.6  0.8 24154128 138880 ?     Sl   21:00   0:00 node /home/user/wt/w8tr-g2/kettle/node_modules/.bin/vite preview --outDir /home/user/wt/w8tr-g2/kettle/test-results/pwa-dist --port 549
