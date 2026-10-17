@@ -260,3 +260,6 @@ expect(A.timer.getState().intention).toBe('from B');
 - Words typed in tab 2's Today composer for a brew that tab has already taken in are a same-session edit. `setIntention` saves them into that brew (F1's fields-only save), and they become its words in both tabs.
 - The guard does not touch this: a same `sessionId` is "not older" by rule 3, and `setIntention` is outside the action wrapper.
 - Pinned unchanged by Vitest #22. Open for the Final Boss, as listed in `VB-DECISIONS-W3R2.md`.
+- **Where it meets the new start join.** A person in a lagging Today types and presses Enter within 150 ms of the last keystroke. Z then joins A's brew (A's words). If Today is still mounted when the composer's pending 150 ms sync fires, that sync is exactly the quirk above: Z's typed words become the brew's words.
+  - Normally Today unmounts first: the join navigates to Focus, and the unmount clears the timer.
+  - The browser start case waits 400 ms before Enter, so it tests the join, not the quirk.
