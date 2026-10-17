@@ -202,7 +202,7 @@ async function runIteration(browser, c, it) {
         await click(B, 'Add 5 minutes');
         // the Focus note after +5 (the maker's open item): whatever "+5 min" text the page shows in the next 1.5 s
         const notes = [];
-        for (let i = 0; i < 6; i++) { notes.push(await B.evaluate(() => (document.body.innerText.match(/\+5 min[^\n]*/g) ?? []).join(' | '))); await sleep(250); }
+        for (let i = 0; i < 6; i++) { notes.push(await B.evaluate(() => (document.body.innerText.match(/5 min\s+·\s+whistles at[^\n]*/g) ?? []).join(' | '))); await sleep(250); }
         R.plus5Note = [...new Set(notes)];
       }
       await sleep(600);
@@ -272,6 +272,7 @@ async function runIteration(browser, c, it) {
     R.exception = String(e.stack ?? e).split('\n').slice(0, 4).join(' / ');
     try { R.steps['99-after-exception'] = { A: await dump(A), B: await dump(B) }; } catch {}
   }
+  if (it === 1) for (const [n, p] of [['A', A], ['B', B]]) { try { await p.screenshot({ path: `${out}/${label}-${c}-${n}-final.png` }); } catch {} }
   R.pageErrors = errs.length;
   R.pass = !R.exception && Object.keys(R.checks).length > 0 && Object.values(R.checks).every(Boolean);
   R.loadAtEnd = load(); R.t1 = now();
