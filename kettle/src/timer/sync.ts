@@ -16,9 +16,38 @@ import { lastWriteFailed } from '@/lib/storage';
 import { useSettings } from '@/state/settings';
 import { useProgress, syncFromStorage } from '@/progress';
 import type { SessionRecord } from '@/progress/types';
-import { TIMER_STORAGE_KEY, useTimer } from './store';
+import { TIMER_STORAGE_KEY, followWipe, readStoredTimer, setActionCatchUp, useTimer } from './store';
 import type { AppEvents } from '@/lib/events';
 import type { TimerState } from './types';
+
+/**
+ * The stale-tab guard, receiving side: is what storage now holds (`incoming`) older than this tab's timer (`mine`), so
+ * that mirroring it would lose a newer brew?
+ *
+ * A tab whose copy of the timer is behind (its `storage` event, and in Chromium often its copy of localStorage too, not
+ * yet arrived) can save that old copy whole over a newer brew; it cannot tell. The tab that holds the newer brew can,
+ * from the existing fields alone (no stored field is added):
+ *  1. `incoming` holds a brew this tab knows has ended (its own `lastEnded`, a record, a completion another tab
+ *     announced): a stale tab brought it back. Older.
+ *  2. Only a brew still under way here can be lost (and not one known to have ended).
+ *  3. A tab that knew this brew accounts for it: the same `sessionId` (paused, resumed, extended, re-worded) or
+ *     `lastEnded` naming it (ended or completed, then perhaps the next brew started). Not older.
+ *  4. Anything else was written by a tab that never saw this brew. An idle kettle is older (a removal, i.e. a wipe, is
+ *     not mirrored through here). Another brew under way is older if it started earlier (`startedAt`): of two brews
+ *     started in two tabs within the lag, neither knowing the other, the later start is the newer one, and both tabs
+ *     agree on that, so they converge. On a tie storage's copy stays.
+ */
+export function olderThanMine(mine: TimerState, incoming: TimerState, ended: (sessionId: string) => boolean): boolean {
+  const theirs = incoming.status !== 'idle' ? incoming.sessionId : null;
+  if (theirs && theirs !== mine.sessionId && (mine.lastEnded?.sessionId === theirs || ended(theirs))) return true;
+  const sid = mine.status !== 'idle' ? mine.sessionId : null;
+  if (!sid || ended(sid)) return false;
+  if (incoming.sessionId === sid || incoming.lastEnded?.sessionId === sid) return false;
+  if (!theirs) return true;
+  return (mine.startedAt ?? 0) > (incoming.startedAt ?? 0);
+}
+
+const knownEnded = (sid: string): boolean => completed.has(sid) || findRecord(sid) != null;
 
 export type SyncKind = AppEvents['timer:sync']['kind'];
 
@@ -72,13 +101,16 @@ export function mirrorTimerFromStorage(opts: { removed?: boolean; event?: boolea
     }
     if (opts.removed) {
       // Another tab wiped data (reset/import). Mirror an idle kettle.
-      if (prev.status !== 'idle') useTimer.getState().reset();
+      if (prev.status !== 'idle') followWipe();
     } else if (opts.event || !lastWriteFailed(TIMER_STORAGE_KEY)) {
       // Not when this tab re-reads on its own after its own last save failed (storage full or blocked):
       // storage then holds an older timer than this tab, and adopting it would roll a running brew back
       // to an earlier state (or to idle) and lose it at 0:00. Another tab's write (a storage event) did
-      // land, so it is newer and is still mirrored.
-      void useTimer.persist.rehydrate();
+      // land, so it is newer and is still mirrored, unless it is older than this tab's brew (olderThanMine):
+      // then this tab keeps its brew and saves it back, and the stale tab mirrors that in turn.
+      const incoming = readStoredTimer();
+      if (incoming && olderThanMine(prev, incoming, knownEnded)) useTimer.setState({});
+      else void useTimer.persist.rehydrate();
     }
     const next = useTimer.getState();
     const kind = diffTimer(prev, next);
@@ -152,9 +184,16 @@ export interface TabSyncOptions {
   onOtherKey?: (key: string | null) => void;
 }
 
+/** Every timer action first takes in what storage holds now (store.ts, "act on the current brew"). */
+export function installActionCatchUp(): () => void {
+  setActionCatchUp(() => void mirrorTimerFromStorage());
+  return () => setActionCatchUp(null);
+}
+
 export function initTabSync(opts: TabSyncOptions = {}): () => void {
   if (started || typeof window === 'undefined') return () => {};
   started = true;
+  const removeCatchUp = installActionCatchUp();
 
   const onStorage = (e: StorageEvent) => {
     try {
@@ -209,6 +248,7 @@ export function initTabSync(opts: TabSyncOptions = {}): () => void {
   }
 
   return () => {
+    removeCatchUp();
     window.removeEventListener('storage', onStorage);
     channel?.close();
     channel = null;
