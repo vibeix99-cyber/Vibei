@@ -6,8 +6,8 @@
 | Branch | `pe/w3r2-sync-guard`, worktree `/home/user/wt/w8g`, base `494748b` (app `5f78af1`, src `b74e6b3`). Local commits only, never pushed |
 | **Head** | **`54a9721` (src `dd6944e`)**. Commits: `c917293` the guard + `staleTab.test.ts`; `e18b621` the "away" rule (§1.2, 2.) + `tests/w3r2-stale-tab.spec.ts` (app code final here, src `0fafc69`); `54a9721` one more Vitest case (three tabs), test only |
 | Scope | `git diff --stat 494748b 54a9721`: `src/timer/store.ts` +77/−2, `src/timer/sync.ts` +48/−4, new `src/timer/staleTab.test.ts`, new `tests/w3r2-stale-tab.spec.ts`. Nothing else: no `Composer.tsx`, `src/ui`, `src/screens`, `multitab.test.ts`, `intentionRace.test.ts`, `w3-intention-race.spec.ts`, `integrity.spec.ts` or `timer.spec.ts` change |
-| Dev | :5581 (HMR) serves the branch. Checked by blob hash of `src/timer/store.ts` and `sync.ts` (and `verify.sh`): `PORT 5581 serves c917293 (src f88ab8a): VERIFIED`; re-checked before each browser run (§3) |
-| Controls | :5560 integration = HEAD `494748b` (its `store.ts` and `sync.ts` blobs equal HEAD's, checked); :5478 old base `4d36939` |
+| Dev | :5581 (HMR) serves the branch. Checked by blob hash of `src/timer/store.ts`, `sync.ts` and `ticker.ts` against the branch, plus `verify.sh`: `PORT 5581 serves e18b621 (src 0fafc69): VERIFIED` (`logs/served-blobs.log.txt`). Source untouched while the browser runs ran; `54a9721` changes only a Vitest file |
+| Controls | :5560 integration = HEAD `494748b`; :5478 old base `4d36939`. The served `store.ts`, `sync.ts` and `ticker.ts` blobs equal those revisions' (checked, same log) |
 | Evidence | `SG/logs/*.log.txt`, `SG/scripts/*.txt` |
 
 **Status: READY for LEAD.** All of the brief's proof is in (§3–§6). One existing-test question is for LEAD to rule (§7.1); residuals are in §7.2–§7.4.
@@ -44,7 +44,7 @@ Files: `src/timer/store.ts` and `src/timer/sync.ts` only (no other `src/timer/*`
 - **Coverage.** It covers every writer, present or future, whatever path the stale save came from: whole saves, the fields-only saves, the composer.
 - **`olderThanMine(mine, incoming)`**, in order:
   1. `incoming` holds a brew under way that this tab knows has **ended**: its own `lastEnded`, a record in progress, or a completion another tab announced. A stale tab brought it back. **Older** (this also covers an idle tab: an ended brew does not come back over its idle kettle).
-  2. Only a brew **still under way here** can be lost. That excludes a brew with a record or an announced completion, and a brew running here **more than `WHILE_AWAY_AFTER_MS` (10 s) past its end**: this tab's ticker would have completed it, so the tab was away (frozen, asleep) and its copy is the old one (§1.3).
+  2. Only a brew **still under way here** can be lost. That excludes a brew with a record or an announced completion, and a brew running here **more than `WHILE_AWAY_AFTER_MS` (10 s) past its end**: this tab's ticker would have completed it, so the tab was away (frozen, asleep) and its copy is the old one.
   3. `incoming` **accounts for** this brew: the same `sessionId` (paused, resumed, extended, re-worded) or `lastEnded` naming it (ended or completed, and perhaps the next brew started). **Not older.**
   4. Anything else was written by a tab that never saw this brew:
      - an **idle** kettle is older;
@@ -77,8 +77,8 @@ Files: `src/timer/store.ts` and `src/timer/sync.ts` only (no other `src/timer/*`
 
 Exactly-once is unchanged:
 - `lastEnded`, the IndexedDB claims and progress de-duplication are untouched;
-- the completion path (`tick`, the ticker, `guard.refresh`) is unchanged;
-- the refresh now also puts back a brew that a stale tab overwrote just before its end (the ticker-first order in §3), which is then completed once.
+- the completion code (`tick`, `ticker.ts`) is unchanged;
+- its pre-completion refresh (`guard.refresh` → `mirrorTimerFromStorage`) now runs the receive rule like any mirror. So it also puts back a brew that a stale tab overwrote just before its end (Vitest #16), which is then completed once. A brew more than 10 s past its end is never put back (rule 2), so nothing ended elsewhere can complete again.
 
 The F1 fix is unchanged: `setIntention` writes only its fields, and `syncIdleLength`'s following tab writes nothing. Both are outside the wrapper.
 
