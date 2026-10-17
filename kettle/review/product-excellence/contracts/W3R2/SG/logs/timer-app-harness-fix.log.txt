@@ -26,3 +26,6 @@ Running 28 tests using 1 worker
   ✓  22 [timer-app] › tests/timer.spec.ts:281:3 › device integrations › media session: metadata + play/pause handlers while a phase runs, cleared when idle (6.6s)
   -  23 [timer-app] › tests/timer.spec.ts:294:3 › keyboard shortcuts infra › Space toggles — but never while typing, on a focused button, or on key repeat; ? toggles help, not over a dialog
   ✓  24 [timer-app] › tests/timer.spec.ts:339:3 › multiple tabs › two tabs show the same session live and exactly one records it (15.5s)
+  ✓  25 [timer-app] › tests/timer.spec.ts:377:3 › multiple tabs › two tabs pressing start at the same moment converge on one session (16.7s)
+  ✓  26 [timer-app] › tests/timer.spec.ts:399:3 › multiple tabs › closing the leader tab mid-session hands over; the other tab completes it once (14.7s)
+  ✓  27 [timer-app] › tests/timer.spec.ts:416:3 › multiple tabs › frozen leader: the other tab takes over at the end; the leader waking up later does not double-count (12.9s)
