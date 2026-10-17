@@ -72,3 +72,16 @@ Running 10 tests using 2 workers
 [diag] first read (rescrolled 0) -> null {"t":1669,"top":296,"bottom":348,"left":459,"right":804,"ih":390,"iw":844,"sy":0,"hit":"p._ctaNote_ahnin_487 | Then a 5 min tea break. Change | inField=false leaving=false inert=false chrome=sticky div._ctaDock_ahnin_439","dock":"tall=false pos=sticky top=182 bottom=390 h=208 dockH=209px","leavingLayers":0,"dialogs":0,"hash":"#/","vv":[390,0]}
 [diag] after walk (rescrolled 0) -> on top {"t":3261,"top":116,"bottom":168,"left":459,"right":804,"ih":390,"iw":844,"sy":180,"hit":"input#_r_h_-input._input_vv3ei_47 |  | inField=true leaving=false inert=false chrome=none","dock":"tall=false pos=sticky top=182 bottom=390 h=208 dockH=209px","leavingLayers":0,"dialogs":0,"hash":"#/","vv":[390,0]}
   ✓   9 [chromium] › .tmp/ts/diag3/notice-strip.spec.ts:408:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (1.1m)
+  ✓  10 [chromium] › .tmp/ts/diag3/notice-strip.spec.ts:408:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (1.2m)
+
+  10 passed (6.0m)
+### end 19:57:44 exit=0 load 11.45 11.50 12.14
+
+burners stopped 19:57:44: 5160 gone 5161 gone 5162 gone 5163 gone 
+######## combo: whole 19:57:44
+no burners (whole-file run, --workers=2 as the spec's header says)
+######## r2-whole-notice: env KETTLE_PORT=5560 PLAYWRIGHT_JSON_OUTPUT_NAME=/home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/TS/logs/r2/r2-whole-notice.json npx playwright test tests/notice-strip.spec.ts --project=chromium --workers=2 --reporter=list,json --output=.tmp/ts-out/r2-r2-whole-notice
+### start 19:57:44 load 11.45 11.50 12.14
+
+Running 25 tests using 2 workers
+
