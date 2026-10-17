@@ -1,5 +1,7 @@
 # TS-READY: W3R2 item 3, test-only stability (maker TS)
 
+**UPDATE after the fix round (§6, 20:12 UTC):** TS-D1 and TS-D2 are fixed and shown (injection, 20/20 and 10/10 under load, diagnostic copy 10/10 with the chrome path taken, whole `notice-strip.spec.ts` 25/25); R3 and R4 are done. The status block below is the state at the first hand-back (18:05 UTC), kept as written.
+
 **Status at the stop, honestly.**
 - **Timer pair: done.** Old fails and new passes under the same injected late runner (§2.1); 20/20 and 20/20 under load (§3); the whole timer file 26 passed + 2 skipped (§4).
 - **`press()`: the fix is shown by injection (§2.2), but the 10/10 under load is NOT met**: 6/10 with the re-aim alone, 9/10 with the final code (§3). One failure of the same kind remains and its cause is not identified (§5.1).
@@ -307,3 +309,26 @@ LEAD-6's `__why` (the target's rect, what is at its centre and its fixed / stick
 ### 6.5 The whole `notice-strip.spec.ts` (acceptance 5)
 
 `--project=chromium --workers=2`, no burners, :5560 (app `7cb3242`, src `07df367`), the fix tree: **25 passed, 0 failed, 0 skipped** (12.2 min). Load 11.45 11.50 12.14 (19:57:44) → 6.75 7.30 9.13 (20:09:57). Log `logs/r2/combo.log.txt` (section `r2-whole-notice`), report `logs/r2/r2-whole-notice.json.txt`.
+
+### 6.6 R3: `:156` asserts its freeze leg (acceptance 6)
+
+- **Under load, both projects** (`--workers=2` + 4 burners, `--repeat-each=10`, :5560 app `7cb3242`, src `07df367`; `logs/r2/combo.log.txt` section `r2-timer156-x10`, `logs/r2/r2-timer156-x10.json.txt`): **`timer-app` 10/10 and `timer-harness` 10/10** (1.7 min, with the new assertion in place). Load 6.53 7.24 9.10 (20:10:02) → 12.01 8.80 9.45 (20:11:43); burners 11104 11105 11106 11107 stopped, gone. (The load average was lower in this run than in §3 of the rejected-tip round: the other lanes were quieter.)
+- **The assertion bites** (`logs/r2/inject-r3.log.txt`, `scratch/r2.r3.timer.spec.ts.txt`): a scratch copy whose in-page wait before the freeze is 2500 ms instead of 100 ms (a page that stalls for most of a 3 s brew), `timer-harness`: **fails** at the new line with `the main-thread timers were frozen at least 1 s before the end of the brew`, expected ≥ 1000, received 489.
+- Margin 1000 ms: the freeze is made about 100 ms after the start of a 3 s (harness) or 6 s (app) brew, so a normal run has about 2.9 s / 5.9 s.
+
+### 6.7 Against LEAD-6's acceptance list
+
+| # | Check | Where | Result |
+|---|---|---|---|
+| 1 | diff, no weakening, classes of cover, bound | §6.1 (table, `scratch/r2-spec-changes.diff.txt`) | notice-strip.spec.ts and, for R3, timer.spec.ts only; wheeled away from: out of the view, and the docked `.ctaDock` / `nav[aria-label=Main]`; not notices, sheets or unknown covers; bound 3 calls × (8 re-reads + one walk) |
+| 2 | injection | §6.2 | `dock`: `21e5644` fails, fix passes; `transient` passes; `permanent-abs` and `permanent` fail with the same words; `sheet`: `21e5644` presses by Tab + Enter, the fix fails |
+| 3 | under load | §6.3 | dark 200 % ×20: **20/20**; light 200 % reduced ×10: **10/10** |
+| 4 | diagnostic copy | §6.4 | ×10: **10/10**; docked-chrome path taken **2** times |
+| 5 | whole `notice-strip.spec.ts` | §6.5 | **25/25** |
+| 6 | timer pair | §6.6 | `:156` ×10 in both projects 10/10 with R3; `:189` unchanged (20/20 in §3, whole timer file 26 + 2 skipped in §4; not rerun in this round: `timer.spec.ts` changed only at `:156`) |
+| 7 | packet | this section, `logs/r2/`, `.txt` copies | staged commits via `commit-evidence.sh`; no model names |
+
+**Open items of the round.**
+1. `:189` and the whole `timer.spec.ts` were not rerun after the R3 edit (it touches `:156` only); LEAD-6 reruns the timer pair per acceptance 6 if wanted.
+2. The acceptance runs used :5560 (src `07df367`); the injection runs used :5583 (src `494748b`). The product note R8 (the dock changes mode after boot and then covers the field at `scrollY` 0) is unchanged and is not a test matter.
+3. The 8-in-10 runs where the first read already sees the settled dock never reach the new path; only the 2-in-10 that catch the switch do (§6.4). The injection (`COVER=dock`) is what guarantees the path is tested every time.
