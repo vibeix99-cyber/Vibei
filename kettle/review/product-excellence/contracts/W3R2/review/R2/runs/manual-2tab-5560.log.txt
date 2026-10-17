@@ -100,3 +100,16 @@
     B=running/s_mvcqnk/30m/ends=1792264026411
     S=running/s_mvcqnk/30m/ends=1792264026411  S(read in B)=running/s_mvcqnk/30m/ends=1792264026411  pageErrors=0
     plus5Note=["5 min · whistles at 7:07 PM now"]
+[18:37:48] control-5560 (e) it4 FAIL load 12.48 12.14 12.34->12.52 12.16 12.35 failed: brew2_running_A_B_storage,brew2_not_extended_or_ended,storage_byte_identical_after_B_click
+    A=running/s_mvcqo3/30m/ends=1792264050712
+    B=running/s_mvcqo3/30m/ends=1792264050712
+    S=running/s_mvcqo3/30m/ends=1792264050712  S(read in B)=running/s_mvcqo3/30m/ends=1792264050712  pageErrors=0
+    plus5Note=["5 min · whistles at 7:07 PM now"]
+[18:38:11] control-5560 (e) it5 FAIL load 12.52 12.16 12.35->10.71 11.78 12.21 failed: brew2_running_A_B_storage,brew2_not_extended_or_ended,storage_byte_identical_after_B_click
+    A=running/s_mvcqol/30m/ends=1792264073858
+    B=running/s_mvcqol/30m/ends=1792264073858
+    S=running/s_mvcqol/30m/ends=1792264073858  S(read in B)=running/s_mvcqol/30m/ends=1792264073858  pageErrors=0
+    plus5Note=["5 min · whistles at 7:07 PM now"]
+### case (e) control-5560: pass 0/5 {"precondition_B_behind":5,"brew2_running_A_B_storage":0,"A_B_storage_agree":5,"brew2_not_extended_or_ended":0,"B_shows_focus":5,"storage_byte_identical_after_B_click":0}
+### done control-5560 18:38:11 load 10.71 11.78 12.21
+### end 18:38:12 UTC; exit=0; load:  18:38:12 up  2:48,  0 user,  load average: 10.71, 11.78, 12.21
