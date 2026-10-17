@@ -22,3 +22,15 @@
     B=paused/s_mvcpmj/30m/ends=null
     S=paused/s_mvcpmj/30m/ends=null  S(read in B)=paused/s_mvcpmj/30m/ends=null  pageErrors=0
 ### case (a) fix-5591: pass 5/5 {"precondition_B_behind":5,"paused_in_A":5,"paused_in_B":5,"paused_in_storage":5,"same_session_A_B_storage":5,"kept_plus5_A_B_storage":5,"A_B_storage_agree":5,"remaining_gt_planned_minus_2min":5}
+[18:08:44] fix-5591 (b) it1 PASS load 12.76 13.04 13.27->14.01 13.32 13.36
+    A=paused/s_mvcpmt/30m/ends=null
+    B=paused/s_mvcpmt/30m/ends=null
+    S=paused/s_mvcpmt/30m/ends=null  S(read in B)=paused/s_mvcpmt/30m/ends=null  pageErrors=0
+[18:08:56] fix-5591 (b) it2 PASS load 14.01 13.32 13.36->14.17 13.38 13.38
+    A=paused/s_mvcpn7/30m/ends=null
+    B=paused/s_mvcpn7/30m/ends=null
+    S=paused/s_mvcpn7/30m/ends=null  S(read in B)=paused/s_mvcpn7/30m/ends=null  pageErrors=0
+[18:09:11] fix-5591 (b) it3 PASS load 14.17 13.38 13.38->14.47 13.49 13.42
+    A=paused/s_mvcpni/30m/ends=null
+    B=paused/s_mvcpni/30m/ends=null
+    S=paused/s_mvcpni/30m/ends=null  S(read in B)=paused/s_mvcpni/30m/ends=null  pageErrors=0
