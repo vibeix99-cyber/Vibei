@@ -189,16 +189,26 @@ async function onTop(page: Page, el: ReturnType<Page['locator']>, strict = false
     return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width, h: r.height, top: r.top };
   }, strict, { timeout: GONE_MS });
 }
+/** Is the element wholly inside the viewport? (The first test of `onTop`: when that finds nothing, this says whether the
+ *  element has moved out of the view, as opposed to being covered.) */
+const inView = (el: ReturnType<Page['locator']>) =>
+  el.evaluate((e) => {
+    const r = e.getBoundingClientRect();
+    return r.width > 0 && r.top >= 0 && r.bottom <= innerHeight && r.left >= 0 && r.right <= innerWidth;
+  }, undefined, { timeout: GONE_MS });
 /** (W3R1 Q, X-11) Every read of a target in `press()` waits at most this long for it to be in the page: a target that
  *  has gone (an inline Undo whose time ran out) fails the test at once, saying so, instead of holding it to its 4-minute
  *  timeout. */
 const GONE_MS = 15_000;
-/** (W3R2) In `press()`, a target found covered at the re-check before the tap is looked at again, after AIM_PAUSE_MS, at
- *  most AIM_AGAIN times (about 2 s of waiting in all); one that is still covered after that fails the test as before. */
+/** (W3R2) In `press()`, a target found not on top at the re-check before the tap is looked at again, after AIM_PAUSE_MS, at
+ *  most AIM_AGAIN times (about 2 s of waiting in all); one that is still covered after that fails the test as before. A
+ *  target that is not covered but has moved out of the view (the page moved under it) is brought back by the wheel as
+ *  at the start of `press()`, at most AIM_RESCROLL times. */
 const AIM_AGAIN = 8;
 const AIM_PAUSE_MS = 250;
+const AIM_RESCROLL = 2;
 /** Scroll by real wheel (over `over`, or the page's middle) until `el` is on top, then tap / click it for real. */
-async function press(page: Page, touch: boolean, el: ReturnType<Page['locator']>, over?: { x: number; y: number }, strict = false) {
+async function press(page: Page, touch: boolean, el: ReturnType<Page['locator']>, over?: { x: number; y: number }, strict = false, rescrolled = 0): Promise<{ x: number; y: number; w: number; h: number; top: number }> {
   await el.waitFor({ state: 'attached', timeout: 20_000 });
   let at = await onTop(page, el, strict);
   if (!at) {
@@ -293,16 +303,18 @@ async function press(page: Page, touch: boolean, el: ReturnType<Page['locator']>
   // spell with no input at all (QUIET_MS, or BAND_IDLE_MS for a kept band: src/ui/moment.ts), so nothing can move
   // between that read and the tap; if the target has moved, or the read took 800 ms or more, the move and the read are
   // made again.
-  // (W3R2) If the read finds the target covered (not on top), that is not yet the end: something can cross it for a
-  // moment (once, on a loaded machine, at 844×390 dark 200 %, the field was covered at that one read). The target is
-  // looked at again after AIM_PAUSE_MS, at most AIM_AGAIN times (about 2 s in all), and aimed at again from where it is
-  // then. The tap still goes only after a read, made after the pointer is on the target, that finds it on top; a target
-  // that stays covered through all of them fails here as before, with the same words.
+  // (W3R2) If the read finds the target not on top, that is not yet the end: something can cross it for a moment, or the
+  // page can move under it (once, on a loaded machine, at 844×390 dark 200 %, the field was not on top at that one read).
+  // The target is looked at again after AIM_PAUSE_MS, at most AIM_AGAIN times (about 2 s in all), and aimed at again from
+  // where it is then; one that has moved out of the view is first brought back by the wheel, as at the start. The tap
+  // still goes only after a read, made after the pointer is on the target, that finds it on top; a target that stays
+  // covered through all of them fails here as before, with the same words.
   for (let k = 0, covered = 0; ; ) {
     if (!at) {
       if (covered++ >= AIM_AGAIN) break;
       await page.waitForTimeout(AIM_PAUSE_MS);
       at = await onTop(page, el, strict);
+      if (!at && rescrolled < AIM_RESCROLL && !(await inView(el))) return press(page, touch, el, over, strict, rescrolled + 1);
       continue;
     }
     const round = k++;
