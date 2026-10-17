@@ -34,3 +34,12 @@
     A=paused/s_mvcpni/30m/ends=null
     B=paused/s_mvcpni/30m/ends=null
     S=paused/s_mvcpni/30m/ends=null  S(read in B)=paused/s_mvcpni/30m/ends=null  pageErrors=0
+[18:09:22] fix-5591 (b) it4 PASS load 14.47 13.49 13.42->15.01 13.64 13.47
+    A=paused/s_mvcpnu/30m/ends=null
+    B=paused/s_mvcpnu/30m/ends=null
+    S=paused/s_mvcpnu/30m/ends=null  S(read in B)=paused/s_mvcpnu/30m/ends=null  pageErrors=0
+[18:09:36] fix-5591 (b) it5 PASS load 15.01 13.64 13.47->15.28 13.77 13.51
+    A=paused/s_mvcpo1/30m/ends=null
+    B=paused/s_mvcpo1/30m/ends=null
+    S=paused/s_mvcpo1/30m/ends=null  S(read in B)=paused/s_mvcpo1/30m/ends=null  pageErrors=0
+### case (b) fix-5591: pass 5/5 {"precondition_B_behind":5,"same_session_A_B_storage":5,"A_B_storage_agree":5,"still_paused_A_B_storage":5,"plus5_applied_A_B_storage":5}
