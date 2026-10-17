@@ -37,7 +37,7 @@ case $WHAT in
     run load-notice338 tests/notice-strip.spec.ts --project=chromium --repeat-each=10 -g 'real input \(844×390 dark 200 %\)'
     ;;
   notice-part)
-    run part-notice tests/notice-strip.spec.ts --project=chromium -g '\\((390×844 light 100|375×667 dark 200|1440×900 light 100) %\\)'
+    run part-notice tests/notice-strip.spec.ts --project=chromium -g '\((390×844 light 100|375×667 dark 200|1440×900 light 100) %\)'
     ;;
   diag2)
     run diag2-notice338 -c .tmp/ts-pw.config.ts ts/diag/notice-strip.spec.ts --project=chromium --repeat-each=8 -g 'real input \(844×390 dark 200 %\)'
