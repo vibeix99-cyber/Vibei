@@ -75,7 +75,7 @@ The F1 fix is unchanged: `setIntention` writes only its fields, and `syncIdleLen
 
 ## 3. Tests: fail on HEAD, pass on the fix
 
-### 3a. Vitest `src/timer/staleTab.test.ts` (23 tests; the two-store harness of `intentionRace.test.ts`)
+### 3a. Vitest `src/timer/staleTab.test.ts` (24 tests; the two-store harness of `intentionRace.test.ts`)
 Harness:
 - each tab is its own module graph over one shared localStorage;
 - a tab takes in another tab's write only when the test delivers its `storage` event, so its events are held and released in the order the test chooses;
@@ -109,6 +109,7 @@ Harness:
 | 21 | reset data in one tab still stops the brew in the other | pass | pass |
 | 22 | composer label: words typed in Z for the running brew become its words (unchanged) | pass | pass |
 | 23 | in step: pause, +5, resume, end from either tab reach the other | pass | pass |
+| 24 | **three tabs**, doubly stale typed edit; A and C both hold the brew, either order → it is put back, at most one save per holding tab, **no further writes** when every event is delivered again (no ping-pong); completes once | **FAIL** | pass |
 
 **Every trigger has a case that fails on HEAD and passes on the fix:**
 
@@ -120,23 +121,23 @@ Harness:
 | add 5 | 5, 6 |
 | end | 7, 8 |
 | start | 9–11 |
-| doubly stale typed edit | 13, 14, 16 |
+| doubly stale typed edit | 13, 14, 16, 24 (three tabs) |
 | doubly stale pause (added) | 17, 18 |
 
 The singly stale typed edit (12) already passes on HEAD: F1's fields-only save guards it. It stays as a regression guard; its fail-on-HEAD form is the doubly stale case.
 
 | Run | Result | Log |
 |---|---|---|
-| HEAD `494748b`, the 23 tests as committed in `e18b621` | **16 failed / 7 passed**. All 16 fail on a behaviour assertion (no crash). The 7 passing are 12, 15, 19–23, as the table says | `logs/vitest-staletab-on-HEAD-494748b.log.txt` |
-| fix `e18b621` (src `0fafc69`) | **23/23** | `logs/vitest-staletab-on-fix.log.txt` |
-| fix: `staleTab` + `intentionRace` + `multitab`, 10 runs in a row | **10 × 50/50** (deterministic) | `logs/vitest-race-files-x10-fix.log.txt` |
+| HEAD `494748b`, the 24 tests as committed in `54a9721` | **17 failed / 7 passed**. All 17 fail on a behaviour assertion (no crash). The 7 passing are 12, 15, 19–23, as the table says | `logs/vitest-staletab-on-HEAD-494748b.log.txt` |
+| fix `54a9721` (src `dd6944e`; app code as in `e18b621`) | **24/24** | `logs/vitest-staletab-on-fix.log.txt` |
+| fix: `staleTab` + `intentionRace` + `multitab`, 10 runs in a row | **10 × 51/51** (deterministic) | `logs/vitest-race-files-x10-fix.log.txt` |
 
 ### 3b. Existing tests (unchanged files)
 
 | Run | Result | Log |
 |---|---|---|
 | `intentionRace.test.ts`, `multitab.test.ts`, `store.test.ts`, `storageFull.test.ts` on the fix | 4 files, **71/71** | `logs/vitest-existing-race-on-fix.log.txt` |
-| Vitest, all, on the fix `e18b621` | **34 files, 337/337** (was 314; +23) | `logs/vitest-all-fix.log.txt` |
+| Vitest, all, on the fix `54a9721` | **34 files, 338/338** (was 314; +24) | `logs/vitest-all-fix.log.txt` |
 | tsc (`tsc --noEmit`) | exit 0 | `logs/tsc-fix.log.txt` |
 
 `multitab.test.ts` "two tabs pressing start at the same time converge on one session" stays green. Its harness does not install the action catch-up, so it models two starts that cannot see each other (the doubly stale start, #20), whose outcome is unchanged. **But it encodes "last writer wins", which Vibei's rule overturns for a tab whose read is current. See §7.1 (for LEAD).**
@@ -177,8 +178,31 @@ Reporter quirk, as F1FIX noted: the HEAD run lists the four tests at `:154`, `:1
 |---|---|---|
 | `tests/w3-intention-race.spec.ts` (F1 case + F1X-D1 case) on the fix :5581 ×3 | **6/6** | `logs/intention-race-pw-fix-5581-x3.log.txt` |
 
-## 4. Storage compatibility (real browsers, through the gate)
-(running: `scripts/compat.spec.ts.txt`, F1FIX's script plus a third profile saved through `reset`)
+## 4. Storage compatibility (real browsers, through the gate): all byte-identical
+**Script.** `scripts/compat.spec.ts.txt` (config `scripts/compat-pw.config.ts.txt`) is F1FIX's §3 script, unchanged but for one added profile.
+
+**Three profiles**, each made on FROM through the real UI or the debug API:
+- **idle:** typed, started with Enter, ended, then new words typed on Today (`lastEnded` set);
+- **paused:** typed, started with Enter, paused;
+- **reset (new):** typed, started, then `reset()`. On the fix that removes the key, then saves the idle kettle.
+
+**Method.** Every `kettle:*` key is copied into a fresh profile on TO before boot.
+
+**Asserts:**
+- TO's in-memory timer equals FROM's stored `state`, field by field;
+- after TO has booted and its composer has synced, `kettle:timer` and `kettle:progress` are byte-identical;
+- the envelope keys are `['state', 'version']`, version 1, and the 14 state keys are in order.
+
+| FROM → TO | idle | paused | reset | Log |
+|---|---|---|---|---|
+| HEAD `494748b` :5560 → fix :5581 | pass | pass | pass | `logs/compat-5560-to-5581.log.txt` |
+| fix :5581 → HEAD :5560 | pass | pass | pass | `logs/compat-5581-to-5560.log.txt` |
+| old base `4d36939` :5478 → fix :5581 | pass | pass | pass | `logs/compat-5478-to-5581.log.txt` |
+| fix :5581 → old base :5478 | pass | pass | pass | `logs/compat-5581-to-5478.log.txt` |
+
+**Byte comparison** (`SGCOMPAT` lines in each log, saved vs after boot): all 12 pairs are identical.
+- The reset profile has the same bytes on all three servers (sha256 prefix `e47c72404da7`): the removal-first reset leaves exactly what the base's reset left.
+- Nothing in the guard writes a new key or field. The re-assert is an ordinary whole save of the same 14 fields, and the catch-up writes nothing.
 
 ## 5. `integrity:309` ×20 under load
 (queued: `--workers=2` plus 6 CPU burners, own PIDs, killed by PID; `scripts/chain.sh.txt` step `stress`)
