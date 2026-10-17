@@ -13,3 +13,16 @@
     A=paused/s_mvcsi3/25m/ends=null
     B=paused/s_mvcsi3/25m/ends=null
     S=paused/s_mvcsi3/25m/ends=null  S(read in B)=paused/s_mvcsi3/25m/ends=null  pageErrors=0
+[19:29:05] control-5560-after (a) it4 FAIL load 11.78 8.10 10.46->14.87 8.90 10.70 failed: kept_plus5_A_B_storage
+    A=paused/s_mvcsib/25m/ends=null
+    B=paused/s_mvcsib/25m/ends=null
+    S=paused/s_mvcsib/25m/ends=null  S(read in B)=paused/s_mvcsib/25m/ends=null  pageErrors=0
+[19:29:14] control-5560-after (a) it5 FAIL load 14.87 8.90 10.70->14.58 9.03 10.72 failed: kept_plus5_A_B_storage
+    A=paused/s_mvcsij/25m/ends=null
+    B=paused/s_mvcsij/25m/ends=null
+    S=paused/s_mvcsij/25m/ends=null  S(read in B)=paused/s_mvcsij/25m/ends=null  pageErrors=0
+### case (a) control-5560-after: pass 0/5 {"precondition_B_behind":5,"paused_in_A":5,"paused_in_B":5,"paused_in_storage":5,"same_session_A_B_storage":5,"kept_plus5_A_B_storage":0,"A_B_storage_agree":5,"remaining_gt_planned_minus_2min":5}
+[19:29:30] control-5560-after (b) it1 FAIL load 14.58 9.03 10.72->16.68 9.75 10.93 failed: still_paused_A_B_storage
+    A=running/s_mvcsiq/30m/ends=1792267160616
+    B=running/s_mvcsiq/30m/ends=1792267160616
+    S=running/s_mvcsiq/30m/ends=1792267160616  S(read in B)=running/s_mvcsiq/30m/ends=1792267160616  pageErrors=0
