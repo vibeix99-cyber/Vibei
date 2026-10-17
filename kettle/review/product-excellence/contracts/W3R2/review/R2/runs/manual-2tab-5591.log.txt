@@ -13,3 +13,12 @@
     A=paused/s_mvcply/30m/ends=null
     B=paused/s_mvcply/30m/ends=null
     S=paused/s_mvcply/30m/ends=null  S(read in B)=paused/s_mvcply/30m/ends=null  pageErrors=0
+[18:08:11] fix-5591 (a) it4 PASS load 11.91 12.91 13.24->12.24 12.94 13.25
+    A=paused/s_mvcpm9/30m/ends=null
+    B=paused/s_mvcpm9/30m/ends=null
+    S=paused/s_mvcpm9/30m/ends=null  S(read in B)=paused/s_mvcpm9/30m/ends=null  pageErrors=0
+[18:08:25] fix-5591 (a) it5 PASS load 12.24 12.94 13.25->12.76 13.04 13.27
+    A=paused/s_mvcpmj/30m/ends=null
+    B=paused/s_mvcpmj/30m/ends=null
+    S=paused/s_mvcpmj/30m/ends=null  S(read in B)=paused/s_mvcpmj/30m/ends=null  pageErrors=0
+### case (a) fix-5591: pass 5/5 {"precondition_B_behind":5,"paused_in_A":5,"paused_in_B":5,"paused_in_storage":5,"same_session_A_B_storage":5,"kept_plus5_A_B_storage":5,"A_B_storage_agree":5,"remaining_gt_planned_minus_2min":5}
