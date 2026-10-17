@@ -293,3 +293,115 @@ Both tabs on a running break (started with the debug API: set-up). B held. **A c
 - B goes to `#/` in 5 of 5; one record for the joined brew in storage, A's memory, B's memory; A, B and storage idle at the end.
 (In iteration 1 the first click on B's "End session" reported a Playwright timeout of 5 s while the sheet opened and the flow completed; it is recorded as `bEnd.firstClick` in that iteration's JSON.)
 
+### R6e. Control for case (e) on :5560 (optional; no guard)
+`rerun/runs/manual-2tab-5560-e2.log.txt`, label `e2-5560-control`, same strict observer and script as the :5601 rerun, 20:37:01 to 20:39:30. **0 of 5**, and the note **is shown**: the observer and the poll both read `5 min · whistles at 9:07 PM now` (9:07 to 9:09 PM in the five iterations) in 5 of 5. The page held the ended brew 1 running with 30 min (the +5 applied), over A's brew 2, in A, B and storage; storage changed after B's click 5 of 5. So the observer does see the note when it is shown. B's spy: `["addTime"]` (the button's own sound) in both runs.
+
+### R6d. Tables: A, B and storage after each iteration (status, last 4 of `sessionId`, planned length, `endsAt`)
+`[brew 1]` / `[brew 2]` mark which brew the `sessionId` is where there were two (in case (g), brew 1 is the break and brew 2 the joined focus brew). Records: brew 1 / brew 2, in storage; A's memory; B's memory.
+
+#### trial2-5601
+
+| case | iterations | pass | fail | exceptions | page errors |
+|---|---|---|---|---|---|
+| (a) pause | 5 | 5 | 0 | 0 | 0 |
+| (b) add 5 | 5 | 5 | 0 | 0 | 0 |
+| (c) end | 5 | 5 | 0 | 0 | 0 |
+| (d) no hold | 5 | 5 | 0 | 0 | 0 |
+| (f) pause on a replaced brew | 5 | 5 | 0 | 0 | 0 |
+| (g) Next brew | 5 | 5 | 0 | 0 | 0 |
+
+**(a) pause**, criteria met (of 5): precondition_B_behind 5; paused_in_A 5; paused_in_B 5; paused_in_storage 5; same_session_A_B_storage 5; kept_plus5_A_B_storage 5; A_B_storage_agree 5; remaining_gt_planned_minus_2min 5; pause_sound_played_in_B_when_applied 5
+
+| it | result | A (memory) | B (memory) | storage (read in A) | storage (read in B) | records for brew 1 / 2 (storage; A; B) | failed criteria |
+|---|---|---|---|---|---|---|---|
+| 1 | pass | paused 3a5d 30m null | paused 3a5d 30m null | paused 3a5d 30m null | paused 3a5d 30m null | 0/-; 0/-; 0/- | - |
+| 2 | pass | paused 095c 30m null | paused 095c 30m null | paused 095c 30m null | paused 095c 30m null | 0/-; 0/-; 0/- | - |
+| 3 | pass | paused 5cd1 30m null | paused 5cd1 30m null | paused 5cd1 30m null | paused 5cd1 30m null | 0/-; 0/-; 0/- | - |
+| 4 | pass | paused a031 30m null | paused a031 30m null | paused a031 30m null | paused a031 30m null | 0/-; 0/-; 0/- | - |
+| 5 | pass | paused 01ba 30m null | paused 01ba 30m null | paused 01ba 30m null | paused 01ba 30m null | 0/-; 0/-; 0/- | - |
+
+**(b) add 5**, criteria met (of 5): precondition_B_behind 5; same_session_A_B_storage 5; A_B_storage_agree 5; still_paused_A_B_storage 5; plus5_applied_A_B_storage 5
+
+| it | result | A (memory) | B (memory) | storage (read in A) | storage (read in B) | records for brew 1 / 2 (storage; A; B) | failed criteria |
+|---|---|---|---|---|---|---|---|
+| 1 | pass | paused a92d 30m null | paused a92d 30m null | paused a92d 30m null | paused a92d 30m null | 0/-; 0/-; 0/- | - |
+| 2 | pass | paused c700 30m null | paused c700 30m null | paused c700 30m null | paused c700 30m null | 0/-; 0/-; 0/- | - |
+| 3 | pass | paused d385 30m null | paused d385 30m null | paused d385 30m null | paused d385 30m null | 0/-; 0/-; 0/- | - |
+| 4 | pass | paused 9b2f 30m null | paused 9b2f 30m null | paused 9b2f 30m null | paused 9b2f 30m null | 0/-; 0/-; 0/- | - |
+| 5 | pass | paused 74ef 30m null | paused 74ef 30m null | paused 74ef 30m null | paused 74ef 30m null | 0/-; 0/-; 0/- | - |
+
+**(c) end**, criteria met (of 5): precondition_B_behind 5; brew2_running_A_B_storage 5; A_B_storage_agree 5; brew2_not_extended_or_ended 5; B_shows_focus 5; records_brew1_exactly_one_stored 5; records_brew1_exactly_one_A_memory 5; records_brew1_exactly_one_B_memory 5; no_record_for_brew2 5
+
+| it | result | A (memory) | B (memory) | storage (read in A) | storage (read in B) | records for brew 1 / 2 (storage; A; B) | failed criteria |
+|---|---|---|---|---|---|---|---|
+| 1 | pass | running f7ac [brew 2] 25m 1792270639197 | running f7ac [brew 2] 25m 1792270639197 | running f7ac [brew 2] 25m 1792270639197 | running f7ac [brew 2] 25m 1792270639197 | 1/0; 1/0; 1/0 | - |
+| 2 | pass | running 10f2 [brew 2] 25m 1792270664576 | running 10f2 [brew 2] 25m 1792270664576 | running 10f2 [brew 2] 25m 1792270664576 | running 10f2 [brew 2] 25m 1792270664576 | 1/0; 1/0; 1/0 | - |
+| 3 | pass | running 2869 [brew 2] 25m 1792270685924 | running 2869 [brew 2] 25m 1792270685924 | running 2869 [brew 2] 25m 1792270685924 | running 2869 [brew 2] 25m 1792270685924 | 1/0; 1/0; 1/0 | - |
+| 4 | pass | running ca84 [brew 2] 25m 1792270710851 | running ca84 [brew 2] 25m 1792270710851 | running ca84 [brew 2] 25m 1792270710851 | running ca84 [brew 2] 25m 1792270710851 | 1/0; 1/0; 1/0 | - |
+| 5 | pass | running 2535 [brew 2] 25m 1792270730924 | running 2535 [brew 2] 25m 1792270730924 | running 2535 [brew 2] 25m 1792270730924 | running 2535 [brew 2] 25m 1792270730924 | 1/0; 1/0; 1/0 | - |
+
+**(d) no hold**, criteria met (of 5): paused_in_A_and_B_after_B_pause 5; plus5_in_A_B_storage 5; still_paused_after_plus5 5; brew1_ended_idle_in_A_B_storage 5; brew1_one_record_everywhere 5; brew2_one_record_everywhere 5; final_idle_A_B_storage_agree 5; exactly_two_records_total 5
+
+| it | result | A (memory) | B (memory) | storage (read in A) | storage (read in B) | records for brew 1 / 2 (storage; A; B) | failed criteria |
+|---|---|---|---|---|---|---|---|
+| 1 | pass | idle - 25m null | idle - 25m null | idle - 25m null | idle - 25m null | 1/1; 1/1; 1/1 | - |
+| 2 | pass | idle - 25m null | idle - 25m null | idle - 25m null | idle - 25m null | 1/1; 1/1; 1/1 | - |
+| 3 | pass | idle - 25m null | idle - 25m null | idle - 25m null | idle - 25m null | 1/1; 1/1; 1/1 | - |
+| 4 | pass | idle - 25m null | idle - 25m null | idle - 25m null | idle - 25m null | 1/1; 1/1; 1/1 | - |
+| 5 | pass | idle - 25m null | idle - 25m null | idle - 25m null | idle - 25m null | 1/1; 1/1; 1/1 | - |
+
+**(f) pause on a replaced brew**, criteria met (of 5): precondition_B_behind 5; brew2_running_A_B_storage 5; A_B_storage_agree 5; brew2_not_extended_or_ended 5; brew2_not_paused 5; no_pause_or_resume_sound_in_B_when_dropped 5; B_shows_focus 5; records_brew1_exactly_one_stored 5; records_brew1_exactly_one_A_memory 5; records_brew1_exactly_one_B_memory 5; no_record_for_brew2 5
+
+| it | result | A (memory) | B (memory) | storage (read in A) | storage (read in B) | records for brew 1 / 2 (storage; A; B) | failed criteria |
+|---|---|---|---|---|---|---|---|
+| 1 | pass | running fe33 [brew 2] 25m 1792270389338 | running fe33 [brew 2] 25m 1792270389338 | running fe33 [brew 2] 25m 1792270389338 | running fe33 [brew 2] 25m 1792270389338 | 1/0; 1/0; 1/0 | - |
+| 2 | pass | running 6da6 [brew 2] 25m 1792270415656 | running 6da6 [brew 2] 25m 1792270415656 | running 6da6 [brew 2] 25m 1792270415656 | running 6da6 [brew 2] 25m 1792270415656 | 1/0; 1/0; 1/0 | - |
+| 3 | pass | running 9296 [brew 2] 25m 1792270430454 | running 9296 [brew 2] 25m 1792270430454 | running 9296 [brew 2] 25m 1792270430454 | running 9296 [brew 2] 25m 1792270430454 | 1/0; 1/0; 1/0 | - |
+| 4 | pass | running bd86 [brew 2] 25m 1792270449150 | running bd86 [brew 2] 25m 1792270449150 | running bd86 [brew 2] 25m 1792270449150 | running bd86 [brew 2] 25m 1792270449150 | 1/0; 1/0; 1/0 | - |
+| 5 | pass | running c00f [brew 2] 25m 1792270472549 | running c00f [brew 2] 25m 1792270472549 | running c00f [brew 2] 25m 1792270472549 | running c00f [brew 2] 25m 1792270472549 | 1/0; 1/0; 1/0 | - |
+
+**(g) Next brew**, criteria met (of 5): precondition_B_behind 5; B_joined_A_brew_after_its_click 5; A_storage_byte_identical_after_B_click 5; no_second_brew_started_by_B 5; A_B_storage_agree_after_release 5; saved_of_focus_toast_shown_in_B 5; B_went_home 5; one_record_for_joined_brew_everywhere 5; idle_in_A_B_storage_at_the_end 5
+
+| it | result | A (memory) | B (memory) | storage (read in A) | storage (read in B) | records for brew 1 / 2 (storage; A; B) | failed criteria |
+|---|---|---|---|---|---|---|---|
+| 1 | pass | idle - 25m null | idle - 25m null | idle - 25m null | idle - 25m null | 0/1; 0/1; 0/1 | - |
+| 2 | pass | idle - 25m null | idle - 25m null | idle - 25m null | idle - 25m null | 0/1; 0/1; 0/1 | - |
+| 3 | pass | idle - 25m null | idle - 25m null | idle - 25m null | idle - 25m null | 0/1; 0/1; 0/1 | - |
+| 4 | pass | idle - 25m null | idle - 25m null | idle - 25m null | idle - 25m null | 0/1; 0/1; 0/1 | - |
+| 5 | pass | idle - 25m null | idle - 25m null | idle - 25m null | idle - 25m null | 0/1; 0/1; 0/1 | - |
+
+
+**Case (e), rerun with the strict observer (label e2-5601):**
+
+##### e2-5601
+
+| case | iterations | pass | fail | exceptions | page errors |
+|---|---|---|---|---|---|
+| (e) add 5 on a replaced brew | 5 | 5 | 0 | 0 | 0 |
+
+**(e) add 5 on a replaced brew**, criteria met (of 5): precondition_B_behind 5; brew2_running_A_B_storage 5; A_B_storage_agree 5; brew2_not_extended_or_ended 5; B_shows_focus 5; storage_byte_identical_after_B_click 5; no_plus5_note_ever_in_B 5
+
+| it | result | A (memory) | B (memory) | storage (read in A) | storage (read in B) | records for brew 1 / 2 (storage; A; B) | failed criteria |
+|---|---|---|---|---|---|---|---|
+| 1 | pass | running 0739 [brew 2] 25m 1792270898620 | running 0739 [brew 2] 25m 1792270898620 | running 0739 [brew 2] 25m 1792270898620 | running 0739 [brew 2] 25m 1792270898620 | 1/0; 1/0; 1/0 | - |
+| 2 | pass | running 2296 [brew 2] 25m 1792270931609 | running 2296 [brew 2] 25m 1792270931609 | running 2296 [brew 2] 25m 1792270931609 | running 2296 [brew 2] 25m 1792270931609 | 1/0; 1/0; 1/0 | - |
+| 3 | pass | running 6534 [brew 2] 25m 1792270957828 | running 6534 [brew 2] 25m 1792270957828 | running 6534 [brew 2] 25m 1792270957828 | running 6534 [brew 2] 25m 1792270957828 | 1/0; 1/0; 1/0 | - |
+| 4 | pass | running 553e [brew 2] 25m 1792270978711 | running 553e [brew 2] 25m 1792270978711 | running 553e [brew 2] 25m 1792270978711 | running 553e [brew 2] 25m 1792270978711 | 1/0; 1/0; 1/0 | - |
+| 5 | pass | running 4f2c [brew 2] 25m 1792271004109 | running 4f2c [brew 2] 25m 1792271004109 | running 4f2c [brew 2] 25m 1792271004109 | running 4f2c [brew 2] 25m 1792271004109 | 1/0; 1/0; 1/0 | - |
+
+##### e2-5560-control
+
+| case | iterations | pass | fail | exceptions | page errors |
+|---|---|---|---|---|---|
+| (e) add 5 on a replaced brew | 5 | 0 | 5 | 0 | 0 |
+
+**(e) add 5 on a replaced brew**, criteria met (of 5): precondition_B_behind 5; brew2_running_A_B_storage 0; A_B_storage_agree 5; brew2_not_extended_or_ended 0; B_shows_focus 5; storage_byte_identical_after_B_click 0; no_plus5_note_ever_in_B 0
+
+| it | result | A (memory) | B (memory) | storage (read in A) | storage (read in B) | records for brew 1 / 2 (storage; A; B) | failed criteria |
+|---|---|---|---|---|---|---|---|
+| 1 | FAIL | running b7a0 [brew 1] 30m 1792271227705 | running b7a0 [brew 1] 30m 1792271227705 | running b7a0 [brew 1] 30m 1792271227705 | running b7a0 [brew 1] 30m 1792271227705 | 1/0; 1/0; 1/0 | brew2_running_A_B_storage, brew2_not_extended_or_ended, storage_byte_identical_after_B_click, no_plus5_note_ever_in_B |
+| 2 | FAIL | running f509 [brew 1] 30m 1792271268885 | running f509 [brew 1] 30m 1792271268885 | running f509 [brew 1] 30m 1792271268885 | running f509 [brew 1] 30m 1792271268885 | 1/0; 1/0; 1/0 | brew2_running_A_B_storage, brew2_not_extended_or_ended, storage_byte_identical_after_B_click, no_plus5_note_ever_in_B |
+| 3 | FAIL | running 272d [brew 1] 30m 1792271296401 | running 272d [brew 1] 30m 1792271296401 | running 272d [brew 1] 30m 1792271296401 | running 272d [brew 1] 30m 1792271296401 | 1/0; 1/0; 1/0 | brew2_running_A_B_storage, brew2_not_extended_or_ended, storage_byte_identical_after_B_click, no_plus5_note_ever_in_B |
+| 4 | FAIL | running b068 [brew 1] 30m 1792271326269 | running b068 [brew 1] 30m 1792271326269 | running b068 [brew 1] 30m 1792271326269 | running b068 [brew 1] 30m 1792271326269 | 1/0; 1/0; 1/0 | brew2_running_A_B_storage, brew2_not_extended_or_ended, storage_byte_identical_after_B_click, no_plus5_note_ever_in_B |
+| 5 | FAIL | running d80b [brew 1] 30m 1792271356676 | running d80b [brew 1] 30m 1792271356676 | running d80b [brew 1] 30m 1792271356676 | running d80b [brew 1] 30m 1792271356676 | 1/0; 1/0; 1/0 | brew2_running_A_B_storage, brew2_not_extended_or_ended, storage_byte_identical_after_B_click, no_plus5_note_ever_in_B |
+
