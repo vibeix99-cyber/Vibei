@@ -124,3 +124,15 @@
 - **Correction (orchestrator):** :5560/:5570 switched to the new integration HEAD (app `7cb3242`, src `07df367`) at **19:02:16–19:02:59 UTC**, not "about 19:12" as I told LEAD-6, Lane R2 and maker TS. R2 established this from its own served-file checks.
   - LEAD-6's TS runs dated 19:02–19:07 may have used src `07df367` (TH's `Toast.tsx` hook change) rather than `b74e6b3`.
   - LEAD-6 is asked to note this in its fix-round review.
+
+## Item 3, TS fix round (TS-D1, TS-D2; R3, R4 taken): GATE PASSED, 2026-10-17 ~20:20 UTC
+
+| Item | Result |
+|---|---|
+| Revision | `pe/w3r2-test-stability@89396e8` (`a6b3790` and `21e5644` kept; adds `1befde2` for TS-D1/D2 and `89396e8` for R3), tests `1f5feee`. Packet `TS-READY.md` §6, logs `TS/logs/r2/` (evidence `34daff1`) |
+| Scope (checked, `21e5644..89396e8`) | `tests/notice-strip.spec.ts` (+35/−15) and `tests/timer.spec.ts` (+5/−2, R3 only). No `src/`, no other spec, no config |
+| **Trial 2** | **`41b3424`** = integration `34daff1` (app `7cb3242`, src `07df367`) + `89396e8`, worktree `/home/user/wt/w8tr-q2`, tests `1f5feee`. tsc 0; `--list` gives 53 tests in the 2 files. The app equals integration, so specs run against **:5560** |
+| The maker's claims | **TS-D1:** `press()` rescrolls (the existing wheel walk, within `AIM_RESCROLL=2`) a target that is in view but whose every non-target read point lies in the page's docked chrome (`.ctaDock` or `nav[aria-label=Main]`). Notices (`[data-notice-strip]`, `[data-inline-undo]`, `[inert]`), open sheets (`[role=dialog]`, `#root[inert]`) and other or mixed covers stay wait-only. Bound: ≤ 3 calls per target, each ≤ 8 re-reads (~2 s) and one walk. **TS-D2:** sheet fallbacks run only when `rescrolled === 0`. **Injection** (:5583, workers=1): `COVER=dock` fails `21e5644` and passes the fix; transient passes; permanent-abs and permanent fail with the same words; a sheet target out of view for good passes `21e5644` by Tab+Enter but fails on the fix. **Under load** (:5560, src `07df367`, 2 workers + 4 burners killed by PID): dark 200 % ×20 **20/20** (load 15.4→12.6); light 200 % reduced ×10 **10/10**. Diagnostic copy ×10: 10/10, docked-chrome path taken 2×. Whole `notice-strip` **25/25**. **R3:** `:156` asserts `endsAt − frozeAt ≥ 1000 ms`; ×10 under load in each project 10/10; a 2.5 s freeze-delay copy fails the new line. **R4:** sentences corrected. §6 records the 19:02 switch |
+| Open | `:189` and the whole `timer.spec.ts` were not rerun after R3 (which touches `:156` only). Product note R8 (the dock changes mode after boot) is unchanged |
+| Archive | `archive/pe-w3r2-test-stability-fix-89396e8.incremental.bundle` (requires `21e5644`) |
+| Next | LEAD-6's final TS verdict |
