@@ -1,0 +1,49 @@
+### LEAD-5 W3R2 TH console run: trial-w3-notices. Full log (DEBUG=pw:browser) kept to its test lines and Chromium console lines; summary below via console-summary.py.txt
+### start 18:15:13 load 11.66 12.90 13.25
+Running 9 tests using 2 workers
+  ✓  1 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 light 100 %) (18.2s)
+  ✓  2 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 light 200 % reduced motion) (20.3s)
+  ✓  3 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 dark 100 %) (14.7s)
+  ✓  4 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 dark 100 %) (15.1s)
+  ✓  5 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (844×390 dark 100 %) (14.3s)
+  ✓  6 [chromium] › tests/w3-notices.spec.ts:158:1 › the room a gone notice keeps stays while the page is scrolled, and goes on the same screen once idle (390×844, 200 %) (14.8s)
+  ✓  8 [chromium] › tests/w3-notices.spec.ts:239:1 › a new screen starts with no room: Today after End, then Stats and back (375×667, 100 %) (11.0s)
+  ✓  7 [chromium] › tests/w3-notices.spec.ts:210:1 › the room is not given back while a pointer is held; it goes 4–6.5 s after release (1440×900, 100 %) (17.7s)
+  ✓  9 [chromium] › tests/w3-notices.spec.ts:265:1 › the status bar warm-days button is named "N days warm. Show details" (and ", today not brewed yet") (4.2s)
+  9 passed (1.1m)
+### end 18:16:21 exit=0 load 8.52 11.76 12.83
+
+### Chromium console lines (INFO:CONSOLE) from the browser log:
+  pw:browser [pid=29295][err] [1017/181516.231048:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5592/@vite/client (883) +235ms
+  pw:browser [pid=29295][err] [1017/181516.246312:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5592/@vite/client (996) +21ms
+  pw:browser [pid=29340][err] [1017/181516.354056:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5592/@vite/client (883) +332ms
+  pw:browser [pid=29340][err] [1017/181516.458907:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5592/@vite/client (996) +113ms
+  pw:browser [pid=29340][err] [1017/181517.060811:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5592/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=29295][err] [1017/181517.097470:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5592/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=29295][err] [1017/181534.321795:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5592/@vite/client (883) +16s
+  pw:browser [pid=29295][err] [1017/181534.406637:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5592/@vite/client (996) +83ms
+  pw:browser [pid=29295][err] [1017/181534.732340:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5592/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=29340][err] [1017/181536.530081:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5592/@vite/client (883) +18s
+  pw:browser [pid=29340][err] [1017/181536.564309:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5592/@vite/client (996) +34ms
+  pw:browser [pid=29340][err] [1017/181536.838123:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5592/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=29295][err] [1017/181549.059943:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5592/@vite/client (883) +14s
+  pw:browser [pid=29295][err] [1017/181549.080083:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5592/@vite/client (996) +20ms
+  pw:browser [pid=29295][err] [1017/181549.348782:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5592/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=29340][err] [1017/181551.791549:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5592/@vite/client (883) +15s
+  pw:browser [pid=29340][err] [1017/181551.809373:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5592/@vite/client (996) +40ms
+  pw:browser [pid=29340][err] [1017/181552.114593:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5592/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=29295][err] [1017/181603.382031:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5592/@vite/client (883) +14s
+  pw:browser [pid=29295][err] [1017/181603.385458:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5592/@vite/client (996) +3ms
+  pw:browser [pid=29295][err] [1017/181603.710981:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5592/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=29340][err] [1017/181606.557292:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5592/@vite/client (883) +14s
+  pw:browser [pid=29340][err] [1017/181606.585405:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5592/@vite/client (996) +28ms
+  pw:browser [pid=29340][err] [1017/181607.009260:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5592/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=29340][err] [1017/181617.593872:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5592/@vite/client (883) +11s
+  pw:browser [pid=29340][err] [1017/181617.617271:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5592/@vite/client (996) +23ms
+  pw:browser [pid=29340][err] [1017/181617.883961:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5592/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=29340][err] [1017/181618.548770:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5592/@vite/client (883) +664ms
+  pw:browser [pid=29340][err] [1017/181618.568050:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5592/@vite/client (996) +20ms
+  pw:browser [pid=29340][err] [1017/181618.751276:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5592/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=29340][err] [1017/181619.333802:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5592/@vite/client (883) +582ms
+  pw:browser [pid=29340][err] [1017/181619.342155:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5592/@vite/client (996) +9ms
+  pw:browser [pid=29340][err] [1017/181619.474422:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5592/.tmp/vite-cache/deps/react-dom_client

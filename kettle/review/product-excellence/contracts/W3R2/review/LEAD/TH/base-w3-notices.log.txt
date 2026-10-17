@@ -1,0 +1,58 @@
+### LEAD-5 W3R2 TH console run: base-w3-notices. Full log (DEBUG=pw:browser) kept to its test lines and Chromium console lines; summary below via console-summary.py.txt
+### start 18:19:43 load 7.26 9.24 11.60
+Running 9 tests using 2 workers
+  ✓  2 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 light 100 %) (16.7s)
+  ✓  1 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 light 200 % reduced motion) (17.4s)
+  ✓  3 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 dark 100 %) (15.0s)
+  ✓  4 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 dark 100 %) (15.6s)
+  ✓  5 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (844×390 dark 100 %) (14.5s)
+  ✓  6 [chromium] › tests/w3-notices.spec.ts:158:1 › the room a gone notice keeps stays while the page is scrolled, and goes on the same screen once idle (390×844, 200 %) (15.3s)
+  ✓  8 [chromium] › tests/w3-notices.spec.ts:239:1 › a new screen starts with no room: Today after End, then Stats and back (375×667, 100 %) (10.8s)
+  ✓  9 [chromium] › tests/w3-notices.spec.ts:265:1 › the status bar warm-days button is named "N days warm. Show details" (and ", today not brewed yet") (4.1s)
+  ✓  7 [chromium] › tests/w3-notices.spec.ts:210:1 › the room is not given back while a pointer is held; it goes 4–6.5 s after release (1440×900, 100 %) (17.4s)
+  9 passed (1.1m)
+### end 18:20:49 exit=0 load 5.96 8.48 11.17
+
+### Chromium console lines (INFO:CONSOLE) from the browser log:
+  pw:browser [pid=31581][err] [1017/181945.997170:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5560/@vite/client (883) +219ms
+  pw:browser [pid=31581][err] [1017/181946.035947:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5560/@vite/client (996) +31ms
+  pw:browser [pid=31605][err] [1017/181946.093681:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5560/@vite/client (883) +251ms
+  pw:browser [pid=31605][err] [1017/181946.114090:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5560/@vite/client (996) +22ms
+  pw:browser [pid=31581][err] [1017/181946.432977:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5560/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=31605][err] [1017/181946.521478:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5560/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=31581][err] [1017/181948.212931:INFO:CONSOLE:299] "React has detected a change in the order of Hooks called by +497ms. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules
+  pw:browser [pid=31605][err] [1017/181948.607073:INFO:CONSOLE:299] "React has detected a change in the order of Hooks called by +733ms. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules
+  pw:browser [pid=31605][err] [1017/182002.774661:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5560/@vite/client (883) +14s
+  pw:browser [pid=31605][err] [1017/182002.841674:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5560/@vite/client (996) +63ms
+  pw:browser [pid=31605][err] [1017/182003.085691:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5560/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=31581][err] [1017/182003.386832:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5560/@vite/client (883) +15s
+  pw:browser [pid=31581][err] [1017/182003.439933:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5560/@vite/client (996) +39ms
+  pw:browser [pid=31581][err] [1017/182003.814680:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5560/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=31605][err] [1017/182004.579844:INFO:CONSOLE:299] "React has detected a change in the order of Hooks called by +1s. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules-of
+  pw:browser [pid=31581][err] [1017/182006.006468:INFO:CONSOLE:299] "React has detected a change in the order of Hooks called by +2s. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules-of
+  pw:browser [pid=31605][err] [1017/182017.719747:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5560/@vite/client (883) +13s
+  pw:browser [pid=31605][err] [1017/182017.777227:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5560/@vite/client (996) +58ms
+  pw:browser [pid=31605][err] [1017/182018.002628:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5560/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=31581][err] [1017/182019.217443:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5560/@vite/client (883) +13s
+  pw:browser [pid=31581][err] [1017/182019.240987:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5560/@vite/client (996) +24ms
+  pw:browser [pid=31605][err] [1017/182019.269806:INFO:CONSOLE:299] "React has detected a change in the order of Hooks called by +1s. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules-of
+  pw:browser [pid=31581][err] [1017/182019.695214:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5560/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=31581][err] [1017/182020.922283:INFO:CONSOLE:299] "React has detected a change in the order of Hooks called by +1s. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules-of
+  pw:browser [pid=31605][err] [1017/182032.220279:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5560/@vite/client (883) +13s
+  pw:browser [pid=31605][err] [1017/182032.246309:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5560/@vite/client (996) +26ms
+  pw:browser [pid=31605][err] [1017/182032.518845:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5560/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=31605][err] [1017/182033.845828:INFO:CONSOLE:299] "React has detected a change in the order of Hooks called by +1s. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules-of
+  pw:browser [pid=31581][err] [1017/182034.282477:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5560/@vite/client (883) +13s
+  pw:browser [pid=31581][err] [1017/182034.328347:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5560/@vite/client (996) +46ms
+  pw:browser [pid=31581][err] [1017/182034.684979:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5560/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=31581][err] [1017/182035.848036:INFO:CONSOLE:299] "React has detected a change in the order of Hooks called by +1s. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules-of
+  pw:browser [pid=31581][err] [1017/182045.266596:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5560/@vite/client (883) +9s
+  pw:browser [pid=31581][err] [1017/182045.294094:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5560/@vite/client (996) +28ms
+  pw:browser [pid=31581][err] [1017/182045.562792:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5560/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=31581][err] [1017/182046.241432:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5560/@vite/client (883) +678ms
+  pw:browser [pid=31581][err] [1017/182046.246593:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5560/@vite/client (996) +6ms
+  pw:browser [pid=31581][err] [1017/182046.389132:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5560/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=31581][err] [1017/182046.934687:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5560/@vite/client (883) +545ms
+  pw:browser [pid=31581][err] [1017/182046.941990:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5560/@vite/client (996) +20ms
+  pw:browser [pid=31581][err] [1017/182047.045903:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5560/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=31581][err] [1017/182047.162372:INFO:CONSOLE:299] "React has detected a change in the order of Hooks called by +116ms. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules

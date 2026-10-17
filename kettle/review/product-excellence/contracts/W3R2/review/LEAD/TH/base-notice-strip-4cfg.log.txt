@@ -1,0 +1,39 @@
+### LEAD-5 W3R2 TH console run: base-notice-strip-4cfg. Full log (DEBUG=pw:browser) kept to its test lines and Chromium console lines; summary below via console-summary.py.txt
+### start 18:20:49 load 5.96 8.48 11.17
+Running 4 tests using 2 workers
+  ✓  1 [chromium] › tests/notice-strip.spec.ts:338:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 % reduced motion) (56.6s)
+  ✓  2 [chromium] › tests/notice-strip.spec.ts:338:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 100 %) (58.5s)
+  ✓  3 [chromium] › tests/notice-strip.spec.ts:338:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (58.8s)
+  ✓  4 [chromium] › tests/notice-strip.spec.ts:338:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 200 %) (1.0m)
+  4 passed (2.0m)
+### end 18:22:51 exit=0 load 6.03 7.70 10.55
+
+### Chromium console lines (INFO:CONSOLE) from the browser log:
+  pw:browser [pid=32140][err] [1017/182052.274227:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5560/@vite/client (883) +157ms
+  pw:browser [pid=32140][err] [1017/182052.287999:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5560/@vite/client (996) +11ms
+  pw:browser [pid=32141][err] [1017/182052.368193:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5560/@vite/client (883) +262ms
+  pw:browser [pid=32141][err] [1017/182052.442487:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5560/@vite/client (996) +76ms
+  pw:browser [pid=32140][err] [1017/182052.786002:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5560/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=32141][err] [1017/182052.813144:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5560/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=32141][err] [1017/182054.606370:INFO:CONSOLE:299] "React has detected a change in the order of Hooks called by +700ms. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules
+  pw:browser [pid=32140][err] [1017/182055.629048:INFO:CONSOLE:299] "React has detected a change in the order of Hooks called by +513ms. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules
+  pw:browser [pid=32140][err] [1017/182145.394573:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5560/@vite/client (883) +50s
+  pw:browser [pid=32140][err] [1017/182145.411658:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5560/@vite/client (996) +17ms
+  pw:browser [pid=32140][err] [1017/182145.621985:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5560/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=32141][err] [1017/182147.352538:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5560/@vite/client (883) +53s
+  pw:browser [pid=32141][err] [1017/182147.368718:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5560/@vite/client (996) +15ms
+  pw:browser [pid=32141][err] [1017/182147.541246:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5560/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=32140][err] [1017/182148.854295:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5560/@vite/client (883) +3s
+  pw:browser [pid=32140][err] [1017/182148.868254:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5560/@vite/client (996) +13ms
+  pw:browser [pid=32140][err] [1017/182149.146306:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5560/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=32140][err] [1017/182150.840968:INFO:CONSOLE:299] "React has detected a change in the order of Hooks called by +2s. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules-of
+  pw:browser [pid=32141][err] [1017/182150.889562:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5560/@vite/client (883) +3s
+  pw:browser [pid=32141][err] [1017/182150.930009:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5560/@vite/client (996) +41ms
+  pw:browser [pid=32141][err] [1017/182151.318985:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5560/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=32141][err] [1017/182153.024115:INFO:CONSOLE:299] "React has detected a change in the order of Hooks called by +2s. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules-of
+  pw:browser [pid=32140][err] [1017/182244.121989:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5560/@vite/client (883) +53s
+  pw:browser [pid=32140][err] [1017/182244.130971:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5560/@vite/client (996) +3ms
+  pw:browser [pid=32140][err] [1017/182244.383311:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5560/.tmp/vite-cache/deps/react-dom_client
+  pw:browser [pid=32141][err] [1017/182246.398900:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5560/@vite/client (883) +53s
+  pw:browser [pid=32141][err] [1017/182246.414892:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5560/@vite/client (996) +16ms
+  pw:browser [pid=32141][err] [1017/182246.545819:INFO:CONSOLE:15805] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5560/.tmp/vite-cache/deps/react-dom_client
