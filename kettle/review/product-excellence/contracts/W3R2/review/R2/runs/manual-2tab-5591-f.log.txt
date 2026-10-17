@@ -13,3 +13,13 @@
     A=running/s_mvcsr1/25m/ends=1792267337133
     B=running/s_mvcsr1/25m/ends=1792267337133
     S=running/s_mvcsr1/25m/ends=1792267337133  S(read in B)=running/s_mvcsr1/25m/ends=1792267337133  pageErrors=0
+[19:36:16] fix-5591 (f) it4 PASS load 19.55 16.17 13.45->19.87 16.46 13.60
+    A=running/s_mvcsrk/25m/ends=1792267361855
+    B=running/s_mvcsrk/25m/ends=1792267361855
+    S=running/s_mvcsrk/25m/ends=1792267361855  S(read in B)=running/s_mvcsrk/25m/ends=1792267361855  pageErrors=0
+[19:36:38] fix-5591 (f) it5 PASS load 19.87 16.46 13.60->20.20 16.75 13.76
+    A=running/s_mvcss0/25m/ends=1792267382828
+    B=running/s_mvcss0/25m/ends=1792267382828
+    S=running/s_mvcss0/25m/ends=1792267382828  S(read in B)=running/s_mvcss0/25m/ends=1792267382828  pageErrors=0
+### case (f) fix-5591: pass 5/5 {"precondition_B_behind":5,"brew2_running_A_B_storage":5,"A_B_storage_agree":5,"brew2_not_extended_or_ended":5,"brew2_not_paused":5,"B_shows_focus":5,"records_brew1_exactly_one_stored":5,"records_brew1_exactly_one_A_memory":5,"records_brew1_exactly_one_B_memory":5,"no_record_for_brew2":5}
+### done fix-5591 19:36:38 load 20.20 16.75 13.76
