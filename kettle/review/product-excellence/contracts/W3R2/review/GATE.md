@@ -181,3 +181,19 @@
   - the merged src `5f504d4` equals SG trial 2 `2c9ec66`'s;
   - the merged tests differ from trial 2's only by `notice-strip.spec.ts` and `timer.spec.ts`, which are identical to TS's approved trial `41b3424`'s.
 - **Integration HEAD app is now `72214c8`** (src `5f504d4`). All three W3R2 items are merged. Next: the full regression on the merged tree (Lane RF, Sonnet).
+
+## Full regression on the merged tree `1c791f3` (Lane RF, `review/FINAL/RECEIPT-FINAL-W3R2.md`), 2026-10-17 23:42 UTC
+
+- **Green:**
+  - tsc 0; vitest 342/342; build identical to the :5570 preview;
+  - `notice-strip` 25/25; `W3_LOAD=1` `w3-notices-load` 25/25 (the two W3R1 base failures now pass);
+  - timer/PWA 29 + 2 skipped (pwa on a port checked free);
+  - under load: `:309` 10/10, stale-tab 15/15, notice dark 200 % 5/5, `timer:156` 10/10;
+  - 2-tab check 21/21;
+  - console on preview and dev: 0 errors and 0 warnings, with no hook-order message;
+  - captures: quiet run, 0 of 18 pairs different.
+- **Full chromium runs without notice-strip (264):** run 1 237/2/25; run 2 236/3/25. Every failure passed on a quiet rerun.
+  - **F1/F3, `integrity:1048` I03:** "every failed save has gone through" is stuck on `kettle:home:lastVisit`. Failed 3 of 6 inside full runs, 0 of 25 outside.
+  - **F2, `w3-settings:39`:** the Reset everything dialog was still visible 10 s after confirm. 1 failure.
+  - **F4, `chai3d:197`:** a 30 s model-swap timeout. 1 failure.
+- **Sent to LEAD-5 to classify** (Vibei's rule: not shown flaky = real finding). F1 and F2 touch areas this round changed (SG's catch-up and `reset()`).
