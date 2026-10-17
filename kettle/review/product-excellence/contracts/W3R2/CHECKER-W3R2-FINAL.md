@@ -44,3 +44,31 @@ Nothing in `src/scene`, `src/screens/home`, `src/screens/settings`, `src/ui/Shee
 **Flaky (shown):** once, in full run 2, beside the heavy `a11y` tests on the other worker. It passed in full 1 and on the rerun (16.3 s), and in my matched runs below.
 
 **It is a load-bound budget:** a held model request, released, then a 30 s wait for a 3D model swap on SwiftShader.
+
+## F1 / F3 · `integrity.spec.ts:1048` I03 "nothing over the brew …": `kettle:home:lastVisit` still unsaved 10 s after room returns
+### The mechanism (shown from the code, a probe and the three failing traces)
+**Who writes the key.** Only Today does (`src/screens/home/useHomeData.ts`, `useFirstVisitToday`): once per mount of the Today screen, `setItem('kettle:home:lastVisit', <today's day key>)`. Nothing retries it, and nothing else writes or removes it.
+
+**How Chromium treats it when storage is full** (`quota-probe.mjs.txt`, this machine's Chromium, storage filled exactly as I03 fills it):
+
+| Write | Result |
+|---|---|
+| an existing key, same value | ok |
+| an existing key, a same-size new value | ok |
+| an existing key, one character longer | ok (the fill leaves < 16 bytes) |
+| a **new** key | **QuotaExceededError** |
+
+So **a `lastVisit` write fails only if Today mounts for the first time after the storage fill.**
+
+**When it fails, nothing heals it.** After the room is restored the test forces saves of the timer, progress and settings, but not of `lastVisit`. That key is written again only when Today mounts again, so `unsaved()` stays `["kettle:home:lastVisit"]`. That is the failure at :1136.
+
+**The three failing traces show exactly this.** In F1 (full 1, phone 390), G2 (full 2, phone 390) and G3 (full 2, desktop 1440), I read the DOM text of every snapshot:
+- After the first load and after the reload, the page shows the shell (nav and status chips) but **no Today content**: no greeting, no "What are you brewing?".
+- This holds through `ready()`, the storage fill and the start of the brew.
+- **Today's content first appears only after "Skip break"** (at 15.7 s, 17.3 s and 11.7 s into each test), long after storage was filled. So its first `lastVisit` write was a new key in full storage.
+- Today is a lazy route chunk (`App.tsx:48`, `lazyScreen(() => import('@/screens/home/HomeScreen'))`). On a dev server loaded by a two-worker full run, it arrived more than about 5 s after the page load. The test's `ready()` waits for the timer and leadership, not for Today.
+
+**In my instrumented passing runs** (`instr-*.log.txt`: the I03 phone test, its I03 describe logging every `lastVisit` write, ×2 on :5560 and ×2 on :5583):
+- Today writes `lastVisit` about 0.6–0.8 s after each load, before the fill, so the key exists.
+- Every later write in full storage is a same-size replacement and succeeds.
+- **4/4 pass on both servers.**
