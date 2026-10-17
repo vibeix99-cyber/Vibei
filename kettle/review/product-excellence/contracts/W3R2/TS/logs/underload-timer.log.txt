@@ -32,3 +32,16 @@ Running 20 tests using 2 workers
   ✓  18 [timer-app] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (13.0s)
   ✓  19 [timer-app] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (10.1s)
   ✓  20 [timer-app] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (10.1s)
+
+  20 passed (2.6m)
+### end 16:38:48 exit=0 load 19.97 17.97 14.06
+
+######## load-timer183: env KETTLE_PORT=5583 PLAYWRIGHT_JSON_OUTPUT_NAME=/home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/TS/logs/load-timer183.json npx playwright test tests/timer.spec.ts --project=timer-app --project=timer-harness --repeat-each=10 -g hidden page: completion --workers=2 --reporter=list,json --output=.tmp/ts-out/load-timer183
+### start 16:38:48 load 19.97 17.97 14.06
+
+Running 20 tests using 2 workers
+
+  ✓   1 [timer-harness] › tests/timer.spec.ts:189:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (5.2s)
+  ✓   2 [timer-harness] › tests/timer.spec.ts:189:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (5.4s)
+  ✓   3 [timer-harness] › tests/timer.spec.ts:189:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (6.0s)
+  ✓   4 [timer-harness] › tests/timer.spec.ts:189:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (5.6s)
