@@ -1,17 +1,10 @@
-
+npx vitest run on 203b057 src 07df367
  RUN  v5.0.2 /home/user/wt/w8t/kettle
-
-
  Test Files  33 passed (33)
       Tests  314 passed (314)
-   Start at  16:13:49
-   Duration  11.52s (tests 46%, transform 38%, import 15%, worker 1%)
-
-  Transform  transforming modules took 7.87s · 38% of tracked time, re-done on every run
+   Start at  17:11:29
+   Duration  13.69s (tests 50%, transform 29%, import 19%, worker 2%)
+  Transform  transforming modules took 7.26s · 29% of tracked time, re-done on every run
              persist transforms across runs with fsModuleCache: true
              learn more: https://vitest.dev/guide/improving-performance#caching-between-reruns
-
-
-real	0m12.954s
-user	0m12.694s
-sys	0m2.428s
+exit 0

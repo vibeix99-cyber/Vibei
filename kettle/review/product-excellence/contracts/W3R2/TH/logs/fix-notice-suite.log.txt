@@ -1,0 +1,95 @@
+### start 16:33:36 load 13.60 13.64 11.51 lane=fix port=5582 src=07df367 dirty=0
+[slots] TH took 2/3 at 16:49:38: env KETTLE_PORT=5582 TH_CONSOLE_LOG=/home/user/wt/w8t/kettle/.tmp/th/logs/fix-console.jsonl NODE_OPTIONS=--require /home/user/wt/w8t/kettle/.tmp/th/console-hook.cjs PLAYWRIGHT_JSON_OUTPUT_NAME=/home/u
+
+Running 74 tests using 2 workers
+
+  ✓   1 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 100 %) (1.0m)
+  ✓   2 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 %) (1.1m)
+  ✓   3 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 % reduced motion) (54.4s)
+  ✓   4 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 100 %) (56.0s)
+  ✓   5 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 200 %) (1.0m)
+  ✓   6 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 100 %) (56.7s)
+  ✓   8 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 % reduced motion) (53.8s)
+  ✓   7 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 %) (1.1m)
+  ✓   9 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 100 %) (57.2s)
+  ✓  10 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 200 %) (1.1m)
+  ✓  11 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 100 %) (53.8s)
+  ✓  12 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 %) (56.5s)
+  ✓  13 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion) (51.1s)
+  ✓  14 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 100 %) (53.8s)
+  ✓  15 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (57.6s)
+  ✓  16 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 100 %) (56.1s)
+  ✓  17 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 %) (59.7s)
+  ✓  18 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 % reduced motion) (51.5s)
+  ✓  19 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 100 %) (55.6s)
+  ✓  20 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 200 %) (1.0m)
+  ✓  21 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 100 %) (1.1m)
+  ✓  22 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 %) (1.2m)
+  ✓  23 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) (1.2m)
+  ✓  24 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 100 %) (1.0m)
+  ✓  26 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (375×667 light 100 %, task day) (32.1s)
+  ✓  27 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (375×667 light 100 %, big day) (30.9s)
+  ✓  25 [chromium] › tests/notice-strip.spec.ts:458:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 200 %) (1.5m)
+  ✓  28 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (375×667 dark 200 %, task day) (30.5s)
+  ✓  29 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (375×667 dark 200 %, big day) (32.9s)
+  ✓  30 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (390×844 dark 100 %, task day) (31.6s)
+  ✓  31 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (390×844 dark 100 %, big day) (30.7s)
+  ✓  32 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (390×844 light 200 %, task day) (29.2s)
+  ✓  33 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (390×844 light 200 %, big day) (29.7s)
+  ✓  34 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (844×390 light 100 %, task day) (31.6s)
+  ✓  35 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (844×390 light 100 %, big day) (30.9s)
+  ✓  36 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (667×375 dark 100 %, task day) (30.6s)
+  ✓  37 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (667×375 dark 100 %, big day) (30.5s)
+  ✓  38 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (1440×900 light 100 %, task day) (31.7s)
+  ✓  39 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (1440×900 light 100 %, big day) (32.2s)
+  ✓  40 [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by wheel (375×667, 200 % text) (23.6s)
+FACT 390x844-light-t100 a-no-input {"leftAt":5549,"room":68,"commits":[{"t":9632,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8629,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":4083,"collapseAfterLastBusyMs":4083,"visibleMove":68}
+  ✓  41 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (390x844-light-t100) (11.9s)
+FACT 390x844-light-t100 b-scroll-then-idle {"leftAt":5555,"room":68,"maxSy":486,"scrollMs":3489,"roomAfterScroll":68,"commits":[{"t":13152,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4108,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":7597,"collapseAfterLastBusyMs":4108,"visibleMove":68}
+  ✓  43 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (390x844-light-t100) (15.6s)
+  ✓  42 [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by touch (375×667, 200 % text) (35.7s)
+FACT 390x844-light-t100 c-pointer-held {"leftAt":6137,"room":68,"roomWhileDown":68,"downWhileHeld":1,"commits":[{"t":6144,"why":"rest","room":68,"shown":null,"down":0,"sinceInput":4501,"topBefore":132,"topAfter":132,"sy":0},{"t":13568,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4128,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":7431,"collapseAfterLastBusyMs":4128,"visibleMove":68}
+  ✓  44 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (390x844-light-t100) (15.1s)
+FACT 390x844-dark-t200-rm a-no-input {"leftAt":5650,"room":113,"commits":[{"t":9746,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8607,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":4096,"collapseAfterLastBusyMs":4096,"visibleMove":113}
+  ✓  46 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (390x844-dark-t200-rm) (10.8s)
+  ✓  45 [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by wheel (844×390, 200 % text) (16.8s)
+FACT 390x844-dark-t200-rm b-scroll-then-idle {"leftAt":5697,"room":113,"maxSy":434,"scrollMs":4528,"roomAfterScroll":113,"commits":[{"t":14304,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4079,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":8607,"collapseAfterLastBusyMs":4079,"visibleMove":113}
+  ✓  47 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (390x844-dark-t200-rm) (15.9s)
+  ✓  48 [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by touch (844×390, 200 % text) (23.5s)
+FACT 390x844-dark-t200-rm c-pointer-held {"leftAt":5480,"room":113,"roomWhileDown":113,"downWhileHeld":1,"commits":[{"t":12672,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4066,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":7192,"collapseAfterLastBusyMs":4066,"visibleMove":113}
+  ✓  49 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (390x844-dark-t200-rm) (13.9s)
+FACT 1440x900-light-t100 a-no-input {"leftAt":6060,"room":68,"commits":[{"t":10166,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8497,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":4106,"collapseAfterLastBusyMs":4106,"visibleMove":68}
+  ✓  51 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (1440x900-light-t100) (11.7s)
+  ✓  50 [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while every notice in the strip is read by wheel (667×375, 200 % text) (21.9s)
+FACT 1440x900-light-t100 b-scroll-then-idle {"leftAt":5527,"room":68,"maxSy":11,"scrollMs":3142,"roomAfterScroll":68,"commits":[{"t":12784,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4115,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":7257,"collapseAfterLastBusyMs":4115,"visibleMove":68}
+  ✓  52 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (1440x900-light-t100) (14.2s)
+FACT 1440x900-light-t100 c-pointer-held {"leftAt":5705,"room":68,"roomWhileDown":68,"downWhileHeld":1,"commits":[{"t":5713,"why":"rest","room":68,"shown":null,"down":0,"sinceInput":4431,"topBefore":168,"topAfter":168,"sy":0},{"t":13408,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4064,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":7703,"collapseAfterLastBusyMs":4064,"visibleMove":68}
+  ✓  54 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (1440x900-light-t100) (14.9s)
+  ✓  53 [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while every notice in the strip is read by touch (667×375, 200 % text) (28.4s)
+FACT 1440x900-dark-t200-rm a-no-input {"leftAt":5974,"room":113,"commits":[{"t":5984,"why":"rest","room":113,"shown":null,"down":0,"sinceInput":4476,"topBefore":234.09375,"topAfter":234.09375,"sy":0},{"t":10083,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8575,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":4109,"collapseAfterLastBusyMs":4109,"visibleMove":113}
+  ✓  55 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (1440x900-dark-t200-rm) (11.3s)
+FACT 1440x900-dark-t200-rm b-scroll-then-idle {"leftAt":5220,"room":113,"maxSy":300,"scrollMs":2281,"roomAfterScroll":113,"commits":[{"t":5232,"why":"rest","room":113,"shown":null,"down":0,"sinceInput":4474,"topBefore":234.09375,"topAfter":234.09375,"sy":0},{"t":11536,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4035,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":6316,"collapseAfterLastBusyMs":4035,"visibleMove":113}
+  ✓  57 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (1440x900-dark-t200-rm) (12.8s)
+  ✓  56 [chromium] › tests/toast-room.spec.ts:262:3 › notices timing out, and the endless update prompt, never move the banner under the person (375×667, 200 % text, wheel, light) (21.6s)
+FACT 1440x900-dark-t200-rm c-pointer-held {"leftAt":5517,"room":113,"roomWhileDown":113,"downWhileHeld":1,"commits":[{"t":13104,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4107,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":7587,"collapseAfterLastBusyMs":4107,"visibleMove":113}
+  ✓  58 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (1440x900-dark-t200-rm) (14.3s)
+  ✓  59 [chromium] › tests/toast-room.spec.ts:262:3 › notices timing out, and the endless update prompt, never move the banner under the person (375×667, 200 % text, wheel, dark) (22.2s)
+  ✓  60 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 light 200 % reduced motion) (15.4s)
+  ✓  61 [chromium] › tests/toast-room.spec.ts:297:3 › the last notice leaves where it was, never over the docked start (375×667, 200 % text) (5.0s)
+  ✓  63 [chromium] › tests/toast-room.spec.ts:297:3 › the last notice leaves where it was, never over the docked start (844×390, 200 % text) (5.3s)
+  ✓  62 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 light 100 %) (16.2s)
+  ✓  64 [chromium] › tests/toast-room.spec.ts:431:3 › three notices never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, light) (14.9s)
+  ✓  65 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 dark 100 %) (16.6s)
+  ✓  66 [chromium] › tests/toast-room.spec.ts:431:3 › three notices never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, dark) (15.6s)
+  ✓  67 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 dark 100 %) (20.3s)
+  ✓  68 [chromium] › tests/toast-room.spec.ts:466:3 › the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (667×375, 200 % text, wheel, light) (20.3s)
+  ✓  69 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (844×390 dark 100 %) (17.0s)
+  ✓  70 [chromium] › tests/toast-room.spec.ts:466:3 › the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (844×390, 200 % text, touch, dark) (25.8s)
+  ✓  71 [chromium] › tests/w3-notices.spec.ts:158:1 › the room a gone notice keeps stays while the page is scrolled, and goes on the same screen once idle (390×844, 200 %) (16.5s)
+  ✓  73 [chromium] › tests/w3-notices.spec.ts:239:1 › a new screen starts with no room: Today after End, then Stats and back (375×667, 100 %) (11.9s)
+  ✓  72 [chromium] › tests/w3-notices.spec.ts:210:1 › the room is not given back while a pointer is held; it goes 4–6.5 s after release (1440×900, 100 %) (19.7s)
+  ✓  74 [chromium] › tests/w3-notices.spec.ts:265:1 › the status bar warm-days button is named "N days warm. Show details" (and ", today not brewed yet") (4.7s)
+
+  74 passed (21.1m)
+[slots] TH freed 2 at 17:10:47
+### end 17:10:47 exit=0
