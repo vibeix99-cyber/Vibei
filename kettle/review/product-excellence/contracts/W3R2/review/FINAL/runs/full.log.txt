@@ -234,3 +234,8 @@ FACT 390x844-dark-t200-rm c-pointer-held {"leftAt":5474,"room":113,"roomWhileDow
   ✓  223 [chromium] › tests/toast-room.spec.ts:466:3 › the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (667×375, 200 % text, wheel, light) (18.3s)
 FACT 1440x900-light-t100 a-no-input {"leftAt":5330,"room":68,"commits":[{"t":9424,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8492,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":4094,"collapseAfterLastBusyMs":4094,"visibleMove":68}
   ✓  224 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (1440x900-light-t100) (10.7s)
+FACT 1440x900-light-t100 b-scroll-then-idle {"leftAt":5575,"room":68,"maxSy":11,"scrollMs":2572,"roomAfterScroll":68,"commits":[{"t":12176,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4029,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":6601,"collapseAfterLastBusyMs":4029,"visibleMove":68}
+  ✓  226 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (1440x900-light-t100) (13.8s)
+  ✓  225 [chromium] › tests/toast-room.spec.ts:466:3 › the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (844×390, 200 % text, touch, dark) (25.0s)
+FACT 1440x900-light-t100 c-pointer-held {"leftAt":5491,"room":68,"roomWhileDown":68,"downWhileHeld":1,"commits":[{"t":13088,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4029,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":7597,"collapseAfterLastBusyMs":4029,"visibleMove":68}
+  ✓  227 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (1440x900-light-t100) (14.4s)
