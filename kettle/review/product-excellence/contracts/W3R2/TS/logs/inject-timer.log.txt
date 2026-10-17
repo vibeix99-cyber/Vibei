@@ -412,3 +412,12 @@ Running 8 tests using 1 worker
 [inject] runner late by 4500 ms after the start command (hidden page: complet, /?debug&onboarded=1#)
   ✓  6 [timer-app] › .tmp/ts/new/timer.spec.ts:205:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (7.8s)
 [inject] runner late by 6500 ms after the start command (background: the work, /?debug&onboarded=1#)
+  ✓  7 [timer-app] › .tmp/ts/new/timer.spec.ts:172:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (8.3s)
+[inject] runner late by 4500 ms after the start command (hidden page: complet, /?debug&onboarded=1#)
+  ✓  8 [timer-app] › .tmp/ts/new/timer.spec.ts:205:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (7.1s)
+
+  8 passed (58.0s)
+### end 16:14:49 exit=0 load 10.82 6.74 3.52
+
+### end 16:14:49 exit=0 load 10.82 6.74 3.52
+[slots] TS freed 1 at 16:14:49

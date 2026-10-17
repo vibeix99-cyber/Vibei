@@ -6,6 +6,7 @@ for v in old mid new; do
   echo "######## $v: KETTLE_PORT=5583 npx playwright test -c .tmp/ts-pw.config.ts ts/$v/timer.spec.ts --project=timer-app --project=timer-harness --repeat-each=2 -g 'background: the worker|hidden page: completion'"
   echo "### start $(date -u +%T) load $(cut -d' ' -f1-3 /proc/loadavg)"
   env KETTLE_PORT=5583 npx playwright test -c .tmp/ts-pw.config.ts ts/$v/timer.spec.ts --project=timer-app --project=timer-harness --repeat-each=2 --reporter=list --output=.tmp/ts-out/$v -g 'background: the worker|hidden page: completion'
-  echo "### end $(date -u +%T) exit=$? load $(cut -d' ' -f1-3 /proc/loadavg)"
+  rc=$?
+  echo "### end $(date -u +%T) exit=$rc load $(cut -d' ' -f1-3 /proc/loadavg)"
   echo
 done
