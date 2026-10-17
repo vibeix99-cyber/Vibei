@@ -1,3 +1,8 @@
 ### start 20:37:00 UTC; load:  20:37:00 up  4:46,  0 user,  load average: 19.08, 17.20, 14.24
 ### cmd: node .tmp/RR-2tab-e2.mjs e2-5560-control http://127.0.0.1:5560 5 /home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/review/R2/rerun/manual e
 ### e2-5560-control http://127.0.0.1:5560 N=5 cases=e start 20:37:01 load 19.08 17.20 14.24
+[20:37:41] e2-5560-control (e) it1 FAIL load 19.08 17.20 14.24->18.84 17.35 14.41 failed: brew2_running_A_B_storage,brew2_not_extended_or_ended,storage_byte_identical_after_B_click,no_plus5_note_ever_in_B
+    A=running/s_mvcuxx/30m/ends=1792271227705
+    B=running/s_mvcuxx/30m/ends=1792271227705
+    S=running/s_mvcuxx/30m/ends=1792271227705  S(read in B)=running/s_mvcuxx/30m/ends=1792271227705  pageErrors=0
+    plus5Note=["5 min · whistles at 9:07 PM now"]
