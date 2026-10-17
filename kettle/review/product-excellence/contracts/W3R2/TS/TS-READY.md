@@ -128,5 +128,13 @@ The injection code is a scratch copy, derived from the committed specs by `scrip
 | cover | old `press()` | new `press()` |
 |---|---|---|
 | transient 300 ms | **fails** in 2.7 s: `getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed`, received `null` | **passes** (whole test, 1.2 min): the re-check is covered at +81 ms, one `aim again` at +389 ms finds the field free, the tap follows |
-| permanent | **fails** in 2.3 s, same message | **fails** after 8 pauses (the log lists `aim again 1 … 8` over ~2.0 s), **same message**, same line (`expect(at, … still on top as the tap is aimed)`) |
-TODO-BOUND
+| permanent | **fails** in 2.3 s, same message | **fails** after 8 pauses (the log lists `aim again 1 … 8` over 2.2 s: 59.842 to 02.000), **same message**, same line (`expect(at, … still on top as the tap is aimed)`) |
+
+**The bound, shown (new `press()` only, `logs/inject-notice-bound.log.txt`):**
+
+| transient cover | result |
+|---|---|
+| 1500 ms | **passes** (whole test, 1.1 min): covered re-check, 6 `aim again`, then the field is free and the tap follows |
+| 3500 ms | **fails** in 4.6 s with the same message: it outlasts the 8 pauses (2.1 s: 29.410 to 31.552) |
+
+So a cover is tolerated only while it lasts less than about 2 s; the frame recorder (`__inv`, every animation frame of the test) is untouched and still counts any real notice-over-control overlap as a hit, whether or not `press()` waited for it.
