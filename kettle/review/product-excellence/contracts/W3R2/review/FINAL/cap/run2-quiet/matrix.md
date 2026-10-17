@@ -22,8 +22,8 @@
 | state | size after / before | after vs before strict % / tol % | before2 vs before strict % / tol % | after2 vs after strict % / tol % | robust px (outside readout / in readout) | class | biggest robust band (x, y, px) |
 |---|---|---|---|---|---|---|---|
 | 01-home.png | 1440x900 / 1440x900 | 0.0 / 0.0 | 0.0 / 0.0 | 0.0 / 0.0 | 0 / 0 | **identical** |  |
-| 02-focus-start.png | 1440x900 / 1440x900 | 0.0 / 0.0 | 0.1425 / 0.1331 | 3.5604 / 0.3199 | 0 / 0 | **identical** |  |
-| 03-focus-mid.png | 1440x900 / 1440x900 | 0.0 / 0.0 | 0.2415 / 0.2348 | 0.2415 / 0.2348 | 0 / 0 | **identical** |  |
-| 04-focus-paused.png | 1440x900 / 1440x900 | 0.0002 / 0.0002 | 0.1806 / 0.1711 | 0.2501 / 0.242 | 0 / 0 | **within noise** |  |
-| 07-summary.png | 1440x900 / 1440x900 | 0.0 / 0.0 | 0.0002 / 0.0 | 0.0 / 0.0 | 0 / 0 | **identical** |  |
-| 16-stats-populated.png | 1440x3091 / 1440x3091 | 0.0075 / 0.0 | 0.0103 / 0.0029 | 0.027 / 0.003 | 0 / 0 | **within noise** |  |
+| 02-focus-start.png | 1440x900 / 1440x900 | 3.5773 / 0.3199 | 0.0 / 0.0 | 3.5773 / 0.3199 | 0 / 0 | **within noise** |  |
+| 03-focus-mid.png | 1440x900 / 1440x900 | 0.0 / 0.0 | 0.0 / 0.0 | 3.3677 / 0.0876 | 0 / 0 | **identical** |  |
+| 04-focus-paused.png | 1440x900 / 1440x900 | 0.0007 / 0.0007 | 0.1799 / 0.1704 | 0.0009 / 0.0004 | 4 / 0 | **within noise** | x 397-402, y 653-673 (4) |
+| 07-summary.png | 1440x900 / 1440x900 | 0.0 / 0.0 | 0.0 / 0.0 | 0.0 / 0.0 | 0 / 0 | **identical** |  |
+| 16-stats-populated.png | 1440x3091 / 1440x3091 | 0.0126 / 0.0053 | 0.0077 / 0.0 | 0.0113 / 0.0036 | 23 / 0 | **within noise** | x 1103-1203, y 963-984 (23) |
