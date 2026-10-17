@@ -21,3 +21,25 @@ Running 10 tests using 2 workers
   ✓   6 [chromium] › tests/notice-strip.spec.ts:509:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion) (58.6s)
   ✓   7 [chromium] › tests/notice-strip.spec.ts:509:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion) (57.0s)
   ✓   8 [chromium] › tests/notice-strip.spec.ts:509:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion) (59.5s)
+  ✓   9 [chromium] › tests/notice-strip.spec.ts:509:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion) (57.0s)
+  ✓  10 [chromium] › tests/notice-strip.spec.ts:509:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion) (58.0s)
+
+  10 passed (5.1m)
+### end 19:51:35 exit=0 load 8.73 10.70 12.29
+
+burners stopped 19:51:35: 3005 gone 3006 gone 3007 gone 3008 gone 
+######## combo: diag3 19:51:35
+burners: 5160 5161 5162 5163 started 19:51:35 load 8.73 10.70 12.29
+######## r2-diag3-x10: env KETTLE_PORT=5560 PLAYWRIGHT_JSON_OUTPUT_NAME=/home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/TS/logs/r2/r2-diag3-x10.json npx playwright test -c .tmp/ts-pw.config.ts ts/diag3/notice-strip.spec.ts --project=chromium --repeat-each=10 -g real input \(844×390 dark 200 %\) --workers=2 --reporter=list,json --output=.tmp/ts-out/r2-r2-diag3-x10
+### start 19:51:40 load 8.35 10.59 12.24
+
+Running 10 tests using 2 workers
+
+[diag] first read (rescrolled 0) -> on top {"t":2018,"top":296,"bottom":348,"left":459,"right":804,"ih":390,"iw":844,"sy":0,"hit":"input#_r_h_-input._input_vv3ei_47 |  | inField=true leaving=false inert=false chrome=none","dock":"tall=true pos=relative top=538 bottom=746 h=208 dockH=255px","leavingLayers":0,"dialogs":0,"hash":"#/","vv":[390,0]}
+[diag] re-check null (round 0, rescrolled 0) {"t":2347,"top":296,"bottom":348,"left":459,"right":804,"ih":390,"iw":844,"sy":0,"hit":"p._ctaNote_ahnin_487 | Then a 5 min tea break. Change | inField=false leaving=false inert=false chrome=sticky div._ctaDock_ahnin_439","dock":"tall=false pos=sticky top=182 bottom=390 h=208 dockH=209px","leavingLayers":0,"dialogs":0,"hash":"#/","vv":[390,0]}
+[diag] first read (rescrolled 0) -> null {"t":2450,"top":296,"bottom":348,"left":459,"right":804,"ih":390,"iw":844,"sy":0,"hit":"p._ctaNote_ahnin_487 | Then a 5 min tea break. Change | inField=false leaving=false inert=false chrome=sticky div._ctaDock_ahnin_439","dock":"tall=false pos=sticky top=182 bottom=390 h=208 dockH=209px","leavingLayers":0,"dialogs":0,"hash":"#/","vv":[390,0]}
+[diag] aim again 1 (rescrolled 0) -> null {"t":2659,"top":296,"bottom":348,"left":459,"right":804,"ih":390,"iw":844,"sy":0,"hit":"p._ctaNote_ahnin_487 | Then a 5 min tea break. Change | inField=false leaving=false inert=false chrome=sticky div._ctaDock_ahnin_439","dock":"tall=false pos=sticky top=182 bottom=390 h=208 dockH=209px","leavingLayers":0,"dialogs":0,"hash":"#/","vv":[390,0]}
+[diag] PATH docked chrome (rescrolled 0) getByRole('textbox', { name: /What are you brewing
+[diag] first read (rescrolled 1) -> null {"t":2749,"top":296,"bottom":348,"left":459,"right":804,"ih":390,"iw":844,"sy":0,"hit":"p._ctaNote_ahnin_487 | Then a 5 min tea break. Change | inField=false leaving=false inert=false chrome=sticky div._ctaDock_ahnin_439","dock":"tall=false pos=sticky top=182 bottom=390 h=208 dockH=209px","leavingLayers":0,"dialogs":0,"hash":"#/","vv":[390,0]}
+[diag] after walk (rescrolled 0) -> on top {"t":3083,"top":116,"bottom":168,"left":459,"right":804,"ih":390,"iw":844,"sy":180,"hit":"input#_r_h_-input._input_vv3ei_47 |  | inField=true leaving=false inert=false chrome=none","dock":"tall=false pos=sticky top=182 bottom=390 h=208 dockH=209px","leavingLayers":0,"dialogs":0,"hash":"#/","vv":[390,0]}
+[diag] after walk (rescrolled 1) -> on top {"t":3539,"top":116,"bottom":168,"left":459,"right":804,"ih":390,"iw":844,"sy":180,"hit":"input#_r_h_-input._input_vv3ei_47 |  | inField=true leaving=false inert=false chrome=none","dock":"tall=false pos=sticky top=182 bottom=390 h=208 dockH=209px","leavingLayers":0,"dialogs":0,"hash":"#/","vv":[390,0]}
