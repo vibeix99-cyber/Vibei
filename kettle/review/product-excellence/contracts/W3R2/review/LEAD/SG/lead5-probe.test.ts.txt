@@ -1,0 +1,202 @@
+/**
+ * W3R2: a tab whose timer is older than what storage holds can never overwrite a newer brew.
+ *
+ * Two-store harness of intentionRace.test.ts: each "tab" is a fresh module graph (vi.resetModules) with its own
+ * in-memory stores, sharing one localStorage. A tab takes in another tab's write only when its `storage` event is
+ * delivered (`storageEvent()`), so "this tab is behind" is exact: its events are held until the test releases them, in
+ * the order the test chooses. `behindToo(raw, fn)` also makes the tab's own copy of storage behind while `fn` runs (as
+ * Chromium does: it updates a tab's copy with the same message that brings the event), the case no tab can detect itself.
+ *
+ * The app installs the action catch-up in initTabSync (browser only); the harness installs it the same way.
+ */
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import type { SessionRecord } from '@/progress/types';
+
+const MIN = 60_000;
+const KEY = 'kettle:timer';
+
+class MemoryStorage {
+  map = new Map<string, string>();
+  /** A tab's stale copy: reads of these keys return these values. */
+  stale: Map<string, string | null> | null = null;
+  getItem(k: string) {
+    if (this.stale?.has(k)) return this.stale.get(k)!;
+    return this.map.has(k) ? this.map.get(k)! : null;
+  }
+  setItem(k: string, v: string) {
+    this.map.set(k, String(v));
+  }
+  removeItem(k: string) {
+    this.map.delete(k);
+  }
+  clear() {
+    this.map.clear();
+  }
+  key(i: number) {
+    return [...this.map.keys()][i] ?? null;
+  }
+  get length() {
+    return this.map.size;
+  }
+}
+
+const storage = new MemoryStorage();
+(globalThis as unknown as { localStorage: MemoryStorage }).localStorage = storage;
+
+async function openTab(name: string, leader: boolean) {
+  vi.resetModules();
+  const store = await import('./store');
+  const sync = await import('./sync');
+  const events = await import('@/lib/events');
+  const progress = await import('@/progress');
+  progress.initProgress();
+  store.setCompletionGuard({
+    canComplete: () => leader,
+    refresh: () => {
+      sync.mirrorTimerFromStorage();
+    },
+    alreadyCompleted: sync.wasCompletedElsewhere,
+    announce: sync.broadcastCompleted,
+  });
+  // As initTabSync does in the app (absent before W3R2, so on older trees the tab acts on its own copy, as it did).
+  (sync as { installActionCatchUp?: () => void }).installActionCatchUp?.();
+  const completes: SessionRecord[] = [];
+  const syncs: string[] = [];
+  const starts: string[] = [];
+  events.on('timer:complete', ({ record }) => completes.push(record));
+  events.on('timer:sync', ({ kind }) => syncs.push(kind));
+  events.on('timer:start', ({ phase }) => starts.push(phase));
+  return {
+    name,
+    timer: store.useTimer,
+    t: () => store.useTimer.getState(),
+    progress: progress.useProgress,
+    completes,
+    syncs,
+    starts,
+    /** Deliver this tab's `storage` event for the timer key (another tab's write has landed). */
+    storageEvent: () => sync.mirrorTimerFromStorage({ event: true }),
+    /** Deliver the event for the key being removed (a wipe in another tab). */
+    removedEvent: () => sync.mirrorTimerFromStorage({ removed: true, event: true }),
+  };
+}
+type Tab = Awaited<ReturnType<typeof openTab>>;
+
+const raw = () => storage.getItem(KEY);
+const stored = () => JSON.parse(storage.getItem(KEY)!) as { state: Record<string, unknown>; version: number };
+const storedSessions = (): SessionRecord[] => {
+  const r = storage.getItem('kettle:progress');
+  return r ? ((JSON.parse(r).state?.sessions ?? []) as SessionRecord[]) : [];
+};
+const advance = (ms: number) => vi.setSystemTime(Date.now() + ms);
+/** The end of the person's gesture (one task): a dropped action's "rest of this gesture" flag clears. */
+const settle = () => Promise.resolve();
+
+/** Run `fn` in a tab whose own copy of storage is still `old` for the timer key (it cannot see the newer write). */
+function behindToo(old: string | null, fn: () => void) {
+  storage.stale = new Map([[KEY, old]]);
+  try {
+    fn();
+  } finally {
+    storage.stale = null;
+  }
+}
+
+/** Both tabs in step on one running brew started in A. */
+async function brewInStep(intention = 'Essay') {
+  const A = await openTab('A', true);
+  const Z = await openTab('Z', false);
+  A.t().startFocus({ intention });
+  Z.storageEvent();
+  const sid = A.t().sessionId!;
+  expect(Z.t()).toMatchObject({ status: 'running', sessionId: sid });
+  return { A, Z, sid };
+}
+
+/** Finish the brew both tabs hold: it completes once (A leads), one record in storage and in each tab. */
+function completesOnce(A: Tab, Z: Tab, sid: string) {
+  advance(5 * 60 * MIN);
+  A.t().tick();
+  Z.t().tick();
+  Z.storageEvent();
+  expect(A.completes.filter((r) => r.id === sid)).toHaveLength(1);
+  expect(Z.completes.filter((r) => r.id === sid)).toHaveLength(0);
+  expect(storedSessions().filter((r) => r.id === sid)).toHaveLength(1);
+  for (const t of [A, Z]) expect(t.progress.getState().sessions.filter((r) => r.id === sid)).toHaveLength(1);
+}
+
+beforeEach(() => {
+  vi.useFakeTimers({ toFake: ['Date'] });
+  vi.setSystemTime(new Date(2026, 9, 17, 10, 0, 0));
+  storage.stale = null;
+  storage.clear();
+});
+afterEach(() => {
+  vi.useRealTimers();
+});
+
+describe('LEAD-5 probe (W3R2 SG review)', () => {
+  it('a tab that missed every event (back/forward cache) does not complete a brew another tab ended under 1 min', async () => {
+    const t0 = Date.now();
+    const A = await openTab('A', false);
+    const Z = await openTab('Z', true); // Z leads once it is back and visible
+    A.t().startFocus({ intention: 'X' });
+    Z.storageEvent();
+    const x = A.t().sessionId!;
+    expect(Z.t()).toMatchObject({ status: 'running', sessionId: x });
+    // Z goes into the back/forward cache: from here on it receives no storage event.
+    advance(30_000);
+    A.t().end('user'); // X ended at 0:30, under a minute: no record
+    advance(10_000);
+    A.t().startFocus({ intention: 'Y' });
+    const y = A.t().sessionId!;
+    advance(5 * MIN);
+    A.t().end('user'); // Y ended: one record; lastEnded now names Y
+    expect(stored().state).toMatchObject({ status: 'idle', lastEnded: { sessionId: y } });
+    expect(storedSessions().map((r) => r.id)).toEqual([y]);
+    // Z is restored before X's planned end, still holding X running; its ticker ticks at X's end.
+    vi.setSystemTime(t0 + 25 * MIN + 1000);
+    Z.t().tick();
+    const out = { zCompletes: Z.completes.map((r) => r.id), sessions: storedSessions().map((r) => r.id), storedStatus: stored().state.status, storedSid: stored().state.sessionId };
+    console.log('LEAD5-PROBE', JSON.stringify({ x, y, ...out }));
+    expect(out.zCompletes, 'no completion of X').toEqual([]);
+    expect(out.sessions, 'records: Y only').toEqual([y]);
+    expect(out.storedStatus, 'storage stays idle').toBe('idle');
+  });
+
+  it('the same tab, the person presses Pause there (no tick): X does not come back', async () => {
+    const A = await openTab('A', false);
+    const Z = await openTab('Z', true);
+    A.t().startFocus({ intention: 'X' });
+    Z.storageEvent();
+    advance(30_000);
+    A.t().end('user');
+    advance(10_000);
+    A.t().startFocus({ intention: 'Y' });
+    advance(5 * MIN);
+    A.t().end('user');
+    Z.t().pause();
+    console.log('LEAD5-PROBE-PAUSE', JSON.stringify({ storedStatus: stored().state.status, storedSid: stored().state.sessionId }));
+    expect(stored().state.status, 'storage stays idle').toBe('idle');
+  });
+  it('the same tab receives any later write (the other tab types its next words): X does not come back', async () => {
+    const A = await openTab('A', true);
+    const Z = await openTab('Z', false);
+    A.t().startFocus({ intention: 'X' });
+    Z.storageEvent();
+    const x = A.t().sessionId!;
+    advance(30_000);
+    A.t().end('user');
+    advance(10_000);
+    A.t().startFocus({ intention: 'Y' });
+    advance(5 * MIN);
+    A.t().end('user');
+    A.t().setIntention('Next words'); // a fields-only save into the idle kettle
+    Z.storageEvent(); // Z, back from the cache, receives it
+    A.storageEvent();
+    console.log('LEAD5-PROBE-EVENT', JSON.stringify({ x, storedStatus: stored().state.status, storedSid: stored().state.sessionId, A: A.t().status, Z: Z.t().status }));
+    expect(stored().state.status, 'storage stays idle').toBe('idle');
+    expect(A.t().status, 'A stays idle').toBe('idle');
+  });
+});
+

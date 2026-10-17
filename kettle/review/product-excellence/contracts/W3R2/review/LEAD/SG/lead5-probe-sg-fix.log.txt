@@ -1,0 +1,15 @@
+### sg-fix: npx vitest run src/timer/zz-lead5-probe.test.ts --reporter=verbose (18:10:48); tree: git archive 88d6b64 (trial = integration + 54a9721)
+LEAD5-PROBE {"x":"s_mvc86kg038d3fb8d","y":"s_mvc87fb4ce28c155","zCompletes":["s_mvc86kg038d3fb8d"],"sessions":["s_mvc87fb4ce28c155","s_mvc86kg038d3fb8d"],"storedStatus":"idle","storedSid":null}
+LEAD5-PROBE-PAUSE {"storedStatus":"paused","storedSid":"s_mvc86kg0df0ec27a"}
+LEAD5-PROBE-EVENT {"x":"s_mvc86kg027e471c0","storedStatus":"running","storedSid":"s_mvc86kg027e471c0","A":"running","Z":"running"}
+ × src/timer/zz-lead5-probe.test.ts > LEAD-5 probe (W3R2 SG review) > a tab that missed every event (back/forward cache) does not complete a brew another tab ended under 1 min 459ms
+ × src/timer/zz-lead5-probe.test.ts > LEAD-5 probe (W3R2 SG review) > the same tab, the person presses Pause there (no tick): X does not come back 14ms
+ × src/timer/zz-lead5-probe.test.ts > LEAD-5 probe (W3R2 SG review) > the same tab receives any later write (the other tab types its next words): X does not come back 12ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: no completion of X: expected [ 's_mvc86kg038d3fb8d' ] to deeply equal []
+    161|     console.log('LEAD5-PROBE', JSON.stringify({ x, y, ...out }));
+AssertionError: storage stays idle: expected 'paused' to be 'idle' // Object.is equality
+    179|     console.log('LEAD5-PROBE-PAUSE', JSON.stringify({ storedStatus: st…
+AssertionError: storage stays idle: expected 'running' to be 'idle' // Object.is equality
+    197|     console.log('LEAD5-PROBE-EVENT', JSON.stringify({ x, storedStatus:…
+      Tests  3 failed (3)
