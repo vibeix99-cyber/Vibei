@@ -36,3 +36,16 @@
 | Open (packet §7) | Same-brew older fields while doubly stale (e.g. A's +5 lost; telling versions apart would need a stored field). A bfcache-restored paused brew could come back over an idle timer, never over a live one. `flow.ts` `startNextBrew` leaves `suppressNextStop` set when its `end` no-ops (same gap on HEAD at 0:00). The Focus screen "+5 min" note shows when the +5 was dropped. Composer label: unchanged, logged |
 | Archive | `archive/pe-w3r2-sync-guard-54a9721.incremental.bundle` (requires `494748b`) |
 | Next | **Lane R2** (Sonnet) regression on :5591; then the LEAD verdict |
+
+## Item 3, TS (test-only stability): GATE PASSED (scope), handed back with its 10/10 target NOT met, 2026-10-17 ~18:20 UTC
+
+| Item | Result |
+|---|---|
+| Revision | `pe/w3r2-test-stability@21e5644` (`a6b3790`, `21e5644`), tests `59f5e49`; src unchanged (`b74e6b3`). Packet `contracts/W3R2/TS/TS-READY.md` (evidence `d1b9080`) |
+| Scope (checked) | `tests/timer.spec.ts` (+13/−5) and `tests/notice-strip.spec.ts` (+33/−5) only. No `src/` change |
+| **Trial** | **`6babf87`** = integration `f4e57e1` + `21e5644`, worktree `/home/user/wt/w8tr-q`, src `b74e6b3` (= integration, so specs run against **:5560**), tests `59f5e49`. tsc 0; `--list` gives 53 tests in the 2 files |
+| The maker's changes | **timer `:156`:** observer, `startFocus`, the `endsAt`/`sessionId` read and the freeze are one `page.evaluate` chain. Observer-first alone was not enough: `state()` then read an idle timer. All six asserts are unchanged line for line. **timer `:183` (now `:189`):** `setHidden(true)` moved before `start()`; every `expect` is untouched. **`press()`:** a not-on-top re-check is re-read up to 8× at 250 ms (~2 s); a target that left the view is walked back by the existing wheel walk (max 2). The tap still follows only a move-then-on-top read; the expect and its message are unchanged |
+| The maker's claims | **Injected race:** the timer pair fails 8/8 on old and passes 8/8 on new. A transient 300 ms cover: old fails, new passes. A permanent cover: both fail with the same message. A 1.5 s cover passes, a 3.5 s cover fails. **Under load** (2 workers + 4 burners, load 12–23): `:156` 10/10 + 10/10 (timer-app, harness); hidden page 10/10 + 10/10. **notice 844×390 dark 200 % ×10: 9/10, NOT 10/10** (one failure, same message). Whole `timer.spec.ts` 26 + 2 skipped. **Whole `notice-strip` 25/25 NOT run** (partial 3/3) |
+| Open (the maker's) | The cause of the remaining first-press failure is not observed (candidate, unconfirmed: the sticky docked Start). An UNVERIFIED chrome-aware rescroll patch is in the packet's `scratch/`. The old tests were not run under the same burners as a control. The 2 s window is a judgement |
+| Archive | `archive/pe-w3r2-test-stability-21e5644.incremental.bundle` (requires `494748b`) |
+| Next | LEAD verdict. Vibei's bar ("each test must pass 10/10 under load") is not met for `press()` |
