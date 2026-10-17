@@ -1,0 +1,18 @@
+### stale-tab-trial2-5601-x2: KETTLE_PORT=5601 npx playwright test tests/w3r2-stale-tab.spec.ts --project=chromium --workers=1 --repeat-each=2 --reporter=list --output=/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/sgout2/pw-st-5601
+### start 20:13:37 load 6.81 7.72 8.97
+
+Running 10 tests using 1 worker
+
+  ✓   1 [chromium] › tests/w3r2-stale-tab.spec.ts:121:1 › pause in the lagging tab: the brew current in storage pauses, with its real remaining time (the other tab’s +5 kept) (5.2s)
+  ✓   2 [chromium] › tests/w3r2-stale-tab.spec.ts:145:1 › add 5 in the lagging tab after the other tab ended its brew and started another: nothing added, the newer brew untouched, the lagging tab shows it (5.5s)
+  ✓   3 [chromium] › tests/w3r2-stale-tab.spec.ts:168:1 › Next brew in the lagging tab after the other tab already did: it joins that brew; ending it there later still says so and goes home (8.6s)
+  ✓   4 [chromium] › tests/w3r2-stale-tab.spec.ts:199:1 › end in the lagging tab after the other tab ended its brew and started another: the newer brew is not ended, the lagging tab shows it (5.9s)
+  ✓   5 [chromium] › tests/w3r2-stale-tab.spec.ts:215:1 › start in the lagging tab (Today, Enter) while the other tab’s brew runs: it does not replace that brew; it joins and shows it (5.5s)
+  ✓   6 [chromium] › tests/w3r2-stale-tab.spec.ts:121:1 › pause in the lagging tab: the brew current in storage pauses, with its real remaining time (the other tab’s +5 kept) (4.8s)
+  ✓   7 [chromium] › tests/w3r2-stale-tab.spec.ts:145:1 › add 5 in the lagging tab after the other tab ended its brew and started another: nothing added, the newer brew untouched, the lagging tab shows it (5.3s)
+  ✓   8 [chromium] › tests/w3r2-stale-tab.spec.ts:168:1 › Next brew in the lagging tab after the other tab already did: it joins that brew; ending it there later still says so and goes home (7.8s)
+  ✓   9 [chromium] › tests/w3r2-stale-tab.spec.ts:199:1 › end in the lagging tab after the other tab ended its brew and started another: the newer brew is not ended, the lagging tab shows it (5.7s)
+  ✓  10 [chromium] › tests/w3r2-stale-tab.spec.ts:215:1 › start in the lagging tab (Today, Enter) while the other tab’s brew runs: it does not replace that brew; it joins and shows it (5.7s)
+
+  10 passed (1.0m)
+### end 20:14:41 exit=0 load 4.97 7.03 8.65

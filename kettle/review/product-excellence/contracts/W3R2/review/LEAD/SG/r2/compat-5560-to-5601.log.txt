@@ -1,0 +1,17 @@
+### compat-5560-to-5601: SG_FROM=http://127.0.0.1:5560 SG_TO=http://127.0.0.1:5601 npx playwright test --config .tmp/lead5-sg/compat/pw.config.ts --workers=1 --reporter=list --output=/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/sgout2/pw-c1
+### start 20:14:41 load 4.97 7.03 8.65
+
+Running 3 tests using 1 worker
+
+SGCOMPAT idle saved-by http://127.0.0.1:5560: {"state":{"status":"idle","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":null,"endsAt":null,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Outline the talk","tag":null,"sessionId":null,"lastEnded":{"sessionId":"s_mvcu558y9c973e50","phase":"focus","reason":"user","at":1792268085468,"whileAway":false}},"version":1}
+SGCOMPAT idle after-boot on http://127.0.0.1:5601: {"state":{"status":"idle","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":null,"endsAt":null,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Outline the talk","tag":null,"sessionId":null,"lastEnded":{"sessionId":"s_mvcu558y9c973e50","phase":"focus","reason":"user","at":1792268085468,"whileAway":false}},"version":1}
+  ✓  1 [chromium] › .tmp/lead5-sg/compat/compat.spec.ts:59:3 › idle profile saved by http://127.0.0.1:5560 loads unchanged on http://127.0.0.1:5601 (6.7s)
+SGCOMPAT paused saved-by http://127.0.0.1:5560: {"state":{"status":"paused","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792268091718,"endsAt":null,"remainingMs":1498613,"pausedAt":1792268093105,"pausedTotalMs":0,"completedInCycle":0,"intention":"Reply to Sam","tag":null,"sessionId":"s_mvcu5a9y098e6b3f","lastEnded":null},"version":1}
+SGCOMPAT paused after-boot on http://127.0.0.1:5601: {"state":{"status":"paused","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792268091718,"endsAt":null,"remainingMs":1498613,"pausedAt":1792268093105,"pausedTotalMs":0,"completedInCycle":0,"intention":"Reply to Sam","tag":null,"sessionId":"s_mvcu5a9y098e6b3f","lastEnded":null},"version":1}
+  ✓  2 [chromium] › .tmp/lead5-sg/compat/compat.spec.ts:59:3 › paused profile saved by http://127.0.0.1:5560 loads unchanged on http://127.0.0.1:5601 (6.2s)
+SGCOMPAT reset saved-by http://127.0.0.1:5560: {"state":{"status":"idle","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":null,"endsAt":null,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"","tag":null,"sessionId":null,"lastEnded":null},"version":1}
+SGCOMPAT reset after-boot on http://127.0.0.1:5601: {"state":{"status":"idle","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":null,"endsAt":null,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"","tag":null,"sessionId":null,"lastEnded":null},"version":1}
+  ✓  3 [chromium] › .tmp/lead5-sg/compat/compat.spec.ts:59:3 › reset profile saved by http://127.0.0.1:5560 loads unchanged on http://127.0.0.1:5601 (5.5s)
+
+  3 passed (19.5s)
+### end 20:15:02 exit=0 load 5.14 6.94 8.59
