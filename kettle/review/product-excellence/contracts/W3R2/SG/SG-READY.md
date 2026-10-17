@@ -157,3 +157,26 @@ expect(A.timer.getState().intention).toBe('from B');
   - (a) keep the test as it is, read as the doubly stale start (its comment would need "B cannot yet see A's write"); or
   - (b) make its harness install the catch-up (`sync.installActionCatchUp()`, as `initTabSync` does) and change the assertion to `expect(A.timer.getState().intention).toBe('from A')`. Its other assertions (one session id in both tabs, one completion, one record with that id) hold unchanged under (b).
 - I recommend (b) plus a one-line comment change, so the suite pins the app's behaviour.
+
+**Evidence for 7.1** (scratch copies of `multitab.test.ts` run on the fix, then deleted; the file itself is untouched):
+- catch-up installed, assertions as they are: **1 failed / 14 passed**, exactly this assertion (`expected 'from A' to be 'from B'`). Log: `logs/multitab-with-catchup-as-is.log.txt`.
+- catch-up installed and proposal (b) applied: **15/15**. Log: `logs/multitab-with-catchup-proposal-b.log.txt`, with the 2-line diff.
+
+### 7.2 Residuals of the guard (known, not fixed)
+1. **Same brew, older fields, doubly stale.** Example: Z's copy lacks A's +5 *and* Z's read is behind; Z pauses; the pause is saved with Z's remaining time, without the +5.
+   - The receive side restores whole brews (session level). It cannot tell an older version of the same brew from a newer one without a stored version field, which the brief rules out.
+   - With a current read (the usual case: the event is merely late), the write side applies the pause to the current brew (Vitest #2, browser pause case).
+2. **A tab that missed events entirely** (restored from the back/forward cache, not merely frozen). Example: it holds a *paused* brew that another tab ended without a record (< 1 min, or a break), after which `lastEnded` moved on. If the person then acts there, the catch-up may put that brew back over an idle kettle.
+   - It is never put back over another live brew (the later start wins).
+   - A *running* brew in that position is excluded by the away rule (§1.2, 2.), which keeps a brew ended elsewhere from completing.
+   - A frozen (not cached) tab gets its queued events in order and is not affected.
+3. **The doubly stale start.** Two starts within the lag, neither tab able to see the other: the later start wins in both tabs (#20, unchanged from HEAD). The earlier brew is less than one lag old, so nothing it would have recorded is lost.
+
+### 7.3 Outside my files, for their owners (found while checking the outcomes; nothing changed)
+- **`src/app/flow.ts` `startNextBrew`** sets `suppressNextStop = true` before `end('skip')`. If that end does nothing (now: a lagging tab whose break another tab already ended; on HEAD: a break ended at 0:00, which completes through `tick` and emits no stop), the flag stays set. The next *local* `timer:stop` in that tab then skips its toast and its navigation home. Fix there: clear the flag when the end did not happen.
+- **`FocusScreen.addFive`** shows "+5 min · whistles at …" after calling `addTime`, even when the lagging tab's +5 was dropped (the tab now shows the newer brew). The note shows that brew's real end, so it is cosmetic. The pause/resume sound in `FocusScreen.toggle` likewise plays before the store acts.
+
+### 7.4 Composer label (logged only, per Vibei; behaviour unchanged)
+- Words typed in tab 2's Today composer for a brew that tab has already taken in are a same-session edit. `setIntention` saves them into that brew (F1's fields-only save), and they become its words in both tabs.
+- The guard does not touch this: a same `sessionId` is "not older" by rule 3, and `setIntention` is outside the action wrapper.
+- Pinned unchanged by Vitest #22. Open for the Final Boss, as listed in `VB-DECISIONS-W3R2.md`.
