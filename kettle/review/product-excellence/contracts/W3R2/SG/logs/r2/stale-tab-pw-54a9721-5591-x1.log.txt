@@ -5,3 +5,75 @@ Running 5 tests using 1 worker
   ✓  1 [chromium] › tests/w3r2-stale-tab.spec.ts:154:1 › pause in the lagging tab: the brew current in storage pauses, with its real remaining time (the other tab’s +5 kept) (6.8s)
   ✘  2 [chromium] › tests/w3r2-stale-tab.spec.ts:197:1 › add 5 in the lagging tab after the other tab ended its brew and started another: nothing added, the newer brew untouched, the lagging tab shows it (7.8s)
   ✘  3 [chromium] › tests/w3r2-stale-tab.spec.ts:237:1 › Next brew in the lagging tab after the other tab already did: it joins that brew; ending it there later still says so and goes home (21.6s)
+  ✓  4 [chromium] › tests/w3r2-stale-tab.spec.ts:287:1 › end in the lagging tab after the other tab ended its brew and started another: the newer brew is not ended, the lagging tab shows it (12.8s)
+  ✓  5 [chromium] › tests/w3r2-stale-tab.spec.ts:317:1 › start in the lagging tab (Today, Enter) while the other tab’s brew runs: it does not replace that brew; it joins and shows it (8.9s)
+
+
+  1) [chromium] › tests/w3r2-stale-tab.spec.ts:197:1 › add 5 in the lagging tab after the other tab ended its brew and started another: nothing added, the newer brew untouched, the lagging tab shows it 
+
+    Error: no “+5 min · whistles at …” note in Z (nothing was added)
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32mfalse[39m
+    Received: [31mtrue[39m
+
+      163 |   expect((await memory(z)).plannedMs, 'nothing was added to it').toBe(10 * MIN);
+      164 |   await newerBrewSurvives(a, z, second, raw);
+    > 165 |   expect(await z.evaluate(() => (window as any).__sawFive), 'no “+5 min · whistles at …” note in Z (nothing was added)').toBe(false);
+          |                                                                                                                          ^
+      166 | });
+      167 |
+      168 | test('Next brew in the lagging tab after the other tab already did: it joins that brew; ending it there later still says so and goes home', async ({ context }) => {
+        at /home/user/wt/w8g/kettle/tests/w3r2-stale-tab.spec.ts:165:122
+
+    Error Context: .tmp/sg/r2-stale-5591/w3r2-stale-tab-add-5-in-th-61c4d-ed-the-lagging-tab-shows-it-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/sg/r2-stale-5591/w3r2-stale-tab-add-5-in-th-61c4d-ed-the-lagging-tab-shows-it-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/sg/r2-stale-5591/w3r2-stale-tab-add-5-in-th-61c4d-ed-the-lagging-tab-shows-it-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/w3r2-stale-tab.spec.ts:237:1 › Next brew in the lagging tab after the other tab already did: it joins that brew; ending it there later still says so and goes home 
+
+    Error: the stop’s toast in Z
+
+    [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByText('Kettle’s off. See you soon.').first()
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - the stop’s toast in Z with timeout 10000ms[22m
+    [2m  - waiting for getByText('Kettle’s off. See you soon.').first()[22m
+
+
+      193 |   await expect(sheet).toBeVisible();
+      194 |   await sheet.getByRole('button', { name: 'End session', exact: true }).click();
+    > 195 |   await expect(z.getByText('Kettle’s off. See you soon.').first(), 'the stop’s toast in Z').toBeVisible();
+          |                                                                                             ^
+      196 |   await expect.poll(() => hash(z), { message: 'Z went home' }).toBe('#/');
+      197 | });
+      198 |
+        at /home/user/wt/w8g/kettle/tests/w3r2-stale-tab.spec.ts:195:93
+
+    Error Context: .tmp/sg/r2-stale-5591/w3r2-stale-tab-Next-brew-i-84f5c-still-says-so-and-goes-home-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/sg/r2-stale-5591/w3r2-stale-tab-Next-brew-i-84f5c-still-says-so-and-goes-home-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/sg/r2-stale-5591/w3r2-stale-tab-Next-brew-i-84f5c-still-says-so-and-goes-home-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/w3r2-stale-tab.spec.ts:197:1 › add 5 in the lagging tab after the other tab ended its brew and started another: nothing added, the newer brew untouched, the lagging tab shows it 
+    [chromium] › tests/w3r2-stale-tab.spec.ts:237:1 › Next brew in the lagging tab after the other tab already did: it joins that brew; ending it there later still says so and goes home 
+  3 passed (1.1m)
+### exit 1 | end 2026-10-17T19:12:17Z load 13.12 15.90 14.51
