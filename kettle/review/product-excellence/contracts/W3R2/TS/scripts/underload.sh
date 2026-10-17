@@ -35,7 +35,8 @@ case $WHAT in
     run load-notice338 tests/notice-strip.spec.ts --project=chromium --repeat-each=10 -g 'real input \(844×390 dark 200 %\)'
     ;;
   diag)
-    run diag-notice338 -c .tmp/ts-pw.config.ts ts/diag/notice-strip.spec.ts --project=chromium --repeat-each=10 -g 'real input \(844×390 dark 200 %\)'
+    W=1
+    run diag-notice338 -c .tmp/ts-pw.config.ts ts/diag/notice-strip.spec.ts --project=chromium --repeat-each=8 -g 'real input \(844×390 dark 200 %\)'
     ;;
   timer-whole)
     run whole-timer tests/timer.spec.ts --project=timer-app --project=timer-harness
