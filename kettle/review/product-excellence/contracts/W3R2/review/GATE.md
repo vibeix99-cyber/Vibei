@@ -147,3 +147,15 @@
   - The rerun covers timer/PWA, integrity plus `:309` ×10, `w2-home`, the race and stale-tab specs, the notice suite, and the 2-tab check (a)–(e). In (e), no "+5 min" note may show.
   - **Merge if green; any failure goes back to LEAD-5.** Rerun started 20:20 UTC (stop 21:45).
 - Servers for superseded trials (:5591/:5593, :5592/:5594) and the TH maker (:5582) are stopped.
+
+## Item 3, TS: APPROVE `89396e8` (LEAD-6 `23c6d1a`, `CHECKER-W3R2-TS.md` fix round) → merged as `a391cdc` (2026-10-17 ~20:45 UTC)
+
+- **Merge check:** the merged src `07df367` and tests `1f5feee` equal trial `41b3424`'s.
+- **LEAD-6 on trial 2** (against :5560, src `07df367`):
+  - **No assertion weakened.** Only a target under the Today dock or main nav is wheeled clear; notices, sheets, inert parts and other covers wait and fail with the same words. A rescroll never falls back (TS-D2 closed). `:156` gains the freeze-before-end check.
+  - **Injections:** dock fails on old and passes on the fix 3/3; transient passes; the permanent covers fail; the sheet passes on old via Tab+Enter but fails on the fix; a 2.5 s freeze delay fails the new `:156` line.
+  - **Under load** (load 9–17): dark 200 % 10/10; light 200 % reduced 10/10; diagnostic 10/10 (it did not hit the race; the maker's run hit it twice, and the fix cured both); `:156` 10/10 in both projects.
+  - **Whole files:** `notice-strip` 25/25; `timer.spec.ts` 26 + 2 skipped (covering `:189` after R3).
+- **FOLLOW-UP for Vibei:** R8, the Today dock switching mode after boot at 844×390 @200 %. Pre-existing.
+- **Integration HEAD tests now `1f5feee`**; app unchanged at `7cb3242` (src `07df367`).
+- **Item 1 (SG)** merges after Lane R2's rerun on :5601. It does not overlap TS's files. Its merged src must equal trial 2's `5f504d4`, and its merged tests must be trial 2's plus TS's two files.
