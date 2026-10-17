@@ -210,7 +210,7 @@ Why the missing whole-file run is a smaller risk than it looks (an argument, not
 
 **Branch** `pe/w3r2-test-stability`: `a6b3790`, `21e5644` kept; added `1befde2` (TS-D1, TS-D2; `notice-strip.spec.ts`) and `89396e8` (R3; `timer.spec.ts`). Whole diff of the round: `scratch/r2-spec-changes.diff.txt`; against the base: `scratch/spec-changes.diff.txt`.
 **Files touched in the round:** `kettle/tests/notice-strip.spec.ts` and, for R3 only, `kettle/tests/timer.spec.ts`. No `src/`, no other spec, no config.
-**Servers:** the injection runs (§6.2) used **:5583** (my worktree, src `494748b`, `workers=1`, no burners, for a deterministic read). The acceptance runs (§6.3–§6.5) used **:5560**, the integration HEAD (app `7cb3242`, with TH's `Toast.tsx` hook change), through the same `KETTLE_PORT` mechanism; the specs under test are those of this branch (`/home/user/wt/w8q/kettle/tests`), the gate lane `TS`.
+**Servers:** the injection runs (§6.2) used **:5583** (my worktree, src `494748b`, `workers=1`, no burners, for a deterministic read). The acceptance runs (§6.3–§6.5) used **:5560**, the integration HEAD (app `7cb3242`, src `07df367`, with TH's `Toast.tsx` hook change; per the orchestrator's correction :5560 / :5570 switched to it at **19:02 UTC**, so every :5560 run of this round, all started after 19:30, ran on `07df367`; the exact old src `b74e6b3` is :5583 only), through the same `KETTLE_PORT` mechanism; the specs under test are those of this branch (`/home/user/wt/w8q/kettle/tests`), the gate lane `TS`.
 
 ### 6.1 The changes, line by line
 
