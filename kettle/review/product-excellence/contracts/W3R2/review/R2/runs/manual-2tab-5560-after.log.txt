@@ -84,3 +84,11 @@
     B=running/s_mvcsoa/30m/ends=1792267418888
     S=running/s_mvcsoa/30m/ends=1792267418888  S(read in B)=running/s_mvcsoa/30m/ends=1792267418888  pageErrors=0
     plus5Note=["5 min · whistles at 8:03 PM now"]
+[19:34:32] control-5560-after (e) it5 FAIL load 19.51 14.71 12.69->19.41 15.08 12.87 failed: brew2_running_A_B_storage,brew2_not_extended_or_ended,storage_byte_identical_after_B_click
+    A=running/s_mvcsoy/30m/ends=1792267450774
+    B=running/s_mvcsoy/30m/ends=1792267450774
+    S=running/s_mvcsoy/30m/ends=1792267450774  S(read in B)=running/s_mvcsoy/30m/ends=1792267450774  pageErrors=0
+    plus5Note=["5 min · whistles at 8:04 PM now"]
+### case (e) control-5560-after: pass 0/5 {"precondition_B_behind":5,"brew2_running_A_B_storage":0,"A_B_storage_agree":5,"brew2_not_extended_or_ended":0,"B_shows_focus":5,"storage_byte_identical_after_B_click":0}
+### done control-5560-after 19:34:32 load 19.41 15.08 12.87
+### end 19:34:33 UTC; exit=0; load:  19:34:33 up  3:44,  0 user,  load average: 19.41, 15.08, 12.87
