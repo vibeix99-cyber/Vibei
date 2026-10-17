@@ -1,1 +1,9 @@
 ### integrity:309 x20, --workers=2 + 6 CPU burners (own PIDs), on the fix :5581 | branch 54a9721 (src dd6944e) | start 2026-10-17T17:49:04Z load 10.39 10.95 13.11
+[slots] SG took 2/3 at 17:51:50: bash -c 
+      PIDS=""; for i in 1 2 3 4 5 6; do ( while :; do :; done ) & PIDS="$PIDS $!"; done
+      echo "burners:$PIDS start $(date -u +%T) load $(cut -d" " -f1-3 /proc/loadavg)"
+      env KETTLE_
+burners: 2544 2545 2546 2547 2548 2549 start 17:51:51 load 10.08 10.81 12.72
+
+Running 20 tests using 2 workers
+
