@@ -1,6 +1,6 @@
 // RF-console.mjs <label> <baseURL> <outdir> [viewport=desktop|phone]
 // Console check: load Today, start a brew (real clicks), move the clock 90 s, end it (real clicks, the sheet), see the toast,
-// start a second brew and let it finish (debug finish) to reach the summary, open Stats (real click on the nav), scroll it,
+// start a second brew and let it finish (debug finish) to reach the summary, take Tea time, return to Today (debug navigate), open Stats (real click on the nav), scroll it,
 // open Settings and go back to Today. Records EVERY console message (all types), pageerror, failed request and HTTP >= 400.
 import { chromium } from 'playwright';
 import { mkdirSync, writeFileSync } from 'node:fs';
@@ -57,8 +57,11 @@ await step('5 Today again, start a second brew, let it finish (summary)', async 
   await p.evaluate(() => window.__kettle.finish()); await sleep(6000);
   log.afterFinishHash = await p.evaluate(() => location.hash);
 });
-await step('6 leave the summary (Done / Today), open Stats (real click), scroll', async () => {
-  await p.evaluate(() => window.__kettle.settings.getState().set({ autoStartBreaks: false, muted: true })).catch(() => {});
+await step('6 summary: Tea time, back to Today, open Stats (real click), scroll', async () => {
+  // the summary is a full screen without the nav: take its Tea time button (real click, best effort), then go to Today (debug navigate) for the nav
+  await p.getByRole('button', { name: /Tea time|Long tea break/ }).click({ timeout: 5000 }).then(() => { log.teaTimeClicked = true; }, () => { log.teaTimeClicked = false; });
+  await sleep(2500);
+  await p.evaluate(() => window.__kettle.navigate('/')); await sleep(1500);
   const nav = p.getByRole('link', { name: /stats/i }).or(p.getByRole('button', { name: /stats/i })).first();
   await nav.click({ timeout: 8000 });
   await p.waitForFunction(() => location.hash.startsWith('#/stats'), null, { timeout: 8000 });
