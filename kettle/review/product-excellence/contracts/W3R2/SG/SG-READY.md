@@ -353,3 +353,11 @@ Served code: `logs/r2/served-blobs.log.txt`.
 | `multitab` (with the ruled edit), `intentionRace`, `store`, `storageFull` on the fix | 4 files, **71/71** | `logs/r2/vitest-existing-race-on-fix.log.txt` (the diff of the edit is at its top) |
 | Vitest, all | **34 files, 342/342** (338 + 4) | `logs/r2/vitest-all-fix.log.txt` |
 | tsc | exit 0 | `logs/r2/tsc-fix.log.txt` |
+
+### 8.4 Compatibility on the final code (`scripts/compat.spec.ts.txt`, unchanged)
+| FROM → TO | idle | paused | reset | Log |
+|---|---|---|---|---|
+| HEAD :5560 → fix :5581 | pass | pass | pass | `logs/r2/compat-5560-to-5581.log.txt` |
+| fix :5581 → HEAD :5560 | pass | pass | pass | `logs/r2/compat-5581-to-5560.log.txt` |
+
+Saved vs after boot: **6/6 byte-identical**. The reset profile has the same bytes as in §4 (sha256 prefix `e47c72404da7`). The fix round adds no stored field and no write: SG-D1 only changes what a tab adopts, and SG-D2 and SG-D3 touch no storage.
