@@ -61,3 +61,13 @@ Running 10 tests using 2 workers
   ✓   3 [timer-harness] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (4.3s)
   ✓   4 [timer-harness] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (4.4s)
   ✓   5 [timer-harness] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (4.2s)
+  ✓   6 [timer-app] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (8.5s)
+  ✓   7 [timer-app] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (9.9s)
+  ✓   8 [timer-app] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (8.4s)
+  ✓   9 [timer-app] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (9.0s)
+  ✓  10 [timer-app] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (10.1s)
+
+  10 passed (50.7s)
+--- timer156 end 22:44:50 exit=0 load 11.02 9.84 7.86
+burners stopped 22:44:50:  16977 16978 16979 16980
+### end 22:44:50 UTC; exit=0; load:  22:44:50 up  6:54,  0 user,  load average: 11.02, 9.84, 7.86
