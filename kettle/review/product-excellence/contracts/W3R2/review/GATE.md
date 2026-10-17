@@ -159,3 +159,14 @@
 - **FOLLOW-UP for Vibei:** R8, the Today dock switching mode after boot at 844×390 @200 %. Pre-existing.
 - **Integration HEAD tests now `1f5feee`**; app unchanged at `7cb3242` (src `07df367`).
 - **Item 1 (SG)** merges after Lane R2's rerun on :5601. It does not overlap TS's files. Its merged src must equal trial 2's `5f504d4`, and its merged tests must be trial 2's plus TS's two files.
+
+## Lane R2 rerun on SG trial 2 (:5601), 2026-10-17 ~21:20 UTC: green apart from one PWA failure, sent to LEAD-5
+
+- **R2 §R** (`review/R2/RECEIPT-R2.md`, `bbaee84`), at load 5–20:
+  - tsc 0; vitest 342/342; integrity 25/25; `:309` ×10 10/10; race and stale-tab 7/7; `w2-home` 18/18; notice suites 74/74.
+  - **2-tab check, real clicks, 5/5 for every case on :5601:** (a) pause; (b) +5; (c) end; (d) no hold; (e) +5 on a replaced brew, with no "+5 min" note (the control shows it 5/5); (f) pause on a replaced brew, with no pause or resume sound; (g) Next brew, joined, then "Saved 1 minute of focus" and home (the control replaces A's brew 5/5).
+- **Failure:** `pwa.spec.ts:85` (line 91, the `needRefresh` wait).
+  - It failed on :5601 and on :5560, then passed 3/3 on a clean PWA port.
+  - R2's cause: its own leftover first-pass preview (PID 409) held the PWA port :5498, so the test ran against an old build.
+  - The orchestrator also found and killed SG maker's leftover `test-results/pwa-dist` preview on :5597 (PID 10314).
+  - **Sent to LEAD-5 to rule before the SG merge**, per its condition. Every PWA-project result this round is flagged as possibly affected by stray builds.
