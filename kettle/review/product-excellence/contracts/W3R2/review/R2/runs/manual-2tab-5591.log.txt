@@ -1,3 +1,15 @@
 ### start 18:07:14 UTC; load:  18:07:14 up  2:17,  0 user,  load average: 12.31, 13.11, 13.32
 ### cmd: node .tmp/R2-2tab.mjs fix-5591 http://127.0.0.1:5591 5 /home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/review/R2/manual a,b,c,d,e
 ### fix-5591 http://127.0.0.1:5591 N=5 cases=a,b,c,d,e start 18:07:15 load 12.31 13.11 13.32
+[18:07:35] fix-5591 (a) it1 PASS load 12.31 13.11 13.32->12.27 13.07 13.30
+    A=paused/s_mvcplb/30m/ends=null
+    B=paused/s_mvcplb/30m/ends=null
+    S=paused/s_mvcplb/30m/ends=null  S(read in B)=paused/s_mvcplb/30m/ends=null  pageErrors=0
+[18:07:46] fix-5591 (a) it2 PASS load 12.27 13.07 13.30->12.09 13.00 13.27
+    A=paused/s_mvcplq/30m/ends=null
+    B=paused/s_mvcplq/30m/ends=null
+    S=paused/s_mvcplq/30m/ends=null  S(read in B)=paused/s_mvcplq/30m/ends=null  pageErrors=0
+[18:07:57] fix-5591 (a) it3 PASS load 12.09 13.00 13.27->11.56 12.85 13.22
+    A=paused/s_mvcply/30m/ends=null
+    B=paused/s_mvcply/30m/ends=null
+    S=paused/s_mvcply/30m/ends=null  S(read in B)=paused/s_mvcply/30m/ends=null  pageErrors=0
