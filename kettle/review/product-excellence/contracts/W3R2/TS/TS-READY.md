@@ -303,3 +303,7 @@ LEAD-6's `__why` (the target's rect, what is at its centre and its fixed / stick
 - **`PATH docked chrome` taken 2 times** (2 of the 10 runs; no `PATH out of view`). In both, the log is LEAD-6's race exactly: first read at page time 2.0 s: field 296–348, `scrollY` 0, **dock `tall=true`, `relative`, top 538, `--home-dock-h` 255px**, field on top; re-check at 2.3 s: **dock `tall=false`, `sticky`, 182–390, 209px**, `p._ctaNote` in `div._ctaDock` on top at the field's centre; then `PATH docked chrome (rescrolled 0)`, the rescrolled call reads the field covered, the wheel walk takes it to `scrollY` 180, field 116–168, on top, and the tap follows.
 - The other 8 runs: the first read already saw the settled dock (`tall=false`, sticky, 209px; field covered), took the walk (`scrollY` 180) and tapped, as in LEAD-6's passing runs.
 - No failure, so no "anything other than the docked Start over the field" to report.
+
+### 6.5 The whole `notice-strip.spec.ts` (acceptance 5)
+
+`--project=chromium --workers=2`, no burners, :5560 (app `7cb3242`, src `07df367`), the fix tree: **25 passed, 0 failed, 0 skipped** (12.2 min). Load 11.45 11.50 12.14 (19:57:44) → 6.75 7.30 9.13 (20:09:57). Log `logs/r2/combo.log.txt` (section `r2-whole-notice`), report `logs/r2/r2-whole-notice.json.txt`.

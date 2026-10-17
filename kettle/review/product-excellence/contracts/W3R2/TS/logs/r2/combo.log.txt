@@ -117,3 +117,15 @@ Running 25 tests using 2 workers
 burners stopped 20:09:57: 
 ######## combo: timer 20:09:57
 burners: 11104 11105 11106 11107 started 20:09:57 load 6.75 7.30 9.13
+######## r2-timer156-x10: env KETTLE_PORT=5560 PLAYWRIGHT_JSON_OUTPUT_NAME=/home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/TS/logs/r2/r2-timer156-x10.json npx playwright test tests/timer.spec.ts --project=timer-app --project=timer-harness --repeat-each=10 -g background: the worker --workers=2 --reporter=list,json --output=.tmp/ts-out/r2-r2-timer156-x10
+### start 20:10:02 load 6.53 7.24 9.10
+
+Running 20 tests using 2 workers
+
+  ✓   1 [timer-harness] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (4.1s)
+  ✓   2 [timer-harness] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (4.3s)
+  ✓   3 [timer-harness] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (4.0s)
+  ✓   4 [timer-harness] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (4.1s)
+  ✓   5 [timer-harness] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (4.3s)
+  ✓   6 [timer-harness] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (4.3s)
+  ✓   7 [timer-harness] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (4.2s)
