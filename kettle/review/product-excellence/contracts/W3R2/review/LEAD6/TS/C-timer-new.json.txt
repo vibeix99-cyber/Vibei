@@ -1,0 +1,267 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts-pw.config.ts",
+    "rootDir": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/out/C-timer-new",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-harness",
+        "name": "timer-harness",
+        "testDir": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/out/C-timer-new",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-app",
+        "name": "timer-app",
+        "testDir": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/out/C-timer-new",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts",
+        "testIgnore": [],
+        "testMatch": [
+          "/notice-strip\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "new/timer.spec.ts",
+      "file": "new/timer.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "timer reliability",
+          "file": "new/timer.spec.ts",
+          "line": 89,
+          "column": 6,
+          "specs": [
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4468,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[inject] runner late by 3500 ms after the start command (background: the work, /tests/harness/timer)\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T18:32:37.426Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e78a1d321998b7941c39-795ee6fe31bd3c409631",
+              "file": "new/timer.spec.ts",
+              "line": 172,
+              "column": 3
+            },
+            {
+              "title": "hidden page: completion shows a warm notification; coming back restores the title",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3338,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[inject] runner late by 2500 ms after the start command (hidden page: complet, /tests/harness/timer)\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T18:32:42.025Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e78a1d321998b7941c39-b5b34e1b6b1838cde0b6",
+              "file": "new/timer.spec.ts",
+              "line": 205,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8617,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[inject] runner late by 6500 ms after the start command (background: the work, /?debug&onboarded=1#)\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T18:32:46.512Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e78a1d321998b7941c39-c6580a2f3969a8ada5e9",
+              "file": "new/timer.spec.ts",
+              "line": 172,
+              "column": 3
+            },
+            {
+              "title": "hidden page: completion shows a warm notification; coming back restores the title",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6385,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[inject] runner late by 4500 ms after the start command (hidden page: complet, /?debug&onboarded=1#)\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T18:32:55.251Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e78a1d321998b7941c39-a9b83437c79081394c59",
+              "file": "new/timer.spec.ts",
+              "line": 205,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-17T18:32:36.045Z",
+    "duration": 26385.486,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

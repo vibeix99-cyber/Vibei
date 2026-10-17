@@ -1,0 +1,387 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts-pw.config.ts",
+    "rootDir": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/out/C-timer-old",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-harness",
+        "name": "timer-harness",
+        "testDir": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/out/C-timer-old",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-app",
+        "name": "timer-app",
+        "testDir": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/out/C-timer-old",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts",
+        "testIgnore": [],
+        "testMatch": [
+          "/notice-strip\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "old/timer.spec.ts",
+      "file": "old/timer.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "timer reliability",
+          "file": "old/timer.spec.ts",
+          "line": 89,
+          "column": 6,
+          "specs": [
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 14370,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate\n    at /home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/old/timer.spec.ts:191:5",
+                        "location": {
+                          "file": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/old/timer.spec.ts",
+                          "column": 5,
+                          "line": 191
+                        },
+                        "snippet": "  189 |       document.dispatchEvent(new Event('visibilitychange'));\n  190 |     });\n> 191 |     await expect.poll(() => page.evaluate(() => (window as any).__doneAt ?? null), { timeout: 10_000, intervals: [200] }).not.toBeNull();\n      |     ^\n  192 |     const doneAt = await page.evaluate(() => (window as any).__doneAt as number);\n  193 |     expect(doneAt - (endsAt as number)).toBeGreaterThanOrEqual(0);\n  194 |     expect(doneAt - (endsAt as number)).toBeLessThan(lateBudget(kettlePage));"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/old/timer.spec.ts",
+                            "column": 5,
+                            "line": 191
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate\n\n  189 |       document.dispatchEvent(new Event('visibilitychange'));\n  190 |     });\n> 191 |     await expect.poll(() => page.evaluate(() => (window as any).__doneAt ?? null), { timeout: 10_000, intervals: [200] }).not.toBeNull();\n      |     ^\n  192 |     const doneAt = await page.evaluate(() => (window as any).__doneAt as number);\n  193 |     expect(doneAt - (endsAt as number)).toBeGreaterThanOrEqual(0);\n  194 |     expect(doneAt - (endsAt as number)).toBeLessThan(lateBudget(kettlePage));\n    at /home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/old/timer.spec.ts:191:5"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "[inject] runner late by 3500 ms after the start command (background: the work, /tests/harness/timer)\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T18:31:28.884Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/out/C-timer-old/old-timer-timer-reliabilit-aed0b-h-main-thread-timers-frozen-timer-harness/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/old/timer.spec.ts",
+                        "column": 5,
+                        "line": 191
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "20e9ed5b70e656895097-9f2907e0ccffe67cfbab",
+              "file": "old/timer.spec.ts",
+              "line": 172,
+              "column": 3
+            },
+            {
+              "title": "hidden page: completion shows a warm notification; coming back restores the title",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 13315,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate\n    at /home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/old/timer.spec.ts:220:5",
+                        "location": {
+                          "file": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/old/timer.spec.ts",
+                          "column": 5,
+                          "line": 220
+                        },
+                        "snippet": "  218 |     await start(page, secs(kettlePage, 2), 'Essay');\n  219 |     await setHidden(page, true);\n> 220 |     await expect.poll(() => page.evaluate(() => (window as any).__notes.length), { timeout: 10_000 }).toBe(1);\n      |     ^\n  221 |     const note = await page.evaluate(() => (window as any).__notes[0]);\n  222 |     expect(note.title).toBe('The kettle’s whistling! Time for tea.');\n  223 |     expect(note.body).toContain('Essay');"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/old/timer.spec.ts",
+                            "column": 5,
+                            "line": 220
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate\n\n  218 |     await start(page, secs(kettlePage, 2), 'Essay');\n  219 |     await setHidden(page, true);\n> 220 |     await expect.poll(() => page.evaluate(() => (window as any).__notes.length), { timeout: 10_000 }).toBe(1);\n      |     ^\n  221 |     const note = await page.evaluate(() => (window as any).__notes[0]);\n  222 |     expect(note.title).toBe('The kettle’s whistling! Time for tea.');\n  223 |     expect(note.body).toContain('Essay');\n    at /home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/old/timer.spec.ts:220:5"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "[inject] runner late by 2500 ms after the start command (hidden page: complet, /tests/harness/timer)\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T18:31:44.321Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/out/C-timer-old/old-timer-timer-reliabilit-fb1c6-ing-back-restores-the-title-timer-harness/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/old/timer.spec.ts",
+                        "column": 5,
+                        "line": 220
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "20e9ed5b70e656895097-2cee9d2105f0aa79dff3",
+              "file": "old/timer.spec.ts",
+              "line": 199,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 18248,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate\n    at /home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/old/timer.spec.ts:191:5",
+                        "location": {
+                          "file": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/old/timer.spec.ts",
+                          "column": 5,
+                          "line": 191
+                        },
+                        "snippet": "  189 |       document.dispatchEvent(new Event('visibilitychange'));\n  190 |     });\n> 191 |     await expect.poll(() => page.evaluate(() => (window as any).__doneAt ?? null), { timeout: 10_000, intervals: [200] }).not.toBeNull();\n      |     ^\n  192 |     const doneAt = await page.evaluate(() => (window as any).__doneAt as number);\n  193 |     expect(doneAt - (endsAt as number)).toBeGreaterThanOrEqual(0);\n  194 |     expect(doneAt - (endsAt as number)).toBeLessThan(lateBudget(kettlePage));"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/old/timer.spec.ts",
+                            "column": 5,
+                            "line": 191
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate\n\n  189 |       document.dispatchEvent(new Event('visibilitychange'));\n  190 |     });\n> 191 |     await expect.poll(() => page.evaluate(() => (window as any).__doneAt ?? null), { timeout: 10_000, intervals: [200] }).not.toBeNull();\n      |     ^\n  192 |     const doneAt = await page.evaluate(() => (window as any).__doneAt as number);\n  193 |     expect(doneAt - (endsAt as number)).toBeGreaterThanOrEqual(0);\n  194 |     expect(doneAt - (endsAt as number)).toBeLessThan(lateBudget(kettlePage));\n    at /home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/old/timer.spec.ts:191:5"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "[inject] runner late by 6500 ms after the start command (background: the work, /?debug&onboarded=1#)\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T18:31:58.757Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/out/C-timer-old/old-timer-timer-reliabilit-aed0b-h-main-thread-timers-frozen-timer-app/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/old/timer.spec.ts",
+                        "column": 5,
+                        "line": 191
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "20e9ed5b70e656895097-be5cfe8d126f79afb13b",
+              "file": "old/timer.spec.ts",
+              "line": 172,
+              "column": 3
+            },
+            {
+              "title": "hidden page: completion shows a warm notification; coming back restores the title",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 16255,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate\n    at /home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/old/timer.spec.ts:220:5",
+                        "location": {
+                          "file": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/old/timer.spec.ts",
+                          "column": 5,
+                          "line": 220
+                        },
+                        "snippet": "  218 |     await start(page, secs(kettlePage, 2), 'Essay');\n  219 |     await setHidden(page, true);\n> 220 |     await expect.poll(() => page.evaluate(() => (window as any).__notes.length), { timeout: 10_000 }).toBe(1);\n      |     ^\n  221 |     const note = await page.evaluate(() => (window as any).__notes[0]);\n  222 |     expect(note.title).toBe('The kettle’s whistling! Time for tea.');\n  223 |     expect(note.body).toContain('Essay');"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/old/timer.spec.ts",
+                            "column": 5,
+                            "line": 220
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate\n\n  218 |     await start(page, secs(kettlePage, 2), 'Essay');\n  219 |     await setHidden(page, true);\n> 220 |     await expect.poll(() => page.evaluate(() => (window as any).__notes.length), { timeout: 10_000 }).toBe(1);\n      |     ^\n  221 |     const note = await page.evaluate(() => (window as any).__notes[0]);\n  222 |     expect(note.title).toBe('The kettle’s whistling! Time for tea.');\n  223 |     expect(note.body).toContain('Essay');\n    at /home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/old/timer.spec.ts:220:5"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "[inject] runner late by 4500 ms after the start command (hidden page: complet, /?debug&onboarded=1#)\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T18:32:18.178Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/out/C-timer-old/old-timer-timer-reliabilit-fb1c6-ing-back-restores-the-title-timer-app/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/old/timer.spec.ts",
+                        "column": 5,
+                        "line": 220
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "20e9ed5b70e656895097-099513d2423e11f1fd29",
+              "file": "old/timer.spec.ts",
+              "line": 199,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-17T18:31:27.587Z",
+    "duration": 67061.53899999999,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

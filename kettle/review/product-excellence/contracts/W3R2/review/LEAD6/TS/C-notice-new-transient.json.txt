@@ -1,0 +1,163 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts-pw.config.ts",
+    "rootDir": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/out/C-notice-new-transient",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-harness",
+        "name": "timer-harness",
+        "testDir": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/out/C-notice-new-transient",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-app",
+        "name": "timer-app",
+        "testDir": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/out/C-notice-new-transient",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts",
+        "testIgnore": [],
+        "testMatch": [
+          "/notice-strip\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "new/notice-strip.spec.ts",
+      "file": "new/notice-strip.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":1876,\"markDone\":{\"tapAt\":{\"x\":534.03125,\"y\":117.59375,\"w\":151,\"h\":44,\"top\":95.59375},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":178.375,\"undoY\":178.375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1722,\"modalFrames\":19,\"frames\":2895,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":201,\"Crossed off. Nice work. Undo\":11,\"Couldn’t save just now. Your summary is still he\":246,\"Recipe done: Take a full tea break · +10 leaves\":248,\"Recipe done: Take 2 full tea breaks · +15 leaves\":238,\"Kettle’s off. See you soon.\":199,\"Brew updated\":250,\"Brew deleted Undo\":11,\"A notice on Settings, here to be read.\":266,\"A notice on Nook, here to be read.\":56}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":54,\"modalFrames\":0,\"frames\":183,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":54}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 57994,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[inject] transient cover over getByRole('textbox', { name: /What are you brewing/ }) for 300 ms at 18:33:13.478\n"
+                    },
+                    {
+                      "text": "[inject] re-check: covered at 18:33:13.488\n"
+                    },
+                    {
+                      "text": "[inject] aim again 1 at 18:33:13.740\n"
+                    },
+                    {
+                      "text": "[inject] aim again 2 at 18:33:14.017\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T18:33:11.463Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":1876,\"markDone\":{\"tapAt\":{\"x\":534.03125,\"y\":117.59375,\"w\":151,\"h\":44,\"top\":95.59375},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":178.375,\"undoY\":178.375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1722,\"modalFrames\":19,\"frames\":2895,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":201,\"Crossed off. Nice work. Undo\":11,\"Couldn’t save just now. Your summary is still he\":246,\"Recipe done: Take a full tea break · +10 leaves\":248,\"Recipe done: Take 2 full tea breaks · +15 leaves\":238,\"Kettle’s off. See you soon.\":199,\"Brew updated\":250,\"Brew deleted Undo\":11,\"A notice on Settings, here to be read.\":266,\"A notice on Nook, here to be read.\":56}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":54,\"modalFrames\":0,\"frames\":183,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":54}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c1bff286c635c64dc892-2e0e9cd4c34dbc66c5ef",
+          "file": "new/notice-strip.spec.ts",
+          "line": 394,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-17T18:33:09.893Z",
+    "duration": 59779.698000000004,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
