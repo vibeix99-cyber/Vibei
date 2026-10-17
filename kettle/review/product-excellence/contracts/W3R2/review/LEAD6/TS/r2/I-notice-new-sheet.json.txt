@@ -1,0 +1,192 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts-pw.config.ts",
+    "rootDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/out/I-notice-new-sheet",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-harness",
+        "name": "timer-harness",
+        "testDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/out/I-notice-new-sheet",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-app",
+        "name": "timer-app",
+        "testDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/out/I-notice-new-sheet",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts",
+        "testIgnore": [],
+        "testMatch": [
+          "/notice-strip\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "new/notice-strip.spec.ts",
+      "file": "new/notice-strip.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 14232,
+                  "error": {
+                    "message": "Error: getByRole('dialog', { name: 'Leave the kettle early?' }).getByRole('button', { name: 'End session' }) can be brought on top by real scrolling ({\"x\":426,\"y\":-2726.09375,\"width\":250,\"height\":55.796875}, scrollY 0)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m",
+                    "stack": "Error: getByRole('dialog', { name: 'Leave the kettle early?' }).getByRole('button', { name: 'End session' }) can be brought on top by real scrolling ({\"x\":426,\"y\":-2726.09375,\"width\":250,\"height\":55.796875}, scrollY 0)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n    at press (/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/new/notice-strip.spec.ts:381:160)\n    at /home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/new/notice-strip.spec.ts:486:5",
+                    "location": {
+                      "file": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/new/notice-strip.spec.ts",
+                      "column": 160,
+                      "line": 381
+                    },
+                    "snippet": "  379 |       return { x: -1, y: -1, w: 0, h: 0, top: -1 };\n  380 |     }\n> 381 |     expect(at, `${el} can be brought on top by real scrolling (${JSON.stringify(await el.boundingBox())}, scrollY ${await page.evaluate(() => scrollY)})`).not.toBeNull();\n      |                                                                                                                                                                ^\n  382 |   }\n  383 |   // (W3R1 Q, X-11) Aim and tap inside one input window, as a person does: the pointer moves onto the target (input), its\n  384 |   // place is read again right then, and the tap follows at once. The strip changes height at rest only after a quiet"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/new/notice-strip.spec.ts",
+                        "column": 160,
+                        "line": 381
+                      },
+                      "message": "Error: getByRole('dialog', { name: 'Leave the kettle early?' }).getByRole('button', { name: 'End session' }) can be brought on top by real scrolling ({\"x\":426,\"y\":-2726.09375,\"width\":250,\"height\":55.796875}, scrollY 0)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\n  379 |       return { x: -1, y: -1, w: 0, h: 0, top: -1 };\n  380 |     }\n> 381 |     expect(at, `${el} can be brought on top by real scrolling (${JSON.stringify(await el.boundingBox())}, scrollY ${await page.evaluate(() => scrollY)})`).not.toBeNull();\n      |                                                                                                                                                                ^\n  382 |   }\n  383 |   // (W3R1 Q, X-11) Aim and tap inside one input window, as a person does: the pointer moves onto the target (input), its\n  384 |   // place is read again right then, and the tap follows at once. The strip changes height at rest only after a quiet\n    at press (/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/new/notice-strip.spec.ts:381:160)\n    at /home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/new/notice-strip.spec.ts:486:5"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "[inject] re-check: covered at 20:45:19.480\n"
+                    },
+                    {
+                      "text": "[inject] aim again 1 at 20:45:19.735\n"
+                    },
+                    {
+                      "text": "[inject] rescroll: bring it clear by the wheel\n"
+                    },
+                    {
+                      "text": "[inject] sheet: getByRole('dialog', { name: 'Leave the kettle early?' }).getByRole('button', { name: 'End session' }) moved out of the view for good at the re-check\n"
+                    },
+                    {
+                      "text": "[inject] re-check: covered at 20:45:24.985\n"
+                    },
+                    {
+                      "text": "[inject] aim again 1 at 20:45:25.243\n"
+                    },
+                    {
+                      "text": "[inject] rescroll: bring it clear by the wheel\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T20:45:17.146Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/out/I-notice-new-sheet/new-notice-strip-no-notice-58846-eal-input-844×390-dark-200--chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/new/notice-strip.spec.ts",
+                    "column": 160,
+                    "line": 381
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "c1bff286c635c64dc892-2e0e9cd4c34dbc66c5ef",
+          "file": "new/notice-strip.spec.ts",
+          "line": 601,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-17T20:45:16.045Z",
+    "duration": 17108.825,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

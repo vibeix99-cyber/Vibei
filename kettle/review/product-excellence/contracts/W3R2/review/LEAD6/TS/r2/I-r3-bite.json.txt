@@ -1,0 +1,179 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts-pw.config.ts",
+    "rootDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/out/I-r3-bite",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-harness",
+        "name": "timer-harness",
+        "testDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/out/I-r3-bite",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-app",
+        "name": "timer-app",
+        "testDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/out/I-r3-bite",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts",
+        "testIgnore": [],
+        "testMatch": [
+          "/notice-strip\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "r3/timer.spec.ts",
+      "file": "r3/timer.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "timer reliability",
+          "file": "r3/timer.spec.ts",
+          "line": 73,
+          "column": 6,
+          "specs": [
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3372,
+                      "error": {
+                        "message": "Error: the main-thread timers were frozen at least 1 s before the end of the brew\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m1000\u001b[39m\nReceived:    \u001b[31m492\u001b[39m",
+                        "stack": "Error: the main-thread timers were frozen at least 1 s before the end of the brew\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m1000\u001b[39m\nReceived:    \u001b[31m492\u001b[39m\n    at /home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/r3/timer.spec.ts:183:120",
+                        "location": {
+                          "file": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/r3/timer.spec.ts",
+                          "column": 120,
+                          "line": 183
+                        },
+                        "snippet": "  181 |     // (W3R2) Every run proves its own freeze leg: the freeze landed well before the brew's end (a page that stalled for the\n  182 |     // best part of the brew would otherwise freeze after the end and pass without the timers ever being frozen).\n> 183 |     expect((endsAt as number) - frozeAt, 'the main-thread timers were frozen at least 1 s before the end of the brew').toBeGreaterThanOrEqual(1000);\n      |                                                                                                                        ^\n  184 |     await expect.poll(() => page.evaluate(() => (window as any).__doneAt ?? null), { timeout: 10_000, intervals: [200] }).not.toBeNull();\n  185 |     const doneAt = await page.evaluate(() => (window as any).__doneAt as number);\n  186 |     expect(doneAt - (endsAt as number)).toBeGreaterThanOrEqual(0);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/r3/timer.spec.ts",
+                            "column": 120,
+                            "line": 183
+                          },
+                          "message": "Error: the main-thread timers were frozen at least 1 s before the end of the brew\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m1000\u001b[39m\nReceived:    \u001b[31m492\u001b[39m\n\n  181 |     // (W3R2) Every run proves its own freeze leg: the freeze landed well before the brew's end (a page that stalled for the\n  182 |     // best part of the brew would otherwise freeze after the end and pass without the timers ever being frozen).\n> 183 |     expect((endsAt as number) - frozeAt, 'the main-thread timers were frozen at least 1 s before the end of the brew').toBeGreaterThanOrEqual(1000);\n      |                                                                                                                        ^\n  184 |     await expect.poll(() => page.evaluate(() => (window as any).__doneAt ?? null), { timeout: 10_000, intervals: [200] }).not.toBeNull();\n  185 |     const doneAt = await page.evaluate(() => (window as any).__doneAt as number);\n  186 |     expect(doneAt - (endsAt as number)).toBeGreaterThanOrEqual(0);\n    at /home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/r3/timer.spec.ts:183:120"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T20:46:40.883Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/out/I-r3-bite/r3-timer-timer-reliability-d27df-h-main-thread-timers-frozen-timer-harness/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/r3/timer.spec.ts",
+                        "column": 120,
+                        "line": 183
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "4803d22ecaf024a654af-39bf6afdd98adc1b8231",
+              "file": "r3/timer.spec.ts",
+              "line": 156,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-17T20:46:39.300Z",
+    "duration": 5182.415999999999,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

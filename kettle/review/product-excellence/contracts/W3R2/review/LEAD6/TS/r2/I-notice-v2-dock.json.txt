@@ -1,0 +1,204 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts-pw.config.ts",
+    "rootDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/out/I-notice-v2-dock",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-harness",
+        "name": "timer-harness",
+        "testDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/out/I-notice-v2-dock",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-app",
+        "name": "timer-app",
+        "testDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/out/I-notice-v2-dock",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts",
+        "testIgnore": [],
+        "testMatch": [
+          "/notice-strip\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "v2/notice-strip.spec.ts",
+      "file": "v2/notice-strip.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4784,
+                  "error": {
+                    "message": "Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m",
+                    "stack": "Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n    at press (/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/v2/notice-strip.spec.ts:393:60)\n    at /home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/v2/notice-strip.spec.ts:443:5",
+                    "location": {
+                      "file": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/v2/notice-strip.spec.ts",
+                      "column": 60,
+                      "line": 393
+                    },
+                    "snippet": "  391 |     if (at && ((same && Date.now() - t < 800) || round >= 4)) break;\n  392 |   }\n> 393 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();\n      |                                                            ^\n  394 |   if (touch) {\n  395 |     await page.touchscreen.tap(at!.x, at!.y);\n  396 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/v2/notice-strip.spec.ts",
+                        "column": 60,
+                        "line": 393
+                      },
+                      "message": "Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\n  391 |     if (at && ((same && Date.now() - t < 800) || round >= 4)) break;\n  392 |   }\n> 393 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();\n      |                                                            ^\n  394 |   if (touch) {\n  395 |     await page.touchscreen.tap(at!.x, at!.y);\n  396 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)\n    at press (/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/v2/notice-strip.spec.ts:393:60)\n    at /home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/v2/notice-strip.spec.ts:443:5"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "[inject] dock: dock in the flow: relative top 538 bottom 746 of 390\n"
+                    },
+                    {
+                      "text": "[inject] dock: docked: sticky top 182 bottom 390 of 390\n"
+                    },
+                    {
+                      "text": "[inject] re-check: covered at 20:42:25.644\n"
+                    },
+                    {
+                      "text": "[inject] aim again 1 at 20:42:25.896\n"
+                    },
+                    {
+                      "text": "[inject] aim again 2 at 20:42:26.175\n"
+                    },
+                    {
+                      "text": "[inject] aim again 3 at 20:42:26.454\n"
+                    },
+                    {
+                      "text": "[inject] aim again 4 at 20:42:26.733\n"
+                    },
+                    {
+                      "text": "[inject] aim again 5 at 20:42:27.011\n"
+                    },
+                    {
+                      "text": "[inject] aim again 6 at 20:42:27.355\n"
+                    },
+                    {
+                      "text": "[inject] aim again 7 at 20:42:27.641\n"
+                    },
+                    {
+                      "text": "[inject] aim again 8 at 20:42:27.971\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T20:42:23.019Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/out/I-notice-v2-dock/v2-notice-strip-no-notice--82731-eal-input-844×390-dark-200--chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/v2/notice-strip.spec.ts",
+                    "column": 60,
+                    "line": 393
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ee1e580acd2d5be0458f-b334b0b7b20241b7a30b",
+          "file": "v2/notice-strip.spec.ts",
+          "line": 431,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-17T20:42:20.942Z",
+    "duration": 7470.159,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

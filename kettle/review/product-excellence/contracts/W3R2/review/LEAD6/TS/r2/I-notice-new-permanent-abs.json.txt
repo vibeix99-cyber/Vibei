@@ -1,0 +1,201 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts-pw.config.ts",
+    "rootDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/out/I-notice-new-permanent-abs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-harness",
+        "name": "timer-harness",
+        "testDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/out/I-notice-new-permanent-abs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-app",
+        "name": "timer-app",
+        "testDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/out/I-notice-new-permanent-abs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts",
+        "testIgnore": [],
+        "testMatch": [
+          "/notice-strip\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "new/notice-strip.spec.ts",
+      "file": "new/notice-strip.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5297,
+                  "error": {
+                    "message": "Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m",
+                    "stack": "Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n    at press (/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/new/notice-strip.spec.ts:415:60)\n    at /home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/new/notice-strip.spec.ts:465:5",
+                    "location": {
+                      "file": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/new/notice-strip.spec.ts",
+                      "column": 60,
+                      "line": 415
+                    },
+                    "snippet": "  413 |     if (at && ((same && Date.now() - t < 800) || round >= 4)) break;\n  414 |   }\n> 415 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();\n      |                                                            ^\n  416 |   if (touch) {\n  417 |     await page.touchscreen.tap(at!.x, at!.y);\n  418 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/new/notice-strip.spec.ts",
+                        "column": 60,
+                        "line": 415
+                      },
+                      "message": "Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\n  413 |     if (at && ((same && Date.now() - t < 800) || round >= 4)) break;\n  414 |   }\n> 415 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();\n      |                                                            ^\n  416 |   if (touch) {\n  417 |     await page.touchscreen.tap(at!.x, at!.y);\n  418 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)\n    at press (/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/new/notice-strip.spec.ts:415:60)\n    at /home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/new/notice-strip.spec.ts:465:5"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "[inject] permanent-abs cover over getByRole('textbox', { name: /What are you brewing/ }) (never removed) at 20:45:00.266\n"
+                    },
+                    {
+                      "text": "[inject] re-check: covered at 20:45:00.502\n"
+                    },
+                    {
+                      "text": "[inject] aim again 1 at 20:45:00.793\n"
+                    },
+                    {
+                      "text": "[inject] aim again 2 at 20:45:01.115\n"
+                    },
+                    {
+                      "text": "[inject] aim again 3 at 20:45:01.517\n"
+                    },
+                    {
+                      "text": "[inject] aim again 4 at 20:45:01.959\n"
+                    },
+                    {
+                      "text": "[inject] aim again 5 at 20:45:02.425\n"
+                    },
+                    {
+                      "text": "[inject] aim again 6 at 20:45:02.715\n"
+                    },
+                    {
+                      "text": "[inject] aim again 7 at 20:45:03.022\n"
+                    },
+                    {
+                      "text": "[inject] aim again 8 at 20:45:03.328\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T20:44:57.958Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/out/I-notice-new-permanent-abs/new-notice-strip-no-notice-58846-eal-input-844×390-dark-200--chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/ts/new/notice-strip.spec.ts",
+                    "column": 60,
+                    "line": 415
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "c1bff286c635c64dc892-2e0e9cd4c34dbc66c5ef",
+          "file": "new/notice-strip.spec.ts",
+          "line": 453,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-17T20:44:56.725Z",
+    "duration": 7477.613000000001,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}
