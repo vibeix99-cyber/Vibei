@@ -166,3 +166,56 @@ Tests from the trial tree. Logs in `LEAD/SG/`.
 **Rulings:** `multitab.test.ts` (b) in the fix round; `reset()` ACCEPTED; open items as in §4.
 
 *Run logs:* `.log` files are git-ignored, so mine are committed as `.log.txt` in `review/LEAD/SG/`. Scratch trees (`git archive` of `494748b` and of `88d6b64`) and my compat copy are in my scratchpad and in the git-ignored `/home/user/wt/w8tr-g/kettle/.tmp/lead5-sg/`.
+
+## 6. Fix round: `pe/w3r2-sync-guard@4b2690f` (src `8a67658`), trial 2 `2c9ec66`
+| | |
+|---|---|
+| Revision | `4b2690f`, one commit on `54a9721`. Packet `SG-READY.md` §8; logs `SG/logs/r2/` |
+| Trial 2 | `2c9ec66` = integration `d8749ad` (app `7cb3242`, TH merged) + `4b2690f`; worktree `/home/user/wt/w8tr-g2`; src `5f504d4`. Dev **:5601** serves it: `sync.ts` has `theirEnd`, `flow.ts` has the flag reset, `Toast.tsx` has `layerLeaving`, and pids 27525/27564 run in `w8tr-g2` |
+| Controls | :5560 = `/home/user/wt/w6-int` (src `07df367`: TH merged, no guard; its `sync.ts` has no `olderThanMine`; the timer directory is the same as `494748b`'s); :5591 = the first fix `54a9721` |
+| My evidence | `review/LEAD/SG/r2/` |
+
+### ◆ Scope, and the code (read in full)
+`git diff --stat 54a9721 4b2690f`:
+- `sync.ts` +8/−1;
+- `store.ts` +17/−12;
+- `flow.ts` +4;
+- `FocusScreen.tsx` +6/−3;
+- `multitab.test.ts` +4/−2;
+- `staleTab.test.ts` +72;
+- `w3r2-stale-tab.spec.ts` +41.
+
+**Exactly the round's permitted scope.**
+
+**SG-D1, the new rule 4 in `olderThanMine`.** When storage's `lastEnded` is not this tab's own and was made after this brew's `startedAt`, the tab adopts storage: it neither saves its brew back nor completes it.
+- **Probes (1) and (3) are covered.** Their writer ended Y after X began, and this tab never knew Y.
+- **The doubly stale copies still restore.**
+  - #13, #14, #16 and #24 carry this tab's own `lastEnded`, or an older one ended before X began.
+  - #17 and #18 are decided by rule 1 first.
+  - A stale tab ending its old brew writes the end this tab already knew; that is the new case "still restored".
+- **Existing fields only.**
+- **The catch-up runs the same rule.** So probe (2), the pause, is now dropped too, and the tab shows the idle kettle. That also closes the paused bfcache variant I had left as a FOLLOW-UP.
+- **One residual case: a brew this tab never knew** (two Starts in two tabs within the lag, neither seeing the other), ended in the other tab later. This tab then adopts that end. That is consistent with the accepted doubly stale start (#20), where the later start already wins.
+
+**SG-D2 (`flow.ts`).**
+- `suppressNextStop = false` right after `t.end('skip')`.
+- `end` emits `timer:stop` synchronously (`lib/events.ts` `emit`), and the handler takes the flag there. So the reset only matters when that end did not stop the brew: a dropped end, or HEAD's 0:00 case.
+- In a single tab nothing changes.
+
+**SG-D3 (`store.ts`, `FocusScreen.tsx`).**
+- The wrapped actions return `false` when they are dropped (`Acted = void | false`), and `toggle` returns what `pause` or `resume` returned.
+- `addFive` sets the note only when `addTime` did not return `false`, and `toggle` plays its sound only when `toggle` did not.
+- In a single tab nothing changes: the actions return `undefined`.
+
+**`multitab.test.ts`: exactly the ruled edit** (catch-up installed; `'from A'`; the comment).
+
+### ◆ Vitest (my runs)
+| Run | Result | Log |
+|---|---|---|
+| `staleTab.test.ts` (28) on trial 2 | **28/28** | `r2/vitest-staletab-trial2.log.txt` |
+| the same file on `git archive 88d6b64` (src = `54a9721`) | **3 failed / 25 passed**: exactly probes (1), (2) and (3) | `r2/vitest-staletab-new-on-54a9721.log.txt` |
+| the same file on `git archive 7cb3242` (integration HEAD; its timer directory equals `494748b`'s) | **19 failed / 9 passed** | `r2/vitest-staletab-new-on-HEAD-7cb3242.log.txt` |
+| **my own probe file, unchanged from §3**, on `git archive 2c9ec66` | **3/3**: no completion of X; storage stays idle after Pause; storage, A and Z stay idle after the later write | `r2/lead5-probe-on-trial2.log.txt` |
+| `multitab`, `intentionRace`, `store`, `storageFull` on trial 2 | **71/71** | `r2/vitest-existing-race-trial2.log.txt` |
+| Vitest, all, on trial 2 | **34 files, 342/342** | `r2/vitest-all-trial2.log.txt` |
+| tsc on trial 2 | exit 0 | `r2/tsc-trial2.log.txt` |
