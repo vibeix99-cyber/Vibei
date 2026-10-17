@@ -438,3 +438,38 @@ Classification: the failure **reproduces** while a stale server holds the PWA po
 ## R5. The notice suites on :5601
 `runs/notice-suite-5601.log.txt`, `json/notice-suite-5601.json`; `KETTLE_PORT=5601 npx playwright test tests/notice-strip.spec.ts tests/w3-notices.spec.ts tests/w3-notices-idle.spec.ts tests/summary-notice.spec.ts tests/toast-room.spec.ts --project=chromium --workers=2`; two gate slots; 21:00:46 to 21:20:52 (20.1 min); load average 14.0 at the start, 5.1 at the end. **74 passed, 0 failed, 0 flaky, 0 skipped**: `notice-strip` 25, `w3-notices` 9, `w3-notices-idle` 12, `summary-notice` 14, `toast-room` 14. Nothing to rerun.
 
+### R6f. Control for case (g) on :5560 (optional; no guard)
+`runs/manual-2tab-5560-g.log.txt`, label `g-5560-control`, same script as the :5601 run (`RR-2tab.mjs`), 21:04:14 to 21:05:49 (it ran beside the notice suite, in the third gate slot). **0 of 5.** After B's click on its stale break's "Start next brew", **B started its own brew** (`dd40` in iteration 1) and it replaced A's brew (`9424`) in A, B and storage; storage changed after B's click 5 of 5. B's later End of that brew showed the toast (`Saved 1 minute of focus`) and went home 5 of 5, with one record, for B's brew, not A's. So on :5560 the gesture replaces the other tab's brew; on :5601 it joins it, and the later End keeps its toast and its way home (R6c). Table: `manual/TABLE-g-5560-control.md`.
+
+## R7. Index and state at the stop
+
+| Check on :5601 (trial 2, `2c9ec66`) | Result |
+|---|---|
+| 1 tsc, vitest | tsc exit 0; vitest 34 files, **342/342** |
+| 2 timer-harness, timer-app, pwa | **29 passed, 2 skipped** (by design) after one classified pwa failure (R2: a preview server left over from my first pass held the PWA port; 3 of 3 on a clean port) |
+| 3 integrity | whole **25/25**; `:309` x10 **10/10** |
+| 4 race, stale-tab, w2-home | `w3-intention-race` 2 and `w3r2-stale-tab` 5: **7/7**; `w2-home` **18/18** |
+| 5 notice suites | **74/74** |
+| 6 2-tab, real clicks, 5 iterations | (a) 5/5, (b) 5/5, (c) 5/5, (d) 5/5, (e) 5/5 on the rerun with the strict note observer (the first run's looser observer matched the normal "N min brewed · whistles at …" line: 0/5, a defect of my check), (f) 5/5, (g) Next brew 5/5 |
+| 6 detail asked for | (e): no "5 min · whistles at" note ever showed in the tab whose +5 was dropped (observer and poll), where the :5560 control shows it 5/5. (f): no `pause` or `resume` sound in B (spy `[]`) 5/5; (a) with the pause applied: `["pause"]` 5/5. (g): in the lagging tab, "Start next brew" joined A's brew, and ending it there showed `Saved 1 minute of focus` and went to `#/`, 5/5; :5560 replaces A's brew 5/5 |
+
+- Failures: the `pwa.spec.ts:85` failure above, and my first (e) run's check failure; both explained in R2 and R6b. No other failure in any run; `runs/failures.txt` lists only the pwa one.
+- Page errors: 0 in every 2-tab iteration. No composer-label quirk seen (tab 2 never typed after a brew was running).
+- Processes: I killed by explicit PID only: 409 (my first pass's leftover preview, `w8tr-g`, :5498), 16928 (the clean-port preview of this rerun, :5496), and my own gate waiters 24604, 25241 and 1685, 28323 and 16266 (re-queued in a better order). Nothing killed by pattern. The preview on :5603 (PID 27555) is not mine.
+- Not run: :5603, :5570, :5583; no control rerun except R6e and R6f.
+##### g-5560-control
+
+| case | iterations | pass | fail | exceptions | page errors |
+|---|---|---|---|---|---|
+| (g) Next brew | 5 | 0 | 5 | 0 | 0 |
+
+**(g) Next brew**, criteria met (of 5): precondition_B_behind 5; B_joined_A_brew_after_its_click 0; A_storage_byte_identical_after_B_click 0; no_second_brew_started_by_B 0; A_B_storage_agree_after_release 5; saved_of_focus_toast_shown_in_B 5; B_went_home 5; one_record_for_joined_brew_everywhere 0; idle_in_A_B_storage_at_the_end 5
+
+| it | result | A (memory) | B (memory) | storage (read in A) | storage (read in B) | records for brew 1 / 2 (storage; A; B) | failed criteria |
+|---|---|---|---|---|---|---|---|
+| 1 | FAIL | idle - 25m null | idle - 25m null | idle - 25m null | idle - 25m null | 0/0; 0/0; 0/0 | B_joined_A_brew_after_its_click, A_storage_byte_identical_after_B_click, no_second_brew_started_by_B, one_record_for_joined_brew_everywhere |
+| 2 | FAIL | idle - 25m null | idle - 25m null | idle - 25m null | idle - 25m null | 0/0; 0/0; 0/0 | B_joined_A_brew_after_its_click, A_storage_byte_identical_after_B_click, no_second_brew_started_by_B, one_record_for_joined_brew_everywhere |
+| 3 | FAIL | idle - 25m null | idle - 25m null | idle - 25m null | idle - 25m null | 0/0; 0/0; 0/0 | B_joined_A_brew_after_its_click, A_storage_byte_identical_after_B_click, no_second_brew_started_by_B, one_record_for_joined_brew_everywhere |
+| 4 | FAIL | idle - 25m null | idle - 25m null | idle - 25m null | idle - 25m null | 0/0; 0/0; 0/0 | B_joined_A_brew_after_its_click, A_storage_byte_identical_after_B_click, no_second_brew_started_by_B, one_record_for_joined_brew_everywhere |
+| 5 | FAIL | idle - 25m null | idle - 25m null | idle - 25m null | idle - 25m null | 0/0; 0/0; 0/0 | B_joined_A_brew_after_its_click, A_storage_byte_identical_after_B_click, no_second_brew_started_by_B, one_record_for_joined_brew_everywhere |
+
