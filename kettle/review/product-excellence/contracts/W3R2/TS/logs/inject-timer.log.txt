@@ -18,3 +18,7 @@ Running 8 tests using 1 worker
 [inject] runner late by 3500 ms after the start command (background: the work, /tests/harness/timer)
   ✘  3 [timer-harness] › .tmp/ts/old/timer.spec.ts:172:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (14.2s)
 [inject] runner late by 2500 ms after the start command (hidden page: complet, /tests/harness/timer)
+  ✘  4 [timer-harness] › .tmp/ts/old/timer.spec.ts:199:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (13.2s)
+[inject] runner late by 6500 ms after the start command (background: the work, /?debug&onboarded=1#)
+  ✘  5 [timer-app] › .tmp/ts/old/timer.spec.ts:172:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (17.9s)
+[inject] runner late by 4500 ms after the start command (hidden page: complet, /?debug&onboarded=1#)
