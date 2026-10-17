@@ -11,3 +11,8 @@ Running 28 tests using 1 worker
   ✓   7 [timer-harness] › tests/timer.spec.ts:232:3 › device integrations › wake lock: held while running and visible; released on pause, idle and setting off; re-acquired on return (1.0s)
   ✓   8 [timer-harness] › tests/timer.spec.ts:281:3 › device integrations › media session: metadata + play/pause handlers while a phase runs, cleared when idle (1.3s)
   ✓   9 [timer-harness] › tests/timer.spec.ts:294:3 › keyboard shortcuts infra › Space toggles — but never while typing, on a focused button, or on key repeat; ? toggles help, not over a dialog (1.4s)
+  ✓  10 [timer-harness] › tests/timer.spec.ts:339:3 › multiple tabs › two tabs show the same session live and exactly one records it (8.2s)
+  ✓  11 [timer-harness] › tests/timer.spec.ts:377:3 › multiple tabs › two tabs pressing start at the same moment converge on one session (8.6s)
+  ✓  12 [timer-harness] › tests/timer.spec.ts:399:3 › multiple tabs › closing the leader tab mid-session hands over; the other tab completes it once (6.1s)
+  ✓  13 [timer-harness] › tests/timer.spec.ts:416:3 › multiple tabs › frozen leader: the other tab takes over at the end; the leader waking up later does not double-count (5.9s)
+  ✓  14 [timer-harness] › tests/timer.spec.ts:438:3 › rendering budget › useRemaining re-renders about once per displayed second (4.3s)
