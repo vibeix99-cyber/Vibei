@@ -8,7 +8,7 @@ committed specs are never edited by this. Usage: mkinject.py <worktree kettle di
 timer.spec.ts  -> a `page` fixture whose evaluate() is followed by a test-side wait (the runner is late) after the
                   command that starts the brew (the one whose function text holds `startFocus`): the page is untouched.
 notice-strip   -> before the re-check read in press(), a positioned element covers the target (COVER=transient: ~300 ms,
-                  once per test; permanent: never removed; none: nothing).
+                  once per test; permanent: never removed; shift: the page is scrolled 400 px at that read; none: nothing).
 """
 import subprocess, sys, pathlib
 
@@ -81,6 +81,11 @@ async function __cover(page: Page, el: ReturnType<Page['locator']>) {
   const mode = process.env.COVER ?? 'transient';
   if (mode === 'none' || __covers >= 1) return;
   __covers++;
+  if (mode === 'shift') {  // the page moves under the target (a layout shift): the target is out of the view at the re-check
+    const [a, b, v] = await page.evaluate(() => { const a = scrollY; window.scrollBy({ top: 400, behavior: 'instant' }); return [a, scrollY]; }).then(async ([a, b]) => [a, b, await el.evaluate((e) => { const r = e.getBoundingClientRect(); return `top ${Math.round(r.top)} bottom ${Math.round(r.bottom)} of ${innerHeight}`; })] as const);
+    console.log(`[inject] shift: the page scrolled ${a} -> ${b}; the field is now at ${v}`);
+    return;
+  }
   const ms = mode === 'permanent' ? 0 : Number(process.env.COVER_MS ?? 300);
   await el.evaluate((e, ms) => {
     const r = e.getBoundingClientRect();
@@ -98,14 +103,19 @@ def notice(src):
             COVER + "/** Scroll by real wheel (over `over`, or the page's middle) until `el` is on top, then tap / click it for real. */")
     s = rep(s, "    const again = await onTop(page, el, strict);\n",
             "    await __cover(page, el);\n    const again = await onTop(page, el, strict);\n    if (!again) console.log(`[inject] re-check: covered at ${new Date().toISOString().slice(11, 23)}`);\n")
+    if 'rescrolled + 1' in s:
+        s = rep(s, "!(await inView(el))) return press(", "!(await inView(el)) && (console.log('[inject] out of view: bring it back by the wheel') || true)) return press(")
     if 'AIM_PAUSE_MS);' in s:
         s = rep(s, "      await page.waitForTimeout(AIM_PAUSE_MS);\n",
                 "      await page.waitForTimeout(AIM_PAUSE_MS);\n      console.log(`[inject] aim again ${covered} at ${new Date().toISOString().slice(11, 23)}`);\n")
     return s
 
-for name, getter in (('old', base_src), ('new', work_src)):
+def v1_src(name):
+    return subprocess.check_output(['git', '-C', str(wt), 'show', f'a6b3790:kettle/tests/{name}'], text=True)
+
+for name, getter in (('old', base_src), ('v1', v1_src), ('new', work_src)):
     d = out / name; d.mkdir(parents=True, exist_ok=True)
-    (d / 'timer.spec.ts').write_text(timer(getter('timer.spec.ts')), encoding='utf-8')
+    if name != 'v1': (d / 'timer.spec.ts').write_text(timer(getter('timer.spec.ts')), encoding='utf-8')
     (d / 'notice-strip.spec.ts').write_text(notice(getter('notice-strip.spec.ts')), encoding='utf-8')
 d = out / 'mid'; d.mkdir(parents=True, exist_ok=True)
 (d / 'timer.spec.ts').write_text(timer(base_src('timer.spec.ts'), mid=True), encoding='utf-8')
