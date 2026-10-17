@@ -1,0 +1,32 @@
+### scratch copy of multitab.test.ts with only the app's action catch-up installed (assertions as they are), on the fix e18b621
+
+ RUN  v5.0.2 /home/user/wt/w8g/kettle
+
+ ❯ src/timer/zz-multitab-catchup-only.scratch.test.ts (15 tests | 1 failed) 983ms
+   ❯ two tabs, one session (7)
+     × two tabs pressing start at the same time converge on one session 42ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/timer/zz-multitab-catchup-only.scratch.test.ts > two tabs, one session > two tabs pressing start at the same time converge on one session
+AssertionError: expected 'from A' to be 'from B' // Object.is equality
+
+Expected: "from B"
+Received: "from A"
+
+ ❯ src/timer/zz-multitab-catchup-only.scratch.test.ts:242:42
+    240|     const sid = B.timer.getState().sessionId;
+    241|     expect(A.timer.getState().sessionId).toBe(sid);
+    242|     expect(A.timer.getState().intention).toBe('from B');
+       |                                          ^
+    243|     advance(25 * MIN);
+    244|     A.timer.getState().tick();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 14 passed (15)
+   Start at  16:28:26
+   Duration  1.71s (tests 72%, transform 25%, import 2%, worker 1%)
+

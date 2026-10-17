@@ -1,0 +1,31 @@
+### scratch copy of multitab.test.ts with proposal (b) (diff above), on the fix e18b621
+108a109
+>   sync.installActionCatchUp();
+241c242
+<     expect(A.timer.getState().intention).toBe('from B');
+---
+>     expect(A.timer.getState().intention).toBe('from A');
+
+ RUN  v5.0.2 /home/user/wt/w8g/kettle
+
+ ✓ src/timer/zz-multitab-proposal-b.scratch.test.ts > two tabs, one session > only the leader completes; the follower mirrors; progress holds exactly one session 671ms
+ ✓ src/timer/zz-multitab-proposal-b.scratch.test.ts > two tabs, one session > leader closes mid-session → the other tab takes over and completes once 76ms
+ ✓ src/timer/zz-multitab-proposal-b.scratch.test.ts > two tabs, one session > leadership stolen at the instant of completion never double-records 113ms
+ ✓ src/timer/zz-multitab-proposal-b.scratch.test.ts > two tabs, one session > two tabs pressing start at the same time converge on one session 57ms
+ ✓ src/timer/zz-multitab-proposal-b.scratch.test.ts > two tabs, one session > a follower pressing End at 0:00 does not record a second (partial) session 134ms
+ ✓ src/timer/zz-multitab-proposal-b.scratch.test.ts > two tabs, one session > a stale tab that ends early after the leader completed cannot resurrect the session 51ms
+ ✓ src/timer/zz-multitab-proposal-b.scratch.test.ts > two tabs, one session > pause in one tab shows as paused in the other (and emits timer:sync pause/resume/addTime) 35ms
+ ✓ src/timer/zz-multitab-proposal-b.scratch.test.ts > atomic completion claims > two tabs that BOTH think they lead still complete once (split-brain) 18ms
+ ✓ src/timer/zz-multitab-proposal-b.scratch.test.ts > atomic completion claims > claim rule: pending blocks, won allows, lost waits out the grace period, no IndexedDB → leader rule only 51ms
+ ✓ src/timer/zz-multitab-proposal-b.scratch.test.ts > Web Locks election > exactly one leader at every step; claim steals; handover on stop 30ms
+ ✓ src/timer/zz-multitab-proposal-b.scratch.test.ts > localStorage lease fallback > lease rules 1ms
+ ✓ src/timer/zz-multitab-proposal-b.scratch.test.ts > localStorage lease fallback > one leader after two confirmations; takeover after the lease expires 1ms
+ ✓ src/timer/zz-multitab-proposal-b.scratch.test.ts > localStorage lease fallback > two tabs racing for an expired lease never both lead 1ms
+ ✓ src/timer/zz-multitab-proposal-b.scratch.test.ts > localStorage lease fallback > stop() frees the lease so the next tab leads within two heartbeats 0ms
+ ✓ src/timer/zz-multitab-proposal-b.scratch.test.ts > localStorage lease fallback > solo mode (no locks, no storage) is always leader 0ms
+
+ Test Files  1 passed (1)
+      Tests  15 passed (15)
+   Start at  16:28:15
+   Duration  1.67s (tests 87%, transform 11%, import 2%)
+
