@@ -15,9 +15,15 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 **Binding:** `contracts/W3R2/VB-DECISIONS-W3R2.md`. The Final Product Boss stays on hold. Plan: `contracts/W3R2/PLAN.md`; gate record: `contracts/W3R2/review/GATE.md`.
 
 - **Start:** integration HEAD `494748b`, clean and equal to origin. Servers, slot gate (MAX 3) and autocommit were restarted after the container restart. Old worktrees were pruned; their branches and bundles remain.
-- **Item 1, stale-tab guard (SG):** gate passed (`54a9721`, trial **`88d6b64`** on :5591/:5593). Vitest 338/338; 17 of 24 race cases fail on HEAD; `integrity:309` 20/20 ×2 under load. **Lane R2** (Sonnet) regression on :5591 (stop 19:45). **LEAD-5** verdict after TH; it needs to rule on `multitab.test.ts:229` (last writer wins vs join).
-- **Item 2, `Toast.tsx:482` hook (TH):** gate passed (`203b057`, trial **`0ad85b9`** on :5592/:5594). Hook-order errors 73 → 0; notice suite 74/74; 192 capture pairs. **LEAD-5 is reviewing.**
-- **Item 3, test stability (TS):** gate passed on scope (`21e5644`, trial `6babf87`, specs against :5560). Timer pair 10/10 under load; **`press()` 9/10, short of 10/10**; whole `notice-strip` not run. **LEAD-6** (Opus, a second lead for parallelism) is giving the verdict (stop 20:15).
+- **Item 1, stale-tab guard (SG): REJECT** (LEAD-5 `2a33de1`). The design holds; three defects:
+  - **SG-D1:** a missed-events tab puts back and completes a brew ended elsewhere, writing a false record;
+  - **SG-D2:** `flow.ts` `suppressNextStop` is left set;
+  - **SG-D3:** Focus shows "+5 min" and plays the sound when the action was dropped.
+  - **Fix round** 19:10–20:40 UTC (maker SG, Opus). The scope is widened to `flow.ts` (the flag) and `FocusScreen.tsx` (`addFive`, `toggle`). `multitab.test.ts:229` edit ruled not a weakening; `reset()` change ACCEPTED.
+  - Lane R2's 2-tab check: 25/25 on the fix vs 5/25 on :5560.
+- **Item 2, `Toast.tsx:482` hook (TH): APPROVE** (LEAD-5 `f4fb5b3`) → **merged `7cb3242`**. Hook-order errors 73 → 0; captures within the base's own noise.
+- **Item 3, test stability (TS):** gate passed on scope (`21e5644`, trial `6babf87`). Timer pair 10/10 under load; `press()` 9/10, short of 10/10. **LEAD-6** (Opus) is giving the verdict (stop 20:15).
+- **Integration HEAD app is now `7cb3242`** (src `07df367`); :5560/:5570 serve it.
 - **Then:** merges on APPROVE only, a full regression on the merged tree (Lane RF, Sonnet), and the report to Vibei.
 - **Not this round:** the composer label quirk (for the Final Boss), the low-tier backdrop still vs live (Vibei's phone check), band collapse only off-screen (post-Boss polish).
 - **Servers:** integration :5560/:5570; old base :5478/:5488; makers :5581, :5582, :5583.
