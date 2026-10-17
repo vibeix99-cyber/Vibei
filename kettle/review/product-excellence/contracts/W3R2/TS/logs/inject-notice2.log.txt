@@ -13,3 +13,81 @@ Running 1 test using 1 worker
 
 [inject] shift: the page scrolled 180 -> 580; the field is now at top -284 bottom -232 of 390
 [inject] re-check: covered at 17:17:11.473
+  ✘  1 [chromium] › .tmp/ts/old/notice-strip.spec.ts:363:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (3.1s)
+
+
+  1) [chromium] › .tmp/ts/old/notice-strip.spec.ts:363:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+
+    Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+      323 |     if (!at || (same && Date.now() - t < 800) || k >= 4) break;
+      324 |   }
+    > 325 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();
+          |                                                            ^
+      326 |   if (touch) {
+      327 |     await page.touchscreen.tap(at!.x, at!.y);
+      328 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)
+        at press (/home/user/wt/w8q/kettle/.tmp/ts/old/notice-strip.spec.ts:325:60)
+        at /home/user/wt/w8q/kettle/.tmp/ts/old/notice-strip.spec.ts:375:5
+
+    Error Context: .tmp/ts-out/n2-old-shift/old-notice-strip-no-notice-ed785-eal-input-844×390-dark-200--chromium/error-context.md
+
+  1 failed
+    [chromium] › .tmp/ts/old/notice-strip.spec.ts:363:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+### end 17:17:12 exit=1 load 19.30 17.60 14.97
+
+######## v1 COVER=shift COVER_MS=300: KETTLE_PORT=5583 npx playwright test -c .tmp/ts-pw.config.ts ts/v1/notice-strip.spec.ts --project=chromium --workers=1 -g 'real input \(844×390 dark 200 %\)'
+### start 17:17:12 load 19.30 17.60 14.97
+
+Running 1 test using 1 worker
+
+[inject] shift: the page scrolled 180 -> 580; the field is now at top -284 bottom -232 of 390
+[inject] re-check: covered at 17:17:17.661
+[inject] aim again 1 at 17:17:17.913
+[inject] aim again 2 at 17:17:18.201
+[inject] aim again 3 at 17:17:18.469
+[inject] aim again 4 at 17:17:18.730
+[inject] aim again 5 at 17:17:18.992
+[inject] aim again 6 at 17:17:19.257
+[inject] aim again 7 at 17:17:19.528
+[inject] aim again 8 at 17:17:19.803
+  ✘  1 [chromium] › .tmp/ts/v1/notice-strip.spec.ts:380:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (4.5s)
+
+
+  1) [chromium] › .tmp/ts/v1/notice-strip.spec.ts:380:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+
+    Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+      340 |     if (at && ((same && Date.now() - t < 800) || round >= 4)) break;
+      341 |   }
+    > 342 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();
+          |                                                            ^
+      343 |   if (touch) {
+      344 |     await page.touchscreen.tap(at!.x, at!.y);
+      345 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)
+        at press (/home/user/wt/w8q/kettle/.tmp/ts/v1/notice-strip.spec.ts:342:60)
+        at /home/user/wt/w8q/kettle/.tmp/ts/v1/notice-strip.spec.ts:392:5
+
+    Error Context: .tmp/ts-out/n2-v1-shift/v1-notice-strip-no-notice--d64d3-eal-input-844×390-dark-200--chromium/error-context.md
+
+  1 failed
+    [chromium] › .tmp/ts/v1/notice-strip.spec.ts:380:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+### end 17:17:20 exit=1 load 18.63 17.49 14.95
+
+######## new COVER=shift COVER_MS=300: KETTLE_PORT=5583 npx playwright test -c .tmp/ts-pw.config.ts ts/new/notice-strip.spec.ts --project=chromium --workers=1 -g 'real input \(844×390 dark 200 %\)'
+### start 17:17:20 load 18.63 17.49 14.95
+
+Running 1 test using 1 worker
+
+[inject] shift: the page scrolled 180 -> 580; the field is now at top -284 bottom -232 of 390
+[inject] re-check: covered at 17:17:26.663
+[inject] aim again 1 at 17:17:26.916
+[inject] out of view: bring it back by the wheel
