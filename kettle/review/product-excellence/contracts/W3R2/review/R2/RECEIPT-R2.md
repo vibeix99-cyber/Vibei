@@ -405,3 +405,33 @@ Both tabs on a running break (started with the debug API: set-up). B held. **A c
 | 4 | FAIL | running b068 [brew 1] 30m 1792271326269 | running b068 [brew 1] 30m 1792271326269 | running b068 [brew 1] 30m 1792271326269 | running b068 [brew 1] 30m 1792271326269 | 1/0; 1/0; 1/0 | brew2_running_A_B_storage, brew2_not_extended_or_ended, storage_byte_identical_after_B_click, no_plus5_note_ever_in_B |
 | 5 | FAIL | running d80b [brew 1] 30m 1792271356676 | running d80b [brew 1] 30m 1792271356676 | running d80b [brew 1] 30m 1792271356676 | running d80b [brew 1] 30m 1792271356676 | 1/0; 1/0; 1/0 | brew2_running_A_B_storage, brew2_not_extended_or_ended, storage_byte_identical_after_B_click, no_plus5_note_ever_in_B |
 
+
+## R2. Timer-harness, timer-app and pwa on :5601, and the classified pwa failure
+
+`rerun/runs/timer-pwa-5601.log.txt`, `json/timer-pwa-5601.json`; `KETTLE_PORT=5601 KETTLE_PWA_PORT=5498 npx playwright test --project=timer-harness --project=timer-app --project=pwa --workers=1`; 20:50:27 to 20:54:12 (3.7 min); load average 8.4 at the start, 14.0 at the end.
+
+**First run: 28 passed, 1 failed, 2 skipped** (31 tests): `timer-harness` 14 passed; `timer-app` 12 passed, 2 skipped (`timer.spec.ts:294` and `:438`, by design, as in the first pass); `pwa` 2 passed, **1 failed**.
+
+| Failed | First error lines |
+|---|---|
+| `pwa.spec.ts:85` "update: new version waits for the user (no reload mid-brew), then applies and the brew carries on" (26.1 s) | `TimeoutError: page.waitForFunction: Timeout 20000ms exceeded.` at `tests/pwa.spec.ts:91`, `await page.waitForFunction(() => (window as any).__kettle.pwa.state().needRefresh, null, { timeout: 20_000 })`, after the test appended a line to the built `sw.js` and called `registration.update()` |
+
+**Reruns (once each, by title, inside the same gate slot, `scripts/RR-bundle.sh`):**
+- on :5601: `runs/timer-pwa-5601-rerun-5601.log.txt`, 20:54:12: **failed again**, same error at line 91.
+- "control" `KETTLE_PORT=5560`: `runs/timer-pwa-5601-control-5560.log.txt`, 20:54:51: **failed**, same error. This is not a real control: the `pwa` project builds the worktree it runs in and previews it on `KETTLE_PWA_PORT`; `KETTLE_PORT` does not change what it tests.
+
+**Cause found, in my own set-up.** The preview server `vite preview ... --port 5498 --strictPort` of my **first pass** (PID 409, worktree `w8tr-g`, started 19:03:37 by that pass's pwa test) was **still running**: the spec's `afterAll` kills the `npx` wrapper, not the node child. My first-pass note "nothing left running" was wrong on this point. With `--strictPort` the new preview of `w8tr-g2` could not start on :5498; the spec's wait for `http://127.0.0.1:5498/` was answered by the old server, so tests 1 and 2 ran against the old server's build; test 3 edits `w8tr-g2`'s `test-results/pwa-dist/sw.js`, which that server does not serve, so `needRefresh` never came. I killed PID 409 by its explicit PID (checked its command line and `cwd` first) at 20:59.
+
+**Rerun on a clean port**: `runs/pwa-5601-clean-port.log.txt`, `json/pwa-5601-clean-port.json`; `KETTLE_PORT=5601 KETTLE_PWA_PORT=5496 npx playwright test --project=pwa --workers=1`; 21:00:20 to 21:00:42; load average 14.3 at the start, 12.8 at the end: **3 of 3 passed** (the update test 6.0 s). That run left its own preview (PID 16928, `w8tr-g2`, :5496), which I killed by PID after reading its command line.
+
+Classification: the failure **reproduces** while a stale server holds the PWA port (three times), **does not reproduce** on a clean port (passes), and has nothing to do with :5601 vs :5560. With the clean-port run counted in place of the failed test: timer-harness 14, timer-app 12 (+2 skipped), pwa 3, i.e. **29 passed, 2 skipped**.
+
+## R3. Integrity on :5601
+- **Whole file**: `runs/integrity-5601.log.txt`, `json/integrity-5601.json`; 20:41:08 to 20:47:07 (6.0 min); load average 17.1 at the start, 10.3 at the end. **25 of 25 passed**, 0 failed, 0 flaky, 0 skipped (`integrity:309` among them).
+- **`integrity:309` x10**: `runs/integrity309-x10-5601.log.txt`, `json/integrity309-x10-5601.json`; `-g 'two tabs, the leading one frozen across the end' --repeat-each=10 --workers=1`; 20:47:07 to 20:50:27 (3.3 min); load average 10.3 at the start, 8.4 at the end. **10 of 10 passed.**
+
+## R4. `w3-intention-race`, `w3r2-stale-tab` and `w2-home` on :5601
+- **Race and stale-tab**: `runs/race-staletab-5601.log.txt`, `json/race-staletab-5601.json`; `tests/w3r2-stale-tab.spec.ts tests/w3-intention-race.spec.ts --project=chromium --workers=1`; 20:39:41 to 20:41:08 (1.4 min); load average 17.7 at the start, 17.1 at the end. **7 of 7 passed**: `w3-intention-race` 2, `w3r2-stale-tab` 5 (the first pass's 4 plus the new Next brew case).
+- **`w2-home`**: `runs/w2-home-5601.log.txt`, `json/w2-home-5601.json`; 20:55:25 to 21:00:04 (4.6 min); load average 12.7 at the start, 16.9 at the end. **18 of 18 passed.**
+- Check 4 together: **25 of 25**.
+
