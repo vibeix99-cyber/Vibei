@@ -219,3 +219,55 @@ Tests from the trial tree. Logs in `LEAD/SG/`.
 | `multitab`, `intentionRace`, `store`, `storageFull` on trial 2 | **71/71** | `r2/vitest-existing-race-trial2.log.txt` |
 | Vitest, all, on trial 2 | **34 files, 342/342** | `r2/vitest-all-trial2.log.txt` |
 | tsc on trial 2 | exit 0 | `r2/tsc-trial2.log.txt` |
+
+### ◆ Browser reruns (my runs, through the gate, `--lane LEAD --n 2`; tests from trial 2)
+| Run | Result | Log |
+|---|---|---|
+| `w3r2-stale-tab.spec.ts` (5 cases) on HEAD :5560 ×1 | **5/5 FAIL**, each at Z's action: pause "with A's +5"; add 5 and end "Z now shows the current brew"; Next brew "Z joined A's brew"; start | `r2/stale-tab-HEAD-5560-x1.log.txt` |
+| the same on the first fix :5591 (`54a9721`) ×1 | **2 FAIL**, exactly SG-D3 ("no “+5 min · whistles at …” note in Z") and SG-D2 ("the stop's toast in Z", not found). The other 3 pass | `r2/stale-tab-firstfix-5591-x1.log.txt` |
+| the same on trial 2 :5601 ×2 | **10/10** | `r2/stale-tab-trial2-5601-x2.log.txt` |
+| compatibility HEAD :5560 → :5601, and :5601 → :5560 (the same script as §5) | **3/3 + 3/3**; in-memory state equals storage, bytes identical after boot | `r2/compat-*.log.txt` |
+| `integrity:309` ×20, `--workers=2`, plus 6 CPU burners (PIDs 17247–17252, killed by PID), load 4.8 → 9.5 | **20/20** (3.8 min) | `r2/stress-309-x20-trial2-5601.log.txt` |
+
+**Lane R2's receipt for the first trial :5591** (`review/R2/RECEIPT-R2.md`, read in full):
+- tsc 0; Vitest 338/338;
+- timer-harness, timer-app and `pwa`: 29 passed + 2 skipped by design;
+- integrity 25/25, and `:309` ×10 10/10;
+- race and stale-tab specs 6/6; `w2-home` 18/18;
+- notice suite 74/74;
+- 2-tab real clicks: 25/25 on the fix vs 5/25 on :5560.
+
+Its §6b recorded SG-D3 on :5591 (the note shown, 5/5), which the fix round removes. Nothing else in it needs a rerun to be classified.
+
+### Residuals after the fix round
+| Item | Class |
+|---|---|
+| §7.2.1 the same brew with older fields while doubly stale (a +5 lost) | **FOLLOW-UP** (pre-existing, not worse; closing it needs a stored version field: Vibei's call) |
+| §7.2.2 the bfcache **paused** variant | **closed** by SG-D1's rule (probe (2) passes on trial 2) |
+| a brew this tab never knew, ended in the other tab later (two Starts within the lag): this tab adopts that end | **ACCEPTED** (the same class as the accepted doubly stale start, #20) |
+| §7.4 the composer label | **FOLLOW-UP** (logged only, per Vibei) |
+
+## Final verdict: **APPROVE** `pe/w3r2-sync-guard@4b2690f` (src `8a67658`), as gated in trial 2 `2c9ec66`
+**Defects closed:**
+- **SG-D1 (an ended brew coming back and completing):** closed. My unchanged probe passes 3/3. The new file fails 3 cases on `54a9721` and 19 on HEAD, and passes 28/28 on the fix. Every doubly stale restore holds.
+- **SG-D2 (the Next brew flag):** closed. The browser case fails on `54a9721` and passes 2/2 on the fix.
+- **SG-D3 (the "+5 min" note and pause sound on a dropped action):** closed. The browser case fails on `54a9721` and passes 2/2 on the fix.
+- **`multitab.test.ts`:** exactly the ruled edit.
+
+**Holding on the final code:**
+- every trigger fails on HEAD and passes on the fix;
+- storage compatible both ways, byte-identical;
+- `integrity:309` 20/20 under load;
+- Vitest 342/342, tsc 0.
+
+**Before merge, a Lane R2 rerun on :5601 is required, and any failure there comes back to me.** The fix round changed single-tab code (`app/flow.ts` "Next brew", and `FocusScreen.tsx` pause / +5). Also, :5601 is the first build with TH and SG together, and R2's regression ran on the first trial, without either. The rerun:
+- timer-harness, timer-app and `pwa`;
+- `integrity` whole, plus `:309` ×10;
+- `w2-home`;
+- the race and stale-tab specs;
+- the notice suite;
+- the 2-tab real-click check (a)–(e), where (e) must now show no "+5 min" note.
+
+The one fix round is spent. Any change to the branch after this invalidates the approval.
+
+*Run logs:* mine are in `review/LEAD/SG/r2/` as `.log.txt`. Scratch trees (`git archive` of `7cb3242`, `88d6b64` and `2c9ec66`) are in my scratchpad; my compat copy is in the git-ignored `/home/user/wt/w8tr-g2/kettle/.tmp/lead5-sg/`.
