@@ -27,9 +27,25 @@ Raw evidence only. No verdict. Times are UTC, 2026-10-17. Task received 17:58, b
 | tsc | `npx tsc --noEmit -p .` in `/home/user/wt/w8tr-g/kettle` (`runs/tsc.log.txt`; the log opens with HEAD `88d6b64`, src `dd6944e`, 0 dirty files) | exit 0, no output (6 s) |
 | vitest | `npx vitest run` (`runs/vitest.log.txt`) | **34 test files passed (34), 338 tests passed (338)**, 0 failed, exit 0, 25 s (18:00:18) |
 
+## 2. Timer-harness, timer-app and pwa projects on :5591
+
+`runs/timer-pwa-5591.log.txt`, `json/timer-pwa-5591.json`; `KETTLE_PORT=5591 KETTLE_PWA_PORT=5498 npx playwright test --project=timer-harness --project=timer-app --project=pwa --workers=1`; 19:00:03 to 19:03:57 (3.9 min); load average 14.0 at the start, 18.6 at the end.
+
+**29 passed, 2 skipped, 0 failed, 0 flaky** (31 tests): `timer-harness` 14 passed; `timer-app` 12 passed, 2 skipped; `pwa` 3 passed. The 2 skips are the by-design ones in `tests/timer.spec.ts` (`:294` "Space toggles ..." and `:438` "useRemaining re-renders about once per displayed second"). Nothing to rerun or classify.
+
+## 3. Integrity on :5591
+
+**3a. The whole file once:** `runs/integrity-5591.log.txt`, `json/integrity-5591.json`; `npx playwright test tests/integrity.spec.ts --project=chromium --workers=1`; 18:51:39 to 18:56:46 (5.1 min); load average 10.4 at the start, 12.4 at the end. **25 of 25 passed**, 0 failed, 0 flaky, 0 skipped. `integrity.spec.ts:309` is among them.
+
+**3b. `integrity:309` x10:** `runs/integrity309-x10-5591.log.txt`, `json/integrity309-x10-5591.json`; `-g 'two tabs, the leading one frozen across the end' --repeat-each=10 --workers=1`; 18:56:46 to 19:00:03 (3.3 min); load average 12.4 at the start, 14.0 at the end (no extra CPU burners: the brief asked for the plain x10). **10 of 10 passed.**
+
 ## 4a. Race specs on :5591 (first part of check 4)
 
 `runs/race-staletab-5591.log.txt`, `json/race-staletab-5591.json`; `KETTLE_PORT=5591 npx playwright test tests/w3r2-stale-tab.spec.ts tests/w3-intention-race.spec.ts --project=chromium --workers=1`; 18:00:09 to 18:01:35 (1.3 min); load average 9.4 at the start, 14.2 at the end. **6 of 6 passed**: `w3-intention-race` 2 (the intention race 21.0 s, F1X-D1 16.6 s) and `w3r2-stale-tab` 4 (pause 9.7 s, add 5 8.8 s, end 11.1 s, start 7.1 s). 0 failed, 0 flaky, 0 skipped.
+
+## 4b. `w2-home` on :5591 (second part of check 4)
+
+`runs/w2-home-5591.log.txt`, `json/w2-home-5591.json`; `npx playwright test tests/w2-home.spec.ts --project=chromium --workers=1`; 19:03:57 to 19:09:11 (5.2 min); load average 18.6 at the start, 17.5 at the end. **18 of 18 passed** (0 failed, 0 flaky). With 4a (race and stale-tab specs, 6 of 6) the whole of check 4 is 24 of 24.
 
 ## 6. The 2-tab manual check with real clicks (:5591 fix, :5560 control)
 
