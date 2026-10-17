@@ -74,3 +74,32 @@ The pre-completion refresh (`guard.refresh` → `mirrorTimerFromStorage`) now ru
 - rule 4: an idle incoming state is "older". So Z saves X back.
 
 On HEAD, Z simply adopts the idle kettle on a tick or a received event.
+
+## 4. Rulings asked for
+**1 · `multitab.test.ts:229` ("two tabs pressing start at the same time converge on one session"): adopt the maker's proposal (b), in the fix round.**
+- **The edit (LEAD-ruled; this is the only change allowed in that file):**
+  - its `openTab` installs the catch-up as `initTabSync` does: `sync.installActionCatchUp()`;
+  - `expect(A.timer.getState().intention).toBe('from B')` becomes `.toBe('from A')`;
+  - the comment `// B's write lands last` says instead that B can read A's brew, so its Start joins it.
+- **This is not a weakening.**
+  - The test as it is passes only because its harness lacks what the app always installs, so it pins a path the app no longer has.
+  - Under Vibei's rule, a Start in a tab that can see a running brew joins it.
+  - The changed assertion is exactly as strict as before.
+  - Every other assertion in the file still holds: one session id, one completion, one record (the maker's scratch run: 15/15).
+  - The doubly stale start, where neither tab can see the other, stays pinned by `staleTab` #20.
+
+**2 · `reset()` removes the key before saving the idle kettle: ACCEPTED.**
+- It keeps the receive guard from taking a wipe for a stale tab's idle write.
+- Other tabs follow the wipe through `followWipe()`, which writes the same idle state their `reset()` wrote before.
+- The stored bytes after a reset are identical on all three builds (maker §4; my compat run below).
+- `resetAllData` is its only app caller.
+
+**3 · The open items (packet §7):**
+
+| Item | Class | Why |
+|---|---|---|
+| §7.2.1 same brew, older fields, doubly stale (A's +5 lost when Z pauses from an old read) | **FOLLOW-UP** | Present on HEAD, where the doubly stale save loses it the same way; not worse. With a current read, the write side now keeps the +5 (#2). Closing it needs a stored version field, which the brief rules out: that is Vibei's call |
+| §7.2.2 a tab that missed every event (bfcache), **paused** brew, the person acts there | **FOLLOW-UP** (pre-existing: my probe (2) fails on HEAD too) | The **running** variant is introduced: **SG-D1** below. The fix for SG-D1 should cover this one too |
+| §7.3 `flow.ts` `startNextBrew` leaves `suppressNextStop` set when the lagging tab's `end` is dropped | **BLOCKS: SG-D2** | Worsened. A new, user-reachable trigger (both tabs press "Next brew" within the lag) for a flag leak that HEAD had only at 0:00. The next local stop in that tab then loses its "Saved … of focus" toast and the way home |
+| §7.3 Focus "+5 min · whistles at …" shown, and the pause / resume sound played, when the store dropped the action | **BLOCKS: SG-D3** | Introduced. The note tells the person a +5 was added when it was not. The pause/resume sound is chosen by the outcome. (The button's generic press sound is press feedback: ACCEPTED) |
+| §7.4 the composer label | **FOLLOW-UP** (logged only, per Vibei; for the Final Boss) | Unchanged and pinned by #22 |
