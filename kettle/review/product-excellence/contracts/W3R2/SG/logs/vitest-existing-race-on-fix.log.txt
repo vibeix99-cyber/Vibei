@@ -1,0 +1,85 @@
+### fix c917293 (src f88ab8a); 2026-10-17T16:23:08Z
+
+ RUN  v5.0.2 /home/user/wt/w8g/kettle
+
+ ✓ src/timer/storageFull.test.ts > storage full while brewing > a brew started after storage filled up still completes once and is recorded (not rolled back to the saved idle kettle) 195ms
+ ✓ src/timer/storageFull.test.ts > storage full while brewing > +5 added after storage filled up: the brew completes at its extended end with all 30 minutes 5ms
+ ✓ src/timer/storageFull.test.ts > storage full while brewing > another tab’s successful write still wins: a storage event mirrors it even after this tab failed to save 4ms
+ ✓ src/timer/storageFull.test.ts > safeStorage write failures > never throws, reports each failure with whether storage is full, and clears the flag after a good write 2ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs and is recorded once 1281ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a tab that has not yet seen the other tab end the brew does not bring it back by saving its intention 20ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > same brew, other tab paused it: the intention is saved and the pause is kept 34ms
+ ✓ src/timer/multitab.test.ts > two tabs, one session > only the leader completes; the follower mirrors; progress holds exactly one session 1144ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > keeps the stored format: same key, the { state, version: 1 } envelope, the same fields in the same order 51ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a save that changes nothing writes nothing (Today’s composer syncing on mount), even in a tab that is behind 7ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a fresh profile (nothing saved yet) saves as before 5ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > storage full: once this tab’s own save failed, the intention save writes the whole (newer) timer, as before, and repairs storage 9ms
+ ✓ src/timer/intentionRace.test.ts > the idle brew length sync writes only the length (F1X-D1) > B picks another length and starts; A (idle, not yet seen the start) takes in the length change first: the brew survives in both tabs and is recorded once 11ms
+ ✓ src/timer/intentionRace.test.ts > the idle brew length sync writes only the length (F1X-D1) > a real length change still persists: one tab 19ms
+ ✓ src/timer/intentionRace.test.ts > the idle brew length sync writes only the length (F1X-D1) > a real length change still persists: two tabs in step, and the other tab’s newer words in storage are kept 80ms
+ ✓ src/timer/intentionRace.test.ts > the idle brew length sync writes only the length (F1X-D1) > a sync that changes nothing writes nothing 13ms
+ ✓ src/timer/intentionRace.test.ts > the idle brew length sync writes only the length (F1X-D1) > storage full: once this tab’s own save failed, the length sync writes the whole (newer) timer, as before, and repairs storage 9ms
+ ✓ src/timer/multitab.test.ts > two tabs, one session > leader closes mid-session → the other tab takes over and completes once 114ms
+ ✓ src/timer/multitab.test.ts > two tabs, one session > leadership stolen at the instant of completion never double-records 190ms
+ ✓ src/timer/multitab.test.ts > two tabs, one session > two tabs pressing start at the same time converge on one session 90ms
+ ✓ src/timer/multitab.test.ts > two tabs, one session > a follower pressing End at 0:00 does not record a second (partial) session 22ms
+ ✓ src/timer/multitab.test.ts > two tabs, one session > a stale tab that ends early after the leader completed cannot resurrect the session 27ms
+ ✓ src/timer/multitab.test.ts > two tabs, one session > pause in one tab shows as paused in the other (and emits timer:sync pause/resume/addTime) 117ms
+ ✓ src/timer/multitab.test.ts > atomic completion claims > two tabs that BOTH think they lead still complete once (split-brain) 39ms
+ ✓ src/timer/multitab.test.ts > atomic completion claims > claim rule: pending blocks, won allows, lost waits out the grace period, no IndexedDB → leader rule only 252ms
+ ✓ src/timer/multitab.test.ts > Web Locks election > exactly one leader at every step; claim steals; handover on stop 33ms
+ ✓ src/timer/multitab.test.ts > localStorage lease fallback > lease rules 1ms
+ ✓ src/timer/multitab.test.ts > localStorage lease fallback > one leader after two confirmations; takeover after the lease expires 1ms
+ ✓ src/timer/multitab.test.ts > localStorage lease fallback > two tabs racing for an expired lease never both lead 2ms
+ ✓ src/timer/multitab.test.ts > localStorage lease fallback > stop() frees the lease so the next tab leads within two heartbeats 1ms
+ ✓ src/timer/multitab.test.ts > localStorage lease fallback > solo mode (no locks, no storage) is always leader 0ms
+ ✓ src/timer/store.test.ts > start / pause / resume math > counts down from the configured focus length, anchored to the wall clock 8ms
+ ✓ src/timer/store.test.ts > start / pause / resume math > freezes remaining time while paused and resumes exactly 2ms
+ ✓ src/timer/store.test.ts > start / pause / resume math > toggle flips running ↔ paused and does nothing when idle 1ms
+ ✓ src/timer/store.test.ts > start / pause / resume math > honours a custom length and caps runaway lengths 1ms
+ ✓ src/timer/store.test.ts > addTime > extends a running phase (end and plan move together) 2ms
+ ✓ src/timer/store.test.ts > addTime > extends a paused phase without starting it 1ms
+ ✓ src/timer/store.test.ts > addTime > tracks how much was added (for the kettle gauge), and a new phase starts at zero 1ms
+ ✓ src/timer/store.test.ts > addTime > never goes below zero or beyond the max, and is ignored when idle or already due 9ms
+ ✓ src/timer/store.test.ts > end early > records focus of at least a minute as not completed 2ms
+ ✓ src/timer/store.test.ts > end early > does not record less than a minute 1ms
+ ✓ src/timer/store.test.ts > end early > excludes paused time from what counts 0ms
+ ✓ src/timer/store.test.ts > end early > ending a phase that already ran out completes it instead 1ms
+ ✓ src/timer/store.test.ts > end early > never records breaks that are skipped 0ms
+ ✓ src/timer/store.test.ts > end early > starting over an active focus saves the minutes already brewed 0ms
+ ✓ src/timer/store.test.ts > completion > completes exactly at the end with the real end time 1ms
+ ✓ src/timer/store.test.ts > completion > completion while away: 3 hours closed → completes at its real end, whileAway 1ms
+ ✓ src/timer/store.test.ts > completion > is idempotent: repeated ticks never double-complete 1ms
+ ✓ src/timer/store.test.ts > completion > a session whose id already ended is mirrored to idle, not completed again 1ms
+ ✓ src/timer/store.test.ts > completion > respects the completion guard (follower tab) 1ms
+ ✓ src/timer/store.test.ts > completion > skips a session another tab announced as completed 1ms
+ ✓ src/timer/store.test.ts > completion > pausing at 0:00 completes instead 1ms
+ ✓ src/timer/store.test.ts > long-break cycle > short, short, short, long — then the cycle restarts 1ms
+ ✓ src/timer/store.test.ts > long-break cycle > a skipped long break stays owed 0ms
+ ✓ src/timer/store.test.ts > long-break cycle > follows longBreakEvery from settings 0ms
+ ✓ src/timer/store.test.ts > record.day > uses the local day the session ended — across midnight 0ms
+ ✓ src/timer/store.test.ts > record.day > pause across midnight: day of the real end, paused time excluded 0ms
+ ✓ src/timer/store.test.ts > record.day > completion found the next morning is still filed under the day it really ended 0ms
+ ✓ src/timer/store.test.ts > restore after reload (persist + rehydrate) > restores a running session exactly 1ms
+ ✓ src/timer/store.test.ts > restore after reload (persist + rehydrate) > restores added time with the session (the gauge keeps its +5 segment) 1ms
+ ✓ src/timer/store.test.ts > restore after reload (persist + rehydrate) > restores a paused session exactly, hours later 0ms
+ ✓ src/timer/store.test.ts > restore after reload (persist + rehydrate) > a phase that ended while closed completes once on the next tick — even across repeated reloads 1ms
+ ✓ src/timer/store.test.ts > restore after reload (persist + rehydrate) > reload exactly at 0:00 completes once 0ms
+ ✓ src/timer/store.test.ts > restore after reload (persist + rehydrate) > survives corrupt or hand-edited storage 2ms
+ ✓ src/timer/store.test.ts > sanitizeTimer > turns an unanchored running state into paused (keeps the time) 0ms
+ ✓ src/timer/store.test.ts > sanitizeTimer > caps remaining at the plan when the clock went backwards while closed 0ms
+ ✓ src/timer/store.test.ts > sanitizeTimer > clamps paused remaining into [0, plan] and unknown phases to focus 0ms
+ ✓ src/timer/store.test.ts > sanitizeTimer > repairs addedMs from older or hand-edited saves 0ms
+ ✓ src/timer/store.test.ts > sanitizeTimer > idle state follows the current focus-length setting 0ms
+ ✓ src/timer/store.test.ts > settings while idle vs running > idle length follows focusMin; a running phase is unaffected 1ms
+ ✓ src/timer/store.test.ts > rebase (system clock jumped) > keeps the countdown continuous when the clock is set back 1ms
+
+ Test Files  4 passed (4)
+      Tests  71 passed (71)
+   Start at  16:23:10
+   Duration  3.72s (tests 55%, transform 35%, import 10%)
+
+  Transform  transforming modules took 2.42s · 35% of tracked time, re-done on every run
+             persist transforms across runs with fsModuleCache: true
+             learn more: https://vitest.dev/guide/improving-performance#caching-between-reruns
+
