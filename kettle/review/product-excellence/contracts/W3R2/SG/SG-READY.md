@@ -279,3 +279,41 @@ expect(A.timer.getState().intention).toBe('from B');
 - **Where it meets the new start join.** A person in a lagging Today types and presses Enter within 150 ms of the last keystroke. Z then joins A's brew (A's words). If Today is still mounted when the composer's pending 150 ms sync fires, that sync is exactly the quirk above: Z's typed words become the brew's words.
   - Normally Today unmounts first: the join navigates to Focus, and the unmount clears the timer.
   - The browser start case waits 400 ms before Enter, so it tests the join, not the quirk.
+
+## 8. Fix round (LEAD-5 `CHECKER-W3R2-SG.md`: SG-D1, SG-D2, SG-D3; ruling 4.1)
+
+| | |
+|---|---|
+| From | `54a9721` (REJECT: three defects) |
+| **Head** | **`4b2690f` (src `8a67658`)**, one commit on `54a9721` |
+| Files | `git diff --stat 54a9721 4b2690f`: `src/timer/sync.ts` +8/−1 (SG-D1); `src/timer/store.ts` +17/−12 (SG-D3: returns, types, comment); `src/app/flow.ts` +4 (SG-D2, the flag only); `src/screens/focus/FocusScreen.tsx` +6/−3 (SG-D3, `toggle` and `addFive` only); `src/timer/multitab.test.ts` +4/−2 (ruling 4.1 only); `src/timer/staleTab.test.ts` +72; `tests/w3r2-stale-tab.spec.ts` +41 |
+| Dev | :5581 serves `4b2690f`: blob hashes of `store.ts`, `sync.ts`, `ticker.ts`, `flow.ts` and `FocusScreen.tsx` equal the branch head (`logs/r2/served-blobs.log.txt`) |
+| Controls | :5591 (LEAD-5's trial of `54a9721`, used read-only; the same five blobs equal `54a9721`'s); :5560 (the five blobs equal `494748b`'s; integration has since merged `7cb3242`, `Toast.tsx` only) |
+| Evidence | `SG/logs/r2/` |
+
+### 8.1 The change, per defect
+**SG-D1 (`sync.ts`, `olderThanMine`, a new rule 4 between "accounts for this brew" and "anything else").**
+- **The rule.** `incoming` comes from a later timeline when its `lastEnded`:
+  - names an end this tab did **not** know when its brew began, i.e. it is not this tab's own `lastEnded` (which is what `lastEnded` was when this brew started);
+  - and that end was made **after** this brew began (`lastEnded.at > mine.startedAt`).
+- **Why that is enough.** The writer lived through time after this brew started, and ended a brew of its own then. So it is this tab that missed events, and its brew was ended or superseded meanwhile. That holds even once no record and no `lastEnded` names it. The tab therefore adopts what storage holds: it neither saves its brew back nor completes it.
+- **Why it keeps every doubly stale restore.** The stale tab writes an *old* copy:
+  - its `lastEnded` is the one from before this brew (#13, #14, #16, #24: the same as this tab's own, or older), so the rule does not fire;
+  - #17 and #18 are decided by rule 1 before it;
+  - a stale tab that *ends* its old brew writes `lastEnded` = that old brew, which is exactly this tab's own `lastEnded`: still restored (new case "still restored", below).
+- **Fields used:** `lastEnded.sessionId`, `lastEnded.at`, `startedAt`. Existing fields only; no stored field, and no format change (§8.4).
+- **Covered:** LEAD-5's probe (1) the tick, (3) the later write, and also (2) the person's Pause. The catch-up runs the same rule, so the pause is dropped and the tab shows the idle kettle. That closes the §7.2.2 paused/bfcache follow-up's running and acted-on variants.
+
+**SG-D2 (`src/app/flow.ts` `startNextBrew`, the flag only).**
+- After `t.end('skip')`, `suppressNextStop = false`.
+- The break's own `timer:stop` is emitted synchronously inside `end` (`lib/events.ts` `emit` calls its handlers in place) and takes the flag there. So clearing it afterwards only matters when the end did **not** stop the break: a dropped end in a lagging tab, or HEAD's 0:00 case, where the end completes instead.
+
+**SG-D3 (`store.ts`; `FocusScreen.tsx` `toggle` and `addFive` only).**
+- Every action behind the catch-up now returns `false` when it is dropped (type `Acted = void | false`). `toggle` returns what `pause` / `resume` returned.
+- `FocusScreen.addFive` sets the "+5 min · whistles at …" note only when `addTime` did not return `false`.
+- `FocusScreen.toggle` plays the pause/resume sound only when `toggle` did not return `false`. The sound is still chosen by the status the person saw. The button's generic press sound is unchanged (ACCEPTED by LEAD-5).
+
+**Ruling 4.1 (`multitab.test.ts`, only this):**
+- `openTab` installs the catch-up as `initTabSync` does (`sync.installActionCatchUp()`);
+- the comment `// B's write lands last` → `// B can read A's brew, so its Start joins it (W3R2)`;
+- `toBe('from B')` → `toBe('from A')`.
