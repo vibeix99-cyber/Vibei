@@ -1,0 +1,16 @@
+[slots] TS took 2/3 at 16:36:04: bash -c 
+  cd "$WT" || exit 9
+  echo "### start $(date -u +%T) load $(cut -d" " -f1-3 /proc/loadavg)"
+  echo "### cmd: $*"
+  "$@"; rc=$?
+  echo "### end $(date -u +%T) exit=$rc load $(cut -d" " -f1-3 
+### start 16:36:04 load 20.72 16.71 12.98
+### cmd: /home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/TS/scripts/underload.sh timer
+burners: 3073 3074 3075 3076 started 16:36:05 load 20.34 16.70 13.00
+######## load-timer156: env KETTLE_PORT=5583 PLAYWRIGHT_JSON_OUTPUT_NAME=/home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/TS/logs/load-timer156.json npx playwright test tests/timer.spec.ts --project=timer-app --project=timer-harness --repeat-each=10 -g background: the worker --workers=2 --reporter=list,json --output=.tmp/ts-out/load-timer156
+### start 16:36:10 load 19.35 16.55 12.97
+
+Running 20 tests using 2 workers
+
+  ✓   1 [timer-harness] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (4.9s)
+  ✓   2 [timer-harness] › tests/timer.spec.ts:156:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (5.4s)
