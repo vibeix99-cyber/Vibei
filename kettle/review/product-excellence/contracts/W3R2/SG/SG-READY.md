@@ -1,0 +1,159 @@
+# SG: the stale-tab guard (W3R2 item 1). Packet, in stages
+
+| | |
+|---|---|
+| Brief | `contracts/W3R2/BRIEF-SG.md`; binding `VB-DECISIONS-W3R2.md` §1; background `W3R1/CHECKER-W3R1-F1FIX.md` §4, §7–§9, `W3R1/F1FIX/F1FIX-READY.md`, `W3R1/review/F1-ROOT-CAUSE.md` |
+| Branch | `pe/w3r2-sync-guard`, worktree `/home/user/wt/w8g`, base `494748b` (app `5f78af1`, src `b74e6b3`). Local commits only, never pushed |
+| Commits so far | `c917293` the guard + `staleTab.test.ts`; `e18b621` the "away" rule (§1.3) + `tests/w3r2-stale-tab.spec.ts` |
+| Dev | :5581 (HMR) serves the branch. Checked by blob hash of `src/timer/store.ts` and `sync.ts` (and `verify.sh`): `PORT 5581 serves c917293 (src f88ab8a): VERIFIED`; re-checked before each browser run (§3) |
+| Controls | :5560 integration = HEAD `494748b` (its `store.ts` and `sync.ts` blobs equal HEAD's, checked); :5478 old base `4d36939` |
+| Evidence | `SG/logs/*.log.txt`, `SG/scripts/*.txt` |
+
+**Status: stage 1 (code + deterministic Vitest). Browser runs, compatibility and load runs follow in §3–§6.**
+
+## 1. Design: one rule, applied where every write passes
+
+**The rule:** a tab never saves its timer over a newer brew. "Newer" is decided only from existing fields: `sessionId`, `lastEnded`, `startedAt`, `endsAt`, the session records in `kettle:progress`, and the completions other tabs announce. No stored field is added; the storage format is unchanged (§4).
+
+Files: `src/timer/store.ts` and `src/timer/sync.ts` only (no other `src/timer/*` file was needed). `Composer.tsx`, `src/ui/*`, `src/screens/*` and every existing test file are untouched.
+
+### 1.1 Write side: every action acts on the current brew (`store.ts`, `onCurrentBrew` / `actsOnCurrentBrew`)
+- The action creators' object is wrapped once. **Every action passes the same entry**, except an explicit list of five, so **an action added later is guarded by default**:
+  - `tick`: re-reads storage itself (completion guard);
+  - `reset`: a wipe;
+  - `setIntention` and `syncIdleLength`: fields-only saves (F1 / F1X-D1), which never write this tab's copy of the brew;
+  - `toggle`: it only picks `pause` or `resume`, which are guarded. It picks by the status the person saw, so Space on a brew shown running means "pause".
+- **At the entry**, the tab first takes in what storage holds now. The hook is installed by `initTabSync` (`installActionCatchUp`) and runs `mirrorTimerFromStorage()`, so the change is re-emitted as `timer:sync` and the screens follow. Then:
+  - **same brew** (`sessionId` unchanged: another tab only paused, resumed, extended or re-worded it): the action applies to the brew **as it is now**;
+  - **another brew, or none** (it was ended, or another tab started one this tab had not seen): the action was aimed at a brew that is gone. **It does nothing more**, and the tab now shows the current brew: a start **joins** the running brew.
+  - **The rest of that gesture is dropped too** (`behind`, cleared on the next microtask). "Next brew" from a break is `end` then `startFocus` in one handler; without this, the start would go through once the end had refreshed the tab.
+- **When the tab's own last save failed** (storage full), the catch-up does not rehydrate, as before (`mirrorTimerFromStorage`'s existing rule). Storage-full behaviour is unchanged.
+
+### 1.2 Receive side: the tab with the newer brew keeps it and saves it back (`sync.ts`, `olderThanMine`)
+- **Why it is needed.** In Chromium a tab's copy of localStorage is updated with the same message that brings its `storage` event (F1FIX §1). So a tab that is behind usually also **reads** an old copy, and nothing in that tab can tell. This is the doubly stale case.
+- **Where.** `mirrorTimerFromStorage` (every non-removal mirror: a storage event, the action catch-up, and the ticker's pre-completion refresh) reads what storage holds (`readStoredTimer`, sanitised as a rehydrate is) **before** adopting it. If that state is older than this tab's own (rule below), the tab keeps its timer and **saves it back whole** (`useTimer.setState({})`). The stale tab then mirrors that save. Otherwise it rehydrates, as before.
+- **Coverage.** It covers every writer, present or future, whatever path the stale save came from: whole saves, the fields-only saves, the composer.
+- **`olderThanMine(mine, incoming)`**, in order:
+  1. `incoming` holds a brew under way that this tab knows has **ended**: its own `lastEnded`, a record in progress, or a completion another tab announced. A stale tab brought it back. **Older** (this also covers an idle tab: an ended brew does not come back over its idle kettle).
+  2. Only a brew **still under way here** can be lost. That excludes a brew with a record or an announced completion, and a brew running here **more than `WHILE_AWAY_AFTER_MS` (10 s) past its end**: this tab's ticker would have completed it, so the tab was away (frozen, asleep) and its copy is the old one (§1.3).
+  3. `incoming` **accounts for** this brew: the same `sessionId` (paused, resumed, extended, re-worded) or `lastEnded` naming it (ended or completed, and perhaps the next brew started). **Not older.**
+  4. Anything else was written by a tab that never saw this brew:
+     - an **idle** kettle is older;
+     - **another brew under way** is older only if it **started earlier** (`startedAt`). Of two brews started in two tabs within the lag, neither knowing the other, the later start is the newer one. Both tabs reach the same verdict, so they converge with no ping-pong. On a tie, storage's copy stays.
+- **Not passed through the rule:**
+  - **a removal** (`kettle:timer` removed, or `localStorage.clear()`): the existing wipe path, which now calls `followWipe()` (the same idle save the follower's `reset()` made before);
+  - **`reset()` itself**: now removes the key before saving the idle kettle, so other tabs see a wipe rather than a stale idle save, and do not put their brew back. Same key and shape afterwards.
+
+### 1.3 Why one guard covers every trigger
+- The triggers in the brief are all one shape: a whole save computed from a copy of the timer that is older than storage.
+- **The receive side** checks every write any tab makes, before any tab adopts it. Whatever wrote it (`rebase`, pause, resume, +5, end, start, a typed edit, or a writer not yet written), a newer brew that a live tab holds is put back. **That alone guarantees the brew is never lost**, in any event order (§3: four orders for the typed edit).
+- **The write side** is one entry that every action passes (default-on for future actions). It gives the person's action the right meaning when the tab's read is current: applied to the current brew, or a refresh.
+- **"Newer" in one line:** a state that names this brew (same `sessionId`, or `lastEnded`) is newer; an ended brew is never newer; between two live brews unknown to each other, the later start is newer; anything else (idle, older) loses to a live brew. "Live" excludes a brew this tab was away for.
+
+## 2. The outcome per trigger
+
+**Terms.** *Lagging tab Z*: its `storage` events for the timer have not arrived, but its read of storage is current. *Doubly stale*: Z's read is behind too. *A*: the tab whose write is newer. "Shows the current brew": Z's timer and screen follow A's brew at once, with a `timer:sync`.
+
+| Trigger (in Z) | Same brew, newer in storage (A paused / resumed / +5 / re-worded it) | A ended it, or started another brew Z has not seen | Doubly stale |
+|---|---|---|---|
+| `rebase` (leader's clock-jump fix) | shifts the anchors of the brew as it is now | nothing; Z shows the current brew | A puts its brew back |
+| pause | pauses the brew current in storage, with its **real remaining time** (A's +5 included); already paused: nothing | nothing; the newer brew runs on, Z shows it | A puts its brew back (an ended brew stays ended) |
+| resume | already running: nothing (its end and +5 kept); paused: resumes with its current remaining time | nothing; Z shows the current brew | A puts its brew back |
+| add 5 | adds 5 min to the brew as it is now (paused stays paused) | nothing added; the newer brew is untouched, Z shows it | A puts its brew back |
+| end (`end` / `endActive`) | ends the brew as it is now, with its **real focus time** (a pause elsewhere is not counted); one record | nothing; **no second record**, the newer brew is not ended. Z shows it (or the idle kettle, if A had ended it) | A puts its brew back |
+| start (`startFocus` / `startBreak`, Tea time, Next brew = end + start in one gesture) | both idle: starts as before | **does not replace A's brew: Z joins and shows it** (A's words, A's end); Z starts nothing (no `timer:start`) | both pressed Start within the lag, neither able to see the other: both tabs settle on the **later** start, one record. The earlier brew is under a second old (the lag), so no record can be lost. Same as HEAD |
+| typed edit (`setIntention`, a real change) | only the words change in the stored brew (F1, unchanged) | nothing saved (F1, unchanged); the event brings Z up to date | Z's old idle copy plus its words lands over A's brew. **A puts its brew back**, whatever order the events land in: write order; Z's event first; A acting first (pause); A's ticker first (it then completes the brew once). Z's words are dropped: they were for an idle kettle |
+| (unchanged) reset data | — | — | a wipe still stops the brew in every tab |
+| (unchanged) composer label | words typed in Z for the running brew (same session) become its words in both tabs (logged in §7, not changed) | — | — |
+
+Exactly-once is unchanged:
+- `lastEnded`, the IndexedDB claims and progress de-duplication are untouched;
+- the completion path (`tick`, the ticker, `guard.refresh`) is unchanged;
+- the refresh now also puts back a brew that a stale tab overwrote just before its end (the ticker-first order in §3), which is then completed once.
+
+The F1 fix is unchanged: `setIntention` writes only its fields, and `syncIdleLength`'s following tab writes nothing. Both are outside the wrapper.
+
+## 3. Tests: fail on HEAD, pass on the fix
+
+### 3a. Vitest `src/timer/staleTab.test.ts` (23 tests; the two-store harness of `intentionRace.test.ts`)
+Harness:
+- each tab is its own module graph over one shared localStorage;
+- a tab takes in another tab's write only when the test delivers its `storage` event, so its events are held and released in the order the test chooses;
+- `behindToo(raw, fn)` makes the tab's own read of storage old while `fn` runs (the doubly stale case);
+- the action catch-up is installed as `initTabSync` does in the app, through `installActionCatchUp?.()`. That export is absent on HEAD, so there the tab acts on its own copy, as it does on HEAD.
+
+**HEAD run:** `git archive 494748b kettle/src kettle/vite.config.ts kettle/package.json kettle/tsconfig.json` into scratch, `node_modules` symlinked, this test file copied in. Its `store.ts` was diffed equal to HEAD's.
+
+| # | Test (trigger) | HEAD `494748b` | fix |
+|---|---|---|---|
+| 1 | **rebase**: the leader, still on a brew A ended and replaced, corrects a clock jump → storage untouched, Z shows the newer brew, completes once | **FAIL** (Z's old brew saved over A's) | pass |
+| 2 | **pause**, A added 5 min → storage: the same brew paused, `plannedMs` 30, `remainingMs` 25 min (real); both tabs paused at 25 | **FAIL** (paused at 20 min, `plannedMs` 25: A's +5 lost) | pass |
+| 3 | **pause**, A ended the brew and started another → nothing paused, the newer brew runs on, Z shows it | **FAIL** (the old brew, paused, over A's) | pass |
+| 4 | **resume**, A resumed and added 5 → storage byte-identical, Z running with A's end | **FAIL** (Z's resume rewrites the end without the +5) | pass |
+| 5 | **add 5**, A ended and replaced the brew → storage byte-identical, Z shows the newer brew, nothing added | **FAIL** | pass |
+| 6 | **add 5**, A paused → +5 on the paused brew, still paused | **FAIL** (Z's +5 un-pauses it) | pass |
+| 7 | **end**, A ended and replaced the brew → the newer brew is not ended; one record for the old one | **FAIL** (idle saved over A's brew) | pass |
+| 8 | **end**, A paused for 5 min → the record has 10 min focus, not 15 | **FAIL** (`focusedMs` 15 min) | pass |
+| 9 | **start** (Composer's start: words saved, then started) while A's brew runs → storage byte-identical; Z joins (sync `start`, no `timer:start`), A's words | **FAIL** (Z's brew replaces A's) | pass |
+| 10 | **start** (Tea time, `startBreak`) after A started the next brew → not replaced | **FAIL** | pass |
+| 11 | **start** (Next brew from a break: `end` + `startFocus`, one gesture) after A already did → neither goes through | **FAIL** | pass |
+| 12 | **typed edit** (singly stale), A paused and extended → only the words change | pass (F1 already guards this) | pass |
+| 13 | **doubly stale typed edit**, events in write order → A puts its brew back; both tabs on it; completes once | **FAIL** (A mirrors the idle kettle: brew gone) | pass |
+| 14 | the same, Z's event lands first, then A's, then Z's again | **FAIL** | pass |
+| 15 | the same, A acts (pause) before its event | pass (A's whole save happens to restore it) | pass |
+| 16 | the same, A's ticker re-reads first → restores the brew and completes it once | **FAIL** (no completion: the brew is gone) | pass |
+| 17 | **doubly stale pause** of a brew A ended and replaced → A puts its newer brew back | **FAIL** | pass |
+| 18 | **doubly stale pause** of a brew A ended → it stays ended (A keeps its idle kettle) | **FAIL** (the ended brew comes back) | pass |
+| 19 | a tab that was away (brew 25 min past its end) does not put it back; no record | pass | pass |
+| 20 | **doubly stale start** in both tabs within the lag → both on the later start, one record | pass (same outcome) | pass |
+| 21 | reset data in one tab still stops the brew in the other | pass | pass |
+| 22 | composer label: words typed in Z for the running brew become its words (unchanged) | pass | pass |
+| 23 | in step: pause, +5, resume, end from either tab reach the other | pass | pass |
+
+**Every trigger has a case that fails on HEAD and passes on the fix:**
+
+| Trigger | Cases |
+|---|---|
+| `rebase` | 1 |
+| pause | 2, 3 |
+| resume | 4 |
+| add 5 | 5, 6 |
+| end | 7, 8 |
+| start | 9–11 |
+| doubly stale typed edit | 13, 14, 16 |
+| doubly stale pause (added) | 17, 18 |
+
+The singly stale typed edit (12) already passes on HEAD: F1's fields-only save guards it. It stays as a regression guard; its fail-on-HEAD form is the doubly stale case.
+
+| Run | Result | Log |
+|---|---|---|
+| HEAD `494748b`, first 22 tests (before #19 was added) | **16 failed / 6 passed** (all 16 on a behaviour assertion; the 6 passing: 12, 15, 20–23) | `logs/vitest-staletab-on-HEAD-494748b.log.txt` |
+| fix `c917293`, first 22 tests | **22/22** | `logs/vitest-staletab-on-fix.log.txt` |
+| fix, all 23 tests, and HEAD again | §3c (final rerun) | |
+
+### 3b. Existing tests (unchanged files)
+
+| Run | Result | Log |
+|---|---|---|
+| `intentionRace.test.ts`, `multitab.test.ts`, `store.test.ts`, `storageFull.test.ts` on the fix | 4 files, **71/71** | `logs/vitest-existing-race-on-fix.log.txt` |
+| Vitest, all, on the fix | **34 files, 336/336** (was 314; +22) | `logs/vitest-all-fix.log.txt` |
+| tsc (`tsc --noEmit`) | exit 0 | `logs/tsc-fix.log.txt` |
+
+`multitab.test.ts` "two tabs pressing start at the same time converge on one session" stays green. Its harness does not install the action catch-up, so it models two starts that cannot see each other (the doubly stale start, #20), whose outcome is unchanged. **But it encodes "last writer wins", which Vibei's rule overturns for a tab whose read is current. See §7.1 (for LEAD).**
+
+## 7. Open items, for LEAD (draft; completed at the last stage)
+
+### 7.1 Existing test whose behaviour Vibei's rule overturns (not edited)
+**Test:** `src/timer/multitab.test.ts:229`, "two tabs pressing start at the same time converge on one session":
+```ts
+A.timer.getState().startFocus({ intention: 'from A' });
+B.timer.getState().startFocus({ intention: 'from B' }); // B's write lands last
+...
+expect(A.timer.getState().intention).toBe('from B');
+```
+- **As run, it stays green.** That harness does not install the action catch-up (`initTabSync` is never called there), so B's start is computed from B's own copy, as when B cannot see A's write: the doubly stale start. Both tabs then settle on the later start, B's (the startedAt tie in the harness's frozen clock leaves storage's copy, B's).
+- **In the app, B's read is current here** (storage holds A's brew), so under Vibei's rule B's Start **joins** A's brew: the stored brew stays `from A`. Staletab #9 is that case.
+- **Proposal (LEAD rules):**
+  - (a) keep the test as it is, read as the doubly stale start (its comment would need "B cannot yet see A's write"); or
+  - (b) make its harness install the catch-up (`sync.installActionCatchUp()`, as `initTabSync` does) and change the assertion to `expect(A.timer.getState().intention).toBe('from A')`. Its other assertions (one session id in both tabs, one completion, one record with that id) hold unchanged under (b).
+- I recommend (b) plus a one-line comment change, so the suite pins the app's behaviour.
