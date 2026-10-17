@@ -38,3 +38,8 @@
     A=running/s_mvcsjj/30m/ends=1792267198131
     B=running/s_mvcsjj/30m/ends=1792267198131
     S=running/s_mvcsjj/30m/ends=1792267198131  S(read in B)=running/s_mvcsjj/30m/ends=1792267198131  pageErrors=0
+[19:30:15] control-5560-after (b) it5 FAIL load 16.89 10.62 11.18->16.62 10.77 11.22 failed: still_paused_A_B_storage
+    A=running/s_mvcsjs/30m/ends=1792267209669
+    B=running/s_mvcsjs/30m/ends=1792267209669
+    S=running/s_mvcsjs/30m/ends=1792267209669  S(read in B)=running/s_mvcsjs/30m/ends=1792267209669  pageErrors=0
+### case (b) control-5560-after: pass 0/5 {"precondition_B_behind":5,"same_session_A_B_storage":5,"A_B_storage_agree":5,"still_paused_A_B_storage":0,"plus5_applied_A_B_storage":5}
