@@ -236,3 +236,35 @@ FACT 1440x900-light-t100 a-no-input {"leftAt":5099,"room":68,"commits":[{"t":920
 FACT 1440x900-light-t100 b-scroll-then-idle {"leftAt":5301,"room":68,"maxSy":11,"scrollMs":2383,"roomAfterScroll":68,"commits":[{"t":5312,"why":"rest","room":68,"shown":null,"down":0,"sinceInput":4490,"topBefore":168,"topAfter":168,"sy":0},{"t":11712,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4028,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":6411,"collapseAfterLastBusyMs":4028,"visibleMove":68}
   ✓  224 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (1440x900-light-t100) (12.8s)
   ✓  225 [chromium] › tests/toast-room.spec.ts:466:3 › the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (667×375, 200 % text, wheel, light) (17.7s)
+FACT 1440x900-light-t100 c-pointer-held {"leftAt":5285,"room":68,"roomWhileDown":68,"downWhileHeld":1,"commits":[{"t":5297,"why":"rest","room":68,"shown":null,"down":0,"sinceInput":4398,"topBefore":168,"topAfter":168,"sy":0},{"t":12608,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4062,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":7323,"collapseAfterLastBusyMs":4062,"visibleMove":68}
+  ✓  226 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (1440x900-light-t100) (14.0s)
+FACT 1440x900-dark-t200-rm a-no-input {"leftAt":5422,"room":113,"commits":[{"t":9522,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8606,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":4100,"collapseAfterLastBusyMs":4100,"visibleMove":113}
+  ✓  228 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (1440x900-dark-t200-rm) (10.5s)
+  ✓  227 [chromium] › tests/toast-room.spec.ts:466:3 › the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (844×390, 200 % text, touch, dark) (23.1s)
+FACT 1440x900-dark-t200-rm b-scroll-then-idle {"leftAt":5305,"room":113,"maxSy":300,"scrollMs":2171,"roomAfterScroll":113,"commits":[{"t":5312,"why":"rest","room":113,"shown":null,"down":0,"sinceInput":4510,"topBefore":234.09375,"topAfter":234.09375,"sy":0},{"t":11521,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4045,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":6216,"collapseAfterLastBusyMs":4045,"visibleMove":113}
+  ✓  229 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (1440x900-dark-t200-rm) (12.4s)
+  -  231 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 100 %) #0
+  -  232 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 %) #0
+  -  233 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 % reduced motion) #0
+  -  234 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 100 %) #0
+  -  235 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 200 %) #0
+  -  236 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 100 %) #0
+  -  237 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 %) #0
+  -  238 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 % reduced motion) #0
+  -  239 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 100 %) #0
+  -  240 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 200 %) #0
+  -  241 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 100 %) #0
+  -  242 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 %) #0
+  -  243 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion) #0
+  -  244 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 100 %) #0
+  -  245 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) #0
+  -  246 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 100 %) #0
+  -  247 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 %) #0
+  -  248 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 % reduced motion) #0
+  -  249 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 100 %) #0
+  -  250 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 200 %) #0
+  -  251 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 100 %) #0
+  -  252 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 %) #0
+  -  253 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #0
+  -  254 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 100 %) #0
+  -  255 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 200 %) #0
