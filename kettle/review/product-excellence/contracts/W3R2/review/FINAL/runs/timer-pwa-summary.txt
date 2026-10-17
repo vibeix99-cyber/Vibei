@@ -1,0 +1,37 @@
+| Spec file | Passed | Failed | Skipped | Flaky |
+|---|---|---|---|---|
+| `pwa.spec.ts` | 3 | 0 | 0 | 0 |
+| `timer.spec.ts` | 26 | 0 | 2 | 0 |
+| **total (31)** | **29** | **0** | **2** | **0** |
+stats {"startTime":"2026-10-17T21:57:12.035Z","duration":201905.935,"expected":29,"skipped":2,"unexpected":0,"flaky":0}
+expected	timer-harness	timer.spec.ts:74	5068	start → reload mid-session → same session, same end, correct remaining; paused survives reload
+expected	timer-harness	timer.spec.ts:111	3172	a phase that ended while the app was closed (3 h ago) completes once, at its real end, whileAway
+expected	timer-harness	timer.spec.ts:143	4935	reload exactly at 0:00 records the session once
+expected	timer-harness	timer.spec.ts:156	3966	background: the worker completes on time even with main-thread timers frozen
+expected	timer-harness	timer.spec.ts:192	3835	hidden page: completion shows a warm notification; coming back restores the title
+expected	timer-harness	timer.spec.ts:225	4910	frozen tab (OS suspended it) across the end completes once on resume, at the real end
+expected	timer-app	timer.spec.ts:74	8200	start → reload mid-session → same session, same end, correct remaining; paused survives reload
+expected	timer-app	timer.spec.ts:111	7121	a phase that ended while the app was closed (3 h ago) completes once, at its real end, whileAway
+expected	timer-app	timer.spec.ts:143	8797	reload exactly at 0:00 records the session once
+expected	timer-app	timer.spec.ts:156	9839	background: the worker completes on time even with main-thread timers frozen
+expected	timer-app	timer.spec.ts:192	8540	hidden page: completion shows a warm notification; coming back restores the title
+expected	timer-app	timer.spec.ts:225	8580	frozen tab (OS suspended it) across the end completes once on resume, at the real end
+expected	timer-harness	timer.spec.ts:243	997	wake lock: held while running and visible; released on pause, idle and setting off; re-acquired on return
+expected	timer-harness	timer.spec.ts:292	848	media session: metadata + play/pause handlers while a phase runs, cleared when idle
+expected	timer-app	timer.spec.ts:243	3858	wake lock: held while running and visible; released on pause, idle and setting off; re-acquired on return
+expected	timer-app	timer.spec.ts:292	4258	media session: metadata + play/pause handlers while a phase runs, cleared when idle
+expected	timer-harness	timer.spec.ts:305	1513	Space toggles — but never while typing, on a focused button, or on key repeat; ? toggles help, not over a dialog
+skipped	timer-app	timer.spec.ts:305	1969	Space toggles — but never while typing, on a focused button, or on key repeat; ? toggles help, not over a dialog
+expected	timer-harness	timer.spec.ts:350	8441	two tabs show the same session live and exactly one records it
+expected	timer-harness	timer.spec.ts:388	7971	two tabs pressing start at the same moment converge on one session
+expected	timer-harness	timer.spec.ts:410	5417	closing the leader tab mid-session hands over; the other tab completes it once
+expected	timer-harness	timer.spec.ts:427	5453	frozen leader: the other tab takes over at the end; the leader waking up later does not double-count
+expected	timer-app	timer.spec.ts:350	15421	two tabs show the same session live and exactly one records it
+expected	timer-app	timer.spec.ts:388	15928	two tabs pressing start at the same moment converge on one session
+expected	timer-app	timer.spec.ts:410	12025	closing the leader tab mid-session hands over; the other tab completes it once
+expected	timer-app	timer.spec.ts:427	10723	frozen leader: the other tab takes over at the end; the leader waking up later does not double-count
+expected	timer-harness	timer.spec.ts:449	4108	useRemaining re-renders about once per displayed second
+skipped	timer-app	timer.spec.ts:449	1071	useRemaining re-renders about once per displayed second
+expected	pwa	pwa.spec.ts:48	114	manifest is installable: name, colors, standalone, icons that exist
+expected	pwa	pwa.spec.ts:59	6742	precaches the shell, fonts, 3D chunk and tick worker; boots and times a brew offline
+expected	pwa	pwa.spec.ts:85	5790	update: new version waits for the user (no reload mid-brew), then applies and the brew carries on
