@@ -86,3 +86,8 @@ Running 264 tests using 2 workers
   ✓   81 [chromium] › tests/w2-summary.spec.ts:192:5 › 375×667 @200 %, routine day: no line starts under the footer on arrival; the final line clears it; nothing covers anything (15.4s)
   ✓   82 [chromium] › tests/w3-intention-race.spec.ts:119:1 › F1X-D1: B picks another brew length and starts; A (idle, its timer events held) takes in the length change first: the brew survives, one record (18.8s)
   ✓   83 [chromium] › tests/w2-summary.spec.ts:192:5 › 375×667 @200 %, big day: no line starts under the footer on arrival; the final line clears it; nothing covers anything (20.3s)
+  ✓   85 [chromium] › tests/w2-summary.spec.ts:222:3 › 375×667 @100 %, a brew with a task (the K02 layout, Wave-1 #1 exactly): the third pill row does not start under the footer (17.8s)
+  ✓   84 [chromium] › tests/w3-settings.spec.ts:39:1 › preferences persist across a reload; Reset everything returns each to its default (31.0s)
+  ✓   87 [chromium] › tests/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (390×844, light); inert controls are not Tab stops (6.3s)
+  ✓   86 [chromium] › tests/w2-summary.spec.ts:222:3 › 375×667 @100 %, a brew with a task (the K02 layout, Wave-1 #1 exactly), reduced motion: the third pill row does not start under the footer (13.4s)
+  ✓   88 [chromium] › tests/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (390×844, dark); inert controls are not Tab stops (7.4s)
