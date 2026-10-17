@@ -445,6 +445,50 @@ describe('the doubly stale tab (its copy of storage behind too): the tab with th
     expect(storedSessions().filter((r) => r.id === sid)).toHaveLength(1);
   });
 
+  it('three tabs: both tabs holding the brew put it back, in either order; it settles (no further writes) and completes once', async () => {
+    for (const order of ['A first', 'C first'] as const) {
+      storage.clear();
+      const A = await openTab('A', true);
+      const C = await openTab('C', false);
+      const Z = await openTab('Z', false);
+      A.t().setIntention('Inbox', null);
+      C.storageEvent();
+      Z.storageEvent();
+      const idle = raw();
+      A.t().startFocus({ intention: 'Chapter 3 notes' });
+      C.storageEvent();
+      const brew = A.t();
+      behindToo(idle, () => Z.t().setIntention('Reply to Sam', 'work'));
+      let writes = 0;
+      const setItem = storage.setItem.bind(storage);
+      storage.setItem = (k: string, v: string) => {
+        if (k === KEY) writes++;
+        setItem(k, v);
+      };
+      try {
+        const [first, second] = order === 'A first' ? [A, C] : [C, A];
+        first.storageEvent();
+        second.storageEvent();
+        Z.storageEvent();
+        const settled = writes;
+        expect(settled, `${order}: each tab holding the brew saved it back at most once`).toBeLessThanOrEqual(2);
+        for (const t of [A, C, Z, A, C, Z]) t.storageEvent(); // every later event changes nothing
+        expect(writes, `${order}: no ping-pong`).toBe(settled);
+      } finally {
+        storage.setItem = setItem;
+      }
+      for (const t of [A, C, Z]) expect(t.t()).toMatchObject({ status: 'running', sessionId: brew.sessionId, endsAt: brew.endsAt, intention: 'Chapter 3 notes' });
+      advance(25 * MIN + 100);
+      for (const t of [A, C, Z]) t.t().tick();
+      C.storageEvent();
+      Z.storageEvent();
+      expect(A.completes.filter((r) => r.id === brew.sessionId)).toHaveLength(1);
+      expect(C.completes.length + Z.completes.length).toBe(0);
+      expect(storedSessions().filter((r) => r.id === brew.sessionId)).toHaveLength(1);
+      vi.setSystemTime(new Date(2026, 9, 17, 10, 0, 0));
+    }
+  });
+
   it('a tab that was away (its brew long past its end, its events missed) does not put that brew back over what storage holds', async () => {
     const { A, Z, sid: s1 } = await brewInStep('Essay');
     advance(30_000);
