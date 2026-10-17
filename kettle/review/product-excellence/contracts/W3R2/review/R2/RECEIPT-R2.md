@@ -47,6 +47,12 @@ Raw evidence only. No verdict. Times are UTC, 2026-10-17. Task received 17:58, b
 
 `runs/w2-home-5591.log.txt`, `json/w2-home-5591.json`; `npx playwright test tests/w2-home.spec.ts --project=chromium --workers=1`; 19:03:57 to 19:09:11 (5.2 min); load average 18.6 at the start, 17.5 at the end. **18 of 18 passed** (0 failed, 0 flaky). With 4a (race and stale-tab specs, 6 of 6) the whole of check 4 is 24 of 24.
 
+## 5. The notice suites on :5591
+
+`runs/notice-suite-5591.log.txt`, `json/notice-suite-5591.json`; `KETTLE_PORT=5591 npx playwright test tests/notice-strip.spec.ts tests/w3-notices.spec.ts tests/w3-notices-idle.spec.ts tests/summary-notice.spec.ts tests/toast-room.spec.ts --project=chromium --workers=2`; two gate slots; run time 21.0 min (the gate job started at 19:07 by the Playwright clock and ended 19:28:15; the log header gives the exact start); load average 10 to 18 at the start, 5.6 at the end.
+
+**74 passed, 0 failed, 0 flaky, 0 skipped** (74 tests): `notice-strip` 25, `w3-notices` 9, `w3-notices-idle` 12, `summary-notice` 14, `toast-room` 14. Nothing to rerun or classify.
+
 ## 6. The 2-tab manual check with real clicks (:5591 fix, :5560 control)
 
 **Script** `scripts/R2-2tab.mjs` (sha256 prefix `d3c8d64ef9a734c2`, the same file for both servers; run through the gate, one slot). Playwright, one Chromium, **one browser context with two pages = two tabs sharing localStorage**, a fresh context per iteration, quiet defaults (onboarded, no 3D scene, reduced motion, muted). Every action of the person is a real mouse or keyboard event: the start (click the composer, `pressSequentially` the words, click "Put the kettle on"), "Pause", "Add 5 minutes", "End session" and the sheet's "End session" (`locator.click`, `bringToFront` first). The debug API is used only to **read** state, and in (c), (d) and (e) to move the clock by 90 s **in both tabs by the same amount**, so a brew has over one minute of focus and gets a record. "Lagging" is the maker's method: an init script (registered before the app's listener, as in `tests/w3r2-stale-tab.spec.ts`) holds tab B's `storage` events for `kettle:timer`, and `release()` re-dispatches them in order. B's own read of storage stays current (the usual "late event" lag, not the doubly stale case). Page errors: 0 in every iteration.

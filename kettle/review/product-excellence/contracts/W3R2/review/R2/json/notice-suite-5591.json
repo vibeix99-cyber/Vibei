@@ -1,0 +1,3165 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w8tr-g/kettle/playwright.config.ts",
+    "rootDir": "/home/user/wt/w8tr-g/kettle/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w8tr-g/kettle/.tmp/R2-pw/notice-suite-5591",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "timer-harness",
+        "name": "timer-harness",
+        "testDir": "/home/user/wt/w8tr-g/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-g/kettle/.tmp/R2-pw/notice-suite-5591",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "timer-app",
+        "name": "timer-app",
+        "testDir": "/home/user/wt/w8tr-g/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-g/kettle/.tmp/R2-pw/notice-suite-5591",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pwa",
+        "name": "pwa",
+        "testDir": "/home/user/wt/w8tr-g/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/pwa\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-g/kettle/.tmp/R2-pw/notice-suite-5591",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w8tr-g/kettle/tests",
+        "testIgnore": [
+          "/(timer|pwa)\\.spec\\.ts/"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 2,
+    "webServer": {
+      "command": "npx vite --config tests/e2e.vite.config.ts --port 5591 --strictPort",
+      "url": "http://127.0.0.1:5591/",
+      "reuseExistingServer": true,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "notice-strip.spec.ts",
+      "file": "notice-strip.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (390×844 light 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":1712,\"markDone\":{\"tapAt\":{\"x\":282.5,\"y\":578,\"w\":79,\"h\":44,\"top\":556},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":738.640625,\"undoY\":738.640625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":208,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":208},\"noticeFrames\":1736,\"modalFrames\":39,\"frames\":3301,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":195,\"Crossed off. Nice work. Undo\":32,\"Couldn’t save just now. Your summary is still he\":257,\"Recipe done: Take a full tea break · +10 leaves\":241,\"Recipe done: Take 2 full tea breaks · +15 leaves\":247,\"Kettle’s off. See you soon.\":199,\"Brew updated\":245,\"Brew deleted Undo\":26,\"A notice on Settings, here to be read.\":248,\"A notice on Nook, here to be read.\":78}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":63,\"modalFrames\":0,\"frames\":186,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":63}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 69374,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:07:14.800Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":1712,\"markDone\":{\"tapAt\":{\"x\":282.5,\"y\":578,\"w\":79,\"h\":44,\"top\":556},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":738.640625,\"undoY\":738.640625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":208,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":208},\"noticeFrames\":1736,\"modalFrames\":39,\"frames\":3301,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":195,\"Crossed off. Nice work. Undo\":32,\"Couldn’t save just now. Your summary is still he\":257,\"Recipe done: Take a full tea break · +10 leaves\":241,\"Recipe done: Take 2 full tea breaks · +15 leaves\":247,\"Kettle’s off. See you soon.\":199,\"Brew updated\":245,\"Brew deleted Undo\":26,\"A notice on Settings, here to be read.\":248,\"A notice on Nook, here to be read.\":78}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":63,\"modalFrames\":0,\"frames\":186,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":63}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-41deed2571370f68d806",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":3493,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":343.5625,\"w\":151,\"h\":44,\"top\":321.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":654.609375,\"undoY\":655.015625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":344,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":344},\"noticeFrames\":1834,\"modalFrames\":25,\"frames\":3758,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":201,\"Crossed off. Nice work. Undo\":14,\"Couldn’t save just now. Your summary is still he\":258,\"Recipe done: Take a full tea break · +10 leaves\":216,\"Recipe done: Take 2 full tea breaks · +15 leaves\":256,\"Kettle’s off. See you soon.\":199,\"Brew updated\":248,\"Brew deleted Undo\":43,\"A notice on Settings, here to be read.\":270,\"A notice on Nook, here to be read.\":75}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":64,\"modalFrames\":0,\"frames\":185,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":64}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 76546,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:07:14.673Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":3493,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":343.5625,\"w\":151,\"h\":44,\"top\":321.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":654.609375,\"undoY\":655.015625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":344,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":344},\"noticeFrames\":1834,\"modalFrames\":25,\"frames\":3758,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":201,\"Crossed off. Nice work. Undo\":14,\"Couldn’t save just now. Your summary is still he\":258,\"Recipe done: Take a full tea break · +10 leaves\":216,\"Recipe done: Take 2 full tea breaks · +15 leaves\":256,\"Kettle’s off. See you soon.\":199,\"Brew updated\":248,\"Brew deleted Undo\":43,\"A notice on Settings, here to be read.\":270,\"A notice on Nook, here to be read.\":75}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":64,\"modalFrames\":0,\"frames\":185,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":64}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-70eef10ea93ab8b38962",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 % reduced motion)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":3540,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":343.5625,\"w\":151,\"h\":44,\"top\":321.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":654.609375,\"undoY\":655.015625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":664,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":664},\"noticeFrames\":1882,\"modalFrames\":43,\"frames\":3406,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":193,\"Crossed off. Nice work. Undo\":11,\"Couldn’t save just now. Your summary is still he\":250,\"Recipe done: Take a full tea break · +10 leaves\":236,\"Recipe done: Take 2 full tea breaks · +15 leaves\":246,\"Kettle’s off. See you soon.\":198,\"Brew updated\":247,\"Brew deleted Undo\":83,\"A notice on Settings, here to be read.\":271,\"A notice on Nook, here to be read.\":84}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":66,\"modalFrames\":0,\"frames\":197,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":66}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 65868,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:08:24.317Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":3540,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":343.5625,\"w\":151,\"h\":44,\"top\":321.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":654.609375,\"undoY\":655.015625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":664,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":664},\"noticeFrames\":1882,\"modalFrames\":43,\"frames\":3406,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":193,\"Crossed off. Nice work. Undo\":11,\"Couldn’t save just now. Your summary is still he\":250,\"Recipe done: Take a full tea break · +10 leaves\":236,\"Recipe done: Take 2 full tea breaks · +15 leaves\":246,\"Kettle’s off. See you soon.\":198,\"Brew updated\":247,\"Brew deleted Undo\":83,\"A notice on Settings, here to be read.\":271,\"A notice on Nook, here to be read.\":84}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":66,\"modalFrames\":0,\"frames\":197,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":66}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-4e7ebe1b44f61a9f0aea",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":1370,\"markDone\":{\"tapAt\":{\"x\":282.5,\"y\":578,\"w\":79,\"h\":44,\"top\":556},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":738.640625,\"undoY\":738.640625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":320,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":320},\"noticeFrames\":1772,\"modalFrames\":47,\"frames\":3187,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":190,\"Crossed off. Nice work. Undo\":11,\"Couldn’t save just now. Your summary is still he\":250,\"Recipe done: Take a full tea break · +10 leaves\":237,\"Recipe done: Take 2 full tea breaks · +15 leaves\":244,\"Kettle’s off. See you soon.\":198,\"Brew updated\":253,\"Brew deleted Undo\":40,\"A notice on Settings, here to be read.\":248,\"A notice on Nook, here to be read.\":112}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":64,\"modalFrames\":0,\"frames\":195,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":64}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 67058,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:08:31.474Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":1370,\"markDone\":{\"tapAt\":{\"x\":282.5,\"y\":578,\"w\":79,\"h\":44,\"top\":556},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":738.640625,\"undoY\":738.640625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":320,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":320},\"noticeFrames\":1772,\"modalFrames\":47,\"frames\":3187,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":190,\"Crossed off. Nice work. Undo\":11,\"Couldn’t save just now. Your summary is still he\":250,\"Recipe done: Take a full tea break · +10 leaves\":237,\"Recipe done: Take 2 full tea breaks · +15 leaves\":244,\"Kettle’s off. See you soon.\":198,\"Brew updated\":253,\"Brew deleted Undo\":40,\"A notice on Settings, here to be read.\":248,\"A notice on Nook, here to be read.\":112}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":64,\"modalFrames\":0,\"frames\":195,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":64}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-b3d8ec2f5c2c50c69155",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":4032,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":343.5625,\"w\":151,\"h\":44,\"top\":321.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":654.609375,\"undoY\":655.015625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":248,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":248},\"noticeFrames\":1850,\"modalFrames\":25,\"frames\":3672,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":207,\"Crossed off. Nice work. Undo\":14,\"Couldn’t save just now. Your summary is still he\":251,\"Recipe done: Take a full tea break · +10 leaves\":220,\"Recipe done: Take 2 full tea breaks · +15 leaves\":257,\"Kettle’s off. See you soon.\":197,\"Brew updated\":252,\"Brew deleted Undo\":31,\"A notice on Settings, here to be read.\":270,\"A notice on Nook, here to be read.\":92}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":61,\"modalFrames\":0,\"frames\":181,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":61}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 74952,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:09:30.448Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":4032,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":343.5625,\"w\":151,\"h\":44,\"top\":321.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":654.609375,\"undoY\":655.015625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":248,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":248},\"noticeFrames\":1850,\"modalFrames\":25,\"frames\":3672,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":207,\"Crossed off. Nice work. Undo\":14,\"Couldn’t save just now. Your summary is still he\":251,\"Recipe done: Take a full tea break · +10 leaves\":220,\"Recipe done: Take 2 full tea breaks · +15 leaves\":257,\"Kettle’s off. See you soon.\":197,\"Brew updated\":252,\"Brew deleted Undo\":31,\"A notice on Settings, here to be read.\":270,\"A notice on Nook, here to be read.\":92}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":61,\"modalFrames\":0,\"frames\":181,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":61}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-95a9869917f1c2625e74",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (375×667 light 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":2144,\"markDone\":{\"tapAt\":{\"x\":282.5,\"y\":398,\"w\":79,\"h\":44,\"top\":376},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":516.828125,\"undoY\":516.828125},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1856,\"modalFrames\":25,\"frames\":3219,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":216,\"Crossed off. Nice work. Undo\":8,\"Couldn’t save just now. Your summary is still he\":247,\"Recipe done: Take a full tea break · +10 leaves\":243,\"Recipe done: Take 2 full tea breaks · +15 leaves\":253,\"Kettle’s off. See you soon.\":196,\"Brew updated\":253,\"Brew deleted Undo\":114,\"A notice on Settings, here to be read.\":251,\"A notice on Nook, here to be read.\":75}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":67,\"modalFrames\":0,\"frames\":175,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":67}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 65981,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:09:38.549Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":2144,\"markDone\":{\"tapAt\":{\"x\":282.5,\"y\":398,\"w\":79,\"h\":44,\"top\":376},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":516.828125,\"undoY\":516.828125},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1856,\"modalFrames\":25,\"frames\":3219,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":216,\"Crossed off. Nice work. Undo\":8,\"Couldn’t save just now. Your summary is still he\":247,\"Recipe done: Take a full tea break · +10 leaves\":243,\"Recipe done: Take 2 full tea breaks · +15 leaves\":253,\"Kettle’s off. See you soon.\":196,\"Brew updated\":253,\"Brew deleted Undo\":114,\"A notice on Settings, here to be read.\":251,\"A notice on Nook, here to be read.\":75}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":67,\"modalFrames\":0,\"frames\":175,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":67}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-cce3df3150ab0ada28e0",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":3529,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":149.5625,\"w\":151,\"h\":44,\"top\":127.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":489.78125,\"undoY\":490.1875},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":240,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":240},\"noticeFrames\":1851,\"modalFrames\":25,\"frames\":3545,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":196,\"Crossed off. Nice work. Undo\":13,\"Couldn’t save just now. Your summary is still he\":251,\"Recipe done: Take a full tea break · +10 leaves\":216,\"Recipe done: Take 2 full tea breaks · +15 leaves\":293,\"Kettle’s off. See you soon.\":199,\"Brew updated\":247,\"Brew deleted Undo\":27,\"A notice on Settings, here to be read.\":265,\"A notice on Nook, here to be read.\":85}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":64,\"modalFrames\":0,\"frames\":186,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":64}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 70496,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:10:44.546Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":3529,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":149.5625,\"w\":151,\"h\":44,\"top\":127.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":489.78125,\"undoY\":490.1875},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":240,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":240},\"noticeFrames\":1851,\"modalFrames\":25,\"frames\":3545,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":196,\"Crossed off. Nice work. Undo\":13,\"Couldn’t save just now. Your summary is still he\":251,\"Recipe done: Take a full tea break · +10 leaves\":216,\"Recipe done: Take 2 full tea breaks · +15 leaves\":293,\"Kettle’s off. See you soon.\":199,\"Brew updated\":247,\"Brew deleted Undo\":27,\"A notice on Settings, here to be read.\":265,\"A notice on Nook, here to be read.\":85}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":64,\"modalFrames\":0,\"frames\":186,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":64}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-eb474d57bd4cca515668",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 % reduced motion)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":3168,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":149.5625,\"w\":151,\"h\":44,\"top\":127.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":489.78125,\"undoY\":490.1875},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":360,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":360},\"noticeFrames\":1866,\"modalFrames\":16,\"frames\":3261,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":192,\"Crossed off. Nice work. Undo\":7,\"Couldn’t save just now. Your summary is still he\":255,\"Recipe done: Take a full tea break · +10 leaves\":221,\"Recipe done: Take 2 full tea breaks · +15 leaves\":273,\"Kettle’s off. See you soon.\":202,\"Brew updated\":255,\"Brew deleted Undo\":37,\"A notice on Settings, here to be read.\":259,\"A notice on Nook, here to be read.\":110}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":64,\"modalFrames\":0,\"frames\":181,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":64}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 61671,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:10:45.414Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":3168,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":149.5625,\"w\":151,\"h\":44,\"top\":127.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":489.78125,\"undoY\":490.1875},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":360,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":360},\"noticeFrames\":1866,\"modalFrames\":16,\"frames\":3261,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":192,\"Crossed off. Nice work. Undo\":7,\"Couldn’t save just now. Your summary is still he\":255,\"Recipe done: Take a full tea break · +10 leaves\":221,\"Recipe done: Take 2 full tea breaks · +15 leaves\":273,\"Kettle’s off. See you soon.\":202,\"Brew updated\":255,\"Brew deleted Undo\":37,\"A notice on Settings, here to be read.\":259,\"A notice on Nook, here to be read.\":110}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":64,\"modalFrames\":0,\"frames\":181,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":64}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-8474ccb7dd7da4616c83",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":1363,\"markDone\":{\"tapAt\":{\"x\":282.5,\"y\":398,\"w\":79,\"h\":44,\"top\":376},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":516.828125,\"undoY\":516.828125},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1793,\"modalFrames\":28,\"frames\":2873,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":220,\"Crossed off. Nice work. Undo\":9,\"Couldn’t save just now. Your summary is still he\":243,\"Recipe done: Take a full tea break · +10 leaves\":247,\"Recipe done: Take 2 full tea breaks · +15 leaves\":255,\"Kettle’s off. See you soon.\":198,\"Brew updated\":253,\"Brew deleted Undo\":57,\"A notice on Settings, here to be read.\":253,\"A notice on Nook, here to be read.\":58}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":61,\"modalFrames\":0,\"frames\":201,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":61}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 59504,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:11:47.106Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":1363,\"markDone\":{\"tapAt\":{\"x\":282.5,\"y\":398,\"w\":79,\"h\":44,\"top\":376},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":516.828125,\"undoY\":516.828125},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1793,\"modalFrames\":28,\"frames\":2873,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":220,\"Crossed off. Nice work. Undo\":9,\"Couldn’t save just now. Your summary is still he\":243,\"Recipe done: Take a full tea break · +10 leaves\":247,\"Recipe done: Take 2 full tea breaks · +15 leaves\":255,\"Kettle’s off. See you soon.\":198,\"Brew updated\":253,\"Brew deleted Undo\":57,\"A notice on Settings, here to be read.\":253,\"A notice on Nook, here to be read.\":58}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":61,\"modalFrames\":0,\"frames\":201,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":61}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-9e4def12cc6b1079b2b7",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":2803,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":149.5625,\"w\":151,\"h\":44,\"top\":127.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":489.78125,\"undoY\":490.1875},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":612,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":612},\"noticeFrames\":1873,\"modalFrames\":24,\"frames\":3442,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":197,\"Crossed off. Nice work. Undo\":8,\"Couldn’t save just now. Your summary is still he\":252,\"Recipe done: Take a full tea break · +10 leaves\":223,\"Recipe done: Take 2 full tea breaks · +15 leaves\":261,\"Kettle’s off. See you soon.\":195,\"Brew updated\":254,\"Brew deleted Undo\":68,\"A notice on Settings, here to be read.\":265,\"A notice on Nook, here to be read.\":86}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":63,\"modalFrames\":0,\"frames\":179,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":63}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 69738,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:11:55.062Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":2803,\"markDone\":{\"tapAt\":{\"x\":111.5,\"y\":149.5625,\"w\":151,\"h\":44,\"top\":127.5625},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":489.78125,\"undoY\":490.1875},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":612,\"chrome\":{\"nav \\\"Today Stats Nook Settings\":612},\"noticeFrames\":1873,\"modalFrames\":24,\"frames\":3442,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":197,\"Crossed off. Nice work. Undo\":8,\"Couldn’t save just now. Your summary is still he\":252,\"Recipe done: Take a full tea break · +10 leaves\":223,\"Recipe done: Take 2 full tea breaks · +15 leaves\":261,\"Kettle’s off. See you soon.\":195,\"Brew updated\":254,\"Brew deleted Undo\":68,\"A notice on Settings, here to be read.\":265,\"A notice on Nook, here to be read.\":86}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":63,\"modalFrames\":0,\"frames\":179,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":63}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-8462af184b1e2584ce30",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 light 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":1605,\"markDone\":{\"tapAt\":{\"x\":705.03125,\"y\":206.25,\"w\":79,\"h\":44,\"top\":184.25},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":265.5625,\"undoY\":265.5625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1798,\"modalFrames\":28,\"frames\":2836,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":204,\"Crossed off. Nice work. Undo\":15,\"Couldn’t save just now. Your summary is still he\":260,\"Recipe done: Take a full tea break · +10 leaves\":243,\"Recipe done: Take 2 full tea breaks · +15 leaves\":276,\"Kettle’s off. See you soon.\":196,\"Brew updated\":251,\"Brew deleted Undo\":30,\"A notice on Settings, here to be read.\":250,\"A notice on Nook, here to be read.\":88}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":61,\"modalFrames\":0,\"frames\":178,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":61}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 58718,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:12:46.639Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":1605,\"markDone\":{\"tapAt\":{\"x\":705.03125,\"y\":206.25,\"w\":79,\"h\":44,\"top\":184.25},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":265.5625,\"undoY\":265.5625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1798,\"modalFrames\":28,\"frames\":2836,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":204,\"Crossed off. Nice work. Undo\":15,\"Couldn’t save just now. Your summary is still he\":260,\"Recipe done: Take a full tea break · +10 leaves\":243,\"Recipe done: Take 2 full tea breaks · +15 leaves\":276,\"Kettle’s off. See you soon.\":196,\"Brew updated\":251,\"Brew deleted Undo\":30,\"A notice on Settings, here to be read.\":250,\"A notice on Nook, here to be read.\":88}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":61,\"modalFrames\":0,\"frames\":178,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":61}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-5308e49c11b2ee57e9e0",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":2832,\"markDone\":{\"tapAt\":{\"x\":534.03125,\"y\":117.59375,\"w\":151,\"h\":44,\"top\":95.59375},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":178.375,\"undoY\":178.375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1911,\"modalFrames\":38,\"frames\":3237,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":249,\"Crossed off. Nice work. Undo\":19,\"Couldn’t save just now. Your summary is still he\":242,\"Recipe done: Take a full tea break · +10 leaves\":244,\"Recipe done: Take 2 full tea breaks · +15 leaves\":271,\"Kettle’s off. See you soon.\":196,\"Brew updated\":252,\"Brew deleted Undo\":92,\"A notice on Settings, here to be read.\":264,\"A notice on Nook, here to be read.\":92}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":56,\"modalFrames\":0,\"frames\":197,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":56}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 65534,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:13:04.811Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":2832,\"markDone\":{\"tapAt\":{\"x\":534.03125,\"y\":117.59375,\"w\":151,\"h\":44,\"top\":95.59375},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":178.375,\"undoY\":178.375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1911,\"modalFrames\":38,\"frames\":3237,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":249,\"Crossed off. Nice work. Undo\":19,\"Couldn’t save just now. Your summary is still he\":242,\"Recipe done: Take a full tea break · +10 leaves\":244,\"Recipe done: Take 2 full tea breaks · +15 leaves\":271,\"Kettle’s off. See you soon.\":196,\"Brew updated\":252,\"Brew deleted Undo\":92,\"A notice on Settings, here to be read.\":264,\"A notice on Nook, here to be read.\":92}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":56,\"modalFrames\":0,\"frames\":197,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":56}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-1b665e06c69eaba4d2ce",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":2244,\"markDone\":{\"tapAt\":{\"x\":534.03125,\"y\":117.59375,\"w\":151,\"h\":44,\"top\":95.59375},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":178.375,\"undoY\":178.375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1796,\"modalFrames\":53,\"frames\":2954,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":231,\"Crossed off. Nice work. Undo\":10,\"Couldn’t save just now. Your summary is still he\":246,\"Recipe done: Take a full tea break · +10 leaves\":228,\"Recipe done: Take 2 full tea breaks · +15 leaves\":275,\"Kettle’s off. See you soon.\":194,\"Brew updated\":246,\"Brew deleted Undo\":31,\"A notice on Settings, here to be read.\":269,\"A notice on Nook, here to be read.\":70}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":53,\"modalFrames\":0,\"frames\":181,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":53}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 55705,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:13:45.404Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":2244,\"markDone\":{\"tapAt\":{\"x\":534.03125,\"y\":117.59375,\"w\":151,\"h\":44,\"top\":95.59375},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":178.375,\"undoY\":178.375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1796,\"modalFrames\":53,\"frames\":2954,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":231,\"Crossed off. Nice work. Undo\":10,\"Couldn’t save just now. Your summary is still he\":246,\"Recipe done: Take a full tea break · +10 leaves\":228,\"Recipe done: Take 2 full tea breaks · +15 leaves\":275,\"Kettle’s off. See you soon.\":194,\"Brew updated\":246,\"Brew deleted Undo\":31,\"A notice on Settings, here to be read.\":269,\"A notice on Nook, here to be read.\":70}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":53,\"modalFrames\":0,\"frames\":181,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":53}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-d1bf87c34eb1f5e16fc2",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":807,\"markDone\":{\"tapAt\":{\"x\":705.03125,\"y\":206.25,\"w\":79,\"h\":44,\"top\":184.25},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":265.5625,\"undoY\":265.5625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1743,\"modalFrames\":26,\"frames\":2758,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":202,\"Crossed off. Nice work. Undo\":7,\"Couldn’t save just now. Your summary is still he\":239,\"Recipe done: Take a full tea break · +10 leaves\":244,\"Recipe done: Take 2 full tea breaks · +15 leaves\":258,\"Kettle’s off. See you soon.\":194,\"Brew updated\":246,\"Brew deleted Undo\":30,\"A notice on Settings, here to be read.\":249,\"A notice on Nook, here to be read.\":81}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":61,\"modalFrames\":0,\"frames\":182,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":61}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 57335,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:14:10.390Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":807,\"markDone\":{\"tapAt\":{\"x\":705.03125,\"y\":206.25,\"w\":79,\"h\":44,\"top\":184.25},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":265.5625,\"undoY\":265.5625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1743,\"modalFrames\":26,\"frames\":2758,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":202,\"Crossed off. Nice work. Undo\":7,\"Couldn’t save just now. Your summary is still he\":239,\"Recipe done: Take a full tea break · +10 leaves\":244,\"Recipe done: Take 2 full tea breaks · +15 leaves\":258,\"Kettle’s off. See you soon.\":194,\"Brew updated\":246,\"Brew deleted Undo\":30,\"A notice on Settings, here to be read.\":249,\"A notice on Nook, here to be read.\":81}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":61,\"modalFrames\":0,\"frames\":182,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":61}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-534f3443fdda9ebe0ea4",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":1941,\"markDone\":{\"tapAt\":{\"x\":534.03125,\"y\":117.59375,\"w\":151,\"h\":44,\"top\":95.59375},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":178.375,\"undoY\":178.375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1739,\"modalFrames\":19,\"frames\":2942,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":201,\"Crossed off. Nice work. Undo\":8,\"Couldn’t save just now. Your summary is still he\":248,\"Recipe done: Take a full tea break · +10 leaves\":249,\"Recipe done: Take 2 full tea breaks · +15 leaves\":237,\"Kettle’s off. See you soon.\":199,\"Brew updated\":248,\"Brew deleted Undo\":15,\"A notice on Settings, here to be read.\":262,\"A notice on Nook, here to be read.\":68}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":55,\"modalFrames\":0,\"frames\":184,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":55}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 59903,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:14:41.125Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":1941,\"markDone\":{\"tapAt\":{\"x\":534.03125,\"y\":117.59375,\"w\":151,\"h\":44,\"top\":95.59375},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":178.375,\"undoY\":178.375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1739,\"modalFrames\":19,\"frames\":2942,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":201,\"Crossed off. Nice work. Undo\":8,\"Couldn’t save just now. Your summary is still he\":248,\"Recipe done: Take a full tea break · +10 leaves\":249,\"Recipe done: Take 2 full tea breaks · +15 leaves\":237,\"Kettle’s off. See you soon.\":199,\"Brew updated\":248,\"Brew deleted Undo\":15,\"A notice on Settings, here to be read.\":262,\"A notice on Nook, here to be read.\":68}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":55,\"modalFrames\":0,\"frames\":184,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":55}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-752f263f0d8de218589b",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (667×375 light 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":1253,\"markDone\":{\"tapAt\":{\"x\":417.578125,\"y\":195.75,\"w\":79,\"h\":44,\"top\":173.75},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":270.46875,\"undoY\":270.46875},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1732,\"modalFrames\":31,\"frames\":2982,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":201,\"Crossed off. Nice work. Undo\":9,\"Couldn’t save just now. Your summary is still he\":245,\"Recipe done: Take a full tea break · +10 leaves\":224,\"Recipe done: Take 2 full tea breaks · +15 leaves\":244,\"Kettle’s off. See you soon.\":197,\"Brew updated\":253,\"Brew deleted Undo\":42,\"A notice on Settings, here to be read.\":251,\"A notice on Nook, here to be read.\":75}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":62,\"modalFrames\":0,\"frames\":180,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":62}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 60647,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:15:07.737Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":1253,\"markDone\":{\"tapAt\":{\"x\":417.578125,\"y\":195.75,\"w\":79,\"h\":44,\"top\":173.75},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":270.46875,\"undoY\":270.46875},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1732,\"modalFrames\":31,\"frames\":2982,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":201,\"Crossed off. Nice work. Undo\":9,\"Couldn’t save just now. Your summary is still he\":245,\"Recipe done: Take a full tea break · +10 leaves\":224,\"Recipe done: Take 2 full tea breaks · +15 leaves\":244,\"Kettle’s off. See you soon.\":197,\"Brew updated\":253,\"Brew deleted Undo\":42,\"A notice on Settings, here to be read.\":251,\"A notice on Nook, here to be read.\":75}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":62,\"modalFrames\":0,\"frames\":180,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":62}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-2f285d9bd1dd1a7dfb86",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":1581,\"markDone\":{\"tapAt\":{\"x\":453.578125,\"y\":336.6875,\"w\":151,\"h\":44,\"top\":314.6875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":218.484375,\"undoY\":218.484375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1807,\"modalFrames\":33,\"frames\":3146,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":206,\"Crossed off. Nice work. Undo\":10,\"Couldn’t save just now. Your summary is still he\":258,\"Recipe done: Take a full tea break · +10 leaves\":244,\"Recipe done: Take 2 full tea breaks · +15 leaves\":284,\"Kettle’s off. See you soon.\":197,\"Brew updated\":249,\"Brew deleted Undo\":18,\"A notice on Settings, here to be read.\":261,\"A notice on Nook, here to be read.\":84}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":54,\"modalFrames\":0,\"frames\":173,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":54}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 63766,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:15:41.043Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":1581,\"markDone\":{\"tapAt\":{\"x\":453.578125,\"y\":336.6875,\"w\":151,\"h\":44,\"top\":314.6875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":218.484375,\"undoY\":218.484375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1807,\"modalFrames\":33,\"frames\":3146,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":206,\"Crossed off. Nice work. Undo\":10,\"Couldn’t save just now. Your summary is still he\":258,\"Recipe done: Take a full tea break · +10 leaves\":244,\"Recipe done: Take 2 full tea breaks · +15 leaves\":284,\"Kettle’s off. See you soon.\":197,\"Brew updated\":249,\"Brew deleted Undo\":18,\"A notice on Settings, here to be read.\":261,\"A notice on Nook, here to be read.\":84}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":54,\"modalFrames\":0,\"frames\":173,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":54}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-e857f26d8c039ffc5b37",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 % reduced motion)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":1016,\"markDone\":{\"tapAt\":{\"x\":453.578125,\"y\":336.6875,\"w\":151,\"h\":44,\"top\":314.6875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":218.484375,\"undoY\":218.484375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1820,\"modalFrames\":14,\"frames\":2923,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":202,\"Crossed off. Nice work. Undo\":11,\"Couldn’t save just now. Your summary is still he\":253,\"Recipe done: Take a full tea break · +10 leaves\":233,\"Recipe done: Take 2 full tea breaks · +15 leaves\":279,\"Kettle’s off. See you soon.\":195,\"Brew updated\":253,\"Brew deleted Undo\":34,\"A notice on Settings, here to be read.\":264,\"A notice on Nook, here to be read.\":101}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":53,\"modalFrames\":0,\"frames\":174,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":53}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 55494,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:16:08.402Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":1016,\"markDone\":{\"tapAt\":{\"x\":453.578125,\"y\":336.6875,\"w\":151,\"h\":44,\"top\":314.6875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":218.484375,\"undoY\":218.484375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1820,\"modalFrames\":14,\"frames\":2923,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":202,\"Crossed off. Nice work. Undo\":11,\"Couldn’t save just now. Your summary is still he\":253,\"Recipe done: Take a full tea break · +10 leaves\":233,\"Recipe done: Take 2 full tea breaks · +15 leaves\":279,\"Kettle’s off. See you soon.\":195,\"Brew updated\":253,\"Brew deleted Undo\":34,\"A notice on Settings, here to be read.\":264,\"A notice on Nook, here to be read.\":101}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":53,\"modalFrames\":0,\"frames\":174,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":53}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-2811ce49d2da5f805c13",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":1068,\"markDone\":{\"tapAt\":{\"x\":417.578125,\"y\":195.75,\"w\":79,\"h\":44,\"top\":173.75},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":270.46875,\"undoY\":270.46875},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1747,\"modalFrames\":23,\"frames\":2886,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":203,\"Crossed off. Nice work. Undo\":8,\"Couldn’t save just now. Your summary is still he\":254,\"Recipe done: Take a full tea break · +10 leaves\":237,\"Recipe done: Take 2 full tea breaks · +15 leaves\":261,\"Kettle’s off. See you soon.\":198,\"Brew updated\":247,\"Brew deleted Undo\":19,\"A notice on Settings, here to be read.\":252,\"A notice on Nook, here to be read.\":76}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":60,\"modalFrames\":0,\"frames\":178,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":60}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 57991,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:16:44.826Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":1068,\"markDone\":{\"tapAt\":{\"x\":417.578125,\"y\":195.75,\"w\":79,\"h\":44,\"top\":173.75},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":270.46875,\"undoY\":270.46875},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1747,\"modalFrames\":23,\"frames\":2886,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":203,\"Crossed off. Nice work. Undo\":8,\"Couldn’t save just now. Your summary is still he\":254,\"Recipe done: Take a full tea break · +10 leaves\":237,\"Recipe done: Take 2 full tea breaks · +15 leaves\":261,\"Kettle’s off. See you soon.\":198,\"Brew updated\":247,\"Brew deleted Undo\":19,\"A notice on Settings, here to be read.\":252,\"A notice on Nook, here to be read.\":76}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":60,\"modalFrames\":0,\"frames\":178,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":60}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-845634207b4974f5bbcb",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":1485,\"markDone\":{\"tapAt\":{\"x\":453.578125,\"y\":336.6875,\"w\":151,\"h\":44,\"top\":314.6875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":218.484375,\"undoY\":218.484375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1767,\"modalFrames\":34,\"frames\":3167,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":202,\"Crossed off. Nice work. Undo\":11,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":241,\"Recipe done: Take 2 full tea breaks · +15 leaves\":253,\"Kettle’s off. See you soon.\":199,\"Brew updated\":249,\"Brew deleted Undo\":15,\"A notice on Settings, here to be read.\":270,\"A notice on Nook, here to be read.\":81}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":55,\"modalFrames\":0,\"frames\":182,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":55}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 63209,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:17:03.914Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":1485,\"markDone\":{\"tapAt\":{\"x\":453.578125,\"y\":336.6875,\"w\":151,\"h\":44,\"top\":314.6875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":218.484375,\"undoY\":218.484375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1767,\"modalFrames\":34,\"frames\":3167,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":202,\"Crossed off. Nice work. Undo\":11,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":241,\"Recipe done: Take 2 full tea breaks · +15 leaves\":253,\"Kettle’s off. See you soon.\":199,\"Brew updated\":249,\"Brew deleted Undo\":15,\"A notice on Settings, here to be read.\":270,\"A notice on Nook, here to be read.\":81}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":55,\"modalFrames\":0,\"frames\":182,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":55}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-23d9db0d174438859871",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":870,\"markDone\":{\"tapAt\":{\"x\":554.5,\"y\":521.390625,\"w\":79,\"h\":44,\"top\":499.390625},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":824.484375,\"undoY\":824.484375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1919,\"modalFrames\":20,\"frames\":3144,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":197,\"Crossed off. Nice work. Undo\":92,\"Couldn’t save just now. Your summary is still he\":251,\"Recipe done: Take a full tea break · +10 leaves\":229,\"Recipe done: Take 2 full tea breaks · +15 leaves\":242,\"Kettle’s off. See you soon.\":199,\"Brew updated\":243,\"Brew deleted Undo\":222,\"A notice on Settings, here to be read.\":259,\"A notice on Nook, here to be read.\":77}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":123,\"modalFrames\":0,\"frames\":251,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":123}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 66715,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:17:42.833Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":870,\"markDone\":{\"tapAt\":{\"x\":554.5,\"y\":521.390625,\"w\":79,\"h\":44,\"top\":499.390625},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":824.484375,\"undoY\":824.484375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1919,\"modalFrames\":20,\"frames\":3144,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":197,\"Crossed off. Nice work. Undo\":92,\"Couldn’t save just now. Your summary is still he\":251,\"Recipe done: Take a full tea break · +10 leaves\":229,\"Recipe done: Take 2 full tea breaks · +15 leaves\":242,\"Kettle’s off. See you soon.\":199,\"Brew updated\":243,\"Brew deleted Undo\":222,\"A notice on Settings, here to be read.\":259,\"A notice on Nook, here to be read.\":77}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":123,\"modalFrames\":0,\"frames\":251,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":123}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-4d779135bdbab53e7659",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":2429,\"markDone\":{\"tapAt\":{\"x\":773.5,\"y\":707.1875,\"w\":151,\"h\":44,\"top\":685.1875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":757.15625,\"undoY\":757.15625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1880,\"modalFrames\":40,\"frames\":3244,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":252,\"Crossed off. Nice work. Undo\":17,\"Couldn’t save just now. Your summary is still he\":245,\"Recipe done: Take a full tea break · +10 leaves\":207,\"Recipe done: Take 2 full tea breaks · +15 leaves\":272,\"Kettle’s off. See you soon.\":195,\"Brew updated\":253,\"Brew deleted Undo\":134,\"A notice on Settings, here to be read.\":267,\"A notice on Nook, here to be read.\":55}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":107,\"modalFrames\":0,\"frames\":281,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":107}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 68597,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:18:07.136Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":2429,\"markDone\":{\"tapAt\":{\"x\":773.5,\"y\":707.1875,\"w\":151,\"h\":44,\"top\":685.1875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":757.15625,\"undoY\":757.15625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1880,\"modalFrames\":40,\"frames\":3244,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":252,\"Crossed off. Nice work. Undo\":17,\"Couldn’t save just now. Your summary is still he\":245,\"Recipe done: Take a full tea break · +10 leaves\":207,\"Recipe done: Take 2 full tea breaks · +15 leaves\":272,\"Kettle’s off. See you soon.\":195,\"Brew updated\":253,\"Brew deleted Undo\":134,\"A notice on Settings, here to be read.\":267,\"A notice on Nook, here to be read.\":55}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":107,\"modalFrames\":0,\"frames\":281,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":107}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-c23cc5f5e64fae14edb4",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":2296,\"markDone\":{\"tapAt\":{\"x\":773.5,\"y\":707.1875,\"w\":151,\"h\":44,\"top\":685.1875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":757.15625,\"undoY\":757.15625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1766,\"modalFrames\":22,\"frames\":3153,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":271,\"Crossed off. Nice work. Undo\":31,\"Couldn’t save just now. Your summary is still he\":250,\"Recipe done: Take a full tea break · +10 leaves\":191,\"Recipe done: Take 2 full tea breaks · +15 leaves\":247,\"Kettle’s off. See you soon.\":196,\"Brew updated\":257,\"Brew deleted Undo\":30,\"A notice on Settings, here to be read.\":270,\"A notice on Nook, here to be read.\":54}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":47,\"modalFrames\":0,\"frames\":178,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":47}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 59556,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:18:49.587Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":2296,\"markDone\":{\"tapAt\":{\"x\":773.5,\"y\":707.1875,\"w\":151,\"h\":44,\"top\":685.1875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":757.15625,\"undoY\":757.15625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1766,\"modalFrames\":22,\"frames\":3153,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":271,\"Crossed off. Nice work. Undo\":31,\"Couldn’t save just now. Your summary is still he\":250,\"Recipe done: Take a full tea break · +10 leaves\":191,\"Recipe done: Take 2 full tea breaks · +15 leaves\":247,\"Kettle’s off. See you soon.\":196,\"Brew updated\":257,\"Brew deleted Undo\":30,\"A notice on Settings, here to be read.\":270,\"A notice on Nook, here to be read.\":54}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":47,\"modalFrames\":0,\"frames\":178,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":47}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-a2916a12dcacd3db0592",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":836,\"markDone\":{\"tapAt\":{\"x\":554.5,\"y\":521.390625,\"w\":79,\"h\":44,\"top\":499.390625},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":824.484375,\"undoY\":824.484375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1771,\"modalFrames\":44,\"frames\":2768,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":200,\"Crossed off. Nice work. Undo\":16,\"Couldn’t save just now. Your summary is still he\":255,\"Recipe done: Take a full tea break · +10 leaves\":239,\"Recipe done: Take 2 full tea breaks · +15 leaves\":244,\"Kettle’s off. See you soon.\":199,\"Brew updated\":243,\"Brew deleted Undo\":47,\"A notice on Settings, here to be read.\":251,\"A notice on Nook, here to be read.\":93}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":61,\"modalFrames\":0,\"frames\":182,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":61}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 57762,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:19:15.742Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":836,\"markDone\":{\"tapAt\":{\"x\":554.5,\"y\":521.390625,\"w\":79,\"h\":44,\"top\":499.390625},\"undo\":{\"n\":9,\"w\":43,\"h\":44}},\"historyUndo\":{\"rowY\":824.484375,\"undoY\":824.484375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1771,\"modalFrames\":44,\"frames\":2768,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":200,\"Crossed off. Nice work. Undo\":16,\"Couldn’t save just now. Your summary is still he\":255,\"Recipe done: Take a full tea break · +10 leaves\":239,\"Recipe done: Take 2 full tea breaks · +15 leaves\":244,\"Kettle’s off. See you soon.\":199,\"Brew updated\":243,\"Brew deleted Undo\":47,\"A notice on Settings, here to be read.\":251,\"A notice on Nook, here to be read.\":93}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":61,\"modalFrames\":0,\"frames\":182,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":61}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-4f8a5fb4be7b6420a4e3",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":2008,\"markDone\":{\"tapAt\":{\"x\":773.5,\"y\":707.1875,\"w\":151,\"h\":44,\"top\":685.1875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":757.15625,\"undoY\":757.15625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1727,\"modalFrames\":25,\"frames\":2758,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":218,\"Crossed off. Nice work. Undo\":6,\"Couldn’t save just now. Your summary is still he\":251,\"Recipe done: Take a full tea break · +10 leaves\":205,\"Recipe done: Take 2 full tea breaks · +15 leaves\":247,\"Kettle’s off. See you soon.\":197,\"Brew updated\":245,\"Brew deleted Undo\":25,\"A notice on Settings, here to be read.\":267,\"A notice on Nook, here to be read.\":72}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":113,\"modalFrames\":0,\"frames\":318,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":113}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 60614,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:19:49.156Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":2008,\"markDone\":{\"tapAt\":{\"x\":773.5,\"y\":707.1875,\"w\":151,\"h\":44,\"top\":685.1875},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":757.15625,\"undoY\":757.15625},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1727,\"modalFrames\":25,\"frames\":2758,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":218,\"Crossed off. Nice work. Undo\":6,\"Couldn’t save just now. Your summary is still he\":251,\"Recipe done: Take a full tea break · +10 leaves\":205,\"Recipe done: Take 2 full tea breaks · +15 leaves\":247,\"Kettle’s off. See you soon.\":197,\"Brew updated\":245,\"Brew deleted Undo\":25,\"A notice on Settings, here to be read.\":267,\"A notice on Nook, here to be read.\":72}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":113,\"modalFrames\":0,\"frames\":318,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":113}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-ab74110eac3ee3adf5a7",
+          "file": "notice-strip.spec.ts",
+          "line": 338,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "summary-notice.spec.ts",
+      "file": "summary-notice.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (375×667 light 100 %, task day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 28870,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:20:13.562Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-b196d57f599557bd0769",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (375×667 light 100 %, big day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 28360,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:20:42.473Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-578111fa20e44b93b81e",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (375×667 dark 200 %, task day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 29387,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:20:49.797Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-43ed0427f16e2b48ca69",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (375×667 dark 200 %, big day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 28005,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:21:10.844Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-209e38d4edc035328a96",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (390×844 dark 100 %, task day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28192,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:21:19.199Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-d49a8d0a1002f34bf24b",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (390×844 dark 100 %, big day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 28026,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:21:38.861Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-853b32b3779580fb84a6",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (390×844 light 200 %, task day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28056,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:21:47.399Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-5931d12df3836115ae74",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (390×844 light 200 %, big day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 28234,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:22:06.911Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-9fd30054307f59f36fcd",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (844×390 light 100 %, task day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28112,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:22:15.465Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-96587176746646a51304",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (844×390 light 100 %, big day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 28121,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:22:35.161Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-7d66ab87c047fd1fac3b",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (667×375 dark 100 %, task day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28008,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:22:43.611Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-8043d5f6770471434f4a",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (667×375 dark 100 %, big day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 28013,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:23:03.298Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-a2ab3542b5902d505c12",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (1440×900 light 100 %, task day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28377,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:23:11.633Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-5a929bd757d8e39be832",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        },
+        {
+          "title": "queued notices never move the summary, then appear on Today in order, each said once (1440×900 light 100 %, big day)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 28474,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:23:31.322Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6c5f68789db1378c7600-83f3fde88bd3ddaa9e22",
+          "file": "summary-notice.spec.ts",
+          "line": 116,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "toast-room.spec.ts",
+      "file": "toast-room.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by wheel (375×667, 200 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 20238,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:23:40.051Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-eb34e94778a8ab4b6074",
+          "file": "toast-room.spec.ts",
+          "line": 192,
+          "column": 5
+        },
+        {
+          "title": "the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by touch (375×667, 200 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 31174,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:24:00.310Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-f93a962c800303e0b822",
+          "file": "toast-room.spec.ts",
+          "line": 192,
+          "column": 5
+        },
+        {
+          "title": "the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by wheel (844×390, 200 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16178,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:24:31.505Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-b1873a0d487987e1ebdf",
+          "file": "toast-room.spec.ts",
+          "line": 192,
+          "column": 5
+        },
+        {
+          "title": "the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by touch (844×390, 200 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21663,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:24:47.699Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-6574a136f1e1d63bae6e",
+          "file": "toast-room.spec.ts",
+          "line": 192,
+          "column": 5
+        },
+        {
+          "title": "the storage-full banner stays in the page, whole and steady, while every notice in the strip is read by wheel (667×375, 200 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 20130,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:25:09.382Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-4a2ee5149f0edb96c770",
+          "file": "toast-room.spec.ts",
+          "line": 192,
+          "column": 5
+        },
+        {
+          "title": "the storage-full banner stays in the page, whole and steady, while every notice in the strip is read by touch (667×375, 200 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 25185,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:25:29.522Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-09682fa8763678d8d687",
+          "file": "toast-room.spec.ts",
+          "line": 192,
+          "column": 5
+        },
+        {
+          "title": "notices timing out, and the endless update prompt, never move the banner under the person (375×667, 200 % text, wheel, light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21709,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:25:54.714Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-920d17743e51b1d7d32f",
+          "file": "toast-room.spec.ts",
+          "line": 262,
+          "column": 3
+        },
+        {
+          "title": "notices timing out, and the endless update prompt, never move the banner under the person (375×667, 200 % text, wheel, dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21781,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:26:16.432Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-8e405dbd8456fee6d1d7",
+          "file": "toast-room.spec.ts",
+          "line": 262,
+          "column": 3
+        },
+        {
+          "title": "the last notice leaves where it was, never over the docked start (375×667, 200 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4819,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:26:38.221Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-af664ab410e4960abacf",
+          "file": "toast-room.spec.ts",
+          "line": 297,
+          "column": 3
+        },
+        {
+          "title": "the last notice leaves where it was, never over the docked start (844×390, 200 % text)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4878,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:26:43.051Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-37f0777a71ad476793cf",
+          "file": "toast-room.spec.ts",
+          "line": 297,
+          "column": 3
+        },
+        {
+          "title": "three notices never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13886,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:26:47.950Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-ac03c871ae5178f52159",
+          "file": "toast-room.spec.ts",
+          "line": 431,
+          "column": 3
+        },
+        {
+          "title": "three notices never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13745,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:27:01.848Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-317ac783a5030a98f614",
+          "file": "toast-room.spec.ts",
+          "line": 431,
+          "column": 3
+        },
+        {
+          "title": "the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (667×375, 200 % text, wheel, light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 18004,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:27:15.606Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-2d786135ad7a5489a843",
+          "file": "toast-room.spec.ts",
+          "line": 466,
+          "column": 3
+        },
+        {
+          "title": "the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (844×390, 200 % text, touch, dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 24175,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:27:33.650Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cf2005c28928a96621dc-fc99f0bcafd61d9ab589",
+          "file": "toast-room.spec.ts",
+          "line": 466,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "w3-notices-idle.spec.ts",
+      "file": "w3-notices-idle.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "band lifetime a-no-input (390x844-light-t100)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5288,\"room\":68,\"commits\":[{\"t\":9376,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8592,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":4088,\"collapseAfterLastBusyMs\":4088,\"visibleMove\":68}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 10442,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 390x844-light-t100 a-no-input {\"leftAt\":5288,\"room\":68,\"commits\":[{\"t\":9376,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8592,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":4088,\"collapseAfterLastBusyMs\":4088,\"visibleMove\":68}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:23:59.826Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5288,\"room\":68,\"commits\":[{\"t\":9376,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8592,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":4088,\"collapseAfterLastBusyMs\":4088,\"visibleMove\":68}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-2b393b9bd47696060c64",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime b-scroll-then-idle (390x844-light-t100)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5280,\"room\":68,\"maxSy\":492,\"scrollMs\":3313,\"roomAfterScroll\":68,\"commits\":[{\"t\":12688,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4095,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":7408,\"collapseAfterLastBusyMs\":4095,\"visibleMove\":68}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 14357,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 390x844-light-t100 b-scroll-then-idle {\"leftAt\":5280,\"room\":68,\"maxSy\":492,\"scrollMs\":3313,\"roomAfterScroll\":68,\"commits\":[{\"t\":12688,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4095,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":7408,\"collapseAfterLastBusyMs\":4095,\"visibleMove\":68}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:24:10.277Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5280,\"room\":68,\"maxSy\":492,\"scrollMs\":3313,\"roomAfterScroll\":68,\"commits\":[{\"t\":12688,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4095,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":7408,\"collapseAfterLastBusyMs\":4095,\"visibleMove\":68}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-2f3a5794b72df223e398",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime c-pointer-held (390x844-light-t100)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5303,\"room\":68,\"roomWhileDown\":68,\"downWhileHeld\":1,\"commits\":[{\"t\":5313,\"why\":\"rest\",\"room\":68,\"shown\":null,\"down\":0,\"sinceInput\":4500,\"topBefore\":132,\"topAfter\":132,\"sy\":0},{\"t\":12513,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4057,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":7210,\"collapseAfterLastBusyMs\":4057,\"visibleMove\":68}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 13458,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 390x844-light-t100 c-pointer-held {\"leftAt\":5303,\"room\":68,\"roomWhileDown\":68,\"downWhileHeld\":1,\"commits\":[{\"t\":5313,\"why\":\"rest\",\"room\":68,\"shown\":null,\"down\":0,\"sinceInput\":4500,\"topBefore\":132,\"topAfter\":132,\"sy\":0},{\"t\":12513,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4057,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":7210,\"collapseAfterLastBusyMs\":4057,\"visibleMove\":68}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:24:24.650Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5303,\"room\":68,\"roomWhileDown\":68,\"downWhileHeld\":1,\"commits\":[{\"t\":5313,\"why\":\"rest\",\"room\":68,\"shown\":null,\"down\":0,\"sinceInput\":4500,\"topBefore\":132,\"topAfter\":132,\"sy\":0},{\"t\":12513,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4057,\"topBefore\":132,\"topAfter\":64,\"sy\":0}],\"collapseAfterLeaveMs\":7210,\"collapseAfterLastBusyMs\":4057,\"visibleMove\":68}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-3ebadc155b9d396d8aef",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime a-no-input (390x844-dark-t200-rm)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5256,\"room\":113,\"commits\":[{\"t\":5264,\"why\":\"rest\",\"room\":113,\"shown\":null,\"down\":0,\"sinceInput\":4526,\"topBefore\":250.09375,\"topAfter\":250.09375,\"sy\":0},{\"t\":9360,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8622,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":4104,\"collapseAfterLastBusyMs\":4104,\"visibleMove\":113}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 10170,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 390x844-dark-t200-rm a-no-input {\"leftAt\":5256,\"room\":113,\"commits\":[{\"t\":5264,\"why\":\"rest\",\"room\":113,\"shown\":null,\"down\":0,\"sinceInput\":4526,\"topBefore\":250.09375,\"topAfter\":250.09375,\"sy\":0},{\"t\":9360,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8622,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":4104,\"collapseAfterLastBusyMs\":4104,\"visibleMove\":113}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:24:38.121Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5256,\"room\":113,\"commits\":[{\"t\":5264,\"why\":\"rest\",\"room\":113,\"shown\":null,\"down\":0,\"sinceInput\":4526,\"topBefore\":250.09375,\"topAfter\":250.09375,\"sy\":0},{\"t\":9360,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8622,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":4104,\"collapseAfterLastBusyMs\":4104,\"visibleMove\":113}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-b40a54dafb1d915e3305",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime b-scroll-then-idle (390x844-dark-t200-rm)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5387,\"room\":113,\"maxSy\":494,\"scrollMs\":3368,\"roomAfterScroll\":113,\"commits\":[{\"t\":12800,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4045,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7413,\"collapseAfterLastBusyMs\":4045,\"visibleMove\":113}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 13846,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 390x844-dark-t200-rm b-scroll-then-idle {\"leftAt\":5387,\"room\":113,\"maxSy\":494,\"scrollMs\":3368,\"roomAfterScroll\":113,\"commits\":[{\"t\":12800,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4045,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7413,\"collapseAfterLastBusyMs\":4045,\"visibleMove\":113}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:24:48.302Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5387,\"room\":113,\"maxSy\":494,\"scrollMs\":3368,\"roomAfterScroll\":113,\"commits\":[{\"t\":12800,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4045,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7413,\"collapseAfterLastBusyMs\":4045,\"visibleMove\":113}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-542c5569d791e9815a6a",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime c-pointer-held (390x844-dark-t200-rm)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5249,\"room\":113,\"roomWhileDown\":113,\"downWhileHeld\":1,\"commits\":[{\"t\":12448,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4088,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7199,\"collapseAfterLastBusyMs\":4088,\"visibleMove\":113}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 13342,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 390x844-dark-t200-rm c-pointer-held {\"leftAt\":5249,\"room\":113,\"roomWhileDown\":113,\"downWhileHeld\":1,\"commits\":[{\"t\":12448,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4088,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7199,\"collapseAfterLastBusyMs\":4088,\"visibleMove\":113}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:25:02.161Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5249,\"room\":113,\"roomWhileDown\":113,\"downWhileHeld\":1,\"commits\":[{\"t\":12448,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4088,\"topBefore\":250.09375,\"topAfter\":137.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7199,\"collapseAfterLastBusyMs\":4088,\"visibleMove\":113}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-37179a47501d887f87c3",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime a-no-input (1440x900-light-t100)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5239,\"room\":68,\"commits\":[{\"t\":5248,\"why\":\"rest\",\"room\":68,\"shown\":null,\"down\":0,\"sinceInput\":4508,\"topBefore\":168,\"topAfter\":168,\"sy\":0},{\"t\":9344,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8604,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":4105,\"collapseAfterLastBusyMs\":4105,\"visibleMove\":68}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 10320,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 1440x900-light-t100 a-no-input {\"leftAt\":5239,\"room\":68,\"commits\":[{\"t\":5248,\"why\":\"rest\",\"room\":68,\"shown\":null,\"down\":0,\"sinceInput\":4508,\"topBefore\":168,\"topAfter\":168,\"sy\":0},{\"t\":9344,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8604,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":4105,\"collapseAfterLastBusyMs\":4105,\"visibleMove\":68}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:25:15.523Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5239,\"room\":68,\"commits\":[{\"t\":5248,\"why\":\"rest\",\"room\":68,\"shown\":null,\"down\":0,\"sinceInput\":4508,\"topBefore\":168,\"topAfter\":168,\"sy\":0},{\"t\":9344,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8604,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":4105,\"collapseAfterLastBusyMs\":4105,\"visibleMove\":68}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-94e5020336bc54616e44",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime b-scroll-then-idle (1440x900-light-t100)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5220,\"room\":68,\"maxSy\":11,\"scrollMs\":2592,\"roomAfterScroll\":68,\"commits\":[{\"t\":11920,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4108,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":6700,\"collapseAfterLastBusyMs\":4108,\"visibleMove\":68}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 12956,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 1440x900-light-t100 b-scroll-then-idle {\"leftAt\":5220,\"room\":68,\"maxSy\":11,\"scrollMs\":2592,\"roomAfterScroll\":68,\"commits\":[{\"t\":11920,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4108,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":6700,\"collapseAfterLastBusyMs\":4108,\"visibleMove\":68}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:25:25.859Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5220,\"room\":68,\"maxSy\":11,\"scrollMs\":2592,\"roomAfterScroll\":68,\"commits\":[{\"t\":11920,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4108,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":6700,\"collapseAfterLastBusyMs\":4108,\"visibleMove\":68}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-a22d0fb53eda16803b33",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime c-pointer-held (1440x900-light-t100)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5193,\"room\":68,\"roomWhileDown\":68,\"downWhileHeld\":1,\"commits\":[{\"t\":12497,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4043,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":7304,\"collapseAfterLastBusyMs\":4043,\"visibleMove\":68}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 13519,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 1440x900-light-t100 c-pointer-held {\"leftAt\":5193,\"room\":68,\"roomWhileDown\":68,\"downWhileHeld\":1,\"commits\":[{\"t\":12497,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4043,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":7304,\"collapseAfterLastBusyMs\":4043,\"visibleMove\":68}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:25:38.827Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5193,\"room\":68,\"roomWhileDown\":68,\"downWhileHeld\":1,\"commits\":[{\"t\":12497,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4043,\"topBefore\":168,\"topAfter\":100,\"sy\":0}],\"collapseAfterLeaveMs\":7304,\"collapseAfterLastBusyMs\":4043,\"visibleMove\":68}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-7756696967abb3660636",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime a-no-input (1440x900-dark-t200-rm)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5224,\"room\":113,\"commits\":[{\"t\":5232,\"why\":\"rest\",\"room\":113,\"shown\":null,\"down\":0,\"sinceInput\":4494,\"topBefore\":234.09375,\"topAfter\":234.09375,\"sy\":0},{\"t\":9344,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8606,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":4120,\"collapseAfterLastBusyMs\":4120,\"visibleMove\":113}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 10297,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 1440x900-dark-t200-rm a-no-input {\"leftAt\":5224,\"room\":113,\"commits\":[{\"t\":5232,\"why\":\"rest\",\"room\":113,\"shown\":null,\"down\":0,\"sinceInput\":4494,\"topBefore\":234.09375,\"topAfter\":234.09375,\"sy\":0},{\"t\":9344,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8606,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":4120,\"collapseAfterLastBusyMs\":4120,\"visibleMove\":113}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:25:52.356Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5224,\"room\":113,\"commits\":[{\"t\":5232,\"why\":\"rest\",\"room\":113,\"shown\":null,\"down\":0,\"sinceInput\":4494,\"topBefore\":234.09375,\"topAfter\":234.09375,\"sy\":0},{\"t\":9344,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":8606,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":4120,\"collapseAfterLastBusyMs\":4120,\"visibleMove\":113}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-995aa033149bdb1a3fb1",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime b-scroll-then-idle (1440x900-dark-t200-rm)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5222,\"room\":113,\"maxSy\":300,\"scrollMs\":2174,\"roomAfterScroll\":113,\"commits\":[{\"t\":5232,\"why\":\"rest\",\"room\":113,\"shown\":null,\"down\":0,\"sinceInput\":4495,\"topBefore\":234.09375,\"topAfter\":234.09375,\"sy\":0},{\"t\":11440,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4044,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":6218,\"collapseAfterLastBusyMs\":4044,\"visibleMove\":113}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 12405,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 1440x900-dark-t200-rm b-scroll-then-idle {\"leftAt\":5222,\"room\":113,\"maxSy\":300,\"scrollMs\":2174,\"roomAfterScroll\":113,\"commits\":[{\"t\":5232,\"why\":\"rest\",\"room\":113,\"shown\":null,\"down\":0,\"sinceInput\":4495,\"topBefore\":234.09375,\"topAfter\":234.09375,\"sy\":0},{\"t\":11440,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4044,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":6218,\"collapseAfterLastBusyMs\":4044,\"visibleMove\":113}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:26:02.669Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5222,\"room\":113,\"maxSy\":300,\"scrollMs\":2174,\"roomAfterScroll\":113,\"commits\":[{\"t\":5232,\"why\":\"rest\",\"room\":113,\"shown\":null,\"down\":0,\"sinceInput\":4495,\"topBefore\":234.09375,\"topAfter\":234.09375,\"sy\":0},{\"t\":11440,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4044,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":6218,\"collapseAfterLastBusyMs\":4044,\"visibleMove\":113}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-92ffeecbc30f29ed3ff6",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        },
+        {
+          "title": "band lifetime c-pointer-held (1440x900-dark-t200-rm)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"leftAt\":5349,\"room\":113,\"roomWhileDown\":113,\"downWhileHeld\":1,\"commits\":[{\"t\":12640,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4050,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7291,\"collapseAfterLastBusyMs\":4050,\"visibleMove\":113}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 13736,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "FACT 1440x900-dark-t200-rm c-pointer-held {\"leftAt\":5349,\"room\":113,\"roomWhileDown\":113,\"downWhileHeld\":1,\"commits\":[{\"t\":12640,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4050,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7291,\"collapseAfterLastBusyMs\":4050,\"visibleMove\":113}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:26:15.084Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"leftAt\":5349,\"room\":113,\"roomWhileDown\":113,\"downWhileHeld\":1,\"commits\":[{\"t\":12640,\"why\":\"idle\",\"room\":0,\"shown\":null,\"down\":0,\"sinceInput\":4050,\"topBefore\":234.09375,\"topAfter\":121.09375,\"sy\":0}],\"collapseAfterLeaveMs\":7291,\"collapseAfterLastBusyMs\":4050,\"visibleMove\":113}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d98b08013ef0b60fad9-5f5d24b1253e5eec74e2",
+          "file": "w3-notices-idle.spec.ts",
+          "line": 80,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "w3-notices.spec.ts",
+      "file": "w3-notices.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 light 200 % reduced motion)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"aimed\":{\"x\":773.5,\"y\":767.1875,\"top\":745.1875,\"at\":4545},\"why\":\"rest\",\"leftToTapMs\":-2,\"frames\":231,\"framesWithNotice\":186,\"moved\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 13905,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:26:28.842Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"aimed\":{\"x\":773.5,\"y\":767.1875,\"top\":745.1875,\"at\":4545},\"why\":\"rest\",\"leftToTapMs\":-2,\"frames\":231,\"framesWithNotice\":186,\"moved\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-fea3b8e26f891dc6aacb",
+          "file": "w3-notices.spec.ts",
+          "line": 111,
+          "column": 3
+        },
+        {
+          "title": "End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 light 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"aimed\":{\"x\":282.5,\"y\":578,\"top\":556,\"at\":5251},\"why\":\"rest\",\"leftToTapMs\":81,\"frames\":225,\"framesWithNotice\":177,\"moved\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 14913,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:26:42.764Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"aimed\":{\"x\":282.5,\"y\":578,\"top\":556,\"at\":5251},\"why\":\"rest\",\"leftToTapMs\":81,\"frames\":225,\"framesWithNotice\":177,\"moved\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-d13ab2ba7f8176c5afb1",
+          "file": "w3-notices.spec.ts",
+          "line": 111,
+          "column": 3
+        },
+        {
+          "title": "End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 dark 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"aimed\":{\"x\":282.5,\"y\":578,\"top\":556,\"at\":5641},\"why\":\"rest\",\"leftToTapMs\":7,\"frames\":229,\"framesWithNotice\":177,\"moved\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 15057,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:26:57.700Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"aimed\":{\"x\":282.5,\"y\":578,\"top\":556,\"at\":5641},\"why\":\"rest\",\"leftToTapMs\":7,\"frames\":229,\"framesWithNotice\":177,\"moved\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-1570ac95d2b05fa8c872",
+          "file": "w3-notices.spec.ts",
+          "line": 111,
+          "column": 3
+        },
+        {
+          "title": "End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 dark 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"aimed\":{\"x\":554.5,\"y\":521.390625,\"top\":499.390625,\"at\":6994},\"why\":\"rest\",\"leftToTapMs\":15,\"frames\":165,\"framesWithNotice\":139,\"moved\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 15798,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:27:12.773Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"aimed\":{\"x\":554.5,\"y\":521.390625,\"top\":499.390625,\"at\":6994},\"why\":\"rest\",\"leftToTapMs\":15,\"frames\":165,\"framesWithNotice\":139,\"moved\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-738af81993b363550427",
+          "file": "w3-notices.spec.ts",
+          "line": 111,
+          "column": 3
+        },
+        {
+          "title": "End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (844×390 dark 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"aimed\":{\"x\":705.03125,\"y\":206.25,\"top\":184.25,\"at\":4529},\"why\":\"rest\",\"leftToTapMs\":96,\"frames\":226,\"framesWithNotice\":182,\"moved\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 14027,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:27:28.587Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"aimed\":{\"x\":705.03125,\"y\":206.25,\"top\":184.25,\"at\":4529},\"why\":\"rest\",\"leftToTapMs\":96,\"frames\":226,\"framesWithNotice\":182,\"moved\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-54f3a7e107eefd74a7d1",
+          "file": "w3-notices.spec.ts",
+          "line": 111,
+          "column": 3
+        },
+        {
+          "title": "the room a gone notice keeps stays while the page is scrolled, and goes on the same screen once idle (390×844, 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"room\":113,\"during\":{\"moved\":[],\"room\":113},\"why\":\"idle\",\"sinceInputAtCollapse\":-1226779}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 15546,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:27:42.625Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"room\":113,\"during\":{\"moved\":[],\"room\":113},\"why\":\"idle\",\"sinceInputAtCollapse\":-1226779}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-7197bc9ab644a4252b30",
+          "file": "w3-notices.spec.ts",
+          "line": 158,
+          "column": 1
+        },
+        {
+          "title": "the room is not given back while a pointer is held; it goes 4–6.5 s after release (1440×900, 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"held\":{\"room\":68,\"down\":1},\"afterUpMs\":4037,\"afterLastInputMs\":4033,\"why\":\"idle\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16953,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:27:57.864Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"held\":{\"room\":68,\"down\":1},\"afterUpMs\":4037,\"afterLastInputMs\":4033,\"why\":\"idle\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-c67f982bc003334545f5",
+          "file": "w3-notices.spec.ts",
+          "line": 210,
+          "column": 1
+        },
+        {
+          "title": "a new screen starts with no room: Today after End, then Stats and back (375×667, 100 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 11074,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:27:58.186Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-ea7346334b1019a35f6e",
+          "file": "w3-notices.spec.ts",
+          "line": 239,
+          "column": 1
+        },
+        {
+          "title": "the status bar warm-days button is named \"N days warm. Show details\" (and \", today not brewed yet\")",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 4017,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T19:28:09.276Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a0e3fbf0a4a3e72efba6-26bbb466c6bb60b6525a",
+          "file": "w3-notices.spec.ts",
+          "line": 265,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-17T19:07:12.039Z",
+    "duration": 1262933.084,
+    "expected": 74,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
