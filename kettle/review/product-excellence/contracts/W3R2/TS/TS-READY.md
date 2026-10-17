@@ -9,7 +9,7 @@
 - Every browser run went through the gate: `slots.py run --lane TS --n 1|2 -- …` (`scripts/gate.sh`). Each log has `### start` / `### end` lines with the load average (1, 5, 15 min).
 - The injection runs use the scratch config `scratch/ts-pw.config.ts.txt` (the same projects, `testDir` pointed at the scratch copies).
 
-## 1. The changes (`scratch/spec-changes.diff.txt` is the whole diff, 33 insertions, 9 deletions)
+## 1. The changes (`scratch/spec-changes.diff.txt` is the whole diff against the base, 46 insertions, 10 deletions)
 
 Note: after the edit the hidden-page test is at `timer.spec.ts:189` (it was `:183`); `:156` is unchanged. The notice test is still `notice-strip.spec.ts:~358` (the line moved by the added lines in `press()`); it is found by name.
 
