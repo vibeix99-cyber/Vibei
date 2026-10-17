@@ -48,3 +48,16 @@ Running 1 test using 1 worker
 
 [inject] dock: dock in the flow: sticky top 182 bottom 390 of 390
 [inject] dock: docked: sticky top 182 bottom 390 of 390
+  ✓  1 [chromium] › .tmp/lead6/ts/new/notice-strip.spec.ts:453:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (1.1m)
+
+  1 passed (1.2m)
+### end 20:43:40 exit=0 load 16.70 17.01 15.25
+
+######## I-notice-new-transient: KETTLE_PORT=5560 COVER=transient npx playwright test -c .tmp/lead6/ts-pw.config.ts ts/new/notice-strip.spec.ts --project=chromium -g real input \(844×390 dark 200 %\) --workers=1
+### start 20:43:40 load 16.70 17.01 15.25
+
+Running 1 test using 1 worker
+
+[inject] transient cover over getByRole('textbox', { name: /What are you brewing/ }) for 300 ms at 20:43:46.586
+[inject] re-check: covered at 20:43:46.601
+[inject] aim again 1 at 20:43:46.852
