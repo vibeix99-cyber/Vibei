@@ -1,3 +1,7 @@
 ### start 21:04:13 UTC; load:  21:04:13 up  5:14,  0 user,  load average: 13.55, 13.33, 13.70
 ### cmd: node .tmp/RR-2tab-g.mjs g-5560-control http://127.0.0.1:5560 5 /home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/review/R2/rerun/manual g
 ### g-5560-control http://127.0.0.1:5560 N=5 cases=g start 21:04:14 load 13.55 13.33 13.70
+[21:04:34] g-5560-control (g) it1 FAIL load 13.55 13.33 13.70->11.83 12.95 13.57 failed: B_joined_A_brew_after_its_click,A_storage_byte_identical_after_B_click,no_second_brew_started_by_B,one_record_for_joined_brew_everywhere
+    A=idle/null/25m/ends=null
+    B=idle/null/25m/ends=null
+    S=idle/null/25m/ends=null  S(read in B)=idle/null/25m/ends=null  pageErrors=0
