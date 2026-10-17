@@ -1,0 +1,649 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w8q/kettle/playwright.config.ts",
+    "rootDir": "/home/user/wt/w8q/kettle/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w8q/kettle/.tmp/ts-out/load-notice338",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "timer-harness",
+        "name": "timer-harness",
+        "testDir": "/home/user/wt/w8q/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w8q/kettle/.tmp/ts-out/load-notice338",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "timer-app",
+        "name": "timer-app",
+        "testDir": "/home/user/wt/w8q/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w8q/kettle/.tmp/ts-out/load-notice338",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pwa",
+        "name": "pwa",
+        "testDir": "/home/user/wt/w8q/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/pwa\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/home/user/wt/w8q/kettle/.tmp/ts-out/load-notice338",
+        "repeatEach": 10,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w8q/kettle/tests",
+        "testIgnore": [
+          "/(timer|pwa)\\.spec\\.ts/"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 2,
+    "webServer": {
+      "command": "npx vite --config tests/e2e.vite.config.ts --port 5583 --strictPort",
+      "url": "http://127.0.0.1:5583/",
+      "reuseExistingServer": true,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "notice-strip.spec.ts",
+      "file": "notice-strip.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5688,
+                  "error": {
+                    "message": "Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m",
+                    "stack": "Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n    at press (/home/user/wt/w8q/kettle/tests/notice-strip.spec.ts:316:60)\n    at /home/user/wt/w8q/kettle/tests/notice-strip.spec.ts:366:5",
+                    "location": {
+                      "file": "/home/user/wt/w8q/kettle/tests/notice-strip.spec.ts",
+                      "column": 60,
+                      "line": 316
+                    },
+                    "snippet": "  314 |     if (at && ((same && Date.now() - t < 800) || round >= 4)) break;\n  315 |   }\n> 316 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();\n      |                                                            ^\n  317 |   if (touch) {\n  318 |     await page.touchscreen.tap(at!.x, at!.y);\n  319 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w8q/kettle/tests/notice-strip.spec.ts",
+                        "column": 60,
+                        "line": 316
+                      },
+                      "message": "Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\n  314 |     if (at && ((same && Date.now() - t < 800) || round >= 4)) break;\n  315 |   }\n> 316 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();\n      |                                                            ^\n  317 |   if (touch) {\n  318 |     await page.touchscreen.tap(at!.x, at!.y);\n  319 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)\n    at press (/home/user/wt/w8q/kettle/tests/notice-strip.spec.ts:316:60)\n    at /home/user/wt/w8q/kettle/tests/notice-strip.spec.ts:366:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T16:44:44.598Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w8q/kettle/.tmp/ts-out/load-notice338/notice-strip-no-notice-ove-011b9-eal-input-844×390-dark-200--chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w8q/kettle/tests/notice-strip.spec.ts",
+                    "column": 60,
+                    "line": 316
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-752f263f0d8de218589b",
+          "file": "notice-strip.spec.ts",
+          "line": 354,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":2210,\"markDone\":{\"tapAt\":{\"x\":534.03125,\"y\":117.59375,\"w\":151,\"h\":44,\"top\":95.59375},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":178.375,\"undoY\":178.375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1893,\"modalFrames\":54,\"frames\":3916,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":238,\"Crossed off. Nice work. Undo\":14,\"Couldn’t save just now. Your summary is still he\":257,\"Recipe done: Take a full tea break · +10 leaves\":256,\"Recipe done: Take 2 full tea breaks · +15 leaves\":249,\"Kettle’s off. See you soon.\":200,\"Brew updated\":259,\"Brew deleted Undo\":99,\"A notice on Settings, here to be read.\":264,\"A notice on Nook, here to be read.\":61}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":64,\"modalFrames\":0,\"frames\":256,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":64}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 79676,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T16:44:43.973Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":2210,\"markDone\":{\"tapAt\":{\"x\":534.03125,\"y\":117.59375,\"w\":151,\"h\":44,\"top\":95.59375},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":178.375,\"undoY\":178.375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1893,\"modalFrames\":54,\"frames\":3916,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":238,\"Crossed off. Nice work. Undo\":14,\"Couldn’t save just now. Your summary is still he\":257,\"Recipe done: Take a full tea break · +10 leaves\":256,\"Recipe done: Take 2 full tea breaks · +15 leaves\":249,\"Kettle’s off. See you soon.\":200,\"Brew updated\":259,\"Brew deleted Undo\":99,\"A notice on Settings, here to be read.\":264,\"A notice on Nook, here to be read.\":61}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":64,\"modalFrames\":0,\"frames\":256,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":64}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-d900a1af8206f18d11dd",
+          "file": "notice-strip.spec.ts",
+          "line": 354,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5478,
+                  "error": {
+                    "message": "Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m",
+                    "stack": "Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n    at press (/home/user/wt/w8q/kettle/tests/notice-strip.spec.ts:316:60)\n    at /home/user/wt/w8q/kettle/tests/notice-strip.spec.ts:366:5",
+                    "location": {
+                      "file": "/home/user/wt/w8q/kettle/tests/notice-strip.spec.ts",
+                      "column": 60,
+                      "line": 316
+                    },
+                    "snippet": "  314 |     if (at && ((same && Date.now() - t < 800) || round >= 4)) break;\n  315 |   }\n> 316 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();\n      |                                                            ^\n  317 |   if (touch) {\n  318 |     await page.touchscreen.tap(at!.x, at!.y);\n  319 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w8q/kettle/tests/notice-strip.spec.ts",
+                        "column": 60,
+                        "line": 316
+                      },
+                      "message": "Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\n  314 |     if (at && ((same && Date.now() - t < 800) || round >= 4)) break;\n  315 |   }\n> 316 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();\n      |                                                            ^\n  317 |   if (touch) {\n  318 |     await page.touchscreen.tap(at!.x, at!.y);\n  319 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)\n    at press (/home/user/wt/w8q/kettle/tests/notice-strip.spec.ts:316:60)\n    at /home/user/wt/w8q/kettle/tests/notice-strip.spec.ts:366:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T16:44:56.414Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w8q/kettle/.tmp/ts-out/load-notice338/notice-strip-no-notice-ove-011b9-eal-input-844×390-dark-200--chromium-repeat2/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w8q/kettle/tests/notice-strip.spec.ts",
+                    "column": 60,
+                    "line": 316
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-f8bd8cf661b87a043c2c",
+          "file": "notice-strip.spec.ts",
+          "line": 354,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":3298,\"markDone\":{\"tapAt\":{\"x\":534.03125,\"y\":117.59375,\"w\":151,\"h\":44,\"top\":95.59375},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":197.875,\"undoY\":197.875},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1825,\"modalFrames\":33,\"frames\":3897,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":220,\"Crossed off. Nice work. Undo\":19,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":246,\"Recipe done: Take 2 full tea breaks · +15 leaves\":237,\"Kettle’s off. See you soon.\":200,\"Brew updated\":250,\"Brew deleted Undo\":51,\"A notice on Settings, here to be read.\":278,\"A notice on Nook, here to be read.\":78}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":83,\"modalFrames\":0,\"frames\":223,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":83}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 79017,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T16:45:06.457Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":3298,\"markDone\":{\"tapAt\":{\"x\":534.03125,\"y\":117.59375,\"w\":151,\"h\":44,\"top\":95.59375},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":197.875,\"undoY\":197.875},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1825,\"modalFrames\":33,\"frames\":3897,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":220,\"Crossed off. Nice work. Undo\":19,\"Couldn’t save just now. Your summary is still he\":249,\"Recipe done: Take a full tea break · +10 leaves\":246,\"Recipe done: Take 2 full tea breaks · +15 leaves\":237,\"Kettle’s off. See you soon.\":200,\"Brew updated\":250,\"Brew deleted Undo\":51,\"A notice on Settings, here to be read.\":278,\"A notice on Nook, here to be read.\":78}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":83,\"modalFrames\":0,\"frames\":223,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":83}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-aca40de46865590ebce6",
+          "file": "notice-strip.spec.ts",
+          "line": 354,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":4304,\"markDone\":{\"tapAt\":{\"x\":534.03125,\"y\":117.59375,\"w\":151,\"h\":44,\"top\":95.59375},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":178.375,\"undoY\":178.375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1899,\"modalFrames\":27,\"frames\":3850,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":268,\"Crossed off. Nice work. Undo\":20,\"Couldn’t save just now. Your summary is still he\":246,\"Recipe done: Take a full tea break · +10 leaves\":259,\"Recipe done: Take 2 full tea breaks · +15 leaves\":303,\"Kettle’s off. See you soon.\":195,\"Brew updated\":257,\"Brew deleted Undo\":31,\"A notice on Settings, here to be read.\":264,\"A notice on Nook, here to be read.\":67}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":58,\"modalFrames\":0,\"frames\":190,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":58}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 76748,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T16:46:08.567Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":4304,\"markDone\":{\"tapAt\":{\"x\":534.03125,\"y\":117.59375,\"w\":151,\"h\":44,\"top\":95.59375},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":178.375,\"undoY\":178.375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1899,\"modalFrames\":27,\"frames\":3850,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":268,\"Crossed off. Nice work. Undo\":20,\"Couldn’t save just now. Your summary is still he\":246,\"Recipe done: Take a full tea break · +10 leaves\":259,\"Recipe done: Take 2 full tea breaks · +15 leaves\":303,\"Kettle’s off. See you soon.\":195,\"Brew updated\":257,\"Brew deleted Undo\":31,\"A notice on Settings, here to be read.\":264,\"A notice on Nook, here to be read.\":67}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":58,\"modalFrames\":0,\"frames\":190,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":58}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-fae7f8cd0fde9ad80d43",
+          "file": "notice-strip.spec.ts",
+          "line": 354,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4702,
+                  "error": {
+                    "message": "Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m",
+                    "stack": "Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n    at press (/home/user/wt/w8q/kettle/tests/notice-strip.spec.ts:316:60)\n    at /home/user/wt/w8q/kettle/tests/notice-strip.spec.ts:366:5",
+                    "location": {
+                      "file": "/home/user/wt/w8q/kettle/tests/notice-strip.spec.ts",
+                      "column": 60,
+                      "line": 316
+                    },
+                    "snippet": "  314 |     if (at && ((same && Date.now() - t < 800) || round >= 4)) break;\n  315 |   }\n> 316 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();\n      |                                                            ^\n  317 |   if (touch) {\n  318 |     await page.touchscreen.tap(at!.x, at!.y);\n  319 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w8q/kettle/tests/notice-strip.spec.ts",
+                        "column": 60,
+                        "line": 316
+                      },
+                      "message": "Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\n  314 |     if (at && ((same && Date.now() - t < 800) || round >= 4)) break;\n  315 |   }\n> 316 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();\n      |                                                            ^\n  317 |   if (touch) {\n  318 |     await page.touchscreen.tap(at!.x, at!.y);\n  319 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)\n    at press (/home/user/wt/w8q/kettle/tests/notice-strip.spec.ts:316:60)\n    at /home/user/wt/w8q/kettle/tests/notice-strip.spec.ts:366:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T16:46:28.858Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w8q/kettle/.tmp/ts-out/load-notice338/notice-strip-no-notice-ove-011b9-eal-input-844×390-dark-200--chromium-repeat5/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w8q/kettle/tests/notice-strip.spec.ts",
+                    "column": 60,
+                    "line": 316
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-b0f4423b125bc55b2610",
+          "file": "notice-strip.spec.ts",
+          "line": 354,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":2591,\"markDone\":{\"tapAt\":{\"x\":534.03125,\"y\":117.59375,\"w\":151,\"h\":44,\"top\":95.59375},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":178.375,\"undoY\":178.375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1827,\"modalFrames\":24,\"frames\":3604,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":254,\"Crossed off. Nice work. Undo\":14,\"Couldn’t save just now. Your summary is still he\":255,\"Recipe done: Take a full tea break · +10 leaves\":251,\"Recipe done: Take 2 full tea breaks · +15 leaves\":245,\"Kettle’s off. See you soon.\":196,\"Brew updated\":264,\"Brew deleted Undo\":28,\"A notice on Settings, here to be read.\":275,\"A notice on Nook, here to be read.\":50}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":65,\"modalFrames\":0,\"frames\":205,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":65}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 72682,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T16:46:36.883Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":2591,\"markDone\":{\"tapAt\":{\"x\":534.03125,\"y\":117.59375,\"w\":151,\"h\":44,\"top\":95.59375},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":178.375,\"undoY\":178.375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1827,\"modalFrames\":24,\"frames\":3604,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":254,\"Crossed off. Nice work. Undo\":14,\"Couldn’t save just now. Your summary is still he\":255,\"Recipe done: Take a full tea break · +10 leaves\":251,\"Recipe done: Take 2 full tea breaks · +15 leaves\":245,\"Kettle’s off. See you soon.\":196,\"Brew updated\":264,\"Brew deleted Undo\":28,\"A notice on Settings, here to be read.\":275,\"A notice on Nook, here to be read.\":50}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":65,\"modalFrames\":0,\"frames\":205,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":65}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-c3840f3269202f12ce06",
+          "file": "notice-strip.spec.ts",
+          "line": 354,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 4829,
+                  "error": {
+                    "message": "Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m",
+                    "stack": "Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n    at press (/home/user/wt/w8q/kettle/tests/notice-strip.spec.ts:316:60)\n    at /home/user/wt/w8q/kettle/tests/notice-strip.spec.ts:366:5",
+                    "location": {
+                      "file": "/home/user/wt/w8q/kettle/tests/notice-strip.spec.ts",
+                      "column": 60,
+                      "line": 316
+                    },
+                    "snippet": "  314 |     if (at && ((same && Date.now() - t < 800) || round >= 4)) break;\n  315 |   }\n> 316 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();\n      |                                                            ^\n  317 |   if (touch) {\n  318 |     await page.touchscreen.tap(at!.x, at!.y);\n  319 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w8q/kettle/tests/notice-strip.spec.ts",
+                        "column": 60,
+                        "line": 316
+                      },
+                      "message": "Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\n  314 |     if (at && ((same && Date.now() - t < 800) || round >= 4)) break;\n  315 |   }\n> 316 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();\n      |                                                            ^\n  317 |   if (touch) {\n  318 |     await page.touchscreen.tap(at!.x, at!.y);\n  319 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)\n    at press (/home/user/wt/w8q/kettle/tests/notice-strip.spec.ts:316:60)\n    at /home/user/wt/w8q/kettle/tests/notice-strip.spec.ts:366:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T16:47:28.510Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w8q/kettle/.tmp/ts-out/load-notice338/notice-strip-no-notice-ove-011b9-eal-input-844×390-dark-200--chromium-repeat7/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w8q/kettle/tests/notice-strip.spec.ts",
+                    "column": 60,
+                    "line": 316
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-a3ba5a13c1e059b1c6d4",
+          "file": "notice-strip.spec.ts",
+          "line": 354,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":2890,\"markDone\":{\"tapAt\":{\"x\":534.03125,\"y\":117.59375,\"w\":151,\"h\":44,\"top\":95.59375},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":178.375,\"undoY\":178.375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1764,\"modalFrames\":22,\"frames\":3486,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":209,\"Crossed off. Nice work. Undo\":15,\"Couldn’t save just now. Your summary is still he\":252,\"Recipe done: Take a full tea break · +10 leaves\":245,\"Recipe done: Take 2 full tea breaks · +15 leaves\":235,\"Kettle’s off. See you soon.\":198,\"Brew updated\":255,\"Brew deleted Undo\":30,\"A notice on Settings, here to be read.\":264,\"A notice on Nook, here to be read.\":66}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":53,\"modalFrames\":0,\"frames\":202,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":53}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 69385,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T16:47:36.217Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":2890,\"markDone\":{\"tapAt\":{\"x\":534.03125,\"y\":117.59375,\"w\":151,\"h\":44,\"top\":95.59375},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":178.375,\"undoY\":178.375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1764,\"modalFrames\":22,\"frames\":3486,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":209,\"Crossed off. Nice work. Undo\":15,\"Couldn’t save just now. Your summary is still he\":252,\"Recipe done: Take a full tea break · +10 leaves\":245,\"Recipe done: Take 2 full tea breaks · +15 leaves\":235,\"Kettle’s off. See you soon.\":198,\"Brew updated\":255,\"Brew deleted Undo\":30,\"A notice on Settings, here to be read.\":264,\"A notice on Nook, here to be read.\":66}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":53,\"modalFrames\":0,\"frames\":202,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":53}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-b475ecb6f6a01a7b8388",
+          "file": "notice-strip.spec.ts",
+          "line": 354,
+          "column": 3
+        },
+        {
+          "title": "no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [
+                {
+                  "type": "facts",
+                  "description": "{\"markDoneTapMs\":2488,\"markDone\":{\"tapAt\":{\"x\":534.03125,\"y\":117.59375,\"w\":151,\"h\":44,\"top\":95.59375},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":178.375,\"undoY\":178.375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1874,\"modalFrames\":26,\"frames\":3555,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":250,\"Crossed off. Nice work. Undo\":10,\"Couldn’t save just now. Your summary is still he\":251,\"Recipe done: Take a full tea break · +10 leaves\":249,\"Recipe done: Take 2 full tea breaks · +15 leaves\":261,\"Kettle’s off. See you soon.\":200,\"Brew updated\":255,\"Brew deleted Undo\":34,\"A notice on Settings, here to be read.\":260,\"A notice on Nook, here to be read.\":105}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":59,\"modalFrames\":0,\"frames\":203,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":59}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 69885,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T16:47:52.480Z",
+                  "annotations": [
+                    {
+                      "type": "facts",
+                      "description": "{\"markDoneTapMs\":2488,\"markDone\":{\"tapAt\":{\"x\":534.03125,\"y\":117.59375,\"w\":151,\"h\":44,\"top\":95.59375},\"undo\":{\"n\":9,\"w\":80,\"h\":44}},\"historyUndo\":{\"rowY\":178.375,\"undoY\":178.375},\"keyboardFallbacks\":[],\"app\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":1874,\"modalFrames\":26,\"frames\":3555,\"cut\":0,\"seen\":{\"Saved 3 minutes of focus\":250,\"Crossed off. Nice work. Undo\":10,\"Couldn’t save just now. Your summary is still he\":251,\"Recipe done: Take a full tea break · +10 leaves\":249,\"Recipe done: Take 2 full tea breaks · +15 leaves\":261,\"Kettle’s off. See you soon.\":200,\"Brew updated\":255,\"Brew deleted Undo\":34,\"A notice on Settings, here to be read.\":260,\"A notice on Nook, here to be read.\":105}},\"welcome\":{\"hits\":[],\"hitCount\":0,\"underChrome\":0,\"chrome\":{},\"noticeFrames\":59,\"modalFrames\":0,\"frames\":203,\"cut\":0,\"seen\":{\"A fresh brew of Kettle is ready.\":59}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3f25de2b0f28ee7ec52d-8f3a68748ec7d12676ab",
+          "file": "notice-strip.spec.ts",
+          "line": 354,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-17T16:44:39.627Z",
+    "duration": 263149.36199999996,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}
