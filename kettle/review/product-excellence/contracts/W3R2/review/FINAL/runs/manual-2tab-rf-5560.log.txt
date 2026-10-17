@@ -38,3 +38,21 @@
     A=running/s_mvcy7l/25m/ends=1792276508551
     B=running/s_mvcy7l/25m/ends=1792276508551
     S=running/s_mvcy7l/25m/ends=1792276508551  S(read in B)=running/s_mvcy7l/25m/ends=1792276508551  pageErrors=0
+[22:08:58] rf-5560 (f) it3 PASS load 11.35 10.60 11.97->12.88 10.97 12.07
+    A=running/s_mvcy7y/25m/ends=1792276524889
+    B=running/s_mvcy7y/25m/ends=1792276524889
+    S=running/s_mvcy7y/25m/ends=1792276524889  S(read in B)=running/s_mvcy7y/25m/ends=1792276524889  pageErrors=0
+### case (f) rf-5560: pass 3/3 {"precondition_B_behind":3,"brew2_running_A_B_storage":3,"A_B_storage_agree":3,"brew2_not_extended_or_ended":3,"brew2_not_paused":3,"no_pause_or_resume_sound_in_B_when_dropped":3,"B_shows_focus":3,"records_brew1_exactly_one_stored":3,"records_brew1_exactly_one_A_memory":3,"records_brew1_exactly_one_B_memory":3,"no_record_for_brew2":3}
+[22:09:11] rf-5560 (a) it1 PASS load 12.88 10.97 12.07->11.98 10.87 12.02
+    A=paused/s_mvcy84/30m/ends=null
+    B=paused/s_mvcy84/30m/ends=null
+    S=paused/s_mvcy84/30m/ends=null  S(read in B)=paused/s_mvcy84/30m/ends=null  pageErrors=0
+[22:09:18] rf-5560 (a) it2 PASS load 11.98 10.87 12.02->11.66 10.82 12.00
+    A=paused/s_mvcy8e/30m/ends=null
+    B=paused/s_mvcy8e/30m/ends=null
+    S=paused/s_mvcy8e/30m/ends=null  S(read in B)=paused/s_mvcy8e/30m/ends=null  pageErrors=0
+[22:09:29] rf-5560 (a) it3 PASS load 11.66 10.82 12.00->11.53 10.83 11.99
+    A=paused/s_mvcy8l/30m/ends=null
+    B=paused/s_mvcy8l/30m/ends=null
+    S=paused/s_mvcy8l/30m/ends=null  S(read in B)=paused/s_mvcy8l/30m/ends=null  pageErrors=0
+### case (a) rf-5560: pass 3/3 {"precondition_B_behind":3,"paused_in_A":3,"paused_in_B":3,"paused_in_storage":3,"same_session_A_B_storage":3,"kept_plus5_A_B_storage":3,"A_B_storage_agree":3,"remaining_gt_planned_minus_2min":3,"pause_sound_played_in_B_when_applied":3}
