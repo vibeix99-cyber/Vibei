@@ -34,3 +34,13 @@ Running 15 tests using 2 workers
   ✓  10 [chromium] › tests/w3r2-stale-tab.spec.ts:317:1 › start in the lagging tab (Today, Enter) while the other tab’s brew runs: it does not replace that brew; it joins and shows it (11.0s)
   ✓  11 [chromium] › tests/w3r2-stale-tab.spec.ts:154:1 › pause in the lagging tab: the brew current in storage pauses, with its real remaining time (the other tab’s +5 kept) (7.0s)
   ✓  12 [chromium] › tests/w3r2-stale-tab.spec.ts:197:1 › add 5 in the lagging tab after the other tab ended its brew and started another: nothing added, the newer brew untouched, the lagging tab shows it (8.4s)
+  ✓  13 [chromium] › tests/w3r2-stale-tab.spec.ts:237:1 › Next brew in the lagging tab after the other tab already did: it joins that brew; ending it there later still says so and goes home (12.0s)
+  ✓  14 [chromium] › tests/w3r2-stale-tab.spec.ts:287:1 › end in the lagging tab after the other tab ended its brew and started another: the newer brew is not ended, the lagging tab shows it (8.6s)
+  ✓  15 [chromium] › tests/w3r2-stale-tab.spec.ts:317:1 › start in the lagging tab (Today, Enter) while the other tab’s brew runs: it does not replace that brew; it joins and shows it (7.8s)
+
+  15 passed (1.9m)
+--- stale-tab end 22:40:28 exit=0 load 12.54 7.98 6.74
+--- notice-844x390-dark200 start 22:40:28 load 12.54 7.98 6.74
+
+Running 5 tests using 2 workers
+
