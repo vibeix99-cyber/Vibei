@@ -21,3 +21,5 @@ Running 25 tests using 1 worker
   ✓  17 [chromium] › tests/integrity.spec.ts:880:3 › I03 data safety › storage full: a brew that completes still reaches its summary, once; saved data stays intact; a backup carries the brew; making room saves it (23.2s)
   ✓  18 [chromium] › tests/integrity.spec.ts:916:3 › I03 data safety › storage full: a restore that cannot be saved is refused with a plain reason and changes nothing (10.7s)
   ✓  19 [chromium] › tests/integrity.spec.ts:942:3 › I03 data safety › “Everything lives on this device”: a brew, an export and an import send nothing anywhere (13.3s)
+  ✓  20 [chromium] › tests/integrity.spec.ts:1048:5 › I03 storage-full warning is a banner in the page (phone 390×844) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room (34.3s)
+  ✓  21 [chromium] › tests/integrity.spec.ts:1148:5 › I03 storage-full warning is a banner in the page (phone 390×844) › a banner that appears while Today is open moves nothing under the finger (Mark done with storage full) (8.2s)
