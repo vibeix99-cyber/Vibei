@@ -1,0 +1,113 @@
+{
+ "label": "fix-5591",
+ "base": "http://127.0.0.1:5591",
+ "N": 5,
+ "cases": {
+  "a": {
+   "iterations": 5,
+   "pass": 5,
+   "fail": 0,
+   "perCheck": {
+    "precondition_B_behind": 5,
+    "paused_in_A": 5,
+    "paused_in_B": 5,
+    "paused_in_storage": 5,
+    "same_session_A_B_storage": 5,
+    "kept_plus5_A_B_storage": 5,
+    "A_B_storage_agree": 5,
+    "remaining_gt_planned_minus_2min": 5
+   },
+   "exceptions": 0,
+   "pageErrors": 0,
+   "plus5Notes": []
+  },
+  "b": {
+   "iterations": 5,
+   "pass": 5,
+   "fail": 0,
+   "perCheck": {
+    "precondition_B_behind": 5,
+    "same_session_A_B_storage": 5,
+    "A_B_storage_agree": 5,
+    "still_paused_A_B_storage": 5,
+    "plus5_applied_A_B_storage": 5
+   },
+   "exceptions": 0,
+   "pageErrors": 0,
+   "plus5Notes": []
+  },
+  "c": {
+   "iterations": 5,
+   "pass": 5,
+   "fail": 0,
+   "perCheck": {
+    "precondition_B_behind": 5,
+    "brew2_running_A_B_storage": 5,
+    "A_B_storage_agree": 5,
+    "brew2_not_extended_or_ended": 5,
+    "B_shows_focus": 5,
+    "records_brew1_exactly_one_stored": 5,
+    "records_brew1_exactly_one_A_memory": 5,
+    "records_brew1_exactly_one_B_memory": 5,
+    "no_record_for_brew2": 5
+   },
+   "exceptions": 0,
+   "pageErrors": 0,
+   "plus5Notes": []
+  },
+  "d": {
+   "iterations": 5,
+   "pass": 5,
+   "fail": 0,
+   "perCheck": {
+    "paused_in_A_and_B_after_B_pause": 5,
+    "plus5_in_A_B_storage": 5,
+    "still_paused_after_plus5": 5,
+    "brew1_ended_idle_in_A_B_storage": 5,
+    "brew1_one_record_everywhere": 5,
+    "brew2_one_record_everywhere": 5,
+    "final_idle_A_B_storage_agree": 5,
+    "exactly_two_records_total": 5
+   },
+   "exceptions": 0,
+   "pageErrors": 0,
+   "plus5Notes": []
+  },
+  "e": {
+   "iterations": 5,
+   "pass": 5,
+   "fail": 0,
+   "perCheck": {
+    "precondition_B_behind": 5,
+    "brew2_running_A_B_storage": 5,
+    "A_B_storage_agree": 5,
+    "brew2_not_extended_or_ended": 5,
+    "B_shows_focus": 5,
+    "storage_byte_identical_after_B_click": 5
+   },
+   "exceptions": 0,
+   "pageErrors": 0,
+   "plus5Notes": [
+    [
+     "5 min · whistles at 6:40 PM now"
+    ],
+    [
+     "5 min · whistles at 6:40 PM now"
+    ],
+    [
+     "5 min · whistles at 6:41 PM now"
+    ],
+    [
+     "5 min · whistles at 6:41 PM now"
+    ],
+    [
+     "5 min · whistles at 6:42 PM now"
+    ]
+   ]
+  }
+ },
+ "startedAt": "18:07:15",
+ "loadAtStart": "12.31 13.11 13.32",
+ "endedAt": "18:15:34",
+ "loadAtEnd": "11.22 12.71 13.18"
+}

@@ -105,3 +105,11 @@
     B=running/s_mvcpvd/25m/ends=1792262500925
     S=running/s_mvcpvd/25m/ends=1792262500925  S(read in B)=running/s_mvcpvd/25m/ends=1792262500925  pageErrors=0
     plus5Note=["5 min · whistles at 6:41 PM now"]
+[18:15:34] fix-5591 (e) it5 PASS load 11.29 12.80 13.21->11.22 12.71 13.18
+    A=running/s_mvcpvs/25m/ends=1792262520444
+    B=running/s_mvcpvs/25m/ends=1792262520444
+    S=running/s_mvcpvs/25m/ends=1792262520444  S(read in B)=running/s_mvcpvs/25m/ends=1792262520444  pageErrors=0
+    plus5Note=["5 min · whistles at 6:42 PM now"]
+### case (e) fix-5591: pass 5/5 {"precondition_B_behind":5,"brew2_running_A_B_storage":5,"A_B_storage_agree":5,"brew2_not_extended_or_ended":5,"B_shows_focus":5,"storage_byte_identical_after_B_click":5}
+### done fix-5591 18:15:34 load 11.22 12.71 13.18
+### end 18:15:35 UTC; exit=0; load:  18:15:35 up  2:25,  0 user,  load average: 10.80, 12.60, 13.14

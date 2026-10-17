@@ -1,0 +1,16 @@
+"""LEAD-5 (W3R2 TH): per log, count hook-order lines and list the distinct page console messages Chromium logged
+(INFO:CONSOLE lines from --enable-logging=stderr, printed by DEBUG=pw:browser), with counts. Usage:
+python3 -I console-summary.py <log>..."""
+import re, sys, collections
+HOOK = re.compile(r'change in the order of Hooks|Rendered (more|fewer) hooks|Rules of Hooks')
+for p in sys.argv[1:]:
+    c = collections.Counter(); hook = 0; pages = 0
+    for line in open(p, errors='replace'):
+        if 'INFO:CONSOLE' not in line: continue
+        m = re.search(r'INFO:CONSOLE[^\]]*\] "(.*)", source: ', line)
+        msg = (m.group(1) if m else line.split('INFO:CONSOLE', 1)[1])[:110]
+        if HOOK.search(line): hook += 1
+        if msg.startswith('[vite] connected'): pages += 1
+        c[re.sub(r'\d+', 'N', msg)] += 1
+    print(f'== {p.split("/")[-1]}: hook-order lines {hook}; page loads ([vite] connected) {pages}; distinct messages {len(c)}')
+    for k, v in c.most_common(): print(f'   {v:5d}  {k}')
