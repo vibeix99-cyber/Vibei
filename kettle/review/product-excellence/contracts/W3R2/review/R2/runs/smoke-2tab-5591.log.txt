@@ -6,3 +6,8 @@
     B=paused/s_mvcpik/30m/ends=null
     S=paused/s_mvcpik/30m/ends=null  S(read in B)=paused/s_mvcpik/30m/ends=null  pageErrors=0
 ### case (a) smoke: pass 1/1 {"precondition_B_behind":1,"paused_in_A":1,"paused_in_B":1,"paused_in_storage":1,"same_session_A_B_storage":1,"kept_plus5_A_B_storage":1,"A_B_storage_agree":1,"remaining_gt_planned_minus_2min":1}
+[18:05:33] smoke (b) it1 PASS load 13.55 13.39 13.42->14.28 13.56 13.47
+    A=paused/s_mvcpiv/30m/ends=null
+    B=paused/s_mvcpiv/30m/ends=null
+    S=paused/s_mvcpiv/30m/ends=null  S(read in B)=paused/s_mvcpiv/30m/ends=null  pageErrors=0
+### case (b) smoke: pass 1/1 {"precondition_B_behind":1,"same_session_A_B_storage":1,"A_B_storage_agree":1,"still_paused_A_B_storage":1,"plus5_applied_A_B_storage":1}
