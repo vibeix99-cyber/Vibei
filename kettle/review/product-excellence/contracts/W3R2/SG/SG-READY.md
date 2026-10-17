@@ -317,3 +317,39 @@ expect(A.timer.getState().intention).toBe('from B');
 - `openTab` installs the catch-up as `initTabSync` does (`sync.installActionCatchUp()`);
 - the comment `// B's write lands last` → `// B can read A's brew, so its Start joins it (W3R2)`;
 - `toBe('from B')` → `toBe('from A')`.
+
+### 8.2 Per-defect tests: fail on `54a9721`, pass on the fix
+**Vitest, `staleTab.test.ts` (28 cases: the 24 earlier ones plus four new).** Run on the fix, and on `git archive` trees of `54a9721` and `494748b` with this test file copied in.
+
+| New case | HEAD `494748b` | `54a9721` | **fix** |
+|---|---|---|---|
+| SG-D1 probe (1): Z, the leader, missed every event and ticks at X's planned end. No completion of X, records Y only, storage stays idle | pass | **FAIL** (X saved back and completed: a false 25-min record) | pass |
+| SG-D1 probe (2): the person presses Pause in Z. X does not come back; Z shows the idle kettle | **FAIL** (pre-existing: X comes back paused) | **FAIL** | pass |
+| SG-D1 probe (3): Z receives A's next write (fields-only save of new words). X does not come back in either tab | pass | **FAIL** (X back, running, in both tabs) | pass |
+| Still restored: a doubly stale tab ends its old brew (`lastEnded` = the end A already knew) over A's newer brew; A puts it back, completes once | **FAIL** | pass | pass |
+
+| Tree | Result | Log |
+|---|---|---|
+| fix `4b2690f` | **28/28** | `logs/r2/vitest-staletab-on-fix.log.txt` |
+| `54a9721` | **3 failed / 25 passed**: exactly probes (1), (2), (3). #13, #14, #16, #17 and #24 pass there and on the fix | `logs/r2/vitest-staletab-on-54a9721.log.txt` |
+| HEAD `494748b` | **19 failed / 9 passed**: the 17 from §3a plus probe (2) and "still restored"; probes (1) and (3) pass, as LEAD-5 found | `logs/r2/vitest-staletab-on-494748b.log.txt` |
+| fix: `staleTab` + `intentionRace` + `multitab`, 10 runs in a row | **10 × 55/55** | `logs/r2/vitest-race-files-x10-fix.log.txt` |
+
+**Browser, `tests/w3r2-stale-tab.spec.ts` (5 cases), through the gate.** Two additions:
+- **SG-D3:** the add 5 case watches Z's page with a `MutationObserver` from before the click, so a note that shows and fades still counts. It asserts that no "whistles at" text ever appeared.
+- **SG-D2 (new case):** both tabs on a break; A presses Next brew (ends the break, starts a 10-min brew). Z (events held) taps **Start next brew** and joins A's brew. After release, the person ends the joined brew in Z (End session, then End session in the sheet). Asserted: the toast "Kettle’s off. See you soon." shows in Z, and Z goes to `#/`.
+
+| Server | pause | add 5 | Next brew (D2) | end | start | Log |
+|---|---|---|---|---|---|---|
+| :5581 fix ×2 | 2/2 | 2/2 | 2/2 | 2/2 | 2/2 (**10/10**) | `logs/r2/stale-tab-pw-fix-5581-x2.log.txt` |
+| :5591 `54a9721` ×1 | pass | **FAIL**: "no “+5 min · whistles at …” note in Z", received `true` | **FAIL**: "the stop’s toast in Z", not found (the leaked flag swallowed the stop) | pass | pass | `logs/r2/stale-tab-pw-54a9721-5591-x1.log.txt` |
+| :5560 HEAD ×1 | **FAIL** | **FAIL** | **FAIL** ("Z joined A’s brew": Z's Next brew replaced A's) | **FAIL** | **FAIL** (**5/5 FAIL**, each at Z's action, as in §3c) | `logs/r2/stale-tab-pw-HEAD-5560-x1.log.txt` |
+
+Served code: `logs/r2/served-blobs.log.txt`.
+
+### 8.3 `multitab.test.ts` and the rest of Vitest
+| Run | Result | Log |
+|---|---|---|
+| `multitab` (with the ruled edit), `intentionRace`, `store`, `storageFull` on the fix | 4 files, **71/71** | `logs/r2/vitest-existing-race-on-fix.log.txt` (the diff of the edit is at its top) |
+| Vitest, all | **34 files, 342/342** (338 + 4) | `logs/r2/vitest-all-fix.log.txt` |
+| tsc | exit 0 | `logs/r2/tsc-fix.log.txt` |

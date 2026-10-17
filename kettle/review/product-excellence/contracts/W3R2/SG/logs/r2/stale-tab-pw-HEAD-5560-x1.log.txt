@@ -6,3 +6,175 @@ Running 5 tests using 1 worker
   ✘  2 [chromium] › tests/w3r2-stale-tab.spec.ts:145:1 › add 5 in the lagging tab after the other tab ended its brew and started another: nothing added, the newer brew untouched, the lagging tab shows it (15.6s)
   ✘  3 [chromium] › tests/w3r2-stale-tab.spec.ts:168:1 › Next brew in the lagging tab after the other tab already did: it joins that brew; ending it there later still says so and goes home (18.0s)
   ✘  4 [chromium] › tests/w3r2-stale-tab.spec.ts:199:1 › end in the lagging tab after the other tab ended its brew and started another: the newer brew is not ended, the lagging tab shows it (20.0s)
+  ✘  5 [chromium] › tests/w3r2-stale-tab.spec.ts:215:1 › start in the lagging tab (Today, Enter) while the other tab’s brew runs: it does not replace that brew; it joins and shows it (6.4s)
+
+
+  1) [chromium] › tests/w3r2-stale-tab.spec.ts:121:1 › pause in the lagging tab: the brew current in storage pauses, with its real remaining time (the other tab’s +5 kept) 
+
+    Error: paused: the same brew, with A’s +5
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoMatchObject[2m([22m[32mexpected[39m[2m)[22m
+
+    [32m- Expected  - 1[39m
+    [31m+ Received  + 1[39m
+
+    [2m  Object {[22m
+    [32m-   "plannedMs": 900000,[39m
+    [31m+   "plannedMs": 600000,[39m
+    [2m    "sessionId": "s_mvcrwy6ibf2447f4",[22m
+    [2m    "status": "paused",[22m
+    [2m  }[22m
+
+      132 |   await expect.poll(async () => (await stored(z))?.state.status).toBe('paused');
+      133 |   const s = (await stored(z))!.state;
+    > 134 |   expect(s, 'paused: the same brew, with A’s +5').toMatchObject({ status: 'paused', sessionId: brew.sessionId, plannedMs: 15 * MIN });
+          |                                                   ^
+      135 |   expect(s.remainingMs, 'its real remaining time (over 10 minutes: the +5 is in it)').toBeGreaterThan(13 * MIN);
+      136 |
+      137 |   await releaseZ(z);
+        at /home/user/wt/w8g/kettle/tests/w3r2-stale-tab.spec.ts:134:51
+
+    Error Context: .tmp/sg/r2-stale-5560/w3r2-stale-tab-pause-in-th-1616b-ime-the-other-tab’s-5-kept--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/sg/r2-stale-5560/w3r2-stale-tab-pause-in-th-1616b-ime-the-other-tab’s-5-kept--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/sg/r2-stale-5560/w3r2-stale-tab-pause-in-th-1616b-ime-the-other-tab’s-5-kept--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/w3r2-stale-tab.spec.ts:145:1 › add 5 in the lagging tab after the other tab ended its brew and started another: nothing added, the newer brew untouched, the lagging tab shows it 
+
+    Error: Z now shows the current brew
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m"s_mvcrx7[7mw148ba9184[27m"[39m
+    Received: [31m"s_mvcrx7[7mgdd4629567[27m"[39m
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      160 |   expect(await z.evaluate(() => (window as any).__sawFive), 'precondition: no +5 note shown').toBe(false);
+      161 |   await z.getByRole('button', { name: 'Add 5 minutes', exact: true }).click();
+    > 162 |   await expect.poll(async () => (await memory(z)).sessionId, { message: 'Z now shows the current brew' }).toBe(second.sessionId);
+          |   ^
+      163 |   expect((await memory(z)).plannedMs, 'nothing was added to it').toBe(10 * MIN);
+      164 |   await newerBrewSurvives(a, z, second, raw);
+      165 |   expect(await z.evaluate(() => (window as any).__sawFive), 'no “+5 min · whistles at …” note in Z (nothing was added)').toBe(false);
+        at /home/user/wt/w8g/kettle/tests/w3r2-stale-tab.spec.ts:162:3
+
+    Error Context: .tmp/sg/r2-stale-5560/w3r2-stale-tab-add-5-in-th-61c4d-ed-the-lagging-tab-shows-it-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/sg/r2-stale-5560/w3r2-stale-tab-add-5-in-th-61c4d-ed-the-lagging-tab-shows-it-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/sg/r2-stale-5560/w3r2-stale-tab-add-5-in-th-61c4d-ed-the-lagging-tab-shows-it-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/w3r2-stale-tab.spec.ts:168:1 › Next brew in the lagging tab after the other tab already did: it joins that brew; ending it there later still says so and goes home 
+
+    Error: Z joined A’s brew
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m"s_mvcrx[7mnexdd14371a[27m"[39m
+    Received: [31m"s_mvcrx[7mpzb69c0bd1c[27m"[39m
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      185 |   await z.bringToFront();
+      186 |   await z.getByRole('button', { name: 'Start next brew', exact: true }).click();
+    > 187 |   await expect.poll(async () => (await memory(z)).sessionId, { message: 'Z joined A’s brew' }).toBe(next.sessionId);
+          |   ^
+      188 |   await newerBrewSurvives(a, z, next, raw);
+      189 |
+      190 |   // SG-D2: the person ends the joined brew in Z. Its stop is not swallowed: the usual toast, and home.
+        at /home/user/wt/w8g/kettle/tests/w3r2-stale-tab.spec.ts:187:3
+
+    Error Context: .tmp/sg/r2-stale-5560/w3r2-stale-tab-Next-brew-i-84f5c-still-says-so-and-goes-home-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/sg/r2-stale-5560/w3r2-stale-tab-Next-brew-i-84f5c-still-says-so-and-goes-home-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/sg/r2-stale-5560/w3r2-stale-tab-Next-brew-i-84f5c-still-says-so-and-goes-home-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests/w3r2-stale-tab.spec.ts:199:1 › end in the lagging tab after the other tab ended its brew and started another: the newer brew is not ended, the lagging tab shows it 
+
+    Error: Z now shows the current brew
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32m"s_mvcry3w86f8af767"[39m
+    Received: [31mnull[39m
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      208 |   await expect(sheet).toBeVisible();
+      209 |   await sheet.getByRole('button', { name: 'End session', exact: true }).click();
+    > 210 |   await expect.poll(async () => (await memory(z)).sessionId, { message: 'Z now shows the current brew' }).toBe(second.sessionId);
+          |   ^
+      211 |   expect((await memory(z)).status).toBe('running');
+      212 |   await newerBrewSurvives(a, z, second, raw);
+      213 | });
+        at /home/user/wt/w8g/kettle/tests/w3r2-stale-tab.spec.ts:210:3
+
+    Error Context: .tmp/sg/r2-stale-5560/w3r2-stale-tab-end-in-the--b184b-ed-the-lagging-tab-shows-it-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/sg/r2-stale-5560/w3r2-stale-tab-end-in-the--b184b-ed-the-lagging-tab-shows-it-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/sg/r2-stale-5560/w3r2-stale-tab-end-in-the--b184b-ed-the-lagging-tab-shows-it-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › tests/w3r2-stale-tab.spec.ts:215:1 › start in the lagging tab (Today, Enter) while the other tab’s brew runs: it does not replace that brew; it joins and shows it 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoMatchObject[2m([22m[32mexpected[39m[2m)[22m
+
+    [32m- Expected  - 2[39m
+    [31m+ Received  + 2[39m
+
+    [2m  Object {[22m
+    [32m-   "intention": "Chapter 3 notes",[39m
+    [32m-   "sessionId": "s_mvcryk12af23d5ff",[39m
+    [31m+   "intention": "Reply to Sam",[39m
+    [31m+   "sessionId": "s_mvcryl1tdce1875d",[39m
+    [2m    "status": "running",[22m
+    [2m  }[22m
+
+      230 |   await field.press('Enter');
+      231 |   await expect.poll(() => hash(z), { message: 'Z joined the brew (Focus)' }).toBe('#/focus');
+    > 232 |   expect(await memory(z)).toMatchObject({ status: 'running', sessionId: brew.sessionId, intention: 'Chapter 3 notes' });
+          |                           ^
+      233 |   await newerBrewSurvives(a, z, brew, raw);
+      234 | });
+      235 |
+        at /home/user/wt/w8g/kettle/tests/w3r2-stale-tab.spec.ts:232:27
+
+    Error Context: .tmp/sg/r2-stale-5560/w3r2-stale-tab-start-in-th-24430--brew-it-joins-and-shows-it-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/sg/r2-stale-5560/w3r2-stale-tab-start-in-th-24430--brew-it-joins-and-shows-it-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/sg/r2-stale-5560/w3r2-stale-tab-start-in-th-24430--brew-it-joins-and-shows-it-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5 failed
+    [chromium] › tests/w3r2-stale-tab.spec.ts:121:1 › pause in the lagging tab: the brew current in storage pauses, with its real remaining time (the other tab’s +5 kept) 
+    [chromium] › tests/w3r2-stale-tab.spec.ts:145:1 › add 5 in the lagging tab after the other tab ended its brew and started another: nothing added, the newer brew untouched, the lagging tab shows it 
+    [chromium] › tests/w3r2-stale-tab.spec.ts:168:1 › Next brew in the lagging tab after the other tab already did: it joins that brew; ending it there later still says so and goes home 
+    [chromium] › tests/w3r2-stale-tab.spec.ts:199:1 › end in the lagging tab after the other tab ended its brew and started another: the newer brew is not ended, the lagging tab shows it 
+    [chromium] › tests/w3r2-stale-tab.spec.ts:215:1 › start in the lagging tab (Today, Enter) while the other tab’s brew runs: it does not replace that brew; it joins and shows it 
+### exit 1 | end 2026-10-17T19:13:43Z load 13.81 15.39 14.45
