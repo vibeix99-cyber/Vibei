@@ -10,7 +10,7 @@ cleanup() { [ -n "$PIDS" ] && kill $PIDS 2>/dev/null; wait $PIDS 2>/dev/null; ec
 trap cleanup EXIT
 W=2
 case $WHAT in
-  timer|notice)  # under load: 4 burners
+  timer|notice|diag)  # under load: 4 burners
     for i in 1 2 3 4; do ( while :; do :; done ) & PIDS="$PIDS $!"; done
     echo "burners:$PIDS started $(date -u +%T) load $(cut -d' ' -f1-3 /proc/loadavg)"
     sleep 5 ;;
@@ -33,6 +33,9 @@ case $WHAT in
     ;;
   notice)
     run load-notice338 tests/notice-strip.spec.ts --project=chromium --repeat-each=10 -g 'real input \(844×390 dark 200 %\)'
+    ;;
+  diag)
+    run diag-notice338 -c .tmp/ts-pw.config.ts ts/diag/notice-strip.spec.ts --project=chromium --repeat-each=10 -g 'real input \(844×390 dark 200 %\)'
     ;;
   timer-whole)
     run whole-timer tests/timer.spec.ts --project=timer-app --project=timer-harness
