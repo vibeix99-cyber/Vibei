@@ -1,0 +1,611 @@
+/**
+ * I10, notices without overlays (W2R3, Vibei's decision): the invariant, with real input, at every size, text size and
+ * theme (plus reduced motion): **zero overlap between any notice and any control, any text or any list row**.
+ *
+ * A notice is a notice strip's item (`[data-notice-strip] li`, src/ui/Toast.tsx) or an inline Undo row
+ * (`[data-inline-undo]`, src/ui/InlineUndo.tsx). Every animation frame of the whole test, while any notice is drawn,
+ * its box is checked against the box of every other drawn element that is a control (button, link, field, any
+ * interactive role, anything in the tab order), carries text of its own, or is a list row (li, role row / listitem):
+ * an overlap of more than 0.5 px each way is a hit. Not counted: the notice's own parts and the boxes that contain it
+ * (its strip, its page); a route layer on its way out (`[data-route-leaving]`, under the arriving one's opaque paper);
+ * an inert subtree; 1 px visually hidden text (sr-only). Frames with a sheet open (`[role=dialog]` or `#root[inert]`)
+ * are counted apart: the sheet is drawn over the whole page, the notice included, and its clock stands still.
+ *
+ * Each configuration walks the notices' states with real taps, wheel and touch (the debug API only sets things up, and
+ * raises a notice where the app has no way to raise one on demand):
+ *  - Today right after End (End → End session → Today): "Saved … of focus" in Today's strip from its first frame; Mark
+ *    done tapped at about +0.6 s (scrolled to first where it is not on screen), its inline Undo in the same place,
+ *    then Undo tapped: the task is back;
+ *  - the summary with a notice; the tea break; Break's over on a recipe day (Monday: "Recipe done" in the panel's
+ *    strip), its panel scrolled by wheel / touch to the end and back; a running brew with a notice;
+ *  - Stats with a notice and the page scrolled; History's delete: the row turns into its Undo in place, Undo tapped;
+ *  - Settings and Nook with a notice, scrolled; the welcome with a notice.
+ *
+ *   KETTLE_PORT=5471 npx playwright test tests/notice-strip.spec.ts --project=chromium --workers=2
+ *   NOTICE_REDUCED_ALL=1: reduced motion at every configuration (default: one per size).
+ */
+import { test, expect, type Browser, type Page, type BrowserContext } from '@playwright/test';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const base = (u: string | undefined) => (u ?? 'http://127.0.0.1:5183').replace(/\/$/, '');
+test.use({ trace: 'off' });
+// Each configuration is its own browser context: they run side by side with --workers=2.
+test.describe.configure({ mode: 'parallel' });
+
+const MONDAY = Date.parse('2026-10-12T07:40:00.000Z');
+
+/** The frame recorder (every document of the context). */
+function recorder() {
+  const PROT =
+    'button, a[href], input, select, textarea, summary, [role="button"], [role="link"], [role="radio"], [role="checkbox"], [role="switch"], [role="tab"], [role="slider"], [role="option"], [role="menuitem"], [tabindex]:not([tabindex="-1"]), [contenteditable=""], [contenteditable="true"], li, [role="row"], [role="listitem"]';
+  const R: any = ((window as any).__inv = { frames: 0, noticeFrames: 0, modalFrames: 0, hits: [] as any[], hitCount: 0, underChrome: 0, chrome: {} as Record<string, number>, seen: {} as Record<string, number>, cut: 0, stop: false });
+  /** Inside the page's fixed or sticky chrome (tab bar, rail, docked start)? It is drawn over all scrolling content by
+   *  design: an in-flow notice passing under it as the page scrolls is counted apart (`underChrome`), not as a hit. */
+  const chromeOf = (e: Element) => {
+    for (let a: Element | null = e; a && a !== document.body; a = a.parentElement) {
+      const p = getComputedStyle(a).position;
+      if (p === 'fixed' || p === 'sticky') return a;
+    }
+    return null;
+  };
+  const label = (e: Element) => `${e.tagName.toLowerCase()}${e.id ? '#' + e.id : ''} "${((e as HTMLElement).innerText || e.getAttribute('aria-label') || '').replace(/\s+/g, ' ').trim().slice(0, 40)}"`;
+  const ownText = (e: Element) => {
+    for (const n of e.childNodes) if (n.nodeType === 3 && (n.textContent ?? '').trim()) return true;
+    return false;
+  };
+  const tick = () => {
+    if (R.stop) return;
+    R.frames++;
+    const notices = [...document.querySelectorAll('[data-notice-strip] li, [data-inline-undo]')].filter((n) => {
+      if (n.closest('[data-route-leaving], [inert]')) return false;
+      const r = n.getBoundingClientRect();
+      return r.width > 0 && r.height > 0 && r.bottom > 0 && r.top < innerHeight && +getComputedStyle(n).opacity > 0;
+    });
+    if (notices.length) {
+      if (document.querySelector('[role="dialog"]') || document.getElementById('root')?.hasAttribute('inert')) R.modalFrames++;
+      else {
+        R.noticeFrames++;
+        // Each notice as drawn: clipped by every ancestor that clips (a strip scrolled up out of the session panel is not
+        // drawn there).
+        const drawnBox = (n: Element) => {
+          const q = n.getBoundingClientRect();
+          // (and by the viewport: nothing outside it is drawn)
+          let top = Math.max(0, q.top), bottom = Math.min(innerHeight, q.bottom), left = Math.max(0, q.left), right = Math.min(innerWidth, q.right);
+          for (let e = n.parentElement; e && e !== document.documentElement; e = e.parentElement) {
+            const cs = getComputedStyle(e);
+            if (cs.overflowX === 'visible' && cs.overflowY === 'visible') continue;
+            const c = e.getBoundingClientRect();
+            top = Math.max(top, c.top); bottom = Math.min(bottom, c.bottom); left = Math.max(left, c.left); right = Math.min(right, c.right);
+          }
+          return { top, bottom, left, right, width: right - left, height: bottom - top };
+        };
+        const boxes = notices.map((n) => ({ n, r: drawnBox(n) })).filter(({ r }) => r.width > 0 && r.height > 0);
+        for (const { n } of boxes) {
+          const key = ((n as HTMLElement).innerText || '').replace(/\s+/g, ' ').trim().slice(0, 48);
+          R.seen[key] = (R.seen[key] || 0) + 1;
+          if (n.matches('li') && (n as HTMLElement).scrollHeight > (n as HTMLElement).clientHeight + 1) R.cut++;
+        }
+        const all = document.body.getElementsByTagName('*');
+        for (let i = 0; i < all.length; i++) {
+          const e = all[i];
+          if (!(e.matches(PROT) || ownText(e))) continue;
+          if (boxes.some(({ n }) => n.contains(e) || e.contains(n))) continue;
+          const raw = e.getBoundingClientRect();
+          if (raw.width <= 1 || raw.height <= 1) continue;
+          if (!boxes.some(({ r }) => raw.right > r.left + 0.5 && raw.left < r.right - 0.5 && raw.bottom > r.top + 0.5 && raw.top < r.bottom - 0.5)) continue;
+          // Drawn box: clipped by every ancestor that clips (clamped text, visually hidden tables, scrolled panels).
+          const q = drawnBox(e);
+          if (q.width <= 1 || q.height <= 1) continue;
+          for (const { n, r } of boxes) {
+            if (q.right > r.left + 0.5 && q.left < r.right - 0.5 && q.bottom > r.top + 0.5 && q.top < r.bottom - 0.5) {
+              if (e.closest('[data-route-leaving], [inert], [aria-hidden="true"] svg')) continue;
+              const cs = getComputedStyle(e);
+              if (cs.visibility === 'hidden' || cs.display === 'contents') continue;
+              const ch = chromeOf(e);
+              if (ch && !chromeOf(n)) {
+                R.underChrome++;
+                const key = `${label(ch).slice(0, 30)}`;
+                R.chrome[key] = (R.chrome[key] || 0) + 1;
+                continue;
+              }
+              R.hitCount++;
+              if (R.hits.length < 30) R.hits.push({ at: Math.round(performance.now()), hash: location.hash, notice: label(n), what: label(e), box: [q.left, q.top, q.width, q.height].map(Math.round), nbox: [r.left, r.top, r.width, r.height].map(Math.round) });
+            }
+          }
+        }
+      }
+    }
+    requestAnimationFrame(tick);
+  };
+  addEventListener('DOMContentLoaded', () => requestAnimationFrame(tick));
+}
+
+type Cfg = { w: number; h: number; theme: 'light' | 'dark'; pct: 100 | 200; reduced: boolean };
+const SIZES = [
+  [390, 844],
+  [375, 667],
+  [844, 390],
+  [667, 375],
+  [1440, 900],
+] as const;
+const CFGS: Cfg[] = [];
+for (const [w, h] of SIZES)
+  for (const theme of ['light', 'dark'] as const)
+    for (const pct of [100, 200] as const) {
+      CFGS.push({ w, h, theme, pct, reduced: false });
+      // Reduced motion: one per size by default (the light 200 % one), every configuration with NOTICE_REDUCED_ALL=1.
+      if (process.env.NOTICE_REDUCED_ALL || (theme === 'light' && pct === 200)) CFGS.push({ w, h, theme, pct, reduced: true });
+    }
+
+async function context(browser: Browser, c: Cfg) {
+  const phone = c.w < 900;
+  const ctx = await browser.newContext({
+    viewport: { width: c.w, height: c.h },
+    deviceScaleFactor: phone ? 2 : 1,
+    isMobile: phone,
+    hasTouch: phone,
+    colorScheme: c.theme,
+    reducedMotion: c.reduced ? 'reduce' : 'no-preference',
+    acceptDownloads: true,
+  });
+  await ctx.addInitScript((pct) => {
+    try {
+      if (!localStorage.getItem('kettle:settings'))
+        localStorage.setItem('kettle:settings', JSON.stringify({ state: { onboarded: true, scene: 'off', autoStartBreaks: false, autoStartFocus: false, muted: true }, version: 1 }));
+    } catch {
+      /* ignore */
+    }
+    if (pct !== 100)
+      addEventListener('DOMContentLoaded', () => {
+        const s = document.createElement('style');
+        s.textContent = `html{font-size:${pct}%!important}`;
+        document.head.appendChild(s);
+      });
+  }, c.pct);
+  await ctx.addInitScript(recorder);
+  const page = await ctx.newPage();
+  await page.clock.install({ time: MONDAY });
+  await page.clock.resume();
+  return { ctx, page, touch: phone };
+}
+
+const ready = (page: Page) =>
+  page.waitForFunction(() => {
+    const i = (window as any).__kettle?.timerInfo?.();
+    return !!(i && i.leader && i.leaderForMs > 400 && !i.settling);
+  }, null, { timeout: 60_000 });
+const k = (page: Page, fn: string, ...args: unknown[]) => page.evaluate(([f, a]) => (window as any).__kettle[f as string](...(a as unknown[])), [fn, args] as const);
+
+/** The element's centre, if it is wholly in the viewport and on top at its centre (strict: at 9 of 9 points). */
+async function onTop(page: Page, el: ReturnType<Page['locator']>, strict = false) {
+  return el.evaluate((e, strict) => {
+    const r = e.getBoundingClientRect();
+    if (r.width <= 0 || r.top < 0 || r.bottom > innerHeight || r.left < 0 || r.right > innerWidth) return null;
+    for (const fx of strict ? [0.15, 0.5, 0.85] : [0.5])
+      for (const fy of strict ? [0.15, 0.5, 0.85] : [0.5]) {
+        const h = document.elementFromPoint(r.left + r.width * fx, r.top + r.height * fy);
+        if (!h || !e.contains(h)) return null;
+      }
+    return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width, h: r.height, top: r.top };
+  }, strict, { timeout: GONE_MS });
+}
+/** (W3R2) The page's own docked chrome: the Today composer's docked Start (`.ctaDock`, sticky) and the tab bar / side rail
+ *  (`<nav aria-label="Main">`). A target under these is cleared by scrolling, as the walk at the top of `press()` already
+ *  does for a target found under them. Nothing else is: not a notice, not a sheet, not a cover the test cannot name. */
+const PAGE_CHROME = '[class*="ctaDock"], nav[aria-label="Main"]';
+/** Can the wheel clear the target? Says why, or null. `'out of view'`: it is not wholly in the viewport (the first test of
+ *  `onTop`). `'docked chrome'`: it is in the view, and every point `onTop` reads that is not the target itself is covered by the
+ *  page's docked chrome. A notice (`[data-notice-strip]`, `[data-inline-undo]`), anything inert, any open sheet
+ *  (`[role=dialog]`, `#root[inert]`) or any other cover gives null: those are only waited for. */
+const wheelCures = (el: ReturnType<Page['locator']>, strict = false) =>
+  el.evaluate((e, [chrome, strict]) => {
+    const r = e.getBoundingClientRect();
+    if (!(r.width > 0 && r.top >= 0 && r.bottom <= innerHeight && r.left >= 0 && r.right <= innerWidth)) return 'out of view';
+    if (document.querySelector('[role="dialog"]') || document.getElementById('root')?.hasAttribute('inert')) return null;
+    let docked = 0;
+    for (const fx of strict ? [0.15, 0.5, 0.85] : [0.5])
+      for (const fy of strict ? [0.15, 0.5, 0.85] : [0.5]) {
+        const h = document.elementFromPoint(r.left + r.width * fx, r.top + r.height * fy);
+        if (!h || e.contains(h)) continue;
+        if (h.closest('[data-notice-strip], [data-inline-undo], [inert]') || !h.closest(chrome as string)) return null;
+        docked++;
+      }
+    return docked ? 'docked chrome' : null;
+  }, [PAGE_CHROME, strict] as const, { timeout: GONE_MS });
+/** (W3R1 Q, X-11) Every read of a target in `press()` waits at most this long for it to be in the page: a target that
+ *  has gone (an inline Undo whose time ran out) fails the test at once, saying so, instead of holding it to its 4-minute
+ *  timeout. */
+const GONE_MS = 15_000;
+/** (W3R2) In `press()`, a target found not on top at the re-check before the tap is looked at again, after AIM_PAUSE_MS, at
+ *  most AIM_AGAIN times per call (about 2 s of waiting); one that is still covered after that fails the test as before. A
+ *  target that is then found out of the view (the page moved under it), or in the view under the page's own docked chrome
+ *  (the Today dock settling over it), is brought clear by the wheel as at the start of `press()`: the call is made again
+ *  from the top, at most AIM_RESCROLL times. So at most 1 + AIM_RESCROLL = 3 calls per target, each with at most
+ *  AIM_AGAIN pauses and one wheel walk. */
+const AIM_AGAIN = 8;
+const AIM_PAUSE_MS = 250;
+const AIM_RESCROLL = 2;
+
+/** DIAGNOSTIC (scratch only): what is at the target's centre, and where the target is. */
+async function __why(el: ReturnType<Page['locator']>) {
+  return el.evaluate((e) => {
+    const r = e.getBoundingClientRect();
+    const h = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+    const d = h ? `${h.tagName.toLowerCase()}${h.id ? '#' + h.id : ''}.${String(h.className).slice(0, 60)} | ${(h.getAttribute('aria-label') || h.textContent || '').trim().slice(0, 30)} | inField=${e.contains(h)} leaving=${!!h.closest('[data-route-leaving]')} inert=${!!h.closest('[inert]')} chrome=${(() => { for (let a: Element | null = h; a && a !== document.body; a = a.parentElement) { const p = getComputedStyle(a).position; if (p === 'fixed' || p === 'sticky') return p + ' ' + a.tagName.toLowerCase() + '.' + String(a.className).slice(0, 40); } return 'none'; })()}` : 'null';
+    return JSON.stringify({ t: Math.round(performance.now()), top: Math.round(r.top), bottom: Math.round(r.bottom), left: Math.round(r.left), right: Math.round(r.right), ih: innerHeight, iw: innerWidth, sy: scrollY, hit: d, dock: (() => { const d = document.querySelector('[class*=ctaDock]'); if (!d) return 'none'; const b = d.getBoundingClientRect(); return `tall=${d.hasAttribute('data-tall')} pos=${getComputedStyle(d).position} top=${Math.round(b.top)} bottom=${Math.round(b.bottom)} h=${Math.round(b.height)} dockH=${document.documentElement.style.getPropertyValue('--home-dock-h')}`; })(), leavingLayers: document.querySelectorAll('[data-route-leaving]').length, dialogs: document.querySelectorAll('[role=dialog]').length, hash: location.hash, vv: window.visualViewport ? [Math.round(window.visualViewport.height), Math.round(window.visualViewport.offsetTop)] : null });
+  }, undefined, { timeout: 5000 }).catch((x) => 'why-failed ' + String(x).slice(0, 80));
+}
+const __cures = async (el: ReturnType<Page['locator']>, strict: boolean, rescrolled: number) => {
+  const why = await wheelCures(el, strict);
+  if (why) console.log(`[diag] PATH ${why} (rescrolled ${rescrolled}) ${String(el).slice(0, 50)}`);
+  return why;
+};
+/** Scroll by real wheel (over `over`, or the page's middle) until `el` is on top, then tap / click it for real. */
+async function press(page: Page, touch: boolean, el: ReturnType<Page['locator']>, over?: { x: number; y: number }, strict = false, rescrolled = 0): Promise<{ x: number; y: number; w: number; h: number; top: number }> {
+  await el.waitFor({ state: 'attached', timeout: 20_000 });
+  let at = await onTop(page, el, strict);
+  if (String(el).includes('What are you brewing')) console.log(`[diag] first read (rescrolled ${rescrolled}) -> ${at ? 'on top' : 'null'} ${await __why(el)}`);
+  if (!at) {
+    // Inside a sheet, the wheel goes over the sheet (its body scrolls); elsewhere over the page's middle.
+    const sheet = await el.evaluate((e) => {
+      const d = e.closest('[role="dialog"]')?.getBoundingClientRect();
+      return d ? { x: Math.round(d.left + d.width / 2), y: Math.round(Math.max(0, d.top) + (Math.min(innerHeight, d.bottom) - Math.max(0, d.top)) / 2) } : null;
+    }, undefined, { timeout: GONE_MS });
+    // Otherwise over the element's own scroller (the session panel, a column), where the wheel scrolls it.
+    const scroller = await el.evaluate((e) => {
+      for (let a = e.parentElement; a && a !== document.body; a = a.parentElement) {
+        const oy = getComputedStyle(a).overflowY;
+        if ((oy === 'auto' || oy === 'scroll') && a.scrollHeight > a.clientHeight) {
+          const r = a.getBoundingClientRect();
+          return { x: Math.round(r.left + r.width / 2), y: Math.round(Math.max(0, r.top) + (Math.min(innerHeight, r.bottom) - Math.max(0, r.top)) / 2) };
+        }
+      }
+      return null;
+    }, undefined, { timeout: GONE_MS });
+    // (W3R1 Q, X-11) One wheel at a time: each wheel is sent only once the previous one has landed. After a wheel, wait
+    // until the element has actually moved from where it was before that wheel (a wheel the browser has received but
+    // not yet handed to the page leaves everything still, so stillness alone cannot see it), then until it is still
+    // across two frames (the end of the scroll). Both waits are bounded; a wheel that moves nothing within its bound
+    // counts as stuck, and three stuck wheels in a row end the walk (nothing more can be brought by wheel there).
+    let stuck = 0;
+    for (let i = 0; !at && i < 60 && stuck < 3; i++) {
+      const r = (await el.boundingBox({ timeout: GONE_MS }))!;
+      const vh = page.viewportSize()!.height;
+      const aim = over ?? sheet ?? scroller;
+      await page.mouse.move(aim?.x ?? Math.round(page.viewportSize()!.width / 2), aim?.y ?? Math.round(vh / 2));
+      const before = await el.evaluate((e) => e.getBoundingClientRect().top, undefined, { timeout: GONE_MS });
+      // Above the view: bring it down; anywhere else (below it, or under the docked start / tab bar): bring it up.
+      await page.mouse.wheel(0, r.y < 4 ? -60 : r.y > vh ? 120 : 60);
+      const moved = await el.evaluate(
+        (e, before) =>
+          new Promise<boolean>((done) => {
+            const t0 = performance.now();
+            const f = () => {
+              if (Math.abs(e.getBoundingClientRect().top - before) > 0.5) done(true);
+              else if (performance.now() - t0 > 1000) done(false);
+              else requestAnimationFrame(f);
+            };
+            requestAnimationFrame(f);
+          }),
+        before,
+        { timeout: GONE_MS },
+      );
+      stuck = moved ? 0 : stuck + 1;
+      // The scroll has landed: the element and the page still across two frames (up to 1.5 s).
+      await el.evaluate(
+        (e) =>
+          new Promise<void>((done) => {
+            const t0 = performance.now();
+            let last = e.getBoundingClientRect().top + ':' + scrollY;
+            let still = 0;
+            const f = () => {
+              const now = e.getBoundingClientRect().top + ':' + scrollY;
+              still = now === last ? still + 1 : 0;
+              last = now;
+              if (still >= 2 || performance.now() - t0 > 1500) done();
+              else requestAnimationFrame(f);
+            };
+            requestAnimationFrame(f);
+          }),
+        undefined,
+        { timeout: GONE_MS },
+      );
+      at = await onTop(page, el, strict);
+    }
+    if (String(el).includes('What are you brewing')) console.log(`[diag] after walk (rescrolled ${rescrolled}) -> ${at ? 'on top' : 'null'} ${await __why(el)}`);
+    await park(page);
+    // (W3R2) Only a first call falls back to the keyboard / a synthetic click, as on the base: a call made again after the
+    // aim failed (`rescrolled` > 0) that cannot bring the target on top fails below instead.
+    if (!at && sheet && rescrolled === 0) {
+      // A sheet's control that no wheel brings on screen (its footer below a short screen at 200 % text: pre-existing,
+      // recorded in the packet): reached by the keyboard instead, Tab then Enter (real input too).
+      for (let i = 0; i < 20; i++) {
+        await page.keyboard.press('Tab');
+        if (await el.evaluate((e) => document.activeElement === e, undefined, { timeout: GONE_MS })) {
+          await page.keyboard.press('Enter');
+          keyboardFallbacks.push(`${el}: Tab + Enter`);
+          return { x: -1, y: -1, w: 0, h: 0, top: -1 };
+        }
+      }
+      // Neither: pre-existing on the base too (61aba17: the confirm dialog's footer runs past its box at 375×667 @200 and
+      // its focus trap never reaches "Delete"). Reported in the packet; the click is synthetic, for setup only.
+      await el.evaluate((e) => (e as HTMLElement).click(), undefined, { timeout: GONE_MS });
+      keyboardFallbacks.push(`${el}: UNREACHABLE by pointer and Tab (pre-existing), synthetic click`);
+      return { x: -1, y: -1, w: 0, h: 0, top: -1 };
+    }
+    expect(at, `${el} can be brought on top by real scrolling (${JSON.stringify(await el.boundingBox())}, scrollY ${await page.evaluate(() => scrollY)})`).not.toBeNull();
+  }
+  // (W3R1 Q, X-11) Aim and tap inside one input window, as a person does: the pointer moves onto the target (input), its
+  // place is read again right then, and the tap follows at once. The strip changes height at rest only after a quiet
+  // spell with no input at all (QUIET_MS, or BAND_IDLE_MS for a kept band: src/ui/moment.ts), so nothing can move
+  // between that read and the tap; if the target has moved, or the read took 800 ms or more, the move and the read are
+  // made again.
+  // (W3R2) If the read finds the target not on top, that is not yet the end: something can cross it for a moment, or the
+  // page can move under it (once, on a loaded machine, at 844×390 dark 200 %, the field was not on top at that one read).
+  // The target is looked at again after AIM_PAUSE_MS, at most AIM_AGAIN times (about 2 s in all), and aimed at again from
+  // where it is then; one that has moved out of the view, or that lies under the page's own docked chrome (the Today dock
+  // settles over the composer field a moment after the page boots), is first brought clear by the wheel, as at the start
+  // (see `wheelCures`). The tap still goes only after a read, made after the pointer is on the target, that finds it on top;
+  // a target that stays covered through all of them (a notice, a sheet, any other cover) fails here as before, with the
+  // same words.
+  for (let k = 0, covered = 0; ; ) {
+    if (!at) {
+      if (covered++ >= AIM_AGAIN) break;
+      await page.waitForTimeout(AIM_PAUSE_MS);
+      at = await onTop(page, el, strict);
+      console.log(`[diag] aim again ${covered} (rescrolled ${rescrolled}) -> ${at ? 'on top' : 'null'} ${await __why(el)}`);
+      if (!at && rescrolled < AIM_RESCROLL && (await __cures(el, strict, rescrolled))) return press(page, touch, el, over, strict, rescrolled + 1);
+      continue;
+    }
+    const round = k++;
+    const t = Date.now();
+    await page.mouse.move(Math.round(at.x), Math.round(at.y));
+    const again = await onTop(page, el, strict);
+    if (!again) console.log(`[diag] re-check null (round ${round}, rescrolled ${rescrolled}) ${await __why(el)}`);
+    const same = !!again && Math.abs(again.x - at.x) < 0.5 && Math.abs(again.y - at.y) < 0.5;
+    at = again;
+    if (at && ((same && Date.now() - t < 800) || round >= 4)) break;
+  }
+  if (!at) { const f = `/home/user/wt/w8q/kettle/.tmp/ts-out/r2-diag3-fail-${Date.now()}.png`; await page.screenshot({ path: f }).catch(() => {}); console.log(`[diag] FAIL screenshot ${f} ${await __why(el)}`); }
+  expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();
+  if (touch) {
+    await page.touchscreen.tap(at!.x, at!.y);
+    // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)
+    await park(page);
+  } else await page.mouse.click(at!.x, at!.y);
+  return at!;
+}
+/** Controls reached by the keyboard because no wheel could bring them on screen (reported per test). */
+let keyboardFallbacks: string[] = [];
+/** The mouse leaves the page's content after wheeling (a resting pointer holds a notice's clock, by design). */
+const park = (page: Page) => page.mouse.move(1, page.viewportSize()!.height - 1);
+/** Wait for a notice with these words to be drawn in a strip. */
+const drawn = async (page: Page, re: RegExp) => {
+  try {
+    await expect(page.locator('[data-notice-strip] li', { hasText: re })).toHaveCount(1, { timeout: 20_000 });
+  } catch (e) {
+    throw new Error(`${re} not drawn; notices: ${JSON.stringify(await page.evaluate(() => (window as any).__kettle.notices()))}; said: ${await page.evaluate(() => (window as any).__kettle.noticesSaid()?.textContent)}; drawn: ${await page.evaluate(() => [...document.querySelectorAll('[data-notice-strip] li')].map((li) => { const r = li.getBoundingClientRect(); const h = document.elementFromPoint((r.left + r.right) / 2, (r.top + r.bottom) / 2); return { r: [r.top, r.bottom], hit: h?.className, leaving: !!li.closest('[data-route-leaving]'), sy: scrollY, dlg: !!document.querySelector('[role=dialog]') }; })).then(JSON.stringify)}`);
+  }
+};
+/** Raise a notice the way the app does (the app has no button that raises one on these screens on demand). */
+const raise = (page: Page, message: string, tone = 'info') => page.evaluate(([m, t]) => (window as any).__kettle.toast(m, { tone: t, duration: 4000 }), [message, tone]);
+/** Real wheel down and back up over the middle of the page (or the session panel). */
+async function wheelAround(page: Page, steps = 4, sel?: string) {
+  const vp = page.viewportSize()!;
+  const at = sel ? await page.locator(sel).first().boundingBox() : null;
+  const x = at ? Math.round(at.x + at.width - 20) : Math.round(vp.width / 2);
+  const y = at ? Math.round(Math.min(vp.height - 20, at.y + at.height - 30)) : Math.round(vp.height / 2);
+  await page.mouse.move(x, y);
+  for (const dir of [1, -1]) for (let i = 0; i < steps; i++) {
+    await page.mouse.wheel(0, dir * 90);
+    await page.waitForTimeout(110);
+  }
+  await park(page);
+}
+
+for (const c of CFGS) {
+  const name = `${c.w}×${c.h} ${c.theme} ${c.pct} %${c.reduced ? ' reduced motion' : ''}`;
+  test(`no notice overlaps a control, text or a row: every notice state, real input (${name})`, async ({ browser, baseURL }) => {
+    test.setTimeout(240_000);
+    const url = base(baseURL);
+    const { ctx, page, touch } = await context(browser, c);
+    const facts: Record<string, unknown> = {};
+    keyboardFallbacks = [];
+
+    // ---- Today right after End: "Saved … of focus" in Today's strip; Mark done at +0.6 s; its inline Undo; Undo.
+    await page.goto(`${url}/?debug&seed=newbie&theme=${c.theme}#/`);
+    await ready(page);
+    await page.evaluate(() => document.fonts.ready);
+    const field = page.getByRole('textbox', { name: /What are you brewing/ });
+    await press(page, touch, field);
+    await page.keyboard.type('Chapter 3 notes');
+    await page.keyboard.press('Escape').catch(() => {});
+    // (W3R1 N-1) The task is in the field before the brew starts. Under heavy load the typing once missed the field
+    // (the brew was saved as "Study brew", so no carried line, and Mark done timed out much later): typed again, for
+    // real, if it is not there, then asserted.
+    if ((await field.inputValue()) !== 'Chapter 3 notes') {
+      await press(page, touch, field);
+      await page.keyboard.press('ControlOrMeta+A');
+      await page.keyboard.type('Chapter 3 notes');
+    }
+    await expect(field).toHaveValue('Chapter 3 notes');
+    await press(page, touch, page.getByRole('button', { name: /^Put the kettle on · / }));
+    await page.waitForFunction(() => location.hash === '#/focus', null, { timeout: 15_000 });
+    await page.waitForTimeout(1500);
+    await k(page, 'ff', 3 * 60_000);
+    await page.waitForTimeout(400);
+    await press(page, touch, page.getByRole('button', { name: 'End session' }).first());
+    const sheet = page.getByRole('dialog', { name: 'Leave the kettle early?' });
+    await sheet.waitFor({ timeout: 10_000 });
+    await page.waitForTimeout(500);
+    await press(page, touch, sheet.getByRole('button', { name: 'End session' }));
+    const t0 = Date.now();
+    await page.waitForFunction(() => location.hash === '#/', null, { timeout: 15_000 });
+    await drawn(page, /^Saved 3 minutes of focus/);
+    await page.waitForTimeout(Math.max(0, 600 - (Date.now() - t0)));
+    const mark = page.getByRole('button', { name: /^Mark “Chapter 3 notes” done/ });
+    // Mark done's line, relative to the button (the same wherever the page is scrolled).
+    const offset = await mark.evaluate((b) => b.getBoundingClientRect().top - b.closest('p')!.getBoundingClientRect().top);
+    // (Diagnostics: every pointerdown / click target from here, to say where a tap went if it did not reach Mark done.)
+    await page.evaluate(() => {
+      const w = window as any;
+      w.__taps = [];
+      for (const t of ['pointerdown', 'click'])
+        addEventListener(t, (e) => w.__taps.push(`${t}@${Math.round((e as MouseEvent).clientX)},${Math.round((e as MouseEvent).clientY)}→${(e.target as Element).tagName}.${String((e.target as Element).className).slice(0, 30)}`), { capture: true });
+    });
+    const tapAt = await press(page, touch, mark, undefined, true);
+    const line = tapAt.top - offset;
+    facts.markDoneTapMs = Date.now() - t0;
+    const undoRow = page.locator('[data-undo-for="mark-done"]');
+    try {
+      await expect(undoRow).toBeVisible();
+    } catch (e) {
+      throw new Error(`Mark done's Undo not drawn after the tap at ${JSON.stringify(tapAt)}: ${JSON.stringify(await page.evaluate(() => ({ taps: (window as any).__taps, mark: document.querySelector('button[aria-label^="Mark"]')?.getBoundingClientRect().toJSON(), sy: scrollY, notices: (window as any).__kettle.notices() })))}`);
+    }
+    const rowTop = await undoRow.evaluate((r) => r.getBoundingClientRect().top);
+    expect(Math.abs(rowTop - line), 'the Undo is drawn where Mark done was, on screen').toBeLessThanOrEqual(2);
+    const undo = undoRow.getByRole('button', { name: /^Undo/ });
+    const nine = await undo.evaluate((b) => {
+      const r = b.getBoundingClientRect();
+      let n = 0;
+      for (const fx of [0.15, 0.5, 0.85]) for (const fy of [0.15, 0.5, 0.85]) {
+        const h = document.elementFromPoint(r.left + r.width * fx, r.top + r.height * fy);
+        if (h && b.contains(h)) n++;
+      }
+      return { n, w: r.width, h: r.height };
+    });
+    expect(nine.n, 'Undo: 9 of 9 points on top').toBe(9);
+    expect(nine.w >= 24 && nine.h >= 24, `Undo ${nine.w}×${nine.h}`).toBe(true);
+    facts.markDone = { tapAt, undo: nine };
+    await press(page, touch, undo);
+    await expect(field).toHaveValue('Chapter 3 notes');
+
+    // ---- The session screen: summary with a notice, the break, Break's over on a recipe day, a running brew.
+    await k(page, 'navigate', '/');
+    await page.evaluate(() => (window as any).__kettle.timer.getState().startFocus({ intention: 'Chapter 3 notes', tag: 'study' }));
+    await page.waitForFunction(() => location.hash === '#/focus');
+    await page.waitForTimeout(1500);
+    await k(page, 'finish');
+    const tea = page.getByRole('button', { name: /Tea time|Long tea break/ });
+    await tea.waitFor({ state: 'visible', timeout: 60_000 });
+    await page.waitForTimeout(1500);
+    await raise(page, 'Couldn’t save just now. Your summary is still here.', 'warning');
+    // The summary has no strip (T2-D1): the notice waits, with its time, and nothing on the summary moves.
+    await page.waitForTimeout(900);
+    expect(await page.locator('[data-notice-strip] li').count(), 'no notice drawn on the summary').toBe(0);
+    expect(await page.evaluate(() => (window as any).__kettle.notices().queue.map((q: any) => q.left)), 'waiting with all its time').toEqual([4000]);
+    await press(page, touch, tea);
+    await page.getByRole('button', { name: /Pause break/ }).waitFor({ state: 'attached', timeout: 20_000 });
+    // ... and is drawn in the tea break's first frames, whole.
+    await drawn(page, /^Couldn’t save just now/);
+    await page.waitForTimeout(1200);
+    await k(page, 'finish');
+    await page.getByRole('button', { name: /^Put the kettle on/ }).waitFor({ state: 'attached', timeout: 20_000 });
+    await drawn(page, /^Recipe done/);
+    await wheelAround(page, 5, '[data-focus-view] main');
+    await page.waitForTimeout(600);
+    await press(page, touch, page.getByRole('button', { name: /^Put the kettle on/ }), undefined);
+    await page.waitForFunction(() => (window as any).__kettle.timer.getState().status === 'running', null, { timeout: 15_000 });
+    await page.waitForTimeout(1200);
+    await raise(page, 'Recipe done: Take 2 full tea breaks · +15 leaves', 'success');
+    await drawn(page, /^Recipe done: Take 2/);
+    await page.waitForTimeout(1500);
+    await page.evaluate(() => (window as any).__kettle.timer.getState().end('user'));
+    await page.waitForFunction(() => location.hash === '#/', null, { timeout: 15_000 });
+    await page.waitForTimeout(1200);
+
+    // ---- Stats: a notice, scrolled; History's delete → the row's inline Undo, in place; Undo.
+    await press(page, touch, page.getByRole('link', { name: 'Stats' }).first());
+    await page.waitForFunction(() => location.hash === '#/stats');
+    await page.waitForTimeout(1200);
+    await raise(page, 'Brew updated');
+    await drawn(page, /^Brew updated/);
+    await wheelAround(page, 4);
+    const rows = page.locator('main button[aria-label*="Edit"]');
+    await rows.first().waitFor({ timeout: 15_000 });
+    const before = await rows.count();
+    const row = rows.first();
+    const rowLabel = await row.getAttribute('aria-label');
+    await press(page, touch, row);
+    const edit = page.getByRole('dialog', { name: 'Edit brew' });
+    await edit.waitFor({ timeout: 10_000 });
+    // Where the person saw the row (on screen) as they opened it: read once the Edit sheet is open and the row has been
+    // still for five frames (up to 3 s), so a late press() wheel cannot land between this read and the Undo read
+    // (W3R1 X-11). Opening the sheet does not scroll the page (W3R1 N-2, closed as a probe artifact; guarded by
+    // tests/w3-history-focus-scroll.spec.ts).
+    const rowY = await row.evaluate(
+      (b) =>
+        new Promise<number>((done) => {
+          const li = b.closest('li')!;
+          const t0 = performance.now();
+          let last = li.getBoundingClientRect().top;
+          let still = 0;
+          const f = () => {
+            const now = li.getBoundingClientRect().top;
+            still = Math.abs(now - last) < 0.5 ? still + 1 : 0;
+            last = now;
+            if (still >= 5 || performance.now() - t0 > 3000) done(now);
+            else requestAnimationFrame(f);
+          };
+          requestAnimationFrame(f);
+        }),
+    );
+    await page.waitForTimeout(400);
+    await press(page, touch, edit.getByRole('button', { name: 'Delete this brew' }));
+    const confirm = page.getByRole('dialog', { name: 'Delete this brew?' });
+    await confirm.waitFor({ timeout: 10_000 });
+    await page.waitForTimeout(400);
+    await press(page, touch, confirm.getByRole('button', { name: 'Delete', exact: true }));
+    const hUndo = page.locator('[data-undo-for="history-delete"]');
+    await expect(hUndo).toBeVisible();
+    await expect(page.getByRole('dialog')).toHaveCount(0, { timeout: 10_000 });
+    const undoY = await hUndo.evaluate((r) => r.getBoundingClientRect().top);
+    facts.historyUndo = { rowY, undoY };
+    expect(Math.abs(undoY - rowY), 'the Undo is the deleted row, in place, on screen where the person saw the row').toBeLessThanOrEqual(2);
+    await press(page, touch, hUndo.getByRole('button', { name: /^Undo/ }));
+    await expect(rows).toHaveCount(before);
+    expect(await rows.first().getAttribute('aria-label')).toBe(rowLabel);
+
+    // ---- Settings and Nook: a notice each, the page scrolled by wheel.
+    for (const tab of ['Settings', 'Nook'] as const) {
+      await page.evaluate(() => scrollTo(0, 0));
+      await press(page, touch, page.getByRole('link', { name: tab }).first());
+      await page.waitForFunction((t) => location.hash === `#/${t.toLowerCase()}`, tab);
+      await page.waitForTimeout(1200);
+      await raise(page, `A notice on ${tab}, here to be read.`);
+      await drawn(page, new RegExp(`^A notice on ${tab}`));
+      await wheelAround(page, 4);
+      await page.waitForTimeout(500);
+    }
+
+    const collect = () =>
+      page.evaluate(() => {
+        const R = (window as any).__inv;
+        R.stop = true;
+        return { hits: R.hits, hitCount: R.hitCount, underChrome: R.underChrome, chrome: R.chrome, noticeFrames: R.noticeFrames, modalFrames: R.modalFrames, frames: R.frames, cut: R.cut, seen: R.seen };
+      });
+    const app = await collect();
+
+    // ---- The welcome: a notice at the top of its page.
+    await page.goto(`${url}/?debug&onboarded=0&theme=${c.theme}#/welcome`);
+    await page.waitForFunction(() => !!(window as any).__kettle);
+    await page.waitForTimeout(1500);
+    await raise(page, 'A fresh brew of Kettle is ready.');
+    await drawn(page, /^A fresh brew of Kettle/);
+    await wheelAround(page, 3);
+    await page.waitForTimeout(600);
+
+    const welcome = await collect();
+    const seen = Object.keys(app.seen);
+    test.info().annotations.push({ type: 'facts', description: JSON.stringify({ ...facts, keyboardFallbacks, app: { ...app, seen: app.seen }, welcome: { ...welcome, seen: welcome.seen } }) });
+    expect(app.hits, `notice overlaps in the app (${app.hitCount} in ${app.noticeFrames} notice frames, ${app.modalFrames} under a sheet)`).toEqual([]);
+    expect(welcome.hits, `notice overlaps on the welcome (${welcome.hitCount} in ${welcome.noticeFrames} notice frames)`).toEqual([]);
+    expect(app.cut + welcome.cut, 'frames with a notice cut short').toBe(0);
+    // Not vacuous: every state was drawn and checked.
+    for (const re of [/^Saved 3 minutes of focus/, /^Crossed off/, /^Couldn’t save just now/, /^Recipe done: Take a full/, /^Recipe done: Take 2/, /^Brew updated/, /^Brew deleted/, /^A notice on Settings/, /^A notice on Nook/])
+      expect(seen.some((s) => re.test(s)), `${re} drawn and checked (seen: ${seen.join(' | ')})`).toBe(true);
+    expect(app.noticeFrames, 'notice frames checked in the app').toBeGreaterThan(200);
+    expect(welcome.noticeFrames, 'the welcome notice was checked').toBeGreaterThan(10);
+    await ctx.close();
+  });
+}

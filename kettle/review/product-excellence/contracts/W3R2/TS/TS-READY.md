@@ -58,7 +58,7 @@ const { endsAt, sessionId } = await page.evaluate(async (minutes) => {
 | exactly one record | `storedSessions(page)` filtered by `sessionId` has length 1 | same |
 | title | `toHaveTitle('Tea’s ready — Kettle')` | same |
 
-The checks that the main-thread timers are frozen and the page hidden while the brew runs are the same statements; they are now guaranteed to run before the end, not after a runner-dependent gap. `endsAt` and `sessionId` are read from the same `getState()` as before, one statement after `startFocus`.
+The checks that the main-thread timers are frozen and the page hidden while the brew runs are the same statements; they now run in the brew's first ~100 ms whatever the runner does (a late *runner* can no longer delay them past the end; a stalled *page* still could, which §6 R3 now asserts per run). `endsAt` and `sessionId` are read from the same `getState()` as before, one statement after `startFocus`.
 
 ### 1.2 `timer.spec.ts`, "hidden page: completion shows a warm notification; coming back restores the title"
 
@@ -107,7 +107,7 @@ async function press(page, touch, el, over?, strict = false, rescrolled = 0): Pr
   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();             // the same line, the same words
 ```
 **The bounds, stated:**
-- After a re-check finds the target not on top, `press()` waits 250 ms and reads it again, at most 8 times in all (about 2 s plus the reads). A ninth ends the loop with `at === null` and the unchanged `expect` fails with the unchanged message.
+- After a re-check finds the target not on top, `press()` waits 250 ms and reads it again, at most 8 times per `press()` call (about 2 s plus the reads). With the rescroll a target gets at most 3 calls (1 + `AIM_RESCROLL`), so at most 3 × 8 = 24 re-reads (about 6 s of pauses) and three wheel walks in all (corrected in §6, R4). A ninth ends the loop with `at === null` and the unchanged `expect` fails with the unchanged message.
 - If that read finds the target **not covered but out of the view** (the page moved under it), `press()` is run again from the top, which brings it back by the same wheel walk as at the start (its own limits: 60 wheels, three stuck wheels end it), at most `AIM_RESCROLL` = 2 times.
 - Untouched: at most 5 aim rounds (`round >= 4`), a round that took 800 ms or more is made again, a target that has gone fails within `GONE_MS` (15 s) on any read.
 
@@ -204,4 +204,4 @@ Why the missing whole-file run is a smaller risk than it looks (an argument, not
 3. **Line numbers moved** by the added lines: the hidden-page test is `timer.spec.ts:189` (was `:183`); the notice test is `notice-strip.spec.ts:366` (was `:338`). `:156` is unchanged.
 4. **The under-load runs are not a control.** I did not run the old tests under my burners: LEAD-5's matched-load control already showed that load alone passes the old timer pair 10/10, which is why the injection (§2.1), not the load, is the proof of the timer fixes. The 10/10 of §3 shows the new tests pass under load; it does not by itself show the old ones would fail.
 5. **The 2 s window and the "moved out of the view" rule are judgements** (no one has seen what covered the field in the original failure). The bound is stated and shown (§2.2); a longer cover fails.
-6. **`:156` keeps its freeze leg in every run** (the freeze is now inside the page chain; it used to follow a runner-dependent gap). Not an open item, noted so LEAD does not look for a vacuous-freeze case.
+6. **`:156` keeps its freeze leg in every run** (the freeze is now inside the page chain and, from the fix round, every run asserts that it landed at least 1 s before `endsAt`, §6 R3).
