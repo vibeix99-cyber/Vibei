@@ -9,12 +9,12 @@ No source or test edits, no commits to app code, no pushes. Only my own PIDs kil
 |---|---|
 | Tree | integration **`1c791f3`** (app merge `72214c8`), kettle/src **`5f504d4`**, worktree `/home/user/wt/w6-int` (detached at `1c791f3`, `git status` empty at start). Over the pre-round app `494748b` (src `b74e6b3`) it changes `src/timer/{store,sync}.ts`, `src/timer/multitab.test.ts`, new `src/timer/staleTab.test.ts`, `src/app/flow.ts`, `src/screens/focus/FocusScreen.tsx`, `src/ui/Toast.tsx`; tests: `notice-strip.spec.ts`, `timer.spec.ts`, new `w3r2-stale-tab.spec.ts` |
 | Dev (run against) | **:5560**, `/home/user/wt/w6-int`. `verify.sh /home/user/wt/w6-int 5560` at 21:25: "PORT 5560 serves 1c791f3 (src 5f504d4): VERIFIED" (Toast.module.css, Toast.tsx, StatusBar.tsx, flow.ts, FocusScreen.tsx all OK) |
-| Preview | **:5570**, `/tmp/rv7-servers/dist-w6int`, files written 21:24:49 (the checkout's files are 21:24:47; the brief's "about 21:40" is not what the file times say). Entry chunk `assets/index-DiqM5a-K.js` |
+| Preview | **:5570**, `/tmp/rv7-servers/dist-w6int`, files written 21:24:49 (the checkout's files are 21:24:47; the task note said "about 21:40", the file times say 21:24). Entry chunk `assets/index-DiqM5a-K.js` |
 | Control, pre-round app | **:5583** dev, `/home/user/wt/w8q` HEAD `89396e8` (the TS tests on top of app `494748b`), kettle/src **`b74e6b3`** (= `494748b:kettle/src`); `verify.sh` "PORT 5583 serves 89396e8 (src b74e6b3): VERIFIED". This is the BEFORE side of the captures |
 | Control, old base | `4d36939` (src `5cd9a44`) dev :5478 (`verify.sh`: VERIFIED), preview :5488 (used only if a failure needed it) |
 | Machine | 4 CPUs, 16 GB, Chromium headless shell with SwiftShader (the flags in `playwright.config.ts`). Load average at the start 0.2 to 0.5 (nothing else running; 5 servers on the ports above only) |
 | Gate | every Playwright and every browser script through `slots.py run --lane RF` (MAX 3). Full run `--n 2`, everything else `--n 1`; I kept up to three slots busy at once (full run + two single-slot jobs), so load during the long runs was 10 to 20. `uptime` is written at the start and end of every run (first and last line of each `runs/*.log.txt`) |
-| Scripts | `scripts/` (`RF-common.sh` gate helper, `RF-basics.sh`, `RF-full.sh`, `RF-chainB.sh`, `RF-pwa.sh`, `RF-stress*.sh`, `RF-twotab.sh` + `RF-2tab.mjs`, `RF-console.{sh,mjs}`, `RF-cap.sh`, `RF-freeze.mjs`, `RF-pdiff.py`) |
+| Scripts | `scripts/` (all `RF-*` scripts and the 2-tab script, listed in section 12; among them `RF-common.sh` gate helper, `RF-basics.sh`, `RF-full.sh`, `RF-chainB.sh`, `RF-pwa.sh`, `RF-stress*.sh`, `RF-twotab.sh` + `RF-2tab.mjs`, `RF-console.{sh,mjs}`, `RF-cap.sh`, `RF-freeze.mjs`, `RF-pdiff.py`) |
 | Test list | `npx playwright test --project=chromium --list --reporter=json` (`json/list-chromium.json`): **289 tests in 21 spec files**; without `notice-strip.spec.ts` (25 tests) **264 in 20 files**. All projects (`json/list-all.json`): 320 (chromium 289, timer-harness 14, timer-app 14, pwa 3) |
 | Reused | the W3R1 final receipt and scripts (`contracts/W3R1/review/FINAL/`), the W3R2 R2 rerun 2-tab script `RR-2tab.mjs` (sha256 prefix `cc66cf8be408cdd4`, cases a to g, copied unchanged as `scripts/RF-2tab.mjs`) |
 
@@ -71,10 +71,10 @@ Each test once, `--workers=1`, one gate slot, own output directory. They were no
 
 | # | Rerun on :5560 | Time | Load start to end |
 |---|---|---|---|
-| F1 `integrity` I03 banner | **pass** | 32.7 s (22:09:24 to 22:09:58) | 12.0 to 11.95 |
-| F2 `w3-settings` Reset everything | **pass** | 22.6 s (22:12:07 to 22:12:31) | 11.3 to 11.4 |
+| F1 `integrity` I03 banner | **pass** | test 31.5 s (run 32.7 s, 22:09:24 to 22:09:58) | 12.0 to 11.95 |
+| F2 `w3-settings` Reset everything | **pass** | test 21.0 s (run 22.6 s, 22:12:07 to 22:12:31) | 11.3 to 11.4 |
 
-Both passed on the rerun, so, by the brief, no run on :5583 or :5478 was made for them. (Extra repeats of both, if made, are in section 10.)
+Both passed on the rerun, so, by the brief, no run on :5583 or :5478 was made for them. Extra repeats, a second full run (which had its own failures) and the I03 neighbour experiment are in section 10.
 
 ## 3. `notice-strip.spec.ts`, the whole file once on :5560
 
@@ -239,3 +239,16 @@ Rerun times and loads: `runs/rerun-F1-*`, `rerun-F2-*`, `rerun-G1-*`, `rerun-G2-
 | pwa project | builds the worktree it runs in (`w6-int`) into `test-results/pwa-dist`, not the :5570 build; the :5570 build was compared by file hash (§1) |
 | Load | the long runs had two to three gate jobs side by side (load 7 to 18); the quiet windows were short. Per-run `uptime` lines are in every log |
 | Judgement | whether any of this blocks anything: not mine |
+
+## 12. Evidence layout and the final process check
+
+`/home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/review/FINAL/`:
+- `runs/` logs as `.log.txt` (each with the `uptime` line at start and end): `full`, `full2`, `notice-strip`, `w3-notices-load`, `timer-pwa` (+ `.listener.txt`, `.log.txt`), `stress`, `manual-2tab-rf-5560`, `cap-*` (run 1), `cap2-*` (run 2), `rerun-*`, `basics`/`tsc`/`vitest`/`build`, the `dist-*` file lists and hashes, `*-summary.txt` per-file tables, `*.done` markers and `q-*.out.txt` launcher output.
+- `json/` Playwright JSON per run (`full`, `full2`, `notice-strip`, `w3-notices-load`, `timer-pwa`, `stress-*`, `list-chromium`, `list-all`).
+- `rerun/` JSON of the reruns and repeats; `fullrun-artifacts/` and `fullrun2-artifacts/` hold the failing runs' traces and error contexts (F1, F2; G1 to G3).
+- `manual/` the 2-tab JSON per iteration, both tabs' end screenshots, `TABLE-rf-5560.md`, `rf-5560-summary.json`.
+- `console/` the four console runs (JSON and logs) and `first-pass-step6-nav-missing/`.
+- `cap/` `run1-loaded/` and `run2-quiet/` (per config: `pairs.json`, diff overlays, crops, the `*-freeze.json`, `*-capture-meta.json`, `*-run.log` of every side; raw frames only for pairs classed different), `matrix.md` per run, `run2-first1440-overlapped-stress/`, `readout-digits.png`.
+- `scripts/` every script used (`RF-*`), and `RF-2tab.mjs` (= `rerun/scripts/RR-2tab.mjs` of W3R2 R2, unchanged).
+
+**Final check, 23:41:53 UTC** (`ps`, `slots.py status`, `curl`): no `chrome`, `headless_shell`, `playwright`, `RF-*` script, burner loop, gate process or `--port 5495` preview of mine is running; `slots.py status` says "max 3; held 0"; ports 5495, 5193, 5498 and 5499 answer nothing (free). The only server processes on the machine are the five that were there when I started and that I did not start: dev :5560 (`verify.sh`: still "serves 1c791f3 (src 5f504d4): VERIFIED"), preview :5570, dev :5583 ("serves 89396e8 (src b74e6b3): VERIFIED"), dev :5478 and preview :5488. `git status` of `/home/user/wt/w6-int` is empty (HEAD `1c791f3`); of `/home/user/wt/w8q` empty. I made no change to either worktree except ignored files under `kettle/.tmp/` and `kettle/test-results/`, and no git write other than the evidence commits through `commit-evidence.sh`.
