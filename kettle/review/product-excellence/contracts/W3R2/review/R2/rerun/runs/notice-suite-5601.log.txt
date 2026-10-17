@@ -70,3 +70,9 @@ FACT 1440x900-dark-t200-rm a-no-input {"leftAt":5304,"room":113,"commits":[{"t":
   ✓  55 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (1440x900-dark-t200-rm) (10.4s)
 FACT 1440x900-dark-t200-rm b-scroll-then-idle {"leftAt":5339,"room":113,"maxSy":300,"scrollMs":2154,"roomAfterScroll":113,"commits":[{"t":11552,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4059,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":6213,"collapseAfterLastBusyMs":4059,"visibleMove":113}
   ✓  57 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (1440x900-dark-t200-rm) (12.7s)
+  ✓  56 [chromium] › tests/toast-room.spec.ts:262:3 › notices timing out, and the endless update prompt, never move the banner under the person (375×667, 200 % text, wheel, light) (21.4s)
+FACT 1440x900-dark-t200-rm c-pointer-held {"leftAt":5188,"room":113,"roomWhileDown":113,"downWhileHeld":1,"commits":[{"t":5200,"why":"rest","room":113,"shown":null,"down":0,"sinceInput":4495,"topBefore":234.09375,"topAfter":234.09375,"sy":0},{"t":12405,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4047,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":7217,"collapseAfterLastBusyMs":4047,"visibleMove":113}
+  ✓  58 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (1440x900-dark-t200-rm) (13.4s)
+  ✓  60 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 light 200 % reduced motion) (13.4s)
+  ✓  59 [chromium] › tests/toast-room.spec.ts:262:3 › notices timing out, and the endless update prompt, never move the banner under the person (375×667, 200 % text, wheel, dark) (21.4s)
+  ✓  62 [chromium] › tests/toast-room.spec.ts:297:3 › the last notice leaves where it was, never over the docked start (375×667, 200 % text) (4.9s)
