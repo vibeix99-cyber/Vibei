@@ -1,0 +1,77 @@
+{
+ "label": "preview5570-desktop",
+ "base": "http://127.0.0.1:5570",
+ "viewport": "desktop",
+ "started": "22:16:14",
+ "steps": [
+  {
+   "name": "1 load Today",
+   "at": "22:16:14",
+   "error": null
+  },
+  {
+   "name": "2 start a brew (type, click Put the kettle on)",
+   "at": "22:16:17",
+   "error": null
+  },
+  {
+   "name": "3 pause and resume (real clicks), Add 5 minutes",
+   "at": "22:16:21",
+   "error": null
+  },
+  {
+   "name": "4 move the clock 90 s, end the brew (End session, sheet)",
+   "at": "22:16:25",
+   "error": null
+  },
+  {
+   "name": "5 Today again, start a second brew, let it finish (summary)",
+   "at": "22:16:30",
+   "error": null
+  },
+  {
+   "name": "6 summary: Tea time, back to Today, open Stats (real click), scroll",
+   "at": "22:16:47",
+   "error": null
+  },
+  {
+   "name": "7 open Settings (route), back to Today",
+   "at": "22:16:57",
+   "error": null
+  }
+ ],
+ "console": [
+  {
+   "step": "1 load Today",
+   "type": "info",
+   "text": "[chai3d] model ready {state: ready, ms: 33, bytes: 45572} {awake: Object, nap: Object, sip: Object, fileTris: 5372}",
+   "loc": "/assets/chaiLoad-CX6DyLSC.js:0"
+  }
+ ],
+ "pageerrors": [],
+ "requestfailed": [],
+ "http4xx": [],
+ "toastText": [
+  "Late-night brew? Let’s keep it short and sweet.Try Gentle · 15 min",
+  "Saved 1 minute of focus",
+  "Kettle’s off. 1 minute of focus saved."
+ ],
+ "afterFinishHash": "#/done",
+ "teaTimeClicked": true,
+ "statsHash": "#/stats",
+ "statsHasHistory": true,
+ "ended": "22:17:01",
+ "counts": {
+  "console_total": 1,
+  "error": 0,
+  "warning": 0,
+  "warn": 0,
+  "log": 0,
+  "info": 1,
+  "debug": 0,
+  "pageerror": 0,
+  "requestfailed": 0,
+  "http4xx": 0
+ },
+ "hookOrder": []
+}
