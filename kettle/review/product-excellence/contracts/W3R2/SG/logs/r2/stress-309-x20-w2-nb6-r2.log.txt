@@ -26,3 +26,10 @@ Running 20 tests using 2 workers
   ✓  17 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (21.1s)
   ✓  18 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (20.5s)
   ✓  19 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (21.4s)
+  ✓  20 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (21.7s)
+
+  20 passed (4.5m)
+playwright exit 0 end 19:32:51 load 15.68 13.03 12.04
+burners stopped (kill 19483 19484 19485 19486 19487 19488) 19:32:51
+[slots] SG freed 2 at 19:32:51
+### exit 0 | end 2026-10-17T19:32:51Z load 15.68 13.03 12.04

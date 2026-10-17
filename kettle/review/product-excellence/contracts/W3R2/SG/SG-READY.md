@@ -361,3 +361,23 @@ Served code: `logs/r2/served-blobs.log.txt`.
 | fix :5581 → HEAD :5560 | pass | pass | pass | `logs/r2/compat-5581-to-5560.log.txt` |
 
 Saved vs after boot: **6/6 byte-identical**. The reset profile has the same bytes as in §4 (sha256 prefix `e47c72404da7`). The fix round adds no stored field and no write: SG-D1 only changes what a tab adopts, and SG-D2 and SG-D3 touch no storage.
+
+### 8.5 `integrity:309` ×20 under load, on the final code
+`--repeat-each=20 --workers=2` on :5581 (`4b2690f`), through the gate (`--n 2`), plus 6 CPU burners. They are my own subshells, PIDs 19483–19488, started and killed by those PIDs; none is left running.
+
+| Run | Result | Load (1 / 5 / 15 min) | Log |
+|---|---|---|---|
+| 19:28:17–19:32:51 | **20/20** (4.5 min) | start 5.6 / 6.5 / 10.1 (burners just started); end 15.7 / 13.0 / 12.0 | `logs/r2/stress-309-x20-w2-nb6-r2.log.txt` |
+
+### 8.6 Status after the fix round
+**SG-D1, SG-D2 and SG-D3 are fixed, each with a test that fails on `54a9721` and passes on the fix (§8.2). Ruling 4.1 is applied (§8.3).**
+
+**Rerun on the final code:**
+- Vitest 342/342; tsc 0;
+- the stale-tab spec on the fix 10/10, and 5/5 FAIL on HEAD;
+- compatibility byte-identical both ways;
+- `integrity:309` 20/20 under load.
+
+**Still open:** LEAD-5's FOLLOW-UPs.
+- The doubly stale +5 loss (§7.2.1) and the composer label (§7.4).
+- The bfcache paused brew (§7.2.2) is now covered by probe (2), which passes. What remains of §7.2.2 is the triple-rare case where storage meanwhile went back to an older `lastEnded`, written by yet another stale tab.
