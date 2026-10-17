@@ -1,0 +1,14 @@
+[slots] TS took 2/3 at 16:44:30: bash -c 
+  cd "$WT" || exit 9
+  echo "### start $(date -u +%T) load $(cut -d" " -f1-3 /proc/loadavg)"
+  echo "### cmd: $*"
+  "$@"; rc=$?
+  echo "### end $(date -u +%T) exit=$rc load $(cut -d" " -f1-3 
+### start 16:44:30 load 13.26 16.86 15.00
+### cmd: /home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/TS/scripts/underload.sh notice
+burners: 13223 13224 13225 13226 started 16:44:30 load 13.26 16.86 15.00
+######## load-notice338: env KETTLE_PORT=5583 PLAYWRIGHT_JSON_OUTPUT_NAME=/home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/TS/logs/load-notice338.json npx playwright test tests/notice-strip.spec.ts --project=chromium --repeat-each=10 -g real input \(844×390 dark 200 %\) --workers=2 --reporter=list,json --output=.tmp/ts-out/load-notice338
+### start 16:44:35 load 12.84 16.72 14.97
+
+Running 10 tests using 2 workers
+

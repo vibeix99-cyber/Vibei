@@ -138,3 +138,17 @@ The injection code is a scratch copy, derived from the committed specs by `scrip
 | 3500 ms | **fails** in 4.6 s with the same message: it outlasts the 8 pauses (2.1 s: 29.410 to 31.552) |
 
 So a cover is tolerated only while it lasts less than about 2 s; the frame recorder (`__inv`, every animation frame of the test) is untouched and still counts any real notice-over-control overlap as a hit, whether or not `press()` waited for it.
+
+## 3. Under load: 10/10
+
+**The load:** the recipe of `W3R1/review/FINAL/scripts/LR-stress.sh` (`scripts/underload.sh`): `--workers=2` (two gate slots) plus 4 CPU burners (`( while :; do :; done ) &`, their own PIDs, killed by PID at the end and checked gone), on top of the other makers' browsers on the same four cores (the load average was already 12–20 before my burners started). Dev server :5583, one `playwright test` per row, `--repeat-each=10`. The load average (1, 5, 15 min) is read at the start and the end of each run (`### start` / `### end` lines in the logs).
+
+| run | log / report | result | load at start → end |
+|---|---|---|---|
+| `timer.spec.ts:156` ×10, `timer-app` | `logs/underload-timer.log.txt`, `logs/load-timer156.json.txt` | **10/10** (117 s of test time) | 19.35 16.55 12.97 (16:36:10) → 19.97 17.97 14.06 (16:38:48) |
+| `timer.spec.ts:156` ×10, `timer-harness` | same | **10/10** (50 s) | same run |
+| `timer.spec.ts:189` (was :183) ×10, `timer-app` | `logs/underload-timer.log.txt`, `logs/load-timer183.json.txt` | **10/10** (102 s) | 19.97 17.97 14.06 (16:38:48) → 23.51 19.91 15.36 (16:41:21) |
+| `timer.spec.ts:189` ×10, `timer-harness` | same | **10/10** (51 s) | same run |
+
+Burners of the timer runs: PIDs 3073 3074 3075 3076, started 16:36:05, stopped 16:41:21, all four reported gone.
+TODO-NOTICE-LOAD
