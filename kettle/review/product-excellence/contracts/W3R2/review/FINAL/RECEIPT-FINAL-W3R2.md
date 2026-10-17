@@ -82,6 +82,12 @@ Both passed on the rerun, so, by the brief, no run on :5583 or :5478 was made fo
 
 **25 passed, 0 failed, 0 flaky, 0 skipped.** All 25 cases are the one test at line 388 "no notice overlaps a control, text or a row: every notice state, real input" in its 25 configurations (durations 62 to 78 s). The case W3R1 named as known flaky, 1440×900 light 200 % reduced motion, passed (71.7 s); 844×390 dark 200 % passed (73.8 s).
 
+## 4. `w3-notices-load.spec.ts` with `W3_LOAD=1`, once on :5560 (the load control, normally skipped)
+
+`runs/w3-notices-load.log.txt`, `json/w3-notices-load.json`, `runs/w3-notices-load-summary.txt`. `W3_LOAD=1 KETTLE_PORT=5560 npx playwright test tests/w3-notices-load.spec.ts --project=chromium --workers=1`, 22:03:32 to 22:27:13 (23.7 min), one gate slot, load 6.8 at the start (the capture, 2-tab and console jobs ran beside it), 3.4 at the end. CPU throttle and repeat switches at their defaults (off).
+
+**25 tests: 25 passed, 0 failed, 0 flaky, 0 skipped.** This includes the two cases that failed in the W3R1 final receipt, deterministically and on base too ("390×844 light 200 % reduced motion" and "375×667 light 200 % reduced motion"): both passed here (390×844 in 57.3 s, 375×667 in 57.7 s).
+
 ## 5. Timer-harness, timer-app and pwa projects
 
 `runs/timer-pwa.log.txt`, `json/timer-pwa.json`, `runs/timer-pwa-summary.txt`. 21:57:10 to 22:00:36 (3.4 min), `KETTLE_PORT=5560 KETTLE_PWA_PORT=5495 npx playwright test --project=timer-harness --project=timer-app --project=pwa --workers=1`, one gate slot, load 12.5 to 15.3.
