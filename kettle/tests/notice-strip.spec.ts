@@ -193,6 +193,10 @@ async function onTop(page: Page, el: ReturnType<Page['locator']>, strict = false
  *  has gone (an inline Undo whose time ran out) fails the test at once, saying so, instead of holding it to its 4-minute
  *  timeout. */
 const GONE_MS = 15_000;
+/** (W3R2) In `press()`, a target found covered at the re-check before the tap is looked at again, after AIM_PAUSE_MS, at
+ *  most AIM_AGAIN times (about 2 s of waiting in all); one that is still covered after that fails the test as before. */
+const AIM_AGAIN = 8;
+const AIM_PAUSE_MS = 250;
 /** Scroll by real wheel (over `over`, or the page's middle) until `el` is on top, then tap / click it for real. */
 async function press(page: Page, touch: boolean, el: ReturnType<Page['locator']>, over?: { x: number; y: number }, strict = false) {
   await el.waitFor({ state: 'attached', timeout: 20_000 });
@@ -289,13 +293,25 @@ async function press(page: Page, touch: boolean, el: ReturnType<Page['locator']>
   // spell with no input at all (QUIET_MS, or BAND_IDLE_MS for a kept band: src/ui/moment.ts), so nothing can move
   // between that read and the tap; if the target has moved, or the read took 800 ms or more, the move and the read are
   // made again.
-  for (let k = 0; ; k++) {
+  // (W3R2) If the read finds the target covered (not on top), that is not yet the end: something can cross it for a
+  // moment (once, on a loaded machine, at 844×390 dark 200 %, the field was covered at that one read). The target is
+  // looked at again after AIM_PAUSE_MS, at most AIM_AGAIN times (about 2 s in all), and aimed at again from where it is
+  // then. The tap still goes only after a read, made after the pointer is on the target, that finds it on top; a target
+  // that stays covered through all of them fails here as before, with the same words.
+  for (let k = 0, covered = 0; ; ) {
+    if (!at) {
+      if (covered++ >= AIM_AGAIN) break;
+      await page.waitForTimeout(AIM_PAUSE_MS);
+      at = await onTop(page, el, strict);
+      continue;
+    }
+    const round = k++;
     const t = Date.now();
-    await page.mouse.move(Math.round(at!.x), Math.round(at!.y));
+    await page.mouse.move(Math.round(at.x), Math.round(at.y));
     const again = await onTop(page, el, strict);
-    const same = !!again && Math.abs(again.x - at!.x) < 0.5 && Math.abs(again.y - at!.y) < 0.5;
+    const same = !!again && Math.abs(again.x - at.x) < 0.5 && Math.abs(again.y - at.y) < 0.5;
     at = again;
-    if (!at || (same && Date.now() - t < 800) || k >= 4) break;
+    if (at && ((same && Date.now() - t < 800) || round >= 4)) break;
   }
   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();
   if (touch) {
