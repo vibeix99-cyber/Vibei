@@ -4,7 +4,8 @@
 |---|---|
 | Brief | `contracts/W3R2/BRIEF-SG.md`; binding `VB-DECISIONS-W3R2.md` §1; background `W3R1/CHECKER-W3R1-F1FIX.md` §4, §7–§9, `W3R1/F1FIX/F1FIX-READY.md`, `W3R1/review/F1-ROOT-CAUSE.md` |
 | Branch | `pe/w3r2-sync-guard`, worktree `/home/user/wt/w8g`, base `494748b` (app `5f78af1`, src `b74e6b3`). Local commits only, never pushed |
-| Commits so far | `c917293` the guard + `staleTab.test.ts`; `e18b621` the "away" rule (§1.2, 2.) + `tests/w3r2-stale-tab.spec.ts` (src `0fafc69`) |
+| **Head** | **`54a9721` (src `dd6944e`)**. Commits: `c917293` the guard + `staleTab.test.ts`; `e18b621` the "away" rule (§1.2, 2.) + `tests/w3r2-stale-tab.spec.ts` (app code final here, src `0fafc69`); `54a9721` one more Vitest case (three tabs), test only |
+| Scope | `git diff --stat 494748b 54a9721`: `src/timer/store.ts` +77/−2, `src/timer/sync.ts` +48/−4, new `src/timer/staleTab.test.ts`, new `tests/w3r2-stale-tab.spec.ts`. Nothing else: no `Composer.tsx`, `src/ui`, `src/screens`, `multitab.test.ts`, `intentionRace.test.ts`, `w3-intention-race.spec.ts`, `integrity.spec.ts` or `timer.spec.ts` change |
 | Dev | :5581 (HMR) serves the branch. Checked by blob hash of `src/timer/store.ts` and `sync.ts` (and `verify.sh`): `PORT 5581 serves c917293 (src f88ab8a): VERIFIED`; re-checked before each browser run (§3) |
 | Controls | :5560 integration = HEAD `494748b` (its `store.ts` and `sync.ts` blobs equal HEAD's, checked); :5478 old base `4d36939` |
 | Evidence | `SG/logs/*.log.txt`, `SG/scripts/*.txt` |
