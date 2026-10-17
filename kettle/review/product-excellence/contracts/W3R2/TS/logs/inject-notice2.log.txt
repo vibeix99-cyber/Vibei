@@ -1,0 +1,15 @@
+[slots] TS took 1/3 at 17:17:04: bash -c 
+  cd "$WT" || exit 9
+  echo "### start $(date -u +%T) load $(cut -d" " -f1-3 /proc/loadavg)"
+  echo "### cmd: $*"
+  "$@"; rc=$?
+  echo "### end $(date -u +%T) exit=$rc load $(cut -d" " -f1-3 
+### start 17:17:04 load 19.57 17.60 14.94
+### cmd: /home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/TS/scripts/inject-notice2.sh
+######## old COVER=shift COVER_MS=300: KETTLE_PORT=5583 npx playwright test -c .tmp/ts-pw.config.ts ts/old/notice-strip.spec.ts --project=chromium --workers=1 -g 'real input \(844×390 dark 200 %\)'
+### start 17:17:04 load 19.57 17.60 14.94
+
+Running 1 test using 1 worker
+
+[inject] shift: the page scrolled 180 -> 580; the field is now at top -284 bottom -232 of 390
+[inject] re-check: covered at 17:17:11.473
