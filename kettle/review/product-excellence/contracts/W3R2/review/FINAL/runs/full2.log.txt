@@ -144,3 +144,7 @@ Running 264 tests using 2 workers
   ✓  137 [chromium] › tests/w3r2-stale-tab.spec.ts:215:1 › start in the lagging tab (Today, Enter) while the other tab’s brew runs: it does not replace that brew; it joins and shows it (16.0s)
   ✓  141 [chromium] › tests/whistle.spec.ts:45:1 › no audio context before the first gesture; the first tap unlocks it (5.5s)
   ✓  140 [chromium] › tests/w3-stats.spec.ts:348:5 › Overview tiles at 844×390 with 200 % text › every tile text fits once the fonts are in (5.9s)
+  ✓  143 [chromium] › tests/w3-stats.spec.ts:365:5 › Stats before the web fonts arrive, 390×844, 200 % text › the page stays the width of the screen and the tiles fit (fonts blocked) (9.3s)
+  ✓  142 [chromium] › tests/whistle.spec.ts:53:1 › the whistle sounds once at completion, and not again after a reload of the summary (17.9s)
+  ✓  144 [chromium] › tests/w3-stats.spec.ts:365:5 › Stats before the web fonts arrive, 375×667, 200 % text › the page stays the width of the screen and the tiles fit (fonts blocked) (10.0s)
+  ✓  145 [chromium] › tests/whistle.spec.ts:76:1 › late return: one whistle, the while-away summary, nothing more on later visibility changes (11.0s)
