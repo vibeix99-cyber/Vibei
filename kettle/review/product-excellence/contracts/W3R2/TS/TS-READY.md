@@ -270,3 +270,22 @@ A call with `rescrolled > 0` that cannot bring the target on top goes on to the 
 | `sheet` (TS-D2) | **passes** (1.2 min) by the loosening: after the rescroll the walk finds nothing and the Tab + Enter fallback presses the button (an annotation only) | **fails** in 13.6 s: `getByRole('dialog', { name: 'Leave the kettle early?' }).getByRole('button', { name: 'End session' }) can be brought on top by real scrolling ({"x":426,"y":-2726.09375,…}, scrollY 0)`; the log shows the rescroll, then the failure, no fallback |
 
 So the dock switch fails the rejected tip with the unchanged words and passes the fix; the covers that are not page chrome (fixed, page-anchored) still fail with the unchanged words; the loosening of TS-D2 is shown on `21e5644` and closed.
+
+### 6.3 Under load (`:5560`, app `7cb3242`, src `07df367`; `scripts/underload2.sh`)
+
+The recipe of `W3R1/review/FINAL/scripts/LR-stress.sh`: `--workers=2` (two gate slots, lane `TS`) plus 4 CPU burners (`( while :; do :; done ) &`, own PIDs, killed by PID at the end and checked gone); the other lanes' browsers shared the same four cores. Load average (1, 5, 15 min) at each start and end.
+
+| run | log / report | result | load at start → end |
+|---|---|---|---|
+| `notice-strip.spec.ts` 844×390 dark 200 % ×20 (`--repeat-each=20`) | `logs/r2/underload-dark844-x20.log.txt`, `logs/r2/r2-dark844-x20.json.txt` | **20/20** (13.3 min; 1.1–1.5 min per test) | 15.38 13.02 12.04 (19:32:58) → 12.60 13.30 13.47 (19:46:22); burners 26014 26015 26016 26017 stopped, gone |
+| `notice-strip.spec.ts` 844×390 light 200 % reduced motion ×10 | `logs/r2/combo.log.txt`, `logs/r2/r2-light844reduced-x10.json.txt` | **10/10** (5.1 min) | 11.91 13.14 13.41 (19:46:28) → 8.73 10.70 12.29 (19:51:35); burners 3005 3006 3007 3008 stopped, gone |
+
+(LEAD-6's, the maker's and my earlier runs of the rejected tip at 844×390 dark 200 %: 6/10, 9/10, 7/10, 7/10, 8/10.)
+
+### 6.4 The fix is exercised, not just lucky (the diagnostic copy on the fix; `scripts/mkdiag3.py`, copy `scratch/r2.diag3.notice-strip.spec.ts.txt`)
+
+LEAD-6's `__why` (the target's rect, what is at its centre and its fixed / sticky ancestor, the Today dock's mode and box), taken from `F-diag3.notice-strip.spec.ts.txt`, on the fix, logging only: the first read and the read after the walk of the composer field, every not-on-top re-check and aim-again, and one `[diag] PATH <why>` line each time the rescroll rule fires. 844×390 dark 200 %, ×10, `--workers=2` + 4 burners, :5560 (`logs/r2/combo.log.txt`, `logs/r2/r2-diag3-x10.json.txt`): **10/10 passed**, load 8.35 10.59 12.24 (19:51:40) → 11.45 11.50 12.14 (19:57:44), burners 5160 5161 5162 5163 stopped, gone.
+
+- **`PATH docked chrome` taken 2 times** (2 of the 10 runs; no `PATH out of view`). In both, the log is LEAD-6's race exactly: first read at page time 2.0 s: field 296–348, `scrollY` 0, **dock `tall=true`, `relative`, top 538, `--home-dock-h` 255px**, field on top; re-check at 2.3 s: **dock `tall=false`, `sticky`, 182–390, 209px**, `p._ctaNote` in `div._ctaDock` on top at the field's centre; then `PATH docked chrome (rescrolled 0)`, the rescrolled call reads the field covered, the wheel walk takes it to `scrollY` 180, field 116–168, on top, and the tap follows.
+- The other 8 runs: the first read already saw the settled dock (`tall=false`, sticky, 209px; field covered), took the walk (`scrollY` 180) and tapped, as in LEAD-6's passing runs.
+- No failure, so no "anything other than the docked Start over the field" to report.
