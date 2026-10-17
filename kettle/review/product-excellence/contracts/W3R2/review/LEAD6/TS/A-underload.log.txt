@@ -1,3 +1,7 @@
 burners: 379 380 381 382 started 18:22:52 load 6.03 7.70 10.55
 ######## A-notice844-x10: KETTLE_PORT=5560 npx playwright test tests/notice-strip.spec.ts --project=chromium --repeat-each=10 -g real input \(844×390 dark 200 %\) --workers=2
 ### start 18:22:57 load 6.67 7.81 10.57
+
+Running 10 tests using 2 workers
+
+  ✘   1 [chromium] › tests/notice-strip.spec.ts:366:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (7.1s)
