@@ -1,0 +1,36 @@
+--- /home/user/wt/w8q/kettle/tests/notice-strip.spec.ts	2026-10-17 17:09:37.381057369 +0000
++++ /tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/ns-chrome.ts	2026-10-17 17:49:40.792704475 +0000
+@@ -189,12 +189,20 @@
+     return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width, h: r.height, top: r.top };
+   }, strict, { timeout: GONE_MS });
+ }
+-/** Is the element wholly inside the viewport? (The first test of `onTop`: when that finds nothing, this says whether the
+- *  element has moved out of the view, as opposed to being covered.) */
+-const inView = (el: ReturnType<Page['locator']>) =>
++/** Can the wheel clear it? True when the element is out of the view, or what covers its centre is the page's own fixed or
++ *  sticky chrome (the docked start, the tab bar: the walk at the top of `press()` scrolls the element clear of both). Any
++ *  other cover is not something a wheel removes; it is only waited for. */
++const wheelCures = (el: ReturnType<Page['locator']>) =>
+   el.evaluate((e) => {
+     const r = e.getBoundingClientRect();
+-    return r.width > 0 && r.top >= 0 && r.bottom <= innerHeight && r.left >= 0 && r.right <= innerWidth;
++    if (!(r.width > 0 && r.top >= 0 && r.bottom <= innerHeight && r.left >= 0 && r.right <= innerWidth)) return true;
++    const h = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
++    if (!h || e.contains(h)) return false;
++    for (let a: Element | null = h; a && a !== document.body; a = a.parentElement) {
++      const p = getComputedStyle(a).position;
++      if (p === 'fixed' || p === 'sticky') return true;
++    }
++    return false;
+   }, undefined, { timeout: GONE_MS });
+ /** (W3R1 Q, X-11) Every read of a target in `press()` waits at most this long for it to be in the page: a target that
+  *  has gone (an inline Undo whose time ran out) fails the test at once, saying so, instead of holding it to its 4-minute
+@@ -314,7 +322,7 @@
+       if (covered++ >= AIM_AGAIN) break;
+       await page.waitForTimeout(AIM_PAUSE_MS);
+       at = await onTop(page, el, strict);
+-      if (!at && rescrolled < AIM_RESCROLL && !(await inView(el))) return press(page, touch, el, over, strict, rescrolled + 1);
++      if (!at && rescrolled < AIM_RESCROLL && (await wheelCures(el))) return press(page, touch, el, over, strict, rescrolled + 1);
+       continue;
+     }
+     const round = k++;
