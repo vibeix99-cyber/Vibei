@@ -1,0 +1,330 @@
+{
+ "label": "e2-5560-control",
+ "base": "http://127.0.0.1:5560",
+ "case": "e",
+ "iteration": 3,
+ "loadAtStart": "17.97 17.30 14.49",
+ "t0": "20:38:09",
+ "steps": {
+  "01-started": {
+   "A": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcuze4x0d7f272d",
+     "startedAt": 1792269496401,
+     "endsAt": 1792270996401,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Chapter 3 notes",
+     "lastEnded": null
+    },
+    "stored": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcuze4x0d7f272d",
+     "startedAt": 1792269496401,
+     "endsAt": 1792270996401,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Chapter 3 notes",
+     "lastEnded": null
+    },
+    "recordsStored": [],
+    "recordsMemory": [],
+    "held": 0,
+    "holding": false,
+    "clockOffset": 0
+   },
+   "B": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcuze4x0d7f272d",
+     "startedAt": 1792269496401,
+     "endsAt": 1792270996401,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Chapter 3 notes",
+     "lastEnded": null
+    },
+    "stored": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcuze4x0d7f272d",
+     "startedAt": 1792269496401,
+     "endsAt": 1792270996401,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Chapter 3 notes",
+     "lastEnded": null
+    },
+    "recordsStored": [],
+    "recordsMemory": [],
+    "held": 0,
+    "holding": false,
+    "clockOffset": 0
+   }
+  },
+  "02-pre-action (A ended brew 1, runs brew 2; B behind, shows brew 1)": {
+   "A": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcuzo5y5cdd1f78",
+     "startedAt": 1792269599398,
+     "endsAt": 1792271099398,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Second brew",
+     "lastEnded": {
+      "sessionId": "s_mvcuze4x0d7f272d",
+      "reason": "user"
+     }
+    },
+    "stored": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcuzo5y5cdd1f78",
+     "startedAt": 1792269599398,
+     "endsAt": 1792271099398,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Second brew",
+     "lastEnded": {
+      "sessionId": "s_mvcuze4x0d7f272d",
+      "reason": "user"
+     }
+    },
+    "recordsStored": [
+     "s_mvcuze4x0d7f272d"
+    ],
+    "recordsMemory": [
+     "s_mvcuze4x0d7f272d"
+    ],
+    "held": 0,
+    "holding": false,
+    "clockOffset": 90000
+   },
+   "B": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcuze4x0d7f272d",
+     "startedAt": 1792269496401,
+     "endsAt": 1792270996401,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Chapter 3 notes",
+     "lastEnded": null
+    },
+    "stored": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcuzo5y5cdd1f78",
+     "startedAt": 1792269599398,
+     "endsAt": 1792271099398,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Second brew",
+     "lastEnded": {
+      "sessionId": "s_mvcuze4x0d7f272d",
+      "reason": "user"
+     }
+    },
+    "recordsStored": [
+     "s_mvcuze4x0d7f272d"
+    ],
+    "recordsMemory": [
+     "s_mvcuze4x0d7f272d"
+    ],
+    "held": 3,
+    "holding": true,
+    "clockOffset": 90000
+   }
+  },
+  "03-after-B-action-before-release": {
+   "A": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcuze4x0d7f272d",
+     "startedAt": 1792269496401,
+     "endsAt": 1792271296401,
+     "plannedMs": 1800000,
+     "remainingMs": 1500000,
+     "intention": "Chapter 3 notes",
+     "lastEnded": null
+    },
+    "stored": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcuze4x0d7f272d",
+     "startedAt": 1792269496401,
+     "endsAt": 1792271296401,
+     "plannedMs": 1800000,
+     "remainingMs": 1500000,
+     "intention": "Chapter 3 notes",
+     "lastEnded": null
+    },
+    "recordsStored": [
+     "s_mvcuze4x0d7f272d"
+    ],
+    "recordsMemory": [
+     "s_mvcuze4x0d7f272d"
+    ],
+    "held": 0,
+    "holding": false,
+    "clockOffset": 90000
+   },
+   "B": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcuze4x0d7f272d",
+     "startedAt": 1792269496401,
+     "endsAt": 1792271296401,
+     "plannedMs": 1800000,
+     "remainingMs": 1500000,
+     "intention": "Chapter 3 notes",
+     "lastEnded": null
+    },
+    "stored": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcuze4x0d7f272d",
+     "startedAt": 1792269496401,
+     "endsAt": 1792271296401,
+     "plannedMs": 1800000,
+     "remainingMs": 1500000,
+     "intention": "Chapter 3 notes",
+     "lastEnded": null
+    },
+    "recordsStored": [
+     "s_mvcuze4x0d7f272d"
+    ],
+    "recordsMemory": [
+     "s_mvcuze4x0d7f272d"
+    ],
+    "held": 3,
+    "holding": true,
+    "clockOffset": 90000
+   }
+  },
+  "04-final": {
+   "A": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcuze4x0d7f272d",
+     "startedAt": 1792269496401,
+     "endsAt": 1792271296401,
+     "plannedMs": 1800000,
+     "remainingMs": 1500000,
+     "intention": "Chapter 3 notes",
+     "lastEnded": null
+    },
+    "stored": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcuze4x0d7f272d",
+     "startedAt": 1792269496401,
+     "endsAt": 1792271296401,
+     "plannedMs": 1800000,
+     "remainingMs": 1500000,
+     "intention": "Chapter 3 notes",
+     "lastEnded": null
+    },
+    "recordsStored": [
+     "s_mvcuze4x0d7f272d"
+    ],
+    "recordsMemory": [
+     "s_mvcuze4x0d7f272d"
+    ],
+    "held": 0,
+    "holding": false,
+    "clockOffset": 90000
+   },
+   "B": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcuze4x0d7f272d",
+     "startedAt": 1792269496401,
+     "endsAt": 1792271296401,
+     "plannedMs": 1800000,
+     "remainingMs": 1500000,
+     "intention": "Chapter 3 notes",
+     "lastEnded": null
+    },
+    "stored": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcuze4x0d7f272d",
+     "startedAt": 1792269496401,
+     "endsAt": 1792271296401,
+     "plannedMs": 1800000,
+     "remainingMs": 1500000,
+     "intention": "Chapter 3 notes",
+     "lastEnded": null
+    },
+    "recordsStored": [
+     "s_mvcuze4x0d7f272d"
+    ],
+    "recordsMemory": [
+     "s_mvcuze4x0d7f272d"
+    ],
+    "held": 0,
+    "holding": false,
+    "clockOffset": 90000
+   }
+  }
+ },
+ "checks": {
+  "precondition_B_behind": true,
+  "brew2_running_A_B_storage": false,
+  "A_B_storage_agree": true,
+  "brew2_not_extended_or_ended": false,
+  "B_shows_focus": true,
+  "storage_byte_identical_after_B_click": false,
+  "no_plus5_note_ever_in_B": false
+ },
+ "errors": [],
+ "spyOk": [
+  true,
+  true
+ ],
+ "firstSessionId": "s_mvcuze4x0d7f272d",
+ "plannedAtStart": 1500000,
+ "aEnd": {
+  "sheet": true,
+  "confirm": true
+ },
+ "secondSessionId": "s_mvcuzo5y5cdd1f78",
+ "preOk": true,
+ "plus5Note": [
+  "5 min · whistles at 9:08 PM now"
+ ],
+ "sawFiveObserver": true,
+ "fiveSnippets": [
+  "5 min · whistles at 9:08 PM now28:16Kettle’s on. Nice start.1 min brewed · now a 30 min brewAdd 5 morePauseEndBrew 1 of 4Space pause · + 5 min · Esc endAdded 5 minutes. 28 minutes 16 seconds left. ",
+  "5 min · whistles at 9:08 PM now28:15Kettle’s on. Nice start.1 min brewed · now a 30 min brewAdd 5 morePauseEndBrew 1 of 4Space pause · + 5 min · Esc endAdded 5 minutes. 28 minutes 16 seconds left. "
+ ],
+ "normalMetaLineBefore": "e’s warming up…1 min brewed · whistles at 9:03 PMAdd 5PauseEn",
+ "soundsB": [
+  "addTime"
+ ],
+ "storageUnchangedByBAction": false,
+ "pageErrors": 0,
+ "pass": false,
+ "loadAtEnd": "18.60 17.52 14.66",
+ "t1": "20:38:40"
+}
