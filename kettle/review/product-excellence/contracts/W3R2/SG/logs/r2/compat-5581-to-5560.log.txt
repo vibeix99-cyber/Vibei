@@ -1,0 +1,11 @@
+### compat: profiles saved on :5581 load unchanged on :5560 | branch 4b2690f (src 8a67658) | start 2026-10-17T19:14:16Z load 14.77 15.45 14.50 | inside one SG gate slot (bundle-r2.sh)
+
+Running 3 tests using 1 worker
+
+SGCOMPAT idle saved-by http://127.0.0.1:5581: {"state":{"status":"idle","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":null,"endsAt":null,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Outline the talk","tag":null,"sessionId":null,"lastEnded":{"sessionId":"s_mvcrzh4m26032e4d","phase":"focus","reason":"user","at":1792264461750,"whileAway":false}},"version":1}
+SGCOMPAT idle after-boot on http://127.0.0.1:5560: {"state":{"status":"idle","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":null,"endsAt":null,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Outline the talk","tag":null,"sessionId":null,"lastEnded":{"sessionId":"s_mvcrzh4m26032e4d","phase":"focus","reason":"user","at":1792264461750,"whileAway":false}},"version":1}
+  ✓  1 [chromium] › .tmp/sg/compat/compat.spec.ts:67:3 › idle profile saved by http://127.0.0.1:5581 loads unchanged on http://127.0.0.1:5560 (9.9s)
+SGCOMPAT paused saved-by http://127.0.0.1:5581: {"state":{"status":"paused","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792264470731,"endsAt":null,"remainingMs":1498520,"pausedAt":1792264472211,"pausedTotalMs":0,"completedInCycle":0,"intention":"Reply to Sam","tag":null,"sessionId":"s_mvcrzoazb09e6dc3","lastEnded":null},"version":1}
+SGCOMPAT paused after-boot on http://127.0.0.1:5560: {"state":{"status":"paused","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792264470731,"endsAt":null,"remainingMs":1498520,"pausedAt":1792264472211,"pausedTotalMs":0,"completedInCycle":0,"intention":"Reply to Sam","tag":null,"sessionId":"s_mvcrzoazb09e6dc3","lastEnded":null},"version":1}
+  ✓  2 [chromium] › .tmp/sg/compat/compat.spec.ts:67:3 › paused profile saved by http://127.0.0.1:5581 loads unchanged on http://127.0.0.1:5560 (8.5s)
+SGCOMPAT reset saved-by http://127.0.0.1:5581: {"state":{"status":"idle","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":null,"endsAt":null,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"","tag":null,"sessionId":null,"lastEnded":null},"version":1}
