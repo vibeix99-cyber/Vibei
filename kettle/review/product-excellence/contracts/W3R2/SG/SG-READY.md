@@ -4,7 +4,7 @@
 |---|---|
 | Brief | `contracts/W3R2/BRIEF-SG.md`; binding `VB-DECISIONS-W3R2.md` §1; background `W3R1/CHECKER-W3R1-F1FIX.md` §4, §7–§9, `W3R1/F1FIX/F1FIX-READY.md`, `W3R1/review/F1-ROOT-CAUSE.md` |
 | Branch | `pe/w3r2-sync-guard`, worktree `/home/user/wt/w8g`, base `494748b` (app `5f78af1`, src `b74e6b3`). Local commits only, never pushed |
-| Commits so far | `c917293` the guard + `staleTab.test.ts`; `e18b621` the "away" rule (§1.3) + `tests/w3r2-stale-tab.spec.ts` |
+| Commits so far | `c917293` the guard + `staleTab.test.ts`; `e18b621` the "away" rule (§1.2, 2.) + `tests/w3r2-stale-tab.spec.ts` (src `0fafc69`) |
 | Dev | :5581 (HMR) serves the branch. Checked by blob hash of `src/timer/store.ts` and `sync.ts` (and `verify.sh`): `PORT 5581 serves c917293 (src f88ab8a): VERIFIED`; re-checked before each browser run (§3) |
 | Controls | :5560 integration = HEAD `494748b` (its `store.ts` and `sync.ts` blobs equal HEAD's, checked); :5478 old base `4d36939` |
 | Evidence | `SG/logs/*.log.txt`, `SG/scripts/*.txt` |
@@ -127,16 +127,16 @@ The singly stale typed edit (12) already passes on HEAD: F1's fields-only save g
 
 | Run | Result | Log |
 |---|---|---|
-| HEAD `494748b`, first 22 tests (before #19 was added) | **16 failed / 6 passed** (all 16 on a behaviour assertion; the 6 passing: 12, 15, 20–23) | `logs/vitest-staletab-on-HEAD-494748b.log.txt` |
-| fix `c917293`, first 22 tests | **22/22** | `logs/vitest-staletab-on-fix.log.txt` |
-| fix, all 23 tests, and HEAD again | §3c (final rerun) | |
+| HEAD `494748b`, the 23 tests as committed in `e18b621` | **16 failed / 7 passed**. All 16 fail on a behaviour assertion (no crash). The 7 passing are 12, 15, 19–23, as the table says | `logs/vitest-staletab-on-HEAD-494748b.log.txt` |
+| fix `e18b621` (src `0fafc69`) | **23/23** | `logs/vitest-staletab-on-fix.log.txt` |
+| fix: `staleTab` + `intentionRace` + `multitab`, 10 runs in a row | **10 × 50/50** (deterministic) | `logs/vitest-race-files-x10-fix.log.txt` |
 
 ### 3b. Existing tests (unchanged files)
 
 | Run | Result | Log |
 |---|---|---|
 | `intentionRace.test.ts`, `multitab.test.ts`, `store.test.ts`, `storageFull.test.ts` on the fix | 4 files, **71/71** | `logs/vitest-existing-race-on-fix.log.txt` |
-| Vitest, all, on the fix | **34 files, 336/336** (was 314; +22) | `logs/vitest-all-fix.log.txt` |
+| Vitest, all, on the fix `e18b621` | **34 files, 337/337** (was 314; +23) | `logs/vitest-all-fix.log.txt` |
 | tsc (`tsc --noEmit`) | exit 0 | `logs/tsc-fix.log.txt` |
 
 `multitab.test.ts` "two tabs pressing start at the same time converge on one session" stays green. Its harness does not install the action catch-up, so it models two starts that cannot see each other (the doubly stale start, #20), whose outcome is unchanged. **But it encodes "last writer wins", which Vibei's rule overturns for a tab whose read is current. See §7.1 (for LEAD).**
