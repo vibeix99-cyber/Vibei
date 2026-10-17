@@ -136,7 +136,25 @@ Differences:
 - `375x667-dark-t100/end-sheet`, `390x844-dark-t200/end-sheet` (and `375x667-light-t100/end-sheet`, 4 px): the blurred backdrop behind the End sheet, a few pixels of the "Rain" button and steam, at most 7 of 255 levels.
 - `1440x900-dark-t100/stats-brew-updated` (4 px, max 5), `390x844-dark-t200/stats-brew-updated` (2 px, max 5), `1440x900-dark-t200/today-after-end-notice` (5 px: the tip of the progress bar), `844x390-light-t200/session-running` (4 px), `1440x900-light-t200/session-running` (1 px counted, the base differs from itself in 11454 px there): isolated pixels far from the strip.
 - The two states that carry a live notice (`stats-brew-updated`, `today-after-end-notice`; 32 pairs) are identical in 25, within the noise floor in 4, and D in 3 (2, 4 and 5 isolated pixels, listed above).
-RECAP_PLACEHOLDER
+
+**Second look at the 10 D pairs (recapture).** Each D state was captured 4 more times (BEFORE ×2 more, AFTER ×2 more: `tools/recap.sh`, `logs/recap.log.txt`), giving 4 BASE and 3 AFTER captures per D pair. Counts are pixels differing by more than 2 levels inside the D region (bbox + 10 px), as mean (max) over the capture pairs (`tools/recap-analyze.cjs`, `logs/recap-analysis.json.txt`):
+
+| D pair | captures (base/after) | differing px in the D region: base vs base mean (max) | after vs after | after vs base |
+|---|:-:|---|---|---|
+| `1440x900-dark-t100/session-running` | 4/3 | 16 (32) | 999 (1499) | 1002 (1515) |
+| `1440x900-dark-t100/stats-brew-updated` | 4/3 | 2 (4) | 3 (4) | 2 (4) |
+| `1440x900-dark-t200/session-running` | 4/3 | 829 (1657) | 8062 (12189) | 5542 (12189) |
+| `1440x900-dark-t200/today-after-end-notice` | 4/3 | 23 (35) | 0 (0) | 18 (30) |
+| `1440x900-light-t200/session-running` | 4/3 | 1 (1) | 1 (1) | 1 (2) |
+| `375x667-dark-t100/end-sheet` | 4/3 | 61 (121) | 81 (121) | 50 (121) |
+| `375x667-light-t100/end-sheet` | 4/3 | 0 (0) | 3 (4) | 3 (4) |
+| `390x844-dark-t200/end-sheet` | 4/3 | 0 (0) | 443 (664) | 221 (664) |
+| `390x844-dark-t200/stats-brew-updated` | 4/3 | 0 (0) | 1 (2) | 1 (2) |
+| `844x390-light-t200/session-running` | 4/3 | 2 (4) | 3 (4) | 2 (4) |
+
+- **In every D pair the AFTER captures differ from each other as much as they differ from BASE, or the whole difference is 5 px or fewer** (the `end-sheet` 375×667 light, both `stats-brew-updated`, the 1440 light @200 and 844×390 `session-running` rows).
+- The two large ones are the focus scene's discrete motion phases, not the build: for `1440x900-dark-t100/session-running` the matrix of 7 captures has `after2` identical to the base captures (16 px) while `after` and `after3` form the other phase (1483–1499 px), and the base shows a third (`before4`, 32 px); for `1440x900-dark-t200/session-running` `after2` equals `before3` exactly (0 px). So an AFTER capture can reproduce a BASE frame; no pixel difference between the builds is stable across captures. The base never showed the second phase in its 4 captures, which I note rather than explain: nothing in `Toast.tsx` draws in the scene, and the session screen's notice strip is empty in this state.
+
 **Noise floor in numbers:** the base differs from itself in 47 of 192 states (145 pixel-identical); mostly the blurred End and warm sheets (maximum 2 levels) and the focus scene; two states had a gross variation between two base captures (`1440x900-light-t200/sheet-warm-missed-cozy`, 237 538 px, and `1440x900-light-t100/today-missed-nocozy`, 107 494 px: a layout moved between two base captures). Machine load during the capture was 15–20.
 
 Files: `shots/{before,after}/`, `shots/before2-flagged/` (BEFORE2 for the 10 D pairs only; the full BEFORE2 set, 22 MB, is not committed, its per-pair numbers are in the JSON), `crops/`, `logs/diff-before-after.json.txt` (every pair: differing px, noise px, real px, max delta, bbox), `logs/summary3.md`.
@@ -146,8 +164,8 @@ Files: `shots/{before,after}/`, `shots/before2-flagged/` (BEFORE2 for the 10 D p
 1. **`w3-notices-idle` is 0 on base** (and 0 on the fix): it stays on the Today screen, so the leaving-layer render the bug needs never happens there. The brief expected > 0 in each spec; the 73 base errors are in the four specs that leave a screen, and the minimal reproducer (§2) shows the flip directly (3/3 on base, 0/3 on fix, listener proven live).
 2. **Counts are per page load**, not per occurrence (React warns once per component name per page).
 3. **One base failure in the notice suite** (`notice-strip` 844×390 light 200 % reduced, the setup tap, 1.7 s in): the tap-helper re-aim flake that Maker TS owns. Not seen on the fix; not related to this change.
-4. **Capture, D pairs.** 148 identical, 34 within the noise floor, 10 D by the pixel rule (§4). From the crops all 10 are scene or backdrop-blur pixels, a few isolated pixels, or the progress-bar tip; none is in a notice strip. They are classified by my reading of the crops, not by a stronger rule; the LEAD can open `crops/` (BEFORE | AFTER | mask). The 12 states do not capture a notice *mid-exit* (a route layer leaving): that moment is covered by the notice suite and the reproducer, not by a still.
-5. **Process deviation, disclosed.** At about 16:08 UTC I ran a 4-second smoke test of the console listener (one test, one worker, one Chromium) **outside** the slot gate before I had worked out the gated command line; every later browser run went through `slots.py … --lane TH`. A second, aborted capture pass (v2, killed at about 17:20 after the noise showed animation and timer effects) and the first discarded pass (§4) are not in the packet.
+4. **Capture, D pairs.** 148 identical, 34 within the noise floor, 10 D by the pixel rule (§4). From the crops all 10 are scene or backdrop-blur pixels, a few isolated pixels, or the progress-bar tip; none is in a notice strip. They are classified by my reading of the crops and by the recapture (§4: AFTER varies among itself as much as it differs from BASE); the LEAD can open `crops/` (BEFORE | AFTER | mask). The 12 states do not capture a notice *mid-exit* (a route layer leaving): that moment is covered by the notice suite and the reproducer, not by a still.
+5. **Process deviation, disclosed.** At about 16:08 UTC I ran a 4-second smoke test of the console listener (one test, one worker, one Chromium) **outside** the slot gate before I had worked out the gated command line; every later browser run went through `slots.py … --lane TH`. A second, aborted capture pass (v2, killed at about 17:17 after the noise showed animation and timer effects) and the first discarded pass (§4) are not in the packet.
 6. **Not run:** the rest of the chromium project, the `timer-*` and `pwa` projects (not asked; no file but `Toast.tsx` changed). Not committed: the full BEFORE2 set (22 MB; per-pair numbers are in `logs/diff-before-after.json.txt`).
 7. **Servers:** `:5582` serves `203b057` (src `07df367`) and `:5560` serves `494748b` (src `b74e6b3`), both `verify.sh`-VERIFIED at 17:21 UTC; nothing was restarted.
 8. **Left alone, same pattern:** none. The only other `useIsPresent()` users (`src/app/App.tsx:113`, `src/ui/Sheet.tsx:120`) already call it unconditionally (AST audit: 0 flagged in both).
