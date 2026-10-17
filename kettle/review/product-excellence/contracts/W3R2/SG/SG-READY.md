@@ -160,7 +160,7 @@ Set-up:
 | :5581 fix, first run | **4/4** (44 s) | `logs/stale-tab-pw-fix-5581-try1.log.txt` |
 | :5581 fix ×3 (`--repeat-each=3`, load 13 → 21) | **12/12** | `logs/stale-tab-pw-fix-5581-x3.log.txt` |
 | :5560 HEAD `494748b` ×3 | **12/12 FAIL**, each at Z's action (details below) | `logs/stale-tab-pw-HEAD-5560-x3.log.txt` |
-| :5478 old base `4d36939` ×1 | (below) | `logs/stale-tab-pw-base-5478-x1.log.txt` |
+| :5478 old base `4d36939` ×1 | **4/4 FAIL**: pause, add 5 and end as on HEAD. Start fails one step earlier, at "Z's typing did not touch A's brew": the pre-F1 composer saves its whole idle timer | `logs/stale-tab-pw-base-5478-x1.log.txt` |
 
 How each case fails on HEAD:
 - **pause:** "paused: the same brew, with A's +5"; storage holds Z's stale 10-min plan;
