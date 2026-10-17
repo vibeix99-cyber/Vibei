@@ -22,3 +22,17 @@
 | Not run by the maker | the rest of the chromium project; the timer and pwa projects. One 4 s console smoke test at ~16:08 ran outside the slot gate |
 | Archive | `archive/pe-w3r2-toast-hook-203b057.incremental.bundle` (requires `494748b`) |
 | Next | LEAD verdict (Opus) on trial :5592 |
+
+## Item 1, SG (stale-tab guard): GATE PASSED, 2026-10-17 ~18:10 UTC
+
+| Item | Result |
+|---|---|
+| Revision | `pe/w3r2-sync-guard@54a9721` (`c917293`, `e18b621` app final, `54a9721` adds a Vitest case), src `dd6944e`. Packet `contracts/W3R2/SG/SG-READY.md` |
+| Scope (checked, `494748b..54a9721`) | `src/timer/store.ts` (+79/−6 overall with sync), `src/timer/sync.ts`, new `src/timer/staleTab.test.ts` (+563), new `tests/w3r2-stale-tab.spec.ts` (+193). Nothing else: `multitab.test.ts`, `Composer.tsx`, `timer.spec.ts`, `notice-strip.spec.ts` and `Toast.tsx` are untouched |
+| **Trial** | **`88d6b64`** = integration `339d85c` (app `5f78af1`) + `54a9721`, worktree `/home/user/wt/w8tr-g`, src `dd6944e`, tests `4701f04`. tsc 0, vitest **338/338**, build OK. Dev **:5591** (verified; `store.ts` and `sync.ts` served), preview **:5593** (200) |
+| Design (the maker's) | **Write side** (`store.ts`): every action except `tick`, `reset`, `setIntention`, `syncIdleLength` and `toggle` first takes in what storage holds now. On the same brew it acts on the brew as it is now; on an ended or replaced brew it does nothing and shows the current one; new actions are guarded by default. **Receive side** (`sync.ts` `olderThanMine`): before adopting a stored state, a tab holding a newer brew keeps it and saves it back, which covers the doubly stale case in any event order. "Newer" uses existing fields only. `reset()` now removes the key first, so other tabs follow a wipe. Storage format unchanged |
+| The maker's claims | `staleTab.test.ts` 24 cases: **17 fail on HEAD**, 24/24 on the fix (10× deterministic); per trigger: rebase, pause, resume, +5, end, start, doubly stale typed edit (including 3 tabs), doubly stale pause. Browser spec: **12/12 fail on :5560**, 4/4 fail on :5478; 12/12 + 4/4 pass on the fix. The singly stale typed edit passes on HEAD (F1 already guards it). Existing race tests 71/71; `w3-intention-race` 6/6; vitest 338/338; compatibility 12/12 byte-identical; `integrity:309` ×20 under load **20/20 ×2**; integrity 25/25; `w2-home` 18/18; timer 26 + 2 skipped; pwa 3/3 |
+| **LEAD ruling needed** | `multitab.test.ts:229` asserts `intention` is `'from B'` (last writer wins). It stays green only because that harness does not install the new catch-up; with the app's wiring, B joins A's brew. The maker proposes installing the catch-up in the harness and expecting `'from A'` (15/15). The file is not edited |
+| Open (packet §7) | Same-brew older fields while doubly stale (e.g. A's +5 lost; telling versions apart would need a stored field). A bfcache-restored paused brew could come back over an idle timer, never over a live one. `flow.ts` `startNextBrew` leaves `suppressNextStop` set when its `end` no-ops (same gap on HEAD at 0:00). The Focus screen "+5 min" note shows when the +5 was dropped. Composer label: unchanged, logged |
+| Archive | `archive/pe-w3r2-sync-guard-54a9721.incremental.bundle` (requires `494748b`) |
+| Next | **Lane R2** (Sonnet) regression on :5591; then the LEAD verdict |
