@@ -479,7 +479,11 @@ export function NoticeStrip({
   reach?: boolean;
   className?: string;
 }) {
-  const leaving = useContext(Leaving) || !useIsPresent() || off;
+  // Both reads are made on every render, in this order: `||` would skip `useIsPresent()` whenever the layer is already
+  // leaving, and the hooks called would then differ from one render to the next (React's rules of hooks).
+  const layerLeaving = useContext(Leaving);
+  const present = useIsPresent();
+  const leaving = layerLeaving || !present || off;
   const idRef = useRef(0);
   if (!idRef.current) idRef.current = ++stripSeq;
   const id = idRef.current;
