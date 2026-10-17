@@ -35,3 +35,7 @@ Running 264 tests using 2 workers
   ✓   30 [chromium] › tests/integrity.spec.ts:781:3 › I03 data safety › export → reset (explicit confirmation) → import restores brews, settings and every reward exactly (20.9s)
   ✓   31 [chromium] › tests/a11y.spec.ts:292:1 › welcome: first brew from the keyboard alone (4.0s)
   ✓   32 [chromium] › tests/integrity.spec.ts:840:3 › I03 data safety › invalid files change nothing and say why (not JSON, another app, truncated, newer version, huge, empty, damaged) (12.9s)
+  ✓   33 [chromium] › tests/a11y.spec.ts:303:1 › live regions stay quiet while a brew runs (no spoken countdown) (13.6s)
+  ✓   34 [chromium] › tests/integrity.spec.ts:880:3 › I03 data safety › storage full: a brew that completes still reaches its summary, once; saved data stays intact; a backup carries the brew; making room saves it (18.3s)
+  ✓   35 [chromium] › tests/a11y.spec.ts:332:3 › a toast never covers the session controls or the summary footer (390×844) (20.6s)
+  ✓   36 [chromium] › tests/integrity.spec.ts:916:3 › I03 data safety › storage full: a restore that cannot be saved is refused with a plain reason and changes nothing (15.2s)
