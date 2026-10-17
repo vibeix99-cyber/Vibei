@@ -43,3 +43,10 @@ Running 74 tests using 2 workers
   ✓  38 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (1440×900 light 100 %, task day) (27.7s)
   ✓  39 [chromium] › tests/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (1440×900 light 100 %, big day) (28.3s)
   ✓  40 [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by wheel (375×667, 200 % text) (21.2s)
+FACT 390x844-light-t100 a-no-input {"leftAt":5196,"room":68,"commits":[{"t":9296,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8590,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":4100,"collapseAfterLastBusyMs":4100,"visibleMove":68}
+  ✓  41 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (390x844-light-t100) (10.4s)
+FACT 390x844-light-t100 b-scroll-then-idle {"leftAt":5376,"room":68,"maxSy":494,"scrollMs":3341,"roomAfterScroll":68,"commits":[{"t":12768,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4051,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":7392,"collapseAfterLastBusyMs":4051,"visibleMove":68}
+  ✓  43 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (390x844-light-t100) (14.5s)
+  ✓  42 [chromium] › tests/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by touch (375×667, 200 % text) (29.5s)
+FACT 390x844-light-t100 c-pointer-held {"leftAt":5240,"room":68,"roomWhileDown":68,"downWhileHeld":1,"commits":[{"t":5248,"why":"rest","room":68,"shown":null,"down":0,"sinceInput":4507,"topBefore":132,"topAfter":132,"sy":0},{"t":12448,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4109,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":7208,"collapseAfterLastBusyMs":4109,"visibleMove":68}
+  ✓  44 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (390x844-light-t100) (13.4s)
