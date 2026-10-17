@@ -49,3 +49,28 @@
 | Open (the maker's) | The cause of the remaining first-press failure is not observed (candidate, unconfirmed: the sticky docked Start). An UNVERIFIED chrome-aware rescroll patch is in the packet's `scratch/`. The old tests were not run under the same burners as a control. The 2 s window is a judgement |
 | Archive | `archive/pe-w3r2-test-stability-21e5644.incremental.bundle` (requires `494748b`) |
 | Next | LEAD verdict. Vibei's bar ("each test must pass 10/10 under load") is not met for `press()` |
+
+## Item 2, TH: APPROVE (LEAD-5 `f4fb5b3`, `CHECKER-W3R2-TH.md`) → merged as `7cb3242` (2026-10-17 ~19:05 UTC)
+
+- **Merge check:** the merged src `07df367` and tests `17d135a` equal trial `0ad85b9`'s.
+- **LEAD-5's results:**
+  - **Hook-order errors** (its own count via Chromium's console log), base vs trial: `notice-strip` 4 vs 0, `summary-notice` 28 vs 0, `w3-notices` 9 vs 0. No other console line.
+  - **`notice-strip` on :5592:** 23/25 in one full run. Both failures are flaky and not from TH: TS's re-aim flake (2/2 on rerun), and a Stats tab link 0.4 px past the viewport edge (3/3 trial and 3/3 base when rerun alternately).
+  - **Captures:** 148/192 identical; each of the other 44 is a frame the base itself reproduces. None is in a notice strip.
+- **Integration HEAD app code is now `7cb3242`** (src `07df367`).
+
+## Item 1, SG: REJECT (LEAD-5 `2a33de1`, `CHECKER-W3R2-SG.md`). One 90-minute fix round
+
+- **The design holds:**
+  - every trigger fails on HEAD and passes on the fix (Vitest 17/24 vs 24/24; browser 4/4 vs 8/8);
+  - compatibility is byte-identical;
+  - `integrity:309` 20/20 under load;
+  - Lane R2's 2-tab check: 25/25 on the fix, 5/25 on :5560.
+- **Blocking defects:**
+  - **SG-D1 (introduced):** a tab that missed the other tab's updates (e.g. bfcache) puts back a brew the other tab ended under 1 minute in, then completes it. That writes a false 25-minute record.
+  - **SG-D2 (worse than HEAD):** in `flow.ts`, `suppressNextStop` stays set when the lagging tab's end is dropped, so that tab's next stop loses its "Saved" toast and doesn't go home.
+  - **SG-D3 (introduced):** Focus shows "+5 min" and plays the pause/resume sound when the action was dropped.
+- **Rulings:**
+  - `multitab.test.ts:229`: take the maker's proposal (b) in the fix round (install the catch-up, expect `'from A'`). It is not a weakening.
+  - `reset()` change: ACCEPTED.
+  - FOLLOW-UPs: the doubly stale +5 loss, the bfcache paused brew, and the composer label.
