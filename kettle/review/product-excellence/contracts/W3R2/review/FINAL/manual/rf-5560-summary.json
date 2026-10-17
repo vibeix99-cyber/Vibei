@@ -1,0 +1,149 @@
+{
+ "label": "rf-5560",
+ "base": "http://127.0.0.1:5560",
+ "N": 3,
+ "cases": {
+  "g": {
+   "iterations": 3,
+   "pass": 3,
+   "fail": 0,
+   "perCheck": {
+    "precondition_B_behind": 3,
+    "B_joined_A_brew_after_its_click": 3,
+    "A_storage_byte_identical_after_B_click": 3,
+    "no_second_brew_started_by_B": 3,
+    "A_B_storage_agree_after_release": 3,
+    "saved_of_focus_toast_shown_in_B": 3,
+    "B_went_home": 3,
+    "one_record_for_joined_brew_everywhere": 3,
+    "idle_in_A_B_storage_at_the_end": 3
+   },
+   "exceptions": 0,
+   "pageErrors": 0,
+   "plus5Notes": []
+  },
+  "e": {
+   "iterations": 3,
+   "pass": 3,
+   "fail": 0,
+   "perCheck": {
+    "precondition_B_behind": 3,
+    "brew2_running_A_B_storage": 3,
+    "A_B_storage_agree": 3,
+    "brew2_not_extended_or_ended": 3,
+    "B_shows_focus": 3,
+    "storage_byte_identical_after_B_click": 3,
+    "no_plus5_note_ever_in_B": 3
+   },
+   "exceptions": 0,
+   "pageErrors": 0,
+   "plus5Notes": [
+    [
+     ""
+    ],
+    [
+     ""
+    ],
+    [
+     ""
+    ]
+   ]
+  },
+  "f": {
+   "iterations": 3,
+   "pass": 3,
+   "fail": 0,
+   "perCheck": {
+    "precondition_B_behind": 3,
+    "brew2_running_A_B_storage": 3,
+    "A_B_storage_agree": 3,
+    "brew2_not_extended_or_ended": 3,
+    "brew2_not_paused": 3,
+    "no_pause_or_resume_sound_in_B_when_dropped": 3,
+    "B_shows_focus": 3,
+    "records_brew1_exactly_one_stored": 3,
+    "records_brew1_exactly_one_A_memory": 3,
+    "records_brew1_exactly_one_B_memory": 3,
+    "no_record_for_brew2": 3
+   },
+   "exceptions": 0,
+   "pageErrors": 0,
+   "plus5Notes": []
+  },
+  "a": {
+   "iterations": 3,
+   "pass": 3,
+   "fail": 0,
+   "perCheck": {
+    "precondition_B_behind": 3,
+    "paused_in_A": 3,
+    "paused_in_B": 3,
+    "paused_in_storage": 3,
+    "same_session_A_B_storage": 3,
+    "kept_plus5_A_B_storage": 3,
+    "A_B_storage_agree": 3,
+    "remaining_gt_planned_minus_2min": 3,
+    "pause_sound_played_in_B_when_applied": 3
+   },
+   "exceptions": 0,
+   "pageErrors": 0,
+   "plus5Notes": []
+  },
+  "b": {
+   "iterations": 3,
+   "pass": 3,
+   "fail": 0,
+   "perCheck": {
+    "precondition_B_behind": 3,
+    "same_session_A_B_storage": 3,
+    "A_B_storage_agree": 3,
+    "still_paused_A_B_storage": 3,
+    "plus5_applied_A_B_storage": 3
+   },
+   "exceptions": 0,
+   "pageErrors": 0,
+   "plus5Notes": []
+  },
+  "c": {
+   "iterations": 3,
+   "pass": 3,
+   "fail": 0,
+   "perCheck": {
+    "precondition_B_behind": 3,
+    "brew2_running_A_B_storage": 3,
+    "A_B_storage_agree": 3,
+    "brew2_not_extended_or_ended": 3,
+    "B_shows_focus": 3,
+    "records_brew1_exactly_one_stored": 3,
+    "records_brew1_exactly_one_A_memory": 3,
+    "records_brew1_exactly_one_B_memory": 3,
+    "no_record_for_brew2": 3
+   },
+   "exceptions": 0,
+   "pageErrors": 0,
+   "plus5Notes": []
+  },
+  "d": {
+   "iterations": 3,
+   "pass": 3,
+   "fail": 0,
+   "perCheck": {
+    "paused_in_A_and_B_after_B_pause": 3,
+    "plus5_in_A_B_storage": 3,
+    "still_paused_after_plus5": 3,
+    "brew1_ended_idle_in_A_B_storage": 3,
+    "brew1_one_record_everywhere": 3,
+    "brew2_one_record_everywhere": 3,
+    "final_idle_A_B_storage_agree": 3,
+    "exactly_two_records_total": 3
+   },
+   "exceptions": 0,
+   "pageErrors": 0,
+   "plus5Notes": []
+  }
+ },
+ "startedAt": "22:06:22",
+ "loadAtStart": "7.16 9.80 11.97",
+ "endedAt": "22:12:05",
+ "loadAtEnd": "12.32 11.54 12.08"
+}

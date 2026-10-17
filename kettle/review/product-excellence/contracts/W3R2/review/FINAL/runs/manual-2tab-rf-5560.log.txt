@@ -90,3 +90,10 @@
     A=idle/null/25m/ends=null
     B=idle/null/25m/ends=null
     S=idle/null/25m/ends=null  S(read in B)=idle/null/25m/ends=null  pageErrors=0
+[22:12:05] rf-5560 (d) it3 PASS load 12.32 11.49 12.08->12.32 11.54 12.08
+    A=idle/null/25m/ends=null
+    B=idle/null/25m/ends=null
+    S=idle/null/25m/ends=null  S(read in B)=idle/null/25m/ends=null  pageErrors=0
+### case (d) rf-5560: pass 3/3 {"paused_in_A_and_B_after_B_pause":3,"plus5_in_A_B_storage":3,"still_paused_after_plus5":3,"brew1_ended_idle_in_A_B_storage":3,"brew1_one_record_everywhere":3,"brew2_one_record_everywhere":3,"final_idle_A_B_storage_agree":3,"exactly_two_records_total":3}
+### done rf-5560 22:12:05 load 12.32 11.54 12.08
+### end 22:12:05 UTC; exit=0; load:  22:12:05 up  6:21,  0 user,  load average: 12.32, 11.54, 12.08
