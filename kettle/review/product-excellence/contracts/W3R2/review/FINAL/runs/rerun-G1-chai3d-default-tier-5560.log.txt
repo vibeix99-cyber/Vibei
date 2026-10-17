@@ -1,0 +1,9 @@
+### start 23:32:10 UTC; load:  23:32:10 up  7:42,  0 user,  load average: 4.18, 5.54, 7.38
+### cmd: env KETTLE_PORT=5560 PLAYWRIGHT_JSON_OUTPUT_NAME=/home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/review/FINAL/rerun/G1-chai3d-default-tier-5560.json npx playwright test tests/chai3d.spec.ts --project=chromium --workers=1 --reporter=list,json --repeat-each=1 --output=/home/user/wt/w6-int/kettle/.tmp/RF-pw/rr-G1-chai3d-default-tier-5560 -g default tier on this machine \(auto → low on SwiftShader\)
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/chai3d.spec.ts:197:3 › 3D Chai: fallbacks keep the procedural Chai › default tier on this machine (auto → low on SwiftShader): the model, with no frame without Chai (12.8s)
+
+  1 passed (16.3s)
+### end 23:32:28 UTC; exit=0; load:  23:32:28 up  7:42,  0 user,  load average: 7.06, 6.16, 7.55

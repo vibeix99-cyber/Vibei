@@ -1,0 +1,30 @@
+| Spec file | Passed | Failed | Skipped | Flaky |
+|---|---|---|---|---|
+| `a11y.spec.ts` | 11 | 0 | 0 | 0 |
+| `break-reach.spec.ts` | 17 | 0 | 0 | 0 |
+| `chai3d.spec.ts` | 9 | **1** | 0 | 0 |
+| `integrity.spec.ts` | 23 | **2** | 0 | 0 |
+| `statusbar.spec.ts` | 9 | 0 | 0 | 0 |
+| `summary-notice.spec.ts` | 14 | 0 | 0 | 0 |
+| `toast-room.spec.ts` | 14 | 0 | 0 | 0 |
+| `w2-firstvisit.spec.ts` | 6 | 0 | 0 | 0 |
+| `w2-home.spec.ts` | 18 | 0 | 0 | 0 |
+| `w2-room.spec.ts` | 7 | 0 | 0 | 0 |
+| `w2-summary.spec.ts` | 18 | 0 | 0 | 0 |
+| `w3-history-focus-scroll.spec.ts` | 14 | 0 | 0 | 0 |
+| `w3-intention-race.spec.ts` | 2 | 0 | 0 | 0 |
+| `w3-notices-idle.spec.ts` | 12 | 0 | 0 | 0 |
+| `w3-notices-load.spec.ts` | 0 | 0 | 25 | 0 |
+| `w3-notices.spec.ts` | 9 | 0 | 0 | 0 |
+| `w3-settings.spec.ts` | 10 | 0 | 0 | 0 |
+| `w3-stats.spec.ts` | 30 | 0 | 0 | 0 |
+| `w3r2-stale-tab.spec.ts` | 5 | 0 | 0 | 0 |
+| `whistle.spec.ts` | 8 | 0 | 0 | 0 |
+| **total (264)** | **236** | **3** | **25** | **0** |
+stats {"startTime":"2026-10-17T22:56:38.060Z","duration":2117377.86,"expected":236,"skipped":25,"unexpected":3,"flaky":0}
+FAIL unexpected [chromium] chai3d.spec.ts:197 (49325 ms) default tier on this machine (auto → low on SwiftShader): the model, with no frame without Chai
+     Error: expect(received).toBe(expected) // Object.is equality //  // Expected: "model" // Received: "procedural" //  // Call Log:  @ chai3d.spec.ts:222
+FAIL unexpected [chromium] integrity.spec.ts:1048 (46360 ms) nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room
+     Error: every failed save has gone through //  // expect(received).toEqual(expected) // deep equality //  // - Expected  - 1 // + Received  + 3  @ integrity.spec.ts:1136
+FAIL unexpected [chromium] integrity.spec.ts:1048 (39594 ms) nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room
+     Error: every failed save has gone through //  // expect(received).toEqual(expected) // deep equality //  // - Expected  - 1 // + Received  + 3  @ integrity.spec.ts:1136

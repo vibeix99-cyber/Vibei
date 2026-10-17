@@ -1,0 +1,138 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e6]:
+      - link "Skip to content" [ref=e7] [cursor=pointer]:
+        - /url: "#main"
+      - navigation "Main" [ref=e8]:
+        - link "Kettle, today" [ref=e9] [cursor=pointer]:
+          - /url: "#/"
+          - img [ref=e11]:
+            - generic [ref=e27]: Kettle
+        - list [ref=e28]:
+          - listitem [ref=e29]:
+            - link "Today" [ref=e30] [cursor=pointer]:
+              - /url: "#/"
+              - img [ref=e33]
+              - generic [ref=e37]: Today
+          - listitem [ref=e38]:
+            - link "Stats" [ref=e39] [cursor=pointer]:
+              - /url: "#/stats"
+              - img [ref=e42]
+              - generic [ref=e46]: Stats
+          - listitem [ref=e47]:
+            - link "Nook" [ref=e48] [cursor=pointer]:
+              - /url: "#/nook"
+              - img [ref=e52]
+              - generic [ref=e57]: Nook
+          - listitem [ref=e58]:
+            - link "Settings" [ref=e59] [cursor=pointer]:
+              - /url: "#/settings"
+              - img [ref=e62]
+              - generic [ref=e74]: Settings
+      - main [active] [ref=e76]:
+        - generic [ref=e80]:
+          - generic [ref=e82]:
+            - heading "Your nook" [level=1] [ref=e83]
+            - paragraph [ref=e84]: 10 of 14 cozy things · Cozy level 12
+          - region "The room" [ref=e85]:
+            - generic [ref=e86]:
+              - generic [ref=e90]: "A small cozy room with rain on the window, a kettle on a little stove, a floor lamp, a low table with a mug on a round rug, and Chai the capybara. Also here: trailing pothos, stack of books, floor cushion, fairy lights, wall shelf, tea set, record player, knitted blanket, mountain painting, paper lantern."
+              - generic [ref=e91]:
+                - 'button "Time of day: Right now. Change" [ref=e93] [cursor=pointer]':
+                  - img [ref=e97]
+                - 'button "Window: Rain, matching your sounds. Change" [ref=e102] [cursor=pointer]':
+                  - img [ref=e106]
+              - paragraph:
+                - img
+                - text: Drag to look around · tap things
+          - generic [ref=e109]:
+            - generic [ref=e110]:
+              - generic [ref=e111]:
+                - img "Cozy level 12" [ref=e112]:
+                  - generic [ref=e131]: "12"
+                - generic [ref=e132]:
+                  - heading "Cozy level 12" [level=2] [ref=e133]
+                  - paragraph [ref=e134]: 204 leaves to level 13
+              - progressbar "Progress to cozy level 13" [ref=e135]
+              - generic [ref=e138]:
+                - generic [ref=e139]:
+                  - img [ref=e140]
+                  - img [ref=e151]
+                - paragraph [ref=e154]:
+                  - strong [ref=e155]: A surprise at level 14
+                  - generic [ref=e156]: 2 levels to go
+            - generic [ref=e157]:
+              - generic [ref=e158]:
+                - heading "Cozy things" [level=2] [ref=e159]
+                - generic [ref=e161]: 10/14
+              - list "Cozy things in your nook" [ref=e162]:
+                - listitem [ref=e163]:
+                  - button "Trailing pothos" [ref=e164] [cursor=pointer]:
+                    - img [ref=e166]
+                    - generic [ref=e179]: Trailing pothos
+                - listitem [ref=e180]:
+                  - button "Stack of books" [ref=e181] [cursor=pointer]:
+                    - img [ref=e183]
+                    - generic [ref=e197]: Stack of books
+                - listitem [ref=e198]:
+                  - button "Floor cushion" [ref=e199] [cursor=pointer]:
+                    - img [ref=e201]
+                    - generic [ref=e208]: Floor cushion
+                - listitem [ref=e209]:
+                  - button "Fairy lights" [ref=e210] [cursor=pointer]:
+                    - img [ref=e212]
+                    - generic [ref=e241]: Fairy lights
+                - listitem [ref=e242]:
+                  - button "Wall shelf" [ref=e243] [cursor=pointer]:
+                    - img [ref=e245]
+                    - generic [ref=e260]: Wall shelf
+                - listitem [ref=e261]:
+                  - button "Tea set" [ref=e262] [cursor=pointer]:
+                    - img [ref=e264]
+                    - generic [ref=e279]: Tea set
+                - listitem [ref=e280]:
+                  - button "Record player" [ref=e281] [cursor=pointer]:
+                    - img [ref=e283]
+                    - generic [ref=e296]: Record player
+                - listitem [ref=e297]:
+                  - button "Knitted blanket" [ref=e298] [cursor=pointer]:
+                    - img [ref=e300]
+                    - generic [ref=e312]: Knitted blanket
+                - listitem [ref=e313]:
+                  - button "Mountain painting" [ref=e314] [cursor=pointer]:
+                    - img [ref=e316]
+                    - generic [ref=e326]: Mountain painting
+                - listitem [ref=e327]:
+                  - button "Paper lantern" [ref=e328] [cursor=pointer]:
+                    - img [ref=e330]
+                    - generic [ref=e340]: Paper lantern
+                - listitem [ref=e341]:
+                  - button "Locked. Unlocks at cozy level 14" [ref=e342] [cursor=pointer]:
+                    - generic [ref=e343]:
+                      - img [ref=e344]
+                      - img [ref=e355]
+                    - generic [ref=e358]: Level 14
+                - listitem [ref=e359]:
+                  - button "Locked. Unlocks at cozy level 16" [ref=e360] [cursor=pointer]:
+                    - generic [ref=e361]:
+                      - img [ref=e362]
+                      - img [ref=e376]
+                    - generic [ref=e379]: Level 16
+                - listitem [ref=e380]:
+                  - button "Locked. Unlocks at cozy level 18" [ref=e381] [cursor=pointer]:
+                    - generic [ref=e382]:
+                      - img [ref=e383]
+                      - img [ref=e395]
+                    - generic [ref=e398]: Level 18
+                - listitem [ref=e399]:
+                  - button "Locked. Unlocks at cozy level 20" [ref=e400] [cursor=pointer]:
+                    - generic [ref=e401]:
+                      - img [ref=e402]
+                      - img [ref=e415]
+                    - generic [ref=e418]: Level 20
+    - status [ref=e419]
+  - status [ref=e421]
+```
