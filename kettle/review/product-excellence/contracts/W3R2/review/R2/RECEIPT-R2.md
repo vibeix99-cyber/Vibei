@@ -435,3 +435,6 @@ Classification: the failure **reproduces** while a stale server holds the PWA po
 - **`w2-home`**: `runs/w2-home-5601.log.txt`, `json/w2-home-5601.json`; 20:55:25 to 21:00:04 (4.6 min); load average 12.7 at the start, 16.9 at the end. **18 of 18 passed.**
 - Check 4 together: **25 of 25**.
 
+## R5. The notice suites on :5601
+`runs/notice-suite-5601.log.txt`, `json/notice-suite-5601.json`; `KETTLE_PORT=5601 npx playwright test tests/notice-strip.spec.ts tests/w3-notices.spec.ts tests/w3-notices-idle.spec.ts tests/summary-notice.spec.ts tests/toast-room.spec.ts --project=chromium --workers=2`; two gate slots; 21:00:46 to 21:20:52 (20.1 min); load average 14.0 at the start, 5.1 at the end. **74 passed, 0 failed, 0 flaky, 0 skipped**: `notice-strip` 25, `w3-notices` 9, `w3-notices-idle` 12, `summary-notice` 14, `toast-room` 14. Nothing to rerun.
+
