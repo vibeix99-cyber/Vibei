@@ -445,6 +445,24 @@ describe('the doubly stale tab (its copy of storage behind too): the tab with th
     expect(storedSessions().filter((r) => r.id === sid)).toHaveLength(1);
   });
 
+  it('a tab that was away (its brew long past its end, its events missed) does not put that brew back over what storage holds', async () => {
+    const { A, Z, sid: s1 } = await brewInStep('Essay');
+    advance(30_000);
+    Z.t().end('user'); // under a minute: no record
+    Z.t().startFocus({ intention: 'Inbox' });
+    advance(2 * MIN);
+    Z.t().end('user'); // lastEnded now names the second brew, not s1
+    const now = raw();
+    // A was frozen throughout; it wakes 5 minutes after s1's planned end and its ticker re-reads storage first.
+    advance(25 * MIN);
+    expect(A.t()).toMatchObject({ status: 'running', sessionId: s1 });
+    A.t().tick();
+    expect(raw()).toBe(now);
+    expect(A.t()).toMatchObject({ status: 'idle', sessionId: null });
+    expect(A.completes).toHaveLength(0);
+    expect(storedSessions().filter((r) => r.id === s1)).toHaveLength(0);
+  });
+
   it('start in both tabs within the lag, neither able to see the other → both settle on the later start, recorded once', async () => {
     const A = await openTab('A', true);
     const Z = await openTab('Z', false);

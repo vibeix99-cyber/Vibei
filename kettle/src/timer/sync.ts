@@ -11,12 +11,13 @@
  * (belt-and-braces against double completion) and "is any tab visible?"
  * (so the leader doesn't notify while you're looking at another Kettle tab).
  */
+import { clock } from '@/lib/clock';
 import { emit } from '@/lib/events';
 import { lastWriteFailed } from '@/lib/storage';
 import { useSettings } from '@/state/settings';
 import { useProgress, syncFromStorage } from '@/progress';
 import type { SessionRecord } from '@/progress/types';
-import { TIMER_STORAGE_KEY, followWipe, readStoredTimer, setActionCatchUp, useTimer } from './store';
+import { TIMER_STORAGE_KEY, WHILE_AWAY_AFTER_MS, followWipe, readStoredTimer, setActionCatchUp, useTimer } from './store';
 import type { AppEvents } from '@/lib/events';
 import type { TimerState } from './types';
 
@@ -29,7 +30,9 @@ import type { TimerState } from './types';
  * from the existing fields alone (no stored field is added):
  *  1. `incoming` holds a brew this tab knows has ended (its own `lastEnded`, a record, a completion another tab
  *     announced): a stale tab brought it back. Older.
- *  2. Only a brew still under way here can be lost (and not one known to have ended).
+ *  2. Only a brew still under way here can be lost (and not one known to have ended). Not one running here more than
+ *     WHILE_AWAY_AFTER_MS past its end either: this tab's ticker would have completed it, so the tab was away (frozen,
+ *     asleep) and its copy is the old one.
  *  3. A tab that knew this brew accounts for it: the same `sessionId` (paused, resumed, extended, re-worded) or
  *     `lastEnded` naming it (ended or completed, then perhaps the next brew started). Not older.
  *  4. Anything else was written by a tab that never saw this brew. An idle kettle is older (a removal, i.e. a wipe, is
@@ -37,11 +40,12 @@ import type { TimerState } from './types';
  *     started in two tabs within the lag, neither knowing the other, the later start is the newer one, and both tabs
  *     agree on that, so they converge. On a tie storage's copy stays.
  */
-export function olderThanMine(mine: TimerState, incoming: TimerState, ended: (sessionId: string) => boolean): boolean {
+export function olderThanMine(mine: TimerState, incoming: TimerState, ended: (sessionId: string) => boolean, now: number = clock.now()): boolean {
   const theirs = incoming.status !== 'idle' ? incoming.sessionId : null;
   if (theirs && theirs !== mine.sessionId && (mine.lastEnded?.sessionId === theirs || ended(theirs))) return true;
   const sid = mine.status !== 'idle' ? mine.sessionId : null;
   if (!sid || ended(sid)) return false;
+  if (mine.status === 'running' && mine.endsAt != null && now - mine.endsAt > WHILE_AWAY_AFTER_MS) return false;
   if (incoming.sessionId === sid || incoming.lastEnded?.sessionId === sid) return false;
   if (!theirs) return true;
   return (mine.startedAt ?? 0) > (incoming.startedAt ?? 0);
