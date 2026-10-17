@@ -1,0 +1,86 @@
+/**
+ * W3R2 storage compatibility (scratch, not in the suite; F1FIX's compat.spec.ts plus a profile saved through reset): a profile saved by FROM loads unchanged on TO.
+ *   SG_FROM=http://127.0.0.1:5560 SG_TO=http://127.0.0.1:5581 npx playwright test --config .tmp/sg/compat/pw.config.ts compat.spec.ts
+ * Two profiles, both made with real typing in the Today composer (the intention save under test):
+ *  - idle: a brew started (Enter), ended early, then new words typed on Today (lastEnded set, intention saved last);
+ *  - paused: words typed, a brew started (Enter), paused;
+ *  - reset: words typed, a brew started (Enter), then the timer reset (W3R2: the key is removed, then the idle kettle saved).
+ * Every kettle:* key is copied into a fresh profile on TO before boot. Asserts: the timer TO holds in memory equals
+ * what FROM stored, field by field, and kettle:timer in storage is byte-identical after TO has booted and its Today
+ * composer has synced (and kettle:progress too).
+ */
+import { test, expect, type Browser, type Page } from '@playwright/test';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const FROM = process.env.SG_FROM!;
+const TO = process.env.SG_TO!;
+const PRIME = `(() => { try { if (localStorage.getItem('kettle:settings')) return;
+  localStorage.setItem('kettle:settings', JSON.stringify({ state: { onboarded: true, scene: 'off', motion: 'reduce', autoStartBreaks: false, autoStartFocus: false, muted: true }, version: 1 })); } catch {} })();`;
+const FIELDS = ['status', 'phase', 'plannedMs', 'addedMs', 'startedAt', 'endsAt', 'remainingMs', 'pausedAt', 'pausedTotalMs', 'completedInCycle', 'intention', 'tag', 'sessionId', 'lastEnded'];
+const dump = (p: Page) => p.evaluate(() => Object.fromEntries(Object.keys(localStorage).filter((k) => k.startsWith('kettle:')).map((k) => [k, localStorage.getItem(k)!])));
+const mem = (p: Page) => p.evaluate((f) => { const s = (window as any).__kettle.timer.getState(); return Object.fromEntries(f.map((k: string) => [k, s[k]])); }, FIELDS);
+const box = (p: Page) => p.getByRole('textbox', { name: /What are you brewing/ });
+async function boot(p: Page, url: string) {
+  await p.goto(`${url}/?debug#/`);
+  await p.waitForFunction(() => !!(window as any).__kettle?.timerInfo);
+}
+async function make(browser: Browser, kind: 'idle' | 'paused' | 'reset') {
+  const ctx = await browser.newContext();
+  await ctx.addInitScript(PRIME);
+  const p = await ctx.newPage();
+  await boot(p, FROM);
+  if (kind === 'idle') {
+    await box(p).fill('Chapter 3 notes');
+    await box(p).press('Enter');
+    await expect.poll(() => p.evaluate(() => location.hash)).toBe('#/focus');
+    await p.evaluate(() => (window as any).__kettle.timer.getState().end('user'));
+    await p.evaluate(() => (location.hash = '#/'));
+    await expect(box(p)).toBeVisible();
+    await box(p).fill('Outline the talk');
+    await expect.poll(async () => (await mem(p)).intention).toBe('Outline the talk');
+  } else if (kind === 'reset') {
+    await box(p).fill('Inbox zero');
+    await box(p).press('Enter');
+    await expect.poll(() => p.evaluate(() => location.hash)).toBe('#/focus');
+    await p.waitForTimeout(800);
+    await p.evaluate(() => (window as any).__kettle.timer.getState().reset());
+  } else {
+    await box(p).fill('Reply to Sam');
+    await box(p).press('Enter');
+    await expect.poll(() => p.evaluate(() => location.hash)).toBe('#/focus');
+    await p.waitForTimeout(1200);
+    await p.evaluate(() => (window as any).__kettle.timer.getState().pause());
+  }
+  await p.waitForTimeout(600);
+  const keys = await dump(p);
+  await ctx.close();
+  return keys;
+}
+for (const kind of ['idle', 'paused', 'reset'] as const) {
+  test(`${kind} profile saved by ${FROM} loads unchanged on ${TO}`, async ({ browser }) => {
+    const keys = await make(browser, kind);
+    const saved = JSON.parse(keys['kettle:timer']);
+    console.log(`SGCOMPAT ${kind} saved-by ${FROM}: ${keys['kettle:timer']}`);
+    expect(Object.keys(saved)).toEqual(['state', 'version']);
+    expect(saved.version).toBe(1);
+    expect(Object.keys(saved.state)).toEqual(FIELDS);
+    if (kind === 'idle') expect(saved.state).toMatchObject({ status: 'idle', intention: 'Outline the talk', lastEnded: expect.objectContaining({ reason: 'user' }) });
+    else if (kind === 'paused') expect(saved.state).toMatchObject({ status: 'paused', intention: 'Reply to Sam' });
+    else expect(saved.state).toMatchObject({ status: 'idle', sessionId: null, intention: '', lastEnded: null });
+
+    const ctx = await browser.newContext();
+    await ctx.addInitScript((k: Record<string, string>) => {
+      if (sessionStorage.getItem('sg-planted')) return;
+      sessionStorage.setItem('sg-planted', '1');
+      for (const [key, v] of Object.entries(k)) localStorage.setItem(key, v);
+    }, keys);
+    const p = await ctx.newPage();
+    await boot(p, TO);
+    await p.waitForTimeout(1500); // Today's composer (if shown) syncs 150 ms after mount
+    expect(await mem(p), 'TO holds what FROM saved').toEqual(saved.state);
+    const after = await dump(p);
+    console.log(`SGCOMPAT ${kind} after-boot on ${TO}: ${after['kettle:timer']}`);
+    expect(after['kettle:timer'], 'kettle:timer unchanged after boot').toBe(keys['kettle:timer']);
+    expect(after['kettle:progress'], 'kettle:progress unchanged after boot').toBe(keys['kettle:progress']);
+    await ctx.close();
+  });
+}

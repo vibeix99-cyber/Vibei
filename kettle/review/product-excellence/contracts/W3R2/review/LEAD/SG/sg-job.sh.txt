@@ -1,0 +1,18 @@
+#!/bin/bash
+# LEAD-5 W3R2 SG: per-trigger browser fail-on-HEAD / pass-on-fix, compatibility both ways, integrity:309 x20 under load.
+# Tests from the trial tree /home/user/wt/w8tr-g (= integration tests + the new spec). Burners: own PIDs, killed by PID.
+set -u
+O=$1; cd /home/user/wt/w8tr-g/kettle || exit 9
+run() {
+  local tag=$1; shift
+  { echo "### $tag: $*"; echo "### start $(date -u +%T) load $(cut -d' ' -f1-3 /proc/loadavg)"; env "$@"; local rc=$?; echo "### end $(date -u +%T) exit=$rc load $(cut -d' ' -f1-3 /proc/loadavg)"; } > "$O/$tag.log" 2>&1
+}
+run stale-tab-HEAD-5560-x1 KETTLE_PORT=5560 npx playwright test tests/w3r2-stale-tab.spec.ts --project=chromium --workers=1 --reporter=list --output="$O/pw-st-5560"
+run stale-tab-trial-5591-x2 KETTLE_PORT=5591 npx playwright test tests/w3r2-stale-tab.spec.ts --project=chromium --workers=1 --repeat-each=2 --reporter=list --output="$O/pw-st-5591"
+run compat-5560-to-5591 SG_FROM=http://127.0.0.1:5560 SG_TO=http://127.0.0.1:5591 npx playwright test --config .tmp/lead5-sg/compat/pw.config.ts --workers=1 --reporter=list --output="$O/pw-c1"
+run compat-5591-to-5560 SG_FROM=http://127.0.0.1:5591 SG_TO=http://127.0.0.1:5560 npx playwright test --config .tmp/lead5-sg/compat/pw.config.ts --workers=1 --reporter=list --output="$O/pw-c2"
+B=(); for i in 1 2 3 4 5 6; do ( while :; do :; done ) & B+=($!); done
+echo "burner PIDs ${B[*]}" > "$O/burners.txt"
+run stress-309-x20-trial-5591 KETTLE_PORT=5591 npx playwright test tests/integrity.spec.ts --project=chromium -g 'two tabs, the leading one frozen across the end' --repeat-each=20 --workers=2 --reporter=list --output="$O/pw-309"
+for p in "${B[@]}"; do kill "$p"; done; echo "killed ${B[*]} at $(date -u +%T)" >> "$O/burners.txt"
+echo "done $(date -u +%T)" > "$O/done.txt"
