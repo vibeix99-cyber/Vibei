@@ -65,7 +65,7 @@ Not hooks, checked so they are not mistaken for violations: `toast()`, `toast.di
 - **No new console line on the fix.** The base also has 0 other `console.error` lines, 0 warnings and 0 page errors in all five specs, so "other lines per spec, base vs fix" is 0 vs 0 everywhere; nothing is new.
 - **Minimal reproducer** (`tools/repro.spec.ts`, scratch; 3 runs of: start a brew on Today, fast-forward, end it, back on Today; this swaps the whole route layer, which is what flips `Leaving`): see the line below.
 
-REPRO_PLACEHOLDER
+**Minimal reproducer result** (`logs/repro-{base,fix}.log.txt`, `logs/repro-{base,fix}-console.jsonl.txt`): on `:5560` each of the 3 runs logs **1** `NoticeStrip` hook-order error; on `:5582` each of the 3 runs logs **0**. Every run (6 of 6) also logs the one deliberate `TH-LIVENESS` line the spec raises with `console.error`, so the listener was live on the fix server too: the 0 is a real zero.
 
 ## 3. Suites (fix `:5582`, src `07df367`; base `:5560` for comparison)
 

@@ -1,0 +1,10 @@
+[slots] TH took 1/3 at 17:17:33: env KETTLE_PORT=5560 TH_TESTDIR=/home/user/wt/w8t/kettle/.tmp/th TH_CONSOLE_LOG=/home/user/wt/w8t/kettle/.tmp/th/logs/repro-base-console.jsonl NODE_OPTIONS=--require /home/user/wt/w8t/kettle/.tmp/th/c
+
+Running 3 tests using 1 worker
+
+  ✓  1 [chromium] › .tmp/th/repro.spec.ts:6:3 › start a brew, end it, back on Today (run 1) (9.1s)
+  ✓  2 [chromium] › .tmp/th/repro.spec.ts:6:3 › start a brew, end it, back on Today (run 2) (8.8s)
+  ✓  3 [chromium] › .tmp/th/repro.spec.ts:6:3 › start a brew, end it, back on Today (run 3) (9.5s)
+
+  3 passed (29.6s)
+[slots] TH freed 1 at 17:18:04

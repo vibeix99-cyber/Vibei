@@ -1,6 +1,7 @@
 // W3R2 maker TH captures: BEFORE (integration dev :5560) / AFTER (fix dev :5582), notice states, full size (DPR 1).
 // Derived from W3R1 maker F's capture.cjs (same frozen date 2026-10-12T07:40Z, same seeds, same settings); adds the two live-notice states.
 // node capture2.cjs <label=port,label=port,...> <outDir> <sizes, e.g. 390x844,375x667> [states csv]
+// v3: frozen page clock + animations disabled for the frame.
 // Each job is captured for every label=port in turn (e.g. before=5560,after=5582,before2=5560), back to back, so the three
 // are taken under the same machine load. Every shot waits until the screen is settled (opacity 1, dialog still) and is retaken if blank.
 const { chromium } = require('@playwright/test');
@@ -195,9 +196,14 @@ const STATES = {
           streakWords: /streak/i.test(document.body.innerText),
           text: (document.querySelector('main')?.innerText ?? document.body.innerText).trim().length,
           leaving: document.querySelectorAll('[data-route-leaving]').length,
+          readout: [...document.querySelectorAll('[class*="readout"]')].map((e) => { const r = e.getBoundingClientRect(); return [Math.round(r.x), Math.round(r.y), Math.round(r.width), Math.round(r.height)]; }),
         }));
         if (f.text < 20 && attempt < 3) { await ctx.close(); continue; }
-        await page.screenshot({ path: path.join(dir, `${st}.png`) });
+        // Deterministic frame: the page clock stops (digits, timers) and CSS animations are reset (Chai, steam), so two captures
+        // of the same build are pixel-identical wherever nothing real differs.
+        const now = await page.evaluate(() => Date.now());
+        await page.clock.pauseAt(now + 40).catch(() => {});
+        await page.screenshot({ path: path.join(dir, `${st}.png`), animations: 'disabled', caret: 'hide' });
         facts.push({ label, cfg, state: st, attempt, ...f });
         await ctx.close();
         return;

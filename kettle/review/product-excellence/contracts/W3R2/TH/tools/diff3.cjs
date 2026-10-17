@@ -8,6 +8,11 @@ const path = require('path');
 const { PNG } = require('/home/user/Vibei/kettle/node_modules/playwright-core/lib/utilsBundle.js');
 const [root, outJson, cropDir] = process.argv.slice(2);
 const RADIUS = 6;
+const TOL = 2; // levels of 255: below this a pixel is not called a difference (the base shows up to this against itself: shadow dithering)
+// The session timer's readout counts down in real time (a second boundary falls differently in each capture): its rectangle,
+// as recorded at capture time, is left out of the comparison and counted apart (maskedPx).
+const maskRects = {};
+for (const f of fs.readdirSync(root).filter((x) => x.startsWith('facts-'))) for (const e of JSON.parse(fs.readFileSync(path.join(root, f), 'utf8'))) if (e.readout && e.readout.length) (maskRects[e.cfg + '/' + e.state] = maskRects[e.cfg + '/' + e.state] || []).push(...e.readout);
 const read = (p) => PNG.sync.read(fs.readFileSync(p));
 const rows = [];
 const cfgs = fs.readdirSync(path.join(root, 'before')).filter((d) => fs.statSync(path.join(root, 'before', d)).isDirectory()).sort();
@@ -21,14 +26,17 @@ for (const cfg of cfgs) for (const f of fs.readdirSync(path.join(root, 'before',
   const row = { cfg, state, size: [W, H] };
   if (a.width !== W || a.height !== H) { row.sizeDiff = [a.width, a.height]; rows.push(row); continue; }
   const d1 = b1.data, da = a.data, d2 = b2 && b2.width === W && b2.height === H ? b2.data : null;
-  let n = 0, nn = 0;
+  let n = 0, nn = 0, masked = 0;
+  const mk = new Uint8Array(W * H);
+  for (const [rx, ry, rw, rh] of maskRects[cfg + '/' + state] || []) for (let y = Math.max(0, ry - 4); y < Math.min(H, ry + rh + 4); y++) for (let x = Math.max(0, rx - 4); x < Math.min(W, rx + rw + 4); x++) mk[y * W + x] = 1;
   const noise = new Uint8Array(W * H), diffA = new Uint8Array(W * H);
   for (let k = 0; k < W * H; k++) {
     const i = k * 4;
+    if (mk[k]) { if (dl(d1, da, i)) masked++; continue; }
     if (dl(d1, da, i)) { diffA[k] = 1; n++; }
     if (d2 && dl(d1, d2, i)) { noise[k] = 1; nn++; }
   }
-  row.px = n; row.noisePx = d2 ? nn : null;
+  row.px = n; row.noisePx = d2 ? nn : null; row.maskedPx = masked;
   // grow the noise mask by RADIUS (separable box)
   let grown = noise;
   if (d2 && nn) {
@@ -42,9 +50,11 @@ for (const cfg of cfgs) for (const f of fs.readdirSync(path.join(root, 'before',
   for (let k = 0; k < W * H; k++) {
     if (!diffA[k] || grown[k]) continue;
     const i = k * 4;
-    if (d2 && !dl(da, d2, i)) continue; // AFTER equals the second base capture here: not a difference
+    const d = dl(d1, da, i);
+    if (d <= TOL) continue;
+    if (d2 && dl(da, d2, i) <= TOL) continue; // AFTER equals the second base capture here: not a difference
     real++; realMask[k] = 1;
-    const d = dl(d1, da, i); if (d > max) max = d;
+    if (d > max) max = d;
     const x = k % W, y = (k / W) | 0; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y;
   }
   row.real = real; row.maxDelta = max;
