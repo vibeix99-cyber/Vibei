@@ -215,7 +215,7 @@ async function runIteration(browser, c, it) {
       await B.bringToFront();
       await clearSounds(B);
       if (c === 'e') {
-        await B.evaluate(() => { const w = window; w.__sawFive = /whistles at/.test(document.body.textContent ?? ''); new MutationObserver(() => { if (/whistles at/.test(document.body.textContent ?? '')) w.__sawFive = true; }).observe(document.body, { subtree: true, childList: true, characterData: true }); });
+        await B.evaluate(() => { const w = window; const NOTE = /5 min\s+·\s+whistles at[^\n]*/; w.__fiveSnips = []; const scan = () => { const m = (document.body.textContent ?? '').match(NOTE); if (m) { w.__sawFive = true; w.__fiveSnips.push(m[0]); } }; w.__sawFive = false; w.__pre = (document.body.textContent ?? '').match(/[^\n]{0,30}whistles at[^\n]{0,20}/i)?.[0] ?? null; scan(); new MutationObserver(scan).observe(document.body, { subtree: true, childList: true, characterData: true }); });
       }
       if (c === 'c') {
         R.bEnd = await endReal(B);
@@ -227,7 +227,7 @@ async function runIteration(browser, c, it) {
         const notes = [];
         for (let i = 0; i < 6; i++) { notes.push(await B.evaluate(() => (document.body.innerText.match(/5 min\s+·\s+whistles at[^\n]*/g) ?? []).join(' | '))); await sleep(250); }
         R.plus5Note = [...new Set(notes)];
-        R.sawFiveObserver = await B.evaluate(() => !!window.__sawFive);
+        R.sawFiveObserver = await B.evaluate(() => !!window.__sawFive); R.fiveSnippets = await B.evaluate(() => [...new Set(window.__fiveSnips ?? [])]); R.normalMetaLineBefore = await B.evaluate(() => window.__pre);
       }
       await sleep(600);
       R.soundsB = await sounds(B);
