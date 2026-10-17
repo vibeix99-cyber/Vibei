@@ -193,7 +193,8 @@ let completing = false;
  * sync, which also re-emits the change as `timer:sync` so the screens follow) and then:
  *  - the same brew (only paused, resumed, extended or re-worded elsewhere): the action applies to it as it is now;
  *  - another brew, or none (it was ended, or another tab started one): the action was aimed at a brew that is gone, so
- *    it does nothing more. This tab now shows the current brew (a start joins the brew already running).
+ *    it does nothing more and returns `false`. This tab now shows the current brew (a start joins the brew already
+ *    running), and the screens must not report the action as done (FocusScreen: no "+5 min" note, no pause sound).
  * When this tab's own copy of storage is behind too, nothing here can tell; the receiving side (sync.ts) restores the
  * newer brew then.
  */
@@ -229,30 +230,34 @@ function onCurrentBrew<T extends object>(actions: T, get: () => TimerState): T {
   for (const [k, v] of Object.entries(out)) {
     if (typeof v !== 'function' || NO_CATCH_UP.has(k)) continue;
     const fn = v as (...args: unknown[]) => unknown;
-    out[k] = (...args: unknown[]) => (actsOnCurrentBrew(get) ? fn(...args) : undefined);
+    out[k] = (...args: unknown[]) => (actsOnCurrentBrew(get) ? fn(...args) : false);
   }
   return out as T;
 }
 
 // ---------- store ----------
 
+/** `false`: the action was dropped, aimed at a brew another tab had already ended or replaced (see `onCurrentBrew`). */
+type Acted = void | false;
+
 interface TimerActions {
-  startFocus: (opts?: StartFocusOptions) => void;
-  startBreak: (kind?: Phase) => void;
-  pause: () => void;
-  resume: () => void;
-  toggle: () => void;
+  startFocus: (opts?: StartFocusOptions) => Acted;
+  startBreak: (kind?: Phase) => Acted;
+  pause: () => Acted;
+  resume: () => Acted;
+  /** Pause or resume, as the brew this tab shows; returns what that action returned. */
+  toggle: () => Acted;
   /** Add (or, with a negative value, remove) time from the current phase. */
-  addTime: (ms: number) => void;
+  addTime: (ms: number) => Acted;
   /** End the current phase early. Focus ≥ 1 min is still recorded (not completed). */
-  end: (reason?: 'user' | 'skip') => void;
+  end: (reason?: 'user' | 'skip') => Acted;
   /** Check for completion. Called by the ticker; safe to call any time, from any tab. */
   tick: () => void;
   /** Back to idle without recording anything (e.g. reset data). */
   reset: () => void;
   setIntention: (intention: string, tag?: TimerState['tag']) => void;
   /** Shift all wall-clock anchors by `deltaMs` (system clock changed under us). */
-  rebase: (deltaMs: number) => void;
+  rebase: (deltaMs: number) => Acted;
   /** While idle, make the displayed length follow the focus-length setting. */
   syncIdleLength: () => void;
 }
@@ -472,8 +477,8 @@ export const useTimer = create<TimerStore>()(
 
         toggle: () => {
           const s = get();
-          if (s.status === 'running') s.pause();
-          else if (s.status === 'paused') s.resume();
+          if (s.status === 'running') return s.pause();
+          if (s.status === 'paused') return s.resume();
         },
 
         addTime: (ms) => {

@@ -106,6 +106,8 @@ async function openTab(name: string, locks: FakeLocks | null) {
   const events = await import('@/lib/events');
   const progress = await import('@/progress');
   progress.initProgress();
+  // As initTabSync does in the app: every timer action first takes in what storage holds now (W3R2).
+  sync.installActionCatchUp();
   const leader = locks ? electLeader({ name: 'kettle:leader', locks, id: name }) : null;
   store.setCompletionGuard({
     canComplete: () => leader?.isLeader() ?? true,
@@ -233,12 +235,12 @@ describe('two tabs, one session', () => {
     const B = await openTab('B', locks);
     await flush();
     A.timer.getState().startFocus({ intention: 'from A' });
-    B.timer.getState().startFocus({ intention: 'from B' }); // B's write lands last
+    B.timer.getState().startFocus({ intention: 'from B' }); // B can read A's brew, so its Start joins it (W3R2)
     A.storageEvent();
     B.storageEvent();
     const sid = B.timer.getState().sessionId;
     expect(A.timer.getState().sessionId).toBe(sid);
-    expect(A.timer.getState().intention).toBe('from B');
+    expect(A.timer.getState().intention).toBe('from A');
     advance(25 * MIN);
     A.timer.getState().tick();
     B.timer.getState().tick();

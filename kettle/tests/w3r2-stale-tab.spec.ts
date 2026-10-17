@@ -149,10 +149,51 @@ test('add 5 in the lagging tab after the other tab ended its brew and started an
   const { second, raw } = await aReplacesBrew(a, z, first);
 
   await z.bringToFront();
+  // SG-D3: Z must not say a +5 was added ("+5 min · whistles at …"), however briefly.
+  await z.evaluate(() => {
+    const w = window as any;
+    w.__sawFive = /whistles at/.test(document.body.textContent ?? '');
+    new MutationObserver(() => {
+      if (/whistles at/.test(document.body.textContent ?? '')) w.__sawFive = true;
+    }).observe(document.body, { subtree: true, childList: true, characterData: true });
+  });
+  expect(await z.evaluate(() => (window as any).__sawFive), 'precondition: no +5 note shown').toBe(false);
   await z.getByRole('button', { name: 'Add 5 minutes', exact: true }).click();
   await expect.poll(async () => (await memory(z)).sessionId, { message: 'Z now shows the current brew' }).toBe(second.sessionId);
   expect((await memory(z)).plannedMs, 'nothing was added to it').toBe(10 * MIN);
   await newerBrewSurvives(a, z, second, raw);
+  expect(await z.evaluate(() => (window as any).__sawFive), 'no “+5 min · whistles at …” note in Z (nothing was added)').toBe(false);
+});
+
+test('Next brew in the lagging tab after the other tab already did: it joins that brew; ending it there later still says so and goes home', async ({ context }) => {
+  test.setTimeout(60_000);
+  const { a, z } = await twoTabs(context);
+  await act(a, `k.timer.getState().startBreak()`);
+  const brk = await memory(a);
+  for (const p of [a, z]) {
+    await expect.poll(() => hash(p)).toBe('#/focus');
+    await expect.poll(async () => (await memory(p)).sessionId).toBe(brk.sessionId);
+  }
+  await holdZ(z);
+  // A: Next brew (as flow.startNextBrew does: end the break, then start).
+  await act(a, `k.timer.getState().end('skip'); k.timer.getState().startFocus({ minutes: 10, intention: 'Inbox' })`);
+  const next = await memory(a);
+  await zBehind(z, (s) => s.sessionId === next.sessionId);
+  expect(await memory(z), 'precondition: Z still shows the break').toMatchObject({ status: 'running', sessionId: brk.sessionId });
+  const raw = await storedRaw(z);
+
+  await z.bringToFront();
+  await z.getByRole('button', { name: 'Start next brew', exact: true }).click();
+  await expect.poll(async () => (await memory(z)).sessionId, { message: 'Z joined A’s brew' }).toBe(next.sessionId);
+  await newerBrewSurvives(a, z, next, raw);
+
+  // SG-D2: the person ends the joined brew in Z. Its stop is not swallowed: the usual toast, and home.
+  await z.getByRole('button', { name: 'End session', exact: true }).click();
+  const sheet = z.getByRole('dialog');
+  await expect(sheet).toBeVisible();
+  await sheet.getByRole('button', { name: 'End session', exact: true }).click();
+  await expect(z.getByText('Kettle’s off. See you soon.').first(), 'the stop’s toast in Z').toBeVisible();
+  await expect.poll(() => hash(z), { message: 'Z went home' }).toBe('#/');
 });
 
 test('end in the lagging tab after the other tab ended its brew and started another: the newer brew is not ended, the lagging tab shows it', async ({ context }) => {

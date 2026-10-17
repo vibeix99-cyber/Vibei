@@ -561,3 +561,75 @@ describe('unchanged', () => {
     expect(A.syncs.at(-1)).toBe('stop');
   });
 });
+
+/**
+ * SG-D1 (LEAD-5's probe, W3R2 review): a tab that missed every event (restored from the back/forward cache) still holds
+ * brew X under way. Meanwhile the other tab ended X at 0:30 (no record), then ran brew Y and ended it (a record;
+ * `lastEnded` now names Y). Neither a record nor `lastEnded` names X any more; X must still never come back.
+ */
+describe('a brew another tab ended never comes back, even once nothing names it (SG-D1)', () => {
+  /** A and Z in step on X; Z then misses every event while A ends X at 0:30 and runs Y for 5 minutes. */
+  async function zMissedEverything(zLeads: boolean) {
+    const t0 = Date.now();
+    const A = await openTab('A', !zLeads);
+    const Z = await openTab('Z', zLeads);
+    A.t().startFocus({ intention: 'X' });
+    Z.storageEvent();
+    const x = A.t().sessionId!;
+    expect(Z.t()).toMatchObject({ status: 'running', sessionId: x });
+    advance(30_000);
+    A.t().end('user'); // X ended at 0:30, under a minute: no record
+    advance(10_000);
+    A.t().startFocus({ intention: 'Y' });
+    const y = A.t().sessionId!;
+    advance(5 * MIN);
+    A.t().end('user'); // Y ended: one record; lastEnded now names Y
+    expect(stored().state).toMatchObject({ status: 'idle', lastEnded: { sessionId: y } });
+    expect(storedSessions().map((r) => r.id)).toEqual([y]);
+    expect(Z.t(), 'precondition: Z still holds X under way').toMatchObject({ status: 'running', sessionId: x });
+    return { A, Z, x, y, t0 };
+  }
+
+  it('probe (1): Z, the leader, ticks at X’s planned end → it does not save X back or complete it (no false 25-minute record)', async () => {
+    const { Z, y, t0 } = await zMissedEverything(true);
+    vi.setSystemTime(t0 + 25 * MIN + 1000);
+    Z.t().tick();
+    expect(Z.completes, 'no completion of X').toEqual([]);
+    expect(storedSessions().map((r) => r.id), 'records: Y only').toEqual([y]);
+    expect(stored().state, 'storage stays idle').toMatchObject({ status: 'idle', sessionId: null, lastEnded: { sessionId: y } });
+    expect(Z.t()).toMatchObject({ status: 'idle', sessionId: null });
+  });
+
+  it('probe (2): the person presses Pause in Z → X does not come back; Z shows the idle kettle', async () => {
+    const { Z, y } = await zMissedEverything(true);
+    Z.t().pause();
+    expect(stored().state, 'storage stays idle').toMatchObject({ status: 'idle', sessionId: null, lastEnded: { sessionId: y } });
+    expect(Z.t()).toMatchObject({ status: 'idle', sessionId: null });
+  });
+
+  it('probe (3): Z receives A’s next write (A types its next words) → X does not come back in either tab', async () => {
+    const { A, Z } = await zMissedEverything(false);
+    A.t().setIntention('Next words'); // a fields-only save into the idle kettle
+    Z.storageEvent();
+    A.storageEvent();
+    expect(stored().state, 'storage stays idle').toMatchObject({ status: 'idle', sessionId: null, intention: 'Next words' });
+    expect(A.t().status, 'A stays idle').toBe('idle');
+    expect(Z.t().status, 'Z follows the idle kettle').toBe('idle');
+  });
+
+  it('still restored: a doubly stale tab ends its old brew (the end A already knew) over A’s newer brew → A puts its brew back', async () => {
+    const { A, Z, sid: x } = await brewInStep('Essay');
+    const old = raw();
+    advance(10 * MIN);
+    A.t().startFocus({ intention: 'Inbox' }); // ends X (lastEnded X), starts S
+    const s = A.t();
+    advance(MIN);
+    behindToo(old, () => Z.t().end('user')); // Z's copy still shows X running: it writes idle, lastEnded X (now)
+    expect(stored().state).toMatchObject({ status: 'idle', lastEnded: { sessionId: x } });
+    A.storageEvent();
+    Z.storageEvent();
+    for (const t of [A, Z]) expect(t.t()).toMatchObject({ status: 'running', sessionId: s.sessionId, endsAt: s.endsAt });
+    expect(storedSessions().filter((r) => r.id === x)).toHaveLength(1);
+    completesOnce(A, Z, s.sessionId!);
+  });
+});

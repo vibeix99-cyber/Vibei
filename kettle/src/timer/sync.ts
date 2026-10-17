@@ -35,7 +35,12 @@ import type { TimerState } from './types';
  *     asleep) and its copy is the old one.
  *  3. A tab that knew this brew accounts for it: the same `sessionId` (paused, resumed, extended, re-worded) or
  *     `lastEnded` naming it (ended or completed, then perhaps the next brew started). Not older.
- *  4. Anything else was written by a tab that never saw this brew. An idle kettle is older (a removal, i.e. a wipe, is
+ *  4. `incoming` comes from a later timeline: its `lastEnded` names an end this tab did not know when its brew began
+ *     (not this tab's own `lastEnded`), made after that brew began (`at` > `startedAt`). Its writer lived through time
+ *     after this brew started and ended a brew of its own then, so it is this tab that missed events: its brew was
+ *     ended or superseded meanwhile, even once no record and no `lastEnded` names it any more. Not older. (A stale tab
+ *     ending its old brew writes the end this tab already knew, the brew before its own, so rule 5 still applies.)
+ *  5. Anything else was written by a tab that never saw this brew. An idle kettle is older (a removal, i.e. a wipe, is
  *     not mirrored through here). Another brew under way is older if it started earlier (`startedAt`): of two brews
  *     started in two tabs within the lag, neither knowing the other, the later start is the newer one, and both tabs
  *     agree on that, so they converge. On a tie storage's copy stays.
@@ -47,6 +52,8 @@ export function olderThanMine(mine: TimerState, incoming: TimerState, ended: (se
   if (!sid || ended(sid)) return false;
   if (mine.status === 'running' && mine.endsAt != null && now - mine.endsAt > WHILE_AWAY_AFTER_MS) return false;
   if (incoming.sessionId === sid || incoming.lastEnded?.sessionId === sid) return false;
+  const theirEnd = incoming.lastEnded;
+  if (theirEnd && theirEnd.sessionId !== mine.lastEnded?.sessionId && mine.startedAt != null && theirEnd.at > mine.startedAt) return false;
   if (!theirs) return true;
   return (mine.startedAt ?? 0) > (incoming.startedAt ?? 0);
 }
