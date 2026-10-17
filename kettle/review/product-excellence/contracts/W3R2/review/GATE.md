@@ -74,3 +74,20 @@
   - `multitab.test.ts:229`: take the maker's proposal (b) in the fix round (install the catch-up, expect `'from A'`). It is not a weakening.
   - `reset()` change: ACCEPTED.
   - FOLLOW-UPs: the doubly stale +5 loss, the bfcache paused brew, and the composer label.
+
+## Item 3, TS: REJECT (LEAD-6 `97f89c9`, `CHECKER-W3R2-TS.md`). One 90-minute fix round, 19:15–20:45 UTC
+
+- **What holds:**
+  - **No weakening:** `:156` and `:189` are not weakened, 10/10 each under load. The injected races fail 2/2 on the old code and pass 2/2 on the new.
+  - **`press()`'s wait path is sound:** a permanent cover fails with the same words.
+  - **Whole `notice-strip`:** 25/25 without burners. All LEAD-6 runs used src `b74e6b3`, before :5560 switched.
+- **TS-D1 (BLOCKS):** 844×390 dark 200 % under load is 7/10, 7/10 and 8/10.
+  - **The cause is now observed:** the Today composer dock first measures 255 px (`data-tall`, in flow), then about 0.5 s later docks (`.ctaDock`, sticky) over the field for good. It is the same flake as W3R1's and TH's base run.
+  - **Required:** a chrome-aware wheel-clear, limited to the page's own dock and tab bar or rail. Notices, sheets and unknown covers keep the wait-only path.
+- **TS-D2 (BLOCKS):** a rescrolled `press()` could end in the sheet's Tab+Enter or a synthetic `click()`. It must fail instead.
+- **Acceptance (LEAD-6 reruns):**
+  - injections: dock fails on old and passes on the fix; transient passes; the permanent covers fail;
+  - dark 200 % ×20 20/20, and light 200 % reduced ×10 10/10, under load;
+  - the diagnostic copy shows the new path is taken;
+  - whole file 25/25.
+- **Product note for Vibei** (pre-existing, out of scope): the Today dock switches mode after boot at 844×390 @200 %.
