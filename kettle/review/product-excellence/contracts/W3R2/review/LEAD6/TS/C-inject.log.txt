@@ -162,3 +162,50 @@ Running 1 test using 1 worker
 [inject] re-check: covered at 18:33:13.488
 [inject] aim again 1 at 18:33:13.740
 [inject] aim again 2 at 18:33:14.017
+  ✓  1 [chromium] › .tmp/lead6/ts/new/notice-strip.spec.ts:394:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (58.0s)
+
+  1 passed (59.8s)
+### end 18:34:09 exit=0 load 7.00 11.78 12.31
+
+######## C-notice-new-permanent: KETTLE_PORT=5560 npx playwright test -c .tmp/lead6/ts-pw.config.ts ts/new/notice-strip.spec.ts --project=chromium -g real input \(844×390 dark 200 %\) --workers=1
+### start 18:34:09 load 7.00 11.78 12.31
+
+Running 1 test using 1 worker
+
+[inject] permanent cover over getByRole('textbox', { name: /What are you brewing/ }) (never removed) at 18:34:13.629
+[inject] re-check: covered at 18:34:13.646
+[inject] aim again 1 at 18:34:13.920
+[inject] aim again 2 at 18:34:14.209
+[inject] aim again 3 at 18:34:14.485
+[inject] aim again 4 at 18:34:14.762
+[inject] aim again 5 at 18:34:15.042
+[inject] aim again 6 at 18:34:15.314
+[inject] aim again 7 at 18:34:15.600
+[inject] aim again 8 at 18:34:15.876
+  ✘  1 [chromium] › .tmp/lead6/ts/new/notice-strip.spec.ts:394:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (4.0s)
+
+
+  1) [chromium] › .tmp/lead6/ts/new/notice-strip.spec.ts:394:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+
+    Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+      354 |     if (at && ((same && Date.now() - t < 800) || round >= 4)) break;
+      355 |   }
+    > 356 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();
+          |                                                            ^
+      357 |   if (touch) {
+      358 |     await page.touchscreen.tap(at!.x, at!.y);
+      359 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)
+        at press (/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/new/notice-strip.spec.ts:356:60)
+        at /home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/new/notice-strip.spec.ts:406:5
+
+    Error Context: .tmp/lead6/out/C-notice-new-permanent/new-notice-strip-no-notice-58846-eal-input-844×390-dark-200--chromium/error-context.md
+
+  1 failed
+    [chromium] › .tmp/lead6/ts/new/notice-strip.spec.ts:394:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+### end 18:34:16 exit=1 load 6.00 11.40 12.18
+
