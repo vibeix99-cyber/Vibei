@@ -141,6 +141,37 @@ The singly stale typed edit (12) already passes on HEAD: F1's fields-only save g
 
 `multitab.test.ts` "two tabs pressing start at the same time converge on one session" stays green. Its harness does not install the action catch-up, so it models two starts that cannot see each other (the doubly stale start, #20), whose outcome is unchanged. **But it encodes "last writer wins", which Vibei's rule overturns for a tab whose read is current. See §7.1 (for LEAD).**
 
+### 3c. Browser: `tests/w3r2-stale-tab.spec.ts` (real browser, two tabs of one profile; through the gate, lane SG)
+Set-up:
+- An init script, registered before the app's own listener (as in `w3-intention-race.spec.ts`), holds tab Z's `storage` events for `kettle:timer` while `__w3r2.hold` is on.
+- `release()` re-dispatches them in order.
+- Tab A acts through the debug API; **the person in Z uses Focus's real buttons**: Pause, Add 5 minutes, End session, then End session in the sheet. For the start case, Z types in Today's composer and presses Enter.
+- Each case asserts its precondition before Z acts: storage holds A's write, Z has a held event, and Z's timer is still the old one.
+
+| Case | What is asserted on the fix |
+|---|---|
+| **pause** (A added 5 min to the 10-min brew) | storage: the same brew, `paused`, `plannedMs` 15 min, `remainingMs` > 13 min (the real remaining time, with A's +5). After release, both tabs paused with that remaining time; A shows Resume |
+| **add 5** (A ended its brew and started another) | Z's timer moves to A's new brew, nothing added (`plannedMs` 10 min). After 400 ms, A's storage string is **byte-identical** and A still runs it on `#/focus`. After release, both tabs on it, Z showing its words |
+| **end** (the same) | the same as add 5, after Z's End session and the sheet's End session |
+| **start** (Z on Today, idle; A started a brew) | Z's typing writes nothing over A's brew. Enter → Z goes to `#/focus` **on A's brew** (A's words). Storage byte-identical; A unaffected |
+
+| Server | Result | Log |
+|---|---|---|
+| :5581 fix, first run | **4/4** (44 s) | `logs/stale-tab-pw-fix-5581-try1.log.txt` |
+| :5581 fix ×3 (`--repeat-each=3`, load 13 → 21) | **12/12** | `logs/stale-tab-pw-fix-5581-x3.log.txt` |
+| :5560 HEAD `494748b` ×3 | **12/12 FAIL**, each at Z's action (details below) | `logs/stale-tab-pw-HEAD-5560-x3.log.txt` |
+| :5478 old base `4d36939` ×1 | (below) | `logs/stale-tab-pw-base-5478-x1.log.txt` |
+
+How each case fails on HEAD:
+- **pause:** "paused: the same brew, with A's +5"; storage holds Z's stale 10-min plan;
+- **add 5:** "Z now shows the current brew"; Z stays on its old brew, which it saved over A's;
+- **end:** the same message, with Z `null`: it ended its old brew and saved its idle kettle over A's;
+- **start:** Z runs **its own** brew (`Reply to Sam`, another `sessionId`) in place of A's.
+
+Served code: `logs/served-blobs.log.txt`. Blob hashes of `store.ts`, `sync.ts` and `ticker.ts` on each server equal the branch head (:5581), `494748b` (:5560) and `4d36939` (:5478).
+
+Reporter quirk, as F1FIX noted: the HEAD run lists the four tests at `:154`, `:197`, `:221`, `:251`, while the fix runs list `:121`, `:145`, `:158`, `:174`. It is the same file and the same four tests; their titles are printed in full in every log.
+
 ## 7. Open items, for LEAD (draft; completed at the last stage)
 
 ### 7.1 Existing test whose behaviour Vibei's rule overturns (not edited)
