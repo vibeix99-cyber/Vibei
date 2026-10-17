@@ -220,3 +220,13 @@ FACT 390x844-light-t100 b-scroll-then-idle {"leftAt":5408,"room":68,"maxSy":489,
   ✓  212 [chromium] › tests/toast-room.spec.ts:262:3 › notices timing out, and the endless update prompt, never move the banner under the person (375×667, 200 % text, wheel, light) (21.6s)
 FACT 390x844-light-t100 c-pointer-held {"leftAt":5186,"room":68,"roomWhileDown":68,"downWhileHeld":1,"commits":[{"t":12384,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4094,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":7198,"collapseAfterLastBusyMs":4094,"visibleMove":68}
   ✓  214 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (390x844-light-t100) (13.2s)
+FACT 390x844-dark-t200-rm a-no-input {"leftAt":5231,"room":113,"commits":[{"t":9344,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8620,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":4113,"collapseAfterLastBusyMs":4113,"visibleMove":113}
+  ✓  216 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (390x844-dark-t200-rm) (10.1s)
+  ✓  215 [chromium] › tests/toast-room.spec.ts:262:3 › notices timing out, and the endless update prompt, never move the banner under the person (375×667, 200 % text, wheel, dark) (21.3s)
+  ✓  218 [chromium] › tests/toast-room.spec.ts:297:3 › the last notice leaves where it was, never over the docked start (375×667, 200 % text) (4.7s)
+FACT 390x844-dark-t200-rm b-scroll-then-idle {"leftAt":5281,"room":113,"maxSy":506,"scrollMs":3361,"roomAfterScroll":113,"commits":[{"t":12688,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4046,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":7407,"collapseAfterLastBusyMs":4046,"visibleMove":113}
+  ✓  217 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (390x844-dark-t200-rm) (13.7s)
+  ✓  219 [chromium] › tests/toast-room.spec.ts:297:3 › the last notice leaves where it was, never over the docked start (844×390, 200 % text) (4.6s)
+FACT 390x844-dark-t200-rm c-pointer-held {"leftAt":5234,"room":113,"roomWhileDown":113,"downWhileHeld":1,"commits":[{"t":12432,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4080,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":7198,"collapseAfterLastBusyMs":4080,"visibleMove":113}
+  ✓  220 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (390x844-dark-t200-rm) (13.3s)
+  ✓  221 [chromium] › tests/toast-room.spec.ts:431:3 › three notices never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, light) (13.4s)
