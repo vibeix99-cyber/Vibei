@@ -235,3 +235,61 @@ Same set-up as (c); B clicks Pause on its stale view of brew 1. Script `scripts/
 - No failure occurred in any :5591 run, so nothing was rerun or classified (the bundle script would have rerun a failure once on :5591 and once on :5560; `runs/failures.txt` was never created).
 - Page errors: 0 in every 2-tab iteration. Composer-label quirk (words typed in tab 2 becoming the label): not seen in these runs (tab 2 never typed after a brew was running).
 - Not run: :5593 preview, :5570, :5478, :5583. Nothing was killed with a pattern; explicit PIDs of mine killed: chain1 14439 and its waiting gate process 16685, chainX 21651.
+
+---
+
+# §R. Rerun on trial 2 (`2c9ec66`, :5601)
+
+Raw evidence only. No verdict. Times UTC, 2026-10-17. Task received 20:20, hard stop 21:45. Logs, JSON, scripts and tables are in `review/R2/rerun/` (`runs/*.log.txt`, `json/`, `manual/`, `scripts/`). Same method, scripts and gate as the first pass (every browser run through `slots.py run --lane R2`; one worker per slot; the notice suites `--n 2`). No source or committed-test edit, no push; the only git write is `commit-evidence.sh`.
+
+## R0. What was tested
+
+| | |
+|---|---|
+| Trial 2 | `/home/user/wt/w8tr-g2`, HEAD `2c9ec66` (integration app `7cb3242` with TH's `Toast.tsx` hook change + SG `4b2690f`), src tree `5f504d4`, 0 dirty files |
+| Served code | dev **:5601**. `verify.sh /home/user/wt/w8tr-g2 5601`: "PORT 5601 serves 2c9ec66 (src 5f504d4): VERIFIED". Served blobs equal the committed ones (`rerun/runs/served-blobs.log.txt`): `store.ts` `02214ba9d947255a`, `sync.ts` `706a916e141b0ef0`, `ticker.ts` `ddbf46b63efc5cdf`, `flow.ts` `2e7c7e7ca367396c`, `FocusScreen.tsx` `192e7bd7a0fba66f` |
+| Control | :5560, `/home/user/wt/w6-int` (integration, no guard). Its served `store.ts` `ecb09baca37315a7`, `sync.ts` `cfc45d0b7bb4ccbe`, `flow.ts` `0bd8dd9623b52bae`, `FocusScreen.tsx` `3db731dd90a572fd` are the pre-guard ones. First-pass control data (section 6, 6a and 6d above) stands; the controls in this rerun are only where stated |
+| Machine | 4 CPUs, gate maximum 3; load average 9 to 20 (the lead's two-slot jobs and the makers' runs shared the box) |
+| Scripts | `scripts/RR-unit.sh`, `RR-common.sh`, `RR-bundle.sh` (race and stale-tab, integrity, :309 x10, timer/pwa, w2-home; failures rerun once on :5601 and once on :5560 in the same slot), `RR-notice.sh`, `RR-twotab.sh`, `RR-2tab.mjs` (the 2-tab script), `RR-e2.sh`, `RR-table.mjs`, `RR-failed.mjs`, `RR-jsum.mjs` |
+
+## R1. Typecheck and unit tests (not browser runs, no gate)
+| Check | Result |
+|---|---|
+| tsc `npx tsc --noEmit -p .` (`rerun/runs/tsc.log.txt`; opens with HEAD `2c9ec66`, src `5f504d4`, 0 dirty files) | exit 0, no output |
+| vitest `npx vitest run` (`rerun/runs/vitest.log.txt`, 20:21:21) | **34 test files passed (34), 342 tests passed (342)**, 0 failed, exit 0, 12 s |
+
+## R6. The 2-tab check with real clicks on :5601
+
+**Script** `rerun/scripts/RR-2tab.mjs`. It is the first pass's script (section 6; the same actions, set-up, held-events method and criteria) plus: case (g); the audio spy; a note observer in (e); case (f) as in the first pass's v2. Per the brief every person action is a real click (start by typing and clicking "Put the kettle on", Pause, "Add 5 minutes", "Start next brew", "End session" and the sheet's); the debug API only reads state, starts the break in (g) (set-up), and moves both tabs' clocks by the same 90 s so a brew gets a record. Page errors: 0 in every iteration of every run below.
+
+**New observations of this rerun:**
+- **Sounds.** The spy wraps `window.__kettleAudio.audio.play` in each tab (the debug hook in `src/audio/index.ts`) and lists the names played during B's action. `FocusScreen.toggle` calls `audio.play('pause')` or `'resume'`; the buttons' own press sounds are separate names (the `addTime` of the "Add 5 minutes" button, `whoosh` and `cancel` of the End sheet). The app was muted by its settings, but the spy sees the call, not the output.
+- **"+5 min" note.** A MutationObserver in B from before the click looks for the note's text `5 min · whistles at …` (its `<span>` "plus icon + 5 min · whistles at HH:MM now"), and a 250 ms poll for 1.5 s reads the same text.
+
+### R6a. Counts, iteration by iteration criteria in the JSON (`manual/trial2-5601-<case>-NN.json`, `checks`)
+
+| Case | :5601 trial 2 | Notes |
+|---|---|---|
+| (a) pause (A +5, B pauses) | **5 of 5** | paused in A, B, storage; same session; `plannedMs` 30 min everywhere (A's +5 kept); agreement; B's spy: `["pause"]` 5 of 5 (the pause sound plays when the pause was applied) |
+| (b) add 5 (A paused, B +5) | **5 of 5** | same session, agreement, still paused, 30 min everywhere; B's spy: `["addTime"]` (the button's own sound) |
+| (c) end (A replaced the brew, B ends) | **5 of 5** | A's second brew running in A, B, storage; B on `#/focus`; one record for brew 1 in storage, A, B; none for brew 2 |
+| (d) no hold (B pauses, +5, ends; then ends a 2nd brew) | **5 of 5** | two records in total, one per ended brew |
+| (e) +5 on a replaced brew | see R6b | |
+| (f) pause on a replaced brew | **5 of 5** | brew 2 running, not paused, same `sessionId` and `endsAt` in A, B, storage; B on `#/focus`; one record for brew 1, none for brew 2; **B's spy `[]` 5 of 5: no `pause` and no `resume` sound** |
+| (g) Next brew, see R6c | **5 of 5** | |
+
+Run: `rerun/runs/manual-2tab-5601.log.txt`, 20:22:30 to 20:34:48, load average 13.9 at the start, 17.1 at the end. Order of cases g, e, f, a, b, c, d.
+
+### R6b. Case (e): is a "+5 min" note shown in the tab whose +5 was dropped?
+- **First run (`manual-2tab-5601.log.txt`, label `trial2-5601`): 0 of 5, a defect of my check, not the note.** The observer matched the text `whistles at` anywhere in the page. The page text already holds the normal meta line `1 min brewed · whistles at 8:59 PM` (`focusMeta`, shown once a minute has brewed; I had moved both clocks 90 s). The 250 ms poll of the note's own text `5 min · whistles at` read an empty string in 5 of 5. The five first-run JSONs are kept in `manual/e-first-run-loose-observer/`. Rule on that run: it is the failure I rerun once, below.
+- **Rerun (`manual-2tab-5601-e2.log.txt`, label `e2-5601`, 20:34:49 to 20:37:00; the script differs from the first run's only in the strict observer, sha256 prefix `cc66cf8be408cdd4` first run vs the file in `scripts/RR-2tab.mjs`):** **5 of 5.** The observer, tested against the note text `5 min · whistles at …` and run from before the click, saw **no note**, and the poll saw none (`plus5Note: [""]`); storage byte-identical before and after B's click 5 of 5; brew 2 running, 25 min, same `sessionId` and `endsAt` in A, B, storage; B on `#/focus`. B's spy: `["addTime"]` only, the button's own sound.
+- **Control, :5560 (optional)**: see R6e.
+
+### R6c. Case (g), "Next brew" in a lagging tab (SG-D2)
+Both tabs on a running break (started with the debug API: set-up). B held. **A clicks "Start next brew"** (real) and runs a 25-min brew. B, still showing the break, **clicks "Start next brew"** (real). Release. Both clocks +90 s. **B ends the joined brew** (End session, then the sheet's End session; real). 5 of 5 met every criterion:
+- after B's click, B shows A's brew (running, same `sessionId`) and storage is byte-identical to before the click; B did not start a second brew;
+- after release A, B and storage agree on A's brew;
+- the toast in B, read by an observer on the page text: `Saved 1 minute of focus` (and its twin `Kettle’s off. 1 minute of focus saved.`) in 5 of 5;
+- B goes to `#/` in 5 of 5; one record for the joined brew in storage, A's memory, B's memory; A, B and storage idle at the end.
+(In iteration 1 the first click on B's "End session" reported a Playwright timeout of 5 s while the sheet opened and the flow completed; it is recorded as `bEnd.firstClick` in that iteration's JSON.)
+
