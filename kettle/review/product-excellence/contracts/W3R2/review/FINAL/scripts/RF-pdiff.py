@@ -12,7 +12,7 @@ crop (before | after | overlay) of the biggest band."""
 import sys, os, json, hashlib, shutil
 import numpy as np
 from PIL import Image
-CAP = '/home/user/wt/w6-int/kettle/.tmp/RF-cap'
+CAP = os.environ.get('RF_CAPROOT', '/home/user/wt/w6-int/kettle/.tmp/RF-cap')
 EVROOT = '/home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/review/FINAL/cap'
 TOL = 16
 RUN = sys.argv[1]
