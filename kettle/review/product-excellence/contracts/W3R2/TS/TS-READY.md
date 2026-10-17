@@ -170,4 +170,32 @@ So a cover is tolerated only while it lasts less than about 2 s. The frame recor
 | `timer.spec.ts:189` ×10, `timer-harness` | same | **10/10** (51 s) | same run |
 
 Burners of the timer runs: PIDs 3073 3074 3075 3076, started 16:36:05, stopped 16:41:21, all four reported gone.
-TODO-NOTICE-LOAD
+
+`notice-strip.spec.ts` at 844×390 dark 200 % (the original failure), `--repeat-each=10 --workers=2` plus 4 burners, same recipe, same server:
+
+| run | code | log / report | result | load at start → end |
+|---|---|---|---|---|
+| 1st | `a6b3790` (re-aim only) | `logs/underload-notice-first.log.txt`, `logs/load-notice338-first.json.txt` | **6/10**: 4 failures, all `… still on top as the tap is aimed` at the first `press()` (the composer field), 4.7–5.7 s into the test, i.e. after the 8 pauses | 12.84 16.72 14.97 (16:44:35) → 11.88 15.52 15.05 (16:49:02); burners 13223–13226 stopped, gone |
+| 2nd | `21e5644` (final: + bring back by the wheel) | `logs/underload-notice.log.txt`, `logs/load-notice338.json.txt` | **9/10**: 1 failure, the same message at the same first `press()` (6.3 s) | 17.32 17.63 15.48 (17:20:27) → 10.64 15.89 15.83 (17:28:00); burners 5753–5756 stopped, gone |
+
+**So the 10/10 for this test is NOT met.** The change took the failure rate in this load from 4/10 to 1/10 (one sample each), not to 0. The remaining failure is the same line; its cause is not identified (§5.1).
+
+The load is the machine's, not a calibrated one: the other makers' browsers were running on the same four cores throughout (load average 10–23).
+
+## 4. The whole files
+
+| file | run | result | load at start → end |
+|---|---|---|---|
+| `timer.spec.ts`, `timer-app` + `timer-harness` | `logs/whole-timer.log.txt` (`KETTLE_PORT=5583`, the config's one worker, no burners) | **26 passed, 2 skipped, 0 failed** (3.5 min). The two skips are the spec's own `test.skip(!kettlePage.includes('harness'))` for `:302` and `:446` in `timer-app` | 12.42 13.49 11.29 (16:32:27) → 20.61 16.62 12.93 (16:35:56) |
+| `notice-strip.spec.ts`, all 25 | **NOT RUN** | the gate had no two free slots for the 25-minute run before the stop (the other lanes held 2 to 3 slots from 16:50 on; my queued job was waiting from 17:28) | |
+
+Why the missing whole-file run is a smaller risk than it looks (an argument, not a substitute for the run): in `press()` the new code runs only when the re-check read finds the target **not** on top, which used to end the walk with a failure. When the re-check is on top, the loop does what it did (the same `same` / 800 ms / `round >= 4` conditions, the same tap). So a configuration that passed before takes the same path; the change can only turn a former immediate failure into a retry. The two under-load runs above did go through the whole 844×390 dark 200 % walk (the long path: 9 + 6 full passes, 1.0 to 1.6 min each), and the injection runs of §2.2 went through it three more times.
+
+## 5. Open items
+
+1. **`notice-strip.spec.ts`, 844×390 dark 200 %, first `press()`: 1 failure in 10 under load remains** (9/10; 6/10 with the re-aim alone). Same message. What is known: the target is not on top for more than the ~2 s of re-reads; the page snapshot at the failure is an ordinary Today screen; in the injection runs this first press starts with the page already scrolled (`scrollY` 180), and a page that moves under the field makes the old helper and the re-aim-only helper fail with this very message while the final one recovers (§2.2). What is not known: what the page does in the failing runs. I did not observe it: the diagnostic copy (`scratch/diag.notice-strip.spec.ts.txt`: logs, at every not-on-top read, the target's rect, the viewport, scroll, and the element at its centre with its fixed / sticky ancestor, and takes a screenshot at the final failure) ran once at one worker with 4 burners (4 of 4 passed, then stopped; that log was overwritten and is not kept) and once more with the page's CPU throttled (`logs/diag2-notice.log.txt`, see below); the 2-worker run of it never got slots. A candidate cause, unconfirmed: the composer's docked start (sticky; `Composer.tsx:121–144` measures it and may switch it to in-flow at 200 % text on a landscape phone) changing after the first read, so the field ends up under it rather than out of the view. The fix I would try, **not built into the committed spec**: also bring the target back by the wheel when what covers its centre is fixed / sticky page chrome (the recorder's `chromeOf` rule), keeping the pause-only path for any other cover. It would make a `position: fixed` permanent cover escapable by scrolling, so the permanent-cover probe would have to use a cover anchored in the page (the scratch has `COVER=permanent-abs` for that).
+2. **Whole `notice-strip.spec.ts` (25/25) not run** (§4).
+3. **Line numbers moved** by the added lines: the hidden-page test is `timer.spec.ts:189` (was `:183`); the notice test is `notice-strip.spec.ts:366` (was `:338`). `:156` is unchanged.
+4. **The under-load runs are not a control.** I did not run the old tests under my burners: LEAD-5's matched-load control already showed that load alone passes the old timer pair 10/10, which is why the injection (§2.1), not the load, is the proof of the timer fixes. The 10/10 of §3 shows the new tests pass under load; it does not by itself show the old ones would fail.
+5. **The 2 s window and the "moved out of the view" rule are judgements** (no one has seen what covered the field in the original failure). The bound is stated and shown (§2.2); a longer cover fails.
+6. **`:156` keeps its freeze leg in every run** (the freeze is now inside the page chain; it used to follow a runner-dependent gap). Not an open item, noted so LEAD does not look for a vacuous-freeze case.
