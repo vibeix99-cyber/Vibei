@@ -41,3 +41,5 @@ Running 264 tests using 2 workers
   ✓   35 [chromium] › tests/a11y.spec.ts:332:3 › a toast never covers the session controls or the summary footer (390×844) (22.0s)
   ✓   37 [chromium] › tests/integrity.spec.ts:942:3 › I03 data safety › “Everything lives on this device”: a brew, an export and an import send nothing anywhere (12.5s)
   ✓   38 [chromium] › tests/a11y.spec.ts:332:3 › a toast never covers the session controls or the summary footer (375×667) (19.9s)
+  ✓   40 [chromium] › tests/a11y.spec.ts:371:3 › toasts never cover the break-over controls, carried task included (390×844) (22.4s)
+  ✘   39 [chromium] › tests/integrity.spec.ts:1048:5 › I03 storage-full warning is a banner in the page (phone 390×844) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room (45.2s)
