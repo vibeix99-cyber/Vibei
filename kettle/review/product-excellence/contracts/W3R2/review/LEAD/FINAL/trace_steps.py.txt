@@ -1,0 +1,22 @@
+import json, sys
+p = sys.argv[1]
+ev = {}
+order = []
+for line in open(p + '/0-trace.trace'):
+    try: e = json.loads(line)
+    except Exception: continue
+    t = e.get('type')
+    if t == 'before':
+        ev[e['callId']] = e; order.append(e['callId'])
+    elif t == 'after' and e.get('callId') in ev:
+        ev[e['callId']]['_end'] = e.get('endTime'); ev[e['callId']]['_res'] = e.get('result'); ev[e['callId']]['_err'] = e.get('error')
+    elif t == 'console':
+        print('CONSOLE', e.get('time'), e.get('messageType'), str(e.get('text'))[:200])
+t0 = None
+for c in order:
+    e = ev[c]
+    st = e.get('startTime'); 
+    if t0 is None: t0 = st
+    params = json.dumps(e.get('params', {}))[:260]
+    res = json.dumps(e.get('_res'))[:200] if e.get('_res') is not None else ''
+    print(f"{st-t0:9.1f} {(e.get('_end') or st)-st:8.1f} {e.get('method')} {params} -> {res} {('ERR '+str(e.get('_err'))[:150]) if e.get('_err') else ''}")

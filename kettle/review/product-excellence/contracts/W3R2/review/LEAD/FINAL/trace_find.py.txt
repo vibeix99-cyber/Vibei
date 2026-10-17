@@ -1,0 +1,45 @@
+import json, sys, re
+p = sys.argv[1]; pats = sys.argv[2:]
+snaps = []; calls = {}; t0 = None
+for line in open(p + '/0-trace.trace'):
+    try: e = json.loads(line)
+    except Exception: continue
+    if e.get('type') == 'before':
+        if t0 is None: t0 = e['startTime']
+        calls[e['callId']] = e['startTime'] - t0
+    if e.get('type') == 'frame-snapshot' and e['snapshot'].get('isMainFrame', True): snaps.append(e['snapshot'])
+def nodes_of(i):
+    s = snaps[i]
+    if '_nodes' not in s:
+        out = []
+        def v(n):
+            if isinstance(n, str): out.append(n)
+            elif isinstance(n, list) and n and isinstance(n[0], str):
+                for c in n[2:]: v(c)
+                out.append(n)
+        v(s['html']); s['_nodes'] = out
+    return s['_nodes']
+def resolve(n, i):
+    if isinstance(n, list) and n and isinstance(n[0], list):
+        ri = i - n[0][0]; ns = nodes_of(ri)
+        return resolve(ns[n[0][1]], ri) if 0 <= n[0][1] < len(ns) else ('', ri)
+    return (n, i)
+def text(n, i, acc):
+    n, i = resolve(n, i)
+    if isinstance(n, str): acc.append(n); return
+    if not isinstance(n, list) or not n or n[0] in ('SCRIPT', 'STYLE'): return
+    for c in n[2:]: text(c, i, acc)
+def dialogs(n, i, acc):
+    n, i = resolve(n, i)
+    if not isinstance(n, list) or not n or not isinstance(n[0], str): return
+    attrs = n[1] if len(n) > 1 and isinstance(n[1], dict) else {}
+    if attrs.get('role') == 'dialog':
+        t = []; text(n, i, t)
+        acc.append({k: attrs.get(k) for k in ('class', 'style', 'aria-hidden', 'inert', 'data-state') if k in attrs} | {'text': re.sub(r'\s+', ' ', ''.join(t))[:60]})
+    for c in n[2:]: dialogs(c, i, acc)
+for i, s in enumerate(snaps):
+    c = calls.get(s.get('callId'))
+    if c is None or c < float(pats[0]): continue
+    d = []; dialogs(s['html'], i, d)
+    acc = []; text(s['html'], i, acc); t = re.sub(r'\s+', ' ', ' '.join(acc))
+    print(f"{s['snapshotName']:<18} @{c:7.0f} welcome={'Hi, I' in t} dialogs={json.dumps(d)[:300]}")
