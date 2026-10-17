@@ -211,3 +211,27 @@ Totals: **:5591 25 of 25, :5560 5 of 25** (all five in (d)). Runs: `runs/manual-
 | 4 | FAIL | running 8378 [brew 1] 30m 1792264050712 | running 8378 [brew 1] 30m 1792264050712 | running 8378 [brew 1] 30m 1792264050712 | running 8378 [brew 1] 30m 1792264050712 | 1/0; 1/0; 1/0 | brew2_running_A_B_storage, brew2_not_extended_or_ended, storage_byte_identical_after_B_click |
 | 5 | FAIL | running aa53 [brew 1] 30m 1792264073858 | running aa53 [brew 1] 30m 1792264073858 | running aa53 [brew 1] 30m 1792264073858 | running aa53 [brew 1] 30m 1792264073858 | 1/0; 1/0; 1/0 | brew2_running_A_B_storage, brew2_not_extended_or_ended, storage_byte_identical_after_B_click |
 
+
+### 6d. The control again AFTER the integration change (`a1e3d04`, src `07df367`, Toast.tsx hook merge; still no guard)
+`runs/manual-2tab-5560-after.log.txt`, 19:28:16 to 19:34:32, same script (`d3c8d64ef9a734c2`), cases a, b, c, e, 5 iterations each, label `control-5560-after`; load average 5.6 at the start, 19.4 at the end. **0 of 20**, with the same failed criteria as the run before the change: (a) +5 lost 5/5, (b) brew running again 5/5, (c) A's second brew gone 5/5 (idle in A, B, storage, B on `#/`), (e) the ended brew 1 back over brew 2, 5/5; one record for brew 1 in (c) 5/5. Tables: `manual/TABLE-control-5560-after.md`. Before-the-change control: section 6a (:5560 at `494748b`, 18:30 to 18:38). The two controls behave the same. (The orchestrator said the change landed "about 19:12"; the commit and file times on this machine are 19:02:16 to 19:02:59.)
+
+### 6e. Extra case (f), added by me: pause in the lagging tab after A ended brew 1 and started brew 2
+Same set-up as (c); B clicks Pause on its stale view of brew 1. Script `scripts/R2-2tab-v2.mjs` (= the script above plus case f; a to e unchanged). Logs `runs/manual-2tab-5591-f.log.txt` (19:34:33 to 19:36:38) and `runs/manual-2tab-5560-after-f.log.txt` (19:36:42 to 19:39:05, post-change control).
+- **:5591: 5 of 5.** Brew 2 running, not paused, same `sessionId` and `endsAt` in A, B and storage; B on `#/focus`; one record for brew 1, none for brew 2.
+- **:5560 (after the change): 0 of 5.** A, B and storage hold the **ended brew 1, paused** (25 min), over A's running brew 2; brew 1 still has its one record.
+- Tables in `manual/TABLE-fix-5591-f.md` and `manual/TABLE-control-5560-after.md`.
+
+## 7. Index and state at the stop (19:40 UTC)
+
+| Check | Result on :5591 |
+|---|---|
+| 1 tsc, vitest | tsc exit 0; vitest 34 files, **338/338** |
+| 2 timer-harness, timer-app, pwa | **29 passed, 2 skipped** (by design), 0 failed |
+| 3 integrity | whole **25/25**; `:309` x10 **10/10** |
+| 4 home and race | `w2-home` **18/18**; `w3-intention-race` 2/2 and `w3r2-stale-tab` 4/4 |
+| 5 notice suites | **74/74** (notice-strip 25, w3-notices 9, w3-notices-idle 12, summary-notice 14, toast-room 14) |
+| 6 2-tab, real clicks | (a) 5/5, (b) 5/5, (c) 5/5, (d) 5/5, (e) 5/5, (f, extra) 5/5; controls (:5560, before and after the change): (a) 0/5, (b) 0/5, (c) 0/5, (d) 5/5, (e) 0/5, (f) 0/5 after |
+
+- No failure occurred in any :5591 run, so nothing was rerun or classified (the bundle script would have rerun a failure once on :5591 and once on :5560; `runs/failures.txt` was never created).
+- Page errors: 0 in every 2-tab iteration. Composer-label quirk (words typed in tab 2 becoming the label): not seen in these runs (tab 2 never typed after a brew was running).
+- Not run: :5593 preview, :5570, :5478, :5583. Nothing was killed with a pattern; explicit PIDs of mine killed: chain1 14439 and its waiting gate process 16685, chainX 21651.
