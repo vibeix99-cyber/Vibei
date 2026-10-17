@@ -80,7 +80,7 @@ Both passed on the rerun, so, by the brief, no run on :5583 or :5478 was made fo
 
 `runs/notice-strip.log.txt`, `json/notice-strip.json`, `runs/notice-strip-summary.txt`. 21:27:50 to 21:57:09 (29.3 min), `--project=chromium --workers=1`, one gate slot, load 0.5 at the start and 13.2 at the end (12 to 18 meanwhile: the full run and a third job were on the machine).
 
-**25 passed, 0 failed, 0 flaky, 0 skipped.** All 25 cases are the one test at line 388 "no notice overlaps a control, text or a row: every notice state, real input" in its 25 configurations (durations 62 to 78 s). The cases that were flaky in the earlier rounds passed here: 1440×900 light 200 % reduced motion (71.7 s), 844×390 dark 200 % (73.8 s).
+**25 passed, 0 failed, 0 flaky, 0 skipped.** All 25 cases are the one test at line 388 "no notice overlaps a control, text or a row: every notice state, real input" in its 25 configurations (durations 62 to 78 s). The case W3R1 named as known flaky, 1440×900 light 200 % reduced motion, passed (71.7 s); 844×390 dark 200 % passed (73.8 s).
 
 ## 5. Timer-harness, timer-app and pwa projects
 
