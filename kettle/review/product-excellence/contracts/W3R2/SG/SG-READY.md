@@ -206,7 +206,14 @@ Reporter quirk, as F1FIX noted: the HEAD run lists the four tests at `:154`, `:1
 - Nothing in the guard writes a new key or field. The re-assert is an ordinary whole save of the same 14 fields, and the catch-up writes nothing.
 
 ## 5. `integrity:309` ×20 under load
-(queued: `--workers=2` plus 6 CPU burners, own PIDs, killed by PID; `scripts/chain.sh.txt` step `stress`)
+**Command:** `integrity.spec.ts -g 'two tabs, the leading one frozen across the end' --repeat-each=20 --workers=2` on :5581, through the gate with `--n 2`, plus **6 CPU burners**. The burners are my own subshells; their PIDs are printed, and each is killed by its explicit PID at the end. Script: `scripts/chain.sh.txt`, step `stress`.
+
+| Run | Result | Load (1 / 5 / 15 min) | Log |
+|---|---|---|---|
+| 1 (17:44:59–17:48:47) | **20/20** (3.8 min). Burners 26227–26232 started and killed by PID | start 5.7 / 10.7 / 13.7 (burners just started; the other lanes had been at 13–20); end 10.5 / 11.0 / 13.2 | `logs/stress-309-x20-w2-nb6.log.txt` |
+| 2 | (queued) | | `logs/stress-309-x20-w2-nb6-run2.log.txt` |
+
+The app code under test is `e18b621`'s (served on :5581; the head commit `54a9721` adds a Vitest case only).
 
 ## 6. The rest (on the fix, through the gate: `scripts/bundle.sh.txt`, one SG slot)
 Branch `54a9721` (src `dd6944e`). The app code served on :5581 is `e18b621`'s: `54a9721` adds one Vitest case and nothing else. Load average 13–20 throughout (the other lanes running).
