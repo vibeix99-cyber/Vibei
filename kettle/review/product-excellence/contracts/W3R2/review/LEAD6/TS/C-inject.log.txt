@@ -110,3 +110,55 @@ Running 4 tests using 1 worker
 [inject] runner late by 3500 ms after the start command (background: the work, /tests/harness/timer)
   ✓  1 [timer-harness] › .tmp/lead6/ts/new/timer.spec.ts:172:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (4.5s)
 [inject] runner late by 2500 ms after the start command (hidden page: complet, /tests/harness/timer)
+  ✓  2 [timer-harness] › .tmp/lead6/ts/new/timer.spec.ts:205:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (3.3s)
+[inject] runner late by 6500 ms after the start command (background: the work, /?debug&onboarded=1#)
+  ✓  3 [timer-app] › .tmp/lead6/ts/new/timer.spec.ts:172:3 › timer reliability › background: the worker completes on time even with main-thread timers frozen (8.6s)
+[inject] runner late by 4500 ms after the start command (hidden page: complet, /?debug&onboarded=1#)
+  ✓  4 [timer-app] › .tmp/lead6/ts/new/timer.spec.ts:205:3 › timer reliability › hidden page: completion shows a warm notification; coming back restores the title (6.4s)
+
+  4 passed (26.4s)
+### end 18:33:02 exit=0 load 8.70 13.13 12.76
+
+######## C-notice-old-transient: KETTLE_PORT=5560 npx playwright test -c .tmp/lead6/ts-pw.config.ts ts/old/notice-strip.spec.ts --project=chromium -g real input \(844×390 dark 200 %\) --workers=1
+### start 18:33:02 load 8.70 13.13 12.76
+
+Running 1 test using 1 worker
+
+[inject] transient cover over getByRole('textbox', { name: /What are you brewing/ }) for 300 ms at 18:33:07.767
+[inject] re-check: covered at 18:33:07.779
+  ✘  1 [chromium] › .tmp/lead6/ts/old/notice-strip.spec.ts:365:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (2.1s)
+
+
+  1) [chromium] › .tmp/lead6/ts/old/notice-strip.spec.ts:365:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+
+    Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+      325 |     if (!at || (same && Date.now() - t < 800) || k >= 4) break;
+      326 |   }
+    > 327 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();
+          |                                                            ^
+      328 |   if (touch) {
+      329 |     await page.touchscreen.tap(at!.x, at!.y);
+      330 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)
+        at press (/home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/old/notice-strip.spec.ts:327:60)
+        at /home/user/wt/w8tr-q/kettle/.tmp/lead6/ts/old/notice-strip.spec.ts:377:5
+
+    Error Context: .tmp/lead6/out/C-notice-old-transient/old-notice-strip-no-notice-ed785-eal-input-844×390-dark-200--chromium/error-context.md
+
+  1 failed
+    [chromium] › .tmp/lead6/ts/old/notice-strip.spec.ts:365:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+### end 18:33:08 exit=1 load 8.40 13.00 12.71
+
+######## C-notice-new-transient: KETTLE_PORT=5560 npx playwright test -c .tmp/lead6/ts-pw.config.ts ts/new/notice-strip.spec.ts --project=chromium -g real input \(844×390 dark 200 %\) --workers=1
+### start 18:33:08 load 8.40 13.00 12.71
+
+Running 1 test using 1 worker
+
+[inject] transient cover over getByRole('textbox', { name: /What are you brewing/ }) for 300 ms at 18:33:13.478
+[inject] re-check: covered at 18:33:13.488
+[inject] aim again 1 at 18:33:13.740
+[inject] aim again 2 at 18:33:14.017
