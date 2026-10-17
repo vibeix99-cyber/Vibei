@@ -245,6 +245,20 @@ if (!at && rescrolled < AIM_RESCROLL && (await wheelCures(el, strict))) return p
 - **Bound per target:** unchanged mechanism, now stated in full: at most `1 + AIM_RESCROLL` = 3 `press()` calls; each call at most `AIM_AGAIN` = 8 re-reads 250 ms apart (about 2 s) and one wheel walk (the existing limits: 60 wheels, three stuck wheels end it). The dock case needs one pause, one re-read, one rescroll: the walk clears it in about three wheels.
 - **Unchanged:** `expect(at, "… still on top as the tap is aimed")`, its words and place; the tap only after a move-then-read that finds the target on top (the rescrolled call ends in the same loop and the same tap); `strict` (passed on); 800 ms / 0.5 px / 5 rounds; `GONE_MS`; `onTop`; the walk itself.
 
+**`press()`, line by line, for the new path (acceptance 1):**
+
+| Item | `21e5644` | the fix (`1befde2`) | Ruling |
+|---|---|---|---|
+| final check | `expect(at, "${el} still on top as the tap is aimed").not.toBeNull()` after the loop | same line, same words, same place | same |
+| what "on top" means | `onTop`: wholly in the viewport and the target at its centre (strict: 9 of 9) | `onTop` unchanged; `strict` is also passed to `wheelCures` and into the rescrolled call | same |
+| how the loop ends with a tap | `at` non-null from the `onTop` read made **after** `mouse.move`, and (`same` within 0.5 px and the round < 800 ms) or round ≥ 4 | identical condition; the rescrolled call is a full `press()` and ends in the same loop and the same tap | same |
+| a not-on-top re-check | pause 250 ms, re-read, at most 8 per call | same | same |
+| target not wholly in the viewport after the pauses | rescroll (≤ 2) | same (`wheelCures` = `'out of view'`, the old `!inView`) | same |
+| **target in the view, every non-target read point under the Today `.ctaDock` or `nav[aria-label=Main]`** | wait-only; fails | **rescroll (≤ 2), the existing wheel walk** | **new, the only addition** |
+| a notice, anything inert, an open sheet, an unknown or mixed cover (fixed, page-anchored, a leaving route layer) | wait-only; fails | wait-only; fails, same words | same |
+| a call made again after the aim failed that cannot bring the target on top | could press by Tab + Enter, or by a synthetic `click()` (sheet targets) | **fails** ("can be brought on top by real scrolling") | **TS-D2 closed** |
+| total bound per target | not stated (3 calls × 8 re-reads) | 1 + `AIM_RESCROLL` = 3 calls, each ≤ 8 re-reads (about 2 s) and one wheel walk (≤ 60 wheels, three stuck end it): about 6 s of pauses plus up to three walks | stated |
+
 **TS-D2.** Before: the sheet fallbacks (Tab + Enter, then a synthetic `click()`) follow every unsuccessful walk, including the walk of a call made again after the aim failed. After:
 ```ts
 if (!at && sheet && rescrolled === 0) { …Tab + Enter… synthetic click… }
