@@ -1,0 +1,61 @@
+[slots] TS took 1/3 at 19:14:47: bash -c 
+  cd "$WT" || exit 9
+  echo "### start $(date -u +%T) load $(cut -d" " -f1-3 /proc/loadavg)"
+  echo "### cmd: $*"
+  "$@"; rc=$?
+  echo "### end $(date -u +%T) exit=$rc load $(cut -d" " -f1-3 
+### start 19:14:47 load 13.88 15.16 14.44
+### cmd: /home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/TS/scripts/inject-notice3.sh
+######## v2 COVER=dock: KETTLE_PORT=5583 COVER=dock npx playwright test -c .tmp/ts-pw.config.ts ts/v2/notice-strip.spec.ts --project=chromium --workers=1 -g 'real input \(844×390 dark 200 %\)'
+### start 19:14:47 load 13.88 15.16 14.44
+
+Running 1 test using 1 worker
+
+[inject] dock: dock in the flow: relative top 536 bottom 791 of 390
+[inject] dock: docked: sticky top 182 bottom 390 of 390
+[inject] re-check: covered at 19:14:54.345
+[inject] aim again 1 at 19:14:54.606
+[inject] aim again 2 at 19:14:54.922
+[inject] aim again 3 at 19:14:55.213
+[inject] aim again 4 at 19:14:55.490
+[inject] aim again 5 at 19:14:55.761
+[inject] aim again 6 at 19:14:56.045
+[inject] aim again 7 at 19:14:56.317
+[inject] aim again 8 at 19:14:56.620
+  ✘  1 [chromium] › .tmp/ts/v2/notice-strip.spec.ts:431:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (4.4s)
+
+
+  1) [chromium] › .tmp/ts/v2/notice-strip.spec.ts:431:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+
+    Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+      391 |     if (at && ((same && Date.now() - t < 800) || round >= 4)) break;
+      392 |   }
+    > 393 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();
+          |                                                            ^
+      394 |   if (touch) {
+      395 |     await page.touchscreen.tap(at!.x, at!.y);
+      396 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)
+        at press (/home/user/wt/w8q/kettle/.tmp/ts/v2/notice-strip.spec.ts:393:60)
+        at /home/user/wt/w8q/kettle/.tmp/ts/v2/notice-strip.spec.ts:443:5
+
+    Error Context: .tmp/ts-out/r2-v2-dock/v2-notice-strip-no-notice--82731-eal-input-844×390-dark-200--chromium/error-context.md
+
+  1 failed
+    [chromium] › .tmp/ts/v2/notice-strip.spec.ts:431:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+### end 19:14:57 exit=1 load 13.57 15.08 14.41
+
+######## new COVER=dock: KETTLE_PORT=5583 COVER=dock npx playwright test -c .tmp/ts-pw.config.ts ts/new/notice-strip.spec.ts --project=chromium --workers=1 -g 'real input \(844×390 dark 200 %\)'
+### start 19:14:57 load 13.57 15.08 14.41
+
+Running 1 test using 1 worker
+
+[inject] dock: dock in the flow: relative top 538 bottom 746 of 390
+[inject] dock: docked: sticky top 182 bottom 390 of 390
+[inject] re-check: covered at 19:15:02.423
+[inject] aim again 1 at 19:15:02.674
+[inject] rescroll: bring it clear by the wheel
