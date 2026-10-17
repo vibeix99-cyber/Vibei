@@ -153,3 +153,43 @@ Running 1 test using 1 worker
 
 Running 1 test using 1 worker
 
+[inject] sheet: getByRole('dialog', { name: 'Leave the kettle early?' }).getByRole('button', { name: 'End session' }) moved out of the view for good at the re-check
+[inject] re-check: covered at 19:16:31.088
+[inject] aim again 1 at 19:16:31.341
+[inject] rescroll: bring it clear by the wheel
+  ✘  1 [chromium] › .tmp/ts/new/notice-strip.spec.ts:453:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (13.6s)
+
+
+  1) [chromium] › .tmp/ts/new/notice-strip.spec.ts:453:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+
+    Error: getByRole('dialog', { name: 'Leave the kettle early?' }).getByRole('button', { name: 'End session' }) can be brought on top by real scrolling ({"x":426,"y":-2726.09375,"width":250,"height":55.796875}, scrollY 0)
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+      379 |       return { x: -1, y: -1, w: 0, h: 0, top: -1 };
+      380 |     }
+    > 381 |     expect(at, `${el} can be brought on top by real scrolling (${JSON.stringify(await el.boundingBox())}, scrollY ${await page.evaluate(() => scrollY)})`).not.toBeNull();
+          |                                                                                                                                                                ^
+      382 |   }
+      383 |   // (W3R1 Q, X-11) Aim and tap inside one input window, as a person does: the pointer moves onto the target (input), its
+      384 |   // place is read again right then, and the tap follows at once. The strip changes height at rest only after a quiet
+        at press (/home/user/wt/w8q/kettle/.tmp/ts/new/notice-strip.spec.ts:381:160)
+        at /home/user/wt/w8q/kettle/.tmp/ts/new/notice-strip.spec.ts:486:5
+
+    Error Context: .tmp/ts-out/r2-new-sheet/new-notice-strip-no-notice-58846-eal-input-844×390-dark-200--chromium/error-context.md
+
+  1 failed
+    [chromium] › .tmp/ts/new/notice-strip.spec.ts:453:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+### end 19:16:38 exit=1 load 11.75 13.98 14.08
+
+######## v2 COVER=sheet: KETTLE_PORT=5583 COVER=sheet npx playwright test -c .tmp/ts-pw.config.ts ts/v2/notice-strip.spec.ts --project=chromium --workers=1 -g 'real input \(844×390 dark 200 %\)'
+### start 19:16:38 load 11.75 13.98 14.08
+
+Running 1 test using 1 worker
+
+[inject] sheet: getByRole('dialog', { name: 'Leave the kettle early?' }).getByRole('button', { name: 'End session' }) moved out of the view for good at the re-check
+[inject] re-check: covered at 19:16:48.125
+[inject] aim again 1 at 19:16:48.377
+[inject] rescroll: bring it clear by the wheel
