@@ -1,0 +1,340 @@
+{
+ "label": "fix-5591",
+ "base": "http://127.0.0.1:5591",
+ "case": "e",
+ "iteration": 2,
+ "loadAtStart": "12.69 13.28 13.39",
+ "t0": "18:14:05",
+ "steps": {
+  "01-started": {
+   "A": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcpu8dyab87f242",
+     "startedAt": 1792260857590,
+     "endsAt": 1792262357590,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Chapter 3 notes",
+     "lastEnded": null
+    },
+    "stored": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcpu8dyab87f242",
+     "startedAt": 1792260857590,
+     "endsAt": 1792262357590,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Chapter 3 notes",
+     "lastEnded": null
+    },
+    "recordsStored": [],
+    "recordsMemory": [],
+    "held": 0,
+    "holding": false,
+    "clockOffset": 0
+   },
+   "B": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcpu8dyab87f242",
+     "startedAt": 1792260857590,
+     "endsAt": 1792262357590,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Chapter 3 notes",
+     "lastEnded": null
+    },
+    "stored": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcpu8dyab87f242",
+     "startedAt": 1792260857590,
+     "endsAt": 1792262357590,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Chapter 3 notes",
+     "lastEnded": null
+    },
+    "recordsStored": [],
+    "recordsMemory": [],
+    "held": 0,
+    "holding": false,
+    "clockOffset": 0
+   }
+  },
+  "02-pre-action (A ended brew 1, runs brew 2; B behind, shows brew 1)": {
+   "A": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcpudll2b21931b",
+     "startedAt": 1792260954345,
+     "endsAt": 1792262454345,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Second brew",
+     "lastEnded": {
+      "sessionId": "s_mvcpu8dyab87f242",
+      "reason": "user"
+     }
+    },
+    "stored": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcpudll2b21931b",
+     "startedAt": 1792260954345,
+     "endsAt": 1792262454345,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Second brew",
+     "lastEnded": {
+      "sessionId": "s_mvcpu8dyab87f242",
+      "reason": "user"
+     }
+    },
+    "recordsStored": [
+     "s_mvcpu8dyab87f242"
+    ],
+    "recordsMemory": [
+     "s_mvcpu8dyab87f242"
+    ],
+    "held": 0,
+    "holding": false,
+    "clockOffset": 90000
+   },
+   "B": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcpu8dyab87f242",
+     "startedAt": 1792260857590,
+     "endsAt": 1792262357590,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Chapter 3 notes",
+     "lastEnded": null
+    },
+    "stored": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcpudll2b21931b",
+     "startedAt": 1792260954345,
+     "endsAt": 1792262454345,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Second brew",
+     "lastEnded": {
+      "sessionId": "s_mvcpu8dyab87f242",
+      "reason": "user"
+     }
+    },
+    "recordsStored": [
+     "s_mvcpu8dyab87f242"
+    ],
+    "recordsMemory": [
+     "s_mvcpu8dyab87f242"
+    ],
+    "held": 3,
+    "holding": true,
+    "clockOffset": 90000
+   }
+  },
+  "03-after-B-action-before-release": {
+   "A": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcpudll2b21931b",
+     "startedAt": 1792260954345,
+     "endsAt": 1792262454345,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Second brew",
+     "lastEnded": {
+      "sessionId": "s_mvcpu8dyab87f242",
+      "reason": "user"
+     }
+    },
+    "stored": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcpudll2b21931b",
+     "startedAt": 1792260954345,
+     "endsAt": 1792262454345,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Second brew",
+     "lastEnded": {
+      "sessionId": "s_mvcpu8dyab87f242",
+      "reason": "user"
+     }
+    },
+    "recordsStored": [
+     "s_mvcpu8dyab87f242"
+    ],
+    "recordsMemory": [
+     "s_mvcpu8dyab87f242"
+    ],
+    "held": 0,
+    "holding": false,
+    "clockOffset": 90000
+   },
+   "B": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcpudll2b21931b",
+     "startedAt": 1792260954345,
+     "endsAt": 1792262454345,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Second brew",
+     "lastEnded": {
+      "sessionId": "s_mvcpu8dyab87f242",
+      "reason": "user"
+     }
+    },
+    "stored": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcpudll2b21931b",
+     "startedAt": 1792260954345,
+     "endsAt": 1792262454345,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Second brew",
+     "lastEnded": {
+      "sessionId": "s_mvcpu8dyab87f242",
+      "reason": "user"
+     }
+    },
+    "recordsStored": [
+     "s_mvcpu8dyab87f242"
+    ],
+    "recordsMemory": [
+     "s_mvcpu8dyab87f242"
+    ],
+    "held": 3,
+    "holding": true,
+    "clockOffset": 90000
+   }
+  },
+  "04-final": {
+   "A": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcpudll2b21931b",
+     "startedAt": 1792260954345,
+     "endsAt": 1792262454345,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Second brew",
+     "lastEnded": {
+      "sessionId": "s_mvcpu8dyab87f242",
+      "reason": "user"
+     }
+    },
+    "stored": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcpudll2b21931b",
+     "startedAt": 1792260954345,
+     "endsAt": 1792262454345,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Second brew",
+     "lastEnded": {
+      "sessionId": "s_mvcpu8dyab87f242",
+      "reason": "user"
+     }
+    },
+    "recordsStored": [
+     "s_mvcpu8dyab87f242"
+    ],
+    "recordsMemory": [
+     "s_mvcpu8dyab87f242"
+    ],
+    "held": 0,
+    "holding": false,
+    "clockOffset": 90000
+   },
+   "B": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcpudll2b21931b",
+     "startedAt": 1792260954345,
+     "endsAt": 1792262454345,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Second brew",
+     "lastEnded": {
+      "sessionId": "s_mvcpu8dyab87f242",
+      "reason": "user"
+     }
+    },
+    "stored": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcpudll2b21931b",
+     "startedAt": 1792260954345,
+     "endsAt": 1792262454345,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "Second brew",
+     "lastEnded": {
+      "sessionId": "s_mvcpu8dyab87f242",
+      "reason": "user"
+     }
+    },
+    "recordsStored": [
+     "s_mvcpu8dyab87f242"
+    ],
+    "recordsMemory": [
+     "s_mvcpu8dyab87f242"
+    ],
+    "held": 0,
+    "holding": false,
+    "clockOffset": 90000
+   }
+  }
+ },
+ "checks": {
+  "precondition_B_behind": true,
+  "brew2_running_A_B_storage": true,
+  "A_B_storage_agree": true,
+  "brew2_not_extended_or_ended": true,
+  "B_shows_focus": true,
+  "storage_byte_identical_after_B_click": true
+ },
+ "errors": [],
+ "firstSessionId": "s_mvcpu8dyab87f242",
+ "plannedAtStart": 1500000,
+ "aEnd": {
+  "sheet": true,
+  "confirm": true
+ },
+ "secondSessionId": "s_mvcpudll2b21931b",
+ "preOk": true,
+ "plus5Note": [
+  "5 min · whistles at 6:40 PM now"
+ ],
+ "storageUnchangedByBAction": true,
+ "pageErrors": 0,
+ "pass": true,
+ "loadAtEnd": "13.73 13.45 13.44",
+ "t1": "18:14:28"
+}
