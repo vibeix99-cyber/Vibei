@@ -85,3 +85,58 @@ The specs are the repo's own, untouched (`git diff 494748b HEAD -- kettle/tests`
 - **The base failure** (`notice-strip.spec.ts:338` "…real input (844×390 light 200 % reduced motion)", 1.7 s in): `getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed` at `press` (spec line 300), the setup tap before any notice is raised. It is the "tap-helper re-aim" flake that Maker TS owns (W3R2 item 3); it did not recur on the fix, and it is not related to this change (it happens before the strip's route layer ever leaves).
 - Machine load during the runs was 10–20 (three makers, nproc 4); both runs were taken under similar load.
 - Not run (not asked): the rest of the chromium project, `timer-*`, `pwa`.
+
+## 4. Captures: REFERENCE → BEFORE → AFTER (full size, DPR 1)
+
+- **REFERENCE:** `shots/REFERENCE-K01-01-home.png` (K01, copied from `contracts/W3R1/F/REFERENCE-K01-01-home.png`; the Today home design the notice work was measured against).
+- **BEFORE** `:5560` (integration `494748b`) and **AFTER** `:5582` (`203b057`): `shots/before/<w>x<h>-<theme>-t<pct>/<state>.png` and `shots/after/…`, **192 + 192 PNG**, the same 12 states in each of the 16 configurations {390×844, 375×667, 844×390, 1440×900} × {light, dark} × {100 %, 200 %}. Conditions are W3R1 Maker F's (`contracts/W3R1/F-READY-FOR-REVIEW.md` §6): frozen date 2026-10-12T07:40Z (Monday), the same seeds, the same settings (scene off, muted, onboarded), the "missed" states = seed then the app clock +2 days; DPR 1; text size by `html{font-size:pct%}`. Capture script `tools/capture3.cjs` (F's `capture.cjs`, extended below).
+- **States (12):** `today-blank`, `today-newbie`, `today-atRisk`, `today-missed-cozy`, `today-missed-nocozy` (Today); `sheet-warm-atRisk`, `sheet-warm-missed-cozy` (the warm sheets); `session-running`; `end-sheet` (the End sheet); `today-after-end-gone` (Today after End, the notice gone and its room kept); **new:** `today-after-end-notice` (the toast End raises, "Saved 3 minutes of focus", drawn in Today's strip) and `stats-brew-updated` (a live notice strip, "Brew updated", on Stats). Not captured: `today-veteran` and the rail states of F's set (not in this brief's list).
+- **How the shots were made repeatable (so a pixel diff means something).** A first pair of passes (`before`, `after`, one shot per state, 16:15–16:46 UTC) was **discarded**: under machine load of 15–20 the BEFORE pass caught a blank Today at 1440×900 @200 % (content layer still fading in), the toast shot depended on its 3.2 s lifetime, and the mascot's idle animation and the session timer's seconds made most pairs differ. Final capture: for every state and configuration the three shots (BEFORE, AFTER, BEFORE2) are taken back to back in one browser, so they see the same load; each waits until the screen is settled (every ancestor of `main` at opacity 1, no leaving route layer, a dialog's box still) and is retaken if blank; the toast shot holds the notice's clock with the pointer over it; the page clock is paused and CSS animations are disabled for the frame (`animations: 'disabled'`).
+- **Noise floor.** BEFORE2 is the same base (`:5560`) captured a second time, so BEFORE vs BEFORE2 is base against base (`tools/diff3.cjs`). A pixel counts as a real AFTER difference only if AFTER differs from BOTH base captures by more than 2 of 255 levels and lies outside the noise region (pixels where the two base captures differ, grown by 6 px). The session timer's readout rectangle (recorded at capture time, `readout` in `shots/facts-*.json`) is left out of the comparison: the seconds fall on a different side of a boundary in each capture. **I** = identical (0 differing pixels), **N** = within the noise floor, **D** = a difference by this rule (crop in `crops/`: BEFORE | AFTER | mask, real pixels red, noise grey).
+
+Pairs: 192. **identical 148**, **within the noise floor 34**, **difference 10**, incomplete 0.
+Noise floor (BEFORE vs BEFORE2, same build twice): pixel-identical in 145 of 192 states; where not, median 55 px, max 237538 px, largest channel delta 250/255; states where the base differs from itself by more than 2 levels: 30.
+
+| Configuration | end-sheet | session-running | sheet-warm-atRisk | sheet-warm-missed-cozy | stats-brew-updated | today-after-end-gone | today-after-end-notice | today-atRisk | today-blank | today-missed-cozy | today-missed-nocozy | today-newbie |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| 1440x900-dark-t100 | N | **D** | N | N | **D** | I | I | I | I | I | I | I |
+| 1440x900-dark-t200 | N | **D** | N | I | N | I | **D** | I | I | I | I | I |
+| 1440x900-light-t100 | N | I | N | N | I | I | I | I | I | I | N | I |
+| 1440x900-light-t200 | N | **D** | I | N | N | I | I | I | I | I | I | I |
+| 375x667-dark-t100 | **D** | N | I | I | I | N | I | I | I | I | I | I |
+| 375x667-dark-t200 | I | I | I | I | I | I | I | I | I | I | I | I |
+| 375x667-light-t100 | **D** | I | I | I | I | I | I | I | I | I | I | I |
+| 375x667-light-t200 | I | I | I | I | I | I | I | I | I | I | I | I |
+| 390x844-dark-t100 | N | N | I | I | I | I | I | I | I | I | I | I |
+| 390x844-dark-t200 | **D** | I | I | I | **D** | I | I | I | I | I | I | I |
+| 390x844-light-t100 | N | N | I | I | I | I | I | I | I | I | I | I |
+| 390x844-light-t200 | I | N | I | I | N | I | I | I | I | I | I | I |
+| 844x390-dark-t100 | N | I | N | N | I | I | N | I | I | I | I | I |
+| 844x390-dark-t200 | N | N | I | N | I | I | I | I | I | I | I | I |
+| 844x390-light-t100 | I | N | N | N | I | I | I | I | I | I | I | I |
+| 844x390-light-t200 | N | **D** | N | N | I | I | I | I | I | I | I | I |
+
+I = identical, N = within the noise floor, D = difference, ? = not captured, S = size differs.
+
+Differences:
+
+- `1440x900-dark-t100/session-running`: differing px 11624, real 1499 (max delta 53), bbox [370,505,328,286], noise px 0, crop `crops/1440x900-dark-t100/session-running.png`
+- `1440x900-dark-t100/stats-brew-updated`: differing px 4, real 4 (max delta 5), bbox [11,95,216,38], noise px 0, crop `crops/1440x900-dark-t100/stats-brew-updated.png`
+- `1440x900-dark-t200/session-running`: differing px 66056, real 8804 (max delta 90), bbox [22,22,1377,860], noise px 0, crop `crops/1440x900-dark-t200/session-running.png`
+- `1440x900-dark-t200/today-after-end-notice`: differing px 5, real 5 (max delta 59), bbox [1339,267,2,3], noise px 0, crop `crops/1440x900-dark-t200/today-after-end-notice.png`
+- `1440x900-light-t200/session-running`: differing px 11508, real 1 (max delta 14), bbox [389,757,1,1], noise px 11454, crop `crops/1440x900-light-t200/session-running.png`
+- `375x667-dark-t100/end-sheet`: differing px 7260, real 121 (max delta 5), bbox [49,27,249,149], noise px 1, crop `crops/375x667-dark-t100/end-sheet.png`
+- `375x667-light-t100/end-sheet`: differing px 4, real 4 (max delta 4), bbox [25,458,39,149], noise px 1, crop `crops/375x667-light-t100/end-sheet.png`
+- `390x844-dark-t200/end-sheet`: differing px 2054, real 664 (max delta 7), bbox [245,59,67,25], noise px 0, crop `crops/390x844-dark-t200/end-sheet.png`
+- `390x844-dark-t200/stats-brew-updated`: differing px 2, real 2 (max delta 5), bbox [37,770,30,1], noise px 0, crop `crops/390x844-dark-t200/stats-brew-updated.png`
+- `844x390-light-t200/session-running`: differing px 4, real 4 (max delta 51), bbox [205,243,11,5], noise px 0, crop `crops/844x390-light-t200/session-running.png`
+
+**Reading of the 10 D pairs (I looked at each crop; none is in the notice strip or at a notice):**
+- `1440x900-dark-t100/session-running` and `1440x900-dark-t200/session-running`: sub-pixel outline shifts on the kettle and the capybara in the focus scene (the scene's JS-driven idle motion, a different phase in each capture; the kettle and capybara are not drawn by `Toast.tsx`).
+- `375x667-dark-t100/end-sheet`, `390x844-dark-t200/end-sheet` (and `375x667-light-t100/end-sheet`, 4 px): the blurred backdrop behind the End sheet, a few pixels of the "Rain" button and steam, at most 7 of 255 levels.
+- `1440x900-dark-t100/stats-brew-updated` (4 px, max 5), `390x844-dark-t200/stats-brew-updated` (2 px, max 5), `1440x900-dark-t200/today-after-end-notice` (5 px: the tip of the progress bar), `844x390-light-t200/session-running` (4 px), `1440x900-light-t200/session-running` (1 px counted, the base differs from itself in 11454 px there): isolated pixels far from the strip.
+- The two states that carry a live notice (`stats-brew-updated`, `today-after-end-notice`; 32 pairs) are identical in 25, within the noise floor in 4, and D in 3 (2, 4 and 5 isolated pixels, listed above).
+RECAP_PLACEHOLDER
+**Noise floor in numbers:** the base differs from itself in 47 of 192 states (145 pixel-identical); mostly the blurred End and warm sheets (maximum 2 levels) and the focus scene; two states had a gross variation between two base captures (`1440x900-light-t200/sheet-warm-missed-cozy`, 237 538 px, and `1440x900-light-t100/today-missed-nocozy`, 107 494 px: a layout moved between two base captures). Machine load during the capture was 15–20.
+
+Files: `shots/{before,after}/`, `shots/before2-flagged/` (BEFORE2 for the 10 D pairs only; the full BEFORE2 set, 22 MB, is not committed, its per-pair numbers are in the JSON), `crops/`, `logs/diff-before-after.json.txt` (every pair: differing px, noise px, real px, max delta, bbox), `logs/summary3.md`.
