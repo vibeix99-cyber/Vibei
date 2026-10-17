@@ -49,7 +49,7 @@ Raw evidence only. No verdict. Times are UTC, 2026-10-17. Task received 17:58, b
 
 ## 5. The notice suites on :5591
 
-`runs/notice-suite-5591.log.txt`, `json/notice-suite-5591.json`; `KETTLE_PORT=5591 npx playwright test tests/notice-strip.spec.ts tests/w3-notices.spec.ts tests/w3-notices-idle.spec.ts tests/summary-notice.spec.ts tests/toast-room.spec.ts --project=chromium --workers=2`; two gate slots; run time 21.0 min (the gate job started at 19:07 by the Playwright clock and ended 19:28:15; the log header gives the exact start); load average 10 to 18 at the start, 5.6 at the end.
+`runs/notice-suite-5591.log.txt`, `json/notice-suite-5591.json`; `KETTLE_PORT=5591 npx playwright test tests/notice-strip.spec.ts tests/w3-notices.spec.ts tests/w3-notices-idle.spec.ts tests/summary-notice.spec.ts tests/toast-room.spec.ts --project=chromium --workers=2`; two gate slots; 19:07:09 to 19:28:15 (21.0 min); load average 19.4 at the start, 5.6 at the end.
 
 **74 passed, 0 failed, 0 flaky, 0 skipped** (74 tests): `notice-strip` 25, `w3-notices` 9, `w3-notices-idle` 12, `summary-notice` 14, `toast-room` 14. Nothing to rerun or classify.
 
