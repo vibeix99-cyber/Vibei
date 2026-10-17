@@ -14,3 +14,14 @@ Raw evidence only. No verdict. Times are UTC, 2026-10-17. Task received 17:58, b
 | Scripts | `scripts/R2-common.sh` (gate helper with the uptime header and trailer), `R2-unit.sh`, `R2-chainX.sh`, `R2-chainY.sh`, `R2-notice.sh`, `R2-2tab.mjs` (the 2-tab script), `R2-jsum.mjs`; superseded: `R2-chain1.sh` (replaced by `R2-chainX.sh` after its first job; I killed its explicit PID 14439 and the waiting gate PID 16685, which had not started any browser), `R2-smoke.sh` |
 | Logs and JSON | `runs/*.log.txt`, `json/*.json` (Playwright JSON), `manual/` (2-tab JSON per iteration, summaries, screenshots) |
 
+## 1. Typecheck and unit tests (not browser runs, no gate)
+
+| Check | Command | Result |
+|---|---|---|
+| tsc | `npx tsc --noEmit -p .` in `/home/user/wt/w8tr-g/kettle` (`runs/tsc.log.txt`; the log opens with HEAD `88d6b64`, src `dd6944e`, 0 dirty files) | exit 0, no output (6 s) |
+| vitest | `npx vitest run` (`runs/vitest.log.txt`) | **34 test files passed (34), 338 tests passed (338)**, 0 failed, exit 0, 25 s (18:00:18) |
+
+## 4a. Race specs on :5591 (first part of check 4)
+
+`runs/race-staletab-5591.log.txt`, `json/race-staletab-5591.json`; `KETTLE_PORT=5591 npx playwright test tests/w3r2-stale-tab.spec.ts tests/w3-intention-race.spec.ts --project=chromium --workers=1`; 18:00:09 to 18:01:35 (1.3 min); load average 9.4 at the start, 14.2 at the end. **6 of 6 passed**: `w3-intention-race` 2 (the intention race 21.0 s, F1X-D1 16.6 s) and `w3r2-stale-tab` 4 (pause 9.7 s, add 5 8.8 s, end 11.1 s, start 7.1 s). 0 failed, 0 flaky, 0 skipped.
+
