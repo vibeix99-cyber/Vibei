@@ -131,7 +131,7 @@ Differences:
 - `390x844-dark-t200/stats-brew-updated`: differing px 2, real 2 (max delta 5), bbox [37,770,30,1], noise px 0, crop `crops/390x844-dark-t200/stats-brew-updated.png`
 - `844x390-light-t200/session-running`: differing px 4, real 4 (max delta 51), bbox [205,243,11,5], noise px 0, crop `crops/844x390-light-t200/session-running.png`
 
-**Reading of the 10 D pairs (I looked at each crop; none is in the notice strip or at a notice):**
+**Reading of the 10 D pairs (I opened the crops of the larger ones and several of the small ones, and read every bbox: none is in the notice strip or at a notice):**
 - `1440x900-dark-t100/session-running` and `1440x900-dark-t200/session-running`: sub-pixel outline shifts on the kettle and the capybara in the focus scene (the scene's JS-driven idle motion, a different phase in each capture; the kettle and capybara are not drawn by `Toast.tsx`).
 - `375x667-dark-t100/end-sheet`, `390x844-dark-t200/end-sheet` (and `375x667-light-t100/end-sheet`, 4 px): the blurred backdrop behind the End sheet, a few pixels of the "Rain" button and steam, at most 7 of 255 levels.
 - `1440x900-dark-t100/stats-brew-updated` (4 px, max 5), `390x844-dark-t200/stats-brew-updated` (2 px, max 5), `1440x900-dark-t200/today-after-end-notice` (5 px: the tip of the progress bar), `844x390-light-t200/session-running` (4 px), `1440x900-light-t200/session-running` (1 px counted, the base differs from itself in 11454 px there): isolated pixels far from the strip.
