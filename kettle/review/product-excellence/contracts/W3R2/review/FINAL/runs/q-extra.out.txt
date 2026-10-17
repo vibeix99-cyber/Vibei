@@ -13,3 +13,11 @@
     "$@" >> $L 2>&1
     rc=$?
     echo "### end $(date -u +%H:%M:%S) UTC; exit
+[slots] RF freed 1 at 22:53:40
+[slots] RF took 2/3 at 22:53:40: bash -c 
+    L=$1; shift
+    echo "### start $(date -u +%H:%M:%S) UTC; load: $(uptime)" > $L
+    echo "### cmd: $*" >> $L
+    "$@" >> $L 2>&1
+    rc=$?
+    echo "### end $(date -u +%H:%M:%S) UTC; exit
