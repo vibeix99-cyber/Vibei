@@ -18,3 +18,7 @@ Running 25 tests using 1 worker
   ✓  13 [chromium] › tests/integrity.spec.ts:586:3 › I02 End, dismissal and task disposition › Done / Carry forward are reversible; the carried task returns on Home; editing it and Mark done → Undo never add a focus record (10.6s)
   ✓  14 [chromium] › tests/integrity.spec.ts:637:3 › I02 End, dismissal and task disposition › Skip break, Next brew and That’s all for now do what they say, and never record a skipped break (19.0s)
   ✓  15 [chromium] › tests/integrity.spec.ts:781:3 › I03 data safety › export → reset (explicit confirmation) → import restores brews, settings and every reward exactly (17.3s)
+  ✓  16 [chromium] › tests/integrity.spec.ts:840:3 › I03 data safety › invalid files change nothing and say why (not JSON, another app, truncated, newer version, huge, empty, damaged) (12.0s)
+  ✓  17 [chromium] › tests/integrity.spec.ts:880:3 › I03 data safety › storage full: a brew that completes still reaches its summary, once; saved data stays intact; a backup carries the brew; making room saves it (12.6s)
+  ✓  18 [chromium] › tests/integrity.spec.ts:916:3 › I03 data safety › storage full: a restore that cannot be saved is refused with a plain reason and changes nothing (7.3s)
+  ✓  19 [chromium] › tests/integrity.spec.ts:942:3 › I03 data safety › “Everything lives on this device”: a brew, an export and an import send nothing anywhere (9.1s)

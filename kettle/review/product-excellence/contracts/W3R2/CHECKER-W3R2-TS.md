@@ -120,7 +120,7 @@ The maker left the cause unobserved. I ran the maker's diagnostic copy (`scripts
 | Read | Field | What is on top at its centre | Page |
 |---|---|---|---|
 | the re-check in round 0 (page time 1.7–1.9 s) | top 296, bottom 348 of 390: **wholly in view** | `p._ctaNote` "Then a 5 min tea break. Change…", inside **`sticky div._ctaDock`**: the docked Start's note | `scrollY` 0, no dialog, no leaving layer, nothing inert, `#/` |
-| `aim again` 1 … 8 (2.5 to 5.1 s) | the same box, unmoved | the same, every time | the same |
+| `aim again` 1 … 8 (2.0 to 5.1 s) | the same box, unmoved | the same, every time | the same |
 | the failure (5.5–5.9 s) | the same | the same | the same (screenshot `E-diag-fail-1.png`) |
 
 So the field is **not** briefly crossed and **not** out of the view: it sits, still, under the Today page's own docked Start (`.ctaDock`, `position: sticky`, `z-index: 3`, `src/screens/home/Home.module.css:439`), for the whole 2+ s of re-reads, and would stay there until the page is scrolled. Neither of the maker's two mechanisms (wait; walk back if out of view) can cure that state, which is why the rescroll commit moved 6/10 only to 9/10 and 7/10.
