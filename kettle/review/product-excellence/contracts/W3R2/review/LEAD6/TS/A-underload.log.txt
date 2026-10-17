@@ -13,3 +13,78 @@ Running 10 tests using 2 workers
   ✓   6 [chromium] › tests/notice-strip.spec.ts:366:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (1.4m)
   ✓   8 [chromium] › tests/notice-strip.spec.ts:366:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (1.4m)
   ✓   9 [chromium] › tests/notice-strip.spec.ts:366:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (1.5m)
+  ✓  10 [chromium] › tests/notice-strip.spec.ts:366:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) (1.3m)
+
+
+  1) [chromium] › tests/notice-strip.spec.ts:366:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+
+    Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+      326 |     if (at && ((same && Date.now() - t < 800) || round >= 4)) break;
+      327 |   }
+    > 328 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();
+          |                                                            ^
+      329 |   if (touch) {
+      330 |     await page.touchscreen.tap(at!.x, at!.y);
+      331 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)
+        at press (/home/user/wt/w8tr-q/kettle/tests/notice-strip.spec.ts:328:60)
+        at /home/user/wt/w8tr-q/kettle/tests/notice-strip.spec.ts:378:5
+
+    Error Context: .tmp/lead6/out/A-notice844-x10/notice-strip-no-notice-ove-011b9-eal-input-844×390-dark-200--chromium/error-context.md
+
+  2) [chromium] › tests/notice-strip.spec.ts:366:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+
+    Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+      326 |     if (at && ((same && Date.now() - t < 800) || round >= 4)) break;
+      327 |   }
+    > 328 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();
+          |                                                            ^
+      329 |   if (touch) {
+      330 |     await page.touchscreen.tap(at!.x, at!.y);
+      331 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)
+        at press (/home/user/wt/w8tr-q/kettle/tests/notice-strip.spec.ts:328:60)
+        at /home/user/wt/w8tr-q/kettle/tests/notice-strip.spec.ts:378:5
+
+    Error Context: .tmp/lead6/out/A-notice844-x10/notice-strip-no-notice-ove-011b9-eal-input-844×390-dark-200--chromium-repeat4/error-context.md
+
+  3) [chromium] › tests/notice-strip.spec.ts:366:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+
+    Error: getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+
+    Received: [31mnull[39m
+
+      326 |     if (at && ((same && Date.now() - t < 800) || round >= 4)) break;
+      327 |   }
+    > 328 |   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();
+          |                                                            ^
+      329 |   if (touch) {
+      330 |     await page.touchscreen.tap(at!.x, at!.y);
+      331 |     // (A finger leaves no pointer behind: the mouse goes back off the content, so it holds no notice's clock.)
+        at press (/home/user/wt/w8tr-q/kettle/tests/notice-strip.spec.ts:328:60)
+        at /home/user/wt/w8tr-q/kettle/tests/notice-strip.spec.ts:378:5
+
+    Error Context: .tmp/lead6/out/A-notice844-x10/notice-strip-no-notice-ove-011b9-eal-input-844×390-dark-200--chromium-repeat6/error-context.md
+
+  3 failed
+    [chromium] › tests/notice-strip.spec.ts:366:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+    [chromium] › tests/notice-strip.spec.ts:366:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+    [chromium] › tests/notice-strip.spec.ts:366:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) 
+  7 passed (5.8m)
+### end 18:28:51 exit=1 load 13.21 13.50 12.44
+
+######## A-timer156-189-x10: KETTLE_PORT=5560 npx playwright test tests/timer.spec.ts --project=timer-app --repeat-each=10 -g background: the worker|hidden page: completion --workers=2
+### start 18:28:51 load 13.21 13.50 12.44
+
+Running 20 tests using 2 workers
+
