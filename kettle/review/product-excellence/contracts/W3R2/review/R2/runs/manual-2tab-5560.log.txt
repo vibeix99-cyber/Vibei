@@ -30,3 +30,16 @@
     A=running/s_mvcqh7/30m/ends=1792263729734
     B=running/s_mvcqh7/30m/ends=1792263729734
     S=running/s_mvcqh7/30m/ends=1792263729734  S(read in B)=running/s_mvcqh7/30m/ends=1792263729734  pageErrors=0
+[18:32:23] control-5560 (b) it3 FAIL load 11.25 14.28 13.08->10.32 13.97 13.00 failed: still_paused_A_B_storage
+    A=running/s_mvcqhd/30m/ends=1792263737871
+    B=running/s_mvcqhd/30m/ends=1792263737871
+    S=running/s_mvcqhd/30m/ends=1792263737871  S(read in B)=running/s_mvcqhd/30m/ends=1792263737871  pageErrors=0
+[18:32:30] control-5560 (b) it4 FAIL load 10.32 13.97 13.00->10.30 13.85 12.97 failed: still_paused_A_B_storage
+    A=running/s_mvcqhl/30m/ends=1792263748087
+    B=running/s_mvcqhl/30m/ends=1792263748087
+    S=running/s_mvcqhl/30m/ends=1792263748087  S(read in B)=running/s_mvcqhl/30m/ends=1792263748087  pageErrors=0
+[18:32:39] control-5560 (b) it5 FAIL load 10.30 13.85 12.97->10.04 13.74 12.94 failed: still_paused_A_B_storage
+    A=running/s_mvcqhr/30m/ends=1792263754943
+    B=running/s_mvcqhr/30m/ends=1792263754943
+    S=running/s_mvcqhr/30m/ends=1792263754943  S(read in B)=running/s_mvcqhr/30m/ends=1792263754943  pageErrors=0
+### case (b) control-5560: pass 0/5 {"precondition_B_behind":5,"same_session_A_B_storage":5,"A_B_storage_agree":5,"still_paused_A_B_storage":0,"plus5_applied_A_B_storage":5}
