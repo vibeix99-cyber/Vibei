@@ -14,7 +14,7 @@ case $WHAT in
     for i in 1 2 3 4; do ( while :; do :; done ) & PIDS="$PIDS $!"; done
     echo "burners:$PIDS started $(date -u +%T) load $(cut -d' ' -f1-3 /proc/loadavg)"
     sleep 5 ;;
-  diag2) W=1; export THROTTLE=${THROTTLE:-6}; echo "no burners; the page's CPU throttled ${THROTTLE}x (CDP Emulation.setCPUThrottlingRate)" ;;
+  diag2) W=1; export THROTTLE=${THROTTLE:-8}; echo "no burners; the page's CPU throttled ${THROTTLE}x (CDP Emulation.setCPUThrottlingRate)" ;;
   timer-whole) W=1; echo "no burners (whole-file run, the config's default of one worker)" ;;
   notice-whole) echo "no burners (whole-file run, --workers=2 as the spec's header says)" ;;
 esac
@@ -36,7 +36,7 @@ case $WHAT in
     run load-notice338 tests/notice-strip.spec.ts --project=chromium --repeat-each=10 -g 'real input \(844×390 dark 200 %\)'
     ;;
   diag2)
-    run diag2-notice338 -c .tmp/ts-pw.config.ts ts/diag/notice-strip.spec.ts --project=chromium --repeat-each=6 -g 'real input \(844×390 dark 200 %\)'
+    run diag2-notice338 -c .tmp/ts-pw.config.ts ts/diag/notice-strip.spec.ts --project=chromium --repeat-each=8 -g 'real input \(844×390 dark 200 %\)'
     ;;
   diag)
     run diag-notice338 -c .tmp/ts-pw.config.ts ts/diag/notice-strip.spec.ts --project=chromium --repeat-each=10 -g 'real input \(844×390 dark 200 %\)'
