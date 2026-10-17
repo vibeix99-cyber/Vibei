@@ -1,0 +1,7 @@
+### start 20:50:27 UTC; load:  20:50:27 up  5:00,  0 user,  load average: 8.36, 11.80, 13.55
+### cmd: KETTLE_PORT=5601 KETTLE_PWA_PORT=5498 npx playwright test --project=timer-harness --project=timer-app --project=pwa --workers=1 --reporter=list,json
+
+Running 31 tests using 1 worker
+
+  ✓   1 [timer-harness] › tests/timer.spec.ts:74:3 › timer reliability › start → reload mid-session → same session, same end, correct remaining; paused survives reload (5.2s)
+  ✓   2 [timer-harness] › tests/timer.spec.ts:111:3 › timer reliability › a phase that ended while the app was closed (3 h ago) completes once, at its real end, whileAway (3.1s)
