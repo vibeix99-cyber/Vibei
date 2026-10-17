@@ -1,60 +1,63 @@
-### HEAD 494748b (src b74e6b3) = git archive 494748b kettle/src kettle/vite.config.ts kettle/package.json kettle/tsconfig.json, node_modules symlinked, the fix's src/timer/staleTab.test.ts (as committed in e18b621) copied in; 2026-10-17T16:31:34Z
+### HEAD 494748b (src b74e6b3) = git archive 494748b kettle/src kettle/vite.config.ts kettle/package.json kettle/tsconfig.json, node_modules symlinked, the fix's src/timer/staleTab.test.ts (as committed in 54a9721) copied in; 2026-10-17T17:09:09Z
 
  RUN  v5.0.2 /tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/head/kettle
 
- × src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > rebase: the leader, still on a brew another tab ended and replaced, corrects a clock jump → the newer brew is untouched, the leader shows it 686ms
+ × src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > rebase: the leader, still on a brew another tab ended and replaced, corrects a clock jump → the newer brew is untouched, the leader shows it 1120ms
    → storage still holds the newer brew, untouched: expected '{"state":{"status":"running","phase":…' to be '{"state":{"status":"running","phase":…' // Object.is equality
- × src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > pause: the other tab added 5 minutes → the brew current in storage pauses with its real remaining time 17ms
+ × src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > pause: the other tab added 5 minutes → the brew current in storage pauses with its real remaining time 38ms
    → paused with its real remaining time: expected { status: 'paused', …(13) } to match object { status: 'paused', …(4) }
 (9 matching properties omitted from actual)
- × src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > pause: the other tab ended the brew and started another → nothing is paused, the newer brew runs on, the lagging tab shows it 24ms
+ × src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > pause: the other tab ended the brew and started another → nothing is paused, the newer brew runs on, the lagging tab shows it 18ms
    → expected '{"state":{"status":"paused","phase":"…' to be '{"state":{"status":"running","phase":…' // Object.is equality
- × src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > resume: the other tab resumed and added 5 minutes → the brew is already running; its end and the +5 are kept 14ms
+ × src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > resume: the other tab resumed and added 5 minutes → the brew is already running; its end and the +5 are kept 13ms
    → storage untouched: the brew runs on with its +5: expected '{"state":{"status":"running","phase":…' to be '{"state":{"status":"running","phase":…' // Object.is equality
- × src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > add 5: the other tab ended the brew and started another → nothing is added, the newer brew is untouched, the lagging tab shows it 11ms
+ × src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > add 5: the other tab ended the brew and started another → nothing is added, the newer brew is untouched, the lagging tab shows it 17ms
    → expected '{"state":{"status":"running","phase":…' to be '{"state":{"status":"running","phase":…' // Object.is equality
- × src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > add 5: the other tab paused the brew → 5 minutes are added to the paused brew, which stays paused 11ms
+ × src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > add 5: the other tab paused the brew → 5 minutes are added to the paused brew, which stays paused 57ms
    → expected { status: 'running', …(13) } to match object { status: 'paused', …(4) }
 (9 matching properties omitted from actual)
- × src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > end: the other tab ended the brew and started another → the newer brew is not ended or replaced; one record each 9ms
+ × src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > end: the other tab ended the brew and started another → the newer brew is not ended or replaced; one record each 20ms
    → storage still holds the newer brew: expected '{"state":{"status":"idle","phase":"fo…' to be '{"state":{"status":"running","phase":…' // Object.is equality
  × src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > end: the other tab paused the brew → it ends with its real focus time (the pause is not counted) 37ms
-   → expected { id: 's_mvc86kg03c4447ce', …(9) } to match object { completed: false, focusedMs: 600000 }
+   → expected { id: 's_mvc86kg0cf06cd0f', …(9) } to match object { completed: false, focusedMs: 600000 }
 (8 matching properties omitted from actual)
- × src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > start: another tab’s brew is running → the lagging tab’s Start (words saved, then started) does not replace it; it joins and shows it 19ms
+ × src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > start: another tab’s brew is running → the lagging tab’s Start (words saved, then started) does not replace it; it joins and shows it 10ms
    → storage still holds A’s brew, as A wrote it: expected '{"state":{"status":"running","phase":…' to be '{"state":{"status":"running","phase":…' // Object.is equality
- × src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > start (Tea time): another tab has started the next brew → the lagging tab’s break does not replace it 25ms
+ × src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > start (Tea time): another tab has started the next brew → the lagging tab’s break does not replace it 15ms
    → expected '{"state":{"status":"running","phase":…' to be '{"state":{"status":"running","phase":…' // Object.is equality
- × src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > start (Next brew from a break): the other tab already started it → neither the break’s end nor the start goes through 17ms
+ × src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > start (Next brew from a break): the other tab already started it → neither the break’s end nor the start goes through 11ms
    → expected '{"state":{"status":"running","phase":…' to be '{"state":{"status":"running","phase":…' // Object.is equality
- ✓ src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > typed edit: the other tab paused and extended the brew → only the words change (already so since F1) 17ms
- × src/timer/staleTab.test.ts > the doubly stale tab (its copy of storage behind too): the tab with the newer brew restores it, in any event order > typed edit, events in write order: A takes in Z’s write first → A puts its brew back; Z then takes it in 7ms
+ ✓ src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > typed edit: the other tab paused and extended the brew → only the words change (already so since F1) 11ms
+ × src/timer/staleTab.test.ts > the doubly stale tab (its copy of storage behind too): the tab with the newer brew restores it, in any event order > typed edit, events in write order: A takes in Z’s write first → A puts its brew back; Z then takes it in 16ms
    → storage holds A’s brew again: expected { status: 'idle', …(13) } to match object { status: 'running', …(3) }
 (10 matching properties omitted from actual)
- × src/timer/staleTab.test.ts > the doubly stale tab (its copy of storage behind too): the tab with the newer brew restores it, in any event order > typed edit, Z’s event for A’s start lands first (Z reads its own idle write), then A’s, then Z’s again 7ms
+ × src/timer/staleTab.test.ts > the doubly stale tab (its copy of storage behind too): the tab with the newer brew restores it, in any event order > typed edit, Z’s event for A’s start lands first (Z reads its own idle write), then A’s, then Z’s again 22ms
    → storage holds A’s brew again: expected { status: 'idle', …(13) } to match object { status: 'running', …(3) }
 (10 matching properties omitted from actual)
  ✓ src/timer/staleTab.test.ts > the doubly stale tab (its copy of storage behind too): the tab with the newer brew restores it, in any event order > typed edit, A acts (pause) before its storage event arrives → it restores the brew, then pauses it 13ms
- × src/timer/staleTab.test.ts > the doubly stale tab (its copy of storage behind too): the tab with the newer brew restores it, in any event order > typed edit, A’s ticker re-reads storage first (completion guard) → it restores the brew and completes it once 13ms
-   → expected [] to deeply equal [ 's_mvc86kg0b2514c9a' ]
- × src/timer/staleTab.test.ts > the doubly stale tab (its copy of storage behind too): the tab with the newer brew restores it, in any event order > pause on a brew the other tab ended and replaced (Z’s copy still holds it) → A puts its newer brew back 19ms
+ × src/timer/staleTab.test.ts > the doubly stale tab (its copy of storage behind too): the tab with the newer brew restores it, in any event order > typed edit, A’s ticker re-reads storage first (completion guard) → it restores the brew and completes it once 19ms
+   → expected [] to deeply equal [ 's_mvc86kg0807d803a' ]
+ × src/timer/staleTab.test.ts > the doubly stale tab (its copy of storage behind too): the tab with the newer brew restores it, in any event order > pause on a brew the other tab ended and replaced (Z’s copy still holds it) → A puts its newer brew back 11ms
    → expected { status: 'paused', …(25) } to match object { status: 'running', …(2) }
 (23 matching properties omitted from actual)
- × src/timer/staleTab.test.ts > the doubly stale tab (its copy of storage behind too): the tab with the newer brew restores it, in any event order > an ended brew does not come back: Z pauses it after A ended it (Z’s copy still running) → A keeps its idle kettle 21ms
+ × src/timer/staleTab.test.ts > the doubly stale tab (its copy of storage behind too): the tab with the newer brew restores it, in any event order > an ended brew does not come back: Z pauses it after A ended it (Z’s copy still running) → A keeps its idle kettle 11ms
    → expected '{"state":{"status":"paused","phase":"…' to be '{"state":{"status":"idle","phase":"fo…' // Object.is equality
- ✓ src/timer/staleTab.test.ts > the doubly stale tab (its copy of storage behind too): the tab with the newer brew restores it, in any event order > a tab that was away (its brew long past its end, its events missed) does not put that brew back over what storage holds 12ms
- ✓ src/timer/staleTab.test.ts > the doubly stale tab (its copy of storage behind too): the tab with the newer brew restores it, in any event order > start in both tabs within the lag, neither able to see the other → both settle on the later start, recorded once 10ms
- ✓ src/timer/staleTab.test.ts > unchanged > a wipe (reset data) in one tab still stops the brew in the other 23ms
- ✓ src/timer/staleTab.test.ts > unchanged > composer label (logged, not changed): words typed in the second tab for the running brew become its words in both tabs 70ms
- ✓ src/timer/staleTab.test.ts > unchanged > in step, every action from either tab still reaches the other (pause, +5, resume, end) 13ms
+ × src/timer/staleTab.test.ts > the doubly stale tab (its copy of storage behind too): the tab with the newer brew restores it, in any event order > three tabs: both tabs holding the brew put it back, in either order; it settles (no further writes) and completes once 16ms
+   → expected { status: 'idle', …(25) } to match object { status: 'running', …(3) }
+(22 matching properties omitted from actual)
+ ✓ src/timer/staleTab.test.ts > the doubly stale tab (its copy of storage behind too): the tab with the newer brew restores it, in any event order > a tab that was away (its brew long past its end, its events missed) does not put that brew back over what storage holds 16ms
+ ✓ src/timer/staleTab.test.ts > the doubly stale tab (its copy of storage behind too): the tab with the newer brew restores it, in any event order > start in both tabs within the lag, neither able to see the other → both settle on the later start, recorded once 20ms
+ ✓ src/timer/staleTab.test.ts > unchanged > a wipe (reset data) in one tab still stops the brew in the other 45ms
+ ✓ src/timer/staleTab.test.ts > unchanged > composer label (logged, not changed): words typed in the second tab for the running brew become its words in both tabs 12ms
+ ✓ src/timer/staleTab.test.ts > unchanged > in step, every action from either tab still reaches the other (pause, +5, resume, end) 8ms
 
-⎯⎯⎯⎯⎯⎯ Failed Tests 16 ⎯⎯⎯⎯⎯⎯⎯
+⎯⎯⎯⎯⎯⎯ Failed Tests 17 ⎯⎯⎯⎯⎯⎯⎯
 
  FAIL  src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > rebase: the leader, still on a brew another tab ended and replaced, corrects a clock jump → the newer brew is untouched, the leader shows it
 AssertionError: storage still holds the newer brew, untouched: expected '{"state":{"status":"running","phase":…' to be '{"state":{"status":"running","phase":…' // Object.is equality
 
-Expected: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792231380000,"endsAt":1792232880000,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Inbox","tag":null,"sessionId":"s_mvc8afc0b6f3d454","lastEnded":{"sessionId":"s_mvc86kg03caf2b15","phase":"focus","reason":"user","at":1792231380000,"whileAway":false}},"version":1}"
-Received: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792230900000,"endsAt":1792232400000,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Essay","tag":null,"sessionId":"s_mvc86kg03caf2b15","lastEnded":null},"version":1}"
+Expected: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792231380000,"endsAt":1792232880000,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Inbox","tag":null,"sessionId":"s_mvc8afc0c166ba9d","lastEnded":{"sessionId":"s_mvc86kg0a5a3eaf6","phase":"focus","reason":"user","at":1792231380000,"whileAway":false}},"version":1}"
+Received: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792230900000,"endsAt":1792232400000,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Essay","tag":null,"sessionId":"s_mvc86kg0a5a3eaf6","lastEnded":null},"version":1}"
 
  ❯ src/timer/staleTab.test.ts:147:68
     145|     // Z leads (mayMutate) and its ticker sees the wall clock set back…
@@ -64,7 +67,7 @@ Received: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"add
     148|     expect(Z.t()).toMatchObject({ status: 'running', sessionId: s2.ses…
     149|     await settle();
 
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/16]⎯
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/17]⎯
 
  FAIL  src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > pause: the other tab added 5 minutes → the brew current in storage pauses with its real remaining time
 AssertionError: paused with its real remaining time: expected { status: 'paused', …(13) } to match object { status: 'paused', …(4) }
@@ -80,7 +83,7 @@ AssertionError: paused with its real remaining time: expected { status: 'paused'
 +   "addedMs": 0,
 +   "plannedMs": 1500000,
 +   "remainingMs": 1200000,
-    "sessionId": "s_mvc86kg0d487deba",
+    "sessionId": "s_mvc86kg0d1ed99f3",
     "status": "paused",
   }
 
@@ -92,13 +95,13 @@ AssertionError: paused with its real remaining time: expected { status: 'paused'
     165|     A.storageEvent();
     166|     Z.storageEvent();
 
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/16]⎯
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/17]⎯
 
  FAIL  src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > pause: the other tab ended the brew and started another → nothing is paused, the newer brew runs on, the lagging tab shows it
 AssertionError: expected '{"state":{"status":"paused","phase":"…' to be '{"state":{"status":"running","phase":…' // Object.is equality
 
-Expected: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792231440000,"endsAt":1792232940000,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Inbox","tag":null,"sessionId":"s_mvc8bpmod7eafc16","lastEnded":{"sessionId":"s_mvc86kg0aa4b4631","phase":"focus","reason":"user","at":1792231440000,"whileAway":false}},"version":1}"
-Received: "{"state":{"status":"paused","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792231200000,"endsAt":null,"remainingMs":1260000,"pausedAt":1792231440000,"pausedTotalMs":0,"completedInCycle":0,"intention":"Essay","tag":null,"sessionId":"s_mvc86kg0aa4b4631","lastEnded":null},"version":1}"
+Expected: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792231440000,"endsAt":1792232940000,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Inbox","tag":null,"sessionId":"s_mvc8bpmof8440508","lastEnded":{"sessionId":"s_mvc86kg0d1859692","phase":"focus","reason":"user","at":1792231440000,"whileAway":false}},"version":1}"
+Received: "{"state":{"status":"paused","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792231200000,"endsAt":null,"remainingMs":1260000,"pausedAt":1792231440000,"pausedTotalMs":0,"completedInCycle":0,"intention":"Essay","tag":null,"sessionId":"s_mvc86kg0d1859692","lastEnded":null},"version":1}"
 
  ❯ src/timer/staleTab.test.ts:181:19
     179|     const before = raw();
@@ -108,13 +111,13 @@ Received: "{"state":{"status":"paused","phase":"focus","plannedMs":1500000,"adde
     182|     expect(Z.t()).toMatchObject({ status: 'running', sessionId: s2.ses…
     183|     await settle();
 
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/16]⎯
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/17]⎯
 
  FAIL  src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > resume: the other tab resumed and added 5 minutes → the brew is already running; its end and the +5 are kept
 AssertionError: storage untouched: the brew runs on with its +5: expected '{"state":{"status":"running","phase":…' to be '{"state":{"status":"running","phase":…' // Object.is equality
 
-Expected: "{"state":{"status":"running","phase":"focus","plannedMs":1800000,"addedMs":300000,"startedAt":1792231200000,"endsAt":1792233120000,"remainingMs":1200000,"pausedAt":null,"pausedTotalMs":120000,"completedInCycle":0,"intention":"Essay","tag":null,"sessionId":"s_mvc86kg0010bfe96","lastEnded":null},"version":1}"
-Received: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792231200000,"endsAt":1792232820000,"remainingMs":1200000,"pausedAt":null,"pausedTotalMs":120000,"completedInCycle":0,"intention":"Essay","tag":null,"sessionId":"s_mvc86kg0010bfe96","lastEnded":null},"version":1}"
+Expected: "{"state":{"status":"running","phase":"focus","plannedMs":1800000,"addedMs":300000,"startedAt":1792231200000,"endsAt":1792233120000,"remainingMs":1200000,"pausedAt":null,"pausedTotalMs":120000,"completedInCycle":0,"intention":"Essay","tag":null,"sessionId":"s_mvc86kg0ef7cc9d1","lastEnded":null},"version":1}"
+Received: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792231200000,"endsAt":1792232820000,"remainingMs":1200000,"pausedAt":null,"pausedTotalMs":120000,"completedInCycle":0,"intention":"Essay","tag":null,"sessionId":"s_mvc86kg0ef7cc9d1","lastEnded":null},"version":1}"
 
  ❯ src/timer/staleTab.test.ts:204:70
     202|     expect(Z.t().status, 'precondition: Z has not taken in the resume'…
@@ -124,13 +127,13 @@ Received: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"add
     205|     expect(Z.t()).toMatchObject({ status: 'running', sessionId: sid, e…
     206|     A.storageEvent();
 
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/16]⎯
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/17]⎯
 
  FAIL  src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > add 5: the other tab ended the brew and started another → nothing is added, the newer brew is untouched, the lagging tab shows it
 AssertionError: expected '{"state":{"status":"running","phase":…' to be '{"state":{"status":"running","phase":…' // Object.is equality
 
-Expected: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792231380000,"endsAt":1792232880000,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Inbox","tag":null,"sessionId":"s_mvc8afc0c2c4ed55","lastEnded":{"sessionId":"s_mvc86kg0438d1548","phase":"focus","reason":"user","at":1792231380000,"whileAway":false}},"version":1}"
-Received: "{"state":{"status":"running","phase":"focus","plannedMs":1800000,"addedMs":300000,"startedAt":1792231200000,"endsAt":1792233000000,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Essay","tag":null,"sessionId":"s_mvc86kg0438d1548","lastEnded":null},"version":1}"
+Expected: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792231380000,"endsAt":1792232880000,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Inbox","tag":null,"sessionId":"s_mvc8afc0e57f3bfd","lastEnded":{"sessionId":"s_mvc86kg0358a0290","phase":"focus","reason":"user","at":1792231380000,"whileAway":false}},"version":1}"
+Received: "{"state":{"status":"running","phase":"focus","plannedMs":1800000,"addedMs":300000,"startedAt":1792231200000,"endsAt":1792233000000,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Essay","tag":null,"sessionId":"s_mvc86kg0358a0290","lastEnded":null},"version":1}"
 
  ❯ src/timer/staleTab.test.ts:219:19
     217|     const before = raw();
@@ -140,7 +143,7 @@ Received: "{"state":{"status":"running","phase":"focus","plannedMs":1800000,"add
     220|     expect(Z.t()).toMatchObject({ status: 'running', sessionId: s2.ses…
     221|     await settle();
 
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/16]⎯
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/17]⎯
 
  FAIL  src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > add 5: the other tab paused the brew → 5 minutes are added to the paused brew, which stays paused
 AssertionError: expected { status: 'running', …(13) } to match object { status: 'paused', …(4) }
@@ -154,7 +157,7 @@ AssertionError: expected { status: 'running', …(13) } to match object { status
 +   "pausedAt": null,
     "plannedMs": 1800000,
     "remainingMs": 1500000,
-    "sessionId": "s_mvc86kg0cd522765",
+    "sessionId": "s_mvc86kg0a69f2846",
 -   "status": "paused",
 +   "status": "running",
   }
@@ -167,13 +170,13 @@ AssertionError: expected { status: 'running', …(13) } to match object { status
     237|     A.storageEvent();
     238|     Z.storageEvent();
 
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/16]⎯
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/17]⎯
 
  FAIL  src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > end: the other tab ended the brew and started another → the newer brew is not ended or replaced; one record each
 AssertionError: storage still holds the newer brew: expected '{"state":{"status":"idle","phase":"fo…' to be '{"state":{"status":"running","phase":…' // Object.is equality
 
-Expected: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792231800000,"endsAt":1792233300000,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Inbox","tag":null,"sessionId":"s_mvc8jfeo2f81e59a","lastEnded":{"sessionId":"s_mvc86kg0e57e6a2d","phase":"focus","reason":"user","at":1792231800000,"whileAway":false}},"version":1}"
-Received: "{"state":{"status":"idle","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":null,"endsAt":null,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Essay","tag":null,"sessionId":null,"lastEnded":{"sessionId":"s_mvc86kg0e57e6a2d","phase":"focus","reason":"user","at":1792231920000,"whileAway":false}},"version":1}"
+Expected: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792231800000,"endsAt":1792233300000,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Inbox","tag":null,"sessionId":"s_mvc8jfeob16f0703","lastEnded":{"sessionId":"s_mvc86kg0091145f6","phase":"focus","reason":"user","at":1792231800000,"whileAway":false}},"version":1}"
+Received: "{"state":{"status":"idle","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":null,"endsAt":null,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Essay","tag":null,"sessionId":null,"lastEnded":{"sessionId":"s_mvc86kg0091145f6","phase":"focus","reason":"user","at":1792231920000,"whileAway":false}},"version":1}"
 
  ❯ src/timer/staleTab.test.ts:251:57
     249|     const before = raw();
@@ -183,10 +186,10 @@ Received: "{"state":{"status":"idle","phase":"focus","plannedMs":1500000,"addedM
     252|     expect(Z.t()).toMatchObject({ status: 'running', sessionId: s2.ses…
     253|     await settle();
 
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/16]⎯
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/17]⎯
 
  FAIL  src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > end: the other tab paused the brew → it ends with its real focus time (the pause is not counted)
-AssertionError: expected { id: 's_mvc86kg03c4447ce', …(9) } to match object { completed: false, focusedMs: 600000 }
+AssertionError: expected { id: 's_mvc86kg0cf06cd0f', …(9) } to match object { completed: false, focusedMs: 600000 }
 (8 matching properties omitted from actual)
 
 - Expected
@@ -206,13 +209,13 @@ AssertionError: expected { id: 's_mvc86kg03c4447ce', …(9) } to match object { 
     272|     A.storageEvent();
     273|     expect(A.t()).toMatchObject({ status: 'idle', lastEnded: { session…
 
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/16]⎯
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/17]⎯
 
  FAIL  src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > start: another tab’s brew is running → the lagging tab’s Start (words saved, then started) does not replace it; it joins and shows it
 AssertionError: storage still holds A’s brew, as A wrote it: expected '{"state":{"status":"running","phase":…' to be '{"state":{"status":"running","phase":…' // Object.is equality
 
-Expected: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792231200000,"endsAt":1792232700000,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Chapter 3 notes","tag":"study","sessionId":"s_mvc86kg000892c69","lastEnded":null},"version":1}"
-Received: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792231200000,"endsAt":1792232700000,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Reply to Sam","tag":"work","sessionId":"s_mvc86kg0b4370076","lastEnded":null},"version":1}"
+Expected: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792231200000,"endsAt":1792232700000,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Chapter 3 notes","tag":"study","sessionId":"s_mvc86kg00fd972a8","lastEnded":null},"version":1}"
+Received: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792231200000,"endsAt":1792232700000,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Reply to Sam","tag":"work","sessionId":"s_mvc86kg006374179","lastEnded":null},"version":1}"
 
  ❯ src/timer/staleTab.test.ts:288:66
     286|     Z.t().setIntention('Reply to Sam', 'work');
@@ -222,13 +225,13 @@ Received: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"add
     289|     expect(Z.t()).toMatchObject({ status: 'running', sessionId: brew.s…
     290|     expect(Z.syncs, 'Z follows the brew (its screens go to Focus)').to…
 
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/16]⎯
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/17]⎯
 
  FAIL  src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > start (Tea time): another tab has started the next brew → the lagging tab’s break does not replace it
 AssertionError: expected '{"state":{"status":"running","phase":…' to be '{"state":{"status":"running","phase":…' // Object.is equality
 
-Expected: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792232700100,"endsAt":1792234200100,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":1,"intention":"Inbox","tag":null,"sessionId":"s_mvc92pxg96de151e","lastEnded":{"sessionId":"s_mvc86kg0938e97de","phase":"focus","reason":"complete","at":1792232700000,"whileAway":false}},"version":1}"
-Received: "{"state":{"status":"running","phase":"shortBreak","plannedMs":300000,"addedMs":0,"startedAt":1792232700100,"endsAt":1792233000100,"remainingMs":300000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":1,"intention":"Essay","tag":null,"sessionId":"b_mvc92pxgbc9ac835","lastEnded":{"sessionId":"s_mvc86kg0938e97de","phase":"focus","reason":"complete","at":1792232700000,"whileAway":false}},"version":1}"
+Expected: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792232700100,"endsAt":1792234200100,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":1,"intention":"Inbox","tag":null,"sessionId":"s_mvc92pxgc795be4a","lastEnded":{"sessionId":"s_mvc86kg03de8c020","phase":"focus","reason":"complete","at":1792232700000,"whileAway":false}},"version":1}"
+Received: "{"state":{"status":"running","phase":"shortBreak","plannedMs":300000,"addedMs":0,"startedAt":1792232700100,"endsAt":1792233000100,"remainingMs":300000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":1,"intention":"Essay","tag":null,"sessionId":"b_mvc92pxg69faeabf","lastEnded":{"sessionId":"s_mvc86kg03de8c020","phase":"focus","reason":"complete","at":1792232700000,"whileAway":false}},"version":1}"
 
  ❯ src/timer/staleTab.test.ts:309:19
     307|     const before = raw();
@@ -238,13 +241,13 @@ Received: "{"state":{"status":"running","phase":"shortBreak","plannedMs":300000,
     310|     expect(Z.t()).toMatchObject({ status: 'running', phase: 'focus', s…
     311|     expect(Z.starts).toEqual([]);
 
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/16]⎯
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/17]⎯
 
  FAIL  src/timer/staleTab.test.ts > a lagging tab acts on the current brew, or refreshes first (its storage events held) > start (Next brew from a break): the other tab already started it → neither the break’s end nor the start goes through
 AssertionError: expected '{"state":{"status":"running","phase":…' to be '{"state":{"status":"running","phase":…' // Object.is equality
 
-Expected: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792232760100,"endsAt":1792234260100,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":1,"intention":"Essay","tag":null,"sessionId":"s_mvc9408486420f73","lastEnded":{"sessionId":"b_mvc92pxga55ae0ee","phase":"shortBreak","reason":"skip","at":1792232760100,"whileAway":false}},"version":1}"
-Received: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792232760100,"endsAt":1792234260100,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":1,"intention":"Essay","tag":null,"sessionId":"s_mvc94084dae7d267","lastEnded":{"sessionId":"b_mvc92pxga55ae0ee","phase":"shortBreak","reason":"skip","at":1792232760100,"whileAway":false}},"version":1}"
+Expected: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792232760100,"endsAt":1792234260100,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":1,"intention":"Essay","tag":null,"sessionId":"s_mvc94084c40895ce","lastEnded":{"sessionId":"b_mvc92pxg8d28e91e","phase":"shortBreak","reason":"skip","at":1792232760100,"whileAway":false}},"version":1}"
+Received: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792232760100,"endsAt":1792234260100,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":1,"intention":"Essay","tag":null,"sessionId":"s_mvc940840e70a395","lastEnded":{"sessionId":"b_mvc92pxg8d28e91e","phase":"shortBreak","reason":"skip","at":1792232760100,"whileAway":false}},"version":1}"
 
  ❯ src/timer/staleTab.test.ts:336:19
     334|     Z.t().end('skip');
@@ -254,7 +257,7 @@ Received: "{"state":{"status":"running","phase":"focus","plannedMs":1500000,"add
     337|     expect(Z.t()).toMatchObject({ status: 'running', phase: 'focus', s…
     338|     expect(Z.starts).toEqual([]);
 
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/16]⎯
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/17]⎯
 
  FAIL  src/timer/staleTab.test.ts > the doubly stale tab (its copy of storage behind too): the tab with the newer brew restores it, in any event order > typed edit, events in write order: A takes in Z’s write first → A puts its brew back; Z then takes it in
 AssertionError: storage holds A’s brew again: expected { status: 'idle', …(13) } to match object { status: 'running', …(3) }
@@ -266,7 +269,7 @@ AssertionError: storage holds A’s brew again: expected { status: 'idle', …(1
   {
 -   "endsAt": 1792232700000,
 -   "intention": "Chapter 3 notes",
--   "sessionId": "s_mvc86kg05b63bda2",
+-   "sessionId": "s_mvc86kg0086637e8",
 -   "status": "running",
 +   "endsAt": null,
 +   "intention": "Reply to Sam",
@@ -283,7 +286,7 @@ AssertionError: storage holds A’s brew again: expected { status: 'idle', …(1
     378|     expect(A.syncs, 'A’s brew was never undone there').toEqual([]);
  ❯ src/timer/staleTab.test.ts:386:5
 
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/16]⎯
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/17]⎯
 
  FAIL  src/timer/staleTab.test.ts > the doubly stale tab (its copy of storage behind too): the tab with the newer brew restores it, in any event order > typed edit, Z’s event for A’s start lands first (Z reads its own idle write), then A’s, then Z’s again
 AssertionError: storage holds A’s brew again: expected { status: 'idle', …(13) } to match object { status: 'running', …(3) }
@@ -295,7 +298,7 @@ AssertionError: storage holds A’s brew again: expected { status: 'idle', …(1
   {
 -   "endsAt": 1792232700000,
 -   "intention": "Chapter 3 notes",
--   "sessionId": "s_mvc86kg02b8c1ade",
+-   "sessionId": "s_mvc86kg000cfad2b",
 -   "status": "running",
 +   "endsAt": null,
 +   "intention": "Reply to Sam",
@@ -312,16 +315,16 @@ AssertionError: storage holds A’s brew again: expected { status: 'idle', …(1
     378|     expect(A.syncs, 'A’s brew was never undone there').toEqual([]);
  ❯ src/timer/staleTab.test.ts:395:5
 
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/16]⎯
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/17]⎯
 
  FAIL  src/timer/staleTab.test.ts > the doubly stale tab (its copy of storage behind too): the tab with the newer brew restores it, in any event order > typed edit, A’s ticker re-reads storage first (completion guard) → it restores the brew and completes it once
-AssertionError: expected [] to deeply equal [ 's_mvc86kg0b2514c9a' ]
+AssertionError: expected [] to deeply equal [ 's_mvc86kg0807d803a' ]
 
 - Expected
 + Received
 
 - [
--   "s_mvc86kg0b2514c9a",
+-   "s_mvc86kg0807d803a",
 - ]
 + []
 
@@ -333,7 +336,7 @@ AssertionError: expected [] to deeply equal [ 's_mvc86kg0b2514c9a' ]
     413|     Z.storageEvent();
     414|     expect(Z.t()).toMatchObject({ status: 'idle', lastEnded: { session…
 
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/16]⎯
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/17]⎯
 
  FAIL  src/timer/staleTab.test.ts > the doubly stale tab (its copy of storage behind too): the tab with the newer brew restores it, in any event order > pause on a brew the other tab ended and replaced (Z’s copy still holds it) → A puts its newer brew back
 AssertionError: expected { status: 'paused', …(25) } to match object { status: 'running', …(2) }
@@ -344,10 +347,10 @@ AssertionError: expected { status: 'paused', …(25) } to match object { status:
 
   {
 -   "endsAt": 1792232940000,
--   "sessionId": "s_mvc8bpmoff33e666",
+-   "sessionId": "s_mvc8bpmoed67493d",
 -   "status": "running",
 +   "endsAt": null,
-+   "sessionId": "s_mvc86kg050ff9fb1",
++   "sessionId": "s_mvc86kg0f74a7347",
 +   "status": "paused",
   }
 
@@ -359,13 +362,13 @@ AssertionError: expected { status: 'paused', …(25) } to match object { status:
     429|     expect(stored().state).toMatchObject({ status: 'running', sessionI…
     430|     completesOnce(A, Z, s2.sessionId!);
 
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/16]⎯
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/17]⎯
 
  FAIL  src/timer/staleTab.test.ts > the doubly stale tab (its copy of storage behind too): the tab with the newer brew restores it, in any event order > an ended brew does not come back: Z pauses it after A ended it (Z’s copy still running) → A keeps its idle kettle
 AssertionError: expected '{"state":{"status":"paused","phase":"…' to be '{"state":{"status":"idle","phase":"fo…' // Object.is equality
 
-Expected: "{"state":{"status":"idle","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":null,"endsAt":null,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Essay","tag":null,"sessionId":null,"lastEnded":{"sessionId":"s_mvc86kg0bafac798","phase":"focus","reason":"user","at":1792231800000,"whileAway":false}},"version":1}"
-Received: "{"state":{"status":"paused","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792231200000,"endsAt":null,"remainingMs":900000,"pausedAt":1792231800000,"pausedTotalMs":0,"completedInCycle":0,"intention":"Essay","tag":null,"sessionId":"s_mvc86kg0bafac798","lastEnded":null},"version":1}"
+Expected: "{"state":{"status":"idle","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":null,"endsAt":null,"remainingMs":1500000,"pausedAt":null,"pausedTotalMs":0,"completedInCycle":0,"intention":"Essay","tag":null,"sessionId":null,"lastEnded":{"sessionId":"s_mvc86kg0f2ec6373","phase":"focus","reason":"user","at":1792231800000,"whileAway":false}},"version":1}"
+Received: "{"state":{"status":"paused","phase":"focus","plannedMs":1500000,"addedMs":0,"startedAt":1792231200000,"endsAt":null,"remainingMs":900000,"pausedAt":1792231800000,"pausedTotalMs":0,"completedInCycle":0,"intention":"Essay","tag":null,"sessionId":"s_mvc86kg0f2ec6373","lastEnded":null},"version":1}"
 
  ❯ src/timer/staleTab.test.ts:441:19
     439|     behindToo(old, () => Z.t().pause());
@@ -375,11 +378,39 @@ Received: "{"state":{"status":"paused","phase":"focus","plannedMs":1500000,"adde
     442|     Z.storageEvent();
     443|     for (const t of [A, Z]) expect(t.t()).toMatchObject({ status: 'idl…
 
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/16]⎯
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/17]⎯
+
+ FAIL  src/timer/staleTab.test.ts > the doubly stale tab (its copy of storage behind too): the tab with the newer brew restores it, in any event order > three tabs: both tabs holding the brew put it back, in either order; it settles (no further writes) and completes once
+AssertionError: expected { status: 'idle', …(25) } to match object { status: 'running', …(3) }
+(22 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "endsAt": 1792232700000,
+-   "intention": "Chapter 3 notes",
+-   "sessionId": "s_mvc86kg07a68ce96",
+-   "status": "running",
++   "endsAt": null,
++   "intention": "Reply to Sam",
++   "sessionId": null,
++   "status": "idle",
+  }
+
+ ❯ src/timer/staleTab.test.ts:480:48
+    478|         storage.setItem = setItem;
+    479|       }
+    480|       for (const t of [A, C, Z]) expect(t.t()).toMatchObject({ status:…
+       |                                                ^
+    481|       advance(25 * MIN + 100);
+    482|       for (const t of [A, C, Z]) t.t().tick();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/17]⎯
 
 
  Test Files  1 failed (1)
-      Tests  16 failed | 7 passed (23)
-   Start at  16:31:35
-   Duration  1.48s (tests 84%, transform 14%, import 1%)
+      Tests  17 failed | 7 passed (24)
+   Start at  17:09:11
+   Duration  2.22s (tests 81%, transform 17%, import 1%)
 
