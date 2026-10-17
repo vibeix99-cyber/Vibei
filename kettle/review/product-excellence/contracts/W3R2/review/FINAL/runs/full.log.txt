@@ -27,3 +27,6 @@ Running 264 tests using 2 workers
   ✓   23 [chromium] › tests/integrity.spec.ts:430:3 › I01 exactly once › reload during the whistle and again on the summary: one record, rewards granted once, the summary still there (22.0s)
   ✓   24 [chromium] › tests/integrity.spec.ts:459:3 › I01 exactly once › two tabs on one profile: one record and one grant; both show the same summary; Tea time in one moves both (20.9s)
   ✓   25 [chromium] › tests/integrity.spec.ts:502:3 › I02 End, dismissal and task disposition › dismissing the End sheet (Esc, backdrop, Keep brewing) or leaving the screen never stops the brew (24.8s)
+  ✓   26 [chromium] › tests/integrity.spec.ts:543:3 › I02 End, dismissal and task disposition › End early after 12 active minutes (with a pause): 12 minutes saved as an unfinished brew, 12 leaves, no full-brew bonus, task kept (9.3s)
+  ✓   27 [chromium] › tests/integrity.spec.ts:575:3 › I02 End, dismissal and task disposition › End within the first minute: the sheet says nothing will be saved, and nothing is (5.6s)
+  ✓   28 [chromium] › tests/integrity.spec.ts:586:3 › I02 End, dismissal and task disposition › Done / Carry forward are reversible; the carried task returns on Home; editing it and Mark done → Undo never add a focus record (17.3s)
