@@ -189,12 +189,44 @@ async function onTop(page: Page, el: ReturnType<Page['locator']>, strict = false
     return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width, h: r.height, top: r.top };
   }, strict, { timeout: GONE_MS });
 }
+/** (W3R2) The page's own docked chrome: the Today composer's docked Start (`.ctaDock`, sticky) and the tab bar / side rail
+ *  (`<nav aria-label="Main">`). A target under these is cleared by scrolling, as the walk at the top of `press()` already
+ *  does for a target found under them. Nothing else is: not a notice, not a sheet, not a cover the test cannot name. */
+const PAGE_CHROME = '[class*="ctaDock"], nav[aria-label="Main"]';
+/** Can the wheel clear the target? Says why, or null. `'out of view'`: it is not wholly in the viewport (the first test of
+ *  `onTop`). `'docked chrome'`: it is in the view, and every point `onTop` reads that is not the target itself is covered by the
+ *  page's docked chrome. A notice (`[data-notice-strip]`, `[data-inline-undo]`), anything inert, any open sheet
+ *  (`[role=dialog]`, `#root[inert]`) or any other cover gives null: those are only waited for. */
+const wheelCures = (el: ReturnType<Page['locator']>, strict = false) =>
+  el.evaluate((e, [chrome, strict]) => {
+    const r = e.getBoundingClientRect();
+    if (!(r.width > 0 && r.top >= 0 && r.bottom <= innerHeight && r.left >= 0 && r.right <= innerWidth)) return 'out of view';
+    if (document.querySelector('[role="dialog"]') || document.getElementById('root')?.hasAttribute('inert')) return null;
+    let docked = 0;
+    for (const fx of strict ? [0.15, 0.5, 0.85] : [0.5])
+      for (const fy of strict ? [0.15, 0.5, 0.85] : [0.5]) {
+        const h = document.elementFromPoint(r.left + r.width * fx, r.top + r.height * fy);
+        if (!h || e.contains(h)) continue;
+        if (h.closest('[data-notice-strip], [data-inline-undo], [inert]') || !h.closest(chrome as string)) return null;
+        docked++;
+      }
+    return docked ? 'docked chrome' : null;
+  }, [PAGE_CHROME, strict] as const, { timeout: GONE_MS });
 /** (W3R1 Q, X-11) Every read of a target in `press()` waits at most this long for it to be in the page: a target that
  *  has gone (an inline Undo whose time ran out) fails the test at once, saying so, instead of holding it to its 4-minute
  *  timeout. */
 const GONE_MS = 15_000;
+/** (W3R2) In `press()`, a target found not on top at the re-check before the tap is looked at again, after AIM_PAUSE_MS, at
+ *  most AIM_AGAIN times per call (about 2 s of waiting); one that is still covered after that fails the test as before. A
+ *  target that is then found out of the view (the page moved under it), or in the view under the page's own docked chrome
+ *  (the Today dock settling over it), is brought clear by the wheel as at the start of `press()`: the call is made again
+ *  from the top, at most AIM_RESCROLL times. So at most 1 + AIM_RESCROLL = 3 calls per target, each with at most
+ *  AIM_AGAIN pauses and one wheel walk. */
+const AIM_AGAIN = 8;
+const AIM_PAUSE_MS = 250;
+const AIM_RESCROLL = 2;
 /** Scroll by real wheel (over `over`, or the page's middle) until `el` is on top, then tap / click it for real. */
-async function press(page: Page, touch: boolean, el: ReturnType<Page['locator']>, over?: { x: number; y: number }, strict = false) {
+async function press(page: Page, touch: boolean, el: ReturnType<Page['locator']>, over?: { x: number; y: number }, strict = false, rescrolled = 0): Promise<{ x: number; y: number; w: number; h: number; top: number }> {
   await el.waitFor({ state: 'attached', timeout: 20_000 });
   let at = await onTop(page, el, strict);
   if (!at) {
@@ -265,7 +297,9 @@ async function press(page: Page, touch: boolean, el: ReturnType<Page['locator']>
       at = await onTop(page, el, strict);
     }
     await park(page);
-    if (!at && sheet) {
+    // (W3R2) Only a first call falls back to the keyboard / a synthetic click, as on the base: a call made again after the
+    // aim failed (`rescrolled` > 0) that cannot bring the target on top fails below instead.
+    if (!at && sheet && rescrolled === 0) {
       // A sheet's control that no wheel brings on screen (its footer below a short screen at 200 % text: pre-existing,
       // recorded in the packet): reached by the keyboard instead, Tab then Enter (real input too).
       for (let i = 0; i < 20; i++) {
@@ -289,13 +323,29 @@ async function press(page: Page, touch: boolean, el: ReturnType<Page['locator']>
   // spell with no input at all (QUIET_MS, or BAND_IDLE_MS for a kept band: src/ui/moment.ts), so nothing can move
   // between that read and the tap; if the target has moved, or the read took 800 ms or more, the move and the read are
   // made again.
-  for (let k = 0; ; k++) {
+  // (W3R2) If the read finds the target not on top, that is not yet the end: something can cross it for a moment, or the
+  // page can move under it (once, on a loaded machine, at 844×390 dark 200 %, the field was not on top at that one read).
+  // The target is looked at again after AIM_PAUSE_MS, at most AIM_AGAIN times (about 2 s in all), and aimed at again from
+  // where it is then; one that has moved out of the view, or that lies under the page's own docked chrome (the Today dock
+  // settles over the composer field a moment after the page boots), is first brought clear by the wheel, as at the start
+  // (see `wheelCures`). The tap still goes only after a read, made after the pointer is on the target, that finds it on top;
+  // a target that stays covered through all of them (a notice, a sheet, any other cover) fails here as before, with the
+  // same words.
+  for (let k = 0, covered = 0; ; ) {
+    if (!at) {
+      if (covered++ >= AIM_AGAIN) break;
+      await page.waitForTimeout(AIM_PAUSE_MS);
+      at = await onTop(page, el, strict);
+      if (!at && rescrolled < AIM_RESCROLL && (await wheelCures(el, strict))) return press(page, touch, el, over, strict, rescrolled + 1);
+      continue;
+    }
+    const round = k++;
     const t = Date.now();
-    await page.mouse.move(Math.round(at!.x), Math.round(at!.y));
+    await page.mouse.move(Math.round(at.x), Math.round(at.y));
     const again = await onTop(page, el, strict);
-    const same = !!again && Math.abs(again.x - at!.x) < 0.5 && Math.abs(again.y - at!.y) < 0.5;
+    const same = !!again && Math.abs(again.x - at.x) < 0.5 && Math.abs(again.y - at.y) < 0.5;
     at = again;
-    if (!at || (same && Date.now() - t < 800) || k >= 4) break;
+    if (at && ((same && Date.now() - t < 800) || round >= 4)) break;
   }
   expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();
   if (touch) {

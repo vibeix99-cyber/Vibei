@@ -157,13 +157,18 @@ test.describe('timer reliability', () => {
     await open(page, kettlePage);
     await settledLeader(page);
     expect((await info(page)).scheduler).toBe('worker');
-    await start(page, secs(kettlePage, 3));
-    const { endsAt, sessionId } = await state(page);
-    await page.evaluate(() => {
+    // (W3R2) The observer, the start, the read of the brew's end and the freeze are one page task chain: a runner that is
+    // late on a loaded machine (its next command reaching the page after the brew is over) can then neither miss the
+    // running → idle change, nor read `endsAt` of an idle timer, nor freeze the page after the end.
+    const { endsAt, sessionId, frozeAt } = await page.evaluate(async (minutes) => {
       const w = window as any;
       w.__kettle.timer.subscribe((s: any, p: any) => {
         if (p.status === 'running' && s.status === 'idle') w.__doneAt = Date.now();
       });
+      await w.__kettle.timer.getState().startFocus({ minutes, intention: '' });
+      const { endsAt, sessionId } = w.__kettle.timer.getState();
+      // The freeze follows the start after the moment two separate commands used to take, kept here in the page (100 ms).
+      await new Promise((r) => setTimeout(r, 100));
       // What an aggressively throttled background tab looks like: main-thread timers never fire.
       w.setTimeout = () => 0;
       w.setInterval = () => 0;
@@ -171,7 +176,11 @@ test.describe('timer reliability', () => {
       Object.defineProperty(document, 'visibilityState', { configurable: true, get: () => 'hidden' });
       Object.defineProperty(document, 'hidden', { configurable: true, get: () => true });
       document.dispatchEvent(new Event('visibilitychange'));
-    });
+      return { endsAt, sessionId, frozeAt: Date.now() };
+    }, secs(kettlePage, 3));
+    // (W3R2) Every run proves its own freeze leg: the freeze landed well before the brew's end (a page that stalled for the
+    // best part of the brew would otherwise freeze after the end and pass without the timers ever being frozen).
+    expect((endsAt as number) - frozeAt, 'the main-thread timers were frozen at least 1 s before the end of the brew').toBeGreaterThanOrEqual(1000);
     await expect.poll(() => page.evaluate(() => (window as any).__doneAt ?? null), { timeout: 10_000, intervals: [200] }).not.toBeNull();
     const doneAt = await page.evaluate(() => (window as any).__doneAt as number);
     expect(doneAt - (endsAt as number)).toBeGreaterThanOrEqual(0);
@@ -199,8 +208,10 @@ test.describe('timer reliability', () => {
     await settledLeader(page);
     const baseTitle = await page.title();
     await page.evaluate(() => (window as any).__kettle.settings.getState().set({ notifications: true }));
-    await start(page, secs(kettlePage, 2), 'Essay');
+    // (W3R2) Hidden before the brew starts, not after: a runner that is late on a loaded machine would hide the page
+    // after the brew has ended in a visible page, where the app (rightly) makes no notification.
     await setHidden(page, true);
+    await start(page, secs(kettlePage, 2), 'Essay');
     await expect.poll(() => page.evaluate(() => (window as any).__notes.length), { timeout: 10_000 }).toBe(1);
     const note = await page.evaluate(() => (window as any).__notes[0]);
     expect(note.title).toBe('The kettle’s whistling! Time for tea.');
