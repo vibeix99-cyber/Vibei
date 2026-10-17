@@ -207,8 +207,19 @@ Reporter quirk, as F1FIX noted: the HEAD run lists the four tests at `:154`, `:1
 ## 5. `integrity:309` ×20 under load
 (queued: `--workers=2` plus 6 CPU burners, own PIDs, killed by PID; `scripts/chain.sh.txt` step `stress`)
 
-## 6. The rest
-(running: `integrity.spec.ts` whole, `w2-home`, `timer.spec.ts` timer-app + timer-harness, `pwa`; `scripts/bundle.sh.txt`)
+## 6. The rest (on the fix, through the gate: `scripts/bundle.sh.txt`, one SG slot)
+Branch `54a9721` (src `dd6944e`). The app code served on :5581 is `e18b621`'s: `54a9721` adds one Vitest case and nothing else. Load average 13–20 throughout (the other lanes running).
+
+| Run | Result | Log |
+|---|---|---|
+| `integrity.spec.ts`, whole, once (includes `:309`, the freeze cases and I03) | **25/25** (7.0 min) | `logs/integrity-all-fix.log.txt` |
+| `w2-home.spec.ts` (Today's composer and brew-length control) | **18/18** (5.0 min) | `logs/w2-home-fix.log.txt` |
+| `timer.spec.ts`, `timer-app` + `timer-harness` | **26 passed, 2 skipped** by design (`timer.spec.ts:294` and `:438` skip outside the harness, as in F1FIX) | `logs/timer-app-harness-fix.log.txt` |
+| `pwa` (a production build of the worktree, previewed on :5597) | **3/3** | `logs/pwa-fix.log.txt` |
+| tsc (`tsc --noEmit`) | exit 0 | `logs/tsc-fix.log.txt` |
+| Vitest, all | 34 files, **338/338** | `logs/vitest-all-fix.log.txt` |
+
+Not mine (the regression lane's): the notice suites and the 2-tab manual check with real clicks.
 
 ## 7. Open items, for LEAD (draft; completed at the last stage)
 
