@@ -1,0 +1,198 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w8tr-g2/kettle/playwright.config.ts",
+    "rootDir": "/home/user/wt/w8tr-g2/kettle/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w8tr-g2/kettle/.tmp/RR-pw/timer-pwa-5601-control-5560",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-harness",
+        "name": "timer-harness",
+        "testDir": "/home/user/wt/w8tr-g2/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-g2/kettle/.tmp/RR-pw/timer-pwa-5601-control-5560",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "timer-app",
+        "name": "timer-app",
+        "testDir": "/home/user/wt/w8tr-g2/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-g2/kettle/.tmp/RR-pw/timer-pwa-5601-control-5560",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pwa",
+        "name": "pwa",
+        "testDir": "/home/user/wt/w8tr-g2/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/pwa\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-g2/kettle/.tmp/RR-pw/timer-pwa-5601-control-5560",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w8tr-g2/kettle/tests",
+        "testIgnore": [
+          "/(timer|pwa)\\.spec\\.ts/"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite --config tests/e2e.vite.config.ts --port 5560 --strictPort",
+      "url": "http://127.0.0.1:5560/",
+      "reuseExistingServer": true,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "pwa.spec.ts",
+      "file": "pwa.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "update: new version waits for the user (no reload mid-brew), then applies and the brew carries on",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pwa",
+              "projectName": "pwa",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 25151,
+                  "error": {
+                    "message": "TimeoutError: page.waitForFunction: Timeout 20000ms exceeded.",
+                    "stack": "TimeoutError: page.waitForFunction: Timeout 20000ms exceeded.\n    at /home/user/wt/w8tr-g2/kettle/tests/pwa.spec.ts:91:14",
+                    "location": {
+                      "file": "/home/user/wt/w8tr-g2/kettle/tests/pwa.spec.ts",
+                      "column": 14,
+                      "line": 91
+                    },
+                    "snippet": "  89 |   appendFileSync(join(OUT, 'sw.js'), `\\n// update ${Date.now()}\\n`); // \"deploy\" a new version\n  90 |   await page.evaluate(async () => (await navigator.serviceWorker.getRegistration())!.update());\n> 91 |   await page.waitForFunction(() => (window as any).__kettle.pwa.state().needRefresh, null, { timeout: 20_000 });\n     |              ^\n  92 |   expect(await page.evaluate(async () => !!(await navigator.serviceWorker.getRegistration())!.waiting)).toBe(true);\n  93 |   expect(await page.evaluate(() => (window as any).__kettle.timer.getState().status)).toBe('running');\n  94 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/user/wt/w8tr-g2/kettle/tests/pwa.spec.ts",
+                        "column": 14,
+                        "line": 91
+                      },
+                      "message": "TimeoutError: page.waitForFunction: Timeout 20000ms exceeded.\n\n  89 |   appendFileSync(join(OUT, 'sw.js'), `\\n// update ${Date.now()}\\n`); // \"deploy\" a new version\n  90 |   await page.evaluate(async () => (await navigator.serviceWorker.getRegistration())!.update());\n> 91 |   await page.waitForFunction(() => (window as any).__kettle.pwa.state().needRefresh, null, { timeout: 20_000 });\n     |              ^\n  92 |   expect(await page.evaluate(async () => !!(await navigator.serviceWorker.getRegistration())!.waiting)).toBe(true);\n  93 |   expect(await page.evaluate(() => (window as any).__kettle.timer.getState().status)).toBe('running');\n  94 |\n    at /home/user/wt/w8tr-g2/kettle/tests/pwa.spec.ts:91:14"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T20:54:54.441Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/user/wt/w8tr-g2/kettle/.tmp/RR-pw/timer-pwa-5601-control-5560/pwa-update-new-version-wai-877e1-ies-and-the-brew-carries-on-pwa/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/home/user/wt/w8tr-g2/kettle/.tmp/RR-pw/timer-pwa-5601-control-5560/pwa-update-new-version-wai-877e1-ies-and-the-brew-carries-on-pwa/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/user/wt/w8tr-g2/kettle/tests/pwa.spec.ts",
+                    "column": 14,
+                    "line": 91
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "30bf0965a0eb07fc9173-f39068c87323bc22a1e1",
+          "file": "pwa.spec.ts",
+          "line": 85,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-17T20:54:53.323Z",
+    "duration": 32309.309000000005,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}
