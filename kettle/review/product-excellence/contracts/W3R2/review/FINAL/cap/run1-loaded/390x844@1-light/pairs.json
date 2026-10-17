@@ -28,11 +28,12 @@
   "after2_vs_before": null,
   "after2_vs_after": null,
   "robust_px": 0,
+  "robust_px_readout": 0,
   "robust_bands": []
  },
  {
   "name": "02-focus-start.png",
-  "cls": "different",
+  "cls": "within noise",
   "sha": {
    "before": "dc36a591302a",
    "after": "dba95e9c356f",
@@ -58,22 +59,15 @@
   },
   "after2_vs_before": null,
   "after2_vs_after": null,
-  "robust_px": 519,
-  "robust_bands": [
-   {
-    "x0": 257,
-    "y0": 512,
-    "x1": 296,
-    "y1": 566,
-    "px": 519
-   }
-  ],
+  "robust_px": 0,
+  "robust_px_readout": 519,
+  "robust_bands": [],
   "crop": "crop-02-focus-start.png",
   "crop_box": [
-   237,
-   492,
-   316,
-   586
+   0,
+   12,
+   390,
+   336
   ]
  },
  {
@@ -104,7 +98,8 @@
   },
   "after2_vs_before": null,
   "after2_vs_after": null,
-  "robust_px": 17025,
+  "robust_px": 16719,
+  "robust_px_readout": 306,
   "robust_bands": [
    {
     "x0": 12,
@@ -128,13 +123,6 @@
     "px": 988
    },
    {
-    "x0": 257,
-    "y0": 511,
-    "x1": 297,
-    "y1": 567,
-    "px": 306
-   },
-   {
     "x0": 164,
     "y0": 286,
     "x1": 165,
@@ -152,7 +140,7 @@
  },
  {
   "name": "04-focus-paused.png",
-  "cls": "different",
+  "cls": "within noise",
   "sha": {
    "before": "c35addf78da8",
    "after": "5e0656413b3e",
@@ -178,15 +166,9 @@
   },
   "after2_vs_before": null,
   "after2_vs_after": null,
-  "robust_px": 519,
+  "robust_px": 5,
+  "robust_px_readout": 514,
   "robust_bands": [
-   {
-    "x0": 258,
-    "y0": 512,
-    "x1": 295,
-    "y1": 566,
-    "px": 514
-   },
    {
     "x0": 164,
     "y0": 291,
@@ -197,10 +179,10 @@
   ],
   "crop": "crop-04-focus-paused.png",
   "crop_box": [
-   238,
-   492,
-   315,
-   586
+   144,
+   271,
+   188,
+   314
   ]
  },
  {
@@ -232,6 +214,7 @@
   "after2_vs_before": null,
   "after2_vs_after": null,
   "robust_px": 0,
+  "robust_px_readout": 0,
   "robust_bands": []
  },
  {
@@ -263,6 +246,7 @@
   "after2_vs_before": null,
   "after2_vs_after": null,
   "robust_px": 0,
+  "robust_px_readout": 0,
   "robust_bands": []
  }
 ]

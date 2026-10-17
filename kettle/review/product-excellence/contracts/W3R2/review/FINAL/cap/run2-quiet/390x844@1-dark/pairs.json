@@ -45,6 +45,7 @@
    "tol_px": 0
   },
   "robust_px": 0,
+  "robust_px_readout": 0,
   "robust_bands": []
  },
  {
@@ -93,6 +94,7 @@
    "tol_px": 0
   },
   "robust_px": 0,
+  "robust_px_readout": 0,
   "robust_bands": []
  },
  {
@@ -141,11 +143,12 @@
    "tol_px": 0
   },
   "robust_px": 0,
+  "robust_px_readout": 0,
   "robust_bands": []
  },
  {
   "name": "04-focus-paused.png",
-  "cls": "different",
+  "cls": "within noise",
   "sha": {
    "before": "d0b3ac126a06",
    "after": "91e2ac6c1baa",
@@ -188,16 +191,9 @@
    "strict_px": 161,
    "tol_px": 0
   },
-  "robust_px": 1132,
-  "robust_bands": [
-   {
-    "x0": 257,
-    "y0": 512,
-    "x1": 295,
-    "y1": 567,
-    "px": 1132
-   }
-  ],
+  "robust_px": 0,
+  "robust_px_readout": 1132,
+  "robust_bands": [],
   "crop": "crop-04-focus-paused.png",
   "crop_box": [
    237,
@@ -252,6 +248,7 @@
    "tol_px": 0
   },
   "robust_px": 0,
+  "robust_px_readout": 0,
   "robust_bands": [],
   "crop": "crop-07-summary.png",
   "crop_box": [
@@ -307,6 +304,7 @@
    "tol_px": 0
   },
   "robust_px": 0,
+  "robust_px_readout": 0,
   "robust_bands": [],
   "crop": "crop-16-stats-populated.png",
   "crop_box": [

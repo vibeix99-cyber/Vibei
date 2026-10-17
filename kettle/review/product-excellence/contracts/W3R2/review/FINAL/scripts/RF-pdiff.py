@@ -5,8 +5,11 @@ Per state: sizes, sha256 prefixes, strict % (any channel differs) and tol % (a c
 before2 vs before, plus the ROBUST count: pixels where every BEFORE frame agrees (<= 16), every AFTER frame agrees (<= 16) and every AFTER
 differs from every BEFORE by more than 16. Class:
   identical     same size and strict 0 (pixel-exact) between after and before
-  within noise  not identical, same size, robust pixels <= 50
-  different     robust pixels > 50, or a size difference that the two BEFORE frames do not have
+  within noise  not identical, same size, robust pixels outside the timer readout <= 50
+  different     robust pixels outside the timer readout > 50, or a size difference that the two BEFORE frames do not have
+The Focus states (02 to 05) carry a countdown readout that is not frozen (the page clock runs at the real rate from the fixed start), so its
+seconds digit differs between any two captures (12:16 to 12:26 seen across all frames, both sides). Robust pixels inside the readout box
+(390 wide: x 85-305, y 490-580; 1440 wide: x 990-1340, y 325-440) are counted separately (`robust_px_readout`) and do not decide the class.
 Raw frames are kept only for pairs that are not identical, with a diff overlay (red = robust difference, or tol difference when none) and a
 crop (before | after | overlay) of the biggest band."""
 import sys, os, json, hashlib, shutil
@@ -15,6 +18,7 @@ from PIL import Image
 CAP = os.environ.get('RF_CAPROOT', '/home/user/wt/w6-int/kettle/.tmp/RF-cap')
 EVROOT = '/home/user/Vibei/kettle/review/product-excellence/contracts/W3R2/review/FINAL/cap'
 TOL = 16
+READOUT = {'390x844': (85, 490, 305, 580), '1440x900': (990, 325, 1340, 440)}
 RUN = sys.argv[1]
 KEEP_RAW = os.environ.get('RF_KEEP_RAW', '1') == '1'
 def sha(p): return hashlib.sha256(open(p, 'rb').read()).hexdigest()[:12]
@@ -57,7 +61,7 @@ for tag in sys.argv[2:]:
         raa = pair(F['after2'], F['after'])[0] if 'after2' in F else None
         sizes_ok = all(x.shape == BEF[0].shape for x in BEF + AFT)
         ident = ra['same_size'] and ra['strict_px'] == 0
-        robust = np.zeros((h, w), bool); rb_px = None
+        robust = np.zeros((h, w), bool); rb_px = None; rb_in = 0
         if sizes_ok:
             def dd(x, y): return np.abs(x - y).max(axis=2) > TOL
             bef_agree = ~dd(BEF[0], BEF[1]); aft_agree = ~dd(AFT[0], AFT[1]) if len(AFT) > 1 else np.ones((h, w), bool)
@@ -65,9 +69,13 @@ for tag in sys.argv[2:]:
             for a in AFT:
                 for b in BEF: differs &= dd(a, b)
             robust = bef_agree & aft_agree & differs; rb_px = int(robust.sum())
+            ro = np.zeros_like(robust)
+            if n[:2] in ('02', '03', '04', '05') and tag.split('@')[0] in READOUT:
+                x0r, y0r, x1r, y1r = READOUT[tag.split('@')[0]]; ro[y0r:y1r, x0r:x1r] = True
+            rb_in = int((robust & ro).sum()); robust = robust & ~ro; rb_px = int(robust.sum())
         size_vs_noise = (not ra['same_size']) and rn['same_size']
         cls = 'identical' if ident else ('different' if (size_vs_noise or (rb_px is not None and rb_px > 50) or (rb_px is None)) else 'within noise')
-        row = dict(name=n, cls=cls, sha={s: sha(p) for s, p in P.items()}, after_vs_before=ra, before2_vs_before=rn, after2_vs_before=ra2, after2_vs_after=raa, robust_px=rb_px, robust_bands=bands(robust))
+        row = dict(name=n, cls=cls, sha={s: sha(p) for s, p in P.items()}, after_vs_before=ra, before2_vs_before=rn, after2_vs_before=ra2, after2_vs_after=raa, robust_px=rb_px, robust_px_readout=rb_in, robust_bands=bands(robust))
         if not ident:
             m = robust if (rb_px or 0) > 0 else (d_ab > TOL if (d_ab > TOL).any() else d_ab > 0)
             base = (F['after'][:h, :w] * 0.35 + 255 * 0.65).astype(np.uint8); base[m[:h, :w]] = [255, 0, 0]
@@ -92,13 +100,13 @@ for tag in sys.argv[2:]:
 lines = []
 for tag, rows in out_all.items():
     lines.append(f'### {RUN} / {tag}')
-    lines.append('| state | size after / before | after vs before strict % / tol % | before2 vs before strict % / tol % | after2 vs after strict % / tol % | robust px | class | biggest robust band (x, y, px) |')
+    lines.append('| state | size after / before | after vs before strict % / tol % | before2 vs before strict % / tol % | after2 vs after strict % / tol % | robust px (outside readout / in readout) | class | biggest robust band (x, y, px) |')
     lines.append('|---|---|---|---|---|---|---|---|')
     for r in rows:
         if r['cls'] == 'MISSING': lines.append(f"| {r['name']} | | | | | | MISSING {r['present']} | |"); continue
         a, n, aa = r['after_vs_before'], r['before2_vs_before'], r['after2_vs_after']
         bd = r['robust_bands'][0] if r['robust_bands'] else None
-        lines.append(f"| {r['name']} | {a['a']} / {a['b']} | {a['strict']} / {a['tol']} | {n['strict']} / {n['tol']} | {(str(aa['strict']) + ' / ' + str(aa['tol'])) if aa else '-'} | {r['robust_px']} | **{r['cls']}** | {('x %d-%d, y %d-%d (%d)' % (bd['x0'], bd['x1'], bd['y0'], bd['y1'], bd['px'])) if bd else ''} |")
+        lines.append(f"| {r['name']} | {a['a']} / {a['b']} | {a['strict']} / {a['tol']} | {n['strict']} / {n['tol']} | {(str(aa['strict']) + ' / ' + str(aa['tol'])) if aa else '-'} | {r['robust_px']} / {r.get('robust_px_readout', 0)} | **{r['cls']}** | {('x %d-%d, y %d-%d (%d)' % (bd['x0'], bd['x1'], bd['y0'], bd['y1'], bd['px'])) if bd else ''} |")
     lines.append('')
 open(f'{EVROOT}/{RUN}/matrix.md', 'w').write('\n'.join(lines))
 print('\n'.join(lines))

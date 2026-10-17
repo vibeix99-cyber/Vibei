@@ -28,11 +28,12 @@
   "after2_vs_before": null,
   "after2_vs_after": null,
   "robust_px": 0,
+  "robust_px_readout": 0,
   "robust_bands": []
  },
  {
   "name": "02-focus-start.png",
-  "cls": "different",
+  "cls": "within noise",
   "sha": {
    "before": "9d23573c76ec",
    "after": "635c47c6eb81",
@@ -58,15 +59,9 @@
   },
   "after2_vs_before": null,
   "after2_vs_after": null,
-  "robust_px": 351,
+  "robust_px": 24,
+  "robust_px_readout": 327,
   "robust_bands": [
-   {
-    "x0": 257,
-    "y0": 511,
-    "x1": 297,
-    "y1": 567,
-    "px": 327
-   },
    {
     "x0": 150,
     "y0": 304,
@@ -84,15 +79,15 @@
   ],
   "crop": "crop-02-focus-start.png",
   "crop_box": [
-   237,
-   491,
-   317,
-   587
+   130,
+   284,
+   182,
+   333
   ]
  },
  {
   "name": "03-focus-mid.png",
-  "cls": "different",
+  "cls": "within noise",
   "sha": {
    "before": "175ac8265bae",
    "after": "929d2223e8ac",
@@ -118,15 +113,9 @@
   },
   "after2_vs_before": null,
   "after2_vs_after": null,
-  "robust_px": 614,
+  "robust_px": 1,
+  "robust_px_readout": 613,
   "robust_bands": [
-   {
-    "x0": 257,
-    "y0": 512,
-    "x1": 296,
-    "y1": 567,
-    "px": 613
-   },
    {
     "x0": 167,
     "y0": 300,
@@ -137,10 +126,10 @@
   ],
   "crop": "crop-03-focus-mid.png",
   "crop_box": [
-   237,
-   492,
-   316,
-   587
+   147,
+   280,
+   187,
+   320
   ]
  },
  {
@@ -172,6 +161,7 @@
   "after2_vs_before": null,
   "after2_vs_after": null,
   "robust_px": 0,
+  "robust_px_readout": 0,
   "robust_bands": [],
   "crop": "crop-04-focus-paused.png",
   "crop_box": [
@@ -210,6 +200,7 @@
   "after2_vs_before": null,
   "after2_vs_after": null,
   "robust_px": 0,
+  "robust_px_readout": 0,
   "robust_bands": []
  },
  {
@@ -241,6 +232,7 @@
   "after2_vs_before": null,
   "after2_vs_after": null,
   "robust_px": 0,
+  "robust_px_readout": 0,
   "robust_bands": []
  }
 ]

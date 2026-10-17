@@ -28,6 +28,7 @@
   "after2_vs_before": null,
   "after2_vs_after": null,
   "robust_px": 0,
+  "robust_px_readout": 0,
   "robust_bands": []
  },
  {
@@ -59,6 +60,7 @@
   "after2_vs_before": null,
   "after2_vs_after": null,
   "robust_px": 1,
+  "robust_px_readout": 0,
   "robust_bands": [
    {
     "x0": 389,
@@ -78,7 +80,7 @@
  },
  {
   "name": "03-focus-mid.png",
-  "cls": "different",
+  "cls": "within noise",
   "sha": {
    "before": "a83b7495f3bb",
    "after": "c1881cfdbafe",
@@ -104,15 +106,9 @@
   },
   "after2_vs_before": null,
   "after2_vs_after": null,
-  "robust_px": 1727,
+  "robust_px": 2,
+  "robust_px_readout": 1725,
   "robust_bands": [
-   {
-    "x0": 1262,
-    "y0": 335,
-    "x1": 1322,
-    "y1": 427,
-    "px": 1725
-   },
    {
     "x0": 397,
     "y0": 660,
@@ -123,15 +119,15 @@
   ],
   "crop": "crop-03-focus-mid.png",
   "crop_box": [
-   1242,
-   315,
-   1342,
-   447
+   377,
+   640,
+   422,
+   684
   ]
  },
  {
   "name": "04-focus-paused.png",
-  "cls": "different",
+  "cls": "within noise",
   "sha": {
    "before": "83b6ac156275",
    "after": "309f1fe52c72",
@@ -157,22 +153,15 @@
   },
   "after2_vs_before": null,
   "after2_vs_after": null,
-  "robust_px": 295,
-  "robust_bands": [
-   {
-    "x0": 1259,
-    "y0": 334,
-    "x1": 1323,
-    "y1": 427,
-    "px": 295
-   }
-  ],
+  "robust_px": 0,
+  "robust_px_readout": 295,
+  "robust_bands": [],
   "crop": "crop-04-focus-paused.png",
   "crop_box": [
-   1239,
+   1160,
    314,
-   1343,
-   447
+   1345,
+   448
   ]
  },
  {
@@ -204,6 +193,7 @@
   "after2_vs_before": null,
   "after2_vs_after": null,
   "robust_px": 0,
+  "robust_px_readout": 0,
   "robust_bands": [],
   "crop": "crop-07-summary.png",
   "crop_box": [
@@ -242,6 +232,7 @@
   "after2_vs_before": null,
   "after2_vs_after": null,
   "robust_px": 1,
+  "robust_px_readout": 0,
   "robust_bands": [
    {
     "x0": 1204,
