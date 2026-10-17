@@ -205,3 +205,68 @@ Why the missing whole-file run is a smaller risk than it looks (an argument, not
 4. **The under-load runs are not a control.** I did not run the old tests under my burners: LEAD-5's matched-load control already showed that load alone passes the old timer pair 10/10, which is why the injection (§2.1), not the load, is the proof of the timer fixes. The 10/10 of §3 shows the new tests pass under load; it does not by itself show the old ones would fail.
 5. **The 2 s window and the "moved out of the view" rule are judgements** (no one has seen what covered the field in the original failure). The bound is stated and shown (§2.2); a longer cover fails.
 6. **`:156` keeps its freeze leg in every run** (the freeze is now inside the page chain and, from the fix round, every run asserts that it landed at least 1 s before `endsAt`, §6 R3).
+
+## 6. Fix round (LEAD-6 REJECT of `21e5644`: TS-D1, TS-D2; R3, R4)
+
+**Branch** `pe/w3r2-test-stability`: `a6b3790`, `21e5644` kept; added `1befde2` (TS-D1, TS-D2; `notice-strip.spec.ts`) and `89396e8` (R3; `timer.spec.ts`). Whole diff of the round: `scratch/r2-spec-changes.diff.txt`; against the base: `scratch/spec-changes.diff.txt`.
+**Files touched in the round:** `kettle/tests/notice-strip.spec.ts` and, for R3 only, `kettle/tests/timer.spec.ts`. No `src/`, no other spec, no config.
+**Servers:** the injection runs (§6.2) used **:5583** (my worktree, src `494748b`, `workers=1`, no burners, for a deterministic read). The acceptance runs (§6.3–§6.5) used **:5560**, the integration HEAD (app `7cb3242`, with TH's `Toast.tsx` hook change), through the same `KETTLE_PORT` mechanism; the specs under test are those of this branch (`/home/user/wt/w8q/kettle/tests`), the gate lane `TS`.
+
+### 6.1 The changes, line by line
+
+**TS-D1.** Before (`21e5644`), in the aim loop's not-on-top branch:
+```ts
+at = await onTop(page, el, strict);
+if (!at && rescrolled < AIM_RESCROLL && !(await inView(el))) return press(page, touch, el, over, strict, rescrolled + 1);
+```
+After (`1befde2`):
+```ts
+const PAGE_CHROME = '[class*="ctaDock"], nav[aria-label="Main"]';
+const wheelCures = (el, strict = false) => el.evaluate((e, [chrome, strict]) => {
+  const r = e.getBoundingClientRect();
+  if (!(r.width > 0 && r.top >= 0 && r.bottom <= innerHeight && r.left >= 0 && r.right <= innerWidth)) return 'out of view';   // = the old inView, negated
+  if (document.querySelector('[role="dialog"]') || document.getElementById('root')?.hasAttribute('inert')) return null;           // a sheet is open
+  let docked = 0;
+  for (const fx of strict ? [0.15, 0.5, 0.85] : [0.5]) for (const fy of strict ? [0.15, 0.5, 0.85] : [0.5]) {              // the points onTop reads
+    const h = document.elementFromPoint(r.left + r.width * fx, r.top + r.height * fy);
+    if (!h || e.contains(h)) continue;
+    if (h.closest('[data-notice-strip], [data-inline-undo], [inert]') || !h.closest(chrome)) return null;                    // a notice, inert, or any other cover
+    docked++;
+  }
+  return docked ? 'docked chrome' : null;
+}, [PAGE_CHROME, strict] as const, { timeout: GONE_MS });
+…
+at = await onTop(page, el, strict);
+if (!at && rescrolled < AIM_RESCROLL && (await wheelCures(el, strict))) return press(page, touch, el, over, strict, rescrolled + 1);
+```
+- **The classes of cover the helper wheels away from (the only ones):** (1) the target is **not wholly in the viewport** (as in `21e5644`); (2) the target is in the view and **every point `onTop` reads that is not the target itself is inside the page's docked chrome**: the Today composer's docked Start (`[class*="ctaDock"]`, the sticky `.ctaDock` of `Home.module.css:439`) or the tab bar / side rail (`nav[aria-label="Main"]`, `Shell.tsx:52`). These are exactly the two things the walk at the top of `press()` already treats as "under the docked start / tab bar: bring it up".
+- **Justified:** the docked Start is part of the page's own layout; a person who finds the field under it scrolls it clear. The walk does the same with real wheels, it is the walk the first `press()` of the other 24 runs takes when the dock has already settled (`scrollY` 180, LEAD-6 §4.1).
+- **Not among them (wait-only, fail as before with the same words):** a notice (`[data-notice-strip]`, `[data-inline-undo]`, also anything `[inert]`), an open sheet (any `[role=dialog]`, or `#root[inert]`: the whole test is then in the sheet's world), and any cover that is not named chrome (the fixed-position and the page-anchored covers of §6.2, a leaving route layer, an unknown element). A cover that is partly chrome and partly something else (one of the read points hit by a non-chrome element) is also wait-only.
+- **Bound per target:** unchanged mechanism, now stated in full: at most `1 + AIM_RESCROLL` = 3 `press()` calls; each call at most `AIM_AGAIN` = 8 re-reads 250 ms apart (about 2 s) and one wheel walk (the existing limits: 60 wheels, three stuck wheels end it). The dock case needs one pause, one re-read, one rescroll: the walk clears it in about three wheels.
+- **Unchanged:** `expect(at, "… still on top as the tap is aimed")`, its words and place; the tap only after a move-then-read that finds the target on top (the rescrolled call ends in the same loop and the same tap); `strict` (passed on); 800 ms / 0.5 px / 5 rounds; `GONE_MS`; `onTop`; the walk itself.
+
+**TS-D2.** Before: the sheet fallbacks (Tab + Enter, then a synthetic `click()`) follow every unsuccessful walk, including the walk of a call made again after the aim failed. After:
+```ts
+if (!at && sheet && rescrolled === 0) { …Tab + Enter… synthetic click… }
+```
+A call with `rescrolled > 0` that cannot bring the target on top goes on to the unchanged `expect(at, "… can be brought on top by real scrolling (…)")` and fails. A first call keeps the base's fallbacks exactly (the sheet footers that no wheel reaches at 375×667 @200 %).
+
+**R3** (`89396e8`, `timer.spec.ts:156`): the evaluate also returns `frozeAt: Date.now()` taken after the freeze statements; the test then asserts `endsAt − frozeAt ≥ 1000` ms with the message "the main-thread timers were frozen at least 1 s before the end of the brew". Both are page times from the same clock. Margin 1 s: the freeze is made about 100 ms after the start of a 3 s (harness) or 6 s (app) brew. No other assertion changed.
+
+**R4:** two sentences in §1 corrected in place: "at most 8 times in all" (per call; at most 24 re-reads in 3 calls) and "guaranteed to run before the end" (true for a late runner, not a stalled page; R3 now asserts it per run).
+
+### 6.2 The injected covers (`logs/r2/inject-notice3.log.txt`; `scripts/mkinject.py` extended; copies `scratch/r2.{v2,new}.notice-strip.spec.ts.txt`)
+
+844×390 dark 200 %, `workers=1`, no burners, :5583, the first `press()` (Today's composer field). `v2` = `21e5644` (the rejected tip), `new` = the fix (`1befde2`). New injection modes, both in the scratch copies only:
+- `COVER=dock`: reproduces the observed switch. Before the first read, `data-tall` is put on the Today dock (it is then in the page flow: the log shows `relative top 536 bottom 791 of 390`, below the view, and the field is on top, as in LEAD-6's first read); at the re-check `data-tall` is removed (the dock is `sticky top 182 bottom 390 of 390`, over the field at 296–348, for good). This is the state LEAD-6 measured (§4.1 table).
+- `COVER=sheet`: at the re-check of the first press whose target is inside a `[role=dialog]` (here the "Leave the kettle early?" sheet's "End session"), the target is moved out of the view for good (`transform: translateY(-3000px)`), so that no wheel can bring it back.
+
+| injection | `21e5644` | the fix |
+|---|---|---|
+| `dock` | **fails** in 4.4 s: `getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed`, after `aim again 1 … 8` (2.3 s) | **passes** (whole test, 1.1 min): re-check covered, `aim again 1`, `rescroll: bring it clear by the wheel`, the walk, the tap |
+| `transient` 300 ms (fixed cover) | passes (§2.2) | **passes** (1.1 min): covered, `aim again 1, 2`, tap; no rescroll |
+| `permanent-abs` (a cover anchored in the page over the field) | (not run on `21e5644`; the same wait-only path) | **fails** in 5.1 s, **the same words**, after `aim again 1 … 8`; no rescroll |
+| `permanent` (the fixed-position cover) | fails (§2.2) | **fails** in 4.2 s, **the same words**, after `aim again 1 … 8`; no rescroll: it is not page chrome |
+| `sheet` (TS-D2) | **passes** (1.2 min) by the loosening: after the rescroll the walk finds nothing and the Tab + Enter fallback presses the button (an annotation only) | **fails** in 13.6 s: `getByRole('dialog', { name: 'Leave the kettle early?' }).getByRole('button', { name: 'End session' }) can be brought on top by real scrolling ({"x":426,"y":-2726.09375,…}, scrollY 0)`; the log shows the rescroll, then the failure, no fallback |
+
+So the dock switch fails the rejected tip with the unchanged words and passes the fix; the covers that are not page chrome (fixed, page-anchored) still fail with the unchanged words; the loosening of TS-D2 is shown on `21e5644` and closed.
