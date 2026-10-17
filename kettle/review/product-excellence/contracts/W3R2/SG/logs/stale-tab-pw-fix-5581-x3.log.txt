@@ -1,1 +1,6 @@
 ### w3r2-stale-tab.spec.ts on the fix :5581 x3 | branch e18b621 (src 0fafc69) | start 2026-10-17T16:32:42Z load 13.08 13.59 11.36
+[slots] SG took 1/3 at 16:33:21: env KETTLE_PORT=5581 npx playwright test --project=chromium tests/w3r2-stale-tab.spec.ts --repeat-each=3 --output=.tmp/sg/pw-stale-fix --reporter=list
+
+Running 12 tests using 1 worker
+
+  ✓   1 [chromium] › tests/w3r2-stale-tab.spec.ts:121:1 › pause in the lagging tab: the brew current in storage pauses, with its real remaining time (the other tab’s +5 kept) (10.3s)

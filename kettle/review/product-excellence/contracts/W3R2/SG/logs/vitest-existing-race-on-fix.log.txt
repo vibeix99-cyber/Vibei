@@ -42,3 +42,44 @@
  ✓ src/timer/store.test.ts > sanitizeTimer > idle state follows the current focus-length setting 1ms
  ✓ src/timer/store.test.ts > settings while idle vs running > idle length follows focusMin; a running phase is unaffected 6ms
  ✓ src/timer/store.test.ts > rebase (system clock jumped) > keeps the countdown continuous when the clock is set back 1ms
+ ✓ src/timer/storageFull.test.ts > storage full while brewing > a brew started after storage filled up still completes once and is recorded (not rolled back to the saved idle kettle) 112ms
+ ✓ src/timer/storageFull.test.ts > storage full while brewing > +5 added after storage filled up: the brew completes at its extended end with all 30 minutes 10ms
+ ✓ src/timer/storageFull.test.ts > storage full while brewing > another tab’s successful write still wins: a storage event mirrors it even after this tab failed to save 1ms
+ ✓ src/timer/storageFull.test.ts > safeStorage write failures > never throws, reports each failure with whether storage is full, and clears the flag after a good write 2ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs and is recorded once 1439ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a tab that has not yet seen the other tab end the brew does not bring it back by saving its intention 18ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > same brew, other tab paused it: the intention is saved and the pause is kept 8ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > keeps the stored format: same key, the { state, version: 1 } envelope, the same fields in the same order 11ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a save that changes nothing writes nothing (Today’s composer syncing on mount), even in a tab that is behind 21ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > a fresh profile (nothing saved yet) saves as before 35ms
+ ✓ src/timer/multitab.test.ts > two tabs, one session > only the leader completes; the follower mirrors; progress holds exactly one session 2054ms
+ ✓ src/timer/intentionRace.test.ts > saving the intention writes only the intention (F1) > storage full: once this tab’s own save failed, the intention save writes the whole (newer) timer, as before, and repairs storage 11ms
+ ✓ src/timer/intentionRace.test.ts > the idle brew length sync writes only the length (F1X-D1) > B picks another length and starts; A (idle, not yet seen the start) takes in the length change first: the brew survives in both tabs and is recorded once 17ms
+ ✓ src/timer/intentionRace.test.ts > the idle brew length sync writes only the length (F1X-D1) > a real length change still persists: one tab 11ms
+ ✓ src/timer/intentionRace.test.ts > the idle brew length sync writes only the length (F1X-D1) > a real length change still persists: two tabs in step, and the other tab’s newer words in storage are kept 6ms
+ ✓ src/timer/intentionRace.test.ts > the idle brew length sync writes only the length (F1X-D1) > a sync that changes nothing writes nothing 6ms
+ ✓ src/timer/intentionRace.test.ts > the idle brew length sync writes only the length (F1X-D1) > storage full: once this tab’s own save failed, the length sync writes the whole (newer) timer, as before, and repairs storage 5ms
+ ✓ src/timer/multitab.test.ts > two tabs, one session > leader closes mid-session → the other tab takes over and completes once 158ms
+ ✓ src/timer/multitab.test.ts > two tabs, one session > leadership stolen at the instant of completion never double-records 112ms
+ ✓ src/timer/multitab.test.ts > two tabs, one session > two tabs pressing start at the same time converge on one session 27ms
+ ✓ src/timer/multitab.test.ts > two tabs, one session > a follower pressing End at 0:00 does not record a second (partial) session 24ms
+ ✓ src/timer/multitab.test.ts > two tabs, one session > a stale tab that ends early after the leader completed cannot resurrect the session 22ms
+ ✓ src/timer/multitab.test.ts > two tabs, one session > pause in one tab shows as paused in the other (and emits timer:sync pause/resume/addTime) 20ms
+ ✓ src/timer/multitab.test.ts > atomic completion claims > two tabs that BOTH think they lead still complete once (split-brain) 13ms
+ ✓ src/timer/multitab.test.ts > atomic completion claims > claim rule: pending blocks, won allows, lost waits out the grace period, no IndexedDB → leader rule only 28ms
+ ✓ src/timer/multitab.test.ts > Web Locks election > exactly one leader at every step; claim steals; handover on stop 49ms
+ ✓ src/timer/multitab.test.ts > localStorage lease fallback > lease rules 1ms
+ ✓ src/timer/multitab.test.ts > localStorage lease fallback > one leader after two confirmations; takeover after the lease expires 1ms
+ ✓ src/timer/multitab.test.ts > localStorage lease fallback > two tabs racing for an expired lease never both lead 1ms
+ ✓ src/timer/multitab.test.ts > localStorage lease fallback > stop() frees the lease so the next tab leads within two heartbeats 0ms
+ ✓ src/timer/multitab.test.ts > localStorage lease fallback > solo mode (no locks, no storage) is always leader 0ms
+
+ Test Files  4 passed (4)
+      Tests  71 passed (71)
+   Start at  16:33:03
+   Duration  3.59s (tests 59%, transform 27%, import 14%)
+
+  Transform  transforming modules took 2.02s · 27% of tracked time, re-done on every run
+             persist transforms across runs with fsModuleCache: true
+             learn more: https://vitest.dev/guide/improving-performance#caching-between-reruns
+
