@@ -33,3 +33,34 @@ Running 31 tests using 1 worker
   -  28 [timer-app] › tests/timer.spec.ts:438:3 › rendering budget › useRemaining re-renders about once per displayed second
   ✓  29 [pwa] › tests/pwa.spec.ts:48:1 › manifest is installable: name, colors, standalone, icons that exist (132ms)
   ✓  30 [pwa] › tests/pwa.spec.ts:59:1 › precaches the shell, fonts, 3D chunk and tick worker; boots and times a brew offline (6.7s)
+  ✘  31 [pwa] › tests/pwa.spec.ts:85:1 › update: new version waits for the user (no reload mid-brew), then applies and the brew carries on (26.1s)
+
+
+  1) [pwa] › tests/pwa.spec.ts:85:1 › update: new version waits for the user (no reload mid-brew), then applies and the brew carries on 
+
+    TimeoutError: page.waitForFunction: Timeout 20000ms exceeded.
+
+      89 |   appendFileSync(join(OUT, 'sw.js'), `\n// update ${Date.now()}\n`); // "deploy" a new version
+      90 |   await page.evaluate(async () => (await navigator.serviceWorker.getRegistration())!.update());
+    > 91 |   await page.waitForFunction(() => (window as any).__kettle.pwa.state().needRefresh, null, { timeout: 20_000 });
+         |              ^
+      92 |   expect(await page.evaluate(async () => !!(await navigator.serviceWorker.getRegistration())!.waiting)).toBe(true);
+      93 |   expect(await page.evaluate(() => (window as any).__kettle.timer.getState().status)).toBe('running');
+      94 |
+        at /home/user/wt/w8tr-g2/kettle/tests/pwa.spec.ts:91:14
+
+    Error Context: .tmp/RR-pw/timer-pwa-5601/pwa-update-new-version-wai-877e1-ies-and-the-brew-carries-on-pwa/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/RR-pw/timer-pwa-5601/pwa-update-new-version-wai-877e1-ies-and-the-brew-carries-on-pwa/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/RR-pw/timer-pwa-5601/pwa-update-new-version-wai-877e1-ies-and-the-brew-carries-on-pwa/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [pwa] › tests/pwa.spec.ts:85:1 › update: new version waits for the user (no reload mid-brew), then applies and the brew carries on 
+  2 skipped
+  28 passed (3.7m)
+### end 20:54:12 UTC; exit=0; load:  20:54:12 up  5:04,  0 user,  load average: 14.00, 13.35, 13.82
