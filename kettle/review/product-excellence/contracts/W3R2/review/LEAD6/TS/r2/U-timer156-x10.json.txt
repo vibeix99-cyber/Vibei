@@ -1,0 +1,818 @@
+{
+  "config": {
+    "configFile": "/home/user/wt/w8tr-q2/kettle/playwright.config.ts",
+    "rootDir": "/home/user/wt/w8tr-q2/kettle/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/out/U-timer156-x10",
+        "repeatEach": 10,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "timer-harness",
+        "name": "timer-harness",
+        "testDir": "/home/user/wt/w8tr-q2/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/out/U-timer156-x10",
+        "repeatEach": 10,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "timer-app",
+        "name": "timer-app",
+        "testDir": "/home/user/wt/w8tr-q2/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/timer\\.spec\\.ts/"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/out/U-timer156-x10",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pwa",
+        "name": "pwa",
+        "testDir": "/home/user/wt/w8tr-q2/kettle/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/pwa\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/home/user/wt/w8tr-q2/kettle/.tmp/lead6/out/U-timer156-x10",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/wt/w8tr-q2/kettle/tests",
+        "testIgnore": [
+          "/(timer|pwa)\\.spec\\.ts/"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 2,
+    "webServer": {
+      "command": "npx vite --config tests/e2e.vite.config.ts --port 5560 --strictPort",
+      "url": "http://127.0.0.1:5560/",
+      "reuseExistingServer": true,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "timer.spec.ts",
+      "file": "timer.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "timer reliability",
+          "file": "timer.spec.ts",
+          "line": 73,
+          "column": 6,
+          "specs": [
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5140,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T20:40:15.103Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-7e1adfa710f761cc9ea0",
+              "file": "timer.spec.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 4612,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T20:40:14.952Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-dfba1cb4ab180b91c3ad",
+              "file": "timer.spec.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 4703,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T20:40:23.883Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-42f0d8455ef3b0c70b0b",
+              "file": "timer.spec.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5187,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T20:40:23.678Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-400768db708cf0f7c4cb",
+              "file": "timer.spec.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 4589,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T20:40:32.406Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-b2434dfdab9be032d8fc",
+              "file": "timer.spec.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5410,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T20:40:33.631Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-cdebc8e255cd03e8ba05",
+              "file": "timer.spec.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 4566,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T20:40:41.011Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-41c3710ac60d455dabfe",
+              "file": "timer.spec.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4738,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T20:40:41.986Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-bf99a210b3e3604a9f06",
+              "file": "timer.spec.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 4742,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T20:40:48.334Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-5f0f1d713c13781ef295",
+              "file": "timer.spec.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-harness",
+                  "projectName": "timer-harness",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4686,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T20:40:51.567Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-0ecc09b7ae6e325dd992",
+              "file": "timer.spec.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 10440,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T20:40:57.138Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-5633ce3bc04fea8097e0",
+              "file": "timer.spec.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9969,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T20:41:00.819Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-519f5c4e0fc13fee731f",
+              "file": "timer.spec.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 10024,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T20:41:12.907Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-f59d83dd8f224fb25a6e",
+              "file": "timer.spec.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9252,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T20:41:19.021Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-af931b17feae8547c4de",
+              "file": "timer.spec.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 12933,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T20:41:32.078Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-e371a85d030b2bad821f",
+              "file": "timer.spec.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 12516,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T20:41:34.903Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-44a6c864eda600f65d15",
+              "file": "timer.spec.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 8580,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T20:41:48.775Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-6ba71ea38e1c145c134b",
+              "file": "timer.spec.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 10293,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T20:41:50.888Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-82711e0a353154392cb7",
+              "file": "timer.spec.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 8033,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T20:42:02.499Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-0f9347cae8a0d7da6ab4",
+              "file": "timer.spec.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "background: the worker completes on time even with main-thread timers frozen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "timer-app",
+                  "projectName": "timer-app",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 10107,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T20:42:05.822Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73927b3a66def3cb9b82-b07958d588a6169b9cf2",
+              "file": "timer.spec.ts",
+              "line": 156,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-17T20:40:12.223Z",
+    "duration": 126685.88,
+    "expected": 20,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

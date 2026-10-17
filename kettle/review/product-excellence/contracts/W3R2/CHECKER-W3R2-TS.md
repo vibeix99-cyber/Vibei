@@ -222,3 +222,16 @@ No `src/`, no other spec, no config (the orchestrator's scope check agrees).
 | `:156` | six assertions (§2.1) | the same six, plus the freeze-leg line | **strengthened** (R3 closed) |
 
 The chrome list is narrow and named (the dock by its CSS-module class stem, the main nav by its label); the notice check runs before the chrome check, so a notice drawn inside the dock still counts as a notice. **Ruling: no assertion weakened; TS-D2 and R3/R4 closed in the code.**
+
+### F.3 Under load, on trial 2 (my ◆ reruns)
+
+Recipe as §4 (`--workers=2` + 4 burners `( while :; do :; done ) &`, PIDs 21840–21843, killed by PID at 20:42:19, all four gone; never `pkill -f`). One gate job, lane `LEAD6`, 20:19:12–20:42:19, nothing else holding a slot at the start. Log `r2/U-underload.log.txt`, reports `r2/U-*.json.txt`.
+
+| Run | Result | Load at start → end |
+|---|---|---|
+| `notice-strip` 844×390 dark 200 % ×10 | **10/10** (71.9–87.8 s each) | 9.08 8.64 8.92 (20:19:17) → 15.22 13.71 11.16 (20:26:13) |
+| `notice-strip` 844×390 light 200 % reduced motion ×10 | **10/10** (67.2–78.2 s) | 15.22 13.71 11.16 → 14.96 15.51 12.98 (20:32:44) |
+| the maker's diagnostic copy of the fix (`mkdiag3.py`; my copy equals the packet's `scratch/r2.diag3…` but for the screenshot path), 844×390 dark 200 % ×10 | **10/10** (78.6–85.3 s). The docked-chrome path was taken **0** times: in all 10 runs the first read already saw the settled dock (sticky 182–390, `--home-dock-h` 209px), so the ordinary walk ran | 14.96 15.51 12.98 → 17.25 17.45 14.90 (20:40:08) |
+| `timer.spec.ts:156` ×10 in `timer-app` and ×10 in `timer-harness` (with R3) | **20/20** (app 8.0–12.9 s, harness 4.6–5.4 s): the new freeze-leg line holds in every run | 17.25 17.45 14.90 → 17.38 17.47 15.25 (20:42:19) |
+
+**Is the fix exercised under load, or just lucky?** My diagnostic run did not meet the race (0 of 10), so it cannot show this by itself. The maker's diagnostic run on the same server and src (`TS/logs/r2/combo.log.txt`, 19:51–19:57, 10/10) did meet it twice, and I read both cases line by line. Each is the exact §4.1 state: the first read is on top with the dock `data-tall`, `relative`, top 538, `--home-dock-h` 255px; the re-check is null under `p._ctaNote` in the sticky dock, 182–390. Then `PATH docked chrome`, the second call's walk (`scrollY` 180, field 116–168), on top, the tap, and the test passed. My injection (F.4, `COVER=dock`) reproduces that state on demand. Together: 30/30 of my notice runs under load, plus the maker's 20/20 + 10/10 + 10/10, with the race met and cured twice. On my first pass the same configuration failed 3, 3 and 2 in 10.
