@@ -1,0 +1,132 @@
+# TS-READY: W3R2 item 3, test-only stability (maker TS)
+
+**Branch** `pe/w3r2-test-stability`, worktree `/home/user/wt/w8q`, base `494748b`.
+**Scope kept:** `kettle/tests/timer.spec.ts` and `kettle/tests/notice-strip.spec.ts` only; no `src/` file, no other spec. The injection code lives in the git-ignored `kettle/.tmp/` and is copied into this folder as `.txt`.
+
+**How every spec was run** (the same for all runs below):
+- `playwright.config.ts` takes its base URL from `KETTLE_PORT` and has `webServer.reuseExistingServer: true`, so `KETTLE_PORT=5583` uses the dev server already running for this worktree (:5583, `vite --config .tmp/w2.vite.config.ts`, the debug API on). It serves the same app code as :5560.
+- Timer specs: the config's two projects, `timer-app` (`kettlePage: '/?debug&onboarded=1#/'`) and `timer-harness` (`'/tests/harness/timer.html'`), both. Notice spec: project `chromium`. No `playwright install`.
+- Every browser run went through the gate: `slots.py run --lane TS --n 1|2 -- …` (`scripts/gate.sh`). Each log has `### start` / `### end` lines with the load average (1, 5, 15 min).
+- The injection runs use the scratch config `scratch/ts-pw.config.ts.txt` (the same projects, `testDir` pointed at the scratch copies).
+
+## 1. The changes (`scratch/spec-changes.diff.txt` is the whole diff, 33 insertions, 9 deletions)
+
+Note: after the edit the hidden-page test is at `timer.spec.ts:189` (it was `:183`); `:156` is unchanged. The notice test is still `notice-strip.spec.ts:~358` (the line moved by the added lines in `press()`); it is found by name.
+
+### 1.1 `timer.spec.ts`, "background: the worker completes on time even with main-thread timers frozen"
+
+Before:
+```ts
+await start(page, secs(kettlePage, 3));
+const { endsAt, sessionId } = await state(page);
+await page.evaluate(() => {
+  const w = window as any;
+  w.__kettle.timer.subscribe((s, p) => { if (p.status === 'running' && s.status === 'idle') w.__doneAt = Date.now(); });
+  // What an aggressively throttled background tab looks like: main-thread timers never fire.
+  w.setTimeout = () => 0; w.setInterval = () => 0; w.requestAnimationFrame = () => 0;
+  Object.defineProperty(document, 'visibilityState', …'hidden'); Object.defineProperty(document, 'hidden', …true);
+  document.dispatchEvent(new Event('visibilitychange'));
+});
+```
+After:
+```ts
+const { endsAt, sessionId } = await page.evaluate(async (minutes) => {
+  const w = window as any;
+  w.__kettle.timer.subscribe((s, p) => { if (p.status === 'running' && s.status === 'idle') w.__doneAt = Date.now(); });   // armed first
+  await w.__kettle.timer.getState().startFocus({ minutes, intention: '' });
+  const { endsAt, sessionId } = w.__kettle.timer.getState();                                                          // read in the page
+  await new Promise((r) => setTimeout(r, 100));          // the moment the separate commands used to take, kept in the page
+  w.setTimeout = () => 0; … (the same freeze, the same hidden page)
+  return { endsAt, sessionId };
+}, secs(kettlePage, 3));
+```
+**Why this is what the race needs.** The brief's fix is "arm the observer before the brew starts". The traces (`W3R1/…/postmerge/trace-timer156-background.txt`) show three commands after `startFocus` all arriving after the brew had ended: `state()` (10.04 s: `idle`, `sessionId` null, `endsAt` null), then the observer and freeze evaluate (10.18 s). Arming the observer first fixes the first miss, but `state()` is then read from an idle timer (`endsAt` null) and `doneAt − endsAt` is nonsense (§2.1, variant `mid`: it fails 4/4 under the same injection). So the observer, the start, the read of `endsAt` / `sessionId` and the freeze are one page task chain; the freeze keeps the same place in the brew (about 100 ms after the start, in the page, where the separate commands of before took a few tens of ms) and can no longer land after the end.
+
+**Why no assertion is weaker.** The assertions after the evaluate are not touched, line for line:
+
+| assertion | before | after |
+|---|---|---|
+| scheduler is the worker | `expect((await info(page)).scheduler).toBe('worker')` | same line, same place (before the start) |
+| the end is seen, in time | `expect.poll(__doneAt ?? null, {timeout: 10_000, intervals: [200]}).not.toBeNull()` | same |
+| not early | `doneAt − endsAt ≥ 0` | same |
+| on time | `doneAt − endsAt < lateBudget(kettlePage)` (400 ms harness / 1500 ms app) | same, same budgets |
+| exactly one record | `storedSessions(page)` filtered by `sessionId` has length 1 | same |
+| title | `toHaveTitle('Tea’s ready — Kettle')` | same |
+
+The checks that the main-thread timers are frozen and the page hidden while the brew runs are the same statements; they are now guaranteed to run before the end, not after a runner-dependent gap. `endsAt` and `sessionId` are read from the same `getState()` as before, one statement after `startFocus`.
+
+### 1.2 `timer.spec.ts`, "hidden page: completion shows a warm notification; coming back restores the title"
+
+Before: `await start(page, secs(kettlePage, 2), 'Essay'); await setHidden(page, true);`
+After:  `await setHidden(page, true); await start(page, secs(kettlePage, 2), 'Essay');` (and a comment).
+
+**Why no assertion is weaker.** Only the order of two existing statements changed; every `expect` after them is untouched: exactly one fake `Notification` (poll, 10 s), its title `The kettle’s whistling! Time for tea.`, body contains `Essay`, tag `kettle-timer`, page title `Tea’s ready — Kettle` while hidden, and after `setHidden(false)` the title is `baseTitle`. The behaviour under test is unchanged: the brew still ends in a hidden page, and `notifyCompletion` / `tabPresence` read `document.visibilityState` only at the end of the brew (`notify.ts:185–188`, `tabPresence.ts:194–197`), not at the start. Hiding earlier does not make the test easier; it removes the case where the brew ends in a *visible* page, which the app handles by making no notification, so the test could only fail there for a reason that is not the product's.
+
+### 1.3 `notice-strip.spec.ts`, `press()`
+
+Before (the aim loop and its check):
+```ts
+for (let k = 0; ; k++) {
+  const t = Date.now();
+  await page.mouse.move(Math.round(at!.x), Math.round(at!.y));
+  const again = await onTop(page, el, strict);
+  const same = !!again && Math.abs(again.x - at!.x) < 0.5 && Math.abs(again.y - at!.y) < 0.5;
+  at = again;
+  if (!at || (same && Date.now() - t < 800) || k >= 4) break;      // a null re-check ended the loop at once
+}
+expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();
+```
+After:
+```ts
+const AIM_AGAIN = 8; const AIM_PAUSE_MS = 250;                      // next to GONE_MS
+for (let k = 0, covered = 0; ; ) {
+  if (!at) {                                                        // covered at the last re-check: look again
+    if (covered++ >= AIM_AGAIN) break;
+    await page.waitForTimeout(AIM_PAUSE_MS);
+    at = await onTop(page, el, strict);
+    continue;
+  }
+  const round = k++;
+  const t = Date.now();
+  await page.mouse.move(Math.round(at.x), Math.round(at.y));
+  const again = await onTop(page, el, strict);
+  const same = !!again && Math.abs(again.x - at.x) < 0.5 && Math.abs(again.y - at.y) < 0.5;
+  at = again;
+  if (at && ((same && Date.now() - t < 800) || round >= 4)) break;
+}
+expect(at, `${el} still on top as the tap is aimed`).not.toBeNull();   // the same line, the same words
+```
+**The bound, stated:** after a re-check finds the target covered, `press()` waits 250 ms and reads the target again, at most 8 times in all (a window of about 2 s plus the reads). A ninth covered read ends the loop with `at === null` and the unchanged `expect` fails with the unchanged message. Pre-existing bounds are untouched: at most 5 aim rounds (`round >= 4`), a round that took 800 ms or more is made again, a target that has gone fails within `GONE_MS` (15 s) on any read.
+
+**Why no assertion is weaker.**
+- The `expect(at, "… still on top as the tap is aimed").not.toBeNull()` line is the same text.
+- The tap (`touchscreen.tap` / `mouse.click`) is reached only through the `break`, and that break needs `at` non-null, which is the result of an `onTop` read made **after** `mouse.move` onto the target in the same round: "on top at the moment of the tap" is checked exactly as before (strict mode is still 9 of 9 points; `same` and the 800 ms rule are unchanged). After a covered read the next tap-bound read is again a *move, then read* round, never the pause's own read alone.
+- A target that stays covered still fails (§2.2: permanent cover, new helper fails with the same message after the 8 pauses).
+- What changed is only that a single covered read no longer ends the walk. The same reads that used to fail the test at once now have to be followed by 8 more covered reads (about 2 s) to fail it.
+- `press()` is local to this spec and used by all 25 tests; the whole-file run (§4) covers every configuration.
+
+## 2. The injected race: old fails, new passes
+
+The injection code is a scratch copy, derived from the committed specs by `scripts/mkinject.py` (text patch; the committed specs are not touched). The `old` copy comes from `494748b`, the `new` copy from the branch. Both get the identical injection. Copies: `scratch/{old,mid,new}.timer.spec.ts.txt`, `scratch/{old,new}.notice-strip.spec.ts.txt`.
+
+### 2.1 Timer pair (`logs/inject-timer.log.txt`)
+
+**Injection:** a `page` fixture whose `evaluate` is followed by a test-side wait of (brew length + 0.5 s) after the command whose function text holds `startFocus` (the command that starts the brew): the reply reaches the test process late, the next command is sent after the brew is over. The page is not touched. Wait 3.5 s / 2.5 s in the harness and 6.5 s / 4.5 s in the app (the delays LEAD-5 used, `W3R1/CHECKER-W3R1-F1FIX.md` §9). Two rounds of each test in each project, one browser at a time, :5583.
+
+| variant | `:156` background (harness ×2, app ×2) | hidden page (harness ×2, app ×2) |
+|---|---|---|
+| **old** (base `494748b`) | **fails 4/4**: `__doneAt` poll `null` (`expect(received).not.toBeNull()`) | **fails 4/4**: notifications `0`, expected `1` |
+| **mid** (old + only the observer moved before the start; the brief's one-line shape) | **fails 4/4** at `doneAt − endsAt < lateBudget`: received 1.79e12 (`endsAt` read as null from an idle timer) | not changed in `mid` (old order): fails 4/4 as old |
+| **new** (the branch) | **passes 4/4** | **passes 4/4** |
+
+`mid` shows why 1.1 moves the read of `endsAt` / `sessionId` into the page as well: with only the observer first, a runner that is late after the start still fails, one assertion later.
+
+### 2.2 `press()` (`logs/inject-notice.log.txt`, `logs/inject-notice-bound.log.txt`)
+
+**Injection:** just before the re-check read in `press()`, a fixed-position element (`z-index` max) the size of the target (+4 px) is put over it. It is applied once per test, to the first `press()` (Today's "What are you brewing?" field, the very place of the original failure). `COVER=transient`: removed after 300 ms; `permanent`: never removed. The test is the original failing one, 844×390 dark 200 %, workers=1, :5583.
+
+| cover | old `press()` | new `press()` |
+|---|---|---|
+| transient 300 ms | **fails** in 2.7 s: `getByRole('textbox', { name: /What are you brewing/ }) still on top as the tap is aimed`, received `null` | **passes** (whole test, 1.2 min): the re-check is covered at +81 ms, one `aim again` at +389 ms finds the field free, the tap follows |
+| permanent | **fails** in 2.3 s, same message | **fails** after 8 pauses (the log lists `aim again 1 … 8` over ~2.0 s), **same message**, same line (`expect(at, … still on top as the tap is aimed)`) |
+TODO-BOUND
