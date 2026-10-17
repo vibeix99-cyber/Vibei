@@ -19,3 +19,5 @@ Running 264 tests using 2 workers
   ✓   15 [chromium] › tests/integrity.spec.ts:217:3 › I01 session time survives reload, suspension and late return › pause → reload → resume: the paused time is kept and the deadline moves by exactly the pause (16.4s)
   ✓   14 [chromium] › tests/a11y.spec.ts:110:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll (53.6s)
   ✓   16 [chromium] › tests/integrity.spec.ts:244:3 › I01 session time survives reload, suspension and late return › +5 → reload: the extension, its deadline and the gauge segment survive; completion records the full 30 min once (13.9s)
+  ✓   18 [chromium] › tests/integrity.spec.ts:267:3 › I01 session time survives reload, suspension and late return › suspended tab (a real Page Lifecycle freeze) across the end: one completion right after resume, at the real end, "while away" summary (21.2s)
+  ✓   19 [chromium] › tests/integrity.spec.ts:309:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (19.7s)
