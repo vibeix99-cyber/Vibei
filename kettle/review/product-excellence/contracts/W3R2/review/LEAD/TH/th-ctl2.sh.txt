@@ -1,0 +1,9 @@
+#!/bin/bash
+# LEAD-5 W3R2 TH: the trial's other notice-strip failure (844x390 light 200 % reduced motion, the press() re-aim flake
+# owned by TS) rerun on :5592, twice, one worker.
+set -u
+O=$1; cd /home/user/wt/w8tr-t/kettle || exit 9
+{ echo "### :5592 x2 $(date -u +%T) load $(cut -d' ' -f1-3 /proc/loadavg)"
+  env KETTLE_PORT=5592 npx playwright test tests/notice-strip.spec.ts --project=chromium -g '\(844×390 light 200 % reduced motion\)$' --repeat-each=2 --workers=1 --reporter=list --output="$O/pw"
+  echo "### end $(date -u +%T) exit=$? load $(cut -d' ' -f1-3 /proc/loadavg)"; } > "$O/ctl2-5592.log" 2>&1
+echo done > "$O/done.txt"

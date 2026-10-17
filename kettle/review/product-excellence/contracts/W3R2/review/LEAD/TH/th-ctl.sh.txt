@@ -1,0 +1,13 @@
+#!/bin/bash
+# LEAD-5 W3R2 TH: matched control for the trial's notice-strip failure at 390x844 dark 200 % (Stats link not on top):
+# the same test on :5592 (trial) and :5560 (base), interleaved A B B A B A, one worker, the same logging config.
+set -u
+O=$1; cd /home/user/wt/w8tr-t/kettle || exit 9
+run() {
+  local port=$1 i=$2
+  { echo "### round $i :$port $(date -u +%T) load $(cut -d' ' -f1-3 /proc/loadavg)"
+    env KETTLE_PORT=$port npx playwright test -c .tmp/lead5-th/pw.config.ts tests/notice-strip.spec.ts --project=chromium -g '\(390×844 dark 200 %\)$' --workers=1 --reporter=list --output="$O/pw-$port-$i"
+    echo "### end $(date -u +%T) exit=$? load $(cut -d' ' -f1-3 /proc/loadavg)"; echo; } >> "$O/ctl-$port.log" 2>&1
+}
+run 5592 1; run 5560 1; run 5560 2; run 5592 2; run 5592 3; run 5560 3
+echo "done $(date -u +%T)" > "$O/done.txt"
