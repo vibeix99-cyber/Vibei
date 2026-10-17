@@ -160,7 +160,7 @@ test.describe('timer reliability', () => {
     // (W3R2) The observer, the start, the read of the brew's end and the freeze are one page task chain: a runner that is
     // late on a loaded machine (its next command reaching the page after the brew is over) can then neither miss the
     // running → idle change, nor read `endsAt` of an idle timer, nor freeze the page after the end.
-    const { endsAt, sessionId } = await page.evaluate(async (minutes) => {
+    const { endsAt, sessionId, frozeAt } = await page.evaluate(async (minutes) => {
       const w = window as any;
       w.__kettle.timer.subscribe((s: any, p: any) => {
         if (p.status === 'running' && s.status === 'idle') w.__doneAt = Date.now();
@@ -176,8 +176,11 @@ test.describe('timer reliability', () => {
       Object.defineProperty(document, 'visibilityState', { configurable: true, get: () => 'hidden' });
       Object.defineProperty(document, 'hidden', { configurable: true, get: () => true });
       document.dispatchEvent(new Event('visibilitychange'));
-      return { endsAt, sessionId };
+      return { endsAt, sessionId, frozeAt: Date.now() };
     }, secs(kettlePage, 3));
+    // (W3R2) Every run proves its own freeze leg: the freeze landed well before the brew's end (a page that stalled for the
+    // best part of the brew would otherwise freeze after the end and pass without the timers ever being frozen).
+    expect((endsAt as number) - frozeAt, 'the main-thread timers were frozen at least 1 s before the end of the brew').toBeGreaterThanOrEqual(1000);
     await expect.poll(() => page.evaluate(() => (window as any).__doneAt ?? null), { timeout: 10_000, intervals: [200] }).not.toBeNull();
     const doneAt = await page.evaluate(() => (window as any).__doneAt as number);
     expect(doneAt - (endsAt as number)).toBeGreaterThanOrEqual(0);
