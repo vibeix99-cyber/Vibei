@@ -43,3 +43,7 @@
     B=paused/s_mvcpo1/30m/ends=null
     S=paused/s_mvcpo1/30m/ends=null  S(read in B)=paused/s_mvcpo1/30m/ends=null  pageErrors=0
 ### case (b) fix-5591: pass 5/5 {"precondition_B_behind":5,"same_session_A_B_storage":5,"A_B_storage_agree":5,"still_paused_A_B_storage":5,"plus5_applied_A_B_storage":5}
+[18:10:04] fix-5591 (c) it1 PASS load 15.28 13.77 13.51->15.56 13.98 13.59
+    A=running/s_mvcpol/25m/ends=1792262184266
+    B=running/s_mvcpol/25m/ends=1792262184266
+    S=running/s_mvcpol/25m/ends=1792262184266  S(read in B)=running/s_mvcpol/25m/ends=1792262184266  pageErrors=0
