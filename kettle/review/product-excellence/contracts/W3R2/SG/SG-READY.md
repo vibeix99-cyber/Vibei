@@ -17,7 +17,7 @@
 - **Browser** (real clicks in the lagging tab): pause, add 5, end and start fail **12/12** on :5560, fail 4/4 on :5478, and pass **12/12** plus 4/4 on the fix.
 - **Existing race tests** green.
 - **Compatibility:** byte-identical both ways (12/12 pairs).
-- **`integrity:309` ×20 under load:** 20/20.
+- **`integrity:309` ×20 under load:** 20/20, twice (40/40).
 - **Suites:** integrity 25/25, `w2-home` 18/18, timer 26 + 2 skipped by design, `pwa` 3/3, tsc 0, Vitest 338/338.
 
 ## 1. Design: one rule, applied where every write passes
@@ -219,7 +219,7 @@ Reporter quirk, as F1FIX noted: the HEAD run lists the four tests at `:154`, `:1
 | Run | Result | Load (1 / 5 / 15 min) | Log |
 |---|---|---|---|
 | 1 (17:44:59–17:48:47) | **20/20** (3.8 min). Burners 26227–26232 started and killed by PID | start 5.7 / 10.7 / 13.7 (burners just started; the other lanes had been at 13–20); end 10.5 / 11.0 / 13.2 | `logs/stress-309-x20-w2-nb6.log.txt` |
-| 2 | (queued) | | `logs/stress-309-x20-w2-nb6-run2.log.txt` |
+| 2 (17:51:51–17:56:48) | **20/20** (4.8 min). Burners 2544–2549 started and killed by PID | start 10.1 / 10.8 / 12.7; end 17.8 / 15.0 / 14.0 | `logs/stress-309-x20-w2-nb6-run2.log.txt` |
 
 The app code under test is `e18b621`'s (served on :5581; the head commit `54a9721` adds a Vitest case only).
 
