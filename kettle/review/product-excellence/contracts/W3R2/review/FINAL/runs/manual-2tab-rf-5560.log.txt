@@ -56,3 +56,16 @@
     B=paused/s_mvcy8l/30m/ends=null
     S=paused/s_mvcy8l/30m/ends=null  S(read in B)=paused/s_mvcy8l/30m/ends=null  pageErrors=0
 ### case (a) rf-5560: pass 3/3 {"precondition_B_behind":3,"paused_in_A":3,"paused_in_B":3,"paused_in_storage":3,"same_session_A_B_storage":3,"kept_plus5_A_B_storage":3,"A_B_storage_agree":3,"remaining_gt_planned_minus_2min":3,"pause_sound_played_in_B_when_applied":3}
+[22:09:43] rf-5560 (b) it1 PASS load 11.53 10.83 11.99->12.09 10.98 12.02
+    A=paused/s_mvcy8t/30m/ends=null
+    B=paused/s_mvcy8t/30m/ends=null
+    S=paused/s_mvcy8t/30m/ends=null  S(read in B)=paused/s_mvcy8t/30m/ends=null  pageErrors=0
+[22:09:52] rf-5560 (b) it2 PASS load 12.09 10.98 12.02->11.43 10.88 11.98
+    A=paused/s_mvcy93/30m/ends=null
+    B=paused/s_mvcy93/30m/ends=null
+    S=paused/s_mvcy93/30m/ends=null  S(read in B)=paused/s_mvcy93/30m/ends=null  pageErrors=0
+[22:10:01] rf-5560 (b) it3 PASS load 11.43 10.88 11.98->11.32 10.88 11.97
+    A=paused/s_mvcy9b/30m/ends=null
+    B=paused/s_mvcy9b/30m/ends=null
+    S=paused/s_mvcy9b/30m/ends=null  S(read in B)=paused/s_mvcy9b/30m/ends=null  pageErrors=0
+### case (b) rf-5560: pass 3/3 {"precondition_B_behind":3,"same_session_A_B_storage":3,"A_B_storage_agree":3,"still_paused_A_B_storage":3,"plus5_applied_A_B_storage":3}
