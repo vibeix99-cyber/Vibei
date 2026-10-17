@@ -1,4 +1,4 @@
-// R2-2tab.mjs <label> <baseURL> <iterations> <outdir> [cases=a,b,c,d,e]
+// RR-2tab.mjs <label> <baseURL> <iterations> <outdir> [cases=a,b,c,d,e]
 // W3R2 item 1 (the stale-tab guard): Vibei's words, "pause, add 5 and end in the lagging tab while the other runs a brew".
 // Two pages (= two tabs) of ONE browser context (one profile, shared localStorage). Every action by the person is a real
 // mouse or keyboard event (Playwright locator.click / pressSequentially): start (type + click "Put the kettle on"), Pause,
@@ -13,6 +13,8 @@
 //   (d) no hold: A starts. B shows it. Both clocks +90 s. B clicks Pause, "Add 5 minutes", End (sheet), with A watching.
 //               Then A starts a 2nd brew, both clocks +90 s, B clicks End. One record per ended brew.
 //   (e) optional: as (c), but B clicks "Add 5 minutes" instead of End; records the Focus "+5 min" note.
+//   (g) Next brew (rerun on trial 2): both tabs on a running break; B held; A clicks "Start next brew"; B clicks "Start next brew" on its stale view and joins A's brew;
+//       release; both clocks +90 s; B ends the joined brew with real clicks. The "Saved ... of focus" toast must show in B and B must go home.
 //   (f) extra (v2 only): as (c), but B clicks Pause instead of End (the literal "pause ... in the lagging tab while the other runs a brew").
 // Output: <outdir>/<label>-<case>-<it>.json per iteration, <outdir>/<label>-summary.json, lines on stdout.
 import { chromium } from 'playwright';
@@ -76,6 +78,11 @@ async function poll(fn, ms = 8000, step = 100) {
     await sleep(step);
   }
 }
+async function spy(p) {
+  return p.evaluate(() => { try { const a = window.__kettleAudio?.audio; if (!a) return false; if (a.__spied) return true; const orig = a.play.bind(a); window.__sounds = []; a.play = (n, o) => { window.__sounds.push(n); return orig(n, o); }; a.__spied = true; return true; } catch { return false; } });
+}
+const sounds = (p) => p.evaluate(() => (window.__sounds ?? []).slice());
+const clearSounds = (p) => p.evaluate(() => { window.__sounds = []; });
 const cnt = (arr, id) => arr.filter((x) => x === id).length;
 const short = (s) => (s ? String(s).slice(0, 8) : s);
 
@@ -134,20 +141,26 @@ async function runIteration(browser, c, it) {
   try {
     await openToday(A, `${base}/?debug#/`); await openToday(B, `${base}/?debug#/`);
     await sleep(700);
-    await startReal(A, 'Chapter 3 notes');
-    const id = await bothShow(A, B);
-    R.firstSessionId = id;
-    await snap('01-started');
-    if (!id) throw new Error('brew not shown in both tabs');
-    const P0 = (await storedState(A)).plannedMs; R.plannedAtStart = P0;
+    R.spyOk = [await spy(A), await spy(B)];
+    let id = null, P0 = null;
+    if (c !== 'g') {
+      await startReal(A, 'Chapter 3 notes');
+      id = await bothShow(A, B);
+      R.firstSessionId = id;
+      await snap('01-started');
+      if (!id) throw new Error('brew not shown in both tabs');
+      P0 = (await storedState(A)).plannedMs; R.plannedAtStart = P0;
+    }
 
     if (c === 'a') {
       await holdOn(B);
       await A.bringToFront(); await click(A, 'Add 5 minutes');
       R.preOk = await poll(async () => (await storedState(B))?.plannedMs === P0 + 5 * MIN && (await heldCount(B)) > 0 && (await planned(B)) === P0, 6000);
       await snap('02-pre-action (A +5 done, B behind)');
+      await clearSounds(B);
       await click(B, 'Pause');
       await sleep(600);
+      R.soundsB = await sounds(B);
       const sB = await snap('03-after-B-pause-before-release');
       await release(B);
       await poll(async () => { const a = await dump(A), b = await dump(B); return agree(a.memory, b.memory) && agree(a.memory, a.stored); }, 6000);
@@ -161,14 +174,17 @@ async function runIteration(browser, c, it) {
         kept_plus5_A_B_storage: [A_, B_, S].every((x) => x?.plannedMs === P0 + 5 * MIN),
         A_B_storage_agree: agree(A_, B_) && agree(A_, S) && agree(S, S2),
         remaining_gt_planned_minus_2min: S?.remainingMs > S?.plannedMs - 2 * MIN,
+        pause_sound_played_in_B_when_applied: (R.soundsB ?? []).includes('pause'),
       };
     } else if (c === 'b') {
       await holdOn(B);
       await click(A, 'Pause');
       R.preOk = await poll(async () => (await storedState(B))?.status === 'paused' && (await heldCount(B)) > 0 && (await status(B)) === 'running', 6000);
       await snap('02-pre-action (A paused, B behind, still shows running)');
+      await clearSounds(B);
       await click(B, 'Add 5 minutes');
       await sleep(600);
+      R.soundsB = await sounds(B);
       await snap('03-after-B-add5-before-release');
       await release(B);
       await poll(async () => { const a = await dump(A), b = await dump(B); return agree(a.memory, b.memory) && agree(a.memory, a.stored); }, 6000);
@@ -197,6 +213,10 @@ async function runIteration(browser, c, it) {
       const pre = await snap('02-pre-action (A ended brew 1, runs brew 2; B behind, shows brew 1)');
       const rawBefore = await rawStored(A);
       await B.bringToFront();
+      await clearSounds(B);
+      if (c === 'e') {
+        await B.evaluate(() => { const w = window; w.__sawFive = /whistles at/.test(document.body.textContent ?? ''); new MutationObserver(() => { if (/whistles at/.test(document.body.textContent ?? '')) w.__sawFive = true; }).observe(document.body, { subtree: true, childList: true, characterData: true }); });
+      }
       if (c === 'c') {
         R.bEnd = await endReal(B);
       } else if (c === 'f') {
@@ -207,8 +227,10 @@ async function runIteration(browser, c, it) {
         const notes = [];
         for (let i = 0; i < 6; i++) { notes.push(await B.evaluate(() => (document.body.innerText.match(/5 min\s+·\s+whistles at[^\n]*/g) ?? []).join(' | '))); await sleep(250); }
         R.plus5Note = [...new Set(notes)];
+        R.sawFiveObserver = await B.evaluate(() => !!window.__sawFive);
       }
       await sleep(600);
+      R.soundsB = await sounds(B);
       const rawMid = await rawStored(A);
       R.storageUnchangedByBAction = rawBefore === rawMid;
       await snap('03-after-B-action-before-release');
@@ -222,7 +244,7 @@ async function runIteration(browser, c, it) {
         brew2_running_A_B_storage: [A_, B_, S].every((x) => x?.status === 'running' && x?.sessionId === id2),
         A_B_storage_agree: agree(A_, B_) && agree(A_, S) && agree(S, S2),
         brew2_not_extended_or_ended: [A_, B_, S].every((x) => x?.plannedMs === P0),
-        ...(c === 'f' ? { brew2_not_paused: [A_, B_, S].every((x) => x?.status === 'running') } : {}),
+        ...(c === 'f' ? { brew2_not_paused: [A_, B_, S].every((x) => x?.status === 'running'), no_pause_or_resume_sound_in_B_when_dropped: !(R.soundsB ?? []).some((n) => n === 'pause' || n === 'resume') } : {}),
         B_shows_focus: f.B.hash === '#/focus',
         records_brew1_exactly_one_stored: cnt(f.A.recordsStored, id) === 1,
         records_brew1_exactly_one_A_memory: cnt(f.A.recordsMemory, id) === 1,
@@ -232,7 +254,51 @@ async function runIteration(browser, c, it) {
       if (c === 'e') {
         delete R.checks.records_brew1_exactly_one_stored; delete R.checks.records_brew1_exactly_one_A_memory; delete R.checks.records_brew1_exactly_one_B_memory; delete R.checks.no_record_for_brew2;
         R.checks.storage_byte_identical_after_B_click = !!R.storageUnchangedByBAction;
+        R.checks.no_plus5_note_ever_in_B = R.sawFiveObserver === false && (R.plus5Note ?? []).every((x) => x === '');
       }
+    } else if (c === 'g') {
+      await A.evaluate(() => window.__kettle.timer.getState().startBreak());
+      const brk = await poll(async () => { const x = await sid(A); return x && (await sid(B)) === x && (await A.evaluate(() => location.hash)) === '#/focus' && (await B.evaluate(() => location.hash)) === '#/focus' ? x : false; }, 10000);
+      if (!brk) throw new Error('break not shown in both tabs');
+      R.firstSessionId = brk;
+      await snap('01-break-in-both');
+      await holdOn(B);
+      await click(A, 'Start next brew');
+      const nextId = await poll(async () => { const x = await sid(A); return x && x !== brk && (await status(A)) === 'running' ? x : false; }, 8000);
+      R.secondSessionId = nextId;
+      R.preOk = await poll(async () => !!nextId && (await storedState(B))?.sessionId === nextId && (await heldCount(B)) > 0 && (await sid(B)) === brk, 6000);
+      await snap('02-pre-action (A pressed Next brew; B behind, still shows the break)');
+      const rawBefore = await rawStored(A);
+      await B.bringToFront();
+      await click(B, 'Start next brew');
+      await sleep(700);
+      const rawMid = await rawStored(A);
+      R.storageUnchangedByBAction = rawBefore === rawMid;
+      const s3 = await snap('03-after-B-next-brew-before-release');
+      await release(B);
+      await poll(async () => { const a = await dump(A), b = await dump(B); return agree(a.memory, b.memory) && agree(a.memory, a.stored) && b.memory?.sessionId === nextId; }, 6000);
+      await sleep(1000);
+      const s4 = await snap('04-after-release');
+      await ffBoth(A, B, 90_000);
+      await sleep(500);
+      await B.bringToFront();
+      await B.evaluate(() => { const w = window; w.__toasts = new Set(); const scan = () => { for (const m of document.body.innerText.match(/(Saved [^\n]*of focus[^\n]*|Kettle’s off[^\n]*|kept in this tab[^\n]*)/g) ?? []) w.__toasts.add(m); }; new MutationObserver(scan).observe(document.body, { subtree: true, childList: true, characterData: true }); });
+      R.bEnd = await endReal(B);
+      await poll(async () => (await B.evaluate(() => location.hash)) === '#/', 6000);
+      await sleep(1500);
+      R.toastsB = await B.evaluate(() => [...window.__toasts]);
+      const f = await snap('05-final (B ended the joined brew)');
+      R.checks = {
+        precondition_B_behind: !!R.preOk,
+        B_joined_A_brew_after_its_click: s3.B.memory?.sessionId === nextId && s3.B.memory?.status === 'running' && s3.A.memory?.sessionId === nextId,
+        A_storage_byte_identical_after_B_click: !!R.storageUnchangedByBAction,
+        no_second_brew_started_by_B: cnt(s4.A.recordsStored, nextId) === 0 && s4.A.memory?.sessionId === nextId && s4.B.memory?.sessionId === nextId,
+        A_B_storage_agree_after_release: agree(s4.A.memory, s4.B.memory) && agree(s4.A.memory, s4.A.stored),
+        saved_of_focus_toast_shown_in_B: (R.toastsB ?? []).some((x) => /Saved \d+ minutes? of focus/.test(x)),
+        B_went_home: f.B.hash === '#/',
+        one_record_for_joined_brew_everywhere: cnt(f.A.recordsStored, nextId) === 1 && cnt(f.A.recordsMemory, nextId) === 1 && cnt(f.B.recordsMemory, nextId) === 1,
+        idle_in_A_B_storage_at_the_end: [f.A.memory, f.B.memory, f.A.stored].every((x) => x?.status === 'idle'),
+      };
     } else if (c === 'd') {
       await ffBoth(A, B, 90_000);
       await sleep(500);
