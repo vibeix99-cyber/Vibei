@@ -1,0 +1,405 @@
+{
+ "label": "g-5560-control",
+ "base": "http://127.0.0.1:5560",
+ "case": "g",
+ "iteration": 4,
+ "loadAtStart": "13.55 13.20 13.63",
+ "t0": "21:05:12",
+ "steps": {
+  "01-break-in-both": {
+   "A": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "shortBreak",
+     "sessionId": "b_mvcvy4ln61d4be90",
+     "startedAt": 1792271117003,
+     "endsAt": 1792271417003,
+     "plannedMs": 300000,
+     "remainingMs": 300000,
+     "intention": "",
+     "lastEnded": null
+    },
+    "stored": {
+     "status": "running",
+     "phase": "shortBreak",
+     "sessionId": "b_mvcvy4ln61d4be90",
+     "startedAt": 1792271117003,
+     "endsAt": 1792271417003,
+     "plannedMs": 300000,
+     "remainingMs": 300000,
+     "intention": "",
+     "lastEnded": null
+    },
+    "recordsStored": [],
+    "recordsMemory": [],
+    "held": 0,
+    "holding": false,
+    "clockOffset": 0
+   },
+   "B": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "shortBreak",
+     "sessionId": "b_mvcvy4ln61d4be90",
+     "startedAt": 1792271117003,
+     "endsAt": 1792271417003,
+     "plannedMs": 300000,
+     "remainingMs": 300000,
+     "intention": "",
+     "lastEnded": null
+    },
+    "stored": {
+     "status": "running",
+     "phase": "shortBreak",
+     "sessionId": "b_mvcvy4ln61d4be90",
+     "startedAt": 1792271117003,
+     "endsAt": 1792271417003,
+     "plannedMs": 300000,
+     "remainingMs": 300000,
+     "intention": "",
+     "lastEnded": null
+    },
+    "recordsStored": [],
+    "recordsMemory": [],
+    "held": 0,
+    "holding": false,
+    "clockOffset": 0
+   }
+  },
+  "02-pre-action (A pressed Next brew; B behind, still shows the break)": {
+   "A": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcvy6h49e003ba5",
+     "startedAt": 1792271119432,
+     "endsAt": 1792272619432,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "",
+     "lastEnded": {
+      "sessionId": "b_mvcvy4ln61d4be90",
+      "reason": "skip"
+     }
+    },
+    "stored": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcvy6h49e003ba5",
+     "startedAt": 1792271119432,
+     "endsAt": 1792272619432,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "",
+     "lastEnded": {
+      "sessionId": "b_mvcvy4ln61d4be90",
+      "reason": "skip"
+     }
+    },
+    "recordsStored": [],
+    "recordsMemory": [],
+    "held": 0,
+    "holding": false,
+    "clockOffset": 0
+   },
+   "B": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "shortBreak",
+     "sessionId": "b_mvcvy4ln61d4be90",
+     "startedAt": 1792271117003,
+     "endsAt": 1792271417003,
+     "plannedMs": 300000,
+     "remainingMs": 300000,
+     "intention": "",
+     "lastEnded": null
+    },
+    "stored": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcvy6h49e003ba5",
+     "startedAt": 1792271119432,
+     "endsAt": 1792272619432,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "",
+     "lastEnded": {
+      "sessionId": "b_mvcvy4ln61d4be90",
+      "reason": "skip"
+     }
+    },
+    "recordsStored": [],
+    "recordsMemory": [],
+    "held": 2,
+    "holding": true,
+    "clockOffset": 0
+   }
+  },
+  "03-after-B-next-brew-before-release": {
+   "A": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcvy7t5fd28eea3",
+     "startedAt": 1792271121161,
+     "endsAt": 1792272621161,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "",
+     "lastEnded": {
+      "sessionId": "b_mvcvy4ln61d4be90",
+      "reason": "skip"
+     }
+    },
+    "stored": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcvy7t5fd28eea3",
+     "startedAt": 1792271121161,
+     "endsAt": 1792272621161,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "",
+     "lastEnded": {
+      "sessionId": "b_mvcvy4ln61d4be90",
+      "reason": "skip"
+     }
+    },
+    "recordsStored": [],
+    "recordsMemory": [],
+    "held": 0,
+    "holding": false,
+    "clockOffset": 0
+   },
+   "B": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcvy7t5fd28eea3",
+     "startedAt": 1792271121161,
+     "endsAt": 1792272621161,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "",
+     "lastEnded": {
+      "sessionId": "b_mvcvy4ln61d4be90",
+      "reason": "skip"
+     }
+    },
+    "stored": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcvy7t5fd28eea3",
+     "startedAt": 1792271121161,
+     "endsAt": 1792272621161,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "",
+     "lastEnded": {
+      "sessionId": "b_mvcvy4ln61d4be90",
+      "reason": "skip"
+     }
+    },
+    "recordsStored": [],
+    "recordsMemory": [],
+    "held": 2,
+    "holding": true,
+    "clockOffset": 0
+   }
+  },
+  "04-after-release": {
+   "A": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcvy7t5fd28eea3",
+     "startedAt": 1792271121161,
+     "endsAt": 1792272621161,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "",
+     "lastEnded": {
+      "sessionId": "b_mvcvy4ln61d4be90",
+      "reason": "skip"
+     }
+    },
+    "stored": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcvy7t5fd28eea3",
+     "startedAt": 1792271121161,
+     "endsAt": 1792272621161,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "",
+     "lastEnded": {
+      "sessionId": "b_mvcvy4ln61d4be90",
+      "reason": "skip"
+     }
+    },
+    "recordsStored": [],
+    "recordsMemory": [],
+    "held": 0,
+    "holding": false,
+    "clockOffset": 0
+   },
+   "B": {
+    "hash": "#/focus",
+    "memory": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcvy7t5fd28eea3",
+     "startedAt": 1792271121161,
+     "endsAt": 1792272621161,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "",
+     "lastEnded": {
+      "sessionId": "b_mvcvy4ln61d4be90",
+      "reason": "skip"
+     }
+    },
+    "stored": {
+     "status": "running",
+     "phase": "focus",
+     "sessionId": "s_mvcvy7t5fd28eea3",
+     "startedAt": 1792271121161,
+     "endsAt": 1792272621161,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "",
+     "lastEnded": {
+      "sessionId": "b_mvcvy4ln61d4be90",
+      "reason": "skip"
+     }
+    },
+    "recordsStored": [],
+    "recordsMemory": [],
+    "held": 0,
+    "holding": false,
+    "clockOffset": 0
+   }
+  },
+  "05-final (B ended the joined brew)": {
+   "A": {
+    "hash": "#/",
+    "memory": {
+     "status": "idle",
+     "phase": "focus",
+     "sessionId": null,
+     "startedAt": null,
+     "endsAt": null,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "",
+     "lastEnded": {
+      "sessionId": "s_mvcvy7t5fd28eea3",
+      "reason": "user"
+     }
+    },
+    "stored": {
+     "status": "idle",
+     "phase": "focus",
+     "sessionId": null,
+     "startedAt": null,
+     "endsAt": null,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "",
+     "lastEnded": {
+      "sessionId": "s_mvcvy7t5fd28eea3",
+      "reason": "user"
+     }
+    },
+    "recordsStored": [
+     "s_mvcvy7t5fd28eea3"
+    ],
+    "recordsMemory": [
+     "s_mvcvy7t5fd28eea3"
+    ],
+    "held": 0,
+    "holding": false,
+    "clockOffset": 90000
+   },
+   "B": {
+    "hash": "#/",
+    "memory": {
+     "status": "idle",
+     "phase": "focus",
+     "sessionId": null,
+     "startedAt": null,
+     "endsAt": null,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "",
+     "lastEnded": {
+      "sessionId": "s_mvcvy7t5fd28eea3",
+      "reason": "user"
+     }
+    },
+    "stored": {
+     "status": "idle",
+     "phase": "focus",
+     "sessionId": null,
+     "startedAt": null,
+     "endsAt": null,
+     "plannedMs": 1500000,
+     "remainingMs": 1500000,
+     "intention": "",
+     "lastEnded": {
+      "sessionId": "s_mvcvy7t5fd28eea3",
+      "reason": "user"
+     }
+    },
+    "recordsStored": [
+     "s_mvcvy7t5fd28eea3"
+    ],
+    "recordsMemory": [
+     "s_mvcvy7t5fd28eea3"
+    ],
+    "held": 0,
+    "holding": false,
+    "clockOffset": 90000
+   }
+  }
+ },
+ "checks": {
+  "precondition_B_behind": true,
+  "B_joined_A_brew_after_its_click": false,
+  "A_storage_byte_identical_after_B_click": false,
+  "no_second_brew_started_by_B": false,
+  "A_B_storage_agree_after_release": true,
+  "saved_of_focus_toast_shown_in_B": true,
+  "B_went_home": true,
+  "one_record_for_joined_brew_everywhere": false,
+  "idle_in_A_B_storage_at_the_end": true
+ },
+ "errors": [],
+ "spyOk": [
+  true,
+  true
+ ],
+ "firstSessionId": "b_mvcvy4ln61d4be90",
+ "secondSessionId": "s_mvcvy6h49e003ba5",
+ "preOk": true,
+ "storageUnchangedByBAction": false,
+ "bEnd": {
+  "sheet": true,
+  "confirm": true
+ },
+ "toastsB": [
+  "Saved 1 minute of focus",
+  "Kettle’s off. 1 minute of focus saved. "
+ ],
+ "pageErrors": 0,
+ "pass": false,
+ "loadAtEnd": "13.31 13.19 13.61",
+ "t1": "21:05:32"
+}

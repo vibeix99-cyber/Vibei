@@ -5,3 +5,22 @@
     A=idle/null/25m/ends=null
     B=idle/null/25m/ends=null
     S=idle/null/25m/ends=null  S(read in B)=idle/null/25m/ends=null  pageErrors=0
+[21:04:51] g-5560-control (g) it2 FAIL load 11.83 12.95 13.57->12.22 12.97 13.56 failed: B_joined_A_brew_after_its_click,A_storage_byte_identical_after_B_click,no_second_brew_started_by_B,one_record_for_joined_brew_everywhere
+    A=idle/null/25m/ends=null
+    B=idle/null/25m/ends=null
+    S=idle/null/25m/ends=null  S(read in B)=idle/null/25m/ends=null  pageErrors=0
+[21:05:10] g-5560-control (g) it3 FAIL load 11.56 12.82 13.51->13.55 13.20 13.63 failed: B_joined_A_brew_after_its_click,A_storage_byte_identical_after_B_click,no_second_brew_started_by_B,one_record_for_joined_brew_everywhere
+    A=idle/null/25m/ends=null
+    B=idle/null/25m/ends=null
+    S=idle/null/25m/ends=null  S(read in B)=idle/null/25m/ends=null  pageErrors=0
+[21:05:32] g-5560-control (g) it4 FAIL load 13.55 13.20 13.63->13.31 13.19 13.61 failed: B_joined_A_brew_after_its_click,A_storage_byte_identical_after_B_click,no_second_brew_started_by_B,one_record_for_joined_brew_everywhere
+    A=idle/null/25m/ends=null
+    B=idle/null/25m/ends=null
+    S=idle/null/25m/ends=null  S(read in B)=idle/null/25m/ends=null  pageErrors=0
+[21:05:49] g-5560-control (g) it5 FAIL load 13.36 13.20 13.62->12.99 13.12 13.58 failed: B_joined_A_brew_after_its_click,A_storage_byte_identical_after_B_click,no_second_brew_started_by_B,one_record_for_joined_brew_everywhere
+    A=idle/null/25m/ends=null
+    B=idle/null/25m/ends=null
+    S=idle/null/25m/ends=null  S(read in B)=idle/null/25m/ends=null  pageErrors=0
+### case (g) g-5560-control: pass 0/5 {"precondition_B_behind":5,"B_joined_A_brew_after_its_click":0,"A_storage_byte_identical_after_B_click":0,"no_second_brew_started_by_B":0,"A_B_storage_agree_after_release":5,"saved_of_focus_toast_shown_in_B":5,"B_went_home":5,"one_record_for_joined_brew_everywhere":0,"idle_in_A_B_storage_at_the_end":5}
+### done g-5560-control 21:05:49 load 12.99 13.12 13.58
+### end 21:05:50 UTC; exit=0; load:  21:05:50 up  5:15,  0 user,  load average: 12.99, 13.12, 13.58
