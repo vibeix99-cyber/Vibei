@@ -110,3 +110,21 @@ Failure snapshots: `A-notice-fail-repeat{0,4,6}.error-context.txt` (an ordinary 
 **The whole `notice-strip.spec.ts` once** (stage D, `D-notice-whole.log.txt`, `D-notice-whole.json.txt`): `--project=chromium --workers=2` as the spec's header says, no burners, the other lead's job beside it. **25/25 passed** (12.5 min), including 844×390 dark 200 % (56.7 s) and 844×390 light 200 % reduced motion (49.1 s). Load 6.00 11.40 12.18 (18:34:16) → 6.56 7.75 9.87 (18:46:48). This closes the maker's open item §5.2 (the whole file was not run) for the unloaded case; it does not bear on the under-load bar.
 
 With the maker's two runs this is three independent samples of the final helper at this configuration under load: **9/10, 7/10** (mine), and with `a6b3790` 6/10. The final code does not meet "each test must pass 10/10 under load", and my run does not support the reading that one failure in ten is a rare tail.
+
+### 4.1 The remaining `press()` failure, observed (my diagnostic run)
+
+The maker left the cause unobserved. I ran the maker's diagnostic copy (`scripts/mkdiag.py` on the trial spec, only the screenshot path changed; `E-diag.notice-strip.spec.ts.txt`) under the same load: stage E, `E-diag-underload.log.txt`, `E-diag844-x10.json.txt`, 844×390 dark 200 % ×10, `--workers=2` + 4 burners (PIDs 15442–15445, stopped and gone), load 6.36 7.69 9.84 (18:46:53) → 10.43 10.21 10.39 (18:51:37).
+
+**Result: 7/10 again; the 3 failures are identical** (6.1 s, 5.8 s, 6.1 s), at the first `press()` (the composer field):
+
+| Read | Field | What is on top at its centre | Page |
+|---|---|---|---|
+| the re-check in round 0 (page time 1.7–1.9 s) | top 296, bottom 348 of 390: **wholly in view** | `p._ctaNote` "Then a 5 min tea break. Change…", inside **`sticky div._ctaDock`**: the docked Start's note | `scrollY` 0, no dialog, no leaving layer, nothing inert, `#/` |
+| `aim again` 1 … 8 (2.5 to 5.1 s) | the same box, unmoved | the same, every time | the same |
+| the failure (5.5–5.9 s) | the same | the same | the same (screenshot `E-diag-fail-1.png`) |
+
+So the field is **not** briefly crossed and **not** out of the view: it sits, still, under the Today page's own docked Start (`.ctaDock`, `position: sticky`, `z-index: 3`, `src/screens/home/Home.module.css:439`), for the whole 2+ s of re-reads, and would stay there until the page is scrolled. Neither of the maker's two mechanisms (wait; walk back if out of view) can cure that state, which is why the rescroll commit moved 6/10 only to 9/10 and 7/10.
+
+**Why the field was on top a moment earlier (inferred, consistent with every log):** the helper skipped the wheel walk, so its first read found the field on top at `scrollY` 0, while the final state at `scrollY` 0 has the field under the dock. In passing runs the walk is taken (the maker's injection logs show `scrollY` 180 at this press). The Today dock changes mode after boot: `Composer.tsx` measures the dock in a `useLayoutEffect` + `ResizeObserver` and sets `data-tall` when it is taller than 60 % of the screen, which takes the dock out of the sticky position into the page flow (`Home.module.css:1013`); at 844×390 @200 % the settled dock is under that line (~210 of 390 px), so it ends docked. Under CPU load that measurement settles after the test's `ready()` and `document.fonts.ready`, i.e. after the first read. Stage F (below, if it ran) logs `data-tall` and the dock's box at the first read to confirm this; the defect does not depend on it.
+
+**Classification.** A test race with the page's boot-time layout, the same failure as W3R1 §9 item 3 (same field, same first `press()`, same words, before any notice exists) and as the base failure in TH's run at 844×390 light 200 % reduced motion (`W3R2/TH/logs/base-notice-suite.log.txt`). Not a new failure introduced by `21e5644`, and not caused by any `src/` change (src is untouched). It is pre-existing product behaviour that a test must be robust to; it is not a product defect of this round (see §5, product note).
