@@ -1,0 +1,323 @@
+### :5560 start 00:23:00 load 4.54 5.09 6.43
+
+Running 264 tests using 2 workers
+
+  ✓    1 [chromium] › .tmp/lead5-final/full/chai3d.spec.ts:72:3 › 3D Chai: the model replaces the procedural Chai › high tier: loads, validates and swaps in place, awake = eyes_open, on the cushion (13.8s)
+  ✓    3 [chromium] › .tmp/lead5-final/full/chai3d.spec.ts:85:3 › 3D Chai: the face reads at evening and night (W3R1 · N) › the fur self-fill follows the hour (day unchanged, stronger at dusk and night); eyes and nose untouched (43.1s)
+  ✓    4 [chromium] › .tmp/lead5-final/full/chai3d.spec.ts:112:3 › 3D Chai: fallbacks keep the procedural Chai › 404: procedural Chai, no error, the room is live (13.5s)
+  ✓    2 [chromium] › .tmp/lead5-final/full/a11y.spec.ts:61:3 › axe: no serious/critical violations in any state (light) (1.2m)
+  ✓    5 [chromium] › .tmp/lead5-final/full/chai3d.spec.ts:125:3 › 3D Chai: fallbacks keep the procedural Chai › slow network: the first frame is the procedural Chai; after 8 s the load gives up and it stays (18.4s)
+  ✓    7 [chromium] › .tmp/lead5-final/full/chai3d.spec.ts:141:3 › 3D Chai: fallbacks keep the procedural Chai › a file that fails validation (the r0 model: no eyes_sip) keeps the procedural Chai (18.0s)
+  ✓    8 [chromium] › .tmp/lead5-final/full/chai3d.spec.ts:154:3 › 3D Chai: fallbacks keep the procedural Chai › the loader chunk itself fails to load: procedural Chai, no error (16.6s)
+  ✓    9 [chromium] › .tmp/lead5-final/full/chai3d.spec.ts:167:3 › 3D Chai: fallbacks keep the procedural Chai › 3D off: the static drawing, no engine, no model request (10.6s)
+  ✓   10 [chromium] › .tmp/lead5-final/full/chai3d.spec.ts:176:3 › 3D Chai: fallbacks keep the procedural Chai › low tier: the model too (liteified), one request; the room is live first (13.7s)
+  ✓    6 [chromium] › .tmp/lead5-final/full/a11y.spec.ts:61:3 › axe: no serious/critical violations in any state (dark) (1.2m)
+  ✓   11 [chromium] › .tmp/lead5-final/full/chai3d.spec.ts:197:3 › 3D Chai: fallbacks keep the procedural Chai › default tier on this machine (auto → low on SwiftShader): the model, with no frame without Chai (19.3s)
+  ✓   12 [chromium] › .tmp/lead5-final/full/a11y.spec.ts:73:1 › pointer targets are at least 24×24 px or meet a WCAG 2.5.8 exception (47.4s)
+  ✓   13 [chromium] › .tmp/lead5-final/full/chai3d.spec.ts:227:3 › 3D Chai: fallbacks keep the procedural Chai › WebGL context lost and restored: the engine is rebuilt with the model from memory, no second request (29.9s)
+  ✓   15 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:218:3 › I01 session time survives reload, suspension and late return › pause → reload → resume: the paused time is kept and the deadline moves by exactly the pause (9.7s)
+  ✓   16 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:245:3 › I01 session time survives reload, suspension and late return › +5 → reload: the extension, its deadline and the gauge segment survive; completion records the full 30 min once (7.1s)
+  ✓   17 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:268:3 › I01 session time survives reload, suspension and late return › suspended tab (a real Page Lifecycle freeze) across the end: one completion right after resume, at the real end, "while away" summary (18.1s)
+  ✓   14 [chromium] › .tmp/lead5-final/full/a11y.spec.ts:110:1 › short screen (375×667): every control can be scrolled clear of sticky chrome, no sideways scroll (45.2s)
+  ✓   18 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:310:3 › I01 session time survives reload, suspension and late return › two tabs, the leading one frozen across the end: the other completes it once; the frozen one wakes up and does not add a second (18.0s)
+  ✓   20 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:341:3 › I01 session time survives reload, suspension and late return › late return: an extended brew that ended 2 h ago while the app was closed completes once, at its real end, with the right minutes (5.9s)
+  ✓   21 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:374:3 › I01 session time survives reload, suspension and late return › late return to a paused brew: nothing completes; the same time is waiting (3.3s)
+  ✓   22 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:396:3 › I01 exactly once › repeated finish / tick / end / pause at 0:00 and a double-clicked Tea time: one record, one grant, one break (7.6s)
+  ✓   23 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:431:3 › I01 exactly once › reload during the whistle and again on the summary: one record, rewards granted once, the summary still there (7.6s)
+  ✓   24 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:460:3 › I01 exactly once › two tabs on one profile: one record and one grant; both show the same summary; Tea time in one moves both (13.7s)
+  ✓   25 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:503:3 › I02 End, dismissal and task disposition › dismissing the End sheet (Esc, backdrop, Keep brewing) or leaving the screen never stops the brew (11.8s)
+  ✓   26 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:544:3 › I02 End, dismissal and task disposition › End early after 12 active minutes (with a pause): 12 minutes saved as an unfinished brew, 12 leaves, no full-brew bonus, task kept (6.1s)
+  ✓   27 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:576:3 › I02 End, dismissal and task disposition › End within the first minute: the sheet says nothing will be saved, and nothing is (4.7s)
+  ✓   28 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:587:3 › I02 End, dismissal and task disposition › Done / Carry forward are reversible; the carried task returns on Home; editing it and Mark done → Undo never add a focus record (10.9s)
+  ✓   29 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:638:3 › I02 End, dismissal and task disposition › Skip break, Next brew and That’s all for now do what they say, and never record a skipped break (18.2s)
+  ✓   30 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:782:3 › I03 data safety › export → reset (explicit confirmation) → import restores brews, settings and every reward exactly (17.5s)
+  ✓   31 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:841:3 › I03 data safety › invalid files change nothing and say why (not JSON, another app, truncated, newer version, huge, empty, damaged) (11.5s)
+  ✓   32 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:881:3 › I03 data safety › storage full: a brew that completes still reaches its summary, once; saved data stays intact; a backup carries the brew; making room saves it (12.2s)
+  ✓   33 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:917:3 › I03 data safety › storage full: a restore that cannot be saved is refused with a plain reason and changes nothing (7.4s)
+  ✓   34 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:943:3 › I03 data safety › “Everything lives on this device”: a brew, an export and an import send nothing anywhere (7.2s)
+LVW {"t":979,"hash":"#/","had":null,"v":"2026-10-18","ok":true}
+LVW {"t":981,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+LVW {"t":713,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+LVW {"t":713,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+  ✓   19 [chromium] › .tmp/lead5-final/full/a11y.spec.ts:177:1 › keyboard-only critical journey with focus restoration (2.7m)
+LVW {"t":6642,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+LVW {"t":6643,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+  ✓   36 [chromium] › .tmp/lead5-final/full/a11y.spec.ts:292:1 › welcome: first brew from the keyboard alone (3.3s)
+LVW {"t":20475,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+LVW {"t":20477,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+  ✓   37 [chromium] › .tmp/lead5-final/full/a11y.spec.ts:303:1 › live regions stay quiet while a brew runs (no spoken countdown) (14.0s)
+  ✓   35 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:1071:5 › I03 storage-full warning is a banner in the page (phone 390×844) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room (28.5s)
+LVW {"t":1036,"hash":"#/","had":null,"v":"2026-10-18","ok":true}
+LVW {"t":1037,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+  ✓   39 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:1171:5 › I03 storage-full warning is a banner in the page (phone 390×844) › a banner that appears while Today is open moves nothing under the finger (Mark done with storage full) (6.3s)
+LVW {"t":805,"hash":"#/","had":null,"v":"2026-10-18","ok":true}
+LVW {"t":806,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+LVW {"t":831,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+LVW {"t":831,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+  ✓   38 [chromium] › .tmp/lead5-final/full/a11y.spec.ts:332:3 › a toast never covers the session controls or the summary footer (390×844) (15.6s)
+LVW {"t":6213,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+LVW {"t":6213,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+  ✓   41 [chromium] › .tmp/lead5-final/full/a11y.spec.ts:332:3 › a toast never covers the session controls or the summary footer (375×667) (13.3s)
+LVW {"t":20018,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+LVW {"t":20019,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+  ✓   40 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:1071:5 › I03 storage-full warning is a banner in the page (phone 375×667) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room (27.5s)
+LVW {"t":849,"hash":"#/","had":null,"v":"2026-10-18","ok":true}
+LVW {"t":850,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+LVW {"t":1734,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+LVW {"t":1734,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+  ✓   43 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:1171:5 › I03 storage-full warning is a banner in the page (phone 375×667) › a banner that appears while Today is open moves nothing under the finger (Mark done with storage full) (3.4s)
+LVW {"t":1043,"hash":"#/","had":null,"v":"2026-10-18","ok":true}
+LVW {"t":1044,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+LVW {"t":1125,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+LVW {"t":1126,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+LVW {"t":1032,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+LVW {"t":1033,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+  ✓   42 [chromium] › .tmp/lead5-final/full/a11y.spec.ts:371:3 › toasts never cover the break-over controls, carried task included (390×844) (18.8s)
+LVW {"t":8486,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+LVW {"t":8486,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+LVW {"t":22790,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+LVW {"t":22790,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+  ✓   45 [chromium] › .tmp/lead5-final/full/a11y.spec.ts:371:3 › toasts never cover the break-over controls, carried task included (375×667) (19.4s)
+  ✓   44 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:1071:5 › I03 storage-full warning is a banner in the page (desktop 1440×900) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room (29.5s)
+  ✓   46 [chromium] › .tmp/lead5-final/full/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (390×844, 100 % text) (3.4s)
+LVW {"t":1149,"hash":"#/","had":null,"v":"2026-10-18","ok":true}
+LVW {"t":1151,"hash":"#/","had":"2026-10-18","v":"2026-10-18","ok":true}
+  ✓   48 [chromium] › .tmp/lead5-final/full/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (390×844, 200 % text) (3.9s)
+  ✓   47 [chromium] › .tmp/lead5-final/full/integrity.spec.ts:1171:5 › I03 storage-full warning is a banner in the page (desktop 1440×900) › a banner that appears while Today is open moves nothing under the finger (Mark done with storage full) (7.9s)
+  ✓   49 [chromium] › .tmp/lead5-final/full/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (375×667, 100 % text) (3.6s)
+  ✓   50 [chromium] › .tmp/lead5-final/full/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (375×667, 200 % text) (3.8s)
+  ✓   52 [chromium] › .tmp/lead5-final/full/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (844×390, 100 % text) (3.7s)
+  ✓   53 [chromium] › .tmp/lead5-final/full/w2-firstvisit.spec.ts:42:5 › first visit: one plain line, one primary action, the 15-minute brew (844×390, 200 % text) (3.8s)
+  ✓   51 [chromium] › .tmp/lead5-final/full/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (390×844, 100 % text, light) (14.4s)
+  ✓   55 [chromium] › .tmp/lead5-final/full/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (390×844, 100 % text, dark) (14.2s)
+  ✓   54 [chromium] › .tmp/lead5-final/full/w2-room.spec.ts:87:3 › Focus backdrop: earned items without the live 3D room › 3D off: the window still shows every earned window-visible item (17.6s)
+  ✓   56 [chromium] › .tmp/lead5-final/full/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (390×844, 200 % text, light) (15.5s)
+  ✓   57 [chromium] › .tmp/lead5-final/full/w2-room.spec.ts:96:3 › Focus backdrop: earned items without the live 3D room › 3D loading: the still shown before the engine is ready carries the same items (18.4s)
+  ✓   58 [chromium] › .tmp/lead5-final/full/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (390×844, 200 % text, dark) (15.9s)
+  ✓   59 [chromium] › .tmp/lead5-final/full/w2-room.spec.ts:111:3 › Focus backdrop: earned items without the live 3D room › items never stand on the bare sky: no layer is drawn before the base room still has decoded (17.8s)
+  ✓   60 [chromium] › .tmp/lead5-final/full/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (375×667, 100 % text, light) (14.8s)
+  ✓   62 [chromium] › .tmp/lead5-final/full/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (375×667, 100 % text, dark) (15.1s)
+  ✓   61 [chromium] › .tmp/lead5-final/full/w2-room.spec.ts:144:3 › Focus backdrop: earned items without the live 3D room › 3D failure (WebGL context lost): the still that takes over carries the same items (36.8s)
+  ✓   63 [chromium] › .tmp/lead5-final/full/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (375×667, 200 % text, light) (15.6s)
+  ✓   64 [chromium] › .tmp/lead5-final/full/w2-room.spec.ts:170:3 › Nook hint tells the truth › 3D off: no drag-and-tap promise over the drawing (3.9s)
+  ✓   66 [chromium] › .tmp/lead5-final/full/w2-room.spec.ts:180:3 › Nook hint tells the truth › no WebGL: the same truthful hint (4.5s)
+  ✓   67 [chromium] › .tmp/lead5-final/full/w2-room.spec.ts:196:3 › Nook hint tells the truth › 3D on: the hint is unchanged (4.4s)
+  ✓   65 [chromium] › .tmp/lead5-final/full/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (375×667, 200 % text, dark) (15.1s)
+  ✓   68 [chromium] › .tmp/lead5-final/full/w2-summary.spec.ts:192:5 › 375×667 @100 %, routine day: no line starts under the footer on arrival; the final line clears it; nothing covers anything (13.5s)
+  ✓   69 [chromium] › .tmp/lead5-final/full/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (844×390, 100 % text, light) (16.0s)
+  ✓   70 [chromium] › .tmp/lead5-final/full/w2-summary.spec.ts:192:5 › 375×667 @100 %, big day: no line starts under the footer on arrival; the final line clears it; nothing covers anything (18.4s)
+  ✓   71 [chromium] › .tmp/lead5-final/full/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (844×390, 100 % text, dark) (15.3s)
+  ✓   72 [chromium] › .tmp/lead5-final/full/w2-summary.spec.ts:192:5 › 375×667 @200 %, routine day: no line starts under the footer on arrival; the final line clears it; nothing covers anything (13.2s)
+  ✓   73 [chromium] › .tmp/lead5-final/full/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (844×390, 200 % text, light) (15.0s)
+  ✓   74 [chromium] › .tmp/lead5-final/full/w2-summary.spec.ts:192:5 › 375×667 @200 %, big day: no line starts under the footer on arrival; the final line clears it; nothing covers anything (18.2s)
+  ✓   75 [chromium] › .tmp/lead5-final/full/w2-home.spec.ts:115:7 › Brew length: every option on screen at rest, clear of the docked start, tapped and keyed (844×390, 200 % text, dark) (15.7s)
+  ✓   77 [chromium] › .tmp/lead5-final/full/w2-home.spec.ts:203:5 › first visit: one plain line, one primary action, the 15-minute brew (390×844, 100 % text) (4.5s)
+  ✓   76 [chromium] › .tmp/lead5-final/full/w2-summary.spec.ts:222:3 › 375×667 @100 %, a brew with a task (the K02 layout, Wave-1 #1 exactly): the third pill row does not start under the footer (11.5s)
+  ✓   78 [chromium] › .tmp/lead5-final/full/w2-home.spec.ts:203:5 › first visit: one plain line, one primary action, the 15-minute brew (390×844, 200 % text) (4.0s)
+  ✓   80 [chromium] › .tmp/lead5-final/full/w2-home.spec.ts:203:5 › first visit: one plain line, one primary action, the 15-minute brew (375×667, 100 % text) (3.5s)
+  ✓   81 [chromium] › .tmp/lead5-final/full/w2-home.spec.ts:203:5 › first visit: one plain line, one primary action, the 15-minute brew (375×667, 200 % text) (3.2s)
+  ✓   79 [chromium] › .tmp/lead5-final/full/w2-summary.spec.ts:222:3 › 375×667 @100 %, a brew with a task (the K02 layout, Wave-1 #1 exactly), reduced motion: the third pill row does not start under the footer (9.3s)
+  ✓   82 [chromium] › .tmp/lead5-final/full/w2-home.spec.ts:203:5 › first visit: one plain line, one primary action, the 15-minute brew (844×390, 100 % text) (3.6s)
+  ✓   84 [chromium] › .tmp/lead5-final/full/w2-home.spec.ts:203:5 › first visit: one plain line, one primary action, the 15-minute brew (844×390, 200 % text) (3.6s)
+  ✓   83 [chromium] › .tmp/lead5-final/full/w2-summary.spec.ts:237:1 › big day: the unlock is the one highlight, whole on arrival; all seven rewards stay on the summary (16.1s)
+  ✓   85 [chromium] › .tmp/lead5-final/full/w3-intention-race.spec.ts:64:1 › a tab that has not yet taken in another tab’s new brew saves its intention: the brew survives in both tabs, one record (13.7s)
+  ✓   86 [chromium] › .tmp/lead5-final/full/w2-summary.spec.ts:251:1 › a milestone day without an unlock: the biggest milestone leads, highlighted and whole on arrival; the rest stay compact (10.5s)
+  ✓   87 [chromium] › .tmp/lead5-final/full/w3-intention-race.spec.ts:119:1 › F1X-D1: B picks another brew length and starts; A (idle, its timer events held) takes in the length change first: the brew survives, one record (13.9s)
+  ✓   88 [chromium] › .tmp/lead5-final/full/w2-summary.spec.ts:279:7 › 390×844 @100 %, routine day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (13.4s)
+  ✓   89 [chromium] › .tmp/lead5-final/full/w3-settings.spec.ts:39:1 › preferences persist across a reload; Reset everything returns each to its default (21.2s)
+  ✓   90 [chromium] › .tmp/lead5-final/full/w2-summary.spec.ts:279:7 › 390×844 @100 %, big day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (17.8s)
+  ✓   91 [chromium] › .tmp/lead5-final/full/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (390×844, light); inert controls are not Tab stops (3.4s)
+  ✓   93 [chromium] › .tmp/lead5-final/full/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (390×844, dark); inert controls are not Tab stops (4.3s)
+  ✓   94 [chromium] › .tmp/lead5-final/full/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (1440×900, light); inert controls are not Tab stops (4.1s)
+  ✓   92 [chromium] › .tmp/lead5-final/full/w2-summary.spec.ts:279:7 › 390×844 @100 %, task day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (13.6s)
+  ✓   95 [chromium] › .tmp/lead5-final/full/w3-settings.spec.ts:158:5 › keyboard focus is always visible on Settings (1440×900, dark); inert controls are not Tab stops (4.4s)
+  ✓   97 [chromium] › .tmp/lead5-final/full/w3-settings.spec.ts:194:1 › a row whose switch cannot change does not react to hover or press; a live row does (4.6s)
+  ✓   98 [chromium] › .tmp/lead5-final/full/w3-settings.spec.ts:233:1 › a pressed segment reads as pressed: unlike hover and unlike the selected one (3.4s)
+  ✓   96 [chromium] › .tmp/lead5-final/full/w2-summary.spec.ts:279:7 › 390×844 @200 %, routine day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (10.7s)
+  ✓   99 [chromium] › .tmp/lead5-final/full/w3-settings.spec.ts:259:1 › forced colours: the focused field keeps its ring and the selected segment stays visible (2.9s)
+  ✓  101 [chromium] › .tmp/lead5-final/full/w3-settings.spec.ts:286:1 › Settings never says "streak", and sound and nudges say what they cannot do (3.9s)
+  ✓  102 [chromium] › .tmp/lead5-final/full/w3-settings.spec.ts:322:1 › an iPhone-like Safari tab (no notifications, no vibration API): Sounds agrees with the Nudges line, Haptics names the browser (2.9s)
+  ✓  103 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:102:5 › Delete this brew? at 375×667 with 200 % text › both choices can be tapped, and Tab reaches them in a loop (7.3s)
+  ✓  100 [chromium] › .tmp/lead5-final/full/w2-summary.spec.ts:279:7 › 390×844 @200 %, big day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (18.2s)
+  ✓  104 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:151:5 › Delete this brew? at 375×667 with 200 % text › a tap on Delete deletes (7.7s)
+  ✓  106 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:102:5 › Delete this brew? at 390×844 with 200 % text › both choices can be tapped, and Tab reaches them in a loop (9.0s)
+  ✓  105 [chromium] › .tmp/lead5-final/full/w2-summary.spec.ts:279:7 › 390×844 @200 %, task day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (17.0s)
+  ✓  107 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:151:5 › Delete this brew? at 390×844 with 200 % text › a tap on Delete deletes (7.1s)
+  ✓  109 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:102:5 › Delete this brew? at 844×390 with 200 % text › both choices can be tapped, and Tab reaches them in a loop (10.0s)
+  ✓  108 [chromium] › .tmp/lead5-final/full/w2-summary.spec.ts:279:7 › 375×667 @100 %, task day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (14.0s)
+  ✓  110 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:151:5 › Delete this brew? at 844×390 with 200 % text › a tap on Delete deletes (8.3s)
+  ✓  111 [chromium] › .tmp/lead5-final/full/w2-summary.spec.ts:279:7 › 375×667 @200 %, task day: Chai and the kettle are wholly above the sheet on arrival; the minutes are whole; no line is cut (14.2s)
+  ✓  112 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:102:5 › Delete this brew? at 1440×900 with 200 % text › both choices can be tapped, and Tab reaches them in a loop (11.9s)
+  ✓  113 [chromium] › .tmp/lead5-final/full/w2-summary.spec.ts:295:1 › the highlight is quieter than the minutes and Tea time (milestone day, 375×667) (10.5s)
+  ✓  114 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:151:5 › Delete this brew? at 1440×900 with 200 % text › a tap on Delete deletes (14.7s)
+  ✓  115 [chromium] › .tmp/lead5-final/full/w2-summary.spec.ts:323:1 › warm days, never "streak": what the big day summary shows and what a screen reader hears (19.8s)
+  ✓  116 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:102:5 › Delete this brew? at 375×667 › both choices can be tapped, and Tab reaches them in a loop (12.2s)
+  ✓  117 [chromium] › .tmp/lead5-final/full/w3r2-stale-tab.spec.ts:121:1 › pause in the lagging tab: the brew current in storage pauses, with its real remaining time (the other tab’s +5 kept) (6.7s)
+  ✓  118 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:151:5 › Delete this brew? at 375×667 › a tap on Delete deletes (7.3s)
+  ✓  119 [chromium] › .tmp/lead5-final/full/w3r2-stale-tab.spec.ts:145:1 › add 5 in the lagging tab after the other tab ended its brew and started another: nothing added, the newer brew untouched, the lagging tab shows it (6.8s)
+  ✓  120 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:102:5 › Delete this brew? at 390×844 with 200 % text, fonts blocked › both choices can be tapped, and Tab reaches them in a loop (11.2s)
+  ✓  121 [chromium] › .tmp/lead5-final/full/w3r2-stale-tab.spec.ts:168:1 › Next brew in the lagging tab after the other tab already did: it joins that brew; ending it there later still says so and goes home (10.8s)
+  ✓  122 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:151:5 › Delete this brew? at 390×844 with 200 % text, fonts blocked › a tap on Delete deletes (7.6s)
+  ✓  123 [chromium] › .tmp/lead5-final/full/w3r2-stale-tab.spec.ts:199:1 › end in the lagging tab after the other tab ended its brew and started another: the newer brew is not ended, the lagging tab shows it (7.8s)
+  ✓  124 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:102:5 › Delete this brew? at 375×667 with 200 % text, fonts blocked › both choices can be tapped, and Tab reaches them in a loop (9.4s)
+  ✓  125 [chromium] › .tmp/lead5-final/full/w3r2-stale-tab.spec.ts:215:1 › start in the lagging tab (Today, Enter) while the other tab’s brew runs: it does not replace that brew; it joins and shows it (7.1s)
+  ✓  127 [chromium] › .tmp/lead5-final/full/whistle.spec.ts:45:1 › no audio context before the first gesture; the first tap unlocks it (3.5s)
+  ✓  126 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:151:5 › Delete this brew? at 375×667 with 200 % text, fonts blocked › a tap on Delete deletes (7.1s)
+  ✓  129 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:207:3 › Stats (veteran): the summary and tiles match the history recomputed from its records (5.5s)
+  ✓  130 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:207:3 › Stats (celebrate): the summary and tiles match the history recomputed from its records (5.3s)
+  ✓  128 [chromium] › .tmp/lead5-final/full/whistle.spec.ts:53:1 › the whistle sounds once at completion, and not again after a reload of the summary (12.6s)
+  ✓  131 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:207:3 › Stats (newbie): the summary and tiles match the history recomputed from its records (3.2s)
+  ✓  132 [chromium] › .tmp/lead5-final/full/whistle.spec.ts:76:1 › late return: one whistle, the while-away summary, nothing more on later visibility changes (8.9s)
+  ✓  133 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:229:1 › a brew that ends after midnight belongs to the day it ended on, everywhere on Stats (6.3s)
+  ✓  135 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:255:1 › a brew ended early at 12:40 counts 12 minutes in History, as in its leaves and the End sheet (6.2s)
+  ✓  134 [chromium] › .tmp/lead5-final/full/whistle.spec.ts:100:1 › another tab in front (page hidden): the whistle is still scheduled once (8.3s)
+  ✓  136 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:299:3 › Stats (empty) never says "streak" (3.7s)
+  ✓  138 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:299:3 › Stats (newbie) never says "streak" (4.3s)
+  ✓  137 [chromium] › .tmp/lead5-final/full/whistle.spec.ts:120:1 › muted: no sound at all, the visual whistle and summary remain (8.7s)
+  ✓  139 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:299:3 › Stats (veteran) never says "streak" (4.7s)
+  ✓  141 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:299:3 › Stats (celebrate) never says "streak" (4.6s)
+  ✓  140 [chromium] › .tmp/lead5-final/full/whistle.spec.ts:165:1 › notification permission is asked only from the Nudges switch: not on load, not before or after the first brew (7.8s)
+  ✓  142 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:299:3 › Stats (atRisk) never says "streak" (4.9s)
+  ✓  143 [chromium] › .tmp/lead5-final/full/whistle.spec.ts:183:1 › denied: Settings says so, shows the browser path, and turning it on later works (3.8s)
+  ✓  145 [chromium] › .tmp/lead5-final/full/whistle.spec.ts:208:1 › unsupported: the switch is off and disabled, and says what happens instead (2.9s)
+  ✓  144 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:307:1 › the History delete dialog speaks of warm days, and the at-risk card invites without a countdown (7.1s)
+  ✓  147 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:348:5 › Overview tiles at 390×844 with 200 % text › every tile text fits once the fonts are in (4.7s)
+  ✓  148 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:348:5 › Overview tiles at 375×667 with 200 % text › every tile text fits once the fonts are in (3.1s)
+  ✓  149 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:348:5 › Overview tiles at 844×390 with 200 % text › every tile text fits once the fonts are in (3.4s)
+  ✓  146 [chromium] › .tmp/lead5-final/full/break-reach.spec.ts:201:5 › 200 % text, 375×667 light, Mon: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (17.9s)
+  ✓  150 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:365:5 › Stats before the web fonts arrive, 390×844, 200 % text › the page stays the width of the screen and the tiles fit (fonts blocked) (6.0s)
+  ✓  152 [chromium] › .tmp/lead5-final/full/w3-stats.spec.ts:365:5 › Stats before the web fonts arrive, 375×667, 200 % text › the page stays the width of the screen and the tiles fit (fonts blocked) (6.5s)
+  ✓  151 [chromium] › .tmp/lead5-final/full/break-reach.spec.ts:201:5 › 200 % text, 375×667 light, Tue: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (17.0s)
+  ✓  153 [chromium] › .tmp/lead5-final/full/statusbar.spec.ts:65:3 › resize or rotation to 375×667 re-fits the row: one tight row, no sideways scroll (light) (23.9s)
+  ✓  154 [chromium] › .tmp/lead5-final/full/break-reach.spec.ts:201:5 › 200 % text, 375×667 light, Wed: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (16.8s)
+  ✓  156 [chromium] › .tmp/lead5-final/full/break-reach.spec.ts:201:5 › 200 % text, 375×667 light, Thu: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (17.5s)
+  ✓  157 [chromium] › .tmp/lead5-final/full/break-reach.spec.ts:201:5 › 200 % text, 375×667 light, Fri: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (16.5s)
+  ✓  155 [chromium] › .tmp/lead5-final/full/statusbar.spec.ts:106:3 › large text with large leaf totals never pushes "Level NN" past the screen (light) (47.3s)
+  ✓  158 [chromium] › .tmp/lead5-final/full/break-reach.spec.ts:201:5 › 200 % text, 375×667 light, Sat: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (16.8s)
+  ✓  160 [chromium] › .tmp/lead5-final/full/break-reach.spec.ts:201:5 › 200 % text, 375×667 light, Sun: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (16.8s)
+  ✓  159 [chromium] › .tmp/lead5-final/full/statusbar.spec.ts:65:3 › resize or rotation to 375×667 re-fits the row: one tight row, no sideways scroll (dark) (23.5s)
+  ✓  161 [chromium] › .tmp/lead5-final/full/break-reach.spec.ts:201:5 › 200 % text, 390×844 dark, Mon: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (16.6s)
+  ✓  163 [chromium] › .tmp/lead5-final/full/break-reach.spec.ts:201:5 › 200 % text, 390×844 dark, Thu: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (16.6s)
+  ✓  164 [chromium] › .tmp/lead5-final/full/break-reach.spec.ts:201:5 › 200 % text, 390×844 dark, Sun: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (16.7s)
+  ✓  162 [chromium] › .tmp/lead5-final/full/statusbar.spec.ts:106:3 › large text with large leaf totals never pushes "Level NN" past the screen (dark) (48.2s)
+  ✓  165 [chromium] › .tmp/lead5-final/full/break-reach.spec.ts:201:5 › 200 % text, 844×390 light, Mon: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (20.1s)
+  ✓  166 [chromium] › .tmp/lead5-final/full/statusbar.spec.ts:142:3 › narrowing that leaves the bar's own box unchanged still re-fits: from 384 px, and 1 px at a time (light) (25.5s)
+  ✓  167 [chromium] › .tmp/lead5-final/full/break-reach.spec.ts:201:5 › 200 % text, 844×390 light, Thu: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (20.0s)
+  ✓  168 [chromium] › .tmp/lead5-final/full/statusbar.spec.ts:142:3 › narrowing that leaves the bar's own box unchanged still re-fits: from 384 px, and 1 px at a time (dark) (25.7s)
+  ✓  169 [chromium] › .tmp/lead5-final/full/break-reach.spec.ts:201:5 › 200 % text, 844×390 light, Sun: Break's over with a carried task — Mark it done, Put the kettle on and That's all for now reachable by wheel, touch and Tab (20.0s)
+  ✓  171 [chromium] › .tmp/lead5-final/full/break-reach.spec.ts:220:3 › 200 % text, 375×667 dark: the paused tea break — Skip break, Resume break and Start next brew reachable by wheel, touch and Tab (14.8s)
+  ✓  170 [chromium] › .tmp/lead5-final/full/statusbar.spec.ts:202:3 › rapid live resizes at large text leave the page unzoomed (light) (25.2s)
+  ✓  172 [chromium] › .tmp/lead5-final/full/break-reach.spec.ts:220:3 › 200 % text, 844×390 dark: the paused tea break — Skip break, Resume break and Start next brew reachable by wheel, touch and Tab (15.1s)
+  ✓  173 [chromium] › .tmp/lead5-final/full/statusbar.spec.ts:202:3 › rapid live resizes at large text leave the page unzoomed (dark) (25.3s)
+  ✓  174 [chromium] › .tmp/lead5-final/full/break-reach.spec.ts:231:1 › 200 % text, 375×667: tapping Pause break leaves Resume break under the finger, and back (13.4s)
+  ✓  175 [chromium] › .tmp/lead5-final/full/statusbar.spec.ts:239:1 › normal text: one row at 390 (designed padding) and at 375 (tight) on a fresh load (7.1s)
+  ✓  177 [chromium] › .tmp/lead5-final/full/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (375×667 light 100 %, task day) (28.2s)
+  ✓  176 [chromium] › .tmp/lead5-final/full/break-reach.spec.ts:251:1 › 100 % text, 375×667 and 390×844: the break and Break’s over fit without scrolling — every control wholly on screen (37.8s)
+  ✓  178 [chromium] › .tmp/lead5-final/full/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (375×667 light 100 %, big day) (27.9s)
+  ✓  179 [chromium] › .tmp/lead5-final/full/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (375×667 dark 200 %, task day) (28.0s)
+  ✓  180 [chromium] › .tmp/lead5-final/full/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (375×667 dark 200 %, big day) (27.9s)
+  ✓  181 [chromium] › .tmp/lead5-final/full/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (390×844 dark 100 %, task day) (28.0s)
+  ✓  182 [chromium] › .tmp/lead5-final/full/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (390×844 dark 100 %, big day) (27.9s)
+  ✓  183 [chromium] › .tmp/lead5-final/full/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (390×844 light 200 %, task day) (28.1s)
+  ✓  184 [chromium] › .tmp/lead5-final/full/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (390×844 light 200 %, big day) (27.8s)
+  ✓  185 [chromium] › .tmp/lead5-final/full/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (844×390 light 100 %, task day) (27.9s)
+  ✓  186 [chromium] › .tmp/lead5-final/full/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (844×390 light 100 %, big day) (27.7s)
+  ✓  187 [chromium] › .tmp/lead5-final/full/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (667×375 dark 100 %, task day) (28.2s)
+  ✓  188 [chromium] › .tmp/lead5-final/full/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (667×375 dark 100 %, big day) (27.6s)
+  ✓  189 [chromium] › .tmp/lead5-final/full/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (1440×900 light 100 %, task day) (28.3s)
+  ✓  190 [chromium] › .tmp/lead5-final/full/summary-notice.spec.ts:116:5 › queued notices never move the summary, then appear on Today in order, each said once (1440×900 light 100 %, big day) (28.0s)
+  ✓  191 [chromium] › .tmp/lead5-final/full/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by wheel (375×667, 200 % text) (24.0s)
+  ✓  192 [chromium] › .tmp/lead5-final/full/w3-history-focus-scroll.spec.ts:160:5 › 1440×900 @200 % reduced motion, light (where X-11 was found) › a tap on a History row opens Edit brew and the row, and the page, stay where the person saw them; Close and Escape too (7.6s)
+  ✓  194 [chromium] › .tmp/lead5-final/full/w3-history-focus-scroll.spec.ts:195:5 › 1440×900 @200 % reduced motion, light (where X-11 was found) › Save: the row stays where it was seen (6.0s)
+  ✓  195 [chromium] › .tmp/lead5-final/full/w3-history-focus-scroll.spec.ts:160:5 › 1440×900 @100 %, light › a tap on a History row opens Edit brew and the row, and the page, stay where the person saw them; Close and Escape too (11.4s)
+  ✓  196 [chromium] › .tmp/lead5-final/full/w3-history-focus-scroll.spec.ts:195:5 › 1440×900 @100 %, light › Save: the row stays where it was seen (7.7s)
+  ✓  193 [chromium] › .tmp/lead5-final/full/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by touch (375×667, 200 % text) (32.6s)
+  ✓  197 [chromium] › .tmp/lead5-final/full/w3-history-focus-scroll.spec.ts:160:5 › 390×844 phone, touch, light › a tap on a History row opens Edit brew and the row, and the page, stay where the person saw them; Close and Escape too (8.6s)
+  ✓  199 [chromium] › .tmp/lead5-final/full/w3-history-focus-scroll.spec.ts:195:5 › 390×844 phone, touch, light › Save: the row stays where it was seen (4.4s)
+  ✓  200 [chromium] › .tmp/lead5-final/full/w3-history-focus-scroll.spec.ts:160:5 › 390×844 phone, touch, dark › a tap on a History row opens Edit brew and the row, and the page, stay where the person saw them; Close and Escape too (6.9s)
+  ✓  198 [chromium] › .tmp/lead5-final/full/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by wheel (844×390, 200 % text) (19.8s)
+  ✓  201 [chromium] › .tmp/lead5-final/full/w3-history-focus-scroll.spec.ts:195:5 › 390×844 phone, touch, dark › Save: the row stays where it was seen (5.4s)
+  ✓  203 [chromium] › .tmp/lead5-final/full/w3-history-focus-scroll.spec.ts:255:5 › keyboard and Delete, 1440×900 @200 % reduced motion, light (where X-11 was found) › Tab brings an off-screen row into view; Enter and Space open Edit brew; closing returns focus to the row (6.0s)
+  ✓  204 [chromium] › .tmp/lead5-final/full/w3-history-focus-scroll.spec.ts:280:5 › keyboard and Delete, 1440×900 @200 % reduced motion, light (where X-11 was found) › Delete from the keyboard: the row turns into its Undo in its exact place, focus lands on the Undo, Undo restores the row (5.3s)
+  ✓  202 [chromium] › .tmp/lead5-final/full/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while the notices in the strip are read by touch (844×390, 200 % text) (24.4s)
+  ✓  205 [chromium] › .tmp/lead5-final/full/w3-history-focus-scroll.spec.ts:316:5 › keyboard and Delete, 1440×900 @200 % reduced motion, light (where X-11 was found) › Delete by pointer or touch: the row turns into its Undo in its exact place; Undo restores the row (9.2s)
+  ✓  207 [chromium] › .tmp/lead5-final/full/w3-history-focus-scroll.spec.ts:255:5 › keyboard and Delete, 390×844 phone, touch, light › Tab brings an off-screen row into view; Enter and Space open Edit brew; closing returns focus to the row (10.5s)
+  ✓  208 [chromium] › .tmp/lead5-final/full/w3-history-focus-scroll.spec.ts:280:5 › keyboard and Delete, 390×844 phone, touch, light › Delete from the keyboard: the row turns into its Undo in its exact place, focus lands on the Undo, Undo restores the row (5.4s)
+  ✓  206 [chromium] › .tmp/lead5-final/full/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while every notice in the strip is read by wheel (667×375, 200 % text) (23.6s)
+  ✓  209 [chromium] › .tmp/lead5-final/full/w3-history-focus-scroll.spec.ts:316:5 › keyboard and Delete, 390×844 phone, touch, light › Delete by pointer or touch: the row turns into its Undo in its exact place; Undo restores the row (7.7s)
+FACT 390x844-light-t100 a-no-input {"leftAt":5373,"room":68,"commits":[{"t":9473,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8598,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":4100,"collapseAfterLastBusyMs":4100,"visibleMove":68}
+  ✓  211 [chromium] › .tmp/lead5-final/full/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (390x844-light-t100) (10.4s)
+FACT 390x844-light-t100 b-scroll-then-idle {"leftAt":5198,"room":68,"maxSy":494,"scrollMs":3366,"roomAfterScroll":68,"commits":[{"t":12595,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4031,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":7397,"collapseAfterLastBusyMs":4031,"visibleMove":68}
+  ✓  212 [chromium] › .tmp/lead5-final/full/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (390x844-light-t100) (13.8s)
+  ✓  210 [chromium] › .tmp/lead5-final/full/toast-room.spec.ts:192:5 › the storage-full banner stays in the page, whole and steady, while every notice in the strip is read by touch (667×375, 200 % text) (29.0s)
+FACT 390x844-light-t100 c-pointer-held {"leftAt":5214,"room":68,"roomWhileDown":68,"downWhileHeld":1,"commits":[{"t":12416,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4033,"topBefore":132,"topAfter":64,"sy":0}],"collapseAfterLeaveMs":7202,"collapseAfterLastBusyMs":4033,"visibleMove":68}
+  ✓  213 [chromium] › .tmp/lead5-final/full/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (390x844-light-t100) (13.3s)
+FACT 390x844-dark-t200-rm a-no-input {"leftAt":5178,"room":113,"commits":[{"t":5184,"why":"rest","room":113,"shown":null,"down":0,"sinceInput":4509,"topBefore":250.09375,"topAfter":250.09375,"sy":0},{"t":9280,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8605,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":4102,"collapseAfterLastBusyMs":4102,"visibleMove":113}
+  ✓  215 [chromium] › .tmp/lead5-final/full/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (390x844-dark-t200-rm) (10.0s)
+  ✓  214 [chromium] › .tmp/lead5-final/full/toast-room.spec.ts:262:3 › notices timing out, and the endless update prompt, never move the banner under the person (375×667, 200 % text, wheel, light) (24.4s)
+FACT 390x844-dark-t200-rm b-scroll-then-idle {"leftAt":5184,"room":113,"maxSy":506,"scrollMs":3345,"roomAfterScroll":113,"commits":[{"t":12592,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4063,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":7408,"collapseAfterLastBusyMs":4063,"visibleMove":113}
+  ✓  216 [chromium] › .tmp/lead5-final/full/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (390x844-dark-t200-rm) (13.4s)
+FACT 390x844-dark-t200-rm c-pointer-held {"leftAt":5210,"room":113,"roomWhileDown":113,"downWhileHeld":1,"commits":[{"t":5216,"why":"rest","room":113,"shown":null,"down":0,"sinceInput":4510,"topBefore":250.09375,"topAfter":250.09375,"sy":0},{"t":12320,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4045,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":7110,"collapseAfterLastBusyMs":4045,"visibleMove":113}
+  ✓  218 [chromium] › .tmp/lead5-final/full/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (390x844-dark-t200-rm) (13.2s)
+  ✓  217 [chromium] › .tmp/lead5-final/full/toast-room.spec.ts:262:3 › notices timing out, and the endless update prompt, never move the banner under the person (375×667, 200 % text, wheel, dark) (24.3s)
+  ✓  220 [chromium] › .tmp/lead5-final/full/toast-room.spec.ts:297:3 › the last notice leaves where it was, never over the docked start (375×667, 200 % text) (4.8s)
+FACT 1440x900-light-t100 a-no-input {"leftAt":5172,"room":68,"commits":[{"t":5184,"why":"rest","room":68,"shown":null,"down":0,"sinceInput":4483,"topBefore":168,"topAfter":168,"sy":0},{"t":9296,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8595,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":4124,"collapseAfterLastBusyMs":4124,"visibleMove":68}
+  ✓  219 [chromium] › .tmp/lead5-final/full/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (1440x900-light-t100) (10.2s)
+  ✓  221 [chromium] › .tmp/lead5-final/full/toast-room.spec.ts:297:3 › the last notice leaves where it was, never over the docked start (844×390, 200 % text) (4.6s)
+FACT 1440x900-light-t100 b-scroll-then-idle {"leftAt":5201,"room":68,"maxSy":11,"scrollMs":2602,"roomAfterScroll":68,"commits":[{"t":11904,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4101,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":6703,"collapseAfterLastBusyMs":4101,"visibleMove":68}
+  ✓  222 [chromium] › .tmp/lead5-final/full/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (1440x900-light-t100) (12.9s)
+  ✓  223 [chromium] › .tmp/lead5-final/full/toast-room.spec.ts:431:3 › three notices never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, light) (20.8s)
+FACT 1440x900-light-t100 c-pointer-held {"leftAt":5208,"room":68,"roomWhileDown":68,"downWhileHeld":1,"commits":[{"t":5216,"why":"rest","room":68,"shown":null,"down":0,"sinceInput":4498,"topBefore":168,"topAfter":168,"sy":0},{"t":12528,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4063,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":7320,"collapseAfterLastBusyMs":4063,"visibleMove":68}
+  ✓  224 [chromium] › .tmp/lead5-final/full/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (1440x900-light-t100) (13.8s)
+FACT 1440x900-dark-t200-rm a-no-input {"leftAt":5309,"room":113,"commits":[{"t":9410,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8591,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":4101,"collapseAfterLastBusyMs":4101,"visibleMove":113}
+  ✓  226 [chromium] › .tmp/lead5-final/full/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (1440x900-dark-t200-rm) (10.4s)
+  ✓  225 [chromium] › .tmp/lead5-final/full/toast-room.spec.ts:431:3 › three notices never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, dark) (20.5s)
+FACT 1440x900-dark-t200-rm b-scroll-then-idle {"leftAt":5184,"room":113,"maxSy":300,"scrollMs":2243,"roomAfterScroll":113,"commits":[{"t":11488,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4061,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":6304,"collapseAfterLastBusyMs":4061,"visibleMove":113}
+  ✓  227 [chromium] › .tmp/lead5-final/full/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (1440x900-dark-t200-rm) (12.5s)
+FACT 1440x900-dark-t200-rm c-pointer-held {"leftAt":5266,"room":113,"roomWhileDown":113,"downWhileHeld":1,"commits":[{"t":12464,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4056,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":7198,"collapseAfterLastBusyMs":4056,"visibleMove":113}
+  ✓  229 [chromium] › .tmp/lead5-final/full/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (1440x900-dark-t200-rm) (13.5s)
+  -  230 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 100 %) #0
+  -  231 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 %) #0
+  -  232 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 % reduced motion) #0
+  -  233 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 100 %) #0
+  -  234 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 200 %) #0
+  -  235 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 100 %) #0
+  -  236 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 %) #0
+  -  237 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 % reduced motion) #0
+  -  238 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 100 %) #0
+  -  239 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 200 %) #0
+  -  240 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 100 %) #0
+  -  241 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 %) #0
+  -  242 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion) #0
+  -  243 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 100 %) #0
+  -  244 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) #0
+  -  245 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 100 %) #0
+  -  246 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 %) #0
+  -  247 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 % reduced motion) #0
+  -  248 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 100 %) #0
+  -  249 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 200 %) #0
+  -  250 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 100 %) #0
+  -  251 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 %) #0
+  -  252 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #0
+  -  253 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 100 %) #0
+  -  254 [chromium] › .tmp/lead5-final/full/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 200 %) #0
+  ✓  228 [chromium] › .tmp/lead5-final/full/toast-room.spec.ts:466:3 › the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (667×375, 200 % text, wheel, light) (24.7s)
+  ✓  255 [chromium] › .tmp/lead5-final/full/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 light 200 % reduced motion) (13.3s)
+  ✓  257 [chromium] › .tmp/lead5-final/full/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 light 100 %) (14.2s)
+  ✓  256 [chromium] › .tmp/lead5-final/full/toast-room.spec.ts:466:3 › the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (844×390, 200 % text, touch, dark) (30.2s)
+  ✓  258 [chromium] › .tmp/lead5-final/full/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (390×844 dark 100 %) (14.0s)
+  ✓  259 [chromium] › .tmp/lead5-final/full/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 dark 100 %) (14.0s)
+  ✓  260 [chromium] › .tmp/lead5-final/full/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (844×390 dark 100 %) (13.8s)
+  ✓  261 [chromium] › .tmp/lead5-final/full/w3-notices.spec.ts:158:1 › the room a gone notice keeps stays while the page is scrolled, and goes on the same screen once idle (390×844, 200 %) (13.9s)
+  ✓  262 [chromium] › .tmp/lead5-final/full/w3-notices.spec.ts:210:1 › the room is not given back while a pointer is held; it goes 4–6.5 s after release (1440×900, 100 %) (16.7s)
+  ✓  263 [chromium] › .tmp/lead5-final/full/w3-notices.spec.ts:239:1 › a new screen starts with no room: Today after End, then Stats and back (375×667, 100 %) (9.9s)
+  ✓  264 [chromium] › .tmp/lead5-final/full/w3-notices.spec.ts:265:1 › the status bar warm-days button is named "N days warm. Show details" (and ", today not brewed yet") (3.9s)
+
+  Slow test file: [chromium] › .tmp/lead5-final/full/a11y.spec.ts (8.1m)
+  Slow test file: [chromium] › .tmp/lead5-final/full/break-reach.spec.ts (5.2m)
+  Slow test file: [chromium] › .tmp/lead5-final/full/toast-room.spec.ts (5.1m)
+  Slow test file: [chromium] › .tmp/lead5-final/full/integrity.spec.ts (5.0m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  25 skipped
+  239 passed (30.0m)
+### end 00:53:04 exit=0 load 4.12 4.90 6.65
