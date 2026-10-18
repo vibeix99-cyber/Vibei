@@ -1,0 +1,9 @@
+#!/bin/bash
+set -u
+O=$1; cd /home/user/wt/w6-int/kettle || exit 9
+for p in 5560 5583; do
+  { echo "### :$p start $(date -u +%T) load $(cut -d' ' -f1-3 /proc/loadavg)"
+    env KETTLE_PORT=$p npx playwright test -c .tmp/lead5-final/pw.config.ts -g 'I03 storage-full warning is a banner in the page \(phone 390×844\) nothing over the brew' --repeat-each=2 --workers=1 --reporter=list --output="$O/pw-$p"
+    echo "### end $(date -u +%T) exit=$?"; } > "$O/instr-$p.log" 2>&1
+done
+echo done > "$O/done.txt"

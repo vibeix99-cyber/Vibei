@@ -1,0 +1,50 @@
+### :5560 HOME_DELAY_MS=6000 start 00:54:21 load 1.79 3.98 6.19
+
+Running 1 test using 1 worker
+
+LVW {"t":6753,"hash":"#/","had":null,"v":"2026-10-18","ok":false,"err":"QuotaExceededError"}
+LVW {"t":6753,"hash":"#/","had":null,"v":"2026-10-18","ok":false,"err":"QuotaExceededError"}
+LVW {"t":20711,"hash":"#/","had":null,"v":"2026-10-18","ok":false,"err":"QuotaExceededError"}
+LVW {"t":20711,"hash":"#/","had":null,"v":"2026-10-18","ok":false,"err":"QuotaExceededError"}
+  ✘  1 [chromium] › .tmp/lead5-final/delay/integrity-delay.spec.ts:1078:5 › I03 storage-full warning is a banner in the page (phone 390×844) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room (35.3s)
+
+
+  1) [chromium] › .tmp/lead5-final/delay/integrity-delay.spec.ts:1078:5 › I03 storage-full warning is a banner in the page (phone 390×844) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room 
+
+    Error: every failed save has gone through
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "kettle:home:lastVisit",
+    + ]
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      1164 |       // (no `kettle:` key's latest write refused) ...
+      1165 |       const unsaved = () => page.evaluate(() => Object.entries((window as any).__saves as Record<string, { ok: boolean }>).filter(([, v]) => !v.ok).map(([k]) => k));
+    > 1166 |       await expect.poll(unsaved, { message: 'every failed save has gone through', timeout: 10_000 }).toEqual([]);
+           |       ^
+      1167 |       const savedAt = await page.evaluate(() => Math.max(...Object.values((window as any).__saves as Record<string, { t: number; failedBefore: boolean }>).filter((v) => v.failedBefore).map((v) => v.t)));
+      1168 |       // ... then the banner goes at the warning's next recovery check (every 2 s): within one check of the saves, plus
+      1169 |       // 1 s for a late timer and the render on a loaded machine, in the page's own time. (The wait itself is only a
+        at /home/user/wt/w6-int/kettle/.tmp/lead5-final/delay/integrity-delay.spec.ts:1166:7
+
+    Error Context: ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/findelay/pw-5560/integrity-delay-I03-storag-836d3-ull-gone-when-there-is-room-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/findelay/pw-5560/integrity-delay-I03-storag-836d3-ull-gone-when-there-is-room-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/findelay/pw-5560/integrity-delay-I03-storag-836d3-ull-gone-when-there-is-room-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › .tmp/lead5-final/delay/integrity-delay.spec.ts:1078:5 › I03 storage-full warning is a banner in the page (phone 390×844) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room 
+### end 00:54:59 exit=0

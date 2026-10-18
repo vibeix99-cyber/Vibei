@@ -1,0 +1,12 @@
+#!/bin/bash
+# LEAD-5 W3R2 final: Lane RF's full chromium run (the same 20 spec files, same order, notice-strip excluded,
+# --workers=2), first on :5583 (pre-round app 494748b, src b74e6b3) then on :5560 (merged 1c791f3, src 5f504d4).
+# Tests: copies of w6-int's tests; integrity's I03 describe logs every kettle:home:lastVisit write (LVW lines).
+set -u
+O=$1; cd /home/user/wt/w6-int/kettle || exit 9
+for p in ${PORTS:-5583 5560}; do
+  { echo "### :$p start $(date -u +%T) load $(cut -d' ' -f1-3 /proc/loadavg)"
+    env KETTLE_PORT=$p KETTLE_PWA_PORT=5495 PLAYWRIGHT_JSON_OUTPUT_NAME="$O/full-$p.json" npx playwright test -c .tmp/lead5-final/pw-full.config.ts --workers=2 --reporter=list,json --output="$O/pw-$p"
+    echo "### end $(date -u +%T) exit=$? load $(cut -d' ' -f1-3 /proc/loadavg)"; } > "$O/full-$p.log" 2>&1
+done
+echo "done $(date -u +%T)" > "$O/done.txt"
