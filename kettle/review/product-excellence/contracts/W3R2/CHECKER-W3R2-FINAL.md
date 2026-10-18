@@ -72,3 +72,44 @@ So **a `lastVisit` write fails only if Today mounts for the first time after the
 - Today writes `lastVisit` about 0.6–0.8 s after each load, before the fill, so the key exists.
 - Every later write in full storage is a same-size replacement and succeeds.
 - **4/4 pass on both servers.**
+
+### The matched controls (my runs, through the gate, `--lane LEAD`; nothing else running)
+**1 · Deterministic: Today's chunk answered 6 s late** (`integrity-delay.spec.ts.txt`, `fin-delay.sh.txt`).
+- The I03 phone test, unchanged, plus one `page.route` that delays `/src/screens/home/HomeScreen.tsx` by 6 s. That is what a loaded dev server did in the failing runs.
+
+| Server | Result | `lastVisit` writes |
+|---|---|---|
+| :5583, pre-round app `494748b` | **FAIL**, at the same assertion: `every failed save has gone through`, received `["kettle:home:lastVisit"]` | `had: null`, `QuotaExceededError`, at Today's first mount (6.7–7.3 s) and again after Settings |
+| :5560, merged `1c791f3` | **FAIL**, identical | identical |
+
+Logs: `delay-6s-{5583,5560}.log.txt`.
+
+**2 · Matched full runs, RF's command** (`fin-full.sh.txt`, `pw-full.config.ts.txt`): the same 20 spec files in the same order, `notice-strip` excluded, `--workers=2`, run :5583 then :5560. The tests are copies of `w6-int`'s; only I03 logs its `lastVisit` writes. Load 0.2–6.6.
+
+| | :5583 pre-round (`full-5583.log.txt`) | :5560 merged (`full-5560.log.txt`) |
+|---|---|---|
+| totals | 233 passed, 6 failed, 25 skipped | **239 passed, 0 failed, 25 skipped** |
+| I03 ×3 configs | 3/3 pass; no failed `lastVisit` write | 3/3 pass; no failed `lastVisit` write |
+| `w3-settings:39` | pass | pass |
+| `chai3d:197` | **FAIL**, the same signature as F4 (`Expected "model"`, `Received "procedural"`, 30 s) | pass |
+| `w3r2-stale-tab` | 5 fail, as expected: no guard there | 5/5 |
+
+### Classification of F1 / F3
+- **FLAKY (shown).** On the merged tree it passes:
+  - 4/4 instrumented;
+  - 3/3 in my full run;
+  - 25/25 outside RF's full runs.
+- **The cause is known and is test-side timing.** I03 fills storage before Today has mounted. Today is a lazy chunk, and the test's `ready()` does not wait for it. Then Today's first `lastVisit` write is a new key in full storage, and nothing re-saves it after room returns.
+- **Pre-existing, not W3R2.** It reproduces identically on the pre-round app when the chunk is late. None of the code it depends on changed in W3R2: `useHomeData.ts`, `App.tsx`'s lazy route, `saveWarning.ts`, `lib/storage.ts`, and `integrity.spec.ts` itself (the wait at :1136 is W3R1 Q's).
+- **SG's catch-up, `reset()` and receive rule are not involved.** No `kettle:timer` write is in the failing set, and `lastVisit` is not a timer key.
+- **FOLLOW-UP (tests, integrity owner):** I03 should wait for Today to have rendered (its greeting) before filling storage.
+- **FOLLOW-UP (product, Today / core loop):** a profile whose first-ever Today mount happens while storage is full keeps `lastVisit` in the failed set. Then `saveWarning.stillFailing()` holds the storage-full banner after room returns, until Today is opened again. It is bookkeeping, not data, so it could be excluded from the warning or retried at the recovery check. This is a rare edge case, unchanged in W3R2.
+
+## Classification
+| # | Failure | Real or flaky | W3R2? | Basis | Class |
+|---|---|---|---|---|---|
+| F1, F3 | `integrity:1048` I03, `lastVisit` unsaved after room returns | **FLAKY** (shown: 4/4 instrumented, 3/3 in my full run and 25/25 outside full runs pass on the same tree) | **Pre-existing** | Mechanism shown in the three traces and reproduced deterministically on **both** :5583 and :5560 with Today's chunk late; every file involved is unchanged in W3R2 | **FOLLOW-UP** (test: wait for Today before the fill; product edge: a failed `lastVisit` holds the banner) |
+| F2 | `w3-settings:39` "Start fresh?" still "visible" 10 s after its confirm | **FLAKY** (1 in 15 on the merged tree: RF 12 passes plus my 2) | **Not introduced** | Read from the trace: the page is already interactive (not `inert`), the welcome screen shows, and the closed sheet's element lingers off-screen (`translateY(100%)`) until its exit unmounts. Nothing W3R2 changed can hold that exit: the only W3R2 code in the leaving layer is TH's `useIsPresent()` context read, which never registers presence. Not reproduced on :5583 in one full run, so "pre-existing" is shown by code, not by a run | **FOLLOW-UP** (Settings / Sheet: the sheet can linger ≥ 10 s in the DOM after confirm under load; the test could wait for detach) |
+| F4 | `chai3d:197` default tier, model not swapped in 30 s | **FLAKY** | **Pre-existing** | **Failed on the pre-round app :5583** in my matched full run, with the same signature; passes on :5560 in mine. W3R2 changed nothing in `src/scene` | **FOLLOW-UP** (3D load budget under load) |
+
+**No real W3R2 regression. Nothing blocks the round's close.** My matched full run of the merged tree passed **239/239** with 0 failures. Everything I started has exited, and the gate holds 0.
