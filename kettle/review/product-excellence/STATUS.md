@@ -10,15 +10,23 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
-## ▶ W3R2 HARDENING ROUND · started 2026-10-17 16:00 UTC (read this first)
+## ▶ W3R2 HARDENING ROUND · CLOSED 2026-10-18 (read this first)
 
-**Binding:** `contracts/W3R2/VB-DECISIONS-W3R2.md`. The Final Product Boss stays on hold. Plan: `contracts/W3R2/PLAN.md`; gate record: `contracts/W3R2/review/GATE.md`.
+**Binding:** `contracts/W3R2/VB-DECISIONS-W3R2.md`. **The Final Product Boss stays on hold** until Vibei says go. Plan: `contracts/W3R2/PLAN.md`; gate record: `contracts/W3R2/review/GATE.md`.
 
-- **Start:** integration HEAD `494748b`, clean and equal to origin. Servers, slot gate (MAX 3) and autocommit were restarted after the container restart. Old worktrees were pruned; their branches and bundles remain.
+- **All three items are APPROVED and merged.**
+- **Full regression** on the merged tree `1c791f3` (Lane RF, `review/FINAL/RECEIPT-FINAL-W3R2.md`): green, apart from three intermittent full-run failures. LEAD-5 classified all three as pre-existing flakes, not W3R2 regressions (`CHECKER-W3R2-FINAL.md`); its matched full run gave 239/239.
+- **Integration HEAD:** app `72214c8` (src `5f504d4`). **Nothing is running.**
+
 - **Item 1, stale-tab guard (SG): APPROVE `4b2690f`** after one fix round (LEAD-5) → **merged `72214c8`**. Lane R2's rerun on trial 2 was green. `pwa:85` was ruled an environment artifact (a stray preview held the PWA port); LEAD-5's clean-port pwa run gave 3/3.
 - **Item 2, `Toast.tsx:482` hook (TH): APPROVE** (LEAD-5) → **merged `7cb3242`**.
 - **Item 3, test stability (TS): APPROVE `89396e8`** after one fix round (LEAD-6) → **merged `a391cdc`**.
-- **Now:** **Lane RF** (Sonnet) full regression on the merged tree `1c791f3` (src `5f504d4`) on :5560 / :5570; pre-round control :5583 (src `b74e6b3`); stop 00:30 UTC. Then LEAD classifies any failure, then the report to Vibei.
+- **Full regression done:** Lane RF on `1c791f3`, then LEAD-5's classification. No W3R2 regression; the round is closed.
+- **FOLLOW-UPs from the final classification:**
+  - the I03 test should wait for Today before filling storage;
+  - **product edge:** when Today first opens while storage is full, the failed `lastVisit` save keeps the storage-full banner up until Today is reopened;
+  - the Settings "Reset everything" sheet exit held over 10 s (1 in 15);
+  - the 3D model-load budget under load.
 - **FOLLOW-UPs logged:**
   - R8, the Today dock switching mode after boot at 844×390 @200 % (product, pre-existing);
   - the doubly stale same-brew +5 loss;

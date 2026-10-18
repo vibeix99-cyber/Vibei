@@ -197,3 +197,14 @@
   - **F2, `w3-settings:39`:** the Reset everything dialog was still visible 10 s after confirm. 1 failure.
   - **F4, `chai3d:197`:** a 30 s model-swap timeout. 1 failure.
 - **Sent to LEAD-5 to classify** (Vibei's rule: not shown flaky = real finding). F1 and F2 touch areas this round changed (SG's catch-up and `reset()`).
+
+## Final classification (LEAD-5 `f94387d`, `CHECKER-W3R2-FINAL.md`): no W3R2 regression. Round closed (2026-10-18)
+
+- **LEAD-5's matched full run** of the merged tree, with neighbours, on :5560: **239/239**.
+- **F1/F3, `integrity:1048` I03: flaky, pre-existing.**
+  - **Cause:** Today is a lazy chunk, and the test's `ready()` does not wait for it. In all three failing traces Today had not rendered when storage was filled, so its first `lastVisit` write (a new key) was refused by the full quota, and nothing saves it again.
+  - **Proof:** a 6 s delay on Today's chunk reproduces the failure identically on :5583 (pre-round) and :5560. No involved file changed in W3R2, and SG's code is not on the path.
+  - **FOLLOW-UPs:** the test should wait for Today before filling storage. **Product edge:** when Today first opens while storage is full, the failed `lastVisit` save keeps the storage-full banner up until Today is reopened.
+- **F2, `w3-settings:39`: flaky (1 in 15), not from W3R2.** The trace shows the page already usable while the closed sheet stays mounted off-screen for over 10 s. Nothing in W3R2 can hold that exit open; TH's `useIsPresent()` only reads presence. FOLLOW-UP for the Settings sheet owner.
+- **F4, `chai3d:197`: flaky, pre-existing.** It failed with the same signature on :5583 in the matched run, and W3R2 did not touch `src/scene`. FOLLOW-UP: the 3D model-load budget under load.
+- **W3R2 closed.** Integration HEAD app `72214c8` (src `5f504d4`). All servers, agents and the autocommit loop are stopped.
