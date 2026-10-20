@@ -56,3 +56,91 @@ Independent review of maker C2's swap of the reading, sipping and cheering art. 
 - **Why that is not a jump:** an ink-width change of a few px is not a "jump or resize" in Vibei's sense. The silhouette changes completely anyway when the pose switches (book → raised paws → mug), while the head height, the yuzu position and the feet stay put.
 - **Fallback:** if the fix round cannot meet the box for a pose, a uniform scale set by min(width, height) (contain) is the fallback, with the baseline still aligned. Report it.
 - **The brief's "≤ 1 CSS px" limit** therefore applies to box, baseline, ink top, ink bottom and ink centre-x, not to ink width.
+
+## 3. Edges and halo (◆ own measurement)
+
+**Background used.** The app's actual dark background is `--bg: #241a2d` (`src/styles/tokens.css:205`; body computed `rgb(36, 26, 45)` on :5621). The `#221829` in the README is stale. I measured on both, plus `--bg-sunken #1d1525` and black (`lead7-halo.txt`, `tools/halo.py`).
+
+**Method.**
+- **Rim pixels:** every pixel with 0 < α < 255, compared with the nearest opaque interior pixel, using CIE L*.
+- **Halo pixel:** a rim pixel whose composite on the background is more than 2 L* lighter than *both* the background and its own interior colour.
+
+| Pose | Rim L* − interior L* (mean; old art) | Halo px on #241a2d (new; old) | Mean \|ΔL*\| vs ideal composite (new; old) |
+|---|---|---|---|
+| reading | **−0.75** (+8.48) | 29 = 0.59 % (19 = 0.61 %) | **0.69** (1.31) |
+| sipping | **−0.40** (+9.67) | 40 = 0.82 % (22 = 0.69 %) | **0.57** (1.34) |
+| cheering | **−0.79** (+8.72) | 41 = 0.70 % (69 = 1.94 %) | **0.62** (1.57) |
+
+**Result.**
+- The new rim carries no cream: it is not lighter than the interior on average, against +8.5 to +9.7 L* in the old art.
+- Its composite error is about half the old art's.
+- The few halo-flagged pixels (< 1 %) are single pixels at the sparkle tips and yuzu highlight, below 3 L* (p99 ≤ +2.7).
+
+**Visual checks.**
+- **6× close-ups on #241a2d** (`img/edges-closeup-x6-dark.png`: raised paw, sparkle, foot, ear, leaf, mug side) and **4× strips per pose** (`tools/tiles2.py`): clean anti-aliasing, no light fringe, no dark ring.
+- **On the live Stage** (dark, 1440 and 390; `img/switch-*-dark.png`): the BEFORE cheering sparkles show a light fringe and the AFTER ones do not.
+- **Small Mascot sizes** on `#241a2d` at DPR 3 (`img/kit-small-dark-dpr3.png`): clean.
+
+**Cut-out method** (read in `scripts/export-chai-2d.py`): flood-fill along the cream hue line from the border, then a 3 px rim un-mixed by projection, then resize on premultiplied colour.
+- It is sound for this flat art, which has no dark outline that "keep colour F" could erase.
+- The diff map (`img/diff-all.png`) confirms that no pale interior part was eaten. That includes the steam, book pages and mug leaf.
+
+**Edges: PASS.**
+
+## 4. Footprint and the pose switch (◆ :5621 vs :5560)
+
+**Method:** my own Playwright run (`tools/fp.mjs`, through the slot gate).
+- **Path:** veteran seed, reduced motion. Running (reading) → `finish()` whistle (cheering) → summary (cheering) → Tea time break (sipping).
+- **Viewports:** 390×844 at DPR 2 and 3, and 1440×900 at DPR 2, on dark and light.
+- **Measured:** the `<img>` rect, the alpha > 8 ink box mapped to CSS px, and the `.cShadow` position (`lead7-footprint-stage-{dark,light}.txt`, raw `fp-*.json.txt`).
+
+| Viewport | Box Δ (x, y, w, h) | Baseline Δ | Ink top Δ | Ink centre-x Δ | Ink width Δ | Shadow y |
+|---|---|---|---|---|---|---|
+| 390×844 (DPR 2 and 3) | 0 / 0 / 0 / 0 in all 4 states | ≤ 0.00 | ≤ 0.07 | ≤ 0.14 | ≤ 0.29 | identical |
+| 1440×900 | 0 / 0 / 0 / 0 in all 4 states | ≤ 0.01 | ≤ 0.12 | ≤ 0.24 | ≤ 0.47 | identical |
+
+- **Pose switch, within AFTER:** the feet baseline spread across reading → cheering → summary → sipping is 0.01 CSS px at both widths, the same as BEFORE.
+- **Agreement:** these numbers agree with the maker's 86-place table (`C2/evidence/footprint.md`).
+- **As shipped:** footprint, framing and baseline are held, and nothing jumps.
+- **Under the Ruling 1 fix:** box, baseline, top and centre stay held. Only ink width moves, by the master's own proportions (§2), up to about 6.7 CSS px for cheering at the Stage cap, split across both sides.
+
+## 5. Formats, sizes and bytes (◆)
+
+| File | Before (B) | After (B) | Pixels after |
+|---|---|---|---|
+| chai-reading.webp | 20,900 | 19,084 | 389 × 609 |
+| chai-sipping.webp | 19,950 | 19,144 | 378 × 614 |
+| chai-cheering.webp | 20,626 | 19,782 | 390 × 535 |
+| **Total** | **61,476** | **58,010** | |
+
+The byte counts come from the files at `17f5a70`, which are byte-identical to the trial and to what :5621 serves. Budget 61,476: under by 3,466. The precache keeps the same names and glob.
+
+**Ruling 2 (WebP only, no fallback format). WebP-only is ACCEPTED. `<picture>` with AVIF and a WebP or PNG fallback is NOT required, and should not be added.**
+- **Supported browsers:** the build target is `es2022` (`vite.config.ts:60`, Vite 8). Any browser that can run the bundle (Chrome/Edge ≥ 94, Firefox ≥ 93, Safari ≥ 15.4/16) decodes lossy WebP with alpha, which needs Safari 14, Firefox 65 or Chrome 32. A browser that cannot decode WebP cannot run the app at all.
+- **So WebP is the floor**, and a fallback below it is unreachable. Every other piece of Chai art already ships as WebP.
+- **A PNG fallback would hurt.** Workbox precaches `**/*.{…,png,webp,…}` (`vite.config.ts:44`), so every install would download dead PNG bytes, several times the WebP size.
+- **AVIF would hurt.** `avif` is not in the precache glob, so a `<picture>` that prefers AVIF would load an uncached file and show no Chai offline, unless the glob were widened. Widening it would double the payload for about a 20 % saving.
+- **What satisfies Vibei's "modern formats with a fallback"** for this app: a modern format (WebP with alpha) whose support is guaranteed by the app's own browser floor. Record that sentence in `art-src/chai/README.md` (fix round, item D2).
+
+**Ruling 4 (resolution and budget). 1.25× is sharp enough. No budget increase is needed or approved; the budget stays at 61,476 B.**
+- **Measured on the live Stage:** device px per file px is 0.95 at 1440@2 (the 1.6 px cap), 0.73 at 390@2 and 0.87 at 390@3. Every case is a downscale; BEFORE was 1.19 at 1440@2.
+- **README table, per pose:**
+  - phone Focus 2×: 354 device px needed vs 609 file px, a downscale;
+  - phone 3×: 531 vs 609, a downscale;
+  - Retina desktop at the cap: 580 vs 609, a downscale.
+- **Worst real case found:** a 3× phone in landscape (u ≈ 1.17) needs about 1.04 device px per file px, which is not visible.
+- **Other surfaces:** the Welcome ready step (200 → 171 CSS px at 3×) is 0.96. Home, Settings and the summary are well under 1.
+- **The fix still fits:** the Ruling 1 uniform fit, run in my scratch area, comes to 58,224 B total (`lead7-uniform-fit-feasibility.txt`).
+- **Docs fix:** the README's "Phone Focus 3×" row still says "1.09× upscale" for these poses, and its "1.25 covers…" text describes the stretch. Correct both in the fix (D2).
+
+## 6. The ground shadow
+
+**Ruling 3: the Stage CSS contact shadow is ACCEPTED as the brief's "reproduce it in CSS, so it sits correctly on both themes".**
+- **How it works:** the masters' baked shadow is removed with the background. The Stage's existing `.cShadow` is centred on Chai, theme-aware via `--shadow-ink`, and darker under `[data-night]`.
+- **Verified on both themes:** it sits under the feet in all three poses on dark and light, at 390 and 1440 (`img/switch-*-dark.png`, `img/after-light-1440.png`). Its y and centre are identical BEFORE and AFTER.
+- **Style:** it is narrower and tighter than the master's painted ellipse. It is the one contact-shadow style the app shares between Chai and the kettle, so it is kept.
+
+**Home, Welcome and Settings carry no ground shadow, as before: ACCEPTED for this round, logged as a FOLLOW-UP for Vibei.**
+- **Why not now:** adding one changes framing on those surfaces. A shadow below the feet extends past Chai's box into neighbouring layout, which is outside this round's scope ("layout outside Chai's own box").
+- **Risk if added:** it would need its own BEFORE → AFTER on each surface.
+- **No defect:** nothing was lost relative to the current product.
