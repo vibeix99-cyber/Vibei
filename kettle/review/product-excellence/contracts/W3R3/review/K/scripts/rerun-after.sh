@@ -52,8 +52,10 @@ streamB() {   # edges, then pose-switch (AFTER only)
   done; done
   echo DONE B
 }
-streamA > $R/logs/streamA.log 2>&1 &  PA=$!
-streamB > $R/logs/streamB.log 2>&1 &  PB=$!
+# K_ONLY=A or B re-runs just one stream (e.g. after fixing the capture script); default both
+PA=; PB=
+[ "${K_ONLY:-A}" = A ] && { streamA > $R/logs/streamA.log 2>&1 &  PA=$!; }
+[ "${K_ONLY:-B}" = B ] && { streamB > $R/logs/streamB.log 2>&1 &  PB=$!; }
 wait $PA $PB
 cd $K/scripts
 $V pixdiff2.py > $R/logs/pixdiff2.txt 2>&1

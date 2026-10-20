@@ -6,6 +6,7 @@ const [base, outDir, cfgsArg, themesArg, variant = 'normal', statesArg] = proces
 const ALL = ['kit-chai', 'settings', 'home-evening', 'focus-running', 'home-live', 'focus-paused', 'whistle', 'summary', 'focus-break', 'home-break', 'welcome-sound', 'welcome-notify', 'welcome-ready'];
 const want = statesArg ? statesArg.split(',') : ALL;
 const log = [];
+const SETTLED = new Set(['focus-running', 'home-live', 'focus-paused', 'focus-break', 'home-break']); // only these entrance-animated states get the longer settle (BEFORE was captured the same way)
 const SET = Number(process.env.K_SETTLE || 1); // multiplies the settle waits (the Stage scene and the tab bar animate on entry)
 const b = await launch();
 
@@ -29,7 +30,7 @@ for (const cfg of cfgsArg.split(',')) for (const theme of themesArg.split(',')) 
   };
   const snap = async (page, name, wait = 600) => {
     if (!want.includes(name)) return;
-    await page.waitForTimeout(wait * SET);
+    await page.waitForTimeout(wait * (SETTLED.has(name) ? SET : 1));
     await shot(page, `${dir}/${name}.png`);
     const f = await facts(page);
     log.push(`${tag} ${name} ${JSON.stringify(f.chai.map((c) => `${c.pose}:${c.box.join(',')}`))}`);
