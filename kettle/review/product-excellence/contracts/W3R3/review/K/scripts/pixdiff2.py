@@ -27,7 +27,9 @@ rows=[]
 for p in sorted(glob.glob(f'{K}/shots/before/*/*.png')):
     tag=os.path.basename(os.path.dirname(p)); st=os.path.basename(p)[:-4]
     pa=f'{K}/shots/after/{tag}/{st}.png'; pn=f'{SC}/before2/{tag}/{st}.png'; pn2=f'{SC}/after2/{tag}/{st}.png'
-    a,b=load(p),load(pa); r=dict(tag=tag,state=st,size_before=list(a.shape[1::-1]),size_after=list(b.shape[1::-1]),noise_pairs=[x for x,f in (('before2',pn),('after2',pn2)) if os.path.exists(f)])
+    if st in ('focus-running','home-live','focus-paused','focus-break','home-break'):   # final (3x settle) recapture has its own noise pair
+        pn=f'{SC}/before3/{tag}/{st}.png'; pn2=f'{SC}/after3/{tag}/{st}.png'
+    a,b=load(p),load(pa); r=dict(tag=tag,state=st,size_before=list(a.shape[1::-1]),size_after=list(b.shape[1::-1]),noise_pairs=[x for x,f in (('before-recapture',pn),('after-recapture',pn2)) if os.path.exists(f)])
     r['has_noise_pair']=bool(r['noise_pairs'])
     n=load(pn) if os.path.exists(pn) else None; n2=load(pn2) if os.path.exists(pn2) else None
     # compare on the common top-left area (page heights can differ by a few px between runs)
