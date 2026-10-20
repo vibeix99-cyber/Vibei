@@ -241,3 +241,33 @@ FACT 1440x900-dark-t200-rm a-no-input {"leftAt":5331,"room":113,"commits":[{"t":
   ✓  226 [chromium] › tests/toast-room.spec.ts:431:3 › three notices never cover the session top bar's Close or a Break's over control, panel scrolled to its end (375×667, 200 % text, dark) (14.0s)
 FACT 1440x900-dark-t200-rm b-scroll-then-idle {"leftAt":5466,"room":113,"maxSy":300,"scrollMs":2603,"roomAfterScroll":113,"commits":[{"t":12144,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4075,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":6678,"collapseAfterLastBusyMs":4075,"visibleMove":113}
   ✓  227 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (1440x900-dark-t200-rm) (13.4s)
+FACT 1440x900-dark-t200-rm c-pointer-held {"leftAt":5916,"room":113,"roomWhileDown":113,"downWhileHeld":1,"commits":[{"t":13216,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4103,"topBefore":234.09375,"topAfter":121.09375,"sy":0}],"collapseAfterLeaveMs":7300,"collapseAfterLastBusyMs":4103,"visibleMove":113}
+  ✓  229 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (1440x900-dark-t200-rm) (14.5s)
+  -  230 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 100 %) #0
+  -  231 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 %) #0
+  -  232 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 light 200 % reduced motion) #0
+  -  233 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 100 %) #0
+  -  234 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (390×844 dark 200 %) #0
+  -  235 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 100 %) #0
+  -  236 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 %) #0
+  -  237 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 light 200 % reduced motion) #0
+  -  238 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 100 %) #0
+  -  239 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (375×667 dark 200 %) #0
+  -  240 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 100 %) #0
+  -  241 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 %) #0
+  -  242 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 light 200 % reduced motion) #0
+  -  243 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 100 %) #0
+  -  244 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (844×390 dark 200 %) #0
+  -  245 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 100 %) #0
+  -  246 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 %) #0
+  -  247 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 light 200 % reduced motion) #0
+  -  248 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 100 %) #0
+  -  249 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (667×375 dark 200 %) #0
+  -  250 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 100 %) #0
+  -  251 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 %) #0
+  -  252 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 light 200 % reduced motion) #0
+  -  253 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 100 %) #0
+  -  254 [chromium] › tests/w3-notices-load.spec.ts:360:3 › no notice overlaps a control, text or a row: every notice state, real input (1440×900 dark 200 %) #0
+  ✓  228 [chromium] › tests/toast-room.spec.ts:466:3 › the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (667×375, 200 % text, wheel, light) (17.8s)
+  ✓  255 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 light 200 % reduced motion) (15.8s)
+  ✓  256 [chromium] › tests/toast-room.spec.ts:466:3 › the update prompt and every notice stay whole and tappable, never over a control, on Break's over scrolled to its end and back (844×390, 200 % text, touch, dark) (23.9s)
