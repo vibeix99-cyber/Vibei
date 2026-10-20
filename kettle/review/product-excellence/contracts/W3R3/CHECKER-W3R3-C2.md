@@ -217,3 +217,31 @@ Lane K agrees with my results on every point:
 6. The maker's 86-place `measure-footprint.mjs` re-run, with a diff table in the packet (`compare-footprint.py`, with the ink-width column labelled "expected").
 7. tsc, vitest and build logs; the preview SW precache and offline check.
 8. Capture lane: a re-shoot of the AFTER set for the Focus stage (all three poses, 390 and 1440, dark and light), Home hero, Welcome ready/notify and Settings About, against the existing REFERENCE and BEFORE, plus the pose-switch strip.
+
+---
+
+## Fix round (`pe/w3r3-chai-2d@20dfffe`, src `731e565`; trial 2 `481bf28`, dev :5631)
+
+Logs: `review/LEAD7/r2/`.
+
+### Scope
+- One commit on `17f5a70`.
+- **Touched:** `scripts/export-chai-2d.py`, the three WebPs, `art-src/chai/README.md` and `docs/areas/art.md`. These are within the files allowed.
+- **Untouched:** the masters, `package.json`, the lockfile, `PaintedChai.tsx`, `src/screens` and `src/scene` ◆.
+- **Served bytes:** :5631 serves the three WebPs byte-identical to `20dfffe` ◆.
+
+### Acceptance checks
+
+| # | Check | Required | Result | |
+|---|---|---|---|---|
+| 1 ◆ | Ink w/h against the master | \|err\| ≤ 0.5 % | reading **−0.07 %**, sipping **+0.06 %**, cheering **+0.02 %** (scale x/y 0.4297/0.4300, 0.4227/0.4225, 0.3857/0.3856) | PASS |
+| 2 ◆ | Fidelity, uniform transform | interior mean ≤ 4/255, nothing missing | 2.74 / 2.91 / 2.58; the diff map shows only edges and the removed shadow | PASS |
+| 3 ◆ | Halo on `#241a2d` | rim L* − interior L* ≤ +1, close-ups clean | **−0.84 / −1.12 / −0.73**. \|ΔL*\| vs ideal 0.69 / 0.71 / 0.61; halo-flag px < 1 %, p99 ≤ +2.75. The 6× close-ups (`r2/img/edges-closeup-x6-dark-r2.png`) are clean | PASS |
+| 4 ◆ | Focus stage footprint against :5560 | box Δ 0; baseline, top and centre ≤ 1; switch spread ≤ 1 | 390@2, 390@3 and 1440@2, dark and light: box Δ 0.00 in every state; baseline ≤ +0.01; top ≤ +0.35; centre-x ≤ −0.24; switch baseline spread **0.01** | PASS |
+|  | Ink width (expected change) | about +2.9 / +2.3 / −6.7 CSS px at the Stage cap | 1440: +2.62 / +1.91 / −6.67; 390: +1.60 / +1.16 / −4.06. Ink margins in the file are ≥ 3 px on every side, so nothing touches the box | as ruled |
+| 5 ◆ | Bytes | ≤ 61,476 | 19,968 + 19,178 + 19,078 = **58,224** | PASS |
+| 6 | Maker's 86-place table | as above | per the C2 packet §7: box 0.00, baseline +0.01, top +0.35, centre −0.24 (agrees with my ◆4) | PASS |
+| 7 | tsc, vitest, build | — | per the gate: tsc 0, 342/342, build OK; precache unchanged in shape | PASS |
+| D2 | Docs | uniform fit, `#241a2d`, sharpness rows, format ruling | README: uniform fit with ratios, `--bg #241a2d`, phone 3× row corrected, format line added. `art.md` updated. No stretch wording left | PASS |
+
+**Full-size look.** The Stage at 1440 on dark (`r2/img/switch2-1440-dark.png`) is on-model. Cheering now has the master's proportions, the sparkles and leaf are clean, and the contact shadow sits under the feet in all three poses.
