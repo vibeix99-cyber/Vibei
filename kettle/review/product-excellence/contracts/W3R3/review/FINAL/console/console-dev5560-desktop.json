@@ -1,0 +1,457 @@
+{
+ "label": "dev5560-desktop",
+ "base": "http://127.0.0.1:5560",
+ "viewport": "desktop",
+ "started": "04:47:38",
+ "steps": [
+  {
+   "name": "1 load Today",
+   "at": "04:47:38",
+   "error": null
+  },
+  {
+   "name": "2 start a brew (type, click Put the kettle on)",
+   "at": "04:47:42",
+   "error": null
+  },
+  {
+   "name": "3 pause and resume (real clicks), Add 5 minutes",
+   "at": "04:47:47",
+   "error": null
+  },
+  {
+   "name": "4 move the clock 90 s, end the brew (End session, sheet)",
+   "at": "04:47:53",
+   "error": null
+  },
+  {
+   "name": "5 Today again, start a second brew, let it finish (summary)",
+   "at": "04:48:00",
+   "error": null
+  },
+  {
+   "name": "6 summary: Tea time, back to Today, open Stats (real click), scroll",
+   "at": "04:48:11",
+   "error": null
+  },
+  {
+   "name": "7 open Settings (route), back to Today",
+   "at": "04:48:23",
+   "error": null
+  }
+ ],
+ "console": [
+  {
+   "step": "1 load Today",
+   "type": "debug",
+   "text": "[vite] connecting...",
+   "loc": "/@vite/client:882"
+  },
+  {
+   "step": "1 load Today",
+   "type": "debug",
+   "text": "[vite] connected.",
+   "loc": "/@vite/client:995"
+  },
+  {
+   "step": "1 load Today",
+   "type": "info",
+   "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+   "loc": "/.tmp/vite-cache/deps/react-dom_client.js?v=80b3ccae:15804"
+  },
+  {
+   "step": "1 load Today",
+   "type": "info",
+   "text": "[chai3d] model ready {state: ready, ms: 19, bytes: 45572} {awake: Object, nap: Object, sip: Object, fileTris: 5372}",
+   "loc": "/src/scene/engine/chaiLoad.ts:67"
+  }
+ ],
+ "pageerrors": [],
+ "requestfailed": [],
+ "http4xx": [],
+ "chaiResponses": [
+  {
+   "step": "1 load Today",
+   "url": "/src/art/chai/chai-happy.webp?import",
+   "status": 200,
+   "fromSW": false
+  },
+  {
+   "step": "1 load Today",
+   "url": "/src/art/chai/chai-concerned.webp?import",
+   "status": 200,
+   "fromSW": false
+  },
+  {
+   "step": "1 load Today",
+   "url": "/src/art/chai/chai-cheering.webp?import",
+   "status": 200,
+   "fromSW": false
+  },
+  {
+   "step": "1 load Today",
+   "url": "/src/art/chai/chai-sipping.webp?import",
+   "status": 200,
+   "fromSW": false
+  },
+  {
+   "step": "1 load Today",
+   "url": "/src/art/chai/chai-reading.webp?import",
+   "status": 200,
+   "fromSW": false
+  },
+  {
+   "step": "1 load Today",
+   "url": "/src/art/chai/chai-stretch.webp?import",
+   "status": 200,
+   "fromSW": false
+  },
+  {
+   "step": "1 load Today",
+   "url": "/src/art/chai/chai-look.webp?import",
+   "status": 200,
+   "fromSW": false
+  },
+  {
+   "step": "1 load Today",
+   "url": "/src/art/chai/chai-happy-face.webp?import",
+   "status": 200,
+   "fromSW": false
+  },
+  {
+   "step": "1 load Today",
+   "url": "/src/art/chai/chai-sleep.webp?import",
+   "status": 200,
+   "fromSW": false
+  },
+  {
+   "step": "1 load Today",
+   "url": "/src/art/chai/chai-happy.webp",
+   "status": 200,
+   "fromSW": false
+  },
+  {
+   "step": "1 load Today",
+   "url": "/src/art/chai/chai-look.webp",
+   "status": 200,
+   "fromSW": false
+  },
+  {
+   "step": "2 start a brew (type, click Put the kettle on)",
+   "url": "/src/art/chai/chai-reading.webp",
+   "status": 200,
+   "fromSW": false
+  },
+  {
+   "step": "4 move the clock 90 s, end the brew (End session, sheet)",
+   "url": "/src/art/chai/chai-concerned.webp",
+   "status": 200,
+   "fromSW": false
+  },
+  {
+   "step": "4 move the clock 90 s, end the brew (End session, sheet)",
+   "url": "/src/art/chai/chai-sleep.webp",
+   "status": 200,
+   "fromSW": false
+  },
+  {
+   "step": "5 Today again, start a second brew, let it finish (summary)",
+   "url": "/src/art/chai/chai-cheering.webp",
+   "status": 200,
+   "fromSW": false
+  },
+  {
+   "step": "6 summary: Tea time, back to Today, open Stats (real click), scroll",
+   "url": "/src/art/chai/chai-sipping.webp",
+   "status": 200,
+   "fromSW": false
+  },
+  {
+   "step": "6 summary: Tea time, back to Today, open Stats (real click), scroll",
+   "url": "/src/art/chai/chai-happy.webp",
+   "status": 200,
+   "fromSW": false
+  }
+ ],
+ "chaiProbes": [
+  {
+   "tag": "2 brew running (focus)",
+   "hash": "#/focus",
+   "poses": [
+    {
+     "pose": "reading",
+     "src": "chai-reading.webp",
+     "ok": true,
+     "nat": "389x609"
+    },
+    {
+     "pose": "reading",
+     "src": "chai-reading.webp",
+     "ok": true,
+     "nat": "389x609"
+    }
+   ],
+   "chaiImgs": [
+    {
+     "src": "chai-reading.webp",
+     "ok": true,
+     "nat": "389x609"
+    }
+   ]
+  },
+  {
+   "tag": "4 after End session (toast)",
+   "hash": "#/",
+   "poses": [
+    {
+     "pose": "reading",
+     "src": "chai-reading.webp",
+     "ok": true,
+     "nat": "389x609"
+    },
+    {
+     "pose": "reading",
+     "src": "chai-reading.webp",
+     "ok": true,
+     "nat": "389x609"
+    },
+    {
+     "pose": "sleep",
+     "src": "chai-sleep.webp",
+     "ok": true,
+     "nat": "323x300"
+    },
+    {
+     "pose": "sleep",
+     "src": "chai-sleep.webp",
+     "ok": true,
+     "nat": "323x300"
+    }
+   ],
+   "chaiImgs": [
+    {
+     "src": "chai-reading.webp",
+     "ok": true,
+     "nat": "389x609"
+    },
+    {
+     "src": "chai-sleep.webp",
+     "ok": true,
+     "nat": "323x300"
+    }
+   ]
+  },
+  {
+   "tag": "5 summary after finish",
+   "hash": "#/done",
+   "poses": [
+    {
+     "pose": "cheering",
+     "src": "chai-cheering.webp",
+     "ok": true,
+     "nat": "390x535"
+    },
+    {
+     "pose": "cheering",
+     "src": "chai-cheering.webp",
+     "ok": true,
+     "nat": "390x535"
+    }
+   ],
+   "chaiImgs": [
+    {
+     "src": "chai-cheering.webp",
+     "ok": true,
+     "nat": "390x535"
+    }
+   ]
+  },
+  {
+   "tag": "6 after Tea time click",
+   "hash": "#/focus",
+   "poses": [
+    {
+     "pose": "sipping",
+     "src": "chai-sipping.webp",
+     "ok": true,
+     "nat": "378x614"
+    },
+    {
+     "pose": "sipping",
+     "src": "chai-sipping.webp",
+     "ok": true,
+     "nat": "378x614"
+    }
+   ],
+   "chaiImgs": [
+    {
+     "src": "chai-sipping.webp",
+     "ok": true,
+     "nat": "378x614"
+    }
+   ]
+  },
+  {
+   "tag": "6 Today",
+   "hash": "#/",
+   "poses": [
+    {
+     "pose": "sip",
+     "src": "chai-sipping.webp",
+     "ok": true,
+     "nat": "378x614"
+    },
+    {
+     "pose": "sipping",
+     "src": "chai-sipping.webp",
+     "ok": true,
+     "nat": "378x614"
+    }
+   ],
+   "chaiImgs": [
+    {
+     "src": "chai-sipping.webp",
+     "ok": true,
+     "nat": "378x614"
+    }
+   ]
+  },
+  {
+   "tag": "6 Stats",
+   "hash": "#/stats",
+   "poses": [
+    {
+     "pose": "proud",
+     "src": "chai-happy.webp",
+     "ok": true,
+     "nat": "303x496"
+    },
+    {
+     "pose": "happy",
+     "src": "chai-happy.webp",
+     "ok": true,
+     "nat": "303x496"
+    }
+   ],
+   "chaiImgs": [
+    {
+     "src": "chai-happy.webp",
+     "ok": true,
+     "nat": "303x496"
+    }
+   ]
+  },
+  {
+   "tag": "7 Settings",
+   "hash": "#/settings",
+   "poses": [
+    {
+     "pose": "wave",
+     "src": "chai-happy.webp",
+     "ok": true,
+     "nat": "303x496"
+    },
+    {
+     "pose": "happy",
+     "src": "chai-happy.webp",
+     "ok": true,
+     "nat": "303x496"
+    },
+    {
+     "pose": "sip",
+     "src": "chai-sipping.webp",
+     "ok": true,
+     "nat": "378x614"
+    },
+    {
+     "pose": "sipping",
+     "src": "chai-sipping.webp",
+     "ok": true,
+     "nat": "378x614"
+    }
+   ],
+   "chaiImgs": [
+    {
+     "src": "chai-happy.webp",
+     "ok": true,
+     "nat": "303x496"
+    },
+    {
+     "src": "chai-sipping.webp",
+     "ok": true,
+     "nat": "378x614"
+    }
+   ]
+  }
+ ],
+ "toastText": [
+  "Late-night brew? Let’s keep it short and sweet.Try Gentle · 15 min",
+  "Recipe done: Name what you’re brewing · +10 leavesRecipe done: Start a brew before 10 am · +15 leavesNew badge: Nook BuilderCozy level 2!Saved 1 minute of focus",
+  "Kettle’s off. 1 minute of focus saved."
+ ],
+ "afterFinishHash": "#/done",
+ "teaTimeClicked": true,
+ "statsHash": "#/stats",
+ "statsHasHistory": true,
+ "resources": [
+  {
+   "n": "chai-sipping.webp?import",
+   "t": 719,
+   "d": 419
+  },
+  {
+   "n": "chai-reading.webp?import",
+   "t": 719,
+   "d": 419
+  },
+  {
+   "n": "chai-happy.webp?import",
+   "t": 709,
+   "d": 409
+  },
+  {
+   "n": "chai-concerned.webp?import",
+   "t": 725,
+   "d": 425
+  },
+  {
+   "n": "chai-cheering.webp?import",
+   "t": 720,
+   "d": 420
+  },
+  {
+   "n": "chai-stretch.webp?import",
+   "t": 719,
+   "d": 419
+  },
+  {
+   "n": "chai-look.webp?import",
+   "t": 708,
+   "d": 408
+  },
+  {
+   "n": "chai-happy-face.webp?import",
+   "t": 742,
+   "d": 442
+  },
+  {
+   "n": "chai-sleep.webp?import",
+   "t": 709,
+   "d": 409
+  }
+ ],
+ "ended": "04:48:27",
+ "counts": {
+  "console_total": 4,
+  "error": 0,
+  "warning": 0,
+  "warn": 0,
+  "log": 0,
+  "info": 2,
+  "debug": 2,
+  "pageerror": 0,
+  "requestfailed": 0,
+  "http4xx": 0
+ },
+ "hookOrder": []
+}
