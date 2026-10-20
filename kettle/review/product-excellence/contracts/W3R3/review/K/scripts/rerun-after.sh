@@ -38,8 +38,10 @@ streamA() {   # states matrix, then noise recaptures (after2 = full subset, afte
   echo DONE A
 }
 streamB() {   # edges, then pose-switch (AFTER only)
-  EDGES=("stage 1440x900 dark" "stage 390x844 dark" "kit 1440x900 dark" "stage 1440x900 light" "kit 1440x900 light"); PSC=(390x844 1440x900); PST=(light dark)
+  EDGES=("plate 1440x900 dark" "stage 1440x900 dark" "stage 390x844 dark" "kit 1440x900 dark" "plate 1440x900 light" "stage 1440x900 light" "kit 1440x900 light"); PSC=(390x844 1440x900); PST=(light dark)
   [ -n "$SMOKE" ] && { EDGES=("kit 1440x900 dark"); PSC=(390x844); PST=(dark); }
+  # BEFORE on the flat plate of the real page background (new surface, so BEFORE is captured here too)
+  for a in "plate 1440x900 dark" "plate 1440x900 light"; do g node $K/scripts/edges.mjs http://localhost:5560 before $a; done
   for a in "${EDGES[@]}"; do g node $K/scripts/edges.mjs $BASE after $a; done
   for cfg in "${PSC[@]}"; do for th in "${PST[@]}"; do
     fd=$SC/frames/after-$cfg-$th; mkdir -p $fd

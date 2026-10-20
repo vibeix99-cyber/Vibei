@@ -30,7 +30,22 @@ async function grab(pose, sel) {
   out.push({ tag, pose, box, clip, dpr: 2 });
 }
 const boot = async (hash) => { await page.goto(`${base}/?debug&theme=${theme}&motion=reduce&seed=veteran#${hash}`); await page.waitForFunction(() => window.__kettle, null, { timeout: 60000 }); await page.waitForTimeout(1500); };
-if (mode === 'kit') {
+if (mode === 'plate') {
+  // Chai on a flat plate of the app's real page background (read from the page: --bg / body), the same <img> source and CSS size as in the Kit gallery at size 240.
+  await boot('/kit?part=art&view=chai&size=240'); await page.waitForTimeout(800);
+  const bg = await page.evaluate(() => { const c = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim(); const b = getComputedStyle(document.body).backgroundColor; return { cssVarBg: c, bodyBg: b }; });
+  const plateBg = bg.cssVarBg || bg.bodyBg; out.push({ plateBackground: bg });
+  for (const [pose, p] of [['reading', 'focus'], ['sipping', 'sip'], ['cheering', 'cheer']]) {
+    await page.evaluate(({ p, plateBg }) => {
+      const src = document.querySelector(`span[data-pose="${p}"] img`); const r = src.getBoundingClientRect();
+      document.getElementById('k-plate')?.remove();
+      const d = document.createElement('div'); d.id = 'k-plate'; d.style.cssText = `position:fixed;inset:0;z-index:2147483647;background:${plateBg}`;
+      const i = document.createElement('img'); i.id = 'k-plate-img'; i.src = src.currentSrc; i.style.cssText = `position:absolute;left:60px;top:40px;width:${r.width}px;height:${r.height}px;display:block`;
+      d.appendChild(i); document.body.appendChild(d);
+    }, { p, plateBg });
+    await grab(pose, '#k-plate-img');
+  }
+} else if (mode === 'kit') {
   await boot('/kit?part=art&view=chai&size=240'); await page.waitForTimeout(800);
   for (const [pose, p] of [['reading', 'focus'], ['sipping', 'sip'], ['cheering', 'cheer']]) await grab(pose, `span[data-pose="${p}"] img`);
 } else {

@@ -26,7 +26,9 @@ os.makedirs(f'{K}/outside-diffs',exist_ok=True)
 rows=[]
 for p in sorted(glob.glob(f'{K}/shots/before/*/*.png')):
     tag=os.path.basename(os.path.dirname(p)); st=os.path.basename(p)[:-4]
-    pa=f'{K}/shots/after/{tag}/{st}.png'; pn=f'{SC}/before2/{tag}/{st}.png'; pn2=f'{SC}/after2/{tag}/{st}.png'
+    pa=f'{K}/shots/after/{tag}/{st}.png'
+    if not os.path.exists(pa): continue   # a partial re-run: only the configs that were captured
+    pn=f'{SC}/before2/{tag}/{st}.png'; pn2=f'{SC}/after2/{tag}/{st}.png'
     if st in ('focus-running','home-live','focus-paused','focus-break','home-break'):   # final (3x settle) recapture has its own noise pair
         pn=f'{SC}/before3/{tag}/{st}.png'; pn2=f'{SC}/after3/{tag}/{st}.png'
     a,b=load(p),load(pa); r=dict(tag=tag,state=st,size_before=list(a.shape[1::-1]),size_after=list(b.shape[1::-1]),noise_pairs=[x for x,f in (('before-recapture',pn),('after-recapture',pn2)) if os.path.exists(f)])
