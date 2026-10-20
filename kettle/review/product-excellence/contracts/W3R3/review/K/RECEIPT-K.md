@@ -1,5 +1,7 @@
 # RECEIPT-K: capture lane K, W3R3 new 2D Chai masters (raw captures and measurements, no verdicts)
 
+**Space note: to keep the folder near 60 MB the AFTER-r1 PNGs (`shots/after/`, 117 files) were removed from the working tree after AFTER-r2 was captured; they are in git commit `613c43d` (path `kettle/review/product-excellence/contracts/W3R3/review/K/shots/after/`). Their measurements, strips, edge sheets and diff json stay in place. The AFTER-r2 PNGs are in `rerun-r2/shots/after/`.**
+
 **Label: every AFTER in this receipt is `AFTER-r1` = the first trial (:5621, `4e9961f`), which LEAD-7 has since rejected (non-uniform stretch). REFERENCE and BEFORE stay valid. The re-run on the fix trial is `scripts/rerun-after.sh <port> <label>` (see "Re-run entry point" at the end).**
 
 BEFORE = integration `f034205` (dev :5560, preview :5570). AFTER = trial `4e9961f` (dev :5621, preview :5622; worktree `/home/user/wt/w9tr`, integration + C2 `17f5a70`). Playwright 1.56 Chromium; every browser run went through the slot gate (`--lane K --n 1`). Captures were taken on the **dev** servers with `?debug`. Pillow/numpy/scipy in a venv outside the repo. No repo file was changed.
@@ -274,10 +276,9 @@ No Chai-unrelated content change (text, layout, colour) was found. The two outsi
 
 Full per-pair numbers: `json/pixdiff2.json` (inside/outside counts, noise-pair counts, components). The first-pass diff (before the serial re-take and noise subsets) is `json/pixdiff.json`, kept only for reference.
 
-### Re-run entry point (for the fix trial)
+### Re-run entry point
 
-`scripts/rerun-after.sh <port> [label]` (label default `r2`) runs, on `http://localhost:<port>`: the full 13-state matrix (all 9 configs), the edge close-ups (kit + stage, dark, plus light once), the pose-switch flow (all 12 runs), the final-timing noise recaptures, and then the post-processing (pixdiff vs the existing BEFORE, halo numbers, strips, proportions). Everything lands under `shots/after-<label>/`, `edges-<label>/`, `strips-<label>/`, `json-<label>/` so AFTER-r1 is untouched. BEFORE and REFERENCE are not re-run.
-
+`scripts/rerun-after.sh <dev-port> [label]` (label default `r2`; used for AFTER-r2 as `scripts/rerun-after.sh 5631 r2`). It runs, on `http://localhost:<dev-port>`, the full 13-state matrix over 9 configs, the edge close-ups (plate, kit, stage), the pose-switch flow (12 runs), the noise recaptures, then the post-processing against the existing BEFORE data. Output: `rerun-<label>/`. BEFORE and REFERENCE are not re-run (BEFORE PNGs and A/B inputs are reused read-only). `K_ONLY=A|B` re-runs one of the two parallel streams, `K_SMOKE=1` is a 5-minute plumbing check. About 40 minutes with two slots. The post scripts take their roots from `K_ROOT` / `K_SC`.
 
 ## Stage 4: AFTER-r2 (fix trial)
 
@@ -287,7 +288,7 @@ Capture details that differ from AFTER-r1: the animated flow states (`focus-runn
 
 ### 4.1 Capture counts (AFTER-r2)
 
-117 PNGs: 13 states x 9 configs, one per BEFORE capture: `390x844-light` 13, `390x844-dark` 13, `375x667-light` 13, `375x667-dark` 13, `1440x900-light` 13, `1440x900-dark` 13, `390x844-light-t200` 13, `390x844-dark-t200` 13, `390x844-light-rm` 13. Per-capture Chai box and pose: `rerun-r2/shots/after/states.log.txt` (the Chai `<img>` boxes equal BEFORE's in every capture).
+117 PNGs: 13 states x 9 configs, one per BEFORE capture: `390x844-light` 13, `390x844-dark` 13, `375x667-light` 13, `375x667-dark` 13, `1440x900-light` 13, `1440x900-dark` 13, `390x844-light-t200` 13, `390x844-dark-t200` 13, `390x844-light-rm` 13. Per-capture Chai box and pose: `rerun-r2/shots/after/states.log.txt` (the Chai `<img>` boxes equal BEFORE's in every capture, to within 0.01 px in two lines).
 
 ### 4.2 REFERENCE sheets re-drawn with the AFTER-r2 file
 
