@@ -55,7 +55,7 @@ await step('4 move the clock 90 s, end the brew (End session, sheet)', async () 
   const dlg = p.getByRole('dialog'); await dlg.waitFor({ state: 'visible', timeout: 5000 });
   await dlg.getByRole('button', { name: 'End session', exact: true }).click();
   await p.waitForFunction(() => window.__kettle.timer.getState().status === 'idle', null, { timeout: 8000 });
-  await sleep(2500); // the "Saved ... of focus" toast
+  await sleep(2500); await probe('4 after End session (toast)'); // the "Saved ... of focus" toast
   log.toastText = await p.evaluate(() => [...document.querySelectorAll('[role=status],[role=alert],[aria-live]')].map((e) => e.textContent?.trim()).filter(Boolean).slice(0, 6));
 });
 await step('5 Today again, start a second brew, let it finish (summary)', async () => {
