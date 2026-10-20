@@ -226,3 +226,12 @@ FACT 390x844-dark-t200-rm b-scroll-then-idle {"leftAt":5305,"room":113,"maxSy":4
   ✓  215 [chromium] › tests/toast-room.spec.ts:262:3 › notices timing out, and the endless update prompt, never move the banner under the person (375×667, 200 % text, wheel, light) (27.4s)
 FACT 390x844-dark-t200-rm c-pointer-held {"leftAt":5375,"room":113,"roomWhileDown":113,"downWhileHeld":1,"commits":[{"t":12480,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4060,"topBefore":250.09375,"topAfter":137.09375,"sy":0}],"collapseAfterLeaveMs":7105,"collapseAfterLastBusyMs":4060,"visibleMove":113}
   ✓  217 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (390x844-dark-t200-rm) (13.4s)
+FACT 1440x900-light-t100 a-no-input {"leftAt":5379,"room":68,"commits":[{"t":9488,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":8633,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":4109,"collapseAfterLastBusyMs":4109,"visibleMove":68}
+  ✓  219 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime a-no-input (1440x900-light-t100) (10.5s)
+  ✓  218 [chromium] › tests/toast-room.spec.ts:262:3 › notices timing out, and the endless update prompt, never move the banner under the person (375×667, 200 % text, wheel, dark) (27.7s)
+FACT 1440x900-light-t100 b-scroll-then-idle {"leftAt":5202,"room":68,"maxSy":11,"scrollMs":2388,"roomAfterScroll":68,"commits":[{"t":11696,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4106,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":6494,"collapseAfterLastBusyMs":4106,"visibleMove":68}
+  ✓  220 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime b-scroll-then-idle (1440x900-light-t100) (12.6s)
+  ✓  221 [chromium] › tests/toast-room.spec.ts:297:3 › the last notice leaves where it was, never over the docked start (375×667, 200 % text) (4.7s)
+  ✓  223 [chromium] › tests/toast-room.spec.ts:297:3 › the last notice leaves where it was, never over the docked start (844×390, 200 % text) (4.8s)
+FACT 1440x900-light-t100 c-pointer-held {"leftAt":5087,"room":68,"roomWhileDown":68,"downWhileHeld":1,"commits":[{"t":12496,"why":"idle","room":0,"shown":null,"down":0,"sinceInput":4108,"topBefore":168,"topAfter":100,"sy":0}],"collapseAfterLeaveMs":7409,"collapseAfterLastBusyMs":4108,"visibleMove":68}
+  ✓  222 [chromium] › tests/w3-notices-idle.spec.ts:80:5 › band lifetime c-pointer-held (1440x900-light-t100) (13.8s)
