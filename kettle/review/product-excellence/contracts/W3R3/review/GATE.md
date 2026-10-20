@@ -22,3 +22,18 @@
 | **Points for LEAD** | (1) To hold the old footprint, the art is **stretched non-uniformly**: cheering +3.9 % width relative to height, reading −1.5 %, sipping −1.2 %. Preserve list #2 names "proportions", and Vibei asked for on-model fidelity. (2) **WebP only, no fallback format**; Vibei asked for "modern formats with a fallback". (3) The masters' ground shadow is represented only by the existing Stage CSS shadow. (4) 1.25× density versus the README sharpness table for 2× screens |
 | Archive | `archive/pe-w3r3-chai-2d-17f5a70.incremental.bundle` (requires `f034205`) |
 | Next | Capture lane (Sonnet) on :5621 vs :5560; LEAD (Opus) verdict |
+
+## C2: REJECT (LEAD-7 `542d3c5`, `CHECKER-W3R3-C2.md`). One 90-minute fix round, 02:50–04:20 UTC
+
+- **R1 (BLOCKS): non-uniform stretch.** Each pose must keep its master's ratio within ±0.5 %; shipped reading −1.6 %, sipping −1.4 %, cheering +3.9 % (lane K measured the same).
+  - **Fix:** one uniform scale per pose, set by the old ink height, with feet and centre aligned. Box, baseline, top and centre stay ≤ 1 CSS px; only ink width moves (cheering about −6.7 CSS px at the Stage cap). LEAD-7's scratch run: about 58,224 B.
+- **Rulings:**
+  - **WebP only: ACCEPTED, no `<picture>` required.** The es2022 build already excludes browsers without WebP alpha. A PNG fallback would be dead precache weight, and AVIF is not in the precache glob, so Chai would vanish offline. *Orchestrator note: Vibei asked for "modern formats with a fallback"; this ruling is reported to Vibei.*
+  - **Shadow:** ACCEPTED on the Stage. No shadow on Home, Welcome or Settings is a FOLLOW-UP for Vibei.
+  - **Resolution:** 1.25× is sharp (every case is a downscale). The budget stays 61,476 B.
+- **Passed:**
+  - halo on the real dark background `#241a2d`: the rim is not lighter than the interior;
+  - the interior matches the masters to about 2.5/255;
+  - scope and bytes.
+- **D2:** docs corrections.
+- **Housekeeping:** LEAD-7's stage commit `5691316` also swept in some of lane K's in-progress captures. They are evidence only.
