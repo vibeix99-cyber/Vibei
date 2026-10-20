@@ -1,0 +1,368 @@
+{
+ "label": "preview5570-desktop",
+ "base": "http://127.0.0.1:5570",
+ "viewport": "desktop",
+ "started": "04:46:18",
+ "steps": [
+  {
+   "name": "1 load Today",
+   "at": "04:46:18",
+   "error": null
+  },
+  {
+   "name": "2 start a brew (type, click Put the kettle on)",
+   "at": "04:46:21",
+   "error": null
+  },
+  {
+   "name": "3 pause and resume (real clicks), Add 5 minutes",
+   "at": "04:46:25",
+   "error": null
+  },
+  {
+   "name": "4 move the clock 90 s, end the brew (End session, sheet)",
+   "at": "04:46:31",
+   "error": null
+  },
+  {
+   "name": "5 Today again, start a second brew, let it finish (summary)",
+   "at": "04:46:36",
+   "error": null
+  },
+  {
+   "name": "6 summary: Tea time, back to Today, open Stats (real click), scroll",
+   "at": "04:46:45",
+   "error": null
+  },
+  {
+   "name": "7 open Settings (route), back to Today",
+   "at": "04:46:56",
+   "error": null
+  }
+ ],
+ "console": [
+  {
+   "step": "1 load Today",
+   "type": "info",
+   "text": "[chai3d] model ready {state: ready, ms: 44, bytes: 45572} {awake: Object, nap: Object, sip: Object, fileTris: 5372}",
+   "loc": "/assets/chaiLoad-CcGChzx6.js:0"
+  }
+ ],
+ "pageerrors": [],
+ "requestfailed": [],
+ "http4xx": [],
+ "chaiResponses": [
+  {
+   "step": "1 load Today",
+   "url": "/assets/chai-happy-BAALIhDR.webp",
+   "status": 200,
+   "fromSW": false
+  },
+  {
+   "step": "1 load Today",
+   "url": "/assets/chai-look-DqB_Gsfd.webp",
+   "status": 200,
+   "fromSW": false
+  },
+  {
+   "step": "2 start a brew (type, click Put the kettle on)",
+   "url": "/assets/chai-reading-CMLk2MAx.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "step": "4 move the clock 90 s, end the brew (End session, sheet)",
+   "url": "/assets/chai-concerned-owi0mQpG.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "step": "4 move the clock 90 s, end the brew (End session, sheet)",
+   "url": "/assets/chai-sleep-CGUxQw--.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "step": "5 Today again, start a second brew, let it finish (summary)",
+   "url": "/assets/chai-cheering-ZKPXRG7z.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "step": "6 summary: Tea time, back to Today, open Stats (real click), scroll",
+   "url": "/assets/chai-sipping-DwyPxpxw.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "step": "6 summary: Tea time, back to Today, open Stats (real click), scroll",
+   "url": "/assets/chai-happy-BAALIhDR.webp",
+   "status": 200,
+   "fromSW": true
+  }
+ ],
+ "chaiProbes": [
+  {
+   "tag": "2 brew running (focus)",
+   "hash": "#/focus",
+   "poses": [
+    {
+     "pose": "reading",
+     "src": "chai-reading-CMLk2MAx.webp",
+     "ok": true,
+     "nat": "389x609"
+    },
+    {
+     "pose": "reading",
+     "src": "chai-reading-CMLk2MAx.webp",
+     "ok": true,
+     "nat": "389x609"
+    }
+   ],
+   "chaiImgs": [
+    {
+     "src": "chai-reading-CMLk2MAx.webp",
+     "ok": true,
+     "nat": "389x609"
+    }
+   ]
+  },
+  {
+   "tag": "4 after End session (toast)",
+   "hash": "#/",
+   "poses": [
+    {
+     "pose": "sleep",
+     "src": "chai-sleep-CGUxQw--.webp",
+     "ok": true,
+     "nat": "323x300"
+    },
+    {
+     "pose": "sleep",
+     "src": "chai-sleep-CGUxQw--.webp",
+     "ok": true,
+     "nat": "323x300"
+    }
+   ],
+   "chaiImgs": [
+    {
+     "src": "chai-sleep-CGUxQw--.webp",
+     "ok": true,
+     "nat": "323x300"
+    }
+   ]
+  },
+  {
+   "tag": "5 summary after finish",
+   "hash": "#/done",
+   "poses": [
+    {
+     "pose": "cheering",
+     "src": "chai-cheering-ZKPXRG7z.webp",
+     "ok": true,
+     "nat": "390x535"
+    },
+    {
+     "pose": "cheering",
+     "src": "chai-cheering-ZKPXRG7z.webp",
+     "ok": true,
+     "nat": "390x535"
+    }
+   ],
+   "chaiImgs": [
+    {
+     "src": "chai-cheering-ZKPXRG7z.webp",
+     "ok": true,
+     "nat": "390x535"
+    }
+   ]
+  },
+  {
+   "tag": "6 after Tea time click",
+   "hash": "#/focus",
+   "poses": [
+    {
+     "pose": "sipping",
+     "src": "chai-sipping-DwyPxpxw.webp",
+     "ok": true,
+     "nat": "378x614"
+    },
+    {
+     "pose": "sipping",
+     "src": "chai-sipping-DwyPxpxw.webp",
+     "ok": true,
+     "nat": "378x614"
+    }
+   ],
+   "chaiImgs": [
+    {
+     "src": "chai-sipping-DwyPxpxw.webp",
+     "ok": true,
+     "nat": "378x614"
+    }
+   ]
+  },
+  {
+   "tag": "6 Today",
+   "hash": "#/",
+   "poses": [
+    {
+     "pose": "sip",
+     "src": "chai-sipping-DwyPxpxw.webp",
+     "ok": true,
+     "nat": "378x614"
+    },
+    {
+     "pose": "sipping",
+     "src": "chai-sipping-DwyPxpxw.webp",
+     "ok": true,
+     "nat": "378x614"
+    }
+   ],
+   "chaiImgs": [
+    {
+     "src": "chai-sipping-DwyPxpxw.webp",
+     "ok": true,
+     "nat": "378x614"
+    }
+   ]
+  },
+  {
+   "tag": "6 Stats",
+   "hash": "#/stats",
+   "poses": [
+    {
+     "pose": "proud",
+     "src": "chai-happy-BAALIhDR.webp",
+     "ok": true,
+     "nat": "303x496"
+    },
+    {
+     "pose": "happy",
+     "src": "chai-happy-BAALIhDR.webp",
+     "ok": true,
+     "nat": "303x496"
+    }
+   ],
+   "chaiImgs": [
+    {
+     "src": "chai-happy-BAALIhDR.webp",
+     "ok": true,
+     "nat": "303x496"
+    }
+   ]
+  },
+  {
+   "tag": "7 Settings",
+   "hash": "#/settings",
+   "poses": [
+    {
+     "pose": "wave",
+     "src": "chai-happy-BAALIhDR.webp",
+     "ok": true,
+     "nat": "303x496"
+    },
+    {
+     "pose": "happy",
+     "src": "chai-happy-BAALIhDR.webp",
+     "ok": true,
+     "nat": "303x496"
+    },
+    {
+     "pose": "sip",
+     "src": "chai-sipping-DwyPxpxw.webp",
+     "ok": true,
+     "nat": "378x614"
+    },
+    {
+     "pose": "sipping",
+     "src": "chai-sipping-DwyPxpxw.webp",
+     "ok": true,
+     "nat": "378x614"
+    }
+   ],
+   "chaiImgs": [
+    {
+     "src": "chai-happy-BAALIhDR.webp",
+     "ok": true,
+     "nat": "303x496"
+    },
+    {
+     "src": "chai-sipping-DwyPxpxw.webp",
+     "ok": true,
+     "nat": "378x614"
+    }
+   ]
+  }
+ ],
+ "toastText": [
+  "Late-night brew? Let’s keep it short and sweet.Try Gentle · 15 min",
+  "Recipe done: Name what you’re brewing · +10 leavesRecipe done: Start a brew before 10 am · +15 leavesNew badge: Nook BuilderCozy level 2!Saved 1 minute of focus",
+  "Kettle’s off. 1 minute of focus saved."
+ ],
+ "afterFinishHash": "#/done",
+ "teaTimeClicked": true,
+ "statsHash": "#/stats",
+ "statsHasHistory": true,
+ "resources": [
+  {
+   "n": "chai-happy-BAALIhDR.webp",
+   "t": 19512,
+   "d": 19212
+  },
+  {
+   "n": "chai-look-DqB_Gsfd.webp",
+   "t": 16882,
+   "d": 16582
+  },
+  {
+   "n": "chai-B-OZIeNI.glb",
+   "t": 45872,
+   "d": 45572
+  },
+  {
+   "n": "chai-reading-CMLk2MAx.webp",
+   "t": 0,
+   "d": 19968
+  },
+  {
+   "n": "chai-concerned-owi0mQpG.webp",
+   "t": 0,
+   "d": 19190
+  },
+  {
+   "n": "chai-sleep-CGUxQw--.webp",
+   "t": 0,
+   "d": 14590
+  },
+  {
+   "n": "chai-cheering-ZKPXRG7z.webp",
+   "t": 0,
+   "d": 19078
+  },
+  {
+   "n": "chai-sipping-DwyPxpxw.webp",
+   "t": 0,
+   "d": 19178
+  },
+  {
+   "n": "chai-happy-BAALIhDR.webp",
+   "t": 0,
+   "d": 19212
+  }
+ ],
+ "ended": "04:47:01",
+ "counts": {
+  "console_total": 1,
+  "error": 0,
+  "warning": 0,
+  "warn": 0,
+  "log": 0,
+  "info": 1,
+  "debug": 0,
+  "pageerror": 0,
+  "requestfailed": 0,
+  "http4xx": 0
+ },
+ "hookOrder": []
+}
