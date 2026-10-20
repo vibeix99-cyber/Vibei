@@ -71,7 +71,6 @@ await step('5 offline: start a brew (real clicks), Chai during focus', async () 
   await sleep(2500); await probe('5 brew running (offline)');
 });
 await step('6 offline: end it (summary, cheering)', async () => {
-  await p.evaluate(() => window.__kettle.ff(90_000)); await sleep(500);
   await p.evaluate(() => window.__kettle.nearEnd()); await sleep(400);
   await p.evaluate(() => window.__kettle.finish()); await sleep(6000);
   await probe('6 summary (offline)');

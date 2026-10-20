@@ -1,0 +1,325 @@
+{
+ "label": "preview5570",
+ "base": "http://127.0.0.1:5570",
+ "started": "04:50:11",
+ "steps": [
+  {
+   "name": "1 load, wait for the service worker to activate and control the page",
+   "at": "04:50:11",
+   "error": null
+  },
+  {
+   "name": "2 list the Chai images in the service-worker caches",
+   "at": "04:50:14",
+   "error": null
+  },
+  {
+   "name": "3 offline: fetch and decode the three Chai images",
+   "at": "04:50:14",
+   "error": null
+  },
+  {
+   "name": "4 offline: reload, the app boots",
+   "at": "04:50:14",
+   "error": null
+  },
+  {
+   "name": "5 offline: start a brew (real clicks), Chai during focus",
+   "at": "04:50:14",
+   "error": null
+  },
+  {
+   "name": "6 offline: end it (summary, cheering)",
+   "at": "04:50:21",
+   "error": null
+  },
+  {
+   "name": "7 offline: Tea time (sipping)",
+   "at": "04:50:28",
+   "error": "locator.click: Timeout 5000ms exceeded."
+  }
+ ],
+ "console": [
+  {
+   "phase": "online",
+   "type": "info",
+   "text": "[chai3d] model ready {state: ready, ms: 32, bytes: 45572} {awake: Object, nap: Object, sip: Object, fileTris: 5372}"
+  },
+  {
+   "phase": "offline",
+   "type": "info",
+   "text": "[chai3d] model ready {state: ready, ms: 31, bytes: 45572} {awake: Object, nap: Object, sip: Object, fileTris: 5372}"
+  }
+ ],
+ "pageerrors": [],
+ "requestfailed": [],
+ "http4xx": [],
+ "chaiResponses": [
+  {
+   "phase": "online",
+   "url": "/assets/chai-look-DqB_Gsfd.webp",
+   "status": 200,
+   "fromSW": false
+  },
+  {
+   "phase": "online",
+   "url": "/assets/chai-happy-BAALIhDR.webp",
+   "status": 200,
+   "fromSW": false
+  },
+  {
+   "phase": "online",
+   "url": "/assets/chai-happy-BAALIhDR.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "online",
+   "url": "/assets/chai-look-DqB_Gsfd.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-sipping-DwyPxpxw.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-sipping-DwyPxpxw.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-reading-CMLk2MAx.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-reading-CMLk2MAx.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-cheering-ZKPXRG7z.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-cheering-ZKPXRG7z.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-happy-BAALIhDR.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-look-DqB_Gsfd.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-reading-CMLk2MAx.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-cheering-ZKPXRG7z.webp",
+   "status": 200,
+   "fromSW": true
+  }
+ ],
+ "chaiProbes": [
+  {
+   "tag": "4 Today (offline reload)",
+   "phase": "offline",
+   "hash": "#/",
+   "online": false,
+   "poses": [
+    {
+     "pose": "wave",
+     "src": "chai-happy-BAALIhDR.webp",
+     "ok": true,
+     "nat": "303x496"
+    },
+    {
+     "pose": "happy",
+     "src": "chai-happy-BAALIhDR.webp",
+     "ok": true,
+     "nat": "303x496"
+    },
+    {
+     "pose": "peek",
+     "src": "chai-look-DqB_Gsfd.webp",
+     "ok": true,
+     "nat": "310x431"
+    },
+    {
+     "pose": "look",
+     "src": "chai-look-DqB_Gsfd.webp",
+     "ok": true,
+     "nat": "310x431"
+    }
+   ]
+  },
+  {
+   "tag": "5 brew running (offline)",
+   "phase": "offline",
+   "hash": "#/focus",
+   "online": false,
+   "poses": [
+    {
+     "pose": "reading",
+     "src": "chai-reading-CMLk2MAx.webp",
+     "ok": true,
+     "nat": "389x609"
+    },
+    {
+     "pose": "reading",
+     "src": "chai-reading-CMLk2MAx.webp",
+     "ok": true,
+     "nat": "389x609"
+    }
+   ]
+  },
+  {
+   "tag": "6 summary (offline)",
+   "phase": "offline",
+   "hash": "#/done",
+   "online": false,
+   "poses": [
+    {
+     "pose": "cheering",
+     "src": "chai-cheering-ZKPXRG7z.webp",
+     "ok": true,
+     "nat": "390x535"
+    },
+    {
+     "pose": "cheering",
+     "src": "chai-cheering-ZKPXRG7z.webp",
+     "ok": true,
+     "nat": "390x535"
+    }
+   ]
+  }
+ ],
+ "sw1": {
+  "state": "activating",
+  "scope": "http://127.0.0.1:5570/",
+  "controller": false
+ },
+ "sw2": {
+  "state": "activated",
+  "url": "http://127.0.0.1:5570/sw.js"
+ },
+ "cached": {
+  "workbox-precache-v2-http://127.0.0.1:5570/": [
+   "chai-stretch-C0-cRH4_.webp",
+   "chai-sleep-CGUxQw--.webp",
+   "chai-sipping-DwyPxpxw.webp",
+   "chai-reading-CMLk2MAx.webp",
+   "chai-look-DqB_Gsfd.webp",
+   "chai-happy-face-BjtAdoSq.webp",
+   "chai-happy-BAALIhDR.webp",
+   "chai-concerned-owi0mQpG.webp",
+   "chai-cheering-ZKPXRG7z.webp",
+   "chai-B-OZIeNI.glb"
+  ]
+ },
+ "want": [
+  {
+   "n": "chai-reading",
+   "cached": [
+    "chai-reading-CMLk2MAx.webp"
+   ]
+  },
+  {
+   "n": "chai-sipping",
+   "cached": [
+    "chai-sipping-DwyPxpxw.webp"
+   ]
+  },
+  {
+   "n": "chai-cheering",
+   "cached": [
+    "chai-cheering-ZKPXRG7z.webp"
+   ]
+  }
+ ],
+ "chaiUrls": [
+  "/assets/chai-sipping-DwyPxpxw.webp",
+  "/assets/chai-reading-CMLk2MAx.webp",
+  "/assets/chai-cheering-ZKPXRG7z.webp"
+ ],
+ "offlineFetch": [
+  {
+   "url": "chai-sipping-DwyPxpxw.webp",
+   "status": 200,
+   "type": "image/webp",
+   "bytes": 19178,
+   "imgOk": true
+  },
+  {
+   "url": "chai-reading-CMLk2MAx.webp",
+   "status": 200,
+   "type": "image/webp",
+   "bytes": 19968,
+   "imgOk": true
+  },
+  {
+   "url": "chai-cheering-ZKPXRG7z.webp",
+   "status": 200,
+   "type": "image/webp",
+   "bytes": 19078,
+   "imgOk": true
+  }
+ ],
+ "offlineReloadOnline": false,
+ "resources": [
+  {
+   "n": "chai-happy-BAALIhDR.webp",
+   "t": 0,
+   "d": 19212
+  },
+  {
+   "n": "chai-look-DqB_Gsfd.webp",
+   "t": 0,
+   "d": 16582
+  },
+  {
+   "n": "chai-B-OZIeNI.glb",
+   "t": 0,
+   "d": 45572
+  },
+  {
+   "n": "chai-reading-CMLk2MAx.webp",
+   "t": 0,
+   "d": 19968
+  },
+  {
+   "n": "chai-cheering-ZKPXRG7z.webp",
+   "t": 0,
+   "d": 19078
+  }
+ ],
+ "ended": "04:50:49",
+ "counts": {
+  "console_total": 2,
+  "error": 0,
+  "warning": 0,
+  "pageerror": 0,
+  "requestfailed": 0,
+  "http4xx": 0
+ }
+}
