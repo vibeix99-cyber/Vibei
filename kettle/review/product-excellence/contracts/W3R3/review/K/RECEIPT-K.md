@@ -1,5 +1,7 @@
 # RECEIPT-K: capture lane K, W3R3 new 2D Chai masters (raw captures and measurements, no verdicts)
 
+**Label: every AFTER in this receipt is `AFTER-r1` = the first trial (:5621, `4e9961f`), which LEAD-7 has since rejected (non-uniform stretch). REFERENCE and BEFORE stay valid. The re-run on the fix trial is `scripts/rerun-after.sh <port> <label>` (see "Re-run entry point" at the end).**
+
 BEFORE = integration `f034205` (dev :5560, preview :5570). AFTER = trial `4e9961f` (dev :5621, preview :5622; worktree `/home/user/wt/w9tr`, integration + C2 `17f5a70`). Playwright 1.56 Chromium; every browser run went through the slot gate (`--lane K --n 1`). Captures were taken on the **dev** servers with `?debug`. Pillow/numpy/scipy in a venv outside the repo. No repo file was changed.
 
 **Stages** (each committed): 1 raw captures, 2 reference + edges + pose-switch + proportions, 3 pixel diff + noise floor + file sizes + hand-back.
@@ -240,3 +242,38 @@ Measured independently: **reading -1.6 to -1.7 %, sipping -1.3 to -1.4 %, cheeri
 Served files fetched by their hashed URLs (`assets-served/{before,after}-chai-*.webp`, `content-type: image/webp`, `cache-control: no-cache`); the AFTER files are byte-identical (md5) to `src/art/chai/*.webp` in the trial worktree, the BEFORE sizes equal `git show f034205:...`. Precache: both previews' `sw.js` list **119 entries**; the three chai WebPs are in it as hashed URLs with `revision: null` (before `chai-reading-BrtgDZfI`, `chai-sipping-DTyMuyps`, `chai-cheering-CK8xIJCH`; after `chai-reading-B1vNQyTr`, `chai-sipping-DCqv63U-`, `chai-cheering-D9IFTGSg`). Live check (`scripts/pwa-cache.mjs`, `json/pwa-cache.json`): service worker `activated` on both, and Cache Storage `workbox-precache-v2` holds the three files at the exact byte sizes above on each.
 
 Scripts for stage 2: `edges.mjs`, `edge_post.py`, `run-edges.sh`, `run-edges-stage.sh`, `poseswitch.mjs`, `ps_post.py`, `run-ps.sh`, `master_ink.py`, `ref_post.py`, `prop_post.py`, `pwa-cache.mjs`.
+
+## Stage 3
+
+### 2b. Pixel diff BEFORE vs AFTER-r1 and the noise floor
+
+Method (`scripts/pixdiff2.py`, `json/pixdiff2.json`): for each of the 117 pairs, compare full-page PNGs (common top-left area; page heights can differ by a few px between runs). A pixel "differs" when max channel difference > 8/255. **Inside** = the union of the BEFORE and AFTER `<img>` boxes (from `states.log.txt`) + 16 px; **outside** = everything else (for the three Welcome states the whole prompt-row column of the mascot, y < 260, counts as inside, because the Welcome mascot is animated and its logged box is from another instant). **Noise floor:** BEFORE was recaptured once for a subset (`before2`: 390x844 light, dark, t200 light and dark, rm; 1440x900 light and dark; 375x667 light and dark) and AFTER-r1 was recaptured once as well (`after2`/`before3`/`after3` for the animated flow states, taken in the final serial, 3x-settle condition). A BEFORE/AFTER outside difference counts as "within noise" when it lies where BEFORE-vs-recapture (or AFTER-vs-recapture) also differs (dilated 10 px). 102 of 117 pairs have such a noise pair; 15 do not (flagged below).
+
+Verdict per pair (I = identical outside Chai's box: 0 differing pixels > 0/255; N = within noise: outside diffs <= 8/255, or coincide with the recapture noise; D* = outside diff not covered by a noise pair, explained below):
+
+| config | kit-chai | settings | home-evening | focus-running | home-live | focus-paused | whistle | summary | focus-break | home-break | welcome-sound | welcome-notify | welcome-ready |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| `1440x900-dark` | I | N | I | I | I | I | N | I | I | N | I | I | I |
+| `1440x900-light` | I | I | I | N | I | I | N | I | I | N | I | I | I |
+| `375x667-dark` | I | I | N | N | I | I | I | I | D* | D* | I | I | I |
+| `375x667-light` | I | I | I | N | I | I | I | I | I | I | I | I | I |
+| `390x844-dark` | I | I | N | I | I | I | N | I | I | D* | I | I | I |
+| `390x844-dark-t200` | I | I | I | D* | I | I | I | I | I | I | I | I | I |
+| `390x844-light` | I | I | I | N | I | I | N | I | I | N | I | I | I |
+| `390x844-light-rm` | I | I | I | I | I | N | N | I | I | I | I | I | I |
+| `390x844-light-t200` | I | I | I | I | N | N | N | I | I | D* | I | N | N |
+
+**Totals: 91 identical, 21 within noise, 5 D\*.** Inside Chai's box the pair differs (> 8/255) in 115 of 117 captures (expected); the two exceptions are `390x844-{light,dark}-t200 home-evening`, where Chai is not visible in the capture at all (at 200 % text the Home hero's Chai sits under the brew-length picker in the full-page frame, in BEFORE and AFTER-r1 alike; this may be an artefact of fixed layers in a full-page capture, not looked into further).
+
+Nothing outside Chai's box changed in any pair except these five, which I looked at (`outside-diffs/*.png`, BEFORE | AFTER | recaptures, 3x):
+- `390x844-dark-t200 focus-running` (11,473 px, the chrome chips at the top and the controls at the foot): AFTER-r1 was caught mid fade-in (Rain and mute chips at about 30 % opacity); BEFORE and its recapture are fully in. Timing, not content.
+- `375x667-dark focus-break` (the Pause button disc, 3,936 px) and `390x844-dark home-break` (2 px unexplained of 8): a button fill and an icon tint at slightly different transition phases (BEFORE and its recapture differ the same way).
+- `375x667-dark home-break` (590 px at the "Nook" tab of the bottom bar): the tab shows a hover/active tint in AFTER-r1 only (the pointer rests at a different place after the preceding click); BEFORE and recapture agree with each other.
+- `390x844-light-t200 home-break`: 1 px.
+No Chai-unrelated content change (text, layout, colour) was found. The two outside-diff sources that do recur are real-time: the **break countdown digits** (the break timer is not covered by the fixed `Date.now()`: 4:50 vs 4:47 and "17 left" vs "18 left" between runs, also BEFORE vs BEFORE) and the Stage scene / tab-bar entrance transitions (why the flow states were re-taken serially, see Stage 1). The ground shadow under Chai on the Stage (CSS `.cShadow`) is outside-the-box pixels in these diffs and is identical in every captured pair.
+
+Full per-pair numbers: `json/pixdiff2.json` (inside/outside counts, noise-pair counts, components). The first-pass diff (before the serial re-take and noise subsets) is `json/pixdiff.json`, kept only for reference.
+
+### Re-run entry point (for the fix trial)
+
+`scripts/rerun-after.sh <port> [label]` (label default `r2`) runs, on `http://localhost:<port>`: the full 13-state matrix (all 9 configs), the edge close-ups (kit + stage, dark, plus light once), the pose-switch flow (all 12 runs), the final-timing noise recaptures, and then the post-processing (pixdiff vs the existing BEFORE, halo numbers, strips, proportions). Everything lands under `shots/after-<label>/`, `edges-<label>/`, `strips-<label>/`, `json-<label>/` so AFTER-r1 is untouched. BEFORE and REFERENCE are not re-run.
