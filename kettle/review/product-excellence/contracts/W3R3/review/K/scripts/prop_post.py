@@ -10,12 +10,12 @@ for key,sides in S.items():
     if ' dpr2 ' not in key+' ': continue
     for side in ('before','after'):
         for i,m in enumerate(sides[side]['steps']):
-            rows.append(dict(src=f'stage {key} {side} step{i+1}',side=side,pose=m['pose'],kind='alpha-mapped',w=m['a_w'],h=m['a_h']))
-            rows.append(dict(src=f'stage {key} {side} step{i+1}',side=side,pose=m['pose'],kind='screenshot',w=m['ink_w'],h=m['ink_h']))
+            if key.endswith('full') and i not in (2,3,4): continue   # normal motion: steps 1 and 2 are mid arrival-hop / whistle-hop, not steady
+            rows.append(dict(src=f'stage {key} {side} step{i+1}',side=side,pose=m['pose'],kind='stage: decoded alpha through the box',w=m['a_w'],h=m['a_h']))
 for k,row in E.items():
     mode,cfg,theme,pose=k.split()
     for side in ('before','after'):
-        b=row[side]['ink_box_dev']; rows.append(dict(src=f'{mode} {cfg} {theme} {side}',side=side,pose=pose,kind='screenshot',w=(b[2]-b[0])/2,h=(b[3]-b[1])/2))
+        b=row[side]['ink_box_dev']; rows.append(dict(src=f'{mode} {cfg} {theme} {side}',side=side,pose=pose,kind=('kit: screenshot diff (flat page)' if mode=='kit' else 'stage: screenshot diff'),w=(b[2]-b[0])/2,h=(b[3]-b[1])/2))
 out=[]
 for r in rows:
     a=r['w']/r['h']; ma=master[r['pose']]['aspect']; out.append(dict(r,aspect=round(a,5),master_aspect=ma,width_vs_height_pct=round((a/ma-1)*100,2)))
@@ -24,7 +24,7 @@ import statistics as st
 L=['| pose | side | method | n | mean aspect w/h | min..max % | mean width-vs-height vs master |','|---|---|---|---|---|---|---|']
 for pose in ('reading','sipping','cheering'):
     for side in ('before','after'):
-        for kind in ('alpha-mapped','screenshot'):
+        for kind in ('stage: decoded alpha through the box','kit: screenshot diff (flat page)','stage: screenshot diff'):
             x=[o for o in out if o['pose']==pose and o['side']==side and o['kind']==kind]
             if not x: continue
             p=[o['width_vs_height_pct'] for o in x]
