@@ -11,6 +11,7 @@ for (const w of [1, 3, 6, 10, 15]) {
   await page.waitForTimeout((w - t) * 1000); t = w;
   await page.screenshot({ path: `${SC}/${tag}-${w}s.png`, animations: 'disabled' });
   const info = await page.evaluate(() => { const win = document.querySelector('[class*="window"]'); return { filter: win && getComputedStyle(win).filter, imgs: [...document.querySelectorAll('[class*="window"] img, [class*="back"] img')].map(i => [i.currentSrc.split('/').pop().slice(0, 40), i.naturalWidth, i.complete]) }; });
-  console.log(tag, w, JSON.stringify(info));
+  await page.screenshot({ path: `${SC}/${tag}-${w}s-full.png`, animations: 'disabled', fullPage: true });
+  console.log(tag, w, 'scrollH', await page.evaluate(() => [document.documentElement.scrollHeight, innerHeight]), JSON.stringify(info));
 }
 await b.close();
