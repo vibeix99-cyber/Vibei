@@ -26,23 +26,30 @@ os.makedirs(f'{K}/outside-diffs',exist_ok=True)
 rows=[]
 for p in sorted(glob.glob(f'{K}/shots/before/*/*.png')):
     tag=os.path.basename(os.path.dirname(p)); st=os.path.basename(p)[:-4]
-    pa=f'{K}/shots/after/{tag}/{st}.png'; pn=f'{SC}/before2/{tag}/{st}.png'
-    a,b=load(p),load(pa); r=dict(tag=tag,state=st,size_before=list(a.shape[1::-1]),size_after=list(b.shape[1::-1]),has_noise_pair=os.path.exists(pn))
-    n=load(pn) if r['has_noise_pair'] else None
-    if n is not None: r['size_noise']=list(n.shape[1::-1])
+    pa=f'{K}/shots/after/{tag}/{st}.png'; pn=f'{SC}/before2/{tag}/{st}.png'; pn2=f'{SC}/after2/{tag}/{st}.png'
+    a,b=load(p),load(pa); r=dict(tag=tag,state=st,size_before=list(a.shape[1::-1]),size_after=list(b.shape[1::-1]),noise_pairs=[x for x,f in (('before2',pn),('after2',pn2)) if os.path.exists(f)])
+    r['has_noise_pair']=bool(r['noise_pairs'])
+    n=load(pn) if os.path.exists(pn) else None; n2=load(pn2) if os.path.exists(pn2) else None
     # compare on the common top-left area (page heights can differ by a few px between runs)
     h=min(a.shape[0],b.shape[0]); w=min(a.shape[1],b.shape[1])
-    if n is not None and n.shape==a.shape or n is not None: h=min(h,n.shape[0]); w=min(w,n.shape[1])
-    A,B=a[:h,:w],b[:h,:w]; d=np.abs(A-B).max(2); cm=chai_mask((h,w),bb.get((tag,st),[])+ba.get((tag,st),[]))
+    for q in (n,n2):
+        if q is not None: h=min(h,q.shape[0]); w=min(w,q.shape[1])
+    A,B=a[:h,:w],b[:h,:w]; d=np.abs(A-B).max(2); bxs=bb.get((tag,st),[])+ba.get((tag,st),[]); cm=chai_mask((h,w),bxs)
+    if st.startswith('welcome'):   # the Welcome mascot is animated (hop/bob): the logged box is from a different instant, so mask its whole column of the prompt row
+        for x,y,bw,bh in bxs: cm[0:260,max(0,int(x-MARGIN)):min(w,int(x+bw+MARGIN)+1)]=True
     r['height_differs_before_vs_after']=a.shape[0]!=b.shape[0]
     r['compared']=[w,h]
     r['inside_chai_box_gt8_px']=int(((d>8)&cm).sum()); r['inside_px']=int(cm.sum())
     out=(d>8)&~cm; r['out_ne0']=int(((d>0)&~cm).sum()); r['out_gt8']=int(out.sum()); r['out_max']=int(d[~cm].max()) if (~cm).any() else 0
-    if n is not None:
-        dn=np.abs(A-n[:h,:w]).max(2); nm=ndi.binary_dilation(dn>8,iterations=10)
-        r['noise_out_gt8']=int(((dn>8)&~cm).sum()); r['noise_inside_gt8']=int(((dn>8)&cm).sum())
+    if n is not None or n2 is not None:
+        dn=np.zeros((h,w),bool)
+        for q in (n,n2):
+            if q is not None: dn|=np.abs((A if q is n else B)-q[:h,:w]).max(2)>8
+        nm=ndi.binary_dilation(dn,iterations=10)
+        r['noise_out_gt8']=int((dn&~cm).sum()); r['noise_inside_gt8']=int((dn&cm).sum())
         un=out&~nm; r['out_gt8_unexplained_by_noise']=int(un.sum())
     else: un=out
+    n=n if n is not None else n2
     if r['out_ne0']==0 and not r['height_differs_before_vs_after']: v='identical outside Chai box'
     elif r['out_gt8']==0: v='within noise (outside diffs <= 8/255)'
     elif n is not None and un.sum()==0: v='within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)'
