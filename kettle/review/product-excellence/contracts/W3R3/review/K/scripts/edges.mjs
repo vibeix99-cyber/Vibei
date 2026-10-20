@@ -38,12 +38,12 @@ if (mode === 'kit') {
   await boot('/');
   await page.evaluate(() => window.__kettle.settings.getState().set({ muted: true, autoStartBreaks: false, autoStartFocus: false }));
   await page.getByRole('button', { name: /put the kettle on/i }).first().click();
-  await page.waitForFunction(() => location.hash === '#/focus'); await page.waitForTimeout(1800);
+  await page.waitForFunction(() => location.hash === '#/focus'); await page.waitForTimeout(5000);
   await grab('reading', sel);
   await page.evaluate(() => window.__kettle.finish());
   await page.waitForFunction(() => location.hash.includes('done'), null, { timeout: 30000 }).catch(() => {});
-  await page.waitForTimeout(3200); await grab('cheering', sel);
-  await page.getByRole('button', { name: /tea time/i }).first().click(); await page.waitForTimeout(2600);
+  await page.waitForTimeout(4500); await grab('cheering', sel);
+  await page.getByRole('button', { name: /tea time/i }).first().click(); await page.waitForTimeout(4500);
   await grab('sipping', sel);
 }
 fs.writeFileSync(`${AB}/edge-${side}-${mode}-${cfg}-${theme}.json`, JSON.stringify(out));
