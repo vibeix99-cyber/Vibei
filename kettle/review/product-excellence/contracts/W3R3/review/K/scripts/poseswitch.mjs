@@ -44,12 +44,14 @@ async function measure(name, frameNo) {
   const A = await page.screenshot({ clip, animations: 'disabled' });
   await page.evaluate((s) => { document.querySelector(s).style.visibility = 'hidden'; }, sel);
   const B = await page.screenshot({ clip, animations: 'disabled' });
+  await page.waitForTimeout(250);
+  const B2 = await page.screenshot({ clip, animations: 'disabled' }); // B vs B2 = what the scene animates by itself (excluded from the ink mask)
   await page.evaluate((s) => { document.querySelector(s).style.visibility = ''; }, sel);
   const raw = frameDir ? await page.screenshot({ animations: 'disabled' }) : null;
   if (raw) fs.writeFileSync(`${frameDir}/${frameNo}-${name}.png`, raw);
   const AB = process.env.K_AB_DIR; fs.mkdirSync(AB, { recursive: true });
   const tag = `${side}-${cfg}-${theme}-d${dpr}-${motion}-${frameNo}`;
-  fs.writeFileSync(`${AB}/${tag}.A.png`, A); fs.writeFileSync(`${AB}/${tag}.B.png`, B);
+  fs.writeFileSync(`${AB}/${tag}.A.png`, A); fs.writeFileSync(`${AB}/${tag}.B.png`, B); fs.writeFileSync(`${AB}/${tag}.B2.png`, B2);
   return { name, ...dec, clip, abTag: tag };
 }
 const steps = [];

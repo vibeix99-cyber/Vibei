@@ -6,10 +6,19 @@ K='/home/user/Vibei/kettle/review/product-excellence/contracts/W3R3/review/K'
 SC='/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/w3r3'
 def diff_ink(tag,dpr,clip,thr=16):
     A=np.asarray(Image.open(f'{SC}/ab/{tag}.A.png').convert('RGB')).astype(int); B=np.asarray(Image.open(f'{SC}/ab/{tag}.B.png').convert('RGB')).astype(int)
-    m=np.abs(A-B).max(2)>thr; ys,xs=np.where(m)
+    import os
+    from scipy import ndimage as ndi
+    p2=f'{SC}/ab/{tag}.B2.png'; noise=np.zeros(A.shape[:2],bool)
+    if os.path.exists(p2): noise=ndi.binary_dilation(np.abs(B-np.asarray(Image.open(p2).convert('RGB')).astype(int)).max(2)>3,iterations=3)
+    m=(np.abs(A-B).max(2)>thr)&~noise
+    lab,nl=ndi.label(ndi.binary_dilation(m,iterations=2))      # keep the connected pieces that touch the main silhouette: biggest component + any piece within 6 px of it
+    if nl>1:
+        sizes=ndi.sum(m,lab,range(1,nl+1)); big=1+int(np.argmax(sizes)); keep=ndi.binary_dilation(lab==big,iterations=0)
+        m=m&(lab>0)&np.isin(lab,[big]+[i+1 for i in range(nl) if sizes[i]>=20])
+    ys,xs=np.where(m)
     if not len(xs): return None
     return [clip['x']+xs.min()/dpr, clip['y']+ys.min()/dpr, clip['x']+(xs.max()+1)/dpr, clip['y']+(ys.max()+1)/dpr]
-def r2(v): return None if v is None else [round(x,2) for x in v]
+def r2(v): return None if v is None else [round(float(x),2) for x in v]
 res={}
 for f in sorted(glob.glob(f'{K}/json/ps/*.json')):
     d=json.load(open(f)); key=f"{d['cfg']} {d['theme']} dpr{d['dpr']} {d['motion']}"
@@ -46,6 +55,7 @@ for key,sides in sorted(res.items()):
         out[side]['trace']=dict(frames=len(tr),frames_not_exactly_one_figure=multi,max_frame_delta=mx,at=at)
     summary[key]=out
 json.dump(summary,open(f'{K}/json/poseswitch-summary.json','w'),indent=1)
+default=lambda o: float(o)
 # markdown
 L=[]
 for key,out in summary.items():
