@@ -1,0 +1,438 @@
+{
+ "label": "preview5570",
+ "base": "http://127.0.0.1:5570",
+ "started": "04:48:28",
+ "steps": [
+  {
+   "name": "1 load, wait for the service worker to activate and control the page",
+   "at": "04:48:28",
+   "error": null
+  },
+  {
+   "name": "2 list the Chai images in the service-worker caches",
+   "at": "04:48:33",
+   "error": null
+  },
+  {
+   "name": "3 offline: fetch and decode the three Chai images",
+   "at": "04:48:33",
+   "error": null
+  },
+  {
+   "name": "4 offline: reload, the app boots",
+   "at": "04:48:33",
+   "error": null
+  },
+  {
+   "name": "5 offline: start a brew (real clicks), Chai during focus",
+   "at": "04:48:34",
+   "error": null
+  },
+  {
+   "name": "6 offline: end it (summary, cheering)",
+   "at": "04:48:38",
+   "error": null
+  },
+  {
+   "name": "7 offline: Tea time (sipping)",
+   "at": "04:49:05",
+   "error": null
+  }
+ ],
+ "console": [
+  {
+   "phase": "online",
+   "type": "info",
+   "text": "[chai3d] model ready {state: ready, ms: 33, bytes: 45572} {awake: Object, nap: Object, sip: Object, fileTris: 5372}"
+  },
+  {
+   "phase": "online",
+   "type": "info",
+   "text": "[chai3d] model ready {state: ready, ms: 16, bytes: 45572} {awake: Object, nap: Object, sip: Object, fileTris: 5372}"
+  },
+  {
+   "phase": "offline",
+   "type": "error",
+   "text": "Failed to load resource: net::ERR_INTERNET_DISCONNECTED"
+  },
+  {
+   "phase": "offline",
+   "type": "error",
+   "text": "Failed to load resource: net::ERR_INTERNET_DISCONNECTED"
+  },
+  {
+   "phase": "offline",
+   "type": "error",
+   "text": "Failed to load resource: net::ERR_INTERNET_DISCONNECTED"
+  },
+  {
+   "phase": "offline",
+   "type": "info",
+   "text": "[chai3d] model ready {state: ready, ms: 20, bytes: 45572} {awake: Object, nap: Object, sip: Object, fileTris: 5372}"
+  }
+ ],
+ "pageerrors": [],
+ "requestfailed": [
+  {
+   "phase": "offline",
+   "url": "/assets/chai-sipping-DwyPxpxw.webp?off=0.8576193087298551",
+   "err": "net::ERR_INTERNET_DISCONNECTED"
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-reading-CMLk2MAx.webp?off=0.9322371058673244",
+   "err": "net::ERR_INTERNET_DISCONNECTED"
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-cheering-ZKPXRG7z.webp?off=0.5292745466967181",
+   "err": "net::ERR_INTERNET_DISCONNECTED"
+  }
+ ],
+ "http4xx": [],
+ "chaiResponses": [
+  {
+   "phase": "online",
+   "url": "/assets/chai-happy-BAALIhDR.webp",
+   "status": 200,
+   "fromSW": false
+  },
+  {
+   "phase": "online",
+   "url": "/assets/chai-look-DqB_Gsfd.webp",
+   "status": 200,
+   "fromSW": false
+  },
+  {
+   "phase": "online",
+   "url": "/assets/chai-happy-BAALIhDR.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "online",
+   "url": "/assets/chai-look-DqB_Gsfd.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-sipping-DwyPxpxw.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-sipping-DwyPxpxw.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-reading-CMLk2MAx.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-reading-CMLk2MAx.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-cheering-ZKPXRG7z.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-cheering-ZKPXRG7z.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-happy-BAALIhDR.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-look-DqB_Gsfd.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-reading-CMLk2MAx.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-cheering-ZKPXRG7z.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-sipping-DwyPxpxw.webp",
+   "status": 200,
+   "fromSW": true
+  },
+  {
+   "phase": "offline",
+   "url": "/assets/chai-happy-BAALIhDR.webp",
+   "status": 200,
+   "fromSW": true
+  }
+ ],
+ "chaiProbes": [
+  {
+   "tag": "4 Today (offline reload)",
+   "phase": "offline",
+   "hash": "#/",
+   "online": false,
+   "poses": [
+    {
+     "pose": "wave",
+     "src": "chai-happy-BAALIhDR.webp",
+     "ok": true,
+     "nat": "303x496"
+    },
+    {
+     "pose": "happy",
+     "src": "chai-happy-BAALIhDR.webp",
+     "ok": true,
+     "nat": "303x496"
+    },
+    {
+     "pose": "peek",
+     "src": "chai-look-DqB_Gsfd.webp",
+     "ok": true,
+     "nat": "310x431"
+    },
+    {
+     "pose": "look",
+     "src": "chai-look-DqB_Gsfd.webp",
+     "ok": true,
+     "nat": "310x431"
+    }
+   ]
+  },
+  {
+   "tag": "5 brew running (offline)",
+   "phase": "offline",
+   "hash": "#/focus",
+   "online": false,
+   "poses": [
+    {
+     "pose": "reading",
+     "src": "chai-reading-CMLk2MAx.webp",
+     "ok": true,
+     "nat": "389x609"
+    },
+    {
+     "pose": "reading",
+     "src": "chai-reading-CMLk2MAx.webp",
+     "ok": true,
+     "nat": "389x609"
+    }
+   ]
+  },
+  {
+   "tag": "6 summary (offline)",
+   "phase": "offline",
+   "hash": "#/done",
+   "online": false,
+   "poses": [
+    {
+     "pose": "cheering",
+     "src": "chai-cheering-ZKPXRG7z.webp",
+     "ok": true,
+     "nat": "390x535"
+    },
+    {
+     "pose": "cheering",
+     "src": "chai-cheering-ZKPXRG7z.webp",
+     "ok": true,
+     "nat": "390x535"
+    }
+   ]
+  },
+  {
+   "tag": "7 tea break (offline)",
+   "phase": "offline",
+   "hash": "#/focus",
+   "online": false,
+   "poses": [
+    {
+     "pose": "sipping",
+     "src": "chai-sipping-DwyPxpxw.webp",
+     "ok": true,
+     "nat": "378x614"
+    },
+    {
+     "pose": "sipping",
+     "src": "chai-sipping-DwyPxpxw.webp",
+     "ok": true,
+     "nat": "378x614"
+    }
+   ]
+  },
+  {
+   "tag": "7 Settings (offline)",
+   "phase": "offline",
+   "hash": "#/settings",
+   "online": false,
+   "poses": [
+    {
+     "pose": "wave",
+     "src": "chai-happy-BAALIhDR.webp",
+     "ok": true,
+     "nat": "303x496"
+    },
+    {
+     "pose": "happy",
+     "src": "chai-happy-BAALIhDR.webp",
+     "ok": true,
+     "nat": "303x496"
+    },
+    {
+     "pose": "sip",
+     "src": "chai-sipping-DwyPxpxw.webp",
+     "ok": true,
+     "nat": "378x614"
+    },
+    {
+     "pose": "sipping",
+     "src": "chai-sipping-DwyPxpxw.webp",
+     "ok": true,
+     "nat": "378x614"
+    }
+   ]
+  }
+ ],
+ "sw1": {
+  "state": "activating",
+  "scope": "http://127.0.0.1:5570/",
+  "controller": false
+ },
+ "sw2": {
+  "state": "activated",
+  "url": "http://127.0.0.1:5570/sw.js"
+ },
+ "cached": {
+  "workbox-precache-v2-http://127.0.0.1:5570/": [
+   "chai-stretch-C0-cRH4_.webp",
+   "chai-sleep-CGUxQw--.webp",
+   "chai-sipping-DwyPxpxw.webp",
+   "chai-reading-CMLk2MAx.webp",
+   "chai-look-DqB_Gsfd.webp",
+   "chai-happy-face-BjtAdoSq.webp",
+   "chai-happy-BAALIhDR.webp",
+   "chai-concerned-owi0mQpG.webp",
+   "chai-cheering-ZKPXRG7z.webp",
+   "chai-B-OZIeNI.glb"
+  ]
+ },
+ "want": [
+  {
+   "n": "chai-reading",
+   "cached": [
+    "chai-reading-CMLk2MAx.webp"
+   ]
+  },
+  {
+   "n": "chai-sipping",
+   "cached": [
+    "chai-sipping-DwyPxpxw.webp"
+   ]
+  },
+  {
+   "n": "chai-cheering",
+   "cached": [
+    "chai-cheering-ZKPXRG7z.webp"
+   ]
+  }
+ ],
+ "chaiUrls": [
+  "/assets/chai-sipping-DwyPxpxw.webp",
+  "/assets/chai-reading-CMLk2MAx.webp",
+  "/assets/chai-cheering-ZKPXRG7z.webp"
+ ],
+ "offlineFetch": [
+  {
+   "url": "chai-sipping-DwyPxpxw.webp",
+   "status": 200,
+   "type": "image/webp",
+   "bytes": 19178,
+   "imgError": "EncodingError: The source image cannot be decoded.",
+   "imgPlainOk": true
+  },
+  {
+   "url": "chai-reading-CMLk2MAx.webp",
+   "status": 200,
+   "type": "image/webp",
+   "bytes": 19968,
+   "imgError": "EncodingError: The source image cannot be decoded.",
+   "imgPlainOk": true
+  },
+  {
+   "url": "chai-cheering-ZKPXRG7z.webp",
+   "status": 200,
+   "type": "image/webp",
+   "bytes": 19078,
+   "imgError": "EncodingError: The source image cannot be decoded.",
+   "imgPlainOk": true
+  }
+ ],
+ "offlineReloadOnline": false,
+ "resources": [
+  {
+   "n": "chai-happy-BAALIhDR.webp",
+   "t": 0,
+   "d": 19212
+  },
+  {
+   "n": "chai-look-DqB_Gsfd.webp",
+   "t": 0,
+   "d": 16582
+  },
+  {
+   "n": "chai-B-OZIeNI.glb",
+   "t": 0,
+   "d": 45572
+  },
+  {
+   "n": "chai-reading-CMLk2MAx.webp",
+   "t": 0,
+   "d": 19968
+  },
+  {
+   "n": "chai-cheering-ZKPXRG7z.webp",
+   "t": 0,
+   "d": 19078
+  },
+  {
+   "n": "chai-sipping-DwyPxpxw.webp",
+   "t": 0,
+   "d": 19178
+  },
+  {
+   "n": "chai-happy-BAALIhDR.webp",
+   "t": 0,
+   "d": 19212
+  }
+ ],
+ "ended": "04:49:11",
+ "counts": {
+  "console_total": 6,
+  "error": 3,
+  "warning": 0,
+  "pageerror": 0,
+  "requestfailed": 3,
+  "http4xx": 0
+ }
+}

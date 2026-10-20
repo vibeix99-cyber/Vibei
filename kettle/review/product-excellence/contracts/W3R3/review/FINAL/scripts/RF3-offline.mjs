@@ -51,8 +51,7 @@ await step('3 offline: fetch and decode the three Chai images', async () => {
     for (const u of us) {
       const r = { url: u.split('/').pop() };
       try { const f = await fetch(u); r.status = f.status; r.type = f.headers.get('content-type'); r.bytes = (await f.arrayBuffer()).byteLength; } catch (e) { r.fetchError = String(e); }
-      try { const im = new Image(); im.src = u + (u.includes('?') ? '&' : '?') + 'off=' + Math.random(); await im.decode(); r.imgOk = im.naturalWidth > 0; r.nat = im.naturalWidth + 'x' + im.naturalHeight; } catch (e) { r.imgError = String(e).slice(0, 100); }
-      try { const im = new Image(); im.src = u; await im.decode(); r.imgPlainOk = im.naturalWidth > 0; } catch (e) { r.imgPlainError = String(e).slice(0, 100); }
+      try { const im = new Image(); im.src = u; await im.decode(); r.imgOk = im.naturalWidth > 0; } catch (e) { r.imgError = String(e).slice(0, 100); }
       res.push(r);
     }
     return res;

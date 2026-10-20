@@ -60,3 +60,16 @@
     A=paused/s_mvg7dt/30m/ends=null
     B=paused/s_mvg7dt/30m/ends=null
     S=paused/s_mvg7dt/30m/ends=null  S(read in B)=paused/s_mvg7dt/30m/ends=null  pageErrors=0
+[04:49:03] rf3-5560 (b) it2 PASS load 14.30 12.59 11.92->14.20 12.62 11.93
+    A=paused/s_mvg7e4/30m/ends=null
+    B=paused/s_mvg7e4/30m/ends=null
+    S=paused/s_mvg7e4/30m/ends=null  S(read in B)=paused/s_mvg7e4/30m/ends=null  pageErrors=0
+[04:49:14] rf3-5560 (b) it3 PASS load 13.86 12.58 11.92->12.82 12.39 11.87
+    A=paused/s_mvg7ee/30m/ends=null
+    B=paused/s_mvg7ee/30m/ends=null
+    S=paused/s_mvg7ee/30m/ends=null  S(read in B)=paused/s_mvg7ee/30m/ends=null  pageErrors=0
+### case (b) rf3-5560: pass 3/3 {"precondition_B_behind":3,"same_session_A_B_storage":3,"A_B_storage_agree":3,"still_paused_A_B_storage":3,"plus5_applied_A_B_storage":3}
+[04:49:30] rf3-5560 (c) it1 PASS load 12.82 12.39 11.87->12.55 12.36 11.87
+    A=running/s_mvg7ep/25m/ends=1792473354295
+    B=running/s_mvg7ep/25m/ends=1792473354295
+    S=running/s_mvg7ep/25m/ends=1792473354295  S(read in B)=running/s_mvg7ep/25m/ends=1792473354295  pageErrors=0
