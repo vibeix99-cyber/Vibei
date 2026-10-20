@@ -83,3 +83,19 @@
   - a ground shadow on Home, Welcome and Settings (Vibei);
   - K's observation, identical BEFORE and AFTER: at 200 % text, the Home hero Chai is not visible in the full-page capture, sitting under the brew-length picker. Possibly a capture artefact; not investigated.
 - **Next:** the full regression on the merged tree.
+
+## Full regression on `7e4056d` (Lane RF3, `review/FINAL/RECEIPT-FINAL-W3R3.md`, `1e4d0ff`)
+
+- **Green:**
+  - tsc 0; vitest 342/342; build identical to the preview;
+  - chromium without notice-strip: 237 passed / 2 failed / 25 skipped;
+  - notice-strip 25/25; timer/PWA 29 + 2 skipped;
+  - 2-tab check 21/21;
+  - console clean, with every Chai request returning 200;
+  - offline: the three Chai images are served from the service worker.
+- **Failures:**
+  - **F1, `integrity:543` I02:** also fails on :5583. Local-hour dependent: before 10:00 the "before 10 am" quest's notices push the toast out of `main`.
+  - **F2, `integrity:1048`:** the known W3R2 I03 flake.
+  - **F3, `w3-notices-load` 844×390 dark 200 % #0:** "textbox still on top" once under load; the rerun passed, plus 3/3.
+  - All three sent to LEAD-7 to classify.
+- **Correction to my timestamps:** RF3 found the :5570 preview files dated 04:02:08 UTC, not "about 05:12" as I wrote. My "~05:10" for the merge is likewise an estimate. The preview build's content was verified identical to RF3's own build.
