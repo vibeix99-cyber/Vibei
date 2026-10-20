@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/user/Vibei/kettle/review/product-excellence/contracts/W3R3/review/K/scripts/pixdiff2.py", line 32, in <module>
+    a,b=load(p),load(pa); r=dict(tag=tag,state=st,size_before=list(a.shape[1::-1]),size_after=list(b.shape[1::-1]),noise_pairs=[x for x,f in (('before-recapture',pn),('after-recapture',pn2)) if os.path.exists(f)])
+                ^^^^^^^^
+  File "/home/user/Vibei/kettle/review/product-excellence/contracts/W3R3/review/K/scripts/pixdiff2.py", line 20, in load
+    def load(p): return np.asarray(Image.open(p).convert('RGB')).astype(np.int16)
+                                   ^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/k-venv/lib/python3.11/site-packages/PIL/Image.py", line 3654, in open
+    fp = builtins.open(filename, "rb")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/user/Vibei/kettle/review/product-excellence/contracts/W3R3/review/K/rerun-smoke/shots/after/1440x900-dark/focus-break.png'

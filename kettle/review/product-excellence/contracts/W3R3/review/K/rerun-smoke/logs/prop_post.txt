@@ -1,0 +1,10 @@
+| pose | side | method | n | mean aspect w/h | min..max % | mean width-vs-height vs master |
+|---|---|---|---|---|---|---|
+| reading | before | kit: screenshot diff (flat page) | 1 | 0.6360 | -0.35..-0.35 | **-0.35 %** |
+| reading | after | kit: screenshot diff (flat page) | 1 | 0.6332 | -0.78..-0.78 | **-0.78 %** |
+| sipping | before | kit: screenshot diff (flat page) | 1 | 0.6052 | -1.89..-1.89 | **-1.89 %** |
+| sipping | after | kit: screenshot diff (flat page) | 1 | 0.6052 | -1.89..-1.89 | **-1.89 %** |
+| cheering | before | kit: screenshot diff (flat page) | 1 | 0.7300 | +4.65..+4.65 | **+4.65 %** |
+| cheering | after | kit: screenshot diff (flat page) | 1 | 0.7282 | +4.39..+4.39 | **+4.39 %** |
+
+Master ink aspect (own segmentation): reading 0.63819 (889x1393 px), sipping 0.61684 (879x1425 px), cheering 0.69757 (948x1359 px)
