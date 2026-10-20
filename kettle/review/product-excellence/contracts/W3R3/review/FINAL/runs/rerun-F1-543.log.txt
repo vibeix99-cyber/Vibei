@@ -3,3 +3,42 @@
 
 Running 1 test using 1 worker
 
+  ✘  1 [chromium] › tests/integrity.spec.ts:543:3 › I02 End, dismissal and task disposition › End early after 12 active minutes (with a pause): 12 minutes saved as an unfinished brew, 12 leaves, no full-brew bonus, task kept (17.2s)
+
+
+  1) [chromium] › tests/integrity.spec.ts:543:3 › I02 End, dismissal and task disposition › End early after 12 active minutes (with a pause): 12 minutes saved as an unfinished brew, 12 leaves, no full-brew bonus, task kept 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('main').getByText('Saved 12 minutes of focus')
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for locator('main').getByText('Saved 12 minutes of focus')[22m
+
+
+      556 |     await endDialog(page).getByRole('button', { name: 'End session' }).click();
+      557 |     await expect.poll(() => hash(page)).toBe('#/');
+    > 558 |     await expect(page.locator('main').getByText('Saved 12 minutes of focus')).toBeVisible();
+          |                                                                               ^
+      559 |
+      560 |     const st = await stored(page);
+      561 |     const rec = recordsFor(st, sessionId!);
+        at /home/user/wt/w6-int/kettle/tests/integrity.spec.ts:558:79
+
+    Error Context: .tmp/RF3-pw/rerun-F1-543/integrity-I02-End-dismissa-0731c-o-full-brew-bonus-task-kept-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/RF3-pw/rerun-F1-543/integrity-I02-End-dismissa-0731c-o-full-brew-bonus-task-kept-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/RF3-pw/rerun-F1-543/integrity-I02-End-dismissa-0731c-o-full-brew-bonus-task-kept-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/integrity.spec.ts:543:3 › I02 End, dismissal and task disposition › End early after 12 active minutes (with a pause): 12 minutes saved as an unfinished brew, 12 leaves, no full-brew bonus, task kept 
+### end 04:43:07 UTC; exit=1; load:  04:43:07 up  3:43,  0 user,  load average: 10.06, 9.86, 11.04
