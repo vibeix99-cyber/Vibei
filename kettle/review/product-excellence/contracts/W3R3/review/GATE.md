@@ -48,3 +48,22 @@
 | The maker's claims | **Ratio vs master:** reading −0.07 %, sipping +0.06 %, cheering +0.02 % (limit ±0.5). **Footprint**, 86 places: box Δ 0.00, baseline +0.01, ink top +0.35, centre-x −0.24 CSS px; stage ink width +2.7 / +1.9 / −6.6; stage baseline spread 0.01. **Bytes:** 19,968 + 19,178 + 19,078 = **58,224** (≤ 61,476). **Halo** on `#241a2d`: rim − interior L* −0.84 / −1.12 / −0.73. **Fidelity:** 2.68 / 2.84 / 2.50 of 255. The PWA works offline |
 | Archive | `archive/pe-w3r3-chai-2d-fix-20dfffe.incremental.bundle` (requires `17f5a70`) |
 | Next | Lane K's AFTER-r2 on :5631 (stop 05:15); LEAD-7's final verdict |
+
+## C2 fix round: APPROVE `20dfffe` (LEAD-7 `682c59f`), conditional on lane K's AFTER-r2
+
+- **LEAD-7's reruns on :5631:**
+  - **Ratio:** −0.07 / +0.06 / +0.02 %.
+  - **Interior error:** 2.74 / 2.91 / 2.58 of 255.
+  - **No halo** on `#241a2d`.
+  - **Footprint vs :5560:** box Δ 0, baseline ≤ 0.01, top ≤ 0.35, centre ≤ 0.24 CSS px; pose-switch spread 0.01.
+  - **Bytes:** 58,224.
+  - **Docs:** corrected.
+- **Merge only if K's AFTER-r2 shows all of these:**
+  - (a) boxes identical to BEFORE in all 117 captures;
+  - (b) no unexplained change outside Chai's box;
+  - (c) 0.00 % cream edge pixels on dark;
+  - (d) a reduced-motion switch spread ≤ 1 CSS px;
+  - (e) on-screen aspect within ±0.5 % (±1 point for screenshot-diff methods).
+
+  If any fails, the case goes back to LEAD-7.
+- **FOLLOW-UP:** a ground shadow on Home, Welcome and Settings (for Vibei).
