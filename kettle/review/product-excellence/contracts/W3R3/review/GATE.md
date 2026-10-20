@@ -67,3 +67,19 @@
 
   If any fails, the case goes back to LEAD-7.
 - **FOLLOW-UP:** a ground shadow on Home, Welcome and Settings (for Vibei).
+
+## Lane K AFTER-r2 meets LEAD-7's conditions → merged as `041dd25` (2026-10-20 ~05:10 UTC)
+
+- **K's AFTER-r2** (`review/K/RECEIPT-K.md`, stage 4, `6590482`): 117 AFTER captures on :5631 against BEFORE :5560, in 9 configs × 13 states, plus edge sheets, pose-switch runs and the reference.
+- **The conditions, checked by the orchestrator:**
+  - **(a) Boxes:** per config and state, the Chai `<img>` box sizes are identical in all 117 pairs (orchestrator's script over `states.log.txt`). Every pair shares an identical position; the only position spread is animated states (Focus arrival, Welcome) captured at different instants.
+  - **(b) Outside Chai's box:** 85 identical, 22 within noise, 10 flagged, all explained (break countdown digits, whistle music-note particles, text anti-aliasing). No layout, text or colour change.
+  - **(c) Cream edge pixels on dark:** 0.00 % everywhere, on `#241a2d`.
+  - **(d) Reduced-motion switch:** baseline and centre jumps 0.00 at 1440 and ≤ 0.02 px at 390, the same as BEFORE.
+  - **(e) Aspect vs master:** −0.10 / +0.08 / +0.12 % (file level −0.07 / +0.18 / +0.13 %).
+- **Bytes:** 61,476 → 58,224, all precached.
+- **Merge check:** `041dd25`'s kettle/src `731e565`, tests `266828b`, scripts, art-src and docs equal trial 2 `481bf28`'s.
+- **FOLLOW-UPs:**
+  - a ground shadow on Home, Welcome and Settings (Vibei);
+  - K's observation, identical BEFORE and AFTER: at 200 % text, the Home hero Chai is not visible in the full-page capture, sitting under the brew-length picker. Possibly a capture artefact; not investigated.
+- **Next:** the full regression on the merged tree.
