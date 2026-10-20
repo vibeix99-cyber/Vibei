@@ -23,7 +23,7 @@ The earlier Chai A/B concept brief is **superseded** (see `review/round-6-mockup
 | `chai-sleep.png` | `chai-sleep.webp` (15 KB) | 323 × 300 | Late night (`sleep`) |
 | `chai-happy-face.png` | `chai-happy-face.webp` (12 KB) | 303 × 312 | Round face avatar, used below 44 px |
 
-The nine delivery files total about 175 KB (the three 2d-v2 poses are 58,010 bytes together, down from 61,476).
+The nine delivery files total about 175 KB (the three 2d-v2 poses are 58,224 bytes together, down from 61,476).
 
 **Scale:**
 - Every pose is at the sheet's native scale with a 4 px transparent margin.
@@ -38,9 +38,10 @@ Reproduce: `python3 -m venv /tmp/c2venv && /tmp/c2venv/bin/pip install pillow nu
 - **Background:** the cream ground and its shadow lie on one hue line (cream × 0.88 to 1.0). Pixels on that line that connect to the image border are the background. Interior pale parts (steam, book pages, the mug's leaf) are enclosed, so they stay.
 - **Rim:** a 3 px band around the background is un-mixed. For each rim pixel, alpha is the projection of (pixel − local background) on (nearest interior colour − local background), and the pixel keeps the interior colour. So no cream or shadow colour is left in the rim. Resizing runs on premultiplied colour.
 - **Ground shadow:** not baked in. It is drawn in CSS: the Stage's contact shadow (`Stage.module.css`, `.cShadow`, theme-aware). Other places never had one, so none was added.
-- **Footprint:** each cut-out is fitted to the ink box of the art it replaces (reading x 5..306, y 4..483; sipping x 4..298, y 5..487; cheering x 4..308, y 5..424 of the 311 × 487, 302 × 491 and 312 × 428 layout box), so size, centre and feet baseline do not change. The fit stretches the art by −1.5 % (reading), −1.2 % (sipping) and +3.9 % (cheering) in width relative to height. `PAINTED` in `src/art/PaintedChai.tsx` is unchanged.
-- **Export:** WebP, 1.25 px per layout px, quality 82, alpha quality 80, method 6. Layout px stay the unit; the file is simply denser. At the Stage cap (1.6 px unit, 290 CSS px tall) a 2× screen needs 1.19 px per layout px, so Retina desktop is now sharp (it was a 1.19× upscale before).
-- **Checked:** halo metric on #221829 (mean pull of rim colour towards cream: about 0.00; a rim left uncorrected: +0.45), edge close-ups on #221829 and #FFF9F0.
+- **Footprint, uniform fit:** each pose is scaled by **one uniform factor**, set by the old art's ink height, so it keeps the master's own width-to-height ratio (error −0.07 % reading, +0.06 % sipping, +0.02 % cheering; the limit is ±0.5 %). The feet (ink bottom) and the horizontal ink centre go where the old art's were (old ink box: reading x 5..306, y 4..483; sipping x 4..298, y 5..487; cheering x 4..308, y 5..424 of the 311 × 487, 302 × 491 and 312 × 428 layout box). So the image box, baseline, top and centre do not change (measured ≤ 1 CSS px). Only the ink width follows the new art's proportions: reading +4.6, sipping +3.6 and cheering −11.2 sheet px against the old art (about +2.7, +2.1 and −6.7 CSS px at the Stage cap). If a pose would not fit its canvas with a 1 px margin, the script falls back to a uniform contain-fit; none does. `PAINTED` in `src/art/PaintedChai.tsx` is unchanged.
+- **Export:** WebP with alpha, 1.25 px per layout px, quality 82, alpha quality 80, method 6 (58,224 bytes for the three). Layout px stay the unit; the file is simply denser. At the Stage cap (1.6 px unit, 290 CSS px tall) a 2× screen needs 1.19 px per layout px, so every Stage and Mascot case is now a downscale (it was a 1.19× upscale before).
+- **Format:** WebP only, no `<picture>` or fallback format. The build targets es2022, so any browser that can run the bundle already decodes WebP with alpha (Chrome 32, Firefox 65, Safari 14). A PNG fallback would be precached dead weight (`png` is in the precache glob), and AVIF is not in the glob, so it would not load offline.
+- **Checked:** halo metric on the app's dark background `--bg` **#241a2d** (`src/styles/tokens.css`; mean pull of rim colour towards cream about −0.01; a rim left uncorrected: +0.45), edge close-ups on #241a2d and #FFF9F0.
 
 ## Format: raster WebP with alpha, not SVG
 
@@ -56,7 +57,7 @@ Reproduce: `python3 -m venv /tmp/c2venv && /tmp/c2venv/bin/pip install pillow nu
 - **Sleep pose:** it shares its row with the stretch pose, so only components left of x = 318 in the crop are kept.
 
 **Checked:**
-- Inspected at 4× zoom on cream, the dark theme (#221829), white and black.
+- Inspected at 4× zoom on cream, the dark theme (`--bg` #241a2d), white and black.
 - WebP against the PNG master: alpha is identical, and the mean colour error is about 1.5/255.
 
 ## Sharpness at the intended display sizes
@@ -66,7 +67,7 @@ The sheet gives about 490 px of height per pose. The Focus stage caps its unit a
 | Where | Chai height | Device px needed | Source px | Result |
 |---|---|---|---|---|
 | Phone Focus, 390 px wide, 2× | 177 CSS px | 354 | 487 | downscaled: sharp |
-| Phone Focus, 3× | 177 CSS px | 531 | 487 | 1.09× upscale: not visible |
+| Phone Focus, 3× | 177 CSS px | 531 | 487 (older art) / 609, 614, 535 (2d-v2 reading, sipping, cheering) | older art: 1.09× upscale, not visible; **2d-v2: downscale, sharp** |
 | Tablet / desktop Focus, 1× | 290 CSS px | 290 | 487 | sharp |
 | **Tablet / desktop Focus, 2× (Retina)** | 290 CSS px | 580 | 487 (older art) / 609 (2d-v2 reading) | older art: 1.19× upscale, slightly soft; **2d-v2 reading, sipping and cheering: downscaled, sharp** |
 | Home, Welcome, summary | 88–204 CSS px | ≤ 408 | 487–496 | sharp |
@@ -101,7 +102,7 @@ Run one generation per pose. Use the tool that made the approved sheet, with `ch
 | sleep | bottom row, 3rd (lying loaf) | asleep, lying flat | 3 |
 
 **Acceptance check before an asset replaces the extracted one:**
-1. Check it on #FFF9F0 and #221829 at 100% and at 40 px.
+1. Check it on #FFF9F0 and #241a2d at 100% and at 40 px.
 2. Run it through `extract-chai.py`'s rim check, or inspect at 4× for a halo.
 3. Downscale the master so the pose is about 1200 px tall. Ship it as WebP, quality 80, alpha 100.
 4. Raise `SHEET_REF_H` in proportion and update `PAINTED` sizes. The 1.6 px stage cap can then go to 2.4 px.

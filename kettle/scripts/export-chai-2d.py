@@ -30,8 +30,8 @@ OUT = os.path.join(ROOT, 'src', 'art', 'chai')
 
 # Logical (CSS-layout) size of each pose in sheet px, as consumed by src/art/PaintedChai.tsx (PAINTED): unchanged.
 LOGICAL = {'reading': (311, 487), 'sipping': (302, 491), 'cheering': (312, 428)}
-# Ink box (alpha > 8, x0, y0, x1, y1, sheet px) of the art that these files replace. The new art is fitted to exactly
-# this box, so the display footprint, the centre and the feet baseline stay where they were (preserve list #2).
+# Ink box (alpha > 8, x0, y0, x1, y1, sheet px) of the art that these files replace. The new art is scaled uniformly to
+# this box's height and aligned to its feet and centre, so the display footprint, the centre and the feet baseline stay where they were (preserve list #2).
 OLD_INK = {'reading': (5, 4, 306, 483), 'sipping': (4, 5, 298, 487), 'cheering': (4, 5, 308, 424)}
 DENSITY = 1.25      # shipped pixels per logical sheet px (display need at the 1.6 px Stage cap on a 2x screen is 1.19)
 QUALITY = 82        # WebP colour quality
@@ -84,13 +84,29 @@ def build(pose, k=DENSITY):
     lw, lh = LOGICAL[pose]
     ox0, oy0, ox1, oy1 = OLD_INK[pose]
     W, H = round(lw * k), round(lh * k)
-    X0, Y0, X1, Y1 = (round(v * k) for v in (ox0, oy0, ox1, oy1))
+    mw, mh = crop.width, crop.height
+    # ONE uniform scale, set by the old ink height: the art keeps the master's own proportions. Feet (ink bottom)
+    # and the horizontal ink centre go where the old art's were; box, baseline, top and centre do not move.
+    oh = round((oy1 - oy0) * k)
+    sc = oh / mh
+    iw = round(mw * sc)
+    fit = 'height'
+    cx = (ox0 + ox1) / 2 * k
+    X0 = round(cx - iw / 2)
+    Y0 = round(oy1 * k) - oh
+    if X0 < 1 or X0 + iw > W - 1 or Y0 < 1:  # does not fit the canvas with 1 file px margin: contain-fit instead
+        sc = min((W - 2) / mw, (H - 2) / mh, sc)
+        iw, oh = round(mw * sc), round(mh * sc)
+        X0 = min(max(round(cx - iw / 2), 1), W - 1 - iw)
+        Y0 = round(oy1 * k) - oh
+        fit = 'contain'
     # Pillow resizes RGBA on premultiplied colour, so the clear background cannot bleed into the rim.
-    ink = crop.resize((X1 - X0, Y1 - Y0), Image.LANCZOS)
+    ink = crop.resize((iw, oh), Image.LANCZOS)
     canvas = Image.new('RGBA', (W, H), (0, 0, 0, 0))
     canvas.paste(ink, (X0, Y0))
-    sx, sy = (ox1 - ox0) / crop.width, (oy1 - oy0) / crop.height
-    return canvas, dict(master_ink=(x0, y0, x1, y1), sx=sx, sy=sy, stretch_pct=(sx / sy - 1) * 100, size=(W, H))
+    aspect_err = (iw / oh) / (mw / mh) * 100 - 100
+    return canvas, dict(master_ink=(x0, y0, x1, y1), scale=sc, fit=fit, aspect_err_pct=aspect_err, size=(W, H),
+                        ink_box_file_px=(X0, Y0, X0 + iw, Y0 + oh), old_ink_width=ox1 - ox0, new_ink_width_sheet_px=iw / k)
 
 
 def encode(img):
@@ -149,7 +165,7 @@ def main():
                 f.write(data)
         total += len(data)
         rep[pose] = dict(info, bytes=len(data), halo=halo_report(data), halo_naive_control=naive_control(pose))
-        print(f"{pose}: {img.size[0]}x{img.size[1]} px, {len(data)} B, stretch {info['stretch_pct']:+.2f}%, halo {rep[pose]['halo']['mean_pull_to_cream']:+.4f} (naive {rep[pose]['halo_naive_control']['mean_pull_to_cream']:+.4f})")
+        print(f"{pose}: {img.size[0]}x{img.size[1]} px, {len(data)} B, aspect err {info['aspect_err_pct']:+.2f}% ({info['fit']} fit, ink w {info['new_ink_width_sheet_px']:.1f} vs old {info['old_ink_width']} sheet px), halo {rep[pose]['halo']['mean_pull_to_cream']:+.4f} (naive {rep[pose]['halo_naive_control']['mean_pull_to_cream']:+.4f})")
     rep['total_bytes'] = total
     print('total', total, 'budget 61476')
     if args.report:
