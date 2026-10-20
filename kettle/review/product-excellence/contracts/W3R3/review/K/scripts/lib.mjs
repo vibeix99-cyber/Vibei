@@ -14,9 +14,8 @@ export async function newCtx(browser, { vw, vh, dpr = 1, reduced = false, text20
   const ctx = await browser.newContext({
     viewport: { width: vw, height: vh }, deviceScaleFactor: dpr, timezoneId: 'UTC', locale: 'en-US',
     reducedMotion: reduced ? 'reduce' : 'no-preference',
-    permissions: ['notifications'],
   });
-  if (frozen) { await ctx.clock.install({ time: FIXED }); await ctx.clock.resume(); }
+  if (frozen) { await ctx.clock.install({ time: FIXED }); await ctx.clock.resume(); if (process.env.K_FIXED_NOW !== '0') await ctx.clock.setFixedTime(FIXED); } // fixed Date.now: the countdown digits do not tick between BEFORE and AFTER; timers still run
   if (text200) await ctx.addInitScript(TEXT200);
   return ctx;
 }
@@ -38,3 +37,6 @@ export function facts(page) {
     return { hash: location.hash, chai: out };
   });
 }
+
+// Notification.permission reads 'denied' in headless Chromium; the Welcome notify step shows Chai cheering only when granted.
+export const NOTIF_GRANTED = `Object.defineProperty(Notification, 'permission', { get: () => 'granted', configurable: true });`;
