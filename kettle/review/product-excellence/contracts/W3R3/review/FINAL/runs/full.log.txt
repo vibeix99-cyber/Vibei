@@ -146,3 +146,8 @@ Running 264 tests using 2 workers
   ✓  141 [chromium] › tests/w3-stats.spec.ts:348:5 › Overview tiles at 375×667 with 200 % text › every tile text fits once the fonts are in (5.9s)
   ✓  143 [chromium] › tests/w3-stats.spec.ts:348:5 › Overview tiles at 844×390 with 200 % text › every tile text fits once the fonts are in (6.0s)
   ✓  142 [chromium] › tests/whistle.spec.ts:76:1 › late return: one whistle, the while-away summary, nothing more on later visibility changes (11.9s)
+  ✓  144 [chromium] › tests/w3-stats.spec.ts:365:5 › Stats before the web fonts arrive, 390×844, 200 % text › the page stays the width of the screen and the tiles fit (fonts blocked) (12.7s)
+  ✓  145 [chromium] › tests/whistle.spec.ts:100:1 › another tab in front (page hidden): the whistle is still scheduled once (13.0s)
+  ✓  146 [chromium] › tests/w3-stats.spec.ts:365:5 › Stats before the web fonts arrive, 375×667, 200 % text › the page stays the width of the screen and the tiles fit (fonts blocked) (10.9s)
+  ✓  147 [chromium] › tests/whistle.spec.ts:120:1 › muted: no sound at all, the visual whistle and summary remain (11.2s)
+  ✓  149 [chromium] › tests/whistle.spec.ts:165:1 › notification permission is asked only from the Nudges switch: not on load, not before or after the first brew (11.7s)
