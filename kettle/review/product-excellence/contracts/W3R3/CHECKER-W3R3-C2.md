@@ -245,3 +245,31 @@ Logs: `review/LEAD7/r2/`.
 | D2 | Docs | uniform fit, `#241a2d`, sharpness rows, format ruling | README: uniform fit with ratios, `--bg #241a2d`, phone 3× row corrected, format line added. `art.md` updated. No stretch wording left | PASS |
 
 **Full-size look.** The Stage at 1440 on dark (`r2/img/switch2-1440-dark.png`) is on-model. Cheering now has the master's proportions, the sparkles and leaf are clean, and the contact shadow sits under the feet in all three poses.
+
+### Lane K AFTER-r2
+At hand-back (02:54 UTC) `RECEIPT-K.md` had **no AFTER-r2 section**, and no `*-r2` output existed under `review/K/`. I could not read it.
+
+### Residuals after the fix round
+
+| # | Item | Class |
+|---|---|---|
+| R1 | Proportions | **Resolved**: ≤ 0.07 %, ◆1 |
+| R2 | Docs | **Resolved**: D2 |
+| R3 | WebP only | ACCEPTED |
+| R4 | Stage CSS shadow | ACCEPTED |
+| R5 | No shadow on Home, Welcome or Settings | FOLLOW-UP for Vibei |
+| R6 | 1.25× density; 58,224 B | ACCEPTED; budget unchanged at 61,476 |
+| R7 | Per-pose scale keeps the old cheering-to-reading size relation | ACCEPTED |
+
+## Final verdict: **APPROVE, conditional on lane K AFTER-r2**
+
+All my ◆ checks pass on `20dfffe` / :5631, and the BLOCKS items are resolved.
+
+**Merge may proceed only when RECEIPT-K's AFTER-r2 section shows all of the following**:
+- (a) the AFTER-r2 `<img>` boxes are identical to BEFORE in all 117 captures;
+- (b) the pixel diff outside Chai's box is I or N, or explained as timing exactly as in r1, with no new content change;
+- (c) the dark-theme edge ring has 0.00 % cream pixels;
+- (d) the reduced-motion pose switch has a baseline and centre-x spread of ≤ 1 CSS px;
+- (e) the on-screen ink aspect is within ±0.5 % of the master. Screenshot-diff methods get ±1 point, as noted in r1.
+
+**If any of (a) to (e) fails, this APPROVE does not stand.** The orchestrator returns the item to LEAD.
