@@ -99,3 +99,10 @@
   - **F3, `w3-notices-load` 844×390 dark 200 % #0:** "textbox still on top" once under load; the rerun passed, plus 3/3.
   - All three sent to LEAD-7 to classify.
 - **Correction to my timestamps:** RF3 found the :5570 preview files dated 04:02:08 UTC, not "about 05:12" as I wrote. My "~05:10" for the merge is likewise an estimate. The preview build's content was verified identical to RF3's own build.
+
+## Final classification (LEAD-7, `CHECKER-W3R3-FINAL.md`, `8f9f36c`): no W3R3 regression. W3R3 closed (2026-10-20)
+
+- **F1, `integrity:543`: pre-existing, hour-dependent.** It fails the same way on :5583 at 05h UTC and passes with TZ=Asia/Tokyo. **FOLLOW-UPs:** pin the clock in the test; a product question for Vibei on the "before 10 am" notices pushing "Saved … of focus" out of `main`.
+- **F2, `integrity:1048` I03: flaky.** The known W3R2 lazy-chunk signature.
+- **F3, `w3-notices-load` 844×390 dark 200 %: flaky** (1 in 9), not caused by the swap. Probed on merged and control under 4× CPU throttle: 4/4 on each; the same Chai box (46×75); the image complete on its first frame; the same layout-shift log. **FOLLOW-UP:** port `notice-strip`'s docked-chrome guard into this spec's `press()`.
+- **Merge `041dd25` stands.** All servers, agents and the autocommit loop are stopped.

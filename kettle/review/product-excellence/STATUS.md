@@ -10,15 +10,20 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
-## ▶ W3R3 · NEW 2D CHAI MASTERS · started 2026-10-20 01:05 UTC (read this first)
+## ▶ W3R3 · NEW 2D CHAI MASTERS · CLOSED 2026-10-20 (read this first)
 
 **Binding:** `contracts/W3R3/VB-DECISIONS-W3R3.md`. The Final Product Boss stays on hold. Gate record: `contracts/W3R3/review/GATE.md`.
 
 - **Masters:** Vibei's upload `f034205` adds `art-src/chai/2d-v2/chai-{reading,sipping,cheering}.png` (992×1586). Integration HEAD is `f034205`; app unchanged (src `5f504d4`).
 - **C2: REJECT** (LEAD-7, for non-uniform stretch), then one fix round (uniform scale), then **APPROVE `20dfffe`**, conditional on lane K's AFTER-r2. K's AFTER-r2 met every condition. **Merged as `041dd25`** (src `731e565`). Bytes 61,476 → 58,224; ratio vs masters within 0.12 %; box unchanged; no halo on dark.
 - **LEAD-7's rulings:** WebP only is accepted, no fallback format (reported to Vibei). The Stage CSS shadow is accepted; a shadow on Home, Welcome and Settings is a FOLLOW-UP.
-- **Now:** **Lane RF3** full regression on `7e4056d` (stop 08:00 UTC); pre-round control :5583 (`f034205`).
-- **Servers:** integration (merged) :5560/:5570; pre-round :5583.
+- **Full regression** (Lane RF3) and LEAD-7's classification (`CHECKER-W3R3-FINAL.md`): **no W3R3 regression**.
+- **FOLLOW-UPs:**
+  - `integrity:543` is hour-dependent (pin the clock), plus a product question on the "before 10 am" notices pushing the saved toast out;
+  - port the docked-chrome guard into `w3-notices-load`'s `press()`;
+  - a ground shadow on Home, Welcome and Settings;
+  - the 200 % Home hero Chai sitting under the picker (unverified).
+- **Integration HEAD:** app `041dd25` (src `731e565`). **Nothing is running.** The Final Product Boss is on hold.
 
 ## W3R2 HARDENING ROUND · CLOSED 2026-10-18
 
