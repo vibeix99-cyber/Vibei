@@ -276,3 +276,89 @@ FACT 1440x900-dark-t200-rm c-pointer-held {"leftAt":5916,"room":113,"roomWhileDo
   ✓  259 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (1440×900 dark 100 %) (15.3s)
   ✓  260 [chromium] › tests/w3-notices.spec.ts:111:3 › End's notice goes at rest and nothing moves: a tap aimed at Mark done before it went lands on Mark done (844×390 dark 100 %) (14.1s)
   ✓  261 [chromium] › tests/w3-notices.spec.ts:158:1 › the room a gone notice keeps stays while the page is scrolled, and goes on the same screen once idle (390×844, 200 %) (14.8s)
+  ✓  263 [chromium] › tests/w3-notices.spec.ts:239:1 › a new screen starts with no room: Today after End, then Stats and back (375×667, 100 %) (10.6s)
+  ✓  262 [chromium] › tests/w3-notices.spec.ts:210:1 › the room is not given back while a pointer is held; it goes 4–6.5 s after release (1440×900, 100 %) (17.6s)
+  ✓  264 [chromium] › tests/w3-notices.spec.ts:265:1 › the status bar warm-days button is named "N days warm. Show details" (and ", today not brewed yet") (4.5s)
+
+
+  1) [chromium] › tests/integrity.spec.ts:543:3 › I02 End, dismissal and task disposition › End early after 12 active minutes (with a pause): 12 minutes saved as an unfinished brew, 12 leaves, no full-brew bonus, task kept 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('main').getByText('Saved 12 minutes of focus')
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for locator('main').getByText('Saved 12 minutes of focus')[22m
+
+
+      556 |     await endDialog(page).getByRole('button', { name: 'End session' }).click();
+      557 |     await expect.poll(() => hash(page)).toBe('#/');
+    > 558 |     await expect(page.locator('main').getByText('Saved 12 minutes of focus')).toBeVisible();
+          |                                                                               ^
+      559 |
+      560 |     const st = await stored(page);
+      561 |     const rec = recordsFor(st, sessionId!);
+        at /home/user/wt/w6-int/kettle/tests/integrity.spec.ts:558:79
+
+    Error Context: .tmp/RF3-pw/full/integrity-I02-End-dismissa-0731c-o-full-brew-bonus-task-kept-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/RF3-pw/full/integrity-I02-End-dismissa-0731c-o-full-brew-bonus-task-kept-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/RF3-pw/full/integrity-I02-End-dismissa-0731c-o-full-brew-bonus-task-kept-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/integrity.spec.ts:1048:5 › I03 storage-full warning is a banner in the page (phone 390×844) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room 
+
+    Error: every failed save has gone through
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoEqual[2m([22m[32mexpected[39m[2m) // deep equality[22m
+
+    [32m- Expected  - 1[39m
+    [31m+ Received  + 3[39m
+
+    [32m- Array [][39m
+    [31m+ Array [[39m
+    [31m+   "kettle:home:lastVisit",[39m
+    [31m+ ][39m
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      1134 |       // (no `kettle:` key's latest write refused) ...
+      1135 |       const unsaved = () => page.evaluate(() => Object.entries((window as any).__saves as Record<string, { ok: boolean }>).filter(([, v]) => !v.ok).map(([k]) => k));
+    > 1136 |       await expect.poll(unsaved, { message: 'every failed save has gone through', timeout: 10_000 }).toEqual([]);
+           |       ^
+      1137 |       const savedAt = await page.evaluate(() => Math.max(...Object.values((window as any).__saves as Record<string, { t: number; failedBefore: boolean }>).filter((v) => v.failedBefore).map((v) => v.t)));
+      1138 |       // ... then the banner goes at the warning's next recovery check (every 2 s): within one check of the saves, plus
+      1139 |       // 1 s for a late timer and the render on a loaded machine, in the page's own time. (The wait itself is only a
+        at /home/user/wt/w6-int/kettle/tests/integrity.spec.ts:1136:7
+
+    Error Context: .tmp/RF3-pw/full/integrity-I03-storage-full-5c5d1-ull-gone-when-there-is-room-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .tmp/RF3-pw/full/integrity-I03-storage-full-5c5d1-ull-gone-when-there-is-room-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace .tmp/RF3-pw/full/integrity-I03-storage-full-5c5d1-ull-gone-when-there-is-room-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  Slow test file: [chromium] › tests/a11y.spec.ts (10.5m)
+  Slow test file: [chromium] › tests/w2-summary.spec.ts (6.0m)
+  Slow test file: [chromium] › tests/w3-stats.spec.ts (5.8m)
+  Slow test file: [chromium] › tests/break-reach.spec.ts (5.5m)
+  Slow test file: [chromium] › tests/toast-room.spec.ts (5.4m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  2 failed
+    [chromium] › tests/integrity.spec.ts:543:3 › I02 End, dismissal and task disposition › End early after 12 active minutes (with a pause): 12 minutes saved as an unfinished brew, 12 leaves, no full-brew bonus, task kept 
+    [chromium] › tests/integrity.spec.ts:1048:5 › I03 storage-full warning is a banner in the page (phone 390×844) › nothing over the brew; the summary says the brew is not saved, with Save backup; Today and Settings show the banner in the page, said once, kept while storage is full, gone when there is room 
+  25 skipped
+  237 passed (38.9m)
+### end 04:42:37 UTC; exit=1; load:  04:42:37 up  3:43,  0 user,  load average: 9.01, 9.73, 11.05

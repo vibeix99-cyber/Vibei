@@ -1,0 +1,10 @@
+### start 04:42:46 UTC; load:  04:42:46 up  3:43,  0 user,  load average: 7.99, 9.50, 10.95
+### cmd: bash /home/user/Vibei/kettle/review/product-excellence/contracts/W3R3/review/FINAL/scripts/RF-pwa-inner.sh
+### port check 04:42:46 load 7.99 9.50 10.95; HEAD 7e4056d src 731e565 dirty=0
+port 5495 free before the run (curl: no answer)
+port 5193 free before the run (curl: no answer)
+listeners on 5495 per /proc/net/tcp: 0
+
+Running 31 tests using 1 worker
+
+  ✓   1 [timer-harness] › tests/timer.spec.ts:74:3 › timer reliability › start → reload mid-session → same session, same end, correct remaining; paused survives reload (5.6s)
