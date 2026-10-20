@@ -10,7 +10,16 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 - **Integration branch:** `claude/wizardly-galileo-uy89d9`. Maker branches are local `pe/*` worktrees, merged only after an independent APPROVE.
 - **Orchestrator / model:** Claude Opus 5.5 (`claude-opus-5-5`, verified via session metadata). Makers, Checkers and the Final Product Boss are separate agent instances with their own context; a Checker never reviews work it built.
 
-## ▶ W3R2 HARDENING ROUND · CLOSED 2026-10-18 (read this first)
+## ▶ W3R3 · NEW 2D CHAI MASTERS · started 2026-10-20 01:05 UTC (read this first)
+
+**Binding:** `contracts/W3R3/VB-DECISIONS-W3R3.md`. The Final Product Boss stays on hold. Gate record: `contracts/W3R3/review/GATE.md`.
+
+- **Masters:** Vibei's upload `f034205` adds `art-src/chai/2d-v2/chai-{reading,sipping,cheering}.png` (992×1586). Integration HEAD is `f034205`; app unchanged (src `5f504d4`).
+- **Maker C2** (Sonnet) on `pe/w3r3-chai-2d`, worktree `w9c`, :5611; brief `BRIEF-C2.md`; stop 04:15 UTC.
+- **Then:** the gate and trial; a Sonnet capture lane (REFERENCE → BEFORE → AFTER, edge close-ups, a pose-switch sequence); LEAD (Opus) with one fix round at most; merge on APPROVE; full regression; report.
+- **Servers:** integration :5560/:5570 (BEFORE); C2 :5611.
+
+## W3R2 HARDENING ROUND · CLOSED 2026-10-18
 
 **Binding:** `contracts/W3R2/VB-DECISIONS-W3R2.md`. **The Final Product Boss stays on hold** until Vibei says go. Plan: `contracts/W3R2/PLAN.md`; gate record: `contracts/W3R2/review/GATE.md`.
 
