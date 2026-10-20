@@ -1,5 +1,5 @@
 # Lane K task 4 post-processing: ink boxes from the screenshot diffs, baseline, step-to-step deltas, rAF-trace jumps, strips.
-import json, glob, os, sys, math
+import json, glob, os, sys, math, gzip
 import numpy as np
 from PIL import Image, ImageDraw
 K='/home/user/Vibei/kettle/review/product-excellence/contracts/W3R3/review/K'
@@ -24,8 +24,8 @@ def diff_ink(tag,dpr,clip,thr=16):
     return [clip['x']+xs.min()/dpr, clip['y']+ys.min()/dpr, clip['x']+(xs.max()+1)/dpr, clip['y']+(ys.max()+1)/dpr]
 def r2(v): return None if v is None else [round(float(x),2) for x in v]
 res={}
-for f in sorted(glob.glob(f'{K}/json/ps/*.json')):
-    d=json.load(open(f)); key=f"{d['cfg']} {d['theme']} dpr{d['dpr']} {d['motion']}"
+for f in sorted(glob.glob(f'{K}/json/ps/*.json.gz')):
+    d=json.load(gzip.open(f,'rt')); key=f"{d['cfg']} {d['theme']} dpr{d['dpr']} {d['motion']}"
     for s in d['steps']:
         s['ink_diff']=diff_ink(s['abTag'],d['dpr'],s['clip'])
     res.setdefault(key,{})[d['side']]=d
