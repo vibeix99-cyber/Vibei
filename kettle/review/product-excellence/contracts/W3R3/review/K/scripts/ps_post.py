@@ -62,21 +62,23 @@ json.dump(summary,open(f'{K}/json/poseswitch-summary.json','w'),indent=1)
 default=lambda o: float(o)
 # markdown
 L=[]
+def agree(m):
+    return all(abs(x-y)<=1.01 for x,y in zip(m['ink_alpha'],m['ink_shot']))
 for key,out in summary.items():
     L.append(f'\n#### {key}\n')
-    L.append('| step | pose | side | img box x,y,w,h | ink x0,y0,x1,y1 (shot diff) | ink w x h | ink cx | baseline y |'); L.append('|---|---|---|---|---|---|---|---|')
+    L.append('| step | pose | side | img box x,y,w,h | ink x0,y0,x1,y1 (decoded alpha through the box) | ink w x h | ink cx | baseline y | screenshot-diff ink agrees (<=1 px) |'); L.append('|---|---|---|---|---|---|---|---|---|')
     names=['1 focus running','2 whistle','3 summary','4 tea break','5 next brew']
     for i in range(5):
         for side in ('before','after'):
             m=out[side]['steps'][i]
-            L.append(f"| {names[i]} | {m['pose']} | {side} | {m['box']} | {m['ink_shot']} | {m['ink_w']} x {m['ink_h']} | {m['cx']} | {m['baseline']} |")
-    L.append('\nStep-to-step deltas (CSS px, ink from the screenshot diff; `box` = the img element):\n')
+            L.append(f"| {names[i]} | {m['pose']} | {side} | {m['box']} | {m['ink_alpha']} | {m['a_w']} x {m['a_h']} | {m['a_cx']} | {m['a_base']} | {'yes' if agree(m) else 'NO: '+str(m['ink_shot'])} |")
+    L.append('\nStep-to-step deltas (CSS px; ink = decoded alpha through the box; `box` = the img element):\n')
     L.append('| transition | side | d box w | d box h | d box bottom | d ink w | d ink h | d ink cx | d baseline |'); L.append('|---|---|---|---|---|---|---|---|---|')
     tn=['1>2 running>whistle','2>3 whistle>summary','3>4 summary>tea break','4>5 tea break>next brew']
     for i in range(4):
         for side in ('before','after'):
             d=out[side]['deltas'][i]
-            L.append(f"| {tn[i]} | {side} | {d['box_w']} | {d['box_h']} | {d['box_bottom']} | {d['ink_w']} | {d['ink_h']} | {d['cx']} | {d['baseline']} |")
+            L.append(f"| {tn[i]} | {side} | {d['box_w']} | {d['box_h']} | {d['box_bottom']} | {d['a_w']} | {d['a_h']} | {d['a_cx']} | {d['a_base']} |")
     for side in ('before','after'):
         t=out[side]['trace']; L.append(f"\nrAF trace {side}: {t['frames']} frames; frames with !=1 figure {t['frames_not_exactly_one_figure']}; max single-frame delta {t['max_frame_delta']} at {t['at']}")
 open(f'{K}/json/poseswitch-tables.md','w').write('\n'.join(L))
