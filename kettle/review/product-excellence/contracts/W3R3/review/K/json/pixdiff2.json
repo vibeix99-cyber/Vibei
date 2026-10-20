@@ -10,7 +10,10 @@
    1440,
    900
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -21,14 +24,38 @@
   "out_ne0": 6839,
   "out_gt8": 6771,
   "out_max": 200,
-  "verdict": "no noise pair: see components",
+  "noise_out_gt8": 4612,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 40,
+  "verdict": "DIFFERENT outside (not covered by the noise pair)",
   "components": [
    [
-    1136,
-    241,
-    1293,
-    347,
-    6771
+    1273,
+    242,
+    1292,
+    261,
+    14
+   ],
+   [
+    1215,
+    243,
+    1233,
+    261,
+    14
+   ],
+   [
+    1228,
+    314,
+    1242,
+    329,
+    3
+   ],
+   [
+    1259,
+    316,
+    1277,
+    334,
+    9
    ]
   ]
  },
@@ -43,7 +70,10 @@
    1440,
    900
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -54,15 +84,11 @@
   "out_ne0": 17457,
   "out_gt8": 13698,
   "out_max": 148,
-  "verdict": "no noise pair: see components",
+  "noise_out_gt8": 6723,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 6975,
+  "verdict": "DIFFERENT outside (not covered by the noise pair)",
   "components": [
-   [
-    385,
-    93,
-    604,
-    161,
-    6723
-   ],
    [
     1174,
     328,
@@ -97,7 +123,10 @@
    1440,
    903
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": true,
   "compared": [
    1440,
@@ -108,7 +137,10 @@
   "out_ne0": 649813,
   "out_gt8": 301233,
   "out_max": 234,
-  "verdict": "no noise pair: see components",
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 301233,
+  "verdict": "DIFFERENT outside (not covered by the noise pair)",
   "components": [
    [
     16,
@@ -354,7 +386,10 @@
    1440,
    900
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -365,23 +400,11 @@
   "out_ne0": 221,
   "out_gt8": 210,
   "out_max": 214,
-  "verdict": "no noise pair: see components",
-  "components": [
-   [
-    332,
-    334,
-    360,
-    354,
-    28
-   ],
-   [
-    401,
-    371,
-    432,
-    396,
-    182
-   ]
-  ]
+  "noise_out_gt8": 457,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
+  "components": []
  },
  {
   "tag": "1440x900-dark",
@@ -394,7 +417,10 @@
    1440,
    900
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -405,6 +431,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -419,7 +448,10 @@
    1440,
    909
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": true,
   "compared": [
    1440,
@@ -430,7 +462,10 @@
   "out_ne0": 70060,
   "out_gt8": 51466,
   "out_max": 219,
-  "verdict": "no noise pair: see components",
+  "noise_out_gt8": 1162,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 49816,
+  "verdict": "DIFFERENT outside (not covered by the noise pair)",
   "components": [
    [
     248,
@@ -561,9 +596,9 @@
    [
     924,
     185,
-    1062,
+    988,
     218,
-    1046
+    400
    ],
    [
     1321,
@@ -571,6 +606,13 @@
     1398,
     214,
     432
+   ],
+   [
+    1017,
+    190,
+    1062,
+    214,
+    258
    ],
    [
     465,
@@ -591,7 +633,7 @@
     218,
     1159,
     279,
-    2446
+    1831
    ],
    [
     23,
@@ -631,9 +673,9 @@
    [
     934,
     280,
-    1156,
+    1126,
     341,
-    2068
+    1421
    ],
    [
     66,
@@ -844,7 +886,10 @@
    1440,
    900
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -855,6 +900,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -869,7 +917,10 @@
    1440,
    3739
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -880,6 +931,9 @@
   "out_ne0": 299,
   "out_gt8": 0,
   "out_max": 3,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "within noise (outside diffs <= 8/255)",
   "components": []
  },
@@ -894,7 +948,10 @@
    1440,
    900
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -905,6 +962,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -919,17 +979,23 @@
    1440,
    900
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
    900
   ],
   "inside_chai_box_gt8_px": 3992,
-  "inside_px": 20000,
+  "inside_px": 33125,
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -944,17 +1010,23 @@
    1440,
    900
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
    900
   ],
   "inside_chai_box_gt8_px": 7121,
-  "inside_px": 32185,
+  "inside_px": 49769,
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -969,17 +1041,23 @@
    1440,
    900
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
    900
   ],
   "inside_chai_box_gt8_px": 8242,
-  "inside_px": 22017,
+  "inside_px": 32595,
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -994,7 +1072,10 @@
    1440,
    900
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -1005,6 +1086,9 @@
   "out_ne0": 2,
   "out_gt8": 0,
   "out_max": 2,
+  "noise_out_gt8": 2,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "within noise (outside diffs <= 8/255)",
   "components": []
  },
@@ -1019,11 +1103,11 @@
    1440,
    900
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   1440,
-   900
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -1051,11 +1135,11 @@
    1440,
    900
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   1440,
-   900
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -1083,11 +1167,11 @@
    1440,
    900
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   1440,
-   900
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -1662,11 +1746,11 @@
    1440,
    900
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   1440,
-   900
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -1702,11 +1786,11 @@
    1440,
    900
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   1440,
-   900
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -1734,11 +1818,11 @@
    1440,
    900
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   1440,
-   900
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -1749,33 +1833,11 @@
   "out_ne0": 1309,
   "out_gt8": 1192,
   "out_max": 168,
-  "noise_out_gt8": 0,
+  "noise_out_gt8": 1192,
   "noise_inside_gt8": 0,
-  "out_gt8_unexplained_by_noise": 1192,
-  "verdict": "DIFFERENT outside (not covered by the noise pair)",
-  "components": [
-   [
-    978,
-    185,
-    1021,
-    213,
-    236
-   ],
-   [
-    1075,
-    244,
-    1159,
-    278,
-    467
-   ],
-   [
-    1069,
-    306,
-    1156,
-    340,
-    489
-   ]
-  ]
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
+  "components": []
  },
  {
   "tag": "1440x900-light",
@@ -1788,11 +1850,11 @@
    1440,
    900
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   1440,
-   900
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -1820,11 +1882,11 @@
    1440,
    3739
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   1440,
-   3739
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -1852,11 +1914,11 @@
    1440,
    900
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   1440,
-   900
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -1884,18 +1946,18 @@
    1440,
    900
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   1440,
-   900
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
    900
   ],
   "inside_chai_box_gt8_px": 4085,
-  "inside_px": 20000,
+  "inside_px": 33125,
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
@@ -1916,18 +1978,18 @@
    1440,
    900
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   1440,
-   900
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
    900
   ],
   "inside_chai_box_gt8_px": 7175,
-  "inside_px": 32185,
+  "inside_px": 49769,
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
@@ -1948,18 +2010,18 @@
    1440,
    900
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   1440,
-   900
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
    900
   ],
   "inside_chai_box_gt8_px": 8223,
-  "inside_px": 22017,
+  "inside_px": 32595,
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
@@ -1980,11 +2042,11 @@
    1440,
    900
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   1440,
-   900
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -2012,11 +2074,11 @@
    375,
    667
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   375,
-   667
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -2044,11 +2106,11 @@
    375,
    667
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   375,
-   667
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -2076,11 +2138,11 @@
    375,
    667
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   375,
-   667
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -2108,11 +2170,11 @@
    375,
    1259
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   375,
-   1259
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -2140,11 +2202,11 @@
    375,
    1422
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   375,
-   1422
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -2172,11 +2234,11 @@
    375,
    1175
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   375,
-   1175
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -2204,11 +2266,11 @@
    375,
    2196
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   375,
-   2196
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -2236,11 +2298,11 @@
    375,
    4377
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   375,
-   4377
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -2268,11 +2330,11 @@
    375,
    667
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   375,
-   667
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -2300,34 +2362,26 @@
    375,
    801
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   375,
-   801
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
    801
   ],
-  "inside_chai_box_gt8_px": 1249,
-  "inside_px": 9030,
-  "out_ne0": 340,
-  "out_gt8": 106,
-  "out_max": 65,
+  "inside_chai_box_gt8_px": 1355,
+  "inside_px": 22360,
+  "out_ne0": 0,
+  "out_gt8": 0,
+  "out_max": 0,
   "noise_out_gt8": 0,
   "noise_inside_gt8": 0,
-  "out_gt8_unexplained_by_noise": 106,
-  "verdict": "DIFFERENT outside (not covered by the noise pair)",
-  "components": [
-   [
-    30,
-    158,
-    86,
-    179,
-    106
-   ]
-  ]
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "identical outside Chai box",
+  "components": []
  },
  {
   "tag": "375x667-dark",
@@ -2340,34 +2394,26 @@
    375,
    800
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   375,
-   800
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
    800
   ],
-  "inside_chai_box_gt8_px": 0,
-  "inside_px": 8856,
-  "out_ne0": 1347,
-  "out_gt8": 1060,
-  "out_max": 216,
+  "inside_chai_box_gt8_px": 1060,
+  "inside_px": 28080,
+  "out_ne0": 0,
+  "out_gt8": 0,
+  "out_max": 0,
   "noise_out_gt8": 0,
   "noise_inside_gt8": 0,
-  "out_gt8_unexplained_by_noise": 1060,
-  "verdict": "DIFFERENT outside (not covered by the noise pair)",
-  "components": [
-   [
-    140,
-    90,
-    220,
-    139,
-    1060
-   ]
-  ]
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "identical outside Chai box",
+  "components": []
  },
  {
   "tag": "375x667-dark",
@@ -2380,34 +2426,26 @@
    375,
    692
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   375,
-   692
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
    692
   ],
-  "inside_chai_box_gt8_px": 2230,
-  "inside_px": 9744,
-  "out_ne0": 306,
-  "out_gt8": 230,
-  "out_max": 33,
+  "inside_chai_box_gt8_px": 2460,
+  "inside_px": 21840,
+  "out_ne0": 0,
+  "out_gt8": 0,
+  "out_max": 0,
   "noise_out_gt8": 0,
   "noise_inside_gt8": 0,
-  "out_gt8_unexplained_by_noise": 230,
-  "verdict": "DIFFERENT outside (not covered by the noise pair)",
-  "components": [
-   [
-    30,
-    148,
-    84,
-    168,
-    230
-   ]
-  ]
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "identical outside Chai box",
+  "components": []
  },
  {
   "tag": "375x667-dark",
@@ -2420,11 +2458,11 @@
    375,
    667
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   375,
-   667
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -2452,7 +2490,11 @@
    375,
    667
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2",
+   "after2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -2463,6 +2505,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -2477,7 +2522,11 @@
    375,
    667
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2",
+   "after2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -2488,6 +2537,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 1522,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -2502,7 +2554,11 @@
    375,
    667
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2",
+   "after2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -2513,282 +2569,11 @@
   "out_ne0": 47228,
   "out_gt8": 4876,
   "out_max": 79,
-  "verdict": "no noise pair: see components",
-  "components": [
-   [
-    155,
-    0,
-    190,
-    40,
-    49
-   ],
-   [
-    232,
-    0,
-    252,
-    11,
-    11
-   ],
-   [
-    139,
-    6,
-    274,
-    163,
-    2471
-   ],
-   [
-    298,
-    6,
-    311,
-    19,
-    1
-   ],
-   [
-    257,
-    18,
-    302,
-    43,
-    181
-   ],
-   [
-    0,
-    21,
-    15,
-    40,
-    19
-   ],
-   [
-    338,
-    21,
-    356,
-    41,
-    4
-   ],
-   [
-    242,
-    28,
-    256,
-    45,
-    2
-   ],
-   [
-    81,
-    35,
-    94,
-    48,
-    1
-   ],
-   [
-    103,
-    39,
-    122,
-    55,
-    11
-   ],
-   [
-    291,
-    39,
-    315,
-    83,
-    59
-   ],
-   [
-    86,
-    49,
-    100,
-    62,
-    2
-   ],
-   [
-    101,
-    52,
-    143,
-    116,
-    303
-   ],
-   [
-    45,
-    58,
-    58,
-    71,
-    1
-   ],
-   [
-    0,
-    63,
-    29,
-    86,
-    138
-   ],
-   [
-    143,
-    78,
-    172,
-    110,
-    15
-   ],
-   [
-    58,
-    120,
-    143,
-    165,
-    465
-   ],
-   [
-    0,
-    135,
-    57,
-    156,
-    132
-   ],
-   [
-    346,
-    145,
-    375,
-    218,
-    488
-   ],
-   [
-    0,
-    172,
-    87,
-    218,
-    464
-   ],
-   [
-    186,
-    173,
-    202,
-    187,
-    2
-   ],
-   [
-    76,
-    516,
-    90,
-    531,
-    2
-   ],
-   [
-    278,
-    519,
-    304,
-    545,
-    16
-   ],
-   [
-    173,
-    523,
-    186,
-    536,
-    1
-   ],
-   [
-    190,
-    523,
-    203,
-    536,
-    1
-   ],
-   [
-    87,
-    525,
-    100,
-    538,
-    1
-   ],
-   [
-    68,
-    526,
-    83,
-    540,
-    2
-   ],
-   [
-    78,
-    535,
-    91,
-    548,
-    1
-   ],
-   [
-    49,
-    539,
-    72,
-    566,
-    6
-   ],
-   [
-    96,
-    539,
-    119,
-    566,
-    6
-   ],
-   [
-    257,
-    541,
-    279,
-    566,
-    5
-   ],
-   [
-    303,
-    541,
-    325,
-    566,
-    5
-   ],
-   [
-    173,
-    544,
-    186,
-    557,
-    1
-   ],
-   [
-    190,
-    544,
-    203,
-    557,
-    1
-   ],
-   [
-    149,
-    556,
-    162,
-    571,
-    2
-   ],
-   [
-    214,
-    556,
-    227,
-    571,
-    2
-   ],
-   [
-    159,
-    566,
-    172,
-    581,
-    2
-   ],
-   [
-    204,
-    566,
-    217,
-    581,
-    2
-   ],
-   [
-    113,
-    620,
-    126,
-    633,
-    1
-   ]
-  ]
+  "noise_out_gt8": 48534,
+  "noise_inside_gt8": 11571,
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
+  "components": []
  },
  {
   "tag": "375x667-light",
@@ -2801,7 +2586,11 @@
    375,
    1259
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2",
+   "after2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -2812,23 +2601,11 @@
   "out_ne0": 150,
   "out_gt8": 129,
   "out_max": 172,
-  "verdict": "no noise pair: see components",
-  "components": [
-   [
-    65,
-    252,
-    78,
-    265,
-    1
-   ],
-   [
-    33,
-    1050,
-    62,
-    1073,
-    128
-   ]
-  ]
+  "noise_out_gt8": 130,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
+  "components": []
  },
  {
   "tag": "375x667-light",
@@ -2841,7 +2618,11 @@
    375,
    1422
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2",
+   "after2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -2852,6 +2633,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -2866,7 +2650,11 @@
    375,
    1175
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2",
+   "after2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -2877,6 +2665,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -2891,7 +2682,11 @@
    375,
    2196
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2",
+   "after2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -2902,6 +2697,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -2916,7 +2714,11 @@
    375,
    4377
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2",
+   "after2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -2927,6 +2729,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -2941,7 +2746,11 @@
    375,
    667
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2",
+   "after2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -2952,6 +2761,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -2966,27 +2778,26 @@
    375,
    801
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2",
+   "after2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
    801
   ],
-  "inside_chai_box_gt8_px": 1291,
-  "inside_px": 9030,
-  "out_ne0": 341,
-  "out_gt8": 119,
-  "out_max": 76,
-  "verdict": "no noise pair: see components",
-  "components": [
-   [
-    30,
-    158,
-    86,
-    179,
-    119
-   ]
-  ]
+  "inside_chai_box_gt8_px": 1410,
+  "inside_px": 22360,
+  "out_ne0": 0,
+  "out_gt8": 0,
+  "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "identical outside Chai box",
+  "components": []
  },
  {
   "tag": "375x667-light",
@@ -2999,27 +2810,26 @@
    375,
    800
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2",
+   "after2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
    800
   ],
-  "inside_chai_box_gt8_px": 0,
-  "inside_px": 8856,
-  "out_ne0": 1346,
-  "out_gt8": 1072,
-  "out_max": 209,
-  "verdict": "no noise pair: see components",
-  "components": [
-   [
-    139,
-    89,
-    221,
-    139,
-    1072
-   ]
-  ]
+  "inside_chai_box_gt8_px": 1072,
+  "inside_px": 28080,
+  "out_ne0": 0,
+  "out_gt8": 0,
+  "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "identical outside Chai box",
+  "components": []
  },
  {
   "tag": "375x667-light",
@@ -3032,27 +2842,26 @@
    375,
    692
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2",
+   "after2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
    692
   ],
-  "inside_chai_box_gt8_px": 2241,
-  "inside_px": 9744,
-  "out_ne0": 315,
-  "out_gt8": 244,
-  "out_max": 67,
-  "verdict": "no noise pair: see components",
-  "components": [
-   [
-    30,
-    148,
-    86,
-    168,
-    244
-   ]
-  ]
+  "inside_chai_box_gt8_px": 2485,
+  "inside_px": 21840,
+  "out_ne0": 0,
+  "out_gt8": 0,
+  "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "identical outside Chai box",
+  "components": []
  },
  {
   "tag": "375x667-light",
@@ -3065,7 +2874,11 @@
    375,
    667
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2",
+   "after2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -3076,6 +2889,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -3090,7 +2906,10 @@
    390,
    844
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3101,6 +2920,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 2110,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -3115,7 +2937,10 @@
    390,
    844
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3126,16 +2951,11 @@
   "out_ne0": 688,
   "out_gt8": 567,
   "out_max": 34,
-  "verdict": "no noise pair: see components",
-  "components": [
-   [
-    129,
-    416,
-    262,
-    434,
-    567
-   ]
-  ]
+  "noise_out_gt8": 567,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
+  "components": []
  },
  {
   "tag": "390x844-dark-t200",
@@ -3148,7 +2968,10 @@
    390,
    854
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": true,
   "compared": [
    390,
@@ -3159,7 +2982,10 @@
   "out_ne0": 166977,
   "out_gt8": 109067,
   "out_max": 220,
-  "verdict": "no noise pair: see components",
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 109067,
+  "verdict": "DIFFERENT outside (not covered by the noise pair)",
   "components": [
    [
     0,
@@ -3251,7 +3077,10 @@
    390,
    2493
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3262,16 +3091,11 @@
   "out_ne0": 5,
   "out_gt8": 5,
   "out_max": 65,
-  "verdict": "no noise pair: see components",
-  "components": [
-   [
-    66,
-    672,
-    80,
-    689,
-    5
-   ]
-  ]
+  "noise_out_gt8": 297,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
+  "components": []
  },
  {
   "tag": "390x844-dark-t200",
@@ -3284,7 +3108,10 @@
    390,
    2886
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3295,6 +3122,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -3309,7 +3139,10 @@
    390,
    2433
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3320,6 +3153,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -3334,7 +3170,10 @@
    390,
    1266
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3345,6 +3184,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -3359,7 +3201,10 @@
    390,
    9133
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3370,6 +3215,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -3384,7 +3232,10 @@
    390,
    844
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3395,6 +3246,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -3409,7 +3263,10 @@
    390,
    1647
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3420,6 +3277,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -3434,7 +3294,10 @@
    390,
    1296
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3445,6 +3308,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -3459,7 +3325,10 @@
    390,
    1272
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3470,6 +3339,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -3484,7 +3356,10 @@
    390,
    844
   ],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before2"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3495,6 +3370,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -3509,11 +3387,11 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3541,11 +3419,11 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3556,19 +3434,11 @@
   "out_ne0": 2096,
   "out_gt8": 1278,
   "out_max": 60,
-  "noise_out_gt8": 0,
+  "noise_out_gt8": 1278,
   "noise_inside_gt8": 0,
-  "out_gt8_unexplained_by_noise": 1278,
-  "verdict": "DIFFERENT outside (not covered by the noise pair)",
-  "components": [
-   [
-    162,
-    28,
-    255,
-    67,
-    1278
-   ]
-  ]
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
+  "components": []
  },
  {
   "tag": "390x844-dark",
@@ -3581,11 +3451,11 @@
    390,
    849
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": true,
   "compared": [
    390,
@@ -3596,215 +3466,11 @@
   "out_ne0": 142733,
   "out_gt8": 68605,
   "out_max": 216,
-  "noise_out_gt8": 31277,
-  "noise_inside_gt8": 10844,
-  "out_gt8_unexplained_by_noise": 35939,
-  "verdict": "DIFFERENT outside (not covered by the noise pair)",
-  "components": [
-   [
-    0,
-    0,
-    114,
-    185,
-    4888
-   ],
-   [
-    118,
-    0,
-    131,
-    7,
-    1
-   ],
-   [
-    152,
-    0,
-    181,
-    9,
-    16
-   ],
-   [
-    204,
-    0,
-    252,
-    35,
-    269
-   ],
-   [
-    248,
-    0,
-    318,
-    67,
-    1018
-   ],
-   [
-    328,
-    0,
-    390,
-    67,
-    1009
-   ],
-   [
-    109,
-    13,
-    138,
-    41,
-    61
-   ],
-   [
-    129,
-    14,
-    205,
-    90,
-    396
-   ],
-   [
-    94,
-    63,
-    108,
-    76,
-    2
-   ],
-   [
-    66,
-    66,
-    92,
-    88,
-    89
-   ],
-   [
-    287,
-    121,
-    308,
-    165,
-    84
-   ],
-   [
-    0,
-    191,
-    27,
-    217,
-    193
-   ],
-   [
-    40,
-    219,
-    56,
-    236,
-    8
-   ],
-   [
-    51,
-    220,
-    82,
-    250,
-    111
-   ],
-   [
-    0,
-    240,
-    390,
-    412,
-    10828
-   ],
-   [
-    0,
-    254,
-    10,
-    276,
-    24
-   ],
-   [
-    0,
-    286,
-    14,
-    305,
-    29
-   ],
-   [
-    359,
-    329,
-    390,
-    360,
-    72
-   ],
-   [
-    359,
-    364,
-    390,
-    383,
-    100
-   ],
-   [
-    0,
-    416,
-    390,
-    433,
-    1950
-   ],
-   [
-    86,
-    505,
-    304,
-    579,
-    4025
-   ],
-   [
-    91,
-    583,
-    300,
-    641,
-    3903
-   ],
-   [
-    53,
-    649,
-    127,
-    748,
-    1567
-   ],
-   [
-    150,
-    649,
-    240,
-    764,
-    1878
-   ],
-   [
-    263,
-    649,
-    337,
-    748,
-    1453
-   ],
-   [
-    74,
-    670,
-    106,
-    706,
-    178
-   ],
-   [
-    287,
-    673,
-    313,
-    704,
-    168
-   ],
-   [
-    180,
-    677,
-    210,
-    716,
-    178
-   ],
-   [
-    113,
-    774,
-    277,
-    804,
-    1441
-   ]
-  ]
+  "noise_out_gt8": 86817,
+  "noise_inside_gt8": 19824,
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
+  "components": []
  },
  {
   "tag": "390x844-dark",
@@ -3817,11 +3483,11 @@
    390,
    1259
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   1259
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3832,7 +3498,7 @@
   "out_ne0": 7,
   "out_gt8": 7,
   "out_max": 33,
-  "noise_out_gt8": 5,
+  "noise_out_gt8": 133,
   "noise_inside_gt8": 0,
   "out_gt8_unexplained_by_noise": 0,
   "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
@@ -3849,11 +3515,11 @@
    390,
    1420
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   1420
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3881,11 +3547,11 @@
    390,
    1175
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   1175
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3913,11 +3579,11 @@
    390,
    1266
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   1266
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3945,11 +3611,11 @@
    390,
    4295
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   4295
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3977,11 +3643,11 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4009,18 +3675,18 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
    844
   ],
   "inside_chai_box_gt8_px": 2132,
-  "inside_px": 12500,
+  "inside_px": 26000,
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
@@ -4041,18 +3707,18 @@
    390,
    862
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   862
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
    862
   ],
   "inside_chai_box_gt8_px": 5177,
-  "inside_px": 24249,
+  "inside_px": 36853,
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
@@ -4073,18 +3739,18 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
    844
   ],
   "inside_chai_box_gt8_px": 4557,
-  "inside_px": 13720,
+  "inside_px": 25480,
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
@@ -4105,11 +3771,11 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4137,11 +3803,11 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4169,11 +3835,11 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4201,11 +3867,11 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4233,11 +3899,11 @@
    390,
    1259
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   1259
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4248,9 +3914,9 @@
   "out_ne0": 2014,
   "out_gt8": 1547,
   "out_max": 212,
-  "noise_out_gt8": 72,
+  "noise_out_gt8": 202,
   "noise_inside_gt8": 0,
-  "out_gt8_unexplained_by_noise": 1472,
+  "out_gt8_unexplained_by_noise": 1344,
   "verdict": "DIFFERENT outside (not covered by the noise pair)",
   "components": [
    [
@@ -4294,13 +3960,6 @@
     254,
     840,
     200
-   ],
-   [
-    33,
-    1050,
-    62,
-    1073,
-    128
    ]
   ]
  },
@@ -4315,11 +3974,11 @@
    390,
    1420
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   1420
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4347,11 +4006,11 @@
    390,
    1175
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   1175
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4379,11 +4038,11 @@
    390,
    1266
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   1266
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4411,11 +4070,11 @@
    390,
    4295
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   4295
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4443,11 +4102,11 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4475,18 +4134,18 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
    844
   ],
   "inside_chai_box_gt8_px": 2186,
-  "inside_px": 12500,
+  "inside_px": 26000,
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
@@ -4507,18 +4166,18 @@
    390,
    862
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   862
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
    862
   ],
   "inside_chai_box_gt8_px": 5076,
-  "inside_px": 24249,
+  "inside_px": 36853,
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
@@ -4539,18 +4198,18 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
    844
   ],
   "inside_chai_box_gt8_px": 4544,
-  "inside_px": 13720,
+  "inside_px": 25480,
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
@@ -4571,11 +4230,11 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4603,11 +4262,11 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4635,11 +4294,11 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4667,11 +4326,11 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4699,11 +4358,11 @@
    390,
    2493
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   2493
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4714,7 +4373,7 @@
   "out_ne0": 4,
   "out_gt8": 4,
   "out_max": 48,
-  "noise_out_gt8": 352,
+  "noise_out_gt8": 353,
   "noise_inside_gt8": 0,
   "out_gt8_unexplained_by_noise": 0,
   "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
@@ -4731,11 +4390,11 @@
    390,
    2886
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   2886
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4763,11 +4422,11 @@
    390,
    2433
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   2433
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4795,11 +4454,11 @@
    390,
    1266
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   1266
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4827,11 +4486,11 @@
    390,
    9133
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   9133
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4859,11 +4518,11 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4891,11 +4550,11 @@
    390,
    1647
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   1647
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4923,11 +4582,11 @@
    390,
    1296
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   1296
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4955,11 +4614,11 @@
    390,
    1272
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   1272
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -4987,11 +4646,11 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -5002,26 +4661,11 @@
   "out_ne0": 350,
   "out_gt8": 131,
   "out_max": 40,
-  "noise_out_gt8": 0,
+  "noise_out_gt8": 131,
   "noise_inside_gt8": 0,
-  "out_gt8_unexplained_by_noise": 131,
-  "verdict": "DIFFERENT outside (not covered by the noise pair)",
-  "components": [
-   [
-    167,
-    183,
-    196,
-    220,
-    81
-   ],
-   [
-    188,
-    206,
-    220,
-    241,
-    50
-   ]
-  ]
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
+  "components": []
  },
  {
   "tag": "390x844-light",
@@ -5034,11 +4678,11 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -5066,11 +4710,11 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -5081,7 +4725,7 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
-  "noise_out_gt8": 0,
+  "noise_out_gt8": 1320,
   "noise_inside_gt8": 0,
   "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
@@ -5098,11 +4742,11 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   849
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -5113,9 +4757,9 @@
   "out_ne0": 85858,
   "out_gt8": 8088,
   "out_max": 88,
-  "noise_out_gt8": 62531,
-  "noise_inside_gt8": 13982,
-  "out_gt8_unexplained_by_noise": 168,
+  "noise_out_gt8": 64923,
+  "noise_inside_gt8": 16398,
+  "out_gt8_unexplained_by_noise": 156,
   "verdict": "DIFFERENT outside (not covered by the noise pair)",
   "components": [
    [
@@ -5130,28 +4774,14 @@
     74,
     329,
     123,
-    89
+    88
    ],
    [
     117,
     99,
     133,
-    128,
-    43
-   ],
-   [
-    228,
-    123,
-    241,
-    138,
-    3
-   ],
-   [
-    165,
-    128,
-    178,
-    141,
-    1
+    127,
+    41
    ],
    [
     247,
@@ -5159,13 +4789,6 @@
     262,
     150,
     3
-   ],
-   [
-    158,
-    145,
-    171,
-    162,
-    5
    ],
    [
     116,
@@ -5194,11 +4817,11 @@
    390,
    1259
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   1259
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -5209,19 +4832,11 @@
   "out_ne0": 149,
   "out_gt8": 128,
   "out_max": 172,
-  "noise_out_gt8": 1,
+  "noise_out_gt8": 136,
   "noise_inside_gt8": 0,
-  "out_gt8_unexplained_by_noise": 128,
-  "verdict": "DIFFERENT outside (not covered by the noise pair)",
-  "components": [
-   [
-    33,
-    1050,
-    62,
-    1073,
-    128
-   ]
-  ]
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
+  "components": []
  },
  {
   "tag": "390x844-light",
@@ -5234,11 +4849,11 @@
    390,
    1420
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   1420
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -5266,11 +4881,11 @@
    390,
    1175
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   1175
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -5298,11 +4913,11 @@
    390,
    1266
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   1266
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -5330,11 +4945,11 @@
    390,
    4295
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   4295
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -5362,11 +4977,11 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -5394,18 +5009,18 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
    844
   ],
   "inside_chai_box_gt8_px": 2182,
-  "inside_px": 12500,
+  "inside_px": 26000,
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
@@ -5426,18 +5041,18 @@
    390,
    862
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   862
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
    862
   ],
   "inside_chai_box_gt8_px": 5229,
-  "inside_px": 24249,
+  "inside_px": 36853,
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
@@ -5458,18 +5073,18 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
    844
   ],
   "inside_chai_box_gt8_px": 4572,
-  "inside_px": 13720,
+  "inside_px": 25480,
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
@@ -5490,11 +5105,11 @@
    390,
    844
   ],
-  "has_noise_pair": true,
-  "size_noise": [
-   390,
-   844
+  "noise_pairs": [
+   "before2",
+   "after2"
   ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -5505,7 +5120,7 @@
   "out_ne0": 2,
   "out_gt8": 0,
   "out_max": 4,
-  "noise_out_gt8": 131,
+  "noise_out_gt8": 141,
   "noise_inside_gt8": 0,
   "out_gt8_unexplained_by_noise": 0,
   "verdict": "within noise (outside diffs <= 8/255)",
