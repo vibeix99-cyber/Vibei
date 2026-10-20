@@ -28,15 +28,20 @@ ls -l $R/assets-served/after-chai-*.webp
 g() { python3 -I $SL run --lane K --n 1 -- "$@"; }
 FLOW=focus-running,home-live,focus-paused,focus-break,home-break
 CFGS=("390x844 light normal" "390x844 dark normal" "375x667 light normal" "375x667 dark normal" "1440x900 light normal" "1440x900 dark normal" "390x844 light t200" "390x844 dark t200" "390x844 light rm")
+SMOKE=${K_SMOKE:-}   # K_SMOKE=1: one config, one edge run, one ps run (a ~5 min check of the plumbing)
+[ -n "$SMOKE" ] && CFGS=("390x844 dark normal")
 streamA() {   # states matrix, then noise recaptures (after2 = full subset, after3 = flow states) 
   for cv in "${CFGS[@]}"; do g node $K/scripts/states.mjs $BASE $R/shots/after $cv; done
+  [ -n "$SMOKE" ] && { echo DONE A; return; }
   for cv in "390x844 light normal" "390x844 dark normal" "1440x900 light normal" "375x667 dark normal"; do g node $K/scripts/states.mjs $BASE $SC/after2 $cv; done
   for cv in "1440x900 dark normal" "1440x900 light normal" "390x844 light normal" "390x844 dark normal" "375x667 light normal" "390x844 light rm"; do g node $K/scripts/states.mjs $BASE $SC/after3 $cv $FLOW; done
   echo DONE A
 }
 streamB() {   # edges, then pose-switch (AFTER only)
-  for a in "stage 1440x900 dark" "stage 390x844 dark" "kit 1440x900 dark" "stage 1440x900 light" "kit 1440x900 light"; do g node $K/scripts/edges.mjs $BASE after $a; done
-  for cfg in 390x844 1440x900; do for th in light dark; do
+  EDGES=("stage 1440x900 dark" "stage 390x844 dark" "kit 1440x900 dark" "stage 1440x900 light" "kit 1440x900 light"); PSC=(390x844 1440x900); PST=(light dark)
+  [ -n "$SMOKE" ] && { EDGES=("kit 1440x900 dark"); PSC=(390x844); PST=(dark); }
+  for a in "${EDGES[@]}"; do g node $K/scripts/edges.mjs $BASE after $a; done
+  for cfg in "${PSC[@]}"; do for th in "${PST[@]}"; do
     fd=$SC/frames/after-$cfg-$th; mkdir -p $fd
     g node $K/scripts/poseswitch.mjs $BASE after $cfg $th 1 full $R/json/ps/after-$cfg-$th-d1-full.json.tmp $fd && $V -c "import gzip,shutil;shutil.copyfileobj(open('$R/json/ps/after-$cfg-$th-d1-full.json.tmp','rb'),gzip.open('$R/json/ps/after-$cfg-$th-d1-full.json.gz','wb'))"
     g node $K/scripts/poseswitch.mjs $BASE after $cfg $th 1 reduce $R/json/ps/after-$cfg-$th-d1-reduce.json.tmp && $V -c "import gzip,shutil;shutil.copyfileobj(open('$R/json/ps/after-$cfg-$th-d1-reduce.json.tmp','rb'),gzip.open('$R/json/ps/after-$cfg-$th-d1-reduce.json.gz','wb'))"
