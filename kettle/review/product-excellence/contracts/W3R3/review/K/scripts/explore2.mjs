@@ -13,9 +13,9 @@ for (let i=0;i<7;i++){
   console.log(i, await page.evaluate(()=>document.querySelector('[data-step]')?.dataset.step), JSON.stringify((await facts(page)).chai.map(c=>c.pose+':'+c.box.join(','))), btns.join('|'));
   await page.screenshot({path:`/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchpad/w3r3/k-w${i}.png`});
   const step = await page.evaluate(()=>document.querySelector('[data-step]')?.dataset.step);
-  if (step==='goal') await page.getByRole('radio').first().click().catch(()=>{});
-  if (step==='rhythm') await page.getByRole('radio').first().click().catch(()=>{});
-  if (step==='ambience') await page.getByRole('radio').first().click().catch(()=>{});
+  if (step==='goal') await page.locator('fieldset label').first().click();
+  if (step==='rhythm') await page.locator('fieldset label').first().click();
+  if (step==='ambience') await page.locator('fieldset label').first().click();
   const cont = page.getByRole('button', { name: /^(continue|next|skip|not now|let.?s go|put the kettle on)/i }).first();
   await page.waitForTimeout(300);
   if (await cont.count()) await cont.click(); else break;
