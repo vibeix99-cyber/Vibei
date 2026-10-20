@@ -116,3 +116,33 @@ All <= 0.47 CSS px (limit 1).
 - Not mine: the full REFERENCE -> BEFORE -> AFTER capture set (390x844, 375x667, 1440x900, light/dark, 200 % text, reduced motion) and the pose-switch sequence belong to the capture lane. Footprint numbers above are the numeric proof that nothing moves on a pose switch.
 - No budget request.
 - Branch tip and tree hashes are in the hand-back message.
+
+## 7. Fix round (LEAD-7 REJECT, D1 and D2)
+
+Base `17f5a70`, fix commit `20dfffe` (src tree `731e5650018e090616baf291c4f3cefe966fea35`). Files touched: `scripts/export-chai-2d.py`, the three WebPs, `art-src/chai/README.md`, `docs/areas/art.md`. Nothing else (`PaintedChai.tsx` had no stretch wording, so no change).
+
+**D1, uniform scale.** `build()` now scales the master's ink crop by one factor, s = old ink height x 1.25 / master ink height, puts the ink bottom on the old ink bottom and the ink centre on the old ink centre, and keeps canvas, density, quality, alpha quality, method and the cut-out as before. All three fit their canvas with margin (L/R/T/B file px: reading 3/4/5/5, sipping 3/3/7/5, cheering 12/12/6/5), so the contain-fit fallback was not used. The script prints `aspect_err_pct` per pose.
+
+| pose | master ink w/h | shipped ink w/h (alpha > 8) | aspect error (was) | ink width vs old art, sheet px | bytes (was) |
+|---|---|---|---|---|---|
+| reading | 0.6382 | 0.6377 | **-0.07 %** (-1.64 %) | 305.6 vs 301 (+4.6) | 19,968 (19,084) |
+| sipping | 0.6175 | 0.6179 | **+0.06 %** (-1.44 %) | 297.6 vs 294 (+3.6) | 19,178 (19,144) |
+| cheering | 0.6983 | 0.6985 | **+0.02 %** (+3.85 %) | 292.8 vs 304 (-11.2) | 19,078 (19,782) |
+| **total** | | | limit 0.5 % | | **58,224** of 61,476 (3,252 under) |
+
+`evidence/fix/ratio.log.txt`.
+
+**Footprint, 86 places** (BEFORE :5560 vs AFTER own dev :5613, dark, reduced motion, DPR 2, 390x844 and 1440x900; `evidence/fix/footprint-fix.md`, raw `footprint-after-fix.json`). Same pose in every place (28 reading, 30 sipping, 28 cheering).
+- Image box delta: 0.00 in all 86.
+- Baseline (ink bottom): worst +0.01 CSS px. Ink top: worst +0.35. Ink centre-x: worst -0.24. Largest per-row delta of box, top, bottom and centre: 0.35 (limit 1).
+- Ink width (expected to change): at the Stage cap reading +2.7 (179.1 -> 181.8), sipping +1.9 (175.0 -> 176.9), cheering -6.6 (180.9 -> 174.3) CSS px; Stage ink keeps >= 0.9 CSS px (>= 2.5 file px) from the box edge.
+- Pose switch on the Focus stage (reading -> whistle -> summary -> break): baseline spread 0.01 CSS px at 390 and at 1440 (BEFORE 0.01 and 0.00).
+
+**Checks.**
+- Halo on the app dark background `#241a2d` (LEAD-7's `halo.py`, `evidence/fix/halo-241a2d.log.txt`): mean rim L* minus interior L* is -0.84 / -1.12 / -0.73 (limit +1); halo-flagged pixels 0.90 % / 0.48 % / 0.84 %, p99 dL* <= +2.75; the script's own mean pull to cream is -0.010 / -0.012 / -0.006 (limit 0.02; control +0.45).
+- Fidelity: the shipped WebP against the uniformly resampled cut-out of the master, on cream, interior mean error 2.68 / 2.84 / 2.50 of 255 (limit 4), no feature missing (`evidence/fix/fidelity.log.txt`).
+- tsc exit 0; vitest 34 files, 342 tests passed; build OK, precache 119 entries (`evidence/fix/*.log.txt`).
+- Preview of the build (:5614): service worker active, the three new hashes precached (`chai-reading-CMLk2MAx`, `chai-sipping-DwyPxpxw`, `chai-cheering-ZKPXRG7z`), offline fetch 200 at 19,968 / 19,178 / 19,078 B (`evidence/fix/offline-check.log.txt`, `captures/pwa-check.json`). Stage captures at 390 and 1440 on dark and an edge set: `evidence/fix/captures/`.
+- Dev :5613 and preview :5614 stopped; nothing of mine is running.
+
+**D2, docs.** The README (2d-v2 section, table, sharpness rows) and `docs/areas/art.md` now describe the uniform fit and the per-pose ink-width change, the real dark background `--bg` #241a2d, phone 3x and Retina as downscales for the three poses, and the format ruling (WebP only: es2022 floor guarantees WebP alpha; a PNG fallback would be precached dead weight, AVIF is not in the precache glob).
