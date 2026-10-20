@@ -22,10 +22,10 @@
   ],
   "inside_chai_box_gt8_px": 33615,
   "inside_px": 69225,
-  "out_ne0": 5983,
-  "out_gt8": 5930,
+  "out_ne0": 5776,
+  "out_gt8": 5699,
   "out_max": 200,
-  "noise_out_gt8": 7496,
+  "noise_out_gt8": 7308,
   "noise_inside_gt8": 0,
   "out_gt8_unexplained_by_noise": 0,
   "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
@@ -118,10 +118,10 @@
   ],
   "inside_chai_box_gt8_px": 9018,
   "inside_px": 22568,
-  "out_ne0": 541,
-  "out_gt8": 509,
+  "out_ne0": 521,
+  "out_gt8": 486,
   "out_max": 214,
-  "noise_out_gt8": 524,
+  "noise_out_gt8": 497,
   "noise_inside_gt8": 0,
   "out_gt8_unexplained_by_noise": 0,
   "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
@@ -398,12 +398,12 @@
   ],
   "inside_chai_box_gt8_px": 15573,
   "inside_px": 63072,
-  "out_ne0": 215333,
-  "out_gt8": 214495,
+  "out_ne0": 215341,
+  "out_gt8": 214497,
   "out_max": 229,
   "noise_out_gt8": 2,
   "noise_inside_gt8": 0,
-  "out_gt8_unexplained_by_noise": 214411,
+  "out_gt8_unexplained_by_noise": 214413,
   "verdict": "DIFFERENT outside (not covered by the noise pair)",
   "components": [
    [
@@ -425,7 +425,7 @@
     235,
     1408,
     669,
-    207719
+    207721
    ],
    [
     404,
@@ -466,10 +466,10 @@
   ],
   "inside_chai_box_gt8_px": 33438,
   "inside_px": 69225,
-  "out_ne0": 5949,
-  "out_gt8": 5874,
+  "out_ne0": 3747,
+  "out_gt8": 3712,
   "out_max": 227,
-  "noise_out_gt8": 5874,
+  "noise_out_gt8": 3712,
   "noise_inside_gt8": 0,
   "out_gt8_unexplained_by_noise": 0,
   "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
@@ -530,13 +530,13 @@
   ],
   "inside_chai_box_gt8_px": 23530,
   "inside_px": 70414,
-  "out_ne0": 0,
+  "out_ne0": 7,
   "out_gt8": 0,
-  "out_max": 0,
-  "noise_out_gt8": 2032,
+  "out_max": 1,
+  "noise_out_gt8": 0,
   "noise_inside_gt8": 0,
   "out_gt8_unexplained_by_noise": 0,
-  "verdict": "identical outside Chai box",
+  "verdict": "within noise (outside diffs <= 8/255)",
   "components": []
  },
  {
@@ -562,10 +562,10 @@
   ],
   "inside_chai_box_gt8_px": 9074,
   "inside_px": 22568,
-  "out_ne0": 582,
-  "out_gt8": 547,
+  "out_ne0": 424,
+  "out_gt8": 394,
   "out_max": 219,
-  "noise_out_gt8": 551,
+  "noise_out_gt8": 402,
   "noise_inside_gt8": 0,
   "out_gt8_unexplained_by_noise": 0,
   "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
@@ -626,13 +626,13 @@
   ],
   "inside_chai_box_gt8_px": 6533,
   "inside_px": 23168,
-  "out_ne0": 1309,
-  "out_gt8": 1192,
-  "out_max": 168,
-  "noise_out_gt8": 1192,
+  "out_ne0": 0,
+  "out_gt8": 0,
+  "out_max": 0,
+  "noise_out_gt8": 0,
   "noise_inside_gt8": 0,
   "out_gt8_unexplained_by_noise": 0,
-  "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
+  "verdict": "identical outside Chai box",
   "components": []
  },
  {
@@ -850,12 +850,12 @@
   ],
   "inside_chai_box_gt8_px": 15628,
   "inside_px": 63072,
-  "out_ne0": 215146,
-  "out_gt8": 200001,
-  "out_max": 234,
-  "noise_out_gt8": 58476,
+  "out_ne0": 214699,
+  "out_gt8": 202287,
+  "out_max": 226,
+  "noise_out_gt8": 19903,
   "noise_inside_gt8": 0,
-  "out_gt8_unexplained_by_noise": 88575,
+  "out_gt8_unexplained_by_noise": 111416,
   "verdict": "DIFFERENT outside (not covered by the noise pair)",
   "components": [
    [
@@ -877,21 +877,42 @@
     235,
     1408,
     517,
-    62506
+    63493
    ],
    [
-    1133,
-    467,
-    1350,
-    491,
-    2394
+    1078,
+    425,
+    1102,
+    443,
+    42
+   ],
+   [
+    1130,
+    457,
+    1353,
+    489,
+    4011
    ],
    [
     902,
-    530,
+    524,
     1408,
     669,
-    17165
+    37260
+   ],
+   [
+    1082,
+    567,
+    1143,
+    585,
+    50
+   ],
+   [
+    1172,
+    568,
+    1213,
+    585,
+    50
    ]
   ]
  },
@@ -915,17 +936,17 @@
   ],
   "inside_chai_box_gt8_px": 11703,
   "inside_px": 28152,
-  "out_ne0": 1474,
-  "out_gt8": 1413,
+  "out_ne0": 790,
+  "out_gt8": 769,
   "out_max": 200,
   "verdict": "no noise pair: see components",
   "components": [
    [
-    174,
+    214,
     376,
     261,
     437,
-    1413
+    769
    ]
   ]
  },
@@ -973,12 +994,12 @@
    375,
    667
   ],
-  "inside_chai_box_gt8_px": 8544,
+  "inside_chai_box_gt8_px": 8543,
   "inside_px": 28623,
-  "out_ne0": 0,
+  "out_ne0": 33,
   "out_gt8": 0,
-  "out_max": 0,
-  "verdict": "identical outside Chai box",
+  "out_max": 7,
+  "verdict": "within noise (outside diffs <= 8/255)",
   "components": []
  },
  {
@@ -1001,24 +1022,24 @@
   ],
   "inside_chai_box_gt8_px": 4948,
   "inside_px": 14300,
-  "out_ne0": 244,
-  "out_gt8": 235,
+  "out_ne0": 132,
+  "out_gt8": 118,
   "out_max": 214,
   "verdict": "no noise pair: see components",
   "components": [
    [
     62,
     246,
-    84,
-    267,
-    59
+    80,
+    266,
+    26
    ],
    [
-    125,
+    133,
     283,
-    156,
+    155,
     308,
-    176
+    92
    ]
   ]
  },
@@ -1295,12 +1316,12 @@
   ],
   "inside_chai_box_gt8_px": 5722,
   "inside_px": 25844,
-  "out_ne0": 157511,
-  "out_gt8": 145602,
+  "out_ne0": 157886,
+  "out_gt8": 145823,
   "out_max": 229,
-  "noise_out_gt8": 8576,
+  "noise_out_gt8": 20937,
   "noise_inside_gt8": 0,
-  "out_gt8_unexplained_by_noise": 101108,
+  "out_gt8_unexplained_by_noise": 89946,
   "verdict": "DIFFERENT outside (not covered by the noise pair)",
   "components": [
    [
@@ -1315,21 +1336,63 @@
     270,
     375,
     525,
-    65180
+    64476
    ],
    [
-    48,
-    411,
-    62,
-    424,
-    2
+    51,
+    512,
+    66,
+    527,
+    6
    ],
    [
     0,
-    538,
+    541,
     375,
     667,
-    30885
+    20336
+   ],
+   [
+    111,
+    554,
+    130,
+    569,
+    13
+   ],
+   [
+    143,
+    554,
+    171,
+    568,
+    8
+   ],
+   [
+    190,
+    554,
+    227,
+    571,
+    37
+   ],
+   [
+    118,
+    582,
+    136,
+    597,
+    12
+   ],
+   [
+    206,
+    583,
+    229,
+    597,
+    15
+   ],
+   [
+    159,
+    584,
+    173,
+    597,
+    2
    ]
   ]
  },
@@ -1356,10 +1419,10 @@
   ],
   "inside_chai_box_gt8_px": 11645,
   "inside_px": 28152,
-  "out_ne0": 6298,
-  "out_gt8": 5848,
+  "out_ne0": 5242,
+  "out_gt8": 4800,
   "out_max": 227,
-  "noise_out_gt8": 5848,
+  "noise_out_gt8": 4800,
   "noise_inside_gt8": 0,
   "out_gt8_unexplained_by_noise": 0,
   "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
@@ -1406,25 +1469,25 @@
   ],
   "size_after": [
    375,
-   667
+   677
   ],
   "noise_pairs": [
    "before-recapture",
    "after-recapture"
   ],
   "has_noise_pair": true,
-  "height_differs_before_vs_after": false,
+  "height_differs_before_vs_after": true,
   "compared": [
    375,
    667
   ],
-  "inside_chai_box_gt8_px": 8404,
-  "inside_px": 28623,
-  "out_ne0": 19053,
-  "out_gt8": 9698,
-  "out_max": 197,
-  "noise_out_gt8": 9698,
-  "noise_inside_gt8": 0,
+  "inside_chai_box_gt8_px": 15690,
+  "inside_px": 30033,
+  "out_ne0": 113448,
+  "out_gt8": 69901,
+  "out_max": 214,
+  "noise_out_gt8": 73597,
+  "noise_inside_gt8": 15329,
   "out_gt8_unexplained_by_noise": 0,
   "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
   "components": []
@@ -1452,10 +1515,10 @@
   ],
   "inside_chai_box_gt8_px": 4986,
   "inside_px": 14300,
-  "out_ne0": 868,
-  "out_gt8": 705,
+  "out_ne0": 754,
+  "out_gt8": 589,
   "out_max": 219,
-  "noise_out_gt8": 705,
+  "noise_out_gt8": 589,
   "noise_inside_gt8": 0,
   "out_gt8_unexplained_by_noise": 0,
   "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
@@ -1577,13 +1640,13 @@
   ],
   "inside_chai_box_gt8_px": 2126,
   "inside_px": 7904,
-  "out_ne0": 356,
+  "out_ne0": 0,
   "out_gt8": 0,
-  "out_max": 1,
+  "out_max": 0,
   "noise_out_gt8": 0,
   "noise_inside_gt8": 0,
   "out_gt8_unexplained_by_noise": 0,
-  "verdict": "within noise (outside diffs <= 8/255)",
+  "verdict": "identical outside Chai box",
   "components": []
  },
  {
@@ -1732,12 +1795,12 @@
   ],
   "inside_chai_box_gt8_px": 7550,
   "inside_px": 25844,
-  "out_ne0": 157494,
-  "out_gt8": 136080,
+  "out_ne0": 156620,
+  "out_gt8": 135247,
   "out_max": 224,
   "noise_out_gt8": 0,
   "noise_inside_gt8": 0,
-  "out_gt8_unexplained_by_noise": 136080,
+  "out_gt8_unexplained_by_noise": 135247,
   "verdict": "DIFFERENT outside (not covered by the noise pair)",
   "components": [
    [
@@ -1752,7 +1815,7 @@
     260,
     375,
     667,
-    130580
+    129747
    ]
   ]
  },
@@ -1776,17 +1839,17 @@
   ],
   "inside_chai_box_gt8_px": 12508,
   "inside_px": 30173,
-  "out_ne0": 4431,
-  "out_gt8": 4386,
+  "out_ne0": 1882,
+  "out_gt8": 1858,
   "out_max": 200,
   "verdict": "no noise pair: see components",
   "components": [
    [
-    178,
+    240,
     482,
-    306,
+    307,
     569,
-    4386
+    1858
    ]
   ]
  },
@@ -1825,7 +1888,7 @@
   ],
   "size_after": [
    390,
-   849
+   854
   ],
   "noise_pairs": [],
   "has_noise_pair": false,
@@ -1834,124 +1897,89 @@
    390,
    844
   ],
-  "inside_chai_box_gt8_px": 17324,
-  "inside_px": 31030,
-  "out_ne0": 153285,
-  "out_gt8": 74509,
-  "out_max": 216,
+  "inside_chai_box_gt8_px": 20844,
+  "inside_px": 31900,
+  "out_ne0": 166786,
+  "out_gt8": 108843,
+  "out_max": 220,
   "verdict": "no noise pair: see components",
   "components": [
    [
     0,
     0,
     390,
-    412,
-    48398
+    438,
+    74761
    ],
    [
     359,
     201,
     390,
-    329,
-    1962
+    347,
+    2600
    ],
    [
     359,
-    342,
+    351,
     390,
-    360,
-    71
-   ],
-   [
-    359,
-    364,
-    390,
-    383,
-    100
-   ],
-   [
-    0,
-    416,
-    390,
-    433,
-    1950
+    388,
+    146
    ],
    [
     52,
     482,
     179,
-    574,
-    2788
+    579,
+    4806
    ],
    [
     180,
     482,
     338,
-    574,
-    2576
+    579,
+    4435
    ],
    [
     26,
     585,
     367,
-    628,
-    5124
-   ],
-   [
-    58,
-    633,
-    332,
-    671,
-    3470
+    676,
+    10661
    ],
    [
     47,
     686,
     132,
-    797,
-    2251
+    802,
+    3287
    ],
    [
     155,
     686,
     245,
-    813,
-    2612
+    818,
+    3660
    ],
    [
     268,
     686,
     342,
-    797,
-    1975
-   ],
-   [
-    74,
-    707,
-    106,
-    744,
-    179
-   ],
-   [
-    292,
-    710,
-    318,
-    741,
-    168
+    802,
+    3033
    ],
    [
     185,
     714,
     215,
-    753,
-    178
+    758,
+    318
    ],
    [
     79,
     828,
     311,
     844,
-    707
+    1136
    ]
   ]
  },
@@ -1975,24 +2003,24 @@
   ],
   "inside_chai_box_gt8_px": 4947,
   "inside_px": 14300,
-  "out_ne0": 1432,
-  "out_gt8": 1367,
+  "out_ne0": 908,
+  "out_gt8": 846,
   "out_max": 214,
   "verdict": "no noise pair: see components",
   "components": [
    [
     62,
     670,
-    84,
-    691,
-    59
+    80,
+    690,
+    27
    ],
    [
-    146,
+    162,
     712,
-    254,
+    253,
     748,
-    1308
+    819
    ]
   ]
  },
@@ -2197,45 +2225,16 @@
    390,
    1296
   ],
-  "inside_chai_box_gt8_px": 31943,
-  "inside_px": 159057,
-  "out_ne0": 78077,
-  "out_gt8": 73609,
-  "out_max": 234,
+  "inside_chai_box_gt8_px": 5189,
+  "inside_px": 152481,
+  "out_ne0": 0,
+  "out_gt8": 0,
+  "out_max": 0,
   "noise_out_gt8": 0,
   "noise_inside_gt8": 0,
-  "out_gt8_unexplained_by_noise": 73609,
-  "verdict": "DIFFERENT outside (not covered by the noise pair)",
-  "components": [
-   [
-    10,
-    398,
-    125,
-    528,
-    7854
-   ],
-   [
-    250,
-    398,
-    365,
-    458,
-    4943
-   ],
-   [
-    250,
-    470,
-    365,
-    528,
-    4574
-   ],
-   [
-    0,
-    1037,
-    381,
-    1284,
-    56238
-   ]
-  ]
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "identical outside Chai box",
+  "components": []
  },
  {
   "tag": "390x844-dark-t200",
@@ -2291,11 +2290,11 @@
   "inside_chai_box_gt8_px": 5972,
   "inside_px": 27783,
   "out_ne0": 193954,
-  "out_gt8": 181812,
+  "out_gt8": 181705,
   "out_max": 229,
   "noise_out_gt8": 0,
   "noise_inside_gt8": 0,
-  "out_gt8_unexplained_by_noise": 181812,
+  "out_gt8_unexplained_by_noise": 181705,
   "verdict": "DIFFERENT outside (not covered by the noise pair)",
   "components": [
    [
@@ -2324,7 +2323,7 @@
     378,
     390,
     844,
-    174892
+    174785
    ]
   ]
  },
@@ -2351,10 +2350,10 @@
   ],
   "inside_chai_box_gt8_px": 12508,
   "inside_px": 30173,
-  "out_ne0": 1224,
-  "out_gt8": 1209,
+  "out_ne0": 1106,
+  "out_gt8": 1083,
   "out_max": 200,
-  "noise_out_gt8": 1209,
+  "noise_out_gt8": 1083,
   "noise_inside_gt8": 0,
   "out_gt8_unexplained_by_noise": 0,
   "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
@@ -2447,10 +2446,10 @@
   ],
   "inside_chai_box_gt8_px": 4948,
   "inside_px": 14300,
-  "out_ne0": 509,
-  "out_gt8": 475,
+  "out_ne0": 404,
+  "out_gt8": 379,
   "out_max": 214,
-  "noise_out_gt8": 475,
+  "noise_out_gt8": 378,
   "noise_inside_gt8": 0,
   "out_gt8_unexplained_by_noise": 0,
   "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
@@ -2738,9 +2737,9 @@
   "out_ne0": 188107,
   "out_gt8": 175379,
   "out_max": 229,
-  "noise_out_gt8": 13505,
+  "noise_out_gt8": 16630,
   "noise_inside_gt8": 0,
-  "out_gt8_unexplained_by_noise": 125167,
+  "out_gt8_unexplained_by_noise": 107184,
   "verdict": "DIFFERENT outside (not covered by the noise pair)",
   "components": [
    [
@@ -2755,84 +2754,56 @@
     379,
     390,
     702,
-    101040
+    80781
    ],
    [
-    47,
-    440,
-    61,
-    454,
-    3
-   ],
-   [
-    186,
-    441,
-    199,
-    454,
-    1
-   ],
-   [
-    222,
-    441,
-    235,
-    454,
-    1
+    48,
+    519,
+    62,
+    532,
+    2
    ],
    [
     0,
-    725,
+    720,
     390,
     844,
-    18999
+    21151
    ],
    [
-    119,
-    737,
-    137,
-    752,
-    12
+    146,
+    733,
+    181,
+    749,
+    44
    ],
    [
-    150,
-    737,
-    179,
+    186,
+    733,
+    236,
     751,
-    10
+    93
    ],
    [
-    198,
-    737,
-    234,
-    753,
-    32
+    124,
+    761,
+    144,
+    777,
+    20
    ],
    [
-    241,
-    737,
-    254,
-    750,
-    1
-   ],
-   [
-    125,
-    765,
-    142,
-    780,
+    165,
+    762,
+    182,
+    777,
     9
    ],
    [
-    167,
-    767,
-    180,
-    780,
-    1
-   ],
-   [
-    215,
-    767,
-    235,
-    780,
-    3
+    213,
+    762,
+    252,
+    777,
+    29
    ]
   ]
  },
@@ -2859,10 +2830,10 @@
   ],
   "inside_chai_box_gt8_px": 12467,
   "inside_px": 30173,
-  "out_ne0": 2998,
-  "out_gt8": 2927,
+  "out_ne0": 3164,
+  "out_gt8": 3107,
   "out_max": 227,
-  "noise_out_gt8": 2927,
+  "noise_out_gt8": 3107,
   "noise_inside_gt8": 0,
   "out_gt8_unexplained_by_noise": 0,
   "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
@@ -2891,13 +2862,13 @@
   ],
   "inside_chai_box_gt8_px": 9031,
   "inside_px": 30450,
-  "out_ne0": 2,
+  "out_ne0": 0,
   "out_gt8": 0,
-  "out_max": 1,
+  "out_max": 0,
   "noise_out_gt8": 0,
   "noise_inside_gt8": 0,
   "out_gt8_unexplained_by_noise": 0,
-  "verdict": "within noise (outside diffs <= 8/255)",
+  "verdict": "identical outside Chai box",
   "components": []
  },
  {
@@ -2955,57 +2926,14 @@
   ],
   "inside_chai_box_gt8_px": 5054,
   "inside_px": 14300,
-  "out_ne0": 2489,
-  "out_gt8": 2008,
+  "out_ne0": 644,
+  "out_gt8": 590,
   "out_max": 219,
-  "noise_out_gt8": 664,
+  "noise_out_gt8": 1934,
   "noise_inside_gt8": 0,
-  "out_gt8_unexplained_by_noise": 1344,
-  "verdict": "DIFFERENT outside (not covered by the noise pair)",
-  "components": [
-   [
-    14,
-    778,
-    88,
-    842,
-    576
-   ],
-   [
-    295,
-    783,
-    355,
-    842,
-    360
-   ],
-   [
-    133,
-    786,
-    159,
-    818,
-    16
-   ],
-   [
-    231,
-    791,
-    244,
-    808,
-    2
-   ],
-   [
-    120,
-    818,
-    163,
-    840,
-    190
-   ],
-   [
-    212,
-    818,
-    254,
-    840,
-    200
-   ]
-  ]
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
+  "components": []
  },
  {
   "tag": "390x844-light-rm",
@@ -3061,13 +2989,13 @@
   ],
   "inside_chai_box_gt8_px": 3830,
   "inside_px": 14484,
-  "out_ne0": 0,
-  "out_gt8": 0,
-  "out_max": 0,
-  "noise_out_gt8": 0,
+  "out_ne0": 1775,
+  "out_gt8": 1348,
+  "out_max": 123,
+  "noise_out_gt8": 1348,
   "noise_inside_gt8": 0,
   "out_gt8_unexplained_by_noise": 0,
-  "verdict": "identical outside Chai box",
+  "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
   "components": []
  },
  {
@@ -3123,13 +3051,13 @@
   ],
   "inside_chai_box_gt8_px": 2126,
   "inside_px": 7828,
-  "out_ne0": 0,
+  "out_ne0": 564,
   "out_gt8": 0,
-  "out_max": 0,
+  "out_max": 4,
   "noise_out_gt8": 0,
   "noise_inside_gt8": 0,
   "out_gt8_unexplained_by_noise": 0,
-  "verdict": "identical outside Chai box",
+  "verdict": "within noise (outside diffs <= 8/255)",
   "components": []
  },
  {
@@ -3276,66 +3204,16 @@
    390,
    844
   ],
-  "inside_chai_box_gt8_px": 8071,
+  "inside_chai_box_gt8_px": 5762,
   "inside_px": 27783,
-  "out_ne0": 202312,
-  "out_gt8": 171836,
-  "out_max": 234,
+  "out_ne0": 2,
+  "out_gt8": 0,
+  "out_max": 2,
   "noise_out_gt8": 0,
   "noise_inside_gt8": 0,
-  "out_gt8_unexplained_by_noise": 171836,
-  "verdict": "DIFFERENT outside (not covered by the noise pair)",
-  "components": [
-   [
-    234,
-    4,
-    384,
-    62,
-    5478
-   ],
-   [
-    4,
-    135,
-    89,
-    281,
-    4017
-   ],
-   [
-    167,
-    183,
-    196,
-    219,
-    174
-   ],
-   [
-    187,
-    206,
-    220,
-    241,
-    176
-   ],
-   [
-    105,
-    212,
-    187,
-    278,
-    1234
-   ],
-   [
-    86,
-    314,
-    225,
-    359,
-    1637
-   ],
-   [
-    0,
-    367,
-    390,
-    844,
-    159120
-   ]
-  ]
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "within noise (outside diffs <= 8/255)",
+  "components": []
  },
  {
   "tag": "390x844-light-t200",
@@ -3357,17 +3235,17 @@
   ],
   "inside_chai_box_gt8_px": 12396,
   "inside_px": 30173,
-  "out_ne0": 2062,
-  "out_gt8": 2045,
+  "out_ne0": 1882,
+  "out_gt8": 1856,
   "out_max": 227,
   "verdict": "no noise pair: see components",
   "components": [
    [
-    178,
+    240,
     482,
-    243,
+    307,
     569,
-    2045
+    1856
    ]
   ]
  },
@@ -3443,24 +3321,24 @@
   ],
   "inside_chai_box_gt8_px": 4986,
   "inside_px": 14300,
-  "out_ne0": 1320,
-  "out_gt8": 1265,
+  "out_ne0": 908,
+  "out_gt8": 855,
   "out_max": 219,
   "verdict": "no noise pair: see components",
   "components": [
    [
-    62,
+    56,
     670,
-    84,
+    80,
     690,
-    56
+    33
    ],
    [
-    146,
+    162,
     712,
-    254,
+    253,
     748,
-    1209
+    822
    ]
   ]
  },
@@ -3729,12 +3607,12 @@
   ],
   "inside_chai_box_gt8_px": 7731,
   "inside_px": 27783,
-  "out_ne0": 193920,
-  "out_gt8": 183688,
+  "out_ne0": 192636,
+  "out_gt8": 182549,
   "out_max": 226,
   "noise_out_gt8": 0,
   "noise_inside_gt8": 0,
-  "out_gt8_unexplained_by_noise": 183688,
+  "out_gt8_unexplained_by_noise": 182549,
   "verdict": "DIFFERENT outside (not covered by the noise pair)",
   "components": [
    [
@@ -3749,7 +3627,7 @@
     368,
     390,
     844,
-    176198
+    175059
    ]
   ]
  },
@@ -3776,10 +3654,10 @@
   ],
   "inside_chai_box_gt8_px": 12396,
   "inside_px": 30173,
-  "out_ne0": 2604,
-  "out_gt8": 2574,
+  "out_ne0": 1106,
+  "out_gt8": 1084,
   "out_max": 227,
-  "noise_out_gt8": 2574,
+  "noise_out_gt8": 1084,
   "noise_inside_gt8": 0,
   "out_gt8_unexplained_by_noise": 0,
   "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
@@ -3808,13 +3686,13 @@
   ],
   "inside_chai_box_gt8_px": 8994,
   "inside_px": 30450,
-  "out_ne0": 1873,
-  "out_gt8": 1551,
-  "out_max": 165,
-  "noise_out_gt8": 1551,
+  "out_ne0": 0,
+  "out_gt8": 0,
+  "out_max": 0,
+  "noise_out_gt8": 0,
   "noise_inside_gt8": 0,
   "out_gt8_unexplained_by_noise": 0,
-  "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
+  "verdict": "identical outside Chai box",
   "components": []
  },
  {
@@ -3872,10 +3750,10 @@
   ],
   "inside_chai_box_gt8_px": 4986,
   "inside_px": 14300,
-  "out_ne0": 524,
-  "out_gt8": 489,
+  "out_ne0": 402,
+  "out_gt8": 368,
   "out_max": 219,
-  "noise_out_gt8": 489,
+  "noise_out_gt8": 367,
   "noise_inside_gt8": 0,
   "out_gt8_unexplained_by_noise": 0,
   "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
@@ -4161,11 +4039,11 @@
   "inside_chai_box_gt8_px": 7386,
   "inside_px": 27783,
   "out_ne0": 185876,
-  "out_gt8": 159759,
+  "out_gt8": 159793,
   "out_max": 234,
-  "noise_out_gt8": 30636,
+  "noise_out_gt8": 22429,
   "noise_inside_gt8": 0,
-  "out_gt8_unexplained_by_noise": 61495,
+  "out_gt8_unexplained_by_noise": 63674,
   "verdict": "DIFFERENT outside (not covered by the noise pair)",
   "components": [
    [
@@ -4193,8 +4071,29 @@
     0,
     399,
     390,
-    702,
-    35457
+    701,
+    36136
+   ],
+   [
+    47,
+    441,
+    61,
+    455,
+    3
+   ],
+   [
+    186,
+    442,
+    199,
+    455,
+    1
+   ],
+   [
+    222,
+    442,
+    235,
+    455,
+    1
    ],
    [
     148,
@@ -4226,24 +4125,66 @@
    ],
    [
     0,
-    728,
+    727,
     390,
     844,
-    13377
+    18436
    ],
    [
-    21,
-    740,
-    110,
-    779,
-    1857
+    117,
+    739,
+    138,
+    755,
+    21
    ],
    [
-    278,
-    740,
-    369,
-    779,
-    1845
+    149,
+    739,
+    180,
+    754,
+    21
+   ],
+   [
+    187,
+    739,
+    235,
+    756,
+    55
+   ],
+   [
+    240,
+    739,
+    264,
+    753,
+    7
+   ],
+   [
+    124,
+    767,
+    143,
+    783,
+    16
+   ],
+   [
+    166,
+    769,
+    181,
+    783,
+    4
+   ],
+   [
+    214,
+    769,
+    236,
+    783,
+    13
+   ],
+   [
+    238,
+    770,
+    251,
+    783,
+    1
    ]
   ]
  }
