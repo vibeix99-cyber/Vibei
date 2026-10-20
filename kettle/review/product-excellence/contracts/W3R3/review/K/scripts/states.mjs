@@ -31,7 +31,7 @@ for (const cfg of cfgsArg.split(',')) for (const theme of themesArg.split(',')) 
   const snap = async (page, name, wait = 600) => {
     if (!want.includes(name)) return;
     await page.waitForTimeout(wait * (SETTLED.has(name) ? SET : 1));
-    await shot(page, `${dir}/${name}.png`);
+    await shot(page, `${dir}/${name}.png`, {}, SETTLED.has(name));
     const f = await facts(page);
     log.push(`${tag} ${name} ${JSON.stringify(f.chai.map((c) => `${c.pose}:${c.box.join(',')}`))}`);
   };

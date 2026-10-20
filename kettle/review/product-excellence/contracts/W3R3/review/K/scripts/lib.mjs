@@ -20,11 +20,11 @@ export async function newCtx(browser, { vw, vh, dpr = 1, reduced = false, text20
   return ctx;
 }
 // Full-page screenshot with animations disabled, after the fonts are ready and no screen is leaving.
-export async function shot(page, path, o = {}) {
+export async function shot(page, path, o = {}, settle = false) {
   await page.waitForFunction(() => !document.querySelector('[data-route-leaving]'), null, { timeout: 20000 }).catch(() => {});
   await page.evaluate(() => document.fonts.ready).catch(() => {});
   // wait (max 5 s) until no finite animation or transition is still running (entrance fades of the Stage and the tab bar)
-  await page.evaluate(async () => { const t0 = performance.now(); while (performance.now() - t0 < 5000 && document.getAnimations().some((a) => a.playState === 'running' && Number.isFinite(a.effect?.getComputedTiming().endTime ?? Infinity))) await new Promise((r) => setTimeout(r, 100)); }).catch(() => {});
+  if (settle) await page.evaluate(async () => { const t0 = performance.now(); while (performance.now() - t0 < 5000 && document.getAnimations().some((a) => a.playState === 'running' && Number.isFinite(a.effect?.getComputedTiming().endTime ?? Infinity))) await new Promise((r) => setTimeout(r, 100)); }).catch(() => {});
   await page.evaluate(async () => { for (const i of document.images) if (!i.complete) await i.decode().catch(() => {}); }).catch(() => {});
   return page.screenshot({ path, animations: 'disabled', fullPage: true, ...o });
 }
