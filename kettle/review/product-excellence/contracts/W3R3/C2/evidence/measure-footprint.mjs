@@ -49,11 +49,14 @@ for (const [vw, vh] of [[390, 844], [1440, 900]]) {
     for (const pose of ['focus', 'sip', 'cheer']) res[key][`kit ${pose} @${size}`] = await inkOf(page, `span[data-pose="${pose}"] img`);
   }
   // 2. Settings > About (Mascot sip 72).
+  await page.goto('about:blank');
   await page.goto(`${base}/?debug&seed=veteran&theme=dark&motion=reduce#/settings`);
   await page.waitForTimeout(1200);
   res[key]['settings about sip @72'] = await inkOf(page, 'img[src*="chai-sipping"]');
   // 3. Focus stage: running (reading), whistle + summary (cheering), break (sipping); Home hero while live.
+  await page.goto('about:blank');
   await page.goto(`${base}/?debug&seed=veteran&theme=dark&motion=reduce#/`);
+  await page.waitForFunction(() => window.__kettle, null, { timeout: 90000 });
   await page.waitForFunction(() => window.__kettle?.timerInfo?.().leader, null, { timeout: 60000 }).catch(() => {});
   await page.evaluate(() => window.__kettle.settings.getState().set({ muted: true, autoStartBreaks: false, autoStartFocus: false }));
   await page.waitForTimeout(1000);
