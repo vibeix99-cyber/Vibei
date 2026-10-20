@@ -144,3 +144,76 @@ The byte counts come from the files at `17f5a70`, which are byte-identical to th
 - **Why not now:** adding one changes framing on those surfaces. A shadow below the feet extends past Chai's box into neighbouring layout, which is outside this round's scope ("layout outside Chai's own box").
 - **Risk if added:** it would need its own BEFORE → AFTER on each surface.
 - **No defect:** nothing was lost relative to the current product.
+
+## 7. Lane K receipt (read in full)
+
+I read `review/K/RECEIPT-K.md` in full as it stood at 02:45 UTC (stages 1 and 2, 242 lines). Its stage 3 (pixel diff, noise floor, hand-back) was not yet written when this verdict closed, and nothing in it can turn R1 around.
+
+I viewed these key captures at full size:
+- `reference/compare-stage-1440x900-cheering-x1.png`;
+- `strips/strip-390x844-dark.png`;
+- `edges/edge-stage-1440x900-dark-cheering.png`;
+- AFTER `390x844-dark/{welcome-ready,home-live}.png`.
+
+Lane K agrees with my results on every point:
+- **Capture matrix:** 117 + 117 captures (9 configs × 13 states, including 200 % text and reduced motion). The `<img>` box is identical BEFORE and AFTER in every state.
+- **Edges:** 0.00 % cream-coloured ring pixels on dark, on every surface, and nothing differs from the background beyond the ink. The BEFORE leaf-tip speck and sparkle fringe are gone in AFTER.
+- **Pose switch** (5 steps, 12 runs, plus a rAF trace): with reduced motion, the baseline and centre never move in either version. Box-height steps are identical BEFORE and AFTER.
+- **Proportions, measured independently:** reading −1.6 to −1.7 %, sipping −1.3 to −1.4 %, **cheering +4.0 %** against the master. The DOM adds no further stretch. K's reference sheet, which shows the master uniformly scaled to the AFTER ink height, shows the AFTER cheering visibly broader.
+- **Bytes:** 58,010 total, and the precache holds the three new hashes at those sizes.
+
+## Residual table
+
+| # | Item | Class | Note |
+|---|---|---|---|
+| R1 | Non-uniform stretch: reading −1.64 %, sipping −1.44 %, **cheering +3.85 %** w/h vs master | **BLOCKS** | Ruling 1. Preserve list #2 "proportions" and Vibei's "on-model fidelity against the masters"; a uniform fit is free (feasibility 58,224 B, aspect ≤ 0.07 %). Fix item D1 |
+| R2 | README and art docs describe the stretch; the README sharpness table is stale for these poses (3× row) and names `#221829` as the dark background | **BLOCKS** (rides with D1) | Docs must describe what ships. Fix item D2 |
+| R3 | WebP only, no `<picture>` / AVIF / PNG fallback | ACCEPTED | Ruling 2: the es2022 bundle floor guarantees WebP alpha. A PNG fallback would be precached dead weight; AVIF would break offline. Record the ruling in the README (D2) |
+| R4 | Ground shadow: Stage CSS `.cShadow` only | ACCEPTED | Ruling 3: theme-aware and verified on dark and light, unchanged from BEFORE |
+| R5 | No ground shadow on Home, Welcome or Settings (as before) | FOLLOW-UP | A product decision for Vibei: it touches layout outside Chai's box and needs its own BEFORE → AFTER |
+| R6 | 1.25× density, 58,010 B | ACCEPTED | Ruling 4: every Stage and Mascot case is a downscale (≤ 0.96 device px per file px; 3× landscape about 1.04). Budget stays 61,476 B; no increase approved or needed |
+| R7 | Cheering drawn about 6 % smaller relative to reading than in the masters (yuzu 0.87 vs 0.925), to keep the old per-pose footprint | ACCEPTED | Preserve list #2 "display footprint" outranks it; the old app had the same relationship (0.88) |
+| R8 | Halo, edges, interior fidelity, box, baseline, pose switch, scope, precache | ACCEPTED (PASS) | §2 to §5 |
+
+## Verdict: **REJECT** (one fix round, 90 minutes)
+
+**Why.** The cut-outs are clean, the interior is faithful, and the footprint and baseline hold to ≤ 0.5 CSS px. The bytes are under budget. But the art is non-uniformly rescaled away from Vibei's approved masters, by up to +3.9 % in width on cheering, which is visible side by side. Preserve list #2 binds "proportions", and on-model fidelity is the review criterion. A uniform-scale fit holds box, baseline, height and centre with no budget cost, so the distortion is not a necessary trade-off.
+
+## Fix-round packet (maker C2, 90 min, base `pe/w3r3-chai-2d@17f5a70`)
+
+### Defects
+- **D1 (R1): proportions.** `scripts/export-chai-2d.py` `build()` resizes each master's ink crop to the old ink box independently in x and y. Required:
+  - **Scale:** one uniform scale per pose, s = (old ink height × DENSITY) / master ink height.
+  - **Vertical:** feet baseline (ink bottom) at the old ink bottom.
+  - **Horizontal:** ink centre-x at the old ink centre-x.
+  - **Unchanged:** canvas = `LOGICAL × DENSITY`, also DENSITY 1.25, q82, alpha q80, method 6 and the cut-out, as already shipped.
+  - **Fallback:** if any pose would not fit its canvas with ≥ 1 file px margin, use a uniform contain-fit (min of the width and height scales) for that pose, baseline still aligned, and report it.
+  - **Reports:** the `stretch_pct` report becomes `aspect_err_pct`, and the script prints it per pose.
+- **D2 (R2, R3): docs.** `art-src/chai/README.md` (2d-v2 section, table and sharpness table) and `docs/areas/art.md`:
+  - describe the uniform fit and the per-pose ink-width change vs the old art (sheet px);
+  - correct the dark background to `--bg #241a2d`;
+  - fix the sharpness-table rows for these three poses (phone 3× and Retina are downscales at 609 / 614 / 535 px);
+  - add one line recording the format ruling: WebP with alpha is guaranteed by the es2022 browser floor; no `<picture>` fallback, because a PNG would be precached dead weight and AVIF is not in the precache glob.
+  - Remove the "stretch" wording from the `PaintedChai.tsx` comment, if it is there.
+
+### Required outcome
+- **Proportions:** |aspect error| ≤ 0.5 % per pose, comparing master ink w/h with shipped ink w/h, alpha > 8.
+- **Footprint, per place** (the existing 86-place measurement at 390 and 1440, BEFORE :5560 vs AFTER): image box Δ = 0.00; baseline (ink bottom) Δ ≤ 1 CSS px; ink top Δ ≤ 1 CSS px; ink centre-x Δ ≤ 1 CSS px. Ink width may differ by the master's proportions, expected at the Stage cap about +2.9 (reading), +2.3 (sipping) and −6.7 (cheering) CSS px. No ink may touch the box edge.
+- **Pose switch:** the Focus-stage baseline spread across reading → whistle → summary → break is ≤ 1 CSS px.
+- **Halo:** on `#241a2d`, the mean rim L* − interior L* is ≤ +1 per pose, and the 4× close-ups are clean (the script's own metric, mean pull to cream, ≤ 0.02).
+- **Bytes:** the three files total ≤ 61,476 B (expected about 58.2 KB).
+- **Unchanged:** `PAINTED`, the pose mapping, `package.json`, the lockfile, the masters, other poses, `src/scene`, the CSS and the precache glob.
+- **Checks:** tsc 0, vitest 342/342, build OK, and a `vite preview` precache/offline check of the three new hashes.
+
+### Files allowed
+`kettle/scripts/export-chai-2d.py`, `kettle/src/art/chai/chai-{reading,sipping,cheering}.webp`, `kettle/art-src/chai/README.md`, `kettle/docs/areas/art.md`, `kettle/src/art/PaintedChai.tsx` (comments only), and the C2 packet and evidence. Nothing else.
+
+### Acceptance checks (◆ = LEAD reruns)
+1. ◆ Decode the three WebPs and compute the ink w/h against the masters: |err| ≤ 0.5 %.
+2. ◆ Fidelity diff of the shipped WebPs against the master resampled with the *uniform* transform: interior mean ≤ 4/255, no missing features.
+3. ◆ Halo on `#241a2d` (`review/LEAD7/tools/halo.py`), plus 6× close-ups.
+4. ◆ Footprint on the Focus stage (`review/LEAD7/tools/fp.mjs`), reading → whistle → summary → break, at 390 (DPR 2 and 3) and 1440, dark and light: box Δ 0, baseline / top / centre Δ ≤ 1, switch spread ≤ 1.
+5. ◆ Bytes per file and total.
+6. The maker's 86-place `measure-footprint.mjs` re-run, with a diff table in the packet (`compare-footprint.py`, with the ink-width column labelled "expected").
+7. tsc, vitest and build logs; the preview SW precache and offline check.
+8. Capture lane: a re-shoot of the AFTER set for the Focus stage (all three poses, 390 and 1440, dark and light), Home hero, Welcome ready/notify and Settings About, against the existing REFERENCE and BEFORE, plus the pose-switch strip.
