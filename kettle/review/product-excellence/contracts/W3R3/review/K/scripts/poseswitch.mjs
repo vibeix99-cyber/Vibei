@@ -41,17 +41,20 @@ async function measure(name, frameNo) {
   // 2. screenshot diff with the <img> hidden
   const pad = 8;
   const clip = { x: Math.max(0, Math.floor(dec.box[0]) - pad), y: Math.max(0, Math.floor(dec.box[1]) - pad), width: Math.ceil(dec.box[2]) + 2 * pad, height: Math.ceil(dec.box[3]) + 2 * pad };
+  await page.screenshot({ clip, animations: 'disabled' }); await page.waitForTimeout(250); // throw-away shot first
   const A = await page.screenshot({ clip, animations: 'disabled' });
   await page.evaluate((s) => { document.querySelector(s).style.visibility = 'hidden'; }, sel);
   const B = await page.screenshot({ clip, animations: 'disabled' });
   await page.waitForTimeout(250);
   const B2 = await page.screenshot({ clip, animations: 'disabled' }); // B vs B2 = what the scene animates by itself (excluded from the ink mask)
   await page.evaluate((s) => { document.querySelector(s).style.visibility = ''; }, sel);
+  await page.waitForTimeout(250);
+  const A2 = await page.screenshot({ clip, animations: 'disabled' });
   const raw = frameDir ? await page.screenshot({ animations: 'disabled' }) : null;
   if (raw) fs.writeFileSync(`${frameDir}/${frameNo}-${name}.png`, raw);
   const AB = process.env.K_AB_DIR; fs.mkdirSync(AB, { recursive: true });
   const tag = `${side}-${cfg}-${theme}-d${dpr}-${motion}-${frameNo}`;
-  fs.writeFileSync(`${AB}/${tag}.A.png`, A); fs.writeFileSync(`${AB}/${tag}.B.png`, B); fs.writeFileSync(`${AB}/${tag}.B2.png`, B2);
+  fs.writeFileSync(`${AB}/${tag}.A.png`, A); fs.writeFileSync(`${AB}/${tag}.B.png`, B); fs.writeFileSync(`${AB}/${tag}.B2.png`, B2); fs.writeFileSync(`${AB}/${tag}.A2.png`, A2);
   return { name, ...dec, clip, abTag: tag };
 }
 const steps = [];

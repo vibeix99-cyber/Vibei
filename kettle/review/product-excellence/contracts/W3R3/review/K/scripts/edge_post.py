@@ -12,7 +12,10 @@ def analyse(tag):
     p2=f'{SC}/ab/{tag}.B2.png'
     noise=np.zeros(d.shape,bool)
     if os.path.exists(p2):
-        B2=np.asarray(Image.open(p2).convert('RGB')).astype(float); noise=ndi.binary_dilation(np.abs(B-B2).max(2)>3,iterations=3)
+        B2=np.asarray(Image.open(p2).convert('RGB')).astype(float); nz=np.abs(B-B2).max(2)>3
+        pa=f'{SC}/ab/{tag}.A2.png'
+        if os.path.exists(pa): nz|=np.abs(A-np.asarray(Image.open(pa).convert('RGB')).astype(float)).max(2)>3
+        noise=ndi.binary_dilation(nz,iterations=3)
     core=(d>40)&~noise; anyp=(d>4)&~noise
     # keep the big connected parts (drop sparkles?) no: all ink counts
     fringe=anyp&~core                                     # anti-aliased edge pixels (partial coverage), outside the solid ink

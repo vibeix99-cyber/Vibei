@@ -16,14 +16,17 @@ async function grab(pose, sel) {
   const box = await page.evaluate((s) => { const r = document.querySelector(s).getBoundingClientRect(); return [r.left, r.top, r.width, r.height]; }, sel);
   const pad = 12;
   const clip = { x: Math.max(0, Math.floor(box[0]) - pad), y: Math.max(0, Math.floor(box[1]) - pad), width: Math.ceil(box[2]) + 2 * pad, height: Math.ceil(box[3]) + 2 * pad };
+  await page.screenshot({ clip, animations: 'disabled' }); await page.waitForTimeout(250); // throw-away shot first: the first shot of a state can carry the scene's settling
   const A = await page.screenshot({ clip, animations: 'disabled' });
   await page.evaluate((s) => { document.querySelector(s).style.visibility = 'hidden'; }, sel);
   const B = await page.screenshot({ clip, animations: 'disabled' });
   await page.waitForTimeout(250);
   const B2 = await page.screenshot({ clip, animations: 'disabled' }); // a second hidden shot: B vs B2 marks the pixels the scene animates by itself
   await page.evaluate((s) => { document.querySelector(s).style.visibility = ''; }, sel);
+  await page.waitForTimeout(250);
+  const A2 = await page.screenshot({ clip, animations: 'disabled' });
   const tag = `edge-${side}-${mode}-${cfg}-${theme}-${pose}`;
-  fs.writeFileSync(`${AB}/${tag}.A.png`, A); fs.writeFileSync(`${AB}/${tag}.B.png`, B); fs.writeFileSync(`${AB}/${tag}.B2.png`, B2);
+  fs.writeFileSync(`${AB}/${tag}.A.png`, A); fs.writeFileSync(`${AB}/${tag}.B.png`, B); fs.writeFileSync(`${AB}/${tag}.B2.png`, B2); fs.writeFileSync(`${AB}/${tag}.A2.png`, A2);
   out.push({ tag, pose, box, clip, dpr: 2 });
 }
 const boot = async (hash) => { await page.goto(`${base}/?debug&theme=${theme}&motion=reduce&seed=veteran#${hash}`); await page.waitForFunction(() => window.__kettle, null, { timeout: 60000 }); await page.waitForTimeout(1500); };

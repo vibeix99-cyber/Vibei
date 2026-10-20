@@ -9,7 +9,11 @@ def diff_ink(tag,dpr,clip,thr=16):
     import os
     from scipy import ndimage as ndi
     p2=f'{SC}/ab/{tag}.B2.png'; noise=np.zeros(A.shape[:2],bool)
-    if os.path.exists(p2): noise=ndi.binary_dilation(np.abs(B-np.asarray(Image.open(p2).convert('RGB')).astype(int)).max(2)>3,iterations=3)
+    if os.path.exists(p2):
+        nz=np.abs(B-np.asarray(Image.open(p2).convert('RGB')).astype(int)).max(2)>3
+        pa=f'{SC}/ab/{tag}.A2.png'
+        if os.path.exists(pa): nz|=np.abs(A-np.asarray(Image.open(pa).convert('RGB')).astype(int)).max(2)>3
+        noise=ndi.binary_dilation(nz,iterations=3)
     m=(np.abs(A-B).max(2)>thr)&~noise
     lab,nl=ndi.label(ndi.binary_dilation(m,iterations=2))      # keep the connected pieces that touch the main silhouette: biggest component + any piece within 6 px of it
     if nl>1:
