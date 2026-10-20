@@ -8,7 +8,12 @@ SC='/tmp/claude-0/-home-user-Vibei/af90140e-0279-5682-99d5-a47623d3eed0/scratchp
 def luma(a): return 0.2126*a[...,0]+0.7152*a[...,1]+0.0722*a[...,2]
 def analyse(tag):
     A=np.asarray(Image.open(f'{SC}/ab/{tag}.A.png').convert('RGB')).astype(float); B=np.asarray(Image.open(f'{SC}/ab/{tag}.B.png').convert('RGB')).astype(float)
-    d=np.abs(A-B).max(2); core=d>40; anyp=d>4
+    d=np.abs(A-B).max(2)
+    p2=f'{SC}/ab/{tag}.B2.png'
+    noise=np.zeros(d.shape,bool)
+    if os.path.exists(p2):
+        B2=np.asarray(Image.open(p2).convert('RGB')).astype(float); noise=ndi.binary_dilation(np.abs(B-B2).max(2)>3,iterations=3)
+    core=(d>40)&~noise; anyp=(d>4)&~noise
     # keep the big connected parts (drop sparkles?) no: all ink counts
     fringe=anyp&~core                                     # anti-aliased edge pixels (partial coverage), outside the solid ink
     ring=ndi.binary_dilation(core,iterations=3)&~core      # 1..3 device px outside the solid ink (superset of fringe)
@@ -22,7 +27,7 @@ def analyse(tag):
                     frac_lighter_than_bg_by_10=round(float((la>lb+10).mean()),4),frac_cream_over_bg=round(float(cream.mean()),4),
                     max_abs_diff_to_bg=round(float(np.abs(a-b).max()),1))
     ys,xs=np.where(core)
-    return dict(size=[A.shape[1],A.shape[0]],core_px=int(core.sum()),fringe=stats(fringe),ring1_3_outside_core=stats(ring),outside_any_ink_1_3px=stats(out2),
+    return dict(size=[A.shape[1],A.shape[0]],noise_px_excluded=int(noise.sum()),core_px=int(core.sum()),fringe=stats(fringe),ring1_3_outside_core=stats(ring),outside_any_ink_1_3px=stats(out2),
                 ink_box_dev=[int(xs.min()),int(ys.min()),int(xs.max())+1,int(ys.max())+1],core=core)
 def window(A,cx,cy,half=32):
     H,W=A.shape[:2]; x0=int(min(max(cx-half,0),W-2*half)); y0=int(min(max(cy-half,0),H-2*half))

@@ -19,9 +19,11 @@ async function grab(pose, sel) {
   const A = await page.screenshot({ clip, animations: 'disabled' });
   await page.evaluate((s) => { document.querySelector(s).style.visibility = 'hidden'; }, sel);
   const B = await page.screenshot({ clip, animations: 'disabled' });
+  await page.waitForTimeout(250);
+  const B2 = await page.screenshot({ clip, animations: 'disabled' }); // a second hidden shot: B vs B2 marks the pixels the scene animates by itself
   await page.evaluate((s) => { document.querySelector(s).style.visibility = ''; }, sel);
   const tag = `edge-${side}-${mode}-${cfg}-${theme}-${pose}`;
-  fs.writeFileSync(`${AB}/${tag}.A.png`, A); fs.writeFileSync(`${AB}/${tag}.B.png`, B);
+  fs.writeFileSync(`${AB}/${tag}.A.png`, A); fs.writeFileSync(`${AB}/${tag}.B.png`, B); fs.writeFileSync(`${AB}/${tag}.B2.png`, B2);
   out.push({ tag, pose, box, clip, dpr: 2 });
 }
 const boot = async (hash) => { await page.goto(`${base}/?debug&theme=${theme}&motion=reduce&seed=veteran#${hash}`); await page.waitForFunction(() => window.__kettle, null, { timeout: 60000 }); await page.waitForTimeout(1500); };
