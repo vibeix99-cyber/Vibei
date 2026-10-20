@@ -31,3 +31,7 @@ Running 264 tests using 2 workers
   ✓   27 [chromium] › tests/integrity.spec.ts:575:3 › I02 End, dismissal and task disposition › End within the first minute: the sheet says nothing will be saved, and nothing is (5.0s)
   ✓   28 [chromium] › tests/integrity.spec.ts:586:3 › I02 End, dismissal and task disposition › Done / Carry forward are reversible; the carried task returns on Home; editing it and Mark done → Undo never add a focus record (17.1s)
   ✓   29 [chromium] › tests/integrity.spec.ts:637:3 › I02 End, dismissal and task disposition › Skip break, Next brew and That’s all for now do what they say, and never record a skipped break (21.9s)
+  ✓   16 [chromium] › tests/a11y.spec.ts:177:1 › keyboard-only critical journey with focus restoration (3.9m)
+  ✓   31 [chromium] › tests/a11y.spec.ts:292:1 › welcome: first brew from the keyboard alone (4.5s)
+  ✓   32 [chromium] › tests/a11y.spec.ts:303:1 › live regions stay quiet while a brew runs (no spoken countdown) (14.1s)
+  ✓   30 [chromium] › tests/integrity.spec.ts:781:3 › I03 data safety › export → reset (explicit confirmation) → import restores brews, settings and every reward exactly (26.7s)
