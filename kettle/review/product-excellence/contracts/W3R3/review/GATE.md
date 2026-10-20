@@ -37,3 +37,14 @@
   - scope and bytes.
 - **D2:** docs corrections.
 - **Housekeeping:** LEAD-7's stage commit `5691316` also swept in some of lane K's in-progress captures. They are evidence only.
+
+## C2 fix round: GATE PASSED, 2026-10-20 ~02:55 UTC
+
+| Item | Result |
+|---|---|
+| Revision | `pe/w3r3-chai-2d@20dfffe` (one commit on `17f5a70`), src `731e565`. Packet §7 (`5730a80`), `C2/evidence/fix/` |
+| Scope (checked) | `scripts/export-chai-2d.py`, the three WebPs, `art-src/chai/README.md`, `docs/areas/art.md`: all allowed. The masters and `package.json` are untouched; `PaintedChai.tsx` is unchanged |
+| **Trial 2** | **`481bf28`** = integration `e3a3f8d` + `20dfffe`, worktree `/home/user/wt/w9tr2`, src `731e565`, tests `266828b`. tsc 0, vitest **342/342**, build OK. Dev **:5631** (verified; the WebPs are served byte-identical), preview **:5632**. The first trial's :5621 / :5622 are stopped |
+| The maker's claims | **Ratio vs master:** reading −0.07 %, sipping +0.06 %, cheering +0.02 % (limit ±0.5). **Footprint**, 86 places: box Δ 0.00, baseline +0.01, ink top +0.35, centre-x −0.24 CSS px; stage ink width +2.7 / +1.9 / −6.6; stage baseline spread 0.01. **Bytes:** 19,968 + 19,178 + 19,078 = **58,224** (≤ 61,476). **Halo** on `#241a2d`: rim − interior L* −0.84 / −1.12 / −0.73. **Fidelity:** 2.68 / 2.84 / 2.50 of 255. The PWA works offline |
+| Archive | `archive/pe-w3r3-chai-2d-fix-20dfffe.incremental.bundle` (requires `17f5a70`) |
+| Next | Lane K's AFTER-r2 on :5631 (stop 05:15); LEAD-7's final verdict |
