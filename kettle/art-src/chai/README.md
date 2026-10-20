@@ -3,7 +3,9 @@
 This folder holds the **masters** of the approved mascot art. The app ships the WebP copies in `src/art/chai/`.
 Nothing here is bundled.
 
-**Source:** `chai-sheet-approved.webp` is the approved sheet (1254 × 1254, eight figures). It is the mascot's art direction. Every pose below was cut from it with its painted pixels unchanged.
+**Source:** `chai-sheet-approved.webp` is the approved sheet (1254 × 1254, eight figures). It is the mascot's art direction. Every pose below, except reading, sipping and cheering, was cut from it with its painted pixels unchanged.
+
+**W3R3 (2026-10-20): reading, sipping and cheering are now the 2D v2 masters.** Vibei approved three new 2D masters, kept untouched in `2d-v2/` (`chai-reading.png`, `chai-sipping.png`, `chai-cheering.png`; 992 × 1586 RGB on a cream ground with a soft ground shadow, one shared canvas). The app copies `src/art/chai/chai-{reading,sipping,cheering}.webp` are cut from them by `scripts/export-chai-2d.py` (see "How reading, sipping and cheering are cut (2d-v2)" below). The PNG masters of those three poses in this folder (`chai-reading.png`, `chai-sipping.png`, `chai-cheering.png`) are the previous art, kept as history; they no longer ship.
 
 The earlier Chai A/B concept brief is **superseded** (see `review/round-6-mockups/chai-ab-brief.md`). So is the vector-redraw plan in `review/round-6-audit/chai-concept-prompt.md`.
 
@@ -11,9 +13,9 @@ The earlier Chai A/B concept brief is **superseded** (see `review/round-6-mockup
 
 | Master (PNG, RGBA) | App asset (`src/art/chai/*.webp`) | Size (px) | Used for |
 |---|---|---|---|
-| `chai-reading.png` | `chai-reading.webp` (21 KB) | 311 × 487 | Focus: running and paused (`Mascot` pose `focus`) |
-| `chai-sipping.png` | `chai-sipping.webp` (20 KB) | 302 × 491 | Tea break; Home in the evening (`sip`) |
-| `chai-cheering.png` | `chai-cheering.webp` (21 KB) | 312 × 428 | The whistle and the summary: one, on the stage (`cheer`) |
+| `2d-v2/chai-reading.png` | `chai-reading.webp` (19 KB; file 389 × 609) | 311 × 487 (layout) | Focus: running and paused (`Mascot` pose `focus`) |
+| `2d-v2/chai-sipping.png` | `chai-sipping.webp` (19 KB; file 378 × 614) | 302 × 491 (layout) | Tea break; Home in the evening (`sip`) |
+| `2d-v2/chai-cheering.png` | `chai-cheering.webp` (19 KB; file 390 × 535) | 312 × 428 (layout) | The whistle and the summary: one, on the stage (`cheer`) |
 | `chai-concerned.png` | `chai-concerned.webp` (19 KB) | 298 × 474 | Gentle support only, e.g. the end-early sheet (`concerned`) |
 | `chai-happy.png` | `chai-happy.webp` (19 KB) | 303 × 496 | Welcome, Home greeting, idle (`idle`, `wave`, `proud`) |
 | `chai-stretch.png` | `chai-stretch.webp` (20 KB) | 288 × 433 | Break's over; Home in the morning (`stretch`) |
@@ -21,13 +23,24 @@ The earlier Chai A/B concept brief is **superseded** (see `review/round-6-mockup
 | `chai-sleep.png` | `chai-sleep.webp` (15 KB) | 323 × 300 | Late night (`sleep`) |
 | `chai-happy-face.png` | `chai-happy-face.webp` (12 KB) | 303 × 312 | Round face avatar, used below 44 px |
 
-The nine delivery files total about 180 KB.
+The nine delivery files total about 175 KB (the three 2d-v2 poses are 58,010 bytes together, down from 61,476).
 
 **Scale:**
 - Every pose is at the sheet's native scale with a 4 px transparent margin.
 - `PaintedChai` (`src/art/PaintedChai.tsx`) sizes them all with one factor: `size` is the height of a 500 px sheet cell (`SHEET_REF_H`). So the poses stay the same size relative to each other and their feet share one baseline.
 - `Mascot` (`src/art/Mascot.tsx`) maps the app's 12 legacy pose names to these nine (`PAINTED_POSE`). So every screen that used the vector Chai now shows the painted one.
 - The vector drawing is kept as `MascotVector` for the kit page and for history. No screen uses it.
+
+## How reading, sipping and cheering are cut (2d-v2)
+
+Reproduce: `python3 -m venv /tmp/c2venv && /tmp/c2venv/bin/pip install pillow numpy scipy && /tmp/c2venv/bin/python kettle/scripts/export-chai-2d.py` (build-time only; not an app dependency).
+
+- **Background:** the cream ground and its shadow lie on one hue line (cream × 0.88 to 1.0). Pixels on that line that connect to the image border are the background. Interior pale parts (steam, book pages, the mug's leaf) are enclosed, so they stay.
+- **Rim:** a 3 px band around the background is un-mixed. For each rim pixel, alpha is the projection of (pixel − local background) on (nearest interior colour − local background), and the pixel keeps the interior colour. So no cream or shadow colour is left in the rim. Resizing runs on premultiplied colour.
+- **Ground shadow:** not baked in. It is drawn in CSS: the Stage's contact shadow (`Stage.module.css`, `.cShadow`, theme-aware). Other places never had one, so none was added.
+- **Footprint:** each cut-out is fitted to the ink box of the art it replaces (reading x 5..306, y 4..483; sipping x 4..298, y 5..487; cheering x 4..308, y 5..424 of the 311 × 487, 302 × 491 and 312 × 428 layout box), so size, centre and feet baseline do not change. The fit stretches the art by −1.5 % (reading), −1.2 % (sipping) and +3.9 % (cheering) in width relative to height. `PAINTED` in `src/art/PaintedChai.tsx` is unchanged.
+- **Export:** WebP, 1.25 px per layout px, quality 82, alpha quality 80, method 6. Layout px stay the unit; the file is simply denser. At the Stage cap (1.6 px unit, 290 CSS px tall) a 2× screen needs 1.19 px per layout px, so Retina desktop is now sharp (it was a 1.19× upscale before).
+- **Checked:** halo metric on #221829 (mean pull of rim colour towards cream: about 0.00; a rim left uncorrected: +0.45), edge close-ups on #221829 and #FFF9F0.
 
 ## Format: raster WebP with alpha, not SVG
 
@@ -55,7 +68,7 @@ The sheet gives about 490 px of height per pose. The Focus stage caps its unit a
 | Phone Focus, 390 px wide, 2× | 177 CSS px | 354 | 487 | downscaled: sharp |
 | Phone Focus, 3× | 177 CSS px | 531 | 487 | 1.09× upscale: not visible |
 | Tablet / desktop Focus, 1× | 290 CSS px | 290 | 487 | sharp |
-| **Tablet / desktop Focus, 2× (Retina)** | 290 CSS px | 580 | 487 | **1.19× upscale: slightly soft up close** |
+| **Tablet / desktop Focus, 2× (Retina)** | 290 CSS px | 580 | 487 (older art) / 609 (2d-v2 reading) | older art: 1.19× upscale, slightly soft; **2d-v2 reading, sipping and cheering: downscaled, sharp** |
 | Home, Welcome, summary | 88–204 CSS px | ≤ 408 | 487–496 | sharp |
 
 The cap exists so the art is never enlarged further. Before this round it allowed about 1.3×.

@@ -7,8 +7,8 @@ Gallery: `#/kit?part=art` (`&view=chai|small|icons|objects|badges|spots|nook|app
 
 - **Source:** Chai is the approved painted sheet (`art-src/chai/chai-sheet-approved.webp`).
 - **Shipped as raster:** nine poses are cut from the sheet with their pixels unchanged:
-  - masters: `art-src/chai/*.png`;
-  - delivery: `src/art/chai/*.webp`, about 180 KB in total.
+  - masters: `art-src/chai/*.png`; reading, sipping and cheering are cut from `art-src/chai/2d-v2/*.png` by `scripts/export-chai-2d.py` (W3R3);
+  - delivery: `src/art/chai/*.webp`, about 175 KB in total.
 - **Rendering:** `PaintedChai` draws a pose at one shared scale. `ChaiFace` is the round avatar used below 44 px.
 - **Mapping:** `Mascot` maps every legacy pose name onto the painted poses (`PAINTED_POSE`), so all screens show the same Chai.
 - **Superseded:**
