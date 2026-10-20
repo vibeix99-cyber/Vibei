@@ -33,7 +33,7 @@ export function facts(page) {
     for (const img of document.images) {
       if (!/chai-(reading|sipping|cheering)/.test(img.currentSrc || img.src)) continue;
       const r = img.getBoundingClientRect();
-      out.push({ file: (img.currentSrc || img.src).split('/').pop().split('?')[0].replace(/-[A-Za-z0-9_]{6,}\./, '.'), box: [r.left, r.top, r.width, r.height].map((v) => +v.toFixed(2)), pose: img.closest('[data-pose]')?.dataset.pose ?? null });
+      out.push({ file: (img.currentSrc || img.src).split('/').pop().split('?')[0], box: [r.left, r.top, r.width, r.height].map((v) => +v.toFixed(2)), pose: img.closest('[data-pose]')?.dataset.pose ?? null });
     }
     return { hash: location.hash, chai: out };
   });
