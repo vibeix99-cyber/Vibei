@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import { launch, newCtx } from './lib.mjs';
 const out = {};
 const b = await launch();
-for (const [side, base] of [['before', 'http://localhost:5570'], ['after', 'http://localhost:5622']]) {
+for (const [side, base] of [['before', 'http://localhost:5570'], ['after', `http://localhost:${process.env.K_AFTER_PREVIEW ?? 5622}`]]) {
   const ctx = await newCtx(b, { vw: 390, vh: 844, frozen: false });
   const page = await ctx.newPage();
   await page.goto(`${base}/?debug`);
@@ -17,4 +17,4 @@ for (const [side, base] of [['before', 'http://localhost:5570'], ['after', 'http
   });
   await ctx.close();
 }
-await b.close(); fs.writeFileSync(`${process.env.K_OUT}/json/pwa-cache.json`, JSON.stringify(out, null, 1)); console.log(JSON.stringify(out));
+await b.close(); fs.writeFileSync(`${process.env.K_OUT}/json/pwa-cache${process.env.K_SUF ?? ''}.json`, JSON.stringify(out, null, 1)); console.log(JSON.stringify(out));
