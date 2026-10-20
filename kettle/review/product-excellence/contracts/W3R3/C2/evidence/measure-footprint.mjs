@@ -43,6 +43,7 @@ for (const [vw, vh] of [[390, 844], [1440, 900]]) {
   const sizes = [72, 76, 84, 88, 108, 112, 120, 148, 152, 168, 200, 186];
   for (const pose of ['focus', 'sip', 'cheer']) {
     for (const size of sizes) {
+      await page.goto('about:blank');
       await page.goto(`${base}/?debug&theme=dark&motion=reduce#/kit?part=art&view=pose&pose=${pose}&size=${size}`);
       await page.waitForSelector('img[draggable="false"]');
       await page.waitForTimeout(250);
