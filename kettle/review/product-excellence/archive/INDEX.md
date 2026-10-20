@@ -63,3 +63,4 @@ Restore a chain in order with `git fetch <bundle> 'refs/heads/*:refs/heads/*'` (
 | `pe-w3r2-test-stability-21e5644.incremental.bundle` | pe/w3r2-test-stability@21e5644 (W3R2 item 3: timer :156/:183 ordering, press() re-aim; tests 59f5e49) | 494748b | okay 2026-10-17 |
 | `pe-w3r2-sync-guard-fix-4b2690f.incremental.bundle` | pe/w3r2-sync-guard@4b2690f (W3R2 item 1 fix round: SG-D1..D3, multitab ruling; src 8a67658) | 54a9721 | okay 2026-10-17 |
 | `pe-w3r2-test-stability-fix-89396e8.incremental.bundle` | pe/w3r2-test-stability@89396e8 (W3R2 item 3 fix round: press() docked-chrome rescroll, no fallback after rescroll; :156 freeze-before-end; tests 1f5feee) | 21e5644 | okay 2026-10-17 |
+| `pe-w3r3-chai-2d-17f5a70.incremental.bundle` | pe/w3r3-chai-2d@17f5a70 (W3R3: reading/sipping/cheering from the 2d-v2 masters; src bf6eeac) | f034205 | okay 2026-10-20 |
