@@ -36,25 +36,26 @@ const res = {};
 const browser = await chromium.launch({ args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] });
 for (const [vw, vh] of [[390, 844], [1440, 900]]) {
   const ctx = await browser.newContext({ viewport: { width: vw, height: vh }, reducedMotion: 'reduce', deviceScaleFactor: 2 });
-  const page = await ctx.newPage();
+  let page = await ctx.newPage();
+  const fresh = async () => { await page.close(); page = await ctx.newPage(); };
   const key = `${vw}x${vh}`;
   res[key] = {};
   // 1. Kit gallery: every Mascot size used by a screen, for the three poses.
   const sizes = [72, 76, 84, 88, 108, 112, 120, 148, 152, 168, 200, 186];
   for (const size of sizes) {
-    await page.goto('about:blank');
+    await fresh();
     await page.goto(`${base}/?debug&theme=dark&motion=reduce#/kit?part=art&view=chai&size=${size}`);
     await page.waitForSelector('span[data-pose="focus"] img');
     await page.waitForTimeout(300);
     for (const pose of ['focus', 'sip', 'cheer']) res[key][`kit ${pose} @${size}`] = await inkOf(page, `span[data-pose="${pose}"] img`);
   }
   // 2. Settings > About (Mascot sip 72).
-  await page.goto('about:blank');
+  await fresh();
   await page.goto(`${base}/?debug&seed=veteran&theme=dark&motion=reduce#/settings`);
   await page.waitForTimeout(1200);
   res[key]['settings about sip @72'] = await inkOf(page, 'img[src*="chai-sipping"]');
   // 3. Focus stage: running (reading), whistle + summary (cheering), break (sipping); Home hero while live.
-  await page.goto('about:blank');
+  await fresh();
   await page.goto(`${base}/?debug&seed=veteran&theme=dark&motion=reduce#/`);
   await page.waitForFunction(() => window.__kettle, null, { timeout: 90000 });
   await page.waitForFunction(() => window.__kettle?.timerInfo?.().leader, null, { timeout: 60000 }).catch(() => {});
