@@ -2,7 +2,7 @@
 # Sources: (a) the Stage at DPR 2 (pose-switch runs): ink from the decoded alpha mapped through the real <img> box (exact) and from the screenshot diff;
 #          (b) the Kit gallery at size 240 on the flat page (edge runs): ink from the screenshot diff (A vs hidden), DPR 2.
 import json, glob, os, re
-K='/home/user/Vibei/kettle/review/product-excellence/contracts/W3R3/review/K'
+K=os.environ.get('K_ROOT','/home/user/Vibei/kettle/review/product-excellence/contracts/W3R3/review/K')
 master=json.load(open(f'{K}/json/master-ink.json')); S=json.load(open(f'{K}/json/poseswitch-summary.json')); E=json.load(open(f'{K}/json/edge-halo.json'))
 POSE=['reading','cheering','cheering','sipping','reading']
 rows=[]

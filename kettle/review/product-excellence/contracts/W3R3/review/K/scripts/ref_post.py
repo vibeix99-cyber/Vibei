@@ -3,7 +3,7 @@
 import json, re, shutil, os
 import numpy as np
 from PIL import Image, ImageDraw
-K='/home/user/Vibei/kettle/review/product-excellence/contracts/W3R3/review/K'
+K=os.environ.get('K_ROOT','/home/user/Vibei/kettle/review/product-excellence/contracts/W3R3/review/K')
 M='/home/user/Vibei/kettle/art-src/chai/2d-v2'
 os.makedirs(f'{K}/reference',exist_ok=True)
 for p in ('reading','sipping','cheering'): shutil.copyfile(f'{M}/chai-{p}.png',f'{K}/reference/master-chai-{p}.png')

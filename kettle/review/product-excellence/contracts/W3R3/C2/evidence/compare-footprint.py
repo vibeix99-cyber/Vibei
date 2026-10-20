@@ -3,8 +3,8 @@
 usage: compare-footprint.py before.json after.json > footprint.md"""
 import json, sys
 b = json.load(open(sys.argv[1])); a = json.load(open(sys.argv[2]))
-rows = []; worst = {k: (0, '') for k in ('box w', 'box h', 'ink w', 'ink h', 'ink left', 'ink right', 'ink top', 'baseline')}
-print('| viewport | place | pose | img box w x h (before -> after) | ink w x h (before -> after) | baseline y (before -> after) | max delta |')
+rows = []; worst = {k: (0, '') for k in ('box w', 'box h', 'ink w', 'ink h', 'ink left', 'ink right', 'ink top', 'ink centre-x', 'baseline')}
+print('| viewport | place | pose | img box w x h (before -> after) | ink w x h (before -> after) | baseline y (before -> after) | max delta (box, top, bottom, centre-x; ink width excluded: expected) |')
 print('|---|---|---|---|---|---|---|')
 for vp in b:
     for k, v in b[vp].items():
@@ -16,10 +16,10 @@ for vp in b:
         iw0, ih0 = v['ink'][2] - v['ink'][0], v['ink'][3] - v['ink'][1]
         iw1, ih1 = w['ink'][2] - w['ink'][0], w['ink'][3] - w['ink'][1]
         d = {'box w': aw - bw, 'box h': ah - bh, 'ink w': iw1 - iw0, 'ink h': ih1 - ih0, 'ink left': w['ink'][0] - v['ink'][0],
-             'ink right': w['ink'][2] - v['ink'][2], 'ink top': w['ink'][1] - v['ink'][1], 'baseline': w['ink'][3] - v['ink'][3]}
+             'ink right': w['ink'][2] - v['ink'][2], 'ink centre-x': (w['ink'][0] + w['ink'][2] - v['ink'][0] - v['ink'][2]) / 2, 'ink top': w['ink'][1] - v['ink'][1], 'baseline': w['ink'][3] - v['ink'][3]}
         # box position too
         d['box left'] = w['img'][0] - v['img'][0]; d['box top'] = w['img'][1] - v['img'][1]
-        m = max(abs(x) for x in d.values())
+        m = max(abs(x) for kx, x in d.items() if kx not in ('ink w', 'ink left', 'ink right'))  # ink width/edges move by design (expected)
         for kk in worst:
             if abs(d[kk]) > abs(worst[kk][0]): worst[kk] = (d[kk], f'{vp} {k}')
         print(f"| {vp} | {k} | {v['pose']} | {bw:.1f}x{bh:.1f} -> {aw:.1f}x{ah:.1f} | {iw0:.1f}x{ih0:.1f} -> {iw1:.1f}x{ih1:.1f} | {v['ink'][3]:.1f} -> {w['ink'][3]:.1f} | {m:.2f} |")
