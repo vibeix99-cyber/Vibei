@@ -17,3 +17,8 @@ Running 31 tests using 1 worker
   ✓   8 [timer-harness] › tests/timer.spec.ts:292:3 › device integrations › media session: metadata + play/pause handlers while a phase runs, cleared when idle (525ms)
   ✓   9 [timer-harness] › tests/timer.spec.ts:305:3 › keyboard shortcuts infra › Space toggles — but never while typing, on a focused button, or on key repeat; ? toggles help, not over a dialog (1.4s)
   ✓  10 [timer-harness] › tests/timer.spec.ts:350:3 › multiple tabs › two tabs show the same session live and exactly one records it (8.1s)
+  ✓  11 [timer-harness] › tests/timer.spec.ts:388:3 › multiple tabs › two tabs pressing start at the same moment converge on one session (7.7s)
+  ✓  12 [timer-harness] › tests/timer.spec.ts:410:3 › multiple tabs › closing the leader tab mid-session hands over; the other tab completes it once (5.5s)
+  ✓  13 [timer-harness] › tests/timer.spec.ts:427:3 › multiple tabs › frozen leader: the other tab takes over at the end; the leader waking up later does not double-count (5.0s)
+  ✓  14 [timer-harness] › tests/timer.spec.ts:449:3 › rendering budget › useRemaining re-renders about once per displayed second (3.9s)
+  ✓  15 [timer-app] › tests/timer.spec.ts:74:3 › timer reliability › start → reload mid-session → same session, same end, correct remaining; paused survives reload (5.9s)
