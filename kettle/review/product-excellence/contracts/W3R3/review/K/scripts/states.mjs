@@ -6,6 +6,7 @@ const [base, outDir, cfgsArg, themesArg, variant = 'normal', statesArg] = proces
 const ALL = ['kit-chai', 'settings', 'home-evening', 'focus-running', 'home-live', 'focus-paused', 'whistle', 'summary', 'focus-break', 'home-break', 'welcome-sound', 'welcome-notify', 'welcome-ready'];
 const want = statesArg ? statesArg.split(',') : ALL;
 const log = [];
+const SET = Number(process.env.K_SETTLE || 1); // multiplies the settle waits (the Stage scene and the tab bar animate on entry)
 const b = await launch();
 
 for (const cfg of cfgsArg.split(',')) for (const theme of themesArg.split(',')) {
@@ -28,7 +29,7 @@ for (const cfg of cfgsArg.split(',')) for (const theme of themesArg.split(',')) 
   };
   const snap = async (page, name, wait = 600) => {
     if (!want.includes(name)) return;
-    await page.waitForTimeout(wait);
+    await page.waitForTimeout(wait * SET);
     await shot(page, `${dir}/${name}.png`);
     const f = await facts(page);
     log.push(`${tag} ${name} ${JSON.stringify(f.chai.map((c) => `${c.pose}:${c.box.join(',')}`))}`);
@@ -48,7 +49,7 @@ for (const cfg of cfgsArg.split(',')) for (const theme of themesArg.split(',')) 
     const { ctx, page } = await mk(); await boot(page, 'veteran');
     await page.evaluate(() => window.__kettle.settings.getState().set({ muted: true, autoStartBreaks: false, autoStartFocus: false }));
     await page.getByRole('button', { name: /put the kettle on/i }).first().click();
-    await page.waitForFunction(() => location.hash === '#/focus'); await page.waitForTimeout(1200);
+    await page.waitForFunction(() => location.hash === '#/focus'); await page.waitForTimeout(1200 * SET);
     await snap(page, 'focus-running', 1200);
     await page.evaluate(() => window.__kettle.navigate('/')); await snap(page, 'home-live', 1800);
     await page.evaluate(() => window.__kettle.navigate('/focus')); await page.waitForTimeout(900);
