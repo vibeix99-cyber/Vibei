@@ -1,0 +1,22 @@
+| pose | side | method | n | mean aspect w/h | min..max % | mean width-vs-height vs master |
+|---|---|---|---|---|---|---|
+| reading | before | stage: decoded alpha through the box | 4 | 0.6284 | -1.54..-1.53 | **-1.54 %** |
+| reading | before | kit: screenshot diff (flat page) | 2 | 0.6360 | -0.35..-0.35 | **-0.35 %** |
+| reading | before | stage: screenshot diff | 5 | 0.6303 | -1.62..-0.70 | **-1.24 %** |
+| reading | after | stage: decoded alpha through the box | 4 | 0.6376 | -0.10..-0.09 | **-0.10 %** |
+| reading | after | kit: screenshot diff (flat page) | 2 | 0.6441 | +0.93..+0.93 | **+0.93 %** |
+| reading | after | stage: screenshot diff | 5 | 0.6381 | -0.21..+0.54 | **-0.02 %** |
+| sipping | before | stage: decoded alpha through the box | 4 | 0.6100 | -1.11..-1.11 | **-1.11 %** |
+| sipping | before | kit: screenshot diff (flat page) | 2 | 0.6052 | -1.89..-1.89 | **-1.89 %** |
+| sipping | before | stage: screenshot diff | 5 | 0.6056 | -2.45..-1.37 | **-1.82 %** |
+| sipping | after | stage: decoded alpha through the box | 4 | 0.6174 | +0.08..+0.09 | **+0.08 %** |
+| sipping | after | kit: screenshot diff (flat page) | 2 | 0.6160 | -0.13..-0.13 | **-0.13 %** |
+| sipping | after | stage: screenshot diff | 5 | 0.6164 | -0.59..+0.14 | **-0.07 %** |
+| cheering | before | stage: decoded alpha through the box | 4 | 0.7255 | +4.00..+4.01 | **+4.00 %** |
+| cheering | before | kit: screenshot diff (flat page) | 2 | 0.7291 | +4.39..+4.65 | **+4.52 %** |
+| cheering | before | stage: screenshot diff | 5 | 0.7243 | +1.58..+4.65 | **+3.83 %** |
+| cheering | after | stage: decoded alpha through the box | 4 | 0.6984 | +0.12..+0.12 | **+0.12 %** |
+| cheering | after | kit: screenshot diff (flat page) | 2 | 0.7024 | +0.56..+0.81 | **+0.69 %** |
+| cheering | after | stage: screenshot diff | 5 | 0.6982 | -0.50..+0.56 | **+0.10 %** |
+
+Master ink aspect (own segmentation): reading 0.63819 (889x1393 px), sipping 0.61684 (879x1425 px), cheering 0.69757 (948x1359 px)
