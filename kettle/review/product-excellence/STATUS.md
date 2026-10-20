@@ -15,9 +15,11 @@ Resume here after any interruption. Do not overwrite past verdicts; append.
 **Binding:** `contracts/W3R3/VB-DECISIONS-W3R3.md`. The Final Product Boss stays on hold. Gate record: `contracts/W3R3/review/GATE.md`.
 
 - **Masters:** Vibei's upload `f034205` adds `art-src/chai/2d-v2/chai-{reading,sipping,cheering}.png` (992×1586). Integration HEAD is `f034205`; app unchanged (src `5f504d4`).
-- **Maker C2** (Sonnet) on `pe/w3r3-chai-2d`, worktree `w9c`, :5611; brief `BRIEF-C2.md`; stop 04:15 UTC.
+- **Maker C2** (Sonnet) handed back `17f5a70`, gate passed. Trial **`4e9961f`** on :5621/:5622: tsc 0, vitest 342/342, three WebPs totalling 58,010 B (≤ 61,476), footprint Δ ≤ 0.47 px.
+- **Points for LEAD:** a non-uniform stretch (cheering +3.9 %); WebP only, with no fallback; the shadow only via the Stage CSS; 1.25× density.
+- **Now:** capture lane **K** (Sonnet, stop 04:00) and **LEAD-7** (Opus, stop 05:00) are reviewing.
 - **Then:** the gate and trial; a Sonnet capture lane (REFERENCE → BEFORE → AFTER, edge close-ups, a pose-switch sequence); LEAD (Opus) with one fix round at most; merge on APPROVE; full regression; report.
-- **Servers:** integration :5560/:5570 (BEFORE); C2 :5611.
+- **Servers:** integration :5560/:5570 (BEFORE); trial :5621/:5622 (AFTER). C2 :5611 stopped.
 
 ## W3R2 HARDENING ROUND · CLOSED 2026-10-18
 
