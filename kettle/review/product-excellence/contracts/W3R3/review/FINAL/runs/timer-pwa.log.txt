@@ -30,3 +30,6 @@ Running 31 tests using 1 worker
   ✓  21 [timer-app] › tests/timer.spec.ts:243:3 › device integrations › wake lock: held while running and visible; released on pause, idle and setting off; re-acquired on return (3.2s)
   ✓  22 [timer-app] › tests/timer.spec.ts:292:3 › device integrations › media session: metadata + play/pause handlers while a phase runs, cleared when idle (4.4s)
   -  23 [timer-app] › tests/timer.spec.ts:305:3 › keyboard shortcuts infra › Space toggles — but never while typing, on a focused button, or on key repeat; ? toggles help, not over a dialog
+  ✓  24 [timer-app] › tests/timer.spec.ts:350:3 › multiple tabs › two tabs show the same session live and exactly one records it (15.4s)
+  ✓  25 [timer-app] › tests/timer.spec.ts:388:3 › multiple tabs › two tabs pressing start at the same moment converge on one session (15.8s)
+  ✓  26 [timer-app] › tests/timer.spec.ts:410:3 › multiple tabs › closing the leader tab mid-session hands over; the other tab completes it once (10.9s)
