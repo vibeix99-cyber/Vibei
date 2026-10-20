@@ -418,8 +418,11 @@
    1440,
    900
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -430,6 +433,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -444,8 +450,11 @@
    1440,
    900
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -456,6 +465,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -470,8 +482,11 @@
    1440,
    900
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -482,6 +497,9 @@
   "out_ne0": 7,
   "out_gt8": 0,
   "out_max": 1,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "within noise (outside diffs <= 8/255)",
   "components": []
  },
@@ -496,8 +514,11 @@
    1440,
    900
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -508,16 +529,11 @@
   "out_ne0": 14,
   "out_gt8": 14,
   "out_max": 48,
-  "verdict": "no noise pair: see components",
-  "components": [
-   [
-    332,
-    334,
-    354,
-    353,
-    14
-   ]
-  ]
+  "noise_out_gt8": 15,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
+  "components": []
  },
  {
   "tag": "1440x900-light",
@@ -562,8 +578,11 @@
    1440,
    900
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    1440,
@@ -574,6 +593,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -1221,8 +1243,11 @@
    375,
    667
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -1233,6 +1258,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 4028,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -1247,8 +1275,11 @@
    375,
    667
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -1259,6 +1290,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -1273,8 +1307,11 @@
    375,
    667
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -1285,65 +1322,11 @@
   "out_ne0": 19053,
   "out_gt8": 9698,
   "out_max": 197,
-  "verdict": "no noise pair: see components",
-  "components": [
-   [
-    219,
-    4,
-    369,
-    62,
-    5500
-   ],
-   [
-    47,
-    495,
-    121,
-    589,
-    826
-   ],
-   [
-    143,
-    495,
-    233,
-    605,
-    950
-   ],
-   [
-    254,
-    495,
-    328,
-    589,
-    748
-   ],
-   [
-    68,
-    516,
-    100,
-    548,
-    132
-   ],
-   [
-    278,
-    519,
-    304,
-    545,
-    184
-   ],
-   [
-    173,
-    523,
-    203,
-    557,
-    300
-   ],
-   [
-    107,
-    607,
-    270,
-    632,
-    1058
-   ]
-  ]
+  "noise_out_gt8": 9698,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
+  "components": []
  },
  {
   "tag": "375x667-light",
@@ -1356,8 +1339,11 @@
    375,
    1259
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -1368,6 +1354,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 480,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -1414,8 +1403,11 @@
    375,
    1175
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    375,
@@ -1426,6 +1418,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -2106,8 +2101,11 @@
    390,
    844
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -2118,6 +2116,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -2132,8 +2133,11 @@
    390,
    844
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -2144,6 +2148,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -2158,8 +2165,11 @@
    390,
    844
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -2170,6 +2180,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -2184,8 +2197,11 @@
    390,
    1259
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -2196,14 +2212,17 @@
   "out_ne0": 8,
   "out_gt8": 8,
   "out_max": 33,
-  "verdict": "no noise pair: see components",
+  "noise_out_gt8": 1,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 2,
+  "verdict": "DIFFERENT outside (not covered by the noise pair)",
   "components": [
    [
     56,
-    246,
-    78,
+    250,
+    71,
     265,
-    8
+    2
    ]
   ]
  },
@@ -2250,8 +2269,11 @@
    390,
    1175
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -2262,6 +2284,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -2500,8 +2525,11 @@
    390,
    844
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -2512,6 +2540,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -2526,8 +2557,11 @@
    390,
    844
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -2538,6 +2572,9 @@
   "out_ne0": 2,
   "out_gt8": 0,
   "out_max": 1,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "within noise (outside diffs <= 8/255)",
   "components": []
  },
@@ -2552,8 +2589,11 @@
    390,
    844
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -2564,6 +2604,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -2578,8 +2621,11 @@
    390,
    1259
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -2590,6 +2636,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -2636,8 +2685,11 @@
    390,
    1175
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -2648,6 +2700,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 1348,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -3280,8 +3335,11 @@
    390,
    844
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3292,6 +3350,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -3306,8 +3367,11 @@
    390,
    844
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3318,6 +3382,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
@@ -3332,8 +3399,11 @@
    390,
    853
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": true,
   "compared": [
    390,
@@ -3344,86 +3414,11 @@
   "out_ne0": 152679,
   "out_gt8": 91000,
   "out_max": 218,
-  "verdict": "no noise pair: see components",
-  "components": [
-   [
-    0,
-    0,
-    390,
-    438,
-    67546
-   ],
-   [
-    359,
-    201,
-    390,
-    337,
-    2366
-   ],
-   [
-    359,
-    341,
-    390,
-    355,
-    50
-   ],
-   [
-    359,
-    364,
-    390,
-    378,
-    50
-   ],
-   [
-    86,
-    505,
-    304,
-    583,
-    6262
-   ],
-   [
-    91,
-    583,
-    300,
-    645,
-    4894
-   ],
-   [
-    53,
-    649,
-    127,
-    752,
-    2450
-   ],
-   [
-    150,
-    649,
-    240,
-    768,
-    2725
-   ],
-   [
-    263,
-    649,
-    337,
-    752,
-    2377
-   ],
-   [
-    180,
-    677,
-    210,
-    721,
-    306
-   ],
-   [
-    113,
-    774,
-    277,
-    809,
-    1974
-   ]
-  ]
+  "noise_out_gt8": 91000,
+  "noise_inside_gt8": 18612,
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
+  "components": []
  },
  {
   "tag": "390x844-light",
@@ -3436,8 +3431,11 @@
    390,
    1259
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3448,16 +3446,11 @@
   "out_ne0": 10,
   "out_gt8": 9,
   "out_max": 48,
-  "verdict": "no noise pair: see components",
-  "components": [
-   [
-    56,
-    246,
-    78,
-    265,
-    9
-   ]
-  ]
+  "noise_out_gt8": 11,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
+  "verdict": "within noise (diffs coincide with the BEFORE-vs-BEFORE recapture)",
+  "components": []
  },
  {
   "tag": "390x844-light",
@@ -3502,8 +3495,11 @@
    390,
    1175
   ],
-  "noise_pairs": [],
-  "has_noise_pair": false,
+  "noise_pairs": [
+   "before-recapture",
+   "after-recapture"
+  ],
+  "has_noise_pair": true,
   "height_differs_before_vs_after": false,
   "compared": [
    390,
@@ -3514,6 +3510,9 @@
   "out_ne0": 0,
   "out_gt8": 0,
   "out_max": 0,
+  "noise_out_gt8": 0,
+  "noise_inside_gt8": 0,
+  "out_gt8_unexplained_by_noise": 0,
   "verdict": "identical outside Chai box",
   "components": []
  },
