@@ -3,7 +3,9 @@
  *
  * The approved art direction (art-src/chai/chai-sheet-approved.webp) used as painted raster poses —
  * never redrawn as vector, so the soft shading, proportions, muzzle and yuzu stay exactly as approved.
- * Masters (PNG) live in art-src/chai; the app ships transparent WebP (≈15–21 KB each).
+ * Masters (PNG) live in art-src/chai; the app ships transparent WebP (≈15–21 KB each). reading, sipping and cheering
+ * come from the 2d-v2 masters (art-src/chai/2d-v2, cut by scripts/export-chai-2d.py) at 1.25 px per sheet px; their
+ * w/h below are the logical layout size, unchanged, so every place keeps its footprint and baseline.
  *
  * All poses come from one sheet at one scale, so a single scale factor keeps them the same size
  * relative to each other (cheering is shorter because the pose sits lower). Below ~44 px a full pose
@@ -24,7 +26,7 @@ import s from './painted.module.css';
 
 export type PaintedPose = 'reading' | 'sipping' | 'cheering' | 'concerned' | 'happy' | 'stretch' | 'look' | 'sleep';
 
-/** Native pixel size of each pose (each has a 4 px transparent margin). */
+/** Logical size of each pose in sheet px (each has a 4 px transparent margin). reading/sipping/cheering files are 1.25x that. */
 export const PAINTED: Record<PaintedPose, { src: string; w: number; h: number }> = {
   reading: { src: reading, w: 311, h: 487 },
   sipping: { src: sipping, w: 302, h: 491 },
