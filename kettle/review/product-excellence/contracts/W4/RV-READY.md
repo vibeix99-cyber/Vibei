@@ -121,7 +121,12 @@ Not touched (stay WebP): happy, stretch, look, sleep, concerned, happy-face (`Ch
     Welcome (cheering 120-200 / sipping 84-148) uses the same Mascot box, measured in the Kit at those sizes; its
     `overflow: clip` `.stage` wraps the step body, not the Chai (`WelcomeScreen.tsx:198-206`).
 
-## §4 Fallback and reduced motion
+## §4 Fallback and reduced motion (updated in the fix round, see §9)
+
+- **Fix round:** during the settle hold the canvas runs `visibility: hidden`; it and the image flip in the same React
+  commit (`shown` prop on both). The reveal state resets whenever the Rive layer goes away (B4). rAF-sampled e2e: no
+  frame with the canvas visible before the reveal, none with both shown, none with the image hidden and the canvas
+  empty.
 
 - Painted image until Rive's first settled frame: the img stays in flow and visible; it is hidden only when Rive has
   run long enough to settle in the requested pose (the state machine enters on reading; sipping settles ~1.65 s,
@@ -134,7 +139,10 @@ Not touched (stay WebP): happy, stretch, look, sleep, concerned, happy-face (`Ch
   + summary under `reducedMotion: 'reduce'` show the image and the request log has nothing matching
   `riveChai|@rive-app|rive*.wasm|.riv`. `?rive=0` forces images too (BEFORE/AFTER idle-CPU baseline).
 
-## §5 Performance (`RV/perf/`)
+## §5 Performance (`RV/perf/`; fix-round numbers in §9 supersede the table below)
+
+- **Fix round:** Rive capped at **30 fps** (public calls only). LEAD-9 `p13.mjs` on :5652: Rive +101 ms/s at x1
+  (210 vs 109; was +143), page 56.0 fps at x4 (was 48); Rive measured at 30.0 fps.
 
 - Pauses: `IntersectionObserver` on the canvas, `visibilitychange`, and while any 3D Nook engine runs
   (`lib/scene3dLive.ts`, set from `NookScene.applyRun`): `pause()` + `stopRendering()`. Measured on the Stage (preview):
@@ -157,7 +165,7 @@ Not touched (stay WebP): happy, stretch, look, sleep, concerned, happy-face (`Ch
   without Rive; `perf-preview-swiftshader.json`), an artefact of that flag set: the same page with default flags runs
   at 60. Open item: a 30 fps cap would roughly halve the cost; the high-level runtime has no fps option.
 
-## §6 Tests (logs in `RV/tests/`)
+## §6 Tests (logs in `RV/tests/`; fix-round results in §9)
 
 New:
 - `src/art/rive/clearBackground.test.ts`: shipped `chai.riv` byte-identical to `art-src` (45,395 B); the patch changes
