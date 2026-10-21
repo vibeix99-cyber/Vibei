@@ -67,3 +67,22 @@
   - **FX3:** 30 fps cap. Cost +101 ms/s at ×1 (LEAD aim about +80); 56.0 fps at ×4 (≥ 55). Option: 24 fps gives +65 ms/s.
   - **FX4:** regression 109/111 (two explained misses); PWA 4/4.
 - **Next:** LEAD-9's final verdict, including the FX3 ruling.
+
+## RV fix round: APPROVE `58f54e0` (LEAD-9 `793a43c`) → merged as `33f0394`
+- **LEAD-9 on :5672:**
+  - `p3`: 0 empty frames;
+  - `p4`: Chai in all 150 frames;
+  - `p5`: never blank;
+  - `p11`: the image only until the swap;
+  - **+92 ms/s at ×1, 56.1 fps at ×4** (FX3 at 30 fps ACCEPTED; 24 fps is optional FOLLOW-UP F5);
+  - the pause on hidden verified (`p14`);
+  - no CDN on 6 paths (`p6`).
+- **Merge check:** the merged src `7b6fdde`, tests `f3ec528`, `package.json`, lockfile and `vite.config.ts` equal trial 2 `62bb1ba`'s.
+- **Main checkout:** `npm install` from the lockfile (no `package.json` or lockfile change) added `@rive-app/canvas` 2.45.0. tsc 0; build OK (precache 123).
+- **FOLLOW-UPs (LEAD-9 F1–F5):**
+  - the wider cheering body (in the file);
+  - a transparent `.riv` from Vibei, replacing the load-time patch;
+  - the start-on-reading settle hold;
+  - the whistle mid-raise;
+  - an optional 24 fps cap;
+  - plus the `w2-summary` footer flake.
