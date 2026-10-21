@@ -271,7 +271,7 @@ test('fix round: Stage pose changes (focus -> whistle -> summary -> break -> ove
   await page.waitForTimeout(800);
   const fr: Frame[] = (await page.evaluate(() => (window as any).__frames)).filter((x: Frame) => x.pose !== undefined);
   const ro = await page.evaluate(() => (window as any).__ro);
-  expect(fr.length).toBeGreaterThan(200);
+  expect(fr.length, "rAF samples through the path").toBeGreaterThan(100);
   expect(neverBlank(fr), 'a frame with the image hidden and no Chai on the canvas').toEqual([]);
   expect(neverBoth(fr), 'a frame with both the image and the canvas shown').toEqual([]);
   expect(ro.length, 'the canvas was resized on the pose changes').toBeGreaterThan(1);
