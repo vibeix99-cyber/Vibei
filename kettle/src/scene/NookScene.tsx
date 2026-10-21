@@ -9,6 +9,7 @@ import { DARK_DIM, backdropCss, debugOn, isMobileDevice, softwareGL, useDarkThem
 import { SETTLE_MS, createEngine, settled, stash, takeWarm, type EngineSpec } from './warm';
 import { chaiModelWanted, chaiStatus, readyChai, startChaiLoad } from './chaiHost';
 import { NookStatic } from './Fallback';
+import { setScene3dRunning } from '@/lib/scene3dLive';
 
 /** Canvas fade-in over the static nook. */
 const FADE_MS = 420;
@@ -48,7 +49,9 @@ export default function NookScene(props: NookSceneProps) {
     const e = engineRef.current;
     if (!e) return;
     const g = gate.current;
-    e.setRunning(g.visible && g.onscreen && !latest.current.paused && !latest.current.reduced);
+    const run = g.visible && g.onscreen && !latest.current.paused && !latest.current.reduced;
+    e.setRunning(run);
+    setScene3dRunning(gate, run); // the animated Rive Chai pauses while a 3D room runs
   };
 
   // ---- create (or adopt a pre-warmed) engine / destroy it
@@ -159,6 +162,7 @@ export default function NookScene(props: NookSceneProps) {
         if (!stash(e, spec)) e.dispose();
       }
       engineRef.current = null;
+      setScene3dRunning(gate, false);
       setReady(false);
       const w = window as unknown as { __nook?: unknown };
       if (w.__nook === e) delete w.__nook;

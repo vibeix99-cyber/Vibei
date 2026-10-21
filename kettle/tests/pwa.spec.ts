@@ -82,6 +82,46 @@ test('precaches the shell, fonts, 3D chunk and tick worker; boots and times a br
   await context.setOffline(false);
 });
 
+test('W4: the animated Chai (chai.riv + self-hosted Rive wasm) is precached and animates offline', async ({ page, context }) => {
+  await installed(page);
+  const cached = await page.evaluate(async () => {
+    const urls: string[] = [];
+    for (const k of await caches.keys()) for (const r of await (await caches.open(k)).keys()) urls.push(new URL(r.url).pathname);
+    return urls;
+  });
+  expect(cached.some((u) => /\/assets\/chai-.*\.riv$/.test(u)), cached.join('\n')).toBe(true);
+  expect(cached.some((u) => /\/assets\/rive-.*\.wasm$/.test(u))).toBe(true);
+  expect(cached.some((u) => /\/assets\/riveChai-.*\.js$/.test(u))).toBe(true);
+
+  await context.setOffline(true);
+  const cdn: string[] = [];
+  page.on('request', (r) => /unpkg|jsdelivr|rive\.app/.test(r.url()) && cdn.push(r.url()));
+  await page.goto(`${BASE}/?debug&onboarded=1#/`); // offline: served by the service worker
+  await page.waitForFunction(() => !!(window as any).__kettle?.timerInfo, null, { timeout: 20_000 });
+  await page.evaluate(() => (window as any).__kettle.settings.getState().set({ autoStartBreaks: false, scene: 'off', muted: true }));
+  await page.evaluate(() => (window as any).__kettle.timer.getState().startFocus({ minutes: 10 }));
+  await page.evaluate(() => (location.hash = '#/focus'));
+  const chai = page.locator('[data-stage-figure="chai"] [data-pose]');
+  await expect(chai).toHaveAttribute('data-pose', 'reading', { timeout: 15_000 });
+  await expect(chai).toHaveAttribute('data-chai-render', 'rive', { timeout: 20_000 });
+  // It animates, offline: the stage canvas changes between samples (breathing, blink, leaf, page turn).
+  const sample = () =>
+    chai.locator('canvas').evaluate((cv: HTMLCanvasElement) => {
+      const d = cv.getContext('2d')!.getImageData(0, 0, cv.width, cv.height).data;
+      let h = 0;
+      for (let i = 0; i < d.length; i += 4) h = (h * 31 + d[i] + d[i + 3]) | 0;
+      return h;
+    });
+  const seen = new Set<number>();
+  for (let i = 0; i < 6; i++) {
+    seen.add(await sample());
+    await page.waitForTimeout(250);
+  }
+  expect(seen.size).toBeGreaterThan(2);
+  expect(cdn).toEqual([]);
+  await context.setOffline(false);
+});
+
 test('update: new version waits for the user (no reload mid-brew), then applies and the brew carries on', async ({ page }) => {
   await installed(page);
   await page.evaluate(() => (window as any).__kettle.timer.getState().startFocus({ minutes: 10 }));

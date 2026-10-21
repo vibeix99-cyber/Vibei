@@ -103,7 +103,7 @@ export function Stage({ state, progress, addedFrom = 1, chai, items, weather, re
         <span className={`${s.shadow} ${s.cShadow}`} />
         <Kettle className={s.kettle} progress={progress} state={state} addedFrom={addedFrom} night={night} reduced={reduced} width={KETTLE_W} />
         <div className={s.chai} data-pose={chai} data-stage-figure="chai">
-          <PaintedChai pose={chai} size={CHAI_SIZE} faceBelow={0} />
+          <PaintedChai pose={chai} size={CHAI_SIZE} faceBelow={0} rive />
         </div>
       </div>
 

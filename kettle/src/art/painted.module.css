@@ -26,6 +26,17 @@
     transform: scale(1.012, 0.986);
   }
 }
+/* The animated Chai (Rive) over the painted pose: never changes layout, never takes taps; may overflow the box
+   (the cheering arms). */
+.rive {
+  position: absolute;
+  display: block;
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
+  /* No size transition: resizing the canvas clears it, so a pose change re-fits in one step (Rive blends through
+     rest anyway). */
+}
 .face {
   position: relative;
   display: inline-block;
