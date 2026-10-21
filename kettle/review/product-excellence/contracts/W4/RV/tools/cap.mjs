@@ -21,7 +21,7 @@ await page.evaluate(() => window.__kettle.finish());
 await page.waitForTimeout(2200); await rec('whistle'); await page.screenshot({ path: `${out}/${label}-${theme}-2-whistle-cheering.png` });
 await page.waitForFunction(() => location.hash.includes('done'), null, { timeout: 30000 }); await page.waitForTimeout(3000);
 await rec('summary'); await page.screenshot({ path: `${out}/${label}-${theme}-3-summary-cheering.png` });
-await page.getByRole('button', { name: /Tea time|Long tea break/ }).first().click(); await page.waitForTimeout(3500);
+await page.getByRole('button', { name: /Tea time|Long tea break/ }).first().click(); await page.waitForTimeout(5000);
 await rec('break'); await page.screenshot({ path: `${out}/${label}-${theme}-4-break-sipping.png` });
 fs.writeFileSync(`${out}/${label}-${theme}-rects.json`, JSON.stringify({ rects, cdn: reqs.filter((u) => /unpkg|jsdelivr|rive\.app/.test(u)), rive: reqs.filter((u) => /rive|\.riv/.test(u)) }, null, 1));
 console.log(label, theme, JSON.stringify(rects));
