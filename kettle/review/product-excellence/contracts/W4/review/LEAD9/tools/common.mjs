@@ -1,6 +1,6 @@
 import { chromium } from '/home/user/wt/w11/kettle/node_modules/playwright/index.mjs';
 export { chromium };
-export const OUT = '/home/user/Vibei/kettle/review/product-excellence/contracts/W4/review/LEAD9';
+export const OUT = process.env.L9OUT || '/home/user/Vibei/kettle/review/product-excellence/contracts/W4/review/LEAD9';
 export const CDN = /unpkg|jsdelivr|rive\.app/;
 export async function boot(page, base, q = '') {
   await page.goto(`${base}/?debug&seed=veteran${q}#/`);
