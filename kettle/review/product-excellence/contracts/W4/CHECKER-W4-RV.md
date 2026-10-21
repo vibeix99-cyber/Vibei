@@ -172,3 +172,42 @@ This repeats on every frame of the transition. It hits:
 - Update RV-READY §4, §5 and §6.
 
 **Out of scope for the round:** F1–F4. Do not touch the `.riv`, the fit numbers, or `art-src`.
+
+## Fix round: `pe/w4-rive-chai@58f54e0` (src `7b6fdde`), trial 2 `62bb1ba`, preview :5672: **APPROVE**
+
+I read the diff `1a7b797..58f54e0`:
+- `LiveChai.tsx`: a `shown` prop sets the canvas's `visibility` in the same commit as the image.
+- `PaintedChai.tsx`: `riveUp` resets when `riveOn` goes false.
+- `painted.module.css`: the size transition is removed.
+- `riveChai.ts`: `drawNow()` redraws inside the ResizeObserver, plus a 30 fps rAF driver that uses only public calls (`play`, `stopRendering`, `drawFrame`).
+- `package.json` and `art-src` are unchanged.
+
+I re-ran my own probes on :5672 (logs in `review/LEAD9/fix/`):
+
+| Probe | Before (1a7b797) | After (58f54e0) | |
+|---|---|---|---|
+| `p3` empty painted frames, image hidden (focus → whistle → summary → break) | 37 / 67 | **0 / 7** | B2 closed |
+| `p4` screencast, min Chai pixels per frame (whistle + break, 150 frames) | ~2,400 (no Chai) | **6,041** (Chai in every frame) | B2 closed |
+| `p5` break → over → focus, min Chai pixels | 7,628 | 7,628 (no blank) | B4 closed |
+| `p11` pre-reveal, Kit cheer/sip @168 | reading Chai + book drawn over the image | canvas `hidden` until the swap; image only, then Rive (`prereveal-*-sheet.png`) | B1 closed |
+| `p13` main thread, Rive − image, ×1 | +143 ms/s | **+92 ms/s** (187 vs 95) | |
+| `p13` main thread, Rive − image, ×4 / page fps | +530 / 48.2 fps | +384 / **56.1 fps** | |
+| `p14` canvas changes in 2 s: running / tab hidden / visible again | n/a | 60 / **0** / 61 (30 fps; pause holds) | |
+| `p6` CDN on 6 paths (normal, wasm abort/garbage/404/truncated, riv garbage) | 0 | **0**; every failure falls back to the image | |
+
+**FX3 ruling: 30 fps is ACCEPTED, and `FPS_CAP` stays 30.**
+- My measurement is +92 ms/s at ×1, not the maker's +101. That is close enough to the "about +80" I asked for.
+- The binding target, page fps ≥ 55 at ×4, is met (56.1).
+- Headless raster runs in software on the main thread, so it overstates the cost a phone sees.
+- 24 fps would make the hops and the page turn visibly choppier for about 30 ms/s more saving. If wanted, that is a one-constant FOLLOW-UP (F5), not a block.
+
+**Swap:** at the reveal, the painted cheering gives way to the Rive cheering in one frame. The arms and body widths differ slightly (F1, inherent to the file). There is no blank frame and no double Chai; this is ACCEPTED.
+
+**Residuals, updated:**
+- B1–B4 → **closed**.
+- F1–F4 → FOLLOW-UP, unchanged.
+- **F5 (new): `FPS_CAP` 24** if a lower cost is ever wanted; it measured +65 ms/s.
+- A1–A6 → ACCEPTED, unchanged.
+- The `w2-summary` footer flake stays ACCEPTED (watch).
+
+**Final verdict: APPROVE `pe/w4-rive-chai@58f54e0` for merge.**
