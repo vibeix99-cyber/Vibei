@@ -1,0 +1,66 @@
+{
+  "info": {
+    "info": {
+      "contents": {
+        "artboards": [
+          {
+            "name": "Chai",
+            "animations": [
+              "pose_reading",
+              "pose_sipping",
+              "pose_cheering",
+              "rest",
+              "cheer_raise",
+              "cheer_fold",
+              "reading_loop",
+              "sipping_loop",
+              "cheering_loop",
+              "action_idle",
+              "action_wait_cheer",
+              "breath",
+              "blink"
+            ],
+            "stateMachines": [
+              {
+                "name": "Chai",
+                "inputs": [
+                  {
+                    "name": "pose",
+                    "type": 56
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "sm": [
+        "Chai"
+      ],
+      "vmCount": 1,
+      "vmi": true,
+      "poseNum": -1,
+      "inputs": [
+        [
+          "pose",
+          0
+        ]
+      ]
+    }
+  },
+  "dom": [
+    "CANVAS#c",
+    "SCRIPT",
+    "SCRIPT"
+  ],
+  "requests": [
+    "http://127.0.0.1:5651/index.html",
+    "http://127.0.0.1:5651/rive.js",
+    "http://127.0.0.1:5651/rive.wasm",
+    "http://127.0.0.1:5651/chai.riv"
+  ],
+  "console": [
+    "warning: [Rive: state-machines-param] The `stateMachines` parameter is deprecated: please use `stateMachine` with a single state machine name instead.\nTo suppress this warning, set Rive.suppressDeprecationWarnings = [\"state-machines-param\"]",
+    "warning: [Rive: state-machine-inputs] State machine inputs are deprecated and will be removed in a future major version: please use data binding properties instead. See https://rive.app/docs/editor/data-binding/migration-guide#state-machine-inputs for how to migrate.\nTo suppress this warning, set Rive.suppressDeprecationWarnings = [\"state-machine-inputs\"]"
+  ]
+}
