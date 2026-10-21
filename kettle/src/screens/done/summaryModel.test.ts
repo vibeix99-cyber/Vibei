@@ -4,7 +4,7 @@ import { clock } from '@/lib/clock';
 import { applyRecord, emptyData, type EngineContext } from '@/progress/engine';
 import { brew, setNow } from '@/progress/testkit';
 import type { ProgressData, QuestSpec } from '@/progress/types';
-import { buildSummary, roman } from './summary';
+import { buildSummary, roman } from './summaryModel';
 
 const TODAY = '2026-09-28';
 const ctx = (): EngineContext => ({ now: clock.now(), goalMin: 30, weekStartsOn: 1 });

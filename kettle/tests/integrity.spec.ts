@@ -1000,7 +1000,7 @@ const inFlow = (page: Page) =>
  * (W3R1 Q, X-1) What the storage-full banner's going depends on, recorded in the page (before the app boots): the
  * result of the latest write of every `kettle:` key (saved, or refused by the browser), and when the banner section
  * last came or went (page time). The banner goes once every save that failed has gone through, at the save warning's
- * next recovery check (src/app/saveWarning.ts, every 2 s), so the test waits on those, not on a fixed time.
+ * next recovery check (src/app/saveWarningState.ts, every 2 s), so the test waits on those, not on a fixed time.
  */
 function saveRecorder() {
   const W = window as any;

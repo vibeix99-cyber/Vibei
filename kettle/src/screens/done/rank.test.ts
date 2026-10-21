@@ -4,7 +4,7 @@ import { clock } from '@/lib/clock';
 import { applyRecord, emptyData, type EngineContext } from '@/progress/engine';
 import { brew, setNow } from '@/progress/testkit';
 import type { CompletionReport, ProgressData, QuestSpec } from '@/progress/types';
-import { buildSummary, COZY_MEANS, MILESTONES, rankRewards, WARM_RULE, warmNote, type RewardPill } from './summary';
+import { buildSummary, COZY_MEANS, MILESTONES, rankRewards, WARM_RULE, warmNote, type RewardPill } from './summaryModel';
 
 const TODAY = '2026-09-28';
 const ctx = (): EngineContext => ({ now: clock.now(), goalMin: 30, weekStartsOn: 1 });

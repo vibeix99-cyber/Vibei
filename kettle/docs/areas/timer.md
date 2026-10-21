@@ -50,7 +50,7 @@ key) and reported to `onStorageWriteError` listeners.
   never overwritten with anything partial. Once there is room, the next change to your brews or rewards (or an
   export, which re-reads and re-saves progress) writes everything the tab holds; a settings change alone does not
   re-save unsaved brews. Export still works and includes the unsaved brew.
-- **The person is told, in the page** (`src/app/saveWarning.ts` state, `src/app/SaveWarning.tsx` banner and note;
+- **The person is told, in the page** (`src/app/saveWarningState.ts` state, `src/app/SaveWarning.tsx` banner and note;
   wired from `src/app/flow.ts`). It is a state, not a toast: it comes with the first failed save and stays while any
   key whose save failed still holds an older value than the tab (`lastWriteFailed`, re-checked every 2 s while it is
   on); once every one of them has been saved again (storage has room again) it goes. No timer takes it away and
