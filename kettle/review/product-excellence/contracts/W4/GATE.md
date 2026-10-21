@@ -41,3 +41,19 @@
   - the start-on-reading delay before sipping and cheering appear (2.0–2.7 s of WebP first);
   - the whistle showing a mid-raise;
   - the CPU cost.
+
+## RV: REJECT (LEAD-9 `8c0819f`, `CHECKER-W4-RV.md`). One 90-minute fix round, from about 20:40 UTC
+- **Passes:**
+  - the watermark is clean on :5662;
+  - **no CDN request on 7 paths** (normal, wasm aborted, garbage, 404, truncated, bad `.riv`, offline); the CDN strings are unused defaults, overwritten, with the fallback set to null;
+  - the lazy load, the self-hosted wasm, offline animation, and the pose mapping.
+- **ACCEPTED:**
+  - the footprint (the extra cheering width is in the file; the scale-by-height rule is met);
+  - the load-time patch, for now (FOLLOW-UP: Vibei's transparent file);
+  - the whistle mid-raise and the settle hold, provided the canvas is hidden during the hold.
+- **BLOCKS:**
+  - **B1:** the canvas is visible over the WebP during the 2.0–2.7 s hold (reading Chai over sipping or cheering);
+  - **B2:** Chai disappears for about 0.5 s on every Stage pose change (a width/height transition clears the canvas);
+  - **B3:** no frame cap (+143 ms/s; 95 % main thread at ×4);
+  - **B4:** `riveUp` is never reset on unmount.
+- **Fix:** FX1–FX4 (hide until reveal; redraw on resize and no size transition; a 30 fps cap to about +80 ms/s and ≥ 55 fps at ×4; regression and captures).
