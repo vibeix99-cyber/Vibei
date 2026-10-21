@@ -156,6 +156,33 @@ Not touched (stay WebP): happy, stretch, look, sleep, concerned, happy-face (`Ch
   without Rive; `perf-preview-swiftshader.json`), an artefact of that flag set: the same page with default flags runs
   at 60. Open item: a 30 fps cap would roughly halve the cost; the high-level runtime has no fps option.
 
+## §6 Tests (logs in `RV/tests/`)
+
+New:
+- `src/art/rive/clearBackground.test.ts`: shipped `chai.riv` byte-identical to `art-src` (45,395 B); the patch changes
+  exactly 1 byte (FF -> 00) at the one `FFFDF9F1` colour; second pass is a no-op.
+- `src/art/rive/fit.test.ts`: pose numbers 0/1/2; per pose, artboard feet -> painted baseline, body centre ->
+  painted centre, uniform scale; reading/sipping share k.
+- `src/lib/scene3dLive.test.ts`: running while any 3D engine runs, notifies on change only.
+- `tests/w4-rive-chai.spec.ts` (chromium, 4 tests): pose per screen (Stage reading -> cheering -> sipping on one
+  canvas, Home hero reading, Settings sipping), all drawn by Rive; at every swap the canvas already holds Chai and the
+  layout box moved 0; corners transparent, nothing under the feet (no file shadow), feet within 1 px of the painted
+  baseline, pointer-events none, no CDN request; wasm aborted -> image; riv aborted -> image; reduced motion -> image
+  and zero runtime/wasm/riv requests.
+- `tests/pwa.spec.ts` +1: `chai-*.riv`, `rive-*.wasm`, `riveChai-*.js` precached; offline, the Stage Chai is Rive
+  and its canvas keeps changing; no CDN request.
+
+Suites (worktree, dev :5651, Chromium 1194):
+- `tsc --noEmit`: clean. `vitest run`: 38 files, 352 tests passed.
+- chromium: integrity 25/25, toast-room 14/14, chai3d 10/10, w3r2-stale-tab 5/5, w4-rive-chai 4/4 (2 workers).
+  w2-home, w2-summary, summary-notice: 10 failures in that first run, caused by my own concurrent Playwright runs
+  sharing `test-results/` (ENOENT on trace files, plus load). Rerun alone (1 worker): w2-home 18/18,
+  summary-notice 14/14, w2-summary 17/18. The one miss (`390x844 @100 %, task day`, footer button hit test) then
+  passed 4/4 with `--repeat-each=4`; the whole w2-summary file passes 18/18 on BEFORE :5560. Logged as flaky, not
+  reproduced.
+- timer-harness + timer-app: 26 passed, 2 skipped (pre-existing skips). pwa (preview on :5652, checked free;
+  my preview stopped first): 4/4.
+
 ## §7 Captures and strips
 
 - **BEFORE (:5560) / AFTER (:5651), 390x844, DPR 2, light + dark** (`RV/captures/`, `tools/cap.mjs`):
@@ -171,3 +198,24 @@ Not touched (stay WebP): happy, stretch, look, sleep, concerned, happy-face (`Ch
   (4.5 s, hops + sparkles + wave), `switch-2-to-0-cheering-to-reading.png`, `switch-2-to-1-cheering-to-sipping.png`,
   `switch-0-to-2-reading-to-cheering.png` (10 s, 250 ms steps). 2 -> 0: arms fold, rest, book fully back by ~2.0 s.
 - Watermark captures: §0 (`RV/watermark/`).
+
+## §8 Open items
+
+1. **Ask Vibei for a transparent file** (artboard Background fill alpha 0) and, ideally, a way to hide `groundShadow`
+   (e.g. a view-model boolean). Today both are fixed at load (byte patch + private `artboard` access, guarded and
+   pinned to 2.45.0). With a clean file the patch becomes a no-op (unit-tested) and can be deleted.
+2. **Cheering width**: scale-by-height keeps baseline/height/centre but the Rive cheering body is up to +10.4 CSS px
+   wider than the painted one (+9.0 on the Stage). LEAD/Vibei call: accept (it is the new art), or one k for all
+   poses (cheering then ~11 % taller than today).
+3. **Entry pose**: the state machine always enters on reading, so a sipping/cheering Chai shows the painted image for
+   2.0 / 2.7 s of running time before Rive takes over (no jump, no blank). A file option to enter directly in the
+   input/view-model pose would remove the wait.
+4. **Whistle**: cheering is reached through rest + arm raise (~2.3 s), longer than the whistle beat, so during the
+   whistle Chai is mid-raise (designed by the file; the CSS whistle hop still plays). If the whistle should show full
+   cheer at once, that is a file change (shorter raise from reading).
+5. **Cost**: +144 ms/s main thread at x1 in headless (software raster); a 30 fps cap or `@rive-app/canvas-lite`
+   (smaller wasm; not on the brief's list, needs a data-binding check) are the two levers.
+6. **Test note**: Playwright's `page.clock` (install or setFixedTime) also fakes rAF/performance time, which slows or
+   stalls Rive; specs that need Rive timing must not use it (w4 spec and captures don't). Existing specs that use it
+   are unaffected in what they assert (layout), but see Chai mid-transition.
+7. `pwa.spec.ts`'s `afterAll` kills `npx`, leaving the `vite preview` child running (pre-existing); I killed mine.
