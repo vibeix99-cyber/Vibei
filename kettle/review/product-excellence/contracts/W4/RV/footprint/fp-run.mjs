@@ -32,5 +32,19 @@ if (which === 'all' || which === 'kit') {
     await take(`kit ${pose}@${size}`);
   }
 }
+if (which === 'other') {
+  await page.goto(`${base}/?debug&seed=veteran&theme=light#/`);
+  await page.waitForFunction(() => { const t = window.__kettle?.timerInfo?.(); return !!(t && t.leader && t.leaderForMs > 400 && !t.settling); }, null, { timeout: 60000 });
+  await page.waitForTimeout(1500);
+  await take('home hero (no brew; evening)');
+  await page.evaluate(() => window.__kettle.settings.getState().set({ muted: true, autoStartBreaks: false, autoStartFocus: false }));
+  await page.getByRole('button', { name: /put the kettle on/i }).first().click();
+  await page.waitForFunction(() => location.hash === '#/focus'); await page.waitForTimeout(1500);
+  await page.evaluate(() => (location.hash = '#/')); await page.waitForTimeout(2500);
+  await take('home hero (brew live)');
+  await page.evaluate(() => (location.hash = '#/settings')); await page.waitForTimeout(1000);
+  await page.locator('[data-pose="sip"]').first().scrollIntoViewIfNeeded(); await page.waitForTimeout(3000);
+  await take('settings about');
+}
 fs.writeFileSync(outJson, JSON.stringify({ rows, raw }, null, 1));
 await b.close();
