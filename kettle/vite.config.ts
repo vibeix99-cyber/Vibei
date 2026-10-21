@@ -41,7 +41,8 @@ export default defineConfig({
       injectManifest: {
         // App shell + self-hosted fonts + icons + the lazy three.js chunk → fully offline.
         // `glb`: the 3D Chai (45.6 KB, content-hashed), so the offline Nook shows the same Chai as online.
-        globPatterns: ['**/*.{js,css,html,svg,png,webp,ico,woff2,glb}'],
+        // `riv` + `wasm`: the animated Chai (chai.riv) and its self-hosted Rive runtime, so Chai animates offline.
+        globPatterns: ['**/*.{js,css,html,svg,png,webp,ico,woff2,glb,riv,wasm}'],
         maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
       },
       devOptions: { enabled: false }, // never a service worker in dev

@@ -11,8 +11,9 @@
  * relative to each other (cheering is shorter because the pose sits lower). Below ~44 px a full pose
  * stops reading, so `PaintedChai` switches to the round face avatar (`ChaiFace`).
  */
-import type { CSSProperties } from 'react';
+import { useState, type CSSProperties } from 'react';
 import { useReducedMotion } from '@/lib/useReducedMotion';
+import { LiveChai, RIVE_POSE, type RiveChaiPose } from './LiveChai';
 import reading from './chai/chai-reading.webp';
 import sipping from './chai/chai-sipping.webp';
 import cheering from './chai/chai-cheering.webp';
@@ -62,23 +63,58 @@ export interface PaintedChaiProps {
   faceBelow?: number;
   /** Load hint (most Chai is above the fold). */
   loading?: 'eager' | 'lazy';
+  /** Animated Chai (Rive) for reading, sipping and cheering. Defaults to `animate`. Never under reduced motion. */
+  rive?: boolean;
 }
 
-export function PaintedChai({ pose, size, animate = false, title, className, style, faceBelow = 44, loading = 'eager' }: PaintedChaiProps) {
+const isRivePose = (p: PaintedPose): p is RiveChaiPose => p in RIVE_POSE;
+/** Test/diagnostic switch: `?rive=0` keeps the painted images everywhere. */
+const riveOff = typeof location !== 'undefined' && /[?&#]rive=0\b/.test(location.href);
+
+export function PaintedChai({ pose, size, animate = false, title, className, style, faceBelow = 44, loading = 'eager', rive = animate }: PaintedChaiProps) {
   const reduced = useReducedMotion();
+  // Rive state: whether its first settled frame is up, and whether the runtime failed (then images for good).
+  const [riveUp, setRiveUp] = useState(false);
+  const [riveFailed, setRiveFailed] = useState(false);
   if (size < faceBelow) return <ChaiFace size={size} title={title} className={className} style={style} />;
   const { w, h } = paintedBox(pose, size);
-  const live = animate && !reduced;
+  const riveOn = rive && !reduced && !riveFailed && !riveOff && isRivePose(pose);
+  const shown = riveOn && riveUp;
+  // CSS breathing only for the painted image; Rive breathes on its own.
+  const live = animate && !reduced && !riveOn;
   return (
     <span
       className={[s.pose, live ? s.live : '', className].filter(Boolean).join(' ')}
       style={{ width: w, height: h, ...style }}
       data-pose={pose}
+      data-chai-render={shown ? 'rive' : 'image'}
       role={title ? 'img' : undefined}
       aria-label={title}
       aria-hidden={title ? undefined : true}
     >
-      <img src={PAINTED[pose].src} width={Math.round(w)} height={Math.round(h)} alt="" draggable={false} decoding="async" loading={loading} className={s.img} />
+      <img
+        src={PAINTED[pose].src}
+        width={Math.round(w)}
+        height={Math.round(h)}
+        alt=""
+        draggable={false}
+        decoding="async"
+        loading={loading}
+        className={s.img}
+        style={shown ? { visibility: 'hidden' } : undefined}
+      />
+      {riveOn && (
+        <LiveChai
+          pose={pose}
+          w={PAINTED[pose].w}
+          h={PAINTED[pose].h}
+          onReady={() => setRiveUp(true)}
+          onFail={() => {
+            setRiveUp(false);
+            setRiveFailed(true);
+          }}
+        />
+      )}
     </span>
   );
 }
