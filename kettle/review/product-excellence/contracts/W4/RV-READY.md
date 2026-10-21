@@ -1,6 +1,7 @@
 # W4 RV-READY: the animated Rive Chai
 
-Maker RV. Worktree `/home/user/wt/w11`, branch `pe/w4-rive-chai`, base `2b8e753`. Evidence in `W4/RV/`.
+Maker RV. Worktree `/home/user/wt/w11`, branch `pe/w4-rive-chai`, base `2b8e753`, **tip `1a7b797`** (3 commits, not
+pushed), `kettle/src` tree `aa8c94fc76e5038ae16833842946c895df72ff63`. Evidence in `W4/RV/`. No servers left running.
 
 ## §0 Watermark check: CLEAN (no splash, no watermark)
 
