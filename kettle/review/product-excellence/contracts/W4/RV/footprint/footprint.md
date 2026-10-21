@@ -1,6 +1,6 @@
 # Footprint: Rive Chai ink vs the painted image ink, same page, same box (CSS px, Rive minus image; medians over ground frames)
 
-390x844, DPR 2, light. Image ink: alpha > 8 of the WebP natural pixels mapped to the img rect. Rive ink: alpha > 8 of the canvas pixels mapped to the canvas rect, sampled 24 (Stage) / 16 (Kit) frames 160 ms apart; ground frames = feet at their lowest (cheering hops). Belly = the ink row 30 %% of the ink height above the feet.
+390x844, DPR 2, light. Image ink: alpha > 8 of the WebP natural pixels mapped to the img rect. Rive ink: alpha > 8 of the canvas pixels mapped to the canvas rect, sampled 24 (Stage) / 16 (Kit) frames 160 ms apart; ground frames = feet at their lowest (cheering hops). Belly = the ink row 30 % of the ink height above the feet.
 
 | place | pose | box w x h (CSS px) | baseline | ink top (median; range) | ink height | belly centre | belly width (img width) | clipped by an ancestor | canvas pointer-events |
 |---|---|---|---|---|---|---|---|---|---|
