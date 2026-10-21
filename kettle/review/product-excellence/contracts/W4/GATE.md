@@ -57,3 +57,13 @@
   - **B3:** no frame cap (+143 ms/s; 95 % main thread at ×4);
   - **B4:** `riveUp` is never reset on unmount.
 - **Fix:** FX1–FX4 (hide until reveal; redraw on resize and no size transition; a 30 fps cap to about +80 ms/s and ≥ 55 fps at ×4; regression and captures).
+
+## RV fix round: GATE PASSED
+- **Revision:** `pe/w4-rive-chai@58f54e0` (`e6e402f`, `58f54e0`), src `7b6fdde`. Scope: the Rive wiring (`LiveChai`, `PaintedChai`, CSS, `riveChai.ts`) and `w4-rive-chai.spec.ts`. `package.json` and `art-src` unchanged.
+- **Trial 2 `62bb1ba`:** tsc 0, vitest 352/352, build OK. Served on :5671 / :5672 (the first trial's :5661 / :5662 stopped).
+- **The maker's claims:**
+  - **FX1:** hidden until the reveal; reset on unmount.
+  - **FX2:** 0 empty frames (was 37 of 67).
+  - **FX3:** 30 fps cap. Cost +101 ms/s at ×1 (LEAD aim about +80); 56.0 fps at ×4 (≥ 55). Option: 24 fps gives +65 ms/s.
+  - **FX4:** regression 109/111 (two explained misses); PWA 4/4.
+- **Next:** LEAD-9's final verdict, including the FX3 ruling.
