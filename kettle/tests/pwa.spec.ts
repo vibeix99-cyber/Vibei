@@ -82,6 +82,36 @@ test('precaches the shell, fonts, 3D chunk and tick worker; boots and times a br
   await context.setOffline(false);
 });
 
+test('W4: the animated Chai (chai.riv + self-hosted Rive wasm) is precached and animates offline', async ({ page, context }) => {
+  await installed(page);
+  const cached = await page.evaluate(async () => {
+    const urls: string[] = [];
+    for (const k of await caches.keys()) for (const r of await (await caches.open(k)).keys()) urls.push(new URL(r.url).pathname);
+    return urls;
+  });
+  expect(cached.some((u) => /\/assets\/chai-.*\.riv$/.test(u)), cached.join('\n')).toBe(true);
+  expect(cached.some((u) => /\/assets\/rive-.*\.wasm$/.test(u))).toBe(true);
+  expect(cached.some((u) => /\/assets\/riveChai-.*\.js$/.test(u))).toBe(true);
+
+  await context.setOffline(true);
+  const cdn: string[] = [];
+  page.on('request', (r) => /unpkg|jsdelivr|rive\.app/.test(r.url()) && cdn.push(r.url()));
+  await page.reload();
+  await page.waitForFunction(() => !!(window as any).__kettle?.timerInfo, null, { timeout: 20_000 });
+  await page.evaluate(() => (window as any).__kettle.settings.getState().set({ autoStartBreaks: false, scene: 'off', muted: true }));
+  await page.evaluate(() => (window as any).__kettle.timer.getState().startFocus({ minutes: 10 }));
+  await page.evaluate(() => (location.hash = '#/focus'));
+  const chai = page.locator('[data-stage-figure="chai"] [data-pose]');
+  await expect(chai).toHaveAttribute('data-pose', 'reading', { timeout: 15_000 });
+  await expect(chai).toHaveAttribute('data-chai-render', 'rive', { timeout: 20_000 });
+  const frames = () => page.evaluate(() => ((window as any).__riveChai ?? [])[0]?.frameCount ?? 0);
+  const f0 = await frames();
+  await page.waitForTimeout(1000);
+  expect(await frames()).toBeGreaterThan(f0 + 10); // it animates, offline
+  expect(cdn).toEqual([]);
+  await context.setOffline(false);
+});
+
 test('update: new version waits for the user (no reload mid-brew), then applies and the brew carries on', async ({ page }) => {
   await installed(page);
   await page.evaluate(() => (window as any).__kettle.timer.getState().startFocus({ minutes: 10 }));

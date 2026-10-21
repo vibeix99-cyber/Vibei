@@ -13,7 +13,8 @@
  */
 import { useState, type CSSProperties } from 'react';
 import { useReducedMotion } from '@/lib/useReducedMotion';
-import { LiveChai, RIVE_POSE, type RiveChaiPose } from './LiveChai';
+import { LiveChai } from './LiveChai';
+import { RIVE_POSE, type RiveChaiPose } from './rive/fit';
 import reading from './chai/chai-reading.webp';
 import sipping from './chai/chai-sipping.webp';
 import cheering from './chai/chai-cheering.webp';

@@ -16,24 +16,13 @@
 import { Rive, RuntimeLoader, Layout, Fit, Alignment, EventType } from '@rive-app/canvas';
 import wasmUrl from '@rive-app/canvas/rive.wasm?url';
 import rivUrl from '../chai/chai.riv?url';
+import { clearBackground } from './clearBackground';
 
-export type RivePose = 0 | 1 | 2;
+export type { RivePose } from './pose';
+import type { RivePose } from './pose';
 
 /** Device-pixel-ratio cap for the drawing surface (crisp on 2x screens; 3x phones draw at 2x). */
 export const DPR_CAP = 2;
-
-/** SolidColor (type 18) colorValue (property 37) = FFFDF9F1, little-endian: the artboard's Background fill. */
-const BG_FILL = [0x12, 0x25, 0xf1, 0xf9, 0xfd, 0xff];
-
-/** Sets the artboard Background fill's alpha to 0. Returns false when the file has no such fill (already clear). */
-export function clearBackground(bytes: Uint8Array): boolean {
-  outer: for (let i = 0; i + BG_FILL.length <= bytes.length; i++) {
-    for (let j = 0; j < BG_FILL.length; j++) if (bytes[i + j] !== BG_FILL[j]) continue outer;
-    bytes[i + BG_FILL.length - 1] = 0;
-    return true;
-  }
-  return false;
-}
 
 let fileBytes: Promise<ArrayBuffer> | null = null;
 function loadFile(): Promise<ArrayBuffer> {
@@ -81,8 +70,13 @@ interface Options {
   onError(err: unknown): void;
 }
 
-/** The time the state machine needs from its entry pose (reading) to settle in each pose, in ms. */
-const SETTLE_MS: Record<RivePose, number> = { 0: 0, 1: 1100, 2: 1900 };
+/** Running time the state machine needs from its entry pose (reading) to settle in each pose, in ms, with margin
+ * (measured frame strips: reading -> sipping settles by ~1.65 s, reading -> cheering by ~2.3 s). */
+const SETTLE_MS: Record<RivePose, number> = { 0: 0, 1: 2000, 2: 2700 };
+
+/** `?debug` builds expose the live instances (frame counts for the perf checks). */
+const debugList = (): Rive[] | null =>
+  typeof location !== 'undefined' && /[?&]debug\b/.test(location.search) ? ((window as unknown as { __riveChai?: Rive[] }).__riveChai ??= []) : null;
 
 type PrivateArtboard = { artboard?: { transformComponent(name: string): { scaleY: number } | null } | null };
 
@@ -187,13 +181,18 @@ export function mountChai(canvas: HTMLCanvasElement, opts: Options): ChaiHandle 
           if (running) scheduleReveal();
         },
       });
-      if (!dead) r = inst;
+      if (!dead) {
+        r = inst;
+        debugList()?.push(inst);
+      }
     })
     .catch(fail);
 
   function destroy() {
     dead = true;
     window.clearTimeout(settle);
+    const list = debugList();
+    if (list && r) list.splice(list.indexOf(r) >>> 0, 1);
     try {
       r?.cleanup();
     } catch {
@@ -210,7 +209,9 @@ export function mountChai(canvas: HTMLCanvasElement, opts: Options): ChaiHandle 
         applyPose();
       } catch (e) {
         fail(e);
+        return;
       }
+      if (loaded && running && !revealed) scheduleReveal(); // not up yet: wait for the new pose to settle
     },
     setRunning(on) {
       if (on === running) return;

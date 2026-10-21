@@ -15,12 +15,12 @@ export function setScene3dRunning(owner: object, on: boolean): void {
   subs.forEach((f) => f());
 }
 
-function subscribe(cb: () => void) {
+export function subscribeScene3d(cb: () => void): () => void {
   subs.add(cb);
   return () => subs.delete(cb);
 }
-const snapshot = () => running.size > 0;
+export const isScene3dRunning = (): boolean => running.size > 0;
 
 export function useScene3dRunning(): boolean {
-  return useSyncExternalStore(subscribe, snapshot, () => false);
+  return useSyncExternalStore(subscribeScene3d, isScene3dRunning, () => false);
 }
