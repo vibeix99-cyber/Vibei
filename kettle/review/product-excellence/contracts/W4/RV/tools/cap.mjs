@@ -7,7 +7,6 @@ const b = await chromium.launch({ args: ['--enable-unsafe-swiftshader', '--use-a
 const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 });
 const page = await ctx.newPage();
 const reqs = []; page.on('request', (r) => reqs.push(r.url()));
-await page.clock.install({ time: Date.parse('2026-10-11T07:40:00Z') }); await page.clock.resume();
 await page.goto(`${base}/?debug&seed=veteran&theme=${theme}#/`);
 await page.waitForFunction(() => { const t = window.__kettle?.timerInfo?.(); return !!(t && t.leader && t.leaderForMs > 400 && !t.settling); }, null, { timeout: 60000 });
 await page.evaluate(() => window.__kettle.settings.getState().set({ muted: true, autoStartBreaks: false, autoStartFocus: false }));
