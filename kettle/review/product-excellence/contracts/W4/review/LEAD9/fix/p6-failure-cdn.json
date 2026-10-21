@@ -1,0 +1,151 @@
+{
+ "ok": {
+  "stage": {
+   "pose": "reading",
+   "render": "rive",
+   "imgVis": "hidden",
+   "canvas": true,
+   "cw": 326,
+   "ch": 394,
+   "ink": 53358,
+   "cream": 1008,
+   "opaqueEdge": 0,
+   "pe": "none",
+   "crect": [
+    211.02,
+    189.7,
+    162.69,
+    196.66
+   ],
+   "prect": [
+    236.09,
+    194.56,
+    112.8,
+    176.63
+   ],
+   "running": true
+  },
+  "imgVisibleLoaded": "hidden",
+  "externalRequests": [],
+  "wasmRequests": [
+   "http://127.0.0.1:5672/assets/rive-CafVgaxY.wasm"
+  ],
+  "console": [
+   "warning: [GroupMarkerNotSet(crbug.com/242999)!:A0A02000B4170000]Automatic fallback to software WebGL has been deprecated. Please use the --enable-unsafe-swiftshader (abo",
+   "warning: [GroupMarkerNotSet(crbug.com/242999)!:A000A602B4170000]Automatic fallback to software WebGL has been deprecated. Please use the --enable-unsafe-swiftshader (abo",
+   "warning: [.WebGL-0x2094048fa800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+  ]
+ },
+ "wasm-abort": {
+  "stage": {
+   "pose": "reading",
+   "render": "image",
+   "imgVis": "visible",
+   "canvas": false
+  },
+  "imgVisibleLoaded": "visible",
+  "externalRequests": [],
+  "wasmRequests": [
+   "http://127.0.0.1:5672/assets/rive-CafVgaxY.wasm",
+   "http://127.0.0.1:5672/assets/rive-CafVgaxY.wasm",
+   "http://127.0.0.1:5672/assets/rive-CafVgaxY.wasm",
+   "http://127.0.0.1:5672/assets/rive-CafVgaxY.wasm"
+  ],
+  "console": [
+   "error: wasm streaming compile failed: TypeError: Failed to fetch",
+   "error: failed to asynchronously prepare wasm: both async and sync fetching of the wasm failed",
+   "error: Aborted(both async and sync fetching of the wasm failed)",
+   "debug: Rive WASM load error details: {message: Aborted(both async and sync fetching of the wasm failed). Build with -sASSERTIONS for more info., type: RuntimeError, wa",
+   "error: Could not load Rive WASM file from http://127.0.0.1:5672/assets/rive-CafVgaxY.wasm.\nPossible reasons:\n- Network connection is down\n- WebAssembly is not supporte",
+   "error: wasm streaming compile failed: TypeError: Failed to fetch"
+  ]
+ },
+ "wasm-garbage": {
+  "stage": {
+   "pose": "reading",
+   "render": "image",
+   "imgVis": "visible",
+   "canvas": false
+  },
+  "imgVisibleLoaded": "visible",
+  "externalRequests": [],
+  "wasmRequests": [
+   "http://127.0.0.1:5672/assets/rive-CafVgaxY.wasm",
+   "http://127.0.0.1:5672/assets/rive-CafVgaxY.wasm",
+   "http://127.0.0.1:5672/assets/rive-CafVgaxY.wasm",
+   "http://127.0.0.1:5672/assets/rive-CafVgaxY.wasm"
+  ],
+  "console": [
+   "error: wasm streaming compile failed: CompileError: WebAssembly.instantiateStreaming(): expected magic word 00 61 73 6d, found 74 68 69 73 @+0",
+   "error: failed to asynchronously prepare wasm: CompileError: WebAssembly.instantiate(): expected magic word 00 61 73 6d, found 74 68 69 73 @+0",
+   "debug: Rive WASM load error details: {message: Aborted(CompileError: WebAssembly.instantiate(): e…9 73 @+0). Build with -sASSERTIONS for more info., type: RuntimeError",
+   "error: Could not load Rive WASM file from http://127.0.0.1:5672/assets/rive-CafVgaxY.wasm.\nPossible reasons:\n- Network connection is down\n- WebAssembly is not supporte",
+   "error: wasm streaming compile failed: CompileError: WebAssembly.instantiateStreaming(): expected magic word 00 61 73 6d, found 74 68 69 73 @+0",
+   "error: failed to asynchronously prepare wasm: CompileError: WebAssembly.instantiate(): expected magic word 00 61 73 6d, found 74 68 69 73 @+0"
+  ]
+ },
+ "wasm-404": {
+  "stage": {
+   "pose": "reading",
+   "render": "image",
+   "imgVis": "visible",
+   "canvas": false
+  },
+  "imgVisibleLoaded": "visible",
+  "externalRequests": [],
+  "wasmRequests": [
+   "http://127.0.0.1:5672/assets/rive-CafVgaxY.wasm",
+   "http://127.0.0.1:5672/assets/rive-CafVgaxY.wasm",
+   "http://127.0.0.1:5672/assets/rive-CafVgaxY.wasm",
+   "http://127.0.0.1:5672/assets/rive-CafVgaxY.wasm"
+  ],
+  "console": [
+   "error: wasm streaming compile failed: TypeError: Failed to execute 'compile' on 'WebAssembly': HTTP status code is not ok",
+   "error: failed to asynchronously prepare wasm: both async and sync fetching of the wasm failed",
+   "error: Aborted(both async and sync fetching of the wasm failed)",
+   "debug: Rive WASM load error details: {message: Aborted(both async and sync fetching of the wasm failed). Build with -sASSERTIONS for more info., type: RuntimeError, wa",
+   "error: Could not load Rive WASM file from http://127.0.0.1:5672/assets/rive-CafVgaxY.wasm.\nPossible reasons:\n- Network connection is down\n- WebAssembly is not supporte",
+   "error: wasm streaming compile failed: TypeError: Failed to execute 'compile' on 'WebAssembly': HTTP status code is not ok"
+  ]
+ },
+ "wasm-truncated": {
+  "stage": {
+   "pose": "reading",
+   "render": "image",
+   "imgVis": "visible",
+   "canvas": false
+  },
+  "imgVisibleLoaded": "visible",
+  "externalRequests": [],
+  "wasmRequests": [
+   "http://127.0.0.1:5672/assets/rive-CafVgaxY.wasm",
+   "http://127.0.0.1:5672/assets/rive-CafVgaxY.wasm",
+   "http://127.0.0.1:5672/assets/rive-CafVgaxY.wasm",
+   "http://127.0.0.1:5672/assets/rive-CafVgaxY.wasm"
+  ],
+  "console": [
+   "error: wasm streaming compile failed: CompileError: WebAssembly.instantiateStreaming(): section (code 2, \"Import\") extends past end of the module (length 4362, remaini",
+   "error: failed to asynchronously prepare wasm: CompileError: WebAssembly.instantiate(): section (code 2, \"Import\") extends past end of the module (length 4362, remainin",
+   "debug: Rive WASM load error details: {message: Aborted(CompileError: WebAssembly.instantiate(): s…) @+2010). Build with -sASSERTIONS for more info., type: RuntimeError",
+   "error: Could not load Rive WASM file from http://127.0.0.1:5672/assets/rive-CafVgaxY.wasm.\nPossible reasons:\n- Network connection is down\n- WebAssembly is not supporte",
+   "error: wasm streaming compile failed: CompileError: WebAssembly.instantiateStreaming(): section (code 2, \"Import\") extends past end of the module (length 4362, remaini",
+   "error: failed to asynchronously prepare wasm: CompileError: WebAssembly.instantiate(): section (code 2, \"Import\") extends past end of the module (length 4362, remainin"
+  ]
+ },
+ "riv-garbage": {
+  "stage": {
+   "pose": "reading",
+   "render": "image",
+   "imgVis": "visible",
+   "canvas": false
+  },
+  "imgVisibleLoaded": "visible",
+  "externalRequests": [],
+  "wasmRequests": [
+   "http://127.0.0.1:5672/assets/rive-CafVgaxY.wasm"
+  ],
+  "console": [
+   "warning: [GroupMarkerNotSet(crbug.com/242999)!:A040C901B4170000]Automatic fallback to software WebGL has been deprecated. Please use the --enable-unsafe-swiftshader (abo"
+  ]
+ }
+}
