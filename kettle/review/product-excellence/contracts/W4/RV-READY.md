@@ -1,7 +1,7 @@
 # W4 RV-READY: the animated Rive Chai
 
-Maker RV. Worktree `/home/user/wt/w11`, branch `pe/w4-rive-chai`, base `2b8e753`, **tip `1a7b797`** (3 commits, not
-pushed), `kettle/src` tree `aa8c94fc76e5038ae16833842946c895df72ff63`. Evidence in `W4/RV/`. No servers left running.
+Maker RV. Worktree `/home/user/wt/w11`, branch `pe/w4-rive-chai`, base `2b8e753`, **tip `58f54e0`** after the fix round (5 commits,
+not pushed), `kettle/src` tree `7b6fdded1e50ce23e5137bfd1def09e6f6dc965d` (reviewed round: `1a7b797`). Evidence in `W4/RV/`. No servers left running.
 
 ## §0 Watermark check: CLEAN (no splash, no watermark)
 
@@ -222,9 +222,61 @@ Suites (worktree, dev :5651, Chromium 1194):
 4. **Whistle**: cheering is reached through rest + arm raise (~2.3 s), longer than the whistle beat, so during the
    whistle Chai is mid-raise (designed by the file; the CSS whistle hop still plays). If the whistle should show full
    cheer at once, that is a file change (shorter raise from reading).
-5. **Cost**: +144 ms/s main thread at x1 in headless (software raster); a 30 fps cap or `@rive-app/canvas-lite`
-   (smaller wasm; not on the brief's list, needs a data-binding check) are the two levers.
+5. **Cost**: after the 30 fps cap, +101 ms/s main thread at x1 in headless (§9). 24 fps measured +65 ms/s (a
+   one-constant change, `FPS_CAP`); `@rive-app/canvas-lite` is the other lever (not on the brief's list).
 6. **Test note**: Playwright's `page.clock` (install or setFixedTime) also fakes rAF/performance time, which slows or
    stalls Rive; specs that need Rive timing must not use it (w4 spec and captures don't). Existing specs that use it
    are unaffected in what they assert (layout), but see Chai mid-transition.
 7. `pwa.spec.ts`'s `afterAll` kills `npx`, leaving the `vite preview` child running (pre-existing); I killed mine.
+
+## §9 Fix round (LEAD-9 REJECT of `1a7b797`; fixes `e6e402f`, `58f54e0`)
+
+Evidence: `RV/fix/` (LEAD-9's probes copied to `RV/fix/tools/` with OUT pointed at `RV/fix/`, run on my :5651/:5652).
+
+- **FX1 (B1 + B4), hidden until the reveal.** The canvas is `visibility: hidden` until `onReady`; `PaintedChai`
+  passes one `shown` value to both the canvas and the `<img>` style, so they flip in one React commit. `riveUp`
+  resets during render whenever `riveOn` goes false (pose leaves the Rive set, reduced motion, failure), so a new
+  layer always starts hidden behind the visible image.
+  - `p11.mjs` (Kit cheer/sip @168): every pre-reveal sample is `image / img visible / canvas hidden`
+    (`p11.log`); sheets `prereveal-cheer-sheet.png`, `prereveal-sip-sheet.png` show the painted pose, then Rive, no
+    reading-with-book overlay.
+  - e2e (rAF sampler): sip and cheer, every frame before the swap has the canvas hidden and the image visible; after
+    it the image is hidden and the canvas shown with ink; 0 frames with both, 0 with neither.
+- **FX2 (B2), no blank frame on a resize or pose change.** `resize()` redraws synchronously after resizing
+  (`drawFrame()` then `stopRendering()`; with our own frame driver no runtime frame is pending, so `drawFrame` draws
+  now, before paint). The left/top/width/height transition is gone: a pose change re-fits in one step.
+  - `p3.mjs`: 7 resize callbacks, **0 painted empty while the image is hidden** (was 37/67).
+  - `p4.mjs` CDP screencast, focus -> whistle and summary -> break: 72 + 77 compositor frames, **0 without Chai;
+    min Chai pixels 6,126 / 7,641** (`screencast-light/`, `analysis.json`). `p5.mjs` over (stretch) -> focus: 65
+    frames, 0 without Chai, min 7,628 (`screencast-over-light/`).
+  - e2e: focus -> whistle -> summary -> break -> over -> focus, rAF-sampled + a late ResizeObserver: 0 blank, 0 both.
+- **FX3 (B3), 30 fps cap with public calls only.** After load and on every resume: `play()` then `stopRendering()`;
+  our rAF loop calls `drawFrame()` when >= 31.3 ms have passed, then `stopRendering()` again (`drawFrame` draws
+  synchronously when no runtime frame is pending and advances by real elapsed time; it re-arms the runtime loop,
+  which `stopRendering` cancels). Pause: stop our loop, `pause()`, one `drawFrame()` so the runtime clock resets
+  (no jump on resume). `_explicitlyStoppedRendering` stays true, so the runtime's own visibility handler never
+  restarts its loop; our IO / visibility / 3D gates drive `setRunning`.
+  - Measured Rive frame rate on the Stage: **30.0 fps** (`rive-fps.log`, 0.81 ms per frame).
+  - `p13.mjs` on :5652 (`p13.log`, `p13-perf.json`):
+
+    | | page fps | TaskDuration | Script |
+    |---|---|---|---|
+    | Rive x1 | 57.6 | 210 ms/s | 44 |
+    | image x1 | 60.2 | 109 ms/s | 7 |
+    | Rive x4 | **56.0** | 799 ms/s | 198 |
+    | image x4 | 58.5 | 490 ms/s | 41 |
+
+    Rive delta **+101 ms/s at x1** (was +143), +309 at x4 (was +530); page fps at x4 56.0 (target >= 55: met).
+    The x1 delta misses the ~+80 aim. Breakdown (`metrics.mjs`): +40 script, +68 "other" (Canvas2D raster in
+    software). Tried: DPR 1.5 (no gain, reverted), own compositing layer (`will-change`, no gain, reverted).
+    **24 fps measures +65 ms/s at x1 and 57.2 fps at x4** (`p13-24fps-variant.log`): a one-constant change
+    (`FPS_CAP`), offered, not shipped, because the packet says 30.
+  - Visual: `live30fps-focus-consecutive-frames.png`, `live30fps-cheer-consecutive-frames.png` (28 consecutive
+    compositor frames each, ~33 ms apart): motion steps evenly.
+- **FX4, regressions** (logs `RV/fix/fx-*.log`): tsc clean; vitest 38 files / 352 tests. Chromium, 2 workers,
+  nothing else running: 109/111. The 2 misses: my new pose-change test failed its own sample-count floor (172 < 200
+  rAF samples under load; lowered to 100, then 7/7 alone), and w2-summary `375x667 @200 %, task day` footer
+  hit test (the A6 flake class; 3/3 on `--repeat-each=3`). PWA on :5652 (checked free, my preview stopped): 4/4.
+  AFTER captures re-shot (8, `RV/captures/after-*`): poses as before, all Rive, pose-box rects equal to BEFORE
+  (0.000 px except the dark whistle hop phase), 0 CDN requests.
+- Not touched: `.riv`, `art-src`, the fit numbers.
