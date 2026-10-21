@@ -67,3 +67,4 @@ Restore a chain in order with `git fetch <bundle> 'refs/heads/*:refs/heads/*'` (
 | `pe-w3r3-chai-2d-fix-20dfffe.incremental.bundle` | pe/w3r3-chai-2d@20dfffe (W3R3 fix round: uniform scale; src 731e565) | 17f5a70 | okay 2026-10-20 |
 | `pe-w3r4-case-collision-e0ed43d.incremental.bundle` | pe/w3r4-case-collision@e0ed43d (case-collision renames + guard; src c9257cd) | d8b475e | okay 2026-10-21 |
 | `pe-w4-rive-chai-1a7b797.incremental.bundle` | pe/w4-rive-chai@1a7b797 (W4 animated Rive Chai; src aa8c94f) | 2b8e753 | okay 2026-10-21 |
+| `pe-w4-rive-chai-fix-58f54e0.incremental.bundle` | pe/w4-rive-chai@58f54e0 (W4 fix round; src 7b6fdde) | 1a7b797 | okay 2026-10-21 |
