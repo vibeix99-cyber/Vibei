@@ -169,5 +169,5 @@ Not touched (stay WebP): happy, stretch, look, sleep, concerned, happy-face (`Ch
 - **Frame strips** (`RV/strips/`, isolated harness with the app's two load-time fixes, 164x198 per frame, time stamps):
   `loop-0-reading.png` (12 s, page turn + leaf), `loop-1-sipping.png` (9 s, sips + steam), `loop-2-cheering.png`
   (4.5 s, hops + sparkles + wave), `switch-2-to-0-cheering-to-reading.png`, `switch-2-to-1-cheering-to-sipping.png`,
-  `switch-0-to-2-reading-to-cheering.png` (10 s, 250 ms steps). 2 -> 0: arms fold, rest, book back by ~1.5 s.
+  `switch-0-to-2-reading-to-cheering.png` (10 s, 250 ms steps). 2 -> 0: arms fold, rest, book fully back by ~2.0 s.
 - Watermark captures: §0 (`RV/watermark/`).
