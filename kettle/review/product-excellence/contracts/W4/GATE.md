@@ -7,3 +7,37 @@
 - **Notes from the README:** it mentions `refs/` and `tools/`, which are not in the upload. The file has its own `groundShadow` layer, so the Stage's CSS shadow must not double it.
 - **Servers:** :5560 / :5570 serve integration `2b8e753` (BEFORE, verified).
 - **Maker RV** (Opus, normal intensity) launched; worktree `w11`, branch `pe/w4-rive-chai`, its own `node_modules` via `npm ci`; brief `BRIEF-RV.md`; stop 21:15 UTC.
+
+## Maker RV: GATE PASSED, 2026-10-21 ~19:45 UTC
+- **Revision:** `pe/w4-rive-chai@1a7b797` (3 commits), src `aa8c94f`. Packet `contracts/W4/RV-READY.md` (§0–§8), evidence in `W4/RV/`.
+- **Watermark check (§0): clean.** No logo, splash or injected DOM; no requests to a CDN.
+- **Scope (checked):**
+  - `package.json` + lockfile (`@rive-app/canvas` pinned 2.45.0);
+  - new `src/art/LiveChai.tsx` and `src/art/rive/*` (`riveChai`, `fit`, `pose`, `clearBackground`, with tests);
+  - `PaintedChai.tsx` + CSS;
+  - `src/art/chai/chai.riv`, byte-identical to `art-src`;
+  - `lib/scene3dLive.ts` (pause Rive while 3D runs), with small hooks in `NookScene.tsx` and `Stage.tsx`;
+  - `vite.config.ts` (precache);
+  - `tests/w4-rive-chai.spec.ts`, plus a new offline test in `tests/pwa.spec.ts`.
+
+  `art-src` is untouched.
+- **Trial `64ad821`** = integration `2b8e753` + `1a7b797`, worktree `w11tr`, using the maker's `node_modules`.
+  - tsc 0, vitest **352/352**, build OK.
+  - Precache 123 entries, including `chai-*.riv` and `rive-*.wasm`, as local assets.
+  - Dev **:5661**, preview **:5662**.
+  - **Note:** the built `riveChai` chunk contains 3 CDN URL strings, probably the runtime's default fallback. The reviewer must confirm no CDN request ever happens.
+- **The maker's numbers:**
+  - runtime JS 278 KB (70 KB gzip), lazy; wasm 2.10 MB (866 KB gzip), self-hosted; `.riv` 45 KB; initial bundle +1.4 KB gzip;
+  - FCP 960 ms, with the runtime fetched at 1,262 ms;
+  - footprint over 39 places: baseline ≤ 0.34, centre ≤ 0.66, height ≤ 0.69 (cheering ≤ 1.29), no clipping, `pointer-events: none`;
+  - **the cheering body is 3.3–10.4 CSS px wider** (+9.0 on the Stage);
+  - fallback and reduced motion OK (0 runtime requests under reduced motion);
+  - DPR cap 2; 60 fps at ×1, 53.9 fps at ×4;
+  - **CPU +144 ms/s on the Stage** vs the static image;
+  - tests green, with one `w2-summary` flake.
+- **Points for review:**
+  - the load-time patch: the cream artboard background's alpha is zeroed and `groundShadow` collapsed via the runtime's private `artboard`;
+  - the cheering width;
+  - the start-on-reading delay before sipping and cheering appear (2.0–2.7 s of WebP first);
+  - the whistle showing a mid-raise;
+  - the CPU cost.
