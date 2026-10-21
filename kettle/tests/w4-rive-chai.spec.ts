@@ -180,3 +180,104 @@ test('reduced motion: the painted image, and no runtime, wasm or .riv request', 
   expect(requests.filter((u) => RIVE_REQ.test(u))).toEqual([]);
   await ctx.close();
 });
+
+/**
+ * Fix round (LEAD-9 B1/B2/B4). A rAF sampler records, for every Chai box on every frame: render mode, the image's
+ * and the canvas's computed visibility, and the canvas ink (downsampled). A ResizeObserver registered after
+ * LiveChai's sees each resized canvas as it is about to be painted.
+ */
+async function sampler(page: Page) {
+  await page.addInitScript(() => {
+    const w = window as any;
+    w.__frames = [];
+    w.__ro = [];
+    const inkOf = (c: HTMLCanvasElement) => {
+      if (c.width < 2) return 0;
+      const t = document.createElement('canvas');
+      t.width = 40;
+      t.height = 48;
+      const g = t.getContext('2d')!;
+      g.drawImage(c, 0, 0, 40, 48);
+      const d = g.getImageData(0, 0, 40, 48).data;
+      let n = 0;
+      for (let i = 3; i < d.length; i += 4) if (d[i] > 16) n++;
+      return n;
+    };
+    const seen = new WeakSet<Element>();
+    const f = () => {
+      document.querySelectorAll<HTMLElement>('[data-chai-render]').forEach((sp) => {
+        const img = sp.querySelector('img');
+        const c = sp.querySelector<HTMLCanvasElement>('canvas[data-rive-chai]');
+        if (c && !seen.has(c)) {
+          seen.add(c);
+          new ResizeObserver(() => w.__ro.push({ pose: sp.dataset.pose, ink: inkOf(c), img: img && getComputedStyle(img).visibility, cv: getComputedStyle(c).visibility })).observe(c);
+        }
+        w.__frames.push({ t: Math.round(performance.now()), pose: sp.dataset.pose, render: sp.dataset.chaiRender, img: img && getComputedStyle(img).visibility, cv: c ? getComputedStyle(c).visibility : null, ink: c ? inkOf(c) : null });
+      });
+      requestAnimationFrame(f);
+    };
+    requestAnimationFrame(f);
+  });
+}
+
+type Frame = { t: number; pose: string; render: string; img: string; cv: string | null; ink: number | null };
+const neverBlank = (fr: Frame[]) => fr.filter((x) => x.img === 'hidden' && (x.cv !== 'visible' || !x.ink));
+const neverBoth = (fr: Frame[]) => fr.filter((x) => x.img === 'visible' && x.cv === 'visible');
+
+for (const pose of ['sip', 'cheer'] as const)
+  test(`fix round: a ${pose} Chai never shows the canvas before its reveal, then swaps in one frame`, async ({ browser, baseURL }) => {
+    const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 });
+    const page = await ctx.newPage();
+    await sampler(page);
+    await page.goto(`${base(baseURL)}/?debug&onboarded=1&s=${pose}#/kit?part=art&view=pose&pose=${pose}&size=168`);
+    const span = page.locator(`[data-pose="${pose}"] [data-pose]`);
+    await expect(span).toHaveAttribute('data-chai-render', 'rive', { timeout: 20_000 });
+    await page.waitForTimeout(500);
+    const fr: Frame[] = await page.evaluate(() => (window as any).__frames);
+    const pre = fr.filter((x) => x.render === 'image');
+    const post = fr.filter((x) => x.render === 'rive');
+    expect(pre.length, 'frames sampled during the hold').toBeGreaterThan(30);
+    expect(pre.filter((x) => x.cv !== null && x.cv !== 'hidden'), 'canvas visible before the reveal').toEqual([]);
+    expect(pre.filter((x) => x.img !== 'visible'), 'image hidden before the reveal').toEqual([]);
+    expect(post.length).toBeGreaterThan(10);
+    expect(post.filter((x) => x.img !== 'hidden' || x.cv !== 'visible' || !x.ink), 'after the swap: image hidden, canvas shown with Chai').toEqual([]);
+    expect(neverBoth(fr)).toEqual([]);
+    expect(neverBlank(fr)).toEqual([]);
+    await ctx.close();
+  });
+
+test('fix round: Stage pose changes (focus -> whistle -> summary -> break -> over -> focus) never paint a blank Chai', async ({ browser, baseURL }) => {
+  test.setTimeout(120_000);
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 });
+  const page = await ctx.newPage();
+  await sampler(page);
+  await page.goto(`${base(baseURL)}/?debug&seed=veteran&theme=light#/`);
+  await page.waitForFunction(() => { const t = (window as any).__kettle?.timerInfo?.(); return !!(t && t.leader && t.leaderForMs > 400 && !t.settling); }, null, { timeout: 60_000 });
+  await page.evaluate(() => (window as any).__kettle.settings.getState().set({ muted: true, autoStartBreaks: false, autoStartFocus: false }));
+  await page.waitForTimeout(600);
+  await page.getByRole('button', { name: /put the kettle on/i }).first().click();
+  await page.waitForFunction(() => location.hash === '#/focus');
+  await riveIn(page, stageChai, 'reading');
+  await page.evaluate(() => (window as any).__kettle.finish());
+  await page.waitForFunction(() => location.hash.includes('done'), null, { timeout: 30_000 });
+  await page.waitForTimeout(2500);
+  await page.getByRole('button', { name: /Tea time|Long tea break/ }).first().click();
+  await page.waitForTimeout(2500);
+  await page.evaluate(() => (window as any).__kettle.finish()); // break over: stretch (painted)
+  await page.waitForTimeout(2500);
+  await expect(page.locator(stageChai).first()).toHaveAttribute('data-pose', 'stretch');
+  await page.getByRole('button', { name: /put the kettle on/i }).first().click();
+  await riveIn(page, stageChai, 'reading');
+  await page.waitForTimeout(800);
+  const fr: Frame[] = (await page.evaluate(() => (window as any).__frames)).filter((x: Frame) => x.pose !== undefined);
+  const ro = await page.evaluate(() => (window as any).__ro);
+  expect(fr.length).toBeGreaterThan(200);
+  expect(neverBlank(fr), 'a frame with the image hidden and no Chai on the canvas').toEqual([]);
+  expect(neverBoth(fr), 'a frame with both the image and the canvas shown').toEqual([]);
+  expect(ro.length, 'the canvas was resized on the pose changes').toBeGreaterThan(1);
+  expect(ro.filter((x: any) => x.img === 'hidden' && !x.ink), 'resized canvas painted empty').toEqual([]);
+  // the stretch -> reading remount started hidden behind the image (B4)
+  const back = fr.filter((x) => x.t > 0 && x.pose === 'reading');
+  expect(back.length).toBeGreaterThan(0);
+  await ctx.close();
+});

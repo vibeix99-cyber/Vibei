@@ -14,7 +14,9 @@ import s from './painted.module.css';
 let loader: Promise<typeof import('./rive/riveChai')> | null = null;
 const loadRive = () => (loader ??= import('./rive/riveChai').catch((e) => ((loader = null), Promise.reject(e))));
 
-export function LiveChai({ pose, w, h, onReady, onFail }: { pose: RiveChaiPose; w: number; h: number; onReady(): void; onFail(): void }) {
+/** `shown` flips together with the image's visibility (same prop, same React commit): until then the canvas runs
+ * hidden, so the entry pose (reading) never draws over a sipping or cheering image. */
+export function LiveChai({ pose, w, h, shown, onReady, onFail }: { pose: RiveChaiPose; w: number; h: number; shown: boolean; onReady(): void; onFail(): void }) {
   const ref = useRef<HTMLCanvasElement>(null);
   const handle = useRef<ChaiHandle | null>(null);
   const scene3d = useScene3dRunning();
@@ -60,6 +62,6 @@ export function LiveChai({ pose, w, h, onReady, onFail }: { pose: RiveChaiPose; 
   useEffect(() => handle.current?.setRunning(running), [running]);
 
   const box = riveCanvasBox(pose, w, h);
-  const style: CSSProperties = { left: `${box.left}%`, top: `${box.top}%`, width: `${box.width}%`, height: `${box.height}%` };
-  return <canvas ref={ref} className={s.rive} style={style} aria-hidden data-rive-chai={pose} data-running={running ? '' : undefined} />;
+  const style: CSSProperties = { left: `${box.left}%`, top: `${box.top}%`, width: `${box.width}%`, height: `${box.height}%`, visibility: shown ? 'visible' : 'hidden' };
+  return <canvas ref={ref} className={s.rive} style={style} aria-hidden data-rive-chai={pose} data-running={running ? '' : undefined} data-shown={shown ? '' : undefined} />;
 }

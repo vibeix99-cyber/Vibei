@@ -80,6 +80,8 @@ export function PaintedChai({ pose, size, animate = false, title, className, sty
   if (size < faceBelow) return <ChaiFace size={size} title={title} className={className} style={style} />;
   const { w, h } = paintedBox(pose, size);
   const riveOn = rive && !reduced && !riveFailed && !riveOff && isRivePose(pose);
+  // A Rive layer that goes away takes its reveal with it: the next one starts hidden, behind the visible image.
+  if (!riveOn && riveUp) setRiveUp(false);
   const shown = riveOn && riveUp;
   // CSS breathing only for the painted image; Rive breathes on its own.
   const live = animate && !reduced && !riveOn;
@@ -109,6 +111,7 @@ export function PaintedChai({ pose, size, animate = false, title, className, sty
           pose={pose}
           w={PAINTED[pose].w}
           h={PAINTED[pose].h}
+          shown={shown}
           onReady={() => setRiveUp(true)}
           onFail={() => {
             setRiveUp(false);

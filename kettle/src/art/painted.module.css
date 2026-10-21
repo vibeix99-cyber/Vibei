@@ -34,13 +34,8 @@
   max-width: none;
   pointer-events: none;
   user-select: none;
-  /* A pose change on a live Chai (e.g. cheering -> reading) re-fits the body to the new pose's painted size
-     while Rive blends through rest. */
-  transition:
-    left 0.5s ease,
-    top 0.5s ease,
-    width 0.5s ease,
-    height 0.5s ease;
+  /* No size transition: resizing the canvas clears it, so a pose change re-fits in one step (Rive blends through
+     rest anyway). */
 }
 .face {
   position: relative;

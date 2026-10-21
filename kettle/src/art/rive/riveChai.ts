@@ -23,6 +23,9 @@ import type { RivePose } from './pose';
 
 /** Device-pixel-ratio cap for the drawing surface (crisp on 2x screens; 3x phones draw at 2x). */
 export const DPR_CAP = 2;
+/** Frame-rate cap. Chai's motion is slow (breathing, blinks, a page turn), so 30 fps reads the same at half the cost. */
+export const FPS_CAP = 30;
+const FRAME_MS = 1000 / FPS_CAP;
 
 let fileBytes: Promise<ArrayBuffer> | null = null;
 function loadFile(): Promise<ArrayBuffer> {
@@ -126,6 +129,34 @@ export function mountChai(canvas: HTMLCanvasElement, opts: Options): ChaiHandle 
     }
   };
 
+  // Frame driver (public calls only): Rive's own rAF loop is kept off with `stopRendering()`, and our loop calls
+  // `drawFrame()` at most FPS_CAP times a second. `drawFrame()` draws synchronously when no runtime frame is pending,
+  // advancing by the real time since the last draw, then re-arms the runtime's loop, which `stopRendering()` cancels.
+  let loop = 0;
+  let lastTick = 0;
+  const drawNow = () => {
+    if (!r) return;
+    r.drawFrame();
+    r.stopRendering();
+  };
+  const tick = (t: number) => {
+    loop = 0;
+    if (dead || !r || !running) return;
+    if (!lastTick || t - lastTick >= FRAME_MS - 2) {
+      lastTick = t;
+      drawNow();
+    }
+    loop = requestAnimationFrame(tick);
+  };
+  const startLoop = () => {
+    if (!loop) loop = requestAnimationFrame(tick);
+  };
+  const stopLoop = () => {
+    cancelAnimationFrame(loop);
+    loop = 0;
+    lastTick = 0;
+  };
+
   const resize = () => {
     if (!r || dead) return;
     const dpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
@@ -136,16 +167,21 @@ export function mountChai(canvas: HTMLCanvasElement, opts: Options): ChaiHandle 
       canvas.height = h;
       r.devicePixelRatioUsed = dpr;
       r.resizeToCanvas();
-      r.drawFrame();
+      // Setting the size cleared the buffer: draw now (inside the ResizeObserver, before paint), playing or not.
+      drawNow();
     }
   };
 
   const applyRunning = () => {
     if (!r) return;
-    if (running) r.play();
-    else {
+    if (running) {
+      r.play(); // draws one frame and arms the runtime's loop...
+      r.stopRendering(); // ...which our capped loop replaces
+      startLoop();
+    } else {
+      stopLoop();
       r.pause();
-      r.stopRendering();
+      drawNow(); // a draw while paused resets the runtime's clock, so resuming does not jump ahead
     }
   };
 
@@ -190,6 +226,7 @@ export function mountChai(canvas: HTMLCanvasElement, opts: Options): ChaiHandle 
 
   function destroy() {
     dead = true;
+    stopLoop();
     window.clearTimeout(settle);
     const list = debugList();
     if (list && r) list.splice(list.indexOf(r) >>> 0, 1);
