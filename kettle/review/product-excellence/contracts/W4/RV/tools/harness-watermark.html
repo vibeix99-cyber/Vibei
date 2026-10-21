@@ -1,0 +1,18 @@
+<!doctype html><html><head><meta charset="utf-8"><style>body{margin:0;background:#f4ead8}canvas{width:656px;height:793px;display:block;outline:1px dashed #999}</style></head>
+<body><canvas id="c" width="1312" height="1586"></canvas>
+<script src="rive.js"></script>
+<script>
+window.log=[];
+rive.RuntimeLoader.setWasmUrl('rive.wasm');
+rive.RuntimeLoader.setWasmFallbackUrl(null);
+const r = new rive.Rive({src:'chai.riv', canvas:document.getElementById('c'), autoplay:true, stateMachines:'Chai', autoBind:true,
+  layout:new rive.Layout({fit:rive.Fit.Contain, alignment:rive.Alignment.Center}),
+  onLoad(){ window.loadedAt=performance.now(); r.resizeDrawingSurfaceToCanvas(1);
+    const c=r.contents; window.info={contents:c, sm:r.stateMachineNames, vmCount:r.viewModelCount,
+      vmi: !!r.viewModelInstance, poseNum: r.viewModelInstance && r.viewModelInstance.number('pose') ? r.viewModelInstance.number('pose').value : null,
+      inputs:(r.stateMachineInputs('Chai')||[]).map(i=>[i.name,i.value])};
+  },
+  onLoadError(e){ window.loadErr=String(e && e.data || e); }});
+window.r=r;
+window.setPose=(p)=>{ r.viewModelInstance.number('pose').value=p; };
+</script></body></html>

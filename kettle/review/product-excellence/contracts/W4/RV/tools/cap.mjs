@@ -1,0 +1,28 @@
+// cap.mjs <base> <outdir> <label> <theme>
+import { chromium } from '/home/user/wt/w11/kettle/node_modules/playwright/index.mjs';
+import fs from 'node:fs';
+const [base, out, label, theme] = process.argv.slice(2);
+fs.mkdirSync(out, { recursive: true });
+const b = await chromium.launch({ args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] });
+const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 });
+const page = await ctx.newPage();
+const reqs = []; page.on('request', (r) => reqs.push(r.url()));
+await page.clock.install({ time: Date.parse('2026-10-11T07:40:00Z') }); await page.clock.resume();
+await page.goto(`${base}/?debug&seed=veteran&theme=${theme}#/`);
+await page.waitForFunction(() => { const t = window.__kettle?.timerInfo?.(); return !!(t && t.leader && t.leaderForMs > 400 && !t.settling); }, null, { timeout: 60000 });
+await page.evaluate(() => window.__kettle.settings.getState().set({ muted: true, autoStartBreaks: false, autoStartFocus: false }));
+await page.waitForTimeout(900);
+const rects = {};
+const rec = async (k) => { rects[k] = await page.evaluate(() => { const f = document.querySelector('[data-stage-figure=chai]'); const sp = f?.querySelector('[data-pose]'); const r = (e) => e && (({ x, y, width, height }) => ({ x, y, width, height }))(e.getBoundingClientRect()); return { figure: r(f), pose: sp?.dataset.pose, span: r(sp), render: sp?.dataset.chaiRender ?? 'image(before)' }; }); };
+await page.getByRole('button', { name: /put the kettle on/i }).first().click();
+await page.waitForFunction(() => location.hash === '#/focus'); await page.waitForTimeout(3000);
+await rec('focus'); await page.screenshot({ path: `${out}/${label}-${theme}-1-focus-reading.png` });
+await page.evaluate(() => window.__kettle.finish());
+await page.waitForTimeout(2200); await rec('whistle'); await page.screenshot({ path: `${out}/${label}-${theme}-2-whistle-cheering.png` });
+await page.waitForFunction(() => location.hash.includes('done'), null, { timeout: 30000 }); await page.waitForTimeout(3000);
+await rec('summary'); await page.screenshot({ path: `${out}/${label}-${theme}-3-summary-cheering.png` });
+await page.getByRole('button', { name: /Tea time|Long tea break/ }).first().click(); await page.waitForTimeout(3500);
+await rec('break'); await page.screenshot({ path: `${out}/${label}-${theme}-4-break-sipping.png` });
+fs.writeFileSync(`${out}/${label}-${theme}-rects.json`, JSON.stringify({ rects, cdn: reqs.filter((u) => /unpkg|jsdelivr|rive\.app/.test(u)), rive: reqs.filter((u) => /rive|\.riv/.test(u)) }, null, 1));
+console.log(label, theme, JSON.stringify(rects));
+await b.close();

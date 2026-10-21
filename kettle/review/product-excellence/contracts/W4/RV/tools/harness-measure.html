@@ -1,0 +1,16 @@
+<!doctype html><html><head><meta charset="utf-8"><style>body{margin:0}canvas{width:1312px;height:1586px;display:block}</style></head>
+<body><canvas id="c" width="1312" height="1586"></canvas>
+<script src="rive.js"></script>
+<script>
+rive.RuntimeLoader.setWasmUrl('rive.wasm'); rive.RuntimeLoader.setWasmFallbackUrl(null);
+const cv=document.getElementById('c');
+let r; fetch('chai.riv').then(x=>x.arrayBuffer()).then(buf=>{ const u=new Uint8Array(buf); if(u[241]===0xff&&u[238]===0xf1) u[241]=0; r = new rive.Rive({buffer:buf, canvas:cv, autoplay:true, stateMachine:'Chai', autoBind:true,
+  layout:new rive.Layout({fit:rive.Fit.Contain, alignment:rive.Alignment.Center}),
+  onLoad(){ r.resizeDrawingSurfaceToCanvas(1);
+    const sh = r.artboard.transformComponent('groundShadow'); window.sh=!!sh; if (sh) sh.scaleY = 0;
+    window.loaded=1; }}); window.r=r; });
+window.setPose=p=>{ r.viewModelInstance.number('pose').value=p; };
+window.imgInk=async(n)=>{const im=new Image(); im.src='chai-'+n+'.webp'; await im.decode(); const c=document.createElement('canvas'); c.width=im.naturalWidth;c.height=im.naturalHeight; const x=c.getContext('2d'); x.drawImage(im,0,0); const d=x.getImageData(0,0,c.width,c.height).data; let x0=1e9,y0=1e9,x1=-1,y1=-1; for(let y=0;y<c.height;y++)for(let X=0;X<c.width;X++) if(d[(y*c.width+X)*4+3]>8){x0=Math.min(x0,X);x1=Math.max(x1,X);y0=Math.min(y0,y);y1=Math.max(y1,y);} return {nat:[c.width,c.height], ink:[x0,y0,x1+1,y1+1]};};
+window.bbox=()=>{ const ctx=cv.getContext('2d'); const d=ctx.getImageData(0,0,cv.width,cv.height).data; const W=cv.width,H=cv.height;
+ let x0=W,y0=H,x1=-1,y1=-1; for(let y=0;y<H;y++){for(let x=0;x<W;x++){ if(d[(y*W+x)*4+3]>8){ if(x<x0)x0=x; if(x>x1)x1=x; if(y<y0)y0=y; if(y>y1)y1=y; }}} return [x0,y0,x1+1,y1+1]; };
+</script></body></html>
