@@ -155,3 +155,19 @@ Not touched (stay WebP): happy, stretch, look, sleep, concerned, happy-face (`Ch
   the e2e config uses, raster goes through software GL and everything is slower (Rive 15 fps, page 13 vs 33 fps
   without Rive; `perf-preview-swiftshader.json`), an artefact of that flag set: the same page with default flags runs
   at 60. Open item: a 30 fps cap would roughly halve the cost; the high-level runtime has no fps option.
+
+## §7 Captures and strips
+
+- **BEFORE (:5560) / AFTER (:5651), 390x844, DPR 2, light + dark** (`RV/captures/`, `tools/cap.mjs`):
+  `{before,after}-{light,dark}-{1-focus-reading,2-whistle-cheering,3-summary-cheering,4-break-sipping}.png`, with
+  `*-rects.json` (pose box rects, render mode, CDN requests = none). Pose identical in all 8 pairs; AFTER renders are
+  Rive in all 8. Box rects equal to 0.000 px except dark whistle (15.4 px: the existing CSS whistle hop is a transform,
+  captured at a different phase; layout offsets are equal, see the e2e swap check).
+  Captured with real time (no Playwright clock; see §8: a faked clock also fakes rAF time and slows Rive).
+- Whistle note: the whistle is short (~2 s) and the file blends reading -> rest -> arms up in ~2.3 s (designed: every
+  change goes through rest), so the whistle capture shows Chai mid-raise; the summary shows the full cheer.
+- **Frame strips** (`RV/strips/`, isolated harness with the app's two load-time fixes, 164x198 per frame, time stamps):
+  `loop-0-reading.png` (12 s, page turn + leaf), `loop-1-sipping.png` (9 s, sips + steam), `loop-2-cheering.png`
+  (4.5 s, hops + sparkles + wave), `switch-2-to-0-cheering-to-reading.png`, `switch-2-to-1-cheering-to-sipping.png`,
+  `switch-0-to-2-reading-to-cheering.png` (10 s, 250 ms steps). 2 -> 0: arms fold, rest, book back by ~1.5 s.
+- Watermark captures: §0 (`RV/watermark/`).
