@@ -3,10 +3,10 @@
  *
  * Shown in the session screen's panel, next to (desktop) or under (phone) the same stage the brew ran on —
  * the scene never changes position, so there is no blank hand-off and no cross-fade of whole scenes.
- * Reads the report the progress engine computed once at completion (see ./summary.ts): it grants nothing.
+ * Reads the report the progress engine computed once at completion (see ./summaryModel.ts): it grants nothing.
  *
  * Order: minutes brewed + Tea time (the footer never scrolls away) → the task (only if there was one) →
- * the one highlighted milestone (./summary.ts `rankRewards`): a room unlock as its close-up card, or else the
+ * the one highlighted milestone (./summaryModel.ts `rankRewards`): a room unlock as its close-up card, or else the
  * biggest milestone leading the rewards list → the optional setup after a first brew → every other reward,
  * compact → the arithmetic, on request.
  * Motion: the panel content rises in a short stagger; reduced motion: one simple fade, nothing moves.
@@ -42,7 +42,7 @@ import { usePageVisible } from '../focus/parts/hooks';
 import { TagChip } from '../focus/parts/bits';
 import { ItemGlyph } from '../nook/ItemGlyph';
 import { LeafConfetti } from './LeafConfetti';
-import { buildSummary, rankRewards, warmNote, type RewardPill } from './summary';
+import { buildSummary, rankRewards, warmNote, type RewardPill } from './summaryModel';
 import s from './Summary.module.css';
 
 const AUTO_BREAK_S = 10;

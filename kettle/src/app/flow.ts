@@ -25,7 +25,7 @@ import { clock } from '@/lib/clock';
 import { plural } from '@/lib/format';
 import { onStorageWriteError, type StorageWriteError } from '@/lib/storage';
 import { audio } from '@/audio';
-import { raiseSaveWarning, initSaveWarning, saveWarningActive } from './saveWarning';
+import { raiseSaveWarning, initSaveWarning, saveWarningActive } from './saveWarningState';
 import { getSettings } from '@/state/settings';
 import { getTimer } from '@/timer';
 import type { Phase } from '@/timer/types';
@@ -167,7 +167,7 @@ export function endFocusEarly(): void {
 /**
  * Brews, rewards and settings then live only in this tab until a save succeeds again. The person is told by a
  * banner in the page itself (Today, and Settings › Your data, beside the backup tools) and a one-line note on the
- * summary, each with "Save backup" (src/app/saveWarning.ts, src/app/SaveWarning.tsx). Nothing is laid over any
+ * summary, each with "Save backup" (src/app/saveWarningState.ts, src/app/SaveWarning.tsx). Nothing is laid over any
  * screen, so nothing has to be held back or taken away: the session, its whistle and the breaks simply don't show it.
  */
 function warnSaveFailed(e: StorageWriteError): void {

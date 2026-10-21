@@ -48,7 +48,7 @@ layer key (`session`), so the brew, the whistle, the summary and the tea break n
 - **Sizing:** everything is in `--u = min(0.25cqw, 0.3cqh, 1.6px)`. The cap keeps the painted Chai near its source
   resolution.
 
-### The summary (`src/screens/done/Summary.tsx`, model `summary.ts`)
+### The summary (`src/screens/done/Summary.tsx`, model `summaryModel.ts`)
 - **Built from** the `CompletionReport` the progress engine computed, and granted, once when the brew completed.
   `buildSummary` is pure and grants nothing. Reloading or re-opening the summary cannot change a reward (unit
   tested, and checked across a real reload).

@@ -1,5 +1,5 @@
 /**
- * The storage-full warning, in the page itself (never over it). OWNER: core-loop area. State: ./saveWarning.ts.
+ * The storage-full warning, in the page itself (never over it). OWNER: core-loop area. State: ./saveWarningState.ts.
  *
  *  - `<SaveWarningBanner/>`: Today (under the greeting) and Settings › Your data (beside the backup tools). It takes its
  *    own room and scrolls with the page; "Save backup" is an ordinary button in the tab order.
@@ -11,7 +11,7 @@ import { Icon } from '@/art';
 import { Button } from '@/ui/Button';
 import { useTimer } from '@/timer';
 import { useRoute, type Route } from './router';
-import { announceSaveWarning, saveBackupNow, saveWarningText, settleAnchor, useSaveWarning } from './saveWarning';
+import { announceSaveWarning, saveBackupNow, saveWarningText, settleAnchor, useSaveWarning } from './saveWarningState';
 import s from './SaveWarning.module.css';
 
 /**

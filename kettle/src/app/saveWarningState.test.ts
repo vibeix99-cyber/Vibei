@@ -4,7 +4,7 @@
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { onStorageWriteError, safeStorage } from '@/lib/storage';
-import { raiseSaveWarning, saveWarningActive, saveWarningText, useSaveWarning } from './saveWarning';
+import { raiseSaveWarning, saveWarningActive, saveWarningText, useSaveWarning } from './saveWarningState';
 
 class FillableStorage {
   map = new Map<string, string>();
